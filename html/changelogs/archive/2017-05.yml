@@ -1,0 +1,808 @@
+2017-05-01:
+  4dplanner:
+  - tweak: Syndicate surplus crates now contain fewer implants
+  Bawhoppen:
+  - rscadd: Deep storage space ruin has been readded.
+  - rscadd: Space Cola machines now stock bottles of water.
+  Cobby:
+  - balance: The Gang pen is now stealthy. Stab away!
+  Cyberboss:
+  - rscadd: You can now make holocalls! Simply stand on a pad, bring up the menu,
+      and select the holopad you wish to call. Remain still until someone answers.
+      When they do, you'll be able to act just like an AI hologram until the call
+      ends
+  Joan:
+  - rscadd: Belligerent now prevents you from running for 7 seconds after every chant.
+  - rscdel: However, you no longer remain walking after Belligerent's effect fades.
+  - rscadd: Clockcult component generation will automatically focus on components
+      needed to activate the Ark if it exists.
+  - rscadd: Gaining Vanguard, such as from the Linked Vanguard scripture, will remove
+      existing stuns.
+  - rscadd: Proselytizers can now charge from Sigils of Transmission at a rate of
+      1000W per second.
+  - rscadd: Sigils of Transmission can be charged with brass at a rate of 250W per
+      sheet.
+  Moonlighting Mac says:
+  - bugfix: Due to a clerical error in the chef's cookbooks now being resolved, you
+      can now make the pristine cookery dish "Stuffed Legion" out of exotic ingredients
+      from Lavaland.
+  - experiment: After being found again you will now be able to enjoy its special
+      blend of flavors with your tastebuds. Mmm.
+  QualityVan:
+  - tweak: Saline glucose now acts as temporary blood instead of increasing blood
+      regeneration
+  Swindly:
+  - tweak: Mercury and Lithium make people move when not in space instead of when
+      in space.
+  ninjanomnom:
+  - tweak: TEG displays power in kw or MW now
+  - tweak: TEG power bar only maxes over 1MW now
+  - experiment: Moves TEG to SSair
+  - experiment: Moves SM to SSair
+2017-05-02:
+  4dplanner:
+  - bugfix: Squishy plants will now affect walls and other turfs they get squished
+      on
+  Kor, Goof and Plizzard:
+  - rscadd: Adds persistent trophy cases. They are not on any map yet.
+  Shadowlight213:
+  - bugfix: The biogenerator will now show its recipes again.
+  XDTM:
+  - tweak: Blood Cult's talisman of Horrors now works at range. It will still give
+      no warning to the victim.
+  - rscadd: Golems can now click on empty golem shells to transfer into them.
+  - tweak: Plasma Golems now no longer explode on death. They instead explode if they're
+      on fire and are hot enough. The explosion size has been increased.
+  - tweak: Plasma Golems are now always flammable.
+  coiax:
+  - rscadd: When talking on the alien hivemind, a person will be identified by their
+      real name, rather than who they are disguised as.
+2017-05-03:
+  BeeSting12:
+  - bugfix: Omega shuttle now has lighting.
+  Joan:
+  - balance: Clockwork component generation is twice as fast.
+  - balance: Scriptures cost up to twice as much; Driver scriptures are unaffected,
+      meaning they cost 50% less, Script scriptures cost 25% less, Application scriptures
+      cost about 12.5% less, and Revenant scriptures cost about 5% less.
+  Jordie0608:
+  - rscadd: Investigate logs are now persistent.
+  - tweak: Game logs are now stored per-round; use .getserverlog to access previous
+      rounds.
+  - rscdel: .giveruntimelog and .getruntimelog removed.
+  Kor, Profakos, Iamgoofball:
+  - rscadd: The Librarian has been replaced by the Curator.
+  - rscadd: Persistent trophy cases have been added to the library on Meta, Delta,
+      and Box. These are only usable by the Curator.
+  - rscadd: The Curator now starts with his whip.
+  - rscadd: The Curator now has access to his treasure hunter outfit, stashed in his
+      private office.
+  coiax:
+  - balance: Plasma vessels, the organs inside aliens that are responsible for their
+      internal plasma storage, will regenerate small amounts of plasma even if the
+      owner is not on resin weeds.
+  - rscadd: Restrictions on Lizardpeople using their native language on the station
+      have been lifted by Centcom, in order to maximise worker productivity. The language's
+      key is ",o".
+  deathride58:
+  - tweak: Fixed the slimecore HUD's neck slot sprite.
+2017-05-04:
+  4dplanner:
+  - bugfix: revenants now properly resurrect from ectoplasm, as opposed to ectoplasm
+      merely spawning a new grief ghost
+  - bugfix: Turrets can no longer see invisible things, such as unrevealed revenants
+  Joan:
+  - rscadd: Mania Motors now do minor toxin damage over time and will convert those
+      affected if the toxin damage is high enough.
+  - balance: The effects of a Mania Motor continue to apply to targets after they
+      leave its range, though they will fall off extremely quickly.
+  - rscdel: Mania Motors no longer cause brain damage.
+  - imageadd: Ratvarian Spears have new inhand icons.
+  Lzimann:
+  - rscdel: Gang game mode was removed
+  Moonlighting Mac says:
+  - rscadd: Courtesy of the art & crafts division, imitation basalt tiles themed on
+      the rough volcanic terrain of lavaland are now available to be made out of sandstone.
+  - experiment: The manufacturer even managed to replicate the way that it lights
+      up with volcanic energy, it is the perfect accompaniment to other fake (or real)
+      lava-land tiles or a independent piece.
+  QualityVan:
+  - rscadd: Point flashlights at mouths to see what's inside them
+2017-05-05:
+  Incoming:
+  - tweak: Display cases now require a key to open, which the curator spawns with
+  Joan:
+  - balance: Sigil of Accession, Fellowship Armory, Memory Allocation, Anima Fragment,
+      and Sigil of Transmission are not affected by the previously-mentioned % reduction
+      to Application scripture costs.
+  LanCartwright:
+  - rscadd: Lesser smoke book to Delta and Metastation
+  - rscdel: Normal smoke book from Delta and Metastation
+  - tweak: Civilian smoke book now has a 360 max cooldown (from 120) and halved smoke
+      output.
+  QualityVan:
+  - bugfix: Dental implants stay with the head they're in
+  bgobandit:
+  - tweak: The Syndicate has added basic functionality to their state-of-the-art equipment.
+      Nuke ops can now donate all TCs at once.
+  lordpidey:
+  - rscadd: There is a new traitor poison, spewium.  It will cause uncontrollable
+      vomiting, which gets worse the longer it's in your system.  An overdose can
+      cause vomiting of organs.
+  - tweak: Committing suicide with a gas pump can now shoot out random organs.
+  - bugfix: Toxic vomit now shows up as intended.
+2017-05-06:
+  4dplanner:
+  - rscadd: Internal Affairs Agents now obtain the kill objectives of their targets
+      when they die.
+  - rscadd: Internal Affairs Agents now have an integrated nanotrasen pinpointer that
+      tracks their target at distances further than ten squares.
+  - rscadd: Internal Affairs Agents will now lose any restrictions on collateral damage
+      and gain a "Die a glorious death" objective upon becoming the last man standing,
+      and revert if any of their targets are cloned.
+  BeeSting12:
+  - bugfix: Pubbystation no longer has two airlocks stacked on top of each other leading
+      into xenobiology's kill room.
+  - rscadd: Deltastation's chemistry now has a screwdriver.
+  - bugfix: Deltastation's morgue no longer has a blue tile.
+  - bugfix: Deltastation's chemistry smart fridge is no longer blocked by a disposal
+      unit.
+  Cyberboss:
+  - tweak: Teslas now give off light
+  Joan:
+  - balance: Sigils of Transgression are slightly more visible and glow very faintly.
+  LanCartwright:
+  - rscadd: Reduction to nutrition when consuming Miner's salve.
+  - rscdel: Stun/weaken that bypasses bugged chemical protection when consuming Miner's
+      salve.
+  Lzimann:
+  - rscdel: Telescience is no more.
+  PKPenguin321:
+  - rscadd: Undid the gang gamemode removal.
+  QualityVan:
+  - rscadd: Cargo can order restocking units for NanoMed vending machines
+  - rscadd: NanoMed vending machines can be build and unbuilt
+  Robustin:
+  - rscadd: Blood Cultists can now attempt to claim the position of Cult Master with
+      the approval of a majority of their brethren.
+  - rscadd: 'The Cult Master has access to unique blood magic that will aid them in
+      leading the cult to victory:'
+  - rscadd: The Cult Master can mark targets, allowing the entire cult to track them
+      down.
+  - rscadd: The Cult Master has single-use, noisy, and overt channeled spell that
+      will summon the entire cult to their location.
+  - rscadd: All cultists gain a HUD alert that will assist them in completing their
+      objectives.
+  - rscadd: Constructs created by soul shards will now be able to track their master.
+  - rscadd: Cultists created outside of cult mode will now get a working sacrifice
+      and summon objective and the summon rune will no longer fail outside of cult
+      mode.
+  - tweak: Gang Dominator max time is now 8 minutes down from 15m
+  - tweak: Gang Tagging now reduces the timer by 9 seconds per territory, down from
+      12 seconds.
+  coiax:
+  - rscadd: Adamantine golems have special vocal cords that allow them to send one-way
+      messages to all golems, due to fragments of resonating adamantine in their heads.
+      Both of these are organs, and can be removed and put in other species.
+  - rscadd: You can use adamantine vocal cords by prefixing your message with ":x".
+  - rscdel: Xenobiology is no longer capable of making golem runes with plasma. Instead,
+      inject plasma into the adamantine slime core to get bars of adamantine which
+      you can then craft into an incomplete golem shell. Add 10 sheets of suitable
+      material to finish the shell.
+  - experiment: The metal adamantine is also quite valuable when sold via cargo.
+  - bugfix: If you know more than the usual number of languages, you'll now remember
+      them after you get cloned.
+  - rscdel: Humans turning into monkeys will not suddenly be able to speak the monkey
+      language, and will continue to understand and speak human.
+  - rscadd: Ghosts can now modify their own understood languages with the language
+      menu.
+  - rscadd: Any mob can also open their language menu with the IC->Open Language Menu
+      verb.
+  - rscadd: Silicons can now understand Draconic as part of their internal databases.
+  - bugfix: Golems no longer have underwear, undershorts or socks.
+  - tweak: The lavaland Seed Vault ruin can spawn only once.
+  - rscadd: It is now possible to make plastic golems, who are made of a material
+      flexible enough to crawl through vents (while not carrying equipment). They
+      also can pass through plastic flaps.
+  - bugfix: Fixed adamantine vocal cord (F) links not working for observers.
+2017-05-07:
+  Anonmare:
+  - tweak: Removes organic check from mediborg storage container
+  Joan:
+  - rscadd: Cultists of Nar-sie have their own language. The language's key is ",n".
+  - balance: Sigils of Transgression are slightly brighter.
+  Moonlighting Mac:
+  - experiment: Due to budget cuts and oil synthesis replacing expensive processes
+      of digging up haunted primeval ashwalker burial grounds, Nanotransen has taught
+      chemists how to make plastic from chemicals in the hopes that new plastic products
+      can reduce expenditure on metal and glass.
+  - rscadd: you can now make plastic sheets from chemistry out of heated up crude
+      oil, ash & sodium chloride
+  MrStonedOne:
+  - bugfix: fixed bug that caused an infinite connection loop when connecting on a
+      new computer or computer with recently changed hardware.
+  - rscadd: Moved to a new system to make top menu items easier to edit.
+  - tweak: Moved icon size stuff to a sub menu
+  - rscadd: Added option to change icon scaling mode.
+  - bugfix: Byond added fancy shader supported scaling(Point Sampling), this sucks
+      because it's blurry, the default for /tg/station has changed back to the old
+      nearest neighbor scaling.
+  Penguaro:
+  - bugfix: Adjusted the Examine description of the right-most tiles of the Space
+      Station 13 sign to be consistent with the rest of the tiles.
+  - bugfix: Anywhere there was lava below a tile on the station is now space.
+  Robustin:
+  - tweak: c4 planting is now 40% faster
+  coiax:
+  - bugfix: Smartfridges no longer magically gain medicines if deconstructed and rebuilt.
+  - rscadd: Ash walkers now know and speak Draconic by default, but still know Galactic
+      Common. Remember, Galcom's language key is ",0" and you can review your known
+      languages with the Language Menu.
+  octareenroon91:
+  - rscadd: Showers and sinks added to gulag and mining station for hygiene and fire
+      safety.
+  - rscadd: Watertanks added to mining station for convenient fire extinguisher refill.
+2017-05-08:
+  Dorsisdwarf:
+  - bugfix: Fixed being unable to hit museum cases in melee
+  Joan:
+  - tweak: The verb to Assert Leadership over the cult has been replaced with an action
+      button that does the same thing, but is much more visible.
+  Moonlighting Mac says:
+  - tweak: After a recent trade fair, employees have took it upon themselves to learn
+      how to craft leather objects out of finished leather sheets, for novices they
+      are pretty good at it! Try it yourself!
+  - rscadd: Muzzles to silence people are now craftable out of leather sheets.
+  - rscdel: You can no longer print off designs from a bio-generator that can now
+      be crafted out of leather sheets.
+  - tweak: Complete sheets of leather can be printed from the bio-generator for 150
+      biomass to accommodate for a loss of designs.
+  - experiment: Specialist objects from the leather & cloth category bio-generator
+      category were not removed as to encourage interdepartmental interaction & balance.
+  Penguaro:
+  - rscadd: The Slime Scanner is available from the Autolathe.
+  - tweak: The Design Names in the various machines are now capitalized consistently
+  coiax:
+  - bugfix: Fixes various mobs speaking languages that they were only supposed to
+      understand.
+  - bugfix: Fixes being able to bypass language restrictions by selecting languages
+      you can't speak as your default language.
+  ninjanomnom:
+  - tweak: Highlander no longer breaks your speakers
+2017-05-09:
+  Expletive:
+  - rscadd: Curator's fedora has a pocket, like all the other fedoras.
+  - tweak: Treasure hunter suits can now hold large internal tanks, to ease the exploration
+      of lavaland.
+  - tweak: The curator can now access the Auxillary Base and open doors on the mining
+      station.
+  MrStonedOne:
+  - tweak: Lighting now defaults to fully bright until the first update tick for that
+      tile. This makes shuttle movements less immersion breaking.
+  - experiment: Rather than remove the light source from the system and then re-adding
+      it on light movements, the system now calculates and applies the difference
+      to each tile. This should speed up lighting updates.
+  Penguaro:
+  - tweak: Adjusts Meteor Shuttle Name
+  - bugfix: The Central Command Ferry will now dock at one of the ports in Arrivals
+  - tweak: '[Meta] The Slime Control Console boundaries have been adjusted around
+      the Kill Room'
+  XDTM:
+  - rscadd: Added bluespace launchpads. They can be built with R&D, and can teleport
+      objects and mobs up to 5 tiles away (8 at max upgrades), from the pad to the
+      target and viceversa.
+  - rscadd: To set up a launchpad, a launchpad and a launchpad console must be built.
+      The pad must be opened with a screwdriver, then linked to the console using
+      a multitool. A console can support up to 4 pads.
+  - rscadd: Launchpads require some time to charge up teleports, but don't require
+      cooldowns unlike quantum pads. Upgrading launchpads increases the range by 1
+      per manipulator tier.
+  - rscadd: A special variant, the Briefcase Launchpad, has also been added to the
+      traitor uplink for 6 TC.
+  - rscadd: Briefcase Launchpads look like briefcases until setup (which requires
+      a few seconds). When setup, the launchpad will be functional, but can still
+      be dragged on the ground. To pick a pad back up, click and drag it to your character's
+      sprite.
+  - rscadd: Unlike stationary launchpads, briefcase pads only have 3 tiles of maximum
+      range.
+  - rscadd: Briefcase pads are controlled by a remote (that is sent with the briefcase)
+      instead of a console. The remote must be linked to the briefcase by simply hitting
+      it. Each remote can only be linked to one pad, unlike consoles.
+  coiax:
+  - rscadd: Visible ghosts emit light.
+2017-05-11:
+  Joan:
+  - rscadd: You can now buy double eswords from the uplink for 16 telecrystals. They
+      cannot be bought below 25 players.
+  - rscdel: You can no longer use two eswords to construct a double esword.
+  Joan, Robustin:
+  - rscdel: Harvesters can no longer break walls, construct walls, convert floors,
+      or emit paralyzing smoke.
+  - rscadd: Harvesters now remove the limbs of humans when attacking, can heal OTHER
+      constructs, have thermal vision, and can move through cult walls.
+  - rscadd: Harvesters can now convert turfs in a small area around them and can create
+      a wall of force.
+  - tweak: Harvesters are now cultists.
+  - rscadd: When Nar-Sie is summoned, she will convert all living non-construct cultists
+      to harvesters, who will automatically track her.
+  Kor:
+  - rscadd: a new mysterious book has been discovered in lavaland chests!
+  - tweak: weird purple hearts found in lavaland chests have started beating again!
+      what could this mean?
+  MrStonedOne:
+  - bugfix: Fixes t-ray mode on engineering goggles not resetting the lighting override
+      properly.
+  QualityVan:
+  - tweak: Machine names will be capitalized when they talk on radio
+  Robustin:
+  - tweak: Dominators now require a significant amount of open (non-walled) space
+      around them in order to operate.
+  TehZombehz:
+  - rscadd: Sticks of butter and liquid mayonnaise can now be produced via a new 'mix'
+      function on the grinder. Please eat responsibly.
+  XDTM:
+  - bugfix: Plasma Golems now have the correct updated tip.
+  - tweak: Plasma Golems no longer take damage from fire, and take normal instead
+      of increased burn damage from other sources. They will still explode if on fire
+      and hot enough.
+  - rscadd: Plasma Golems can now self-ignite with an action button.
+  - tweak: Plasma Golems are now warned when they're close to exploding.
+  - tweak: Plasma Golems now have a constant chance of exploding after 850K instead
+      of a precise threshold at 900K, making it less predictable.
+  bandit:
+  - tweak: Nanotrasen has enhanced personality matchmaking for its personal AIs. pAI
+      candidates will now see who is requesting a pAI personality.
+  duncathan:
+  - tweak: opening a dangerous canister will only alert admins if it contains meaningful
+      amounts of a dangerous gas. No more being bwoinked because you opened an empty
+      canister that used to have plasma in it.
+  lordpidey:
+  - tweak: Modified chances for returning someone's soul using an employment contract.  Now
+      everyone has a chance, not just lawyers and HoP.
+  - rscadd: Particularly brain damaged people can no longer sign infernal contracts
+      properly.
+  - tweak: Infernal contracts for power no longer give fireball, and instead give
+      robeless 'lightning bolt' spell.
+  - rscadd: Devils can now sell you a friend, for the cost of your soul.
+  - tweak: The codex gigas should now be easier to use, and less finicky.
+  - rscdel: The codex gigas no longer sintouches readers.
+  ma44:
+  - tweak: Doubles the amount of points wooden planks sell for (now 50 points)
+2017-05-12:
+  Joan:
+  - tweak: Manifest Spirit will no longer continue to cost the user health if the
+      summoned ghost is put into critical or gibbed.
+  - rscadd: Ghosts summoned by Manifest Spirit are outfitted with ghostly armor and
+      a ghostly cult blade that does slightly less damage than a normal cult blade.
+  - balance: Manifest Spirit now consumes 1 health per second per summoned ghost,
+      from 0.333~.
+  - balance: Manifest Spirit can now only summon a maximum of 5 ghosts per rune, and
+      the summoned ghosts cannot use Manifest Spirit to summon more ghosts.
+  - rscadd: Wraiths now refund Phase Shift's cooldown by attacking; 1 second on normal
+      attacks, 5 seconds when putting a target into critical, and a full refund when
+      killing a target.
+  - balance: Increased Phase Shift's cooldown from 20 seconds to 25 seconds.
+  KorPhaeron:
+  - rscadd: Zombies can now see in the dark. If you steal their eyes you'll be able
+      to see in the dark as well!
+  MMMiracles (Cerestation):
+  - tweak: Hydroponics has been revamped, adding a few things missing before and adding
+      a bee room in place of the backroom.
+  - bugfix: Fixed some other stuff.
+  New Antag Alert sounds:
+  - soundadd: added sounds that alert players to their antag status
+  - soundadd: Blood cult has a new alert sound
+  - soundadd: Clock cult has a new alert sound
+  - soundadd: changeling has a new alert sound
+  - soundadd: Malf/traitor AI has a new alert sound
+  - soundadd: Nuke Ops has a new alert sound
+  - soundadd: Ragin' Mages has a new alert sound
+  - soundadd: Traitor has a new alert sound
+  Swindly:
+  - tweak: Solid plasma now begins burning at the temperature at which it was ignited.
+  - balance: Snow walls no longer block explosions, are deconstructed faster, and
+      no longer leave girders when deconstructed.
+  coiax:
+  - balance: Nanotrasen Cloning Divison's three hundred identical scientists have
+      announced an upgrade to the cloning computer's software. You can now scan brains
+      or dismembered heads and successfully clone from them. Brains seem to remember
+      the DNA of the last body they were attached to.
+2017-05-13:
+  QualityVan:
+  - bugfix: Pizza boxes once again look different when open
+  'Tacolizard Forever: It''s hip to fuck bees':
+  - rscadd: Added a honey jar item. It's not implemented yet.
+  - balance: Honey is now more robust at healing, but don't eat too much or you'll
+      turn into a fatty landwhale.
+  TehZombehz:
+  - rscadd: Butter noodles, butter biscuits, buttered toast, and pigs in a blanket
+      can now be crafted using sticks of butter and other ingredients.
+  coiax:
+  - rscadd: Servant golems now follow the "Material Golem (123)" naming scheme.
+  octareenroon91:
+  - rscadd: Hermit ruin now includes a portable seed extractor.
+2017-05-14:
+  coiax:
+  - rscadd: Free Golems can purchase Royal Capes of the Liberator at their mining
+      equipment vendor.
+2017-05-15:
+  Dorsidwarf:
+  - balance: Nanotrasen Robotics Supply Division has successfully petitioned to replace
+      the "My First Robot" motors in turret coverings with a standard commercial brand.
+      As such, they will now open faster.
+  Expletive:
+  - rscadd: You can now create water bottles  and wet floor signs  by using plastic
+      sheets.
+  - rscadd: You can create toy swords out of plastic sheets, a piece of cable, and
+      a light bulb.
+  Joan:
+  - tweak: Glowshrooms now have a less saturated glow.
+  - balance: The summoned ghosts from Manifest Spirit can no longer break airlocks
+      with their standard blade.
+  - balance: Manifest Spirit now does a small amount of damage when initially manifesting
+      a ghost.
+  McBawbaggings:
+  - tweak: SMES units will now accept charge from the power network even if the available
+      load is less than the input rate. Credit to Zaers for the original code.
+  - bugfix: Wizards are now at least 30 years old. Apprentices will be in-between
+      ages 17 to 29.
+  Penguaro:
+  - bugfix: The Gravity Generator description now mentions a graviton field as opposed
+      to a gravaton field. What is Gravaty anyway?
+  - bugfix: Centcom Engineering has reviewed the plans for the Box series station
+      and has addressed some concerns related to some APCs not affecting their designated
+      section. APCs for the Detective's Office, Cargobay, and Gateway, now control
+      those rooms. The Bridge Maintenance APC has been removed from future construction
+      as it serves no purpose and thus is an unnecessary construction cost.
+  - bugfix: The pipe from the station to the AI Satellite has been completed.
+  Profakos:
+  - rscadd: Centcom has decided to upgrade the Ore Redemption machines with a floppy
+      drive, intended for design disks.
+  Qbopper:
+  - tweak: The supermatter crystal now sends its warning messages to the engineering
+      channel. (if it's in critical condition the message will be sent to the common
+      radio channel as before)
+  Swindly:
+  - balance: Nitrous oxide now causes anemia.
+  coiax:
+  - bugfix: Curator soapstones now successfully leave messages for future shifts.
+  - rscdel: Soapstones can no longer be purchased in cargo.
+  - rscdel: The janitor no longer starts with an empty soapstone.
+  - experiment: Engraved messages can be left anywhere in the world, but be wary that
+      the terrain of places like lavaland and space can change shift to shift.
+  - rscadd: Goats on the station have developed a taste for glowshrooms, and will
+      eat them if they encounter any.
+  ma44:
+  - tweak: Seed vault remapped
+  - tweak: The seed vault random seed spawner can now spawn cherry bombs instead of
+      regular cherry seeds
+  - rscadd: BEES to plant vault
+  octareenroon91:
+  - rscadd: Ambrosia Deus can now mutate into Gaia, and Gaia into Deus.
+  - rscdel: A single branch of Ambrosia Gaia will not immediately make a hydroponics
+      tray self-sufficient.
+  - balance: A (total) dose of 20u Earthsblood (from Gaia) will make a hydroponics
+      tray self-sufficient.
+  uraniummeltdown:
+  - rscadd: Ambrosia Gaia is back
+2017-05-16:
+  Moonlighting Mac says:
+  - rscadd: Starthistles now return seeds when they are harvested, amongst having
+      a overhaul of description, alteration of statistics & a mutational path into
+      harebells. These seeds have been supplied into the hydroponics seed vendor.
+  - imageadd: Starthistle tray sprites have been restructured & also fixed from a
+      issue of them being broken and not appearing in trays. In addition there are
+      new sprites for its seeds.
+  Penguaro:
+  - bugfix: There is now Space under the rocks at the Dragoon's Tomb
+  - bugfix: Centcom Intelligence reports that the Hidden Syndicate Research Base may
+      have received a shipment of viruses.
+  QualityVan:
+  - bugfix: Fixed fire alarms not being repairable if the board was broken
+  - bugfix: People without eyes and ears are no longer susceptible to flashbangs they
+      aren't directly on top of
+  Robustin:
+  - rscadd: Summoning Nar'Sie now triggers a different ending. No shuttle is coming!
+      Survivors must escape on a pod or survive the Red Harvest for 3 minutes. If
+      Nar'Sie acquires enough souls, the round ends immediately with a **special ending**.
+  - rscadd: New Harvester Sprite
+  - rscadd: Harvesters can now track a random survivor on the station, then switch
+      back to tracking Nar'Sie, via a new action button.
+  fludd12:
+  - rscadd: You can now add grills to a bonfire, letting you cook things on top of
+      them.
+2017-05-17:
+  4dplanner:
+  - bugfix: revenant respawning will not spam up deadchat so much, and is less likely
+      to break.
+  Expletive:
+  - rscadd: Syndicate Tomes have been added to traitor uplinks for 9 TC. They let
+      an agent or an operative provide both weal and woe.
+  Penguaro:
+  - bugfix: Centcom Engineering has reviewed the power schematic for the engine room
+      and added an Area Power Controller.
+  coiax:
+  - balance: Magic eightballs are now tiny items, able to fit into a box and pocket.
+2017-05-18:
+  Joan:
+  - rscadd: Proselytizing alloy shards will now proselytize all the shards in the
+      tile, instead of requiring you to proselytize each one at a time.
+  Lordpidey:
+  - tweak: Space ninjas now use action buttons instead of verbs for a more consistent
+      user experience.
+  - rscadd: Toy toolboxes with realistic rumbling action have been added to arcade
+      prizes.
+  'Tacolizard Forever: Plasmaman Powercreep':
+  - tweak: Plasmaman tanks are the same size as emergency oxygen tanks.
+  coiax:
+  - rscadd: Syndicate agents can purchase a "codespeak manual", that teaches them
+      a language that sounds like a series of codewords. You can also hit other people
+      with the manual to teach them. One use per manual.
+  - rscadd: Nuclear operatives have access to a deluxe manual that is more expensive
+      but has unlimited uses.
+  - rscadd: Syndicate AIs know Codespeak for free.
+  - bugfix: Spacevines can no longer spread on space transit turfs.
+  - balance: Plastic explosives can no longer be detonated by EMPs.
+  - rscadd: Various vending machines, when shooting their inventory at nearby people,
+      will "demonstrate their products features". This means that if a cigarette vending
+      machine throws a lighter at you, it will be on. Vending machines also choose
+      random products when throwing, rather than the first available one.
+  kevinz000:
+  - rscadd: Peacekeeper cyborgs now have projectile dampening fields.
+2017-05-19:
+  4dplanner:
+  - balance: the Hierophant club has gained in power
+2017-05-20:
+  Joan:
+  - balance: Proto-kinetic crushers have been worked over by our highly qualified
+      techs, will recharge 12% faster, and no longer require very low-pressure atmospheres
+      to fire!
+  - balance: In addition, our techs have tweaked the quantum linker module and proto-kinetic
+      crushers can apply multiple marks to different targets! Marks applied may eventually
+      expire if not detonated.
+  Steelpoint:
+  - rscadd: All Pulse weapons now accurately show, by their sprites, what fire mode
+      they are in.
+  - rscadd: ERT, non-red alert, Security Response Officers spawn with a Tactical Energy
+      Gun. This is a military variant of the Egun that, in addition to laser and disable
+      rounds, has access to stun rounds.
+  - tweak: Pulse Pistols can now be recharged.
+  Swindly:
+  - rscadd: Added modified syringe guns. They fire DNA injectors. Geneticists and
+      CMOs can buy them from the traitor uplink for 14 TC.
+  coiax:
+  - rscadd: When a shuttle is called, sometimes an on-call admiral, using available
+      information to them, will recall the shuttle from Centcom.
+  octareenroon91:
+  - bugfix: Golems touching a shell can now choose to stay in their own body.
+2017-05-21:
+  Gun Hog:
+  - bugfix: The Auxiliary Base can no longer land outside the lavaland map's boundaries.
+  RandomMarine:
+  - tweak: Drone laws no longer restrict drones to the station.
+  Steelpoint:
+  - rscadd: The Warden's Cycler Shotgun has been replaced with a Compact Combat Shotgun.
+      A unique weapon, it can fit in armour slots but at the sacrifice of a smaller
+      ammo capacity of four shells.
+2017-05-22:
+  Joan:
+  - tweak: Resonator fields now visually show how long they have until they burst.
+  - bugfix: Hitting a legion skull with a resonator will now produce a field.
+  - balance: Swapped how far plasma cutter blasts go when going through rock and in
+      open air. This means blasts through air will go 4/5 tiles, but will mine 7/10
+      tiles, for normal/advanced plasma cutters, respectively.
+  - tweak: There is now a buffer zone between the mining base and lavaland where megafauna
+      will not spawn.
+  - tweak: Ruins will no longer spawn directly in front of the mining base.
+  Lzimann:
+  - rscadd: Pandemic is now tgui!
+  Robustin:
+  - rscadd: Gang influence is now decentralized, each gangster has their own influence
+      that they can increase by spraying (and protecting) their tags and new influence-enhancing
+      bling.
+  - rscadd: Gang uniforms are now created based on your gang's color and can be purchased
+      by any gang member. They will increase the wearer's influence and provide protection,
+      but will make it fairly obvious which gang you belong to.
+  - rscadd: Gangs have access to a new surplus rifle; it is a semi-automatic rifle
+      that is very bulky and has a very low rate of fire. Gang members can buy this
+      gun for just 8 influence.
+  - rscadd: Gangs have access to the new machine gun turret; it unleashes a volley
+      of bullets with an extended view range. It does not run out of ammo, but a significant
+      delay between volleys and its stationary nature leaves the gunner vulnerable
+      to flanking and return fire. Holding down the trigger will allow you to aim
+      the gun while firing. It will cost gangs 50 influence.
+  - rscadd: The sawn-off improvised shotgun is now available to gangs for 6 influence.
+      With buckshot shells being easy to produce or purchase, this gun gives the most
+      "bang for your buck" but its single-shell capacity will leave you vulnerable
+      during a pitched gunfight.
+  - rscadd: The Wetwork boots give gangs access to a lightly armored noslip variant.
+  - tweak: The armored gang outfits are now slightly more resistant to ballistic and
+      bomb damage
+  Swindly:
+  - balance: Monkeys can be weakened by stamina loss
+  kevinz000:
+  - bugfix: Nanotrasen decided to remove the integrated jet engines from jetpacks.
+      They can no longer be used successfully indoors.
+2017-05-23:
+  ClosingBracket:
+  - spellcheck: Fixed very minor inconsistencies on items & punctuation on items.
+  Joan:
+  - rscdel: Nanotrasen has taken a lower bid for their meson suppliers, and meson
+      scanners will no longer display terrain layouts while on the planet.
+  - tweak: However, they have discovered that, with some tweaks, mineral scanners
+      will no longer actually require you to be wearing mesons.
+  - tweak: The cheaper mesons will not completely remove reliance on light.
+  - tweak: Ripleys will collect all ore in front of them when they move with a clamp
+      and stored ore box.
+  - tweak: Chasms will glow dimly, like lava.
+  Joan, Repukan:
+  - rscadd: Traitor miners can now buy up to 2 KA Pressure Mods for 5 TC each.
+  - balance: KA Pressure Mods now only take up 35 mod capacity each, allowing traitor
+      miners to use 2 and have space for 1 other mod.
+  - rscdel: R&D can no longer build KA Pressure Mods.
+  Robustin:
+  - rscadd: Added a sexy new icon for the harvester's AOE conversion spell
+  - bugfix: Fixed construct's forcewall being invisible
+  - bugfix: Fixed cult constructs "Locate Master" and "Locate Prey" not functioning
+  - bugfix: Fixed spell action buttons not showing their actual availability status
+  - tweak: Changed the duration of a few frames for the new Cult ending
+  Steelpoint:
+  - rscadd: Auto Rifle alt ammo mags (AP, Incendiary, Uranium Tipped) now have a coloured
+      stripe to denote them.
+  That Really Good Soda Flavor:
+  - bugfix: Martial arts are no longer lost when mind-swapping, cloning, moving your
+      brain, et cetera.
+  - bugfix: Fixed a bug where paper bins could swallow up pens into the void.
+  coiax:
+  - rscadd: Galactic Common has been added to silicon's internal language database,
+      meaning even if a cyborg is created from someone who previously did not know
+      Galactic Common, they will be able to speak it as a silicon.
+  kevinz000:
+  - bugfix: Spessmen seems to have stopped suffering from the mental condition that
+      makes them believe they can't move fast if they have only one leg, even if they're
+      in space and using a jetpack!
+  ma44:
+  - rscadd: Reports of syndicate base on lavaland has been outfitted with a state
+      of the art donksoft toy weapon dispenser.
+2017-05-24:
+  Joan, WJohnston:
+  - rscadd: Adds marker beacons to mining as a vendible item. They can be bought in
+      stacks of 1, 10, and 30 at a rate of 10 points per beacon.
+  - rscadd: Miners start with a stack of 10 in their backpack, and the Extraction
+      and Rescue Kit contains a stack of 30.
+  - rscadd: Marker beacons come in a large selection of colors and simply light up
+      a small area when placed, but are useful as a path marker or to indicate dangers.
+  QualityVan:
+  - rscadd: Hairless hides now become wet when exposed to water
+  - rscadd: You can microwave wet leather to dry it
+  - bugfix: Inserted legion cores no longer work if they went inert before implanting
+  Steelpoint:
+  - rscadd: Sketchin alternative magazines (Armour Piercing, Hollow Point, Incendiary)
+      now have unique sprites to better identify them.
+  - rscadd: ERT Sec Tactical Energy Guns now have a unique sprite.
+  - tweak: Changes to production of Nanotrasen Auto Rifle armour piercing bullets
+      have now made AP bullets better able to penetrate armour, but at the cost of
+      the amount of possible damage the bullet can do to soft targets.
+  - rscadd: Many Ballistic weapons now have new sounds related to reloading or placing
+      bullets into magazines.
+  - rscadd: Boxstation armoury weapon racks now have glass panes to help prevent the
+      weapons easily flying out of a breached hull.
+  - bugfix: Fixed Battleship Raven's bridge blast doors not working.
+  Tacolizard:
+  - tweak: Station based armour is slightly more descriptive of what it does.
+  That Really Good Soda Flavor:
+  - tweak: Changed spray tan overdoses to be more realistic.
+  - rscadd: People who are high and beach bums can now talk in their own stoner language.
+  - tweak: Beach bums can only communicate with other beach bums and people who are
+      high.
+2017-05-25:
+  4dplanner:
+  - bugfix: crushers now apply marks properly
+  - rscadd: 20% of internal affairs agents are actually traitors
+  4dplanner, robustin:
+  - bugfix: c4 has always taken 3 seconds to plant, and you are not allow to believe
+      otherwise
+  Crexfu:
+  - spellcheck: typo fix for origin tech
+  Cyberboss:
+  - experiment: Explosions will no longer have a start up delay
+  - bugfix: Indestructible objects can no longer be destroyed by bombs
+  Oldman Robustin:
+  - tweak: Gang mode now calls a 4 minute unrecallable shuttle once 60% of the crew
+      is dead
+  ohnopigeons:
+  - balance: The cost of plasma has been reduced from 500 to 300, but retain their
+      immunity to saturation
+2017-05-26:
+  Moonlighting Mac says:
+  - rscadd: You can now craft a strong cloak with a hood made out of goliath and monster
+      materials from within the primitive crafting screen.
+  - rscadd: The cloak has a suit slot for all kind of primitive supplies, however
+      it cannot carry most electronic miner equipment.
+  - balance: Due to the recipe requiring leather, it is not normally accessible to
+      all ghost roles without a source of water & electricity.
+  kevinz000:
+  - rscadd: You can now add bayonets to kinetic accelerators. However, only combat
+      knives and survival knives can be added. Harm intent attacking things will cause
+      you to attack that thing with the bayonet instead!
+2017-05-28:
+  ClosingBracket:
+  - tweak: Allows explorer webbings to hold marker beacons.
+  Expletive:
+  - tweak: E-Cigarettes can now fit in your pocket.
+  Iamgoofball:
+  - bugfix: After the Syndicate realized their top chemist was both mixing a stamina
+      destroying drug with a stimulant to avoid slowdowns entirely in their sleepypens,
+      they fired him and replaced him with a new chemist.
+  Joan:
+  - rscadd: Miner borgs can now place marker beacons from a storage of 30.
+  - bugfix: Necropolis tendrils will once again emit light.
+  - rscadd: The kinetic crusher can now gain bonus effects via trophy items gained
+      by killing bosses with it.
+  - rscadd: Yes, you do have to kill the boss primarily doing damage via the kinetic
+      crusher, or you won't get the trophy item and the bonus effect it grants.
+  Kor:
+  - bugfix: The chaplains possessed blade, shades, and constructs, can once again
+      speak galactic common.
+  QualityVan:
+  - bugfix: Bayonets can now be used for butchery
+  - tweak: Cloning pods which are interrupted by a emagging will now produce a slightly
+      lumpier smoothie
+  - bugfix: Cloning pods that have stopped cloning early can no longer be broken open
+      to extract leftover parts
+  - bugfix: Crew monitoring consoles once again have minimaps while you're on the
+      station level
+  Steelpoint:
+  - rscadd: A New Iron Hawk troop transport ruin has been added to lavaland. Can the
+      sole surviving Marine somehow survive the horrors of lavaland? Lore fluff included.
+  - rscadd: Central Command has listened to complaints and, as such, has now stationed
+      "real" Private Security Officers at centcom docks.
+  - rscadd: A new Nanotrasen Security Officer NPC variant is available to admins,
+      this 'peaceful' version will only attack people who attack it first. Great for
+      keeping order.
+  Swindly:
+  - bugfix: fixed not being able to attach heads without brainmobs in them
+  cacogen:
+  - rscadd: You can now rename dog beds by buckling a new owner to them
+  - rscadd: Dogs that spawn in an area with a vacant bed will take possession of and
+      rename the bed
+  - rscadd: Adds AI follow links to holopad speech and PDA messages. Note that PDA
+      messages point to the owner of the PDA and not the PDA's actual location.
+  - bugfix: Fixes PDA icon not showing up beside received messages for AIs
+  kevinz000:
+  - rscadd: Nanotrasen's new titanium wall blueprints are smooth enough that it can
+      reflect projectiles!
+2017-05-29:
+  Joan:
+  - spellcheck: Renames hivelord and legion cores to 'regenerative core'. Their descs
+      have also been updated to be more clear.
+  Nanotrasen Plasmaman Outreach Division:
+  - tweak: plasmaman tank volume has been increased from 3 to 6.
+  XDTM:
+  - balance: Abductors have learned how to properly delete the memories of their test
+      subjects.
+  bandit:
+  - tweak: The officer's sabre standard in Nanotrasen captain rollouts can be used
+      to remove the tails of lizard traitors, or lizards in general.
+  oranges:
+  - rscadd: AI's can now hang up all holocalls at a station with alt+click
+2017-05-30:
+  Expletive:
+  - rscadd: Luxury versions of the bluespace shelter capsule are now available! Purchase
+      them at the mining equipment vendor.
+  - rscadd: 'Cardboard cutouts have a new option: Xenomorph Maid'
+  - rscadd: Black Carpet can now be crafted using a stack of carpet and a black crayon.
+  - rscadd: Black fancy tables can now be crafted using Black Carpet.
+  - rscadd: Shower curtains can now be recoloured with crayons, unscrewed from the
+      floor, disassembled with wire cutters, and reassembled using cloth, plastic,
+      and a metal rod.
+  kevinz000:
+  - rscadd: Research and Development have recieved designs for new prototype Beam
+      Marksman Rifles. These rifles require a short aiming cycle to fire, however,
+      have extreme velocity over other weapons.
+  - experiment: Aiming time is 2 seconds, hold down mouse to aim, aiming time increases
+      if you change your aim based on angle changed, or if you move while aiming.
+      The weapon can not be fired while unscoped.
+  - rscdel: However, someone tripped and pulled out the power cord while your servers
+      were being updated with the latest revision of accelerator laser cannons. All
+      data have been lost...

@@ -1,9 +1,9 @@
 //States for airlock_control
-#define AIRLOCK_STATE_INOPEN		-2
-#define AIRLOCK_STATE_PRESSURIZE	-1
-#define AIRLOCK_STATE_CLOSED		0
-#define AIRLOCK_STATE_DEPRESSURIZE	1
-#define AIRLOCK_STATE_OUTOPEN		2
+#define AIRLOCK_STATE_INOPEN -2
+#define AIRLOCK_STATE_PRESSURIZE -1
+#define AIRLOCK_STATE_CLOSED 0
+#define AIRLOCK_STATE_DEPRESSURIZE 1
+#define AIRLOCK_STATE_OUTOPEN 2
 
 /datum/computer/file/embedded_program/airlock_controller
 	var/id_tag
@@ -196,6 +196,7 @@
 /obj/machinery/embedded_controller/radio/airlock_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_control_standby"
+	base_icon_state = "airlock_control"
 
 	name = "airlock console"
 	density = FALSE
@@ -204,21 +205,20 @@
 	power_channel = AREA_USAGE_ENVIRON
 
 	// Setup parameters only
-	var/id_tag
 	var/exterior_door_tag
 	var/interior_door_tag
 	var/airpump_tag
 	var/sensor_tag
 	var/sanitize_external
 
-/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_toxmix
+/obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix
 	name = "Incinerator Access Console"
-	airpump_tag = INCINERATOR_TOXMIX_DP_VENTPUMP
-	exterior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_EXTERIOR
-	id_tag = INCINERATOR_TOXMIX_AIRLOCK_CONTROLLER
-	interior_door_tag = INCINERATOR_TOXMIX_AIRLOCK_INTERIOR
+	airpump_tag = INCINERATOR_ORDMIX_DP_VENTPUMP
+	exterior_door_tag = INCINERATOR_ORDMIX_AIRLOCK_EXTERIOR
+	id_tag = INCINERATOR_ORDMIX_AIRLOCK_CONTROLLER
+	interior_door_tag = INCINERATOR_ORDMIX_AIRLOCK_INTERIOR
 	sanitize_external = TRUE
-	sensor_tag = INCINERATOR_TOXMIX_AIRLOCK_SENSOR
+	sensor_tag = INCINERATOR_ORDMIX_AIRLOCK_SENSOR
 
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos
 	name = "Incinerator Access Console"
@@ -257,12 +257,10 @@
 
 /obj/machinery/embedded_controller/radio/airlock_controller/update_icon_state()
 	if(on && program)
-		if(program.memory["processing"])
-			icon_state = "airlock_control_process"
-		else
-			icon_state = "airlock_control_standby"
-	else
-		icon_state = "airlock_control_off"
+		icon_state = "[base_icon_state]_[program.memory["processing"] ? "process" : "standby"]"
+		return ..()
+	icon_state = "[base_icon_state]_off"
+	return ..()
 
 
 /obj/machinery/embedded_controller/radio/airlock_controller/return_text()

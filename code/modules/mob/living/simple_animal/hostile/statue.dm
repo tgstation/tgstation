@@ -2,13 +2,13 @@
 
 /mob/living/simple_animal/hostile/statue
 	name = "statue" // matches the name of the statue with the flesh-to-stone spell
-	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you.." // same as an ordinary statue with the added "eye following you" description
+	desc = "An incredibly lifelike marble carving. Its eyes seem to follow you..." // same as an ordinary statue with the added "eye following you" description
 	icon = 'icons/obj/statue.dmi'
 	icon_state = "human_male"
 	icon_living = "human_male"
 	icon_dead = "human_male"
 	gender = NEUTER
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	mob_biotypes = MOB_HUMANOID
 
 	response_help_continuous = "touches"
@@ -27,8 +27,9 @@
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_vis_effect = ATTACK_EFFECT_CLAW
 
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 
 	faction = list("statue")
@@ -53,16 +54,17 @@
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
 
-
-
 // No movement while seen code.
 
 /mob/living/simple_animal/hostile/statue/Initialize(mapload, mob/living/creator)
 	. = ..()
 	// Give spells
+	LAZYINITLIST(mob_spell_list)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
+	var/datum/action/innate/creature/teleport/teleport = new(src)
+	teleport.Grant(src)
 
 	// Set creator
 	if(creator)
@@ -77,11 +79,11 @@
 /mob/living/simple_animal/hostile/statue/Move(turf/NewLoc)
 	if(can_be_seen(NewLoc))
 		if(client)
-			to_chat(src, "<span class='warning'>You cannot move, there are eyes on you!</span>")
-		return 0
+			to_chat(src, span_warning("You cannot move, there are eyes on you!"))
+		return
 	return ..()
 
-/mob/living/simple_animal/hostile/statue/Life()
+/mob/living/simple_animal/hostile/statue/Life(delta_time = SSMOBS_DT, times_fired)
 	..()
 	if(!client && target) // If we have a target and we're AI controlled
 		var/mob/watching = can_be_seen()
@@ -95,7 +97,7 @@
 /mob/living/simple_animal/hostile/statue/AttackingTarget()
 	if(can_be_seen(get_turf(loc)))
 		if(client)
-			to_chat(src, "<span class='warning'>You cannot attack, there are eyes on you!</span>")
+			to_chat(src, span_warning("You cannot attack, there are eyes on you!"))
 		return FALSE
 	else
 		return ..()
@@ -108,7 +110,7 @@
 	if(!can_be_seen(get_turf(loc)))
 		..()
 
-/mob/living/simple_animals/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
+/mob/living/simple_animal/hostile/statue/IsVocal() //we're a statue, of course we can't talk.
 	return FALSE
 
 /mob/living/simple_animal/hostile/statue/proc/can_be_seen(turf/destination)
@@ -133,16 +135,17 @@
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
 				if(!M.is_blind())
 					return M
-		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
-			if(M.occupant && M.occupant.client)
-				if(!M.occupant.is_blind())
-					return M.occupant
+		for(var/obj/vehicle/sealed/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
+			for(var/O in M.occupants)
+				var/mob/mechamob = O
+				if(mechamob.client && !mechamob.is_blind())
+					return mechamob
 	return null
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
-	return 0
+/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+	return
 
 // Turn to dust when gibbed
 
@@ -156,7 +159,7 @@
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		if(!L.client && !L.ckey)
-			return 0
+			return FALSE
 	return ..()
 
 // Don't attack your creator if there is one
@@ -230,8 +233,3 @@
 
 /mob/living/simple_animal/hostile/statue/sentience_act()
 	faction -= "neutral"
-
-/mob/living/simple_animal/hostile/statue/restrained(ignore_grab)
-	. = ..()
-	if(can_be_seen(loc))
-		return 1

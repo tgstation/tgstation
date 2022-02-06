@@ -1,8 +1,8 @@
 /* First aid storage
  * Contains:
- *		First Aid Kits
- * 		Pill Bottles
- *		Dice Pack (in a pill bottle)
+ * First Aid Kits
+ * Pill Bottles
+ * Dice Pack (in a pill bottle)
  */
 
 /*
@@ -24,7 +24,7 @@
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
 /obj/item/storage/firstaid/regular/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/storage/firstaid/regular/PopulateContents()
@@ -75,6 +75,7 @@
 		/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
+		/obj/item/reagent_containers/spray,
 		/obj/item/lighter,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
@@ -98,14 +99,14 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
+		/obj/item/blood_filter,
+		/obj/item/shears,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
 		/obj/item/clothing/glasses,
 		/obj/item/wrench/medical,
 		/obj/item/clothing/mask/muzzle,
-		/obj/item/storage/bag/chemistry,
-		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/gun/syringe/syndicate,
@@ -113,7 +114,8 @@
 		/obj/item/implant,
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical
+		/obj/item/holosign_creator/medical,
+		/obj/item/stack/sticky_tape //surgical tape
 		))
 
 /obj/item/storage/firstaid/medical/PopulateContents()
@@ -124,7 +126,7 @@
 		/obj/item/stack/medical/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
-		/obj/item/reagent_containers/hypospray/medipen/ekit = 1,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
 		/obj/item/surgical_drapes = 1,
 		/obj/item/scalpel = 1,
 		/obj/item/hemostat = 1,
@@ -150,13 +152,13 @@
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
-	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
+	desc = "A specialized medical kit for when the ordnance lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
 	inhand_icon_state = "firstaid-ointment"
 	damagetype_healed = BURN
 
 /obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!</span>")
+	user.visible_message(span_suicide("[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!"))
 	return FIRELOSS
 
 /obj/item/storage/firstaid/fire/Initialize(mapload)
@@ -181,7 +183,7 @@
 	damagetype_healed = TOX
 
 /obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
 /obj/item/storage/firstaid/toxin/Initialize(mapload)
@@ -206,7 +208,7 @@
 	damagetype_healed = OXY
 
 /obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
 /obj/item/storage/firstaid/o2/Initialize(mapload)
@@ -231,7 +233,7 @@
 	damagetype_healed = BRUTE
 
 /obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/storage/firstaid/brute/Initialize(mapload)
@@ -253,14 +255,14 @@
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "radfirstaid"
 	inhand_icon_state = "firstaid-rad"
-	custom_premium_price = 1100
+	custom_premium_price = PAYCHECK_HARD * 6
 	damagetype_healed = "all"
 
 /obj/item/storage/firstaid/advanced/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
-		/obj/item/reagent_containers/pill/patch/instabitaluri = 3,
+		/obj/item/reagent_containers/pill/patch/synthflesh = 3,
 		/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
 		/obj/item/stack/medical/gauze = 1,
 		/obj/item/storage/pill_bottle/penacid = 1)
@@ -296,20 +298,22 @@
 
 	//Making a medibot!
 	if(contents.len >= 1)
-		to_chat(user, "<span class='warning'>You need to empty [src] out first!</span>")
+		to_chat(user, span_warning("You need to empty [src] out first!"))
 		return
 
 	var/obj/item/bot_assembly/medbot/A = new
-	if(istype(src, /obj/item/storage/firstaid/fire))
+	if (istype(src, /obj/item/storage/firstaid/fire))
 		A.set_skin("ointment")
-	else if(istype(src, /obj/item/storage/firstaid/toxin))
+	else if (istype(src, /obj/item/storage/firstaid/toxin))
 		A.set_skin("tox")
-	else if(istype(src, /obj/item/storage/firstaid/o2))
+	else if (istype(src, /obj/item/storage/firstaid/o2))
 		A.set_skin("o2")
-	else if(istype(src, /obj/item/storage/firstaid/brute))
+	else if (istype(src, /obj/item/storage/firstaid/brute))
 		A.set_skin("brute")
+	else if (istype(src, /obj/item/storage/firstaid/advanced))
+		A.set_skin("advanced")
 	user.put_in_hands(A)
-	to_chat(user, "<span class='notice'>You add [S] to [src].</span>")
+	to_chat(user, span_notice("You add [S] to [src]."))
 	A.robot_arm = S.type
 	A.firstaid = type
 	qdel(S)
@@ -334,10 +338,10 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.allow_quick_gather = TRUE
 	STR.click_gather = TRUE
-	STR.set_holdable(list(/obj/item/reagent_containers/pill, /obj/item/dice))
+	STR.set_holdable(list(/obj/item/reagent_containers/pill))
 
 /obj/item/storage/pill_bottle/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is trying to get the cap off [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (TOXLOSS)
 
 /obj/item/storage/pill_bottle/multiver
@@ -484,22 +488,22 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/neurine(src)
 
-/obj/item/storage/pill_bottle/floorpill
-	name = "bottle of floorpills"
+/obj/item/storage/pill_bottle/maintenance_pill
+	name = "bottle of maintenance pills"
 	desc = "An old pill bottle. It smells musty."
 
-/obj/item/storage/pill_bottle/floorpill/Initialize()
+/obj/item/storage/pill_bottle/maintenance_pill/Initialize(mapload)
 	. = ..()
 	var/obj/item/reagent_containers/pill/P = locate() in src
 	name = "bottle of [P.name]s"
 
-/obj/item/storage/pill_bottle/floorpill/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_pill/PopulateContents()
 	for(var/i in 1 to rand(1,7))
-		new /obj/item/reagent_containers/pill/floorpill(src)
+		new /obj/item/reagent_containers/pill/maintenance(src)
 
-/obj/item/storage/pill_bottle/floorpill/full/PopulateContents()
+/obj/item/storage/pill_bottle/maintenance_pill/full/PopulateContents()
 	for(var/i in 1 to 7)
-		new /obj/item/reagent_containers/pill/floorpill(src)
+		new /obj/item/reagent_containers/pill/maintenance(src)
 
 ///////////////////////////////////////// Psychologist inventory pillbottles
 /obj/item/storage/pill_bottle/happinesspsych
@@ -530,11 +534,12 @@
 	name = "organ transport box"
 	desc = "An advanced box with an cooling mechanism that uses cryostylane or other cold reagents to keep the organs or bodyparts inside preserved."
 	icon_state = "organbox"
+	base_icon_state = "organbox"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_premium_price = 1100
+	custom_premium_price = PAYCHECK_MEDIUM * 4
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
@@ -546,49 +551,47 @@
 	STR.set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
-		/obj/item/reagent_containers/food/snacks/icecream
+		/obj/item/food/icecream
 		))
 
-/obj/item/storage/organbox/Initialize()
+/obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 	create_reagents(100, TRANSPARENT)
 	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/freeze)
 	RegisterSignal(src, COMSIG_TRY_STORAGE_TAKE, .proc/unfreeze)
 	START_PROCESSING(SSobj, src)
 
-/obj/item/storage/organbox/process()
+/obj/item/storage/organbox/process(delta_time)
 	///if there is enough coolant var
 	var/cool = FALSE
-	var/amount = reagents.get_reagent_amount(/datum/reagent/cryostylane)
-	if(amount >= 0.1)
-		reagents.remove_reagent(/datum/reagent/cryostylane, 0.1)
+	var/amount = min(reagents.get_reagent_amount(/datum/reagent/cryostylane), 0.05 * delta_time)
+	if(amount > 0)
+		reagents.remove_reagent(/datum/reagent/cryostylane, amount)
 		cool = TRUE
 	else
-		amount = reagents.get_reagent_amount(/datum/reagent/consumable/ice)
-		if(amount >= 0.3)
-			reagents.remove_reagent(/datum/reagent/consumable/ice, 0.2)
+		amount = min(reagents.get_reagent_amount(/datum/reagent/consumable/ice), 0.1 * delta_time)
+		if(amount > 0)
+			reagents.remove_reagent(/datum/reagent/consumable/ice, amount)
 			cool = TRUE
 	if(!cooling && cool)
 		cooling = TRUE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			freeze(C)
 		return
 	if(cooling && !cool)
 		cooling = FALSE
-		update_icon()
+		update_appearance()
 		for(var/C in contents)
 			unfreeze(C)
 
-/obj/item/storage/organbox/update_icon()
-	. = ..()
-	if(cooling)
-		icon_state = "organbox-working"
-	else
-		icon_state = "organbox"
+/obj/item/storage/organbox/update_icon_state()
+	icon_state = "[base_icon_state][cooling ? "-working" : null]"
+	return ..()
 
 ///freezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/freeze(datum/source, obj/item/I)
+	SIGNAL_HANDLER
 	if(isorgan(I))
 		var/obj/item/organ/organ = I
 		organ.organ_flags |= ORGAN_FROZEN
@@ -602,6 +605,7 @@
 
 ///unfreezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/unfreeze(datum/source, obj/item/I)
+	SIGNAL_HANDLER
 	if(isorgan(I))
 		var/obj/item/organ/organ = I
 		organ.organ_flags  &= ~ORGAN_FROZEN
@@ -618,18 +622,28 @@
 		var/obj/item/reagent_containers/RC = I
 		var/units = RC.reagents.trans_to(src, RC.amount_per_transfer_from_this, transfered_by = user)
 		if(units)
-			to_chat(user, "<span class='notice'>You transfer [units] units of the solution to [src].</span>")
+			to_chat(user, span_notice("You transfer [units] units of the solution to [src]."))
 			return
 	if(istype(I, /obj/item/plunger))
-		to_chat(user, "<span class='notice'>You start furiously plunging [name].</span>")
+		to_chat(user, span_notice("You start furiously plunging [name]."))
 		if(do_after(user, 10, target = src))
-			to_chat(user, "<span class='notice'>You finish plunging the [name].</span>")
+			to_chat(user, span_notice("You finish plunging the [name]."))
 			reagents.clear_reagents()
 		return
 	return ..()
 
 /obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] is putting [user.p_theyre()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!</span>")
+	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
+		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+		if(myhead)
+			user.visible_message(span_suicide("[user] puts [user.p_their()] head into \the [src] and begins closing it! It looks like [user.p_theyre()] trying to commit suicide!"))
+			myhead.dismember()
+			myhead.forceMove(src) //force your enemies to kill themselves with your head collection box!
+			playsound(user, "desecration-01.ogg", 50, TRUE, -1)
+			return BRUTELOSS
+		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return BRUTELOSS
+	user.visible_message(span_suicide("[user] is putting [user.p_their()] head inside the [src], it looks like [user.p_theyre()] trying to commit suicide!"))
 	user.adjust_bodytemperature(-300)
 	user.apply_status_effect(/datum/status_effect/freon)
-	return (OXYLOSS)
+	return FIRELOSS

@@ -12,6 +12,7 @@
 	name = "bus mainframe"
 	icon_state = "bus"
 	desc = "A mighty piece of hardware used to send massive amounts of data quickly."
+	telecomms_type = /obj/machinery/telecomms/bus
 	density = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -71,7 +72,7 @@
 	freq_listening = list(FREQ_ENGINEERING)
 	autolinkers = list("processor4", "engineering", "common", "messaging")
 
-/obj/machinery/telecomms/bus/preset_four/Initialize()
+/obj/machinery/telecomms/bus/preset_four/Initialize(mapload)
 	. = ..()
 	for(var/i = MIN_FREQ, i <= MAX_FREQ, i += 2)
 		freq_listening |= i

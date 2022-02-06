@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/mineral/random/snow/more_caves,
+/turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/unexplored)
 "b" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph,

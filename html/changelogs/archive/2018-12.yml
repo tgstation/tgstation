@@ -1,0 +1,541 @@
+2018-12-01:
+  4dplanner:
+  - bugfix: spawners check allegiance
+  Lavalandby:
+  - bugfix: Watcher's Wing no longer Perma-Disarms certain mobs
+  Skoglol:
+  - rscadd: You can now alt click storage (bags, boxes, etc) to open it.
+  - rscadd: Kitchen whetstones now have a sound when used.
+  YPOQ:
+  - bugfix: Kudzu planting and spacevine random event work again
+  Zxaber:
+  - bugfix: It is no longer possible to purge a malfunctioning AI's Law zero if the
+      AI is currently using a shell.
+  coiax:
+  - bugfix: You can no longer turn blindfolds into regular sunglasses.
+  nicbn:
+  - rscadd: All-In-One Blender UI uses a radial menu now. You can see the contents
+      and reagents by examining.
+  - bugfix: Layered pipes no longer stick out of their tile, also vents and other
+      machines will always be in the middle of the tile.
+  - imageadd: Layer manifold now loos like an adaptor.
+  nichlas0010:
+  - bugfix: wizards can teleport out of their den again
+2018-12-02:
+  Dennok:
+  - bugfix: Fix sensor set by reconnect button in atmos tank console.
+  - rscadd: Add rate button to atmos tank console to set injection rate.
+  MMMiracles:
+  - rscadd: Signalers can now be attached to active paystands to send a signal when
+      a certain amount of money is deposited.
+  - rscadd: Swiping your card on a paystand you own will let you lock it down, preventing
+      it from being unbolted from the ground.
+  - tweak: Paystands now ask for how much you want to deposit when interacting instead
+      of a static price.
+  ShizCalev:
+  - bugfix: Fixed chem OD's causing damage to robotic limbs.
+  - bugfix: Fixed wood golems repairing robotic limbs every tick of life()
+  - bugfix: Fixed vampires repairing robotic limbs every tick of life()...
+  - bugfix: Fixed shadowpeople healing robotic limbs every tick of life()
+  - bugfix: Fixed poppeople healing robotic limbs every tick of life()
+  - bugfix: Fixed adjustBruteLoss and adjustFireLoss not properly discriminating for
+      limb status types.
+  - tweak: Fixed bibles healing robotic limbs, because your false deity can't fix
+      SCIENCE.
+  - bugfix: Fixed the Starlight Condensation, Nocturnal Regeneration, Tissue Hydration,
+      Regenerative Coma, and Radioactive Resonance virus symptoms repairing robotic
+      limbs.
+  Skoglol:
+  - code_imp: Added missing typepaths for syndicate implanters.
+  - tweak: Stealth implant now comes in a box.
+  - spellcheck: Changed the names of some syndicate boxes.
+  - rscadd: Added click shortcuts to xenobiology console. You no longer have to aim
+      with the camera eye to do slime science.
+  - balance: Reduced the beam rifle shots per charge from 10 to 5.
+  - bugfix: Beam rifle no longer looks empty before it is empty.
+  Steelpoint:
+  - rscadd: Beanbag slug shells can now be produced at the security protolathe.
+  - tweak: Beanbag slug shells now have the same metal cost as other comparable shotgun
+      shells.
+  XDTM:
+  - rscadd: Added the desynchronizer device, buildable in science protolathes.
+  - rscadd: The desynchronizer can desync the user from spacetime, effectively making
+      them incorporeal (but immobile) while it lasts. The effect can be ended early,
+      and has a maximum duration of five minutes.
+  - rscadd: Requires the Unregulated Bluespace techweb node.
+  - rscadd: The wizard federation announces that the Curse of Madness is out of beta
+      and is now available for purchase for 4 points. It causes long-lasting brain
+      traumas to all inhabitants of a target space station.
+  - rscadd: The wizard federation declines responsibility for any self-harm caused
+      by curses cast while inside the targeted station.
+  - rscadd: Due to the extensive testing of the Curse of Madness some unique new trauma
+      types have appeared across Nanotrasen-controlled space.
+  - rscadd: Added the Hypnotic Flash to the uplink for 7 TC.
+  - rscadd: The Hypnotic Flash temporarily confuses and pacifies those it's used on.
+  - rscadd: If the victim is in a mentally vulnerable state (hallucinating, insane,
+      reduced mental activity) they will instead fall into a trance, and will be hypnotized
+      by the next words they hear.
+  actioninja:
+  - tweak: Suppressed and dry fire sounds are now stored as a variable, and can be
+      edited on a per gun basis.
+  - sounddel: The standard gun dry fire sound was collapsed to one sound instead of
+      4. They were all just pitch variations anyways, which is now covered by built
+      in sound pitch variation.
+  - soundadd: Revolvers now have a unique gunshot sound that is slightly different
+      for 357 and 38.
+  - soundadd: Revolvers now have a unique dry fire sound.
+  - soundadd: Revolvers now make a unique noise when emptying them besides just the
+      sound of shells falling out.
+  - soundadd: Spinning a revolver such as the Russian Revolver now makes a sound.
+  - spellcheck: Syndicate sniper kit now includes a suppressor instead of a "supressor."
+  anconfuzedrock:
+  - tweak: Nanotrasen has saved materials on emergency oxygen tanks by decreasing
+      the size of the tanks while increasing the pressure- they still hold the same
+      amount of oxygen, but it'll be hard to fit more in.
+  coiax:
+  - rscadd: On Boxstation, Cargo can optionally open up their autolathe to the public,
+      via shutters. Some consoles and machinery has moved to accomplish this feat.
+  - rscadd: A wizard's scrying orb now grants both xray vision, and the ability to
+      hear the dead to whoever possesses it.
+  - balance: However, as soon as the orb is no longer in your possession, these abilities
+      fade.
+  - rscadd: Broken lights that are still powered will occasionally spark.
+  - rscadd: Adds the Spontaneous Brain Trauma to the event pool. Sometimes your brain
+      just goes a little wrong.
+  - tweak: Alien infestations are not limited to once per round only, but will never
+      happen while existing aliens are alive.
+  tralezab:
+  - tweak: spellbooks now count towards the survivalist objective if they were not
+      used.
+2018-12-03:
+  4dplanner:
+  - rscdel: You can no longer pre-scan in the cloner
+  Skoglol:
+  - bugfix: Monkey recyclers now connected to the xenobiology consoles. Upgrading
+      it now increases yield from monkeys gathered through the camera.
+  - balance: Adjusted monkey recycler numbers. Down from 4 cubes to 0.8 cubes per
+      monkey at t4 parts.
+2018-12-04:
+  Denton:
+  - bugfix: Fixed sparks and igniters not properly igniting plasma.
+  Steelpoint:
+  - rscadd: MK II SWAT Suit has been officially added to the game, the base model
+      the Captains SWAT Suit is based off of. Currently it does not spawn in the game
+      anywhere and is admin only.
+2018-12-05:
+  Jordie0608:
+  - admin: 'Ban interface rework. The banning and unbanning panels have received a
+      new design which is easier to use and allows multiple role bans to be made at
+      once. prefix: Ban search and unbanning moved to unbanning panel, which is now
+      a separate panel to the old banning panel.'
+  Tlaltecuhtli:
+  - balance: dragnet no longer stuns on hit
+  - balance: dragnet traps are removed 10x faster than previously.
+  coiax:
+  - rscadd: Nuclear operatives have a Christmas tree during the festive season.
+2018-12-07:
+  Blobby and Crossbowby:
+  - bugfix: KAs no longer have increased reload time because of crossbows
+  - bugfix: The aiming beam will no longer spam chat when aimed at a reflector blob
+  Skoglol:
+  - bugfix: Progress bar should no longer appear below the hud.
+  - tweak: Bio bags can now hold droppers.
+  - tweak: Chemistry bags can now hold droppers, syringes and medical sprays.
+  Steelpoint:
+  - rscadd: A new advanced first aid kit is now purchasable from any approved medical
+      vendor. The kit contains an array of advanced healing items for more complex
+      wounds and injuries.
+  coiax:
+  - rscadd: Adds the Physically Obstructive negative quirk. A person with this quirk
+      can't swap places with other people when moving, akin to someone always being
+      in non-help intent.
+  - rscadd: Cryo tubes will only ever send one message, even if they are auto ejecting.
+  subject217:
+  - bugfix: Plasma cutters will no longer accept infinite plasma, and will stop you
+      when they are full.
+2018-12-08:
+  Steelpoint:
+  - rscadd: The Bartender of NTSS Boxstation was approved to receive a Hoochmaster.
+  XDTM:
+  - bugfix: Hypnosis now shows the proper alert instead of Curse of Normality.
+  coiax:
+  - rscadd: During the Christmas season, you can find Santa hats, christmas crackers
+      and presents in maintenance.
+2018-12-09:
+  Denton:
+  - tweak: Metastation's kitchen cold room is now really cold! Make sure to wear warm
+      clothing.
+  - tweak: The kitchen clothing vendor now stocks two winter jackets by default.
+  - tweak: "Goats are now fine with temperatures as low as 180\xB0K. This is so that\
+      \ Pete doesn't freeze to death inside the cold room."
+  - code_imp: Added a kitchen area subtype for cold rooms and adjusted chef CQC to
+      work inside it (no gameplay changes).
+  Floyd / Qustinnus:
+  - rscadd: Bloodbags for ethereal filled with liquid electricity
+  - bugfix: Ethereals cant clone lightbulbs anymore
+  - bugfix: Fixes runtime in Ethereal charge handling
+  HideAndSeekLOGIC:
+  - rscadd: Added emergency oxygen tanks and extended capacity emergency tanks to
+      the autolathe and protolathe
+  - rscadd: Added them to the Industrial Engineering tech node
+  - tweak: Only Cargo and Engineering can print extended capacities; the rest are
+      available for everyone.
+  JJRcop:
+  - bugfix: The chronosuit's teleport animation has been fixed, as has the gun.
+  MMMiracles:
+  - bugfix: Fixes signalers not working properly on paystands
+  MetroidLover:
+  - rscadd: New Abductor uniforms
+  MrDoomBringer:
+  - admin: The Centcom Pod Launcher has been reorganized, making it easier to navigate
+      at the expense of compact-ness.
+  Nich:
+  - rscadd: Radials now have tooltips on hover
+  Skoglol:
+  - tweak: Reorganized the syndicate uplinks. Items are now mostly alphabetical, some
+      misplaced items moved to more fitting categories.
+  - tweak: 'Added a new category to the uplink: Grenades and Explosives.'
+  - bugfix: Xenobio consoles that didn't connect to recycler in the xenobio lab should
+      now do so.
+  - bugfix: Fixed gibber exploit.
+  Swindly:
+  - rscadd: Arm-mounted implants that contain more than one item use a radial menu
+      instead of a list menu.
+  - bugfix: Fixed repair droids not damaging mechs when the mech has a short circuit.
+  Time-Green:
+  - rscadd: Goon genetics!
+  - rscadd: More mutations! Fire breath for lizards! Radioactive! Telepathy! Glowy!
+      Strength, though its cosmetic and should be combined with radioactivity instead!
+      Fiery sweat!
+  - rscadd: Adds void magnet mutation by @tralezab !
+  XDTM:
+  - rscadd: Added the Vegetarian quirk, which costs 0 points and makes you dislike
+      meat.
+  - bugfix: Projected forcefields can no longer be stacked onto the same tile.
+  - rscadd: Added two new surgery procedures, under the Experimental Surgery techweb
+      node.
+  - rscadd: Ligament Hook makes it so you can attach limbs manually (like skeletons)
+      but makes dismemberment more likely as well.
+  - rscadd: Ligament Reinforcement prevents dismemberment, but makes limbs easier
+      to disable through damage.
+  - tweak: Golem limbs can now be disabled, although they are still undismemberable.
+  coiax:
+  - rscadd: Heirlooms are no longer named "Cherry family bag of dice", but rather
+      their heirloom status can be determined by the owner on examine.
+  - rscadd: Any talented Musician can now use any instrument to lift spirits, and
+      ease burdens. They can now also use the space piano and minimog to grant people
+      the Good Music buffs, just like a handheld instrument.
+  - bugfix: Fixes bug where Curse of Madness was not giving proper brain traumas.
+  - rscadd: Gibs will now rot if not cleaned, and produce small amounts of miasma,
+      approximately equal to a quarter of a corpse.
+  imsxz:
+  - bugfix: glitter now uses the updated atmos overlays
+  kevinz000:
+  - rscadd: Sofas have been added. Make 'em with metal, 1 sheet each.
+  monster860:
+  - bugfix: Teleports now go back to force-moving you instead of Move()
+  subject217:
+  - admin: Admin PMs are now multi-line text prompts, making it easier to write big
+      admin PMs.
+2018-12-11:
+  Denton:
+  - bugfix: The MultiZ test map is no longer the default map.
+  monster860:
+  - bugfix: Fixes teleport runes not working, at all.
+  tralezab:
+  - rscadd: 'Wizard has a new spell: Soul tap!'
+  - tweak: lichdom requires a soul now, and it takes your soul.
+2018-12-12:
+  Anonmare:
+  - bugfix: Fixes cameras being attacked with multitools when used to mess up their
+      focus.
+  Kyep:
+  - bugfix: Fix an AI-related href exploit.
+  Tlaltecuhtli:
+  - rscadd: advanced surgery tools, they work like ce tools
+  coiax:
+  - rscadd: Abductor scientists, or people who have had training similar to an abductor's
+      scientist will be able to examine alien glands to determine their scientific
+      purpose.
+  - rscadd: Abductor glands now have their appearances randomized.
+  - rscadd: Admin and event only pair pinpointers! They come in a box of two, and
+      each pinpointer will always point at its corresponding pair. Aww.
+2018-12-16:
+  Floyd/Qustinnus, paid for by Kryson:
+  - rscadd: You can now select what your pills will look like when making pills from
+      the Chem Master
+  Garen:
+  - bugfix: Fixes runtime spam in pipe manifolds on nonstation z-levels
+  MMMiracles:
+  - rscadd: A new(old?) map, Donutstation, is now in rotation.
+  - balance: You can no longer crash the market with coins.
+  Mickyan:
+  - tweak: brave clowns can now manually disable the patented Waddle Dampeners(tm)
+      built into their shoes by using ctrl-click.
+  Nicjh:
+  - rscadd: Abductor console's select disguise option now uses a radial
+  Skoglol:
+  - bugfix: Smuggler satchels now properly deletes if it's the last one in the list.
+  - bugfix: Id-locked chemistry and kitchen closets now checks for access.
+  - bugfix: Chem dispenser macros now function properly with higher tier manipulator.
+  - bugfix: 'Metastation: Adds missing access requirement to xenobiology airlock buttons.'
+  Time-Green:
+  - bugfix: fixes monkey and species mutations not working
+  - bugfix: fixes not getting gibbed
+  Toolby:
+  - balance: Power tools now perform construction slower than the toolarm implant
+      (but still incredibly faster than normal tools)
+  - balance: This is to promote trusting a player rather than safely printing off
+      an item via techfab.
+  Tortellini Tony:
+  - bugfix: Glitter can be clicked through.
+  YoYoBatty:
+  - rscadd: Blurry eyes now actually blur instead of an overlay.
+  anconfuzedrock:
+  - tweak: slapping now doesn't require a specific intent or limb to be targetted.
+  coiax:
+  - rscadd: Robotics can print cybernetic hearts, lungs and livers at their exofabricators
+      (along with their upgraded versions).
+  - rscadd: Added upgraded cybernetic heart, just like the regular cybernetic heart,
+      that doses you with epinephrine when unconscious. But the upgraded version generates
+      a new dose after five minutes.
+  - admin: Admins now have logging when people open presents.
+  - rscadd: Santa can now examine presents to see what's inside.
+  - rscdel: Santa no longer has a mass summon presents spell, because of his new regenerating
+      bag!
+  - rscadd: Santa's bag regenerates presents as long as Santa is holding it.
+  - balance: You can only find one gift under a christmas tree per round, no matter
+      how many trees you search.
+  - balance: Santa's teleport does not announce where he's going.
+  - bugfix: Fixed Santa not having a full head and beard of white hair.
+  - bugfix: Fixed Santa not being genetically white-haired.
+  - bugfix: Fixed Concentrated Barber's Aid not growing extreme amounts of hair.
+  - rscadd: Bartenders can now rename the generic area "Bar" to the bar name of their
+      choice with the use of their bar sign. This will rename air alarms, doors and
+      APCs, so everyone knows what you're calling your bar this shift. (The bar sign
+      chosen is also now a statistic that's tracked!)
+  - rscadd: Microwaves have a single wire accessible when open, the activation wire.
+      When cut, the microwave will no longer function, when pulsed, the microwave
+      will turn on.
+  - rscadd: Stabilized dark purple extracts now cook items in your hands, rather than
+      dropping the cooked item on the floor.
+  - bugfix: Dead monkeys now produce miasma.
+  - rscadd: Pubby now has a Christmas tree in the library during the festive season.
+  - bugfix: Fixes an exploit where you could get admin-only infinite power cells from
+      the EXPERIMENTOR.
+  - admin: Added the infinite closet, a closet that replicates the first thing that's
+      put into it.
+  - admin: The Admin->Investigate verb will indicate investigate topics that have
+      had no messages logged this round. The view notes option is always visible.
+  kriskog:
+  - bugfix: Goliaths, legions and pAI will no longer block clicks on the entire turf.
+2018-12-18:
+  4dplanner:
+  - rscadd: Re-added autoprocessing function on the cloner
+  - balance: records now have an associated last death time, which must sync with
+      the mind to clone. This means you need a new record every time someone dies.
+  - rscadd: diskette records can be partially applied to records in the cloner, for
+      instance to overwrite a name.
+  - rscadd: you can still scan living people to obtain their records for disk use,
+      but these records can't be cloned from.
+  - bugfix: cloning records are no longer based upon ckey
+  - tweak: ghosts are no longer required for scanning
+  - balance: genetics access is required to alter and delete records
+  - rscadd: do not resuscitate verb added for ghosts (can be toggled on and off)
+  - bugfix: ghosts can no longer regain their ability to re-enter their bodies through
+      the DNR verb unless the reason they cannot re-enter was due to use of the verb
+      in the first place
+  Floyd / Qustinnus:
+  - bugfix: fixes ethereal runtime
+  Kierany9:
+  - code_imp: Several minor updates to Assimilation.
+  - balance: Hosts no longer lose abilities if they fall below the required hive size.
+  - balance: Mind Control victims can no longer see nor hear for the duration of the
+      control.
+  - tweak: Distortion Field now affects the victim and those surrounding them over
+      time instead of instantly.
+  - bugfix: Abilities that inflict stamina damage now affect the head instead of spreading
+      damage over the entire body.
+  - tweak: Mind Control now informs you of how long you have control for upon activation.
+  - tweak: Changed various do_mob for do_after. All hivemind abilities except for
+      Mass Assimilation should now work in certain situations where they didn't before.
+  - balance: Abusing the sleep verb while mind controlling is no longer a viable tactic.
+  - balance: Assimilating/removing people into/from the hive now has screen-wide range,
+      with time taken to assimilate increasing exponentially with distance. The time
+      to assimilate from 4 tiles away is approximately the same. Assimilation's cooldown
+      has also been increased by five seconds to compensate.
+  Mickyan:
+  - rscadd: Added the Hypersensitive and Light Drinker quirks
+  Powercreep Balance Committee:
+  - rscdel: Public autolathes have been removed. Please ask (or break into) cargo
+      if you need something.
+  XDTM:
+  - balance: 'Holymelons can now block a limited amount of spells: one spell per 20
+      points of potency. They will not consume charges when blocking passive or continuous
+      magical effects.'
+  - balance: Anti-magic items no longer work when put inside backpacks.
+  - bugfix: Gem-encrusted hardsuits no longer block spellcasting.
+  - balance: DNA-damaging methods (changeling draining, mainly) no longer prevent
+      alternative revival methods, but can no longer be circumvented by upgrading
+      DNA scanners.
+  - balance: Any source of husking now prevents cloning on unupgraded cloning scanners,
+      instead of only husking caused by changelings.
+  - balance: Husking now fully prevents revival from several non-cloning methods,
+      including defibrillation, surgery, and strange reagent.
+  coiax:
+  - bugfix: Printed oxygen or plasma tanks at the protolathe are now empty.
+  - bugfix: Fixes bug where sufferers of monophobia would enter negative stress levels
+      when around people.
+2018-12-22:
+  4dplanner:
+  - bugfix: heat sources with large heating volume will boost temperature properly
+  - bugfix: deleting a record without access resets the menu, instead of locking the
+      machine
+  Denton:
+  - bugfix: Boxstation disposal pipes no longer empty themselves in the Vacant Commissary.
+  Garen:
+  - bugfix: Beepsky, ED-209s, and Honkbots will once again will defend themselves
+      when attacked.
+  - bugfix: You need the item you're using on an unbuilt cyborg to actually be a multitool
+      to modify it once again.
+  anconfuzedrock:
+  - tweak: '"remove embedded object" surgery is now only two steps, instead of four.'
+  coiax:
+  - rscadd: The cyborg reset module wire has a star symbol marking, allowing a trained
+      Roboticist to easily provide resets without altering any other cyborg settings.
+  - bugfix: Old rotting gibs no longer have the name "rotting old rotting gibs".
+  monster860:
+  - rscadd: celebrates the october revolution.
+  - bugfix: Fixes pumps and valves appearing super broken on maps that make heavy
+      use of pipe layers.
+  nicbn:
+  - bugfix: You can click on things that are under flaps or holo barriers.
+2018-12-24:
+  4dplanner:
+  - bugfix: fires will no longer burn quite so hot
+  - bugfix: the first spark of a hotspot is no longer always the same temperature
+  Carbonhell:
+  - tweak: A nuclear bomb in a rift in spacetime will now count as a syndie major
+      victory, and spawn a singulo back at the station rift origin turf.
+  Dax Dupont:
+  - bugfix: Borgs no longer turn into nanites by unexpanding.
+  Denton:
+  - bugfix: The fridge in Pubbystation's public monastery kitchen is no longer locked
+      by default.
+  - rscdel: Removed the Gondola round end sound.
+  Joe Berry:
+  - rscadd: Reverts back to the bubblegum before [#38306](https://github.com/tgstation/tgstation/pull/38306),
+      was an unfinished pr and generally this bubblegum has more stuff to work with.
+  - rscadd: Enrage mode, while in this mode bubblegum is colored a deep red, moves
+      faster, doesn't retreat, and is immune to projectiles. All while throwing out
+      ground slam attacks around him that throw people around.
+  - rscadd: Clones, basically fake bubblegums that do one attack and disappear afterwards.
+  - rscadd: Ground slam attack, only happens when bubblegum is enraged, throws enemies
+      around. Beware being thrown into a wall or you might be stunned because this
+      is how throws work in this game.
+  - rscadd: Bubblegum can now continue to charge through enemies without stopping.
+  - rscdel: Bubblegum's anger modifier no longer determines his movement speed, instead
+      having a constant speed and changing on enragement.
+  - tweak: Blood spray is now a directional move and can move diagonally towards its
+      target
+  - tweak: Bubblegums charge no longer uses throws to calculate being hit.
+  - balance: Bubblegum now retreats in his standard phase while not using moves, generally
+      he was hard to get hit by in this phase anyways so this is a much smarter play
+      on his part.
+  - balance: Blood spray can now move through walls and goes further, this was pretty
+      easily cheesed because it couldn't move through walls with just hugging the
+      edges of walls and just made him too hard to balance.
+  - balance: Bubblegum now procs melee checks much more often, though he has the same
+      cooldown for his melee attacks. This means you're much less likely to stand
+      next to him and not get hit.
+  - balance: Bubblegum now charges 2 tiles past you, makes it slightly more difficult
+      to predict where he's going to go and makes it so he can catch up to you easier.
+  - balance: Bubblegum now moves faster during his charge.
+  - balance: Bubblegum now only takes 50 damage from explosions, taking many bombs
+      to kill him instead of just 10.
+  Jordie0608:
+  - config: Admin ranks now support punctuation.
+  Mickyan:
+  - tweak: Added a setting to cleanbots for cleaning graffiti
+  MrDoomBringer:
+  - bugfix: Reverse-Supplypods (the admin-launched ones) no longer stay behind after
+      rising up, and also auto-delete from centcom.
+  Skoglol:
+  - tweak: Satchels (chem bag, bio bag etc) now stack by name in addition to type.
+  - spellcheck: Fixed Bubblegum plushie attack verb, Ratvar and Bubblegum plushie
+      capitalization.
+  SpaceManiac:
+  - bugfix: Orbit links on deadchat event announcements now actually work.
+  coiax:
+  - refactor: atom/var/container_type has been moved into datum/reagents/var/flags.
+      There should be no visible changes to effects.
+  - balance: Choice beacons (such as the one the curator, chaplain and people with
+      the Musican trait have access to) will no longer have pods that have minor explosive
+      effects.
+  - balance: Stalking Phantom brain traumas will no longer stalk or attack people
+      who are not conscious.
+  - admin: The use of the Give brain trauma and Cure all traumas options on View Variables
+      is now logged, and messages admins.
+  - bugfix: A player who bag of holding bombs now correctly has their ckey entered
+      in the admin log, and admin messages.
+  - admin: Admins now have access to a "wand of safety", a supercharged teleportation
+      wand that moves people to a safe turf, like a swarmer teleport without the cuffing.
+  - admin: When the nuclear authentication disk remains stationary for too long, the
+      chances of a Lone Operative increase. Admins are now notified when the chances
+      go up or down.
+2018-12-28:
+  Carbonhell:
+  - config: Added a new config setting to allow for species that aren't roundstart
+      races anymore to still be used by players with a character set to that species
+      prior to its removal.
+  Denton:
+  - tweak: Ghosts now get notified whenever a bomb or C4/X4 get activated.
+  - bugfix: Strange Reagent now takes ten seconds to revive people and also notifies
+      ghosts that their body is being revived.
+  - spellcheck: Improved Strange Reagent's description and added a separate "does
+      not react" message for when players try to revive hellbound or suicided corpses.
+  Floyd / Qustinnus, sprites by MrDoomBringer:
+  - rscadd: Adds a questionable new item for the bartender to start parties with
+  Frosty Fridge:
+  - tweak: Swarmers can no longer unleash Lord Singuloth.
+  Kierany9:
+  - rscadd: Assimilation now looks and sounds prettier!
+  - rscadd: Ghosts are now notified when hivemind hosts do something interesting.
+  - tweak: Minor sprite changes.
+  - balance: Hive Sight no longer has a cooldown.
+  - bugfix: Fixed a couple of potential runtimes.
+  - bugfix: Fixed a recent bug where hivemind hosts kept their powers after losing
+      antag status.
+  - bugfix: Added extra sanity checks to assimilate vessel.
+  - bugfix: Removed the buggy and useless progress bar on Mind Control.
+  - bugfix: Network Invasion can no longer be cheesed by mind controlling the interrogated
+      vessel.
+  - soundadd: Assimilation now has its own greeting sound.
+  - imageadd: Added vignettes when using Mind Control and Hive Sight.
+  coiax:
+  - rscdel: Normal shuttles that are not emagged will no longer throw things around.
+      People will still be knocked down.
+  - rscadd: Emagged shuttles and poorly designed shuttles will also throw things around
+      on tables, as well as closets.
+  - bugfix: Abductors created by abductor mutation toxin will be able to talk to themselves
+      and to other abductors.
+  - tweak: Abductor tongues now have distinct "channels". A person with an abductor
+      tongue will be able to attune another tongue to the same channel as their own.
+  - tweak: Speaking on the abductor channel will always use your mob's "real name".
+  - rscadd: Abductor teams can now purchase additional superlingual matricies from
+      their abductor console.
+2018-12-29:
+  4dplanner:
+  - balance: blobs now receive a 50% cost refund on attacks that don't spread
+  - balance: blobs receive a free chemical re-roll every 4 minutes
+  - balance: reflector blobs are considerably tougher
+  - bugfix: attempting to turn a damaged strong blob into a reflector blob now refunds
+      points
+  - bugfix: fixed an intregrity
+2018-12-30:
+  MadmanMartian:
+  - code_imp: Adds helpers for finding if a user has a martial art type
+  coiax:
+  - tweak: The Shuffle Race wizard event no longer changes people's names.
+  - tweak: When laying the drapes for surgery, only the surgeon will know which proceedure
+      has been initiated.

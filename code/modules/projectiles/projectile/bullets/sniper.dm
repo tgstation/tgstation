@@ -3,6 +3,7 @@
 /obj/projectile/bullet/p50
 	name =".50 bullet"
 	speed = 0.4
+	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
 	damage = 70
 	paralyze = 100
 	dismemberment = 50
@@ -12,7 +13,7 @@
 /obj/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
 	if(isobj(target) && (blocked != 100) && breakthings)
 		var/obj/O = target
-		O.take_damage(80, BRUTE, "bullet", FALSE)
+		O.take_damage(80, BRUTE, BULLET, FALSE)
 	return ..()
 
 /obj/projectile/bullet/p50/soporific
@@ -33,7 +34,10 @@
 	name = "penetrator round"
 	icon_state = "gauss"
 	damage = 60
-	movement_type = FLYING | UNSTOPPABLE
+	range = 50
+	projectile_piercing = PASSMOB|PASSVEHICLE
+	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
+	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //It goes through you cleanly.
 	paralyze = 0
 	breakthings = FALSE

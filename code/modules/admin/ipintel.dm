@@ -29,7 +29,7 @@
 		return
 	if (!bypasscache)
 		var/datum/ipintel/cachedintel = SSipintel.cache[ip]
-		if (cachedintel && cachedintel.is_valid())
+		if (cachedintel?.is_valid())
 			cachedintel.cache = TRUE
 			return cachedintel
 
@@ -134,8 +134,3 @@
 /proc/log_ipintel(text)
 	log_game("IPINTEL: [text]")
 	debug_admins("IPINTEL: [text]")
-
-
-
-
-

@@ -1,0 +1,458 @@
+2015-03-01:
+  Dannno:
+  - rscadd: Resprited all owl items. Wings are now a separate toggleable suit item.
+  - rscadd: Added The Griffin costume, arch nemesis of The Owl. Found in the autodrobe.
+  - rscadd: Added admin-only Owl hardsuit. Only for the most vengeful souls.
+  - rscadd: Added Owl and Griffin merchandise; The Nest barsign, Owl/Griffin toys
+      and posters.
+  Iamgoofball:
+  - bugfix: Fixes the recipe for meth.
+  - bugfix: Fixes sorium blobs flinging themselves.
+  Incoming5643:
+  - rscadd: On servers where malfunction, wizard, and blob rounds do not end with
+      the death of the primary antagonist, new antagonists from traitor and changeling
+      derivative modes will now sometimes spawn. This depends on the state of the
+      station, the state of the crew, and the server's gamemode probabilities. Server
+      owners should consider revising their configuration choices
+  - rscdel: If you would like to opt out of this midround chance, a new toggle to
+      disable it can be found in your preferences
+  Mandurrh:
+  - rscadd: The barsign can be emagged and EMP'd; EMP'd signs can be repaired with
+      a screwdriver and cables.
+  Menshin:
+  - bugfix: Fixed the protolathe not requiring displayed amount of materials to make
+      items.
+  MrStonedOne:
+  - rscadd: Adds a Panic Bunker!
+  - tweak: This will prevent any player who has never connected before from connecting.
+      (Admins are exempt)
+  - tweak: Can be enabled per-round by any admin with +SERVER or for longer periods
+      via the config.
+  - recadd: Also adds some other config options relating to new joins, server operators
+      should consult their configuration file for more details.
+  - bugfix: Fixes toggle darkness vision hiding other ghosts.
+  - tweak: Admins fucking around with ghost icon and icon states in VV are going to
+      want to change the icon and icon state of the ghostimage var of the ghost to
+      change the image shown to ghosts who have darkness disabled. doing this via
+      mass edit is not yet supported.
+  - rscadd: New ghost verb, toggle ghost vision. Switches the ghost's invisibility
+      vision between that of a ghost and that of a human. So ghosts can hide other
+      ghosts and in general get the old behaviour of toggle darkness.
+  Paprika:
+  - rscadd: Messages with two exclamation marks will be yelled in bold.
+  Phil235:
+  - bugfix: Cultists can't summon narsie until their sacrifice objective is complete.
+  Razharas:
+  - rscadd: Vines now can grow on any tiles that is not dense, including space, shuttles,
+      centcomm tiles and so on.
+  - rscadd: Added 'Bluespace' mutation to vines, makes them be able to grow through
+      absolutely everything.
+  - rscadd: Added 'Space Proofing' mutation to vines, after they grow if the tile
+      under them is space it will become special vinetile, which is just resprited
+      regular floor, if the vine on the vinetile dies the vineturf changes back to
+      space.
+  - rscadd: Made vines spreading speed depend on the seed's production, can be both
+      slower and faster than current.
+  - rscadd: Made vines mutation chance be 1/10th of the potency of the seed it is
+      spawned from.
+  - rscadd: Special chemicals added to vine seeds durning their growth can increase/decrease
+      their potency and productivity.
+  - rscadd: Special chemicals now can remove good, bad or neutral mutations from vine
+      seeds while they are growing, cultivating actually helpful vines is now possible.
+  - rscadd: Plant analyzers now show the vine seeds mutations.
+  - tweak: Buffed numbers in some of the more useless mutations.
+  Steelpoint:
+  - rscadd: Reworked and expanded areas of the derelict station. Featuring a repairable
+      gravity generator, turret filled computer core and functional solars.
+  Vekter:
+  - rscadd: Chemists, Geneticists, Virologists, Scientists, and Botanists will now
+      spawn with alternative backpacks and satchels in their lockers. Try them out!
+2015-03-03:
+  Delimusca:
+  - rscadd: Improvised heating! use lighters or other heat sources to heat beakers,
+      bottles, etc.
+  Gun Hog:
+  - tweak: We have purged the xenomicrobes contamination in the E.X.P.E.R.I-MENTOR
+      using sulfuric acid. Take care not to be exposed should it leak!
+  Iamgoofball:
+  - tweak: Colorful reagent can be washed off with water now.
+  - tweak: Oxygen blob deals breath loss damage.
+  - tweak: Radioactive blobs irradiate for more.
+  Ikarrus:
+  - rscadd: Antagonist roles are now restricted by player client age.
+  Jordie0608:
+  - rscadd: The server's current local time is now displayed in status panel in ISO
+      date format (YYYY-MM-DD hh:mm)
+  Mandurrrh:
+  - rscadd: Added the ability to see pda messages as a ghost with GHOSTWHISPER toggled
+      on.
+  - bugfix: Removed the degrees symbol from Kelvin units on atmos meters because not
+      gramatically correct
+  RemieRichards:
+  - rscadd: Drones now see either Static, Black icons or Roguelike style lettering
+      instead of actual mob icons
+  - rscadd: Icons for the above, from VG's SkowronX
+  - rscadd: Many icon procs for the above, from VG's ComicIronic
+  - rscadd: Drones moved into their own folder
+  - tweak: Drone.dm replaced with separate files for each functionality
+  - rscadd: Drones now have 2 skins to choose from, Maintenance Drone (Current drones)
+      and Repair Drone (A modified VG/Bay sprite)
+  - rscadd: Much more support for alternate skins on drones
+  Xhuis:
+  - rscadd: 'Added four new emoji: :1997:, :rune:, :blob:, and :onisoma:.'
+  xxalpha:
+  - rscadd: Added a surgery table and tools to the Nuke Ops ship.
+  - rscadd: Added Engineering Scanner Goggles to Engivend, Engineering Secure Closets
+      and Research.
+  - tweak: Doubled T-ray scanner range.
+2015-03-05:
+  Jordie0608:
+  - rscadd: Server hosts can set a config option to make an unseen changelog pop up
+      on connection.
+  MrPerson:
+  - rscadd: Expanded the on-screen alerts you get on the top-right of your screen.
+      You can shift-click them to get a description of what's wrong and maybe how
+      to fix it.
+  - rscadd: Getting buckled to something will show an alert of what you're buckled
+      to. If you're not handcuffed, you can click the alert to unbuckle.
+  RemieRichards:
+  - rscadd: Added Necromantic Stones as a buyable item for wizards
+  - rscadd: Necromantic Stones can cause up to 3 people to rise up as Skeleton Thralls
+      bound to the wielder of the stone
+  - rscadd: Skeleton Thralls have a 33% Chance to drop all their gear on the floor
+      and autoequip a more fitting thematic uniform
+  - rscadd: Allows the blob to reroll it's chemical for a cost.
+  phil235:
+  - rscadd: Adds a lot of new plants to botany (red beet, parsnip, snap corn, blumpkin,
+      rice, oat, vanilla, steel cap, mimana, blue cherries, holy melon, geranium,
+      lily, sweet potato) and two new reagents (vanilla, rice).
+  - bugfix: Fixes taser stun duration being longer due to jitter animation.
+2015-03-08:
+  Dannno:
+  - rscadd: Added more barsigns, sprites by yours truly.
+  Ikarrus:
+  - wip: Gang mode has been reworked to functionality without some of it's features.
+  - rscdel: Gang membership visibility, conversion pens and weapons are removed until
+      fixed.
+  - rscadd: Gang bosses have been given uplinks to use in the meantime.
+  - tweak: Chance of deconversion from repeated head trauma has been increased.
+  Incoming5643:
+  - rscdel: The skeleton and zombie hordes have been quelled, at least for the time
+      being.
+  Mandurrrh:
+  - rscadd: Added the ability to stop table climbers by clicking the table if present.
+  Paprika:
+  - tweak: Labcoats and uniforms no longer use action buttons and object verbs to
+      adjust their aesthetic style. Alt click them to adjust.
+  - rscadd: Alt click a PDA with an ID inside to eject the ID.
+  - tweak: Renamed 'remove ID' verb to 'eject ID' so it's not immediately next to
+      'remove pen'.
+  - tweak: Rebalanced the flash protection of thermal scanners. Syndicate thermals
+      have the same flash weakness as the meson scanners they come disguised as.
+  Xhuis:
+  - rscadd: Adds the Adminbus and Coderbus bar signs.
+  - rscadd: Added a mining satchel of holding to R&amp;D that can hold an infinite
+      amount of ores. It requires gold and uranium, in addition to a decently high
+      bluespace and materials research.
+  phil235:
+  - tweak: Harvesting meat from dead simple animals now takes time, has a sound, and
+      can be done with any sharp weapon.
+  pudl:
+  - imageadd: Updated the sprite for Fire extinguishers.
+  xxalpha:
+  - imageadd: Disposable lighters now come in more colors of the rainbow.
+2015-03-10:
+  Ahammer18:
+  - rscadd: Adds the Slimecake and Slimecake slice.
+  AnturK:
+  - rscadd: Non-player Alien Queens/Drones now spread weeds. Can also lay eggs when
+      enabled.
+  Incoming5643:
+  - rscadd: Nanotrasen scientists have recently reported mutations within the pink
+      family line of slimes. Station scientists are encouraged to investigate.
+  Paprika:
+  - tweak: Reworked reskinning and renaming guns, and added the ability to reskin
+      the bartender's shotgun. Click it with an empty active hand to reskin. Warning,
+      you can only do this once! Rename by hitting it with a pen. This also works
+      with miner shotguns now.
+  RemieRichards:
+  - wip: Embedding from explosions has been tweaked, they will always throw objects
+      fast enough to get embedded if they can.
+  - tweak: Damage taken when embedded spears and throwing stars fall out has been
+      increased.
+  - tweak: Damage dealt by objects getting embedded has been decreased.
+  Sometinyprick:
+  - rscadd: The Horsemask spell has now been altered, instead of just a horse mask
+      it will now choose between three animal masks including the horse mask.
+  Xhuis:
+  - rscadd: You can now burn papers using lighters, welders, or matches. Useful for
+      secret messages.
+  phil235:
+  - rscadd: Airlocks with their safety on no longer closes on dense objects (like
+      mechs or tables).
+  - tweak: Aliens, slimes, monkeys and ventcrawler mobs can now climb into disposal.
+      Cyborgs and very large mobs can no longer climb into it.
+  - tweak: Stuffing another mob in a disposal unit is now only done via grabbing.
+  - rscadd: Coffee now causes jittering only when you overdose on it.
+  - bugfix: Turrets now target occupied mechs and don't target drones.
+2015-03-11:
+  MMMiracles:
+  - rscadd: Adds a new vending machine, the Liberation Station. Consult your local
+      patriot for more details.
+  - rscadd: Adds a patriotic jumpsuit and freedom sheets. Consult your local patriot
+      for more details.
+  Miauw:
+  - rscadd: Added a toggle for ghosts that allows them to hear radio chatter without
+      having to hover near intercoms/over people with headsets.
+2015-03-15:
+  Ahammer18:
+  - bugfix: Adds ass photocopying for drones
+  Gun Hog:
+  - rscadd: Nanotrasen has approved distribution of Loyalty Implant Firing Pin designs.
+      They can be fabricated with sufficient research into weapons technology. If
+      inserted into a firearm, it will only fire upon successful interface with a
+      user's Loyalty Implant.
+  Incoming5643:
+  - rscadd: Utilizing a new magic mirror found in the den, wizards can now customize
+      their appearance to a high degree before descending upon the station.
+  Miauw:
+  - tweak: Firing delay for tasers has been shortened.
+  RemieRichards:
+  - wip: Beginning major rework and refactor of messy Ninja code.
+  - rscdel: Roleplay based, kill deathsquad and kill alien queen objectives removed.
+  - rscdel: Kamikaze mode removed.
+  - rscdel: AIs and pAIs can no longer be integrated into a ninja suit.
+  - tweak: Energy blade power replaced by an energy katana that can be dropped but
+      is more deadly.
+  - rscadd: Energy katana can emag any object it hits.
+  phil235:
+  - rscadd: Bookbags have a new sprite and can hold bibles.
+  - rscadd: Adds egg yolk reagent. You can break eggs in open reagent containers or
+      blend them to get egg yolk.
+  - tweak: Changes how doughs are made. 10water+15flour chem reaction for dough. 15flour+15eggyolk+5sugar
+      for cake batter (or alternatively soymilk instead of the eggyolk for vegans).
+  - tweak: Change customizable snack max volume to 60 and buffs nutriment amount in
+      doughs.
+  - rscadd: Doors can damage mechs by crushing them now.
+  - rscadd: The tablecrafting window now also shows partial recipes in grey, if there's
+      some of the things required for the recipe on the table. Recipe requirements
+      are now also shown next to the names of recipes listed in the window.
+2015-03-17:
+  CandyClownTG:
+  - bugfix: Syndicate cigarettes' non-healing Doctor's Delight replaced with Omnizine.
+  Fayrik:
+  - rscadd: Expanded the Centcom area for better station-Centcom interaction.
+  Iamgoofball:
+  - tweak: Acid blobs are less likely to melt equipment.
+  MMMiracles:
+  - rscadd: Adds the ability to spike bears on a meatspike for their pelt. Yields
+      5 meat instead of the usual 3 from a knife.
+  Thunder12345:
+  - rscadd: Two new shotgun shells. Ion shell, shotgun version of ion rifle, built
+      with 1 x techshell, 1 x ultra microlaser, 1 x ansible crystal.
+  - rscadd: Laser slug, regular laser shot in a shotgun shell, build with 1 x techshell,
+      1 x high power microlaser, 1 x advanced capacitor.
+  - rscadd: Improvised shotgun shells can now be constructed with 1 x grenade casing,
+      1 x metal sheet, 1 x cable, 10 units welding fuel. Can be packed with a further
+      5 units of gunpowder to turn it into a potentially lethal diceroll.
+  - bugfix: FRAG-12 shotgun shells are no longer duds, now explosive.
+  phil235:
+  - tweak: Makes the message when you're attacked slightly bigger for better visibility.
+2015-03-19:
+  Dannno:
+  - rscadd: Adds a few cosmetic glasses to the autodrobe and clothing vendors.
+  Gun Hog:
+  - tweak: Explosion relics will now destroy themselves in their own explosion.
+  - bugfix: The Experimentor can no longer re-roll the function of an already scanned
+      relic.
+  Incoming5643:
+  - tweak: Ghosts are now asked if they want to become a sentient slime.
+  JJRcop:
+  - rscadd: 'Adds the :rollie: and :ambrosia: emojis.'
+  MMMiracles:
+  - tweak: ERT suits now use helmet toggling like hardsuits.
+  Menshin:
+  - bugfix: Fixed mechs ballistic guns not firing bullets.
+  Xhuis:
+  - rscadd: Allows alt-clicking to adjust breath masks, flip caps, and unlock/lock
+      closets.
+  xxalpha:
+  - bugfix: Fixed jetpack trail animation.
+2015-03-21:
+  Chocobro:
+  - rscadd: Checkered skirts can be adjusted to be worn shorter.
+  Incoming5643:
+  - tweak: Player controller uplifted mobs will be attacked by gold core mobs of different
+      species.
+  Jordie0608:
+  - bugfix: The backup shuttle will no longer be called if the emergency shuttle is
+      coming.
+  MMMiracles:
+  - rscadd: Adds 3 new bear-based foods.
+  - rscadd: Beary Pie -1 Plain Pie, 1 berry, 1 bear steak
+  - rscadd: Filet Migrawr - 5u of Manlydorf, 1 bear steak, 1 lighter(not used in crafting)
+  - rscadd: Bearger - 1 bun, 1 bear steak
+  Phil235:
+  - bugfix: Silicons are no longer blinded by welding.
+  Xhuis:
+  - rscadd: A new software update has given the Orion Trail game a cheat code menu.
+      While you can't access this normally (that's for a later software update), maybe
+      an emag could do it...?
+  Zelacks:
+  - bugfix: The chemical implant action button should now correctly inject all chemicals
+      when pressed.
+  pudl:
+  - rscadd: Adds normal security headsets to security lockers.
+  xxalpha:
+  - bugfix: Fixed cables on catwalks being destroyed when creating plating floor.
+  - rscadd: Portable machines can be mounted on any turf that could hold a cable.
+2015-03-22:
+  Iamgoofball:
+  - bugfix: Fixes Morphine not knocking you out.
+  - rscdel: Hotline no longer exists. Poppies now have Saline-Glucose Solution.
+  - rscdel: Muriatic Acid, Caustic Soda, and Hydrogen Chloride have been removed,
+      along with the secondary meth recipe. The original recipe still works.
+  - experiment: Foam now produces more bang for your buck when mixed. Your foam grenades
+      should be larger now to account for the slowdown.
+  - rscadd: Adds Stabilizing Agent. This chemical will prevent the effects of certain
+      reactions from taking place in  the container it is in, such as Smoke Powder
+      and Flash Powder, allowing you to get the raw forms of the powders for heating
+      up later.
+  - rscadd: Smoke Powder and Flash Powder can now be mixed along with Stabilizing
+      Agent in order to produce a powder version of the effects. You can then heat
+      these powders to 374K to get the effects.
+  - rscadd: Mixing them without Stabilizing Agent gives the default effects.
+  - rscadd: Adds Sonic Powder, a chemical that deafens and stuns within 5 tiles of
+      the reaction. It also follows the reaction rules of the other 2 powders.
+  - tweak: Liquid Dark Matter and Sorium also now work like the powders do.
+  - tweak: CLF3 now has a higher chance of making plating tiles, and the burn damage
+      caused by it scales based on your fire stacks.
+  - rscadd: Adds Pyrosium. This reagent heats up mobs by 30 degrees every 3 seconds
+      if it has oxygen to react with. Useful for when you want a delayed mix inside
+      of someone.
+  - rscadd: Adds Cryostylane.  This reagent does the opposite of Pyrosium, but it
+      still requires oxygen to react with.
+  - rscadd: Adds Phlogiston. This reagent ignites you and gives you a single fire
+      stack every 3 seconds. Burn damage from this chemical scales up with the fire
+      stacks you have. Counter this with literally any chemical that purges other
+      chems.
+  - experiment: Smoke now transfers reagents to the mob, and applies touch reactions
+      on them. This means smoke can run out of reagents, no more infinite acid smoke.
+      It also only works on mobs, use the new Reagent Foam(tm) for your hellfoam needs.
+      I suggest a CLF3 Fluoroacid Black Powder mix.
+  - experiment: Added a derelict medibot to the code, will place a few on the derelict
+      when this PR is merged as to prevent mapping conflicts.
+  - rscadd: Adds Initropidril. 33% chance to hit with 5-25 TOX damage every 3 seconds,
+      and a 5-10% chance to either stun, cause lots of oxygen damage, or cause your
+      heart to stop. Get it from the traitor Poison Kit.
+  - rscadd: Adds Pancuronium. Paralyses you after 30 seconds, with a 7% chance to
+      cause 3-5 loss of breath. Get it from the traitor Poison Kit.
+  - rscadd: Adds Sodium Thiopental. Knocks you out after 30 seconds, and destroys
+      your stamina. Get it from the traitor Poison Kit.
+  - rscadd: Adds Sulfonal. +1 TOX per 3 seconds, knocks you out in 66 seconds. Mix
+      it with Acetone, Diethylamine, and Sulfur.
+  - rscadd: Adds Amantin. On the last second it is in you, it hits you with a stack
+      of TOX damage based on how long it's been in you. Get it from the traitor Poison
+      Kit.
+  - rscadd: Adds Lipolicide. +1 TOX unless you have nutriment in you. Mix it with
+      Mercury, Diethylamine, and Ephedrine.
+  - rscadd: Adds Coiine. +2 TOX and +5 loss of breath every 3 seconds. Get it from
+      the traitor Poison Kit.
+  - rscadd: Adds Curare. +1 TOX, +1 OXY, paralyzes after 33 seconds. Get it from the
+      traitor Poison Kit.
+  - rscadd: Adds a reagent_deleted() proc to reagents for effects upon the last time
+      it processes in you, like with Amantin.
+  - bugfix: Neurotoxin required temperature for mixing has been set to 674K, it was
+      370K for some reason.
+  xxalpha:
+  - rscadd: 'Added Cybernetic Implants: Security HUD, Medical HUD, X-Ray, Thermals,
+      Anti-Drop, Anti-Stun. All implants are researchable and producible by R&amp;D
+      and Robotics.'
+2015-03-24:
+  Cheridan:
+  - rscadd: Adds pet collars. Use them to rename pets; Can also be worn if you're
+      a weirdo.
+  - rscadd: Adds the matyr objective to be dead at the round's end. You can get this
+      objective if you have no others that would need you to survive.
+  Dannno:
+  - rscadd: GAR glasses return. Yes, I got permission. Just who the hell do you think
+      I am?
+  Incoming5643:
+  - bugfix: Summon Events has been reworked to be a bit less manic.
+  - rscadd: Summon Events will turn off if the wizard and all apprentices die. Any
+      lingering effects are not reversed however.
+  - rscadd: Improving Summon Events will reduce the average time between events, but
+      not the minimum time between events.
+  - rscdel: Departmental Uprising has been made admin only for being an RP heavy event
+      that creates antags in an enviroment that doesn't really support that.
+  Mandurrrh:
+  - rscadd: Added a cyborg upgrade module for the satchel of holding.
+  Miauw:
+  - imageadd: Added a fancy white dress and a jester outfit. Sprites by Nienhaus.
+  Steelpoint, RemieRichards, and Gun Hog:
+  - rscadd: Nanotrasen Security has authorized modifications to the standard issue
+      helmets for officers. These helmets are now issued with a mounted camera, automatically
+      synced to your assigned station's camera network. In addition, the helmets also
+      include mounting points for the Seclite model of flashlights, found in your
+      station's security vendors.
+  - rscadd: Nanotrasen Security helmets are designed for easy repairs in the field.
+      Officers may remove their Seclite attachment with any screwdriver, and the camera's
+      assembly may be pried off with a crowbar. The assembly is also compatible with
+      analyzer upgrades for scanning through the station's structure, and EMP shielding
+      is possible by applying a sheet of plasma.
+2015-03-25:
+  AnturK:
+  - rscadd: Added an arrow graffiti, made arrow and body graffiti face the same way
+      as the user
+  - rscadd: 'New changeling ability : Last Resort : Explode and infect corpses if
+      the situation looks grim'
+  Fayrik:
+  - rscdel: Deleted the toy crossbow that wasn't a gun, but flung projectiles like
+      a gun. Why was that even a thing?
+  - rscadd: Added an abstract new type of reusable ammo.
+  - rscadd: Added three new foam force guns and a foam force crossbow, all of which
+      take the new foam dart ammo.
+  - rscadd: Added foam force dart boxes to the autolathe, and two crates orderable
+      from cargo containing the new guns.
+  - rscadd: Added two new donksoft guns, the syndicate's own brand of Foam Force.
+      Available in all good uplinks!
+  - tweak: New crossbow can be won as an arcade prize.
+  - tweak: All kinds of ammo containers can now be used to rapidly collect live ammunition
+      on the ground.
+  - tweak: Speedloaders and traditional ammo boxes can now be restocked.
+  - bugfix: Security bots now react to being shot.
+  MrPerson:
+  - rscadd: Added a preference toggle for hearing instruments play as suggested by
+      PKPenguin321.
+  Pennwick:
+  - rscadd: Added a buildable Chem Master, board is in Circuit Imprinter.
+  Wjohnston:
+  - bugfix: Finally fixed the gulag shuttle missing a redemption console.
+2015-03-30:
+  AnturK:
+  - rscadd: 'Added new wizard spell : Lightning Bolt'
+  Dannno:
+  - rscadd: Added a hammer and gavel. Court is now in session.
+  Iamgoofball:
+  - rscadd: You can now *flip.
+  - experiment: Objects now spin when thrown. Please report any oddities.
+  RemieRichards:
+  - rscadd: Monkeys can now wear ANY mask, not just ones they had specific icons for.
+  - rscadd: Monkeys can now wear HATS, That's right, Monkey Hats!
+  Szunti:
+  - rscadd: Mining mobs vision adapted to darkness of the asteroids.
+  phil235:
+  - tweak: All slimes are now simple animals instead of carbon life forms.
+  - rscdel: Remove crit status from brain and slimes.
+  - rscadd: Simple animal aliens can now see in the dark like regular aliens.
+  pudl:
+  - rscadd: The detective's forensic scanner has been resprited.
+  - rscadd: So has the cargo tagger.
+  - rscadd: And the RPED.
+  tedward1337:
+  - rscadd: Admins now have a button to use Bluespace Artillery at their will.
+  xxalpha:
+  - tweak: You will no longer be slowed down by anything if you use a jetpack in zero
+      gravity.
+  - rscadd: Engineering hardsuits come with an inbuilt jetpack. Requires an internals
+      tank in suit storage and is slower than a normal jetpack.

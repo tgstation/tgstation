@@ -22,7 +22,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
 	var/linked_dirs = 0 //bitflag
 	var/node = FALSE //used for sprites display
-	var/cable_layer = CABLE_LAYER_2			//bitflag
+	var/cable_layer = CABLE_LAYER_2 //bitflag
 	var/machinery_layer = MACHINERY_LAYER_1 //bitflag
 	var/datum/powernet/powernet
 
@@ -46,7 +46,15 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	GLOB.cable_list += src //add it to the global cable list
 	Connect_cable()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
+/obj/structure/cable/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
+	SIGNAL_HANDLER
+
+	if(avail())
+		king.apply_damage(10)
+		playsound(king, 'sound/effects/sparks2.ogg', 100, TRUE)
+	deconstruct()
 
 ///Set the linked indicator bitflags
 /obj/structure/cable/proc/Connect_cable(clear_before_updating = FALSE)
@@ -87,9 +95,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
-				C.update_icon()
+				C.update_appearance()
 
-	update_icon()
+	update_appearance()
 
 ///Clear the linked indicator bitflags
 /obj/structure/cable/proc/Disconnect_cable()
@@ -100,16 +108,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 			for(var/obj/structure/cable/C in TB)
 				if(cable_layer & C.cable_layer)
 					C.linked_dirs &= ~inverse
-					C.update_icon()
+					C.update_appearance()
 
-/obj/structure/cable/Destroy()					// called when a cable is deleted
+/obj/structure/cable/Destroy() // called when a cable is deleted
 	Disconnect_cable()
 
 	if(powernet)
-		cut_cable_from_powernet()				// update the powernets
-	GLOB.cable_list -= src							//remove it from global cable list
+		cut_cable_from_powernet() // update the powernets
+	GLOB.cable_list -= src //remove it from global cable list
 
-	return ..()									// then go ahead and delete the cable
+	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -123,46 +131,59 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
 		icon_state = "l[cable_layer]-noconnection"
-	else
-		var/list/dir_icon_list = list()
-		for(var/check_dir in GLOB.cardinals)
-			if(linked_dirs & check_dir)
-				dir_icon_list += "[check_dir]"
-		var/dir_string = dir_icon_list.Join("-")
-		if(dir_icon_list.len > 1)
-			for(var/obj/O in loc)
-				if(GLOB.wire_node_generating_types[O.type])
+		return ..()
+
+	var/list/dir_icon_list = list()
+	for(var/check_dir in GLOB.cardinals)
+		if(linked_dirs & check_dir)
+			dir_icon_list += "[check_dir]"
+	var/dir_string = dir_icon_list.Join("-")
+	if(dir_icon_list.len > 1)
+		for(var/obj/O in loc)
+			if(GLOB.wire_node_generating_types[O.type])
+				dir_string = "[dir_string]-node"
+				break
+			else if(istype(O, /obj/machinery/power))
+				var/obj/machinery/power/P = O
+				if(P.should_have_node())
 					dir_string = "[dir_string]-node"
 					break
-				else if(istype(O, /obj/machinery/power))
-					var/obj/machinery/power/P = O
-					if(P.should_have_node())
-						dir_string = "[dir_string]-node"
-						break
-		dir_string = "l[cable_layer]-[dir_string]"
-		icon_state = dir_string
+	dir_string = "l[cable_layer]-[dir_string]"
+	icon_state = dir_string
+	return ..()
+
+
+/obj/structure/cable/examine(mob/user)
+	. = ..()
+	if(isobserver(user))
+		. += get_power_info()
 
 
 /obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
 	var/turf/T = get_turf(src)
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
 	if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if (shock(user, 50))
 			return
-		user.visible_message("<span class='notice'>[user] cuts the cable.</span>", "<span class='notice'>You cut the cable.</span>")
+		user.visible_message(span_notice("[user] cuts the cable."), span_notice("You cut the cable."))
 		investigate_log("was cut by [key_name(usr)] in [AREACOORD(src)]", INVESTIGATE_WIRES)
 		deconstruct()
 		return
 
 	else if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(powernet && (powernet.avail > 0))		// is it powered?
-			to_chat(user, "<span class='danger'>Total power: [DisplayPower(powernet.avail)]\nLoad: [DisplayPower(powernet.load)]\nExcess power: [DisplayPower(surplus())]</span>")
-		else
-			to_chat(user, "<span class='danger'>The cable is not powered.</span>")
+		to_chat(user, get_power_info())
 		shock(user, 5, 0.2)
 
 	add_fingerprint(user)
+
+
+/obj/structure/cable/proc/get_power_info()
+	if(powernet?.avail > 0)
+		return span_danger("Total power: [display_power(powernet.avail)]\nLoad: [display_power(powernet.load)]\nExcess power: [display_power(surplus())]")
+	else
+		return span_danger("The cable is not powered.")
+
 
 // Items usable on a cable :
 //   - Wirecutters : cut it duh !
@@ -240,7 +261,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 
 	var/inverse_dir = (!direction)? 0 : turn(direction, 180) //flip the direction, to match with the source position on its turf
 
-	var/turf/TB  = get_step(src, direction)
+	var/turf/TB = get_step(src, direction)
 
 	for(var/obj/structure/cable/C in TB)
 		if(!C)
@@ -332,13 +353,12 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		var/datum/powernet/newPN = new()// creates a new powernet...
 		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
-//Makes a new network for the cable and propgates it.
-//If it finds another network in the process, aborts and uses that one and propagates off of it instead
+//Makes a new network for the cable and propgates it. If we already have one, just die
 /obj/structure/cable/proc/propagate_if_no_network()
 	if(powernet)
 		return
 	var/datum/powernet/newPN = new()
-	propagate_network(src, newPN, TRUE)
+	propagate_network(src, newPN)
 
 // cut the cable's powernet at this cable and updates the powergrid
 /obj/structure/cable/proc/cut_cable_from_powernet(remove = TRUE)
@@ -379,15 +399,16 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Definitions
 ////////////////////////////////
 
-GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restraints", /obj/item/restraints/handcuffs/cable, 15), new/datum/stack_recipe("multilayer cable", /obj/structure/cable/multilayer, 1), new/datum/stack_recipe("multiZ cable", /obj/structure/cable/multilayer/multiz, 1)))
+#define CABLE_RESTRAINTS_COST 15
 
 /obj/item/stack/cable_coil
 	name = "cable coil"
-	custom_price = 75
+	custom_price = PAYCHECK_PRISONER * 0.8
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
 	inhand_icon_state = "coil"
+	base_icon_state = "coil"
 	novariants = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -400,70 +421,79 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron=10, /datum/material/glass=5)
+	mats_per_unit = list(/datum/material/iron=10, /datum/material/glass=5)
 	flags_1 = CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb = list("whipped", "lashed", "disciplined", "flogged")
+	attack_verb_continuous = list("whips", "lashes", "disciplines", "flogs")
+	attack_verb_simple = list("whip", "lash", "discipline", "flog")
 	singular_name = "cable piece"
 	full_w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/copper = 2) //2 copper per cable in the coil
 	usesound = 'sound/items/deconstruct.ogg'
+	cost = 1
+	source = /datum/robot_energy_storage/wire
 	var/cable_color = "yellow"
 	var/obj/structure/cable/target_type = /obj/structure/cable
 	var/target_layer = CABLE_LAYER_2
 
-/obj/item/stack/cable_coil/Initialize(mapload, new_amount = null)
+/obj/item/stack/cable_coil/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
-	update_icon()
-	recipes = GLOB.cable_coil_recipes
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
+	update_appearance()
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	. = ..()
 	. += "<b>Ctrl+Click</b> to change the layer you are placing on."
 
+/obj/item/stack/cable_coil/update_name()
+	. = ..()
+	name = "cable [(amount < 3) ? "piece" : "coil"]"
+
+/obj/item/stack/cable_coil/update_desc()
+	. = ..()
+	desc = "A [(amount < 3) ? "piece" : "coil"] of insulated power cable."
+
 /obj/item/stack/cable_coil/update_icon_state()
 	if(novariants)
 		return
-	icon_state = "[initial(icon_state)][amount < 3 ? amount : ""]"
-	var/how_many_things = amount < 3 ? "piece" : "coil"
-	name = "cable [how_many_things]"
-	desc = "A [how_many_things] of insulated power cable."
+	. = ..()
+	icon_state = "[base_icon_state][amount < 3 ? amount : ""]"
 
 /obj/item/stack/cable_coil/suicide_act(mob/user)
 	if(locate(/obj/structure/chair/stool) in get_turf(user))
-		user.visible_message("<span class='suicide'>[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is making a noose with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
-		user.visible_message("<span class='suicide'>[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+		user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return(OXYLOSS)
 
 /obj/item/stack/cable_coil/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+	if(!ISADVANCEDTOOLUSER(user))
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
-GLOBAL_LIST(cable_radial_layer_list)
-
-/obj/item/stack/cable_coil/CtrlClick(mob/living/user)
-	if(loc!=user)
-		return ..()
+/obj/item/stack/cable_coil/attack_self(mob/living/user)
 	if(!user)
 		return
-	if(!GLOB.cable_radial_layer_list)
-		GLOB.cable_radial_layer_list = list(
-		"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
-		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
-		"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
-		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable")
-		)
-	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+
+	var/image/restraints_icon = image(icon = 'icons/obj/restraints.dmi', icon_state = "cuff")
+	restraints_icon.maptext = MAPTEXT("<span [amount >= CABLE_RESTRAINTS_COST ? "" : "style='color: red'"]>[CABLE_RESTRAINTS_COST]</span>")
+
+	var/list/radial_menu = list(
+	"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
+	"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
+	"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
+	"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
+	"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable"),
+	"Cable restraints" = restraints_icon
+	)
+
+	var/layer_result = show_radial_menu(user, src, radial_menu, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(layer_result)
@@ -498,7 +528,13 @@ GLOBAL_LIST(cable_radial_layer_list)
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
 			novariants = TRUE
-	update_icon()
+		if("Cable restraints")
+			if (amount >= CABLE_RESTRAINTS_COST)
+				if(use(CABLE_RESTRAINTS_COST))
+					var/obj/item/restraints/handcuffs/cable/restraints = new
+					restraints.color = color
+					user.put_in_hands(restraints)
+	update_appearance()
 
 
 ///////////////////////////////////
@@ -512,7 +548,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	var/obj/item/bodypart/affecting = H.get_bodypart(check_zone(user.zone_selected))
 	if(affecting && affecting.status == BODYPART_ROBOTIC)
 		if(user == H)
-			user.visible_message("<span class='notice'>[user] starts to fix some of the wires in [H]'s [affecting.name].</span>", "<span class='notice'>You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
+			user.visible_message(span_notice("[user] starts to fix some of the wires in [H]'s [affecting.name]."), span_notice("You start fixing some of the wires in [H == user ? "your" : "[H]'s"] [affecting.name]."))
 			if(!do_mob(user, H, 50))
 				return
 		if(item_heal_robotic(H, user, 0, 15))
@@ -520,14 +556,6 @@ GLOBAL_LIST(cable_radial_layer_list)
 		return
 	else
 		return ..()
-
-//add cables to the stack
-/obj/item/stack/cable_coil/proc/give(extra)
-	if(amount + extra > max_amount)
-		amount = max_amount
-	else
-		amount += extra
-	update_icon()
 
 
 ///////////////////////////////////////////////
@@ -539,21 +567,21 @@ GLOBAL_LIST(cable_radial_layer_list)
 	if(!isturf(user.loc))
 		return
 
-	if(!isturf(T) || T.intact || !T.can_have_cabling())
-		to_chat(user, "<span class='warning'>You can only lay cables on catwalks and plating!</span>")
+	if(!isturf(T) || T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !T.can_have_cabling())
+		to_chat(user, span_warning("You can only lay cables on catwalks and plating!"))
 		return
 
 	if(get_amount() < 1) // Out of cable
-		to_chat(user, "<span class='warning'>There is no cable left!</span>")
+		to_chat(user, span_warning("There is no cable left!"))
 		return
 
 	if(get_dist(T,user) > 1) // Too far
-		to_chat(user, "<span class='warning'>You can't lay cable at a place that far away!</span>")
+		to_chat(user, span_warning("You can't lay cable at a place that far away!"))
 		return
 
 	for(var/obj/structure/cable/C in T)
 		if(C.cable_layer & target_layer)
-			to_chat(user, "<span class='warning'>There's already a cable at that position!</span>")
+			to_chat(user, span_warning("There's already a cable at that position!"))
 			return
 
 	var/obj/structure/cable/C = new target_type(T)
@@ -570,7 +598,6 @@ GLOBAL_LIST(cable_radial_layer_list)
 
 	if(C.shock(user, 50))
 		if(prob(50)) //fail
-			new /obj/item/stack/cable_coil(get_turf(C), 1)
 			C.deconstruct()
 
 	return C
@@ -581,20 +608,18 @@ GLOBAL_LIST(cable_radial_layer_list)
 /obj/item/stack/cable_coil/cut
 	amount = null
 	icon_state = "coil2"
+	worn_icon_state = "coil"
+	base_icon_state = "coil2"
 
-/obj/item/stack/cable_coil/cut/Initialize(mapload)
-	. = ..()
+/obj/item/stack/cable_coil/cut/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	if(!amount)
 		amount = rand(1,2)
-	pixel_x = rand(-2,2)
-	pixel_y = rand(-2,2)
-	update_icon()
+	. = ..()
+	pixel_x = base_pixel_x + rand(-2, 2)
+	pixel_y = base_pixel_y + rand(-2, 2)
+	update_appearance()
 
-/obj/item/stack/cable_coil/cyborg
-	is_cyborg = 1
-	custom_materials = list()
-	cost = 1
-
+#undef CABLE_RESTRAINTS_COST
 #undef UNDER_SMES
 #undef UNDER_TERMINAL
 
@@ -635,18 +660,14 @@ GLOBAL_LIST(cable_radial_layer_list)
 	vis_flags = VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER|VIS_UNDERLAY
 
 /obj/structure/cable/multilayer/update_icon_state()
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /obj/structure/cable/multilayer/update_icon()
-
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
-
 	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
-
 	cable_node_3?.alpha = cable_layer & CABLE_LAYER_3 ? 255 : 0
-
 	return ..()
 
 /obj/structure/cable/multilayer/Initialize(mapload)
@@ -655,7 +676,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
-			C.deconstruct()						// remove adversary cable
+			C.deconstruct() // remove adversary cable
 	if(!mapload)
 		auto_propagate_cut_cable(src)
 
@@ -667,35 +688,35 @@ GLOBAL_LIST(cable_radial_layer_list)
 	vis_contents += cable_node_2
 	cable_node_3 = new /obj/effect/node/layer3()
 	vis_contents += cable_node_3
-	update_icon()
+	update_appearance()
 
-/obj/structure/cable/multilayer/Destroy()					// called when a cable is deleted
+/obj/structure/cable/multilayer/Destroy() // called when a cable is deleted
 	QDEL_NULL(machinery_node)
 	QDEL_NULL(cable_node_1)
 	QDEL_NULL(cable_node_2)
 	QDEL_NULL(cable_node_3)
-	return ..()									// then go ahead and delete the cable
+	return ..() // then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)
 	. += ..()
-	. += "<span class='notice'>L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].</span>"
-	. += "<span class='notice'>L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].</span>"
-	. += "<span class='notice'>L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].</span>"
-	. += "<span class='notice'>M:[machinery_layer & MACHINERY_LAYER_1 ? "Connect" : "Disconnect"].</span>"
+	. += span_notice("L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].")
+	. += span_notice("L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].")
+	. += span_notice("L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].")
+	. += span_notice("M:[machinery_layer & MACHINERY_LAYER_1 ? "Connect" : "Disconnect"].")
 
 GLOBAL_LIST(hub_radial_layer_list)
 
 /obj/structure/cable/multilayer/attack_robot(mob/user)
 	attack_hand(user)
 
-/obj/structure/cable/multilayer/attack_hand(mob/living/user)
+/obj/structure/cable/multilayer/attack_hand(mob/living/user, list/modifiers)
 	if(!user)
 		return
 	if(!GLOB.hub_radial_layer_list)
 		GLOB.hub_radial_layer_list = list(
-			"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
-			"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
-			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
+			"Layer 1" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-red"),
+			"Layer 2" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-yellow"),
+			"Layer 3" = image(icon = 'icons/hud/radial.dmi', icon_state = "coil-blue"),
 			"Machinery" = image(icon = 'icons/obj/power.dmi', icon_state = "smes")
 			)
 
@@ -706,16 +727,16 @@ GLOBAL_LIST(hub_radial_layer_list)
 	switch(layer_result)
 		if("Layer 1")
 			CL = CABLE_LAYER_1
-			to_chat(user, "<span class='warning'>You toggle L1 connection.</span>")
+			to_chat(user, span_warning("You toggle L1 connection."))
 		if("Layer 2")
 			CL = CABLE_LAYER_2
-			to_chat(user, "<span class='warning'>You toggle L2 connection.</span>")
+			to_chat(user, span_warning("You toggle L2 connection."))
 		if("Layer 3")
 			CL = CABLE_LAYER_3
-			to_chat(user, "<span class='warning'>You toggle L3 connection.</span>")
+			to_chat(user, span_warning("You toggle L3 connection."))
 		if("Machinery")
 			machinery_layer ^= MACHINERY_LAYER_1
-			to_chat(user, "<span class='warning'>You toggle machinery connection.</span>")
+			to_chat(user, span_warning("You toggle machinery connection."))
 
 	cut_cable_from_powernet(FALSE)
 
@@ -730,8 +751,8 @@ GLOBAL_LIST(hub_radial_layer_list)
 /obj/structure/cable/multilayer/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(!user.IsAdvancedToolUser())
-		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+	if(!ISADVANCEDTOOLUSER(user))
+		to_chat(user, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
@@ -742,11 +763,13 @@ GLOBAL_LIST(hub_radial_layer_list)
 	var/turf/T = get_turf(src)
 	for(var/obj/structure/cable/C in T.contents - src)
 		if(C.cable_layer & cable_layer)
-			C.deconstruct()						// remove adversary cable
-	auto_propagate_cut_cable(src)				// update the powernets
+			C.deconstruct() // remove adversary cable
+	auto_propagate_cut_cable(src) // update the powernets
 
 /obj/structure/cable/multilayer/CtrlClick(mob/living/user)
-	to_chat(user, "<span class='warning'>You pust reset button.</span>")
+	to_chat(user, span_warning("You push the reset button."))
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
 
-
+// This is a mapping aid. In order for this to be placed on a map and function, all three layers need to have their nodes active
+/obj/structure/cable/multilayer/connected
+		cable_layer = CABLE_LAYER_1 | CABLE_LAYER_2 | CABLE_LAYER_3

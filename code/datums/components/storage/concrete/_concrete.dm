@@ -92,12 +92,14 @@
 	return FALSE
 
 /datum/component/storage/concrete/proc/on_contents_del(datum/source, atom/A)
+	SIGNAL_HANDLER
 	var/atom/real_location = parent
 	if(A in real_location)
 		usr = null
 		remove_from_storage(A, null)
 
 /datum/component/storage/concrete/proc/on_deconstruct(datum/source, disassembled)
+	SIGNAL_HANDLER
 	if(drop_all_on_deconstruct)
 		do_quick_empty()
 
@@ -122,11 +124,12 @@
 	var/list/seeing_mobs = can_see_contents()
 	for(var/mob/M in seeing_mobs)
 		M.client.screen -= AM
-	if(ismob(parent.loc) && isitem(AM))
-		var/obj/item/I = AM
-		var/mob/M = parent.loc
-		I.dropped(M, TRUE)
-		I.item_flags &= ~IN_STORAGE
+	if(isitem(AM))
+		var/obj/item/removed_item = AM
+		removed_item.item_flags &= ~IN_STORAGE
+		if(ismob(parent.loc))
+			var/mob/carrying_mob = parent.loc
+			removed_item.dropped(carrying_mob, TRUE)
 	if(new_location)
 		//Reset the items values
 		_removal_reset(AM)
@@ -139,7 +142,7 @@
 	refresh_mob_views()
 	if(isobj(parent))
 		var/obj/O = parent
-		O.update_icon()
+		O.update_appearance()
 	return TRUE
 
 /datum/component/storage/concrete/proc/slave_can_insert_object(datum/component/storage/slave, obj/item/I, stop_messages = FALSE, mob/M)
@@ -150,7 +153,7 @@
 	if(. && !prevent_warning)
 		slave.mob_item_insertion_feedback(usr, M, I)
 
-/datum/component/storage/concrete/handle_item_insertion(obj/item/I, prevent_warning = FALSE, mob/M, datum/component/storage/remote)		//Remote is null or the slave datum
+/datum/component/storage/concrete/handle_item_insertion(obj/item/I, prevent_warning = FALSE, mob/M, datum/component/storage/remote) //Remote is null or the slave datum
 	var/datum/component/storage/concrete/master = master()
 	var/atom/parent = src.parent
 	var/moved = FALSE
@@ -160,7 +163,7 @@
 		if(!M.temporarilyRemoveItemFromInventory(I))
 			return FALSE
 		else
-			moved = TRUE			//At this point if the proc fails we need to manually move the object back to the turf/mob/whatever.
+			moved = TRUE //At this point if the proc fails we need to manually move the object back to the turf/mob/whatever.
 	if(I.pulledby)
 		I.pulledby.stop_pulling()
 	if(silent)
@@ -195,7 +198,7 @@
 /datum/component/storage/concrete/update_icon()
 	if(isobj(parent))
 		var/obj/O = parent
-		O.update_icon()
+		O.update_appearance()
 	for(var/i in slaves)
 		var/datum/component/storage/slave = i
 		slave.update_icon()

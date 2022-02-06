@@ -20,18 +20,23 @@
 	return ..()
 
 /datum/component/tactical/proc/modify(obj/item/source, mob/user, slot)
+	SIGNAL_HANDLER
+
 	if(allowed_slot && slot != allowed_slot)
 		unmodify()
 		return
 
 	var/obj/item/master = parent
 	var/image/I = image(icon = master.icon, icon_state = master.icon_state, loc = user)
+	I.plane = GAME_PLANE_FOV_HIDDEN
 	I.copy_overlays(master)
 	I.override = TRUE
 	source.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "sneaking_mission", I)
 	I.layer = ABOVE_MOB_LAYER
 
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
 	var/obj/item/master = source || parent
 	if(!user)
 		if(!ismob(master.loc))

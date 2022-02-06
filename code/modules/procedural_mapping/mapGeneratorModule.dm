@@ -105,17 +105,16 @@
 
 //Checks and Rejects dense turfs
 /datum/map_generator_module/proc/checkPlaceAtom(turf/T)
-	. = 1
 	if(!T)
-		return 0
+		return FALSE
 	if(T.density)
-		. = 0
+		return FALSE
 	for(var/atom/A in T)
 		if(A.density)
-			. = 0
-			break
+			return FALSE
 	if(!allowAtomsOnSpace && (isspaceturf(T)))
-		. = 0
+		return FALSE
+	return TRUE
 
 
 ///////////////////////////////////////////////////////////

@@ -1,4 +1,4 @@
-//	crashedship / packer ship
+// crashedship / packer ship
 
 //Areas
 
@@ -23,7 +23,7 @@
 	requires_power = TRUE
 
 
-//	crashedship items
+// crashedship items
 
 /obj/item/paper/fluff/ruins/crashedship/scribbled
 	name = "scribbled note"

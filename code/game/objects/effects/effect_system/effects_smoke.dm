@@ -8,11 +8,12 @@
 	icon_state = "smoke"
 	pixel_x = -32
 	pixel_y = -32
-	opacity = 0
+	opacity = FALSE
+	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	animate_movement = 0
+	animate_movement = FALSE
 	var/amount = 4
 	var/lifetime = 5
 	var/opaque = 1 //whether the smoke can block the view when in enough amount
@@ -24,13 +25,13 @@
 	if(frames == 0)
 		frames = 1 //We will just assume that by 0 frames, the coder meant "during one frame".
 	var/step = alpha / frames
-	for(var/i = 0, i < frames, i++)
+	for(var/i in 1 to frames)
 		alpha -= step
 		if(alpha < 160)
 			set_opacity(0) //if we were blocking view, we aren't now because we're fading out
 		stoplag()
 
-/obj/effect/particle_effect/smoke/Initialize()
+/obj/effect/particle_effect/smoke/Initialize(mapload)
 	. = ..()
 	create_reagents(500)
 	START_PROCESSING(SSobj, src)
@@ -49,23 +50,23 @@
 	lifetime--
 	if(lifetime < 1)
 		kill_smoke()
-		return 0
+		return FALSE
 	for(var/mob/living/L in range(0,src))
 		smoke_mob(L)
-	return 1
+	return TRUE
 
 /obj/effect/particle_effect/smoke/proc/smoke_mob(mob/living/carbon/C)
 	if(!istype(C))
-		return 0
+		return FALSE
 	if(lifetime<1)
-		return 0
+		return FALSE
 	if(C.internal != null || C.has_smoke_protection())
-		return 0
+		return FALSE
 	if(C.smoke_delay)
-		return 0
+		return FALSE
 	C.smoke_delay++
 	addtimer(CALLBACK(src, .proc/remove_smoke_delay, C), 10)
-	return 1
+	return TRUE
 
 /obj/effect/particle_effect/smoke/proc/remove_smoke_delay(mob/living/carbon/C)
 	if(C)
@@ -76,7 +77,7 @@
 	if(!t_loc)
 		return
 	var/list/newsmokes = list()
-	for(var/turf/T in t_loc.GetAtmosAdjacentTurfs())
+	for(var/turf/T in t_loc.get_atmos_adjacent_turfs())
 		var/obj/effect/particle_effect/smoke/foundsmoke = locate() in T //Don't spread smoke where there's already smoke!
 		if(foundsmoke)
 			continue
@@ -125,18 +126,26 @@
 /obj/effect/particle_effect/smoke/bad
 	lifetime = 8
 
+/obj/effect/particle_effect/smoke/bad/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = .proc/on_entered,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/effect/particle_effect/smoke/bad/smoke_mob(mob/living/carbon/M)
-	if(..())
+	. = ..()
+	if(.)
 		M.drop_all_held_items()
 		M.adjustOxyLoss(1)
 		M.emote("cough")
-		return 1
+		return TRUE
 
-/obj/effect/particle_effect/smoke/bad/Crossed(atom/movable/AM, oldloc)
-	. = ..()
-	if(istype(AM, /obj/projectile/beam))
-		var/obj/projectile/beam/B = AM
-		B.damage = (B.damage/2)
+/obj/effect/particle_effect/smoke/bad/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	if(istype(arrived, /obj/projectile/beam))
+		var/obj/projectile/beam/beam = arrived
+		beam.damage *= 0.5
 
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad
@@ -148,7 +157,7 @@
 /obj/effect/particle_effect/smoke/freezing
 	name = "nanofrost smoke"
 	color = "#B2FFFF"
-	opaque = 0
+	opaque = FALSE
 
 /datum/effect_system/smoke_spread/freezing
 	effect_type = /obj/effect/particle_effect/smoke/freezing
@@ -164,7 +173,7 @@
 			var/datum/gas_mixture/G = T.air
 			if(!distcheck || get_dist(T, location) < blast) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
 				G.temperature = temperature
-			T.air_update_turf()
+			T.air_update_turf(FALSE, FALSE)
 			for(var/obj/effect/hotspot/H in T)
 				qdel(H)
 			var/list/G_gases = G.gases
@@ -177,10 +186,10 @@
 			for(var/obj/machinery/atmospherics/components/unary/U in T)
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 					U.welded = TRUE
-					U.update_icon()
-					U.visible_message("<span class='danger'>[U] is frozen shut!</span>")
+					U.update_appearance()
+					U.visible_message(span_danger("[U] is frozen shut!"))
 		for(var/mob/living/L in T)
-			L.ExtinguishMob()
+			L.extinguish_mob()
 		for(var/obj/item/Item in T)
 			Item.extinguish()
 
@@ -226,46 +235,48 @@
 
 
 /obj/effect/particle_effect/smoke/chem/process()
-	if(..())
+	. = ..()
+	if(.)
 		var/turf/T = get_turf(src)
 		var/fraction = 1/initial(lifetime)
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
 				continue
+			if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(AM, TRAIT_T_RAY_VISIBLE))
+				continue
 			reagents.expose(AM, TOUCH, fraction)
 
 		reagents.expose(T, TOUCH, fraction)
-		return 1
+		return TRUE
 
 /obj/effect/particle_effect/smoke/chem/smoke_mob(mob/living/carbon/M)
 	if(lifetime<1)
-		return 0
+		return FALSE
 	if(!istype(M))
-		return 0
+		return FALSE
 	var/mob/living/carbon/C = M
 	if(C.internal != null || C.has_smoke_protection())
-		return 0
+		return FALSE
 	var/fraction = 1/initial(lifetime)
 	reagents.copy_to(C, fraction*reagents.total_volume)
 	reagents.expose(M, INGEST, fraction)
-	return 1
+	return TRUE
 
 
 
 /datum/effect_system/smoke_spread/chem
-	var/obj/chemholder
+	/// Evil evil hack so we have something to "hold" our reagents
+	var/atom/movable/chem_holder/chemholder
 	effect_type = /obj/effect/particle_effect/smoke/chem
 
 /datum/effect_system/smoke_spread/chem/New()
 	..()
-	chemholder = new /obj()
-	var/datum/reagents/R = new/datum/reagents(500)
-	chemholder.reagents = R
-	R.my_atom = chemholder
+	chemholder = new()
+	//This is a safety for now to prevent smoke generating more smoke as the smoke reagents react in the smoke. This is prevented naturally from happening even if this is off, but I want to be sure that any edge cases are prevented before I get a chance to rework smoke reactions (specifically adding water or reacting away stabilizing agent in the middle of it).
+	chemholder.create_reagents(500, REAGENT_HOLDER_INSTANT_REACT)
 
 /datum/effect_system/smoke_spread/chem/Destroy()
-	qdel(chemholder)
-	chemholder = null
+	QDEL_NULL(chemholder)
 	return ..()
 
 /datum/effect_system/smoke_spread/chem/set_up(datum/reagents/carry = null, radius = 1, loca, silent = FALSE)
@@ -284,7 +295,7 @@
 			contained = "\[[contained]\]"
 
 		var/where = "[AREACOORD(location)]"
-		if(carry.my_atom.fingerprintslast)
+		if(carry.my_atom?.fingerprintslast) //Some reagents don't have a my_atom in some cases
 			var/mob/M = get_mob_by_key(carry.my_atom.fingerprintslast)
 			var/more = ""
 			if(M)
@@ -330,3 +341,26 @@
 	smoke.effect_type = smoke_type
 	smoke.set_up(range, location)
 	smoke.start()
+
+/////////////////////////////////////////////
+// Bad Smoke (But Green)
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/bad/green
+	name = "green smoke"
+	color = "#00FF00"
+	opaque = FALSE
+
+/datum/effect_system/smoke_spread/bad/green
+	effect_type = /obj/effect/particle_effect/smoke/bad/green
+
+/////////////////////////////////////////////
+// Quick smoke
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/quick
+	lifetime = 1
+	opaque = FALSE
+
+/datum/effect_system/smoke_spread/quick
+	effect_type = /obj/effect/particle_effect/smoke/quick

@@ -8,24 +8,26 @@
 	lefthand_file = 'icons/mob/inhands/equipment/belt_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/belt_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
-	attack_verb = list("whipped", "lashed", "disciplined")
+	attack_verb_continuous = list("whips", "lashes", "disciplines")
+	attack_verb_simple = list("whip", "lash", "discipline")
 	max_integrity = 300
 	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
-	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
 /obj/item/storage/belt/update_overlays()
 	. = ..()
-	if(content_overlays)
-		for(var/obj/item/I in contents)
-			. += I.get_belt_overlay()
+	if(!content_overlays)
+		return
+	for(var/obj/item/I in contents)
+		. += I.get_belt_overlay()
 
-/obj/item/storage/belt/Initialize()
+/obj/item/storage/belt/Initialize(mapload)
 	. = ..()
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
@@ -34,9 +36,9 @@
 	inhand_icon_state = "utility"
 	worn_icon_state = "utility"
 	content_overlays = TRUE
-	custom_premium_price = 300
+	custom_premium_price = PAYCHECK_MEDIUM * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
-	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
+	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
@@ -66,7 +68,9 @@
 		/obj/item/construction/rcd,
 		/obj/item/pipe_dispenser,
 		/obj/item/inducer,
-		/obj/item/plunger
+		/obj/item/plunger,
+		/obj/item/airlock_painter,
+		/obj/item/pipe_painter
 		))
 
 /obj/item/storage/belt/utility/chief
@@ -76,43 +80,113 @@
 	inhand_icon_state = "utility_ce"
 	worn_icon_state = "utility_ce"
 
+/obj/item/storage/belt/utility/chief/full
+	preload = TRUE
+
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
-	new /obj/item/screwdriver/power(src)
-	new /obj/item/crowbar/power(src)
-	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
-	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src)
-	new /obj/item/extinguisher/mini(src)
-	new /obj/item/analyzer(src)
+	SSwardrobe.provide_type(/obj/item/screwdriver/power, src)
+	SSwardrobe.provide_type(/obj/item/crowbar/power, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool/experimental, src)//This can be changed if this is too much //It's been 5 years
+	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
+	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
+	SSwardrobe.provide_type(/obj/item/analyzer, src)
 	//much roomier now that we've managed to remove two tools
 
+/obj/item/storage/belt/utility/chief/full/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/screwdriver/power
+	to_preload += /obj/item/crowbar/power
+	to_preload += /obj/item/weldingtool/experimental
+	to_preload += /obj/item/multitool
+	to_preload += /obj/item/stack/cable_coil
+	to_preload += /obj/item/extinguisher/mini
+	to_preload += /obj/item/analyzer
+	return to_preload
+
 /obj/item/storage/belt/utility/full/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/wirecutters(src)
+	SSwardrobe.provide_type(/obj/item/screwdriver, src)
+	SSwardrobe.provide_type(/obj/item/wrench, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool, src)
+	SSwardrobe.provide_type(/obj/item/crowbar, src)
+	SSwardrobe.provide_type(/obj/item/wirecutters, src)
+	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
+
+/obj/item/storage/belt/utility/full/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/screwdriver
+	to_preload += /obj/item/wrench
+	to_preload += /obj/item/weldingtool
+	to_preload += /obj/item/crowbar
+	to_preload += /obj/item/wirecutters
+	to_preload += /obj/item/multitool
+	to_preload += /obj/item/stack/cable_coil
+	return to_preload
+
+/obj/item/storage/belt/utility/full/powertools
+	preload = FALSE
+
+/obj/item/storage/belt/utility/full/powertools/PopulateContents()
+	new /obj/item/screwdriver/power(src)
+	new /obj/item/crowbar/power(src)
+	new /obj/item/weldingtool/experimental(src)
 	new /obj/item/multitool(src)
+	new /obj/item/holosign_creator/atmos(src)
+	new /obj/item/extinguisher/mini(src)
+	new /obj/item/stack/cable_coil(src)
+
+/obj/item/storage/belt/utility/full/powertools/rcd/PopulateContents()
+	new /obj/item/screwdriver/power(src)
+	new /obj/item/crowbar/power(src)
+	new /obj/item/weldingtool/experimental(src)
+	new /obj/item/multitool(src)
+	new /obj/item/construction/rcd/loaded/upgraded(src)
+	new /obj/item/extinguisher/mini(src)
 	new /obj/item/stack/cable_coil(src)
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-	new /obj/item/weldingtool/largetank(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/wirecutters(src)
-	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src)
+	SSwardrobe.provide_type(/obj/item/screwdriver, src)
+	SSwardrobe.provide_type(/obj/item/wrench, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool/largetank, src)
+	SSwardrobe.provide_type(/obj/item/crowbar, src)
+	SSwardrobe.provide_type(/obj/item/wirecutters, src)
+	SSwardrobe.provide_type(/obj/item/multitool, src)
+	SSwardrobe.provide_type(/obj/item/stack/cable_coil, src)
 
+/obj/item/storage/belt/utility/full/engi/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/screwdriver
+	to_preload += /obj/item/wrench
+	to_preload += /obj/item/weldingtool/largetank
+	to_preload += /obj/item/crowbar
+	to_preload += /obj/item/wirecutters
+	to_preload += /obj/item/multitool
+	to_preload += /obj/item/stack/cable_coil
+	return to_preload
 
 /obj/item/storage/belt/utility/atmostech/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/wirecutters(src)
-	new /obj/item/t_scanner(src)
-	new /obj/item/extinguisher/mini(src)
+	SSwardrobe.provide_type(/obj/item/screwdriver, src)
+	SSwardrobe.provide_type(/obj/item/wrench, src)
+	SSwardrobe.provide_type(/obj/item/weldingtool, src)
+	SSwardrobe.provide_type(/obj/item/crowbar, src)
+	SSwardrobe.provide_type(/obj/item/wirecutters, src)
+	SSwardrobe.provide_type(/obj/item/t_scanner, src)
+	SSwardrobe.provide_type(/obj/item/extinguisher/mini, src)
+
+/obj/item/storage/belt/utility/atmostech/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/screwdriver
+	to_preload += /obj/item/wrench
+	to_preload += /obj/item/weldingtool
+	to_preload += /obj/item/crowbar
+	to_preload += /obj/item/wirecutters
+	to_preload += /obj/item/t_scanner
+	to_preload += /obj/item/extinguisher/mini
+	return to_preload
+
+/obj/item/storage/belt/utility/syndicate
+	preload = FALSE
 
 /obj/item/storage/belt/utility/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -167,6 +241,7 @@
 		/obj/item/retractor,
 		/obj/item/cautery,
 		/obj/item/hemostat,
+		/obj/item/blood_filter,
 		/obj/item/geiger_counter,
 		/obj/item/clothing/neck/stethoscope,
 		/obj/item/stamp,
@@ -188,15 +263,29 @@
 		/obj/item/stack/sticky_tape //surgical tape
 		))
 
+/obj/item/storage/belt/medical/paramedic
+	preload = TRUE
+
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
-	new /obj/item/sensor_device(src)
-	new /obj/item/pinpointer/crew/prox(src)
-	new /obj/item/stack/medical/gauze/twelve(src)
-	new /obj/item/reagent_containers/syringe(src)
-	new /obj/item/stack/medical/bone_gel(src)
-	new /obj/item/stack/sticky_tape/surgical(src)
-	new /obj/item/reagent_containers/glass/bottle/calomel(src)
-	update_icon()
+	SSwardrobe.provide_type(/obj/item/sensor_device, src)
+	SSwardrobe.provide_type(/obj/item/pinpointer/crew/prox, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/gauze/twelve, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
+	SSwardrobe.provide_type(/obj/item/stack/medical/bone_gel, src)
+	SSwardrobe.provide_type(/obj/item/stack/sticky_tape/surgical, src)
+	SSwardrobe.provide_type(/obj/item/reagent_containers/glass/bottle/formaldehyde, src)
+	update_appearance()
+
+/obj/item/storage/belt/medical/paramedic/get_types_to_preload()
+	var/list/to_preload = list() //Yes this is a pain. Yes this is the point
+	to_preload += /obj/item/sensor_device
+	to_preload += /obj/item/pinpointer/crew/prox
+	to_preload += /obj/item/stack/medical/gauze/twelve
+	to_preload += /obj/item/reagent_containers/syringe
+	to_preload += /obj/item/stack/medical/bone_gel
+	to_preload += /obj/item/stack/sticky_tape/surgical
+	to_preload += /obj/item/reagent_containers/glass/bottle/formaldehyde
+	return to_preload
 
 /obj/item/storage/belt/security
 	name = "security belt"
@@ -213,7 +302,6 @@
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/melee/baton,
-		/obj/item/melee/classic_baton,
 		/obj/item/grenade,
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
@@ -221,10 +309,10 @@
 		/obj/item/clothing/glasses,
 		/obj/item/ammo_casing/shotgun,
 		/obj/item/ammo_box,
-		/obj/item/reagent_containers/food/snacks/donut,
-		/obj/item/kitchen/knife/combat,
+		/obj/item/food/donut,
+		/obj/item/knife/combat,
 		/obj/item/flashlight/seclite,
-		/obj/item/melee/classic_baton/telescopic,
+		/obj/item/melee/baton/telescopic,
 		/obj/item/radio,
 		/obj/item/clothing/gloves,
 		/obj/item/restraints/legcuffs/bola,
@@ -236,8 +324,8 @@
 	new /obj/item/restraints/handcuffs(src)
 	new /obj/item/grenade/flashbang(src)
 	new /obj/item/assembly/flash/handheld(src)
-	new /obj/item/melee/baton/loaded(src)
-	update_icon()
+	new /obj/item/melee/baton/security/loaded(src)
+	update_appearance()
 
 /obj/item/storage/belt/security/webbing
 	name = "security webbing"
@@ -246,7 +334,7 @@
 	inhand_icon_state = "securitywebbing"
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = 900
+	custom_premium_price = PAYCHECK_HARD * 3
 
 /obj/item/storage/belt/security/webbing/ComponentInitialize()
 	. = ..()
@@ -291,7 +379,7 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/reagent_containers/food/drinks/bottle,
 		/obj/item/stack/medical,
-		/obj/item/kitchen/knife,
+		/obj/item/knife,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/gps,
 		/obj/item/storage/bag/ore,
@@ -304,7 +392,8 @@
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/stack/marker_beacon,
-		/obj/item/key/lasso
+		/obj/item/key/lasso,
+		/obj/item/skeleton_key
 		))
 
 
@@ -345,7 +434,7 @@
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
-		new /obj/item/soulstone(src)
+		new /obj/item/soulstone/mystic(src)
 
 /obj/item/storage/belt/soulstone/full/chappy/PopulateContents()
 	for(var/i in 1 to 6)
@@ -367,6 +456,13 @@
 		/obj/item/clothing/mask/luchador
 		))
 
+/obj/item/storage/belt/cummerbund
+	name = "cummerbund"
+	desc = "A pleated sash that pairs well with a suit jacket."
+	icon_state = "cummerbund"
+	inhand_icon_state = "cummerbund"
+	worn_icon_state = "cummerbund"
+
 /obj/item/storage/belt/military
 	name = "chest rig"
 	desc = "A set of tactical webbing worn by Syndicate boarding parties."
@@ -383,9 +479,9 @@
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
 
-/obj/item/storage/belt/military/snack/Initialize()
+/obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
-	var/sponsor = pick("DonkCo", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
+	var/sponsor = pick("Donk Co.", "Waffle Co.", "Roffle Co.", "Gorlax Marauders", "Tiger Cooperative")
 	desc = "A set of snack-tical webbing worn by athletes of the [sponsor] VR sports division."
 
 /obj/item/storage/belt/military/snack/ComponentInitialize()
@@ -394,7 +490,7 @@
 	STR.max_items = 6
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.set_holdable(list(
-		/obj/item/reagent_containers/food/snacks,
+		/obj/item/food,
 		/obj/item/reagent_containers/food/drinks
 		))
 
@@ -402,20 +498,20 @@
 	var/rig_snacks
 	while(contents.len <= amount)
 		rig_snacks = pick(list(
-		/obj/item/reagent_containers/food/snacks/candy,
+		/obj/item/food/candy,
 		/obj/item/reagent_containers/food/drinks/dry_ramen,
-		/obj/item/reagent_containers/food/snacks/chips,
-		/obj/item/reagent_containers/food/snacks/sosjerky,
-		/obj/item/reagent_containers/food/snacks/syndicake,
-		/obj/item/reagent_containers/food/snacks/spacetwinkie,
-		/obj/item/reagent_containers/food/snacks/cheesiehonkers,
-		/obj/item/reagent_containers/food/snacks/nachos,
-		/obj/item/reagent_containers/food/snacks/cheesynachos,
-		/obj/item/reagent_containers/food/snacks/cubannachos,
-		/obj/item/reagent_containers/food/snacks/nugget,
-		/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato,
-		/obj/item/reagent_containers/food/snacks/rofflewaffles,
-		/obj/item/reagent_containers/food/snacks/donkpocket,
+		/obj/item/food/chips,
+		/obj/item/food/sosjerky,
+		/obj/item/food/syndicake,
+		/obj/item/food/spacetwinkie,
+		/obj/item/food/cheesiehonkers,
+		/obj/item/food/nachos,
+		/obj/item/food/cheesynachos,
+		/obj/item/food/cubannachos,
+		/obj/item/food/nugget,
+		/obj/item/food/spaghetti/pastatomato,
+		/obj/item/food/rofflewaffles,
+		/obj/item/food/donkpocket,
 		/obj/item/reagent_containers/food/drinks/soda_cans/cola,
 		/obj/item/reagent_containers/food/drinks/soda_cans/space_mountain_wind,
 		/obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
@@ -463,6 +559,12 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
 
+/obj/item/storage/belt/military/assault/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/wt550m9/wtap = 2,
+		/obj/item/ammo_box/magazine/wt550m9 = 4,
+	), src)
+
 /obj/item/storage/belt/grenade
 	name = "grenadier belt"
 	desc = "A belt for holding grenades."
@@ -484,12 +586,12 @@
 		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
 		/obj/item/grenade/c4,
-		/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
-		/obj/item/reagent_containers/food/snacks/grown/firelemon
+		/obj/item/food/grown/cherry_bomb,
+		/obj/item/food/grown/firelemon
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
-	var/static/items_inside = list(
+	generate_items_inside(list(
 		/obj/item/grenade/flashbang = 1,
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/empgrenade = 1,
@@ -500,8 +602,8 @@
 		/obj/item/grenade/chem_grenade/facid = 1,
 		/obj/item/grenade/syndieminibomb = 2,
 		/obj/item/screwdriver = 1,
-		/obj/item/multitool = 1)
-	generate_items_inside(items_inside,src)
+		/obj/item/multitool = 1,
+	),src)
 
 
 /obj/item/storage/belt/wands
@@ -568,7 +670,7 @@
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding shotgun ammunition."
+	desc = "A bandolier for holding rifle and shotgun ammunition."
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
@@ -580,7 +682,8 @@
 	STR.max_combined_w_class = 18
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
-		/obj/item/ammo_casing/shotgun
+		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_casing/a762
 		))
 
 /obj/item/storage/belt/fannypack
@@ -590,7 +693,7 @@
 	inhand_icon_state = "fannypack_leather"
 	worn_icon_state = "fannypack_leather"
 	dying_key = DYE_REGISTRY_FANNYPACK
-	custom_price = 100
+	custom_price = PAYCHECK_ASSISTANT * 2
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -680,18 +783,18 @@
 /obj/item/storage/belt/sabre/examine(mob/user)
 	. = ..()
 	if(length(contents))
-		. += "<span class='notice'>Alt-click it to quickly draw the blade.</span>"
+		. += span_notice("Alt-click it to quickly draw the blade.")
 
 /obj/item/storage/belt/sabre/AltClick(mob/user)
-	if(!iscarbon(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]
-		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>")
+		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
 		user.put_in_hands(I)
-		update_icon()
+		update_appearance()
 	else
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_warning("[src] is empty!"))
 
 /obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = initial(inhand_icon_state)
@@ -701,10 +804,11 @@
 		icon_state += "-sabre"
 		inhand_icon_state += "-sabre"
 		worn_icon_state += "-sabre"
+	return ..()
 
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
-	update_icon()
+	update_appearance()
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
@@ -731,5 +835,6 @@
 		/obj/item/graft,
 		/obj/item/secateurs,
 		/obj/item/geneshears,
-		/obj/item/shovel/spade
+		/obj/item/shovel/spade,
+		/obj/item/gun/energy/floragun
 		))

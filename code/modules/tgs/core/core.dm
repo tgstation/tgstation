@@ -40,7 +40,7 @@
 		if(5)
 			api_datum = /datum/tgs_api/v5
 
-	var/datum/tgs_version/max_api_version = TgsMaximumAPIVersion();
+	var/datum/tgs_version/max_api_version = TgsMaximumApiVersion();
 	if(version.suite != null && version.minor != null && version.patch != null && version.deprecated_patch != null && version.deprefixed_parameter > max_api_version.deprefixed_parameter)
 		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
 		api_datum = /datum/tgs_api/latest
@@ -64,10 +64,10 @@
 		TGS_WRITE_GLOBAL(tgs, null)
 		TGS_ERROR_LOG("Failed to activate API!")
 
-/world/TgsMaximumAPIVersion()
+/world/TgsMaximumApiVersion()
 	return new /datum/tgs_version("5.x.x")
 
-/world/TgsMinimumAPIVersion()
+/world/TgsMinimumApiVersion()
 	return new /datum/tgs_version("3.2.x")
 
 /world/TgsInitializationComplete()

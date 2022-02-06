@@ -5,6 +5,8 @@
 
 	min_players = 10
 
+	dynamic_should_hijack = TRUE
+
 /datum/round_event_control/alien_infestation/canSpawnEvent()
 	. = ..()
 	if(!.)
@@ -15,7 +17,7 @@
 			return FALSE
 
 /datum/round_event/ghost_role/alien_infestation
-	announceWhen	= 400
+	announceWhen = 400
 
 	minimum_required = 1
 	role_name = "alien larva"
@@ -37,7 +39,7 @@
 			living_aliens = TRUE
 
 	if(living_aliens || fake)
-		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", 'sound/ai/aliens.ogg')
+		priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
 
 
 /datum/round_event/ghost_role/alien_infestation/spawn_role()
@@ -51,24 +53,29 @@
 				continue//no parent vent
 			//Stops Aliens getting stuck in small networks.
 			//See: Security, Virology
-			if(temp_vent_parent.other_atmosmch.len > 20)
+			if(temp_vent_parent.other_atmos_machines.len > 20)
 				vents += temp_vent
 
 	if(!vents.len)
 		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
 		return MAP_ERROR
 
-	var/list/candidates = get_candidates(ROLE_ALIEN, null, ROLE_ALIEN)
+	var/list/candidates = get_candidates(ROLE_ALIEN, ROLE_ALIEN)
 
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
 	while(spawncount > 0 && vents.len && candidates.len)
 		var/obj/vent = pick_n_take(vents)
-		var/client/C = pick_n_take(candidates)
-
+		var/client/candidate_client = pick_n_take(candidates)
+		var/datum/mind/candidate_mind = candidate_client.mob.mind
+		if(!candidate_mind)
+			continue
 		var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-		new_xeno.key = C.key
+		candidate_mind.transfer_to(new_xeno)
+		candidate_mind.set_assigned_role(SSjob.GetJobType(/datum/job/xenomorph))
+		candidate_mind.special_role = ROLE_ALIEN
+		new_xeno.move_into_vent(vent)
 
 		spawncount--
 		message_admins("[ADMIN_LOOKUPFLW(new_xeno)] has been made into an alien by an event.")

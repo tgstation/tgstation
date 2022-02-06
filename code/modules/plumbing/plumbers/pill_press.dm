@@ -3,6 +3,7 @@
 	name = "chemical press"
 	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
+
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch
@@ -23,21 +24,23 @@
 	var/pill_number = RANDOM_PILL_STYLE
 	///list of id's and icons for the pill selection of the ui
 	var/list/pill_styles
+	/// Currently selected patch style
+	var/patch_style = DEFAULT_PATCH_STYLE
+	/// List of available patch styles for UI
+	var/list/patch_styles
 	///list of products stored in the machine, so we dont have 610 pills on one tile
 	var/list/stored_products = list()
 	///max amount of pills allowed on our tile before we start storing them instead
 	var/max_floor_products = 10
 
-	ui_x = 300
-	ui_y = 227
-
 /obj/machinery/plumbing/pill_press/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>The [name] currently has [stored_products.len] stored. There needs to be less than [max_floor_products] on the floor to continue dispensing.</span>"
+	. += span_notice("The [name] currently has [stored_products.len] stored. There needs to be less than [max_floor_products] on the floor to continue dispensing.")
 
-/obj/machinery/plumbing/pill_press/Initialize(mapload, bolt)
+/obj/machinery/plumbing/pill_press/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt)
+
+	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 	//expertly copypasted from chemmasters
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
@@ -47,6 +50,14 @@
 		SL["id"] = x
 		SL["class_name"] = assets.icon_class_name("pill[x]")
 		pill_styles += list(SL)
+	var/datum/asset/spritesheet/simple/patches_assets = get_asset_datum(/datum/asset/spritesheet/simple/patches)
+	patch_styles = list()
+	for (var/raw_patch_style in PATCH_STYLE_LIST)
+		//adding class_name for use in UI
+		var/list/patch_style = list()
+		patch_style["style"] = raw_patch_style
+		patch_style["class_name"] = patches_assets.icon_class_name(raw_patch_style)
+		patch_styles += list(patch_style)
 
 /obj/machinery/plumbing/pill_press/process()
 	if(machine_stat & NOPOWER)
@@ -67,6 +78,7 @@
 			var/obj/item/reagent_containers/pill/patch/P = new(src)
 			reagents.trans_to(P, current_volume)
 			P.name = trim("[product_name] patch")
+			P.icon_state = patch_style
 			stored_products += P
 		else if (product == "bottle")
 			var/obj/item/reagent_containers/glass/bottle/P = new(src)
@@ -75,7 +87,9 @@
 			stored_products += P
 	if(stored_products.len)
 		var/pill_amount = 0
-		for(var/obj/item/reagent_containers/pill/P in loc)
+		for(var/thing in loc)
+			if(!istype(thing, /obj/item/reagent_containers/glass/bottle) && !istype(thing, /obj/item/reagent_containers/pill))
+				continue
 			pill_amount++
 			if(pill_amount >= max_floor_products) //too much so just stop
 				break
@@ -85,16 +99,16 @@
 			AM.forceMove(drop_location())
 
 
-/obj/machinery/plumbing/pill_press/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+/obj/machinery/plumbing/pill_press/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/simple/pills),
+		get_asset_datum(/datum/asset/spritesheet/simple/patches),
+	)
 
-/obj/machinery/plumbing/pill_press/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-		assets.send(user)
-		ui = new(user, src, ui_key, "ChemPress", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "ChemPress", name)
 		ui.open()
 
 /obj/machinery/plumbing/pill_press/ui_data(mob/user)
@@ -106,10 +120,13 @@
 	data["product"] = product
 	data["min_volume"] = min_volume
 	data["max_volume"] = max_volume
+	data["patch_style"] = patch_style
+	data["patch_styles"] = patch_styles
 	return data
 
 /obj/machinery/plumbing/pill_press/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	. = TRUE
 	switch(action)
@@ -128,3 +145,5 @@
 			else if (product == "bottle")
 				max_volume = max_bottle_volume
 			current_volume = clamp(current_volume, min_volume, max_volume)
+		if("change_patch_style")
+			patch_style = params["patch_style"]

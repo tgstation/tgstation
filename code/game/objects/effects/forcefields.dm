@@ -3,12 +3,12 @@
 	name = "FORCEWALL"
 	icon_state = "m_shield"
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = TRUE
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)
 
-/obj/effect/forcefield/Initialize()
+/obj/effect/forcefield/Initialize(mapload)
 	. = ..()
 	if(timeleft)
 		QDEL_IN(src, timeleft)
@@ -19,10 +19,15 @@
 /obj/effect/forcefield/cult
 	desc = "An unholy shield that blocks all attacks."
 	name = "glowing wall"
-	icon = 'icons/effects/cult_effects.dmi'
+	icon = 'icons/effects/cult/effects.dmi'
 	icon_state = "cultshield"
-	CanAtmosPass = ATMOS_PASS_NO
+	can_atmos_pass = ATMOS_PASS_NO
 	timeleft = 200
+
+/// A form of the cult forcefield that lasts permanently.
+/// Used on the Shuttle 667.
+/obj/effect/forcefield/cult/permanent
+	timeleft = 0
 
 ///////////Mimewalls///////////
 

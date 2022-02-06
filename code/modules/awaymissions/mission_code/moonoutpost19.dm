@@ -23,7 +23,6 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	poweralm = FALSE
 	ambientsounds = list('sound/ambience/ambimine.ogg')
 	icon_state = "awaycontent5"
 
@@ -33,7 +32,6 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	poweralm = FALSE
 	icon_state = "awaycontent6"
 
 //Papers

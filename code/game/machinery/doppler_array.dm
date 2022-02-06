@@ -5,10 +5,9 @@
 	desc = "A highly precise directional sensor array which measures the release of quants from decaying tachyons. The doppler shifting of the mirror-image formed by these quants can reveal the size, location and temporal affects of energetic disturbances within a large radius ahead of the array.\n"
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
+	base_icon_state = "tdoppler"
 	density = TRUE
 	verb_say = "states coldly"
-	ui_x = 500
-	ui_y = 225
 	var/cooldown = 10
 	var/next_announce = 0
 	var/max_dist = 150
@@ -19,14 +18,14 @@
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
 
-/obj/machinery/doppler_array/Initialize()
+/obj/machinery/doppler_array/Initialize(mapload)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/power_change)
 	printer_ready = world.time + PRINTER_TIMEOUT
-
-/obj/machinery/doppler_array/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
+	// Alt clicking when unwrenched does not rotate. (likely from UI not returning the mouse click)
+	// Also there is no sprite change for rotation dir, this shouldn't even have a rotate component tbh
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/RotationMessage))
 
 /datum/data/tachyon_record
 	name = "Log Recording"
@@ -36,11 +35,10 @@
 	var/factual_radius = list()
 	var/theory_radius = list()
 
-/obj/machinery/doppler_array/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/doppler_array/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "TachyonArray", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "TachyonArray", name)
 		ui.open()
 
 /obj/machinery/doppler_array/ui_data(mob/user)
@@ -64,7 +62,8 @@
 	return data
 
 /obj/machinery/doppler_array/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
@@ -75,7 +74,7 @@
 			records -= record
 			return TRUE
 		if("print_record")
-			var/datum/data/tachyon_record/record  = locate(params["ref"]) in records
+			var/datum/data/tachyon_record/record = locate(params["ref"]) in records
 			if(!records || !(record in records))
 				return
 			print(usr, record)
@@ -88,7 +87,7 @@
 		printer_ready = world.time + PRINTER_TIMEOUT
 		new /obj/item/paper/record_printout(loc, record)
 	else if(user)
-		to_chat(user, "<span class='warning'>[src] is busy right now.</span>")
+		to_chat(user, span_warning("[src] is busy right now."))
 
 /obj/item/paper/record_printout
 	name = "paper - Log Recording"
@@ -112,28 +111,28 @@
 			<li>Theoretical Outer Radius: [record.theory_radius["outer_radius"]]</li>
 			<li>Theoretical Shockwave Radius: [record.theory_radius["shockwave_radius"]]</li></ul>"}
 
-		update_icon()
+		update_appearance()
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
 		if(!anchored && !isinspace())
-			anchored = TRUE
-			power_change()
-			to_chat(user, "<span class='notice'>You fasten [src].</span>")
+			set_anchored(TRUE)
+			to_chat(user, span_notice("You fasten [src]."))
 		else if(anchored)
-			anchored = FALSE
-			power_change()
-			to_chat(user, "<span class='notice'>You unfasten [src].</span>")
+			set_anchored(FALSE)
+			to_chat(user, span_notice("You unfasten [src]."))
 		I.play_tool_sound(src)
 		return
 	return ..()
 
-/obj/machinery/doppler_array/proc/rot_message(mob/user)
-	to_chat(user, "<span class='notice'>You adjust [src]'s dish to face to the [dir2text(dir)].</span>")
+/obj/machinery/doppler_array/proc/RotationMessage(mob/user)
+	to_chat(user, span_notice("You adjust [src]'s dish to face to the [dir2text(dir)]."))
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 
 /obj/machinery/doppler_array/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 			took, orig_dev_range, orig_heavy_range, orig_light_range)
+	SIGNAL_HANDLER
+
 	if(machine_stat & NOPOWER)
 		return FALSE
 	var/turf/zone = get_turf(src)
@@ -144,12 +143,7 @@
 		return FALSE
 	next_announce = world.time + cooldown
 
-	var/distance = get_dist(epicenter, zone)
-	var/direct = get_dir(zone, epicenter)
-
-	if(distance > max_dist)
-		return FALSE
-	if(!(direct & dir))
+	if((get_dist(epicenter, zone) > max_dist) || !(get_dir(zone, epicenter) & dir))
 		return FALSE
 
 	var/datum/data/tachyon_record/R = new /datum/data/tachyon_record()
@@ -162,8 +156,9 @@
 	R.factual_radius["shockwave_radius"] = light_impact_range
 
 	var/list/messages = list("Explosive disturbance detected.",
-							 "Epicenter at: grid ([epicenter.x], [epicenter.y]). Temporal displacement of tachyons: [took] seconds.",
-							 "Factual: Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range].")
+		"Epicenter at: grid ([epicenter.x], [epicenter.y]). Temporal displacement of tachyons: [took] seconds.",
+		"Factual: Epicenter radius: [devastation_range]. Outer radius: [heavy_impact_range]. Shockwave radius: [light_impact_range].",
+	)
 
 	// If the bomb was capped, say its theoretical size.
 	if(devastation_range < orig_dev_range || heavy_impact_range < orig_heavy_range || light_impact_range < orig_light_range)
@@ -177,67 +172,96 @@
 
 	record_number++
 	records += R
+
+	SEND_SIGNAL(src, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
+
 	return TRUE
 
 /obj/machinery/doppler_array/powered()
-	if(!anchored)
-		return FALSE
-	return ..()
+	return anchored && ..()
 
 /obj/machinery/doppler_array/update_icon_state()
 	if(machine_stat & BROKEN)
-		icon_state = "[initial(icon_state)]-broken"
-	else if(powered())
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]-off"
+		icon_state = "[base_icon_state]-broken"
+		return ..()
+	icon_state = "[base_icon_state][powered() ? null : "-off"]"
+	return ..()
 
 /obj/machinery/doppler_array/research
 	name = "tachyon-doppler research array"
-	desc = "A specialized tachyon-doppler bomb detection array that uses the results of the highest yield of explosions for research."
+	desc = "A specialized tachyon-doppler bomb detection array that uses complex on-board software to record data for experiments."
+	circuit = /obj/item/circuitboard/machine/doppler_array
 	var/datum/techweb/linked_techweb
+
+/obj/machinery/doppler_array/research/Initialize(mapload)
+	..()
+	linked_techweb = SSresearch.science_tech
+	return INITIALIZE_HINT_LATELOAD
+
+// Late initialize to allow the server machinery to initialize first
+/obj/machinery/doppler_array/research/LateInitialize()
+	. = ..()
+	AddComponent(/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/explosion), \
+		config_mode = EXPERIMENT_CONFIG_UI, \
+		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE)
+
+/obj/machinery/doppler_array/research/attackby(obj/item/I, mob/user, params)
+	if (default_deconstruction_screwdriver(user, "tdoppler", "tdoppler", I) || default_deconstruction_crowbar(I))
+		update_icon()
+		return
+	return ..()
 
 /obj/machinery/doppler_array/research/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 		took, orig_dev_range, orig_heavy_range, orig_light_range) //probably needs a way to ignore admin explosives later on
 	. = ..()
 	if(!.)
 		return
+
 	if(!istype(linked_techweb))
-		say("Warning: No linked research system!")
+		say("Warning: no linked research system!")
 		return
 
-	var/point_gain = 0
+	var/cash_gain = 0
+
 	/*****The Point Calculator*****/
-	if(orig_light_range < 10)
-		say("Explosion not large enough for research calculations.")
+	if(orig_light_range < TECHWEB_BOMB_MIN_RANGE)
+		say("Explosion not large enough for profitability.")
 		return
-	else if(orig_light_range < 4500)
-		point_gain = (83300 * orig_light_range) / (orig_light_range + 3000)
+	else if(orig_light_range < TECHWEB_BOMB_MAX_RANGE)
+		cash_gain = (TECHWEB_BOMB_SCALE_CONST * orig_light_range) / (TECHWEB_BOMB_SCALE_DIVISOR + orig_light_range)
 	else
-		point_gain = TECHWEB_BOMB_POINTCAP
+		cash_gain = TECHWEB_BOMB_CASHCAP
 
 	/*****The Point Capper*****/
-	if(point_gain > linked_techweb.largest_bomb_value)
-		if(point_gain <= TECHWEB_BOMB_POINTCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_POINTCAP)
+	if(cash_gain > linked_techweb.largest_bomb_value)
+		if(cash_gain <= TECHWEB_BOMB_CASHCAP || linked_techweb.largest_bomb_value < TECHWEB_BOMB_CASHCAP)
 			var/old_tech_largest_bomb_value = linked_techweb.largest_bomb_value //held so we can pull old before we do math
-			linked_techweb.largest_bomb_value = point_gain
-			point_gain -= old_tech_largest_bomb_value
-			point_gain = min(point_gain,TECHWEB_BOMB_POINTCAP)
+			linked_techweb.largest_bomb_value = cash_gain
+			cash_gain -= old_tech_largest_bomb_value
+			cash_gain = min(cash_gain, TECHWEB_BOMB_CASHCAP)
 		else
-			linked_techweb.largest_bomb_value = TECHWEB_BOMB_POINTCAP
-			point_gain = 1000
+			linked_techweb.largest_bomb_value = TECHWEB_BOMB_CASHCAP
+			cash_gain = 1000
 		var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_SCI)
 		if(D)
-			D.adjust_money(point_gain)
-			linked_techweb.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, point_gain)
-			say("Explosion details and mixture analyzed and sold to the highest bidder for [point_gain] cr, with a reward of [point_gain] points.")
-
+			D.adjust_money(cash_gain)
+			say("Explosion details and mixture analysis sold to the highest bidder for [cash_gain] cr.")
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
 		return
 
-/obj/machinery/doppler_array/research/science/Initialize()
+/obj/machinery/doppler_array/research/science/Initialize(mapload)
 	. = ..()
 	linked_techweb = SSresearch.science_tech
+
+/obj/machinery/doppler_array/research/ui_data(mob/user)
+	. = ..()
+	.["is_research"] = TRUE
+
+/obj/machinery/doppler_array/research/ui_act(action, list/params)
+	. = ..()
+	if (.)
+		return
 
 #undef PRINTER_TIMEOUT

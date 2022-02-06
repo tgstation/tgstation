@@ -32,12 +32,12 @@
 		return
 	goal = goal_number
 	bar_loc = target
-	bar = image('icons/effects/progessbar.dmi', bar_loc, "prog_bar_0", HUD_LAYER)
+	bar = image('icons/effects/progessbar.dmi', bar_loc, "prog_bar_0")
 	bar.plane = ABOVE_HUD_PLANE
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	user = User
 
-	LAZYADDASSOC(user.progressbars, bar_loc, src)
+	LAZYADDASSOCLIST(user.progressbars, bar_loc, src)
 	var/list/bars = user.progressbars[bar_loc]
 	listindex = bars.len
 
@@ -78,6 +78,8 @@
 
 ///Called right before the user's Destroy()
 /datum/progressbar/proc/on_user_delete(datum/source)
+	SIGNAL_HANDLER
+
 	user.progressbars = null //We can simply nuke the list and stop worrying about updating other prog bars if the user itself is gone.
 	user = null
 	qdel(src)
@@ -85,6 +87,8 @@
 
 ///Removes the progress bar image from the user_client and nulls the variable, if it exists.
 /datum/progressbar/proc/clean_user_client(datum/source)
+	SIGNAL_HANDLER
+
 	if(!user_client) //Disconnected, already gone.
 		return
 	user_client.images -= bar
@@ -93,6 +97,8 @@
 
 ///Called by user's Login(), it transfers the progress bar image to the new client.
 /datum/progressbar/proc/on_user_login(datum/source)
+	SIGNAL_HANDLER
+
 	if(user_client)
 		if(user_client == user.client) //If this was not client handling I'd condemn this sanity check. But clients are fickle things.
 			return

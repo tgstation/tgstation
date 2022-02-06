@@ -1,0 +1,474 @@
+2016-08-01:
+  Bawhoppen:
+  - rscadd: Added crowns. Make them from gold. Cap gets a fancy one.
+  Fox McCloud:
+  - rscadd: Adds in generic uplink refund system that potentially allows for even
+      regular traitors to refund uplink items
+  Joan:
+  - rscadd: Soul Vessels can now be used on unconscious or dead humans to extract
+      their consciousness, much like a soulstone.
+  - tweak: Soul Vessels no longer automatically ping ghosts when created, though they
+      can still be used in-hand to ping ghosts.
+  - rscadd: Soul Vessels can now communicate over the Hierophant Network
+  - experiment: Xenobiology golems enslaved to someone will become convertable if
+      their enslaver is converted to the enslaving antag type; this applies to gang
+      and both cult types.
+  oranges:
+  - rscdel: Reverted toolboxes fitting in backpacks due to being incorrectly merged
+2016-08-02:
+  CoreOverload:
+  - rscadd: Pockets in coats!
+2016-08-05:
+  Arctophylax:
+  - bugfix: The Emergency Medical and Winter Wonderland Holodeck programs work once
+      again.
+  Cruix:
+  - bugfix: RCDs can no longer place multiple grilles on the same tile.
+  - bugfix: RCDs will no longer use all their ammo if you try to build a wall on the
+      same turf multiple times.
+  - tweak: RCDs will now inform their user if they do not have enough ammo to complete
+      an operation.
+  Incoming5643:
+  - rscadd: Parrots have been made more robust.
+  Joan:
+  - rscadd: Clockwork Constructs, including anima fragments, marauders, and reclaimers,
+      can now communicate over the Hierophant Network.
+  - rscadd: Plasma cutters(normal, advanced, and mech) now have double range in low
+      pressure areas, but slightly lower range in high pressure areas.
+  - rscadd: Vitality Matrices will consume dead non-servant mobs to gain a large amount
+      of Vitality. This doesn't work on mobs that did not have a mind at some point.
+  Lordpidey and PKPenguin321:
+  - rscadd: Recent studies have revealed that fly amanita can give you a huge trip.
+  Lzimann:
+  - tweak: Holy water no longers makes you confused.
+  ModernViolence:
+  - bugfix: 'Photocopier fixes: proper sprites for not empty copies; removing originals
+      now does not delete them'
+  PKPenguin321:
+  - rscadd: Chef, do your station a favor and make a home run baseball burger (TM)
+  Robustin:
+  - rscadd: The initial supply talisman can now be used to create runed metal, 5 per
+      use
+  - rscadd: The void torch is now available from the altar, use it to transport any
+      item instantly to any cultist! It appears alongside the veil shifter as part
+      of the "Veil Walker" set.
+  - rscadd: Cult floors no longer appear on mesons!
+  - tweak: Flagellant's Robes now increases damage taken by 50%, down from 100%
+  - tweak: Veil Shifter has 4 uses, up from 2
+  - tweak: Shuttle curse now delays shuttle 3 minutes, up from 2.5 minutes
+  - tweak: Cult forges, archives, and airlocks have had their cost reduced by 1 runed
+      metal each
+  Shadowlight213:
+  - rscadd: You will now receive an achievement for winning a pulse rifle at the arcade.
+  TheCarlSaganExpress:
+  - rscadd: Added lighting effects to the welder.
+2016-08-07:
+  Arctophylax:
+  - bugfix: You can unbuckle mobs from meat spikes by clicking on the spike once again.
+  Joan:
+  - tweak: Barrier runes will now block air while active.
+  - rscadd: Trying to use sleeping carp against the colossus will now anger it.
+  frtbngll:
+  - bugfix: Fixed Paper Wizard summoning only 9 minions in its lifespan by making
+      the dead stickman decrease it's summoned_minions variable
+  lordpidey:
+  - bugfix: Centcom has received reports of cyborgs electrocuting themselves when
+      working on the power grid, and we have decided to stop storing important electronics
+      on the wirecutter's blade.
+2016-08-08:
+  Ergovisavi:
+  - rscadd: Added bonfires to botany. Requires five tower cap logs to create, and
+      mobs can be buckled to them if an iron rod is added to the bonfire and the mob
+      is restrained.
+  Joan:
+  - rscadd: Added the clockcult "Global Records" alert, which clock cultists can mouse
+      over to check a variety of information on the clockcult's status, including
+      living servants, number of caches, CV, tinkerer's daemons, if there's an unconverted
+      AI, what clockwork generals can be invoked, and what scripture is unlocked.
+  Shadowlight213:
+  - rscadd: Ghosts can now see human player's huds when using the OOC -> Observe verb
+  WJohnston, Gun Hog:
+  - tweak: Xenos are now considered female.
+  - tweak: Hunter pounce are now always blocked by shields, and may be blocked more
+      often by other protective items.
+  - tweak: Alien Queen is now somewhat faster.
+  - tweak: Adjusted larva growth sprites.
+  - tweak: Removed 20% facehugger failure chance for masks.
+  - tweak: Disarm now always forces a person to drop an item in the active hand, and
+      if a person's hand is empty/undroppable, Disarm will always result in a tackle.
+  - tweak: Cyborgs disarmed by a Xeno will first disable their selected module, and
+      if there is none selected, the cyborg will be pushed back and stunned.
+  - tweak: Tail Sweep now has a slightly longer stun.
+2016-08-10:
+  Cruix:
+  - rscadd: Sentient minebots can now toggle meson vision, a flashlight, their mode,
+      and dump their stored ore.
+  - bugfix: Sentient minebots can now be repaired if they were made sentient while
+      the AI was active.
+  - bugfix: Healing minebots will no longer switch them to attack mode.
+  - tweak: Sentient minebots can now shoot at humans.
+  - bugfix: The cooldown on wizard lightning will no longer break if you ethereal
+      jaunt or RISE! after the initial cast.
+  Kor:
+  - rscadd: You can now detonate drones with the RD console
+  LanCartwright:
+  - rscadd: Acute respiratory distress syndrom symptom.
+  - rscadd: Toxic metabolism.
+  - rscadd: Alkali perspiration
+  - rscadd: Autophagocytosis Necrosis
+  - rscadd: Apoptoxin filter
+  - rscadd: 3 different lategame/Non-roundstart virus reagents
+  - rscadd: 4 different lategame/Non-roundstart virus recipes
+  MrStonedOne:
+  - tweak: Tweaked space wind, it should now only trigger at higher pressure differences,
+      but be quicker to become aggressive as the pressure difference gets higher.
+      This should alleviate issues where small differences was still moving a lot
+      of things.
+  - tweak: Paper still moves with any pressure difference.
+  PKPenguin321:
+  - rscadd: There's now an achievement for managing to examine a meteor as a living
+      mob!
+  RemieRichards:
+  - rscadd: 'Added a new PDA button/app: Drone Phone!'
+2016-08-14:
+  Cheridan:
+  - tweak: Greatly reduced amount of Hydroponics yield multipliers
+  - tweak: Somewhat reduced gaia'd tray sustainability.
+  - tweak: Mutagen will no longer potentially cause plant instadeath based on RNG.
+  Ergovisavi:
+  - tweak: Watchers no longer randomly fire beams at you when damaged, and no longer
+      beam you at point blank.
+  Gun Hog:
+  - tweak: The AI's Crew Manifest button now uses the updated styling.
+  Joan:
+  - rscadd: Sigils of Transgression now glow brightly when stunning a target.
+  - rscadd: The Global Records alert now shows the location and countdown time of
+      the Gateway to the Celestial Derelict.
+  - tweak: Clockcult tooltips now all have the clockcult tooltip style.
+  - rscdel: You can no longer become a Reclaimer when clicking on Ratvar. You can
+      still become a Cogscarab, however.
+  - bugfix: You can no longer invoke Vanguard while under its effects.
+  - bugfix: Servants of Ratvar should now always get an announcement when scripture
+      states change.
+  - tweak: Function Call can be used to summon a Ratvarian Spear once every 3 minutes,
+      from 5, but the spear summoned will now only last 3 minutes.
+  - rscadd: Belligerent now does minor damage to the legs on each invocation, up to
+      a maximum of 30 damage per recital.
+  - tweak: Ratvarian Spears will now stun any mob they're thrown at instead of just
+      enemy cultists and silicons, though the stun is still longer on enemy cultists
+      and silicons.
+  Jordie0608:
+  - rscdel: Removed clicking clown mask to morph it's shape, use action button instead.
+  Kor:
+  - rscadd: Added support for projectiles which can dismember
+  - rscadd: Added a new wizard sword, the spellblade, which fires dismembering projectiles.
+      Sprites from Lexorion.
+  - rscadd: Plasmacutter blasts can now take limbs off, but they still do pitiful
+      damage in a pressurized environment.
+  - rscadd: Humans and drones now have a UI button that allows them to create new
+      areas, in the same manner as blueprints. Unlike blueprints, this button does
+      not allow you to edit existing areas.
+  - rscadd: You can now use mineral doors (or any other object that blocks atmos)
+      to complete rooms with blueprints
+  - rscadd: Players created by sentience potions, mining drone upgrades, or Guardian/Holoparsite
+      summoners will now automatically join the users antagonist team, if any.
+  - rscadd: Mobs created in this manner will no longer be convertable/deconvertable
+      unless their creator is first converted/deconverted.
+  - rscadd: Cayenne will now officially become an operative when given a sentience
+      potion.
+  LanCartwright:
+  - bugfix: Fixes the recipes not working.
+  - tweak: Changes Stable uranium virus food recipe from Plasma virus food to just
+      plasma.
+  RemieRichards:
+  - bugfix: You can no longer use the incorrect limb type during augmentation
+  - bugfix: You can no longer use the incorrect limb type during prosthetic replacement
+  Shadowlight213:
+  - rscadd: Security has two new weapons in their arsenal. The security temperature
+      gun, and the DRAGnet capture and recovery system.
+  optional name here:
+  - bugfix: The syndicate uplink ui has been refactored to majorly reduce lag
+2016-08-15:
+  Joan:
+  - rscadd: The Ark of the Clockwork Justicar can now be constructed even if Ratvar's
+      rise is not the objective.
+  - experiment: Accordingly, its behavior is different; instead of summoning Ratvar,
+      it will convert a massive amount of the station, and should effectively instantly
+      complete the clockwork cult's objectives.
+  MrStonedOne:
+  - tweak: Tweaked the lag stop numbers to hopefully reduce lag during 80+ population
+  - tweak: Fixed the blackbox not blackboxing.
+  OSCAR MIKE:
+  - rscadd: CONTACT ON THE LEFT SIDE!
+2016-08-16:
+  MrStonedOne:
+  - rscadd: Automated the granting of profiler access to admins
+  oranges:
+  - rscadd: Nanotrasen is an all right kind of company
+2016-08-17:
+  Basilman:
+  - rscadd: Added an admin-spawnable only "Cosmohonk" hardsuit that has the same protection
+      values of an engineering hardsuit. Comes with built-in lights and requires clown
+      roundstart role to be equipped.
+  Ergovisavi:
+  - rscadd: Adds the "Proto-Kinetic Crusher", a new melee mining weapon. Available
+      at a mining vendor near you!
+  Gun Hog:
+  - tweak: Nanotrasen has improved the coolant system in the stations automated robots.
+      They will no longer violently explode in hot rooms.
+  Joan:
+  - rscadd: Once the blob alert message is sent in the blob game mode, all mobs get
+      to see how many tiles the blob has until it wins, via the Status tab.
+  - rscdel: Removed/merged a bunch of blob chems, you probably don't care about the
+      specifics.
+  - tweak: The remaining blob chems should, overall, be more powerful.
+  - tweak: Shield blobs soak brute damage less well.
+  - tweak: Flashbangs do higher damage to blobs up close, but their damage falls off
+      faster.
+  - experiment: Shield blobs now cost 15 resources to make instead of 10. Node blobs
+      now cost 50 resources to make instead of 60.
+  - experiment: Expanding/attacking now costs 4 resources instead of 5, and blobs
+      can now ATTACK DIAGONALLY. Diagonal attacks are weaker than normal attacks,
+      especially against cyborgs(which may be entirely immune, depending), and they
+      remain unable to expand diagonally.
+  - rscadd: Shield blobs no longer block atmos while under half health. Shield blobs
+      are still immune to fire, even if they can't block atmos.
+  - tweak: Blobs should block explosions less well.
+  - rscadd: Blob cores and nodes are no longer immune to fire and no longer block
+      atmos.
+  - rscadd: Blobs can only auto-expand one tile at a time per expanding thing, and
+      should be easier to beat back in general.
+  - tweak: Blobbernauts now attack faster.
+  - tweak: Blob Overminds attack mobs slower but can attack non-mobs much faster.
+  - rscadd: Blob Overminds start with some amount of resources; in the gamemode, it's
+      80 divided by the number of overminds, in the event, it's 20 plus the number
+      of active players, and otherwise, it's 60.
+  - bugfix: You can no longer move blob cores into space, onto the mining shuttle,
+      white ship, gulag shuttle, or solars.
+  - bugfix: Blob rounds might be less laggy, if they were laggy?
+  - tweak: Blobs don't heal as fast, excluding the core.
+  - experiment: Blobs are marginally less destructive to their environment.
+  MrStonedOne:
+  - rscdel: The server will no longer wait until the next tick to process movement
+      key presses. Movements should now be ~25-50ms more responsive.
+  Shadowlight213:
+  - rscadd: Adds modular computers
+2016-08-21:
+  Ergovisavi:
+  - tweak: Consolidates the fulton packs into a single item and makes them more user
+      friendly
+  Google Play Store:
+  - spellcheck: Minor Text Fixes.
+  Incoming5643:
+  - rscadd: Smuggler satchels left behind hidden on the station can now reappear in
+      a later round.
+  - experiment: There's absolutely no way of knowing when exactly it will reappear
+      however...
+  - rscadd: Only one item in the satchel will remain when the satchel reappears.
+  - rscadd: Items are saved in their <b>initial</b> forms, so saving things like chemical
+      grenades will only disappoint you.
+  - rscadd: The item pool is map specific and needs to be a certain size before satchels
+      can start reappearing, so get to hiding that loot!
+  - rscadd: The staff of change has been expanded to turn you into even more things
+      that don't have hands.
+  Jalleo:
+  - bugfix: Gulag Teleporter of two issues any more please report them.
+  Jordie0608:
+  - rscadd: Advanced Energy Guns once again have a chance to irradiate you if EMPed.
+  Kor:
+  - rscadd: Kinetic Accelerators are now modular. You can find mod kits in the mining
+      vendor and in RnD.
+  - bugfix: Chaplain's dormant spellblade is no longer invisible.
+  Papa Bones:
+  - rscadd: A new, scandalous outfit is now available as contraband from the clothesmate
+      vendor, check it out! Fulfill your deep, dark fantasies.
+  Shadowlight213:
+  - tweak: Service and cargo have lost roundstart tablets and engineering has gained
+      them
+  - tweak: you can now charge battery modules in cell chargers. Use a screwdriver
+      on a computer to remove them. As a note, tablets and laptops can be charged
+      directly by placing them in a security charger.
+  WJohnston:
+  - rscadd: Metastation and Boxstation now boast auxillary mining construction rooms
+      in arrivals. These allow you to build a base and then launch it to wherever
+      you want on lavaland.
+  Wjohnston, Gun Hog:
+  - rscadd: Aliens with Neurotoxic Spit readied will now have drooling animations.
+  - rscadd: Hunters may now safely leap over lava.
+  - tweak: Hulk punches no longer stun Xenos.
+  - tweak: Alien evolve and promotion buttons updated to current Xeno sprites
+  - bugfix: Handcuff sprites for Xenos now show properly.
+2016-08-22:
+  Bawhoppen:
+  - rscdel: Stock computers have been temporarily removed due to imbalances.
+  Ergovisavi:
+  - bugfix: Bubblegum's charge indicator should be significantly more accurate now.
+  ExcessiveUseOfCobblestone:
+  - rscdel: Reverts getting partial credit for discovered seeds.
+  - tweak: 'Tweaks Money Tree Potency Values [For instance: 1000 Space Cash requires
+      98-100 Potency]'
+  Lzimann & Lexorion:
+  - rscadd: Adds a bow to the game, currently not craftable
+  Shadowlight213:
+  - bugfix: The efficiency AI sat SMES will now charge the APCs instead of itself.
+  XDTM:
+  - rscdel: Removed the Longevity symptom.
+  - rscadd: Added Viral Aggressive Metabolism, which will make viruses act quickly
+      but decay over time.
+  - rscadd: Cloning can now give bad mutations if unupgraded!
+  - rscadd: Cloning can, however, give you good ones if upgraded!
+2016-08-24:
+  Bones:
+  - rscadd: The detective's closet now contains a seclite, get sleuthing!
+  Cargo Intelligence Agency:
+  - rscdel: You don't get to bring traitor items.
+  Ergovisavi:
+  - rscadd: Adds "Sacred Flame", a spell that makes everyone around you more flammable,
+      and lights yourself on fire. Share the wealth. Of fire.
+  - tweak: Replaces the fireball spellbook as a possible reward from a Drake chest
+      with a book of sacred flame.
+  Gun Hog:
+  - rscadd: The Aux mining base can now call the mining shuttle once landed! The mining
+      shuttle beacon that comes with the base must be deployed to enable this functionality.
+  - tweak: Multiple landing zones may now be set for the mining base.
+  - tweak: The coordinates of each landing zone is shown in the list.
+  - rscadd: Miners now each get a remote in their starting lockers. tweak The Aux
+      mining base now requires lighting while on station.
+  - tweak: The Aux Mining Base now has a GPS signal.
+  - tweak: The Aux Mining Base now has an alarm for when it is about to drop.
+  Incoming5643:
+  - rscadd: 'A slight change to the secret satchel system described below: If a satchel
+      cannot be spawned due to there not being enough hidden satchels to choose from,
+      a <b>free</b> empty satchel will spawn hidden SOMEWHERE on the station. Dig
+      it up and bury it with something interesting!'
+  Joan:
+  - rscadd: Using a resonator on an existing resonator field will immediately detonate
+      that field. Normal resonators will reduce the damage dealt to 80% of normal,
+      while upgraded resonators will not reduce it at all.
+  - rscadd: Adds a KA mod that does damage in an AoE, found only in necropolis chests.
+  - rscadd: You can now install any KA mods into a mining cyborg, though its mod capacity
+      is slightly lower.
+  - tweak: Mining cyborgs now have a crowbar to remove mods from their KA.
+  - tweak: Kinetic Accelerators now have a larger mod capacity, though most mods can
+      still only be installed the same amount of times as they can currently.
+  - tweak: You can now hit modkits with Kinetic Accelerators to install that modkit
+      into the accelerator. Mining cyborgs are unable to do so.
+  - rscadd: Added white and adjustably-coloured tracer round mods to the mining equipment
+      vendor, so you can see where your projectile is going(and look cool).
+  - rscadd: Added the super and hyper chassis mods to the mining equipment vendor,
+      so you can use excess mod space to have a cool-looking KA.
+  MrStonedOne:
+  - rscdel: Removes check on lights preventing you from turning them on while in a
+      locker
+  PKPenguin321:
+  - rscadd: Xeno queens now have an action button that makes them appear to themselves
+      as the old, small queen sprite. Now they should be able to interact with things
+      that are above them more easily.
+  Shadowlight213:
+  - tweak: Reviver and nutriment implants are far easier to get and have lower tech
+      origins.
+  - rscdel: Centcom has cut back on their cat carrier budget and will now only be
+      able to bring kittens along with runtime.
+  - rscadd: A new event has been added. The automated grid check. All apcs in non
+      critical areas will be shut off for some time, but can be manually rebooted
+      via interaction.
+  Yackemflam:
+  - tweak: Boxes are worth >26 tc at LEAST
+2016-08-28:
+  CoreOverload:
+  - tweak: You can now use sheets from any hand, not just the active one.
+  Iamgoofball:
+  - tweak: Station and Character names are now allowed to be longer.
+  - rscdel: Gender Reassignment surgery has been removed.
+  Incoming5643:
+  - experiment: 'Due to a bad case of "being terrible" the save system for secret
+      satchels has been reworked. All saves are now unified in a single data file:
+      /data/npc_saves/SecretSatchels'
+  - rscdel: 'Old savefiles such as: /data/npc_saves/SecretSatchels_Box Station can
+      now be safely removed.'
+  - rscadd: A new slime reaction has been found for pink slimes using blood. The potion
+      produced from this reaction can be used to change the gender of living things.
+      Decently useful for animal husbandry, but otherwise mostly just for pranks/"""roleplay"""/enforcing
+      a brutal regime composed entirely of female slime people.
+  Joan:
+  - bugfix: Bumping the AI on help intent will no longer cause it and you to swap
+      positions, even if it is unanchored. If unanchored, it will properly push the
+      AI around.
+  - rscadd: The staff of lava can now turn lava back into basalt.
+  - bugfix: Placing a singularity or energy ball generator directly in front of an
+      active particle accelerator may be a bad idea.
+  Kor:
+  - rscadd: Added Battlemage armour to the spellbook. The armour is heavily shielded,
+      but will not recharge once the shields are depleted.
+  - rscadd: Added armour runes to the spellbook, which can grant additional charges
+      to the Battlemage armour.
+  MrStonedOne:
+  - rscadd: The game window will now flash in the taskbar on incoming admin pm, and
+      to all admins when an admin help comes in.
+  PKPenguin321:
+  - rscadd: The tesla is now much more dangerous, and can cause electronics to explode
+      violently.
+  - rscadd: It now hurts to get thrown into another person.
+  Shadowlight213:
+  - tweak: The radiation storm random event will automatically enable and disable
+      emergency maint.
+  - rscadd: The radiation storm random event is now a weather type that affects the
+      station.
+  - bugfix: The security temperature gun now has a firing pin making it 0.0000001%
+      more useful!
+  - rscadd: Added config option to use byond account creation age for job limits.
+  WJohnston:
+  - imageadd: Lavaland lava probably sorta looks better I guess.
+  Yackemflam:
+  - rscadd: Sniper kit have been given as a syndicate bundle set. Be warned though,
+      they are not as equipped as the nuclear agent kits.
+  kilkun:
+  - rscadd: Adds a shielded deathsquad hardsuit. it has four charges and recharges
+      after 15 seconds of not being shot (compared to the syndicate 3 charges and
+      20 second recharge rate)
+  - tweak: All death commandos now spawn with this new hardsuit. The previous hardsuit
+      was not removed.
+  pubby:
+  - rscadd: Mining scanner module to standard borgs
+  - rscdel: Sheet snatcher module from standard borgs
+  xxalpha:
+  - rscadd: Cigarette packs, donut boxes, egg boxes can now be closed and opened with
+      Ctrl+Click.
+  - rscadd: Lighters are now represented in cigarette packs with a sprite of their
+      own.
+  - rscadd: You can now remove a lighter from a cigarette pack quickly with Alt+Click.
+  - bugfix: Reduced the amount of cigars that cigar cases can hold to 5 because the
+      cigar case sprite doesn't support more than that.
+2016-08-29:
+  Cruix:
+  - rscadd: Space floppy-disk technology has advanced to the point that multiple technologies
+      or designs can be stored on a single disk.
+  Joan:
+  - rscadd: Lava bubbling up from basalt turfs now glows if in sufficient concentration.
+  - rscadd: Necropolis tendrils now glow.
+  - rscadd: Lava rivers now have riverbanks, and should overall look much nicer.
+  Shadowlight213:
+  - bugfix: The revenant ectoplasm sprite is no longer invisible.
+  Xhuis:
+  - rscadd: Highlander has been revamped. Now you can butcher your coworkers in cold
+      blood like never before!
+2016-08-30:
+  oranges:
+  - tweak: The ed209 can now only fire as fast as the portaturrets
+2016-08-31:
+  Iamgoofball:
+  - rscadd: Adds a new experimental gas to the game. Check it out!
+  Joan:
+  - rscadd: Vanguard now has a tooltip showing the amount of stuns you've absorbed
+      and will be affected by.
+  MMMiracles:
+  - bugfix: Xenomorphs can now actually damage barricades.
+  Shadowlight213:
+  - bugfix: Fixed runtime preventing access locked programs from being downloaded
+  XDTM:
+  - rscadd: Metal slimes now spawn a few sheets of glass when injected with water.
+  xxalpha:
+  - tweak: Opening and closing of donut boxes, etc. is now done with clicking the
+      object with itself.
+  yackemflam:
+  - rscadd: The standard rounds now blow off limbs. Happy hunting!

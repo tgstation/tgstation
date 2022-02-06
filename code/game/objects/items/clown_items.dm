@@ -1,9 +1,9 @@
 /* Clown Items
  * Contains:
- *		Soap
- *		Bike Horns
- *		Air Horns
- *		Canned Laughter
+ * Soap
+ * Bike Horns
+ * Air Horns
+ * Canned Laughter
  */
 
 /*
@@ -49,7 +49,7 @@
 				msg = "It's started to get a little smaller than it used to be, but it'll definitely still last for a while."
 			else
 				msg = "It's seen some light use, but it's still pretty fresh."
-	. += "<span class='notice'>[msg]</span>"
+	. += span_notice("[msg]")
 
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
@@ -81,7 +81,7 @@
 	uses = 301
 
 /obj/item/soap/omega/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!"))
 	new /obj/structure/chrono_field(user.loc, user)
 	return MANUAL_SUICIDE
 
@@ -93,63 +93,79 @@
 
 /obj/item/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
-	user.visible_message("<span class='suicide'>[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!</span>")
+	user.visible_message(span_suicide("[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!"))
 	new /obj/effect/particle_effect/foam(loc)
 	return (TOXLOSS)
 
+/**
+ * Decrease the number of uses the bar of soap has.
+ *
+ * The higher the cleaning skill, the less likely the soap will lose a use.
+ * Arguments
+ * * user - The mob that is using the soap to clean.
+ */
 /obj/item/soap/proc/decreaseUses(mob/user)
-	var/skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+	var/skillcheck = 1
+	if(user?.mind)
+		skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 	if(prob(skillcheck*100)) //higher level = more uses assuming RNG is nice
 		uses--
 	if(uses <= 0)
-		to_chat(user, "<span class='warning'>[src] crumbles into tiny bits!</span>")
+		to_chat(user, span_warning("[src] crumbles into tiny bits!"))
 		qdel(src)
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
-	var/clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
+	var/clean_speedies = 1 * cleanspeed
+	if(user.mind)
+		clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
-		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
+		to_chat(user, span_warning("You need to take that [target.name] off before cleaning it!"))
 	else if(istype(target, /obj/effect/decal/cleanable))
-		user.visible_message("<span class='notice'>[user] begins to scrub \the [target.name] out with [src].</span>", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
+		user.visible_message(span_notice("[user] begins to scrub \the [target.name] out with [src]."), span_warning("You begin to scrub \the [target.name] out with [src]..."))
 		if(do_after(user, clean_speedies, target = target))
-			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
+			to_chat(user, span_notice("You scrub \the [target.name] out."))
 			var/obj/effect/decal/cleanable/cleanies = target
-			user?.mind.adjust_experience(/datum/skill/cleaning, max(round(cleanies.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT),0)) //again, intentional that this does NOT round but mops do.
+			user.mind?.adjust_experience(/datum/skill/cleaning, max(round(cleanies.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT),0)) //again, intentional that this does NOT round but mops do.
 			qdel(target)
 			decreaseUses(user)
 
 	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-		var/mob/living/carbon/human/H = user
-		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here			if(user.zone_selected == "mouth")
-		if(H.lip_style)
-			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
-		H.lip_style = null //removes lipstick
-		H.update_body()
+		var/mob/living/carbon/human/human_user = user
+		user.visible_message(span_warning("\the [user] washes \the [target]'s mouth out with [src.name]!"), span_notice("You wash \the [target]'s mouth out with [src.name]!")) //washes mouth out with soap sounds better than 'the soap' here if(user.zone_selected == "mouth")
+		if(human_user.lip_style)
+			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
+			human_user.update_lips(null)
 		decreaseUses(user)
 		return
 	else if(istype(target, /obj/structure/window))
-		user.visible_message("<span class='notice'>[user] begins to clean \the [target.name] with [src]...</span>", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("You begin to clean \the [target.name] with [src]..."))
 		if(do_after(user, clean_speedies, target = target))
-			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
+			to_chat(user, span_notice("You clean \the [target.name]."))
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
-			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
+			var/obj/structure/window/our_window = target
+			if(our_window.bloodied)
+				for(var/obj/effect/decal/cleanable/blood/iter_blood in our_window)
+					our_window.vis_contents -= iter_blood
+					qdel(iter_blood)
+					our_window.bloodied = FALSE
+			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 	else
-		user.visible_message("<span class='notice'>[user] begins to clean \the [target.name] with [src]...</span>", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
+		user.visible_message(span_notice("[user] begins to clean \the [target.name] with [src]..."), span_notice("You begin to clean \the [target.name] with [src]..."))
 		if(do_after(user, clean_speedies, target = target))
-			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
-			for(var/obj/effect/decal/cleanable/C in target)
-				user?.mind.adjust_experience(/datum/skill/cleaning, round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT))
-				qdel(C)
+			to_chat(user, span_notice("You clean \the [target.name]."))
+			if(user && isturf(target))
+				for(var/obj/effect/decal/cleanable/cleanable_decal in target)
+					user.mind?.adjust_experience(/datum/skill/cleaning, round(cleanable_decal.beauty / CLEAN_SKILL_BEAUTY_ADJUSTMENT))
+			target.wash(CLEAN_SCRUB)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
-			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
+			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 	return
 
@@ -160,10 +176,11 @@
 
 /obj/item/bikehorn
 	name = "bike horn"
-	desc = "A horn off of a bicycle."
+	desc = "A horn off of a bicycle. Rumour has it that they're made from recycled clowns."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bike_horn"
 	inhand_icon_state = "bike_horn"
+	worn_icon_state = "horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	throwforce = 0
@@ -172,11 +189,16 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	throw_speed = 3
 	throw_range = 7
-	attack_verb = list("HONKED")
+	attack_verb_continuous = list("HONKS")
+	attack_verb_simple = list("HONK")
+	///sound file given to the squeaky component we make in Initialize() so sub-types can specify their own sound
+	var/sound_file = 'sound/items/bikehorn.ogg'
 
-/obj/item/bikehorn/Initialize()
+/obj/item/bikehorn/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50)
+	var/list/sound_list = list()
+	sound_list[sound_file] = 1
+	AddComponent(/datum/component/squeak, sound_list, 50, falloff_exponent = 20)
 
 /obj/item/bikehorn/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(user != M && ishuman(user))
@@ -186,7 +208,7 @@
 	return ..()
 
 /obj/item/bikehorn/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] solemnly points [src] at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message(span_suicide("[user] solemnly points [src] at [user.p_their()] temple! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 	return (BRUTELOSS)
 
@@ -195,10 +217,8 @@
 	name = "air horn"
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
-
-/obj/item/bikehorn/airhorn/Initialize()
-	. = ..()
-	AddComponent(/datum/component/squeak, list('sound/items/airhorn2.ogg'=1), 50)
+	worn_icon_state = "horn_air"
+	sound_file = 'sound/items/airhorn2.ogg'
 
 //golden bikehorn
 /obj/item/bikehorn/golden
@@ -206,24 +226,25 @@
 	desc = "Golden? Clearly, it's made with bananium! Honk!"
 	icon_state = "gold_horn"
 	inhand_icon_state = "gold_horn"
-	var/flip_cooldown = 0
+	worn_icon_state = "horn_gold"
+	COOLDOWN_DECLARE(golden_horn_cooldown)
 
 /obj/item/bikehorn/golden/attack()
-	if(flip_cooldown < world.time)
-		flip_mobs()
+	flip_mobs()
 	return ..()
 
 /obj/item/bikehorn/golden/attack_self(mob/user)
-	if(flip_cooldown < world.time)
-		flip_mobs()
+	flip_mobs()
 	..()
 
 /obj/item/bikehorn/golden/proc/flip_mobs(mob/living/carbon/M, mob/user)
+	if(!COOLDOWN_FINISHED(src, golden_horn_cooldown))
+		return
 	var/turf/T = get_turf(src)
 	for(M in ohearers(7, T))
 		if(M.can_hear())
 			M.emote("flip")
-	flip_cooldown = world.time + 7
+	COOLDOWN_START(src, golden_horn_cooldown, 1 SECONDS)
 
 //canned laughter
 /obj/item/reagent_containers/food/drinks/soda_cans/canned_laughter

@@ -11,7 +11,7 @@
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
-/obj/machinery/mineral/unloading_machine/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/unloading_machine/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
 	if(istype(target, /obj/structure/ore_box))

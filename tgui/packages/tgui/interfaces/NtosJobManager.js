@@ -4,7 +4,9 @@ import { NtosWindow } from '../layouts';
 
 export const NtosJobManager = (props, context) => {
   return (
-    <NtosWindow resizable>
+    <NtosWindow
+      width={400}
+      height={620}>
       <NtosWindow.Content scrollable>
         <NtosJobManagerContent />
       </NtosWindow.Content>
@@ -14,14 +16,12 @@ export const NtosJobManager = (props, context) => {
 
 export const NtosJobManagerContent = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     authed,
     cooldown,
     slots = [],
     prioritized = [],
   } = data;
-
   if (!authed) {
     return (
       <NoticeBox>
@@ -29,7 +29,6 @@ export const NtosJobManagerContent = (props, context) => {
       </NoticeBox>
     );
   }
-
   return (
     <Section>
       {cooldown > 0 && (
@@ -64,8 +63,7 @@ export const NtosJobManagerContent = (props, context) => {
                 checked={slot.total > 0 && prioritized.includes(slot.title)}
                 onClick={() => act('PRG_priority', {
                   target: slot.title,
-                })}
-              />
+                })} />
             </Table.Cell>
             <Table.Cell collapsing>
               {slot.current} / {slot.total}
@@ -76,15 +74,13 @@ export const NtosJobManagerContent = (props, context) => {
                 disabled={!slot.status_open}
                 onClick={() => act('PRG_open_job', {
                   target: slot.title,
-                })}
-              />
+                })} />
               <Button
                 content="Close"
                 disabled={!slot.status_close}
                 onClick={() => act('PRG_close_job', {
                   target: slot.title,
-                })}
-              />
+                })} />
             </Table.Cell>
           </Table.Row>
         ))}

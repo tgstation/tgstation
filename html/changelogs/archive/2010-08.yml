@@ -1,0 +1,63 @@
+2010-08-06:
+  /tg/station ss13 team:
+  - unknown: <strong>Hydroponics/Botany Added</strong> Credit goes to Skie and the
+      folks over at the independent opensource SS13 branch, this is their code. It's
+      lacking a lot, but it's a great start!
+  - unknown: Way more tweaks than I can remember. Shouldn't wait so long between changelog
+      updates.
+2010-08-26:
+  /tg/station ss13 team:
+  - unknown: <strong>Open Source Release</strong>  Thanks to Mport for releasable
+      singularity code.
+  - unknown: <strong>Cyborgs redone</strong> Thanks again to Mport for this, cyborgs
+      are totally different now.
+  - unknown: Engine Monitor PDA app is now Power Monitor PDA app, and actually works.
+  - unknown: AI State Laws verb now allows the AI to choose which laws to state, in
+      case of traitor AIs or laws ordering it not to state them.  Hopefully this will
+      cut down on 'OMG THE AI IS COPYING AND PASTING' metagaming.
+  - unknown: Power Monitor circuitboard isn't mislabeled as Mass Driver Control any
+      more.
+  - unknown: <strong>Traitor and Rev-head clowns lose the clumsiness gene</strong>
+      - this should make trying to flash people in Rev mode less of an exercise in
+      frustration.
+  - unknown: A sink has been added to the Fitness room - this lets you wash dirty
+      and bloodstained clothing and equipment.
+  - unknown: Blast doors and firedoors no longer open by just bumping into them.
+  - unknown: The bar and kitchen now open onto the same seating area.  The old cafeteria
+      area is now used as a lockerroom to replace the old one which was displaced
+      by Hydroponics.
+  - unknown: The bar now has a space piano with which you can entertain and annoy
+      the crew.
+  - unknown: <strong>LIBRARY</strong>  A library has been added to the station in
+      the escape arm in order to educate the crew.  The new Librarian job is available
+      to manage it.  Crewmembers can request and read books, or write and bind their
+      own books for upload to a persistent database.
+  - unknown: The supply of flashbangs available from Security has been reduced to
+      cut down on people constantly flashbanging the escape shuttle.
+  - unknown: InteliCards are available in various locations to allow the retrieval
+      of valuable AI personality data in the event of catastrophic station damage.
+2010-08-29:
+  /tg/station ss13 team:
+  - unknown: The Robotics Crate no longer exists.  Quartermasters can now order a
+      MULEbot crate for 20 points, or a Robotics Assembly crate for 10 points.  The
+      latter provides 4 flashes, 3 proximity sensors, two 10k charge power cells and
+      an electrical toolbox, and requires a roboticist or a head of staff to open.
+  - unknown: Traitor AIs no longer lose their Law 0 in the event of power loss.
+  - unknown: Administrators can now toggle the availiabilty of their right-click verbs
+      to prevent accidental usage while playing.
+  - unknown: Tool Storage vending machine is now a proper object. (code cleanup)
+  - unknown: Buckets are now available from autolathes.
+  - unknown: Four generic remote signaller PDA cartridges are now stocked in the Tool
+      Storage vending machine.
+  - unknown: AI status display density adjusted.
+2010-08-30:
+  /tg/station ss13 team:
+  - unknown: <b>PDA user interface has been given a graphical overhaul.</b>  Please
+      report any problems with it on the issue tracker.
+  - unknown: Personal lockers are once again available in the lockerroom
+  - unknown: 'BUGFIX: Xenoburger iconstate was accidentally removed in an earlier
+      revision.  This has been fixed.'
+  - unknown: Some of the default messages have been changed.
+  - unknown: Additional sprites added for plants and weeds in preparation for an expansion
+      of Hydroponics.
+  - unknown: A schema script is now available for setting up the SQL database.

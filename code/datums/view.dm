@@ -26,10 +26,10 @@
 	winset(chief, "mapwindow.map", "zoom=0")
 
 /datum/view_data/proc/resetFormat()//Cuck
-	winset(chief, "mapwindow.map", "zoom=[chief.prefs.pixel_size]")
+	winset(chief, "mapwindow.map", "zoom=[chief.prefs.read_preference(/datum/preference/numeric/pixel_size)]")
 
 /datum/view_data/proc/setZoomMode()
-	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.scaling_method]")
+	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.read_preference(/datum/preference/choiced/scaling_method)]")
 
 /datum/view_data/proc/isZooming()
 	return (width || height)
@@ -52,8 +52,8 @@
 
 /datum/view_data/proc/setTo(toAdd)
 	var/list/shitcode = getviewsize(toAdd)  //Backward compatability to account
-	width = shitcode[1]						//for a change in how sizes get calculated. we used to include world.view in
-	height = shitcode[2]					//this, but it was jank, so I had to move it
+	width = shitcode[1] //for a change in how sizes get calculated. we used to include world.view in
+	height = shitcode[2] //this, but it was jank, so I had to move it
 	apply()
 
 /datum/view_data/proc/setBoth(wid, hei)

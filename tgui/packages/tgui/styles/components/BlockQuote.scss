@@ -10,9 +10,9 @@ $color-default: colors.fg(colors.$label) !default;
 
 .BlockQuote {
   color: $color-default;
-  border-left: 2px solid $color-default;
-  padding-left: 6px;
-  margin-bottom: 6px;
+  border-left: base.em(2px) solid $color-default;
+  padding-left: 0.5em;
+  margin-bottom: 0.5em;
 
   &:last-child {
     margin-bottom: 0;

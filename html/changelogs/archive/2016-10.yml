@@ -1,0 +1,429 @@
+2016-10-01:
+  Incoming5643:
+  - rscadd: After years of having to live on a mostly blown up hunk of junk the wizard's
+      ship has finally been repaired
+  - rscdel: No one paid attention to that lore anyway
+2016-10-07:
+  WJohnston:
+  - imageadd: Improved/resprited AI card, pAI, easel/canvases, shotgun shells, RCD
+      cartridge, speedloaders, and certain older buttons.
+  - imageadd: Improved/resprited a few bar signs, basketball/dodgeball/hoop, blood
+      bags, and body bags.
+  - imageadd: Improved/resprited Paper, stamps, folders, small fires, pens, energy
+      daggers, cabinets, newspaper and other bureaucracy related items.
+2016-10-10:
+  ChemicalRascal:
+  - bugfix: Previously, improving the incinerator's efficiency made the RPM decay
+      more quickly, instead of less quickly. No more!
+  Cyberboss:
+  - rscadd: More reagent containers can be used for filling your dirty vapor cancer
+      sticks
+  - spellcheck: Fixed some vape spelling/grammar
+  MrStonedOne:
+  - tweak: Player Preferences window made slightly faster.
+  Nanotrasen Stress Relief Board:
+  - rscdel: Claymores created through Highlander no longer thirst for blood or announce
+      their wielder's location incessantly.
+  - bugfix: Claymores should now properly absorb fallen foes' corpses.
+  - bugfix: Losing a limb now properly destroys your claymore.
+  Supermichael777:
+  - bugfix: The wizards federation have instituted a strict 1 demon limit on demon
+      bottles.
+  XDTM:
+  - rscadd: Using blood on an Oil Slime will create Corn Oil.
+  - rscadd: Using blood on Pyrite Slimes will create a random crayon.
+  - rscadd: Using water on Orange Slimes will create a small smoke cloud.
+  - rscadd: Using water on Blue Slimes will spawn foam.
+  - rscadd: You can now retrieve materials inserted in a Drone Shell Dispenser with
+      a crowbar.
+  phil235:
+  - rscadd: A whole bunch of structures and machines can now be broken and destroyed
+      using conventional attack methods.
+  - rscadd: The effect of fire on objects is overhauled. When on fire, your external
+      clothes now take fire damage and can become ashes, unless fire proof. All objects
+      caught in a fire can now take fire damage, instead of just flammable ones, unless
+      fire proof.
+  - rscadd: Acid effect is overhauled. Splashing acid on something puts a green effect
+      on it and start slowly melting it. Throwing acid on mobs puts acid on their
+      clothes. Acid can destroy structures and items alike, as long as they're not
+      acid proof. The more acid put on an object, the faster it melts. Walking on
+      an acid puddle puts acid on your shoes or burns your bare feet. Picking up an
+      item with acid without adequate glove protection burns your hand. Acid can be
+      washed away with any sort of water source (extinguisher, shower, water glass,etc...).
+  - rscadd: When a mob receives melee attacks, its clothes also get damaged. Clothes
+      with enough damage get a visual effect. Damaged clothes can be repaired with
+      cloth (produced with botany's biogenerator). Clothes that receives too much
+      melee damage become shreds.
+  - tweak: Clicking a structure/machine with an item on help intent can never result
+      in an attack.
+  - tweak: Hostile animals that are environment destroyers no longer destroys tables&closets
+      in one hit. It now takes several hits depending on the animal.
+2016-10-11:
+  Cyberboss:
+  - rscadd: The waste line now has a digital valve leading to space (off by default)
+      along with a port on it's far side
+  Incoming5643:
+  - rscadd: Wizards may finally use jaunt and blink on the escape shuttle. Maybe elsewhere
+      too?
+  - bugfix: The previously broken radios in the wizards den should work now. You still
+      have to turn them on though.
+  Kor:
+  - rscadd: Added frogs, with sprites by WJ and sounds by Cuboos.
+  Papa Bones:
+  - rscadd: Flora now spawns in lavaland tunnels, they can be harvested with a knife.
+  - rscadd: Flora have a range of effects, be careful what you eat!
+  - bugfix: You harvest flora on lavaland with your hands, not a knife. My bad.
+  Shadowlight213:
+  - rscadd: Cargo can order the antimatter engine
+2016-10-12:
+  Cyberboss:
+  - bugfix: Fixed motion alarms instantly triggering and de/un/re/triggering
+  - bugfix: Airlock speed mode now works
+  Joan:
+  - rscadd: You can now deconstruct AI cores that contain no actual AI.
+  WJohnston:
+  - imageadd: Recolored and resprited candles and ID cards. Folders should have improved
+      color contrast.
+  XDTM:
+  - rscadd: Exhausted slime extracts will now dissolve instead of leaving useless
+      used slime extracts.
+  - tweak: Airlocks are now immune to any damage below 20, to prevent pickaxe prison
+      breaks.
+  - tweak: High-Security Airlocks, such as the vault or the AI core's airlocks, are
+      now immune to any damage below 30.
+2016-10-13:
+  Razharas:
+  - tweak: Makes clicking something in heat of battle a bit easier by making drag&drops
+      that dont have any effect be counted as clicks
+  XDTM:
+  - rscadd: 'Added four new symptoms: Regeneration and Tissue Regrowth heal respectively
+      brute and burn damage slowly; Flesh Mending and Heat Resistance are the level
+      8 version of those symptoms, and heal faster.'
+  - rscdel: The Toxic Compensation, Toxic Metabolism and Stimulants symptoms have
+      been removed.
+  - rscdel: Viruses no longer stack. Viruses can be overridden if the infecting virus
+      has higher transmittability than the previous virus' resistance.
+  - tweak: Viruses can now have 8 symptoms, up from 6.
+  - rscadd: You can now store monkey cubes in bio bags; using bio bags on the consoles
+      will load them with the monkey cubes inside the bags.
+  ma44:
+  - rscadd: Cargo can now order a 2500 supply point crate that requires a QM or above
+      to unlock. This crates contains a explorer suit, compact pickaxe, mesons, and
+      a bag to hold ore with.
+2016-10-16:
+  Cuboos:
+  - rscadd: Added a new unique tool belt to the CE
+  - rscadd: Added new power tools, a hand drill that can be used as a screw driver
+      or wrench and jaws of life which can be used as either a crowbar or wire cutters
+  - rscadd: Power tools can also be made from the protolathe with engineering and
+      electromagnet 6
+  - tweak: slightly revamped how construction/deconstruction handle sound
+  - soundadd: added new sounds for the power tools
+  - soundadd: added a new sound for activating and deactivating welding tools, just
+      because.
+  Cyberboss:
+  - bugfix: Plasma fires no longer cause cameras to break.
+  Joan:
+  - tweak: Blazing Oil blobs are now outright immune to fire. This does not affect
+      damage taken from other sources that happen to do burn damage.
+  - tweak: Normal blob spores now take two welder hits to die, from three.
+  - tweak: Cyborgs now die much less rapidly to blob attacks.
+  Lzimann:
+  - tweak: 'Changed two admin hotkeys: f7 is now stealth-mode and f8 to toggle-build-mode-self.'
+  Shadowlight213:
+  - bugfix: Modular consoles have been fixed.
+  Supermichael777:
+  - tweak: Changeling Sting is now one part screwdriver cocktail and 2 parts lemon-lime
+      soda.
+  - bugfix: Triple citrus now actually displays its sprite.
+  Yackemflam:
+  - tweak: extinguishers now spray faster
+  coiax:
+  - rscadd: RCDs have a Toggle Window Type verb allowing the rapid construction of
+      reinforced windows, rather than regular windows.
+  - rscadd: RCDs can now finish and deconstruct wall girders.
+  phil235:
+  - tweak: Clicking a floor with a bodybag or roller bed now deploys them directly
+      (and the bodybag starts open)
+  scoopscoop:
+  - bugfix: The cult shifter will now properly spawn as part of the veil walker set.
+2016-10-18:
+  Basilman:
+  - rscadd: A third martial art, CQC, has been added and is now available to nuke
+      ops instead of sleeping carp
+  Kor:
+  - rscadd: Added sloths to cargobay on Box and Meta
+  MrPerson:
+  - rscadd: New toxin - Rotatium. It doesn't quite do what it does on other servers.
+      Instead it rocks your game view back and forth while slowly doing toxin damage.
+      The rocking gets more intense with time.
+  - rscadd: To make it, mix equal parts mindbreaker, neurotoxin, and teslium.
+  MrStonedOne:
+  - experiment: Byond 511 beta users may now choose their own FPS. This will apply
+      to animations and other client side only effects. Find it in your game preferences.
+  Shadowlight213:
+  - bugfix: fixed removing modular computer components
+  TheCarlSaganExpress:
+  - tweak: Provided you have access, you may now use your ID to unlock the display
+      case.
+  - tweak: The fire axe cabinet and display case may now be repaired with the welder.
+  XDTM:
+  - rscadd: You can now grind slime extracts in a reagent grinder. If the slime was
+      unused it will result in slime jelly, while if used it will only output the
+      reagents inside the extract.
+  Yackemflam:
+  - bugfix: fixed the standard vest being weaker than the slim variant
+  lordpidey:
+  - rscadd: There is a new potential obligation for devils to have.  Musical duels.  Ask
+      your nearest devil for a musical duel, there's a 14% chance he's obligated to
+      do it.
+  - rscdel: Removed the old offering a drink obligation for devils, it overlapped
+      too much with the food obligation.
+  - tweak: Trying to clone people who've sold their soul now results in FUN.
+  - tweak: Devils can no longer spam ghosts with revival contracts.
+  phil235:
+  - rscadd: Visual effects appear on the target of an attack, similar to the item
+      attack effect.
+  - rscdel: You now only see a message in chat when witnessing someone else getting
+      attacked or hit by a bullet if you are close enough to the action.
+2016-10-19:
+  Cyberboss:
+  - bugfix: Physically speaking is no longer delayed by your radio's lag
+  - bugfix: You can now attack doors with fireaxes and crowbars when using the harm
+      intent
+  - tweak: The BSA is no longer ready to fire when constructed
+  - bugfix: The BSA can no longer be reloaded faster by rebuilding the console
+  MrStonedOne:
+  - tweak: tweaked the settings of the space drift subsystem to be less effected by
+      anti-lag slowdowns
+  Pubby:
+  - rscadd: 'A new map: PubbyStation. Set it to your favorite in map preferences!'
+  XDTM:
+  - rscadd: PanD.E.M.I.C. now displays the statistics of the viruses inside.
+  phil235:
+  - tweak: Made the singularity gen and tesla gen immune to fire.
+  - tweak: All unique traitor steal objective item are now immune to all damage except
+      severity=1 explosion.
+  - tweak: Mobs on fire no longer get damage to their worn backpacks, belts, id, pocket
+      stuff, and suit storage.
+  - bugfix: Mob receiving melee attacks now only have its outer layer of clothes damaged,
+      e.g. no damage to jumpsuit when wearing a suit.
+  - bugfix: now all hardsuit have 50% more health, as intended.
+  wrist:
+  - rscadd: Toxins is different now.
+2016-10-21:
+  Adam E.:
+  - tweak: Added cargo and engi access to auxillary mine base launching console.
+  Cyberboss:
+  - tweak: Your brain is now gibbed upon chestburst
+  - bugfix: The safe is indestructible again
+  Joan:
+  - rscadd: Wraith Spectacles will now slowly repair the eye damage they did to you
+      as long as you aren't wearing them.
+  - experiment: You can now see how much eye damage the spectacles have done to you
+      overall, as well as how close you are to being nearsighted/blinded.
+  - tweak: Mending Motors heal for more.
+  - wip: Mania Motors are overall more powerful; they have greater effect, but require
+      more power to run and less power to convert adjacent targets.
+  - experiment: Interdiction Lenses no longer require power to disrupt electronics
+      and will no longer disrupt the radios of servants.
+  - bugfix: You need to be holding teleport talismans and wizard teleport scrolls
+      in your hands when you finish the input, and cannot simply open the input and
+      finish it whenever you get stunned.
+  - tweak: The range for seeing visible messages in combat is a tile higher.
+  Screemonster:
+  - tweak: The anti-tamper mechanism on abandoned crates now resists tampering.
+  - tweak: Secure, non-abandoned crates can be given a %chance of exploding when tampered
+      with. Defaults to 0.
+  Shadowlight213:
+  - bugfix: The Swap minds wizard event will now function
+  Swindly:
+  - rscadd: The action button for a dental implant now includes the name of the pill
+  - bugfix: The pill activation button now properly displays the pill's icon
+  uraniummeltdown:
+  - rscadd: Adds more replacements to the Swedish gene
+2016-10-22:
+  Shadowlight213:
+  - experiment: Breathing has been moved from species to the lung organ
+  - rscadd: Lung transplants are now possible!
+2016-10-23:
+  Cyberboss:
+  - bugfix: Fixed a bug that caused door buttons to open doors one after another rather
+      than simultaneously like they are suppose to
+  - bugfix: NOHUNGER species no longer hunger
+  - bugfix: Appropriate gloves now protect you from getting burned by cheap cigarette
+      lighters
+  - rscdel: Labcoats no longer have pockets
+  Yackemflam:
+  - tweak: Riot helmets are now more useful in melee situations and the standard helmet
+      is now slightly weaker
+  uraniummeltdown:
+  - rscadd: Atmos grenades are now in the game and uplink
+2016-10-24:
+  Batman:
+  - tweak: The sniper rifle descriptions are less edgy.
+  Cobby:
+  - rscadd: Finally, a way to relate to Bees!
+  Cyberboss:
+  - bugfix: Morphs no longer gain the transparency of chameleons
+  - bugfix: Turrets can no longer shoot when unwrenched
+  - bugfix: Spray bottle can now be used in the chem dispenser
+  Joan:
+  - rscadd: Clockwork marauders now have a HUD, showing block chance, counter chance,
+      health, fatigue, and host health(if applicable), as well as including a button
+      to try to emerge/recall.
+  - experiment: Clockwork marauders can now block bullets and thrown items, even if
+      Ratvar has not risen.
+  - rscadd: The Judicial Visor no longer requires an open hand to use. Instead, clicking
+      the button will give you a target selector to place the Judicial Marker.
+  - experiment: Tinkerer's Daemons are now a structure instead of a Cache addon.
+  - wip: Tinkerer's Daemons now consume a small amount of power when producing a component,
+      but produce components every 12 seconds with no additional delay.
+  - tweak: Adjusted the costs of the Tinkerer's Daemon and Interdiction Lens.
+  - imageadd: Floaty component images appear when Tinkerer's Caches and Daemons produce
+      components.
+  MrStonedOne:
+  - bugfix: Spectral sword now tracks orbiting ghosts correctly.
+  Shadowlight213:
+  - imageadd: Damaged airlocks now have a sparking effect
+  Swindly:
+  - rscadd: Added a button to the ChemMaster that dispenses the entire buffer to bottles.
+  ma44:
+  - rscadd: Reminds the user that reading or writing a book is stupid.
+2016-10-27:
+  Chowder McArthor:
+  - rscadd: Added a neck slot.
+  - tweak: Modified some of the attachment items (ties, scarves, etc) to be neck slot
+      items instead.
+  Cyberboss:
+  - rscadd: NEW HOTKEYS
+  - rscadd: The number pad can be used to select the body part you want to target
+      (Cycle through head -> eyes -> mouth with 8) in hotkey mode. Be sure Numlock
+      is on!
+  - rscadd: Holding shift can be used as a modifier to your current run state in both
+      hotkey and normal mode.
+  - bugfix: Emag can no longer be spammed on shuttle console
+  Gun Hog:
+  - bugfix: Fixed AIs uploaded to mechs having their camera view stuck to their card.
+  Joan:
+  - rscadd: Clockwork Floors now have a glow when healing servants of toxin damage.
+      Only other servants can see it, so don't get any funny ideas.
+  - bugfix: The Interdiction Lens now properly has a high Belligerent Eye cost instead
+      of a high Replicant Alloy cost.
+  Pubby:
+  - tweak: PubbyStation's bar is now themed like a spooky castle!
+  Swindly:
+  - bugfix: Chem implants can now be properly filled and implanted
+  WJohnston:
+  - rscadd: Adds an unlocked miner equipment locker on Boxstation and Metastation's
+      Aux Base Construction area, as well as a telescreen to the camera inside. All
+      mining outpost computers can also see through that camera.
+  lordpidey:
+  - rscadd: The wizard federation has teamed up with various LARP groups to invent
+      a new type of spell.
+2016-10-28:
+  Erwgd:
+  - rscadd: You can now use cloth to make black or fingerless gloves.
+  - tweak: Biogenerators require less biomass to produce botanist's leather gloves.
+  Tacolizard:
+  - rscadd: Added a new contraband crate to cargo, the ATV crate.
+2016-10-29:
+  Chowder McArthor:
+  - bugfix: Added in icons for the neck slot for the other huds.
+  Cobby:
+  - rscadd: Adds several Halloween-Themed Emojis. See if you can get them all! [no
+      code diving cheaters!]
+  Erwgd:
+  - rscadd: The NanoMed Plus now stocks premium items.
+  Joan:
+  - experiment: Guvax is now targeted; invoking it charges your slab to bind and start
+      converting the next target attacked in melee within 10 seconds. This makes your
+      slab visible in-hand.
+  - tweak: Above 5 Servants, the invocation to charge your slab is not whispered,
+      and the conversion time is increased for each Servant above 5.
+  - wip: Using Guvax on an already bound target will stun them. The bound target can
+      resist out, which will prevent conversion.
+  - experiment: Sentinel's Compromise is now targeted, like Guvax, but can select
+      any target in vision range.
+  - rscadd: Sentinel's Compromise now also removes holy water from the target Servant.
+  - wip: Clicking your slab will cancel these scriptures.
+  - imageadd: Both of these will change your cursor, to make it obvious they're active
+      and you can't do anything else.
+  - rscadd: Arks of the Clockwork Justicar that do not summon Ratvar will still quick-call
+      the shuttle.
+  - bugfix: Clockwork structures that return power can now return power to the APC
+      of the area they're in if there happens to be one.
+  - bugfix: Clockwork structures that use power from an APC will cause that APC to
+      start charging and update the tgUI of anyone looking at the APC.
+  - bugfix: Converting metal, rods, or plasteel to brass with a clockwork proselytizer
+      while holding it will no longer leave a remainder inside of you.
+  - tweak: Plasteel to brass is now a 2:1 ratio, from a 2.5:1 ratio. Accordingly,
+      you now only need 2 sheets of plasteel to convert it to brass instead of 10
+      sheets.
+  - tweak: Wall gears are now converted to brass sheets instead of directly to alloy.
+  - rscdel: You can no longer do other proselytizer actions while refueling from a
+      cache.
+  - bugfix: Fixed a bug where certain stacks wouldn't merge with other stacks, even
+      when they should have been.
+  - bugfix: Clockwork structures constructed from brass sheets now all have appropriate
+      construction value to replicant alloy ratios.
+  - bugfix: Tinkerer's Caches no longer need to see a clockwork wall to link to it
+      and generate components.
+  MrStonedOne:
+  - experiment: Shoes do not go on heads.
+  NikNak:
+  - rscadd: Action figures are finally winnable at arcade machines.  Comes in boxes
+      of 4.
+  Pubby:
+  - rscadd: The holodeck has been upgraded with new programs. Try them out!
+  Shadowlight213:
+  - rscdel: The HOS and other heads of staff no longer have a chance to be revheads
+  TehZombehz:
+  - tweak: Custom food items can now fit inside of smaller containers, such as paper
+      sacks.
+  - rscadd: Small cartons can be crafted using 1 piece of cardboard. Don't be late
+      for school.
+  - rscadd: Apples can now be juiced for apple juice. Chocolate milk can now be crafted
+      using milk and cocoa.
+  - tweak: Chocolate bar recipe has been modified to compensate for chocolate milk.
+      The soy milk version of the chocolate bar recipe remains unchanged.
+  - bugfix: Grapes can now be properly juiced for grape juice using a grinder.
+  XDTM:
+  - tweak: Wizards no longer need sandals to cast robed spells.
+  Xhuis:
+  - rscadd: Syndicate and malfunctioning AIs may now be transferred onto an intelliCard
+      if their parent core has been destroyed. This may only be done with the AI's
+      consent, and the AI may not be re-transferred onto another APC or the APC it
+      came from.
+  - rscadd: New additions have been made for this Halloween and all future ones. Happy
+      Halloween!
+  ma44:
+  - rscadd: You can now solidify liquid gold into sheets of gold with frostoil and
+      a very little amount of iron
+2016-10-30:
+  Joan:
+  - rscadd: The Recollection option in the Clockwork Slab has been significantly improved,
+      with a better information to fluff ratio, and the ability to toggle which tiers
+      of scripture that are visible in Recollection.
+  Lzimann:
+  - bugfix: You can once again order books by its ID in the library.
+  Mysak0CZ:
+  - bugfix: You no longer need to deconstruct emagged (or AI-hacked) APC to fix them,
+      replacing board is sufficient
+  - bugfix: You can no longer unlock AI-hacked APCs
+  - bugfix: Removing APC's and SMES's terminal no longer ignore current tool's speed
+  - rscadd: You can repair APC's cover (only if APC is not compleatly broken) by using
+      APC frame on it
+  - rscadd: closing APC's cover will lock it
+  bgobandit:
+  - rscadd: The creepy clown epidemic has arrived at Space Station 13.
+  - rscadd: Honk.
+2016-10-31:
+  Joan:
+  - experiment: Brass windows will now survive two fireaxe hits, and are slightly
+      more resistant to bullets.
+  Lzimann:
+  - rscdel: Changelings no longer have the Swap Forms ability.
+  Xhuis:
+  - rscadd: Disposal units, outlets, etc. are now fireproof.
+  - rscadd: Changelings can now use biodegrade to escape silk cocoons.

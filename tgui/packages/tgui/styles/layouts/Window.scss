@@ -27,15 +27,36 @@
   left: 0;
   width: 100%;
   height: 32px;
+  height: base.rem(32px);
 }
 
 // Everything after the title bar
 .Window__rest {
   position: fixed;
   top: 32px;
+  top: base.rem(32px);
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.Window__contentPadding {
+  margin: 0.5rem;
+  // IE8: Calc not supported
+  height: 100%;
+  // 0.01 is needed to make the scrollbar not appear
+  // due to rem rendering inaccuracies in IE11.
+  height: calc(100% - 1.01rem);
+}
+
+.Window__contentPadding:after {
+  height: 0;
+}
+
+.Layout__content--scrollable .Window__contentPadding:after {
+  display: block;
+  content: '';
+  height: 0.5rem;
 }
 
 .Window__dimmer {
@@ -48,25 +69,14 @@
   pointer-events: none;
 }
 
-.Window__toast {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  font-size: 12px;
-  height: 40px;
-  line-height: 39px;
-  padding: 0 12px;
-  background-color: color.scale(base.$color-bg, $lightness: -50%);
-  color: rgba(255, 255, 255, 0.8);
-}
-
 .Window__resizeHandle__se {
   position: fixed;
   bottom: 0;
   right: 0;
   width: 20px;
+  width: base.rem(20px);
   height: 20px;
+  height: base.rem(20px);
   cursor: se-resize;
 }
 
@@ -76,6 +86,7 @@
   left: 0;
   right: 0;
   height: 6px;
+  height: base.rem(6px);
   cursor: s-resize;
 }
 
@@ -85,5 +96,6 @@
   bottom: 0;
   right: 0;
   width: 3px;
+  width: base.rem(3px);
   cursor: e-resize;
 }

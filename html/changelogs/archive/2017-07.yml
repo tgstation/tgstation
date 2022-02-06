@@ -1,0 +1,318 @@
+2017-07-07:
+  Ergovisavi:
+  - tweak: Added a recovery window after some variable length megafauna attacks
+  - rscadd: Adds a new mob to the game, the "leaper"
+  - rscadd: Adds another planetstation mob, the "wanderer/mook" to the backend
+  - bugfix: Fixes a problem with player controlled leapers where they occasionally
+      can't fire
+  Joan:
+  - tweak: Rethemes the ash walker nest to match the Necropolis.
+  - balance: Chasms, asteroid turfs, basalt, and lava can no longer be made wet.
+  - rscadd: A strange new Resonant Signal has appeared on lavaland.
+  - tweak: Dreams while sleeping are now slightly longer on average and will contain
+      more possibilities.
+  - rscadd: Bedsheets may affect what you can dream.
+  Lexorion:
+  - imageadd: The portable PACMAN generators now have new icons, including on and
+      off states.
+  More Robust Than You:
+  - rscadd: Nanotrasen has added lids to their soda that POP! when opened. Up to 3
+      possible sounds!
+  - bugfix: brain damage should no longer attempt to emote/say things while unconcious
+  NanoTrasen Smithy Department:
+  - soundadd: Tasked by corporate heads to make NanoTrasen's line of captain rapiers
+      flashier, a few brave smiths have managed to forge their steel in a way that
+      enhances their swords' acoustic properties.
+  Shadowlight213:
+  - rscdel: The majority of the tiny fans on Deltastation have been removed.
+  - tweak: Airlocks going to space, and secure areas like the bridge and sec on Delta
+      have been given the cycling system.
+  - balance: The freedom suit no longer slows you down and can withstand the FIRES
+      OF LIBERTY!
+  Steelpoint (Ancient Station):
+  - rscadd: Major changes to Ancient Station include new sounds for the prototype
+      RIG hardsuit, the NASA Engineering Voidsuit slowing the user down properly and
+      new insulated gloves in engineering.
+  - rscadd: Several minor changes, such as an extra oxygen tank, spawn in equipment
+      and minor tile changes.
+  Supermichael777:
+  - balance: The AI swap menu is now given to the person with the multi-tool rather
+      than the Borg. Old behavior remains for all non multi-tool sources
+  - bugfix: Borgs and shells now notify when un-linked due to the wire being cut.
+  Tacolizard:
+  - bugfix: Nanotrasen has begun a program to inform the souls of the departed that
+      their hearts can't beat after death.
+  - bugfix: heartbeat noises now loop (i can't come up with any dumb fluff for this
+      one sorry)
+  That Really Good Soda Flavor:
+  - bugfix: Martial arts will no longer be transferred in cloning, etc. if they are
+      temporary (i.e. wrestling, krav maga).
+  Xhuis:
+  - tweak: Recollection has been separated into categories and should be easier to
+      read and more informative.
+  - bugfix: Ratvar has been reminded that he hates Nar-Sie and will now actively pursue
+      fighting her.
+  - bugfix: You can now properly dig out plants from patches of soil.
+  - bugfix: Reskinnable guns no longer become invisible after firing a single shot.
+  - bugfix: The kinetic crusher and other forced two-handed objects can now correctly
+      be stored in a bag of holding.
+  - bugfix: Positronic brains' icons will now properly change depending on status.
+  - tweak: Positronic brains will now stop searching as soon as they're occupied.
+  - tweak: Positronic brains now have error messages if activating them fails for
+      whatever reason.
+  - bugfix: Unconscious Servants are now properly informed when they're deconverted.
+  - bugfix: The Voice of God no longer specifically targets creatures like constructs
+      and clockwork marauders.
+  - bugfix: Heartbeat sounds no longer play indefinitely if your body is destroyed.
+  kevinz000:
+  - rscadd: Headphones have been provided to the station in Autodrobes, mixed wardrobes,
+      and fitness wardrobes. Please use them responsibly, and remember to focus on
+      your job above all else!
+  - experiment: Headphones fit in head, ears, OR neck slots!
+  ohnopigeons:
+  - bugfix: Nanotrasen Electronics have fixed a bug where issued factory-fresh PDAs
+      did not link to their cartridges, requiring manual reinsertion.
+  shizcalev:
+  - balance: Nanotrasen has upgraded the obsolete teleporter consoles on most NT branded
+      stations with newer ones preloaded with the newest Supermatter monitoring application!
+  - soundadd: The supermatter base now has a speaker and will provide audio cues as
+      to it's current status!
+  somebody:
+  - rscadd: Strong plasma glass windows
+2017-07-09:
+  Crexfu:
+  - tweak: 2 plasma sheets have been added to viro break room on box
+  More Robust Than You:
+  - bugfix: Plasma and Reinforced plasma glass no longer merge with Normal and Reinforced
+      Glass
+  Xhuis:
+  - bugfix: You can no longer catch objects that require two hands at all times with
+      only one hand.
+2017-07-11:
+  RandomMarine:
+  - rscadd: Drones can now switch between help and harm intent.
+  Tacolizard:
+  - rscadd: Admins can now set a message/warning when they delay the round end, to
+      be shown to anyone who tries to reboot the world.
+  Tacolizard and Cyberboss:
+  - rscadd: Added two new organs, the liver and stomach. Without them, you won't metabolize
+      chemicals.
+  - rscadd: The liver is responsible for processing all chemicals except nutrients.
+      If your liver is removed, you will be unable to metabolize any drugs and will
+      slowly die of toxin damage.
+  - rscadd: Drinking too much alcohol or having too many toxins in you will damage
+      your liver, if it becomes too damaged, it will undergo liver failure and you
+      will slowly die of toxin damage. Your liver naturally heals a small amount of
+      its damage. However, it doesn't heal enough to offset stronger alcohols or large
+      amounts of toxins, at least until they are metabolized out of your body.
+  - rscadd: to conduct a liver transplant, inject corazone into the patient. Corazone
+      will prevent the patient from taking damage due to either not having a liver
+      or undergoing liver failure. Corazone will metabolize out of the patient quickly,
+      so at least 50u is recommended.
+  - rscadd: The stomach is responsible for metabolizing nutrients. Without a stomach,
+      you will be unable to get fat, but you will also be unable to process any nutrients,
+      meaning you will eventually starve to death.
+  Xhuis:
+  - bugfix: Mobs spawned by Necropolis curses are now immune to chasms.
+  - tweak: The BoxStation warden's office now has a crew monitoring console.
+  - imageadd: Clockwork slabs now show icons of the components used in scripture instead
+      of initials.
+  factoryman942:
+  - bugfix: Boxstation Robotics now has 6 flashes, from 2.
+  - bugfix: Metastation Robotics now has 40 sheets of glass, instead of 20.
+  shizcalev:
+  - tweak: The supermatter reporting system has been updated to report remaining integrity,
+      as opposed to how unstable the SM currently is.
+2017-07-18:
+  BeeSting12:
+  - tweak: Deltastation's auxiliary storage in arrivals can be accessed by anyone
+      now.
+  - bugfix: Deltastation's cargo bay maintenance can now be accessed by cargo techs.
+  Dannno/Supermichael777/InsaneHyena:
+  - rscadd: You can now pick from a few different styles when augmenting someone with
+      robot parts by putting them in the augment manipulator. Alt+click to take parts
+      out.
+  Ergovisavi:
+  - bugfix: Fixed the refresher variant of the anomalous crystal making holodeck items
+      real
+  Fox McCloud:
+  - rscdel: blood and gibs on turfs can no longer infect nearby people
+  - tweak: Tuberculosis bypasses species virus immunity (it's not a virus!)
+  - tweak: Disease and appendicitis events no longer infect clientless mobs
+  - tweak: Disease event will no longer pick virus immune mobs
+  - tweak: Appendicitis event will no longer pick mobs without an appendix
+  - bugfix: Fixed changeling panacea curing non-harmful viruses
+  - bugfix: Fixes IV drips not properly injecting the right amount of blood
+  Joan:
+  - rscdel: Removed the Soul Vessel, Cogscarab, and Anima Fragment Scriptures.
+  - bugfix: The Ark of the Clockwork Justicar will still forcibly take up a 3x3 area
+      even if it still needs components to activate.
+  MrStonedOne & Fox-McCloud:
+  - tweak: Made pathfinding much quicker
+  NewSta:
+  - bugfix: Fixes the maid apron being invisible when in-hand or attached to the maid
+      outfit.
+  XDTM:
+  - experiment: Viruses and symptoms have been havily reworked.
+  - rscadd: Symptoms now have statistic thresholds, that give them new properties
+      or improve their existing ones if the overall virus statistic is above the threshold.
+      Check the pull request in github or the wiki (soon) for the full list.
+  - rscdel: Some symptoms no longer scale linearly with stats, and instead have thresholds.
+  - tweak: The symptom limit is now 6.
+  - rscdel: Viruses can no longer be made invisible to the Pandemic
+  - tweak: Symptoms no longer trigger with a 5% chance every second, but instead have
+      a minimum and maximum number of seconds between each activation, making them
+      more consistent.
+  - rscdel: The symptoms Blood Vomit and Projectile Vomit have been removed, and are
+      now bonuses for the base Vomit symptom.
+  - rscdel: The Weakness symptom has been removed as it was completely useless.
+  - tweak: The Sensory Destruction symptom has been reworked into Narcolepsy, which
+      causes drowsiness and sleep.
+  - tweak: Viral Aggressive Metabolism now has a timer before it starts decaying the
+      virus. It scales with the highest between Resistance or Stage Speed.
+  - rscadd: You can now neuter symptoms, making them inactive. They will still affect
+      stats. Adding formaldehyde to a virus will neuter a random symptom. A bottle
+      of formaldehyde starts in the virus fridge.
+  Xhuis:
+  - tweak: The tachyon-doppler array's rotation now has messages, sprites, and examine
+      text.
+  - bugfix: Time stop is now fixed, finally!
+  - soundadd: Time stop's sound now plays in reverse when the effect ends.
+  - bugfix: Missiles can no longer ricochet off of shuttle walls, etc.
+  - bugfix: Winter coats now hold all flashlights properly, instead of seclites.
+  Xhuis & Cyberboss:
+  - rscadd: New hivebot invasion event
+  kevinz000:
+  - rscadd: Personal Cabinets now have piano synthesizers for handheld piano playing.
+  - experiment: Thank @nicbn for the sprites!
+  ninjanomnom:
+  - experiment: Thank you for updating your ShuttlSoft product! Your last update was
+      -ERROR- years ago. A full changelog can be found at CYG10408.SHSO.b9 along with
+      the EULA. This update lays a foundation for new things to come and a sample
+      in the form of new and improved docking procedures.
+  shizcalev:
+  - bugfix: Cerestation's emergency shuttle autopilot will no longer fly you in reverse
+      back to Centcom!
+2017-07-27:
+  Anonmare:
+  - bugfix: Informs a person about how bomb cores work
+  BeeSting12:
+  - rscdel: Water bottles from the sustenance vendor are gone. Wait for the ice in
+      the ice cups melt, criminal scum.
+  - rscdel: There is no longer a sink in gulag. Hygiene is for the moral members of
+      society.
+  - tweak: Janitor and service cyborgs now get pocket fire extinguishers for fire
+      suppression and space propulsion.
+  - rscadd: Pubbystation's dorms now has a dresser.
+  - bugfix: Crafting satchels from leather now makes a leather satchel rather than
+      a regular satchel.
+  Fox McCloud:
+  - tweak: breathing plasma now causes direct tox damage
+  - tweak: breathing hot/cold air now warns you when you're doing so, again
+  - tweak: species heat/cold mod now impacts damage from breathing hot/cold gases
+  HAL 9000:
+  - bugfix: I'm sorry Dave, I'm afraid I can't do that
+  JStheguy:
+  - imageadd: Resprited the tablet, including completely redone screen sprites.
+  - rscadd: Tablets can now come spawn in one of 5 colors; red, green, yellow, blue,
+      and black.
+  - imageadd: Most alcohol bottles have been resprited, as well as a poster that used
+      one of the current bottles as part of it's design.
+  Joan:
+  - balance: Unwrenching clockwork structures no longer damages them.
+  - tweak: The Hierophant will now release a burst when melee attacking instead of
+      actually hitting its target.
+  - bugfix: The Hierophant Club's blasts will now properly aggro hostile mobs.
+  - tweak: The blood-drunk miner will fire its KA a bit more often.
+  PopNotes:
+  - soundadd: Nar-Sie now sounds like an eldritch abomination that obliterates worlds
+      instead of a sweet maiden that gently whispers sweet nothings in your ear.
+  Supermichael777:
+  - bugfix: delayed chloral hydrate actually works now.
+  Tacolizard:
+  - rscadd: Added cybernetic organs to RnD, they can be used to replace organic organs.
+      Remember to administer corazone during implantation though!
+  - rscadd: Added the upgraded cybernetic liver. It is exceptionally robust against
+      toxins and alcohol poisoning.
+  Xhuis:
+  - bugfix: Cyborgs now regenerate oxygen damage.
+  - bugfix: If a cyborg somehow takes toxin damage, it can be healed with cables as
+      though it was burn damage.
+  - spellcheck: Picking up ores by walking over them now longer spams messages, instead
+      showing one message per tile of ore picked up.
+  - tweak: You can now control-click action buttons to lock them and prevent them
+      from being moved. Alt-clicking the "Show/Hide Actions" button will unlock all
+      buttons.
+  - tweak: There is now a preference for if buttons should be locked by default or
+      not.
+  - rscadd: Pizza box stacks can now fall over
+  - imageadd: Pizza box inhands now stacks depending on how many you're holding.
+  - bugfix: Mining satchels no longer hold infinite amounts of ore.
+  - bugfix: Reviving Stasis now consistently regenerates organs.
+  - bugfix: Medibots now properly render the overlays of the medkits they are made
+      from.
+  - bugfix: The latest batch of Syndicate screwdrivers fell into a vat of paint and
+      were colored randomly. We have rinsed them off and they will no longer come
+      in random colors.
+  - bugfix: Supermatter slivers can now be stolen properly.
+  - tweak: Whenever you're trying to hack off your own limbs, you'll now always hit
+      those limbs.
+  Xhuis & MoreRobustThanYou:
+  - imageadd: Toolbelts now have overlays for crowbars, wirecutters, screwdrivers,
+      multitools, and wrenches.
+  Y0SH1_M4S73R:
+  - bugfix: Romerol zombies count as dead for assassinate and maroon objectives.
+  bandit:
+  - rscadd: New Cards against Spess cards are available!
+  ktccd:
+  - bugfix: Hijacking should now be possible again!
+2017-07-29:
+  Fox McCloud:
+  - rscadd: Sound should carry further, but should get quieter and quieter the further
+      you are from it
+  Joan:
+  - tweak: Sigils of Transmission can now drain power in a large area when activated
+      by a Servant.
+  - rscdel: Interdiction Lenses have been removed, as they were largely only used
+      to drain power into Sigils of Transmission.
+  - balance: Sigils can no longer directly be removed by Servants.
+  - balance: Prolonging Prisms have a higher cost to delay, but no longer increase
+      in cost based off of CV.
+  - balance: Base delay cost changed from 2500W to 3000W, cost increase per activation
+      changed from 750W to 1250W, cost increase per 10 CV changed from 75W to 0W.
+  - rscdel: Removed the Volt Blaster scripture.
+  - rscdel: Ratvarian spears can no longer impale.
+  - balance: Vitality Matrices now require a flat 150 Vitality to revive Servants,
+      from 20 + the Servant's non-oxygen damage. Vitality Matrices are also no longer
+      destroyed when reviving Servants.
+  - balance: Ratvarian spear damage changed from 18 to 20, Ratvarian spears now generate
+      5 Vitality when attacking living targets. Ratvarian spear armour penetration
+      changed from 0 to 10.
+  - balance: The Judicial Visor's mark now immediately applies Belligerent and knocks
+      down for 0.5 seconds. Mark exploding no longer mutes, mark explosion stun changed
+      from 16 seconds to 1.5 seconds, mark explosion damage changed from 10 to 20.
+  More Robust Than You:
+  - rscadd: Nanotrasen has begun production of the Rapid Cable Layer, a tool that
+      helps you lay down cables faster
+  - rscadd: You can now craft ghetto RCLs with metal, a screwdriver, welder, and wrench.
+      They hold less cable, and may fall apart or jam!
+  Xhuis:
+  - spellcheck: Player-controlled medibots now receive a notice whenever they try
+      to heal someone with too high health.
+  - bugfix: Syringes now properly inject targets wearing thick clothing on different
+      slots.
+  - bugfix: Stun baton overlays now appear on security belts when active.
+  kevinz000:
+  - rscadd: 'Badmins: Buildmode map generators have names in the list to select them,
+      instead of paths.'
+  - rscadd: Also, a new map generator has been added, repair/reload station. Use it
+      VERY sparingly, it deletes the block of the map and reloads it to roundstart.
+      THIS CAN CAUSE ISSUES WITH MACHINES AND ATMOSPHERICS, SO DO NOT USE IT UNLESS
+      YOU ABSOLUTELY HAVE TO!
+  - experiment: The reload station one tagged DO NOT USE shouldn't be used as it doesn't
+      delete anything before loading, so if you use it you'll have two copies of things.
+      That can result in a LOT of issues, so don't use it unless you're a codermin
+      and know what you're doing/abusing!
+  ktccd:
+  - bugfix: Ashstorms no longer pierces the protected people to kill anyone/anything
+      in them.

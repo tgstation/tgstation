@@ -4,10 +4,11 @@
 	icon = 'icons/effects/blood.dmi'
 
 /obj/effect/decal/remains/acid_act()
-	visible_message("<span class='warning'>[src] dissolve[gender==PLURAL?"":"s"] into a puddle of sizzling goop!</span>")
+	visible_message(span_warning("[src] dissolve[gender==PLURAL?"":"s"] into a puddle of sizzling goop!"))
 	playsound(src, 'sound/items/welder.ogg', 150, TRUE)
 	new /obj/effect/decal/cleanable/greenglow(drop_location())
 	qdel(src)
+	return TRUE
 
 /obj/effect/decal/remains/human
 	desc = "They look like human remains. They have a strange aura about them."

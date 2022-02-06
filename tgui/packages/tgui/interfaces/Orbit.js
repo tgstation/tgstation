@@ -1,11 +1,10 @@
 import { createSearch } from 'common/string';
-import { Box, Button, Input, Icon, Section, Flex } from '../components';
-import { Window } from '../layouts';
+import { multiline } from 'common/string';
+import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Divider, Flex, Icon, Input, Section } from '../components';
+import { Window } from '../layouts';
 
-import { createLogger } from '../logging';
-
-const PATTERN_DESCRIPTOR = / \[(?:ghost|dead)\]$/;
 const PATTERN_NUMBER = / \(([0-9]+)\)$/;
 
 const searchFor = searchText => createSearch(searchText, thing => thing.name);
@@ -36,7 +35,8 @@ const compareNumberedText = (a, b) => {
 
 const BasicSection = (props, context) => {
   const { act } = useBackend(context);
-  const { searchText, source, title } = props;
+  const { searchText, source, title, autoObserve } = props;
+
   const things = source.filter(searchFor(searchText));
   things.sort(compareNumberedText);
   return source.length > 0 && (
@@ -44,9 +44,10 @@ const BasicSection = (props, context) => {
       {things.map(thing => (
         <Button
           key={thing.name}
-          content={thing.name.replace(PATTERN_DESCRIPTOR, "")}
+          content={thing.name}
           onClick={() => act("orbit", {
             ref: thing.ref,
+            auto_observe: autoObserve,
           })} />
       ))}
     </Section>
@@ -55,13 +56,14 @@ const BasicSection = (props, context) => {
 
 const OrbitedButton = (props, context) => {
   const { act } = useBackend(context);
-  const { color, thing } = props;
+  const { color, thing, autoObserve } = props;
 
   return (
     <Button
       color={color}
       onClick={() => act("orbit", {
         ref: thing.ref,
+        auto_observe: autoObserve,
       })}>
       {thing.name}
       {thing.orbiters && (
@@ -69,7 +71,7 @@ const OrbitedButton = (props, context) => {
           {"("}{thing.orbiters}{" "}
           <Box
             as="img"
-            src="ghost.png"
+            src={resolveAsset('ghost.png')}
             opacity={0.7} />
           {")"}
         </Box>
@@ -90,6 +92,7 @@ export const Orbit = (props, context) => {
   } = data;
 
   const [searchText, setSearchText] = useLocalState(context, "searchText", "");
+  const [autoObserve, setAutoObserve] = useLocalState(context, "autoObserve", false);
 
   const collatedAntagonists = {};
   for (const antagonist of antagonists) {
@@ -113,14 +116,20 @@ export const Orbit = (props, context) => {
         .filter(searchFor(searchText))
         .sort(compareNumberedText)[0];
       if (member !== undefined) {
-        act("orbit", { ref: member.ref });
+        act("orbit", {
+          ref: member.ref,
+          auto_observe: autoObserve,
+        });
         break;
       }
     }
   };
 
   return (
-    <Window>
+    <Window
+      title="Orbit"
+      width={350}
+      height={700}>
       <Window.Content scrollable>
         <Section>
           <Flex>
@@ -138,6 +147,29 @@ export const Orbit = (props, context) => {
                 onInput={(_, value) => setSearchText(value)}
                 onEnter={(_, value) => orbitMostRelevant(value)} />
             </Flex.Item>
+            <Flex.Item>
+              <Divider vertical />
+            </Flex.Item>
+            <Flex.Item>
+              <Button
+                inline
+                color="transparent"
+                tooltip={multiline`Toggle Auto-Observe. When active, you'll
+                see the UI / full inventory of whoever you're orbiting. Neat!`}
+                tooltipPosition="bottom-start"
+                selected={autoObserve}
+                icon={autoObserve ? "toggle-on" : "toggle-off"}
+                onClick={() => setAutoObserve(!autoObserve)} />
+            </Flex.Item>
+            <Flex.Item>
+              <Button
+                inline
+                color="transparent"
+                tooltip="Refresh"
+                tooltipPosition="bottom-start"
+                icon="sync-alt"
+                onClick={() => act("refresh")} />
+            </Flex.Item>
           </Flex>
         </Section>
         {antagonists.length > 0 && (
@@ -152,6 +184,7 @@ export const Orbit = (props, context) => {
                       key={antag.name}
                       color="bad"
                       thing={antag}
+                      autoObserve={autoObserve}
                     />
                   ))}
               </Section>
@@ -159,7 +192,7 @@ export const Orbit = (props, context) => {
           </Section>
         )}
 
-        <Section title="Alive">
+        <Section title={`Alive - (${alive.length})`}>
           {alive
             .filter(searchFor(searchText))
             .sort(compareNumberedText)
@@ -167,20 +200,29 @@ export const Orbit = (props, context) => {
               <OrbitedButton
                 key={thing.name}
                 color="good"
-                thing={thing} />
+                thing={thing}
+                autoObserve={autoObserve} />
             ))}
         </Section>
 
-        <BasicSection
-          title="Ghosts"
-          source={ghosts}
-          searchText={searchText}
-        />
+        <Section title={`Ghosts - (${ghosts.length})`}>
+          {ghosts
+            .filter(searchFor(searchText))
+            .sort(compareNumberedText)
+            .map(thing => (
+              <OrbitedButton
+                key={thing.name}
+                color="grey"
+                thing={thing}
+                autoObserve={autoObserve} />
+            ))}
+        </Section>
 
         <BasicSection
           title="Dead"
           source={dead}
           searchText={searchText}
+          autoObserve={autoObserve}
         />
 
         <BasicSection

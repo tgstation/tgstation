@@ -16,15 +16,19 @@
 	if(isturf(target))
 		RegisterSignal(target, COMSIG_TURF_HAS_GRAVITY, .proc/turf_gravity_check)
 
-/datum/element/forced_gravity/Detach(datum/source, force)
+/datum/element/forced_gravity/Detach(datum/source)
 	. = ..()
 	var/static/list/signals_b_gone = list(COMSIG_ATOM_HAS_GRAVITY, COMSIG_TURF_HAS_GRAVITY)
 	UnregisterSignal(source, signals_b_gone)
 
 /datum/element/forced_gravity/proc/gravity_check(datum/source, turf/location, list/gravs)
+	SIGNAL_HANDLER
+
 	if(!ignore_space && isspaceturf(location))
 		return
 	gravs += gravity
 
 /datum/element/forced_gravity/proc/turf_gravity_check(datum/source, atom/checker, list/gravs)
+	SIGNAL_HANDLER
+
 	return gravity_check(null, source, gravs)

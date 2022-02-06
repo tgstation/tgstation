@@ -3,27 +3,16 @@ import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../co
 import { Window } from '../layouts';
 
 export const GravityGenerator = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    charging_state,
-    operational,
-  } = data;
+  const { data } = useBackend(context);
+  const { operational } = data;
   return (
-    <Window>
+    <Window
+      width={400}
+      height={155}>
       <Window.Content>
         {!operational && (
           <NoticeBox>
             No data available
-          </NoticeBox>
-        )}
-        {!!operational && charging_state !== 0 && (
-          <NoticeBox danger>
-            WARNING - Radiation detected
-          </NoticeBox>
-        )}
-        {!!operational && charging_state === 0 && (
-          <NoticeBox success>
-            No radiation detected
           </NoticeBox>
         )}
         {!!operational && (

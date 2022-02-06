@@ -30,7 +30,7 @@
 	return TRUE
 
 /datum/language/proc/get_icon()
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/goonchat)
+	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 	return sheet.icon_tag("language-[icon_state]")
 
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)

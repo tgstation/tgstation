@@ -165,7 +165,7 @@
 	is_editable = TRUE
 
 /obj/structure/sign/warning/chemdiamond
-	name = "\improper REACTIVE CHEMICALS"
+	name = "\improper REACTIVE CHEMICALS sign"
 	sign_change_name = "Warning - Hazardous Chemicals sign"
 	desc = "A sign that warns of potentially reactive chemicals nearby, be they explosive, flamable, or acidic."
 	icon_state = "chemdiamond"
@@ -179,3 +179,11 @@
 	desc = "A warning sign which reads 'ESCAPE PODS'."
 	icon_state = "pods"
 	is_editable = TRUE
+
+/obj/structure/sign/warning/radshelter
+	name = "\improper RADSTORM SHELTER sign"
+	sign_change_name = "Location - Radstorm Shelter"
+	desc = "A warning sign which reads 'RADSTORM SHELTER'."
+	icon_state = "radshelter"
+	is_editable = TRUE
+

@@ -1,27 +1,28 @@
 //caravan ambush
 
 /obj/item/wrench/caravan
-	color = "#ff0000"
+	icon_state = "wrench_caravan"
 	desc = "A prototype of a new wrench design, allegedly the red color scheme makes it go faster."
 	name = "experimental wrench"
 	toolspeed = 0.3
 
 /obj/item/screwdriver/caravan
-	color = "#ff0000"
+	icon_state = "screwdriver_caravan"
 	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster."
 	name = "experimental screwdriver"
 	toolspeed = 0.3
 	random_color = FALSE
 
 /obj/item/wirecutters/caravan
-	color = "#ff0000"
+	icon_state = "cutters_caravan"
 	desc = "A prototype of a new wirecutter design, allegedly the red color scheme makes it go faster."
 	name = "experimental wirecutters"
+	worn_icon_state = "cutters"
 	toolspeed = 0.3
 	random_color = FALSE
 
 /obj/item/crowbar/red/caravan
-	color = "#ff0000"
+	icon_state = "crowbar_caravan"
 	desc = "A prototype of a new crowbar design, allegedly the red color scheme makes it go faster."
 	name = "experimental crowbar"
 	toolspeed = 0.3
@@ -53,7 +54,7 @@
 	shuttleId = "caravantrade1"
 	possible_destinations = "whiteship_away;whiteship_home;whiteship_z4;whiteship_lavaland;caravantrade1_custom;caravantrade1_ambush"
 
-/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Initialize()
+/obj/machinery/computer/camera_advanced/shuttle_docker/caravan/Initialize(mapload)
 	. = ..()
 	GLOB.jam_on_wardec += src
 
@@ -67,7 +68,7 @@
 	shuttleId = "caravantrade1"
 	lock_override = NONE
 	shuttlePortId = "caravantrade1_custom"
-	jumpto_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "caravantrade1_ambush" = 1)
+	jump_to_ports = list("whiteship_away" = 1, "whiteship_home" = 1, "whiteship_z4" = 1, "caravantrade1_ambush" = 1)
 	view_range = 6.5
 	x_offset = -5
 	y_offset = -5
@@ -78,7 +79,7 @@
 	desc = "Used to control the Pirate Cutter."
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	circuit = /obj/item/circuitboard/computer/caravan/pirate
 	shuttleId = "caravanpirate"
 	possible_destinations = "caravanpirate_custom;caravanpirate_ambush"
@@ -91,7 +92,7 @@
 	shuttleId = "caravanpirate"
 	lock_override = NONE
 	shuttlePortId = "caravanpirate_custom"
-	jumpto_ports = list("caravanpirate_ambush" = 1)
+	jump_to_ports = list("caravanpirate_ambush" = 1)
 	view_range = 6.5
 	x_offset = 3
 	y_offset = -6
@@ -101,7 +102,7 @@
 	desc = "Used to control the Syndicate Fighter."
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	req_access = list(ACCESS_SYNDICATE)
 	circuit = /obj/item/circuitboard/computer/caravan/syndicate1
 	shuttleId = "caravansyndicate1"
@@ -115,7 +116,7 @@
 	shuttleId = "caravansyndicate1"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate1_custom"
-	jumpto_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
+	jump_to_ports = list("caravansyndicate1_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 0
 	x_offset = 2
 	y_offset = 0
@@ -126,7 +127,7 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	req_access = list(ACCESS_SYNDICATE)
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	circuit = /obj/item/circuitboard/computer/caravan/syndicate2
 	shuttleId = "caravansyndicate2"
 	possible_destinations = "caravansyndicate2_custom;caravansyndicate2_ambush;caravansyndicate1_listeningpost"
@@ -139,7 +140,7 @@
 	shuttleId = "caravansyndicate2"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate2_custom"
-	jumpto_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
+	jump_to_ports = list("caravansyndicate2_ambush" = 1, "caravansyndicate1_listeningpost" = 1)
 	view_range = 0
 	x_offset = 0
 	y_offset = 2
@@ -150,7 +151,7 @@
 	icon_screen = "syndishuttle"
 	icon_keyboard = "syndie_key"
 	req_access = list(ACCESS_SYNDICATE)
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	circuit = /obj/item/circuitboard/computer/caravan/syndicate3
 	shuttleId = "caravansyndicate3"
 	possible_destinations = "caravansyndicate3_custom;caravansyndicate3_ambush;caravansyndicate3_listeningpost"
@@ -163,7 +164,7 @@
 	shuttleId = "caravansyndicate3"
 	lock_override = NONE
 	shuttlePortId = "caravansyndicate3_custom"
-	jumpto_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1)
+	jump_to_ports = list("caravansyndicate3_ambush" = 1, "caravansyndicate3_listeningpost" = 1)
 	view_range = 2.5
 	x_offset = -1
 	y_offset = -3

@@ -1,7 +1,7 @@
 
 /mob/living/carbon/alien/proc/updatePlasmaDisplay()
 	if(hud_used) //clientless aliens
-		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[round(getPlasma())]</font></div>"
+		hud_used.alien_plasma_display.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='magenta'>[round(getPlasma())]</font></div>")
 
 /mob/living/carbon/alien/larva/updatePlasmaDisplay()
 	return
@@ -26,7 +26,7 @@
 				finder_icon = "finder_med"
 			if(21 to INFINITY)
 				finder_icon = "finder_far"
-		var/image/finder_eye = image('icons/mob/screen_alien.dmi', finder_icon, dir = Qdir)
+		var/image/finder_eye = image('icons/hud/screen_alien.dmi', finder_icon, dir = Qdir)
 		hud_used.alien_queen_finder.add_overlay(finder_eye)
 
 /mob/living/carbon/alien/humanoid/royal/queen/findQueen()

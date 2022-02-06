@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		/datum/material/bluespace,
 		/datum/material/plastic,
 		)
-	AddComponent(/datum/component/material_container, materials_list, INFINITY, allowed_types=/obj/item/stack, _disable_attackby=TRUE)
+	AddComponent(/datum/component/material_container, materials_list, INFINITY, MATCONTAINER_NO_INSERT, allowed_items=/obj/item/stack)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 
@@ -47,29 +47,39 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 	return ..()
 
-/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/user, obj/item/stack/I)
+/obj/machinery/ore_silo/proc/remote_attackby(obj/machinery/M, mob/living/user, obj/item/stack/I, breakdown_flags=NONE)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	// stolen from /datum/component/material_container/proc/OnAttackBy
-	if(user.a_intent != INTENT_HELP)
+	if(user.combat_mode)
 		return
 	if(I.item_flags & ABSTRACT)
 		return
 	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
-		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
+		to_chat(user, span_warning("[M] won't accept [I]!"))
 		return
-	var/item_mats = I.custom_materials & materials.materials
-	if(!length(item_mats))
-		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
+	var/item_mats = materials.get_item_material_amount(I, breakdown_flags)
+	if(!item_mats)
+		to_chat(user, span_warning("[I] does not contain sufficient materials to be accepted by [M]."))
 		return
 	// assumes unlimited space...
 	var/amount = I.amount
-	materials.user_insert(I, user)
+	materials.user_insert(I, user, breakdown_flags)
 	silo_log(M, "deposited", amount, "sheets", item_mats)
 	return TRUE
 
 /obj/machinery/ore_silo/attackby(obj/item/W, mob/user, params)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, W))
+		updateUsrDialog()
+		return
+	if(default_deconstruction_crowbar(W))
+		return
+
+	if(!powered())
+		return ..()
+
 	if (istype(W, /obj/item/stack))
 		return remote_attackby(src, user, W)
+
 	return ..()
 
 /obj/machinery/ore_silo/ui_interact(mob/user)
@@ -173,7 +183,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
 	if (istype(I))
-		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
+		to_chat(user, span_notice("You log [src] in the multitool's buffer."))
 		I.buffer = src
 		return TRUE
 
@@ -193,7 +203,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>[src] can be linked to techfabs, circuit printers and protolathes with a multitool.</span>"
+	. += span_notice("[src] can be linked to techfabs, circuit printers and protolathes with a multitool.")
 
 /datum/ore_silo_log
 	var/name  // for VV

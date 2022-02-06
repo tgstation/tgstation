@@ -6,6 +6,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	desc = "An automated announcement system that handles minor announcements over the radio."
 	icon = 'icons/obj/machines/telecomms.dmi'
 	icon_state = "AAS_On"
+	base_icon_state = "AAS"
 
 	verb_say = "coldly states"
 	verb_ask = "queries"
@@ -26,17 +27,15 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	var/pinklight = "Light_Pink"
 	var/errorlight = "Error_Red"
 
-/obj/machinery/announcement_system/Initialize()
+/obj/machinery/announcement_system/Initialize(mapload)
 	. = ..()
 	GLOB.announcement_systems += src
 	radio = new /obj/item/radio/headset/silicon/ai(src)
-	update_icon()
+	update_appearance()
 
 /obj/machinery/announcement_system/update_icon_state()
-	if(is_operational())
-		icon_state = (panel_open ? "AAS_On_Open" : "AAS_On")
-	else
-		icon_state = (panel_open ? "AAS_Off_Open" : "AAS_Off")
+	icon_state = "[base_icon_state]_[is_operational ? "On" : "Off"][panel_open ? "_Open" : null]"
+	return ..()
 
 /obj/machinery/announcement_system/update_overlays()
 	. = ..()
@@ -54,20 +53,23 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	GLOB.announcement_systems -= src //"OH GOD WHY ARE THERE 100,000 LISTED ANNOUNCEMENT SYSTEMS?!!"
 	return ..()
 
-/obj/machinery/announcement_system/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_SCREWDRIVER)
-		P.play_tool_sound(src)
-		panel_open = !panel_open
-		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the maintenance hatch of [src].</span>")
-		update_icon()
-	else if(default_deconstruction_crowbar(P))
-		return
-	else if(P.tool_behaviour == TOOL_MULTITOOL && panel_open && (machine_stat & BROKEN))
-		to_chat(user, "<span class='notice'>You reset [src]'s firmware.</span>")
-		machine_stat &= ~BROKEN
-		update_icon()
-	else
-		return ..()
+/obj/machinery/announcement_system/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src)
+	panel_open = !panel_open
+	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance hatch of [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/machinery/announcement_system/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return TRUE
+
+/obj/machinery/announcement_system/multitool_act(mob/living/user, obj/item/tool)
+	if(!panel_open || !(machine_stat & BROKEN))
+		return FALSE
+	to_chat(user, span_notice("You reset [src]'s firmware."))
+	set_machine_stat(machine_stat & ~BROKEN)
+	update_appearance()
 
 /obj/machinery/announcement_system/proc/CompileText(str, user, rank) //replaces user-given variables with actual thingies.
 	str = replacetext(str, "%PERSON", "[user]")
@@ -75,7 +77,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	return str
 
 /obj/machinery/announcement_system/proc/announce(message_type, user, rank, list/channels)
-	if(!is_operational())
+	if(!is_operational)
 		return
 
 	var/message
@@ -87,19 +89,27 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
 
+	broadcast(message, channels)
+
+/// Announces a new security officer joining over the radio
+/obj/machinery/announcement_system/proc/announce_officer(mob/officer, department)
+	if (!is_operational)
+		return
+
+	broadcast("Officer [officer.real_name] has been assigned to [department].", list(RADIO_CHANNEL_SECURITY))
+
+/// Sends a message to the appropriate channels.
+/obj/machinery/announcement_system/proc/broadcast(message, list/channels)
 	if(channels.len == 0)
 		radio.talk_into(src, message, null)
 	else
 		for(var/channel in channels)
 			radio.talk_into(src, message, channel)
 
-//config stuff
-
-/obj/machinery/announcement_system/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	. = ..()
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/announcement_system/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "AutomatedAnnouncement", "Automated Announcement System", 500, 225, master_ui, state)
+		ui = new(user, src, "AutomatedAnnouncement")
 		ui.open()
 
 /obj/machinery/announcement_system/ui_data()
@@ -117,7 +127,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(!usr.canUseTopic(src, !issilicon(usr)))
 		return
 	if(machine_stat & BROKEN)
-		visible_message("<span class='warning'>[src] buzzes.</span>", "<span class='hear'>You hear a faint buzz.</span>")
+		visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		return
 	switch(action)
@@ -137,10 +147,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 				log_game("The head announcement was updated: [NewMessage] by:[key_name(usr)]")
 		if("NewheadToggle")
 			newheadToggle = !newheadToggle
-			update_icon()
+			update_appearance()
 		if("ArrivalToggle")
 			arrivalToggle = !arrivalToggle
-			update_icon()
+			update_appearance()
 	add_fingerprint(usr)
 
 /obj/machinery/announcement_system/attack_robot(mob/living/silicon/user)
@@ -150,12 +160,12 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	if(machine_stat & BROKEN)
-		to_chat(user, "<span class='warning'>[src]'s firmware appears to be malfunctioning!</span>")
+		to_chat(user, span_warning("[src]'s firmware appears to be malfunctioning!"))
 		return
 	interact(user)
 
 /obj/machinery/announcement_system/proc/act_up() //does funny breakage stuff
-	if(!obj_break()) // if badmins flag this unbreakable or its already broken
+	if(!atom_break()) // if badmins flag this unbreakable or its already broken
 		return
 
 	arrival = pick("#!@%ERR-34%2 CANNOT LOCAT@# JO# F*LE!", "CRITICAL ERROR 99.", "ERR)#: DA#AB@#E NOT F(*ND!")

@@ -1,16 +1,14 @@
 GLOBAL_LIST_EMPTY(allbountyboards)
 GLOBAL_LIST_EMPTY(request_list)
 /**
-  * A machine that acts basically like a quest board.
-  * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
-  */
+ * A machine that acts basically like a quest board.
+ * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
+ */
 /obj/machinery/bounty_board
 	name = "bounty board"
-	desc = "Alows you to place requests for goods and services across the station, as well as pay those who actually did it."
+	desc = "Allows you to place requests for goods and services across the station, as well as pay those who actually did it."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "request_kiosk"
-	ui_x = 550
-	ui_y = 600
 	light_color = LIGHT_COLOR_GREEN
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
@@ -21,13 +19,11 @@ GLOBAL_LIST_EMPTY(request_list)
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bounty_board, 32)
+
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
 	GLOB.allbountyboards += src
-	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 /obj/machinery/bounty_board/Destroy()
 	GLOB.allbountyboards -= src
@@ -40,26 +36,26 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(current_card.registered_account)
 			current_user = current_card.registered_account
 			return TRUE
-		to_chat(user, "There's no account assigned with this ID.")
+		say("Requesting ID has no registered account.")
 		return TRUE
 	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
+		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 30))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			if(machine_stat & BROKEN)
-				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
-				new /obj/item/stack/sheet/metal(loc, 3)
+				to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
+				new /obj/item/stack/sheet/iron(loc, 3)
 				new /obj/item/shard(loc)
 			else
-				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+				to_chat(user, span_notice("You [anchored ? "un" : ""]secure [name]."))
 				new /obj/item/wallframe/bounty_board(loc)
 			qdel(src)
 
-/obj/machinery/bounty_board/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/bounty_board/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "RequestKiosk", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "RequestKiosk", name)
 		ui.open()
 
 /obj/machinery/bounty_board/ui_data(mob/user)
@@ -74,7 +70,10 @@ GLOBAL_LIST_EMPTY(request_list)
 		if(request.applicants)
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
-	var/obj/item/card/id/id_card = user.get_idcard()
+	var/obj/item/card/id/id_card
+	if(isliving(user))
+		var/mob/living/L = user
+		id_card = L.get_idcard()
 	if(id_card?.registered_account)
 		current_user = id_card.registered_account
 	if(current_user)
@@ -86,8 +85,10 @@ GLOBAL_LIST_EMPTY(request_list)
 	return data
 
 /obj/machinery/bounty_board/ui_act(action, list/params)
-	if(..())
+	. = ..()
+	if(.)
 		return
+
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
@@ -161,11 +162,12 @@ GLOBAL_LIST_EMPTY(request_list)
 	icon_state = "request_kiosk"
 	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/bounty_board
+	pixel_shift = 32
 
 /**
-  * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
-  * All of this is passed to the Request Console UI in order to present in organized way.
-  */
+ * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
+ * All of this is passed to the Request Console UI in order to present in organized way.
+ */
 /datum/station_request
 	///Name of the Request Owner.
 	var/owner
@@ -180,7 +182,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	///the account of the request fulfiller.
 	var/list/applicants = list()
 
-/datum/station_request/New(var/owned, var/newvalue, var/newdescription, var/reqnum, var/own_account)
+/datum/station_request/New(owned, newvalue, newdescription, reqnum, own_account)
 	. = ..()
 	owner = owned
 	value = newvalue

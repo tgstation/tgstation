@@ -5,7 +5,9 @@ import { NtosWindow } from '../layouts';
 export const NtosShipping = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <NtosWindow resizable>
+    <NtosWindow
+      width={450}
+      height={350}>
       <NtosWindow.Content scrollable>
         <Section
           title="NTOS Shipping Hub."

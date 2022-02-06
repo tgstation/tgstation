@@ -1,10 +1,10 @@
-///////////	cleric's den items.
+/////////// cleric's den items.
 
 //Primary reward: the cleric's mace design disk.
 /obj/item/disk/design_disk/adv/cleric_mace
 	name = "Enshrined Disc of Smiting"
 
-/obj/item/disk/design_disk/adv/cleric_mace/Initialize()
+/obj/item/disk/design_disk/adv/cleric_mace/Initialize(mapload)
 	. = ..()
 	var/datum/design/cleric_mace/M = new
 	blueprints[1] = M

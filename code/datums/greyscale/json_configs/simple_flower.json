@@ -1,0 +1,25 @@
+{
+	"map_flower": [
+		{
+			"type": "icon_state",
+			"icon_state": "flower_petal",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "flower_receptacle",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "flower_filament",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "flower_anthers",
+			"blend_mode": "overlay"
+		}
+	]
+}

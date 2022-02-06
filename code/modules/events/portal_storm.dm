@@ -106,11 +106,12 @@
 
 /datum/round_event/portal_storm/proc/spawn_boss()
 	if(!boss_types || !boss_types.len)
-		return 0
+		return FALSE
 
 	if(activeFor == next_boss_spawn)
 		next_boss_spawn += CEILING(number_of_hostiles / number_of_bosses, 1)
-		return 1
+		return TRUE
+	return FALSE
 
 /datum/round_event/portal_storm/proc/time_to_end()
 	if(!hostile_types.len && !boss_types.len)

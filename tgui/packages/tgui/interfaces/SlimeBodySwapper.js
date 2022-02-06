@@ -2,21 +2,20 @@ import { useBackend } from '../backend';
 import { Section, LabeledList, Button, Box } from '../components';
 import { Window } from '../layouts';
 
+const statusMap = {
+  Dead: "bad",
+  Unconscious: "average",
+  Conscious: "good",
+};
+
+const occupiedMap = {
+  owner: "You Are Here",
+  stranger: "Occupied",
+  available: "Swap",
+};
+
 export const BodyEntry = (props, context) => {
   const { body, swapFunc } = props;
-
-  const statusMap = {
-    Dead: "bad",
-    Unconscious: "average",
-    Conscious: "good",
-  };
-
-  const occupiedMap = {
-    owner: "You Are Here",
-    stranger: "Occupied",
-    available: "Swap",
-  };
-
   return (
     <Section
       title={(
@@ -53,13 +52,13 @@ export const BodyEntry = (props, context) => {
 
 export const SlimeBodySwapper = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     bodies = [],
   } = data;
-
   return (
-    <Window>
+    <Window
+      width={400}
+      height={400}>
       <Window.Content scrollable>
         <Section>
           {bodies.map(body => (

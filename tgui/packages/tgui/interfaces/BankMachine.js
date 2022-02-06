@@ -1,5 +1,6 @@
 import { useBackend } from '../backend';
-import { Button, LabeledList, NoticeBox, Section } from '../components';
+import { AnimatedNumber, Button, LabeledList, NoticeBox, Section } from '../components';
+import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 export const BankMachine = (props, context) => {
@@ -10,11 +11,17 @@ export const BankMachine = (props, context) => {
     station_name,
   } = data;
   return (
-    <Window>
+    <Window
+      width={350}
+      height={155}>
       <Window.Content>
+        <NoticeBox danger>
+          Authorized personnel only
+        </NoticeBox>
         <Section title={station_name + ' Vault'}>
           <LabeledList>
-            <LabeledList.Item label="Current Balance"
+            <LabeledList.Item
+              label="Current Balance"
               buttons={(
                 <Button
                   icon={siphoning ? 'times' : 'sync'}
@@ -22,13 +29,13 @@ export const BankMachine = (props, context) => {
                   selected={siphoning}
                   onClick={() => act(siphoning ? 'halt' : 'siphon')} />
               )}>
-              {current_balance + ' cr'}
+              <AnimatedNumber
+                value={current_balance}
+                format={value => formatMoney(value)} />
+              {' cr'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <NoticeBox textAlign="center">
-          Authorized personnel only
-        </NoticeBox>
       </Window.Content>
     </Window>
   );

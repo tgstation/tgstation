@@ -25,19 +25,19 @@
 /obj/structure/barricade/proc/make_debris()
 	return
 
-/obj/structure/barricade/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM && bar_material == METAL)
-		if(obj_integrity < max_integrity)
+/obj/structure/barricade/attackby(obj/item/I, mob/living/user, params)
+	if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode && bar_material == METAL)
+		if(atom_integrity < max_integrity)
 			if(!I.tool_start_check(user, amount=0))
 				return
 
-			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			to_chat(user, span_notice("You begin repairing [src]..."))
 			if(I.use_tool(src, user, 40, volume=40))
-				obj_integrity = clamp(obj_integrity + 20, 0, max_integrity)
+				atom_integrity = clamp(atom_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
-/obj/structure/barricade/CanAllowThrough(atom/movable/mover, turf/target)//So bullets will fly over and stuff.
+/obj/structure/barricade/CanAllowThrough(atom/movable/mover, border_dir)//So bullets will fly over and stuff.
 	. = ..()
 	if(locate(/obj/structure/barricade) in get_turf(mover))
 		return TRUE
@@ -67,10 +67,10 @@
 	if(istype(I,/obj/item/stack/sheet/mineral/wood))
 		var/obj/item/stack/sheet/mineral/wood/W = I
 		if(W.amount < 5)
-			to_chat(user, "<span class='warning'>You need at least five wooden planks to make a wall!</span>")
+			to_chat(user, span_warning("You need at least five wooden planks to make a wall!"))
 			return
 		else
-			to_chat(user, "<span class='notice'>You start adding [I] to [src]...</span>")
+			to_chat(user, span_notice("You start adding [I] to [src]..."))
 			if(do_after(user, 50, target=src))
 				W.use(5)
 				var/turf/T = get_turf(src)
@@ -96,20 +96,23 @@
 /obj/structure/barricade/wooden/make_debris()
 	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
 
-
 /obj/structure/barricade/sandbags
 	name = "sandbags"
 	desc = "Bags of sand. Self explanatory."
 	icon = 'icons/obj/smooth_structures/sandbags.dmi'
-	icon_state = "sandbags"
+	icon_state = "sandbags-0"
+	base_icon_state = "sandbags"
 	max_integrity = 280
 	proj_pass_rate = 20
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	bar_material = SAND
-	climbable = TRUE
-	smooth = SMOOTH_TRUE
-	canSmoothWith = list(/obj/structure/barricade/sandbags, /turf/closed/wall, /turf/closed/wall/r_wall, /obj/structure/falsewall, /obj/structure/falsewall/reinforced, /turf/closed/wall/rust, /turf/closed/wall/r_wall/rust, /obj/structure/barricade/security)
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_SANDBAGS)
+	canSmoothWith = list(SMOOTH_GROUP_SANDBAGS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_SECURITY_BARRICADE)
 
+/obj/structure/barricade/sandbags/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/climbable)
 
 /obj/structure/barricade/security
 	name = "security barrier"
@@ -120,36 +123,36 @@
 	anchored = FALSE
 	max_integrity = 180
 	proj_pass_rate = 20
-	armor = list("melee" = 10, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 10, "acid" = 0)
+	armor = list(MELEE = 10, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 10, BIO = 100, FIRE = 10, ACID = 0)
 
 	var/deploy_time = 40
 	var/deploy_message = TRUE
 
 
-/obj/structure/barricade/security/Initialize()
+/obj/structure/barricade/security/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/deploy), deploy_time)
 
 /obj/structure/barricade/security/proc/deploy()
 	icon_state = "barrier1"
-	density = TRUE
-	anchored = TRUE
+	set_density(TRUE)
+	set_anchored(TRUE)
 	if(deploy_message)
-		visible_message("<span class='warning'>[src] deploys!</span>")
+		visible_message(span_warning("[src] deploys!"))
 
 
 /obj/item/grenade/barrier
 	name = "barrier grenade"
 	desc = "Instant cover."
 	icon = 'icons/obj/grenade.dmi'
-	icon_state = "flashbang"
+	icon_state = "wallbang"
 	inhand_icon_state = "flashbang"
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 
 /obj/item/grenade/barrier/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to toggle modes.</span>"
+	. += span_notice("Alt-click to toggle modes.")
 
 /obj/item/grenade/barrier/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
@@ -165,33 +168,48 @@
 		if(HORIZONTAL)
 			mode = SINGLE
 
-	to_chat(user, "<span class='notice'>[src] is now in [mode] mode.</span>")
+	to_chat(user, span_notice("[src] is now in [mode] mode."))
 
-/obj/item/grenade/barrier/prime(mob/living/lanced_by)
+/obj/item/grenade/barrier/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
 		if(VERTICAL)
-			var/target_turf = get_step(src, NORTH)
-			if(!(is_blocked_turf(target_turf)))
+			var/turf/target_turf = get_step(src, NORTH)
+			if(!target_turf.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf)
 
-			var/target_turf2 = get_step(src, SOUTH)
-			if(!(is_blocked_turf(target_turf2)))
+			var/turf/target_turf2 = get_step(src, SOUTH)
+			if(!target_turf2.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf2)
 		if(HORIZONTAL)
-			var/target_turf = get_step(src, EAST)
-			if(!(is_blocked_turf(target_turf)))
+			var/turf/target_turf = get_step(src, EAST)
+			if(!target_turf.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf)
 
-			var/target_turf2 = get_step(src, WEST)
-			if(!(is_blocked_turf(target_turf2)))
+			var/turf/target_turf2 = get_step(src, WEST)
+			if(!target_turf2.is_blocked_turf())
 				new /obj/structure/barricade/security(target_turf2)
 	qdel(src)
 
 /obj/item/grenade/barrier/ui_action_click(mob/user)
 	toggle_mode(user)
 
+/obj/item/deployable_turret_folded
+	name = "folded heavy machine gun"
+	desc = "A folded and unloaded heavy machine gun, ready to be deployed and used."
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "folded_hmg"
+	max_integrity = 250
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+
+/obj/item/deployable_turret_folded/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, delete_on_use = TRUE)
 
 #undef SINGLE
 #undef VERTICAL

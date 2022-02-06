@@ -8,10 +8,11 @@ SUBSYSTEM_DEF(idlenpcpool)
 	var/list/currentrun = list()
 	var/static/list/idle_mobs_by_zlevel[][]
 
-/datum/controller/subsystem/idlenpcpool/stat_entry()
+/datum/controller/subsystem/idlenpcpool/stat_entry(msg)
 	var/list/idlelist = GLOB.simple_animals[AI_IDLE]
 	var/list/zlist = GLOB.simple_animals[AI_Z_OFF]
-	..("IdleNPCS:[idlelist.len]|Z:[zlist.len]")
+	msg = "IdleNPCS:[length(idlelist)]|Z:[length(zlist)]"
+	return ..()
 
 /datum/controller/subsystem/idlenpcpool/proc/MaxZChanged()
 	if (!islist(idle_mobs_by_zlevel))
@@ -32,8 +33,9 @@ SUBSYSTEM_DEF(idlenpcpool)
 	while(currentrun.len)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
-		if (!SA)
+		if (QDELETED(SA))
 			GLOB.simple_animals[AI_IDLE] -= SA
+			log_world("Found a null in simple_animals list!")
 			continue
 
 		if(!SA.ckey)

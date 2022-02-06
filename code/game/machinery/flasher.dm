@@ -5,9 +5,10 @@
 	desc = "A wall-mounted flashbulb device."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
+	base_icon_state = "mflash"
 	max_integrity = 250
 	integrity_failure = 0.4
-	light_color = LIGHT_COLOR_WHITE
+	light_color = COLOR_WHITE
 	light_power = FLASH_LIGHT_POWER
 	damage_deflection = 10
 	var/obj/item/assembly/flash/handheld/bulb
@@ -15,28 +16,31 @@
 	var/range = 2 //this is roughly the size of brig cell
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 100 //How knocked down targets are when flashed.
-	var/base_state = "mflash"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1-p"
+	base_icon_state = "pflash"
 	strength = 80
 	anchored = FALSE
-	base_state = "pflash"
 	density = TRUE
+	light_system = MOVABLE_LIGHT //Used as a flash here.
+	light_range = FLASH_LIGHT_RANGE
+	light_on = FALSE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	if(built)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -28 : 28)
-		pixel_y = (dir & 3)? (dir ==1 ? -28 : 28) : 0
-	else
+	if(!built)
 		bulb = new(src)
 
-/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
-	id = "[idnum][id]"
+
+/obj/machinery/flasher/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	id = "[port.id]_[id]"
 
 /obj/machinery/flasher/Destroy()
 	QDEL_NULL(bulb)
@@ -48,22 +52,17 @@
 	return ..()
 
 /obj/machinery/flasher/update_icon_state()
-	if (powered())
-		if(bulb.burnt_out)
-			icon_state = "[base_state]1-p"
-		else
-			icon_state = "[base_state]1"
-	else
-		icon_state = "[base_state]1-p"
+	icon_state = "[base_icon_state]1[(bulb?.burnt_out || !powered()) ? "-p" : null]"
+	return ..()
 
 //Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/W, mob/user, params)
 	add_fingerprint(user)
 	if (W.tool_behaviour == TOOL_WIRECUTTER)
 		if (bulb)
-			user.visible_message("<span class='notice'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
+			user.visible_message(span_notice("[user] begins to disconnect [src]'s flashbulb."), span_notice("You begin to disconnect [src]'s flashbulb..."))
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message("<span class='notice'>[user] disconnects [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
+				user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
@@ -72,20 +71,20 @@
 		if (!bulb)
 			if(!user.transferItemToLoc(W, src))
 				return
-			user.visible_message("<span class='notice'>[user] installs [W] into [src].</span>", "<span class='notice'>You install [W] into [src].</span>")
+			user.visible_message(span_notice("[user] installs [W] into [src]."), span_notice("You install [W] into [src]."))
 			bulb = W
 			power_change()
 		else
-			to_chat(user, "<span class='warning'>A flashbulb is already installed in [src]!</span>")
+			to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
 
 	else if (W.tool_behaviour == TOOL_WRENCH)
 		if(!bulb)
-			to_chat(user, "<span class='notice'>You start unsecuring the flasher frame...</span>")
+			to_chat(user, span_notice("You start unsecuring the flasher frame..."))
 			if(W.use_tool(src, user, 40, volume=50))
-				to_chat(user, "<span class='notice'>You unsecure the flasher frame.</span>")
+				to_chat(user, span_notice("You unsecure the flasher frame."))
 				deconstruct(TRUE)
 		else
-			to_chat(user, "<span class='warning'>Remove a flashbulb from [src] first!</span>")
+			to_chat(user, span_warning("Remove a flashbulb from [src] first!"))
 	else
 		return ..()
 
@@ -106,8 +105,10 @@
 		return
 
 	playsound(src.loc, 'sound/weapons/flash.ogg', 100, TRUE)
-	flick("[base_state]_flash", src)
-	flash_lighting_fx(FLASH_LIGHT_RANGE, light_power, light_color)
+	flick("[base_icon_state]_flash", src)
+	set_light_on(TRUE)
+	addtimer(CALLBACK(src, .proc/flash_end), FLASH_LIGHT_DURATION, TIMER_OVERRIDE|TIMER_UNIQUE)
+
 	last_flash = world.time
 	use_power(1000)
 
@@ -117,6 +118,7 @@
 			continue
 
 		if(L.flash_act(affect_silicon = 1))
+			L.log_message("was AOE flashed by an automated portable flasher",LOG_ATTACK)
 			L.Paralyze(strength)
 			flashed = TRUE
 
@@ -124,6 +126,10 @@
 		bulb.times_used++
 
 	return 1
+
+
+/obj/machinery/flasher/proc/flash_end()
+	set_light_on(FALSE)
 
 
 /obj/machinery/flasher/emp_act(severity)
@@ -134,7 +140,7 @@
 			bulb.burn_out()
 			power_change()
 
-/obj/machinery/flasher/obj_break(damage_flag)
+/obj/machinery/flasher/atom_break(damage_flag)
 	. = ..()
 	if(. && bulb)
 		bulb.burn_out()
@@ -151,10 +157,10 @@
 			F.id = id
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		else
-			new /obj/item/stack/sheet/metal (loc, 2)
+			new /obj/item/stack/sheet/iron (loc, 2)
 	qdel(src)
 
-/obj/machinery/flasher/portable/Initialize()
+/obj/machinery/flasher/portable/Initialize(mapload)
 	. = ..()
 	proximity_monitor = new(src, 0)
 
@@ -172,17 +178,17 @@
 		W.play_tool_sound(src, 100)
 
 		if (!anchored && !isinspace())
-			to_chat(user, "<span class='notice'>[src] is now secured.</span>")
-			add_overlay("[base_state]-s")
-			setAnchored(TRUE)
+			to_chat(user, span_notice("[src] is now secured."))
+			add_overlay("[base_icon_state]-s")
+			set_anchored(TRUE)
 			power_change()
-			proximity_monitor.SetRange(range)
+			proximity_monitor.set_range(range)
 		else
-			to_chat(user, "<span class='notice'>[src] can now be moved.</span>")
+			to_chat(user, span_notice("[src] can now be moved."))
 			cut_overlays()
-			setAnchored(FALSE)
+			set_anchored(FALSE)
 			power_change()
-			proximity_monitor.SetRange(0)
+			proximity_monitor.set_range(0)
 
 	else
 		return ..()
@@ -194,12 +200,13 @@
 	icon_state = "mflash_frame"
 	result_path = /obj/machinery/flasher
 	var/id = null
+	pixel_shift = 28
 
 /obj/item/wallframe/flasher/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Its channel ID is '[id]'.</span>"
+	. += span_notice("Its channel ID is '[id]'.")
 
-/obj/item/wallframe/flasher/after_attach(var/obj/O)
+/obj/item/wallframe/flasher/after_attach(obj/O)
 	..()
 	var/obj/machinery/flasher/F = O
 	F.id = id

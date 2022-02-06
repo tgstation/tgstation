@@ -1,11 +1,19 @@
+// Remove these once we have Byond implementation.
+#define ISNAN(a) (!(a==a))
+#define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
+#define IS_INF_OR_NAN(a) (ISNAN(a-a))
+// Aight dont remove the rest
+
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 // This file is quadruple wrapped for your pleasure
 // (
 
 #define NUM_E 2.71828183
 
-#define PI						3.1416
-#define INFINITY				1e31	//closer then enough
+#define SQRT_2 1.414214 //CLOSE ENOUGH!
+
+#define PI 3.1416
+#define INFINITY 1e31 //closer then enough
 
 #define SHORT_REAL_LIMIT 16777216
 
@@ -23,9 +31,12 @@
 #define REALTIMEOFDAY (world.timeofday + (MIDNIGHT_ROLLOVER * MIDNIGHT_ROLLOVER_CHECK))
 #define MIDNIGHT_ROLLOVER_CHECK ( GLOB.rollovercheck_last_timeofday != world.timeofday ? update_midnight_rollover() : GLOB.midnight_rollovers )
 
-#define SIGN(x) ( (x)!=0 ? (x) / abs(x) : 0 )
+/// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
+#define SIGN(x) ( ((x) > 0) - ((x) < 0) )
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
+
+#define ROUND_UP(x) ( -round(-(x)))
 
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
@@ -34,7 +45,7 @@
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
 // Real modulus that handles decimals
-#define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
+#define MODULUS(x, y) ( (x) - FLOOR(x, y))
 
 // Cotangent
 #define COT(x) (1 / tan(x))
@@ -88,9 +99,9 @@
 /proc/SolveQuadratic(a, b, c)
 	ASSERT(a)
 	. = list()
-	var/d		= b*b - 4 * a * c
+	var/d = b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0)
+	if(d < 0 || IS_INF_OR_NAN(d) || IS_INF_OR_NAN(bottom))
 		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom
@@ -175,8 +186,8 @@
 	while(pixel_y < -16)
 		pixel_y += 32
 		new_y--
-	new_x = clamp(new_x, 0, world.maxx)
-	new_y = clamp(new_y, 0, world.maxy)
+	new_x = clamp(new_x, 1, world.maxx)
+	new_y = clamp(new_y, 1, world.maxy)
 	return locate(new_x, new_y, starting.z)
 
 // Returns a list where [1] is all x values and [2] is all y values that overlap between the given pair of rectangles
@@ -205,4 +216,13 @@
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-y)/s)) + 1/2 )
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
+
+/// Converts a probability/second chance to probability/delta_time chance
+/// For example, if you want an event to happen with a 10% per second chance, but your proc only runs every 5 seconds, do `if(prob(100*DT_PROB_RATE(0.1, 5)))`
+#define DT_PROB_RATE(prob_per_second, delta_time) (1 - (1 - (prob_per_second)) ** (delta_time))
+
+/// Like DT_PROB_RATE but easier to use, simply put `if(DT_PROB(10, 5))`
+#define DT_PROB(prob_per_second_percent, delta_time) (prob(100*DT_PROB_RATE((prob_per_second_percent)/100, (delta_time))))
 // )
+
+#define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))

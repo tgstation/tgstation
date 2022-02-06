@@ -1,0 +1,668 @@
+2017-02-01:
+  Cyberboss:
+  - bugfix: AI integrity restorer computer now respects power usage
+  - bugfix: Progress bars will now stack vertically instead of on top of each other
+  - bugfix: Progress bars will no longer be affected by lighting
+  Xhuis:
+  - rscadd: You can now fold up bluespace body bags with creatures or objects inside.
+      You can't fold them up if too many things are inside, but anything you fold
+      up in can be carried around in the object and redeployed at any time.
+2017-02-03:
+  Cobby:
+  - rscadd: Ghosts will now be informed when an event has been triggered by our lovely
+      RNG system.
+  Cyberboss:
+  - tweak: Firedoors will eventually reseal themselves if left open during a fire
+      alarm
+  Joan:
+  - tweak: Clockwork Marauders have 25% less health, 300 health from 400.
+  - wip: The Vitality Matrix scripture is now a Script, from an Application. Its cost
+      has been accordingly adjusted.
+  - tweak: Vitality Matrices will be consumed upon successfully reviving a Servant.
+      They also drain and heal conscious targets slightly slower.
+  - wip: The Fellowship Armory scripture is now an Application, from a Script. Its
+      cost has been accordingly adjusted.
+  - tweak: Fellowship Armory now affects all Servants in view of the invoker, and
+      will replace weaker gear and armor with its Ratvarian armor. Also, clockwork
+      treads now allow you to move in no gravity like magboots.
+  - rscdel: Mania Motors no longer instantly convert people next to them.
+  - rscadd: Instead, you have to remain next to them for several seconds, after which
+      you will be knocked out, then converted if possible.
+  - tweak: Mania Motors now cost slightly less power to run.
+  Jordie0608:
+  - tweak: Admin notes, memos and watchlist entries now use a generalized system,
+      they can all be accessed from the former notes browser.
+  - rscadd: Added to this are messages, which allow admins to leave a message for
+      players that is delivered to them when they next connect.
+  Lexorion:
+  - tweak: Laser projectiles have a new sprite! They also have a new effect when they
+      hit a wall.
+  Sweaterkittens and Joan:
+  - rscadd: Ocular Wardens will now provide auditory feedback when they acquire targets
+      and deal damage.
+  - soundadd: adds ocularwarden-target.ogg, ocularwarden-dot1.ogg and ocularwarden-dot2.ogg
+      to the game sound files.
+  Tofa01:
+  - bugfix: '[Delta] Allows Station Engineers to access Delta Atmospherics Solar Panel
+      Array Room.'
+  - rscadd: '[Omega] Adds a Massdriver room to chapel on Omegastation.'
+  bgobandit:
+  - rscadd: All art storage facilities offer construction paper now!
+  coiax:
+  - rscadd: A victim of a transformation disease will retain their name.
+  - tweak: The slime transformation disease can turn you into any colour or age of
+      slime.
+  - rscadd: The Abductor event can now happen at any time, rather than thirty (30)
+      minute plus rounds.
+2017-02-04:
+  Cyberboss:
+  - bugfix: Modular computers now explode properly
+  - bugfix: Emagged holograms can no longer be exported for credits
+  - bugfix: Abstract entities no longer feed the singularity
+  - tweak: Machine frames will no longer be anchored when created
+  Joan:
+  - rscadd: Vanguard now shows you how long you have until it deactivates.
+  Kor:
+  - rscadd: 'By combing two flashlights and cable coil, you can create a new eye implant:
+      flashlight eyes. People with flashlights for eyes can not see, but they will
+      provide an enormous amount of light to their friends.'
+  - rscadd: Valentines day will now randomly pair up crew members on dates. The paired
+      crewmembers will get an objective to protect each other at all costs.
+  Steelpoint:
+  - rscadd: Addition of two security DragNETs to Deltastations, Omegastations and
+      Metastations armouries.
+  Tofa01:
+  - rscadd: '[Delta] Removes space money from gold crate replaces with 3 Gold Bars
+      Gold Wrestling belt is still there.'
+  - rscadd: '[Delta] Removes space money from silver crate replaces with 5 Silver
+      Coins.'
+  - bugfix: Fixes incorrect placement of RD modular computer on Metastation.
+  WhiteHusky:
+  - rscadd: Fields are supported when printing with a modular computer
+  - rscadd: PRINTER_FONT is now a variable
+  - rscdel: Removed the [logo] tag on Modular computers as the logo no longer exists
+  - tweak: New lines on paper are parsed properly
+  - tweak: '[tab] is now four non-breaking spaces on papers'
+  - tweak: Papers have an additional proc, reload_fields, to allow fields made programmatically
+      to be used
+  - tweak: 'stripped_input stripped_multiline_input has a new argument: no_trim'
+  - bugfix: Modular computers no longer spew HTML when looking at a file, rather it
+      is unescaped like it should
+  - bugfix: Modular computers no longer show escaped HTML entities when editing
+  - bugfix: Modular computers can now propperly read and write from external media
+  - bugfix: Modular computers' file browser lists files correctly
+  - spellcheck: NTOS File Manager had a spelling mistake; Manage instead of Manager
+  coiax:
+  - bugfix: Engraved messages can no longer be moved by a gravitational singularity.
+  - tweak: The deadchat notification of randomly triggered events now uses the deadsay
+      span.
+  - rscdel: The wizard spell "Rod Form" does not produce a message in deadchat everytime
+      it is used.
+2017-02-05:
+  Cyberboss:
+  - bugfix: Shuttle docking/round end shouldn't lag as much
+  - rscadd: There's a new round end sound!
+  Hyena:
+  - bugfix: The bible now contains 1 whiskey
+  Joan:
+  - rscadd: Ratvar-converted AIs become brass-colored, speak in Ratvarian, and cannot
+      be carded.
+  Kor:
+  - rscadd: Eyes are now organs. You can remove or implant them into peoples heads
+      with organ manipulation surgery. A mob without eyes will obviously have trouble
+      seeing.
+  - rscadd: All special eye powers are now tied to their respective organs. For example,
+      this means you can harvest an alien or shadow persons eyes, have them implanted,
+      and gain toggle-able night vision.
+  - rscadd: All cybernetic eye implants are now cybernetic eyes, meaning you must
+      replace the patients organic eyes. HUD implants are still just regular implants.
+  Lzimann:
+  - rscadd: Tesla zaps can now generate an energy ball if they zap a tesla generator!
+  Sweaterkittens:
+  - rscadd: The station's Plasmamen have been issued a new production of envirosuits.
+      The most notable change aside from small aesthetic differences is the addition
+      of an integrated helmet light.
+  - tweak: Tweaked a few of the Plasma Envirosuit sprites to be more fitting thematically.
+  Swindly:
+  - bugfix: Saline-glucose solution can no longer decrease blood volume
+  - rscadd: Cyborg hyposprays can now dispense saline-glucose solution
+  - rscadd: Saline-glucose solution now increases blood volume when it heals
+  coiax:
+  - bugfix: The mulligan reagent can now be created with 1u stable mutation toxin
+      + 1u unstable mutagen.
+  - rscdel: Tesla balls cannot dust people near grounding rods.
+  - rscadd: Soapstones/chisel/magic markers/chalk can remove messages for free. Removing
+      one of your own messages still grants a use.
+  - rscadd: The Janitor starts with a dull soapstone for removing unwanted messages.
+  xmikey555:
+  - tweak: The tesla engine no longer destroys energy ball generators.
+2017-02-06:
+  Xhuis:
+  - rscadd: Traitor janitors can now order EZ-clean grenades for 6 telecrystals per
+      bundle. They function like normal cleaning grenades with an added "oh god my
+      face is melting" effect, and can also be found in surplus crates.
+2017-02-07:
+  Cyberboss:
+  - bugfix: Wire, atmos, and disposal networks no longer work across hyperspace when
+      on the border of a shuttle
+  - bugfix: Implants that work on death will now work for simple_animals
+  - bugfix: The target moving while being implanted will no longer continue the implant
+  - bugfix: Implanters now show progress bars as they were intended to
+  - bugfix: Pipe painters are no longer aggressive
+  - bugfix: Carding the AI will now stop a doomsday device
+  - rscadd: The job subsystem now loads instantly. No more waiting to set your occupation
+      prefs!
+  - bugfix: The rare case of duping your inventory at roundstart has been fixed
+  - bugfix: Self deleting stackable items are fixed
+  Dannno:
+  - tweak: We've switched to a new brand of colored jumpsuit.
+  JJRcop:
+  - tweak: Adds 4% chance when assigning a valentines day date to also assign someone
+      else to the same date, but your date will still have you as their only date.
+  Poojawa:
+  - bugfix: '[Delta] Active turfs down from 300+'
+  - bugfix: '[Delta] Janitor closet isn''t 2.7K anymore'
+  - bugfix: '[Delta] Various pipe fixes'
+  RemieRichards:
+  - rscadd: Added a new checmial, Skewium, it's produced by mixing rotatium, plasma
+      and sulphuric acid in the ratio 2:2:1, which results in 5 Skewium.
+  Swindly:
+  - bugfix: Robotic eyes can no longer be eaten
+  Tofa01:
+  - bugfix: Fixes grammar issue when changing someones appearance via plastic surgery.
+  - tweak: '[OmegaStation] Allows Chaplain job to be selectable.'
+  - bugfix: '[Omega] Fixes Overpressurization In Mass Driver Room'
+  Xhuis:
+  - rscadd: Traitor clowns can now buy a reverse revolver. I'll leave it up to you
+      to guess what it does. Honk.
+  iamthedigitalme:
+  - imageadd: Legion has a new, animated sprite.
+  kevinz000:
+  - rscadd: 'ADMINS: SDQL2 has been given some new features!'
+  - bugfix: SDQL2 now gives you an exception on runtime instead of flooding server
+      runtime logs.
+  - rscadd: SDQL2 now supports usr, which makes that variable reference to whatever
+      mob you are in, src, which targets the object it is being called on itself,
+      and marked, which targets the datum marked by the admin calling it. Also, it
+      supports hex references (the hex number at the top of a VV panel) in {}s, so
+      you can target nearly anything! Also, global procs are supported by global.[procname](args),
+      for CALL queries.
+  - bugfix: SDQL2 can no longer edit /datum/admins or /datum/admin_rank, and is protected
+      from changing x/y/z of a turf and anything that would cause broken movement
+      for movable atoms.
+  - rscadd: SDQL2 can now get list input with [arg1, arg2]!
+  - experiment: Do '"<string>"' to put strings inside of SDQL2 or it won't work.
+2017-02-09:
+  Cyberboss:
+  - bugfix: Certain firedoors that should have closed during an alarm now actually
+      close
+  - soundadd: You can now knock on firedoors
+  - bugfix: Supermatter in a closet/crate will now properly fee the singulo
+  - bugfix: Paper planes can be unfolded again
+  - bugfix: Paper planes can be stamped properly
+  Joan:
+  - tweak: Impaling someone with a sharp item by pulling them with a changeling Tentacle
+      now does significantly less damage and stuns for less time.
+  Jordie0608:
+  - rscadd: Admins can now filter watchlist entries to only users who are connected.
+  - tweak: Messages no longer delete themselves when sent.
+  Kor:
+  - rscadd: The limb grower has been replaced with a box of surplus limbs. Visit robotics
+      or harvest limbs from another person if you want quality.
+  Reeeeimstupid:
+  - rscadd: Silly Abductee objectives. Try not to go crazy trading life stories with
+      Lord Singulo.
+  Tofa01:
+  - tweak: Removes virology access to jobs including Medical Doctor, Geneticist and
+      Chemist.
+  - tweak: '[Delta] Changes NW supermatter filter to filter O2 instead of N2'
+  - rscadd: '[Delta] Adds wardrobes to Dorms & Arrivals Shuttle'
+  - rscadd: '[Delta] Adds access buttons to virology doors for extra security'
+  - rscadd: '[Delta] Adds bolt door button to all dorms'
+  - rscadd: '[Delta] Adds three pairs of optical meson scanners to supermatter room'
+  - rscadd: '[Delta] Adds a disk fridge to botany'
+  - rscadd: '[Delta] Adds a cake hat to the bar'
+  - bugfix: '[Delta] Fixes misplaced station intercom in Supermatter SMES room'
+  XDTM:
+  - rscadd: A Law Removal module can be build in RnD. It can remove a specified core
+      or freeform law.
+  - tweak: 'When stating laws, silicons won''t skip a number when hiding laws. (example:
+      1. Law 1; 2. Law 2; 3. Law 4 if you choose not to state Law 3)'
+  Xhuis:
+  - rscadd: Artistic toolboxes now spawn in maintenance and possess various supplies
+      for wire art and crayon art.
+  - rscadd: Traitors can now obtain His Grace. Chaplains can buy it for 20 TC, or
+      it can be found in a surplus crate.
+  - rscadd: Soapstone messages can now be rated! Attack the message with your hand
+      to rate it positive or negative. Anyone can see the rating, and you cannot rate
+      a message more than once, even across rounds.
+  - rscdel: Soapstones no longer have a write time.
+  - tweak: Soapstones now have a fixed vocabulary to write messages with.
+  chanoc1:
+  - tweak: The salt and pepper shakers have new sprites.
+  coiax:
+  - rscadd: Added metal rods and floor tiles to Standard cyborgs.
+  - rscadd: Added a remote signaling device to Engineering cyborg.
+  - rscadd: Adds a 'Guardian of Balance' lawset and AI module, currently admin spawn
+      only.
+  uraniummeltdown:
+  - tweak: Kinetic Accelerator Cosmetic and Tracer Modkits now don't use mod capacity.
+      Cosmetic kits change the name of the KA.
+2017-02-10:
+  Ausops:
+  - rscadd: Air tanks and plasma tanks have been resprited.
+  ChemicalRascal:
+  - tweak: Pen is able to wind up ruined tapes.
+  CoreOverload:
+  - rscadd: You can now emag the escape pods to launch them under any alert code.
+  - tweak: Shuttle name is no longer displayed on "Status" panel. Instead, you can
+      now examine a status screen to see it.
+  Cyberboss:
+  - bugfix: Simple animals now deathgasp properly again
+  - bugfix: Testmerged PRs will no longer duplicate in the list
+  - bugfix: Pods and shuttles now have air again
+  Joan:
+  - experiment: Clockwork Cults must always construct and activate the Ark.
+  - imageadd: Updates air tank inhands to match Ausops' new sprites.
+  Mekhi Anderson:
+  - rscadd: All mobs can now *spin!
+  - rscadd: Cyborgs now have handholds. This means you can ride around on them, but
+      if you get stunned or hit, you fall off! The cyborg can also throw you off by
+      spinning.
+  Tofa01:
+  - soundadd: Changes fire alarm to make new sound FireAlarm.ogg
+  Xhuis:
+  - rscdel: The Syndicate will no longer prank their operatives by including reverse
+      revolvers in surplus crates.
+  coiax:
+  - rscadd: A reverse revolver now comes in a box of hugs.
+  - rscadd: 'Added a new admin only event: Station-wide Human-level Intelligence.
+      Like the random animal intelligence event, but affecting as many animals as
+      there are ghosties.'
+  - rscadd: The Luxury Shuttle grabs cash in your wallet and backpack, and shares
+      approval between the entrance gates.
+  - rscadd: The NES Port shuttle now costs 500 credits.
+2017-02-11:
+  Dannno:
+  - tweak: hahaha I switched your toolboxes you MORONS
+  Kor:
+  - rscadd: Killing bubblegum now unlocks a new shuttle for purchase.
+  Lzimann:
+  - tweak: Hardsuit built-in jetpacks no longer have a speed boost.
+  Pyko:
+  - bugfix: Fixed legit posters and map editing official/serial number for poster
+      decals.
+  Tofa01:
+  - bugfix: '[Delta] Fixes doors walls and windows being incorrectly placed due to
+      mapmerge issues.'
+  - bugfix: '[Box] Fixes access levels for HOP shutters.'
+2017-02-12:
+  AnturK:
+  - rscadd: Added Poison Pen to uplink.
+  Drunk Musicians:
+  - rscadd: Drunk music
+  Gun Hog:
+  - rscadd: Nanotrasen Engineering has devised a construction console to assist with
+      building the Auxiliary Mining Base, usually located near a station's Arrivals
+      hallway. A breakthrough in bluespace technology, this console employs an advanced
+      internal Rapid Construction Device linked to a camera-assisted holocrane for
+      rapid, remote construction!
+  Lzimann:
+  - bugfix: MMIs/posibrains works with mechas again
+  RandomMarine:
+  - rscadd: The Russians have expanded to the shuttle business. A new escape shuttle
+      is available for purchase.
+  Sweaterkittens:
+  - tweak: Plasmamen burn damage multiplier reduced to 1.5x from 2x
+  coiax:
+  - rscdel: Removes the STV5 shuttle from purchase.
+  - rscadd: Swarmers no longer consume the deep fryer, since they have too much respect
+      for the potential fried foods it can produce.
+  - rscadd: The clown's survival/internals box is now a box of hugs. Dawww.
+2017-02-13:
+  ChemicalRascal:
+  - tweak: Delta station brig cell chairs have been replaced with beds. One bed per
+      cell, no funny business.
+  Cyberboss:
+  - bugfix: Simple animals that are deleted when killed will now deathrattle
+  - bugfix: Fixed Alt-click stack duplication
+  Joan:
+  - imageadd: Updated the back and belt sprites for airtanks to match the new sprites.
+  Kor:
+  - rscadd: Mobile pAIs are now slower than humans.
+  Swindly:
+  - rscadd: Added Nuka Cola as a premium item in Robust Softdrinks
+  Tofa01:
+  - bugfix: '[Delta] Fixes double windoor on chemistry windows.'
+  - tweak: Lowered volume of fire alarm sound also makes it more quiet.
+  coiax:
+  - rscadd: Added an admin only tool, the life candle. Touch the candle, and when
+      you die, you'll respawn shortly afterwards. Touch it again to stop. Used for
+      testing, thunderdome brawls and good old fashioned memery.
+  - bugfix: Fried foods no longer shrink to miniature size.
+2017-02-14:
+  Cyberboss:
+  - bugfix: Fixed unequipping items while stunned
+  - bugfix: Fixed various things deleting when unequipped
+  - bugfix: Fixed tablet ID slots deleting cards
+  - bugfix: Fixed water mister nozzle getting stuck in hands
+  - tweak: Title music now starts immediately upon login
+  - tweak: You can no longer sharpen energy weapons
+  Joan:
+  - tweak: Mania Motors are overall less effective and only affect people who can
+      see the motor.
+  - tweak: Mania Motors have slightly more health; 100, from 80.
+  MrStonedOne:
+  - tweak: Station time is now always visible in the status tab.
+  - tweak: Both server time and station time now displays seconds so you can actively
+      see how game time (ByondTime[tm]) is progressing along side real time.
+  - rscadd: Added a time dilation tracker, this allows you to better understand how
+      time will progress in game. It shows the time dilation percent for the last
+      minute as well as some rolling averages.
+  RandomMarine:
+  - tweak: Pre-made charcoal pills now contain 10 units instead of 50. The amount
+      of pills inside of toxin first aid kits and the smartfridge have been increased
+      to compensate. Keep in mind that each ten unit pill recovers 100 points of toxin
+      damage and purges 50 units of other reagents.
+  Steelpoint:
+  - tweak: All Drones now have a walking animation.
+  Tofa01:
+  - bugfix: '[Delta] Fixes space cleaner being empty in brig medbay'
+  - bugfix: '[Delta] Fixes some areas that are not radiation proof'
+  - bugfix: '[Meta] Fixes Atmospherics Freezer Spawning As A Heater'
+  uraniummeltdown:
+  - rscadd: Window Flashing is now a preference
+  - rscadd: Your game window will flash when alerted as a ghost. This includes being
+      revived by defibs/cloning and events such as borers, swarmers, revenant, etc.
+2017-02-16:
+  Cyberboss:
+  - rscadd: Test merged PRs are now more detailed
+  Steelpoint:
+  - rscadd: The Head of Security's Hardsuit is now equipped with a inbuilt Jetpack.
+  coiax:
+  - rscadd: The Hyperfractal Gigashuttle is now purchasable for 100,000 credits. Help
+      Centcom by testing this very safe and efficient shuttle design. (Terms and conditions
+      apply.)
+  - rscadd: The changeling power "Anatomic Panacea" now causes the changeling to vomit
+      out zombie infections, along with headslugs and xeno infections, as before.
+  - bugfix: The main CTF laser gun disappears when dropped on the floor.
+2017-02-17:
+  Arianya:
+  - tweak: The Labour Camp rivet wall has been removed!
+  - spellcheck: Fixed some typos in Prison Ofitser's description.
+  Cobby:
+  - experiment: Flashes have been rebalanced to be more powerful
+  Cyberboss:
+  - bugfix: Rack construction progress bars will no longer be spammed
+  - tweak: The round start timer will count down during subsystem initialization
+  - tweak: Total subsystem initialization time will now be displayed
+  Joan:
+  - rscdel: His Grace no longer globally announces when He is awakened or falls to
+      sleep.
+  - rscdel: His Grace is not a toolbox, even if He looks like one.
+  - experiment: His Grace no longer requires organs to awaken.
+  - tweak: His Grace now gains 4 force for each victim consumed, always provides stun
+      immunity, and will, generally, take longer to consume His owner.
+  - experiment: His Grace must be destroyed to free the bodies within Him.
+  - experiment: Dropping His Grace while He is awake will cause you to suffer His
+      Wrath until you hold Him again.
+  - rscadd: His Grace becomes highly aggressive after consuming His owner, and will
+      hunt His own prey.
+  - experiment: The Ark of the Clockwork Justicar now only costs 3 of each component
+      to summon, but must consume an additional 7 of each component before it will
+      activate and start counting down.
+  - rscadd: The presence of the Ark will be immediately announced, though the location
+      will still only be announced after it has been active and counting down for
+      2 minutes.
+  - tweak: The Ark also requires an additional invoker to invoke.
+  Lobachevskiy:
+  - bugfix: Fixed glass shards affecting buckled and flying mobs
+  MrStonedOne:
+  - experiment: The game will now force hardware rendering on for all clients.
+  Nienhaus:
+  - rscadd: Drying racks have new sprites.
+  Swindly:
+  - rscadd: Trays can now be used to insert food into food processors
+  Thunder12345:
+  - bugfix: It's ACTUALLY possible to pat people on the head now
+  WJohn:
+  - imageadd: Improved blueshift sprites, courtesy of Nienhaus.
+  XDTM:
+  - rscadd: Bluespace Crystals are now a material that can be inserted in Protolathes
+      and Circuit Printers. Some items now require Bluespace Mesh.
+  - rscadd: Bluespace Crystal can now be ground in a reagent grinder to gain bluespace
+      dust. It has no uses, but it teleports people if splashed on them, and if ingested
+      it will occasionally cause teleportation.
+  coiax:
+  - rscadd: Engraved messages now have a UI, which any player, living or dead can
+      access. See when the message was engraved, and upvote or downvote accordingly.
+  - rscadd: Admins have additional options with the UI, seeing the player ckey, original
+      character name, and the ability to outright delete messages at the press of
+      a button.
+  kevinz000:
+  - bugfix: Flightsuits actually fly over people
+  - bugfix: Flightsuits don't interrupt pulls when you pass through doors
+2017-02-18:
+  Cyberboss:
+  - imageadd: New round end animation. Inspired by @Iamgoofball
+  Gun Hog:
+  - rscadd: The Aux Base console now controls turrets made by the construction console.
+  - rscadd: The Aux Base may now be dropped at a random location if miners fail to
+      use the landing remote.
+  - rscadd: The mining shuttle may now dock at the Aux Base's spot once the base is
+      dropped.
+  - tweak: Removed access levels on the mining shuttle so it can be used at the public
+      dock.
+  - tweak: The Aux Base's turrets now fire through glass. Reminder that the turrets
+      need to be installed outside the base for full damage.
+  - rscadd: Added a base construction console to Delta Station.
+  Mysterious Basilman:
+  - rscadd: More powerful toolboxes are active in this world...
+  Scoop:
+  - tweak: Condimasters now correctly drop their items in front of their sprite.
+  Tofa01:
+  - bugfix: Re-Arranges And Extends Pubby Escape Hallway To Allow Larger Shuttle To
+      Dock
+  - bugfix: '[Meta] Fixes top left grounding rod from being destroyed by the Tesla
+      engine.'
+  TrustyGun:
+  - rscadd: Traitor mimes can now learn two new spells for 15 tc.
+  - rscadd: The first, Invisible Blockade, creates a 3x1 invisible wall.
+  - rscadd: The second, Finger Guns, allows them to shoot bullets out of their fingers.
+  kevinz000:
+  - rscadd: You can now ride piggyback on other human beings, as a human being! To
+      do so they must grab you aggressively and you must climb on without outside
+      assistance without being restrained or incapacitated in any manner. They must
+      also not be restrained or incapacitated in any manner.
+  - rscadd: If someone is riding on you and you want them to get off, disarm them
+      to instantly floor them for a few seconds! It's pretty rude, though.
+  rock:
+  - soundadd: you can now harmlessly slap somebody by aiming for the mouth on disarm
+      intent.
+  - soundadd: you can only slap somebody who is unarmed on help intent, restrained,
+      or ready to slap you.
+2017-02-19:
+  Basilman:
+  - rscadd: some toolboxes, very rarely, have more than one latch
+  Joan:
+  - rscadd: You can now put components, and deposit components from slabs, directly
+      into the Ark of the Clockwork Justicar provided it actually requires components.
+  - experiment: Taunting Tirade now leaves a confusing and weakening trail instead
+      of confusing and weakening everyone in view.
+  - tweak: Invoking Inath-neq/Nzcrentr is now 33% cheaper and has a 33% lower cooldown.
+  Tofa01:
+  - rscdel: '[Delta] Removes SSU From Mining Equipment Room'
+  - tweak: Changes centcomm ferry to require centcomm general access instead of admin
+      permission.
+  coiax:
+  - rscadd: Nuke ops syndicate cyborgs have been split into two separate uplink items.
+      Medical cyborgs now cost 35 TC, assault cyborgs now cost 65 TC.
+  grimreaperx15:
+  - tweak: Blood Cult Pylons will now rapidly regenerate any nearby cultists blood,
+      in addition to the normal healing they do.
+  ma44:
+  - tweak: Intercepted messages from a lavaland syndicate base reveals they have additional
+      grenade and other miscellaneous equipment.
+  uraniummeltdown:
+  - rscadd: Shuttle engines have new sprites.
+2017-02-20:
+  Cyberboss:
+  - bugfix: The frequncy fire alarms play at is now consistent
+  MrStonedOne:
+  - tweak: bluespace ore cap changed from 100 ores to 500
+  Tofa01:
+  - tweak: '[Meta] Replaces orange jumpsuit in holding cell with prisoner jumpsuits'
+  XDTM:
+  - tweak: Repairing someone else's robotic limb is instant. Repairing your own robotic
+      limbs will still take time.
+  - tweak: Repairing limbs with cable or welding will now heal more.
+  Xhuis:
+  - bugfix: Medipens are no longer reusable.
+2017-02-21:
+  Cyberboss:
+  - bugfix: You can now unshunt as a malfunctioning AI again
+  Kor:
+  - bugfix: You will now retain your facing when getting pushed by another mob.
+  Tofa01:
+  - bugfix: '[Z2] Fixed Centcomm shutters to have proper access levels for inspectors
+      and other Admin given roles'
+  coiax:
+  - rscadd: Refactors heart attack code, a cardiac arrest will knock someone unconscious
+      and kill them very quickly.
+  - rscadd: Adds corazone, an anti-heart attack drug, made by mixing 2 parts Phenol,
+      1 part Lithium. A person with corazone in their system will not suffer any negative
+      effects from missing a heart. Use it during surgery.
+  - rscadd: Abductor glands are now hearts, the abductor operation table now automatically
+      injects corazone to prevent deaths during surgery. The gland will restart if
+      it stops beating.
+  - bugfix: Cloning pods always know the name of the person they are cloning.
+  - rscadd: You can swipe a medical ID card to eject someone from the cloning pod
+      early. The cloning pod will announce this over the radio.
+  - rscdel: Fresh clones have no organs or limbs, they gain them during the cloning
+      process. Ejecting a clone too early is not recommended. Power loss will also
+      eject a clone as before.
+  - rscdel: An ejected clone will take damage from being at critical health very quickly
+      upon ejection, rather than before, where a clone could be stable in critical
+      for up to two minutes.
+  - rscadd: Occupants of cloning pods do not interact with the air outside the pod.
+  uraniummeltdown:
+  - bugfix: All shuttle engines should now be facing the right way
+2017-02-22:
+  AnonymousNow:
+  - rscadd: Added Medical HUD Sunglasses. Not currently available on-station, unless
+      you can convince Centcom to send you a pair.
+  Cyberboss:
+  - bugfix: Spawning to the station should now be a less hitchy experience
+  MrPerson:
+  - experiment: 'Ion storms have several new additions:'
+  - rscadd: 25% chance to flatly replace the AI's core lawset with something random
+      in the config. Suddenly the AI is Corporate, deal w/ it.
+  - rscadd: 10% chance to delete one of the AI's core or supplied laws. Hope you treated
+      the AI well without its precious law 1 to protect your sorry ass.
+  - rscadd: 10% chance that, instead of adding a random law, it will instead replace
+      one of the AI's existing core or supplied laws with the ion law. Otherwise,
+      it adds the generated law as normal. There's still a 100% chance of getting
+      a generated ion law.
+  - rscadd: 10% chance afterwards to shuffle all the AI's laws.
+  TalkingCactus:
+  - bugfix: New characters will now have their backpack preference correctly set to
+      "Department Backpack".
+  Tofa01:
+  - bugfix: '[Delta] Fixes missing R&D shutter near public autolathe'
+  Xhuis:
+  - tweak: Highlanders can no longer hide behind chairs and plants.
+  - tweak: Highlanders no longer bleed and are no longer slowed down by damage.
+2017-02-23:
+  Cyberboss:
+  - bugfix: Fixed a bug where the fire overlay wasn't getting removed from objects
+  - bugfix: The graphical delays with characters at roundstart are gone
+  - bugfix: The crew manifest is working again
+  - rscadd: Admins can now asay with ":p" and dsay with ":d"
+  Dannno:
+  - imageadd: Robust Softdrinks LLC. has sent out new vendies to the stendy.
+  Joan:
+  - rscdel: Off-station and carded AIs no longer prevent Judgement scripture from
+      unlocking.
+  Nienhaus:
+  - tweak: Updates ammo sprites to the new perspective.
+  Tofa01:
+  - bugfix: Disables sound/frequency variance on cryo tube alert sound
+  coiax:
+  - rscadd: Nanotrasen reminds its employees that they have ALWAYS been able to taste.
+      Anyone claiming that they've recently only just gained the ability to taste
+      are probably Syndicate agents.
+2017-02-24:
+  MrStonedOne:
+  - rscdel: Limit on Mining Satchel of Holding Removed
+  - tweak: Dumping/mass pickup/mass transfer of items is now lag checked
+  - rscadd: Dumping/mass pickup/mass transfer of items has a progress bar
+2017-02-25:
+  AnonymousNow:
+  - rscadd: Nerd Co. has sent pairs of thicker prescription glasses out to Nanotrasen
+      stations, for your local geek to wear.
+  Basilman:
+  - rscadd: New box sprites
+  Robustin:
+  - tweak: Hulks can no longer use pneumatic cannons or flamethrowers
+  Tofa01:
+  - rscadd: '[All Maps] The new and improved Centcom transportation ferry version
+      2.0 is out now!'
+  coiax:
+  - rscadd: Cargo can now order plastic sheets to make plastic flaps. No doubt other
+      uses for plastic will be discovered in the future.
+  - rscadd: To deconstruct plastic flaps, unscrew from the floor, then cut apart with
+      wirecutters. Plastic flaps have examine tips like reinforced walls.
+  uraniummeltdown:
+  - rscadd: Science crates now have new sprites
+2017-02-26:
+  Ausops:
+  - imageadd: New sprites for water, fuel and hydroponics tanks.
+  Joan:
+  - experiment: 'Clockwork objects are overall easier to deconstruct:'
+  - wip: Clockwork Walls now take 33% less time to slice through, Brass Windows now
+      work like non-reinforced windows, and Pinion Airlocks now have less health and
+      only two steps to decon(wrench, then crowbar).
+  - rscadd: EMPing Pinion Airlocks and Brass Windoors now has a high chance to open
+      them and will not shock or bolt them.
+  - rscadd: Anima fragments will very gradually self-repair.
+  Tofa01:
+  - bugfix: '[Omega] Fixes ORM input and output directions'
+  - bugfix: Fixes space bar kitchen freezer access level
+  - bugfix: Fixes giving IDs proper access for players who spawn on a ruin via a player
+      sleeper/spawners
+  - bugfix: '[Delta] Fixes varedited tiles causing tiles to appear as if they have
+      no texture'
+  - bugfix: Fixes robotic limb repair grammar issue
+2017-02-27:
+  Kor, Jordie0608 and Tokiko1:
+  - rscadd: Singularity containment has been replaced on box, meta, and delta with
+      a supermatter room. The supermatter gives ample warning when melting down, so
+      hopefully we'll see fewer 15 minute rounds ended by a loose singularity.
+  - rscadd: Supermatter crystals now collapse into singularities when they fail, rather
+      than explode.
+  Tofa01:
+  - bugfix: Stops AI And Borgs From Interfacing With Ferry Console
+  TrustyGun:
+  - imageadd: Box sprites are improved.
+  WJohnston:
+  - imageadd: New and improved BRPED beam. The old one was hideous.
+  coiax:
+  - rscadd: Drone shells are now points of interest in the orbit list.
+  - rscadd: Derelict drone shells now spawn with appropriate headgear.
+2017-02-28:
+  Cyberboss:
+  - tweak: You will no longer be shown empty memories when the game starts
+  - bugfix: Built APCs now work again
+  - bugfix: Borg AI cameras now work again
+  Joan:
+  - rscadd: Anima Fragments now slam into non-Servants when bumping. This will ONLY
+      happen if the fragment is not slowed, and slamming into someone will slightly
+      damage the fragment and slow it severely.
+  Lzimann:
+  - tweak: Communications console can also check the ID the user is wearing.
+  Supermichael777:
+  - tweak: The button now has a five second delay when detonating bombs
+  XDTM:
+  - rscadd: You can now change the input/output directons for Ore Redemption Machines
+      by using a multitool on them with the panel open.
+  - rscadd: Diagnostic HUDs can now see if airlocks are shocked.

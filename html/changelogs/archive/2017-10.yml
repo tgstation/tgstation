@@ -1,0 +1,622 @@
+2017-10-07:
+  Antur:
+  - bugfix: Liches will no longer lose their spells when reviving.
+  AnturK:
+  - rscadd: Wigs are now available in AutoDrobe
+  Cobby:
+  - admin: Players will now be notified automatically when an admin resolves their
+      ahelp.
+  Cyberboss:
+  - config: The shuttle may now be configured to be automatically called if the amount
+      of living crew drops below a certain percentage
+  - bugfix: Fixed a rare case where creating a one tank bomb would result in a broken
+      object
+  - bugfix: Fixed many cases where forced item drops could be avoided by not having
+      an item in your active hand
+  DaxDupont:
+  - rscdel: No more roundstart tips about gangs. You can finally start to forget gangs
+      ever existed.
+  Incoming5643:
+  - bugfix: The rarely utilized secret satchel item persistence system has been fixed
+      and made more lenient.
+  - rscadd: 'In case you forgot how it works: if you find or buy secret satchels,
+      put an item in them, and then bury them under tiles on the station you or someone
+      else can find them again in a future round with the item still there! Free satchels
+      can often be found hiding around the station, so get to burying!'
+  JJRcop:
+  - config: Hosts can now lock config options with the @ prefix. This prevents admins
+      from editing the option in-game.
+  - tweak: Admin volume slider moved to its own menu for better visibility.
+  Joan:
+  - bugfix: Fixes Vanguard never stunning for more than 2 seconds.
+  - balance: Ocular Warden base damage per second changed from 12.5 to 15.
+  - bugfix: Ocular Wardens no longer count themselves when checking for dense objects,
+      which decreased their overall damage by 15%.
+  - balance: Ocular Wardens now only reduce their damage by 10% per dense object,
+      and only do so once per turf. However, dense turfs now reduce their damage with
+      the same 10% penalty.
+  Kerbin-Fiber:
+  - bugfix: Wood is no longer invisible
+  Kor:
+  - rscadd: Nightmares now have mutant hearts and brains, with their own special properties
+      when consumed or implanted in mobs. Experiment!
+  - bugfix: You can now tell when someone is in soft crit by examining them.
+  - rscadd: Nightmares now have a chance to spawn via event.
+  More Robust Than You:
+  - bugfix: Fixes cogscarab sprites not updating
+  - balance: Blobs now take damage from particle accelerators
+  MrDoomBringer:
+  - rscadd: Nanotrasen, as part of their new Employee Retention program, has encouraged
+      more station point-makery by adding the "Cargo Tech of the Shift"! The award
+      is located in a lockbox in the Quartermaster's locker.
+  MrStonedOne:
+  - tweak: The MC will now reduce tick rate during high populations to keep it from
+      fighting with byond for processing time.
+  - config: Added config options to control MC tick rate
+  - admin: Admins can no longer manually control the mc's tick rate by editing the
+      MC's processing value, instead you will have to edit the config datum's values
+      for high/low pop tick rates.
+  Naksu:
+  - bugfix: Removed some of the free lag
+  - bugfix: Updates to station name are now reflected on Cargo's stock exchange computers.
+  - bugfix: Gutlunches will now once again look for gibs to eat.
+  - bugfix: Bees now come with reduced amounts of free lag
+  - balance: Pyrosium and cryostylane now react at ludicrous speeds.
+  - tweak: Made atmos tiny bit faster
+  - bugfix: Tweaks to atmos performance
+  Qbopper:
+  - tweak: Moved a locker blocking an airlock in Toxins maintenance.
+  RandomMarine:
+  - bugfix: Simple mobs should no longer experience severe hud/lighting glitches when
+      reconnecting.
+  Robustin:
+  - rscadd: Blood cultists can now create a unique bastard sword at their forge
+  - rscdel: Blood cultists can no longer obtain a hardsuit from the forge
+  - bugfix: Emotes (e.g. spinning and flipping) will now properly check for consciousness,
+      restraints, etc. when appropriate.
+  - bugfix: The Cult's bastard sword should now properly store souls and create constructs.
+  - bugfix: Neutering a disease symptom now produces a unique ID that will ensure
+      the PANDEMIC machine copies it properly.
+  ShizCalev:
+  - bugfix: You now have to unbuckle a player PRIOR to shaking them up off a bed or
+      resin nest.
+  - bugfix: Wizards will now have the correct name when attacked with Envy's knife!
+  - soundadd: Space ninja energy katanas now make a swish when drawn!
+  Supermichael777:
+  - balance: The detectives gun has been restored from a system change that nerfed
+      knockdown in general. We need to have a serious discussion about anti revolver
+      hate in this community.
+  - tweak: The PDA default font has been switched from "eye bleed" to old-style monospace.
+      Check your preference.
+  Thefastfoodguy:
+  - bugfix: Silicons can no longer take brain damage
+  - bugfix: Antimatter shielding that can't find a control unit won't delete itself
+      anymore
+  WJohnston:
+  - rscadd: Boxstation and Metastation's white ships now have navigation computers,
+      letting you move them around in the station, deep space, and derelict z levels.
+  XDTM:
+  - rscadd: Added the H.E.C.K. suit, a guaranteed loot frop from Bubblegum.
+  - rscadd: The H.E.C.K. suit is fully fire (and ash) proof, and has very good melee
+      armor.
+  - rscadd: H.E.C.K. suits can also be painted with spraycans, to fully customize
+      your experience.
+  - rscadd: Despite spending centuries inside a demon king, H.E.C.K. suits are most
+      definitely safe.
+  - bugfix: Fixed a bug where Viral Aggressive Metabolism caused viruses to be cured
+      instantly.
+  - bugfix: Fixed a bug where viruses' symptoms would all instantly activate on infection.
+  - rscadd: The CMO now has an advanced health analyzer in his closet! It can give
+      more precise readings on the non-standard damage types.
+  Xhuis:
+  - bugfix: Runed metal and brass are no longer invisible.
+  Xhuis and Y0SH1_M4S73R:
+  - bugfix: Servants of Ratvar now spawn in as the actual race set on their preferences,
+      with plasmamen getting the gear they need to not immediately die.
+  Y0SH1_M4S73R:
+  - balance: Gygax overdrive consumes at least 100 power per step
+  YPOQ:
+  - bugfix: Jaunters equipped on the belt slot will save you from chasms again.
+  kevinz000:
+  - rscadd: Wormhole event wormholes now actually teleport you.
+  - bugfix: portals now actually teleport on click.
+  kingofkosmos:
+  - rscadd: You can now see construction/deconstruction hints when examining airlocks.
+  - spellcheck: Beds, chairs, closets, grilles, lattices, catwalks, tables, racks,
+      floors, plating and bookcases now show hints about constructing/deconstructing
+      them.
+  nicbn:
+  - rscadd: Paperwork now uses Markdown instead of BBCode, see the writing help for
+      changes.
+  - imageadd: Changed the drop, throw, pull and resist icons.
+2017-10-15:
+  Armhulen:
+  - bugfix: Clockwork golems no longer slip and slide on glass!
+  Armie:
+  - tweak: Holoparasites are once again in the uplink.
+  Bawhoppen:
+  - tweak: Smoke machine board has been moved to tech storage.
+  DaxDupont:
+  - tweak: After lobbying by Robust Softdrinks and Getmore Chocolate Corp all vendor
+      firmware has been changed to add sillicons to their target demographic.
+  - spellcheck: Replaces instances of "permenant" and "permenantly" with the proper
+      spelling in several areas,
+  Epoc:
+  - rscadd: Added a Toggle Underline button to the PDA menu
+  - code_imp: Cleaned HTML spacing
+  Frozenguy5:
+  - bugfix: C20r damage upped from 20 to 30 (used to be 30 before an ammo cleanup
+      in the code)
+  GLACoding:
+  - bugfix: Syndicate turrets and other machines in walls can now be hit by projectiles
+  Improvedname:
+  - rscadd: You can now put custom name and lore on your holy weapon by using a pen
+      on it!
+  - tweak: Cmo, captain, and the bartender now get pet collars in their lockers.
+  Jambread/RemieRichards/Incoming5643:
+  - server: There is a new system for title music accessible from config/title_music
+      folder. This system allows for multiple rotating lobby music without bloating
+      Git as well as map specific lobby music. See the readme.txt in config/title_music
+      for full details.
+  - config: The previous method of title music selection, strings/round_start_sounds.txt
+      has been depreciated by this change.
+  Kor:
+  - balance: You can now smash the bulbs out of floodlights rather than having to
+      entirely destroy the object.
+  Mercenaryblue:
+  - rscadd: Use the Clown Stamp on some cardboard to begin... the honkbot!
+  - rscadd: These honkbots are just adorable, and totally not annoying. I swear! Honk!
+  - rscadd: You can even slot in a pAI! Just don't emag them... oh boy. oh no. oh
+      geez.
+  - soundadd: Honkbots now release an evil laugh when emagged.
+  - imageadd: added some in_hands for banana peels.
+  - tweak: Golden Bike Horns now permit its victims to perform a full flip before
+      forcing them to jump again.
+  More Robust Than You:
+  - bugfix: Makes the santa event properly poll ghosts
+  - bugfix: Diseases will now cure if species is changed
+  - tweak: You can now drag-drop people into open DNA scanners
+  - bugfix: Medibots will no longer inject people in lockers/sleepers/etc
+  Naksu:
+  - bugfix: Fixes to door/airlock deletion routines.
+  - bugfix: Traitor pen uplinks now preferentially spawn in the PDA pen, and not in
+      a pocket protector full of pens that no-one checks.
+  - bugfix: Reusable projectiles such as foam darts no longer get deleted if they're
+      shot at a shooting range target or a cardboard cutout.
+  - bugfix: Ghosts no longer inherit the movement delay of their former bodies.
+  - bugfix: Fixed mobs being able to smash shocked objects without taking damage.
+  - bugfix: Fixed some mobs not deleting correctly
+  - code_imp: Fixed dusting code, supermatter-suicides no longer spam the runtime
+      logs.
+  - code_imp: Fixed some initialize paths.
+  Onule:
+  - tweak: Sunflower sprites were changed, small edits to variants.
+  - imageadd: Sunflower and variant's inhands sprites.
+  - imageadd: Tweaked growing sprites to match the new sunflower.
+  - imageadd: Moonflower and novaflowers now have slightly different growing sprites.
+  Robustin:
+  - rscadd: The Chemistry Smoke Machine! Chemist offices will have a board available
+      should they choose to construct a smoke machine. The smoke machine will regularly
+      produce smoke from whatever chemicals have been inserted into the machine. Designs
+      for the circuitboard are also available at RND.
+  - tweak: Abandoned Airlocks will no longer be deleted when their turf is changed
+      to a wall.
+  - tweak: Tesla movement is now completely random.
+  - bugfix: Clock Cult mode will no longer end if all the cultists die. The round
+      will not end until the Ark is destroyed or completed.
+  - bugfix: Chain reactions between explosives will now properly trigger explosives
+      located in an individual's bag.
+  - tweak: The wrench-anchoring time of the smoke machine is now doubled to 4 seconds.
+  - tweak: Smoke Machine smoke is now transparent.
+  - rscadd: The smoke machine has taken its rightful place in the chemist's office.
+  - bugfix: Smoke machine will no longer operate while moving/unanchored.
+  ShizCalev:
+  - tweak: Nanotrasen brand "Box" model stations have received approval from CentCom
+      to be retrofitted with the latest in Xenobiology equipment. You will now find
+      a chemmaster, a chemical dispenser, and a dropper within the Research Division's
+      Xenobiology lab.
+  - bugfix: C4 will no longer appear underneath objects on walls.
+  - bugfix: Plastic explosives will no longer be invisible after being planted.
+  - imageadd: The security bombsuit's sprite has been updated!
+  SpaceManiac:
+  - spellcheck: Grammar when examining objects has been improved.
+  - bugfix: AI eye camera static is now correctly positioned on Lavaland.
+  - spellcheck: Fixed many instances of "the the" when interacting with objects.
+  - bugfix: The tracking implant locator now works on the station again.
+  WJohn:
+  - rscadd: An old cruiser class vessel has resiliently stuck around, and may do so
+      for the foreseeable future.
+  WJohnston:
+  - tweak: Due to age, the abandoned ship's engines are now considerably slower when
+      bringing it place to place. This does however mean that the ship now has a more
+      gradual takeoff, with no sudden jolt to knock passengers off their feet.
+  - imageadd: Black carpets no longer have an ugly periodic black line in them. Regular
+      catwalks are now totally opaque so you won't accidentally click on space when
+      trying to place wires or tiles on them.
+  - rscdel: Boxstation's guitar white ship is no more.
+  - rscadd: Metastation's white ship stands in its  place!
+  - tweak: Metastation's white ship has a couple of weak laser turrets to protect
+      the cockpit from space carp.
+  - tweak: Boxstation and metastation now have some plating under the grilles near
+      the AI sat's transit tube to prevent players from deleting the tube by landing
+      there.
+  WJohnston & ninjanomnom:
+  - rscadd: Plastitanium walls smooth, fancier syndicate shuttles!
+  - bugfix: Infiltrator shuttles have been moved out of the station maps and made
+      into a multi-area shuttle.
+  - balance: Titanium and plastitanium have explosion resistance (requested by Wjohn)
+  XDTM:
+  - rscadd: Blood and vomit pools can now spread the diseases of the mob that made
+      them! Cover your feet properly to avoid infection.
+  - rscadd: Virus severity now changes the color of the disease HUD icon, scaling
+      from green to red to flashing black-red.
+  - tweak: Contact-based diseases no longer spread by simply standing near other people;
+      it requires interaction like touching or attacking. Bumping against people/swapping
+      with help intent still counts as touching.
+  - tweak: Advanced viruses now have another infection type, "Fluids"; it's between
+      blood and skin contact, and will only be transmitted through fluid contact.
+  - rscdel: Two "hidden" infection types have been removed. Overall this means that
+      making a virus airborne is a little bit easier.
+  - bugfix: Species who cannot breathe can no longer be infected by breathing.
+  - bugfix: Internals now properly work if set to 0 pressure, and will prevent breathing
+      gas from the external atmosphere.
+  - bugfix: Viral Aggressive Metabolism is now properly inactive when neutered.
+  Xhuis:
+  - tweak: Cogscarabs can now experiment more freely with base design during non-clockcult
+      rounds with infinite power and the ability to recite scripture!
+  - bugfix: The Ark of the Clockwork Justiciar is now registered as a hostile environment.
+  - refactor: Clockwork scripture now has one progress bar for the entire recital
+      instead of multiple ones for each sentence in the invocation.
+  - bugfix: Ocular wardens no longer have a burning hatred for revenants and won't
+      attack their corpse endlessly anymore.
+  - balance: Stargazers can no longer be built off-station, even in new areas.
+  - balance: Integration cogs no longer emit sounds and steam visuals when active.
+  armie:
+  - bugfix: mob spawners are no longer possessable
+  deathride58:
+  - rscadd: '*slap'
+  duncathan:
+  - bugfix: Scrubbers and filters no longer allow for infinite pressure in pipes.
+  improvedname:
+  - bugfix: 9mm doesn't longer appear in traitor surplus crates
+  kevinz000:
+  - bugfix: 'Flightsuits now allow proper pulling experimental: Moved now has an argument
+      for if it was a regular Move or a forceMove.'
+  - rscadd: Instead of dumb sleep()s, follow trails now use SSfastprocess for processing!
+  - rscadd: Mobs now float while flying automatically!
+  - rscdel: 'Flightsuits can no longer be safely shut off if you''re still barreling
+      down the hallway. experimental: Flightsuits should be less shitcode. Hope this
+      PR doesn''t blow anything important up!'
+  - bugfix: Fixed trying to clear beaker in pandemic when the beaker is already removed
+      causing a runtime.
+  kingofkosmos:
+  - rscadd: Alt-clicking on a computer now ejects the ID card inside it.
+  nicbn:
+  - tweak: You can now clear bullet holes in walls using a welding tool.
+  ninjanomnom:
+  - refactor: Radiation has been completely overhauled.
+  - rscadd: A new radiation subsystem and spreading mechanics.
+  - rscadd: Walls and other dense objects insulate you from radiation.
+  - rscadd: Geiger counters now store the last burst of radiation so you can view
+      it at your leisure or show it to someone. Examine it.
+  - rscadd: Geiger counters can check mobs for contaminated objects. Scan yourself
+      before you leave to make sure you aren't carrying dangerous radioactive items.
+  - soundadd: Geiger counters have realistic sounds and the radiation pulse spam in
+      chat has been replaced.
+  - balance: Radiation is more deadly and causes burns at high intensities, WEAR YOUR
+      RADSUITS.
+  - balance: However residue radiation is far slower acting and kills you with toxin.
+  - balance: Engineering holosigns have a light amount of radiation insulation.
+  - balance: Rad collectors are nerfed. No more supercharging with pressurized plasma.
+      No more collector spam either.
+  - balance: Engine output is a lot more stable as a result of collector changes.
+  - balance: Monkeys need more rads and take more time to turn into gorillas.
+  - tweak: Over 100% on the DNA computer means your subject is now taking damage.
+  - tweak: The asteroid escape shuttle has no stabilizers and throws you around when
+      it moves
+  - bugfix: Shuttles no longer rotate ghosts of players who prefer directionless sprites
+  - bugfix: 2 Years later and cameras work on shuttles now, probably.
+  - bugfix: Buckled mobs when on a rotating shuttle should now rotate correctly
+  - bugfix: Fixes shuttles gibbing in supposedly safe areas
+  - bugfix: Mobs that didn't move during shuttle launch would not have their parallax
+      updated. This is fixed now.
+  - bugfix: The custom shuttle placement highlight now works for multi area shuttles.
+  - bugfix: Directional windows shouldn't leak air anymore
+  - tweak: Windows only block air while anchored
+  - bugfix: Fixes camera mobs being considered a target by radiation
+  - bugfix: Cables can no longer be contaminated as well
+  - balance: Buffs radiation cleansing chems
+  - balance: Toxin damage per tick from radiation is halved
+  - admin: Contaminated objects keep track of what contaminated them
+  - admin: Radiation pulses over 3000 are logged now
+  spessmenart:
+  - imageadd: The captains sabre no longer looks like a rapier.
+2017-10-17:
+  DaxDupont:
+  - bugfix: 'Fancy boxes(ie: donut boxes) now show the proper content amount in the
+      sprite and no longer go invisible when empty.'
+  Mercenaryblue:
+  - bugfix: when decapitated, banana-flavored cream no longer hovers where your head
+      used to be.
+  More Robust Than You:
+  - rscadd: EI NATH! now causes a flash of light
+  Naksu:
+  - bugfix: Pinned notes will now show up on vault, abductor, centcom and large glass
+      airlocks.
+  - spellcheck: Removed a misleading message when handling full stacks of sheets.
+  - bugfix: Pre-filled glass bottles (uplink, medbay, botany) will now give visual
+      feedback about how much stuff is left inside, and the color of contents will
+      match an empty bottle being filled with the same reagent.
+  - bugfix: Player-controlled "neutral" mobs such as minebots are now considered valid
+      targets by clock cult's ocular wardens.
+  Xhuis:
+  - bugfix: Cogged APCs can now be correctly unlocked with an ID card.
+  duncathan:
+  - tweak: Portable air pumps can output to a maximum of 25 atmospheres.
+  kevinz000:
+  - refactor: Legacy projectiles have been removed. Instead, all projectiles are now
+      PIXEL PROJECTILES!
+  - rscadd: Reflectors can now be at any angle you want. Alt click them to set angle!
+  - rscadd: Pipes can now be layered up to 3 layers.
+2017-10-18:
+  DaxDupont:
+  - bugfix: Fixes automatic fire on guns.
+  Gun Hog:
+  - bugfix: The GPS item now correctly changes its name when the GPS tag is changed.
+  Improvedname:
+  - tweak: Reverts katana's to its orginal size being huge
+  Mercenaryblue:
+  - balance: it should be far easier to clean out your face from multiple cream pies.
+  More Robust Than You:
+  - tweak: People that are burning slightly less will appear to be burning... slightly
+      less.
+  Robustin:
+  - bugfix: The smoke machine now properly generates transparent smoke, transmits
+      chemicals, and displays the proper icons.
+  ShizCalev:
+  - tweak: You can no longer build reinforced floors directly on top of dirt, asteroid
+      sand, ice, or beaches. You'll have to first construct flooring on top of it
+      instead.
+  - bugfix: Corrected mapping issues introduced with the latest SM engine/radiation
+      update across all relevant maps.
+  - bugfix: The tools on the Caravan Ambush space ruin have had their speeds corrected.
+  - bugfix: Slappers will no longer appear as a latex balloon in your hand.
+  - bugfix: Renault now has a comfy new bed on Metastation!
+  - tweak: Engineering cyborgs now have access to geiger counters.
+  Xhuis:
+  - bugfix: You can no longer pick up brass chairs.
+  Y0SH1_M4S73R:
+  - bugfix: Disabling leg actuators sets the power drain per step to the correct value.
+  duncathan:
+  - bugfix: Filters no longer stop passing any gas through if the filtered output
+      is full.
+  ninjanomnom:
+  - rscadd: You can vomit blood at high enough radiation.
+  - balance: Radiation knockdown is far far shorter.
+  - balance: Genetics modification is less harmful but still, upgrade your machines.
+  - balance: Pentetic acid is useless for low amounts of radiation but indispensable
+      for high amounts now.
+  - balance: Singularity radiation has been normalized and Pubby engine has been remapped.
+  - bugfix: No more hair loss spam
+  - bugfix: Mob rad contamination has been disabled for now. Regular contamination
+      is still a thing.
+  - bugfix: Fixed turfs not rotating
+  - bugfix: Fixed stealing structures you shouldn't be moving
+2017-10-19:
+  Kor:
+  - rscadd: Blob is now a side antagonist.
+  - rscadd: Event and admin blobs will now be able to choose their spawn location.
+  - rscadd: Blob can now win in any mode by gaining enough tiles to reach Critical
+      Mass.
+  - rscadd: Blobs that have Critical Mass have unlimited points, and a minute after
+      achieving critical mass, they will spread to every tile on station, killing
+      anyone still on board and ending the round.
+  - rscadd: Using an analyzer on a blob will now reveal its progress towards Critical
+      Mass.
+  - rscadd: The blob event is now more common.
+  Mercenaryblue:
+  - tweak: You will no longer trip on inactive honkbots.
+  - bugfix: Sentient Honkbots are no longer forced to speak when somebody trip on
+      them.
+  Naksu:
+  - bugfix: Manned turrets stop firing when there's no-one in the turret shooting.
+  - refactor: 'mobs will enter a deep power-saving state when there''s not much to
+      do except wander around. change: bees are slightly more passive in general'
+  deathride58:
+  - tweak: You can now press Ctrl+H to stop pulling, or simply H to stop pulling if
+      you're in hotkey mode.
+  ninjanomnom:
+  - rscadd: Engineering scanner goggles have a radiation mode now
+  - rscadd: Objects placed under showers are cleansed of radioactive contamination
+      over a short time.
+  - soundadd: Showers make sound now.
+  oranges:
+  - rscdel: Removed the bluespace pipe
+2017-10-20:
+  Kor:
+  - rscadd: You can now select your Halloween race, rather than having it assigned
+      randomly via event.
+  Robustin:
+  - bugfix: Fixed a bug where detonating maxcaps, especially multiple maxcaps, on
+      Reebe guaranteed that everyone would die and thus the Clock Cult would immediately
+      lose; Reebe maxcap is now 2/5/10.
+  ShizCalev:
+  - bugfix: All reflector prisms/mirrors have had their angles corrected.
+  - tweak: Remains left over by dusting or soul-stoning a mob are now dissoluble with
+      acid.
+  - tweak: Changelings using biodegrade to escape restraints will now leave a pile
+      of goop.
+  - bugfix: Fixed messages related to changelings using biodegrade not appearing.
+2017-10-21:
+  More Robust Than You:
+  - bugfix: Heads of staff will now have cat organs removed at roundstart
+  Robustin:
+  - balance: Spray tan no longer stuns when ingested.
+  Thunder12345:
+  - bugfix: Sentient cats no longer forget to fall over when they die
+2017-10-22:
+  More Robust Than You:
+  - bugfix: Blood Brother now properly shows up in player panel
+  Naksu:
+  - server: Paper bins no longer let server admins know that pens were eaten.
+  - code_imp: Removed dangling mob references to last attacker/attacked
+  Robustin:
+  - balance: Medical biosuits (and hardsuits) now offer heavy, but not complete, radiation
+      resistance.
+  ninjanomnom:
+  - bugfix: Contents of silicon mobs are no longer considered for targets of radiation.
+      This blocks them from being contaminated.
+2017-10-24:
+  Armhulen:
+  - rscadd: Wizards may now shapeshift into viper spiders.
+  Improvedname:
+  - tweak: Blacklists holoparasite's from surplus crates
+  Kor:
+  - rscadd: Added dullahans, which will be available from the character set up menu
+      during the Halloween event.
+  - bugfix: Severed heads will no longer appear bald.
+  More Robust Than You:
+  - bugfix: Fixes champrojector camera bugs
+  Naksu:
+  - bugfix: Grinders will now grind grown items like cocoa pods again
+  - code_imp: Cameras no longer keep hard references to mobs in their motion tracking
+      list.
+  ShizCalev:
+  - bugfix: Creatures made via gold slime cores will now be given the proper name
+      of their master.
+  deathride58:
+  - tweak: Deltastation's armory now contains reinforced windows surrounding the lethal
+      weaponry. This makes Delta's armory consistent with Box.
+  - tweak: There are now decals in places where extra Security lockers can spawn.
+  - tweak: Cleaned up semicolons in Meta and Boxstation's .dmms
+2017-10-25:
+  Cruix:
+  - rscadd: Shuttle navigation computers can now place new transit locations over
+      the shuttle's current position.
+  JJRcop:
+  - rscadd: The heart of darkness revives you as a shadowperson if you aren't one
+      already.
+  ShizCalev:
+  - bugfix: Shades will no longer always hear a heartbeat.
+  - bugfix: Golem abilities will now be start on cooldown when they are made.
+2017-10-26:
+  Kor and JJRcop:
+  - rscadd: Added vampires. They will be available as a roundstart race during the
+      Halloween holiday event.
+  ShizCalev:
+  - bugfix: Reflectors will no longer drop more materials than they took to make when
+      deconstructed.
+  - bugfix: You will no longer be prompted to reenter your body while being defibbed
+      if you can't actually be revived.
+  - bugfix: You can no longer teleport past the ticket stands of the Luxury Emergency
+      Shuttle.
+  - bugfix: Lightgeists can now -actually- be spawned with gold slime cores.
+  - tweak: The Staff of Change will now randomly assign a cyborg module when transforming
+      a mob into a cyborg.
+  Xhuis:
+  - balance: Clockwork marauders now move more slowly below 40% health.
+  - balance: Instead of a 40% chance (or more) chance to block projectiles, clockwork
+      marauders now have three fixed 100% blocks; after using those three, they cannot
+      block anymore without avoiding projectiles for ten seconds. This number increases
+      to four if war is declared.
+  - balance: Projectiles that deal no damage DO reduce marauders' shield health. Use
+      disabler shots to open them up, then use lasers to go for the kill!
+  - bugfix: Cogscarab shells and marauder armor now appear in the spawners menu.
+  - bugfix: You can no longer stack infinitely many stargazers on one tile.
+  nicbn:
+  - imageadd: Chemical heater and smoke machine resprited.
+  ninjanomnom:
+  - soundadd: Portable generators have a sound while active.
+  - soundadd: The supermatter has a sound that scales with stored energy.
+  ninjanomnom & Wjohn:
+  - bugfix: Cable cuffs now inherit the color of the cables used to make them.
+  - bugfix: Split cable stacks keep their color.
+  - tweak: The blue cable color is now a better blue.
+2017-10-27:
+  Anonmare:
+  - rscadd: Adds new grindables
+  JamieH:
+  - rscadd: Buildmode map generators will now show you a preview of the area you're
+      changing
+  - rscadd: Buildmode map generators will now ask before nuking the map
+  - bugfix: Buildmode map generator corners can now only be set by left clicking
+  Kor:
+  - rscadd: Cloth golems will be available as a roundstart race during Halloween.
+  MrStonedOne:
+  - code_imp: Created a system to profile code on a line by line basis and return
+      detailed info about how much time was spent (in milliseconds) on each line(s).
+  Xhuis:
+  - balance: Servants can no longer teleport into the gravity generator, EVA, or telecomms.
+  ninjanomnom:
+  - bugfix: Hardsuit helmets work like geiger counters for the user.
+  - code_imp: Radiation should perform a little better in places.
+  - balance: Various radiation symptom thresholds have been tweaked.
+  - balance: Contamination strengths at different ranges have been tweaked.
+  - balance: Contaminated objects have less range for their radiation.
+  - balance: Hitting something with a contaminated object reduces its strength faster.
+  - balance: Contaminated objects decay faster.
+  - balance: Both radiation healing medicines have been buffed a bit.
+  - balance: Passive radiation loss for mobs is nerfed.
+  - balance: There is a soft cap for mob radiation now.
+  - balance: Projectiles, ammo casings, and implants are disallowed from becoming
+      contaminated.
+  - rscadd: Suit storage units can completely cleanse contamination from stored objects
+  - admin: The first time an object is contaminated enough to spread more contamination
+      admins will be warned. This is also added to stat tracking.
+  - rscadd: Thermite works on floors and can be ignited by sufficiently hot fires
+      now
+  - refactor: Thermite has been made into a component
+  - bugfix: Thermite no longer removes existing overlays on turfs
+2017-10-28:
+  Mark9013100:
+  - tweak: The Medical Cloning manual has been updated.
+2017-10-29:
+  Armhulen:
+  - rscadd: Frost Spiders now use Frost OIL!
+  Mercenaryblue:
+  - rscadd: Skeletons can now have their own spectral instruments
+  - rscadd: \[Dooting Intensifies\]
+  - admin: the variable "too_spooky" defines if it will spawn new instruments, by
+      default TRUE.
+  Naksu:
+  - bugfix: Removed meteor-related free lag
+  - bugfix: Cleaned up dangling mob references from alerts
+  Xhuis:
+  - bugfix: You can no longer become an enhanced clockwork golem with mutation toxin.
+  - balance: Normal clockwork golems now have 20% armor, down from 40%.
+  as334:
+  - spellcheck: This changelog has been updated and so read it again if you are interested
+      in doing assmos.
+  - rscadd: Atmospherics has been massively expanded including new gases.
+  - rscadd: These new gases include Brown Gas, Pluoxium, Stimulum, Hyper-Noblium and
+      Tritium.
+  - rscadd: Brown Gas is acidic to breath, but mildly stimulation.
+  - rscadd: Stimulum is more stimulating and much safer.
+  - rscadd: Pluoxium is a non-reactive form of oxygen that delivers more oxygen into
+      the bloodstream.
+  - rscadd: Hyper-Noblium is an extremely noble gas, and stops gases from reacting.
+  - rscadd: Tritium is radioactive and flammable.
+  - rscadd: New reactions have also been added to create these gases.
+  - rscadd: 'Tritium formation: Heat large amounts of oxygen with plasma. Make sure
+      you have a filter ready and setup!'
+  - rscadd: Fusion has been reintroduced. Plasma will fuse when heated to a high thermal
+      energy with Tritium as a catalyst. Make sure to manage the waste products.
+  - rscadd: 'Brown Gas formation: Heat Oxygen and Nitrogen.'
+  - rscadd: 'BZ fixation: Heat Tritium and Plasma.'
+  - rscadd: 'Stimulum formation: Heated Tritium, Plasma, BZ and Brown Gas.'
+  - rscadd: 'Hyper-Noblium condensation: Needs Nitrogen and Tritium at a super high
+      heat. Cools rapidly.'
+  - rscadd: Pluoxium is unable to be formed.
+  - rscdel: Freon has been removed. Use cold nitrogen for your SME problems now.
+  - rscadd: Water vapor now freezes the tile it is on when it is cooled heavily.
+  naltronix:
+  - bugfix: fixes that table that wasnt accessible in Metastation
+2017-10-30:
+  PKPenguin321:
+  - tweak: You can now use beakers/cups/etc that have welding fuel in them on welders
+      to refuel them.
+  bgobandit:
+  - tweak: 'Due to cuts to Nanotrasen''s Occupational Safety and Health Administration
+      (NO-SHA) budget, station fixtures no longer undergo as much safety testing.
+      (Translation for rank and file staff: More objects on the station will hurt
+      you.)'

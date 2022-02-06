@@ -1,15 +1,13 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { classes } from 'common/react';
-import { Fragment } from 'inferno';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, TextArea } from '../components';
+import { useBackend } from '../backend';
+import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stack, TextArea } from '../components';
 import { formatMoney } from '../format';
-import { refocusLayout, Window } from '../layouts';
+import { Window } from '../layouts';
 
 export const RequestKiosk = (props, context) => {
   return (
-    <Window resizable>
+    <Window
+      width={550}
+      height={600}>
       <Window.Content scrollable>
         <RequestKioskContent />
       </Window.Content>
@@ -29,7 +27,7 @@ export const RequestKioskContent = (props, context) => {
   const color = 'rgba(13, 13, 213, 0.7)';
   const backColor = 'rgba(0, 0, 69, 0.5)';
   return (
-    <Fragment>
+    <>
       <Section>
         <LabeledList>
           <LabeledList.Item
@@ -54,14 +52,14 @@ export const RequestKioskContent = (props, context) => {
               <Section
                 key={request.name}
                 width="300px">
-                <Flex spacing={1} align="baseline">
-                  <Flex.Item bold width="310px">
+                <Stack align="baseline">
+                  <Stack.Item bold width="310px">
                     {request.owner}
-                  </Flex.Item>
-                  <Flex.Item width="100px">
+                  </Stack.Item>
+                  <Stack.Item width="100px">
                     {formatMoney(request.value) + ' cr'}
-                  </Flex.Item>
-                  <Flex.Item>
+                  </Stack.Item>
+                  <Stack.Item>
                     <Button
                       fluid
                       icon="pen-fancy"
@@ -77,8 +75,8 @@ export const RequestKioskContent = (props, context) => {
                       onClick={() => act('deleteRequest', {
                         request: request.acc_number,
                       })} />
-                  </Flex.Item>
-                </Flex>
+                  </Stack.Item>
+                </Stack>
                 <Section align="center">
                   <i>&quot;{request.description}&quot;</i>
                 </Section>
@@ -123,12 +121,11 @@ export const RequestKioskContent = (props, context) => {
             <Section>
               <TextArea
                 fluid
-                value={bountyText}
                 height="250px"
                 width="200px"
                 backgroundColor="black"
                 textColor="white"
-                onInput={(e, value) => act('bountyText', {
+                onChange={(e, value) => act('bountyText', {
                   bountytext: value,
                 })} />
               <Box>
@@ -151,6 +148,6 @@ export const RequestKioskContent = (props, context) => {
           </Collapsible>
         </Flex.Item>
       </Flex>
-    </Fragment>
+    </>
   );
 };

@@ -20,19 +20,18 @@
 //- Check if the area has too much empty space. If so, make it smaller and replace the rest with maintenance tunnels.
 
 GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
-	/client/proc/camera_view, 				//-errorage
-	/client/proc/sec_camera_report, 		//-errorage
-	/client/proc/intercom_view, 			//-errorage
+	/client/proc/camera_view, //-errorage
+	/client/proc/sec_camera_report, //-errorage
+	/client/proc/intercom_view, //-errorage
 	/client/proc/air_status, //Air things
 	/client/proc/Cell, //More air things
 	/client/proc/atmosscan, //check plumbing
 	/client/proc/powerdebug, //check power
 	/client/proc/count_objects_on_z_level,
 	/client/proc/count_objects_all,
-	/client/proc/cmd_assume_direct_control,	//-errorage
+	/client/proc/cmd_assume_direct_control, //-errorage
 	/client/proc/cmd_give_direct_control,
-	/client/proc/startSinglo,
-	/client/proc/set_server_fps,	//allows you to set the ticklag.
+	/client/proc/set_server_fps, //allows you to set the ticklag.
 	/client/proc/cmd_admin_grantfullaccess,
 	/client/proc/cmd_admin_areatest_all,
 	/client/proc/cmd_admin_areatest_station,
@@ -43,6 +42,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/cmd_admin_rejuvenate,
 	/datum/admins/proc/show_traitor_panel,
 	/client/proc/disable_communication,
+	/client/proc/show_map_reports,
 	/client/proc/cmd_show_at_list,
 	/client/proc/cmd_show_at_markers,
 	/client/proc/manipulate_organs,
@@ -51,22 +51,11 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/show_line_profiling,
 	/client/proc/create_mapping_job_icons,
 	/client/proc/debug_z_levels,
-	/client/proc/place_ruin
+	/client/proc/place_ruin,
+	/client/proc/station_food_debug,
+	/client/proc/station_stack_debug,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
-
-/obj/effect/debugging/mapfix_marker
-	name = "map fix marker"
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "mapfixmarker"
-	desc = "I am a mappers mistake."
-
-/obj/effect/debugging/marker
-	icon = 'icons/turf/areas.dmi'
-	icon_state = "yellow"
-
-/obj/effect/debugging/marker/Move()
-	return 0
 
 /client/proc/camera_view()
 	set category = "Mapping"
@@ -84,7 +73,7 @@ GLOBAL_PROTECT(admin_verbs_debug_mapping)
 			for(var/turf/T in C.can_see())
 				seen[T]++
 		for(var/turf/T in seen)
-			T.maptext = "[seen[T]]"
+			T.maptext = MAPTEXT(seen[T])
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Camera Range")
 
@@ -110,8 +99,8 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Camera Report"
 
 	if(!Master)
-		alert(usr,"Master_controller not found.","Sec Camera Report")
-		return 0
+		tgui_alert(usr,"Master_controller not found.","Sec Camera Report")
+		return FALSE
 
 	var/list/obj/machinery/camera/CL = list()
 
@@ -130,7 +119,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
 				if(C1.loc == C2.loc)
 					output += "<li>Overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
-		var/turf/T = get_step(C1,turn(C1.dir,180))
+		var/turf/T = get_step(C1,C1.dir)
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille) in T))
 				var/window_check = 0
@@ -150,18 +139,29 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set name = "Intercom Range Display"
 
 	var/static/intercom_range_display_status = FALSE
-	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something
+	intercom_range_display_status = !intercom_range_display_status //blame cyberboss if this breaks something //blamed
 
-	for(var/obj/effect/debugging/marker/M in world)
-		qdel(M)
+	for(var/obj/effect/abstract/marker/intercom/marker in GLOB.all_abstract_markers)
+		qdel(marker)
 
 	if(intercom_range_display_status)
-		for(var/obj/item/radio/intercom/I in world)
-			for(var/turf/T in orange(7,I))
-				var/obj/effect/debugging/marker/F = new/obj/effect/debugging/marker(T)
-				if (!(F in view(7,I.loc)))
-					qdel(F)
+		for(var/frequency in GLOB.all_radios)
+			for(var/obj/item/radio/intercom/intercom in GLOB.all_radios[frequency])
+				for(var/turf/turf in view(7,intercom.loc))
+					new /obj/effect/abstract/marker/intercom(turf)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Intercom Range") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/show_map_reports()
+	set category = "Mapping"
+	set name = "Show map report list"
+	set desc = "Displays a list of map reports"
+
+	var/dat = {"<b>List of all map reports:</b><br>"}
+
+	for(var/datum/map_report/report as anything in GLOB.map_reports)
+		dat += "[report.tag] ([report.original_path]) - <a href='?src=[REF(report)];[HrefToken()];show=1'>View</a><br>"
+
+	usr << browse(dat, "window=map_reports")
 
 /client/proc/cmd_show_at_list()
 	set category = "Mapping"
@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 	set desc = "Displays a list of active turfs coordinates at roundstart"
 
 	var/dat = {"<b>Coordinate list of Active Turfs at Roundstart</b>
-	 <br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
+		<br>Real-time Active Turfs list you can see in Air Subsystem at active_turfs var<br>"}
 
 	for(var/t in GLOB.active_turfs_startlist)
 		var/turf/T = t
@@ -200,20 +200,20 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Roundstart Active Turf Markers")
 
-/client/proc/enable_debug_verbs()
+/client/proc/enable_mapping_verbs()
 	set category = "Debug"
-	set name = "Debug verbs - Enable"
+	set name = "Mapping verbs - Enable"
 	if(!check_rights(R_DEBUG))
 		return
-	verbs -= /client/proc/enable_debug_verbs
-	verbs.Add(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
+	remove_verb(src, /client/proc/enable_mapping_verbs)
+	add_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Enable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/disable_debug_verbs()
+/client/proc/disable_mapping_verbs()
 	set category = "Debug"
-	set name = "Debug verbs - Disable"
-	verbs.Remove(/client/proc/disable_debug_verbs, GLOB.admin_verbs_debug_mapping)
-	verbs += /client/proc/enable_debug_verbs
+	set name = "Mapping verbs - Disable"
+	remove_verb(src, list(/client/proc/disable_mapping_verbs, GLOB.admin_verbs_debug_mapping))
+	add_verb(src, /client/proc/enable_mapping_verbs)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Disable Debug Verbs") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/count_objects_on_z_level()
@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 		if(istype(A,type_path))
 			var/atom/B = A
 			while(!(isturf(B.loc)))
-				if(B && B.loc)
+				if(B?.loc)
 					B = B.loc
 				else
 					break
@@ -298,22 +298,22 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	for(var/job in subtypesof(/datum/job))
 		var/datum/job/JB = new job
 		switch(JB.title)
-			if("AI")
+			if(JOB_AI)
 				final.Insert(icon('icons/mob/ai.dmi', "ai", SOUTH, 1), "AI")
-			if("Cyborg")
+			if(JOB_CYBORG)
 				final.Insert(icon('icons/mob/robots.dmi', "robot", SOUTH, 1), "Cyborg")
 			else
 				for(var/obj/item/I in D)
 					qdel(I)
 				randomize_human(D)
-				JB.equip(D, TRUE, FALSE)
+				D.dress_up_as_job(JB, TRUE)
 				COMPILE_OVERLAYS(D)
 				var/icon/I = icon(getFlatIcon(D), frame = 1)
 				final.Insert(I, JB.title)
 	qdel(D)
 	//Also add the x
 	for(var/x_number in 1 to 4)
-		final.Insert(icon('icons/mob/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
+		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
 	fcopy(final, "icons/mob/landmarks.dmi")
 
 /client/proc/debug_z_levels()
@@ -375,3 +375,50 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	messages += "</table>"
 
 	to_chat(src, messages.Join(""), confidential = TRUE)
+
+/client/proc/station_food_debug()
+	set name = "Count Station Food"
+	set category = "Mapping"
+	var/list/foodcount = list()
+	for(var/obj/item/food/fuck_me in world)
+		var/turf/location = get_turf(fuck_me)
+		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+			continue
+		LAZYADDASSOC(foodcount, fuck_me.type, 1)
+
+	var/table_header = "<tr><th>Name</th> <th>Type</th> <th>Amount</th>"
+	var/table_contents = list()
+	for(var/atom/type as anything in foodcount)
+		var/foodname = initial(type.name)
+		var/count = foodcount[type]
+		table_contents += "<tr><td>[foodname]</td> <td>[type]</td> <td>[count]</td></tr>"
+
+	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
+	var/page_contents = "[page_style]<table style=\"width:100%\">[table_header][jointext(table_contents, "")]</table>"
+	var/datum/browser/popup = new(mob, "fooddebug", "Station Food Count", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()
+
+/client/proc/station_stack_debug()
+	set name = "Count Station Stacks"
+	set category = "Mapping"
+	var/list/stackcount = list()
+	for(var/obj/item/stack/fuck_me in world)
+		var/turf/location = get_turf(fuck_me)
+		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+			continue
+		LAZYADDASSOC(stackcount, fuck_me.type, fuck_me.amount)
+
+	var/table_header = "<tr><th>Name</th> <th>Type</th> <th>Amount</th>"
+	var/table_contents = list()
+	for(var/atom/type as anything in stackcount)
+		var/stackname = initial(type.name)
+		var/count = stackcount[type]
+		table_contents += "<tr><td>[stackname]</td> <td>[type]</td> <td>[count]</td></tr>"
+
+	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
+	var/page_contents = "[page_style]<table style=\"width:100%\">[table_header][jointext(table_contents, "")]</table>"
+	var/datum/browser/popup = new(mob, "stackdebug", "Station Stack Count", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()
+

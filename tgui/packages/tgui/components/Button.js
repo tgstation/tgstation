@@ -4,13 +4,11 @@
  * @license MIT
  */
 
+import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
-import { IS_IE8 } from '../byond';
-import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
-import { refocusLayout } from '../layouts';
 import { createLogger } from '../logging';
-import { Box } from './Box';
+import { Box, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
 
@@ -21,15 +19,19 @@ export const Button = props => {
     className,
     fluid,
     icon,
+    iconRotation,
+    iconSpin,
+    iconColor,
+    iconPosition,
     color,
     disabled,
     selected,
     tooltip,
     tooltipPosition,
     ellipsis,
+    compact,
+    circular,
     content,
-    iconRotation,
-    iconSpin,
     children,
     onclick,
     onClick,
@@ -44,10 +46,17 @@ export const Button = props => {
       + `'onClick' instead and read: `
       + `https://infernojs.org/docs/guides/event-handling`);
   }
-  // IE8: Use a lowercase "onclick" because synthetic events are fucked.
-  // IE8: Use an "unselectable" prop because "user-select" doesn't work.
-  return (
-    <Box
+  rest.onClick = e => {
+    if (!disabled && onClick) {
+      onClick(e);
+    }
+  };
+  // IE8: Use "unselectable" because "user-select" doesn't work.
+  if (Byond.IS_LTE_IE8) {
+    rest.unselectable = true;
+  }
+  let buttonContent = (
+    <div
       className={classes([
         'Button',
         fluid && 'Button--fluid',
@@ -55,20 +64,20 @@ export const Button = props => {
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
         ellipsis && 'Button--ellipsis',
+        circular && 'Button--circular',
+        compact && 'Button--compact',
+        iconPosition && 'Button--iconPosition--' + iconPosition,
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
         className,
+        computeBoxClassName(rest),
       ])}
       tabIndex={!disabled && '0'}
-      unselectable={IS_IE8}
-      onclick={e => {
-        refocusLayout();
-        if (!disabled && onClick) {
-          onClick(e);
-        }
-      }}
       onKeyDown={e => {
+        if (props.captureKeys === false) {
+          return;
+        }
         const keyCode = window.event ? e.which : e.keyCode;
         // Simulate a click when pressing space or enter.
         if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
@@ -81,23 +90,38 @@ export const Button = props => {
         // Refocus layout on pressing escape.
         if (keyCode === KEY_ESCAPE) {
           e.preventDefault();
-          refocusLayout();
           return;
         }
       }}
-      {...rest}>
-      {icon && (
-        <Icon name={icon} rotation={iconRotation} spin={iconSpin} />
+      {...computeBoxProps(rest)}>
+      {(icon && iconPosition !== 'right') && (
+        <Icon
+          name={icon}
+          color={iconColor}
+          rotation={iconRotation}
+          spin={iconSpin} />
       )}
       {content}
       {children}
-      {tooltip && (
-        <Tooltip
-          content={tooltip}
-          position={tooltipPosition} />
+      {(icon && iconPosition === 'right') && (
+        <Icon
+          name={icon}
+          color={iconColor}
+          rotation={iconRotation}
+          spin={iconSpin} />
       )}
-    </Box>
+    </div>
   );
+
+  if (tooltip) {
+    buttonContent = (
+      <Tooltip content={tooltip} position={tooltipPosition}>
+        {buttonContent}
+      </Tooltip>
+    );
+  }
+
+  return buttonContent;
 };
 
 Button.defaultHooks = pureComponentHooks;
@@ -224,7 +248,7 @@ export class ButtonInput extends Component {
       ...rest
     } = this.props;
 
-    return (
+    let buttonContent = (
       <Box
         className={classes([
           'Button',
@@ -264,14 +288,21 @@ export class ButtonInput extends Component {
             }
           }}
         />
-        {tooltip && (
-          <Tooltip
-            content={tooltip}
-            position={tooltipPosition}
-          />
-        )}
       </Box>
     );
+
+    if (tooltip) {
+      buttonContent = (
+        <Tooltip
+          content={tooltip}
+          position={tooltipPosition}
+        >
+          {buttonContent}
+        </Tooltip>
+      );
+    }
+
+    return buttonContent;
   }
 }
 

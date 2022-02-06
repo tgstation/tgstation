@@ -2,7 +2,7 @@
 	name = "glass alarm airlock"
 	icon = 'icons/obj/doors/airlocks/station2/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
-	opacity = 0
+	opacity = FALSE
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
 	glass = TRUE
 
@@ -10,7 +10,7 @@
 	var/air_frequency = FREQ_ATMOS_ALARMS
 	autoclose = FALSE
 
-/obj/machinery/door/airlock/alarmlock/Initialize()
+/obj/machinery/door/airlock/alarmlock/Initialize(mapload)
 	. = ..()
 	air_connection = new
 
@@ -19,11 +19,11 @@
 	air_connection = null
 	return ..()
 
-/obj/machinery/door/airlock/alarmlock/Initialize()
+/obj/machinery/door/airlock/alarmlock/Initialize(mapload)
 	. = ..()
 	SSradio.remove_object(src, air_frequency)
 	air_connection = SSradio.add_object(src, air_frequency, RADIO_TO_AIRALARM)
-	open()
+	INVOKE_ASYNC(src, .proc/open)
 
 /obj/machinery/door/airlock/alarmlock/receive_signal(datum/signal/signal)
 	..()

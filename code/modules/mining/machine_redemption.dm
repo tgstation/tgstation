@@ -12,8 +12,6 @@
 	req_access = list(ACCESS_MINERAL_STOREROOM)
 	layer = BELOW_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/ore_redemption
-	ui_x = 440
-	ui_y = 550
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
 
@@ -30,29 +28,19 @@
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
-	materials = AddComponent(/datum/component/remote_materials, "orm", mapload)
+	materials = AddComponent(/datum/component/remote_materials, "orm", mapload, mat_container_flags=BREAKDOWN_FLAGS_ORM)
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	QDEL_NULL(stored_research)
 	materials = null
 	return ..()
 
-/obj/machinery/mineral/ore_redemption/RefreshParts()
-	var/point_upgrade_temp = 1
-	var/ore_multiplier_temp = 1
-	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		ore_multiplier_temp = 0.65 + (0.35 * B.rating)
-	for(var/obj/item/stock_parts/micro_laser/L in component_parts)
-		point_upgrade_temp = 0.65 + (0.35 * L.rating)
-	point_upgrade = point_upgrade_temp
-	ore_multiplier = round(ore_multiplier_temp, 0.01)
-
 /obj/machinery/mineral/ore_redemption/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.</span>"
+		. += span_notice("The status display reads: Smelting <b>[ore_multiplier]</b> sheet(s) per piece of ore.<br>Reward point generation at <b>[point_upgrade*100]%</b>.")
 	if(panel_open)
-		. += "<span class='notice'>Alt-click to rotate the input and output direction.</span>"
+		. += span_notice("Alt-click to rotate the input and output direction.")
 
 /obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/O)
 	if(QDELETED(O))
@@ -64,10 +52,10 @@
 	if(O.refined_type == null)
 		return
 
-	if(O && O.refined_type)
+	if(O?.refined_type)
 		points += O.points * point_upgrade * O.amount
 
-	var/material_amount = mat_container.get_item_material_amount(O)
+	var/material_amount = mat_container.get_item_material_amount(O, BREAKDOWN_FLAGS_ORM)
 
 	if(!material_amount)
 		qdel(O) //no materials, incinerate it
@@ -76,9 +64,10 @@
 		unload_mineral(O)
 
 	else
-		var/mats = O.custom_materials & mat_container.materials
+		var/list/stack_mats = O.get_material_composition(BREAKDOWN_FLAGS_ORM)
+		var/mats = stack_mats & mat_container.materials
 		var/amount = O.amount
-		mat_container.insert_item(O, ore_multiplier) //insert it
+		mat_container.insert_item(O, ore_multiplier, breakdown_flags=BREAKDOWN_FLAGS_ORM) //insert it
 		materials.silo_log(src, "smelted", amount, "someone", mats)
 		qdel(O)
 
@@ -143,7 +132,7 @@
 	))
 	signal.send_to_receivers()
 
-/obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+/obj/machinery/mineral/ore_redemption/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
 		return
 	if(!materials.mat_container || panel_open || !powered())
@@ -191,7 +180,7 @@
 	var/obj/item/stack/ore/O = W
 	if(istype(O))
 		if(O.refined_type == null)
-			to_chat(user, "<span class='warning'>[O] has already been refined!</span>")
+			to_chat(user, span_warning("[O] has already been refined!"))
 			return
 
 	return ..()
@@ -203,15 +192,15 @@
 	if(panel_open)
 		input_dir = turn(input_dir, -90)
 		output_dir = turn(output_dir, -90)
-		to_chat(user, "<span class='notice'>You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)].</span>")
+		to_chat(user, span_notice("You change [src]'s I/O settings, setting the input to [dir2text(input_dir)] and the output to [dir2text(output_dir)]."))
 		unregister_input_turf() // someone just rotated the input and output directions, unregister the old turf
 		register_input_turf() // register the new one
 		return TRUE
 
-/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "OreRedemptionMachine", "Ore Redemption Machine", ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "OreRedemptionMachine")
 		ui.open()
 
 /obj/machinery/mineral/ore_redemption/ui_data(mob/user)
@@ -253,29 +242,32 @@
 	return data
 
 /obj/machinery/mineral/ore_redemption/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			var/obj/item/card/id/I
+			if(isliving(usr))
+				var/mob/living/L = usr
+				I = L.get_idcard(TRUE)
 			if(points)
 				if(I)
 					I.mining_points += points
 					points = 0
 				else
-					to_chat(usr, "<span class='warning'>No valid ID detected.</span>")
+					to_chat(usr, span_warning("No valid ID detected."))
 			else
-				to_chat(usr, "<span class='warning'>No points to claim.</span>")
+				to_chat(usr, span_warning("No points to claim."))
 			return TRUE
 		if("Release")
 			if(!mat_container)
 				return
 			if(materials.on_hold())
-				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
+				to_chat(usr, span_warning("Mineral access is on hold, please contact the quartermaster."))
 			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
-				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+				to_chat(usr, span_warning("Required access not found."))
 			else
 				var/datum/material/mat = locate(params["id"])
 
@@ -292,8 +284,9 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
-
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt",  max_value = stored_amount)
+					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+						return
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
 
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
@@ -309,7 +302,7 @@
 					return
 				inserted_disk = disk
 			else
-				to_chat(usr, "<span class='warning'>Not a valid Design Disk!</span>")
+				to_chat(usr, span_warning("Not a valid Design Disk!"))
 			return TRUE
 		if("diskEject")
 			if(inserted_disk)
@@ -325,19 +318,23 @@
 			if(!mat_container)
 				return
 			if(materials.on_hold())
-				to_chat(usr, "<span class='warning'>Mineral access is on hold, please contact the quartermaster.</span>")
+				to_chat(usr, span_warning("Mineral access is on hold, please contact the quartermaster."))
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
-			var/mob/M = usr
-			var/obj/item/card/id/I = M.get_idcard(TRUE)
+			var/obj/item/card/id/I
+			if(isliving(usr))
+				var/mob/living/L = usr
+				I = L.get_idcard(TRUE)
 			if((check_access(I) || allowed(usr)) && alloy)
 				var/smelt_amount = can_smelt_alloy(alloy)
 				var/desired = 0
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = input("How many sheets?", "How many sheets would you like to smelt?", 1) as null|num
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", max_value = smelt_amount)
+					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+						return
 				var/amount = round(min(desired,50,smelt_amount))
 				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)
@@ -348,15 +345,13 @@
 					output = new alloy.build_path(src)
 				unload_mineral(output)
 			else
-				to_chat(usr, "<span class='warning'>Required access not found.</span>")
+				to_chat(usr, span_warning("Required access not found."))
 			return TRUE
 
 /obj/machinery/mineral/ore_redemption/ex_act(severity, target)
 	do_sparks(5, TRUE, src)
-	..()
+	return ..()
 
 /obj/machinery/mineral/ore_redemption/update_icon_state()
-	if(powered())
-		icon_state = initial(icon_state)
-	else
-		icon_state = "[initial(icon_state)]-off"
+	icon_state = "[initial(icon_state)][powered() ? null : "-off"]"
+	return ..()

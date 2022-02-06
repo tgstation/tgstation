@@ -1,8 +1,7 @@
 import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, LabeledList, NumberInput, Section } from '../../components';
+import { useBackend } from '../../backend';
+import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
-
 
 export const Vent = (props, context) => {
   const { vent } = props;

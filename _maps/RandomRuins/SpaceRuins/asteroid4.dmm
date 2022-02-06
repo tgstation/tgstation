@@ -3,13 +3,13 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
 /turf/closed/mineral/random/high_chance,
 /area/ruin/unpowered/no_grav)
 "d" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random,
 /area/ruin/unpowered)
 "e" = (
 /turf/open/floor/plating/asteroid/airless,
@@ -40,7 +40,7 @@
 	dir = 1
 	},
 /obj/item/shard,
-/obj/effect/mob_spawn/human/clown{
+/obj/effect/mob_spawn/corpse/human/clown{
 	brute_damage = 120;
 	oxy_damage = 75
 	},

@@ -1,69 +1,40 @@
+/// Fully randomizes everything in the character.
+/datum/preferences/proc/randomise_appearance_prefs(randomize_flags = ALL)
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (!preference.included_in_randomization_flags(randomize_flags))
+			continue
 
-	//The mob should have a gender you want before running this proc. Will run fine without H
-/datum/preferences/proc/random_character(gender_override, antag_override = FALSE)
-	if(randomise[RANDOM_SPECIES])
-		random_species()
-	else if(randomise[RANDOM_NAME])
-		real_name = pref_species.random_name(gender,1)
-	if(gender_override && !(randomise[RANDOM_GENDER] || randomise[RANDOM_GENDER_ANTAG] && antag_override))
-		gender = gender_override
-	else
-		gender = pick(MALE,FEMALE,PLURAL)
-	if(randomise[RANDOM_AGE] || randomise[RANDOM_AGE_ANTAG] && antag_override)
-		age = rand(AGE_MIN,AGE_MAX)
-	if(randomise[RANDOM_UNDERWEAR])
-		underwear = random_underwear(gender)
-	if(randomise[RANDOM_UNDERWEAR_COLOR])
-		underwear_color = random_short_color()
-	if(randomise[RANDOM_UNDERSHIRT])
-		undershirt = random_undershirt(gender)
-	if(randomise[RANDOM_SOCKS])
-		socks = random_socks()
-	if(randomise[RANDOM_BACKPACK])
-		backpack = random_backpack()
-	if(randomise[RANDOM_JUMPSUIT_STYLE])
-		jumpsuit_style = pick(GLOB.jumpsuitlist)
-	if(randomise[RANDOM_HAIRSTYLE])
-		hairstyle = random_hairstyle(gender)
-	if(randomise[RANDOM_FACIAL_HAIRSTYLE])
-		facial_hairstyle = random_facial_hairstyle(gender)
-	if(randomise[RANDOM_HAIR_COLOR])
-		hair_color = random_short_color()
-	if(randomise[RANDOM_FACIAL_HAIR_COLOR])
-		facial_hair_color = random_short_color()
-	if(randomise[RANDOM_SKIN_TONE])
-		skin_tone = random_skin_tone()
-	if(randomise[RANDOM_EYE_COLOR])
-		eye_color = random_eye_color()
-	if(!pref_species)
-		var/rando_race = pick(GLOB.roundstart_races)
-		pref_species = new rando_race()
-	features = random_features()
-	if(gender in list(MALE, FEMALE))
-		body_type = gender
-	else
-		body_type = pick(MALE, FEMALE)
+		if (preference.is_randomizable())
+			write_preference(preference, preference.create_random_value(src))
 
-/datum/preferences/proc/random_species()
-	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
-	pref_species = new random_species_type
-	if(randomise[RANDOM_NAME])
-		real_name = pref_species.random_name(gender,1)
+/// Randomizes the character according to preferences.
+/datum/preferences/proc/apply_character_randomization_prefs(antag_override = FALSE)
+	switch (read_preference(/datum/preference/choiced/random_body))
+		if (RANDOM_ANTAG_ONLY)
+			if (!antag_override)
+				return
 
-///Setup a hardcore random character and calculate their hardcore random score
-/datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character, antagonist, is_latejoiner)
-	var/rand_gender = pick(list(MALE, FEMALE, PLURAL))
-	random_character(rand_gender, antagonist)
-	select_hardcore_quirks()
-	hardcore_survival_score = hardcore_survival_score ** 1.2 //30 points would be about 60 score
-	if(is_latejoiner)//prevent them from cheatintg
-		hardcore_survival_score = 0
+		if (RANDOM_DISABLED)
+			return
 
-///Go through all quirks that can be used in hardcore mode and select some based on a random budget.
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
+		if (should_randomize(preference, antag_override))
+			write_preference(preference, preference.create_random_value(src))
+
+///Setup the random hardcore quirks and give the character the new score prize.
+/datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character)
+	var/next_hardcore_score = select_hardcore_quirks()
+	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
+
+
+/**
+ * Goes through all quirks that can be used in hardcore mode and select some based on a random budget.
+ * Returns the new value to be gained with this setup, plus the previously earned score.
+ **/
 /datum/preferences/proc/select_hardcore_quirks()
+	. = 0
 
 	var/quirk_budget = rand(8, 35)
-
 
 	all_quirks = list() //empty it out
 
@@ -102,35 +73,37 @@
 
 		all_quirks += initial(picked_quirk.name)
 		quirk_budget -= available_hardcore_quirks[picked_quirk]
-		hardcore_survival_score += available_hardcore_quirks[picked_quirk]
+		. += available_hardcore_quirks[picked_quirk]
 		available_hardcore_quirks -= picked_quirk
 
-/datum/preferences/proc/update_preview_icon()
-	// Determine what job is marked as 'High' priority, and dress them up as such.
-	var/datum/job/previewJob
+/// Returns what job is marked as highest
+/datum/preferences/proc/get_highest_priority_job()
+	var/datum/job/preview_job
 	var/highest_pref = 0
+
 	for(var/job in job_preferences)
 		if(job_preferences[job] > highest_pref)
-			previewJob = SSjob.GetJob(job)
+			preview_job = SSjob.GetJob(job)
 			highest_pref = job_preferences[job]
 
-	if(previewJob)
+	return preview_job
+
+/datum/preferences/proc/render_new_preview_appearance(mob/living/carbon/human/dummy/mannequin)
+	var/datum/job/preview_job = get_highest_priority_job()
+
+	if(preview_job)
 		// Silicons only need a very basic preview since there is no customization for them.
-		if(istype(previewJob,/datum/job/ai))
-			parent.show_character_previews(image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(preferred_ai_core_display), dir = SOUTH))
-			return
-		if(istype(previewJob,/datum/job/cyborg))
-			parent.show_character_previews(image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH))
-			return
+		if (istype(preview_job,/datum/job/ai))
+			return image('icons/mob/ai.dmi', icon_state = resolve_ai_icon(read_preference(/datum/preference/choiced/ai_core_display)), dir = SOUTH)
+		if (istype(preview_job,/datum/job/cyborg))
+			return image('icons/mob/robots.dmi', icon_state = "robot", dir = SOUTH)
 
 	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	copy_to(mannequin, 1, TRUE, TRUE)
+	apply_prefs_to(mannequin, TRUE)
 
-	if(previewJob)
-		mannequin.job = previewJob.title
-		previewJob.equip(mannequin, TRUE, preference_source = parent)
+	if(preview_job)
+		mannequin.job = preview_job.title
+		mannequin.dress_up_as_job(preview_job, TRUE)
 
 	COMPILE_OVERLAYS(mannequin)
-	parent.show_character_previews(new /mutable_appearance(mannequin))
-	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	return mannequin.appearance

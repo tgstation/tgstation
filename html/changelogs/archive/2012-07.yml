@@ -1,0 +1,138 @@
+2012-07-04:
+  39kk9t & Carn:
+  - rscadd: Added alien nests. They're basically beds made of thick sticky resin which
+      aliums can 'stick' (buckle) people to for sexytimes
+  - tweak: Weed nodes are no longer dense.
+  - tweak: Queens can secrete resin for walls/nests/membranes
+  - bugfix: Various bugfixes
+2012-07-05:
+  Carn:
+  - tweak: Alien larva now chestburst even after their host has died.
+  - tweak: Aliens can now slap facehuggers onto faces so they can infect mobs which
+      lay down (or those stuck to nests).
+  - tweak: Aliens can now slash security cameras to deactivate them.
+2012-07-06:
+  Giacom:
+  - rscadd: Bottles can now be broken over people's heads! To do this, you must have
+      the harm intent on and you must be targeting the person's head. This change
+      affects alcoholic bottles only. It does not change pill bottles or chemistry
+      bottles. Helmets help protect you from damage and the regents of the bottles
+      will splash over the victim.
+  - rscadd: 'AI''s now have access to a PDA. Note: It is not PDA-bomb-able'
+  - rscadd: Health analyzers and medical PDAs now give a time of death when used on
+      corpses.
+2012-07-07:
+  Icarus:
+  - rscadd: A basketball simulation is now available at the holodeck. Credit to Sly
+      and Ausops for the sprites.
+2012-07-11:
+  Errorage:
+  - tweak: You can now only adminhelp once every 2 minutes so please provide all necesary
+      information in one adminhelp instead of 5! Also reply to admins in PM-s and
+      not additional adminhelps.
+2012-07-12:
+  Giacom:
+  - rscadd: pAI gets a better PDA that can actually receive messages from people.
+      They can also instantly reply like everybody else now and they can toggle their
+      receiver/signaller/ringer.
+  - rscadd: You can show the AI the notes on your PDA by holding it up to a camera.
+      When you show up a paper/pda to the camera the AI can now click on your name
+      to go to you, if you're near a camera. People who are Unknown will not have
+      a link; which would've allowed the AI to track them.
+  - rscadd: Made the" common server" and the "preset right receiver" listen for frequencies
+      144.1 to 148.9. This will allow people to use different frequencies to talk
+      to eachother without bothering the common channel. It will also allow Revs and
+      Cultists to work with each other; everything is still logged though so it still
+      has risks.
+  - rscadd: Increased the maximum frequency limit for handheld radios and intercoms.
+      It will give you the option to just use station bounced radios on a higher frequency
+      so that anyone with a headset can't simply tune in.
+  - rscadd: Created an All-In-One Grinder that is suppose to replace the blender,
+      juicer and reagent grinder all together. Meaning any department that has a juicer,
+      blender and grinder will instead get this. It will help people be more independent
+      from Chemistry by recycling foods and plants.
+2012-07-13:
+  Icarus:
+  - imageadd: Added new Dwarf and Very Long hairstyles. Dwarf hair and beard by SuperCrayon.
+2012-07-14:
+  Giacom:
+  - rscadd: Added Russian Revolvers. This is a special Revolver that can only hold
+      a single bullet randomly in it's chamber. This will allow you to play Russian
+      Roulette with your fellow crew members! You can use it like a normal gun but
+      you will need to cycle through the chamber slots until you hit the bullet. Only
+      admin spawnable.
+  Willox and Messycakes:
+  - rscadd: pAI Emoticons! Allows each pAI to set their screen to display an array
+      of faces! Click on 'Screen Display' in the pAI OS for a list.
+2012-07-17:
+  Giacom:
+  - tweak: Added a new wire for Cyborgs. See if you can figure out what it does.
+  - tweak: You can now fill any container with a sink. You can change the amount to
+      fill, from sinks, by setting your container's transfer amount.
+2012-07-18:
+  Giacom:
+  - rscadd: Added the Light Replacer. This is a device that can auto replace lights
+      that are broken, missing or burnt. Currently it is found in the Janitor's closet
+      and Janitor Borgs can equip it. You can refill it with glass, or if you're a
+      Cyborg, just recharge. It is emaggable and will replace lights with rigged lights.
+      The light's explosion was nerfed to help balance it and it is very noticable
+      when you are holding an emagged Light Replacer.
+  - tweak: The Janitor's equipment locator, on their PDA, will now tell you the direction
+      of the equipment.
+2012-07-22:
+  Giacom:
+  - tweak: You can now make newlines with your PDA notes.
+  - tweak: You can now research and build the Light Replacer.
+  - tweak: You can now store donuts in the donut box. The next donut you pull out
+      will be the last one you put in.
+  - tweak: APCs will auto-turn on if there is enough power in the grid, even if the
+      powercell is below 30%. The APC needs to be charged for a long enough time before
+      it starts turning equipment on, to avoid spazzing out. If you have any problems
+      with it, such as equipment turning off and on repeatedly then please make an
+      issue report with a screenshot of the APC.
+2012-07-24:
+  Errorage:
+  - tweak: Both the chef and bartender have access to the bar area so both can serve
+      if the other is incompetent or does not exist. Bartender's shotgun and shaker
+      were moved to his back room and the booze-o-mat is now ID restricted to the
+      bartender.
+  - rscadd: Added powercells into vending machines in engineering
+  - rscadd: Gave two beartraps to the janitor for pest control purposes................
+2012-07-25:
+  Icarus:
+  - rscadd: Players not buckled in when the emergency shuttle/pod starts moving get
+      will get knocked down.
+  - rscadd: Added a YouTool vending machine to primary tool storage.
+2012-07-26:
+  Giacom:
+  - rscadd: Added a new mushroom for Hydroponics, the Reishi Mushroom! It is obtained
+      like any other mushroom and it has relaxing properties.
+2012-07-29:
+  Errorage:
+  - rscadd: You can now use crayons to color eggs
+  - rscadd: Mice have invaded the station!
+  Giacom:
+  - rscadd: All radios now only work in their Z level. This means that the CommSat
+      has a few more additions to work with this change. There is now a new Telecomms
+      Machine called the Relay which allows information to travel across Z levels.
+      It it then linked to a new machine called the Hub, which will receive information
+      from the Relays and send it to the buses. Because every Z level needs these
+      relays, which are linked up with Receivers/Broadcasters, every Z level will
+      get one. There is one in the station, in the RD's office, one in Telecomms as
+      always, one in the Ruskie station which is turned off and hidden from the HUB's
+      linked list. The last one is in Mining but the location for it has not been
+      decided yet.
+  - tweak: PDAs now need to be in a Z level with a functioning Relay/Comms Network
+      in order to send messages. It will also send uncompressed (scrambled) messages
+      like you would with the ordinary voice messages.
+  - imageadd: 'Added some of WJohnston''s sprites. Added a new mining borg sprite,
+      Added a new high tech security airlock, Added the new telecomm sprites for Relays.
+      Hubs were given old Bus sprites. '
+2012-07-31:
+  Giacom:
+  - tweak: Removed passive throwing. You need at least an aggressive hold of the mob
+      before you can throw them.
+  - rscadd: 'New map changes by Ikarrus. AI Upload Foyer is now Secure Tech Access,
+      and the outer door only requires Bridge access. Attached to it are two new rooms:
+      The messaging server room and the communications relay. The comms relay room
+      runs off its own SMES unit like the AI, so it won''t be affected by powersinks'

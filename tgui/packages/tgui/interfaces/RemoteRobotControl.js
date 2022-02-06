@@ -1,12 +1,14 @@
 import { decodeHtmlEntities } from 'common/string';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
 import { Window } from '../layouts';
 
 export const RemoteRobotControl = (props, context) => {
   return (
-    <Window resizable>
+    <Window
+      title="Remote Robot Control"
+      width={500}
+      height={500}>
       <Window.Content scrollable>
         <RemoteRobotControlContent />
       </Window.Content>
@@ -19,7 +21,6 @@ export const RemoteRobotControlContent = (props, context) => {
   const {
     robots = [],
   } = data;
-
   if (!robots.length) {
     return (
       <Section>
@@ -29,14 +30,13 @@ export const RemoteRobotControlContent = (props, context) => {
       </Section>
     );
   }
-
   return robots.map(robot => {
     return (
       <Section
         key={robot.ref}
         title={robot.name + " (" + robot.model + ")"}
         buttons={(
-          <Fragment>
+          <>
             <Button
               icon="tools"
               content="Interface"
@@ -49,7 +49,7 @@ export const RemoteRobotControlContent = (props, context) => {
               onClick={() => act('callbot', {
                 ref: robot.ref,
               })} />
-          </Fragment>
+          </>
         )}>
         <LabeledList>
           <LabeledList.Item label="Status">

@@ -10,7 +10,7 @@
 	if(user != owner || owner.incapacitated())
 		return FALSE
 	if(owner.control_disabled)
-		to_chat(user, "<span class='warning'>Wireless control is disabled.</span>")
+		to_chat(user, span_warning("Wireless control is disabled."))
 		return FALSE
 	return TRUE
 
@@ -19,11 +19,13 @@
 		return ..()
 	return UI_CLOSE
 
-/datum/robot_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/robot_control/ui_state(mob/user)
+	return GLOB.always_state
+
+/datum/robot_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "RemoteRobotControl", "Remote Robot Control", 500, 500, master_ui, state)
+		ui = new(user, src, "RemoteRobotControl")
 		ui.open()
 
 /datum/robot_control/ui_data(mob/user)
@@ -35,13 +37,13 @@
 
 	data["robots"] = list()
 	for(var/mob/living/simple_animal/bot/B in GLOB.bots_list)
-		if(B.z != ai_zlevel || B.remote_disabled) //Only non-emagged bots on the same Z-level are detected!
+		if(B.z != ai_zlevel || !(B.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
 		var/list/robot_data = list(
 			name = B.name,
-			model = B.model,
+			model = B.bot_type,
 			mode = B.get_mode(),
-			hacked = B.hacked,
+			hacked = B.bot_cover_flags & BOT_COVER_HACKED,
 			location = get_area_name(B, TRUE),
 			ref = REF(B)
 		)
@@ -50,25 +52,29 @@
 	return data
 
 /datum/robot_control/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!is_interactable(usr))
 		return
 
+	var/mob/living/simple_animal/bot/bot
 	switch(action)
 		if("callbot") //Command a bot to move to a selected location.
 			if(owner.call_bot_cooldown > world.time)
-				to_chat(usr, "<span class='danger'>Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route.</span>")
+				to_chat(usr, span_danger("Error: Your last call bot command is still processing, please wait for the bot to finish calculating a route."))
 				return
-			owner.Bot = locate(params["ref"]) in GLOB.bots_list
-			if(!owner.Bot || owner.Bot.remote_disabled || owner.control_disabled)
+			bot = locate(params["ref"]) in GLOB.bots_list
+			owner.bot_ref = WEAKREF(bot)
+			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
 				return
 			owner.waypoint_mode = TRUE
-			to_chat(usr, "<span class='notice'>Set your waypoint by clicking on a valid location free of obstructions.</span>")
+			to_chat(usr, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
 			. = TRUE
 		if("interface") //Remotely connect to a bot!
-			owner.Bot = locate(params["ref"]) in GLOB.bots_list
-			if(!owner.Bot || owner.Bot.remote_disabled || owner.control_disabled)
+			bot = locate(params["ref"]) in GLOB.bots_list
+			owner.bot_ref = WEAKREF(bot)
+			if(!bot || !(bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED) || owner.control_disabled)
 				return
-			owner.Bot.attack_ai(usr)
+			bot.attack_ai(usr)
 			. = TRUE

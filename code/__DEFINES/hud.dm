@@ -9,7 +9,8 @@
 /// Used in show_hud(); Please ensure this is the same as the maximum index.
 #define HUD_VERSIONS 3
 
-//1:1 HUD layout stuff
-#define UI_BOXCRAFT "EAST-4:22,SOUTH+1:6"
-#define UI_BOXAREA "EAST-4:6,SOUTH+1:6"
-#define UI_BOXLANG "EAST-5:22,SOUTH+1:6"
+// Consider these images/atoms as part of the UI/HUD (apart of the appearance_flags)
+/// Used for progress bars and chat messages
+#define APPEARANCE_UI_IGNORE_ALPHA (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|RESET_ALPHA|PIXEL_SCALE)
+/// Used for HUD objects
+#define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)

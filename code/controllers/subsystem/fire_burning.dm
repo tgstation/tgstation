@@ -7,8 +7,9 @@ SUBSYSTEM_DEF(fire_burning)
 	var/list/currentrun = list()
 	var/list/processing = list()
 
-/datum/controller/subsystem/fire_burning/stat_entry()
-	..("P:[processing.len]")
+/datum/controller/subsystem/fire_burning/stat_entry(msg)
+	msg = "P:[length(processing)]"
+	return ..()
 
 
 /datum/controller/subsystem/fire_burning/fire(resumed = 0)
@@ -17,6 +18,7 @@ SUBSYSTEM_DEF(fire_burning)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
+	var/delta_time = wait * 0.1
 
 	while(currentrun.len)
 		var/obj/O = currentrun[currentrun.len]
@@ -30,10 +32,9 @@ SUBSYSTEM_DEF(fire_burning)
 
 		if(O.resistance_flags & ON_FIRE) //in case an object is extinguished while still in currentrun
 			if(!(O.resistance_flags & FIRE_PROOF))
-				O.take_damage(20, BURN, "fire", 0)
+				O.take_damage(10 * delta_time, BURN, FIRE, 0)
 			else
 				O.extinguish()
 
 		if (MC_TICK_CHECK)
 			return
-

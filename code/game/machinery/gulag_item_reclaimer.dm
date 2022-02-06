@@ -8,8 +8,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500
-	ui_x = 325
-	ui_y = 400
+
 	var/list/stored_items = list()
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
@@ -27,11 +26,10 @@
 	req_access = list()
 	obj_flags |= EMAGGED
 
-/obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/gulag_item_reclaimer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "GulagItemReclaimer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "GulagItemReclaimer", name)
 		ui.open()
 
 /obj/machinery/gulag_item_reclaimer/ui_data(mob/user)
@@ -41,9 +39,12 @@
 	if(allowed(user))
 		can_reclaim = TRUE
 
-	var/obj/item/card/id/I = user.get_idcard(TRUE)
-	if(istype(I, /obj/item/card/id/prisoner))
-		var/obj/item/card/id/prisoner/P = I
+	var/obj/item/card/id/I
+	if(isliving(user))
+		var/mob/living/L = user
+		I = L.get_idcard(TRUE)
+	if(istype(I, /obj/item/card/id/advanced/prisoner))
+		var/obj/item/card/id/advanced/prisoner/P = I
 		if(P.points >= P.goal)
 			can_reclaim = TRUE
 
@@ -65,14 +66,15 @@
 	return data
 
 /obj/machinery/gulag_item_reclaimer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
 		if("release_items")
 			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
 			if(H != usr && !allowed(usr))
-				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				to_chat(usr, span_warning("Access denied."))
 				return
 			drop_items(H)
 			. = TRUE

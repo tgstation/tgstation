@@ -74,10 +74,10 @@
 /turf/closed/indestructible/fakeglass,
 /area/mafia)
 "q" = (
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "r" = (
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "s" = (
 /turf/closed/wall/ice,
@@ -97,11 +97,12 @@
 /turf/open/floor/holofloor/snow,
 /area/mafia)
 "w" = (
-/turf/open/lava/plasma,
+/turf/open/lava/plasma/mafia,
 /area/mafia)
 "x" = (
-/obj/machinery/door/airlock/external{
-	max_integrity = 9999
+/obj/machinery/door/airlock/external/ruin{
+	max_integrity = 9999;
+	opacity = 0
 	},
 /obj/machinery/door/poddoor/preopen{
 	desc = "When it's time to sleep, the lights will go out. Remember - no one in space can hear you scream.";
@@ -110,7 +111,7 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel/dark,
+/turf/open/floor/iron/dark,
 /area/mafia)
 "y" = (
 /obj/effect/landmark/mafia,
@@ -118,10 +119,10 @@
 /area/mafia)
 "z" = (
 /obj/structure/lattice/catwalk,
-/turf/open/lava/plasma,
+/turf/open/lava/plasma/mafia,
 /area/mafia)
 "A" = (
-/obj/machinery/door/airlock/external{
+/obj/machinery/door/airlock/external/ruin{
 	max_integrity = 9999
 	},
 /obj/machinery/door/poddoor/preopen{
@@ -131,12 +132,12 @@
 	name = "Station Night Shutters"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/plasteel,
+/turf/open/floor/iron,
 /area/mafia)
 "B" = (
 /obj/effect/landmark/mafia,
 /obj/structure/lattice/catwalk,
-/turf/open/lava/plasma,
+/turf/open/lava/plasma/mafia,
 /area/mafia)
 "C" = (
 /obj/mafia_game_board,
@@ -153,7 +154,7 @@
 /obj/structure/closet/crate/critter,
 /obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/clothing/shoes/winterboots,
-/turf/open/lava/plasma,
+/turf/open/lava/plasma/mafia,
 /area/mafia)
 "F" = (
 /turf/open/floor/holofloor/wood,

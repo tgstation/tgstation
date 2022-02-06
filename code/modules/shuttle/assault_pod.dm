@@ -34,9 +34,10 @@
 
 
 /obj/item/assault_pod/attack_self(mob/living/user)
-	var/target_area
-	target_area = input("Area to land", "Select a Landing Zone", target_area) as null|anything in GLOB.teleportlocs
-	if(!target_area)
+	var/target_area = tgui_input_list(user, "Area to land", "Landing Zone", GLOB.teleportlocs)
+	if(isnull(target_area))
+		return
+	if(isnull(GLOB.teleportlocs[target_area]))
 		return
 	var/area/picked_area = GLOB.teleportlocs[target_area]
 	if(!src || QDELETED(src))
@@ -48,6 +49,7 @@
 	var/turf/T = pick(turfs)
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "assault_pod([REF(src)])"
+	landing_zone.port_destinations = "assault_pod([REF(src)])"
 	landing_zone.name = "Landing Zone"
 	landing_zone.dwidth = dwidth
 	landing_zone.dheight = dheight
@@ -59,6 +61,6 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	to_chat(user, "<span class='notice'>Landing zone set.</span>")
+	to_chat(user, span_notice("Landing zone set."))
 
 	qdel(src)

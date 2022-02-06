@@ -1,8 +1,7 @@
-/mob/living/silicon/ai/say(message, bubble_type,var/list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/silicon/ai/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if(parent && istype(parent) && parent.stat != DEAD) //If there is a defined "parent" AI, it is actually an AI, and it is alive, anything the AI tries to say is said by the parent instead.
-		parent.say(message, language)
-		return
-	..(message)
+		return parent.say(arglist(args))
+	return ..()
 
 /mob/living/silicon/ai/compose_track_href(atom/movable/speaker, namepart)
 	var/mob/M = speaker.GetSource()
@@ -17,43 +16,34 @@
 /mob/living/silicon/ai/IsVocal()
 	return !CONFIG_GET(flag/silent_ai)
 
-/mob/living/silicon/ai/radio(message, message_mode, list/spans, language)
+/mob/living/silicon/ai/radio(message, list/message_mods = list(), list/spans, language)
 	if(incapacitated())
 		return FALSE
 	if(!radio_enabled) //AI cannot speak if radio is disabled (via intellicard) or depowered.
-		to_chat(src, "<span class='danger'>Your radio transmitter is offline!</span>")
+		to_chat(src, span_danger("Your radio transmitter is offline!"))
 		return FALSE
 	..()
 
-/mob/living/silicon/ai/get_message_mode(message)
-	var/static/regex/holopad_finder = regex(@"[:.#][hH]")
-	if(holopad_finder.Find(message, 1, 1))
-		return MODE_HOLOPAD
-	else
-		return ..()
-
 //For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, language)
-
-
 	message = trim(message)
 
 	if (!message)
 		return
 
-	var/obj/machinery/holopad/T = current
-	if(istype(T) && T.masters[src])//If there is a hologram and its master is the user.
-		var/turf/padturf = get_turf(T)
+	var/obj/machinery/holopad/active_pad = current
+	if(istype(active_pad) && active_pad.masters[src])//If there is a hologram and its master is the user.
+		var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
+		var/turf/padturf = get_turf(active_pad)
 		var/padloc
 		if(padturf)
 			padloc = AREACOORD(padturf)
 		else
 			padloc = "(UNKNOWN)"
 		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		send_speech(message, 7, T, "robot", message_language = language)
-		to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> <span class='message robot'>\"[message]\"</span></span></i>")
+		ai_holo.say(message, language = language)
 	else
-		to_chat(src, "<span class='alert'>No holopad connected.</span>")
+		to_chat(src, span_alert("No holopad connected."))
 
 
 // Make sure that the code compiles with AI_VOX undefined
@@ -94,10 +84,10 @@
 /mob/living/silicon/ai/proc/announcement()
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
-		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
+		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return
 
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text|null
+	var/message = tgui_input_text(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
 
 	if(!message || announcing_vox > world.time)
 		return
@@ -108,7 +98,7 @@
 		return
 
 	if(control_disabled)
-		to_chat(src, "<span class='warning'>Wireless interface disabled, unable to interact with announcement PA.</span>")
+		to_chat(src, span_warning("Wireless interface disabled, unable to interact with announcement PA."))
 		return
 
 	var/list/words = splittext(trim(message), " ")
@@ -126,12 +116,14 @@
 			incorrect_words += word
 
 	if(incorrect_words.len)
-		to_chat(src, "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>")
+		to_chat(src, span_notice("These words are not available on the announcement system: [english_list(incorrect_words)]."))
 		return
 
 	announcing_vox = world.time + VOX_DELAY
 
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
+	log_talk(message, LOG_SAY, tag="VOX Announcement")
+	say(";[message]", forced = "VOX Announcement")
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)
@@ -147,18 +139,18 @@
 		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
- 		// If there is no single listener, broadcast to everyone in the same z level
+	// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
+				if(M.can_hear() && (M.client?.prefs.toggles & SOUND_ANNOUNCEMENTS))
 					var/turf/T = get_turf(M)
 					if(T.z == z_level)
 						SEND_SOUND(M, voice)
 		else
 			SEND_SOUND(only_listener, voice)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 #undef VOX_DELAY
 #endif

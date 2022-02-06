@@ -1,0 +1,323 @@
+{
+	"startings": [
+	  "Forsooth,",
+	  "I say,",
+	  "I sayeth,",
+	  "Forsooth, I say,",
+	  "Forsooth, say I,",
+	  "Forsooth, sayeth I,",
+	  "Hark,",
+	  "Harketh,",
+	  "Avast,",
+	  "Zounds,",
+	  "Perchance,",
+	  "Pray tell,",
+	  "Prithee,",
+	  "What hey,",
+	  "What ho,",
+	  "Pray,",
+	  "Surely",
+	  "Pray pardon,",
+	  "Alas,",
+	  "In short,",
+	  "By my faith,",
+	  "If it pleases you,",
+	  "I pray you,",
+	  "In truth,",
+	  "By my trowth,",
+	  "In sooth,",
+	  "By my word,",
+	  "S'wounds,",
+	  "Z'wounds,",
+	  "Heigh-ho,",
+	  "Ah,",
+	  "Quoth I,",
+	  "Listen,",
+	  "Listen thee,",
+	  "Hear me,",
+	  "Now hear me,",
+	  "I warrant",
+	  "Come,",
+	  "Kind sire,",
+	  "Sire,",
+	  "There is much in what you say, and yet,"
+	],
+	"medieval": {
+	  "it is": "'tis",
+	  "it's": "'tis",
+	  "it was": "'twas",
+	  "it will": "'twould",
+	  "it were": "'twere",
+	  "there": "thither",
+	  "shall not": "shan't",
+	  "will not": "shan't",
+	  "over there": "yonder",
+	  "in the": "i' the",
+	  "thank you": [
+		"many good thanks to you",
+		"thankee",
+		"kindly thanks to you",
+		"grammercy to you"
+	  ],
+	  "thanks": [
+		"many good thanks to you",
+		"thankee",
+		"kindly thanks to you",
+		"grammercy to you"
+	  ],
+	  "you": [
+		"thou",
+		"thee",
+		"ye"
+	  ],
+	  "your": [
+		"thine",
+		"thy",
+		"thyne"
+	  ],
+	  "are": "art",
+	  "killed": [
+		"slain",
+		"vanquished",
+		"brung low",
+		"conquered",
+		"fleeced",
+		"humbled",
+		"subjugated",
+		"bested",
+		"foiled"
+	  ],
+	  "kill": [
+		"slay",
+		"vanquish",
+		"bring low",
+		"conquer",
+		"fleece",
+		"humble",
+		"subjugate",
+		"best",
+		"foil"
+	  ],
+	  "goodbye": [
+		"farewell",
+		"fare thee well",
+		"good morrow",
+		"godspeed",
+		"begone",
+		"by your leave",
+		"good day",
+		"adieu",
+		"cheerio",
+		"pleasant journey",
+		"I bid thee good day",
+		"I bid thee farewell"
+	  ],
+	  "bye": [
+		"farewell",
+		"fare thee well",
+		"good morrow",
+		"godspeed",
+		"begone",
+		"by your leave",
+		"good day",
+		"adieu",
+		"cheerio",
+		"pleasant journey",
+		"I bid thee good day",
+		"I bid thee farewell"
+	  ],
+	  "yes": [
+		"aye",
+		"yea",
+		"yea verily"
+	  ],
+	  "no": [
+		"nay",
+		"nayeth"
+	  ],
+	  "hello": [
+		"hail",
+		"good day",
+		"well met",
+		"well meteth",
+		"tally ho",
+		"ave"
+	  ],
+	  "hi": [
+		"hail",
+		"good day",
+		"well met",
+		"well meteth",
+		"tally ho",
+		"ave"
+	  ],
+	  "does": [
+		"doeseth",
+		"dost",
+		"doth"
+	  ],
+	  "my": "mine",
+	  "in": "within",
+	  "nuke disk": "plate of holy fire",
+	  "captain": "king",
+	  "cap": "king",
+	  "food": [
+		"bellytimber",
+		"game",
+		"cake"
+	  ],
+	  "going": "a-walkin'",
+	  "go": "a-walk",
+	  "bet": "warrant",
+	  "the": "yon",
+	  "kidding": [
+		"but pulling a jest",
+		"but pulling a jape"
+	  ],
+	  "joke": [
+		"jest",
+		"jape"
+	  ],
+	  "station": "castle",
+	  "please": [
+		"I pray you",
+		"prithee",
+		"pray"
+	  ],
+	  "ok": [
+		"as you will",
+		"agreed",
+		"well said",
+		"just so"
+	  ],
+	  "is": "be",
+	  "never": "ne'er",
+	  "haha": [
+		"guffaw!",
+		"cackle!",
+		"oh, 'tis to laugh!",
+		"zounds!",
+		"chuckle!",
+		"snigger!",
+		"snicker!",
+		"snort!",
+		"cachinnate!",
+		"titter!",
+		"and there was much tittering!",
+		"and there was much guffawing!",
+		"and there was much chuckling!",
+		"and there was much snorting!",
+		"and there was much snickering!",
+		"and there was much mirth!"
+	  ],
+	  "hehe": [
+		"guffaw!",
+		"cackle!",
+		"oh, 'tis to laugh!",
+		"zounds!",
+		"chuckle!",
+		"snigger!",
+		"snicker!",
+		"snort!",
+		"cachinnate!",
+		"titter!",
+		"and there was much tittering!",
+		"and there was much guffawing!",
+		"and there was much chuckling!",
+		"and there was much snorting!",
+		"and there was much snickering!",
+		"and there was much mirth!"
+	  ],
+	  "hah": [
+		"guffaw!",
+		"cackle!",
+		"oh, 'tis to laugh!",
+		"zounds!",
+		"chuckle!",
+		"snigger!",
+		"snicker!",
+		"snort!",
+		"cachinnate!",
+		"titter!",
+		"and there was much tittering!",
+		"and there was much guffawing!",
+		"and there was much chuckling!",
+		"and there was much snorting!",
+		"and there was much snickering!",
+		"and there was much mirth!"
+	  ],
+	  "heh": [
+		"guffaw!",
+		"cackle!",
+		"oh, 'tis to laugh!",
+		"zounds!",
+		"chuckle!",
+		"snigger!",
+		"snicker!",
+		"snort!",
+		"cachinnate!",
+		"titter!",
+		"and there was much tittering!",
+		"and there was much guffawing!",
+		"and there was much chuckling!",
+		"and there was much snorting!",
+		"and there was much snickering!",
+		"and there was much mirth!"
+	  ],
+	  "help": [
+		"aid",
+		"aideth",
+		"saveth",
+		"assistance",
+		"succor"
+	  ],
+	  "could": "couldst",
+	  "would": "wouldst",
+	  "sure": "shore",
+	  "maybe": [
+		"mayhaps",
+		"perchance"
+	  ],
+	  "probably": [
+		"mayhaps",
+		"perchance"
+	  ],
+	  "girl": [
+		"madame",
+		"waif",
+		"mistress",
+		"lass",
+		"lady",
+		"maid",
+		"maiden"
+	  ],
+	  "felinid": "catbeast",
+	  "cat": "beast",
+	  "moth": "gnat",
+	  "mothperson": "gnat critter",
+	  "plasmaman": "fire spirit",
+	  "plasmamen": "fire spirits",
+	  "lizard": "beast",
+	  "lizardperson": "moat creature",
+	  "soon": "anon",
+	  "later": "anon",
+	  "often": "oft",
+	  "really": [
+		"indeed",
+		"in truth"
+	  ],
+	  "those": "yon",
+	  "here": "hither",
+	  "enough": "ynogh",
+	  "why": "wherefore",
+	  "away": "aroint",
+	  "being": "bein",
+	  "of": "o'",
+	  "shit": "nightsoil",
+	  "fuck": "flummery",
+	  "based": [
+		"joly",
+		"jolyf"
+	  ]
+	}
+  }

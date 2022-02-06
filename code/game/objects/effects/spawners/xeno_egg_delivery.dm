@@ -15,5 +15,5 @@
 	message_admins("An alien egg has been delivered to [ADMIN_VERBOSEJMP(T)].")
 	log_game("An alien egg has been delivered to [AREACOORD(T)]")
 	var/message = "Attention [station_name()], we have entrusted you with a research specimen in [get_area_name(T, TRUE)]. Remember to follow all safety precautions when dealing with the specimen."
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/addtimer, CALLBACK(GLOBAL_PROC, /proc/print_command_report, message), announcement_time))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, /proc/_addtimer, CALLBACK(GLOBAL_PROC, /proc/print_command_report, message), announcement_time))
 	return INITIALIZE_HINT_QDEL

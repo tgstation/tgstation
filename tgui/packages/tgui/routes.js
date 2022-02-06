@@ -4,13 +4,15 @@
  * @license MIT
  */
 
+import { selectBackend } from './backend';
+import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
-const requireInterface = require.context('./interfaces', false, /\.js$/);
+const requireInterface = require.context('./interfaces');
 
 const routingError = (type, name) => () => {
   return (
-    <Window resizable>
+    <Window>
       <Window.Content scrollable>
         {type === 'notFound' && (
           <div>Interface <b>{name}</b> was not found.</div>
@@ -23,23 +25,49 @@ const routingError = (type, name) => () => {
   );
 };
 
-export const getRoutedComponent = state => {
+const SuspendedWindow = () => {
+  return (
+    <Window>
+      <Window.Content scrollable />
+    </Window>
+  );
+};
+
+export const getRoutedComponent = store => {
+  const state = store.getState();
+  const { suspended, config } = selectBackend(state);
+  if (suspended) {
+    return SuspendedWindow;
+  }
   if (process.env.NODE_ENV !== 'production') {
+    const debug = selectDebug(state);
     // Show a kitchen sink
-    if (state.showKitchenSink) {
-      return require('./interfaces/manually-routed/KitchenSink').KitchenSink;
+    if (debug.kitchenSink) {
+      return require('./debug').KitchenSink;
     }
   }
-  const name = state.config?.interface;
+  const name = config?.interface;
+  const interfacePathBuilders = [
+    name => `./${name}.tsx`,
+    name => `./${name}.js`,
+    name => `./${name}/index.tsx`,
+    name => `./${name}/index.js`,
+  ];
   let esModule;
-  try {
-    esModule = requireInterface(`./${name}.js`);
-  }
-  catch (err) {
-    if (err.code === 'MODULE_NOT_FOUND') {
-      return routingError('notFound', name);
+  while (!esModule && interfacePathBuilders.length > 0) {
+    const interfacePathBuilder = interfacePathBuilders.shift();
+    const interfacePath = interfacePathBuilder(name);
+    try {
+      esModule = requireInterface(interfacePath);
     }
-    throw err;
+    catch (err) {
+      if (err.code !== 'MODULE_NOT_FOUND') {
+        throw err;
+      }
+    }
+  }
+  if (!esModule) {
+    return routingError('notFound', name);
   }
   const Component = esModule[name];
   if (!Component) {

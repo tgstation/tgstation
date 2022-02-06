@@ -6,6 +6,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
 	inhand_icon_state = "RPED"
+	worn_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -50,6 +51,66 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	alt_sound = 'sound/items/pshoom_2.ogg'
 	component_type = /datum/component/storage/concrete/bluespace/rped
 
+/obj/item/storage/part_replacer/bluespace/Initialize(mapload)
+	. = ..()
+
+	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
+	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_part_exited)
+
+/**
+ * Signal handler for when a part has been inserted into the BRPED.
+ *
+ * If the inserted item is a rigged or corrupted cell, does some logging.
+ *
+ * If it has a reagent holder, clears the reagents and registers signals to prevent new
+ * reagents being added and registers clean up signals on inserted item's removal from
+ * the BRPED.
+ */
+/obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
+	SIGNAL_HANDLER
+	if(inserted_component.reagents)
+		if(length(inserted_component.reagents.reagent_list))
+			inserted_component.reagents.clear_reagents()
+			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
+		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, .proc/on_insered_component_reagent_pre_add)
+
+
+	if(!istype(inserted_component, /obj/item/stock_parts/cell))
+		return
+
+	var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+
+	if(inserted_cell.rigged || inserted_cell.corrupted)
+		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		log_game("[key_name(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
+
+/**
+ * Signal handler for when the reagents datum of an inserted part has reagents added to it.
+ *
+ * Registers the PRE_ADD variant which allows the signal handler to stop reagents being
+ * added.
+ *
+ * Simply returns COMPONENT_CANCEL_REAGENT_ADD. We never want to allow people to add
+ * reagents to beakers in BRPEDs as they can then be used for spammable remote bombing.
+ */
+/obj/item/storage/part_replacer/bluespace/proc/on_insered_component_reagent_pre_add(datum/source, reagent, amount, reagtemp, data, no_react)
+	SIGNAL_HANDLER
+
+	return COMPONENT_CANCEL_REAGENT_ADD
+
+/**
+ * Signal handler for a part is removed from the BRPED.
+ *
+ * Does signal registration cleanup on its reagents, if it has any.
+ */
+/obj/item/storage/part_replacer/bluespace/proc/on_part_exited(datum/source, obj/item/removed_component)
+	SIGNAL_HANDLER
+
+	if(removed_component.reagents)
+		UnregisterSignal(removed_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT)
+
+
 /obj/item/storage/part_replacer/bluespace/tier1
 
 /obj/item/storage/part_replacer/bluespace/tier1/PopulateContents()
@@ -60,7 +121,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
 		new /obj/item/stock_parts/cell/high(src)
-		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -72,7 +132,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
 		new /obj/item/stock_parts/cell/super(src)
-		new /obj/item/stock_parts/electrolite/adv(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -84,7 +143,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
 		new /obj/item/stock_parts/cell/hyper(src)
-		new /obj/item/stock_parts/electrolite/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -96,7 +154,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/cell/bluespace(src)
-		new /obj/item/stock_parts/electrolite/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 
@@ -107,7 +164,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
-		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
@@ -127,10 +183,10 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 
-/obj/item/stock_parts/Initialize()
+/obj/item/stock_parts/Initialize(mapload)
 	. = ..()
-	pixel_x = rand(-5, 5)
-	pixel_y = rand(-5, 5)
+	pixel_x = base_pixel_x + rand(-5, 5)
+	pixel_y = base_pixel_y + rand(-5, 5)
 
 /obj/item/stock_parts/get_part_rating()
 	return rating
@@ -166,12 +222,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A container designed to hold compressed matter awaiting reconstruction."
 	icon_state = "matter_bin"
 	custom_materials = list(/datum/material/iron=80)
-
-/obj/item/stock_parts/electrolite
-	name = "electrolite"
-	desc = "An electrolite component to separate matters into others"
-	icon_state = "electrolite"
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 
 //Rating 2
 
@@ -210,13 +260,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	rating = 2
 	custom_materials = list(/datum/material/iron=80)
 
-/obj/item/stock_parts/electrolite/adv
-	name = "advanced electrolite"
-	desc = "An electrolite component to separate matters into others"
-	icon_state = "adv_electrolite"
-	rating = 2
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
-
 //Rating 3
 
 /obj/item/stock_parts/capacitor/super
@@ -254,13 +297,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	rating = 3
 	custom_materials = list(/datum/material/iron=80)
 
-/obj/item/stock_parts/electrolite/super
-	name = "super electrolite"
-	desc = "An electrolite component to separate matters into others"
-	icon_state = "super_electrolite"
-	rating = 3
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
-
 //Rating 4
 
 /obj/item/stock_parts/capacitor/quadratic
@@ -297,13 +333,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon_state = "bluespace_matter_bin"
 	rating = 4
 	custom_materials = list(/datum/material/iron=80)
-
-/obj/item/stock_parts/electrolite/bluespace
-	name = "bluespace electrolite"
-	desc = "An electrolite component to separate matters into others"
-	icon_state = "bluespace_electrolite"
-	rating = 4
-	custom_materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
 
 // Subspace stock parts
 
@@ -349,11 +378,19 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	custom_materials = list(/datum/material/iron=50)
 
+// Misc. Parts
+
 /obj/item/stock_parts/card_reader
 	name = "card reader"
 	icon_state = "card_reader"
 	desc = "A small magnetic card reader, used for devices that take and transmit holocredits."
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=10)
+
+/obj/item/stock_parts/water_recycler
+	name = "water recycler"
+	icon_state = "water_recycler"
+	desc = "A chemical reclaimation component, which serves to re-accumulate and filter water over time."
+	custom_materials = list(/datum/material/plastic=200, /datum/material/iron=50)
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"

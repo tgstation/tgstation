@@ -1,17 +1,9 @@
-/mob/living/silicon/robot/verb/cmd_show_laws()
-	set category = "Robot Commands"
-	set name = "Show Laws"
-
-	if(usr.stat == DEAD)
-		return //won't work if dead
-	show_laws()
-
 /mob/living/silicon/robot/deadchat_lawchange()
 	if(lawupdate)
 		return
 	..()
 
-/mob/living/silicon/robot/show_laws(everyone = 0)
+/mob/living/silicon/robot/show_laws(everyone = FALSE)
 	laws_sanity_check()
 	var/who
 
@@ -29,7 +21,7 @@
 				to_chat(src, "<b>Laws synced with AI, be sure to note any changes.</b>")
 		else
 			to_chat(src, "<b>No AI selected to sync laws with, disabling lawsync protocol.</b>")
-			lawupdate = 0
+			lawupdate = FALSE
 
 	to_chat(who, "<b>Obey these laws:</b>")
 	laws.show_laws(who)
@@ -45,23 +37,17 @@
 
 /mob/living/silicon/robot/proc/lawsync()
 	laws_sanity_check()
-	var/datum/ai_laws/master = connected_ai ? connected_ai.laws : null
+	var/datum/ai_laws/master = connected_ai?.laws
 	var/temp
 	if (master)
-		laws.devillaws.len = master.devillaws.len
-		for (var/index = 1, index <= master.devillaws.len, index++)
-			temp = master.devillaws[index]
-			if (length(temp) > 0)
-				laws.devillaws[index] = temp
-
 		laws.ion.len = master.ion.len
-		for (var/index = 1, index <= master.ion.len, index++)
+		for (var/index in 1 to master.ion.len)
 			temp = master.ion[index]
 			if (length(temp) > 0)
 				laws.ion[index] = temp
 
 		laws.hacked.len = master.hacked.len
-		for (var/index = 1, index <= master.hacked.len, index++)
+		for (var/index in 1 to master.hacked.len)
 			temp = master.hacked[index]
 			if (length(temp) > 0)
 				laws.hacked[index] = temp
@@ -73,15 +59,23 @@
 		laws.zeroth = temp
 
 		laws.inherent.len = master.inherent.len
-		for (var/index = 1, index <= master.inherent.len, index++)
+		for (var/index in 1 to master.inherent.len)
 			temp = master.inherent[index]
 			if (length(temp) > 0)
 				laws.inherent[index] = temp
 
 		laws.supplied.len = master.supplied.len
-		for (var/index = 1, index <= master.supplied.len, index++)
+		for (var/index in 1 to master.supplied.len)
 			temp = master.supplied[index]
 			if (length(temp) > 0)
 				laws.supplied[index] = temp
 
+		var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
+		if(program)
+			program.force_full_update()
+
 	picturesync()
+
+/mob/living/silicon/robot/post_lawchange(announce = TRUE)
+	. = ..()
+	addtimer(CALLBACK(src, .proc/logevent,"Law update processed."), 0, TIMER_UNIQUE | TIMER_OVERRIDE) //Post_Lawchange gets spammed by some law boards, so let's wait it out

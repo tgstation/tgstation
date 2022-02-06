@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/pointed/trigger/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
-	school = "transmutation"
+	school = SCHOOL_TRANSMUTATION
 	charge_max = 300
 	clothes_req = FALSE
 	invocation = "STI KALY"
@@ -19,7 +19,7 @@
 	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
-	mutations = list(BLINDMUT)
+	mutations = list(/datum/mutation/human/blind)
 	duration = 300
 	charge_max = 400 // needs to be higher than the duration or it'll be permanent
 	sound = 'sound/magic/blind.ogg'
@@ -30,6 +30,6 @@
 		return FALSE
 	if(!isliving(target))
 		if(!silent)
-			to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
+			to_chat(user, span_warning("You can only blind living beings!"))
 		return FALSE
 	return TRUE

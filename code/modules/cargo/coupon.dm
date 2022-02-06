@@ -1,6 +1,6 @@
 #define COUPON_OMEN "omen"
 
-obj/item/coupon
+/obj/item/coupon
 	name = "coupon"
 	desc = "It doesn't matter if you didn't want it before, what matters now is that you've got a coupon for it!"
 	icon_state = "data_1"
@@ -18,23 +18,23 @@ obj/item/coupon
 	if(rig_omen)
 		discount_pct_off = COUPON_OMEN
 	else
-		discount_pct_off = pickweight(chances)
+		discount_pct_off = pick_weight(chances)
 	if(discount_pct_off == COUPON_OMEN)
 		name = "coupon - fuck you"
 		desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
 		if(ismob(loc))
 			var/mob/M = loc
-			to_chat(M, "<span class='warning'>The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?</span>")
+			to_chat(M, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
 			M.AddComponent(/datum/component/omen, TRUE, src)
 	else
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
 
-/obj/item/coupon/attack_obj(obj/O, mob/living/user)
+/obj/item/coupon/attack_atom(obj/O, mob/living/user, params)
 	if(!istype(O, /obj/machinery/computer/cargo))
 		return ..()
 	if(discount_pct_off == COUPON_OMEN)
-		to_chat(user, "<span class='warning'>\The [O] validates the coupon as authentic, but refuses to accept it...</span>")
+		to_chat(user, span_warning("\The [O] validates the coupon as authentic, but refuses to accept it..."))
 		O.say("Coupon fulfillment already in progress...")
 		return
 

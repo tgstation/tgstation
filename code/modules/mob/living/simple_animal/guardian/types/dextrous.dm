@@ -67,7 +67,7 @@
 			internal_storage = I
 			update_inv_internal_storage()
 		else
-			to_chat(src, "<span class='danger'>You are trying to equip this item to an unsupported inventory slot. Report this to a coder!</span>")
+			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
 
 /mob/living/simple_animal/hostile/guardian/dextrous/getBackSlot()
 	return ITEM_SLOT_DEX_STORAGE
@@ -76,7 +76,7 @@
 	return ITEM_SLOT_DEX_STORAGE
 
 /mob/living/simple_animal/hostile/guardian/dextrous/proc/update_inv_internal_storage()
-	if(internal_storage && client && hud_used && hud_used.hud_shown)
+	if(internal_storage && client && hud_used?.hud_shown)
 		internal_storage.screen_loc = ui_id
 		client.screen += internal_storage
 

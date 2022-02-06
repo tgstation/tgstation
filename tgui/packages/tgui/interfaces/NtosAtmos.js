@@ -9,7 +9,8 @@ import { NtosWindow } from '../layouts';
 export const NtosAtmos = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    AirTemp,
+    AirTempC,
+    AirTempK,	
     AirPressure,
   } = data;
   const gases = flow([
@@ -18,12 +19,14 @@ export const NtosAtmos = (props, context) => {
   ])(data.AirData || []);
   const gasMaxPercentage = Math.max(1, ...gases.map(gas => gas.percentage));
   return (
-    <NtosWindow resizable>
+    <NtosWindow
+      width={300}
+      height={350}>
       <NtosWindow.Content scrollable>
         <Section>
           <LabeledList>
             <LabeledList.Item label="Temperature">
-              {AirTemp}°C
+              {AirTempC}°C | {AirTempK}K
             </LabeledList.Item>
             <LabeledList.Item label="Pressure">
               {AirPressure} kPa

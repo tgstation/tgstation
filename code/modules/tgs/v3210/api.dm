@@ -39,7 +39,7 @@
 	var/warned_custom_commands = FALSE
 
 /datum/tgs_api/v3210/ApiVersion()
-	return new /datum/tgs_version("3.2.1.0")
+	return new /datum/tgs_version("3.2.1.3")
 
 /datum/tgs_api/v3210/proc/trim_left(text)
 	for (var/i = 1 to length(text))
@@ -54,6 +54,8 @@
 	return ""
 
 /datum/tgs_api/v3210/proc/file2list(filename)
+	if(IsAdminAdvancedProcCall())
+		CRASH("Attempted to read file via admin call")
 	return splittext(trim_left(trim_right(file2text(filename))), "\n")
 
 /datum/tgs_api/v3210/OnWorldNew(minimum_required_security_level)
@@ -62,7 +64,7 @@
 	comms_key = world.params[SERVICE_WORLD_PARAM]
 	instance_name = world.params[SERVICE_INSTANCE_PARAM]
 	if(!instance_name)
-		instance_name = "TG Station Server"	//maybe just upgraded
+		instance_name = "TG Station Server" //maybe just upgraded
 
 	var/list/logs = file2list(".git/logs/HEAD")
 	if(logs.len)
@@ -92,14 +94,14 @@
 	if(skip_compat_check && !fexists(SERVICE_INTERFACE_DLL))
 		TGS_ERROR_LOG("Service parameter present but no interface DLL detected. This is symptomatic of running a service less than version 3.1! Please upgrade.")
 		return
-	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(instance_name, command)	//trust no retval
+	call(SERVICE_INTERFACE_DLL, SERVICE_INTERFACE_FUNCTION)(instance_name, command) //trust no retval
 	return TRUE
 
 /datum/tgs_api/v3210/OnTopic(T)
 	var/list/params = params2list(T)
 	var/their_sCK = params[SERVICE_CMD_PARAM_KEY]
 	if(!their_sCK)
-		return FALSE	//continue world/Topic
+		return FALSE //continue world/Topic
 
 	if(their_sCK != comms_key)
 		return "Invalid comms key!";
@@ -160,7 +162,7 @@
 		var/datum/tgs_revision_information/test_merge/tm = new
 		tm.number = text2num(I)
 		var/list/entry = json[I]
-		tm.pull_request_commit = entry["commit"]
+		tm.head_commit = entry["commit"]
 		tm.author = entry["author"]
 		tm.title = entry["title"]
 		. += tm
@@ -176,11 +178,11 @@
 	return ri
 
 /datum/tgs_api/v3210/EndProcess()
-	sleep(world.tick_lag)	//flush the buffers
+	sleep(world.tick_lag) //flush the buffers
 	ExportService(SERVICE_REQUEST_KILL_PROCESS)
 
 /datum/tgs_api/v3210/ChatChannelInfo()
-	return list()
+	return list() // :omegalul:
 
 /datum/tgs_api/v3210/ChatBroadcast(message, list/channels)
 	if(channels)

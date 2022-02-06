@@ -11,7 +11,7 @@
 /obj/effect/light_emitter/red_energy_sword //used so there's a combination of both their head light and light coming off the energy sword
 	set_luminosity = 2
 	set_cap = 2.5
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 
 
 /mob/living/simple_animal/hostile/syndicate
@@ -23,10 +23,11 @@
 	icon_dead = "syndicate_dead"
 	icon_gib = "syndicate_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	sentience_type = SENTIENCE_HUMANOID
 	speak_chance = 0
 	turns_per_move = 5
 	speed = 0
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	robust_searching = 1
 	maxHealth = 100
 	health = 100
@@ -36,10 +37,10 @@
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
-	a_intent = INTENT_HARM
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
-	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	unsuitable_atmos_damage = 15
+	combat_mode = TRUE
+	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
+	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
+	unsuitable_atmos_damage = 7.5
 	faction = list(ROLE_SYNDICATE)
 	check_friendly_fire = 1
 	status_flags = CANPUSH
@@ -56,11 +57,11 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -81,6 +82,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	status_flags = 0
 	var/projectile_deflect_chance = 0
 
@@ -90,12 +92,12 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
 	projectile_deflect_chance = 50
 
-/mob/living/simple_animal/hostile/syndicate/melee/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/melee/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -117,12 +119,12 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
 	armour_penetration = 35
-	light_color = LIGHT_COLOR_RED
+	light_color = COLOR_SOFT_RED
 	status_flags = 0
 	var/obj/effect/light_emitter/red_energy_sword/sord
 	projectile_deflect_chance = 50
 
-/mob/living/simple_animal/hostile/syndicate/melee/sword/Initialize()
+/mob/living/simple_animal/hostile/syndicate/melee/sword/Initialize(mapload)
 	. = ..()
 	set_light(2)
 
@@ -132,7 +134,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/melee/bullet_act(obj/projectile/Proj)
 	if(prob(projectile_deflect_chance))
-		visible_message("<span class='danger'>[src] blocks [Proj] with its shield!</span>")
+		visible_message(span_danger("[src] blocks [Proj] with its shield!"))
 		return BULLET_ACT_BLOCK
 	return ..()
 
@@ -142,12 +144,12 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
 	projectile_deflect_chance = 50
 
-/mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/melee/sword/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	sord = new(src)
@@ -181,7 +183,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/infiltrator //shuttle loan event
 	projectilesound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
+	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/space
 	icon_state = "syndicate_space_pistol"
@@ -189,11 +191,11 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/ranged/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -214,7 +216,7 @@
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/pilot //caravan ambush ruin
 	name = "Syndicate Salvage Pilot"
-	loot = list(/obj/effect/mob_spawn/human/corpse/syndicatesoldier)
+	loot = list(/obj/effect/mob_spawn/corpse/human/syndicatesoldier)
 
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space
 	icon_state = "syndicate_space_smg"
@@ -222,11 +224,11 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/ranged/smg/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -252,11 +254,11 @@
 	name = "Syndicate Commando"
 	maxHealth = 170
 	health = 170
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	speed = 1
 
-/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/Initialize()
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	set_light(4)
@@ -288,7 +290,7 @@
 	icon_state = "viscerator_attack"
 	icon_living = "viscerator_attack"
 	pass_flags = PASSTABLE | PASSMOB
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	mob_biotypes = MOB_ROBOTIC
 	health = 25
 	maxHealth = 25
@@ -296,17 +298,17 @@
 	melee_damage_upper = 15
 	wound_bonus = -10
 	bare_wound_bonus = 20
-	sharpness = TRUE
+	sharpness = SHARP_EDGED
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	attack_verb_continuous = "cuts"
 	attack_verb_simple = "cut"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(ROLE_SYNDICATE)
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	mob_size = MOB_SIZE_TINY
-	movement_type = FLYING
 	limb_destroyer = 1
 	speak_emote = list("states")
 	bubble_icon = "syndibot"
@@ -314,6 +316,7 @@
 	del_on_death = 1
 	deathmessage = "is smashed into pieces!"
 
-/mob/living/simple_animal/hostile/viscerator/Initialize()
+/mob/living/simple_animal/hostile/viscerator/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)

@@ -9,9 +9,9 @@
 	earliest_start = 25 MINUTES
 
 /datum/round_event/meteor_wave
-	startWhen		= 6
-	endWhen			= 66
-	announceWhen	= 1
+	startWhen = 6
+	endWhen = 66
+	announceWhen = 1
 	var/list/wave_type
 	var/wave_name = "normal"
 
@@ -22,7 +22,7 @@
 
 /datum/round_event/meteor_wave/proc/determine_wave_type()
 	if(!wave_name)
-		wave_name = pickweight(list(
+		wave_name = pick_weight(list(
 			"normal" = 50,
 			"threatening" = 40,
 			"catastrophic" = 10))
@@ -47,7 +47,7 @@
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)
-	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", 'sound/ai/meteors.ogg')
+	priority_announce("Meteors have been detected on collision course with the station.", "Meteor Alert", ANNOUNCER_METEORS)
 
 /datum/round_event/meteor_wave/tick()
 	if(ISMULTIPLE(activeFor, 3))

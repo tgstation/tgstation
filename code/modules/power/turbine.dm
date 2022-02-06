@@ -12,11 +12,11 @@
 //
 // - Numbers
 //
-// Example setup	 S - sparker
-//					 B - Blast doors into space for venting
-// *BBB****BBB*		 C - Compressor
-// S    CT    *		 T - Turbine
-// * ^ *  * V *		 D - Doors with firedoor
+// Example setup  S - sparker
+//  B - Blast doors into space for venting
+// *BBB****BBB*  C - Compressor
+// S    CT    *  T - Turbine
+// * ^ *  * V *  D - Doors with firedoor
 // **|***D**|**      ^ - Fuel feed (Not vent, but a gas outlet)
 //   |      |        V - Suction vent (Like the ones in atmos
 //
@@ -29,7 +29,7 @@
 	icon_state = "compressor"
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_compressor
 	var/obj/machinery/power/turbine/turbine
 	var/datum/gas_mixture/gas_contained
@@ -54,10 +54,8 @@
 	icon_state = "turbine"
 	density = TRUE
 	resistance_flags = FIRE_PROOF
-	CanAtmosPass = ATMOS_PASS_DENSITY
+	can_atmos_pass = ATMOS_PASS_DENSITY
 	circuit = /obj/item/circuitboard/machine/power_turbine
-	ui_x = 310
-	ui_y = 150
 	var/opened = 0
 	var/obj/machinery/power/compressor/compressor
 	var/turf/outturf
@@ -72,14 +70,14 @@
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/power/compressor/Initialize()
+/obj/machinery/power/compressor/Initialize(mapload)
 	. = ..()
 	// The inlet of the compressor is the direction it faces
 	gas_contained = new
 	inturf = get_step(src, dir)
 	locate_machinery()
 	if(!turbine)
-		obj_break()
+		atom_break()
 
 #define COMPFRICTION 5e5
 
@@ -99,7 +97,7 @@
 /obj/machinery/power/compressor/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Efficiency at <b>[efficiency*100]%</b>.</span>"
+		. += span_notice("The status display reads: Efficiency at <b>[efficiency*100]%</b>.")
 
 /obj/machinery/power/compressor/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
@@ -110,11 +108,11 @@
 		inturf = get_step(src, dir)
 		locate_machinery()
 		if(turbine)
-			to_chat(user, "<span class='notice'>Turbine connected.</span>")
-			machine_stat &= ~BROKEN
+			to_chat(user, span_notice("Turbine connected."))
+			set_machine_stat(machine_stat & ~BROKEN)
 		else
-			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
-			obj_break()
+			to_chat(user, span_alert("Turbine not connected."))
+			atom_break()
 		return
 
 	default_deconstruction_crowbar(I)
@@ -129,14 +127,17 @@
 		return
 	cut_overlays()
 
-	rpm = 0.9* rpm + 0.1 * rpmtarget
-	var/datum/gas_mixture/environment = inturf.return_air()
+	if(istype(inturf, /turf/open))
+		rpm = 0.9 * rpm + 0.1 * rpmtarget
+		var/datum/gas_mixture/environment = inturf.return_air()
 
-	// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
+		// It's a simplified version taking only 1/10 of the moles from the turf nearby. It should be later changed into a better version
 
-	var/transfer_moles = environment.total_moles()/10
-	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
-	gas_contained.merge(removed)
+		var/transfer_moles = environment.total_moles()/10
+		var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
+		gas_contained.merge(removed)
+	else
+		rpm = 0.9 * rpm // rpmtarget is basically 0, the intake is completely blocked with no airflow
 
 // RPM function to include compression friction - be advised that too low/high of a compfriction value can make things screwy
 
@@ -159,7 +160,7 @@
 		add_overlay(mutable_appearance(icon, "comp-o2", FLY_LAYER))
 	else if(rpm>500)
 		add_overlay(mutable_appearance(icon, "comp-o1", FLY_LAYER))
-	 //TODO: DEFERRED
+	//TODO: DEFERRED
 
 // These are crucial to working of a turbine - the stats modify the power output. TurbGenQ modifies how much raw energy can you get from
 // rpms, TurbGenG modifies the shape of the curve - the lower the value the less straight the curve is.
@@ -167,13 +168,13 @@
 #define TURBGENQ 100000
 #define TURBGENG 0.5
 
-/obj/machinery/power/turbine/Initialize()
+/obj/machinery/power/turbine/Initialize(mapload)
 	. = ..()
 // The outlet is pointed at the direction of the turbine component
 	outturf = get_step(src, dir)
 	locate_machinery()
 	if(!compressor)
-		obj_break()
+		atom_break()
 	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
@@ -185,7 +186,7 @@
 /obj/machinery/power/turbine/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads: Productivity at <b>[productivity*100]%</b>.</span>"
+		. += span_notice("The status display reads: Productivity at <b>[productivity*100]%</b>.")
 
 /obj/machinery/power/turbine/locate_machinery()
 	if(compressor)
@@ -197,7 +198,7 @@
 /obj/machinery/power/turbine/process()
 
 	if(!compressor)
-		machine_stat = BROKEN
+		set_machine_stat(BROKEN)
 
 	if((machine_stat & BROKEN) || panel_open)
 		return
@@ -240,20 +241,19 @@
 		outturf = get_step(src, dir)
 		locate_machinery()
 		if(compressor)
-			to_chat(user, "<span class='notice'>Compressor connected.</span>")
-			machine_stat &= ~BROKEN
+			to_chat(user, span_notice("Compressor connected."))
+			set_machine_stat(machine_stat & ~BROKEN)
 		else
-			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
-			obj_break()
+			to_chat(user, span_alert("Compressor not connected."))
+			atom_break()
 		return
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/turbine/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/power/turbine/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "TurbineComputer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "TurbineComputer", name)
 		ui.open()
 
 /obj/machinery/power/turbine/ui_data(mob/user)
@@ -263,18 +263,19 @@
 	data["turbine"] = compressor?.turbine ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.machine_stat & BROKEN)) ? TRUE : FALSE
 	data["online"] = compressor?.starter
-	data["power"] = DisplayPower(compressor?.turbine?.lastgen)
+	data["power"] = display_power(compressor?.turbine?.lastgen)
 	data["rpm"] = compressor?.rpm
 	data["temp"] = compressor?.gas_contained.temperature
 	return data
 
 /obj/machinery/power/turbine/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
 		if("toggle_power")
-			if(compressor && compressor.turbine)
+			if(compressor?.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")
@@ -292,12 +293,10 @@
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
 	circuit = /obj/item/circuitboard/computer/turbine_computer
-	ui_x = 310
-	ui_y = 150
 	var/obj/machinery/power/compressor/compressor
 	var/id = 0
 
-/obj/machinery/computer/turbine_computer/Initialize()
+/obj/machinery/computer/turbine_computer/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
@@ -313,11 +312,10 @@
 	else
 		compressor = locate(/obj/machinery/power/compressor) in range(7, src)
 
-/obj/machinery/computer/turbine_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/turbine_computer/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "TurbineComputer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "TurbineComputer", name)
 		ui.open()
 
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
@@ -327,18 +325,19 @@
 	data["turbine"] = compressor?.turbine ? TRUE : FALSE
 	data["turbine_broke"] = (!compressor || !compressor.turbine || (compressor.turbine.machine_stat & BROKEN)) ? TRUE : FALSE
 	data["online"] = compressor?.starter
-	data["power"] = DisplayPower(compressor?.turbine?.lastgen)
+	data["power"] = display_power(compressor?.turbine?.lastgen)
 	data["rpm"] = compressor?.rpm
 	data["temp"] = compressor?.gas_contained.temperature
 	return data
 
 /obj/machinery/computer/turbine_computer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	switch(action)
 		if("toggle_power")
-			if(compressor && compressor.turbine)
+			if(compressor?.turbine)
 				compressor.starter = !compressor.starter
 				. = TRUE
 		if("reconnect")

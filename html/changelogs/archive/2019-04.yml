@@ -1,0 +1,216 @@
+2019-04-01:
+  AutomaticFrenzy:
+  - bugfix: soap now displays the correct message when examined
+  ShizCalev:
+  - bugfix: Revamped Donutstation's engineering and supermatter rooms to fix a number
+      of issues that prevented proper functionality, and resolved numerous aesthetic
+      complaints.
+  - bugfix: Fixed Jones actions on a couple away mission fridges.
+  - bugfix: Mass drivers will no longer launch ghosts & camera mobs (AI cameras, xenobio
+      cameras, ect)
+  SpaceManiac:
+  - bugfix: Blood brothers succeeding at some objective no longer bolds the entire
+      rest of the round-end report.
+  Tlaltecuhtli:
+  - spellcheck: fixes spelling error in void magent
+  - tweak: cryo cell starts with auto eject true
+  Vile Beggar:
+  - bugfix: Toxins launch site telescreens now work properly again.
+  - bugfix: Polymorphed drones no longer have normal drone flavortext.
+  Zxaber:
+  - bugfix: Firefighter construction text is no longer off by a step.
+2019-04-02:
+  Barhandar:
+  - rscadd: Plasteel golems have been buffed and will now stay on the ground instead
+      of floating without gravity (like magboots). They're also cannot be swapped
+      positions with even on help intent.
+  SpaceManiac:
+  - bugfix: Fixed the latest set of roundstart active turfs.
+  WJohnston:
+  - imageadd: New .357 revolver sprites.
+  bobbahbrown:
+  - bugfix: Return of the photocopied ass
+  - bugfix: Photocopiers now properly have a delay before photocopying an ass.
+  - bugfix: Corrected an error that stopped photos of crew members being printed at
+      the security records consoles.
+  pireamaineach:
+  - bugfix: Makes the .45 magazine actually update per round rather than just showing
+      full or empty.
+2019-04-03:
+  Basilman:
+  - bugfix: Added a cooldown for datum outputs
+  Kierany9:
+  - bugfix: Fixed the assimilation radar bug for real this time.
+  - bugfix: Possibly fixed mindshield implants sometimes not working against vessels.
+  MrDoomBringer:
+  - tweak: Supplypod Beacons from the Express Supply Console now cost 500 credits,
+      down from 5000.
+  Nervere:
+  - bugfix: Default color for when custom asay colors is not enabled is now orange,
+      not red.
+  - bugfix: Asay is now properly bolded in lightmode.
+  - bugfix: Asay is now properly bolded in darkmode.
+  - tweak: Default color for when custom asay colors is enabled is now orange, not
+      black.
+  - admin: removed a duplicate/broken secrets panel button
+  - admin: you can now click the text that says "Antagonist" on an antagonist's entry
+      in the global player panel to check all antags, as intended
+  ShizCalev:
+  - bugfix: Paraplegics can now climb into mechs.
+  - bugfix: Locker bolts will no longer move mobs that aren't valid for lockering.
+  - bugfix: Paraplegics/mobs missing legs can no longer operate vehicles which require
+      legs to operate (ie bicycles, skateboards, ATVs, ect) if they lost the limbs
+      while still buckled in.
+  - tweak: Mobs with no arms will now fall off bikes & scooters when trying to move.
+  - tweak: Badmins can now edit limb requirements of vehicles.
+  Tlaltecuhtli:
+  - balance: large ebows do 20 damage instead of 40
+  - rscadd: russian surplus crate, sec ammo crate, meat/veggie/fruit crate, rped crate,  bomb
+      suit crate, bio suit crate, parrot crate, chem crate
+  - tweak: lowered price of some crates which are overpriced for no reason aka the
+      ipod crate and the mech circuits crate, track implant crate has also track .38
+      ammo
+  - bugfix: sectech vendor has the refill pack
+  Zxaber:
+  - balance: Deflecting shots while inside a MK-I Ripley (or inside anything else,
+      for that matter) will cause the shots to deflect back into the container.
+  - balance: Firing at a MK-I Ripley while aiming for the head or chest will still
+      hit the pilot, but aiming for the arms or legs will now intentionally hit the
+      mech.
+  - tweak: Being incapacitated in an open-canopy mech will now lead to you falling
+      out.
+  actioninja:
+  - balance: EZ-CLEAN grenades now deal 1.5x the damage.
+  - soundadd: Replaced Title2.ogg with a much higher quality version.
+  bobbahbrown:
+  - bugfix: Wands, staves, and other magic guns no longer allow bypassing den and
+      anti-magic checks when being fired offhand.
+  - spellcheck: Removed unlawful reference to Disney's Star Wars franchise in map
+      logging.
+2019-04-04:
+  actioninja:
+  - rscadd: Disarm has been reworked, instead of an rng based system instead it pushes
+      people away from you. If their movement is blocked it knocks them over. Shoving
+      someone twice quickly will knock ranged weapons out of their hands.
+  - rscdel: Moving into humans while in a hostile intent no longer pushes them.
+  - tweak: Passive grabs need to be resisted out of while on the ground, and can't
+      be directly crawled out of
+2019-04-06:
+  FloranOtten:
+  - tweak: Changes the wooden doors on the Meta Maint Bar with wooden airlocks. Sounds
+      are the same.
+  RaveRadbury:
+  - tweak: Bike horns and baguettes can now be equipped to belt and back slots!
+  ShizCalev:
+  - tweak: Enabled tactical reloads for most ballistic weapons.
+  bobbahbrown:
+  - rscadd: Monkeys now apply knockdown when tackling instead of stunning, and can
+      stun you by tackling you whilst you are knocked down.
+2019-04-24:
+  Kierany9:
+  - balance: The hivemind radar's no longer has a minimum range, but has an increased
+      ping time.
+  - balance: How power use affects the hivemind radar has been tweaked as to ensure
+      that going loud early is punished more.
+  Mickyan:
+  - rscadd: 'New quirk: Empath. Gain a better insight on the state of people around
+      you by examining them.'
+  - rscadd: 'New quirk: Friendly. Your hugs are just the best. Keep yourself in a
+      good mood to give the bestest hugs!'
+  MrDroppodBringer and Time-Green:
+  - rscadd: Adds the lipid extractor to the service protolathe arsenal
+  TetraK1:
+  - bugfix: AI integrity restorer no longer drops a free AI core on deconstruction/destruction.
+  Tlaltecuhtli:
+  - balance: rubbershot does 66 stamina  + 18 damage instead of 150 stamina + 18 damage
+  - balance: beanbang does 55 stamina + 5 damge instead of 80 + 5 damage
+  Wilchenx:
+  - rscadd: The modular pc vendor
+  - rscdel: minor entities on meta/pubby/box/delta to make room for said vendor
+  actioninja:
+  - bugfix: Fixed an exploit where incompatible magazine could be tactical reloaded
+      into guns, and then still fire.
+  bgobandit:
+  - tweak: Examining intercoms/radios shows the frequency they're set to, if you're
+      in range.
+2019-04-25:
+  RaveRadbury:
+  - rscadd: pAI's now have the same headset tech as AI. Add and remove keys just like
+      you would with headsets.
+  - tweak: Service Halls now allow all Service dept. jobs.
+2019-04-27:
+  81Denton:
+  - bugfix: 'Pubbystation: Fixed the incinerator''s waste to space injector starting
+      powered off.'
+  - bugfix: 'Metastation: You can now pass parts of the AI sat transit tube again.'
+  DaxDupont:
+  - bugfix: Clowns now spawn with the proper health
+  Mideanon:
+  - bugfix: Adminordrazine now gives blood back
+  MrFluffster:
+  - tweak: tweaked the pubby incinerator
+  RaveRadbury:
+  - bugfix: The radio configuration menu for masters of pAI will now toggle properly.
+  - bugfix: pAI HUD appears as it should.
+  RaveRadbury, Art by Navi.OS:
+  - rscadd: pAI Newscaster
+  - rscadd: pAI Camera
+  - rscadd: New pAI HUD
+  - imageadd: unique pAI HUD theme
+  TheDreamweaver:
+  - bugfix: Hilbert's Hotel can no longer be brought inside of itself.
+  Zxaber:
+  - tweak: Certain small items purchased through cargo now get grouped into a single
+      box.
+  - rscadd: Added single-order options for several existing products in the Cargo
+      Catalog.
+  - rscadd: Added ALPU MK-I Ripley kit to the cargo catalog, under Engineering.
+  - balance: 'Cargo Ripley bounty now requires a MK-II. remove: Removed the Ripley
+      and Odysseus listings in the cargo catalog that were only the control boards
+      and nothing more.'
+  - tweak: Ammo and Medkit listings are now single-pack items, and considered small
+      items that get grouped into single boxes. Price per unit for ammo is unchanged,
+      and for medkits is as close to unchanged as is reasonable.
+  actioninja:
+  - spellcheck: Changed the description on ling augmented eyes to be more accurate
+      to their actual functionality
+  nemvar:
+  - balance: Heavily nerfs russian surplus gear.
+  tralezab:
+  - rscadd: zombies can eat brains now
+2019-04-30:
+  81Denton:
+  - bugfix: Dead AIs no longer get stuck in place and become movable again.
+  Carshalash:
+  - rscadd: Replaces Pressurized Slime to spray lube instead of water
+  PKPenguin321:
+  - balance: Humans now have a punch damage range of 1-10, up from 0-9
+  - balance: The chance to miss a punch now increases the more stamina and brute damage
+      you have
+  - balance: The stun duration for a critical punch now scales with how much stamina/brute
+      damage the victim has
+  - balance: Punches now deal full stamina damage + half damage in brute (effectively
+      1.5x damage on all punches, not accounting for stamina regeneration)
+  - balance: Kicking (punching a prone person) does full brute damage, never misses,
+      and does 1.5x damage
+  - balance: Grabs are now harder to break out of the more stamina/brute damage you
+      have
+  - balance: Failing to resist out of a grab will deal a bit of stamina damage to
+      you
+  - balance: In all instances above where both stamina and brute damage are considered,
+      brute is weighed 1/2 as heavily as stamina (meaning stamina has more of an effect
+      than brute when it comes to punch-stun duration, miss chance, etc)
+  Skoglol:
+  - bugfix: Offstation AI can no longer interact with other z-levels. Again.
+  - balance: Robotics control console can now only blow/lockdown borgs and drones
+      on current z-level.
+  - bugfix: Falsewalls now properly hide pipes and wires.
+  - bugfix: Ninja dash now works in dark areas if you can see in the dark.
+  - bugfix: Blob factories can no longer create more than one blobbernaut at a time.
+  SpaceManiac:
+  - code_imp: Removed a workaround for a compiler bug that has since been fixed.
+  - tweak: The "draggable" cursor is now shown when folding a closed bodybag.
+  - tweak: Failing to fold a bodybag because it is open or full now tells you why.
+  nemvar:
+  - bugfix: Fixes bathsalts and beepsky smash transfering their respective brain traumas
+      after cloning.

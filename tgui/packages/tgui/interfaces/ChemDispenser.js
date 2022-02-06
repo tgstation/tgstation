@@ -1,13 +1,16 @@
 import { toFixed } from 'common/math';
 import { toTitleCase } from 'common/string';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { AnimatedNumber, Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 export const ChemDispenser = (props, context) => {
   const { act, data } = useBackend(context);
   const recording = !!data.recordingRecipe;
+  const { recipeReagents = [] } = data;
+  const [hasCol, setHasCol] = useLocalState(
+    context, 'has_col', false);
   // TODO: Change how this piece of shit is built on server side
   // It has to be a list, not a fucking OBJECT!
   const recipes = Object.keys(data.recipes)
@@ -26,15 +29,34 @@ export const ChemDispenser = (props, context) => {
     || data.beakerContents
     || [];
   return (
-    <Window resizable>
+    <Window
+      width={565}
+      height={620}>
       <Window.Content scrollable>
         <Section
           title="Status"
-          buttons={recording && (
-            <Box inline mx={1} color="red">
-              <Icon name="circle" mr={1} />
-              Recording
-            </Box>
+          buttons={(
+            <>
+              {recording && (
+                <Box inline mx={1} color="red">
+                  <Icon name="circle" mr={1} />
+                  Recording
+                </Box>
+              )}
+              <Button
+                icon="book"
+                disabled={!data.isBeakerLoaded}
+                content={"Reaction search"}
+                tooltip={data.isBeakerLoaded ? "Look up recipes and reagents!" : "Please insert a beaker!"}
+                tooltipPosition="bottom-start"
+                onClick={() => act('reaction_lookup')} />
+              <Button
+                icon="cog"
+                tooltip="Color code the reagents by pH"
+                tooltipPosition="bottom-start"
+                selected={hasCol}
+                onClick={() => setHasCol(!hasCol)} />
+            </>
           )}>
           <LabeledList>
             <LabeledList.Item label="Energy">
@@ -48,7 +70,7 @@ export const ChemDispenser = (props, context) => {
         <Section
           title="Recipes"
           buttons={(
-            <Fragment>
+            <>
               {!recording && (
                 <Box inline mx={1}>
                   <Button
@@ -78,7 +100,7 @@ export const ChemDispenser = (props, context) => {
                   content="Save"
                   onClick={() => act('save_recording')} />
               )}
-            </Fragment>
+            </>
           )}>
           <Box mr={-1}>
             {recipes.map(recipe => (
@@ -86,7 +108,7 @@ export const ChemDispenser = (props, context) => {
                 key={recipe.name}
                 icon="tint"
                 width="129.5px"
-                lineHeight="21px"
+                lineHeight={1.75}
                 content={recipe.name}
                 onClick={() => act('dispense_recipe', {
                   recipe: recipe.name,
@@ -119,8 +141,12 @@ export const ChemDispenser = (props, context) => {
                 key={chemical.id}
                 icon="tint"
                 width="129.5px"
-                lineHeight="21px"
+                lineHeight={1.75}
                 content={chemical.title}
+                tooltip={"pH: " + chemical.pH}
+                backgroundColor={recipeReagents.includes(chemical.id)
+                  ? hasCol ? "black" : "green"
+                  : hasCol ? chemical.pHCol : "default"}
                 onClick={() => act('dispense', {
                   reagent: chemical.id,
                 })} />
@@ -153,12 +179,12 @@ export const ChemDispenser = (props, context) => {
                 && 'Virtual beaker'
                 || data.isBeakerLoaded
                   && (
-                    <Fragment>
+                    <>
                       <AnimatedNumber
                         initial={0}
                         value={data.beakerCurrentVolume} />
                       /{data.beakerMaxVolume} units
-                    </Fragment>
+                    </>
                   )
                 || 'No beaker'}
             </LabeledList.Item>
@@ -179,6 +205,13 @@ export const ChemDispenser = (props, context) => {
                   units of {chemical.name}
                 </Box>
               ))}
+              {((beakerContents.length > 0 && !!data.showpH) && (
+                <Box>
+                  pH:
+                  <AnimatedNumber
+                    value={data.beakerCurrentpH} />
+                </Box>)
+              )}
             </LabeledList.Item>
           </LabeledList>
         </Section>

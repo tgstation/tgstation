@@ -4,10 +4,10 @@
 /area/template_noop)
 "b" = (
 /turf/closed/mineral,
-/area/space)
+/area/template_noop)
 "c" = (
 /turf/closed/mineral/random/low_chance,
-/area/space)
+/area/template_noop)
 
 (1,1,1) = {"
 a

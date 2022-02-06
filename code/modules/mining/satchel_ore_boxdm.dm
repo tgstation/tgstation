@@ -9,27 +9,20 @@
 	density = TRUE
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
-	var/ui_x = 335
-	var/ui_y = 415
-
 /obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/stack/ore))
 		user.transferItemToLoc(W, src)
 	else if(SEND_SIGNAL(W, COMSIG_CONTAINS_STORAGE))
 		SEND_SIGNAL(W, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/stack/ore, src)
-		to_chat(user, "<span class='notice'>You empty the ore in [W] into \the [src].</span>")
+		to_chat(user, span_notice("You empty the ore in [W] into \the [src]."))
 	else
 		return ..()
 
-/obj/structure/ore_box/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/rad_insulation, 0.01) //please datum mats no more cancer
-
 /obj/structure/ore_box/crowbar_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 50, volume=50))
-		user.visible_message("<span class='notice'>[user] pries \the [src] apart.</span>",
-			"<span class='notice'>You pry apart \the [src].</span>",
-			"<span class='hear'>You hear splitting wood.</span>")
+		user.visible_message(span_notice("[user] pries \the [src] apart."),
+			span_notice("You pry apart \the [src]."),
+			span_hear("You hear splitting wood."))
 		deconstruct(TRUE, user)
 	return TRUE
 
@@ -38,7 +31,7 @@
 		ui_interact(user)
 	. = ..()
 
-/obj/structure/ore_box/attack_hand(mob/user)
+/obj/structure/ore_box/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -61,11 +54,10 @@
 			stoplag()
 			drop = drop_location()
 
-/obj/structure/ore_box/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "OreBox", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, "OreBox", name)
 		ui.open()
 
 /obj/structure/ore_box/ui_data()
@@ -83,7 +75,8 @@
 	return data
 
 /obj/structure/ore_box/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(!Adjacent(usr))
 		return
@@ -92,14 +85,15 @@
 	switch(action)
 		if("removeall")
 			dump_box_contents()
-			to_chat(usr, "<span class='notice'>You open the release hatch on the box..</span>")
+			to_chat(usr, span_notice("You open the release hatch on the box.."))
 
 /obj/structure/ore_box/deconstruct(disassembled = TRUE, mob/user)
 	var/obj/item/stack/sheet/mineral/wood/WD = new (loc, 4)
-	if(user)
+	if(user && !QDELETED(WD))
 		WD.add_fingerprint(user)
 	dump_box_contents()
 	qdel(src)
 
-/obj/structure/ore_box/onTransitZ()
-	return
+/// Special override for notify_contents = FALSE.
+/obj/structure/ore_box/on_changed_z_level(turf/old_turf, turf/new_turf, notify_contents = FALSE)
+	return ..()

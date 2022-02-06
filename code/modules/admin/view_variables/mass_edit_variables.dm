@@ -3,12 +3,15 @@
 	set name = "Mass Edit Variables"
 	set desc="(target) Edit all instances of a target item's variables"
 
-	var/method = 0	//0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
+	var/method = 0 //0 means strict type detection while 1 means this type and all subtypes (IE: /obj/item with this set to 1 will set it to ALL items)
+
+	if(tgui_alert(usr, "Are you sure you'd like to mass-modify every instance of the [var_name] variable? This can break everything if you do not know what you are doing.", "Slow down, chief!", list("Yes", "No"), 60 SECONDS) != "Yes")
+		return
 
 	if(!check_rights(R_VAREDIT))
 		return
 
-	if(A && A.type)
+	if(A?.type)
 		method = vv_subtype_prompt(A.type)
 
 	src.massmodify_variables(A, var_name, method)
@@ -26,7 +29,7 @@
 		for (var/V in O.vars)
 			names += V
 
-		names = sortList(names)
+		names = sort_list(names)
 
 		variable = input("Which var?", "Var") as null|anything in names
 	else
@@ -49,7 +52,7 @@
 	if(variable in GLOB.VVpixelmovement)
 		if(!check_rights(R_DEBUG))
 			return
-		var/prompt = alert(src, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", "ABORT ", "Continue", " ABORT")
+		var/prompt = tgui_alert(usr, "Editing this var may irreparably break tile gliding for the rest of the round. THIS CAN'T BE UNDONE", "DANGER", list("ABORT ", "Continue", " ABORT"))
 		if (prompt != "Continue")
 			return
 
@@ -114,8 +117,8 @@
 			var/list/varsvars = vv_parse_text(O, new_value)
 			var/pre_processing = new_value
 			var/unique
-			if (varsvars && varsvars.len)
-				unique = alert(usr, "Process vars unique to each instance, or same for all?", "Variable Association", "Unique", "Same")
+			if (varsvars?.len)
+				unique = tgui_alert(usr, "Process vars unique to each instance, or same for all?", "Variable Association", list("Unique", "Same"))
 				if(unique == "Unique")
 					unique = TRUE
 				else
@@ -142,7 +145,7 @@
 				CHECK_TICK
 
 		if (VV_NEW_TYPE)
-			var/many = alert(src, "Create only one [value["type"]] and assign each or a new one for each thing", "How Many", "One", "Many", "Cancel")
+			var/many = tgui_alert(usr, "Create only one [value["type"]] and assign each or a new one for each thing", "How Many", list("One", "Many", "Cancel"))
 			if (many == "Cancel")
 				return
 			if (many == "Many")
@@ -198,7 +201,7 @@
 	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]] ([accepted] objects modified)")
 
 //not using global lists as vv is a debug function and debug functions should rely on as less things as possible.
-/proc/get_all_of_type(var/T, subtypes = TRUE)
+/proc/get_all_of_type(T, subtypes = TRUE)
 	var/list/typecache = list()
 	typecache[T] = 1
 	if (subtypes)

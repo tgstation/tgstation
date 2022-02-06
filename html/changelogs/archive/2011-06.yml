@@ -1,0 +1,80 @@
+2011-06-01:
+  /tg/station team:
+  - unknown: ' Canadian Day Against Homophobia'
+  Cheridan:
+  - unknown: Updated mine floor and wall edge sprites.
+  ConstantA:
+  - unknown: 'Added exosuit energy relay equipment. Uses area power (any power channel
+
+      available) instead of powercell for movement and actions, recharges powercell.'
+  - unknown: Exosuits can be renamed. Command is in Permissions &amp; Logging menu.
+  - unknown: Lowered construction time for Ripley parts.
+  - unknown: Exosuit wreckage can be salvaged for exosuit parts (torso, limbs etc).
+  - unknown: Speed-up for mecha.
+  - unknown: New malf-AI sprite. (Sprite donated by the D2K5 server)
+  Deuryn:
+  - unknown: Meteors now do a bit more damage and they're not stopped by grills.
+  Errorage:
+  - unknown: Fixed twohanded weapon throwing, which left the 'off-hand' object in
+      your other hand.
+  - unknown: Doors now hide items under them when closed, mobs are still always above.
+  - unknown: Singularity engine emitter is now much quieter.
+  - unknown: Mining station redesigned.
+  - unknown: Atmospherics' misc gasses tank now starts with N2O.
+  - unknown: Hitting the resist button while handcuffed and buckled to something will
+      make you attempt to free yourself. The process is the same as trying to remove
+      handcuffs. When the 2 minutes pass you will be unbuckled but still handcuffed.
+  Microwave:
+  - unknown: Barman renamed to Bartender.
+  - unknown: The amount of drink you get when mixing things in the bar has been rebalanced.
+  - unknown: Fixed arrivals maintenance shaft not having air at round start.
+  Neo:
+  - unknown: Department radio chat now shows with the department name instead of the
+      frequency.
+  Noise:
+  - unknown: Changed holopad speaking to :h on request.
+  - unknown: Ninja fixes, changes, etc. Refer to the <a href="http://code.google.com/p/tgstation13/source/list"
+      target="_blank">code changelog</a> for more info.
+  TLE:
+  - unknown: Added personal AIs (pAI).
+  Urist McDorf:
+  - unknown: AIs no longer bleed when they reach 0HP (Critical health).
+  - unknown: Added 2 more security HUDs to security.
+  - unknown: Security HUDs now show if a person has a tracking implant.
+  Veyveyr:
+  - unknown: Spent casing sprites + SMG sprite.
+  - unknown: Sprites for 1x4 and 1x2 pod doors.
+2011-06-07:
+  Darem:
+  - unknown: Gun Code Overhaul Phase 1.
+  - unknown: Taser guns shoot ONE WHOLE SHOT more then they do now.
+  - unknown: Energy Crossbow has a slightly higher shot capacity (still automatically
+      recharges).
+  - unknown: Revolvers can either be loaded one shell at a time or all at once with
+      an ammo box.
+  - unknown: 'Shotguns no longer need to be pumped before firing (will change back
+      in phase 2). '
+  K0000:
+  - unknown: Arcane tome now has a "notes" option. Set English translations for runewords
+      which come up when scribing runes. Attack an arcane tome with another arcane
+      tome to copy your notes to the target tome.
+  - unknown: Stun rune buffed considerably. Its a 1-use item so it deserved longer
+      stun time.
+  - unknown: 'Tome text: Added missing word description for stun rune.'
+  Neo:
+  - unknown: Nar-sie is now a more vengeful eldritch being. When summoned into our
+      world, he first rewards his loyal cultists by chasing down and eating them first,
+      then turns his attention to any remaining humans.
+  TLE:
+  - unknown: 'Wiped/suicided pAIs should be eligible for being candidates again (5
+      minute cooldown between prompts.) '
+  - unknown: 'pAIs are now affected by EMP bursts. pAIs hit with a burst will be silenced
+      (no speech or PDA messaging) for two minutes and may have their directives or
+      master modified. A sufficiently powerful EMP burst will have a 20% chance of
+      killing a pAI. '
+2011-06-18:
+  Agouri:
+  - unknown: 'Bugfixes: The reagent grinding now works, allowing the miners to FINALLY
+      bring plasma to the chemistry.'
+  - unknown: 'Bugfixes: Pill bottles and clipboards can now be removed from the pockets
+      once placed there.'

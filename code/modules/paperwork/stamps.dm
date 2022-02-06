@@ -10,10 +10,11 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=60)
 	pressure_resistance = 2
-	attack_verb = list("stamped")
+	attack_verb_continuous = list("stamps")
+	attack_verb_simple = list("stamp")
 
 /obj/item/stamp/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead.</span>")
+	user.visible_message(span_suicide("[user] stamps 'VOID' on [user.p_their()] forehead, then promptly falls over, dead."))
 	return (OXYLOSS)
 
 /obj/item/stamp/qm
@@ -86,5 +87,5 @@
 	icon_state = "stamp-syndicate"
 	dye_color = DYE_SYNDICATE
 
-/obj/item/stamp/attack_paw(mob/user)
-	return attack_hand(user)
+/obj/item/stamp/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)

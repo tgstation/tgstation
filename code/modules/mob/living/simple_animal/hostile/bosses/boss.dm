@@ -2,9 +2,9 @@
 	name = "\improper A Perfectly Generic Boss Placeholder"
 	desc = ""
 	robust_searching = 1
-	stat_attack = UNCONSCIOUS
+	stat_attack = HARD_CRIT
 	status_flags = 0
-	a_intent = INTENT_HARM
+	combat_mode = TRUE
 	sentience_type = SENTIENCE_BOSS
 	gender = NEUTER
 	var/list/boss_abilities = list() //list of /datum/action/boss
@@ -12,7 +12,7 @@
 	var/point_regen_delay = 1
 
 
-/mob/living/simple_animal/hostile/boss/Initialize()
+/mob/living/simple_animal/hostile/boss/Initialize(mapload)
 	. = ..()
 
 	atb = new()
@@ -52,27 +52,28 @@
 	var/needs_target = TRUE //Does the boss need to have a target? (Only matters for the AI)
 	var/say_when_triggered = "" //What does the boss Say() when the ability triggers?
 
-/datum/action/boss/Trigger()
+/datum/action/boss/Trigger(trigger_flags)
 	. = ..()
-	if(.)
-		if(!istype(boss, boss_type))
-			return 0
-		if(!boss.atb)
-			return 0
-		if(boss.atb.points < boss_cost)
-			return 0
-		if(!boss.client)
-			if(needs_target && !boss.target)
-				return 0
-		if(boss)
-			if(say_when_triggered)
-				boss.say(say_when_triggered, forced = "boss action")
-			if(!boss.atb.spend(boss_cost))
-				return 0
+	if(!.)
+		return
+	if(!istype(boss, boss_type))
+		return
+	if(!boss.atb)
+		return
+	if(boss.atb.points < boss_cost)
+		return
+	if(!boss.client)
+		if(needs_target && !boss.target)
+			return
+	if(boss)
+		if(say_when_triggered)
+			boss.say(say_when_triggered, forced = "boss action")
+		if(!boss.atb.spend(boss_cost))
+			return
 
 //Example:
 /*
-/datum/action/boss/selfgib/Trigger()
+/datum/action/boss/selfgib/Trigger(trigger_flags)
 	if(..())
 		boss.gib()
 */

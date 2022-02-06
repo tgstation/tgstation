@@ -1,14 +1,14 @@
 /datum/computer_file/program/crew_manifest
-	filename = "crewmani"
-	filedesc = "Crew Manifest"
+	filename = "plexagoncrew"
+	filedesc = "Plexagon Crew List"
+	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
 	transfer_access = ACCESS_HEADS
-	requires_ntnet = FALSE
+	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosCrewManifest"
-	ui_x = 400
-	ui_y = 480
+	program_icon = "clipboard-list"
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()
@@ -29,7 +29,8 @@
 	return data
 
 /datum/computer_file/program/crew_manifest/ui_act(action, params, datum/tgui/ui)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	var/obj/item/computer_hardware/printer/printer
@@ -44,7 +45,7 @@
 								[GLOB.data_core ? GLOB.data_core.get_manifest_html(0) : ""]
 								"}
 				if(!printer.print_text(contents,text("crew manifest ([])", station_time_timestamp())))
-					to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
+					to_chat(usr, span_notice("Hardware error: Printer was unable to print the file. It may be out of paper."))
 					return
 				else
-					computer.visible_message("<span class='notice'>\The [computer] prints out a paper.</span>")
+					computer.visible_message(span_notice("\The [computer] prints out a paper."))

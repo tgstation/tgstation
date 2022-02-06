@@ -1,4 +1,3 @@
-import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
@@ -7,7 +6,9 @@ export const ChemMaster = (props, context) => {
   const { data } = useBackend(context);
   const { screen } = data;
   return (
-    <Window resizable>
+    <Window
+      width={465}
+      height={550}>
       <Window.Content scrollable>
         {screen === 'analyze' && (
           <AnalysisResults />
@@ -36,11 +37,11 @@ const ChemMasterContent = (props, context) => {
     return <AnalysisResults />;
   }
   return (
-    <Fragment>
+    <>
       <Section
         title="Beaker"
         buttons={!!data.isBeakerLoaded && (
-          <Fragment>
+          <>
             <Box inline color="label" mr={2}>
               <AnimatedNumber
                 value={beakerCurrentVolume}
@@ -51,7 +52,7 @@ const ChemMasterContent = (props, context) => {
               icon="eject"
               content="Eject"
               onClick={() => act('eject')} />
-          </Fragment>
+          </>
         )}>
         {!isBeakerLoaded && (
           <Box color="label" mt="3px" mb="5px">
@@ -75,7 +76,7 @@ const ChemMasterContent = (props, context) => {
       <Section
         title="Buffer"
         buttons={(
-          <Fragment>
+          <>
             <Box inline color="label" mr={1}>
               Mode:
             </Box>
@@ -84,7 +85,7 @@ const ChemMasterContent = (props, context) => {
               icon={data.mode ? 'exchange-alt' : 'times'}
               content={data.mode ? 'Transfer' : 'Destroy'}
               onClick={() => act('toggleMode')} />
-          </Fragment>
+          </>
         )}>
         {bufferContents.length === 0 && (
           <Box color="label" mt="3px" mb="5px">
@@ -108,7 +109,7 @@ const ChemMasterContent = (props, context) => {
         <Section
           title="Pill Bottle"
           buttons={(
-            <Fragment>
+            <>
               <Box inline color="label" mr={2}>
                 {pillBottleCurrentAmount} / {pillBottleMaxAmount} pills
               </Box>
@@ -116,10 +117,10 @@ const ChemMasterContent = (props, context) => {
                 icon="eject"
                 content="Eject"
                 onClick={() => act('ejectPillBottle')} />
-            </Fragment>
+            </>
           )} />
       )}
-    </Fragment>
+    </>
   );
 };
 
@@ -236,8 +237,14 @@ const PackagingControls = (props, context) => {
   const {
     condi,
     chosenPillStyle,
+    chosenCondiStyle,
+    autoCondiStyle,
     pillStyles = [],
+    condiStyles = [],
+    patch_style,
+    patch_styles = [],
   } = data;
+  const autoCondiStyleChosen = autoCondiStyle === chosenCondiStyle;
   return (
     <LabeledList>
       {!condi && (
@@ -269,6 +276,20 @@ const PackagingControls = (props, context) => {
           })} />
       )}
       {!condi && (
+        <LabeledList.Item label="Patch type">
+          {patch_styles.map(patch => (
+            <Button
+              key={patch.style}
+              selected={patch.style === patch_style}
+              textAlign="center"
+              color="transparent"
+              onClick={() => act('change_patch_style', { patch_style: patch.style })}>
+              <Box mb={0} mt={1} className={patch.class_name} />
+            </Button>
+          ))}
+        </LabeledList.Item>
+      )}
+      {!condi && (
         <PackagingControlsItem
           label="Patches"
           amount={patchAmount}
@@ -295,17 +316,30 @@ const PackagingControls = (props, context) => {
           })} />
       )}
       {!!condi && (
-        <PackagingControlsItem
-          label="Packs"
-          amount={packAmount}
-          amountUnit="packs"
-          sideNote="max 10u"
-          onChangeAmount={(e, value) => setPackAmount(value)}
-          onCreate={() => act('create', {
-            type: 'condimentPack',
-            amount: packAmount,
-            volume: 'auto',
-          })} />
+        <LabeledList.Item label="Bottle type">
+          <Button.Checkbox
+            onClick={() => act('condiStyle', { id: autoCondiStyleChosen ? condiStyles[0].id : autoCondiStyle })}
+            checked={autoCondiStyleChosen}
+            disabled={!condiStyles.length}>
+            Guess from contents
+          </Button.Checkbox>
+        </LabeledList.Item>
+      )}
+      {!!condi && !autoCondiStyleChosen && (
+        <LabeledList.Item label="">
+          {condiStyles.map(style => (
+            <Button
+              key={style.id}
+              width="30px"
+              selected={style.id === chosenCondiStyle}
+              textAlign="center"
+              color="transparent"
+              title={style.title}
+              onClick={() => act('condiStyle', { id: style.id })}>
+              <Box mx={-1} className={style.className} />
+            </Button>
+          ))}
+        </LabeledList.Item>
       )}
       {!!condi && (
         <PackagingControlsItem
@@ -317,6 +351,19 @@ const PackagingControls = (props, context) => {
           onCreate={() => act('create', {
             type: 'condimentBottle',
             amount: bottleAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!!condi && (
+        <PackagingControlsItem
+          label="Packs"
+          amount={packAmount}
+          amountUnit="packs"
+          sideNote="max 10u"
+          onChangeAmount={(e, value) => setPackAmount(value)}
+          onCreate={() => act('create', {
+            type: 'condimentPack',
+            amount: packAmount,
             volume: 'auto',
           })} />
       )}
@@ -344,6 +391,9 @@ const AnalysisResults = (props, context) => {
         </LabeledList.Item>
         <LabeledList.Item label="State">
           {analyzeVars.state}
+        </LabeledList.Item>
+        <LabeledList.Item label="pH">
+          {analyzeVars.ph}
         </LabeledList.Item>
         <LabeledList.Item label="Color">
           <ColorBox color={analyzeVars.color} mr={1} />

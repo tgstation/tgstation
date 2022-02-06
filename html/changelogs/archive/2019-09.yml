@@ -1,0 +1,417 @@
+2019-09-02:
+  ATHATH:
+  - tweak: Made the alkali perspiration symptom's water reaction explosion effect
+      much easier to proc.
+  - balance: The alkali perspiration symptom's stage speed 8 threshold effect now
+      also increases the potency of the explosion effect to a "heavy" level on the
+      host's tile, in addition to its previous effect(s).
+  - balance: The alkali perspiration symptom's water reaction explosion effect can
+      now occur in both stage 4 and in stage 5 (instead of only in stage 5).
+  - bugfix: Fixes a bug that would cause the alkali perspiration symptom's water reaction
+      explosion effect to trigger the alkali perspiration symptom's Alkali_fire_stage_5()
+      effect a second time in a single cycle.
+  - tweak: Slightly modifies the alkali perspiration symptom's threshold effect descriptions
+      to be slightly more clear about what its threshold effects actually do.
+  - balance: The Mutate spell's effects are now permanent (until/unless you forget
+      or otherwise lose the spell) if you purchase it five times.
+  - balance: The Soul Tap spell now costs 1 wizard point instead of 3.
+  - tweak: Nars-Ians no longer eat each other's souls
+  - tweak: The chance per tick of Life() that Nars-Ian will try to eat the soul of
+      another pet near it has been increased from 5% to 100%.
+  - tweak: When Nars-Ian eats a pet's soul, they will now set that pet's hasSoul value
+      to FALSE.
+  - tweak: Added another comma to one of Ian's possible descriptions.
+  Akrilla:
+  - tweak: Boxing glove knockouts only affect other boxing glove wearers.
+  Cobby:
+  - rscadd: Operating computers can now be built to sync with all nearby stasis beds
+      within it's LoS and provide them with advanced surgeries.
+  Dawson1917:
+  - rscadd: ED-209's will retaliate when you throw things at them.
+  - balance: ED-209's no longer take damage from electricity.
+  Fikou:
+  - tweak: the windup toolbox now has some more "realistic" sounds
+  - bugfix: the windup toolbox now rumbles again
+  - tweak: all borgs now have fire extinguishers
+  Kurgis:
+  - rscadd: Beepsky now bumps around on its wheels when patrolling for crime.
+  TheChosenEvilOne:
+  - rscadd: Motorized wheelchairs.
+  Time-Green:
+  - rscadd: Adds advanced DNA injectors to genetics. You can now put multiple mutations
+      in an injector
+  Touches Medbay... Again...:
+  - rscadd: Keep their pants on! Now Tend Wounds can be done through clothing!
+  - balance: It is less effective to perform Tend Wounds with clothes on.
+  actioninja:
+  - bugfix: changeling and chameleon should properly copy mob overlays again.
+  - bugfix: prison jumpsuit has correct sprite
+  bgobandit:
+  - tweak: Graffiti by a non-tagger counts as bad art.
+  bobbahbrown:
+  - bugfix: Dynamic mode ruleset will now respect your player preferences when selecting
+      antag candidates
+  - code_imp: Fixed 9 instances of incorrect not-in-list expressions.
+  cacogen:
+  - tweak: HoP can now delete the latest ticket
+  - bugfix: HoP ticket messages should now be visible when the ticket is held
+  - imageadd: Added condiment bottle reagent overlays for reagents without special
+      bottle sprites
+  - rscadd: Made it so you can rename or change the description of condiment bottles
+      with a pen
+  - balance: You can no longer tell the main or only reagent in a condiment bottle
+      through the description. This is in line with other reagent containers.
+  - spellcheck: Fixed some typos/punched descriptions up a little
+  - tweak: Sprites of roundstart condiment containers (e.g. salt, milk, flour) are
+      no longer static and change based on the reagent with the largest volume as
+      well now
+  - tweak: Sugar comes in a bag rather than a bottle
+  - tweak: Bottles will turn into flour, rice, milk or soymilk containers if they
+      are the largest reagent in them
+  - bugfix: Condiment packs exist again
+  nemvar:
+  - rscadd: All mobs can now switch hands with middle click. This mostly affects gorillas,
+      dexterous stands and monky.
+  - code_imp: Ling sting code has been migrated over to signals.
+  wesoda25:
+  - bugfix: Purified Artificers description no longer mentions Nar'sie
+2019-09-03:
+  ATH1909:
+  - rscadd: The regenerative coma symptom has a new resistance 4 threshold effect!
+      Said threshold effect will give hosts of the symptom's virus the TRAIT_STABLECRIT
+      trait if its threshold is met.
+  - bugfix: An obscure, probably never reported before bug that may or may not exist
+      involving sentient diseases and the self-respiration symptom should be fixed
+      now (if it even existed in the first place).
+  ATHAHTH:
+  - balance: Androids and synths have been added to the lists of races available from
+      pride mirrors and magic mirrors.
+  ATHATH:
+  - tweak: The confusion symptom now noticeably confuses you.
+  - tweak: The confusion symptom's transmission 6 threshold effect now actually affects
+      how much the symptom increases your confused value by (instead of affecting
+      the cap that the symptom can bring it to, which is plenty high enough by default).
+  - tweak: The dizziness symptom now actually makes you noticeably dizzy (and has
+      a cap for how dizzy it can make you).
+  - tweak: The dizziness symptom's transmission 6 threshold effect now makes your
+      screen look "druggy" all of the time (only once its virus reaches a high enough
+      stage, of course), instead of only occasionally.
+  - tweak: The hallucigen symptom's stealth 4 threshold effect now continues to give
+      you positive messages instead of bad ones at stage 5. Before this tweak, meeting
+      that stealth threshold would actually cause bad messages to appear MORE often
+      at stage 5 than if you hadn't met it.
+  - tweak: Pretty much completely reworked the narcolepsy symptom so that it now uses
+      the "drowsyness" (yes, that's how it's spelled in the code; no, I don't know
+      why it's misspelled like that in the code) status effect instead of a confusing
+      mess of ticking counters that rarely actually put you to sleep.
+  - tweak: The narcolepsy symptom's transmission 7 threshold effect now only requires
+      transmission 4 no longer causes its virus to occasionally deal negligible amounts
+      of stamina damage. Instead, it now causes the host to periodically yawn, spreading
+      its virus whenever they do so.
+  - tweak: The narcolepsy symptom's resistance 10 threshold effect is now a stage
+      speed 10 threshold effect.
+  - tweak: The narcolepsy symptom's activation frequencies have been tweaked a bit
+      to make the symptom less threatening (albeit still quite potent) without its
+      stage speed 10 (formerly a resistance 10) threshold effect.
+  - balance: The nacrolepsy symptom now adds 0 to its virus's transmission stat (upped
+      from -4).
+  - bugfix: Fixed a bug that could cause the confusion symptom to lower your confusion
+      value if you had a high confusion value when it activated.
+  Akrilla:
+  - rscdel: Removes crayon eating colour changes from the crayons in crayon packs.
+      Rainbow/mime unaffected.
+  - tweak: Sprays cans have a cap on how dark you can make objects. Art is uneffected.
+  AnturK:
+  - rscadd: Voting boxes are now buildable from 15 metal sheets.
+  Dingo-Dongler:
+  - rscadd: Some foods can now be dunked in drinks. Dip your breakfast donut in some
+      robust coffee today!
+  Fhaxaris:
+  - bugfix: riot darts now do stamina damage again
+  - code_imp: removed duplicate code
+  Fikou:
+  - rscadd: You can now create snow golems! They have ice powers, but take more damage
+      from burns, heat and fire.
+  - tweak: The Chaplain and Geneticst now have family heirlooms, forgotten no longer!
+  Skoglol:
+  - balance: Removed the static spawn maint sunglasses from metastation.
+  - balance: Pulling a locker now slows you down.
+  TheChosenEvilOne:
+  - rscadd: added passive vent to the arsenal of atmospheric devices.
+  Time-Green:
+  - rscadd: A pill press, reaction chamber and splitter have been added to the not-yet-existing
+      plumbing arsenal.
+  Trilbyspaceclone:
+  - rscadd: Chameleon neckties/cloaks
+  cacogen:
+  - code_imp: Updated changelog header
+  - spellcheck: Made Pax chems' descriptions read better
+  nemvar:
+  - refactor: refactored digital camo into an element.
+  - bugfix: Antiglow now properly antiglows.
+  - bugfix: You can now mix antiglow
+  - bugfix: Glowy now glowies correctly.
+  - bugfix: AIs can track people again.
+  qustinnus:
+  - bugfix: missing techpriest icon added
+  zxaber:
+  - bugfix: fixed being able to Convert a Ripley MK-I to MK-II without a battery and
+      breaking things.
+2019-09-06:
+  ATHATH and ExcessiveUseOfCobblestone:
+  - balance: Earthsblood's healing has been changed; its burn and brute healing rates
+      have been increased, but its oxygen, stamina and clone healing rates have been
+      lowered.
+  - balance: Earthsblood heals you less before its 26th cycle in you, but also deals
+      less brain damage to you before its 26th cycle in you as well.
+  - balance: Earthsblood now gives you the pacifism trait temporarily while it is
+      in your system.
+  - balance: If you are a human, the earthsblood overdose effect now, in addition
+      to its previous effects, gives you a pacifism brain trauma with a resilience
+      of TRAUMA_RESILIENCE_SURGERY. If you already had a pacifism brain trauma with
+      a resilience of TRAUMA_RESILIENCE_BASIC (for some reason), it will increase
+      the resilience of that brain trauma to TRAUMA_RESILIENCE_SURGERY. This pacifism
+      brain trauma is NOT taken away when the earthsblood chem leaves your system.
+  - rscadd: After its 25th cycle in you, earthsblood has a 10% chance per tick of
+      on_mob_life to make you say a random hippie-related message.
+  Dawson1917:
+  - tweak: Tweaked combat glove descriptions to more clearly state that they're shockproof.
+  Fhaxaris:
+  - tweak: cybernetic heart will restart after 20 seconds instead of stopping forever
+  - tweak: cybernetic heart takes damage from emp like other cybernetics
+  - tweak: heart injects epinephrine on crit instead of unconsciousness
+  GuyonBroadway:
+  - balance: Felinids now have a very adverse reaction to chocolate products.
+  - bugfix: You no longer purge your entire system of food in a single puke
+  Qustinnus:
+  - bugfix: you can no longer exploit the pet park for unlimited happiness
+  plapatin:
+  - tweak: mime's invisible box lasts for twice as long now
+  zxaber:
+  - bugfix: It's no longer possible to pull the Durand shield away from the Durand.
+2019-09-10:
+  ATHATH:
+  - balance: The OD effect of the earthsblood chemical now deals no damage before
+      cycle 26, a net 1 point of toxin damage per tick (factoring in the toxin healing
+      from earthsblood's normal effect(s)) from cycles 26 to 100, and a net 3 points
+      of toxin damage per tick (factoring in the toxin healing from earthsblood's
+      normal effect(s)) after cycle 100.
+  - bugfix: The pacifism trauma application part of OD effect of the earthsblood chemical
+      is less shitcode-y now and should now work on monkeys (and other carbons with
+      brains) too (instead of just on humans).
+  Anarcho-Capitalistabital-by:
+  - rscadd: In General, Buffs healing thoroughput of C2s. You can stop paying your
+      cloners overtime now!
+  - tweak: The roundstart C2 methods are now diluted with a new reagent, Granibitaluri.
+  - tweak: The borghypo now can switch to "microdosing", which is 2u transfer via
+      AltClick
+  - rscadd: Granibitaluri is a C3 (no downside!!!) that tops off your brute THEN burn
+      damage if they are at or  below 10 damage.
+  Denton:
+  - admin: Killer tomato activations are now logged in the game log.
+  Detective-Google:
+  - rscadd: the syndicate now stock a chameleon kit in their dropship.
+  - rscdel: someone fumbled the stetchkin in the caravan ambush in shipping.
+  Dingo-Dongler:
+  - bugfix: Fixes uranium/holy water and small plasma activation of self-sustaining
+      rainbow slime extracts
+  - bugfix: injecting blue slime extracts with water now creates foam, not fluorosurfactant
+  ExcessiveUseOfCobblestone:
+  - rscadd: Plasma now "boils" at 50C. This means you will need to heat the liquid
+      form up to make it into a gas (previously you could just splash it)
+  - tweak: containers that halt reactions (IE cryostasis beakers) will keep reagents
+      at a set temperature.
+  - bugfix: Plasma will no longer summon gas whenever transferring via syringe. AKA
+      you can now do xenobio again.
+  - bugfix: Plasma can no longer be cheesed grenade-style by heating the beaker. It
+      will now require reaction/pyrotechnics.
+  - code_imp: Reagents now have the framework to perform different effects on temperature
+      change.
+  Floyd / Qustinnus:
+  - rscadd: The science department now gets a mood bonus for petting borgs.
+  MacBlaze1:
+  - balance: increased volume of pepper sprays to 50
+  - tweak: adds knockdown of 3 second for no protection, 3 for no mouth protection
+  - tweak: Changes bluring and blindness of eyes
+  - balance: Replaces Paralysis with blind
+  - balance: vastly decreased the scope of pepperspray protection.
+  - rscadd: New variable for pepperspray protection, PEPPERPROOF, decides if you can
+      be pepperproof with certain equipment
+  - balance: Rebalanced Gygax part diamond cost numbers to be the same but now in
+      gold AND silver.
+  Medbotby:
+  - bugfix: Medbots do not idle while stationary because they see a hot babe across
+      the medbay
+  - bugfix: Medbots do not take you down with them upon deletion, resulting in no
+      heals from the little buggers for the rest of the round
+  Mickyan:
+  - tweak: Photos stored in photo albums will no longer occasionally be destroyed
+      by explosions
+  - imageadd: Added new floor line decals for mappers to decorate the station
+  Quartich:
+  - rscadd: Adds a new event to the Orion Trail - Old Ship
+  ShizCalev:
+  - bugfix: Fixed DNA scanners breaking if you spammed the print injector button during
+      it's cooldown.
+  - bugfix: Crab rangoons are no longer invisible.
+  Skoglol:
+  - balance: Stam crit made more reliable against stamina regen drugs. Upon first
+      entering stam crit, some extra stamina damage will be applied.
+  - bugfix: Unblocked donutstation incinterator door.
+  SpaceManiac:
+  - bugfix: Clicking "increase line height" once will no longer forever ruin the chat
+      for Wine users.
+  TheChosenEvilOne:
+  - rscadd: Dynamic now loads server specific configurations from a defined configuration
+      file.
+  - bugfix: Antagonist preferences and bans work correctly again in dynamic.
+  - config: DYNAMIC_CONFIG_ENABLED has been added to game_options.
+  Tlaltecuhtli:
+  - bugfix: Loading items into the custom vending machine is possible again.
+  Trilbyspaceclone:
+  - rscadd: Cakes/Tarts/book
+  - imageadd: new cake/tarts/books sprites
+  Twaticus:
+  - bugfix: Blackberry Strawberry cake slices now have an icon
+  - imageadd: inhand wood sprite
+  actioninja:
+  - bugfix: fixed an issue where the random jumpsuits was occasionally rolling an
+      invalid item resulting in a broken item
+  - bugfix: fixed the generic red suit not having correct icons
+  bgobandit:
+  - rscadd: Nanotrasen has approved a new bar concept The Goose.
+  cacogen:
+  - rscadd: Can lock attributes on character creation (e.g. hair style, eye color)
+      screen so when character is randomised on the screen using "Random Body" or
+      spawns randomised using "Always Random Body" they stay the same
+  - rscdel: Removed random name enforcement when using "Always Random Species" as
+      it discourages its use and manually chosen species don't have this naming restriction
+  - tweak: Having "Always Random Body" on on the character creation screen won't constantly
+      refresh your character anytime you change an attribute. Same for "Always Random
+      Name" for your name and "Always Random Species" for your species.
+  - rscadd: Can selectively spawn with random gender, age, backpack style, jumpsuit
+      style (i.e. suit or skirt), maybe a couple of other shits I forgot that weren't
+      previously affected by "Always Random Body"
+  - spellcheck: Changed all instances of the word hairstyle as multiple words in the
+      code to a single word due to autism and because I think it's more intuitive
+      as a coder for the word to be spelled properly
+  - code_imp: Adds defines for all randomisable features
+  - code_imp: Changes/shortens some character creation variables for clarity and ease
+      of repetition
+  - code_imp: The existing "Always Random" stuff is now part of a list that covers
+      all randomisation
+  - bugfix: Fixes chameleon ID card job overlays not showing up after selecting an
+      ID that doesn't use them
+  - tweak: You can reset (delete) the forged name/assignment on an ID so you can chameleon
+      change to IDs with a generic name instead (e.g. captain's spare ID).
+  carlarctg:
+  - tweak: halved syndicate combat defib recharge time
+  - imageadd: it also has new sprites
+  nemvar:
+  - bugfix: Various morph fixes.
+  - bugfix: Changelings can perform other alt click actions while having a sting collected
+      once again.
+  wesoda25:
+  - balance: Flashbangs now stun for 1/10 of their former duration, with a knockdown
+      as long as the old stun.
+  zxaber:
+  - bugfix: Strafe mode now works correctly on Honk and Odysseus mechs
+  - rscadd: Odysseus and Gygax mechs can now move and turn in one step if they're
+      not set to strafe mode. This can be overridden with Alt to turn in place.
+2019-09-11:
+  4dplanner:
+  - bugfix: blood drunk eye slowdown nullification should work properly on the first
+      step now
+  ATHATH:
+  - balance: The cooldown time between each removal or addition of a symptom for sentient
+      diseases has been brought down from an agonizingly long 2 minutes to a more
+      reasonable 1 minute.
+  AdamElTablawy:
+  - balance: Changeling adrenalin ability now improves stamina regeneration by -10,
+      rather than a measly -1, to reflect stamina based combat
+  Akrilla:
+  - tweak: Removes flashbang protection from helmets.
+  Fikou, hippie guys that i stole and modified code from:
+  - rscadd: you can now sleep to restore some health
+  GuyonBroadway:
+  - balance: Coco now does not force puking on application and causes less disgust
+      but is more aggressive with it's organ damage.
+  MacBlaze1:
+  - bugfix: fixed turrets firing at silicons constantly
+  - bugfix: fixed turrets shooting at heads when on loyalty check
+  Mickyan:
+  - imageadd: Added inhand sprites for photo albums
+  - spellcheck: Fixed a grammar mistake with the photographer quirk's photo albums
+  Twaticus:
+  - bugfix: missing plasma spear inhand
+  - imageadd: plasma spear back sprite
+  - imageadd: inhand megaphone sprites
+  actioninja:
+  - balance: Reinforced windows take 9 less seconds total to deconstruct
+  - balance: Reinforced windows now have 80 armor instead of 90, which is approximately
+      one minute of sustained beating with a toolbox.
+  anconfuzedrock:
+  - bugfix: The fire axe instakills windows again.
+  cacogen:
+  - rscadd: The font size of all text in the chat window now scales
+  - tweak: High volume is a slightly smaller
+  - tweak: Admins have slightly larger OOC text
+  kevinz000:
+  - bugfix: vv renaming is fixed.
+  zxaber:
+  - bugfix: Mechs removed from the game via means other than damage no longer leave
+      a wreckage.
+2019-09-12:
+  Arkatos:
+  - bugfix: Fixed a bug where refunding Lightning bolt wizard spell did not also remove
+      relevant mob properties connected with the spell.
+  Fikou:
+  - balance: the recycler when not emagged wont grind any mobs anymore
+  Krysonism:
+  - rscadd: You can now craft a bronze bust depicting economist Karl Marx.
+  Twaticus:
+  - imageadd: Byond membership ghosts now have directional sprites
+  actioninja:
+  - soundadd: support for equip sounds, with jumpsuits and toolbelts serving as a
+      proof of concept
+2019-09-14:
+  ATH1909:
+  - tweak: Changed the default name of /datum/reagent/colorful_reagent/powder to "mundane
+      powder" (from "crayon powder"), to better reflect that it can't color anything
+      (its subtypes still can, of course) and that /datum/reagent/colorful_reagent/powder
+      isn't found in most crayons anymore.
+  - tweak: Changed the names of the subtypes of /datum/reagent/colorful_reagent/powder
+      so that they no longer mention crayons/"crayon powder".
+  - tweak: Changes the wordings of the descriptions of /datum/reagent/colorful_reagent/powder
+      and its subtypes to be less weird (and to mention that invisible powder and
+      mundane powder can't color anything). This change should also make the description
+      of mundane powder no longer state that it can color things the "none" color.
+  ATHATH:
+  - balance: Omega weed has lost its haloperidol, capsaicin, barber's aid, itching
+      powder, and histamine chemical production traits. In exchange, it's received
+      the nicotine production trait as an additional chemical production trait. The
+      chemical production traits that were in omega weed before this change but were
+      not mentioned in the above list are still in omega weed.
+  - balance: The list of chemical production traits of rainbow weed has been changed
+      from 15% mindbreaker toxin and 35% lipolicide to 5% colorful reagent, 3% psicodine,
+      10% happiness, 10% mindbreaker toxin, and 15% lipolicide. This should make ingesting
+      rainbow weed change your character's color, but should also make 100 potency
+      rainbow weed highly addictive.
+  - balance: The extradimensional orange has received the 15% haloperidol chemical
+      production trait that omega weed used to have.
+  - balance: The base damage dealt (before modifiers) by stepping on a d4 without
+      shoes on is now 1d4 damage (dropped from just a flat 4 damage).
+  Dingo-Dongler:
+  - tweak: Slimes and jellypeople pass nanites to their offspring.
+  Fikou:
+  - balance: the bone spear is an itty bitty tiny bit stronger
+  Mickyan:
+  - rscadd: Medical staff now spawns with a first aid kit with increased capacity
+      and basic surgery tools
+  - bugfix: Fixes fire extinguisher being able to be emptied from storage slots
+  qustinnus:
+  - rscadd: adds Knight's Armour made out of any materials add; new ruin found in
+      lavaland protected by dark wizards, I wonder what they're guarding
+2019-09-15:
+  4dplanner:
+  - bugfix: dead livers no longer runtime

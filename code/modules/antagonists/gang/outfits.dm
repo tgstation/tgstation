@@ -3,10 +3,9 @@
 		return
 
 	var/obj/item/card/id/W = H.wear_id
-	W.access = get_all_accesses() // I have a warrant.
-	W.assignment = "Space Police"
 	W.registered_name = H.real_name
 	W.update_label()
+	W.update_icon()
 	..()
 
 /datum/outfit/families_police/beatcop
@@ -17,14 +16,15 @@
 	suit = null
 	shoes = /obj/item/clothing/shoes/combat/swat
 	gloves = null
-	glasses = /obj/item/clothing/glasses/hud/spacecop
+	glasses = /obj/item/clothing/glasses/sunglasses
 	ears = /obj/item/radio/headset/headset_sec/alt
 	mask = null
 	head = /obj/item/clothing/head/spacepolice
 	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
 	r_pocket = /obj/item/lighter
 	l_pocket = /obj/item/restraints/handcuffs
-	id = /obj/item/card/id
+	id = /obj/item/card/id/advanced/black
+	r_hand = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
@@ -33,11 +33,14 @@
 	/obj/item/ammo_box/c45 = 2,
 	/obj/item/storage/box/survival/security)
 
+	id_trim = /datum/id_trim/space_police
+
 /datum/outfit/families_police/beatcop/armored
 	name = "Families: Armored Beat Cop"
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	head = /obj/item/clothing/head/helmet/blueshirt
-	belt = /obj/item/gun/ballistic/shotgun/automatic/combat
+	belt = null
+	l_hand = /obj/item/gun/ballistic/shotgun/automatic/combat
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,
@@ -50,7 +53,8 @@
 	suit = /obj/item/clothing/suit/armor/riot
 	head = /obj/item/clothing/head/helmet/riot
 	gloves = /obj/item/clothing/gloves/combat
-	belt = /obj/item/gun/ballistic/shotgun/automatic/combat
+	belt = null
+	l_hand = /obj/item/gun/ballistic/shotgun/automatic/combat
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
 	/obj/item/storage/box/flashbangs = 1,

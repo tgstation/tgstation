@@ -1,0 +1,517 @@
+2017-06-02:
+  Cyberboss:
+  - experiment: New server backend!
+  - tweak: Test merged PRs now show the commit of the PR at which they were merged
+  Expletive:
+  - rscadd: Adds the NT75 Electromagnetic Power Inducer, a tool which can be used
+      to quickly recharge many devices! They can be found in Electrical Closets, the
+      CE's locker, ordered by cargo, or created in RnD.
+  Goodstuff:
+  - bugfix: Fixes the crafting recipe for black carpet
+  - bugfix: Removed a random white dot on the black carpet sprite
+  Joan:
+  - rscadd: Goliaths, Watchers, and Legions have a small chance of dropping a kinetic
+      crusher trophy item when killed with a kinetic crusher. Like the boss trophy
+      items, these give various effects.
+  - tweak: Kinetic crushers recharge very slightly slower.
+  - rscadd: Three unique Kinetic Accelerator modules will now appear in necropolis
+      chests.
+  MMMiracles (Cerestation):
+  - rscadd: CereStation's Security department has been overhauled entirely thanks
+      to the tireless efforts of Nanotrasen's construction division.
+  Nanotrasen Mining Alert:
+  - rscadd: Nanotrasen's mining operations have created far more corpses than an entire
+      galaxy of cooks could hope to deal with. To solve this, we decided to just dump
+      them all from orbit onto the barren lava planet. Unfortunately, the creatures
+      called "Legion" have infested a great number of them, and you can now commonly
+      find the bodies of former Nanotrasen employees left behind. Additionally, there
+      are reports of natives, other settlers, and even stranger things found among
+      the corpses.
+  QualityVan:
+  - tweak: The tactical rigging in op closets is more tacticool
+  Shadowlight213:
+  - balance: The reset wire on borgs must now be cut to reset a borg's module instead
+      of pulsed.
+  - tweak: Portable pump max pressure has been lowered.
+  Steelpoint:
+  - tweak: Iron Hawk Marine no longer has Centcom all access. My mistake.
+  - bugfix: Fixes Iron Hawk marine carbine not having a visible sprite.
+  Swindly:
+  - balance: Nitrous oxide no longer produces water as a by-product, requires 2 parts
+      ammonia instead of 3, and produces 5 parts when made instead of 2.
+  kevinz000:
+  - experiment: Gang turrets now follow the mouse of the person using them! Yay!
+  octareenroon91:
+  - bugfix: Attempts to add items to a storage container beyond its slots limit will
+      now obtain a failure message again.
+2017-06-03:
+  Expletive:
+  - tweak: Chem Dispensers now store their power in their batteries.
+  - tweak: Instead of being based on battery and capacitor ratings, recharge delay
+      for portable chem dispensers is now based on their capacitor and matter bin
+      ratings.
+  - tweak: The Seed Vault's chemical dispenser now has all the chemicals a pod person
+      could want.
+  - rscadd: The crafting menu now has subcategories!
+  - rscadd: Food recipe categories have been combined as subcategories of the Foods
+      category.
+  - rscadd: Weaponry and Ammunition have been combined as subcategories of the Weaponry
+      category.
+  Improvedname:
+  - rscadd: Janitors now start with a flyswatter
+  Mothership Epsilon:
+  - tweak: All your base are belong to us.
+  Penguaro:
+  - bugfix: '[Box] Removes extra/unattached vent from Xeno Lab'
+  Planned Spaceparenthood:
+  - bugfix: We would like to apologize for mislabeled cloning pod buttons.
+  WJohnston:
+  - bugfix: Deltastation's south nuke op shuttle location should no longer be possible
+      to teleport into by moving off the map and back on, and moved the rest closer
+      to the station.
+  p440:
+  - bugfix: Fixed duping cable coils with magic APC terminals
+  - bugfix: Fixed invalid icon state for empty APCs
+2017-06-04:
+  Expletive:
+  - rscadd: Many stacks now update their sprite based on their amount.
+  - rscadd: Stacks will now weigh less if they're less than full.
+  - imageadd: Added new icon states for glass, reinforced glass, metal, plasteel,
+      plastic, plasma, plastitanium, titanium, gold, silver, adamantine, brass, bruise
+      packs, ointment, gauze, cloth, leather, wet leather, hairless hide, human hide,
+      ash drake hide, goliath hide, bones, sandstone blocks, and snow blocks.
+  - tweak: Some lavaland stacks' max amounts have been reduced.
+  - bugfix: Bulldog Shotguns should update their sprite properly when you remove the
+      magazine.
+  - bugfix: Riot suits no longer hide jumpsuits.
+  Joan:
+  - balance: Rod Form now costs 2 points, from 3.
+  - balance: Rod Form now does 70 damage, from 160, but gains 20 damage, per upgrade,
+      when upgraded. This means you'll need to spend 6 points on it to instantly crit
+      people from full health.
+  Swindly:
+  - balance: Chemical grenades are no longer permanently disabled after being unlocked
+      by wirecutters after being primed.
+2017-06-05:
+  Expletive:
+  - rscadd: The Ore Redemption Machine has been ported to TGUI. New features include
+      the addition of "Release All" and "Smelt All" buttons.
+  - rscadd: The Ore Redemption Machine now be loaded with sheets of material.
+  - rscadd: The Ore Redemption Machine can now 'smelt' Reinforced Glass.
+  Joan:
+  - balance: Only human and silicon servants can help recite multi-invoker scriptures.
+      This means cogscarabs, clockwork marauders, and anima fragments DO NOT COUNT
+      for scriptures that require multiple invokers.
+  - balance: Clockcult scripture tiers can no longer be lost by dipping below their
+      requirements once they are unlocked.
+  - rscdel: Removes Revenant scriptures entirely.
+  MMMiracles:
+  - tweak: Deepstorage ruin has been redone to be more self-sufficient and up to better
+      mapping standards.
+2017-06-06:
+  Joan:
+  - rscadd: Added a new unique Kinetic Accelerator module to necropolis chests.
+  - spellcheck: Renames Clockwork Proselytizers to Replica Fabricators.
+  - balance: Replica Fabricators can directly consume floor tiles, rods, metal, and
+      plasteel for power instead of needing to convert to brass first.
+  - balance: Cogscarabs can no longer use guns.
+  - tweak: KA modkits in necropolis chests are now design discs with designs for those
+      modkits, to force miners to bring back minerals.
+  PKPenguin321:
+  - bugfix: The fake pits that the arcade machines can vend now vend properly, for
+      real this time.
+  Robustin:
+  - rscadd: The cult master has finally acquired their 3rd spell, Eldritch Pulse.
+      This ability allows the cult master to quickly teleport any cultist or cult
+      structure in visual range to another tile in visual range. This spell has an
+      obvious spell effect that will indicate where the target has gone but without
+      explicitly revealing who the master is. This spell should assist with moving
+      obstinate cultists off an important rune,  getting wandering cultists back onto
+      an important rune, save a cultist from an untimely arrest/summary execution,
+      assist in getting your allies into secure areas, etc.
+  - bugfix: The void torch now only works on items that have been placed on surfaces,
+      this prevents the inventory bugs associated with this item.
+  thefastfoodguy:
+  - tweak: you can burn your brains out with a flashlight if you're tired of life
+2017-06-07:
+  Expletive:
+  - rscadd: New plasma medals have been added to the Captain's medal box. Don't get
+      them too warm.
+  - imageadd: New sprites for plasma medals.
+  - imageadd: Icon and worn sprites for all medals and the lawyer's badge have been
+      improved. Worn medals more closely match their icons.
+  - tweak: The bone talisman is an accessory again, so it's not useless.
+  - imageadd: It also has a new worn sprite, based on an arm band.
+  - imagedel: Ties have been removed from accessories.dmi and vice versa. Same for
+      the explorer's webbing sprites that were in there. ties.dmi is now neck.dmi,
+      and has sprites for scarves, ties, sthetoscopes, etc.
+  - tweak: Examining an accessory now tells you how to use it.
+  Joan:
+  - spellcheck: Renamed Volt Void to Volt Blaster.
+  - tweak: Volt Blaster does not consume power when firing and does not cause backlash
+      if you don't fire.
+  - balance: Volt Blaster does 25 damage, from 20-40 depending on power, and has 5
+      shots, from 4, over its duration.
+  QualityVan:
+  - bugfix: Surplus rifles are no longer invisible while unloaded
+  Shadowlight213:
+  - balance: The Changeling Transformation Sting is once again stealthy. However,
+      it no longer transfers mutations.
+  - balance: The chemical cost of Transformation Sting has been increased to 50
+2017-06-08:
+  4dplanner:
+  - bugfix: traitors show up on antagHUD
+  Expletive:
+  - tweak: The detective's flask has Hearty Punch instead of whiskey.
+  - bugfix: The Detective's fedora no longer clips with hair.
+  - imageadd: Adds 91 new sprites to fix clipping issues with the Detective's fedora
+      and hair.
+  - imageadd: Change the standard fedora to match the detective and treasure hunter
+      variants.
+  - tweak: Detective, Treasure Hunter, and standard fedoras now all benefit from new
+      sprites.
+  Joan:
+  - balance: Tinkerer's Daemons are no longer totally disabled if you drop below the
+      servant requirement.
+  - balance: Instead, Tinkerer's Daemons will disable until the number of active daemons
+      is equal to or less than one-fifth of the living Servants.
+  - tweak: Tinkerer's Daemons produce components very slightly slower.
+  - rscadd: Added Prolonging Prism as an application scripture.
+  - balance: Prolonging Prism will delay the arrival of an emergency shuttle by 2
+      minutes at the cost of 2500W of power plus 75W for every 10 CV and 750W for
+      every previous activation. In addition to the high cost, it very obviously affects
+      the shuttle dock and leaves an obvious trail to the prism.
+  - balance: Script scripture now requires 6 Servants to unlock, from 5, and Application
+      scripture now requires 9 Servants to unlock, from 8.
+  Lzimann + Cyberboss:
+  - experiment: Ported goonchat. Much less laggy and crashy than BYOND chat. + Frills!
+  NanoTrasen Public Relations Department:
+  - rscadd: A mining accident has released large amounts of space dust, which is starting
+      to drift near our stations. Don't panic, it's probably safe.
+  Nanotrasen Plastic Surgery Advert:
+  - rscadd: Are you a mutant? Were you born hideously deformed? Do you have ears growing
+      out of the top of your head? Or even a tail? Don't worry, with our patented
+      surgical techniques, Nanotrasen's highly trained medical staff can make you
+      normal! Schedule an appointment, and one of our surgeons can see you same day.
+  - balance: Cat ears now give you double the ear damage.
+  QualityVan:
+  - bugfix: Cremators now still work when there's only one thing in them
+  - bugfix: The ORM now uses the intended amount of resources when making alloys
+  - rscdel: Cyborgs can no longer alt-click their material stacks to split them
+  Robustin:
+  - balance: The blood cult can only attempt to summon Nar-Sie in one of three rooms
+      that are randomly selected at round-start.
+  Shadowlight213:
+  - rscadd: Tracking implants and chem implants have been added to rnd
+  - rscdel: Adrenaline and freedom implants have been removed from rnd
+  Xhuis:
+  - tweak: Defibrillator paddles will no longer stick to your hands, and will snap
+      back onto the unit if you drop them somehow.
+  lzimann:
+  - rscdel: Xeno queens can no longer be maids
+  oranges:
+  - rscadd: Added stungloves to the brain damage lines
+2017-06-09:
+  Nanotrasen Shiny Object Appreciation Club:
+  - rscadd: The RD and HoS now receive medal lockboxes in their lockers, containing
+      science and security medals, respectively.
+  Tacolizard and Cyberboss, idea by RandomMarine:
+  - rscadd: You can now add a commendation message when pinning a medal on someone.
+  - rscadd: Medal commendations will be displayed when the round ends.
+  - tweak: Refactored the outfit datum to allow accessories as part of an outfit.
+  - bugfix: The Captain spawns with the Medal of Captaincy again.
+  TrustyGun:
+  - rscadd: Some of the clown's toys have been moved into a crate in the theater.
+      If you think you are missing something, check in there.
+  - rscadd: Wooden crates have been added. You can construct them with 6 wooden planks,
+      and deconstruct them the same way as regular crates
+  oranges:
+  - tweak: Security minor and major crime descriptors are now a single line input,
+      making it easier to add them
+  - tweak: Medical record descriptions are single inputs now
+2017-06-11:
+  Expletive:
+  - imageadd: Glass tables are shinier
+  Nanotrasen Consistency Affairs:
+  - bugfix: You no longer see yourself in place of the user when examining active
+      Spirit Sight runes.
+  Shadowlight213:
+  - bugfix: Cloning dismembered heads and brains now respects husking and other clone
+      preventing disabilities.
+  WJohn:
+  - bugfix: It is now easier to wire the powernet into box's telecomms SMES cell.
+  Xhuis:
+  - rscadd: You can now pin papers and photos to airlocks. Anyone examining the airlock
+      from up close can see the details. You can cut them down with wirecutters.
+  lordpidey:
+  - rscadd: Added F.R.A.M.E. cartridge to uplinks.  This PDA cartridge contains 5
+      viruses, which when used will unlock the target's PDA into a syndicate uplink,
+      in addition, you will receive the code needed to unlock the uplink again, if
+      you so desire.
+  - rscadd: If you use telecrystals on a F.R.A.M.E. cartridge, the next time it is
+      used, it will also give those crystals to the target uplink.
+  octareenroon91:
+  - bugfix: Mecha tools now respond to MMI control signals as intended.
+  shizcalev:
+  - tweak: '"Species immune to radiation are no longer compatible targets of radiation
+      based DNA injectors."'
+  - bugfix: '"A gun''s firing pin will no longer malfunction when placed into your
+      own mouth. Phew!"'
+  - imageadd: '"Bedsheets capes are now slightly more accurate. Be jealous of the
+      clown and their sexy cape!"'
+2017-06-13:
+  Expletive:
+  - tweak: Paper planes are now the same color as the paper used to make them.
+  - bugfix: Flashdarks can no longer be used to examine head based organs.
+  Fox McCloud:
+  - tweak: Tweaked game options animal speed value to match live server
+  Joan:
+  - spellcheck: Renamed AI liquid dispensers to foam dispensers.
+  - tweak: Foam dispensers now activate immediately when clicked, rather than forcing
+      the user to go through a menu. They also have better visual, message, and examine
+      feedback on if they can be activated.
+  MrStonedOne:
+  - experiment: Added some code to detect the byond bug causing clients to send phantom
+      actions shortly after connection. It will attempt to fix or work around the
+      issue.
+  Nanotrasen Robotics Department:
+  - rscadd: To aid in general-purpose cleaning and maintaining of station faculties,
+      all janitor cyborgs are now outfitted with a screwdriver, crowbar, and floor
+      tile synthesizer.
+  WJohnston:
+  - bugfix: Survival bunker ruin's power now works, mostly.
+  shizcalev:
+  - tweak: '"Radiation immune species are now incompatible with the radiation based
+      genetics DNA scanner/modifier."'
+2017-06-14:
+  Expletive:
+  - rscadd: The medalboxes are now fancy.
+  - imageadd: New sprites for opened medal boxes.
+  Joan:
+  - tweak: Being converted to clockcult will briefly cause your world to turn yellow
+      and you to hear the machines of Reebe, matching the description in the messages.
+  - spellcheck: The messages for being converted and for failing conversion to clockcult
+      have been updated.
+  Tacolizard:
+  - bugfix: Flamethrowers no longer say they're being ignited when you extinguish
+      them
+2017-06-17:
+  Cyberboss:
+  - tweak: NT now provides education on the proper response for experiencing the excrutiating
+      pain of varying degree burns (You scream when burning)
+  Expletive:
+  - rscadd: The Captain now starts with a deluxe fountain pen in their PDA.
+  - rscadd: The quartermaster, curator, research director, lawyer, and bartender start
+      with normal fountain pens in their PDAs.
+  - rscadd: Cargo can order fountain pens via the Calligraphy Crate.
+  - rscadd: Nerds on the station will be pleased to know they now have pocket protectors.
+  - bugfix: Cryo cells work properly on mobs with varying max health values.
+  Joan:
+  - rscdel: Cultists must be human to run for Cult Master status.
+  - tweak: The Hierophant is a little less chaotic and murdery on average.
+  LanCartwright:
+  - rscadd: Penguins, penguin chicks, penguin eggs.
+  - rscadd: Penguin family to Winter Wonderland.
+  MrStonedOne and Lummox JR:
+  - bugfix: Fixed icon scaling and size preferences not loading (Technically size
+      preferences were loading because byond saves that locally, but that's not reliable
+      because ss13 shares a hub)
+  QualityVan:
+  - rscadd: The botany vending machine now has a stock of onion seeds
+  RandomMarine:
+  - tweak: RCDs now always use matter consistent with the material needed when building.
+  - tweak: Floors now cost 3 or 1 matter to build, based on if a lattice exists on
+      the tile.
+  - tweak: Reinforced windows cost 12 matter. Normal windows cost 8 matter. (Both
+      up/down from 10)
+  - tweak: Glass airlocks cost 20 matter.
+  - tweak: RCDs are faster at building grilles and plain glass windows.
+  Steelpoint:
+  - tweak: Slightly reshuffles the Head of Security's, and Research Directors, locker
+      to place fluff items below essential items.
+  Tacolizard:
+  - rscdel: Flashes no longer have a tech requirement
+  That Really Good Soda Flavor:
+  - bugfix: High luminosity eyes will have material science instead of an error research
+      type
+  Thunder12345 and Improvedname:
+  - rscadd: You can now turn severed cat tails and ears into genuine kitty ears
+  - rscadd: Cat tails can now be used to make a cat o' nine tails, similarly to the
+      liz o' nine tails.
+  Xhuis:
+  - spellcheck: The names of the hand drill, jaws of life, and emitter are now lowercase.
+  - spellcheck: The descriptions of the hand drill, jaws of life, and emitter have
+      been changed to be more descriptive and less lengthy.
+  - rscadd: Tablets with IDs in them now show the ID's name when examining someone
+      with that tablet in their ID slot, similar to a PDA would.
+  bandit:
+  - tweak: Default short/medium/long brig times are now, in order, 2, 3, and 5 minutes.
+2017-06-18:
+  Expletive:
+  - tweak: Stacks of space cash now tell you their total value and their value per
+      bill when you examine them.
+  RandomMarine:
+  - tweak: Compressed matter cartridge production costs now reflect their material
+      worth at basic efficiency.
+  - bugfix: Compressed matter cartridges can now be exported.
+  Xhuis:
+  - bugfix: Puny windows will no longer stop the progress of Ratvar.
+2017-06-19:
+  Expletive:
+  - rscadd: Paper frames can be created using wood and paper, and can be used to create
+      decorative structures.
+  - rscadd: Natural paper can now be crafted
+  - rscadd: KorPhaeron can now start a maid cafe, if they so desire.
+  - rscadd: Thanks to the invention of "Bill slots", vending machines can now accept
+      space cash.
+  - tweak: The Clown and Mime can now find their unique crayons stored inside their
+      PDAs
+  LanCartwright:
+  - rscadd: 1D4 into Lavaland Mining base crate.
+  RandomMarine:
+  - tweak: Bonfires now work on lavaland!
+  Tacolizard:
+  - rscadd: Repurposed the action button tooltip code to add tooltips with the examine
+      details of all held and equipped items. Hover your mouse over any item equipped,
+      held or in your inventory to examine it.
+  - rscadd: Examine tooltips can be toggled with the 'toggle-examine-tooltips' verb,
+      which can be typed or accessed from the OOC menu.
+  - rscadd: You can change the delay before a tooltip appears with the 'set-examine-tooltip-delay'
+      verb, also accessible via the OOC menu. The default delay is 500ms.
+2017-06-20:
+  Bawhoppen:
+  - bugfix: Grenade belts and bandoliers will no longer obscure half the screen when
+      they're completely filled.
+  LanCartwright:
+  - rscdel: Removed loot drops from Syndicate Simple mobs.
+  Tacolizard:
+  - rscadd: Some items now have custom force strings in their tooltips.
+  - bugfix: items with no force can still use a custom force string.
+  Xhuis:
+  - bugfix: The station's heaters and freezers have been sternly reprimanded and will
+      now drop the correct circuit boards and cable coils.
+  - rscadd: The straight jacket now takes five seconds to put on.
+  - bugfix: The display cases in luxury shelter capsules will no longer spawn unobtainable,
+      abstract offhand objects.
+  - bugfix: Disablers now have an in-hand sprite.
+  nicbn:
+  - imageadd: Changed cryo sprites to Bay cryopods, which show the person inside of
+      them.
+2017-06-22:
+  Bawhoppen:
+  - rscadd: Dressers are now constructable, and unanchorable with a wrench.
+  ClosingBracket:
+  - spellcheck: Fixes small typographical errors on flight suits and implanters.
+  Ergovisavi:
+  - tweak: Nanofrost setting and metal foam synthesizer on the Atmos watertank backpack
+      changed to "Resin", which is a solid, but transparent structure similar to metal
+      foam that scrubs the air of toxins, regulates temperature, etc
+  - tweak: Atmos holobarrier device swapped out for an Atmos holo-firelock device,
+      which creates holographic firelocks that prevent atmospheric changes from going
+      over them
+  Expletive:
+  - tweak: Flame thrower plasma tanks can be removed with alt-click.
+  Lordpidey:
+  - bugfix: True and arch devils are no longer deaf.
+  - bugfix: Fixed some edge cases with devils getting two sets of spells.
+  - bugfix: True/arch devils can now instabreak cuffs.
+  - rscadd: The codex gigas now indicates if a devil is ascendable or not.
+  - tweak: Hellfire has been buffed, it now explodes multiple times.
+  Nanotrasen Robotics Department:
+  - tweak: Traitor AIs' malfunction modules have received a firmware update and are
+      more responsive, with HUD buttons and more sensible menus.
+  - tweak: Overload and Override Machines now function differently; instead of right-clicking
+      a machine to choose a context menu option, you activate the ability, which lets
+      you left-click on a machine to overload or override it. This also changes your
+      cursor.
+  Xhuis:
+  - rscadd: Alt-clicking the Show/Hide Actions button will now reset the positions
+      of all action buttons.
+  - rscadd: Hints to the two shortcuts for action buttons are now included in the
+      Show/Hide Actions button's tooltip.
+  - rscadd: (As a reminder, that's shift-click to reset the clicked button, and alt-clicking
+      the Show/Hide Actions button to reset it and all the others!)
+  - spellcheck: The names of several objects, such as the holopad and biogenerator,
+      have been lowercased.
+  - spellcheck: Added some descriptions to a few objects that lacked them.
+  - rscadd: Tablets now have a built-in flashlight! It can even change colors, as
+      long as they're light enough in hue.
+  bandit:
+  - rscadd: Nanotrasen researchers have made the breakthrough discovery that Lavaland's
+      plants are, in fact, plants, and can be harvested with seed extractors.
+  ohnopigeons:
+  - bugfix: After a janitorial audit Nanotrasen has decided to further cut costs by
+      removing the janicart's secret space propulsion functionality
+2017-06-23:
+  BeeSting12:
+  - bugfix: The clowndagger now has the correct skin.
+  MrStonedOne:
+  - tweak: Makes old chat show while goonchat loads. Should goonchat fail to load,
+      the old chat will still be operational.
+2017-06-25:
+  Expletive:
+  - rscadd: Adds the skull codpiece, which can be crafted from parts of lavaland monsters.
+  - rscadd: Maid Costume aprons can now be detached and reattached to any uniform.
+  Improvedname:
+  - rscadd: You can now export cat ears/tails for 1000 credits
+  JJRcop:
+  - bugfix: Fixed telekinesis remote item pick up exploit
+  Kor:
+  - rscadd: Robotic legs now let you use pockets without a jumpsuit, and a robot chest
+      now lets you use the belt slot and ID slot without a jumpsuit.
+  RandomMarine:
+  - rscadd: Cargo can now export mechs!
+  Steelpoint:
+  - rscadd: Station Engineers spawn with a Industrial Welder in their toolbelt.
+  - tweak: Engineering Welder Locker now only holds three standard Welders.
+  - rscadd: An old Nanotrasen Space Station has quietly reawoken its surviving crew
+      one hundred years after they fell to slumber. Can the surviving crew, using
+      old, broken and out of date equipment, overcome all odds and survive, or will
+      the cold embrace of the stars become their new home?
+  - tweak: Nanotrasens Corps of Engineers has refitted and refurbished NTSS Boxstations
+      Engineering area into, what Centcom believes,  a more efficient design.
+  That Really Good Soda Flavor:
+  - experiment: Added the ability for a holiday to start on the nth weekday of a month.
+  - experiment: Allahu ackbar! Added the ability to calculate Ramadan.
+  - rscadd: Added Thanksgiving, Mother's Day, Father's Day, Ramadan, and Columbus
+      Day to the possible holidays.
+  - bugfix: Fixed nuclear bombs being radioactive.
+  Xhuis:
+  - rscadd: You can now unfasten intercoms from walls and place them elsewhere on
+      the station.
+  - rscadd: Intercom frames can now be created at an autolathe for 75 metal and 25
+      glass.
+  - bugfix: Nearly-full goliath hide stacks now correctly have a sprite.
+2017-06-27:
+  Ergovisavi:
+  - bugfix: Fixed a few anomalous crystal effects
+  - bugfix: Fixes stacking atmos resin objects in a single tile
+  - tweak: Lasers now go through atmos resin objects
+  Joan:
+  - tweak: The Necropolis has been rethemed.
+  Kor:
+  - rscadd: Added dash weapons, which let you do a short teleport within line of sight.
+  - rscadd: The ninjas energy katana now lets him dash. He can no longer teleport
+      with right click.
+  - rscadd: Glass shards will no longer hurt people with robotic legs.
+  - rscadd: Mesons work on lavaland again.
+  Xhuis:
+  - spellcheck: The names of most glasses, like mesons, t-ray scanners, and night
+      vision goggles, have been lowercased.
+  - spellcheck: The thermonocle's description now changes based on the gender of the
+      person examining it.
+  - bugfix: Straight jackets can now properly be put onto others.
+  drline:
+  - bugfix: Nanotrasen finally sent out IT personnel to plug your modular consoles
+      back in. You're welcome.
+2017-06-28:
+  Cyberboss:
+  - rscdel: Cortical borers have been removed
+  Shadowlight213:
+  - rscadd: There is now a new monitor program that engineers can use to monitor the
+      supermatter status
+  Tacolizard:
+  - rscadd: NanoTrasen has now outfitted their employees with Extra-Loud(TM) Genetically
+      Modified Hearts! Now you can hear your heart about to explode when the clown
+      shoots you full of meth, or hear it slowly coming to a stop as you bleed out
+      in critical condition after being toolboxed by an unknown gas-mask wearing assistant.

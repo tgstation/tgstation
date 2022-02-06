@@ -1,12 +1,12 @@
 /* Library Machines
  *
  * Contains:
- *		Borrowbook datum
- *		Library Public Computer
- *		Cachedbook datum
- *		Library Computer
- *		Library Scanner
- *		Book Binder
+ * Borrowbook datum
+ * Library Public Computer
+ * Cachedbook datum
+ * Library Computer
+ * Library Scanner
+ * Book Binder
  */
 
 
@@ -18,7 +18,7 @@
 	name = "library visitor console"
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 	desc = "Checked out books MUST be returned on time."
 	var/screenstate = 0
@@ -56,8 +56,8 @@
 				var/datum/db_query/query_library_count_books = SSdbcore.NewQuery({"
 					SELECT COUNT(id) FROM [format_table_name("library")]
 					WHERE isnull(deleted)
-						AND author LIKE '%' + :author + '%'
-						AND title LIKE '%' + :title + '%'
+						AND author LIKE CONCAT('%',:author,'%')
+						AND title LIKE CONCAT('%',:title,'%')
 						AND (:category = 'Any' OR category = :category)
 				"}, list("author" = author, "title" = title, "category" = category))
 				if(!query_library_count_books.warn_execute())
@@ -80,8 +80,8 @@
 					SELECT author, title, category, id
 					FROM [format_table_name("library")]
 					WHERE isnull(deleted)
-						AND author LIKE '%' + :author + '%'
-						AND title LIKE '%' + :title + '%'
+						AND author LIKE CONCAT('%',:author,'%')
+						AND title LIKE CONCAT('%',:title,'%')
 						AND (:category = 'Any' OR category = :category)
 					LIMIT :skip, :take
 				"}, list("author" = author, "title" = title, "category" = category, "skip" = booksperpage * search_page, "take" = booksperpage))
@@ -101,7 +101,6 @@
 			dat += "<A href='?src=[REF(src)];back=1'>\[Go Back\]</A><BR>"
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
 	popup.set_content(jointext(dat, ""))
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/libraryconsole/Topic(href, href_list)
@@ -121,7 +120,7 @@
 		else
 			title = null
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
+		var/newcategory = tgui_input_list(usr, "Choose a category to search for", "Category Search", list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
@@ -173,7 +172,7 @@
 
 	icon_state = "oldcomp"
 	icon_screen = "library"
-	icon_keyboard = "no_keyboard"
+	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
 
 	var/screenstate = 0 // 0 - Main Menu, 1 - Inventory, 2 - Checked Out, 3 - Check Out a Book
@@ -186,11 +185,11 @@
 	var/list/inventory = list()
 	var/checkoutperiod = 5 // In minutes
 	var/obj/machinery/libraryscanner/scanner // Book scanner that will be used when uploading books to the Archive
-	var/page = 1	//current page of the external archives
+	var/page = 1 //current page of the external archives
 	var/printer_cooldown = 0
 	COOLDOWN_DECLARE(library_console_topic_cooldown)
 
-/obj/machinery/computer/bookmanagement/Initialize()
+/obj/machinery/computer/bookmanagement/Initialize(mapload)
 	. = ..()
 	if(circuit)
 		circuit.name = "Book Inventory Management Console (Machine Board)"
@@ -325,7 +324,6 @@
 
 	var/datum/browser/popup = new(user, "library", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/computer/bookmanagement/proc/findscanner(viewrange)
@@ -335,15 +333,15 @@
 
 /obj/machinery/computer/bookmanagement/proc/print_forbidden_lore(mob/user)
 	new /obj/item/melee/cultblade/dagger(get_turf(src))
-	to_chat(user, "<span class='warning'>Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from...</span>")
-	user.visible_message("<span class='warning'>[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older.</span>", 2)
+	to_chat(user, span_warning("Your sanity barely endures the seconds spent in the vault's browsing window. The only thing to remind you of this when you stop browsing is a sinister dagger sitting on the desk. You don't even remember where it came from..."))
+	user.visible_message(span_warning("[user] stares at the blank screen for a few moments, [user.p_their()] expression frozen in fear. When [user.p_they()] finally awaken[user.p_s()] from it, [user.p_they()] look[user.p_s()] a lot older."), 2)
 
 /obj/machinery/computer/bookmanagement/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = W
 		scanner.computer = src
-		to_chat(user, "<span class='notice'>[scanner]'s associated machine has been set to [src].</span>")
-		audible_message("<span class='hear'>[src] lets out a low, short blip.</span>")
+		to_chat(user, span_notice("[scanner]'s associated machine has been set to [src]."))
+		audible_message(span_hear("[src] lets out a low, short blip."))
 	else
 		return ..()
 
@@ -392,7 +390,7 @@
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = stripped_input(usr, "Enter the book's title:")
+		buffer_book = stripped_input(usr, "Enter the book's title:", max_length = 45)
 	if(href_list["editmob"])
 		buffer_mob = stripped_input(usr, "Enter the recipient's name:", max_length = MAX_NAME_LEN)
 	if(href_list["checkout"])
@@ -411,20 +409,20 @@
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = stripped_input(usr, "Enter the author's name: ")
+		var/newauthor = stripped_input(usr, "Enter the author's name", "Set Author", max_length = MAX_NAME_LEN)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = input("Choose a category: ") in list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical")
+		var/newcategory = tgui_input_list(usr, "Choose a category", "Set Category", list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical"))
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
 		if(scanner)
 			if(scanner.cache)
-				var/choice = input("Are you certain you wish to upload this title to the Archive?") in list("Confirm", "Abort")
+				var/choice = tgui_alert(usr, "Are you certain you wish to upload this title to the Archive?", "Confirm Upload", list("Confirm", "Abort"))
 				if(choice == "Confirm")
 					if (!SSdbcore.Connect())
-						alert("Connection to Archive has been severed. Aborting.")
+						tgui_alert(usr,"Connection to Archive has been severed. Aborting.")
 					else
 						var/msg = "[key_name(usr)] has uploaded the book titled [scanner.cache.name], [length(scanner.cache.dat)] signs"
 						var/datum/db_query/query_library_upload = SSdbcore.NewQuery({"
@@ -433,15 +431,15 @@
 						"}, list("title" = scanner.cache.name, "author" = scanner.cache.author, "content" = scanner.cache.dat, "category" = upload_category, "ckey" = usr.ckey, "round_id" = GLOB.round_id))
 						if(!query_library_upload.Execute())
 							qdel(query_library_upload)
-							alert("Database error encountered uploading to Archive")
+							tgui_alert(usr,"Database error encountered uploading to Archive")
 							return
 						else
 							log_game(msg)
 							qdel(query_library_upload)
-							alert("Upload Complete. Uploaded title will be unavailable for printing for a short period")
+							tgui_alert(usr,"Upload Complete. Uploaded title will be unavailable for printing for a short period")
 	if(href_list["newspost"])
 		if(!GLOB.news_network)
-			alert("No news network found on station. Aborting.")
+			tgui_alert(usr,"No news network found on station. Aborting.")
 		var/channelexists = 0
 		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
@@ -450,7 +448,7 @@
 		if(!channelexists)
 			GLOB.news_network.CreateFeedChannel("Nanotrasen Book Club", "Library", null)
 		GLOB.news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
-		alert("Upload complete. Your uploaded title is now available on station newscasters.")
+		tgui_alert(usr,"Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
 		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
@@ -463,11 +461,10 @@
 	if(href_list["targetid"])
 		var/id = href_list["targetid"]
 		if (!SSdbcore.Connect())
-			alert("Connection to Archive has been severed. Aborting.")
+			tgui_alert(usr,"Connection to Archive has been severed. Aborting.")
 		if(printer_cooldown > world.time)
 			say("Printer unavailable. Please allow a short time before attempting to print.")
 		else
-			printer_cooldown = world.time + PRINTER_COOLDOWN
 			var/datum/db_query/query_library_print = SSdbcore.NewQuery(
 				"SELECT * FROM [format_table_name("library")] WHERE id=:id AND isnull(deleted)",
 				list("id" = id)
@@ -476,6 +473,7 @@
 				qdel(query_library_print)
 				say("PRINTER ERROR! Failed to print document (0x0000000F)")
 				return
+			printer_cooldown = world.time + PRINTER_COOLDOWN
 			while(query_library_print.NextRow())
 				var/author = query_library_print.item[2]
 				var/title = query_library_print.item[3]
@@ -487,7 +485,7 @@
 					B.author = author
 					B.dat = content
 					B.icon_state = "book[rand(1,8)]"
-					visible_message("<span class='notice'>[src]'s printer hums as it produces a completely bound book. How did it do that?</span>")
+					visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 				break
 			qdel(query_library_print)
 	if(href_list["printbible"])
@@ -519,7 +517,7 @@
 	icon_state = "bigscanner"
 	desc = "It servers the purpose of scanning stuff."
 	density = TRUE
-	var/obj/item/book/cache		// Last scanned book
+	var/obj/item/book/cache // Last scanned book
 
 /obj/machinery/libraryscanner/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/book))
@@ -528,7 +526,7 @@
 	else
 		return ..()
 
-/obj/machinery/libraryscanner/attack_hand(mob/user)
+/obj/machinery/libraryscanner/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -545,7 +543,6 @@
 		dat += "<BR>"
 	var/datum/browser/popup = new(user, "scanner", name, 600, 400)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
@@ -591,18 +588,18 @@
 	if(machine_stat)
 		return
 	if(busy)
-		to_chat(user, "<span class='warning'>The book binder is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, span_warning("The book binder is busy. Please wait for completion of previous operation."))
 		return
 	if(!user.transferItemToLoc(P, src))
 		return
-	user.visible_message("<span class='notice'>[user] loads some paper into [src].</span>", "<span class='notice'>You load some paper into [src].</span>")
-	audible_message("<span class='hear'>[src] begins to hum as it warms up its printing drums.</span>")
+	user.visible_message(span_notice("[user] loads some paper into [src]."), span_notice("You load some paper into [src]."))
+	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
 	sleep(rand(200,400))
 	busy = FALSE
 	if(P)
 		if(!machine_stat)
-			visible_message("<span class='notice'>[src] whirs as it prints and binds a new book.</span>")
+			visible_message(span_notice("[src] whirs as it prints and binds a new book."))
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"

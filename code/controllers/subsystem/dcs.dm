@@ -1,6 +1,7 @@
 PROCESSING_SUBSYSTEM_DEF(dcs)
 	name = "Datum Component System"
 	flags = SS_NO_INIT
+	wait = 1 SECONDS
 
 	var/list/elements_by_type = list()
 
@@ -48,6 +49,6 @@ PROCESSING_SUBSYSTEM_DEF(dcs)
 			fullid += "[key]"
 
 	if(length(named_arguments))
-		named_arguments = sortList(named_arguments)
+		named_arguments = sort_list(named_arguments)
 		fullid += named_arguments
 	return list2params(fullid)

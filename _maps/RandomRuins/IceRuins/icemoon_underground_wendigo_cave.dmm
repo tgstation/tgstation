@@ -7,9 +7,9 @@
 /area/icemoon/underground/unexplored)
 "d" = (
 /turf/template_noop,
-/area/icemoon/underground/unexplored)
+/area/template_noop)
 "j" = (
-/obj/effect/mob_spawn/human/miner/explorer,
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/unexplored)
 "q" = (

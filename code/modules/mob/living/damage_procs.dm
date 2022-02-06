@@ -1,25 +1,25 @@
 
 /**
-  * Applies damage to this mob
-  *
-  * Sends [COMSIG_MOB_APPLY_DAMGE]
-  *
-  * Arguuments:
-  * * damage - amount of damage
-  * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
-  * * def_zone - zone that is being hit if any
-  * * blocked - armor value applied
-  * * forced - bypass hit percentage
-  * * spread_damage - used in overrides
-  *
-  * Returns TRUE if damage applied
-  */
-/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
+ * Applies damage to this mob
+ *
+ * Sends [COMSIG_MOB_APPLY_DAMAGE]
+ *
+ * Arguuments:
+ * * damage - amount of damage
+ * * damagetype - one of [BRUTE], [BURN], [TOX], [OXY], [CLONE], [STAMINA]
+ * * def_zone - zone that is being hit if any
+ * * blocked - armor value applied
+ * * forced - bypass hit percentage
+ * * spread_damage - used in overrides
+ *
+ * Returns TRUE if damage applied
+ */
+/mob/living/proc/apply_damage(damage = 0,damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
 		return FALSE
-	var/damage_amount =  forced ? damage : damage * hit_percent
+	var/damage_amount = forced ? damage : damage * hit_percent
 	switch(damagetype)
 		if(BRUTE)
 			adjustBruteLoss(damage_amount, forced = forced)
@@ -89,10 +89,10 @@
 
 
 /// applies various common status effects or common hardcoded mob effects
-/mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = FALSE)
+/mob/living/proc/apply_effect(effect = 0,effecttype = EFFECT_STUN, blocked = 0)
 	var/hit_percent = (100-blocked)/100
 	if(!effect || (hit_percent <= 0))
-		return 0
+		return FALSE
 	switch(effecttype)
 		if(EFFECT_STUN)
 			Stun(effect * hit_percent)
@@ -104,8 +104,6 @@
 			Immobilize(effect * hit_percent)
 		if(EFFECT_UNCONSCIOUS)
 			Unconscious(effect * hit_percent)
-		if(EFFECT_IRRADIATE)
-			radiation += max(effect * hit_percent, 0)
 		if(EFFECT_SLUR)
 			slurring = max(slurring,(effect * hit_percent))
 		if(EFFECT_STUTTER)
@@ -114,16 +112,16 @@
 		if(EFFECT_EYE_BLUR)
 			blur_eyes(effect * hit_percent)
 		if(EFFECT_DROWSY)
-			drowsyness = max(drowsyness,(effect * hit_percent))
+			adjust_drowsyness(effect * hit_percent)
 		if(EFFECT_JITTER)
 			if((status_flags & CANSTUN) && !HAS_TRAIT(src, TRAIT_STUNIMMUNE))
 				jitteriness = max(jitteriness,(effect * hit_percent))
-	return 1
+	return TRUE
 
 /// applies multiple effects at once via [/mob/living/proc/apply_effect]
-/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, irradiate = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = FALSE, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
+/mob/living/proc/apply_effects(stun = 0, knockdown = 0, unconscious = 0, slur = 0, stutter = 0, eyeblur = 0, drowsy = 0, blocked = 0, stamina = 0, jitter = 0, paralyze = 0, immobilize = 0)
 	if(blocked >= 100)
-		return BULLET_ACT_BLOCK
+		return FALSE
 	if(stun)
 		apply_effect(stun, EFFECT_STUN, blocked)
 	if(knockdown)
@@ -134,8 +132,6 @@
 		apply_effect(paralyze, EFFECT_PARALYZE, blocked)
 	if(immobilize)
 		apply_effect(immobilize, EFFECT_IMMOBILIZE, blocked)
-	if(irradiate)
-		apply_effect(irradiate, EFFECT_IRRADIATE, blocked)
 	if(slur)
 		apply_effect(slur, EFFECT_SLUR, blocked)
 	if(stutter)
@@ -148,7 +144,7 @@
 		apply_damage(stamina, STAMINA, null, blocked)
 	if(jitter)
 		apply_effect(jitter, EFFECT_JITTER, blocked)
-	return BULLET_ACT_HIT
+	return TRUE
 
 
 /mob/living/proc/getBruteLoss()
@@ -251,10 +247,10 @@
 	return
 
 /**
-  * heal ONE external organ, organ gets randomly selected from damaged ones.
-  *
-  * needs to return amount healed in order to calculate things like tend wounds xp gain
-  */
+ * heal ONE external organ, organ gets randomly selected from damaged ones.
+ *
+ * needs to return amount healed in order to calculate things like tend wounds xp gain
+ */
 /mob/living/proc/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	. = (adjustBruteLoss(-brute, FALSE) + adjustFireLoss(-burn, FALSE) + adjustStaminaLoss(-stamina, FALSE)) //zero as argument for no instant health update
 	if(updating_health)
@@ -262,7 +258,7 @@
 		update_stamina()
 
 /// damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE)
+/mob/living/proc/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
 	adjustBruteLoss(brute, FALSE) //zero as argument for no instant health update
 	adjustFireLoss(burn, FALSE)
 	adjustStaminaLoss(stamina, FALSE)

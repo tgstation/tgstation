@@ -19,7 +19,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/proc/do_after_spawn(obj/item/spawned)
 	return
 
-/obj/item/slimecross/industrial/Initialize()
+/obj/item/slimecross/industrial/Initialize(mapload)
 	. = ..()
 	create_reagents(100, INJECTABLE | DRAWABLE)
 	START_PROCESSING(SSobj,src)
@@ -42,7 +42,7 @@ Industrial extracts:
 	if(plasmaabsorbed >= plasmarequired)
 		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		plasmaabsorbed -= plasmarequired
-		for(var/i = 0, i < itemamount, i++)
+		for(var/i in 1 to itemamount)
 			do_after_spawn(new itempath(get_turf(src)))
 	else if(IsWorking)
 		playsound(src, 'sound/effects/bubbles.ogg', 5, TRUE)
@@ -54,7 +54,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/grey
 	colour = "grey"
 	effect_desc = "Produces monkey cubes."
-	itempath = /obj/item/reagent_containers/food/snacks/monkeycube
+	itempath = /obj/item/food/monkeycube
 	itemamount = 5
 
 /obj/item/slimecross/industrial/orange
@@ -77,9 +77,9 @@ Industrial extracts:
 
 /obj/item/slimecross/industrial/metal
 	colour = "metal"
-	effect_desc = "Produces metal sheets."
+	effect_desc = "Produces iron sheets."
 	plasmarequired = 3
-	itempath = /obj/item/stack/sheet/metal/ten
+	itempath = /obj/item/stack/sheet/iron/ten
 
 /obj/item/slimecross/industrial/yellow
 	colour = "yellow"

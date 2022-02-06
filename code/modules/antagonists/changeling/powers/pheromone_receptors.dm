@@ -11,16 +11,23 @@
 	dna_cost = 2
 	var/receptors_active = FALSE
 
+/datum/action/changeling/pheromone_receptors/Remove(mob/living/carbon/user)
+	if(receptors_active)
+		var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+		changeling.chem_recharge_slowdown -= 0.25
+		user.remove_status_effect(/datum/status_effect/agent_pinpointer/changeling)
+	..()
+
 /datum/action/changeling/pheromone_receptors/sting_action(mob/living/carbon/user)
 	..()
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!receptors_active)
-		to_chat(user, "<span class='warning'>We search for the scent of any nearby changelings.</span>")
-		changeling.chem_recharge_slowdown += 0.5
+		to_chat(user, span_warning("We search for the scent of any nearby changelings."))
+		changeling.chem_recharge_slowdown += 0.25
 		user.apply_status_effect(/datum/status_effect/agent_pinpointer/changeling)
 	else
-		to_chat(user, "<span class='notice'>We stop searching for now.</span>")
-		changeling.chem_recharge_slowdown -= 0.5
+		to_chat(user, span_notice("We stop searching for now."))
+		changeling.chem_recharge_slowdown -= 0.25
 		user.remove_status_effect(/datum/status_effect/agent_pinpointer/changeling)
 
 	receptors_active = !receptors_active
@@ -28,7 +35,7 @@
 //Modified IA pinpointer - Points to the NEAREST changeling, but will only get you within a few tiles of the target.
 //You'll still have to rely on intuition and observation to make the identification.  Lings can 'hide' in public places.
 /datum/status_effect/agent_pinpointer/changeling
-	alert_type = /obj/screen/alert/status_effect/agent_pinpointer/changeling
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/changeling
 	minimum_range = CHANGELING_PHEROMONE_MIN_DISTANCE
 	tick_interval = CHANGELING_PHEROMONE_PING_TIME
 	range_fuzz_factor = 0
@@ -48,11 +55,11 @@
 					changelings[C] = (CHANGELING_PHEROMONE_MAX_DISTANCE ** 2) - (distance ** 2)
 
 	if(changelings.len)
-		scan_target = pickweight(changelings) //Point at a 'random' changeling, biasing heavily towards closer ones.
+		scan_target = pick_weight(changelings) //Point at a 'random' changeling, biasing heavily towards closer ones.
 	else
 		scan_target = null
 
 
-/obj/screen/alert/status_effect/agent_pinpointer/changeling
+/atom/movable/screen/alert/status_effect/agent_pinpointer/changeling
 	name = "Pheromone Scent"
 	desc = "The nose always knows."

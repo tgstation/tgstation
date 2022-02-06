@@ -29,7 +29,7 @@
 	var/can_insert = min(S.amount, remaining_space())
 	if(!can_insert)
 		return FALSE
-	for(var/i in real_location)				//combine.
+	for(var/i in real_location) //combine.
 		if(QDELETED(I))
 			return
 		var/obj/item/stack/_S = i
@@ -39,7 +39,8 @@
 			_S.add(can_insert)
 			S.use(can_insert, TRUE)
 			return TRUE
-	return ..(S.change_stack(null, can_insert), override)
+	I = S.split_stack(null, can_insert)
+	return ..()
 
 /datum/component/storage/concrete/stack/remove_from_storage(obj/item/I, atom/new_location)
 	var/atom/real_location = real_location()
@@ -58,7 +59,7 @@
 	. = list()
 	for(var/i in real_location)
 		var/obj/item/stack/I = i
-		if(!istype(I) || QDELETED(I))				//We're specialized stack storage, just ignore non stacks.
+		if(!istype(I) || QDELETED(I)) //We're specialized stack storage, just ignore non stacks.
 			continue
 		if(!.[I.merge_type])
 			.[I.merge_type] = new /datum/numbered_display(I, I.amount)

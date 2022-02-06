@@ -16,7 +16,7 @@
 
 /obj/effect/proc_holder/spell/targeted/telepathy/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	for(var/mob/living/M in targets)
-		var/msg = stripped_input(usr, "What do you wish to tell [M]?", null, "")
+		var/msg = tgui_input_text(user, "What do you wish to tell [M]?", "Telepathy")
 		if(!msg)
 			charge_counter = charge_max
 			return
@@ -29,4 +29,4 @@
 				continue
 			var/follow_rev = FOLLOW_LINK(ded, user)
 			var/follow_whispee = FOLLOW_LINK(ded, M)
-			to_chat(ded, "[follow_rev] <span class='[boldnotice]'>[user] [name]:</span> <span class='[notice]'>\"[msg]\" to</span> [follow_whispee] <span class='name'>[M]</span>")
+			to_chat(ded, "[follow_rev] <span class='[boldnotice]'>[user] [name]:</span> <span class='[notice]'>\"[msg]\" to</span> [follow_whispee] [span_name("[M]")]")

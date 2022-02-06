@@ -39,6 +39,21 @@
 /datum/proc/p_es(temp_gender)
 	. = "es"
 
+/datum/proc/plural_s(pluralize)
+	switch(copytext_char(pluralize, -2))
+		if ("ss")
+			. = "es"
+		if ("sh")
+			. = "es"
+		if ("ch")
+			. = "es"
+		else
+			switch(copytext_char(pluralize, -1))
+				if("s", "x", "z")
+					. = "es"
+				else
+					. = "s"
+
 //like clients, which do have gender.
 /client/p_they(capitalized, temp_gender)
 	if(!temp_gender)
@@ -201,65 +216,65 @@
 
 //humans need special handling, because they can have their gender hidden
 /mob/living/carbon/human/p_they(capitalized, temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_their(capitalized, temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_them(capitalized, temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_have(temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_are(temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_were(temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_do(temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_s(temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
 /mob/living/carbon/human/p_es(temp_gender)
-	var/list/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
-	if((ITEM_SLOT_ICLOTHING in obscured) && skipface)
+	if((obscured & ITEM_SLOT_ICLOTHING) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
