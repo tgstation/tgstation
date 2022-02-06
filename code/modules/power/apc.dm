@@ -788,8 +788,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 	if(!istype(maybe_ethereal_stomach))
 		togglelock(user)
 	else
-		var/obj/item/organ/stomach/ethereal/stomach = maybe_ethereal_stomach
-		if(stomach.crystal_charge >= ETHEREAL_CHARGE_NORMAL)
+		if(maybe_ethereal_stomach.crystal_charge >= ETHEREAL_CHARGE_NORMAL)
 			togglelock(user)
 		ethereal_interact(user,modifiers)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
