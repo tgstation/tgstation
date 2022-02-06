@@ -90,10 +90,6 @@
 	input = /obj/item/food/grown/potato/wedges
 	output = /obj/item/food/fries
 
-/datum/food_processor_process/sweetpotato
-	input = /obj/item/food/grown/potato/sweet
-	output = /obj/item/food/yakiimo
-
 /datum/food_processor_process/spidereggs
 	input = /obj/item/food/spidereggs
 	output = /obj/item/food/spidereggs/processed
