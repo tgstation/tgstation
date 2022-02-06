@@ -218,7 +218,9 @@
 	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), SACRIFICE_SLEEP_DURATION * (1/3))
 	addtimer(CALLBACK(sac_target, /mob/living/carbon.proc/do_jitter_animation, 100), SACRIFICE_SLEEP_DURATION * (2/3))
 
-	// If our target is dead, and we fail to revive them, just disembowel them and be done
+	// If our target is dead, try to revive them
+	// and if we fail to revive them,
+	// just disembowel them and be done
 	if(!sac_target.heal_and_revive(50, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		return
 
@@ -253,7 +255,9 @@
 		disembowel_target()
 		return
 
-	// If our target died during the (short) timer, and we fail to revive them, just disembowel them and stop the chain
+	// If our target died during the (short) wait timer,
+	// and we fail to revive them (using a lower number than before),
+	// just disembowel them and stop the chain
 	if(!sac_target.heal_and_revive(75, span_danger("[sac_target]'s heart begins to beat with an unholy force as they return from death!")))
 		disembowel_target(sac_target)
 		return

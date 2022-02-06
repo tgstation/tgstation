@@ -739,40 +739,42 @@
 
 
 /*
- * Heals up the [target] to up to [heal_to] brute and burn, and [heal_to / 2] tox and oxy.
+ * Heals up the [target] to up to [heal_to] of the main damage types.
+ * EX: If heal_to is 50, and they have 150 brute damage, they will heal 100 brute (up to 50 brute damage)
  *
- * If the target is dead, also revives them and heals up their organs / restores blood slightly.
+ * If the target is dead, also revives them and heals their organs / restores blood.
  * If we have a [revive_message], play a visible message if the revive was successful.
  *
  * Arguments
- * * heal_to - the percentage of health to heal the mob for. Halved for toxins and oxygen.
+ * * heal_to - the health threshold to heal the mob up to for each of the main damage types.
  * * revive_message - if provided, a visible message to show on a successful revive.
  *
- * Returns TRUE if the mob is alive afterwards, or FALSE if they're dead.
+ * Returns TRUE if the mob is alive afterwards, or FALSE if they're still dead (revive failed).
  */
-/mob/living/proc/heal_and_revive(heal_to = 75, revive_message)
+/mob/living/proc/heal_and_revive(heal_to = 50, revive_message)
 
-	if(HAS_TRAIT(src, TRAIT_HUSK))
-		return FALSE
-
+	// Heal their brute and burn up to the threshold we're looking for
 	var/brute_to_heal = heal_to - getBruteLoss()
 	var/burn_to_heal = heal_to - getFireLoss()
-	var/tox_to_heal = (heal_to/2) - getToxLoss()
-	var/oxy_to_heal = (heal_to/2) - getOxyLoss()
+	var/oxy_to_heal = heal_to - getOxyLoss()
+	var/tox_to_heal = heal_to - getToxLoss()
 	if(brute_to_heal < 0)
 		adjustBruteLoss(brute_to_heal, FALSE)
 	if(burn_to_heal < 0)
 		adjustFireLoss(burn_to_heal, FALSE)
+	if(oxy_to_heal < 0)
+		adjustOxyLoss(oxy_to_heal, FALSE)
 	if(tox_to_heal < 0)
 		adjustToxLoss(tox_to_heal, FALSE, TRUE)
-	if(oxy_to_heal < 0)
-		adjustOxyLoss(oxy_to_heal, FALSE, TRUE)
 
-	var/overall_health = getBruteLoss() + getFireLoss() + getToxLoss() + getOxyLoss()
-	if(overall_health < 200 && stat == DEAD)
-		revive(FALSE, FALSE, 10)
-		if(revive_message)
+	// We've given them a decent heal.
+	// If they happen to be dead too, try to revive them - if possible.
+	if(stat == DEAD && can_be_revived())
+		// If the revive is successful, show our revival message (if present).
+		if(revive(FALSE, FALSE, 10) && revive_message)
 			visible_message(revive_message)
+
+	// Update health when we're all done.
 	updatehealth()
 
 	return stat != DEAD
