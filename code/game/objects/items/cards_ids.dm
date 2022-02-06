@@ -710,17 +710,21 @@
 
 	if(is_intern)
 		if(assignment)
-			assignment_string = (assignment in SSjob.head_of_staff_jobs) ? " ([assignment]-in-Training)" : " (Intern [assignment])"
+			assignment_string = trim?.intern_alt_name || "Intern [assignment]"
 		else
-			assignment_string = " (Intern)"
+			assignment_string = "Intern"
 	else
-		assignment_string = " ([assignment])"
+		assignment_string = assignment
 
-	name = "[name_string][assignment_string]"
+	name = "[name_string] ([assignment_string])"
 
 /// Returns the trim assignment name.
 /obj/item/card/id/proc/get_trim_assignment()
 	return trim?.assignment || assignment
+
+/// Returns the trim sechud icon state.
+/obj/item/card/id/proc/get_trim_sechud_icon_state()
+	return trim?.sechud_icon_state || SECHUD_UNKNOWN
 
 /obj/item/card/id/away
 	name = "\proper a perfectly generic identification card"
@@ -814,8 +818,10 @@
 	var/trim_icon_override
 	/// If this is set, will manually override the icon state for the trim. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_state_override
-	/// If this is set, will manually override the trim's assignmment for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
+	/// If this is set, will manually override the trim's assignmment as it appears in the crew monitor and elsewhere. Intended for admins to VV edit and chameleon ID cards.
 	var/trim_assignment_override
+	/// If this is set, will manually override the trim shown for SecHUDs. Intended for admins to VV edit and chameleon ID cards.
+	var/sechud_icon_state_override = null
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
@@ -842,7 +848,7 @@
 	var/intern_threshold = (CONFIG_GET(number/use_low_living_hour_intern_hours) * 60) || (CONFIG_GET(number/use_exp_restrictions_heads_hours) * 60) || INTERN_THRESHOLD_FALLBACK_HOURS * 60
 	var/playtime = user.client.get_exp_living(pure_numeric = TRUE)
 
-	if((intern_threshold >= playtime) && (user.mind?.assigned_role.title in SSjob.station_jobs))
+	if((intern_threshold >= playtime) && (user.mind?.assigned_role.job_flags & JOB_CAN_BE_INTERN))
 		is_intern = TRUE
 		update_label()
 		return
@@ -917,11 +923,16 @@
 /obj/item/card/id/advanced/get_trim_assignment()
 	if(trim_assignment_override)
 		return trim_assignment_override
-	else if(ispath(trim))
+
+	if(ispath(trim))
 		var/datum/id_trim/trim_singleton = SSid_access.trim_singletons_by_path[trim]
 		return trim_singleton.assignment
 
 	return ..()
+
+/// Returns the trim sechud icon state.
+/obj/item/card/id/advanced/get_trim_sechud_icon_state()
+	return sechud_icon_state_override || ..()
 
 /obj/item/card/id/advanced/silver
 	name = "silver identification card"
@@ -969,7 +980,7 @@
 	icon_state = "card_centcom"
 	worn_icon_state = "card_centcom"
 	assigned_icon_state = "assigned_centcom"
-	registered_name = "Central Command"
+	registered_name = JOB_CENTCOM
 	registered_age = null
 	trim = /datum/id_trim/centcom
 	wildcard_slots = WILDCARD_LIMIT_CENTCOM
@@ -982,31 +993,31 @@
 	trim = /datum/id_trim/centcom/ert
 
 /obj/item/card/id/advanced/centcom/ert
-	registered_name = "Emergency Response Team Commander"
+	registered_name = JOB_ERT_COMMANDER
 	trim = /datum/id_trim/centcom/ert/commander
 
 /obj/item/card/id/advanced/centcom/ert/security
-	registered_name = "Security Response Officer"
+	registered_name = JOB_ERT_OFFICER
 	trim = /datum/id_trim/centcom/ert/security
 
 /obj/item/card/id/advanced/centcom/ert/engineer
-	registered_name = "Engineering Response Officer"
+	registered_name = JOB_ERT_ENGINEER
 	trim = /datum/id_trim/centcom/ert/engineer
 
 /obj/item/card/id/advanced/centcom/ert/medical
-	registered_name = "Medical Response Officer"
+	registered_name = JOB_ERT_MEDICAL_DOCTOR
 	trim = /datum/id_trim/centcom/ert/medical
 
 /obj/item/card/id/advanced/centcom/ert/chaplain
-	registered_name = "Religious Response Officer"
+	registered_name = JOB_ERT_CHAPLAIN
 	trim = /datum/id_trim/centcom/ert/chaplain
 
 /obj/item/card/id/advanced/centcom/ert/janitor
-	registered_name = "Janitorial Response Officer"
+	registered_name = JOB_ERT_JANITOR
 	trim = /datum/id_trim/centcom/ert/janitor
 
 /obj/item/card/id/advanced/centcom/ert/clown
-	registered_name = "Entertainment Response Officer"
+	registered_name = JOB_ERT_CLOWN
 	trim = /datum/id_trim/centcom/ert/clown
 
 /obj/item/card/id/advanced/black
@@ -1020,7 +1031,7 @@
 /obj/item/card/id/advanced/black/deathsquad
 	name = "\improper Death Squad ID"
 	desc = "A Death Squad ID card."
-	registered_name = "Death Commando"
+	registered_name = JOB_ERT_DEATHSQUAD
 	trim = /datum/id_trim/centcom/deathsquad
 	wildcard_slots = WILDCARD_LIMIT_DEATHSQUAD
 

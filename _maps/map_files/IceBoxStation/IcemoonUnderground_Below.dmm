@@ -224,6 +224,21 @@
 /obj/structure/flora/tree/pine,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"hv" = (
+/obj/machinery/door/airlock/external{
+	glass = 1;
+	name = "Mining Mech Bay External Airlock";
+	opacity = 0;
+	req_access_txt = "48"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "mining-mechbay-external"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/mine/mechbay)
 "hw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -458,14 +473,14 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/mine/eva)
 "ok" = (
 /obj/structure/sign/warning/gasmask{
 	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
 	pixel_y = -32
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "oq" = (
 /obj/structure/lattice/catwalk,
@@ -604,6 +619,9 @@
 /area/mine/mechbay)
 "uL" = (
 /obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "uV" = (
@@ -770,7 +788,7 @@
 	},
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/mine/eva)
 "BJ" = (
 /obj/structure/fence,
@@ -867,9 +885,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
-"EX" = (
-/turf/open/floor/plating,
-/area/mine/mechbay)
 "Ft" = (
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
@@ -999,6 +1014,7 @@
 	c_tag = "Mining Mech Bay"
 	},
 /obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "Jw" = (
@@ -1017,6 +1033,9 @@
 "JG" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/mechbay)
@@ -1145,6 +1164,14 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
+"Nf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/mine/mechbay)
 "Ng" = (
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating/snowed/icemoon,
@@ -1308,7 +1335,7 @@
 /obj/structure/sign/warning/xeno_mining{
 	pixel_x = 29
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/mine/eva)
 "Sy" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1406,7 +1433,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "mining-mechbay-external"
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "Vz" = (
 /obj/machinery/telecomms/relay/preset/mining,
@@ -1424,7 +1454,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "mining-mechbay-external"
 	},
-/turf/open/floor/plating,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth,
 /area/mine/mechbay)
 "Wc" = (
 /obj/structure/lattice/catwalk,
@@ -23035,7 +23068,7 @@ zq
 MQ
 Uu
 Jv
-Sy
+Nf
 JG
 uL
 Zm
@@ -23549,7 +23582,7 @@ Xw
 GR
 MP
 LC
-EX
+Ft
 ok
 MP
 GD
@@ -23806,8 +23839,8 @@ fF
 fF
 MP
 MP
-VS
-VS
+hv
+hv
 MP
 nD
 KW

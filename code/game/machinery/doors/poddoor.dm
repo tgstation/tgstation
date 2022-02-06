@@ -27,6 +27,9 @@
 
 /obj/machinery/door/poddoor/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
@@ -40,6 +43,9 @@
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
@@ -54,6 +60,9 @@
 
 /obj/machinery/door/poddoor/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
@@ -69,6 +78,9 @@
 
 /obj/machinery/door/poddoor/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_WIRES)
@@ -162,6 +174,9 @@
 		return 0
 	else
 		return ..()
+
+/obj/machinery/door/poddoor/bumpopen()
+	return
 
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
