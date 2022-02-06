@@ -404,7 +404,7 @@
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(W.tool_behaviour == TOOL_WRENCH && anchorable) // Bolts are on the inside now, so we make sure that the locker isn't closed
-		balloon_alert(user, "Locker must be open to access bolts!")
+		balloon_alert(user, "locker must be open first!")
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		if(!W.tool_start_check(user, amount=0))
 			return
