@@ -155,7 +155,7 @@
 		var/atom/current_parent = parent
 		var/obj/item/stack/item_stack = held_item
 		requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
-		if(!requested_amount || QDELETED(held_item) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(!requested_amount || QDELETED(held_item) || QDELETED(user) || QDELETED(src))
 			return
 		if(parent != current_parent || user.get_active_held_item() != active_held)
 			return
