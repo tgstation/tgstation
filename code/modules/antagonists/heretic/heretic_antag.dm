@@ -90,7 +90,7 @@
 		knowledge_data["gainFlavor"] = found_knowledge.gain_text
 		knowledge_data["cost"] = found_knowledge.cost
 		knowledge_data["hereticPath"] = found_knowledge.route
-		knowledge_data["color"] = path_to_color?[found_knowledge.route] || "grey"
+		knowledge_data["color"] = path_to_color[found_knowledge.route] || "grey"
 
 		data["learnedKnowledge"] += list(knowledge_data)
 
