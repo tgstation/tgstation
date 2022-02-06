@@ -290,7 +290,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	if(istype(I, /obj/item/shard))
 		user.balloon_alert(user, "crafting spear")
 		if(do_after(user, 4 SECONDS, src))
-			var/obj/item/spear/S = new /obj/item/spear
+			var/obj/item/spear/crafted_spear = new /obj/item/spear
 
 			remove_item_from_storage(user)
 			if (!user.transferItemToLoc(I, S))
