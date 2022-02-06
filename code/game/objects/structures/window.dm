@@ -294,7 +294,6 @@
 
 /obj/structure/window/proc/AfterRotation(mob/user, degrees)
 	air_update_turf(TRUE, FALSE)
-	balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [src]")
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
