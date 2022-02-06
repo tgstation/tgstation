@@ -22,7 +22,6 @@
 
 /obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
-	balloon_alert(user, "you [degrees == ROTATION_FLIP ? "flip" : "rotate"] [src]")
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
