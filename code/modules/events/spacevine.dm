@@ -466,7 +466,7 @@
 	var/list/vine_mutations_list
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
-	var/max_mutation_severity = 15
+	var/max_mutation_severity = 20
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
@@ -482,7 +482,7 @@
 		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency / 10 // If potency is 100, 10 mutativeness; if 1: 0.1 mutativeness
-		max_mutation_severity = round(potency / 10 + 5) // If potency is 100, 15 max mutation severity; if 1, 5 max mutation severity
+		max_mutation_severity = round(potency / 10 + 10) // If potency is 100, 20 max mutation severity; if 1, 10 max mutation severity
 	if(production != null && production <= 10) //Prevents runtime in case production is set to 11.
 		spread_cap *= (11 - production) / 7.5 //Best production speed of 1 increases spread_cap to 40, worst production speed of 10 lowers it to 4, even distribution
 		spread_multiplier /= (11 - production) / 10 // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
