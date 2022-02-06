@@ -44,7 +44,7 @@
 /obj/item/mod/core/infinite
 	name = "MOD infinite core"
 	icon_state = "mod-core-infinite"
-	desc = "A fusion core using the rare palladium to sustain enough energy for the lifetime of the MOD's user. \
+	desc = "A fusion core using the rare Fixium to sustain enough energy for the lifetime of the MOD's user. \
 		This might be because of the slowly killing poison inside, but those are just rumors."
 
 /obj/item/mod/core/infinite/charge_source()
