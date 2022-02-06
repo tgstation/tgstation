@@ -301,6 +301,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.put_in_hands(crafted_spear)
 			to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
 			user.balloon_alert(user, "crafted")
+			return
 
 	else if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
 		user.balloon_alert(user, "crafting cattleprod")
