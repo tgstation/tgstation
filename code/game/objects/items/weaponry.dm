@@ -289,7 +289,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/shard))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
-		user.balloon_alert(user, "crafting spear")
+		user.balloon_alert(user, "crafting spear...")
 		if(do_after(user, initial(recipe_to_use.time), src)) // we do initial work here to get the correct timer
 			var/obj/item/spear/crafted_spear = new /obj/item/spear()
 
