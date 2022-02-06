@@ -382,7 +382,7 @@
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	parts = list(/obj/item/storage/firstaid = 1,
-				 /obj/item/healthanalyzer = 1)
+				/obj/item/healthanalyzer = 1)
 	time = 40
 	category = CAT_ROBOT
 
