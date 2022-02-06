@@ -239,3 +239,31 @@
   - bugfix: Reality has shifted around you, and now all parts of the outdoors of IceBox
       Station should now be blanketed in snow whenever one of those storms come around.
       Why was this broken in the first place? Nobody knows!
+2022-02-06:
+  Fikou:
+  - expansion: brings back the extended announcement
+  - bugfix: fixes printing unresearched mech stuff and design disks
+  - bugfix: fixes modsuit core recipes
+  - bugfix: you no longer see ghosts and through walls with nooartrium
+  Jackraxxus:
+  - bugfix: The 145.7 frequency is no longer received by all signalers.
+  LemonInTheDark:
+  - bugfix: Wizards who exit rodform in a wall will no longer self gib. Skill issue?
+  Mothblocks:
+  - balance: The Dynamic report for Peaceful Waypoint/Core Territory no longer guarantees
+      providing any meta information. Previously, "Core Territory" guaranteed there
+      were roundstart antagonists, and "Peaceful Waypoint" guaranteed the inverse.
+      There is now a 15% chance to show the opposite result, meaning you can use the
+      report as a good guess of what is coming, but cannot rely on it.
+  RandomGamer123, Iamgoofball, IssacTheSharkWolf:
+  - bugfix: Shuttles on multi-z stations now have ceilings!
+  SuperNovaa41:
+  - refactor: Refactors reverse bear trap code.
+  - bugfix: You can now properly take reverse bear traps off of your head if you manage
+      to break free.
+  jlsnow301:
+  - bugfix: Tgui number input now uses a new component that makes it easier to use.
+      It now autofocuses and autoselects, just like the original.
+  - bugfix: Alert modals have been rewritten. Messages no longer clip, they also now
+      respond to TGUI input preferences (UI tab) and you can press ESC to close.
+  - bugfix: You should now be able to enter a blank text to succumb.

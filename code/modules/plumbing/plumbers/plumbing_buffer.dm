@@ -78,10 +78,9 @@
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
-	if(isnull(new_volume))
+	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-
-	activation_volume = round(new_volume)
+	activation_volume = new_volume
 	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))
 	return
 
