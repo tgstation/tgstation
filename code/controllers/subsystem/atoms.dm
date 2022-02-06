@@ -53,7 +53,7 @@ SUBSYSTEM_DEF(atoms)
 	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD)
 
 	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
-	CreateAtoms()
+	CreateAtoms(atoms, atoms_to_return)
 	clear_tracked_initalize()
 
 	if(late_loaders.len)
