@@ -1,7 +1,7 @@
 // Some various defines used in the heretic sacrifice map.
 
 /// A global lazylist of all landmarks that denote a heretic sacrifice location.
-GLOBAL_LIST(heretic_sacrifice_landmarks)
+GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
 /**
  * A map template loaded in when heretics are created.
@@ -20,10 +20,10 @@ GLOBAL_LIST(heretic_sacrifice_landmarks)
 
 /obj/effect/landmark/heretic/Initialize()
 	. = ..()
-	LAZYSET(GLOB.heretic_sacrifice_landmarks, for_heretic_path, src)
+	GLOB.heretic_sacrifice_landmarks[for_heretic_path] = src
 
 /obj/effect/landmark/heretic/Destroy()
-	LAZYREMOVE(GLOB.heretic_sacrifice_landmarks, src)
+	GLOB.heretic_sacrifice_landmarks[for_heretic_path] = null
 	return ..()
 
 /obj/effect/landmark/heretic/ash
