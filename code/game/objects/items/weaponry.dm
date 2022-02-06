@@ -303,7 +303,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.balloon_alert(user, "crafted")
 			return
 
-	else if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
+	if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
 		user.balloon_alert(user, "crafting cattleprod")
 		if(do_after(user, 4 SECONDS, src))
 			var/obj/item/melee/baton/security/cattleprod/prod = new
