@@ -2,7 +2,7 @@ import { Loader } from './common/Loader';
 import { Preferences } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import { KEY_ESCAPE, KEY_ENTER, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
-import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
+import { Autofocus, Box, Button, Flex, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type AlertModalData = {
@@ -19,15 +19,17 @@ const KEY_INCREMENT = 1;
 
 export const AlertModal = (_, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
-  const { autofocus, buttons = [], message, timeout, title } = data;
-  const { large_buttons } = data.preferences;
+  const { autofocus, buttons = [], message, preferences, timeout, title } = data;
+  const { large_buttons } = preferences;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window height
-  const windowHeight
-    = 100
+  let windowHeight = 100;
+  if (message && buttons) {
+    windowHeight = 100
     + Math.ceil(message.length / 3)
     + (message.length && large_buttons ? 5 : 0)
     + (buttons.length > 2 ? buttons.length * 25 : 0);
+  }
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -64,7 +66,8 @@ export const AlertModal = (_, context) => {
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
-              <Box color="label">{message}</Box>
+              {message ? (
+                <Box color="label">{message}</Box>) : (<NoticeBox>Please reload to continue.</NoticeBox>)}
             </Stack.Item>
             <Stack.Item>
               {!!autofocus && <Autofocus />}
@@ -84,9 +87,9 @@ export const AlertModal = (_, context) => {
  */
 const ButtonDisplay = (props, context) => {
   const { data } = useBackend<AlertModalData>(context);
-  const { buttons = [] } = data;
+  const { buttons = [], preferences } = data;
   const { selected } = props;
-  const { large_buttons, swapped_buttons } = data.preferences;
+  const { large_buttons, swapped_buttons } = preferences;
   const buttonDirection
     = (buttons.length > 2 ? 'column' : 'row')
     + (!swapped_buttons ? '-reverse' : '');
@@ -121,8 +124,9 @@ const ButtonDisplay = (props, context) => {
  */
 const AlertButton = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
+  const { preferences } = data;
+  const { large_buttons } = preferences;
   const { button, selected } = props;
-  const { large_buttons } = data.preferences;
 
   return (
     <Button
