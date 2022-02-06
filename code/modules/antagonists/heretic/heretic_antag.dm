@@ -78,7 +78,7 @@
 					knowledge_data["disabled"] = TRUE
 
 		knowledge_data["hereticPath"] = initial(knowledge.route)
-		knowledge_data["color"] = path_to_color?[initial(knowledge.route)] || "grey"
+		knowledge_data["color"] = path_to_color[initial(knowledge.route)] || "grey"
 
 		data["learnableKnowledge"] += list(knowledge_data)
 
