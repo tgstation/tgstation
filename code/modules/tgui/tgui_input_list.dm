@@ -141,10 +141,13 @@
 /datum/tgui_list_input/ui_state(mob/user)
 	return GLOB.always_state
 
+/datum/tgui_list_input/ui_static_data(mob/user)
+	. = list()
+	.["items"] = items
+
 /datum/tgui_list_input/ui_data(mob/user)
 	. = list()
 	.["init_value"] = default || items[1]
-	.["items"] = items
 	.["message"] = message
 	.["preferences"] = list()
 	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
