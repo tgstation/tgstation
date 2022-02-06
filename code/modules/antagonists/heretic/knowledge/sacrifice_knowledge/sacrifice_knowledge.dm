@@ -20,13 +20,13 @@
 	/// If TRUE, we skip the ritual when our target list is empty. Done to avoid locking up the heretic.
 	var/skip_this_ritual = FALSE
 	/// A weakref to the mind of our heretic.
-	var/datum/datum/mind/heretic_mind
+	var/datum/mind/heretic_mind
 	/// Lazylist of minds that we won't pick as targets.
 	var/list/datum/mind/target_blacklist
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/return_timers
 
-/datum/heretic_knowledge/Destroy(force, ...)
+/datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force, ...)
 	heretic_mind = null
 	LAZYCLEARLIST(target_blacklist)
 	return ..()
