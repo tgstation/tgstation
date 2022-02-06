@@ -388,22 +388,22 @@
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
 	var/mob/living/simple_animal/bot/medbot/bot = result
-	var/obj/item/storage/firstaid/FA = bot.contents[3]
-	bot.firstaid = FA
+	var/obj/item/storage/firstaid/first_aid = bot.contents[3]
+	bot.firstaid = first_aid
 	bot.healthanalyzer = bot.contents[4]
 
-	if (istype(FA, /obj/item/storage/firstaid/fire))
+	if (istype(first_aid, /obj/item/storage/firstaid/fire))
 		bot.skin = "ointment"
-	else if (istype(FA, /obj/item/storage/firstaid/toxin))
+	else if (istype(first_aid, /obj/item/storage/firstaid/toxin))
 		bot.skin = "tox"
-	else if (istype(FA, /obj/item/storage/firstaid/o2))
+	else if (istype(first_aid, /obj/item/storage/firstaid/o2))
 		bot.skin = "o2"
-	else if (istype(FA, /obj/item/storage/firstaid/brute))
+	else if (istype(first_aid, /obj/item/storage/firstaid/brute))
 		bot.skin = "brute"
-	else if (istype(FA, /obj/item/storage/firstaid/advanced))
+	else if (istype(first_aid, /obj/item/storage/firstaid/advanced))
 		bot.skin = "advanced"
 
-	bot.damagetype_healer = initial(FA.damagetype_healed) ? initial(FA.damagetype_healed) : BRUTE
+	bot.damagetype_healer = initial(first_aid.damagetype_healed) ? initial(first_aid.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
