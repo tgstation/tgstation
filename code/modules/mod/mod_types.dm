@@ -146,11 +146,11 @@
 	applied_cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/welding,
-		/obj/item/mod/module/tether,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
+		/obj/item/mod/module/holster,
 	)
 
 /obj/item/mod/control/pre_equipped/nuclear
@@ -158,7 +158,6 @@
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/welding,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
@@ -170,7 +169,6 @@
 	applied_cell = /obj/item/stock_parts/cell/bluespace
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/welding,
 		/obj/item/mod/module/emp_shield,
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
