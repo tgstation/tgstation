@@ -10,82 +10,84 @@
 	if(NOBLOOD in dna.species.species_traits || HAS_TRAIT(src, TRAIT_NOBLEED) || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
 		return
 
-	if(bodytemperature >= TCRYO && !(HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+	if(bodytemperature < TCRYO || (HAS_TRAIT(src, TRAIT_HUSK))) //cryosleep or husked people do not pump the blood.
+		return
 
-		//Blood regeneration if there is some space
-		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-			var/nutrition_ratio = 0
-			switch(nutrition)
-				if(0 to NUTRITION_LEVEL_STARVING)
-					nutrition_ratio = 0.2
-				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-					nutrition_ratio = 0.4
-				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-					nutrition_ratio = 0.6
-				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-					nutrition_ratio = 0.8
-				else
-					nutrition_ratio = 1
-			if(satiety > 80)
-				nutrition_ratio *= 1.25
-			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
-			blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
+	//Blood regeneration if there is some space
+	if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
+		var/nutrition_ratio = 0
+		switch(nutrition)
+			if(0 to NUTRITION_LEVEL_STARVING)
+				nutrition_ratio = 0.2
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+				nutrition_ratio = 0.4
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				nutrition_ratio = 0.6
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				nutrition_ratio = 0.8
+			else
+				nutrition_ratio = 1
+		if(satiety > 80)
+			nutrition_ratio *= 1.25
+		adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * delta_time)
+		blood_volume = min(blood_volume + (BLOOD_REGEN_FACTOR * nutrition_ratio * delta_time), BLOOD_VOLUME_NORMAL)
 
-		//Effects of bloodloss
-		var/word = pick("dizzy","woozy","faint")
-		switch(blood_volume)
-			if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
-				if(DT_PROB(7.5, delta_time))
-					to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
-					inflate_gib()
-			if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
-				if(DT_PROB(5, delta_time))
-					to_chat(src, span_warning("You feel terribly bloated."))
-			if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
-				if(DT_PROB(2.5, delta_time))
-					to_chat(src, span_warning("You feel [word]."))
-				adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
-			if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
-				adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
-				if(DT_PROB(2.5, delta_time))
-					blur_eyes(6)
-					to_chat(src, span_warning("You feel very [word]."))
-			if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
-				adjustOxyLoss(2.5 * delta_time)
-				if(DT_PROB(7.5, delta_time))
-					Unconscious(rand(20,60))
-					to_chat(src, span_warning("You feel extremely [word]."))
-			if(-INFINITY to BLOOD_VOLUME_SURVIVE)
-				if(!HAS_TRAIT(src, TRAIT_NODEATH))
-					death()
+	//Effects of bloodloss
+	var/word = pick("dizzy","woozy","faint")
+	switch(blood_volume)
+		if(BLOOD_VOLUME_EXCESS to BLOOD_VOLUME_MAX_LETHAL)
+			if(DT_PROB(7.5, delta_time))
+				to_chat(src, span_userdanger("Blood starts to tear your skin apart. You're going to burst!"))
+				inflate_gib()
+		if(BLOOD_VOLUME_MAXIMUM to BLOOD_VOLUME_EXCESS)
+			if(DT_PROB(5, delta_time))
+				to_chat(src, span_warning("You feel terribly bloated."))
+		if(BLOOD_VOLUME_OKAY to BLOOD_VOLUME_SAFE)
+			if(DT_PROB(2.5, delta_time))
+				to_chat(src, span_warning("You feel [word]."))
+			adjustOxyLoss(round(0.005 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
+		if(BLOOD_VOLUME_BAD to BLOOD_VOLUME_OKAY)
+			adjustOxyLoss(round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume) * delta_time, 1))
+			if(DT_PROB(2.5, delta_time))
+				blur_eyes(6)
+				to_chat(src, span_warning("You feel very [word]."))
+		if(BLOOD_VOLUME_SURVIVE to BLOOD_VOLUME_BAD)
+			adjustOxyLoss(2.5 * delta_time)
+			if(DT_PROB(7.5, delta_time))
+				Unconscious(rand(20,60))
+				to_chat(src, span_warning("You feel extremely [word]."))
+		if(-INFINITY to BLOOD_VOLUME_SURVIVE)
+			if(!HAS_TRAIT(src, TRAIT_NODEATH))
+				death()
 
-		var/temp_bleed = 0
-		var/update_bleed_icons = FALSE
-		//Bleeding out
-		for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-			var/iter_bleed_rate = iter_part.get_part_bleed_rate()
-			temp_bleed += iter_bleed_rate * delta_time
-			iter_part.generic_bleedstacks = max(0, iter_part.generic_bleedstacks - 1)
+	var/temp_bleed = 0
+	var/update_bleed_icons = FALSE
+	//Bleeding out
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		var/iter_bleed_rate = iter_part.get_part_bleed_rate()
+		temp_bleed += iter_bleed_rate * delta_time
+		iter_part.generic_bleedstacks = max(0, iter_part.generic_bleedstacks - 1)
 
-			var/new_bleed_icon
-			switch(iter_bleed_rate)
-				if(-INFINITY to 1)
-					new_bleed_icon = null
-				if(1 to 2)
-					new_bleed_icon = "[iter_part.body_zone]_1s"
-				if(2 to INFINITY)
-					new_bleed_icon = "[iter_part.body_zone]_2s"
+		testing("[src] bf: [temp_bleed]")
+		var/new_bleed_icon
+		switch(iter_bleed_rate)
+			if(-INFINITY to 1)
+				new_bleed_icon = null
+			if(1 to 2)
+				new_bleed_icon = "[iter_part.body_zone]_1s"
+			if(2 to INFINITY)
+				new_bleed_icon = "[iter_part.body_zone]_2s"
 
-			if(new_bleed_icon != iter_part.bleed_icon_severity)
-				update_bleed_icons = TRUE
-				iter_part.bleed_icon_severity = new_bleed_icon
+		if(new_bleed_icon != iter_part.bleed_icon_severity)
+			update_bleed_icons = TRUE
+			iter_part.bleed_icon_severity = new_bleed_icon
 
-		if(update_bleed_icons)
-			update_wound_overlays()
+	if(update_bleed_icons)
+		update_wound_overlays()
 
-		if(temp_bleed)
-			bleed(temp_bleed)
-			bleed_warn(temp_bleed)
+	if(temp_bleed)
+		bleed(temp_bleed)
+		bleed_warn(temp_bleed)
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
