@@ -305,7 +305,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 	if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
 		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/stunprod
-		user.balloon_alert(user, "crafting cattleprod")
+		user.balloon_alert(user, "crafting cattleprod...")
 		if(do_after(user, initial(recipe_to_use.time), src))
 			var/obj/item/melee/baton/security/cattleprod/prod = new
 
