@@ -1,6 +1,6 @@
 // Some various defines used in the heretic sacrifice map.
 
-/// A global lazylist of all landmarks that denote a heretic sacrifice location.
+/// A global assoc list of all landmarks that denote a heretic sacrifice location. [string heretic path] = [landmark].
 GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 
 /**
