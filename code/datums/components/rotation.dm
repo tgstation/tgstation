@@ -98,8 +98,10 @@
 	Rotate(user, ROTATION_COUNTERCLOCKWISE)
 
 /datum/component/simple_rotation/proc/Rotate(mob/user, degrees)
+	if(QDELETED(user))
+		stack_trace("[src] is being rotated [user ? "with a qdeleting" : "without a"] user")
 	if(!istype(user))
-		stack_trace("[src] is being rotated without a user")
+		stack_trace("[src] is being rotated without a user of the wrong type: [user.type]")
 		
 	if(!CanBeRotated(user, degrees) || !CanUserRotate(user, degrees))
 		return
