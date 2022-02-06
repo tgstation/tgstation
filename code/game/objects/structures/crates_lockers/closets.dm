@@ -395,16 +395,15 @@
 				return
 			set_anchored(!anchored)
 			W.play_tool_sound(src, 75)
-			user.visible_message(span_notice("[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						balloon_alert(user, "You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						span_hear("You hear a ratchet."))
+			user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"].")
+			span_hear("You hear a ratchet.")
 			return // This return prevents us from putting the wrench inside the locker when we bolt/unbolt it
 		if (user.combat_mode)
 			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(W.tool_behaviour == TOOL_WRENCH && anchorable) // Bolts are on the inside now, so we make sure that the locker isn't closed
-		balloon_alert(user, "locker must be open first!")
+		balloon_alert(user, "locker must be open!")
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		if(!W.tool_start_check(user, amount=0))
 			return
