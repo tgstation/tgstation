@@ -814,6 +814,9 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
+/mob/living/proc/update_wound_overlays()
+	return
+
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 	if(lying_angle != 0)
 		lying_angle_on_movement(direct)

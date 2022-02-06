@@ -60,11 +60,28 @@
 					death()
 
 		var/temp_bleed = 0
+		var/update_bleed_icons = FALSE
 		//Bleeding out
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
-			temp_bleed += BP.get_bleed_rate() * delta_time
-			BP.generic_bleedstacks = max(0, BP.generic_bleedstacks - 1)
+		for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+			var/iter_bleed_rate = iter_part.get_part_bleed_rate()
+			temp_bleed += iter_bleed_rate * delta_time
+			iter_part.generic_bleedstacks = max(0, iter_part.generic_bleedstacks - 1)
+
+			var/new_bleed_icon
+			switch(iter_bleed_rate)
+				if(-INFINITY to 1)
+					new_bleed_icon = null
+				if(1 to 2)
+					new_bleed_icon = "[iter_part.body_zone]_1s"
+				if(2 to INFINITY)
+					new_bleed_icon = "[iter_part.body_zone]_2s"
+
+			if(new_bleed_icon != iter_part.bleed_icon_severity)
+				update_bleed_icons = TRUE
+				iter_part.bleed_icon_severity = new_bleed_icon
+
+		if(update_bleed_icons)
+			update_wound_overlays()
 
 		if(temp_bleed)
 			bleed(temp_bleed)
@@ -92,7 +109,7 @@
 	var/bleed_amt = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/iter_bodypart = X
-		bleed_amt += iter_bodypart.get_bleed_rate()
+		bleed_amt += iter_bodypart.get_part_bleed_rate()
 	return bleed_amt
 
 /mob/living/carbon/human/get_bleed_rate()

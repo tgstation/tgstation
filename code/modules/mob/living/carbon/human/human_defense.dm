@@ -809,7 +809,7 @@
 		var/list/obj/item/bodypart/bleeding_limbs = list()
 		for(var/i in bodyparts)
 			var/obj/item/bodypart/BP = i
-			if(BP.get_bleed_rate())
+			if(BP.get_part_bleed_rate())
 				bleeding_limbs += BP
 
 		var/num_bleeds = LAZYLEN(bleeding_limbs)

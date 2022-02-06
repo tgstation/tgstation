@@ -77,6 +77,8 @@
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type
 
+	var/bleed_icon_severity
+
 	//Damage messages used by help_shake_act()
 	var/light_brute_msg = "bruised"
 	var/medium_brute_msg = "battered"
@@ -966,7 +968,7 @@
 	wound_damage_multiplier = dam_mul
 
 
-/obj/item/bodypart/proc/get_bleed_rate()
+/obj/item/bodypart/proc/get_part_bleed_rate()
 	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
 		return
 	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
