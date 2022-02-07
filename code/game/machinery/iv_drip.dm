@@ -24,10 +24,12 @@
 	///Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
 	///Typecache of containers we accept
-	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
-									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass,
-									/obj/item/reagent_containers/chem_pack))
+	var/static/list/drip_containers = typecacheof(list(
+		/obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/chem_pack,
+	))
 	// If the blood draining tab should be greyed out
 	var/inject_only = FALSE
 
