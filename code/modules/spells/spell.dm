@@ -175,10 +175,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("Not when you're incapacitated!"))
 		return FALSE
 
-	if(antimagic_flags & MAGIC_CASTING_RESTRICTION)
-		// we only want to pass the MAGIC_RESTRICTS_CASTING flag to the can_block_magic since we are only checking
-		// if the person can cast the spell themselves and want to ignore all other resistances
-		var/antimagic = user.can_block_magic(MAGIC_CASTING_RESTRICTION, charge_cost = 0)
+	if(antimagic_flags & MAGIC_RESISTANCE)
+		var/antimagic = user.can_cast_magic()
 		if(antimagic)
 			if(isitem(antimagic))
 				to_chat(user, span_notice("[antimagic] is interfering with your magic."))
@@ -547,8 +545,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !stat_allowed)
 		return FALSE
 
-	// we only want to pass the MAGIC_RESTRICT_CASTING flag to the can_block_magic and not all the antimagic_flags
-	if((antimagic_flags & MAGIC_CASTING_RESTRICTION) && user.can_block_magic(MAGIC_CASTING_RESTRICTION, charge_cost = 0))
+	if((user.can_cast_magic(antimagic_flags))
 		return FALSE
 
 	if(!ishuman(user))

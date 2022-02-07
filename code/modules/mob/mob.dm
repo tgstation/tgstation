@@ -934,7 +934,7 @@
 	var/static/charge_cost = 0 // charge cost will always be zero when checking if we can cast magic
 
 	// if all equipped antimagic items don't have a casting magic restriction we can cast magic
-	if(!(SEND_SIGNAL(src, COMSIG_MOB_CAST_MAGIC, src, magic_flags = MAGIC_CASTING_RESTRICTION, charge_cost) & COMPONENT_BLOCK_MAGIC))
+	if(!(SEND_SIGNAL(src, COMSIG_MOB_CAST_MAGIC, src, magic_flags, charge_cost) & COMPONENT_BLOCK_MAGIC))
 		return TRUE
 	// if we have this trait the magic casting restrictions can be bypassed
 	if(!HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
