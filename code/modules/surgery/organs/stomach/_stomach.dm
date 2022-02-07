@@ -30,6 +30,7 @@
 	///The rate that the stomach will transfer reagents to the body
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
+	var/max_combined_w_class = 14
 
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
@@ -221,10 +222,17 @@
 	var/inedibles = 0
 	for(var/atom/movable/thing in contents)
 		if(!IsEdible(thing))
-			inedibles += 1
+			var/size = 1
+			if(isitem(thing))
+				var/obj/item/inedible_item = thing
+				size = inedible_item.w_class
+			inedibles += 1 * size
 
 	if(!inedibles)
 		return
+
+	if(inedibles > max_combined_w_class)
+		mule.adjust_disgust(5)
 
 	if(DT_PROB(5, delta_time))
 		mule.adjust_disgust(5*inedibles)
