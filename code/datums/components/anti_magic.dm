@@ -38,8 +38,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect)
-		RegisterSignal(parent, COMSIG_MOB_CAST_MAGIC, .proc/try_casting)
+		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_magic)
+		RegisterSignal(parent, COMSIG_MOB_CAST_MAGIC, .proc/can_cast_magic)
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -56,8 +56,8 @@
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		UnregisterSignal(equipper, COMSIG_MOB_CAST_MAGIC)
 		return
-	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
-	RegisterSignal(equipper, COMSIG_MOB_CAST_MAGIC, .proc/try_casting)
+	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_magic, TRUE)
+	RegisterSignal(equipper, COMSIG_MOB_CAST_MAGIC, .proc/can_cast_magic)
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -65,7 +65,7 @@
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 	UnregisterSignal(user, COMSIG_MOB_CAST_MAGIC)
 
-/datum/component/anti_magic/proc/protect(datum/source, mob/user, casted_magic_flags, charge_cost)
+/datum/component/anti_magic/proc/block_magic(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
@@ -78,12 +78,18 @@
 		if(charges <= 0)
 			expiration?.Invoke(user, parent)
 			qdel(src)
-		return COMPONENT_BLOCK_MAGIC
+		return TRUE
+	return FALSE
 
-/datum/component/anti_magic/proc/try_casting(datum/source, mob/user, magic_flags)
+/datum/component/anti_magic/proc/can_cast_magic(datum/source, mob/user, magic_flags)
 	SIGNAL_HANDLER
 
 	// if we are trying to cast wizard spells (not mime abilities, abductor telepathy, etc.)
-	// and we have an antimagic equipped that blocks casting, we can't cast that type of magic
-	if((magic_flags & MAGIC_RESISTANCE) && (antimagic_flags & MAGIC_CASTING_RESTRICTION))
-		return COMPONENT_BLOCK_MAGIC
+	var/is_casting_wizard_magic = magic_flags & MAGIC_RESISTANCE
+	// any antimagic equipment on the mob or antimagic traits
+	var/has_magic_casting_restriction = antimagic_flags & MAGIC_CASTING_RESTRICTION
+
+	if(is_casting_wizard_magic && has_magic_casting_restriction)
+		return FALSE // cannot cast wizard magic with antimagic present
+	else 
+		return TRUE
