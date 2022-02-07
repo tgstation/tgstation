@@ -235,7 +235,7 @@
 		compiled_chords = null
 	STOP_PROCESSING(SSinstruments, src)
 	SEND_SIGNAL(parent, COMSIG_SONG_END, finished)
-	SEND_SIGNAL(user_playing, COMSIG_SONG_END, finished)
+	SEND_SIGNAL(music_player, COMSIG_SONG_END, finished)
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
 	music_player = null
@@ -265,7 +265,7 @@
 	repeat--
 	current_chord = 1
 	SEND_SIGNAL(parent, COMSIG_SONG_REPEAT, TRUE)
-	SEND_SIGNAL(user_playing, COMSIG_SONG_REPEAT, TRUE)
+	SEND_SIGNAL(music_player, COMSIG_SONG_REPEAT, TRUE)
 
 /**
  * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.

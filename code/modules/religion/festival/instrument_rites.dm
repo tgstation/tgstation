@@ -146,11 +146,11 @@
 			continue
 		if(prob(20))
 			to_chat(listener, span_warning(pick("The music is putting you to sleep...", "The music makes you nod off for a moment.", "You try to focus on staying awake through the song.")))
-			M.emote("yawn")
+			listener.emote("yawn")
 		listener.blur_eyes(2)
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		to_chat(user, span_danger("Wow, the ending of that song was... pretty..."))
+		to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
 		listener.AdjustSleeping(5 SECONDS)
 
