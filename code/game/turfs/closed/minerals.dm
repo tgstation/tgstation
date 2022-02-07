@@ -37,6 +37,9 @@
 	transform = M
 	icon = smooth_icon
 
+/turf/closed/mineral/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/tool_bump, TOOL_MINING)
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
@@ -152,22 +155,6 @@
 		H.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		gets_drilled(H)
 	return TRUE
-
-/turf/closed/mineral/Bumped(atom/movable/movable)
-	. = ..()
-	if(!isliving(movable))
-		return
-	var/mob/living/miner = movable
-	if(!ISADVANCEDTOOLUSER(miner)) // Unadvanced tool users can't mine anyway. This just prevents message spam from attackby()
-		return
-	if(iscyborg(miner))
-		var/mob/living/silicon/robot/robot = miner
-		if(robot.module_active?.tool_behaviour == TOOL_MINING)
-			attackby(robot.module_active, robot)
-		return
-	var/obj/item/mining_item = miner.is_holding_tool_quality(TOOL_MINING)
-	if(mining_item)
-		attackby(mining_item, miner)
 
 /turf/closed/mineral/acid_melt()
 	ScrapeAway()

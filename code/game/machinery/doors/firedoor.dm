@@ -80,6 +80,10 @@
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = merger_typecache)
 
+/obj/machinery/door/firedoor/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/tool_bump, TOOL_CROWBAR)
+
 /**
  * Sets the offset for the warning lights.
  *
@@ -295,19 +299,7 @@
 		return
 	if(!density)
 		return ..()
-	if(!isliving(movable))
-		return
-	var/mob/living/opener = movable
-	if(!ISADVANCEDTOOLUSER(opener))
-		return
-	if(iscyborg(opener))
-		var/mob/living/silicon/robot/robot = opener
-		if(robot.module_active?.tool_behaviour == TOOL_CROWBAR)
-			attackby(robot.module_active, robot)
-		return
-	var/obj/item/held_item = opener.get_active_held_item()
-	if(held_item?.tool_behaviour == TOOL_CROWBAR)
-		attackby(held_item, opener)
+	SEND_SIGNAL(src, COMSIG_ATOM_BUMPED, movable)
 	return FALSE
 
 /obj/machinery/door/firedoor/bumpopen(mob/living/user)
