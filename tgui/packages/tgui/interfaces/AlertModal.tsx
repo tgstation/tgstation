@@ -31,8 +31,8 @@ export const AlertModal = (_, context) => {
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window height
   const windowHeight
-  = 100
-  + Math.ceil(message.length / 3)
+  = 115
+  + (message.length > 30 ? message.length / 3 : 0)
   + (message.length && large_buttons ? 5 : 0)
   + (buttons.length > 2 ? buttons.length * 25 : 0);
   const onKey = (direction: number) => {
@@ -71,7 +71,7 @@ export const AlertModal = (_, context) => {
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
-              <Box color="label">{message}</Box>
+              <Box color="label" overflow="hidden">{message}</Box>
             </Stack.Item>
             <Stack.Item>
               {!!autofocus && <Autofocus />}
