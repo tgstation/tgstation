@@ -42,8 +42,8 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ProcCallMenu", "ProcCall Configuration Menu")
-		ui.set_autoupdate(FALSE)
 		ui.open()
+		ui.set_autoupdate(FALSE)
 
 /obj/item/circuit_component/proccall/populate_options()
 	var/static/list/component_options = list(
@@ -88,8 +88,10 @@
 	. = list()
 	.["possible_types"] = GLOB.wiremod_fundamental_types
 
-/obj/item/circuit_component/proccall/ui_state(mob/user)
-	return GLOB.admin_state
+/obj/item/circuit_component/proccall/ui_status(mob/user)
+	if(!check_rights_for(user.client, R_VAREDIT))
+		return UI_CLOSE
+	return UI_INTERACTIVE
 
 /obj/item/circuit_component/proccall/save_data_to_list(list/component_data)
 	. = ..()
