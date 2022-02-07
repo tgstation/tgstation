@@ -252,12 +252,24 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 						round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
 			if(GAME_STATE_FINISHED)
 				round_state = "Round has ended"
+		var/list/admin_counts = get_admin_counts(R_BAN)
+		var/stealth_admins = jointext(admin_counts["stealth"], ", ")
+		var/afk_admins = jointext(admin_counts["afk"], ", ")
+		var/other_admins = jointext(admin_counts["noflags"], ", ")
+		var/admin_text = ""
+		if(stealth_admins)
+			admin_text += "**Stealthed**: [stealth_admins]\n"
+		if(afk_admins)
+			admin_text += "**AFK**: [afk_admins]\n"
+		if(other_admins)
+			admin_text += "**Lacks +BAN**: [other_admins]\n"
 		embed.fields = list(
 			"CKEY" = initiator_ckey,
 			"ROUND STATE" = round_state,
 			"ROUND ID" = GLOB.round_id,
 			"ROUND TIME" = ROUND_TIME,
-			"MESSAGE" = message
+			"MESSAGE" = message,
+			"ADMINS" = admin_text,
 		)
 		embed.content = extra_message
 		if(CONFIG_GET(string/adminhelp_ahelp_link))
