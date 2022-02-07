@@ -101,8 +101,7 @@
 		return
 	TIMER_COOLDOWN_START(src, user, hand_mine_speed)
 	var/skill_modifier = 1
-	if(ishuman(user) && user.mind)
-		skill_modifier = user.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
+	skill_modifier = user?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 	to_chat(user, span_notice("You start pulling out pieces of [src] with your hands..."))
 	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
 		TIMER_COOLDOWN_END(src, user) //if we fail we can start again immediately
