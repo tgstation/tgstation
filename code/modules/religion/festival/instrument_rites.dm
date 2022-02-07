@@ -146,82 +146,11 @@
 			continue
 		if(prob(20))
 			to_chat(listener, span_warning(pick("The music is putting you to sleep...", "The music makes you nod off for a moment.", "You try to focus on staying awake through the song.")))
+			M.emote("yawn")
 		listener.blur_eyes(2)
-		listener_counter[WEAKREF(listener)] += 5
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(atom/song_player, datum/song/song_datum)
-	for(var/datum/weakref/listener_weakref in listener_counter)
-		var/mob/living/listener = listener_weakref.resolve()
-		if(!listener)
-			continue
-		if(listener_counter[listener_weakref] >= 100)
-			listener.AdjustSleeping(10 SECONDS)
-
-/datum/religion_rites/song_tuner/power
-	name = "Power Chord"
-	desc = "Sing a powerful tune, speeding up listeners. At the end of the song, Ethereals fully recharge."
-	particles_path = /particles/musical_notes/power
-	song_invocation_message = "You've prepared a powerful song!"
-	song_start_message = span_warning("This music's making you feel excited!")
-	favor_cost = 20
-	glow_color = "#E8E822"
-	repeats_okay = FALSE
-	///after each process, the song's listeners are recorded as weakrefs so people who are powered up can be cleared of buffs when the song is over
-	var/list/buffed_weakrefs = list()
-
-/datum/religion_rites/song_tuner/power/song_effect(atom/song_player, datum/song/song_datum)
-	if(!song_datum)
-		return
-	//buffed
-	var/list/has_modifiers = recursive_list_resolve(buffed_weakrefs)
-	//buffed, but not listening (difflist removes everyone from who is buffed who is not in hearing_mobs)
-	var/list/remove_modifiers = difflist(has_modifiers, song_datum.hearing_mobs)
-	//not buffed, but listening and valid target
-	var/list/add_modifiers = special_list_filter(difflist(song_datum.hearing_mobs.Copy(), has_modifiers), .proc/is_valid_listener)
-
-	//handle current listeners
-	for(var/mob/living/currently_listening in has_modifiers)
-		if(currently_listening in remove_modifiers)
-			continue
-		if(prob(20))
-			to_chat(currently_listening, span_warning(pick("The music is hyping you up!", "The music makes you feel amp'd up.", "This song is electric!")))
-
-	//remove old listeners
-	for(var/mob/living/not_listening in remove_modifiers)
-		to_chat(world, "removing movespeed from [not_listening]")
-		not_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
-		not_listening.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
-
-	//add new listeners
-	for(var/mob/living/new_listener in add_modifiers)
-		if(!(new_listener in has_modifiers))
-			to_chat(world, "adding movespeed to [new_listener]")
-			ADD_TRAIT(new_listener, TRAIT_POWER_CHORD, STATUS_EFFECT_TRAIT)
-			new_listener.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
-			new_listener.add_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
-	buffed_weakrefs = weakref_list(song_datum.hearing_mobs)
-
-/datum/religion_rites/song_tuner/power/proc/is_valid_listener(mob/living/listener)
-	. = TRUE
-	if(HAS_TRAIT(listener, TRAIT_POWER_CHORD))
-		return FALSE
-	if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
-		return FALSE
-	if(listener.mind?.holy_role)
-		return FALSE
-
-/datum/religion_rites/song_tuner/power/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		var/obj/item/organ/stomach/ethereal/stomach = listener.getorganslot(ORGAN_SLOT_STOMACH)
-		if(!istype(stomach))
-			continue
-		stomach.crystal_charge = ETHEREAL_CHARGE_FULL
+		to_chat(user, span_danger("Wow, the ending of that song was... pretty..."))
+		listener.AdjustSleeping(5 SECONDS)
 
-/datum/religion_rites/song_tuner/power/Destroy()
-	var/list/has_modifiers = recursive_list_resolve(buffed_weakrefs)
-	for(var/mob/living/finished_listening in has_modifiers)
-		to_chat(world, "song over. removing movespeed from [finished_listening]")
-		finished_listening.remove_actionspeed_modifier(/datum/actionspeed_modifier/power_chord)
-		finished_listening.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/power_chord)
-	QDEL_NULL(has_modifiers)
-	. = ..()
