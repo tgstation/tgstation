@@ -175,14 +175,13 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("Not when you're incapacitated!"))
 		return FALSE
 
-	if(antimagic_flags & MAGIC_RESISTANCE)
-		var/antimagic = user.can_cast_magic()
-		if(antimagic)
-			if(isitem(antimagic))
-				to_chat(user, span_notice("[antimagic] is interfering with your magic."))
-			else
-				to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))
-			return FALSE
+	var/antimagic = user.can_cast_magic(antimagic_flags)
+	if(!antimagic)
+		if(isitem(antimagic))
+			to_chat(user, span_notice("[antimagic] is interfering with your magic."))
+		else
+			to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))
+		return FALSE
 
 	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))
 		to_chat(user, span_warning("[name] cannot be cast unless you are completely manifested in the material plane!"))
