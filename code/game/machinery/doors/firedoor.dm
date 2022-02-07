@@ -82,7 +82,7 @@
 
 /obj/machinery/door/firedoor/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/tool_bump, TOOL_CROWBAR)
+	AddElement(/datum/element/tool_bump, TOOL_CROWBAR, TRUE)
 
 /**
  * Sets the offset for the warning lights.

@@ -39,7 +39,7 @@
 
 /turf/closed/mineral/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/tool_bump, TOOL_MINING)
+	AddElement(/datum/element/tool_bump, TOOL_MINING, FALSE)
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
