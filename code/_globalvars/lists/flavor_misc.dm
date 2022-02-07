@@ -150,6 +150,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sort_list(list(
 	"Murica",
 	"Nanotrasen",
 	"Not Malf",
+	"Operative",
 	"Portrait",
 	"President",
 	"Rainbow",
