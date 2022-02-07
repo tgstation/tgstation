@@ -19,12 +19,6 @@
 	description = "Surprised to see us here?"
 	suffix = "icemoon_surface_asteroid.dmm"
 
-/datum/map_template/ruin/icemoon/hotsprings
-	name = "Hot Springs"
-	id = "hotsprings"
-	description = "Just relax and take a dip, nothing will go wrong, I swear!"
-	suffix = "icemoon_surface_hotsprings.dmm"
-
 /datum/map_template/ruin/icemoon/engioutpost
 	name = "Engineer Outpost"
 	id = "engioutpost"
@@ -43,6 +37,18 @@
 	id = "abandoned_homestead"
 	description = "This homestead was once host to a happy homesteading family. It's now host to hungry bears."
 	suffix = "icemoon_underground_abandoned_homestead.dmm"
+
+/datum/map_template/ruin/icemoon/entemology
+	name = "Insect Research Station"
+	id = "bug_habitat"
+	description = "An independently funded research outpost, long abandoned. Their mission, to boldly go where no insect life would ever live, ever, and look for bugs."
+	suffix = "icemoon_surface_bughabitat.dmm"
+
+/datum/map_template/ruin/icemoon/pizza
+	name = "Moffuchi's Pizzeria"
+	id = "pizzeria"
+	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
+	suffix = "icemoon_surface_pizza.dmm"
 
 // above and below ground together
 
@@ -141,3 +147,9 @@
 	description = "Rumors have developed over the many years of Freyja plasma mining. These rumors suggest that the ghosts of dead mistreated excavation staff have returned to \
 	exact revenge on their (now former) employers. Coorperate reminds all staff that rumors are just that: Old Housewife tales meant to scare misbehaving kids to bed."
 	suffix = "icemoon_underground_abandoned_plasma_facility.dmm"
+
+/datum/map_template/ruin/icemoon/underground/hotsprings
+	name = "Hot Springs"
+	id = "hotsprings"
+	description = "Just relax and take a dip, nothing will go wrong, I swear!"
+	suffix = "icemoon_underground_hotsprings.dmm"

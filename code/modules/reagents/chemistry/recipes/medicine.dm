@@ -59,17 +59,17 @@
 	mix_message = "The mixture sputters loudly and becomes a light grey color!"
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_ORGAN
 	//Fermichem vars
-	required_temp = 200
+	required_temp = 300
 	optimal_temp = 400
-	overheat_temp = 450
-	optimal_ph_min = 2
-	optimal_ph_max = 5
+	overheat_temp = 500
+	optimal_ph_min = 5
+	optimal_ph_max = 10
 	determin_ph_range = 10
-	temp_exponent_factor = 3
+	temp_exponent_factor = 0.35
 	ph_exponent_factor = 0.5
-	thermic_constant = 200
-	H_ion_release = 0.05
-	rate_up_lim = 50
+	thermic_constant = 20
+	H_ion_release = 1.5
+	rate_up_lim = 3
 	purity_min = 0.25
 
 ///Calls it over and over
@@ -350,7 +350,7 @@
 
 /datum/chemical_reaction/medicine/medsuture/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/medical/suture/medicated(location)
 
 /datum/chemical_reaction/medicine/medmesh
@@ -359,7 +359,7 @@
 
 /datum/chemical_reaction/medicine/medmesh/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/medical/mesh/advanced(location)
 
 /datum/chemical_reaction/medicine/poultice

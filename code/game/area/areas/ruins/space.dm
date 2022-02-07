@@ -161,10 +161,10 @@
 	icon_state = "green"
 
 
-//Ruin of gas the lizard
+//Ruin of The Lizard's Gas (Station)
 
-/area/ruin/space/has_grav/gasthelizard
-	name = "Gas the lizard"
+/area/ruin/space/has_grav/thelizardsgas
+	name = "\improper The Lizard's Gas"
 
 
 //Ruin of Deep Storage
@@ -375,6 +375,12 @@
 
 /area/ruin/space/djstation/solars
 	name = "\improper DJ Station Solars"
+	icon_state = "DJ"
+	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	has_gravity = STANDARD_GRAVITY
+
+/area/ruin/space/djstation/service
+	name = "\improper DJ Station Service"
 	icon_state = "DJ"
 	has_gravity = STANDARD_GRAVITY
 

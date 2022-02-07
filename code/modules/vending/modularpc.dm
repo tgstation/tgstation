@@ -3,6 +3,7 @@
 	desc = "All the parts you need to build your own custom pc."
 	icon_state = "modularpc"
 	icon_deny = "modularpc-deny"
+	panel_type = "panel21"
 	light_mask = "modular-light-mask"
 	product_ads = "Get your gamer gear!;The best GPUs for all of your space-crypto needs!;The most robust cooling!;The finest RGB in space!"
 	vend_reply = "Game on!"

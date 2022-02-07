@@ -33,7 +33,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"charge_type",
 		"clothes_req",
 		"cone_level",
-		"cult_req",
 		"deactive_msg",
 		"desc",
 		"drawmessage",
@@ -211,7 +210,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 				If this is set to anything else, the variable with the appropriate name will be modified.",
 			"holder_var_amount" = "The amount of damage taken, the duration of status effect inflicted, or the change made to any other variable.",
 			"clothes_req" = "Whether the user has to be wearing wizard robes to cast the spell.",
-			"cult_req" = "Whether the user has to be wearing cult robes to cast the spell.",
 			"human_req" = "Whether the user has to be a human to cast the spell. Redundant when clothes_req is true.",
 			"nonabstract_req" = "If this is true, the spell cannot be cast by brains and pAIs.",
 			"stat_allowed" = "Whether the spell can be cast if the user is unconscious or dead.",
@@ -324,13 +322,14 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			saved_vars[params["name"]] = !saved_vars[params["name"]]
 		if("path_variable")
 			var/new_path = tgui_input_list(user, "Select type.", "Add SDQL Spell", typesof(text2path(params["root_path"])))
-			if(new_path)
-				saved_vars[params["name"]] = new_path
-				var/datum/sample = new new_path
-				var/list/overrides = list_vars[special_var_lists[params["name"]]]
-				overrides = overrides&sample.vars
-				qdel(sample)
-				icon_needs_updating(params["name"])
+			if(isnull(new_path))
+				return
+			saved_vars[params["name"]] = new_path
+			var/datum/sample = new new_path
+			var/list/overrides = list_vars[special_var_lists[params["name"]]]
+			overrides = overrides&sample.vars
+			qdel(sample)
+			icon_needs_updating(params["name"])
 		if("list_variable_add")
 			if(!list_vars[params["list"]])
 				list_vars[params["list"]] = list()

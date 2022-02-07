@@ -56,5 +56,5 @@
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2"
   },
-  "packageManager": "yarn@3.0.1"
+  "packageManager": "yarn@3.1.1"
 }

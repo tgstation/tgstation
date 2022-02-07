@@ -12,7 +12,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/structure/closet/crate/grave/filled/lead_researcher,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "ae" = (
@@ -568,7 +568,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "cl" = (
 /obj/structure/closet/crate/grave/filled,
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cm" = (
@@ -629,7 +629,7 @@
 "cw" = (
 /obj/structure/closet/crate/grave/filled,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cx" = (

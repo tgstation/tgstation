@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(minor_mapping)
 		var/turf/T = pick_n_take(turfs)
 		var/obj/item/storage/backpack/satchel/flat/F = new(T)
 
-		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, T.intact)
+		SEND_SIGNAL(F, COMSIG_OBJ_HIDE, T.underfloor_accessibility < UNDERFLOOR_VISIBLE)
 		amount--
 
 /proc/find_exposed_wires()
@@ -62,9 +62,9 @@ SUBSYSTEM_DEF(minor_mapping)
 	var/list/suitable = list()
 
 	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
-		for(var/t in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
-			if(isfloorturf(t) && !isplatingturf(t))
-				suitable += t
+		for(var/turf/detected_turf as anything in block(locate(1,1,z), locate(world.maxx,world.maxy,z)))
+			if(isfloorturf(detected_turf) && detected_turf.underfloor_accessibility == UNDERFLOOR_HIDDEN)
+				suitable += detected_turf
 
 	return shuffle(suitable)
 

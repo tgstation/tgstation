@@ -8,6 +8,9 @@ GLOBAL_VAR(bible_name)
 GLOBAL_VAR(bible_icon_state)
 GLOBAL_VAR(bible_inhand_icon_state)
 
+//altar
+GLOBAL_LIST_EMPTY(chaplain_altars)
+
 //gear
 GLOBAL_VAR(holy_weapon_type)
 GLOBAL_VAR(holy_armor_type)

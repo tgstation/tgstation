@@ -23,7 +23,7 @@
  *  power_channel (num)
  *     What channel to draw from when drawing power for power mode
  *     Possible Values:
- *        AREA_USAGE_EQUIP:0 -- Equipment Channel
+ *        AREA_USAGE_EQUIP:1 -- Equipment Channel
  *        AREA_USAGE_LIGHT:2 -- Lighting Channel
  *        AREA_USAGE_ENVIRON:3 -- Environment Channel
  *
@@ -146,7 +146,7 @@
 
 /obj/machinery/Initialize(mapload)
 	if(!armor)
-		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 70)
+		armor = list(MELEE = 25, BULLET = 10, LASER = 10, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 70)
 	. = ..()
 	GLOB.machines += src
 
@@ -159,6 +159,10 @@
 
 	if(occupant_typecache)
 		occupant_typecache = typecacheof(occupant_typecache)
+
+	if((resistance_flags & INDESTRUCTIBLE) && component_parts){ // This is needed to prevent indestructible machinery still blowing up. If an explosion occurs on the same tile as the indestructible machinery without the PREVENT_CONTENTS_EXPLOSION_1 flag, /datum/controller/subsystem/explosions/proc/propagate_blastwave will call ex_act on all movable atoms inside the machine, including the circuit board and component parts. However, if those parts get deleted, the entire machine gets deleted, allowing for INDESTRUCTIBLE machines to be destroyed. (See #62164 for more info)
+		flags_1 |= PREVENT_CONTENTS_EXPLOSION_1
+	}
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -204,7 +208,7 @@
 	if(our_area)
 		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
 
-	REMOVE_TRAIT(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)
+	lose_area_sensitivity(INNATE_TRAIT)
 	UnregisterSignal(src, COMSIG_ENTER_AREA)
 	UnregisterSignal(src, COMSIG_EXIT_AREA)
 
@@ -623,11 +627,13 @@
 	if(!Adjacent(user) || !can_buckle || !has_buckled_mobs()) //so that borgs (but not AIs, sadly (perhaps in a future PR?)) can unbuckle people from machines
 		return _try_interact(user)
 
-	if(buckled_mobs.len <= 1)
+	if(length(buckled_mobs) <= 1)
 		if(user_unbuckle_mob(buckled_mobs[1],user))
 			return TRUE
 
-	var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sort_names(buckled_mobs)
+	var/unbuckled = tgui_input_list(user, "Who do you wish to unbuckle?", "Unbuckle", sort_names(buckled_mobs))
+	if(isnull(unbuckled))
+		return FALSE
 	if(user_unbuckle_mob(unbuckled,user))
 		return TRUE
 

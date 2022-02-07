@@ -54,8 +54,6 @@
 	var/cannot_be_seen = 1
 	var/mob/living/creator = null
 
-
-
 // No movement while seen code.
 
 /mob/living/simple_animal/hostile/statue/Initialize(mapload, mob/living/creator)
@@ -65,6 +63,8 @@
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flicker_lights(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/aoe_turf/blindness(src)
 	mob_spell_list += new /obj/effect/proc_holder/spell/targeted/night_vision(src)
+	var/datum/action/innate/creature/teleport/teleport = new(src)
+	teleport.Grant(src)
 
 	// Set creator
 	if(creator)
@@ -144,7 +144,7 @@
 
 // Cannot talk
 
-/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/simple_animal/hostile/statue/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	return
 
 // Turn to dust when gibbed

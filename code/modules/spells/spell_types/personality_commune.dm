@@ -7,23 +7,26 @@
 	include_user = TRUE
 	action_icon_state = "telepathy"
 	action_background_icon_state = "bg_spell"
-	var/datum/brain_trauma/severe/split_personality/trauma
+	// Bidaly reminder that spells are not really "owned" by anyone
+	/// Weakref to the trauma that owns this spell
+	var/datum/weakref/trauma_ref
 	var/flufftext = "You hear an echoing voice in the back of your head..."
 
 /obj/effect/proc_holder/spell/targeted/personality_commune/New(datum/brain_trauma/severe/split_personality/T)
 	. = ..()
-	trauma = T
+	trauma_ref = WEAKREF(T)
 
 /obj/effect/proc_holder/spell/targeted/personality_commune/Destroy()
-	trauma = null
+	trauma_ref = null
 	return ..()
 
 // Pillaged and adapted from telepathy code
 /obj/effect/proc_holder/spell/targeted/personality_commune/cast(list/targets, mob/user)
+	var/datum/brain_trauma/severe/split_personality/trauma = trauma_ref?.resolve()
 	if(!istype(trauma))
 		to_chat(user, span_warning("Something is wrong; Either due a bug or admemes, you are trying to cast this spell without a split personality!"))
 		return
-	var/msg = stripped_input(usr, "What would you like to tell your other self?", null , "")
+	var/msg = tgui_input_text(usr, "What would you like to tell your other self?", "Commune")
 	if(!msg)
 		charge_counter = charge_max
 		return

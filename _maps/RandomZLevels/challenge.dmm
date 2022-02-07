@@ -608,10 +608,6 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = 28
-	},
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 "cd" = (
@@ -973,6 +969,19 @@
 "ds" = (
 /obj/structure/closet/l3closet,
 /turf/open/floor/circuit,
+/area/awaymission/challenge/end)
+"hR" = (
+/obj/machinery/computer/security/telescreen{
+	desc = "Used for watching evil areas.";
+	name = "Security Monitor";
+	network = "";
+	pixel_y = 30
+	},
+/obj/structure/table/reinforced,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)"
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 
 (1,1,1) = {"
@@ -26827,7 +26836,7 @@ aA
 aa
 aa
 bP
-bS
+hR
 cc
 cl
 cb
@@ -27598,7 +27607,7 @@ bI
 bM
 aF
 bP
-bS
+hR
 cc
 cd
 cu

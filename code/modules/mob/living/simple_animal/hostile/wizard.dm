@@ -27,7 +27,7 @@
 	retreat_distance = 3 //out of fireball range
 	minimum_distance = 3
 	del_on_death = 1
-	loot = list(/obj/effect/mob_spawn/human/corpse/wizard,
+	loot = list(/obj/effect/mob_spawn/corpse/human/wizard,
 				/obj/item/staff)
 
 	var/obj/effect/proc_holder/spell/aimed/fireball/fireball = null

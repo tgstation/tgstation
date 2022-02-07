@@ -12,7 +12,7 @@
 
 /datum/design/board/ripley_peri
 	name = "APLU \"Ripley\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Ripley\" Peripheral Control module."
+	desc = "Allows for the construction of a \"Ripley\" Peripheral Control module."
 	id = "ripley_peri"
 	build_path = /obj/item/circuitboard/mecha/ripley/peripherals
 	category = list("Exosuit Modules")
@@ -143,7 +143,7 @@
 
 /datum/design/board/clarke_peri
 	name = "\"Clarke\" Peripherals Control module"
-	desc = "Allows for the construction of a  \"Clarke\" Peripheral Control module."
+	desc = "Allows for the construction of a \"Clarke\" Peripheral Control module."
 	id = "clarke_peri"
 	build_path = /obj/item/circuitboard/mecha/clarke/peripherals
 	category = list("Exosuit Modules")
@@ -398,7 +398,7 @@
 	id = "mech_energy_relay"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay
-	materials = list(/datum/material/iron=10000,/datum/material/glass =  2000,/datum/material/gold=2000,/datum/material/silver=3000)
+	materials = list(/datum/material/iron=10000,/datum/material/glass = 2000,/datum/material/gold=2000,/datum/material/silver=3000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -429,16 +429,6 @@
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/drill/diamonddrill
 	materials = list(/datum/material/iron=10000,/datum/material/diamond=6500)
-	construction_time = 100
-	category = list("Exosuit Equipment")
-
-/datum/design/mech_generator_nuclear
-	name = "Exosuit Module (ExoNuclear Reactor)"
-	desc = "Compact nuclear reactor module."
-	id = "mech_generator_nuclear"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	materials = list(/datum/material/iron=10000,/datum/material/glass =  1000,/datum/material/silver=500)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 
@@ -489,7 +479,7 @@
 	id = "mech_sleeper"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/mecha_equipment/medical/sleeper
-	materials = list(/datum/material/iron=5000, /datum/material/glass =  10000)
+	materials = list(/datum/material/iron=5000, /datum/material/glass = 10000)
 	construction_time = 100
 	category = list("Exosuit Equipment")
 

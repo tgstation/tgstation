@@ -139,6 +139,7 @@
 		if(use(3))
 			var/obj/structure/big_delivery/P = new /obj/structure/big_delivery(get_turf(O.loc))
 			P.icon_state = O.delivery_icon
+			P.drag_slowdown = O.drag_slowdown
 			O.forceMove(P)
 			P.add_fingerprint(user)
 			O.add_fingerprint(user)

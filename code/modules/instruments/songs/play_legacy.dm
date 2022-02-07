@@ -46,7 +46,7 @@
  * * acc is either "b", "n", or "#"
  * * oct is 1-8 (or 9 for C)
  */
-/datum/song/proc/playkey_legacy(note, acc as text, oct, mob/user)
+/datum/song/proc/playkey_legacy(note, acc as text, oct, atom/player)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -82,9 +82,9 @@
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
+		if(player && HAS_TRAIT(player, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
-			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
+			L.apply_status_effect(/datum/status_effect/good_music)
 		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
 			continue
 		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, S = music_played)

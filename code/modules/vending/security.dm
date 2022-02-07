@@ -4,6 +4,7 @@
 	product_ads = "Crack communist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 	icon_state = "sec"
 	icon_deny = "sec-deny"
+	panel_type = "panel6"
 	light_mask = "sec-light-mask"
 	req_access = list(ACCESS_SECURITY)
 	products = list(
@@ -11,7 +12,7 @@
 		/obj/item/restraints/handcuffs/cable/zipties = 10,
 		/obj/item/grenade/flashbang = 4,
 		/obj/item/assembly/flash/handheld = 5,
-		/obj/item/food/donut = 12,
+		/obj/item/food/donut/plain = 12,
 		/obj/item/storage/box/evidence = 6,
 		/obj/item/flashlight/seclite = 4,
 		/obj/item/restraints/legcuffs/bola/energy = 7

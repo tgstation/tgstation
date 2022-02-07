@@ -58,7 +58,7 @@
 				data["status"] = "Recharging"
 			else
 				data["status"] = "In Transit"
-	for(var/obj/docking_port/stationary/S in SSshuttle.stationary)
+	for(var/obj/docking_port/stationary/S in SSshuttle.stationary_docking_ports)
 		if(!options.Find(S.port_destinations))
 			continue
 		if(!M.check_dock(S, silent = TRUE))

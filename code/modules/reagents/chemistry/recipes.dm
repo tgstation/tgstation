@@ -195,7 +195,7 @@
 		var/datum/reagent/reagent = holder.get_reagent(id)
 		if(!reagent)
 			return
-		reagent.volume =  round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
+		reagent.volume = round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
@@ -258,7 +258,7 @@
 				spawned_mob = new mob_class(get_turf(holder.my_atom))//Spawn our specific mob_class
 			spawned_mob.faction |= mob_faction
 			if(prob(50))
-				for(var/j = 1, j <= rand(1, 3), j++)
+				for(var/j in 1 to rand(1, 3))
 					step(spawned_mob, pick(NORTH,SOUTH,EAST,WEST))
 
 /**

@@ -291,6 +291,10 @@
 	healthdoll.hud = src
 	infodisplay += healthdoll
 
+	stamina = new /atom/movable/screen/stamina()
+	stamina.hud = src
+	infodisplay += stamina
+
 	pull_icon = new /atom/movable/screen/pull()
 	pull_icon.icon = ui_style
 	pull_icon.update_appearance()
@@ -306,7 +310,7 @@
 	lingstingdisplay.hud = src
 	infodisplay += lingstingdisplay
 
-	zone_select =  new /atom/movable/screen/zone_sel()
+	zone_select = new /atom/movable/screen/zone_sel()
 	zone_select.icon = ui_style
 	zone_select.hud = src
 	zone_select.update_appearance()

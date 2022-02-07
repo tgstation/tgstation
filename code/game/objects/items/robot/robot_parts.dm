@@ -255,7 +255,7 @@
 				return
 
 			var/mob/living/brain/brainmob = M.brainmob
-			if(is_banned_from(brainmob.ckey, "Cyborg") || QDELETED(src) || QDELETED(brainmob) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
+			if(is_banned_from(brainmob.ckey, JOB_CYBORG) || QDELETED(src) || QDELETED(brainmob) || QDELETED(user) || QDELETED(M) || !Adjacent(user))
 				if(!QDELETED(M))
 					to_chat(user, span_warning("This [M.name] does not seem to fit!"))
 				return
@@ -279,16 +279,17 @@
 				lawsync = FALSE
 				O.set_connected_ai(null)
 			else
-				O.notify_ai(NEW_BORG)
+				O.notify_ai(AI_NOTIFICATION_NEW_BORG)
 				if(forced_ai)
 					O.set_connected_ai(forced_ai)
 			if(!lawsync)
 				O.lawupdate = FALSE
 				if(M.laws.id == DEFAULT_AI_LAWID)
 					O.make_laws()
+					O.log_current_laws()
 
 			brainmob.mind?.remove_antags_for_borging()
-			O.job = "Cyborg"
+			O.job = JOB_CYBORG
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
@@ -337,16 +338,17 @@
 			else
 				if(forced_ai)
 					O.set_connected_ai(forced_ai)
-				O.notify_ai(AI_SHELL)
+				O.notify_ai(AI_NOTIFICATION_AI_SHELL)
 			if(!lawsync)
 				O.lawupdate = FALSE
 				O.make_laws()
+				O.log_current_laws()
 
 			O.cell = chest.cell
 			chest.cell.forceMove(O)
 			chest.cell = null
 			O.locked = panel_locked
-			O.job = "Cyborg"
+			O.job = JOB_CYBORG
 			forceMove(O)
 			O.robot_suit = src
 			if(!locomotion)

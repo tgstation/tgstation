@@ -200,8 +200,10 @@
 
 /turf/closed/wall/r_wall/update_icon(updates=ALL)
 	. = ..()
-	if(!(updates & UPDATE_SMOOTHING) || (d_state != INTACT))
+	if(d_state != INTACT)
 		smoothing_flags = NONE
+		return
+	if (!(updates & UPDATE_SMOOTHING))
 		return
 	smoothing_flags = SMOOTH_BITMASK
 	QUEUE_SMOOTH_NEIGHBORS(src)

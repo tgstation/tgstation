@@ -4,6 +4,7 @@
 	desc = "Everything you need for do-it-yourself station repair."
 	icon_state = "engi"
 	icon_deny = "engi-deny"
+	panel_type = "panel10"
 	req_access = list(ACCESS_ENGINE_EQUIP)
 	products = list(
 		/obj/item/clothing/under/rank/engineering/chief_engineer = 4,

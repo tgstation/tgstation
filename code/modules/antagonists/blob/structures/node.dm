@@ -5,7 +5,7 @@
 	desc = "A large, pulsating yellow mass."
 	max_integrity = BLOB_NODE_MAX_HP
 	health_regen = BLOB_NODE_HP_REGEN
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 65, ACID = 90)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 65, ACID = 90)
 	point_return = BLOB_REFUND_NODE_COST
 	claim_range = BLOB_NODE_CLAIM_RANGE
 	pulse_range = BLOB_NODE_PULSE_RANGE

@@ -117,23 +117,22 @@
 				atomstothrow = range(3, target)
 			else
 				atomstothrow = orange(3, target)
-			for(var/atom/movable/A in atomstothrow)
-				if(A.anchored || A.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
+			for(var/atom/movable/scatter in atomstothrow)
+				if(scatter.anchored || scatter.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					continue
-				if(ismob(A))
-					var/mob/M = A
-					if(M.mob_negates_gravity())
+				if(ismob(scatter))
+					var/mob/scatter_mob = scatter
+					if(scatter_mob.mob_negates_gravity())
 						continue
-				INVOKE_ASYNC(src, .proc/do_scatter, A, target)
+				do_scatter(scatter, target)
 			var/turf/targetturf = get_turf(target)
 			log_game("[key_name(source)] used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)]")
 			return ..()
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/A, atom/movable/target)
-	var/iter = 5-get_dist(A,target)
-	for(var/i in 0 to iter)
-		step_away(A,target)
-		sleep(2)
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/scatter, atom/movable/target)
+	var/dist = 5 - get_dist(scatter, target)
+	var/delay = 2
+	SSmove_manager.move_away(scatter, target, delay = delay, timeout = delay * dist, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
 	return "[..()] [mode==1?"([movable_target||"Nothing"])":null] \[<a href='?src=[REF(src)];mode=1'>S</a>|<a href='?src=[REF(src)];mode=2'>P</a>\]"
@@ -440,26 +439,6 @@
 		chassis.give_power(rechargerate * delta_time)
 	fuel.amount -= min(delta_time * use_fuel / MINERAL_MATERIAL_AMOUNT, fuel.amount)
 	update_equip_info()
-
-
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear
-	name = "exonuclear reactor"
-	desc = "An exosuit module that generates power using uranium as fuel. Pollutes the environment."
-	icon_state = "tesla"
-	max_fuel = 50000
-	fuelrate_idle = 5
-	fuelrate_active = 15
-	rechargerate = 25
-	var/radrate = 15
-
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/generator_init()
-	fuel = new /obj/item/stack/sheet/mineral/uranium(src, 0)
-
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/process(delta_time)
-	. = ..()
-	if(!.) //process wasnt killed
-		radiation_pulse(get_turf(src), radrate * delta_time)
-
 
 /////////////////////////////////////////// THRUSTERS /////////////////////////////////////////////
 

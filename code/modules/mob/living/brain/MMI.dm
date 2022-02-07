@@ -18,7 +18,7 @@
 /obj/item/mmi/Initialize(mapload)
 	. = ..()
 	radio = new(src) //Spawns a radio inside the MMI.
-	radio.broadcasting = FALSE //researching radio mmis turned the robofabs into radios because this didnt start as 0.
+	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as 0.
 	laws.set_laws_config()
 
 /obj/item/mmi/Destroy()
@@ -104,8 +104,8 @@
 
 /obj/item/mmi/attack_self(mob/user)
 	if(!brain)
-		radio.on = !radio.on
-		to_chat(user, span_notice("You toggle [src]'s radio system [radio.on==1 ? "on" : "off"]."))
+		radio.set_on(!radio.is_on())
+		to_chat(user, span_notice("You toggle [src]'s radio system [radio.is_on() == TRUE ? "on" : "off"]."))
 	else
 		eject_brain(user)
 		update_appearance()
@@ -204,12 +204,12 @@
 
 	if(brainmob.stat)
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
-	if(!radio.on)
+	if(!radio.is_on())
 		to_chat(brainmob, span_warning("Your radio is disabled!"))
 		return
 
-	radio.listening = !radio.listening
-	to_chat(brainmob, span_notice("Radio is [radio.listening ? "now" : "no longer"] receiving broadcast."))
+	radio.set_listening(!radio.get_listening())
+	to_chat(brainmob, span_notice("Radio is [radio.get_listening() ? "now" : "no longer"] receiving broadcast."))
 
 /obj/item/mmi/emp_act(severity)
 	. = ..()
@@ -235,7 +235,7 @@
 /obj/item/mmi/examine(mob/user)
 	. = ..()
 	if(radio)
-		. += span_notice("There is a switch to toggle the radio system [radio.on ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
+		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].[brain ? " It is currently being covered by [brain]." : null]")
 	if(brainmob)
 		var/mob/living/brain/B = brainmob
 		if(!B.key || !B.mind || B.stat == DEAD)
@@ -284,4 +284,4 @@
 /obj/item/mmi/syndie/Initialize(mapload)
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
-	radio.on = FALSE
+	radio.set_on(FALSE)

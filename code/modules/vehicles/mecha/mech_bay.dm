@@ -1,16 +1,3 @@
-/turf/open/floor/mech_bay_recharge_floor               //        Whos idea it was
-	name = "mech bay recharge station"                      //        Recharging turfs
-	desc = "Parking a mech on this station will recharge its internal power cell."
-	icon = 'icons/turf/floors.dmi'                          //   That are set in stone to check the west turf for recharge port
-	icon_state = "recharge_floor"                           //        Some people just want to watch the world burn i guess
-
-/turf/open/floor/mech_bay_recharge_floor/break_tile()
-	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
-
-/turf/open/floor/mech_bay_recharge_floor/airless
-	icon_state = "recharge_floor_asteroid"
-	initial_gas_mix = AIRLESS_ATMOS
-
 /obj/machinery/mech_bay_recharge_port
 	name = "mech bay power port"
 	desc = "This port recharges a mech's internal power cell."
@@ -19,7 +6,7 @@
 	icon = 'icons/mecha/mech_bay.dmi'
 	icon_state = "recharge_port"
 	circuit = /obj/item/circuitboard/machine/mech_recharger
-	var/obj/vehicle/sealed/mecha/recharging_mech
+	var/datum/weakref/recharging_mech_ref
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	var/recharge_power = 25
 	var/on = FALSE
@@ -52,9 +39,11 @@
 /obj/machinery/mech_bay_recharge_port/process(delta_time)
 	if(machine_stat & NOPOWER || !recharge_console)
 		return
+	var/obj/vehicle/sealed/mecha/recharging_mech = recharging_mech_ref?.resolve()
 	if(!recharging_mech)
 		recharging_mech = locate(/obj/vehicle/sealed/mecha) in recharging_turf
 		if(recharging_mech)
+			recharging_mech_ref = WEAKREF(recharging_mech)
 			recharge_console.update_appearance()
 	if(recharging_mech && recharging_mech.cell)
 		if(recharging_mech.cell.charge < recharging_mech.cell.maxcharge)
@@ -64,7 +53,7 @@
 		else
 			recharge_console.update_appearance()
 		if(recharging_mech.loc != recharging_turf)
-			recharging_mech = null
+			recharging_mech_ref = null
 			recharge_console.update_appearance()
 
 
@@ -107,15 +96,22 @@
 
 /obj/machinery/computer/mech_bay_power_console/ui_data(mob/user)
 	var/list/data = list()
-	if(recharge_port && !QDELETED(recharge_port))
-		data["recharge_port"] = list("mech" = null)
-		if(recharge_port.recharging_mech && !QDELETED(recharge_port.recharging_mech))
-			data["recharge_port"]["mech"] = list("health" = recharge_port.recharging_mech.get_integrity(), "maxhealth" = recharge_port.recharging_mech.max_integrity, "cell" = null, "name" = recharge_port.recharging_mech.name,)
-			if(recharge_port.recharging_mech.cell && !QDELETED(recharge_port.recharging_mech.cell))
-				data["recharge_port"]["mech"]["cell"] = list(
-				"charge" = recharge_port.recharging_mech.cell.charge,
-				"maxcharge" = recharge_port.recharging_mech.cell.maxcharge
-				)
+	if(QDELETED(recharge_port))
+		return data
+
+	data["recharge_port"] = list("mech" = null)
+	var/obj/vehicle/sealed/mecha/recharging_mech = recharge_port.recharging_mech_ref?.resolve()
+
+	if(!recharging_mech)
+		return data
+	data["recharge_port"]["mech"] = list("health" = recharging_mech.get_integrity(), "maxhealth" = recharging_mech.max_integrity, "cell" = null, "name" = recharging_mech.name,)
+
+	if(QDELETED(recharging_mech.cell))
+		return data
+	data["recharge_port"]["mech"]["cell"] = list(
+	"charge" = recharging_mech.cell.charge,
+	"maxcharge" = recharging_mech.cell.maxcharge
+	)
 	return data
 
 
@@ -140,9 +136,11 @@
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
-	if(!recharge_port?.recharging_mech?.cell)
+	var/obj/vehicle/sealed/mecha/recharging_mech = recharge_port?.recharging_mech_ref?.resolve()
+
+	if(!recharging_mech?.cell)
 		return
-	if(recharge_port.recharging_mech.cell.charge >= recharge_port.recharging_mech.cell.maxcharge)
+	if(recharging_mech.cell.charge >= recharging_mech.cell.maxcharge)
 		return
 	. += "recharge_comp_on"
 

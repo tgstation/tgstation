@@ -30,6 +30,7 @@
 	desc = "An alien organ that twists and writhes when exposed to light."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "demon_heart-on"
+	visual = TRUE
 	color = "#1C1C1C"
 	decay_factor = 0
 	/// How many life ticks in the dark the owner has been dead for. Used for nightmare respawns.

@@ -5,7 +5,6 @@
 	antagpanel_category = "Heretic Beast"
 	antag_moodlet = /datum/mood_event/heretics
 	job_rank = ROLE_HERETIC
-	antag_hud_type = ANTAG_HUD_HERETIC
 	antag_hud_name = "heretic_beast"
 	show_in_antagpanel = FALSE
 	var/datum/antagonist/master
@@ -16,8 +15,8 @@
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/heretic_monster/greet()
+	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
-	to_chat(owner, span_userdanger("You became an Eldritch Horror!"))
 
 /datum/antagonist/heretic_monster/on_removal()
 	if(master)
@@ -35,11 +34,3 @@
 	owner.announce_objectives()
 	to_chat(owner, span_notice("Your master is [master.owner.current.real_name]"))
 	return
-
-/datum/antagonist/heretic_monster/apply_innate_effects(mob/living/mob_override)
-	. = ..()
-	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
-
-/datum/antagonist/heretic_monster/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-	remove_antag_hud(antag_hud_type, owner.current)

@@ -29,8 +29,8 @@
 	skinned_type = /obj/item/stack/sheet/animalhide/lizard
 	exotic_bloodtype = "L"
 	disliked_food = GRAIN | DAIRY | CLOTH
-	liked_food = GROSS | MEAT | SEAFOOD
-	inert_mutation = FIREBREATH
+	liked_food = GROSS | MEAT | SEAFOOD | NUTS
+	inert_mutation = /datum/mutation/human/firebreath
 	deathsound = 'sound/voice/lizard/deathsound.ogg'
 	wings_icons = list("Dragon")
 	species_language_holder = /datum/language_holder/lizard
@@ -114,6 +114,11 @@
 	human_mob.dna.features["tail_lizard"] = tail
 	mutant_bodyparts["tail_lizard"] = tail
 	human_mob.update_body()
+
+/datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
+	return pick('sound/voice/lizard/lizard_scream_1.ogg',
+				'sound/voice/lizard/lizard_scream_2.ogg',
+				'sound/voice/lizard/lizard_scream_3.ogg')
 
 /*
 Lizard subspecies: ASHWALKERS

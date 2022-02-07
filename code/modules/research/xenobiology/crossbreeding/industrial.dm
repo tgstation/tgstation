@@ -42,7 +42,7 @@ Industrial extracts:
 	if(plasmaabsorbed >= plasmarequired)
 		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
 		plasmaabsorbed -= plasmarequired
-		for(var/i = 0, i < itemamount, i++)
+		for(var/i in 1 to itemamount)
 			do_after_spawn(new itempath(get_turf(src)))
 	else if(IsWorking)
 		playsound(src, 'sound/effects/bubbles.ogg', 5, TRUE)

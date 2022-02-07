@@ -154,37 +154,37 @@ SUBSYSTEM_DEF(id_access)
 	sub_department_managers_tgui = list(
 		"[ACCESS_CAPTAIN]" = list(
 			"regions" = list(REGION_COMMAND),
-			"head" = "Captain",
+			"head" = JOB_CAPTAIN,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_HOP]" = list(
 			"regions" = list(REGION_GENERAL, REGION_SUPPLY),
-			"head" = "Head of Personnel",
+			"head" = JOB_HEAD_OF_PERSONNEL,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_HOS]" = list(
 			"regions" = list(REGION_SECURITY),
-			"head" = "Head of Security",
+			"head" = JOB_HEAD_OF_SECURITY,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_CMO]" = list(
 			"regions" = list(REGION_MEDBAY),
-			"head" = "Chief Medical Officer",
+			"head" = JOB_CHIEF_MEDICAL_OFFICER,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_RD]" = list(
 			"regions" = list(REGION_RESEARCH),
-			"head" = "Research Director",
+			"head" = JOB_RESEARCH_DIRECTOR,
 			"templates" = list(),
 			"pdas" = list(),
 		),
 		"[ACCESS_CE]" = list(
 			"regions" = list(REGION_ENGINEERING),
-			"head" = "Chief Engineer",
+			"head" = JOB_CHIEF_ENGINEER,
 			"templates" = list(),
 			"pdas" = list(),
 		),
@@ -312,6 +312,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_MECH_SCIENCE]"] = "Science Mech Access"
 	desc_by_access["[ACCESS_MECH_ENGINE]"] = "Engineering Mech Access"
 	desc_by_access["[ACCESS_AUX_BASE]"] = "Auxiliary Base"
+	desc_by_access["[ACCESS_SERVICE]"] = "Service Hallway"
 	desc_by_access["[ACCESS_CENT_GENERAL]"] = "Code Grey"
 	desc_by_access["[ACCESS_CENT_THUNDER]"] = "Code Yellow"
 	desc_by_access["[ACCESS_CENT_STORAGE]"] = "Code Orange"
@@ -428,6 +429,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_icon_override = trim.trim_icon
 	id_card.trim_state_override = trim.trim_state
 	id_card.trim_assignment_override = trim.assignment
+	id_card.sechud_icon_state_override = trim.sechud_icon_state
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -444,6 +446,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
 	id_card.trim_assignment_override = null
+	id_card.sechud_icon_state_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.

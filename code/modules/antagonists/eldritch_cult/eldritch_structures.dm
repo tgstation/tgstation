@@ -81,7 +81,12 @@
 	for(var/X in subtypesof(/obj/item/eldritch_potion))
 		var/obj/item/eldritch_potion/potion = X
 		lst[initial(potion.name)] = potion
-	var/type = lst[input(user,"Choose your brew","Brew") in lst]
+	var/chosen_type = tgui_input_list(user, "Choose a brew", "Brewing", lst)
+	if(isnull(chosen_type))
+		return
+	if(isnull(lst[chosen_type]))
+		return
+	var/type = lst[chosen_type]
 	playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
 	new type(drop_location())
 	current_mass = 0

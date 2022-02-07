@@ -48,8 +48,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// Set by the shell. Holds the reference to the owner who inserted the component into the shell.
 	var/datum/weakref/inserter_mind
 
-	/// Variables stored on this integrated circuit. with a `variable_name = value` structure
+	/// Variables stored on this integrated circuit, with a `variable_name = value` structure
 	var/list/datum/circuit_variable/circuit_variables = list()
+
+	/// Variables stored on this integrated circuit that can be set by a setter, with a `variable_name = value` structure
+	var/list/datum/circuit_variable/modifiable_circuit_variables = list()
+
+	/// List variables stored on this integrated circuit, with a `variable_name = value` structure
+	var/list/datum/circuit_variable/list_variables = list()
 
 	/// The maximum amount of setters and getters a circuit can have
 	var/max_setters_and_getters = 30
@@ -72,6 +78,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The current size of the circuit.
 	var/current_size = 0
 
+	/// The current linked component printer. Lets you remotely print off circuit components and places them in the integrated circuit.
+	var/datum/weakref/linked_component_printer
+
 /obj/item/integrated_circuit/Initialize(mapload)
 	. = ..()
 
@@ -88,6 +97,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		remove_component(to_delete)
 		qdel(to_delete)
 	QDEL_LIST_ASSOC_VAL(circuit_variables)
+	QDEL_LIST_ASSOC_VAL(list_variables)
 	attached_components.Cut()
 	shell = null
 	examined_component = null
@@ -102,6 +112,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		. += span_notice("The charge meter reads [cell ? round(cell.percent(), 1) : 0]%.")
 	else
 		. += span_notice("There is no power cell installed.")
+
+/obj/item/integrated_circuit/drop_location()
+	if(shell)
+		return shell.drop_location()
+	return ..()
 
 /**
  * Sets the cell of the integrated circuit.
@@ -272,7 +287,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/simple/circuit_assets)
+		get_asset_datum(/datum/asset/simple/circuit_assets),
+		get_asset_datum(/datum/asset/json/circuit_components)
 	)
 
 /obj/item/integrated_circuit/ui_static_data(mob/user)
@@ -280,6 +296,11 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	.["global_basic_types"] = GLOB.wiremod_basic_types
 	.["screen_x"] = screen_x
 	.["screen_y"] = screen_y
+
+	var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+	if(!printer)
+		return
+	.["stored_designs"] = printer.current_unlocked_designs
 
 /obj/item/integrated_circuit/ui_data(mob/user)
 	. = list()
@@ -332,8 +353,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		variable_data["name"] = variable.name
 		variable_data["datatype"] = variable.datatype
 		variable_data["color"] = variable.color
+		if(islist(variable.value))
+			variable_data["is_list"] = TRUE
 		.["variables"] += list(variable_data)
-
 
 	.["display_name"] = display_name
 
@@ -554,7 +576,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			if(params["is_list"])
 				variable_datatype = PORT_TYPE_LIST(variable_datatype)
-			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)
+			var/datum/circuit_variable/variable = new /datum/circuit_variable(variable_identifier, variable_datatype)
+			if(params["is_list"])
+				variable.set_value(list())
+				list_variables[variable_identifier] = variable
+			else
+				modifiable_circuit_variables[variable_identifier] = variable
+			circuit_variables[variable_identifier] = variable
 			. = TRUE
 		if("remove_variable")
 			var/variable_identifier = params["variable_name"]
@@ -564,6 +592,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(!variable)
 				return
 			circuit_variables -= variable_identifier
+			list_variables -= variable_identifier
+			modifiable_circuit_variables -= variable_identifier
 			qdel(variable)
 			. = TRUE
 		if("add_setter_or_getter")
@@ -592,9 +622,35 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			var/obj/item/circuit_component/component = attached_components[component_id]
 			component.ui_perform_action(ui.user, params["action_name"])
-
+		if("print_component")
+			var/component_path = text2path(params["component_to_print"])
+			var/obj/item/circuit_component/component
+			if(!check_rights_for(ui.user.client, R_SPAWN))
+				var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+				if(!printer)
+					balloon_alert(ui.user, "linked printer not found!")
+					return
+				component = printer.print_component(component_path)
+				if(!component)
+					balloon_alert(ui.user, "failed to make the component!")
+					return
+			else
+				if(!ispath(component_path, /obj/item/circuit_component))
+					return
+				component = new component_path(drop_location())
+				component.datum_flags |= DF_VAR_EDITED
+			if(!add_component(component))
+				return
+			component.rel_x = text2num(params["rel_x"])
+			component.rel_y = text2num(params["rel_y"])
+			return TRUE
 
 #undef WITHIN_RANGE
+
+/obj/item/integrated_circuit/balloon_alert(mob/viewer, text)
+	if(shell)
+		return shell.balloon_alert(viewer, text)
+	return ..()
 
 /obj/item/integrated_circuit/proc/clear_setter_or_getter(datum/source)
 	SIGNAL_HANDLER

@@ -25,7 +25,7 @@
 
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
-	if(reagents.has_reagent(/datum/reagent/water, 1) || reagents.has_reagent(/datum/reagent/water/holywater, 1) || reagents.has_reagent(/datum/reagent/consumable/ethanol/vodka, 1) || reagents.has_reagent(/datum/reagent/space_cleaner, 1))
+	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))
 		// If there's a cleaner with a mind, let's gain some experience!
 		if(cleaner?.mind)
 			var/total_experience_gain = 0
@@ -64,14 +64,6 @@
 		if(do_after(user, mopspeed*clean_speedies, target = T))
 			to_chat(user, span_notice("You finish mopping."))
 			clean(T, user)
-
-
-/obj/effect/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/mop) || istype(I, /obj/item/soap))
-		return
-	else
-		return ..()
-
 
 /obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	if(insertable)

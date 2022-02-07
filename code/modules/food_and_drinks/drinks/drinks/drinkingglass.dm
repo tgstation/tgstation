@@ -1,10 +1,11 @@
-
-
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
+	base_icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
+	fill_icon_thresholds = list(0)
+	fill_icon_state = "drinking_glass"
 	volume = 50
 	custom_materials = list(/datum/material/glass=500)
 	max_integrity = 20
@@ -12,7 +13,7 @@
 	resistance_flags = ACID_PROOF
 	obj_flags = UNIQUE_RENAME
 	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
-	pickup_sound =  'sound/items/handling/drinkglass_pickup.ogg'
+	pickup_sound = 'sound/items/handling/drinkglass_pickup.ogg'
 	custom_price = PAYCHECK_PRISONER
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
@@ -35,23 +36,22 @@
 	desc = largest_reagent?.glass_desc || initial(desc)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/update_icon_state()
-	if(!length(reagents.reagent_list))
-		icon_state = "glass_empty"
+	if(!reagents.total_volume)
+		icon_state = base_icon_state
 		return ..()
 
-	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	if(largest_reagent?.glass_icon_state)
-		icon_state = largest_reagent.glass_icon_state
+	var/glass_icon = get_glass_icon(reagents.get_master_reagent())
+	if(glass_icon)
+		icon_state = glass_icon
+		fill_icon_thresholds = null
+	else
+		//Make sure the fill_icon_thresholds and the icon_state are reset. We'll use reagent overlays.
+		fill_icon_thresholds = fill_icon_thresholds || list(1)
+		icon_state = base_icon_state
 	return ..()
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/update_overlays()
-	. = ..()
-	if(icon_state != initial(icon_state))
-		return
-
-	var/mutable_appearance/reagent_overlay = mutable_appearance(icon, "glassoverlay")
-	reagent_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-	. += reagent_overlay
+/obj/item/reagent_containers/food/drinks/drinkingglass/proc/get_glass_icon(datum/reagent/largest_reagent)
+	return largest_reagent?.glass_icon_state
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
@@ -68,6 +68,7 @@
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list(15)
+	fill_icon_state = "shot_glass"
 	volume = 15
 	custom_materials = list(/datum/material/glass=100)
 	custom_price = PAYCHECK_ASSISTANT * 0.4
@@ -87,23 +88,8 @@
 	else
 		desc = "The challenge is not taking as many as you can, but guessing what it is before you pass out."
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_icon_state()
-	. = ..()
-	if(!length(reagents.reagent_list))
-		icon_state = base_icon_state
-		return
-
-	var/datum/reagent/largest_reagent = reagents.get_master_reagent()
-	icon_state = largest_reagent.shot_glass_icon_state || "[base_icon_state]clear"
-
-/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/update_overlays()
-	. = ..()
-	if(icon_state != "[base_icon_state]clear")
-		return
-
-	var/mutable_appearance/shot_overlay = mutable_appearance(icon, "shotglassoverlay")
-	shot_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-	. += shot_overlay
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/get_glass_icon(datum/reagent/largest_reagent)
+	return largest_reagent?.shot_glass_icon_state
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/filled/soda
 	name = "Soda Water"

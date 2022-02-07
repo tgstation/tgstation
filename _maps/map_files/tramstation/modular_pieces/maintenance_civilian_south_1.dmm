@@ -1,0 +1,232 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"d" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
+"e" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"f" = (
+/turf/template_noop,
+/area/template_noop)
+"h" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"j" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"o" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"q" = (
+/obj/item/clothing/head/cone{
+	pixel_y = -8
+	},
+/turf/template_noop,
+/area/template_noop)
+"v" = (
+/turf/closed/wall/rust,
+/area/maintenance/port/aft)
+"z" = (
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"C" = (
+/turf/closed/wall,
+/area/maintenance/port/aft)
+"F" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/pickaxe/improvised,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"G" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/structure/girder,
+/obj/item/stack/sheet/iron/five,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"H" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/clothing/glasses/welding,
+/obj/item/crowbar,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"J" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"L" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"M" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"O" = (
+/obj/item/stack/ore/glass,
+/obj/effect/spawner/random/decoration/glowstick,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"R" = (
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"T" = (
+/turf/closed/wall/rock/porous,
+/area/maintenance/port/aft)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"V" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"W" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/mecha_wreckage/ripley,
+/obj/item/stack/cable_coil/five,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+
+(1,1,1) = {"
+f
+f
+C
+v
+v
+f
+f
+f
+f
+f
+"}
+(2,1,1) = {"
+q
+d
+k
+U
+o
+f
+f
+f
+f
+f
+"}
+(3,1,1) = {"
+f
+f
+f
+V
+o
+f
+f
+f
+f
+f
+"}
+(4,1,1) = {"
+f
+f
+C
+J
+v
+f
+f
+f
+f
+f
+"}
+(5,1,1) = {"
+f
+f
+v
+U
+o
+f
+f
+f
+f
+f
+"}
+(6,1,1) = {"
+f
+f
+T
+V
+V
+V
+T
+j
+f
+f
+"}
+(7,1,1) = {"
+f
+f
+v
+V
+V
+O
+z
+R
+z
+e
+"}
+(8,1,1) = {"
+f
+f
+C
+v
+F
+h
+z
+M
+H
+T
+"}
+(9,1,1) = {"
+f
+f
+f
+v
+v
+T
+L
+W
+V
+T
+"}
+(10,1,1) = {"
+f
+f
+f
+f
+f
+f
+f
+G
+f
+f
+"}

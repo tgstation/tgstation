@@ -1,10 +1,3 @@
-//SEC_LEVEL_GREEN = code green
-//SEC_LEVEL_BLUE = code blue
-//SEC_LEVEL_RED = code red
-//SEC_LEVEL_DELTA = code delta
-
-//config.alert_desc_blue_downto
-
 /proc/set_security_level(level)
 	switch(level)
 		if("green")

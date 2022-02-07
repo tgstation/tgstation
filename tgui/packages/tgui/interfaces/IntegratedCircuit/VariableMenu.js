@@ -94,6 +94,7 @@ export class VariableMenu extends Component {
                             onMouseDown={(e) =>
                               handleMouseDownSetter(e, val.name)}
                             color={val.color}
+                            disabled={!!val.is_list}
                             tooltip={
                               multiline`
                             Drag me onto the circuit's grid
@@ -148,7 +149,7 @@ export class VariableMenu extends Component {
                       <Dropdown
                         options={types}
                         displayText={variable_type}
-                        className="Datatype__Option"
+                        className="IntegratedCircuit__BlueBorder"
                         color="black"
                         width="100%"
                         over

@@ -296,7 +296,7 @@
 
 /// Traits for plants that can be activated to turn into a mob.
 /datum/plant_gene/trait/mob_transformation
-	name = "Dormat Ferocity"
+	name = "Dormant Ferocity"
 	trait_ids = ATTACK_SELF_ID
 	/// Whether mobs spawned by this trait are dangerous or not.
 	var/dangerous = FALSE
@@ -644,20 +644,25 @@
 /datum/plant_gene/trait/carnivory/jupitercup
 	mutability_flags = PLANT_GENE_GRAFTABLE
 
+/// Preset plant reagent genes that are unremovable from a plant.
+/datum/plant_gene/reagent/preset
+	mutability_flags = PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/reagent/preset/New(new_reagent_id, new_reagent_rate = 0.04)
+	. = ..()
+	set_reagent(reagent_id)
+
 /// Spaceman's Trumpet fragile Polypyrylium Oligomers
-/datum/plant_gene/reagent/polypyr
+/datum/plant_gene/reagent/preset/polypyr
 	reagent_id = /datum/reagent/medicine/polypyr
 	rate = 0.15
-	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Jupitercup's fragile Liquid Electricity
-/datum/plant_gene/reagent/liquidelectricity
+/datum/plant_gene/reagent/preset/liquidelectricity
 	reagent_id = /datum/reagent/consumable/liquidelectricity/enriched
 	rate = 0.1
-	mutability_flags = PLANT_GENE_GRAFTABLE
 
 /// Carbon Roses's fragile Carbon
-/datum/plant_gene/reagent/carbon
+/datum/plant_gene/reagent/preset/carbon
 	reagent_id = /datum/reagent/carbon
 	rate = 0.1
-	mutability_flags = PLANT_GENE_GRAFTABLE

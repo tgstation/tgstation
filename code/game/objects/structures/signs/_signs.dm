@@ -6,10 +6,9 @@
 	layer = SIGN_LAYER
 	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	///Determines if a sign is unwrenchable.
 	var/buildable_sign = TRUE
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
@@ -33,7 +32,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
-	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
@@ -133,8 +132,8 @@
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
-		if(!choice)
+		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
 			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
@@ -161,13 +160,11 @@
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
-		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
-		if(!choice)
+		var/choice = tgui_input_list(user, "Select a sign type", "Sign Customization", GLOB.editable_sign_types)
+		if(isnull(choice))
 			return
 		if(!Adjacent(user)) //Make sure user is adjacent still.
 			to_chat(user, span_warning("You need to stand next to the sign to change it!"))
-			return
-		if(!choice)
 			return
 		user.visible_message(span_notice("You begin changing [src]."))
 		if(!do_after(user, 4 SECONDS, target = src))

@@ -6,6 +6,7 @@
 /obj/item/circuit_component/direction
 	display_name = "Get Direction"
 	desc = "A component that returns the direction of itself and an entity."
+	category = "Entity"
 
 	/// The input port
 	var/datum/port/input/input_port
@@ -43,7 +44,7 @@
 	var/atom/object = input_port.value
 	if(!object)
 		return
-	var/turf/location = get_turf(src)
+	var/turf/location = get_location()
 
 	if(object.z != location.z || get_dist(location, object) > max_range)
 		output.set_output(null)

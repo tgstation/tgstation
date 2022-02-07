@@ -178,9 +178,10 @@
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
 		return
 
-	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
-	if(new_layer)
-		target_layer = layers[new_layer]
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
+	if(isnull(new_layer))
+		return
+	target_layer = layers[new_layer]
 
 ///A faster reinforced plunger
 /obj/item/plunger/reinforced

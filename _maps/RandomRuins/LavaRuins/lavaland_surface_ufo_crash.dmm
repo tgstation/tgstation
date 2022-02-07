@@ -39,7 +39,7 @@
 	},
 /area/ruin/unpowered)
 "p" = (
-/obj/effect/mob_spawn/human/abductor,
+/obj/effect/mob_spawn/corpse/human/abductor,
 /turf/open/floor/plating/abductor{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},

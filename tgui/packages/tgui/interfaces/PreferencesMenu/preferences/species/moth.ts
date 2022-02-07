@@ -8,8 +8,8 @@ const Moth: Species = {
     good: [{
       icon: "feather-alt",
       name: "Precious Wings",
-      description: "Moths can fly in pressurized, zero-g environments using \
-        their wings.",
+      description: "Moths can fly in pressurized, zero-g environments and \
+        safely land short falls using their wings.",
     }, {
       icon: "tshirt",
       name: "Meal Plan",

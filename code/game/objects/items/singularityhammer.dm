@@ -12,7 +12,7 @@
 	throwforce = 15
 	throw_range = 1
 	w_class = WEIGHT_CLASS_HUGE
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 50, BIO = 0, RAD = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 0, BOMB = 50, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
 	///Is it able to pull shit right now?
@@ -55,20 +55,16 @@
 			var/atom/movable/A = X
 			if(A == wielder)
 				continue
-			if(A && !A.anchored && !ishuman(X) && !isobserver(X))
+			if(isliving(A))
+				var/mob/living/vortexed_mob = A
+				if(vortexed_mob.mob_negates_gravity())
+					continue
+				else
+					vortexed_mob.Paralyze(2 SECONDS)
+			if(!A.anchored && !isobserver(A))
 				step_towards(A,pull)
 				step_towards(A,pull)
 				step_towards(A,pull)
-			else if(ishuman(X))
-				var/mob/living/carbon/human/H = X
-				if(istype(H.shoes, /obj/item/clothing/shoes/magboots))
-					var/obj/item/clothing/shoes/magboots/M = H.shoes
-					if(M.magpulse)
-						continue
-				H.apply_effect(20, EFFECT_PARALYZE, 0)
-				step_towards(H,pull)
-				step_towards(H,pull)
-				step_towards(H,pull)
 
 /obj/item/singularityhammer/afterattack(atom/A as mob|obj|turf|area, mob/living/user, proximity)
 	. = ..()
@@ -141,6 +137,8 @@
 
 /obj/item/mjollnir/attack(mob/living/M, mob/user)
 	..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
 	if(wielded)
 		shock(M)
 

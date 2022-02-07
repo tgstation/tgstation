@@ -6,10 +6,8 @@
 	extra_price = PAYCHECK_HARD
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
+	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
-
-/obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
@@ -68,6 +66,7 @@
 					/obj/item/clothing/shoes/sneakers/white = 4,
 					/obj/item/clothing/head/beret/medical/paramedic = 4,
 					/obj/item/clothing/head/soft/paramedic = 4,
+					/obj/item/clothing/shoes/sneakers/blue = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
@@ -356,8 +355,8 @@
 					/obj/item/clothing/under/suit/black = 1,
 					/obj/item/clothing/under/suit/black/skirt = 1,
 					/obj/item/clothing/suit/toggle/lawyer/black = 1,
-					/obj/item/clothing/under/rank/civilian/lawyer/female = 1,
-					/obj/item/clothing/under/rank/civilian/lawyer/female/skirt = 1,
+					/obj/item/clothing/under/rank/civilian/lawyer/beige = 1,
+					/obj/item/clothing/under/rank/civilian/lawyer/beige/skirt = 1,
 					/obj/item/clothing/under/suit/black_really = 1,
 					/obj/item/clothing/under/suit/black_really/skirt = 1,
 					/obj/item/clothing/under/rank/civilian/lawyer/blue = 1,

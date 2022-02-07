@@ -28,8 +28,7 @@
 		if(T.density)
 			to_chat(src, span_warning("This spot is too dense to place a blob core on!"))
 			return FALSE
-		var/area/A = get_area(T)
-		if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
+		if(!is_valid_turf(T))
 			to_chat(src, span_warning("You cannot place your core here!"))
 			return FALSE
 		for(var/obj/O in T)
@@ -71,7 +70,11 @@
 		for(var/i in 1 to GLOB.blob_nodes.len)
 			var/obj/structure/blob/special/node/B = GLOB.blob_nodes[i]
 			nodes["Blob Node #[i] ([get_area_name(B)])"] = B
-		var/node_name = input(src, "Choose a node to jump to.", "Node Jump") in nodes
+		var/node_name = tgui_input_list(src, "Choose a node to jump to", "Node Jump", nodes)
+		if(isnull(node_name))
+			return FALSE
+		if(isnull(nodes[node_name]))
+			return FALSE
 		var/obj/structure/blob/special/node/chosen_node = nodes[node_name]
 		if(chosen_node)
 			forceMove(chosen_node.loc)

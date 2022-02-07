@@ -24,3 +24,8 @@
 	sleep(10)
 	H.facial_hairstyle = "Neckbeard"
 	return(BRUTELOSS)
+
+/obj/item/clothing/head/fedora/carpskin
+	name = "carpskin fedora"
+	icon_state = "fedora_carpskin"
+	inhand_icon_state = "fedora_carpskin"

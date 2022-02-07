@@ -56,6 +56,8 @@
 		RegisterSignal(parent, COMSIG_DOPPLER_ARRAY_EXPLOSION_DETECTED, .proc/try_run_doppler_experiment)
 	if(istype(parent, /obj/machinery/destructive_scanner))
 		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
+	if(istype(parent, /obj/machinery/computer/operating))
+		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, .proc/try_run_dissection_experiment)
 
 	// Determine UI display mode
 	switch(config_mode)
@@ -172,6 +174,16 @@
 	else
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		our_array.say("Insufficient explosion to contribute to current experiment.")
+
+/// Hooks on a successful dissection experiment
+/datum/component/experiment_handler/proc/try_run_dissection_experiment(obj/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	if (action_experiment(source, target))
+		playsound(source, 'sound/machines/ping.ogg', 25)
+	else
+		playsound(source, 'sound/machines/buzz-sigh.ogg', 25)
+		source.say("The dissection did not result in anything, either prior dissections have not been complete, or this one has already been researched.")
 
 /**
  * Announces a message to all experiment handlers

@@ -34,7 +34,7 @@
 		tool_paths = string_list(tool_paths)
 
 /**
- * Run custom pre-craft checks for this recipe
+ * Run custom pre-craft checks for this recipe, don't add feedback messages in this because it will spam the client
  *
  * user: The /mob that initiated the crafting
  * collected_requirements: A list of lists of /obj/item instances that satisfy reqs. Top level list is keyed by requirement path.
@@ -44,6 +44,13 @@
 
 /datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
 	return
+
+///Check if the pipe used for atmospheric device crafting is the proper one
+/datum/crafting_recipe/proc/atmos_pipe_check(mob/user, list/collected_requirements)
+	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
+	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
+		return TRUE
+	return FALSE
 
 /datum/crafting_recipe/improv_explosive
 	name = "IED"
@@ -62,7 +69,7 @@
 	result = /obj/item/spear/explosive
 	reqs = list(/obj/item/spear = 1,
 				/obj/item/grenade = 1)
-	blacklist = list(/obj/item/spear/bonespear)
+	blacklist = list(/obj/item/spear/bonespear, /obj/item/spear/bamboospear)
 	parts = list(/obj/item/spear = 1,
 				/obj/item/grenade = 1)
 	time = 15
@@ -379,7 +386,7 @@
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
-	result = /mob/living/simple_animal/bot/honkbot
+	result = /mob/living/simple_animal/bot/secbot/honkbot
 	reqs = list(/obj/item/storage/box/clown = 1,
 				/obj/item/bodypart/r_arm/robot = 1,
 				/obj/item/assembly/prox_sensor = 1,
@@ -625,18 +632,22 @@
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/radiogloves/New()
+	..()
+	blacklist |= subtypesof(/obj/item/radio)
+
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
 	reqs = list(/obj/item/food/grown/poppy/lily =2,
-				/obj/item/grown/sunflower = 2,
+				/obj/item/food/grown/sunflower = 2,
 				/obj/item/food/grown/poppy/geranium = 2)
 	category = CAT_MISC
 
 /datum/crafting_recipe/sunbouquet
 	name = "Sunflower bouquet"
 	result = /obj/item/bouquet/sunflower
-	reqs = list(/obj/item/grown/sunflower = 6)
+	reqs = list(/obj/item/food/grown/sunflower = 6)
 	category = CAT_MISC
 
 /datum/crafting_recipe/poppybouquet
@@ -941,6 +952,17 @@
 	result = /obj/item/reagent_containers/glass/bucket/wooden
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/ore_sensor
+	name = "Ore Sensor"
+	time = 3 SECONDS
+	reqs = list(
+		/datum/reagent/brimdust = 15,
+		/obj/item/stack/sheet/bone = 1,
+		/obj/item/stack/sheet/sinew = 1,
+	)
+	result = /obj/item/ore_sensor
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/headpike
 	name = "Spike Head (Glass Spear)"
 	time = 65
@@ -948,7 +970,7 @@
 				/obj/item/bodypart/head = 1)
 	parts = list(/obj/item/bodypart/head = 1,
 			/obj/item/spear = 1)
-	blacklist = list(/obj/item/spear/explosive, /obj/item/spear/bonespear)
+	blacklist = list(/obj/item/spear/explosive, /obj/item/spear/bonespear, /obj/item/spear/bamboospear)
 	result = /obj/structure/headpike
 	category = CAT_PRIMAL
 
@@ -960,6 +982,16 @@
 	parts = list(/obj/item/bodypart/head = 1,
 			/obj/item/spear/bonespear = 1)
 	result = /obj/structure/headpike/bone
+	category = CAT_PRIMAL
+
+/datum/crafting_recipe/headpikebamboo
+	name = "Spike Head (Bamboo Spear)"
+	time = 65
+	reqs = list(/obj/item/spear/bamboospear = 1,
+				/obj/item/bodypart/head = 1)
+	parts = list(/obj/item/bodypart/head = 1,
+			/obj/item/spear/bamboospear = 1)
+	result = /obj/structure/headpike/bamboo
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/pressureplate
@@ -1176,13 +1208,13 @@
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
-	reqs = list(/obj/item/stack/sheet/plasteel = 10,
-				/obj/item/stack/cable_coil = 10,
+	reqs = list(/obj/item/stack/sheet/plasteel = 5,
+				/obj/item/stack/cable_coil = 5,
 				/obj/item/electronics/airlock = 1
 				)
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
-	time = 15 SECONDS
+	time = 10 SECONDS
 	category = CAT_MISC
 	one_per_turf = TRUE
 
@@ -1208,11 +1240,36 @@
 				)
 	category = CAT_MISC
 
+/datum/crafting_recipe/mod_core_standard
+	name = "MOD core (Standard)"
+	result = /obj/item/mod/core/standard
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	reqs = list(/obj/item/stack/cable_coil = 5,
+				/obj/item/stack/rods = 2,
+				/obj/item/stack/sheet/glass = 1,
+				/obj/item/organ/heart/ethereal = 1,
+				)
+	category = CAT_MISC
+
+/datum/crafting_recipe/mod_core_ethereal
+	name = "MOD core (Ethereal)"
+	result = /obj/item/mod/core/ethereal
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	reqs = list(/datum/reagent/consumable/liquidelectricity = 5,
+				/obj/item/stack/cable_coil = 5,
+				/obj/item/stack/rods = 2,
+				/obj/item/stack/sheet/glass = 1,
+				/obj/item/reagent_containers/syringe = 1,
+				)
+	category = CAT_MISC
+
 /datum/crafting_recipe/alcohol_burner
 	name = "Alcohol burner"
 	result = /obj/item/burner
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/consumable/ethanol = 15,
 				/obj/item/paper = 1
 				)
@@ -1222,7 +1279,7 @@
 	name = "Oil burner"
 	result = /obj/item/burner/oil
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/fuel/oil = 15,
 				/obj/item/paper = 1
 				)
@@ -1232,7 +1289,7 @@
 	name = "Fuel burner"
 	result = /obj/item/burner/fuel
 	time = 5 SECONDS
-	reqs = list(/obj/item/reagent_containers/glass/beaker  = 1,
+	reqs = list(/obj/item/reagent_containers/glass/beaker = 1,
 				/datum/reagent/fuel = 15,
 				/obj/item/paper = 1
 				)
@@ -1275,8 +1332,8 @@
 	tool_behaviors = list(TOOL_WELDER)
 	time = 5 SECONDS
 	reqs = list(
-				/obj/item/stack/sheet/glass  = 1,
-				)
+		/obj/item/stack/sheet/glass = 1,
+	)
 	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/improvised_chem_heater
@@ -1325,6 +1382,322 @@
 	tool_paths = list(/obj/item/bikehorn)
 	time = 40 SECONDS
 	category = CAT_MISC
+
+/datum/crafting_recipe/pipe
+	name = "Smart pipe fitting"
+	tool_behaviors = list(TOOL_WRENCH)
+	result = /obj/item/pipe/quaternary
+	reqs = list(/obj/item/stack/sheet/iron = 1)
+	time = 0.5 SECONDS
+	category = CAT_ATMOSPHERIC
+
+/datum/crafting_recipe/pipe/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/smart
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.p_init_dir = ALL_CARDINALS
+	crafted_pipe.setDir(SOUTH)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/layer_adapter
+	name = "Layer manifold fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/binary
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1)
+	time = 1 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/layer_adapter/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/layer_adapter/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/layer_manifold
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/color_adapter
+	name = "Color adapter fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/binary
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1)
+	time = 1 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/color_adapter/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/color_adapter/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/color_adapter
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/he_pipe
+	name = "H/E pipe fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/quaternary
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1)
+	time = 1 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/he_pipe/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/he_pipe/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/manifold4w
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/he_junction
+	name = "H/E junction fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1)
+	time = 1 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/he_junction/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/he_junction/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/pipe/heat_exchanging/junction
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/pressure_pump
+	name = "Pressure pump fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/binary
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/pressure_pump/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/pressure_pump/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/binary/pump
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/manual_valve
+	name = "Manual valve fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/binary
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/manual_valve/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/manual_valve/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/binary/valve
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/vent
+	name = "Vent pump fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/vent/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/vent/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/vent_pump
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/scrubber
+	name = "Scrubber fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/scrubber/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/scrubber/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/vent_scrubber
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/filter
+	name = "Filter fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/trinary/flippable
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/filter/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/filter/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/trinary/filter
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/mixer
+	name = "Mixer fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/trinary/flippable
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 5,
+		/obj/item/stack/cable_coil = 5)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/mixer/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/mixer/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/trinary/mixer
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/connector
+	name = "Portable connector fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/connector/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/connector/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/portables_connector
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/passive_vent
+	name = "Passive vent fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/passive_vent/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/passive_vent/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/passive_vent
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/injector
+	name = "Outlet injector fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/iron = 1,
+		/obj/item/stack/cable_coil = 5)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/injector/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/injector/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/outlet_injector
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
+
+/datum/crafting_recipe/he_exchanger
+	name = "Heat exchanger fitting"
+	tool_behaviors = list(TOOL_WRENCH, TOOL_WELDER)
+	result = /obj/item/pipe/directional
+	reqs = list(
+		/obj/item/pipe = 1,
+		/obj/item/stack/sheet/plasteel = 1)
+	time = 2 SECONDS
+	category = CAT_ATMOSPHERIC
+	additional_req_text = " smart pipe fitting"
+
+/datum/crafting_recipe/he_exchanger/check_requirements(mob/user, list/collected_requirements)
+	return atmos_pipe_check(user, collected_requirements)
+
+/datum/crafting_recipe/he_exchanger/on_craft_completion(mob/user, atom/result)
+	var/obj/item/pipe/crafted_pipe = result
+	crafted_pipe.pipe_type = /obj/machinery/atmospherics/components/unary/heat_exchanger
+	crafted_pipe.pipe_color = COLOR_VERY_LIGHT_GRAY
+	crafted_pipe.setDir(user.dir)
+	crafted_pipe.update()
 
 #undef CRAFTING_MACHINERY_CONSUME
 #undef CRAFTING_MACHINERY_USE

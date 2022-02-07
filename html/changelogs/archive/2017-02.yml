@@ -495,7 +495,7 @@
   - tweak: Changes centcomm ferry to require centcomm general access instead of admin
       permission.
   coiax:
-  - rscadd: Nuke ops syndicate cyborgs have been split into two seperate uplink items.
+  - rscadd: Nuke ops syndicate cyborgs have been split into two separate uplink items.
       Medical cyborgs now cost 35 TC, assault cyborgs now cost 65 TC.
   grimreaperx15:
   - tweak: Blood Cult Pylons will now rapidly regenerate any nearby cultists blood,

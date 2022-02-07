@@ -72,5 +72,5 @@
 
 /obj/item/clothing/mask/bandana/durathread
 	name = "durathread bandana"
-	desc =  "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
+	desc = "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
 	icon_state = "banddurathread"

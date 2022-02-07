@@ -763,7 +763,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/east,
-/obj/structure/reagent_dispensers/peppertank/directional/east,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "qi" = (

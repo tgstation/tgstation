@@ -4,12 +4,14 @@
 	product_slogans = "THIS'S WHERE TH' SEEDS LIVE! GIT YOU SOME!;Hands down the best seed selection on the station!;Also certain mushroom varieties available, more for experts! Get certified today!"
 	product_ads = "We like plants!;Grow some crops!;Grow, baby, growww!;Aw h'yeah son!"
 	icon_state = "seeds"
+	panel_type = "panel2"
 	light_mask = "seeds-light-mask"
 	products = list(
 		/obj/item/seeds/aloe = 3,
 		/obj/item/seeds/ambrosia = 3,
 		/obj/item/seeds/apple = 3,
 		/obj/item/seeds/banana = 3,
+		/obj/item/seeds/chili/bell_pepper = 3,
 		/obj/item/seeds/berry = 3,
 		/obj/item/seeds/cabbage = 3,
 		/obj/item/seeds/carrot = 3,
@@ -24,6 +26,7 @@
 		/obj/item/seeds/garlic = 3,
 		/obj/item/seeds/grape = 3,
 		/obj/item/seeds/grass = 3,
+		/obj/item/seeds/herbs = 3,
 		/obj/item/seeds/korta_nut = 3,
 		/obj/item/seeds/lemon = 3,
 		/obj/item/seeds/lime = 3,
@@ -42,6 +45,7 @@
 		/obj/item/seeds/tea = 3,
 		/obj/item/seeds/tobacco = 3,
 		/obj/item/seeds/tomato = 3,
+		/obj/item/seeds/toechtauese = 3,
 		/obj/item/seeds/tower = 3,
 		/obj/item/seeds/watermelon = 3,
 		/obj/item/seeds/wheat = 3,

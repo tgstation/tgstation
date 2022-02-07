@@ -105,6 +105,8 @@ Nothing else in the console has ID requirements.
 			var/logname = "Unknown"
 			if(isAI(user))
 				logname = "AI: [user.name]"
+			if(iscyborg(user))
+				logname = "Cyborg: [user.name]"
 			if(iscarbon(user))
 				var/obj/item/card/id/idcard = user.get_active_held_item()
 				if(istype(idcard))
@@ -316,7 +318,11 @@ Nothing else in the console has ID requirements.
 				say("No Design Disk Inserted!")
 				return TRUE
 			var/slot = text2num(params["slot"])
-			var/datum/design/design = SSresearch.techweb_design_by_id(params["selectedDesign"])
+			var/design_id = params["selectedDesign"]
+			if(!stored_research.researched_designs.Find(design_id))
+				stack_trace("ID did not map to a researched datum [design_id]")
+				return
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 			if(design)
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
 					if(design.autolathe_exportable && !design.reagents_list.len)

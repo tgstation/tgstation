@@ -44,6 +44,7 @@
 
 	if(isliving(edible_object.loc))
 		var/mob/living/food_holding_mob = edible_object.loc
+		food_holding_mob.dropItemToGround(edible_object)
 		food_holding_mob.put_in_hands(trash_item)
 
 /datum/element/food_trash/proc/food_crossed(datum/source, mob/crosser, bitecount)

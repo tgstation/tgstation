@@ -430,7 +430,7 @@
 /datum/chemical_reaction/cryostylane/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/datum/reagent/oxygen = holder.has_reagent(/datum/reagent/oxygen) //If we have oxygen, bring in the old cooling effect
 	if(oxygen)
-		holder.chem_temp =  max(holder.chem_temp - (10 * oxygen.volume * 2),0)
+		holder.chem_temp = max(holder.chem_temp - (10 * oxygen.volume * 2),0)
 		holder.remove_reagent(/datum/reagent/oxygen, oxygen.volume) // halves the temperature - tried to bring in some of the old effects at least!
 	return
 

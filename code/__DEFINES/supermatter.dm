@@ -2,7 +2,7 @@
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY -0.5 //Better then co2, worse then n2
 #define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 0.1
+#define CO2_HEAT_PENALTY 6
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
@@ -44,6 +44,17 @@
 /// The amount of matter power generated for every mole of miasma consumed. Higher values mean miasma generates more power.
 #define MIASMA_POWER_GAIN 10
 
+/// The minimum portion of the CO2 in the air that will be consumed. Higher values mean more CO2 will be consumed be default.
+#define CO2_CONSUMPTION_RATIO_MIN 0
+/// The maximum portion of the CO2 in the air that will be consumed. Lower values mean the CO2 consumption rate caps earlier.
+#define CO2_CONSUMPTION_RATIO_MAX 1
+/// The minimum pressure for a pure CO2 atmosphere to begin being consumed. Higher values mean it takes more CO2 pressure to make CO2 be consumed. Should be >= 0
+#define CO2_CONSUMPTION_PP (ONE_ATMOSPHERE*0.01)
+/// How the amount of CO2 consumed per tick scales with partial pressure. Higher values decrease the rate CO2 consumption scales with partial pressure. Should be >0
+#define CO2_PRESSURE_SCALING (ONE_ATMOSPHERE*0.25)
+/// How much the amount of CO2 consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the CO2 consumed.
+#define CO2_GASMIX_SCALING (0.1)
+
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
 #define POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD 500  //bonus powerloss inhibition boost if this amount of moles is reached
@@ -70,9 +81,10 @@
 #define MATTER_POWER_CONVERSION 10         //Crystal converts 1/this value of stored matter into energy.
 
 //These would be what you would get at point blank, decreases with distance
-#define DETONATION_RADS 200
 #define DETONATION_HALLUCINATION 600
 
+/// All humans within this range will be irradiated
+#define DETONATION_RADIATION_RANGE 20
 
 #define WARNING_DELAY 60
 

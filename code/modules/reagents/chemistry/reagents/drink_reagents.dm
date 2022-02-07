@@ -125,7 +125,7 @@
 	description = "This juice is VERY sour."
 	color = "#863333" // rgb: 175, 175, 0
 	taste_description = "sourness"
-	glass_icon_state  = "lemonglass"
+	glass_icon_state = "lemonglass"
 	glass_name = "glass of lemon juice"
 	glass_desc = "Sour..."
 	ph = 2
@@ -226,7 +226,7 @@
 /datum/reagent/consumable/milk/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 0.3))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 0.3))
 		if(myseed)
 			myseed.adjust_potency(-chems.get_reagent_amount(type) * 0.5)
 
@@ -259,7 +259,7 @@
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
 	taste_description = "creamy milk"
-	glass_icon_state  = "glass_white"
+	glass_icon_state = "glass_white"
 	glass_name = "glass of cream"
 	glass_desc = "Ewwww..."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -418,7 +418,7 @@
 	description = "A refreshing beverage."
 	color = "#100800" // rgb: 16, 8, 0
 	taste_description = "cola"
-	glass_icon_state  = "spacecola"
+	glass_icon_state = "spacecola"
 	glass_name = "glass of Space Cola"
 	glass_desc = "A glass of refreshing Space Cola."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -454,6 +454,45 @@
 	M.set_drowsyness(0)
 	M.AdjustSleeping(-40 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	..()
+	. = TRUE
+
+/datum/reagent/consumable/rootbeer
+	name = "root beer"
+	description = "A delightfully bubbly root beer, filled with so much sugar that it can actually speed up the user's trigger finger."
+	color = "#181008" // rgb: 24, 16, 8
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	metabolization_rate = 2 * REAGENTS_METABOLISM
+	taste_description = "a monstrous sugar rush"
+	glass_icon_state = "spacecola"
+	glass_name = "glass of root beer"
+	glass_desc = "A glass of highly potent, incredibly sugary root beer."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	/// If we activated the effect
+	var/effect_enabled = FALSE
+
+
+/datum/reagent/consumable/rootbeer/on_mob_end_metabolize(mob/living/L)
+	REMOVE_TRAIT(L, TRAIT_DOUBLE_TAP, type)
+	if(current_cycle > 10)
+		to_chat(L, span_warning("You feel kinda tired as your sugar rush wears off..."))
+		L.adjustStaminaLoss(min(80, current_cycle * 3))
+		L.adjust_drowsyness(current_cycle)
+	..()
+
+/datum/reagent/consumable/rootbeer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	if(current_cycle >= 3 && !effect_enabled) // takes a few seconds for the bonus to kick in to prevent microdosing
+		to_chat(M, span_notice("You feel your trigger finger getting itchy..."))
+		ADD_TRAIT(M, TRAIT_DOUBLE_TAP, type)
+		effect_enabled = TRUE
+
+	M.Jitter(2 * REM * delta_time)
+	if(prob(50))
+		M.dizziness += 1 * REM * delta_time
+	if(current_cycle > 10)
+		M.dizziness += 1.5 * REM * delta_time
+
 	..()
 	. = TRUE
 
@@ -601,8 +640,8 @@
 /datum/reagent/consumable/sodawater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.1))
+		mytray.adjust_waterlevel(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(type) * 0.1))
 
 /datum/reagent/consumable/sodawater/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
@@ -821,7 +860,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/grape_soda
-	name = "Grape soda"
+	name = "Grape Soda"
 	description = "Beloved by children and teetotalers."
 	color = "#E6CDFF"
 	taste_description = "grape soda"
@@ -847,7 +886,7 @@
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
-	glass_icon_state  = "chocolateglass"
+	glass_icon_state = "chocolateglass"
 	glass_name = "glass of hot coco"
 	glass_desc = "A favorite winter drink to warm you up."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -981,7 +1020,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/prunomix
-	name = "pruno mixture"
+	name = "Pruno Mixture"
 	color = "#E78108"
 	description = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
 	taste_description = "garbage"
@@ -1043,3 +1082,26 @@
 		M.adjustOxyLoss(-0.5 * REM * delta_time, 0)
 	..()
 	. = TRUE
+
+//Moth Stuff
+/datum/reagent/consumable/toechtauese_juice
+	name = "Töchtaüse Juice"
+	description = "An unpleasant juice made from töchtaüse berries. Best made into a syrup, unless you enjoy pain."
+	color = "#554862"
+	nutriment_factor = 0
+	taste_description = "fiery itchy pain"
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse juice"
+	glass_desc = "Raw, unadulterated töchtaüse juice. One swig will fill you with regrets."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/toechtauese_syrup
+	name = "Töchtaüse Syrup"
+	description = "A harsh spicy and bitter syrup, made from töchtaüse berries. Useful as an ingredient, both for food and cocktails."
+	color = "#554862"
+	nutriment_factor = 0
+	taste_description = "sugar, spice, and nothing nice"
+	glass_icon_state = "toechtauese_syrup"
+	glass_name = "glass of töchtaüse syrup"
+	glass_desc = "Not for drinking on its own."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

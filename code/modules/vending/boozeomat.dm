@@ -3,6 +3,7 @@
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one."
 	icon_state = "boozeomat"
 	icon_deny = "boozeomat-deny"
+	panel_type = "panel22"
 	products = list(
 		/obj/item/reagent_containers/food/drinks/drinkingglass = 30,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass = 12,
@@ -27,9 +28,11 @@
 		/obj/item/reagent_containers/food/drinks/bottle/vodka = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/vermouth = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/rum = 5,
+		/obj/item/reagent_containers/food/drinks/bottle/navy_rum = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/wine = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/cognac = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/kahlua = 5,
+		/obj/item/reagent_containers/food/drinks/bottle/curacao = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/hcider = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/absinthe = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/grappa = 5,
@@ -47,6 +50,7 @@
 		/obj/item/reagent_containers/glass/bottle/ethanol = 4,
 		/obj/item/reagent_containers/food/drinks/bottle/champagne = 5,
 		/obj/item/reagent_containers/food/drinks/bottle/trappist = 5,
+		/obj/item/reagent_containers/food/drinks/bottle/bitters = 5,
 	)
 
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"

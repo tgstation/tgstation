@@ -6,6 +6,27 @@
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	item_flags = NEEDS_PERMIT | NO_MAT_REDEMPTION
+	var/allow_intruder_use = FALSE
+
+/obj/item/gun/magic/staff/proc/is_wizard_or_friend(mob/user)
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/wizard) \
+		&& !user.mind.has_antag_datum(/datum/antagonist/survivalist/magic) \
+		&& !user.mind.has_antag_datum(/datum/antagonist/wizard_minion))
+		return FALSE
+	return TRUE
+
+/obj/item/gun/magic/staff/check_botched(mob/living/user, atom/target)
+	if(allow_intruder_use)
+		return ..()
+
+	if(!is_wizard_or_friend(user))
+		return !on_intruder_use(user, target)
+	return ..()
+
+/// Called when someone who isn't a wizard or magician uses this staff.
+/// Return TRUE to allow usage.
+/obj/item/gun/magic/staff/proc/on_intruder_use(mob/living/user, atom/target)
+	return TRUE
 
 /obj/item/gun/magic/staff/change
 	name = "staff of change"
@@ -15,6 +36,21 @@
 	icon_state = "staffofchange"
 	inhand_icon_state = "staffofchange"
 	school = SCHOOL_TRANSMUTATION
+
+/obj/item/gun/magic/staff/change/unrestricted
+	allow_intruder_use = TRUE
+
+/obj/item/gun/magic/staff/change/pickup(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>You don't feel strong enough to properly wield this staff!</span>"))
+		balloon_alert(user, "you feel weak holding this staff")
+
+/obj/item/gun/magic/staff/change/on_intruder_use(mob/living/user, atom/target)
+	user.dropItemToGround(src, TRUE)
+	var/randomize = pick("monkey","humanoid","animal")
+	var/mob/new_body = user.wabbajack(randomize)
+	balloon_alert(new_body, "wabbajack, wabbajack!")
 
 /obj/item/gun/magic/staff/animate
 	name = "staff of animation"
@@ -33,6 +69,35 @@
 	icon_state = "staffofhealing"
 	inhand_icon_state = "staffofhealing"
 	school = SCHOOL_RESTORATION
+	var/obj/item/gun/medbeam/healing_beam
+
+/obj/item/gun/magic/staff/healing/pickup(mob/user)
+	. = ..()
+	if(!is_wizard_or_friend(user))
+		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
+		user.balloon_alert(user, "the staff feels weaker as you touch it")
+
+/obj/item/gun/magic/staff/healing/Initialize(mapload)
+	. = ..()
+	healing_beam = new(src)
+	healing_beam.mounted = TRUE
+
+/obj/item/gun/magic/staff/healing/Destroy()
+	qdel(healing_beam)
+	return ..()
+
+/obj/item/gun/magic/staff/healing/unrestricted
+	allow_intruder_use = TRUE
+
+/obj/item/gun/magic/staff/healing/on_intruder_use(mob/living/user, atom/target)
+	if(target == user)
+		return FALSE
+	healing_beam.process_fire(target, user)
+	return FALSE
+
+/obj/item/gun/magic/staff/healing/dropped(mob/user)
+	healing_beam.LoseTarget()
+	return ..()
 
 /obj/item/gun/magic/staff/healing/handle_suicide() //Stops people trying to commit suicide to heal themselves
 	return
@@ -54,9 +119,24 @@
 	/obj/projectile/magic/bounty, /obj/projectile/magic/antimagic, /obj/projectile/magic/fetch, /obj/projectile/magic/sapping,
 	/obj/projectile/magic/necropotence, /obj/projectile/magic, /obj/projectile/temp/chill, /obj/projectile/magic/wipe)
 
+/obj/item/gun/magic/staff/chaos/unrestricted
+	allow_intruder_use = TRUE
+
 /obj/item/gun/magic/staff/chaos/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	chambered.projectile_type = pick(allowed_projectile_types)
 	. = ..()
+
+/obj/item/gun/magic/staff/chaos/on_intruder_use(mob/living/user)
+	if(user.anti_magic_check(TRUE, FALSE, FALSE)) // Don't let people with antimagic use the staff of chaos.
+		balloon_alert(user, "the staff refuses to fire!")
+		return FALSE
+
+	if(prob(95)) // You have a 5% chance of hitting yourself when using the staff of chaos.
+		return TRUE
+	balloon_alert(user, "chaos!")
+	user.dropItemToGround(src, TRUE)
+	process_fire(user, user, FALSE)
+	return FALSE
 
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"

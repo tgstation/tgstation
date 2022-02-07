@@ -24,6 +24,7 @@
 	name = "regenerative core"
 	desc = "All that remains of a hivelord. It can be used to help keep your body going, but it will rapidly decay into uselessness."
 	icon_state = "roro core 2"
+	visual = FALSE
 	item_flags = NOBLUDGEON
 	slot = ORGAN_SLOT_REGENERATIVE_CORE
 	organ_flags = NONE
@@ -86,7 +87,7 @@
 			else
 				to_chat(user, span_notice("You start to smear [src] on yourself. Disgusting tendrils hold you together and allow you to keep moving, but for how long?"))
 				SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "self"))
-			H.apply_status_effect(STATUS_EFFECT_REGENERATIVE_CORE)
+			H.apply_status_effect(/datum/status_effect/regenerative_core)
 			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "core", /datum/mood_event/healsbadman) //Now THIS is a miner buff (fixed - nerf)
 			qdel(src)
 
@@ -121,13 +122,13 @@
 	update_appearance()
 
 /obj/item/organ/regenerative_core/update_icon_state()
-	icon_state = inert ? "legion_soul_inert" : "legion_soul"
+	if (inert)
+		icon_state = "legion_soul_inert"
+	if (preserved)
+		icon_state = "legion_soul"
+	if (!inert && !preserved)
+		icon_state = "legion_soul_unstable"
 	return ..()
-
-/obj/item/organ/regenerative_core/update_overlays()
-	. = ..()
-	if(!inert && !preserved)
-		. += "legion_soul_crackle"
 
 /obj/item/organ/regenerative_core/legion/go_inert()
 	..()

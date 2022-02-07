@@ -247,5 +247,5 @@
 				else
 					uniform.adjusted = DIGITIGRADE_STYLE
 				leg_owner.update_inv_w_uniform()
-		if(leg_owner.shoes && !swap_back)
+		if(leg_owner.shoes && !(leg_owner.shoes.item_flags & IGNORE_DIGITIGRADE) && !swap_back)
 			leg_owner.dropItemToGround(leg_owner.shoes)

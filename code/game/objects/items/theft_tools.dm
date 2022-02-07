@@ -33,7 +33,7 @@
 	if(cooldown < world.time - 60)
 		cooldown = world.time
 		flick(pulseicon, src)
-		radiation_pulse(src, 400, 2)
+		radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION)
 
 /obj/item/nuke_core/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is rubbing [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -144,6 +144,7 @@
 /obj/item/paper/guides/antag/supermatter_sliver
 	info = "How to safely extract a supermatter sliver:<br>\
 	<ul>\
+	<li>You must have active magnetic anchoring at all times near an active supermatter crystal.</li>\
 	<li>Approach an active supermatter crystal with radiation shielded personal protective equipment. DO NOT MAKE PHYSICAL CONTACT.</li>\
 	<li>Use a supermatter scalpel (provided) to slice off a sliver of the crystal.</li>\
 	<li>Use supermatter extraction tongs (also provided) to safely pick up the sliver you sliced off.</li>\
@@ -183,7 +184,7 @@
 		return
 	else
 		to_chat(user, span_notice("As it touches \the [src], both \the [src] and \the [W] burst into dust!"))
-		radiation_pulse(user, 100)
+		radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 		qdel(W)
 		qdel(src)
@@ -206,7 +207,7 @@
 		span_userdanger("You're hit by [src] and everything suddenly goes silent.\n[src] flashes into dust, and soon as you can register this, you do as well."),\
 		span_hear("Everything suddenly goes silent."))
 	victim.dust()
-	radiation_pulse(src, 500, 2)
+	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	qdel(src)
 
@@ -217,7 +218,7 @@
 	user.visible_message(span_danger("[user] reaches out and tries to pick up [src]. [user.p_their()] body starts to glow and bursts into flames before flashing into dust!"),\
 			span_userdanger("You reach for [src] with your hands. That was dumb."),\
 			span_hear("Everything suddenly goes silent."))
-	radiation_pulse(user, 500, 2)
+	radiation_pulse(user, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	user.dust()
 
@@ -328,7 +329,7 @@
 			span_userdanger("You touch [AM] with [src], and everything suddenly goes silent.\n[AM] and [sliver] flash into dust, and soon as you can register this, you do as well."),\
 			span_hear("Everything suddenly goes silent."))
 		user.dust()
-	radiation_pulse(src, 500, 2)
+	radiation_pulse(src, max_range = 2, threshold = RAD_EXTREME_INSULATION, chance = 40)
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	QDEL_NULL(sliver)
 	update_appearance()

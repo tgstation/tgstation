@@ -45,7 +45,7 @@ To add a crossbreed:
 
 /obj/item/slimecross/Initialize(mapload)
 	. = ..()
-	name =  effect + " " + colour + " extract"
+	name = effect + " " + colour + " extract"
 	var/itemcolor = "#FFFFFF"
 	switch(colour)
 		if("orange")

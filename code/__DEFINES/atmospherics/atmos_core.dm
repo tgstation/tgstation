@@ -78,8 +78,6 @@
 #define STOP_REACTIONS 2
 
 //Fusion
-///Max amount of radiation that can be emitted per reaction cycle
-#define FUSION_RAD_MAX 5000
 ///Maximum instability before the reaction goes endothermic
 #define FUSION_INSTABILITY_ENDOTHERMALITY 4
 ///Maximum reachable fusion temperature
@@ -195,3 +193,6 @@
 #define MAKE_ACTIVE 2
 ///Disable excited group
 #define KILL_EXCITED 3
+
+/// How many maximum iterations do we allow the Newton-Raphson approximation for gas pressure to do.
+#define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 10

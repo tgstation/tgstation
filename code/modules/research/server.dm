@@ -76,8 +76,9 @@
 	set_machine_stat(machine_stat & ~EMPED)
 	refresh_working()
 
-/obj/machinery/rnd/server/proc/toggle_disable()
+/obj/machinery/rnd/server/proc/toggle_disable(mob/user)
 	research_disabled = !research_disabled
+	log_game("[key_name(user)] [research_disabled ? "shut off" : "turned on"] [src] at [loc_name(user)]")
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/get_env_temp()
@@ -151,7 +152,7 @@
 	if (href_list["toggle"])
 		if(allowed(usr) || obj_flags & EMAGGED)
 			var/obj/machinery/rnd/server/S = locate(href_list["toggle"]) in SSresearch.servers
-			S.toggle_disable()
+			S.toggle_disable(usr)
 		else
 			to_chat(usr, span_danger("Access Denied."))
 

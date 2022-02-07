@@ -174,10 +174,14 @@
 		if(get_amount() < 2)
 			to_chat(user, span_warning("You need at least two gauzes to do this!"))
 			return
-		new /obj/item/stack/sheet/cloth(user.drop_location())
-		user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
-			span_notice("You cut [src] into pieces of cloth with [I]."), \
-			span_hear("You hear cutting."))
+		new /obj/item/stack/sheet/cloth(I.drop_location())
+		if(user.CanReach(src))
+			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
+				span_notice("You cut [src] into pieces of cloth with [I]."), \
+				span_hear("You hear cutting."))
+		else //telekinesis
+			visible_message(span_notice("[I] cuts [src] into pieces of cloth."), \
+				blind_message = span_hear("You hear cutting."))
 		use(2)
 	else
 		return ..()

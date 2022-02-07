@@ -6,26 +6,34 @@
 	/// How close you are before you get shy
 	var/shy_range = 4
 	/// Typecache of mob types you are okay around
-	var/list/whitelist
+	var/list/mob_whitelist
+	/// Typecache of machines you can avoid being shy with
+	var/list/machine_whitelist = null
 	/// Message shown when you are is_shy
 	var/message = "You find yourself too shy to do that around %TARGET!"
 	/// Are you shy around a dead body?
 	var/dead_shy = FALSE
+	/// If dead_shy is false and this is true, you're only shy when right next to a dead target
+	var/dead_shy_immediate = TRUE
 	/// Invalidate last_result at this time
 	COOLDOWN_DECLARE(result_cooldown)
 	/// What was our last result?
 	var/last_result = FALSE
 
-/datum/component/shy/Initialize(whitelist, shy_range, message, dead_shy)
+/datum/component/shy/Initialize(mob_whitelist, shy_range, message, dead_shy, dead_shy_immediate, machine_whitelist)
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.whitelist = whitelist
+	src.mob_whitelist = mob_whitelist
 	if(shy_range)
 		src.shy_range = shy_range
 	if(message)
 		src.message = message
 	if(dead_shy)
 		src.dead_shy = dead_shy
+	if(dead_shy_immediate)
+		src.dead_shy_immediate = dead_shy_immediate
+	if(machine_whitelist)
+		src.machine_whitelist = machine_whitelist
 
 /datum/component/shy/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/on_clickon)
@@ -50,7 +58,7 @@
 /datum/component/shy/InheritComponent(datum/component/shy/friend, i_am_original, list/arguments)
 	if(i_am_original)
 		shy_range = friend.shy_range
-		whitelist = friend.whitelist
+		mob_whitelist = friend.mob_whitelist
 		message = friend.message
 
 /// Returns TRUE or FALSE if you are within shy_range tiles from a /mob/living
@@ -60,6 +68,9 @@
 
 	if(target in owner.DirectAccess())
 		return
+	for(var/type in machine_whitelist)
+		if(istype(target, type))
+			return
 
 	if(!COOLDOWN_FINISHED(src, result_cooldown))
 		return last_result
@@ -68,10 +79,18 @@
 
 	if(length(strangers) && locate(/mob/living) in strangers)
 		for(var/mob/living/person in strangers)
-			if(person != owner && !is_type_in_typecache(person, whitelist) && (person.stat != DEAD || dead_shy))
-				to_chat(owner, span_warning("[replacetext(message, "%TARGET", person)]"))
-				result = TRUE
-				break
+			if(person == owner)
+				continue
+			if(!is_type_in_typecache(person, mob_whitelist))
+				continue
+			if(person.stat == DEAD && !dead_shy)
+				if(!dead_shy_immediate)
+					continue
+				else if(!owner.Adjacent(person))
+					continue
+			to_chat(owner, span_warning("[replacetext(message, "%TARGET", person)]"))
+			result = TRUE
+			break
 
 	last_result = result
 	COOLDOWN_START(src, result_cooldown, SHY_COMPONENT_CACHE_TIME)

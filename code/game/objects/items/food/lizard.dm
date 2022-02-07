@@ -14,7 +14,7 @@
 
 /obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dryable,  /obj/item/food/tiziran_sausage)
+	AddElement(/datum/element/dryable, /obj/item/food/tiziran_sausage)
 
 /obj/item/food/tiziran_sausage
 	name = "\improper Tiziran blood sausage"

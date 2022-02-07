@@ -6,7 +6,7 @@
 	req_access = list(ACCESS_BAR)
 	max_integrity = 500
 	integrity_failure = 0.5
-	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, RAD = 0, FIRE = 50, ACID = 50)
+	armor = list(MELEE = 20, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
 	buildable_sign = FALSE
 
 	var/panel_open = FALSE
@@ -123,8 +123,8 @@
 
 
 /obj/structure/sign/barsign/proc/pick_sign(mob/user)
-	var/picked_name = input(user, "Available Signage", "Bar Sign", name) as null|anything in sort_list(get_bar_names())
-	if(!picked_name)
+	var/picked_name = tgui_input_list(user, "Available Signage", "Bar Sign", sort_list(get_bar_names()))
+	if(isnull(picked_name))
 		return
 	chosen_sign = set_sign_by_name(picked_name)
 	SSblackbox.record_feedback("tally", "barsign_picked", 1, chosen_sign.type)

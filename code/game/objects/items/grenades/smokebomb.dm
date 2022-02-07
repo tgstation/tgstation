@@ -21,13 +21,16 @@
 ///Here we generate some smoke and also damage blobs??? for some reason. Honestly not sure why we do that.
 /obj/item/grenade/smokebomb/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	var/datum/effect_system/smoke_spread/bad/smoke = new
 	smoke.set_up(4, src)
 	smoke.start()
 	qdel(smoke) //And deleted again. Sad really.
-	for(var/obj/structure/blob/B in view(8,src))
-		var/damage = round(30/(get_dist(B,src)+1))
-		B.take_damage(damage, BURN, MELEE, 0)
+	for(var/obj/structure/blob/blob in view(8, src))
+		var/damage = round(30/(get_dist(blob, src) + 1))
+		blob.take_damage(damage, BURN, MELEE, 0)
 	qdel(src)

@@ -10,7 +10,7 @@
 /obj/item/toy/cards/deck/wizoff/populate_deck()
 	var/card_list = strings("wizoff.json", theme)
 	for(var/card in card_list)
-		cards += "[card]"
+		cards += generate_card("[card]")
 
 /obj/item/toy/cards/deck/wizoff/examine_more(mob/user)
 	var/list/msg = list(span_notice("Remember the rules of Wiz-Off!"))

@@ -48,7 +48,7 @@
 
 /datum/admins/proc/beaker_panel_create_container(list/containerdata, location)
 	var/containertype = text2path(containerdata["container"])
-	var/obj/item/reagent_containers/container =  new containertype(location)
+	var/obj/item/reagent_containers/container = new containertype(location)
 	var/datum/reagents/reagents = container.reagents
 	for(var/datum/reagent/R in reagents.reagent_list) // clear the container of reagents
 		reagents.remove_reagent(R.type,R.volume)

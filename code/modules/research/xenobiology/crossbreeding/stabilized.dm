@@ -121,7 +121,7 @@ Stabilized extracts:
 
 /obj/item/slimecross/stabilized/gold/proc/generate_mobtype()
 	var/static/list/mob_spawn_pets = list()
-	if(mob_spawn_pets.len <= 0)
+	if(!length(mob_spawn_pets))
 		for(var/T in typesof(/mob/living/simple_animal))
 			var/mob/living/simple_animal/SA = T
 			switch(initial(SA.gold_core_spawnable))
@@ -134,7 +134,9 @@ Stabilized extracts:
 	generate_mobtype()
 
 /obj/item/slimecross/stabilized/gold/attack_self(mob/user)
-	var/choice = input(user, "Which do you want to reset?", "Familiar Adjustment") as null|anything in sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name"))
+	var/choice = tgui_input_list(user, "Which do you want to reset?", "Familiar Adjustment", sort_list(list("Familiar Location", "Familiar Species", "Familiar Sentience", "Familiar Name")))
+	if(isnull(choice))
+		return
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 	if(isliving(user))
@@ -153,7 +155,7 @@ Stabilized extracts:
 		saved_mind = null
 		START_PROCESSING(SSobj, src)
 	if(choice == "Familiar Name")
-		var/newname = sanitize_name(stripped_input(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
+		var/newname = sanitize_name(tgui_input_text(user, "Would you like to change the name of [mob_name]", "Name change", mob_name, MAX_NAME_LEN))
 		if(newname)
 			mob_name = newname
 		to_chat(user, span_notice("You speak softly into [src], and it shakes slightly in response."))

@@ -98,8 +98,8 @@
 		if(attacker_controller.incapacitated())
 			return FALSE
 		//if the attacker_controller isn't next to the attacking toy (and doesn't have telekinesis), the battle ends
-		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
-			attacker_controller.visible_message(span_notice("[attacker_controller.name] seperates from [attacker], ending the battle."), \
+		if(!in_range(attacker, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+			attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [attacker], ending the battle."), \
 								span_notice("You separate from [attacker], ending the battle."))
 			return FALSE
 
@@ -107,14 +107,14 @@
 		if(opponent)
 			if(opponent.incapacitated())
 				return FALSE
-			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(TK)))
-				opponent.visible_message(span_notice("[opponent.name] seperates from [src], ending the battle."), \
+			if(!in_range(src, opponent) && !(opponent.dna.check_mutation(/datum/mutation/human/telekinesis)))
+				opponent.visible_message(span_notice("[opponent.name] separates from [src], ending the battle."), \
 							span_notice("You separate from [src], ending the battle."))
 				return FALSE
 		//if it's not PVP and the attacker_controller isn't next to the defending toy (and doesn't have telekinesis), the battle ends
 		else
-			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(TK)))
-				attacker_controller.visible_message(span_notice("[attacker_controller.name] seperates from [src] and [attacker], ending the battle."), \
+			if (!in_range(src, attacker_controller) && !(attacker_controller.dna.check_mutation(/datum/mutation/human/telekinesis)))
+				attacker_controller.visible_message(span_notice("[attacker_controller.name] separates from [src] and [attacker], ending the battle."), \
 									span_notice("You separate [attacker] and [src], ending the battle."))
 				return FALSE
 

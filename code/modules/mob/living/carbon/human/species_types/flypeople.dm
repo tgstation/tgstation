@@ -99,6 +99,7 @@
 //useless organs we throw in just to fuck with surgeons a bit more
 /obj/item/organ/fly
 	desc = "You have no idea what the hell this is, or how it manages to keep something alive in any capacity."
+	visual = FALSE
 
 /obj/item/organ/fly/Initialize(mapload)
 	. = ..()

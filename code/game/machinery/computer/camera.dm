@@ -90,6 +90,12 @@
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
+/obj/machinery/computer/security/ui_status(mob/user)
+	. = ..()
+	if(. == UI_DISABLED)
+		return UI_CLOSE
+	return .
+
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
 	data["network"] = network
@@ -120,7 +126,7 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
+		var/c_tag = format_text(params["name"])
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		active_camera = selected_camera
@@ -279,21 +285,7 @@
 	var/icon_state_off = "entertainment_blank"
 	var/icon_state_on = "entertainment"
 
-/obj/machinery/computer/security/telescreen/entertainment/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/computer/security/telescreen/entertainment/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/computer/security/telescreen/entertainment/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/computer/security/telescreen/entertainment/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()

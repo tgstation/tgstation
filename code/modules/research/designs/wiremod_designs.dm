@@ -103,6 +103,16 @@
 	id = "comp_random"
 	build_path = /obj/item/circuit_component/random
 
+/datum/design/component/binary_conversion
+	name = "Binary Conversion Component"
+	id = "comp_binary_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/binary_conversion
+
+/datum/design/component/decimal_conversion
+	name = "Decimal Conversion Component"
+	id = "comp_decimal_convert"
+	build_path = /obj/item/circuit_component/binary_decimal/decimal_conversion
+
 /datum/design/component/species
 	name = "Get Species Component"
 	id = "comp_species"
@@ -173,10 +183,20 @@
 	id = "comp_direction"
 	build_path = /obj/item/circuit_component/direction
 
+/datum/design/component/reagentscanner
+	name = "Reagents Scanner"
+	id = "comp_reagents"
+	build_path = /obj/item/circuit_component/reagentscanner
+
 /datum/design/component/health
 	name = "Health Component"
 	id = "comp_health"
 	build_path = /obj/item/circuit_component/health
+
+/datum/design/component/matscanner
+	name = "Material Scanner"
+	id = "comp_matscanner"
+	build_path = /obj/item/circuit_component/matscanner
 
 /datum/design/component/split
 	name = "Split Component"
@@ -223,6 +243,26 @@
 	id = "comp_concat_list"
 	build_path = /obj/item/circuit_component/concat_list
 
+/datum/design/component/list_add
+	name = "List Add"
+	id = "comp_list_add"
+	build_path = /obj/item/circuit_component/variable/list/listadd
+
+/datum/design/component/list_remove
+	name = "List Remove"
+	id = "comp_list_remove"
+	build_path = /obj/item/circuit_component/variable/list/listremove
+
+/datum/design/component/list_clear
+	name = "List Clear"
+	id = "comp_list_clear"
+	build_path = /obj/item/circuit_component/variable/list/listclear
+
+/datum/design/component/element_find
+	name = "Element Find"
+	id = "comp_element_find"
+	build_path = /obj/item/circuit_component/listin
+
 /datum/design/component/select_query
 	name = "Select Query Component"
 	id = "comp_select_query"
@@ -263,6 +303,11 @@
 	id = "comp_list_literal"
 	build_path = /obj/item/circuit_component/list_literal
 
+/datum/design/component/list_assoc_literal
+	name = "Associative List Literal"
+	id = "comp_list_assoc_literal"
+	build_path = /obj/item/circuit_component/list_literal/assoc_literal
+
 /datum/design/component/typecast
 	name = "Typecast Component"
 	id = "comp_typecast"
@@ -284,7 +329,7 @@
 /datum/design/component/bci/bci_action
 	name = "BCI Action Component"
 	id = "comp_bci_action"
-	build_path = /obj/item/circuit_component/bci_action
+	build_path = /obj/item/circuit_component/equipment_action/bci
 
 /datum/design/component/bci/object_overlay
 	name = "Object Overlay Component"
@@ -316,6 +361,30 @@
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
 
+/datum/design/component/mod_action
+	name = "MOD Action Component"
+	id = "comp_mod_action"
+	build_path = /obj/item/circuit_component/equipment_action/mod
+
+/datum/design/component/id_getter
+	name = "ID Getter Component"
+	id = "comp_id_getter"
+	build_path = /obj/item/circuit_component/id_getter
+
+/datum/design/component/id_info_reader
+	name = "ID Getter Component"
+	id = "comp_id_info_reader"
+	build_path = /obj/item/circuit_component/id_info_reader
+
+/datum/design/component/id_access_reader
+	name = "ID Access Reader Component"
+	id = "comp_id_access_reader"
+	build_path = /obj/item/circuit_component/id_access_reader
+
+/datum/design/component/access_checker
+	name = "Access Checker Component"
+	id = "comp_access_checker"
+	build_path = /obj/item/circuit_component/compare/access
 
 /datum/design/compact_remote_shell
 	name = "Compact Remote Shell"
@@ -452,3 +521,21 @@
 	build_path = /obj/item/circuitboard/machine/bci_implanter
 	build_type = IMPRINTER | COMPONENT_PRINTER
 	category = list("Circuitry", "Core")
+
+/datum/design/assembly_shell
+	name = "Assembly Shell"
+	desc = "An assembly shell that can be attached to wires and other assemblies."
+	id = "assembly_shell"
+	materials = list(/datum/material/glass = 2000, /datum/material/iron = 5000)
+	build_path = /obj/item/assembly/wiremod
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")
+
+/datum/design/mod_module_shell
+	name = "MOD Module Shell"
+	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
+	id = "module_shell"
+	materials = list(/datum/material/glass = 2000)
+	build_path = /obj/item/mod/module/circuit
+	build_type = MECHFAB | COMPONENT_PRINTER
+	category = list("MOD Modules", "Shells")

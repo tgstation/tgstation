@@ -2,7 +2,7 @@
 /obj/item/organ/external/wings
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
-	layers = EXTERNAL_BEHIND | EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = ALL_EXTERNAL_OVERLAYS
 
 	feature_key = "wings"
 
@@ -14,6 +14,10 @@
 	if(human.wear_suit.species_exception && is_type_in_list(src, human.wear_suit.species_exception))
 		return TRUE
 	return FALSE
+
+///Checks if the wings can soften short falls
+/obj/item/organ/external/wings/proc/can_soften_fall()
+	return TRUE
 
 ///The true wings that you can use to fly and shit (you cant actually shit with them)
 /obj/item/organ/external/wings/functional
@@ -100,7 +104,7 @@
 		buckled_obj.unbuckle_mob(human)
 		step(buckled_obj, olddir)
 	else
-		new /datum/forced_movement(human, get_ranged_target_turf(human, olddir, 4), 1, FALSE, CALLBACK(human, /mob/living/carbon/.proc/spin, 1, 1))
+		human.AddComponent(/datum/component/force_move, get_ranged_target_turf(human, olddir, 4), TRUE)
 	return TRUE
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
@@ -186,6 +190,9 @@
 
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
 	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, src)
+
+/obj/item/organ/external/wings/moth/can_soften_fall()
+	return !burnt
 
 ///Check if we can flutter around
 /obj/item/organ/external/wings/moth/proc/update_float_move()

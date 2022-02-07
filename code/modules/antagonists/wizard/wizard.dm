@@ -1,9 +1,8 @@
 /datum/antagonist/wizard
-	name = "Space Wizard"
+	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
-	antag_hud_type = ANTAG_HUD_WIZ
 	antag_hud_name = "wizard"
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 0.5
@@ -18,6 +17,47 @@
 	var/outfit_type = /datum/outfit/wizard
 	var/wiz_age = WIZARD_AGE_MIN /* Wizards by nature cannot be too young. */
 	show_to_ghosts = TRUE
+
+/datum/antagonist/wizard_minion
+	name = "Wizard Minion"
+	antagpanel_category = "Wizard"
+	antag_hud_name = "apprentice"
+	show_in_roundend = FALSE
+	show_name_in_check_antagonists = TRUE
+	/// The wizard team this wizard minion is part of.
+	var/datum/team/wizard/wiz_team
+
+/datum/antagonist/wizard_minion/create_team(datum/team/wizard/new_team)
+	if(!new_team)
+		return
+	if(!istype(new_team))
+		stack_trace("Wrong team type passed to [type] initialization.")
+	wiz_team = new_team
+
+/datum/antagonist/wizard_minion/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/current_mob = mob_override || owner.current
+	current_mob.faction |= ROLE_WIZARD
+	add_team_hud(current_mob)
+
+/datum/antagonist/wizard_minion/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/last_mob = mob_override || owner.current
+	last_mob.faction -= ROLE_WIZARD
+
+/datum/antagonist/wizard_minion/on_gain()
+	create_objectives()
+	return ..()
+
+/datum/antagonist/wizard_minion/proc/create_objectives()
+	if(!wiz_team)
+		return
+	var/datum/objective/custom/custom_objective = new()
+	custom_objective.owner = owner
+	custom_objective.name = "Serve [wiz_team.master_wizard?.owner]"
+	custom_objective.explanation_text = "Serve [wiz_team.master_wizard?.owner]"
+	objectives += custom_objective
+
+/datum/antagonist/wizard_minion/get_team()
+	return wiz_team
 
 /datum/antagonist/wizard/on_gain()
 	equip_wizard()
@@ -47,7 +87,6 @@
 	wiz_team = new(owner)
 	wiz_team.name = "[owner.current.real_name] team"
 	wiz_team.master_wizard = src
-	add_antag_hud(antag_hud_type, antag_hud_name, owner.current)
 
 /datum/antagonist/wizard/proc/send_to_lair()
 	if(!owner)
@@ -129,9 +168,6 @@
 	data["objectives"] = get_objectives()
 	return data
 
-/datum/antagonist/wizard/farewell()
-	to_chat(owner, span_userdanger("You have been brainwashed! You are no longer a wizard!"))
-
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
 
@@ -139,7 +175,7 @@
 	var/wizard_name_second = pick(GLOB.wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
 	var/mob/living/wiz_mob = owner.current
-	var/newname = sanitize_name(reject_bad_text(stripped_input(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN)))
+	var/newname = sanitize_name(reject_bad_text(tgui_input_text(wiz_mob, "You are the [name]. Would you like to change your name to something else?", "Name change", randomname, MAX_NAME_LEN)))
 
 	if (!newname)
 		newname = randomname
@@ -148,12 +184,11 @@
 
 /datum/antagonist/wizard/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	M.faction |= ROLE_WIZARD
+	add_team_hud(M)
 
 /datum/antagonist/wizard/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 	M.faction -= ROLE_WIZARD
 
 
@@ -217,7 +252,8 @@
 	move_to_lair = FALSE
 
 /datum/antagonist/wizard/apprentice/imposter/greet()
-	to_chat(owner, "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
+	. = ..()
+	to_chat(owner, "<B>Trick and confuse the crew to misdirect malice from your handsome original!</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/imposter/equip_wizard()
@@ -305,7 +341,7 @@
 	parts += "<span class='header'>Wizards/witches of [master_wizard.owner.name] team were:</span>"
 	parts += master_wizard.roundend_report()
 	parts += " "
-	parts += "<span class='header'>[master_wizard.owner.name] apprentices were:</span>"
+	parts += "<span class='header'>[master_wizard.owner.name] apprentices and minions were:</span>"
 	parts += printplayerlist(members - master_wizard.owner)
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"

@@ -68,12 +68,6 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/suit/black/female
-	name = "executive suit"
-	desc = "A formal trouser suit for women, intended for the station's finest."
-	icon_state = "black_suit_fem"
-	inhand_icon_state = "black_suit_fem"
-
 /obj/item/clothing/under/suit/green
 	name = "green suit"
 	desc = "A green suit and yellow necktie. Baller."
@@ -145,3 +139,9 @@
 	desc = "A formal black tuxedo. It exudes classiness."
 	icon_state = "tuxedo"
 	inhand_icon_state = "tuxedo"
+
+/obj/item/clothing/under/suit/carpskin
+	name = "carpskin suit"
+	desc = "An luxurious suit made with only the finest scales, perfect for conducting dodgy business deals."
+	icon_state = "carpskin_suit"
+	inhand_icon_state = "carpskin_suit"

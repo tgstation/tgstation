@@ -108,4 +108,4 @@
 	sleep(30)
 	if(R)
 		R.SetLockdown(FALSE)
-		R.notify_ai(NEW_BORG)
+		R.notify_ai(AI_NOTIFICATION_NEW_BORG)

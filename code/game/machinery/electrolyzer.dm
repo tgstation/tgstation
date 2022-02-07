@@ -10,7 +10,7 @@
 	name = "space electrolyzer"
 	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
 	max_integrity = 250
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, RAD = 100, FIRE = 80, ACID = 10)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 10)
 	circuit = /obj/item/circuitboard/machine/electrolyzer
 	/// We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
@@ -117,6 +117,16 @@
 
 	efficiency = (cap + 1) * 0.5 //used in the amount of charge in power cell uses
 
+/obj/machinery/electrolyzer/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 50)
+	panel_open = !panel_open
+	user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(tool)
+
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
@@ -136,13 +146,6 @@
 		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
 		SStgui.update_uis(src)
 
-		return
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		panel_open = !panel_open
-		user.visible_message(span_notice("\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src]."), span_notice("You [panel_open ? "open" : "close"] the hatch on \the [src]."))
-		update_appearance()
-		return
-	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
 

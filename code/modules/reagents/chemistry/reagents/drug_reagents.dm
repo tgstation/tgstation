@@ -9,7 +9,7 @@
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "[type]_high")
 
 /datum/reagent/drug/space_drugs
-	name = "Space drugs"
+	name = "Space Drugs"
 	description = "An illegal chemical compound used as drug."
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 30
@@ -76,8 +76,8 @@
 /datum/reagent/drug/nicotine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(type, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(type)))
-		mytray.adjustPests(-rand(1,2))
+		mytray.adjust_toxic(round(chems.get_reagent_amount(type)))
+		mytray.adjust_pestlevel(-rand(1,2))
 
 /datum/reagent/drug/nicotine/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(DT_PROB(0.5, delta_time))
@@ -356,7 +356,6 @@
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 15
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/maintenance_drugs = 14)
 
 /datum/reagent/drug/maint/powder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -448,7 +447,6 @@
 /datum/reagent/drug/mushroomhallucinogen/on_mob_life(mob/living/carbon/psychonaut, delta_time, times_fired)
 	if(!psychonaut.slurring)
 		psychonaut.slurring = 1 * REM * delta_time
-	SEND_SIGNAL(psychonaut, COMSIG_ADD_MOOD_EVENT, "tripping", /datum/mood_event/high, name)
 	switch(current_cycle)
 		if(1 to 5)
 			if(DT_PROB(5, delta_time))
@@ -466,6 +464,7 @@
 /datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/psychonaut)
 	. = ..()
 
+	SEND_SIGNAL(psychonaut, COMSIG_ADD_MOOD_EVENT, "tripping", /datum/mood_event/high, name)
 	if(!psychonaut.hud_used)
 		return
 
@@ -491,6 +490,7 @@
 
 /datum/reagent/drug/mushroomhallucinogen/on_mob_end_metabolize(mob/living/psychonaut)
 	. = ..()
+	SEND_SIGNAL(psychonaut, COMSIG_CLEAR_MOOD_EVENT, "tripping")
 	if(!psychonaut.hud_used)
 		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
@@ -517,6 +517,7 @@
 /datum/reagent/drug/blastoff/on_mob_metabolize(mob/living/dancer)
 	. = ..()
 
+	SEND_SIGNAL(dancer, COMSIG_ADD_MOOD_EVENT, "vibing", /datum/mood_event/high, name)
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
 	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
 
@@ -547,6 +548,7 @@
 /datum/reagent/drug/blastoff/on_mob_end_metabolize(mob/living/dancer)
 	. = ..()
 
+	SEND_SIGNAL(dancer, COMSIG_CLEAR_MOOD_EVENT, "vibing")
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("flip"))
 	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("spin"))
 
@@ -564,7 +566,6 @@
 
 	dancer.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3 * REM * delta_time)
 	dancer.AdjustKnockdown(-20)
-	SEND_SIGNAL(dancer, COMSIG_ADD_MOOD_EVENT, "vibing", /datum/mood_event/high, name)
 
 	if(DT_PROB(BLASTOFF_DANCE_MOVE_CHANCE_PER_UNIT * volume, delta_time))
 		dancer.emote("flip")
@@ -676,7 +677,7 @@
 		return
 	if(HAS_TRAIT(invisible_man, TRAIT_NOMETABOLISM))
 		return
-	if(invisible_man.has_status_effect(STATUS_EFFECT_STASIS))
+	if(invisible_man.has_status_effect(/datum/status_effect/grouped/stasis))
 		return
 
 	ADD_TRAIT(invisible_man, TRAIT_INVISIBLE_MAN, name)
@@ -723,7 +724,7 @@
 	invisible_man.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.4 * REM * delta_time)
 
 /datum/reagent/drug/kronkaine
-	name = "kronkaine"
+	name = "Kronkaine"
 	description = "A highly illegal stimulant from the edge of the galaxy.\nIt is said the average kronkaine addict causes as much criminal damage as five stick up men, two rascals and one proferssional cambringo hustler combined."
 	reagent_state = SOLID
 	color = "#FAFAFA"

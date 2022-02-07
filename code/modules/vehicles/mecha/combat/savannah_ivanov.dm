@@ -28,7 +28,7 @@
 	dir_in = 2 //Facing South.
 	max_integrity = 450 //really tanky, like damn
 	deflect_chance = 25
-	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, RAD = 80, FIRE = 100, ACID = 100)
+	armor = list(MELEE = 45, BULLET = 40, LASER = 30, ENERGY = 30, BOMB = 40, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 30000
 	infra_luminosity = 3
 	wreckage = /obj/structure/mecha_wreckage/savannah_ivanov
@@ -304,7 +304,7 @@
 	name = "Savannah Skyfall"
 	button_icon_state = "mech_savannah"
 
-/datum/action/vehicle/sealed/mecha/skyfall/Trigger()
+/datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/savannah_mecha = chassis
@@ -333,7 +333,7 @@
 	name = "Ivanov Strike"
 	button_icon_state = "mech_ivanov"
 
-/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger()
+/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/ivanov_mecha = chassis

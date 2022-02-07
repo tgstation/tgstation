@@ -154,7 +154,7 @@
 		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
 	if(!ismob(AM0))
 		qdel(AM0)
-	else // Lets not move a mob to nullspace and qdel it, yes?
+	else // Lets not qdel a mob, yes?
 		for(var/i in AM0.contents)
 			var/atom/movable/content = i
 			content.moveToNullspace()
@@ -175,6 +175,7 @@
 			return
 		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100), breakdown_flags=BREAKDOWN_FLAGS_RECYCLER)
 		materials.retrieve_all()
+	qdel(I)
 
 
 /obj/machinery/recycler/proc/emergency_stop()

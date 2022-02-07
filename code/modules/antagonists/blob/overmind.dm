@@ -106,9 +106,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 			if(blobstrain.effectdesc)
 				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
-/mob/camera/blob/can_zFall(turf/source, levels)
-	// Prevent blob from falling through zlevels
-	return FALSE
+/mob/camera/blob/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	if(placed) // The blob can't expand vertically (yet)
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	var/turf/target_turf = .
+	if(!is_valid_turf(target_turf)) // Allows unplaced blobs to travel through station z-levels
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(src, "Your destination is invalid. Move somewhere else and try again.")
+		return null
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)
@@ -221,7 +229,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	if(!. || !client)
 		return FALSE
-	to_chat(src, span_notice("You are the overmind!"))
+	to_chat(src, span_big("You are the overmind!"))
 	blob_help()
 	update_health_hud()
 	add_points(0)
@@ -243,7 +251,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
-/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/camera/blob/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
 	if (!message)
 		return
 
@@ -291,7 +299,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
 	if(!placed)
 		if(manualplace_min_time)
-			. +=  "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
+			. += "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
 		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
 
 /mob/camera/blob/Move(NewLoc, Dir = 0)

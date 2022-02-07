@@ -28,7 +28,7 @@
 	payday_modifier = 0.75
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
 
-/datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
+/datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)
 	. = ..()
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
@@ -63,3 +63,6 @@
 	human_mob.dna.features["wings"] = wings
 	human_mob.dna.features["moth_wings"] = wings
 	human_mob.update_body()
+
+/datum/species/moth/get_scream_sound(mob/living/carbon/human/human)
+	return 'sound/voice/moth/scream_moth.ogg'

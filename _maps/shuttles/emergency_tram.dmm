@@ -137,7 +137,7 @@
 /area/shuttle/escape)
 "aB" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/structure/reagent_dispensers/peppertank/directional/north,
+/obj/structure/reagent_dispensers/wall/peppertank/directional/north,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "aC" = (

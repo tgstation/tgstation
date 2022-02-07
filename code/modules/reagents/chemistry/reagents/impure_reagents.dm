@@ -26,7 +26,7 @@
 
 //Basically just so people don't forget to adjust metabolization_rate
 /datum/reagent/inverse
-	name = "Toxic monomers"
+	name = "Toxic Monomers"
 	description = "Inverse reagents are created when a reagent's purity is below it's inverse threshold. The are created either during ingestion - which will then replace their associated reagent, or some can be created during the reaction process."
 	ph = 2
 	chemical_flags = REAGENT_SNEAKYNAME | REAGENT_DONOTSPLIT //Inverse generally cannot be synthed - they're difficult to get
@@ -45,7 +45,7 @@
 //Failed chems - generally use inverse if you want to use a impure subtype for it
 //technically not a impure chem, but it's here because it can only be made with a failed impure reaction
 /datum/reagent/consumable/failed_reaction
-	name = "Viscous sludge"
+	name = "Viscous Sludge"
 	description = "A off smelling sludge that's created when a reaction gets too impure."
 	nutriment_factor = -1
 	quality = -1
@@ -103,7 +103,7 @@
 	cube.color = COLOR_CYAN
 	cube.set_anchored(TRUE)
 	owner.forceMove(cube)
-	owner.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
+	owner.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 	cryostylane_alert = owner.throw_alert("cryostylane_alert", /atom/movable/screen/alert/status_effect/freon/cryostylane)
 	cryostylane_alert.attached_effect = src //so the alert can reference us, if it needs to
 	..()
@@ -117,6 +117,6 @@
 
 /datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/carbon/owner, amount)
 	QDEL_NULL(cube)
-	owner.remove_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
+	owner.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 	owner.clear_alert("cryostylane_alert")
 	..()

@@ -1,7 +1,7 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/transforming_energy.dmi'
 	max_integrity = 200
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, RAD = 0, FIRE = 100, ACID = 30)
+	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 30)
 	attack_verb_continuous = list("hits", "taps", "pokes")
 	attack_verb_simple = list("hit", "tap", "poke")
 	resistance_flags = FIRE_PROOF
@@ -67,16 +67,16 @@
 	if(heat)
 		open_flame()
 
-/obj/item/melee/energy/ignition_effect(atom/A, mob/user)
+/obj/item/melee/energy/ignition_effect(atom/atom, mob/user)
 	if(!heat && !blade_active)
 		return ""
 
 	var/in_mouth = ""
 	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.wear_mask)
-			in_mouth = ", barely missing [C.p_their()] nose"
-	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [A.name] in the process.")
+		var/mob/living/carbon/carbon_user = user
+		if(carbon_user.wear_mask)
+			in_mouth = ", barely missing [carbon_user.p_their()] nose"
+	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_they(TRUE)] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 
@@ -249,19 +249,16 @@
 /obj/item/melee/energy/sword/saber/purple
 	sword_color_icon = "purple"
 
-/obj/item/melee/energy/sword/saber/attackby(obj/item/weapon, mob/living/user, params)
-	if(weapon.tool_behaviour == TOOL_MULTITOOL)
-		if(hacked)
-			to_chat(user, span_warning("It's already fabulous!"))
-		else
-			hacked = TRUE
-			sword_color_icon = "rainbow"
-			to_chat(user, span_warning("RNBW_ENGAGE"))
-			if(force >= active_force)
-				icon_state = "[initial(icon_state)]_on_rainbow"
-				user.update_inv_hands()
-	else
-		return ..()
+/obj/item/melee/energy/sword/saber/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's already fabulous!"))
+		return
+	hacked = TRUE
+	sword_color_icon = "rainbow"
+	to_chat(user, span_warning("RNBW_ENGAGE"))
+	if(force >= active_force)
+		icon_state = "[initial(icon_state)]_on_rainbow"
+		user.update_inv_hands()
 
 /obj/item/melee/energy/sword/pirate
 	name = "energy cutlass"

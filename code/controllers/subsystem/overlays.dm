@@ -54,6 +54,11 @@ SUBSYSTEM_DEF(overlays)
 			UNSETEMPTY(A.remove_overlays)
 			STAT_STOP_STOPWATCH
 			STAT_LOG_ENTRY(stats, A.type)
+		if(mc_check)
+			if(MC_TICK_CHECK)
+				break
+		else
+			CHECK_TICK
 	if (count)
 		queue.Cut(1,count+1)
 		count = 0

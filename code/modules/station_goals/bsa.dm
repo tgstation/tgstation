@@ -300,8 +300,12 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	var/list/options = gps_locators
 	if(area_aim)
 		options += GLOB.teleportlocs
-	var/V = input(user,"Select target", "Select target",null) in options|null
-	target = options[V]
+	var/victim = tgui_input_list(user, "Select target", "Artillery Targeting", options)
+	if(isnull(victim))
+		return
+	if(isnull(options[victim]))
+		return
+	target = options[victim]
 
 
 /obj/machinery/computer/bsa_control/proc/get_target_name()

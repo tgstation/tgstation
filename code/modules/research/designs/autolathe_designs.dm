@@ -17,7 +17,7 @@
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = 1000)
 	build_path = /obj/item/mop
-	category = list("initial","Tools","Tool Designs")
+	category = list("initial", "Equipment", "Tools", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /datum/design/broom

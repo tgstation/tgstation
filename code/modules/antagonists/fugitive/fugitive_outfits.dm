@@ -4,10 +4,14 @@
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 	r_pocket = /obj/item/knife/shiv
 
-/datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
+/datum/outfit/prisoner/post_equip(mob/living/carbon/human/prisoner, visualsOnly=FALSE)
+	// This outfit is used by the assets SS, which is ran before the atoms SS
+	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
+		prisoner.w_uniform?.update_greyscale()
+		prisoner.update_inv_w_uniform()
 	if(visualsOnly)
 		return
-	H.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
+	prisoner.fully_replace_character_name(null,"NTP #CC-0[rand(111,999)]") //same as the lavaland prisoner transport, but this time they are from CC, or CentCom
 
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"
@@ -101,10 +105,10 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
-	glasses = /obj/item/clothing/glasses/sunglasses/garb
+	glasses = /obj/item/clothing/glasses/sunglasses/gar
 	ears = /obj/item/radio/headset
 	r_pocket = /obj/item/restraints/handcuffs/cable
-	id = /obj/item/card/id/advanced
+	id = /obj/item/card/id/advanced/bountyhunter
 	l_hand = /obj/item/tank/internals/plasma/full
 	r_hand = /obj/item/flamethrower/full/tank
 
@@ -112,7 +116,6 @@
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
@@ -127,7 +130,7 @@
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/scarecrow
 	r_pocket = /obj/item/restraints/handcuffs/cable
-	id = /obj/item/card/id/advanced
+	id = /obj/item/card/id/advanced/bountyhunter
 	r_hand = /obj/item/gun/ballistic/shotgun/hook
 
 	backpack_contents = list(
@@ -138,7 +141,6 @@
 	if(visualsOnly)
 		return
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
@@ -152,7 +154,7 @@
 	glasses = /obj/item/clothing/glasses/eyepatch
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	ears = /obj/item/radio/headset
-	id = /obj/item/card/id/advanced
+	id = /obj/item/card/id/advanced/bountyhunter
 	r_hand = /obj/item/storage/firstaid/regular
 	l_hand = /obj/item/pinpointer/shuttle
 
@@ -168,7 +170,25 @@
 	synthetic_appearance.assume_disguise(synthetic_appearance, H)
 	H.update_hair()
 	var/obj/item/card/id/W = H.wear_id
-	W.assignment = "Bounty Hunter"
 	W.registered_name = H.real_name
 	W.update_label()
 	W.update_icon()
+
+//ids and ert code
+
+/obj/item/card/id/advanced/bountyhunter
+	assignment = "Bounty Hunter"
+	icon_state = "card_flames" //oh SHIT
+	trim = /datum/id_trim/bounty_hunter
+
+/datum/outfit/bountyarmor/ert
+	id = /obj/item/card/id/advanced/bountyhunter/ert
+
+/datum/outfit/bountyhook/ert
+	id = /obj/item/card/id/advanced/bountyhunter/ert
+
+/datum/outfit/bountysynth/ert
+	id = /obj/item/card/id/advanced/bountyhunter/ert
+
+/obj/item/card/id/advanced/bountyhunter/ert
+	trim = /datum/id_trim/centcom/bounty_hunter

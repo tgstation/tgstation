@@ -2,29 +2,6 @@
 	name = "Base Slime Experiment"
 	required_points = 1
 
-/datum/experiment/scanning/points/slime/calibration
-	name = "Slime Sample Test"
-	description = "Let's see if our scanners can pick up the genetic data from a simple slime extract."
-	required_atoms = list(/obj/item/slime_extract/grey = 1)
-
-/datum/experiment/scanning/points/slime/easy
-	name = "Easy Slime Survey"
-	description = "A wealthy client has requested that we provide samples of data from several basic slime cores."
-	required_points = 3
-	required_atoms =  list(/obj/item/slime_extract/orange = 1,
-		/obj/item/slime_extract/purple = 1,
-		/obj/item/slime_extract/blue = 1,
-		/obj/item/slime_extract/metal = 1)
-
-/datum/experiment/scanning/points/slime/moderate
-	name = "Moderate Slime Survey"
-	description = "Central Command has asked that you collect data from several common slime cores."
-	required_points = 5
-	required_atoms = list(/obj/item/slime_extract/yellow = 1,
-		/obj/item/slime_extract/darkpurple = 1,
-		/obj/item/slime_extract/darkblue = 1,
-		/obj/item/slime_extract/silver = 1)
-
 /datum/experiment/scanning/points/slime/hard
 	name = "Challenging Slime Survey"
 	description = "Another station has challenged your research team to collect several challenging slime cores, \

@@ -10,7 +10,7 @@
 	desc = "A radio beacon used for bot navigation and crew wayfinding."
 	layer = LOW_OBJ_LAYER
 	max_integrity = 500
-	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, RAD = 0, FIRE = 80, ACID = 80)
+	armor = list(MELEE = 70, BULLET = 70, LASER = 70, ENERGY = 70, BOMB = 0, BIO = 0, FIRE = 80, ACID = 80)
 
 	var/open = FALSE // true if cover is open
 	var/locked = TRUE // true if controls are locked
@@ -96,17 +96,18 @@
 	icon_state = "[base_icon_state][open]"
 	return ..()
 
+/obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	open = !open
+	user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
+	update_appearance()
+	tool.play_tool_sound(src, 50)
+	return TRUE
+
 /obj/machinery/navbeacon/attackby(obj/item/I, mob/user, params)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
-
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		open = !open
-
-		user.visible_message(span_notice("[user] [open ? "opens" : "closes"] the beacon's cover."), span_notice("You [open ? "open" : "close"] the beacon's cover."))
-
-		update_appearance()
 
 	else if (istype(I, /obj/item/card/id)||istype(I, /obj/item/pda))
 		if(open)
@@ -131,7 +132,7 @@
 	. = ..()
 	var/ai = isAI(user)
 	var/turf/T = loc
-	if(T.intact)
+	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed
 
 	if(!open && !ai) // can't alter controls if not open, unless you're an AI

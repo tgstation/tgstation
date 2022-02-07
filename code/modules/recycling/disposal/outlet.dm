@@ -1,3 +1,13 @@
+//how fast disposal machinery is ejecting things (does not effect range)
+/// The slowest setting for disposal eject speed
+#define EJECT_SPEED_SLOW 1
+/// The default setting for disposal eject speed
+#define EJECT_SPEED_MED 2
+/// The fast setting for disposal eject speed
+#define EJECT_SPEED_FAST 4
+/// The fastest setting for disposal eject speed
+#define EJECT_SPEED_YEET 6
+
 // the disposal outlet machine
 /obj/structure/disposaloutlet
 	name = "disposal outlet"
@@ -6,7 +16,6 @@
 	icon_state = "outlet"
 	density = TRUE
 	anchored = TRUE
-	flags_1 = RAD_PROTECT_CONTENTS_1 | RAD_NO_CONTAMINATE_1
 	var/active = FALSE
 	var/turf/target // this will be where the output objects are 'thrown' to.
 	var/obj/structure/disposalpipe/trunk/trunk // the attached pipe trunk
@@ -112,3 +121,8 @@
 		return
 	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
 	obj_flags |= EMAGGED
+
+#undef EJECT_SPEED_SLOW
+#undef EJECT_SPEED_MED
+#undef EJECT_SPEED_FAST
+#undef EJECT_SPEED_YEET

@@ -64,7 +64,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter)
 "o" = (
-/obj/effect/mob_spawn/human/fugitive/russian{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/russian{
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
@@ -209,7 +209,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "L" = (
-/obj/effect/mob_spawn/human/fugitive/russian{
+/obj/effect/mob_spawn/ghost_role/human/fugitive/russian{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -224,7 +224,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "V" = (
-/obj/effect/mob_spawn/human/fugitive/russian,
+/obj/effect/mob_spawn/ghost_role/human/fugitive/russian,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter)
 "Y" = (

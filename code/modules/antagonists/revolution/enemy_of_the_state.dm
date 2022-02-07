@@ -4,7 +4,7 @@
  * They either have the choice to fuck off and do their own thing, or try and regain their honor with a hijack.
  */
 /datum/antagonist/enemy_of_the_state
-	name = "Enemy of the State"
+	name = "\improper Enemy of the State"
 	show_in_antagpanel = FALSE
 	show_name_in_check_antagonists = TRUE
 	hijack_speed = 2 //not like they have much to do
@@ -28,6 +28,7 @@
 	. = ..()
 
 /datum/antagonist/enemy_of_the_state/greet()
+	. = ..()
 	to_chat(owner, span_userdanger("The revolution is dead."))
 	to_chat(owner, span_boldannounce("You're an enemy of the state to Nanotrasen. You're a loose end to the Syndicate."))
 	to_chat(owner, "<b>It's time to live out your days as an exile... or go out in one last big bang.</b>")

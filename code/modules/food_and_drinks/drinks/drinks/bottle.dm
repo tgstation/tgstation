@@ -151,6 +151,7 @@
 
 /obj/item/broken_bottle/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/caltrop, min_damage = force)
 	AddComponent(/datum/component/butchering, 200, 55)
 
 /obj/item/reagent_containers/food/drinks/bottle/beer
@@ -169,6 +170,15 @@
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
+
+/obj/item/reagent_containers/food/drinks/bottle/rootbeer
+	name = "Two-Time root beer"
+	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
+	foodtype = SUGAR | JUNKFOOD
+	custom_price = PAYCHECK_HARD * 1.5
+	custom_premium_price = PAYCHECK_HARD * 2
 
 /obj/item/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
@@ -412,6 +422,25 @@
 	icon_state = "fernetbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/fernet = 100)
 
+/obj/item/reagent_containers/food/drinks/bottle/bitters
+	name = "Andromeda Bitters"
+	desc = "An aromatic addition to any drink. Made in New Trinidad, now and forever."
+	icon_state = "bitters_bottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/bitters = 30)
+
+/obj/item/reagent_containers/food/drinks/bottle/curacao
+	name = "Beekhof Blauw Curaçao"
+	desc = "Still produced on the island of Curaçao, after all these years."
+	icon_state = "curacao_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/curacao = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/navy_rum
+	name = "Pride of the Union Navy-Strength Rum"
+	desc = "Ironically named, given it's made in Bermuda."
+	icon_state = "navy_rum_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 100)
+
 //////////////////////////JUICES AND STUFF ///////////////////////
 
 /obj/item/reagent_containers/food/drinks/bottle/orangejuice
@@ -541,28 +570,31 @@
 	playsound(src, 'sound/items/champagne_pop.ogg', 70, TRUE)
 	spillable = TRUE
 	update_appearance()
-	var/obj/item/champagne_cork/popped_cork = new(user.loc)
-	popped_cork.might_of_the_sun_king = TRUE
-	var/turf/pop_target = get_edge_target_turf(popped_cork, user.dir)
-	popped_cork.throw_at(target = pop_target, thrower = user, speed = 2, range = 7, spin = FALSE)
+	var/obj/projectile/bullet/reusable/champagne_cork/popped_cork = new (get_turf(src))
+	popped_cork.firer =  user
+	popped_cork.fired_from = src
+	popped_cork.fire(dir2angle(user.dir) + rand(-30, 30))
 
-/obj/item/champagne_cork
+/obj/projectile/bullet/reusable/champagne_cork
 	name = "champagne cork"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = "champagne_cork"
-	force = 0
-	throwforce = 10
-	///this var determines if the cork will knockdown on impact.
-	var/might_of_the_sun_king = FALSE
+	hitsound = 'sound/weapons/genhit.ogg'
+	damage = 10
+	sharpness = NONE
+	impact_effect_type = null
+	ricochets_max = 3
+	ricochet_chance = 70
+	ricochet_decay_damage = 1
+	ricochet_incidence_leeway = 0
+	range = 7
+	knockdown = 2 SECONDS
+	ammo_type = /obj/item/trash/champagne_cork
 
-/obj/item/champagne_cork/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if(!iscarbon(hit_atom) || !might_of_the_sun_king)
-		return
-
-	var/mob/living/carbon/champagne_victim = hit_atom
-	champagne_victim.Knockdown(20)
-	might_of_the_sun_king = FALSE
+/obj/item/trash/champagne_cork
+	name = "champagne cork"
+	icon = 'icons/obj/drinks.dmi'
+	icon_state = "champagne_cork"
 
 /obj/item/reagent_containers/food/drinks/bottle/blazaam
 	name = "Ginbad's Blazaam"
@@ -704,6 +736,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/do_fermentation()
 	fermentation_time_remaining = null
 	fermentation_timer = null
+	reagents.remove_reagent(/datum/reagent/consumable/prunomix, 50)
 	if(prob(10))
 		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15) // closest thing we have to botulism
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 35)

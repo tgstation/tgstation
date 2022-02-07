@@ -1,5 +1,17 @@
 // This is eventually for wjohn to add more color standardization stuff like I keep asking him >:(
 
+//different types of atom colorations
+/// Only used by rare effects like greentext coloring mobs and when admins varedit color
+#define ADMIN_COLOUR_PRIORITY 1
+/// e.g. purple effect of the revenant on a mob, black effect when mob electrocuted
+#define TEMPORARY_COLOUR_PRIORITY 2
+/// Color splashed onto an atom (e.g. paint on turf)
+#define WASHABLE_COLOUR_PRIORITY 3
+/// Color inherent to the atom (e.g. blob color)
+#define FIXED_COLOUR_PRIORITY 4
+///how many colour priority levels there are.
+#define COLOUR_PRIORITY_AMOUNT 4
+
 #define COLOR_INPUT_DISABLED "#F0F0F0"
 #define COLOR_INPUT_ENABLED "#D3B5B5"
 
@@ -25,6 +37,7 @@
 #define COLOR_VIVID_RED "#FF3232"
 #define COLOR_LIGHT_GRAYISH_RED "#E4C7C5"
 #define COLOR_SOFT_RED "#FA8282"
+#define COLOR_CULT_RED "#960000"
 #define COLOR_BUBBLEGUM_RED "#950A0A"
 
 #define COLOR_YELLOW "#FFFF00"
@@ -198,3 +211,11 @@
 
 /// The default color for admin say, used as a fallback when the preference is not enabled
 #define DEFAULT_ASAY_COLOR COLOR_MOSTLY_PURE_RED
+
+#define DEFAULT_HEX_COLOR_LEN 6
+
+// Color filters
+/// Icon filter that creates ambient occlusion
+#define AMBIENT_OCCLUSION filter(type="drop_shadow", x=0, y=-2, size=4, color="#04080FAA")
+/// Icon filter that creates gaussian blur
+#define GAUSSIAN_BLUR(filter_size) filter(type="blur", size=filter_size)

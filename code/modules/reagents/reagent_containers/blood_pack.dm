@@ -73,7 +73,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the label of [src]!"))
 			return
-		var/custom_label = stripped_input(user, "What would you like to label the blood pack?", name, null, 53)
+		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(user.get_active_held_item() != tool)

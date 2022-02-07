@@ -6,6 +6,7 @@
 /obj/item/circuit_component/not
 	display_name = "Not"
 	desc = "A component that inverts its input."
+	category = "Math"
 
 	/// The input port
 	var/datum/port/input/input_port

@@ -1,8 +1,16 @@
+// Remove these once we have Byond implementation.
+#define ISNAN(a) (!(a==a))
+#define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
+#define IS_INF_OR_NAN(a) (ISNAN(a-a))
+// Aight dont remove the rest
+
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 // This file is quadruple wrapped for your pleasure
 // (
 
 #define NUM_E 2.71828183
+
+#define SQRT_2 1.414214 //CLOSE ENOUGH!
 
 #define PI 3.1416
 #define INFINITY 1e31 //closer then enough
@@ -28,6 +36,8 @@
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
+#define ROUND_UP(x) ( -round(-(x)))
+
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
 
@@ -35,7 +45,7 @@
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
 // Real modulus that handles decimals
-#define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
+#define MODULUS(x, y) ( (x) - FLOOR(x, y))
 
 // Cotangent
 #define COT(x) (1 / tan(x))
@@ -84,11 +94,6 @@
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
 
-/// Low-pass filter a value to smooth out high frequent peaks. This can be thought of as a moving average filter as well.
-/// delta_time is how many seconds since we last ran this command. RC is the filter constant, high RC means more smoothing
-/// See https://en.wikipedia.org/wiki/Low-pass_filter#Simple_infinite_impulse_response_filter for the maths
-#define LPFILTER(memory, signal, delta_time, RC) (delta_time / (RC + delta_time)) * signal + (1 - delta_time / (RC + delta_time)) * memory
-
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.
 /proc/SolveQuadratic(a, b, c)
@@ -96,7 +101,7 @@
 	. = list()
 	var/d = b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0)
+	if(d < 0 || IS_INF_OR_NAN(d) || IS_INF_OR_NAN(bottom))
 		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom

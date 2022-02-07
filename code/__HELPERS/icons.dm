@@ -903,16 +903,16 @@ world
 	var/icon/alpha_mask = getIconMask(src)//getFlatIcon(src) is accurate but SLOW. Not designed for running each tick. This is also a little slow since it's blending a bunch of icons together but good enough.
 	opacity_icon.AddAlphaMask(alpha_mask)//Likely the main source of lag for this proc. Probably not designed to run each tick.
 	opacity_icon.ChangeOpacity(0.4)//Front end for MapColors so it's fast. 0.5 means half opacity and looks the best in my opinion.
-	for(var/i=0,i<5,i++)//And now we add it as overlays. It's faster than creating an icon and then merging it.
+	for(var/i in 1 to 5)//And now we add it as overlays. It's faster than creating an icon and then merging it.
 		var/image/I = image("icon" = opacity_icon, "icon_state" = A.icon_state, "layer" = layer+0.8)//So it's above other stuff but below weapons and the like.
 		switch(i)//Now to determine offset so the result is somewhat blurred.
-			if(1)
-				I.pixel_x--
 			if(2)
-				I.pixel_x++
+				I.pixel_x--
 			if(3)
-				I.pixel_y--
+				I.pixel_x++
 			if(4)
+				I.pixel_y--
+			if(5)
 				I.pixel_y++
 		add_overlay(I)//And finally add the overlay.
 

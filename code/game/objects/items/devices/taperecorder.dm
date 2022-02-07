@@ -299,7 +299,7 @@
 	playsound(src, 'sound/items/taperecorder/taperecorder_print.ogg', 50, FALSE)
 	var/obj/item/paper/P = new /obj/item/paper(get_turf(src))
 	var/t1 = "<B>Transcript:</B><BR><BR>"
-	for(var/i = 1, mytape.storedinfo.len >= i, i++)
+	for(var/i in 1 to mytape.storedinfo.len)
 		t1 += "[mytape.storedinfo[i]]<BR>"
 	P.info = t1
 	var/tapename = mytape.name
@@ -422,12 +422,13 @@
 	else if(icon_state == "[initial_icon_state]_reverse") //so flipping doesn't overwrite an unexpected icon_state (e.g. an admin's)
 		icon_state = initial_icon_state
 
-/obj/item/tape/attackby(obj/item/I, mob/user, params)
-	if(unspooled && (I.tool_behaviour == TOOL_SCREWDRIVER))
-		to_chat(user, span_notice("You start winding the tape back in..."))
-		if(I.use_tool(src, user, 120))
-			to_chat(user, span_notice("You wind the tape back in."))
-			respool()
+/obj/item/tape/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!unspooled)
+		return FALSE
+	to_chat(user, span_notice("You start winding the tape back in..."))
+	if(tool.use_tool(src, user, 120))
+		to_chat(user, span_notice("You wind the tape back in."))
+		respool()
 
 //Random colour tapes
 /obj/item/tape/random

@@ -63,7 +63,7 @@
 /turf/open/floor/iron,
 /area/ctf)
 "bs" = (
-/obj/structure/chair/stool/bar{
+/obj/structure/chair/stool/bar/directional/south{
 	item_chair = null;
 	resistance_flags = 64
 	},
@@ -302,8 +302,7 @@
 /turf/open/floor/carpet/blue,
 /area/ctf)
 "go" = (
-/obj/structure/chair/stool/bar{
-	dir = 4;
+/obj/structure/chair/stool/bar/directional/east{
 	item_chair = null;
 	resistance_flags = 64
 	},
@@ -386,8 +385,7 @@
 /turf/closed/wall/mineral/iron,
 /area/ctf)
 "hU" = (
-/obj/structure/chair/stool/bar{
-	dir = 8;
+/obj/structure/chair/stool/bar/directional/west{
 	item_chair = null;
 	resistance_flags = 64
 	},
@@ -862,8 +860,7 @@
 /area/ctf)
 "qJ" = (
 /obj/effect/turf_decal/siding/wood/corner,
-/obj/structure/chair/stool/bar{
-	dir = 8;
+/obj/structure/chair/stool/bar/directional/west{
 	item_chair = null;
 	resistance_flags = 64
 	},
@@ -1387,9 +1384,9 @@
 /area/ctf)
 "Am" = (
 /obj/structure/window/reinforced/fulltile{
+	atom_integrity = 5000;
 	max_integrity = 5000;
-	name = "hardened window";
-	atom_integrity = 5000
+	name = "hardened window"
 	},
 /turf/open/floor/plating,
 /area/ctf)
@@ -1623,8 +1620,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/bar,
-/obj/structure/chair/stool/bar{
-	dir = 1
+/obj/structure/chair/stool/bar/directional/north{
+	item_chair = null;
+	resistance_flags = 64
 	},
 /turf/open/floor/iron,
 /area/ctf)

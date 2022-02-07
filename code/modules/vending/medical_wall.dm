@@ -3,6 +3,7 @@
 	desc = "Wall-mounted Medical Equipment dispenser."
 	icon_state = "wallmed"
 	icon_deny = "wallmed-deny"
+	panel_type = "panel-wall"
 	density = FALSE
 	products = list(
 		/obj/item/reagent_containers/syringe = 3,
@@ -27,21 +28,7 @@
 	tiltable = FALSE
 	light_mask = "wallmed-light-mask"
 
-/obj/machinery/vending/wallmed/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/machinery/vending/wallmed/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/machinery/vending/wallmed/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/machinery/vending/wallmed/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed, 32)
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"

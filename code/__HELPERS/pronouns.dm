@@ -40,13 +40,19 @@
 	. = "es"
 
 /datum/proc/plural_s(pluralize)
-	switch(copytext_char(pluralize, -1))
-		if ("s")
+	switch(copytext_char(pluralize, -2))
+		if ("ss")
 			. = "es"
-		if ("x")
+		if ("sh")
+			. = "es"
+		if ("ch")
 			. = "es"
 		else
-			. = "s"
+			switch(copytext_char(pluralize, -1))
+				if("s", "x", "z")
+					. = "es"
+				else
+					. = "s"
 
 //like clients, which do have gender.
 /client/p_they(capitalized, temp_gender)
