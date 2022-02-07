@@ -1,0 +1,11 @@
+author: "Necromanceranne, quin"
+delete-after: True
+changes: 
+  - rscadd: "Adds the Inferno and Cryo Pistols. A hybrid energy/ballistic weapon, to cargo. It can be purchased in either a goodies pack or a normal crate order."
+  - rscadd: "Thermal Pistols do more damage and a special based on temperature of the target hit."
+  - rscadd: "Inferno pistols cause an explosion when they hit a severely cold target."
+  - rscadd: "Cryo pistols cause a knockdown and extra damage if they hit a severely hot target."
+  - rscadd: "There is a special nanite pistol, which is admin spawned. Don't tell anyone about the forbidden ballistic energy gun."
+  - rscadd: "You can order a .38 revolver as a goodie pack. It is expensive."
+  - rscdel: "Removes WT-550's from cargo and related content from the techweb/protolathes."
+  - balance: "Exotic Ammo is now much earlier in the tech web to take the place of Ballistic Weaponry."

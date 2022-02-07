@@ -718,28 +718,32 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/melee/flyswatter/Initialize(mapload)
 	. = ..()
 	strong_against = typecacheof(list(
-					/mob/living/simple_animal/hostile/bee/,
-					/mob/living/simple_animal/butterfly,
-					/mob/living/basic/cockroach,
-					/obj/item/queen_bee,
-					/obj/structure/spider/spiderling,
-					/mob/living/simple_animal/ant,
-					/obj/effect/decal/cleanable/ants
+		/mob/living/simple_animal/hostile/bee,
+		/mob/living/simple_animal/butterfly,
+		/mob/living/basic/cockroach,
+		/obj/item/queen_bee,
+		/obj/structure/spider/spiderling,
+		/mob/living/simple_animal/ant,
+		/obj/effect/decal/cleanable/ants,
 	))
 
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
-	if(proximity_flag)
-		if(is_type_in_typecache(target, strong_against))
-			if(!HAS_TRAIT(user, TRAIT_PACIFISM))
-				new /obj/effect/decal/cleanable/insectguts(target.drop_location())
-				to_chat(user, span_warning("You easily splat [target]."))
-				if(isliving(target))
-					var/mob/living/bug = target
-					bug.gib()
-				else
-					qdel(target)
+	if(!proximity_flag)
+		return
+	if(!is_type_in_typecache(target, strong_against))
+		return
+	if (HAS_TRAIT(user, TRAIT_PACIFISM))
+		return
+
+	new /obj/effect/decal/cleanable/insectguts(target.drop_location())
+	to_chat(user, span_warning("You easily splat [target]."))
+	if(isliving(target))
+		var/mob/living/bug = target
+		bug.gib()
+	else
+		qdel(target)
 
 /obj/item/proc/can_trigger_gun(mob/living/user)
 	if(!user.can_use_guns(src))
