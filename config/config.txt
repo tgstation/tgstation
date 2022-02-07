@@ -564,7 +564,7 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## The URL to the webhook for adminhelps to relay the urgent ahelp message to
 ## If not set, will disable urgent ahelps.
-ADMINHELP_WEBHOOK_URL https://discord.com/api/webhooks/940285845548695572/M4ML3XqaZvX8co3csrOdyjc7l0VpNhYGCmLgAUPd18Inn4ZLYAWAVEmSeNzjR_iFicnj
+#ADMINHELP_WEBHOOK_URL
 
 ## The urgent ahelp cooldown for a given player if they're alone on a server and need to send an urgent ahelp.
 URGENT_AHELP_COOLDOWN 300

@@ -245,14 +245,16 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
 				round_state = "Round has not started"
 			if(GAME_STATE_PLAYING)
-				round_state = "Round is ongoing.\n[SSshuttle.emergency.getModeStr()]: [SSshuttle.emergency.getTimerStr()]"
-				if(SSticker.emergency_reason)
-					round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
+				round_state = "Round is ongoing."
+				if(SSshuttle.emergency.getModeStr())
+					round_state += "\n[SSshuttle.emergency.getModeStr()]: [SSshuttle.emergency.getTimerStr()]"
+					if(SSticker.emergency_reason)
+						round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
 			if(GAME_STATE_FINISHED)
 				round_state = "Round has ended"
 		embed.fields = list(
-			"ROUND STATE" = round_state,
 			"CKEY" = initiator_ckey,
+			"ROUND STATE" = round_state,
 			"ROUND ID" = GLOB.round_id,
 			"ROUND TIME" = ROUND_TIME,
 			"MESSAGE" = message
