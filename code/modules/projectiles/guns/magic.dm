@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	///what kind of magic is this
 	var/school = SCHOOL_EVOCATION
-	var/antimagic_flags = MAGIC_CASTING_RESTRICTION
+	var/antimagic_flags = MAGIC_RESISTANCE
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 8
