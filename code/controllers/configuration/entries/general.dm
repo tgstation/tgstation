@@ -605,6 +605,8 @@
 
 /datum/config_entry/string/adminhelp_webhook_name
 
+/datum/config_entry/string/adminhelp_ahelp_link
+
 /datum/config_entry/flag/cache_assets
 	default = TRUE
 
