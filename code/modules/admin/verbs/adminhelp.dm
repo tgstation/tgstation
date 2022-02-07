@@ -261,7 +261,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		)
 		embed.content = extra_message
 		if(CONFIG_GET(string/adminhelp_ahelp_link))
-			embed.url = CONFIG_GET(string/adminhelp_ahelp_link)
+			var/ahelp_link = replacetext(CONFIG_GET(string/adminhelp_ahelp_link), "$RID", GLOB.round_id)
+			ahelp_link = replacetext(ahelp_link, "$TID", id)
+			embed.url = ahelp_link
 		embed.footer = "This player requested an admin"
 		send2adminchat_webhook(embed)
 	//send it to TGS if nobody is on and tell us how many were on
