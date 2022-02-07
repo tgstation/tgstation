@@ -21,14 +21,11 @@
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
 	var/mineralAmt = 3
+	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
 	// If true you can mine the mineral turf with your hands
 	var/weak_turf = FALSE
-	///How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
-	var/tool_mine_speed = 4 SECONDS
-	///How long it takes to mine this turf with hands, if it's weak.
-	var/hand_mine_speed = 15 SECONDS
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
