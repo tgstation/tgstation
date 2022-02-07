@@ -272,6 +272,9 @@
 	///Has narsie been summoned yet?
 	var/narsie_summoned = FALSE
 
+	///When can the summon theme play again?
+	COOLDOWN_DECLARE(summon_theme_cooldown)
+
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
 		return

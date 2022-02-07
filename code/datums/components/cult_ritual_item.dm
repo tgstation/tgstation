@@ -1,3 +1,5 @@
+#define CULT_THEME_COOLDOWN 5 MINUTES
+
 /*
  * Component for items that are used by cultists to conduct rituals.
  *
@@ -357,6 +359,9 @@
 	priority_announce("Figments from an eldritch god are being summoned by [cultist.real_name] into [get_area(cultist)] from an unknown dimension. Disrupt the ritual at all costs!","Central Command Higher Dimensional Affairs", ANNOUNCER_SPANOMALIES)
 	for(var/shielded_turf in spiral_range_turfs(1, cultist, 1))
 		LAZYADD(shields, new /obj/structure/emergency_shield/cult/narsie(shielded_turf))
+	if(COOLDOWN_FINISHED(cult_team, summon_theme_cooldown))
+		sound_to_playing_players("sound/ambience/narsie_scribe.ogg")
+	COOLDOWN_START(cult_team, summon_theme_cooldown, CULT_THEME_COOLDOWN)
 
 	return TRUE
 
@@ -463,3 +468,5 @@
 		LAZYREMOVE(shields, shield)
 		if(!QDELETED(shield))
 			qdel(shield)
+
+#undef CULT_THEME_COOLDOWN
