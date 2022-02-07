@@ -214,11 +214,11 @@
 			if (params["amount"])
 				desired = text2num(params["amount"])
 			else
-				desired = tgui_input_number(usr, "How many items would you like to take out?", "Release", 1, min_value = 1)
-				if(isnull(desired))
+				desired = tgui_input_number(usr, "How many items would you like to take out?", "Release", max_value = 50)
+				if(!desired)
 					return FALSE
-				desired = round(desired)
-			if(QDELETED(src) || QDELETED(usr) || !usr.Adjacent(src)) // Sanity checkin' in case stupid stuff happens while we wait for input()
+
+			if(QDELETED(src) || QDELETED(usr) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)) // Sanity checkin' in case stupid stuff happens while we wait for input()
 				return FALSE
 
 			for(var/obj/item/dispensed_item in src)

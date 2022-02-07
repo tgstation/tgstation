@@ -149,7 +149,7 @@
 		/obj/projectile/beam,
 		/obj/projectile/bullet,
 		/obj/projectile/magic,
-		))
+	))
 	if(!is_type_in_typecache(proj, guilty_projectiles))
 		return
 	if((proj.damage_type == STAMINA))
