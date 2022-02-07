@@ -40,9 +40,9 @@
 		var/mob/living/silicon/robot/robot = bumper
 		if(robot.module_active?.tool_behaviour == tool_behaviour)
 			INVOKE_ASYNC(source, /atom.proc/attackby, robot.module_active, robot)
-			TIMER_COOLDOWN_START(robot, type, CLICK_CD_RAPID)
+			TIMER_COOLDOWN_START(robot, type, CLICK_CD_MELEE)
 		return
 	var/obj/item/tool_item = bumper.is_holding_tool_quality(tool_behaviour)
 	if(tool_item)
 		INVOKE_ASYNC(source, /atom.proc/attackby, tool_item, bumper)
-		TIMER_COOLDOWN_START(bumper, type, CLICK_CD_RAPID)
+		TIMER_COOLDOWN_START(bumper, type, CLICK_CD_MELEE)
