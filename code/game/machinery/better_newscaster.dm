@@ -4,7 +4,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner_wand"
 	///What newscaster channel is currently being viewed by the player?
-	var/current_channel
+	var/datum/newscaster/feed_channel/current_channel
 
 /obj/item/newser/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -35,7 +35,7 @@
 			data["user"]["job"] = "No Job"
 			data["user"]["department"] = "No Department"
 
-	//Code breaking down the channels that have been made on-station thus far.
+	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
 	for(var/datum/newscaster/feed_channel/channel in GLOB.news_network.network_channels)
 		channel_list += list(list(
@@ -44,6 +44,7 @@
 			"desc" = channel.channel_desc,
 			"censored" = channel.censored,
 			"locked" = channel.locked,
+			"ID" = channel.channel_ID,
 			))
 		for(var/datum/newscaster/feed_message/comment_message in channel.messages)
 			message_list += list(list(
@@ -51,7 +52,7 @@
 			"body" = comment_message.body,
 			"channel_num" = comment_message.parent_ID,
 			))
-
+	data["viewing_channel"] = current_channel.channel_ID
 	data["channel"] = channel_list
 	data["messages"] = message_list
 
@@ -69,4 +70,5 @@
 			if(!(proto_chan in GLOB.news_network.network_channels))
 				return
 			current_channel = params["category"]
+			//say(current_channel)
 			. = TRUE

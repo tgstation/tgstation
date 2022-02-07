@@ -11,7 +11,7 @@ export const Newscaster = (props, context) => {
     icon,
     viewing_channel,
     current_channel = [],
-  } = props;
+  } = data;
   return (
     <Window
       width={575}
@@ -114,7 +114,7 @@ const NewscasterChannelSelector = (props, context) => {
             pt={0.75}
             pb={0.75}
             mr={1}
-            selected={viewing_channel === channels}
+            selected={viewing_channel === channels.ID}
             textColor="white"
             onClick={() => act('setChannel', {
               channels: channels,
@@ -129,22 +129,28 @@ const NewscasterChannelSelector = (props, context) => {
 
 /** This is where the channels comments get spangled out (tm) */
 const NewscasterChannelComments = (props, context) => {
-  const {
-    messages = [],
-  } = props;
   const { act, data } = useBackend(context);
+  const {
+    messages,
+    viewing_channel,
+  } = data;
   return (
     <Section>
-      {messages?.map(message => (
-        <Box key={message.body}>
-          <BlockQuote>
+      {messages?.map(message => {
+        if (message.channel_num === viewing_channel) {
+          return;
+        }
+        return (
+          <BlockQuote key={message.body}>
             {message.body}
-            <Box italic>
-              {message.auth}
+            <Box
+              pl={2.5}
+              italic>
+              by: {message.auth}
             </Box>
           </BlockQuote>
-        </Box>
-      ))}
+        ); }
+      )}
     </Section>
   );
 };

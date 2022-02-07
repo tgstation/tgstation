@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	newChannel.channel_desc = desc
 	newChannel.locked = locked
 	newChannel.is_admin_channel = adminChannel
-	newChannel.channelID = newChannel.random_channel_id_setup()
+	newChannel.channel_ID = newChannel.random_channel_id_setup()
 	network_channels += newChannel
 
 /datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)
