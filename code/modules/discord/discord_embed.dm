@@ -2,8 +2,10 @@
 /// https://discord.com/developers/docs/resources/channel#embed-object
 /// It is recommended to read the documentation on the discord website, as the information below could become outdated in the future.
 /datum/discord_embed
-	var/title = "Discord Embed"
-	var/description = "Description"
+	/// Title of the embed
+	var/title
+	/// The description
+	var/description
 	/// The URL that the title
 	var/url
 	/// The colour that appears on the top of the embed. This is an integer and is the color code of the embed.

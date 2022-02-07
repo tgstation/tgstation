@@ -240,7 +240,18 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/datum/discord_embed/embed = new()
 		embed.title = "Ticket #[id]"
 		embed.author = key_name(initiator_ckey)
+		var/round_state
+		switch(SSticker.current_state)
+			if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
+				round_state = "Round has not started"
+			if(GAME_STATE_PLAYING)
+				round_state = "Round is ongoing.\n[SSshuttle.emergency.getModeStr()]: [SSshuttle.emergency.getTimerStr()]"
+				if(SSticker.emergency_reason)
+					round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
+			if(GAME_STATE_FINISHED)
+				round_state = "Round has ended"
 		embed.fields = list(
+			"ROUND STATE" = round_state,
 			"CKEY" = initiator_ckey,
 			"ROUND ID" = GLOB.round_id,
 			"ROUND TIME" = ROUND_TIME,
@@ -248,7 +259,6 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		)
 		embed.content = extra_message
 		embed.footer = "This player requested an admin"
-		//send2adminchat_webhook("RELAY: [initiator_ckey] |  Ticket #[id]: [extra_message_to_send]")
 		send2adminchat_webhook(embed)
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
