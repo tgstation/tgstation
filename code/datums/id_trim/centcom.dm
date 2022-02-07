@@ -1,29 +1,28 @@
 /// Trim for basic Centcom cards.
 /datum/id_trim/centcom
 	access = list(ACCESS_CENT_GENERAL)
-	assignment = JOB_CENTCOM
+	assignment = "Central Command"
 	trim_state = "trim_centcom"
-	sechud_icon_state = SECHUD_CENTCOM
 
 /// Trim for Centcom VIPs
 /datum/id_trim/centcom/vip
 	access = list(ACCESS_CENT_GENERAL)
-	assignment = JOB_CENTCOM_VIP
+	assignment = "VIP Guest"
 
 /// Trim for Centcom Custodians.
 /datum/id_trim/centcom/custodian
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_STORAGE)
-	assignment = JOB_CENTCOM_CUSTODIAN
+	assignment = "Custodian"
 
 /// Trim for Centcom Thunderdome Overseers.
 /datum/id_trim/centcom/thunderdome_overseer
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_THUNDER)
-	assignment = JOB_CENTCOM_THUNDERDOME_OVERSEER
+	assignment = "Thunderdome Overseer"
 
 /// Trim for Centcom Officials.
 /datum/id_trim/centcom/official
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_WEAPONS)
-	assignment = JOB_CENTCOM_OFFICIAL
+	assignment = "CentCom Official"
 
 /// Trim for Centcom Interns.
 /datum/id_trim/centcom/intern
@@ -47,21 +46,21 @@
 /// Trim for Centcom Bartenders.
 /datum/id_trim/centcom/bartender
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_BAR)
-	assignment = JOB_CENTCOM_BARTENDER
+	assignment = "CentCom Bartender"
 
 /// Trim for Centcom Medical Officers.
 /datum/id_trim/centcom/medical_officer
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_LIVING, ACCESS_CENT_MEDICAL)
-	assignment = JOB_CENTCOM_MEDICAL_DOCTOR
+	assignment = "Medical Officer"
 
 /// Trim for Centcom Research Officers.
 /datum/id_trim/centcom/research_officer
 	access = list(ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_TELEPORTER, ACCESS_CENT_STORAGE)
-	assignment = JOB_CENTCOM_RESEARCH_OFFICER
+	assignment = "Research Officer"
 
 /// Trim for Centcom Specops Officers. All Centcom and Station Access.
 /datum/id_trim/centcom/specops_officer
-	assignment = JOB_CENTCOM_SPECIAL_OFFICER
+	assignment = "Special Ops Officer"
 
 /datum/id_trim/centcom/specops_officer/New()
 	. = ..()
@@ -70,7 +69,7 @@
 
 /// Trim for Centcom (Soviet) Admirals. All Centcom and Station Access.
 /datum/id_trim/centcom/admiral
-	assignment = JOB_CENTCOM_ADMIRAL
+	assignment = "Admiral"
 
 /datum/id_trim/centcom/admiral/New()
 	. = ..()
@@ -79,7 +78,7 @@
 
 /// Trim for Centcom Commanders. All Centcom and Station Access.
 /datum/id_trim/centcom/commander
-	assignment = JOB_CENTCOM_COMMANDER
+	assignment = "CentCom Commander"
 
 /datum/id_trim/centcom/commander/New()
 	. = ..()
@@ -88,9 +87,8 @@
 
 /// Trim for Deathsquad officers. All Centcom and Station Access.
 /datum/id_trim/centcom/deathsquad
-	assignment = JOB_ERT_DEATHSQUAD
+	assignment = "Death Commando"
 	trim_state = "trim_ert_commander"
-	sechud_icon_state = SECHUD_DEATH_COMMANDO
 
 /datum/id_trim/centcom/deathsquad/New()
 	. = ..()
@@ -108,9 +106,8 @@
 
 /// Trim for ERT Commanders. All station and centcom access.
 /datum/id_trim/centcom/ert/commander
-	assignment = JOB_ERT_COMMANDER
+	assignment = "Emergency Response Team Commander"
 	trim_state = "trim_ert_commander"
-	sechud_icon_state = SECHUD_EMERGENCY_RESPONSE_TEAM_COMMANDER
 
 /datum/id_trim/centcom/ert/commander/New()
 	. = ..()
@@ -119,9 +116,8 @@
 
 /// Trim for generic ERT seccies. No universal ID card changing access.
 /datum/id_trim/centcom/ert/security
-	assignment = JOB_ERT_OFFICER
+	assignment = "Security Response Officer"
 	trim_state = "trim_ert_security"
-	sechud_icon_state = SECHUD_SECURITY_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/security/New()
 	. = ..()
@@ -130,9 +126,8 @@
 
 /// Trim for generic ERT engineers. No universal ID card changing access.
 /datum/id_trim/centcom/ert/engineer
-	assignment = JOB_ERT_ENGINEER
+	assignment = "Engineering Response Officer"
 	trim_state = "trim_ert_engineering"
-	sechud_icon_state = SECHUD_ENGINEERING_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/engineer/New()
 	. = ..()
@@ -141,9 +136,8 @@
 
 /// Trim for generic ERT medics. No universal ID card changing access.
 /datum/id_trim/centcom/ert/medical
-	assignment = JOB_ERT_MEDICAL_DOCTOR
+	assignment = "Medical Response Officer"
 	trim_state = "trim_ert_medical"
-	sechud_icon_state = SECHUD_MEDICAL_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/medical/New()
 	. = ..()
@@ -152,9 +146,8 @@
 
 /// Trim for generic ERT chaplains. No universal ID card changing access.
 /datum/id_trim/centcom/ert/chaplain
-	assignment = JOB_ERT_CHAPLAIN
+	assignment = "Religious Response Officer"
 	trim_state = "trim_ert_religious"
-	sechud_icon_state = SECHUD_RELIGIOUS_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/chaplain/New()
 	. = ..()
@@ -163,9 +156,8 @@
 
 /// Trim for generic ERT janitors. No universal ID card changing access.
 /datum/id_trim/centcom/ert/janitor
-	assignment = JOB_ERT_JANITOR
+	assignment = "Janitorial Response Officer"
 	trim_state = "trim_ert_janitor"
-	sechud_icon_state = SECHUD_JANITORIAL_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/janitor/New()
 	. = ..()
@@ -174,9 +166,8 @@
 
 /// Trim for generic ERT clowns. No universal ID card changing access.
 /datum/id_trim/centcom/ert/clown
-	assignment = JOB_ERT_CLOWN
+	assignment = "Entertainment Response Officer"
 	trim_state = "trim_ert_entertainment"
-	sechud_icon_state = SECHUD_ENTERTAINMENT_RESPONSE_OFFICER
 
 /datum/id_trim/centcom/ert/clown/New()
 	. = ..()

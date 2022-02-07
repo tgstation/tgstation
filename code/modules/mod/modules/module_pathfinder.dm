@@ -150,18 +150,17 @@
 	button_icon_state = "recall"
 	/// The cooldown for the recall.
 	COOLDOWN_DECLARE(recall_cooldown)
+	/// The implant we are linked to.
+	var/obj/item/implant/mod/implant
 
 /datum/action/item_action/mod_recall/New(Target)
 	..()
-	if(!istype(Target, /obj/item/implant/mod))
-		qdel(src)
-		return
+	implant = Target
 
 /datum/action/item_action/mod_recall/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
-	var/obj/item/implant/mod/implant = target
 	if(!COOLDOWN_FINISHED(src, recall_cooldown))
 		implant.balloon_alert(implant.imp_in, "on cooldown!")
 		return

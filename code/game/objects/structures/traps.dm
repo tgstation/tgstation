@@ -33,8 +33,7 @@
 	if(!ignore_typecache)
 		ignore_typecache = typecacheof(list(
 			/obj/effect,
-			/mob/dead,
-		))
+			/mob/dead))
 
 /obj/structure/trap/Destroy()
 	qdel(spark_system)

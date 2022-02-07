@@ -36,8 +36,6 @@
 	var/move_self = TRUE
 	///If the singularity has eaten a supermatter shard and can go to stage six
 	var/consumed_supermatter = FALSE
-	/// How long it's been since the singulo last acted, in seconds
-	var/time_since_act = 0
 
 	flags_1 = SUPERMATTER_IGNORES_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -48,7 +46,7 @@
 
 	energy = starting_energy
 
-	START_PROCESSING(SSsinguloprocess, src)
+	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	var/datum/component/singularity/new_component = AddComponent(
@@ -78,7 +76,7 @@
 
 
 /obj/singularity/Destroy()
-	STOP_PROCESSING(SSsinguloprocess, src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/singularity/attack_tk(mob/user)
@@ -148,10 +146,6 @@
 			energy -= round(((energy + 1) / 4), 1)
 
 /obj/singularity/process(delta_time)
-	time_since_act += delta_time
-	if(time_since_act < 2)
-		return
-	time_since_act = 0
 	if(current_size >= STAGE_TWO)
 		if(prob(event_chance))
 			event()

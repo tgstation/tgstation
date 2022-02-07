@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "Calls via holopads now transmit the caller's speech again."

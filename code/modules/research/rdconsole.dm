@@ -318,11 +318,7 @@ Nothing else in the console has ID requirements.
 				say("No Design Disk Inserted!")
 				return TRUE
 			var/slot = text2num(params["slot"])
-			var/design_id = params["selectedDesign"]
-			if(!stored_research.researched_designs.Find(design_id))
-				stack_trace("ID did not map to a researched datum [design_id]")
-				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+			var/datum/design/design = SSresearch.techweb_design_by_id(params["selectedDesign"])
 			if(design)
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
 					if(design.autolathe_exportable && !design.reagents_list.len)

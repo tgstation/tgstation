@@ -14,9 +14,10 @@
 	var/obj/item/assembly/a_left = null
 	var/obj/item/assembly/a_right = null
 
-/obj/item/assembly_holder/Initialize(mapload)
+/obj/item/assembly_holder/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
+	AddComponent(/datum/component/simple_rotation, rotation_flags)
 
 /obj/item/assembly_holder/Destroy()
 	QDEL_NULL(a_left)

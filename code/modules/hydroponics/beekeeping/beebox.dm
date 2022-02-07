@@ -213,11 +213,11 @@
 		else
 			visible_message(span_danger("[user] disturbs the [name] to no effect!"))
 	else
-		var/option = tgui_alert(user, "Which piece do you wish to remove?", "Apiary Adjustment", list("Honey Frame", "Queen Bee"))
-		if(!option || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE))
+		var/option = tgui_alert(user, "What action do you wish to perform?","Apiary",list("Remove a Honey Frame","Remove the Queen Bee", "Cancel"))
+		if(!Adjacent(user))
 			return
 		switch(option)
-			if("Honey Frame")
+			if("Remove a Honey Frame")
 				if(!honey_frames.len)
 					to_chat(user, span_warning("There are no honey frames to remove!"))
 					return
@@ -240,7 +240,7 @@
 						var/multiple = fallen > 1
 						visible_message(span_notice("[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame."))
 
-			if("Queen Bee")
+			if("Remove the Queen Bee")
 				if(!queen_bee || queen_bee.loc != src)
 					to_chat(user, span_warning("There is no queen bee to remove!"))
 					return

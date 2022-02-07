@@ -48,7 +48,7 @@
 		if(3)
 			heart_nominee = tgui_input_text(src, "One more try, what was their name? Just a first or last name may be enough.", "<3?")
 
-	if(!heart_nominee)
+	if(isnull(heart_nominee) || heart_nominee == "")
 		return
 
 	heart_nominee = lowertext(heart_nominee)

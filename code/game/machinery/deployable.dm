@@ -172,9 +172,6 @@
 
 /obj/item/grenade/barrier/detonate(mob/living/lanced_by)
 	. = ..()
-	if(!.)
-		return
-
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
 		if(VERTICAL)

@@ -71,7 +71,7 @@
 	var/hive_name
 
 	/// Static typecache of all changeling powers that are usable.
-	var/static/list/all_powers = typecacheof(/datum/action/changeling, ignore_root_path = TRUE)
+	var/static/list/all_powers = typecacheof(/datum/action/changeling, TRUE)
 
 	/// Satic list of what each slot associated with (in regard to changeling flesh items).
 	var/static/list/slot2type = list(

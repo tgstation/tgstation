@@ -162,7 +162,7 @@ export const ListInputModal = (_, context) => {
                 selected={selected}
               />
             )}
-            <Stack.Item>
+            <Stack.Item pl={!large_buttons && 4} pr={!large_buttons && 4}>
               <InputButtons input={filteredItems[selected]} />
             </Stack.Item>
           </Stack>

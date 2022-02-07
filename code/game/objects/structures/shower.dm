@@ -204,7 +204,12 @@
 
 /obj/structure/showerframe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+
+/obj/structure/showerframe/proc/can_be_rotated(mob/user, rotation_type)
+	if(anchored)
+		to_chat(user, span_warning("It is fastened to the floor!"))
+	return !anchored
 
 /obj/effect/mist
 	name = "mist"

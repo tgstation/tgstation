@@ -51,13 +51,10 @@
 		value = reference_to_obj.resolve()
 
 	if(src.value != value || force)
-		if(isdatum(src.value))
+		if(isatom(src.value))
 			UnregisterSignal(src.value, COMSIG_PARENT_QDELETING)
-		if(datatype_handler.is_extensive)
-			src.value = datatype_handler.convert_value_extensive(src, value, force)
-		else
-			src.value = datatype_handler.convert_value(src, value, force)
-		if(isdatum(value))
+		src.value = datatype_handler.convert_value(src, value, force)
+		if(isatom(value))
 			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
 

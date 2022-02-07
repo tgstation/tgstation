@@ -284,9 +284,11 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt",  max_value = stored_amount)
-					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", 1, stored_amount, 1)
+					if(isnull(desired))
 						return
+					desired = round(desired)
+
 				var/sheets_to_remove = round(min(desired,50,stored_amount))
 
 				var/count = mat_container.retrieve_sheets(sheets_to_remove, mat, get_step(src, output_dir))
@@ -332,9 +334,10 @@
 				if (params["sheets"])
 					desired = text2num(params["sheets"])
 				else
-					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", max_value = smelt_amount)
-					if(!desired || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+					desired = tgui_input_number(usr, "How many sheets would you like to smelt?", "Smelt", 1, smelt_amount, 1)
+					if(isnull(desired))
 						return
+					desired = round(desired)
 				var/amount = round(min(desired,50,smelt_amount))
 				mat_container.use_materials(alloy.materials, amount)
 				materials.silo_log(src, "released", -amount, "sheets", alloy.materials)

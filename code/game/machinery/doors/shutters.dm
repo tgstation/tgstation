@@ -51,3 +51,6 @@
 /obj/machinery/door/poddoor/shutters/window/preopen
 	icon_state = "open"
 	density = FALSE
+
+/obj/machinery/door/poddoor/shutters/bumpopen()
+	return

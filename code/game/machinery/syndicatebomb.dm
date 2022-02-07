@@ -209,9 +209,11 @@
 	if(!user.canUseTopic(src, !issilicon(user)))
 		return
 	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
-	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if (isnull(new_timer))
 		return
-	timer_set = new_timer
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+	timer_set = round(new_timer)
 	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
 	if(choice != "Yes")

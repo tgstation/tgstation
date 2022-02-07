@@ -531,14 +531,12 @@
 			return
 		if("add_queue_part")
 			// Add a specific part to queue
-			var/id = params["id"]
-			if(!stored_research.researched_designs.Find(id))
-				stack_trace("ID did not map to a researched datum [id]")
-				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(id)
-			if(!(design.build_type & MECHFAB) || design.id != id)
-				return
-			add_to_queue(design)
+			var/T = params["id"]
+			for(var/v in stored_research.researched_designs)
+				var/datum/design/D = SSresearch.techweb_design_by_id(v)
+				if((D.build_type & MECHFAB) && (D.id == T))
+					add_to_queue(D)
+					break
 			return
 		if("del_queue_part")
 			// Delete a specific from from the queue
@@ -568,13 +566,12 @@
 				return
 
 			var/id = params["id"]
-			if(!stored_research.researched_designs.Find(id))
-				stack_trace("ID did not map to a researched datum [id]")
+			var/datum/design/D = SSresearch.techweb_design_by_id(id)
+
+			if(!(D.build_type & MECHFAB) || !(D.id == id))
 				return
-			var/datum/design/design = SSresearch.techweb_design_by_id(id)
-			if(!(design.build_type & MECHFAB) || design.id != id)
-				return
-			if(build_part(design))
+
+			if(build_part(D))
 				on_start_printing()
 				begin_processing()
 

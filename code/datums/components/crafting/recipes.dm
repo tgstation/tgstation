@@ -632,10 +632,6 @@
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/radiogloves/New()
-	..()
-	blacklist |= subtypesof(/obj/item/radio)
-
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
 	result = /obj/item/bouquet
@@ -952,17 +948,6 @@
 	result = /obj/item/reagent_containers/glass/bucket/wooden
 	category = CAT_PRIMAL
 
-/datum/crafting_recipe/ore_sensor
-	name = "Ore Sensor"
-	time = 3 SECONDS
-	reqs = list(
-		/datum/reagent/brimdust = 15,
-		/obj/item/stack/sheet/bone = 1,
-		/obj/item/stack/sheet/sinew = 1,
-	)
-	result = /obj/item/ore_sensor
-	category = CAT_PRIMAL
-
 /datum/crafting_recipe/headpike
 	name = "Spike Head (Glass Spear)"
 	time = 65
@@ -1208,13 +1193,13 @@
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
-	reqs = list(/obj/item/stack/sheet/plasteel = 5,
-				/obj/item/stack/cable_coil = 5,
+	reqs = list(/obj/item/stack/sheet/plasteel = 10,
+				/obj/item/stack/cable_coil = 10,
 				/obj/item/electronics/airlock = 1
 				)
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
-	time = 10 SECONDS
+	time = 15 SECONDS
 	category = CAT_MISC
 	one_per_turf = TRUE
 
@@ -1240,7 +1225,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/mod_core_standard
+/datum/crafting_recipe/mod_core
 	name = "MOD core (Standard)"
 	result = /obj/item/mod/core/standard
 	tool_behaviors = list(TOOL_SCREWDRIVER)
@@ -1252,7 +1237,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/mod_core_ethereal
+/datum/crafting_recipe/mod_core
 	name = "MOD core (Ethereal)"
 	result = /obj/item/mod/core/ethereal
 	tool_behaviors = list(TOOL_SCREWDRIVER)

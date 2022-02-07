@@ -132,6 +132,7 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ListInputModal")
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_list_input/ui_close(mob/user)
@@ -142,17 +143,18 @@
 	return GLOB.always_state
 
 /datum/tgui_list_input/ui_static_data(mob/user)
-	. = list()
-	.["items"] = items
+	. = list(
+		"init_value" = default || items[1],
+		"items" = items,
+		"message" = message,
+		"preferences" = list(),
+		"title" = title
+	)
+	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
 
 /datum/tgui_list_input/ui_data(mob/user)
 	. = list()
-	.["init_value"] = default || items[1]
-	.["message"] = message
-	.["preferences"] = list()
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
-	.["title"] = title
 	if(timeout)
 		.["timeout"] = clamp((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS), 0, 1)
 
@@ -165,12 +167,11 @@
 			if (!(params["entry"] in items))
 				return
 			set_choice(items_map[params["entry"]])
-			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			closed = TRUE
 			SStgui.close_uis(src)
+			closed = TRUE
 			return TRUE
 
 /datum/tgui_list_input/proc/set_choice(choice)

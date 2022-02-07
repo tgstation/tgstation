@@ -3,6 +3,7 @@
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	icon_state = "standard-control"
 	worn_icon = 'icons/mob/clothing/mod.dmi'
 
 /obj/item/mod/control
@@ -29,7 +30,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
-	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
+	alternate_worn_layer = BODY_FRONT_LAYER
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
@@ -113,7 +114,7 @@
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
 	chestplate.mod = src
-	chestplate.allowed = theme.allowed_suit_storage.Copy()
+	chestplate.allowed = theme.allowed.Copy()
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	gauntlets.mod = src
@@ -536,7 +537,7 @@
 		return FALSE
 	do_sparks(5, TRUE, src)
 	var/check_range = TRUE
-	return electrocute_mob(user, get_cell(), src, 0.7, check_range)
+	return electrocute_mob(user, get_charge_source(), src, 0.7, check_range)
 
 /obj/item/mod/control/proc/install(module, mob/user)
 	var/obj/item/mod/module/new_module = module
@@ -565,11 +566,11 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(wearer)]
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[wearer]
 		if(action)
 			action.Grant(wearer)
 	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(ai)]
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[ai]
 		if(action)
 			action.Grant(ai)
 	if(user)
@@ -584,7 +585,16 @@
 		old_module.on_suit_deactivation()
 		if(old_module.active)
 			old_module.on_deactivation(display_message = TRUE)
-	QDEL_LIST(old_module.pinned_to)
+	if(wearer)
+		old_module.on_unequip()
+		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[wearer]
+		if(action)
+			action.Remove(wearer)
+	if(ai)
+		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[ai]
+		if(action)
+			action.Remove(ai)
+	old_module.pinned_to.Cut()
 	old_module.on_uninstall()
 	old_module.mod = null
 
@@ -656,8 +666,8 @@
 	SIGNAL_HANDLER
 
 	update_charge_alert()
-	var/obj/item/stock_parts/cell/cell = get_cell()
-	if(!cell)
+	var/obj/item/stock_parts/cell/cell = get_charge_source()
+	if(!istype(cell))
 		return
 	cell.give(amount)
 
@@ -666,10 +676,10 @@
 
 	if(slowdown_inactive <= 0)
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
-		return SPEED_POTION_STOP
+		return
 	if(wearer)
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
-		return SPEED_POTION_STOP
+		return
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
 	var/list/all_parts = mod_parts.Copy() + src
 	for(var/obj/item/part as anything in all_parts)
@@ -679,4 +689,4 @@
 	slowdown_active = 0
 	update_speed()
 	qdel(speed_potion)
-	return SPEED_POTION_STOP
+	return SPEED_POTION_SUCCESSFUL
