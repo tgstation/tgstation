@@ -235,12 +235,21 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/message_to_send = message
 
 	if(urgent)
-		var/extra_message_to_send = "[message] - Requested an admin"
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
-		if(extra_message)
-			extra_message_to_send += " ([extra_message])"
 		to_chat(initiator, span_boldwarning("Notified admins to prioritize your ticket"))
-		send2adminchat_webhook("RELAY: [initiator_ckey] | Ticket #[id]: [extra_message_to_send]")
+		var/datum/discord_embed/embed = new()
+		embed.title = "Ticket #[id]"
+		embed.author = key_name(initiator_ckey)
+		embed.fields = list(
+			"CKEY" = initiator_ckey,
+			"ROUND ID" = GLOB.round_id,
+			"ROUND TIME" = ROUND_TIME,
+			"MESSAGE" = message
+		)
+		embed.content = extra_message
+		embed.footer = "This player requested an admin"
+		//send2adminchat_webhook("RELAY: [initiator_ckey] |  Ticket #[id]: [extra_message_to_send]")
+		send2adminchat_webhook(embed)
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
@@ -248,13 +257,100 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent to admins who are available through IRC or Discord."), confidential = TRUE)
 		heard_by_no_admins = TRUE
 
-/proc/send2adminchat_webhook(message)
+
+/// Documentation for the embed object and all of its variables can be found at
+/// https://discord.com/developers/docs/resources/channel#embed-object
+/// It is recommended to read the documentation on the discord website, as the information below could become outdated in the future.
+/datum/discord_embed
+	var/title = "Discord Embed"
+	var/description = "Description"
+	/// The URL that the title
+	var/url
+	/// The colour that appears on the top of the embed. This is an integer and is the color code of the embed.
+	var/color
+	/// The footer that appears on the embed
+	var/footer
+	/// String representing a link to an image
+	var/image
+	/// String representing a link to the thumbnail image
+	var/thumbnail
+	/// String representing a link to the video
+	var/video
+	/// String representing the name of the provider
+	var/provider
+	/// String representing the link of the provider
+	var/provider_url
+	/// Name of the author of the embed
+	var/author
+	/// A key-value string list of fields that should be displayed
+	var/list/fields
+	/// Any content that should appear above the embed
+	var/content
+
+/datum/discord_embed/proc/convert_to_list()
+	if(color && !isnum(color))
+		CRASH("Color on [type] is not a number! Expected a number, got [color] instead.")
+	var/list/data_to_list = list()
+	if(title)
+		data_to_list["title"] = title
+	if(description)
+		var/new_desc = replacetext(replacetext(description, "\proper", ""), "\improper", "")
+		new_desc = GLOB.has_discord_embeddable_links.Replace(replacetext(new_desc, "`", ""), " ```$1``` ")
+		data_to_list["description"] = new_desc
+	if(url)
+		data_to_list["url"] = url
+	if(color)
+		data_to_list["color"] = color
+	if(footer)
+		data_to_list["footer"] = list(
+			"text" = footer,
+		)
+	if(image)
+		data_to_list["image"] = list(
+			"url" = image,
+		)
+	if(thumbnail)
+		data_to_list["thumbnail"] = list(
+			"url" = thumbnail,
+		)
+	if(video)
+		data_to_list["video"] = list(
+			"url" = video,
+		)
+	if(provider)
+		data_to_list["provider"] = list(
+			"name" = provider,
+			"url" = provider_url,
+		)
+	if(author)
+		data_to_list["author"] = list(
+			"author" = author,
+		)
+	if(fields)
+		data_to_list["fields"] = list()
+		for(var/data as anything in fields)
+			if(!fields[data])
+				continue
+			data_to_list["fields"] += list(list(
+				"name" = data,
+				"value" = GLOB.has_discord_embeddable_links.Replace(replacetext(fields[data], "`", ""), " ```$1``` "),
+			))
+	return data_to_list
+
+
+/proc/send2adminchat_webhook(message_or_embed)
 	if(!CONFIG_GET(string/adminhelp_webhook_url))
 		return
-	var/message_content = replacetext(replacetext(message, "\proper", ""), "\improper", "")
-	message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message, "`", ""), " ```$1``` ")
 	var/list/webhook_info = list()
-	webhook_info["content"] = message_content
+	if(istext(message_or_embed))
+		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
+		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
+		webhook_info["content"] = message_content
+	else
+		var/datum/discord_embed/embed = message_or_embed
+		webhook_info["embeds"] = list(embed.convert_to_list())
+		if(embed.content)
+			webhook_info["content"] = embed.content
 	if(CONFIG_GET(string/adminhelp_webhook_name))
 		webhook_info["username"] = CONFIG_GET(string/adminhelp_webhook_name)
 	if(CONFIG_GET(string/adminhelp_webhook_pfp))
