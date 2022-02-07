@@ -2410,6 +2410,7 @@
 	},
 /obj/machinery/newscaster/security_unit/directional/south,
 /obj/effect/landmark/start/depsec/engineering,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "atF" = (
@@ -38022,9 +38023,6 @@
 	pixel_y = 4
 	},
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
-/obj/item/radio/intercom/directional/north{
-	pixel_x = 32
-	},
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "lrr" = (
@@ -71247,9 +71245,6 @@
 /obj/item/paper{
 	pixel_x = -4;
 	pixel_y = 6
-	},
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
