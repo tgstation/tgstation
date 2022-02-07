@@ -602,3 +602,9 @@ CACHE_ASSETS 0
 ## The number of PR announcements allowed for the same pull request per round
 ## This makes sure that somebody can only spam a few reopens and closes before being ignored
 PR_ANNOUNCEMENTS_PER_ROUND 5
+
+## Uncomment to block all attempts to profile, for performance reasons
+#FORBID_ALL_PROFILING
+
+## Uncomment to block granting profiling privileges to users with R_DEBUG, for performance purposes
+#FORBID_ADMIN_PROFILING

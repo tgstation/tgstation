@@ -48,8 +48,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// Set by the shell. Holds the reference to the owner who inserted the component into the shell.
 	var/datum/weakref/inserter_mind
 
-	/// Variables stored on this integrated circuit. with a `variable_name = value` structure
+	/// Variables stored on this integrated circuit, with a `variable_name = value` structure
 	var/list/datum/circuit_variable/circuit_variables = list()
+
+	/// Variables stored on this integrated circuit that can be set by a setter, with a `variable_name = value` structure
+	var/list/datum/circuit_variable/modifiable_circuit_variables = list()
+
+	/// List variables stored on this integrated circuit, with a `variable_name = value` structure
+	var/list/datum/circuit_variable/list_variables = list()
 
 	/// The maximum amount of setters and getters a circuit can have
 	var/max_setters_and_getters = 30
@@ -91,6 +97,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		remove_component(to_delete)
 		qdel(to_delete)
 	QDEL_LIST_ASSOC_VAL(circuit_variables)
+	QDEL_LIST_ASSOC_VAL(list_variables)
 	attached_components.Cut()
 	shell = null
 	examined_component = null
@@ -346,8 +353,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		variable_data["name"] = variable.name
 		variable_data["datatype"] = variable.datatype
 		variable_data["color"] = variable.color
+		if(islist(variable.value))
+			variable_data["is_list"] = TRUE
 		.["variables"] += list(variable_data)
-
 
 	.["display_name"] = display_name
 
@@ -568,7 +576,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			if(params["is_list"])
 				variable_datatype = PORT_TYPE_LIST(variable_datatype)
-			circuit_variables[variable_identifier] = new /datum/circuit_variable(variable_identifier, variable_datatype)
+			var/datum/circuit_variable/variable = new /datum/circuit_variable(variable_identifier, variable_datatype)
+			if(params["is_list"])
+				variable.set_value(list())
+				list_variables[variable_identifier] = variable
+			else
+				modifiable_circuit_variables[variable_identifier] = variable
+			circuit_variables[variable_identifier] = variable
 			. = TRUE
 		if("remove_variable")
 			var/variable_identifier = params["variable_name"]
@@ -578,6 +592,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(!variable)
 				return
 			circuit_variables -= variable_identifier
+			list_variables -= variable_identifier
+			modifiable_circuit_variables -= variable_identifier
 			qdel(variable)
 			. = TRUE
 		if("add_setter_or_getter")

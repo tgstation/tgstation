@@ -615,3 +615,7 @@
 	default = 5
 	min_val = 0
 	integer = TRUE
+
+/datum/config_entry/flag/forbid_all_profiling
+
+/datum/config_entry/flag/forbid_admin_profiling

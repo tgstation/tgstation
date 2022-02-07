@@ -231,7 +231,7 @@
 		/turf/closed/indestructible,
 		/turf/open/space,
 		/turf/open/lava,
-		/turf/open/chasm
+		/turf/open/chasm,
 	))
 
 /datum/rust_spread/New(loc)
