@@ -42,9 +42,9 @@
 /obj/item/organ/stomach/attack_self(mob/user, modifiers)
 	. = ..()
 
-	if(contents.len)
+	if(length(contents))
 		to_chat(user, span_notice("You begin squeezing out the contents of [src]..."))
-		if(do_after(user, contents.len SECONDS / 2))
+		if(do_after(user, length(contents) SECONDS / 2))
 			to_chat(user, span_notice("You squeeze out the contents of [src]."))
 			for(var/atom/movable/thing in contents)
 				thing.forceMove(user.drop_location())
@@ -93,7 +93,7 @@
 	//Handle disgust
 	if(body)
 		handle_disgust(body, delta_time, times_fired)
-		if(contents.len)
+		if(length(contents))
 			handle_contents(body, delta_time)
 
 	//If the stomach is not damage exit out
