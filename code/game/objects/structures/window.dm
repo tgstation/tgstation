@@ -196,7 +196,7 @@
 			return FALSE
 
 		to_chat(user, span_notice("You begin repairing [src]..."))
-		if(tool.use_tool(src, user, 40, volume = 50))
+		if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
 			atom_integrity = max_integrity
 			update_nearby_icons()
 			to_chat(user, span_notice("You repair [src]."))
@@ -233,7 +233,7 @@
 	if(!(reinf && (state == WINDOW_OUT_OF_FRAME) && anchored))
 		return FALSE
 	to_chat(user, span_notice("You begin to lever the window into the frame..."))
-	if(tool.use_tool(src, user, 100, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 		state = RWINDOW_SECURE
 		to_chat(user, span_notice("You pry the window into the frame."))
 	return TRUE

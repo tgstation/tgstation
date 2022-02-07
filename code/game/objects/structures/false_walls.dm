@@ -105,11 +105,10 @@
 		to_chat(user, span_warning("You can't reach, close it first!"))
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 0, volume=50))
+	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
 		dismantle(user, TRUE)
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
 	if(opening)

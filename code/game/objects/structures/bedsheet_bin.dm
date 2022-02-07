@@ -545,7 +545,7 @@ LINEN BINS
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
 		return TRUE
-	if(tool.use_tool(src, user, 5, volume=50))
+	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
 		to_chat(user, span_notice("You disassemble the [src]."))
 		new /obj/item/stack/rods(loc, 2)
 		qdel(src)

@@ -122,7 +122,7 @@
 	return TRUE
 
 /obj/structure/showcase/crowbar_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 20, volume=100))
+	if(tool.use_tool(src, user, 2 SECONDS, volume=100))
 		to_chat(user, span_notice("You start to crowbar the showcase apart..."))
 		new /obj/item/stack/sheet/iron(drop_location(), 4)
 		qdel(src)

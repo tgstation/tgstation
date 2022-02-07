@@ -92,7 +92,7 @@
 		to_chat(user, span_warning("Unweld [src] from the floor first!"))
 		return
 	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
-	if(tool.use_tool(src, user, 80, volume=50))
+	if(tool.use_tool(src, user, 8 SECONDS, volume=50))
 		to_chat(user, span_notice("You dismantle [src]."))
 		new framebuildstacktype(drop_location(), framebuildstackamount)
 		if(buildstackamount)
@@ -107,7 +107,7 @@
 		user.visible_message(span_notice("[user] starts to repair [src]."),
 							span_notice("You begin repairing [src]..."),
 							span_hear("You hear welding."))
-		if(tool.use_tool(src, user, 40, volume=40))
+		if(tool.use_tool(src, user, 4 SECONDS, volume=40))
 			atom_integrity = max_integrity
 			user.visible_message(span_notice("[user] repairs [src]."), \
 								span_notice("You finish repairing [src]."))
@@ -115,14 +115,14 @@
 		user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
 							span_notice("You start to weld [src] to the floor..."),
 							span_hear("You hear welding."))
-		if (tool.use_tool(src, user, 20, volume=50))
+		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(TRUE)
 			to_chat(user, span_notice("You weld [src] to the floor."))
 	else
 		user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
 							span_notice("You start to cut [src] free from the floor..."),
 							span_hear("You hear welding."))
-		if (tool.use_tool(src, user, 20, volume=50))
+		if (tool.use_tool(src, user, 2 SECONDS, volume=50))
 			set_anchored(FALSE)
 			to_chat(user, span_notice("You cut [src] free from the floor."))
 
