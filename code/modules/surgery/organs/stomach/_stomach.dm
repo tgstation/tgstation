@@ -39,6 +39,16 @@
 	else
 		reagents.flags |= REAGENT_HOLDER_ALIVE
 
+/obj/item/organ/stomach/attack_self(mob/user, modifiers)
+	. = ..()
+
+	if(contents.len)
+		to_chat(user, span_notice("You begin squeezing out the contents of [src]..."))
+		if(do_after(user, contents.len SECONDS / 2))
+			to_chat(user, span_notice("You squeeze out the contents of [src]."))
+			for(var/atom/movable/thing in contents)
+				thing.forceMove(user.drop_location())
+
 /obj/item/organ/stomach/on_life(delta_time, times_fired)
 	. = ..()
 
@@ -83,6 +93,8 @@
 	//Handle disgust
 	if(body)
 		handle_disgust(body, delta_time, times_fired)
+		if(contents.len)
+			handle_contents(body, delta_time)
 
 	//If the stomach is not damage exit out
 	if(damage < low_threshold)
@@ -204,6 +216,18 @@
 
 /obj/item/organ/stomach/get_availability(datum/species/owner_species)
 	return !(NOSTOMACH in owner_species.inherent_traits)
+
+/obj/item/organ/stomach/proc/handle_contents(mob/living/carbon/human/mule, delta_time)
+	var/inedibles = 0
+	for(var/atom/movable/thing in contents)
+		if(!IsEdible(thing))
+			inedibles += 1
+
+	if(!inedibles)
+		return
+
+	if(DT_PROB(5, delta_time))
+		mule.adjust_disgust(5*inedibles)
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
 	if(disgusted.disgust)
