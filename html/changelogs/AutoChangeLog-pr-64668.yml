@@ -1,7 +1,0 @@
-author: "Fikou, PositiveEntropy"
-delete-after: True
-changes: 
-  - imageadd: "the elite nukie suit has new sprites"
-  - balance: "the elite nukie suit starts with a little armor filled to standard by the armor booster, the elite armor booster is removed"
-  - balance: "welding protection is now a part of the armor booster module, no longer a separate module in syndie suits"
-  - balance: "adds a jetpack and holster to traitor modsuit"

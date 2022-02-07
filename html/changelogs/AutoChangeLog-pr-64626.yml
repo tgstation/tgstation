@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "blob overminds can now move vertically through station z-levels while its core hasn't been placed yet."
-  - bugfix: "disease mobs can too move vertically while a host hasn't been selected yet."
-  - bugfix: "(unrevealed) revenants can now move up and down more freely, without having to be standing on or below open space. This also applies to other living mobs with generic incorporeal movement (not to be confused with the nightmare or wizard's jaunt) as long as they can fly or there's no gravity."
