@@ -289,3 +289,8 @@
 			icon_state = "[initial(icon_state)]_3"
 		if(7.1 to 10)
 			icon_state = "[initial(icon_state)]_4"
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/effect/decal/cleanable/ants/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)
