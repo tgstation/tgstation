@@ -267,3 +267,76 @@
   - bugfix: Alert modals have been rewritten. Messages no longer clip, they also now
       respond to TGUI input preferences (UI tab) and you can press ESC to close.
   - bugfix: You should now be able to enter a blank text to succumb.
+2022-02-07:
+  Fikou:
+  - bugfix: xeno egg now updates its icon properly when burst
+  Fikou, Imaginos, Azlan, Nerevar:
+  - qol: you can deactivate modsuit device modules with drop key
+  - qol: the cargo modsuit can now hold mail bags
+  - bugfix: fixes modsuit speed potion being fucky
+  - qol: makes the gps module open the gps tgui instead of putting a gps in your hand
+  - balance: Reworks the mining MODsuit, the full suit is bought from the mining vendor.
+  Fikou, PositiveEntropy:
+  - imageadd: the elite nukie suit has new sprites
+  - balance: the elite nukie suit starts with a little armor filled to standard by
+      the armor booster, the elite armor booster is removed
+  - balance: welding protection is now a part of the armor booster module, no longer
+      a separate module in syndie suits
+  - balance: adds a jetpack and holster to traitor modsuit
+  Ghommie:
+  - bugfix: blob overminds can now move vertically through station z-levels while
+      its core hasn't been placed yet.
+  - bugfix: disease mobs can too move vertically while a host hasn't been selected
+      yet.
+  - bugfix: (unrevealed) revenants can now move up and down more freely, without having
+      to be standing on or below open space. This also applies to other living mobs
+      with generic incorporeal movement (not to be confused with the nightmare or
+      wizard's jaunt) as long as they can fly or there's no gravity.
+  Jolly-66:
+  - bugfix: Mapped in firelocks that are closed will STAY closed.
+  MacBlaze1:
+  - bugfix: made blast doors unable to be opened via bumping of any kind
+  - bugfix: made blastdoors unable to be interacted with via tools when closed
+  - balance: blast doors and shutters are now above windows and doors, and will hide
+      them. Both layers have been increased to 3.3.
+  - balance: shutters now cost 5 plasteel and 5 coil and 1 airlock electronic and
+      take 10 seconds to build
+  Melbert:
+  - bugfix: Fixes some active turfs + airlock issues on the icebox mining outpost
+  Mothblocks:
+  - qol: The observe button no longer requires tgui.
+  - refactor: Replaced the old surgery interface with one that is much better to use,
+      and lets you choose the body zone within itself.
+  OneAsianTortoise:
+  - balance: broken drinking/alcohol glass and broken plate shard now hurt you if
+      you step on them barefoot.
+  Ryll/Shaps:
+  - bugfix: Shooting living mobs with projectiles will no longer cause duplicated
+      logs/messages
+  TemporalOroboros:
+  - qol: Used grenades now look used when examined.
+  - bugfix: It should no longer be possible to DC admins by spamming grenades.
+  Wallem:
+  - bugfix: Radio Gloves will no longer vacuum your earpieces when crafted.
+  Wallem, Partheo & Tex:
+  - imageadd: Ports canister sprites made by Partheo & Tex from Yogstation.
+  Watermelon914:
+  - bugfix: Fixed how the diminishing returns of having too much progression scaled.
+      It now properly scales exponentially.
+  - rscdel: Removed the 'take' option for traitor uplinks in the traitor panel.
+  sergeirocks100:
+  - bugfix: The song editor UI now updates properly on pianos/space minimoogs.
+  timothymtorres:
+  - rscdel: Remove rotation from IV drips.
+  - rscdel: Rotating objects will no longer leave fingerprints.
+  - qol: Add right-clicking and left-clicking to rotate objects in different directions
+      for alt click. Left is counterclockwise and right is clockwise.
+  - qol: Replace to_chat rotation messages with balloon alerts to stop redundant chat
+      spamming.
+  - qol: Hotkeys for some pipe interactions had to be changed. Right clicking on an
+      unwrenched pipe now changes the pipe layer.  Right clicking on a unwrenched
+      trinary pipe device now flips it.  Alt clicking handles rotation.
+  - qol: Computer frames now have rotation component
+  - bugfix: Fix rotation on wheelchairs to work properly.
+  - refactor: Refactored the entire rotation component and all objects that use it.  Remove
+      a lot of deprecated code to make things cleaner.

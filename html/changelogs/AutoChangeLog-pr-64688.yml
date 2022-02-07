@@ -1,8 +1,0 @@
-author: "Fikou, Imaginos, Azlan, Nerevar"
-delete-after: True
-changes: 
-  - qol: "you can deactivate modsuit device modules with drop key"
-  - qol: "the cargo modsuit can now hold mail bags"
-  - bugfix: "fixes modsuit speed potion being fucky"
-  - qol: "makes the gps module open the gps tgui instead of putting a gps in your hand"
-  - balance: "Reworks the mining MODsuit, the full suit is bought from the mining vendor."

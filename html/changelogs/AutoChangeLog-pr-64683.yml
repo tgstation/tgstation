@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Shooting living mobs with projectiles will no longer cause duplicated logs/messages"
