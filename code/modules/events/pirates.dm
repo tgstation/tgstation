@@ -28,7 +28,7 @@
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/spawn_pirates, threat, chosen_gang, FALSE), RESPONSE_MAX_TIME)
 	SScommunications.send_message(threat, unique = TRUE)
 
-/proc/pirates_answered(datum/comm_message/threat, payoff, datum/pirate_gang/chosen_gang, initial_send_time)
+/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
 	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
 		priority_announce(chosen_gang.response_too_late ,sender_override = chosen_gang.ship_name)
 		return
