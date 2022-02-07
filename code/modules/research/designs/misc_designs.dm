@@ -362,7 +362,7 @@
 	desc = "A box full of crayons"
 	id = "crayon_box"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/plastic = 1000)
+	materials = list(/datum/material/plastic = 500, /datum/material/cardboard = 500)
 	build_path = /obj/item/storage/crayons
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
