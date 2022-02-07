@@ -1,5 +1,0 @@
-author: "MacBlaze1"
-delete-after: True
-changes: 
-  - bugfix: "made blast doors unable to be opened via bumping of any kind"
-  - bugfix: "made blastdoors unable to be interacted with via tools when closed"

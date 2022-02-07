@@ -1,5 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - bugfix: "Fixed how the diminishing returns of having too much progression scaled. It now properly scales exponentially."
-  - rscdel: "Removed the 'take' option for traitor uplinks in the traitor panel."
