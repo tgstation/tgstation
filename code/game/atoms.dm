@@ -1372,7 +1372,7 @@
 	var/signal_result
 	if(!is_right_clicking) // Left click first for sensibility
 		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, processing_recipes)
+		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes, tool)
 		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
 			return TOOL_ACT_SIGNAL_BLOCKING
 		if(processing_recipes.len)
@@ -1443,7 +1443,7 @@
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
 	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
-		to_chat(user, span_notice("You start working on [src]."))
+	to_chat(user, span_notice("You start working on [src]."))
 	if(process_item.use_tool(src, user, processing_time, volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
