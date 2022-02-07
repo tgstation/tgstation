@@ -32,7 +32,7 @@ export const AlertModal = (_, context) => {
   // Dynamically sets window height
   const windowHeight
   = 115
-  + (message.length > 30 ? message.length / 3 : 0)
+  + (message.length > 30 ? Math.ceil(message.length / 3) : 0)
   + (message.length && large_buttons ? 5 : 0)
   + (buttons.length > 2 ? buttons.length * 25 : 0);
   const onKey = (direction: number) => {
