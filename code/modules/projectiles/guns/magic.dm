@@ -11,7 +11,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	///what kind of magic is this
 	var/school = SCHOOL_EVOCATION
-	var/antimagic_obstructions = MAGIC_CASTING_RESTRICTION
+	var/antimagic_flags = MAGIC_CASTING_RESTRICTION
 	var/max_charges = 6
 	var/charges = 0
 	var/recharge_rate = 8
@@ -32,7 +32,7 @@
 			return
 		else
 			no_den_usage = 0
-	if(user.can_block_magic(antimagic_obstructions, charge_cost = 0))
+	if(user.can_block_magic(antimagic_flags, charge_cost = 0))
 		add_fingerprint(user)
 		to_chat(user, span_warning("Something is interfering with [src]."))
 		return

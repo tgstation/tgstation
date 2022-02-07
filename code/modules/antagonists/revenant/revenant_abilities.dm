@@ -129,7 +129,7 @@
 	action_background_icon_state = "bg_revenant"
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
-	antimagic_obstructions = MAGIC_RESISTANCE_HOLY
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0

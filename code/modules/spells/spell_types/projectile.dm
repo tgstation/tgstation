@@ -3,7 +3,7 @@
 /obj/projectile/magic/spell
 	name = "custom spell projectile"
 	var/list/ignored_factions //Do not hit these
-	var/antimagic_obstructions = NONE
+	var/antimagic_flags = NONE
 	var/trigger_range = 0 //How far we do we need to be to hit
 	var/linger = FALSE //Can't hit anything but the intended target
 
@@ -45,7 +45,7 @@
 		return FALSE
 	if(ismob(target) && !direct_target) //Unsure about the direct target, i guess it could always skip these.
 		var/mob/M = target
-		if(M.can_block_magic(antimagic_obstructions))
+		if(M.can_block_magic(antimagic_flags))
 			return FALSE
 		if(ignored_factions?.len && faction_check(M.faction,ignored_factions))
 			return FALSE
@@ -56,7 +56,7 @@
 /obj/effect/proc_holder/spell/targeted/projectile
 	name = "Projectile"
 	desc = "This spell summons projectiles which try to hit the targets."
-	antimagic_obstructions = MAGIC_RESISTANCE
+	antimagic_flags = MAGIC_RESISTANCE
 	var/proj_type = /obj/projectile/magic/spell //IMPORTANT use only subtypes of this
 	var/update_projectile = FALSE //So you want to admin abuse magic bullets ? This is for you
 	//Below only apply if update_projectile is true

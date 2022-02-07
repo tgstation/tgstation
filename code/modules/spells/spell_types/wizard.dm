@@ -255,7 +255,7 @@
 	cooldown_min = 150
 	selection_type = "view"
 	sound = 'sound/magic/repulse.ogg'
-	antimagic_obstructions = MAGIC_RESISTANCE
+	antimagic_flags = MAGIC_RESISTANCE
 	var/maxthrow = 5
 	var/sparkle_path = /obj/effect/temp_visual/gravpush
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
@@ -278,7 +278,7 @@
 
 		if(ismob(AM))
 			var/mob/M = AM
-			if(M.can_block_magic(antimagic_obstructions))
+			if(M.can_block_magic(antimagic_flags))
 				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
@@ -303,7 +303,7 @@
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	clothes_req = FALSE
-	antimagic_obstructions = NONE
+	antimagic_flags = NONE
 	range = 2
 	cooldown_min = 150
 	invocation_type = "none"
@@ -311,7 +311,7 @@
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
-	antimagic_obstructions = NONE
+	antimagic_flags = NONE
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/cast(list/targets,mob/user = usr)
 	if(iscarbon(user))
