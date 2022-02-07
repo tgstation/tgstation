@@ -6,28 +6,27 @@
 //How the world interacts with drones
 
 
-/mob/living/simple_animal/drone/attack_drone(mob/living/simple_animal/drone/D)
-	if(D != src && stat == DEAD)
-		var/d_input = tgui_alert(D,"Perform which action?","Drone Interaction",list("Reactivate","Cannibalize","Nothing"))
-		if(d_input)
-			switch(d_input)
-				if("Reactivate")
-					try_reactivate(D)
-
-				if("Cannibalize")
-					if(D.health < D.maxHealth)
-						D.visible_message(span_notice("[D] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
-						if(do_after(D, 60, 0, target = src))
-							D.visible_message(span_notice("[D] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
-							D.adjustBruteLoss(-src.maxHealth)
-							new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
-							qdel(src)
-						else
-							to_chat(D, span_warning("You need to remain still to cannibalize [src]!"))
-					else
-						to_chat(D, span_warning("You're already in perfect condition!"))
-				if("Nothing")
-					return
+/mob/living/simple_animal/drone/attack_drone(mob/living/simple_animal/drone/drone)
+	if(drone == src || stat != DEAD)
+		return FALSE
+	var/input = tgui_alert(drone, "Perform which action?", "Drone Interaction", list("Reactivate", "Cannibalize"))
+	if(!input)
+		return FALSE
+	switch(input)
+		if("Reactivate")
+			try_reactivate(drone)
+		if("Cannibalize")
+			if(drone.health >= drone.maxHealth)
+				to_chat(drone, span_warning("You're already in perfect condition!"))
+				return
+			drone.visible_message(span_notice("[drone] begins to cannibalize parts from [src]."), span_notice("You begin to cannibalize parts from [src]..."))
+			if(do_after(drone, 60, 0, target = src))
+				drone.visible_message(span_notice("[drone] repairs itself using [src]'s remains!"), span_notice("You repair yourself using [src]'s remains."))
+				drone.adjustBruteLoss(-src.maxHealth)
+				new /obj/effect/decal/cleanable/oil/streak(get_turf(src))
+				qdel(src)
+			else
+				to_chat(drone, span_warning("You need to remain still to cannibalize [src]!"))
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/simple_animal/drone/attack_hand(mob/user, list/modifiers)
@@ -114,7 +113,7 @@
 		..()
 
 /mob/living/simple_animal/drone/transferItemToLoc(obj/item/item, newloc, force, silent)
-	return item in internal_storage && ..()
+	return !(item.type in drone_item_whitelist_flat) && ..()
 
 /mob/living/simple_animal/drone/getarmor(def_zone, type)
 	var/armorval = 0
