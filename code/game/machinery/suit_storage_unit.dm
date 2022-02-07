@@ -136,6 +136,9 @@
 	icon_state = "industrial"
 	base_icon_state = "industrial"
 
+/obj/machinery/suit_storage_unit/industrial/loader
+	mod_type = /obj/item/mod/control/pre_equipped/loader
+
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
@@ -424,17 +427,11 @@
 
 /obj/machinery/suit_storage_unit/process(delta_time)
 	var/obj/item/stock_parts/cell/cell
-	if(suit)
-		if(!istype(suit))
-			return
-		if(!suit.cell)
-			return
+	if(suit && istype(suit))
 		cell = suit.cell
-	else if(mod)
-		cell = mod.get_charge_source()
-		if(!istype(cell))
-			return
-	else
+	if(mod)
+		cell = mod.get_cell()
+	if(!cell)
 		return
 	use_power(charge_rate * delta_time)
 	cell.give(charge_rate * delta_time)

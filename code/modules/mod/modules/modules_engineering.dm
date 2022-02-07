@@ -61,7 +61,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
-/obj/item/mod/module/magboot/on_deactivation()
+/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -112,7 +112,6 @@
 	name = "tether"
 	icon_state = "tether_projectile"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	pass_flags = PASSTABLE
 	damage = 0
 	nodamage = TRUE
 	range = 10

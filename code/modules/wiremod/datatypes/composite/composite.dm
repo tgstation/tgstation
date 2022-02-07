@@ -40,10 +40,15 @@
 
 	if(GLOB.circuit_datatypes[new_datatype])
 		return new_datatype
+	var/is_extensive = FALSE
 	for(var/datatype_to_check in composite_datatypes)
 		if(!GLOB.circuit_datatypes[datatype_to_check])
 			CRASH("Attempted to form an invalid composite datatype using datatypes that don't exist! (got [datatype_to_check], expected a valid datatype)")
+		if(GLOB.circuit_datatypes[datatype_to_check].is_extensive)
+			is_extensive = TRUE
 	var/datum/circuit_datatype/composite_instance/generated_type = new composite_datatype_path(new_datatype, datatype, composite_datatypes)
+	if(!generated_type.is_extensive)
+		generated_type.is_extensive = is_extensive
 	GLOB.circuit_datatypes[new_datatype] = generated_type
 	generated_types[new_datatype] = generated_type
 	return new_datatype
@@ -108,3 +113,8 @@
 
 /datum/circuit_datatype/composite_instance/get_datatypes()
 	return composite_datatypes
+
+/datum/circuit_datatype/composite_instance/get_datatype(index)
+	if(index > length(composite_datatypes) || index < 0)
+		return
+	return composite_datatypes[index]

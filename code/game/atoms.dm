@@ -572,7 +572,8 @@
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	. = hitting_projectile.on_hit(src, 0, def_zone, piercing_hit)
+	var/armor = check_projectile_armor(def_zone, hitting_projectile)
+	. = hitting_projectile.on_hit(src, armor, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -1414,6 +1415,7 @@
 			if(TOOL_ANALYZER)
 				act_result = analyzer_act_secondary(user, tool)
 	if(act_result) // A tooltype_act has completed successfully
+		log_tool("[key_name(user)] used [tool] on [src][is_right_clicking ? "(right click)" : ""] at [AREACOORD(src)]")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 

@@ -27,7 +27,7 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
-/turf/open/floor/plating{
+/turf/open/floor/plating/airless{
 	icon_state = "platingdmg3"
 	},
 /area/ruin/space/djstation)

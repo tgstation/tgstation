@@ -37,14 +37,12 @@
 		return
 	if(!istype(target))
 		return
-	target.AI_notify_hack()
 	INVOKE_ASYNC(src, .proc/begin_hack, user, target)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/traitor_objective/hack_comm_console/proc/begin_hack(mob/user, obj/machinery/computer/communications/target)
+	target.AI_notify_hack()
 	if(!do_after(user, 30 SECONDS, target))
 		return
 	succeed_objective()
-	priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
-	var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
-	pirate_event.runEvent()
+	target.hack_console(user)

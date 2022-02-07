@@ -727,9 +727,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	if(!holder)
 		return
 
-	if(combo_hud_enabled)
-		toggle_combo_hud()
-
 	holder.deactivate()
 
 	to_chat(src, span_interface("You are now a normal player."))

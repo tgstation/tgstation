@@ -3,7 +3,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Guest Room APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /turf/open/floor/carpet/purple,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
@@ -118,7 +118,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Guest Room APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/wood/parquet,
@@ -204,7 +204,7 @@
 	},
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Dock APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /obj/structure/chair{
@@ -802,7 +802,7 @@
 "hT" = (
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Kitchen APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
@@ -1437,7 +1437,7 @@
 "mh" = (
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Guest Room APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/red,
@@ -1899,7 +1899,7 @@
 "qG" = (
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Custodial APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /obj/structure/sink{
@@ -2987,7 +2987,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Guest Room APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/structure/cable,
 /obj/item/pen,
@@ -3133,7 +3133,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 1;
 	name = "Power Storage APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/power)
@@ -3606,7 +3606,7 @@
 "MQ" = (
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Pool APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/freezer,
@@ -3779,7 +3779,7 @@
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Guest Room APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/carpet/royalblue,
@@ -4361,7 +4361,7 @@
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Staff Room APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /obj/item/gps/spaceruin{
@@ -4675,7 +4675,7 @@
 /obj/item/paper_bin,
 /obj/machinery/power/apc/highcap/five_k{
 	name = "Guest Room APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /obj/item/pen,

@@ -32,31 +32,41 @@
 /mob/living/silicon/proc/add_inherent_law(law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_inherent_law(law)
+	lawcheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_inherent_laws(announce = TRUE)
 	laws_sanity_check()
+	for (var/law in laws.inherent)
+		if (law in lawcheck)
+			lawcheck -= law
 	laws.clear_inherent_laws()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/add_supplied_law(number, law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
+	lawcheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_supplied_laws(announce = TRUE)
 	laws_sanity_check()
+	for(var/law in laws.supplied)
+		if (law in lawcheck)
+			lawcheck -= law
 	laws.clear_supplied_laws()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/add_ion_law(law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_ion_law(law)
+	ioncheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/add_hacked_law(law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_hacked_law(law)
+	hackedcheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/replace_random_law(law, groups, announce = TRUE)
@@ -72,16 +82,20 @@
 /mob/living/silicon/proc/remove_law(number, announce = TRUE)
 	laws_sanity_check()
 	. = laws.remove_law(number)
+	if (. in lawcheck)
+		lawcheck -= .
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_ion_laws(announce = TRUE)
 	laws_sanity_check()
 	laws.clear_ion_laws()
+	ioncheck = list()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_hacked_laws(announce = TRUE)
 	laws_sanity_check()
 	laws.clear_hacked_laws()
+	hackedcheck = list()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/make_laws()
@@ -91,5 +105,7 @@
 
 /mob/living/silicon/proc/clear_zeroth_law(force, announce = TRUE)
 	laws_sanity_check()
-	laws.clear_zeroth_law(force)
+	var/zeroth = laws.zeroth
+	if(laws.clear_zeroth_law(force))
+		lawcheck -= zeroth
 	post_lawchange(announce)

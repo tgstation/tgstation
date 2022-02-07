@@ -77,7 +77,8 @@ ALERT_RED_UPTO There is an immediate serious threat to the station. Security may
 ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
 ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
 
-
+## The total weight of station goals possible for a round (allows multiple goals)
+STATION_GOAL_BUDGET 1
 
 ## GAME MODES ###
 

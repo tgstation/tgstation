@@ -104,6 +104,9 @@ GLOBAL_LIST_INIT(heretic_start_knowledge,list(/datum/eldritch_knowledge/spell/ba
 ///File to the malf flavor
 #define MALFUNCTION_FLAVOR_FILE "antagonist_flavor/malfunction_flavor.json"
 
+///File to the thief flavor
+#define THIEF_FLAVOR_FILE "antagonist_flavor/thief_flavor.json"
+
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Animal Rights Consortium",

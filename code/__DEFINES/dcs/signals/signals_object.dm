@@ -75,6 +75,9 @@
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
 	#define COMPONENT_OBJ_ALLOW (1<<0)
 
+#define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
+	#define COMPONENT_AIRLOCK_SHELL_ALLOW (1<<0)
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)
@@ -373,4 +376,4 @@
 
 /// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
-	#define SPEED_POTION_SUCCESSFUL (1<<0)
+	#define SPEED_POTION_STOP (1<<0)
