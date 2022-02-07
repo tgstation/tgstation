@@ -937,7 +937,7 @@
 	if(SEND_SIGNAL(src, COMSIG_MOB_CAST_MAGIC, src, magic_flags, charge_cost))
 		return TRUE
 	// if we have this trait the magic casting restrictions can be bypassed
-	if(!HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
 		return TRUE
 
 	return FALSE
