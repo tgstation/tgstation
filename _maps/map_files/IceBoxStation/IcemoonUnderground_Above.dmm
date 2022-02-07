@@ -16197,7 +16197,7 @@
 	name = "Public Mining APC";
 	pixel_y = 25
 	},
-/obj/item/reagent_containers/food/drinks/bottle/hooch,
+/obj/effect/spawner/random/entertainment/drugs,
 /turf/open/floor/plating,
 /area/mine/storage)
 "ZC" = (
