@@ -126,7 +126,7 @@
 		to_chat(user, span_notice("You start to crowbar the showcase apart..."))
 		new /obj/item/stack/sheet/iron(drop_location(), 4)
 		qdel(src)
-	return TRUE
+		return TRUE
 
 /obj/structure/showcase/wrench_act(mob/living/user, obj/item/tool)
 	if(deconstruction_state == SHOWCASE_CONSTRUCTED && default_unfasten_wrench(user, tool))

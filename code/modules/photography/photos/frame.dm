@@ -117,7 +117,7 @@
 		framed?.show(user)
 
 /// Internal proc
-/obj/structure/sign/picture_frame/proc/try_decon(mob/living/user, obj/item/tool)
+/obj/structure/sign/picture_frame/proc/try_deconstruct(mob/living/user, obj/item/tool)
 	if(!can_decon)
 		return FALSE
 	to_chat(user, span_notice("You start unsecuring [name]..."))
@@ -128,10 +128,10 @@
 	return TRUE
 
 /obj/structure/sign/picture_frame/screwdriver_act(mob/living/user, obj/item/tool)
-	return try_decon(user, tool)
+	return try_deconstruct(user, tool)
 
 /obj/structure/sign/picture_frame/wrench_act(mob/living/user, obj/item/tool)
-	return try_decon(user, tool)
+	return try_deconstruct(user, tool)
 
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)

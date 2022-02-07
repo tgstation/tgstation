@@ -92,11 +92,11 @@
 /obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
 	. = TRUE
 	if(density)
-		var/turf/T = get_turf(src)
-		if(T.density)
+		var/turf/loc_turf = get_turf(src)
+		if(loc_turf.density)
 			to_chat(user, span_warning("[src] is blocked!"))
 			return
-		if(!isfloorturf(T))
+		if(!isfloorturf(loc_turf))
 			to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
 			return
 		user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
