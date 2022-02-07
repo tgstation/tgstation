@@ -35,7 +35,7 @@
 	var/cooldown_time = 0
 	/// The mouse button needed to use this module
 	var/used_signal
-	/// List of mobs we are pinned to, linked with their action buttons
+	/// List of REF()s mobs we are pinned to, linked with their action buttons
 	var/list/pinned_to = list()
 	/// If we're allowed to use this module while phased out.
 	var/allowed_in_phaseout = FALSE
@@ -118,13 +118,14 @@
 	if(SEND_SIGNAL(src, COMSIG_MODULE_TRIGGERED) & MOD_ABORT_USE)
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
-		if(mod.selected_module && !mod.selected_module.on_deactivation())
+		if(mod.selected_module && !mod.selected_module.on_deactivation(display_message = FALSE))
 			return
 		mod.selected_module = src
 		if(device)
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(mod.wearer, "[device] extended")
 				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
@@ -140,16 +141,17 @@
 	return TRUE
 
 /// Called when the module is deactivated
-/obj/item/mod/module/proc/on_deactivation()
+/obj/item/mod/module/proc/on_deactivation(display_message = TRUE)
 	active = FALSE
 	if(module_type == MODULE_ACTIVE)
 		mod.selected_module = null
+		if(display_message)
+			balloon_alert(mod.wearer, device ? "[device] retracted" : "[src] deactivated")
 		if(device)
 			mod.wearer.transferItemToLoc(device, src, force = TRUE)
-			balloon_alert(mod.wearer, "[device] retracted")
 			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
+			UnregisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN)
 		else
-			balloon_alert(mod.wearer, "[src] deactivated")
 			UnregisterSignal(mod.wearer, used_signal)
 			used_signal = null
 	mod.wearer.update_inv_back()
@@ -178,7 +180,7 @@
 
 /// Called when an activated module without a device is used
 /obj/item/mod/module/proc/on_select_use(atom/target)
-	if(mod.wearer.incapacitated(ignore_grab = TRUE))
+	if(mod.wearer.incapacitated(IGNORE_GRAB))
 		return FALSE
 	mod.wearer.face_atom(target)
 	if(!on_use())
@@ -247,7 +249,7 @@
 	if(part.loc == mod.wearer)
 		return
 	if(part == device)
-		on_deactivation()
+		on_deactivation(display_message = FALSE)
 
 /// Called when the device gets deleted on active modules
 /obj/item/mod/module/proc/on_device_deletion(datum/source)
@@ -285,14 +287,20 @@
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)
-	var/datum/action/item_action/mod/pinned_module/action = pinned_to[user]
+	var/datum/action/item_action/mod/pinned_module/action = pinned_to[REF(user)]
 	if(action)
 		qdel(action)
-		pinned_to[user] = null
 	else
 		action = new(mod, src, user)
 		action.Grant(user)
-		pinned_to[user] = action
+
+/// On drop key, concels a device item.
+/obj/item/mod/module/proc/dropkey(mob/living/user)
+	SIGNAL_HANDLER
+
+	if(user.get_active_held_item() != device)
+		return
+	on_deactivation()
 
 ///Anomaly Locked - Causes the module to not function without an anomaly.
 /obj/item/mod/module/anomaly_locked

@@ -1617,6 +1617,13 @@
 	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
+"XD" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/stasis{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/shuttle/escape)
 
 (1,1,1) = {"
 aa
@@ -1772,7 +1779,7 @@ bD
 bK
 cg
 cm
-cu
+XD
 cE
 cN
 cW

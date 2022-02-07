@@ -105,7 +105,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 
 	face_atom(A)

@@ -870,7 +870,7 @@ Striking a noncultist, however, will tear their flesh."}
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	var/mob/mob_target = target
 
-	if(mob_target && IS_CULTIST(mob_target))
+	if(ismob(mob_target) && IS_CULTIST(mob_target))
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != DEAD)
