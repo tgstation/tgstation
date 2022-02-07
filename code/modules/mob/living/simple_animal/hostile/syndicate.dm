@@ -316,14 +316,6 @@
 	del_on_death = 1
 	deathmessage = "is smashed into pieces!"
 
-/mob/living/simple_animal/hostile/viscerator/emp_act(severity)
-	. = ..()
-	switch (severity)
-		if (EMP_LIGHT)
-			apply_damage(15)
-		if (EMP_HEAVY)
-			apply_damage(25)
-
 /mob/living/simple_animal/hostile/viscerator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
