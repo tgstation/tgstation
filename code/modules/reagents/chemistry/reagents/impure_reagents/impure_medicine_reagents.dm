@@ -520,6 +520,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ADD_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.set_stat(CONSCIOUS) //This doesn't touch knocked out
 	owner.updatehealth()
+	owner.update_sight()
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, STAT_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
 	owner.set_resting(FALSE)//Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
@@ -577,6 +578,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	REMOVE_TRAIT(owner, TRAIT_NODEATH, type)
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
+	owner.update_sight()
 
 /*				Non c2 medicines 				*/
 

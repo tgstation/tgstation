@@ -10,7 +10,7 @@
 "be" = (
 /obj/machinery/power/apc/syndicate{
 	name = "Experimentation Lab APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,

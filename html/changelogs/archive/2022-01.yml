@@ -1222,3 +1222,31 @@
       now abandoned.
   theOOZ:
   - bugfix: Runechat reads the y offset value of the sayer instead of the hearer
+2022-01-31:
+  Donpedrito:
+  - rscadd: Added blue shoes to the MediDrobe.
+  Ghommie:
+  - bugfix: Fixed the Illegal tech node being unobtainable.
+  Guillaume Prata:
+  - qol: Metalfoam structures can now be used as a girder to finish building walls.
+  Jackraxxus:
+  - bugfix: Examining the pirate Dutchman's mast will no longer shatter your immersion.
+  Maurukas:
+  - bugfix: NT CIMS no longer detects Supermatter crystals and shards that are not
+      owned by Nanotrasen
+  Melbert:
+  - qol: blind people can hear talking toys
+  SmoSmoSmoSmok:
+  - spellcheck: Fixes popup text resulting from someone batoning a cyborg
+  TemporalOroboros:
+  - balance: The sniper rifle can now shoot things from much further away.
+  Zonespace27:
+  - bugfix: Using an autosurgeon on someone else now properly gives them the implant.
+  jjpark-kb:
+  - qol: You can now rotate the direction of the mecha fab if its wire panel is open
+  timothymtorres:
+  - config: Add PR_ANNOUNCEMENTS_PER_ROUND and STATION_GOAL_BUDGET to be a config
+      instead of define
+  tralezab:
+  - admin: Bounty Hunters can now be called via admin ert
+  - expansion: Oh, and they have cool flame ids as well!

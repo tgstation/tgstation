@@ -1,0 +1,8 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "Literally unplayable bugs fixed: Pens can now be rotated again."
+  - bugfix: "TGUI alerts now display buttons in a column when there's more than 2 options."
+  - bugfix: "TGUI alerts can now be disabled via turning TGUI inputs off in prefs."
+  - bugfix: "Fixed some bluescreens related to TGUI inputs."
+  - bugfix: "Fixes a runtime with material containers."

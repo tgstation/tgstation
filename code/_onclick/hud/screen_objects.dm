@@ -132,7 +132,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(ignore_stasis = TRUE))
+	if(usr.incapacitated(IGNORE_STASIS))
 		return TRUE
 	if(ismecha(usr.loc)) // stops inventory actions in a mech
 		return TRUE
@@ -573,6 +573,7 @@
 	if(choice != hud.mymob.zone_selected)
 		hud.mymob.zone_selected = choice
 		update_appearance()
+		SEND_SIGNAL(user, COMSIG_MOB_SELECTED_ZONE_SET, choice)
 
 	return TRUE
 

@@ -44,7 +44,7 @@
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
 	/// Allowed items in the chestplate's suit storage.
-	var/list/allowed = list(/obj/item/flashlight, /obj/item/tank/internals)
+	var/list/allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals)
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
@@ -224,22 +224,58 @@
 
 /datum/mod_theme/mining
 	name = "mining"
-	desc = "A high-power Nanotrasen mining suit, supporting more complexity at a bigger drain."
+	desc = "A Nanotrasen mining suit for on-site operations, fit with accreting ash armor and a sphere form."
 	extended_desc = "A high-powered Nanotrasen-designed suit, based off the work of Nakamura Engineering. \
 		While initial designs were built for the rigors of asteroid mining, given blast resistance through inbuilt ceramics, \
-		mining teams have since heavily tweaked the suit themselves. Aftermarket armor plating has been added, \
-		giving way to incredible protection against corrosives and thermal protection good enough for volcanic environments. \
-		The systems have been upgraded as well, giving space for further modification down the line. \
-		However, all of this has proven to be straining on the power and the actuators of the suit, \
-		making it demand more power in exchange."
+		mining teams have since heavily tweaked the suit themselves with assistance from devices crafted by \
+		destructive analysis of unknown technologies discovered on the Indecipheres mining sites, patterned off \
+		their typical non-EVA exploration suits. The visor has been expanded to a system of seven arachnid-like cameras, \
+		offering full view of the land and its soon-to-be-dead inhabitants. The armor plating has been trimmed down to \
+		the bare essentials, geared far more for environmental hazards than combat against fauna; however, \
+		this gives way to incredible protection against corrosives and thermal protection good enough for \
+		both casual backstroking through molten magma and romantic walks through arctic terrain. \
+		Instead, the suit is capable of using its' anomalous properties to attract and \
+		carefully distribute layers of ash or ice across the surface; these layers are ablative, but incredibly strong. \
+		Lastly, the suit is capable of compressing and shrinking the mass of the wearer, as well as \
+		rearranging its own constitution, to allow them to fit upright in a sphere form that can \
+		roll around at half their original size; leaving high-powered mining ordinance in its wake. \
+		However, all of this has proven to be straining on all Nanotrasen-approved cells, \
+		so much so that it comes default fueled by equally-enigmatic plasma fuel rather than a simple recharge. \
+		Additionally, the systems have been put to near their maximum load, allowing for far less customization than others."
 	default_skin = "mining"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 50, BIO = 100, FIRE = 100, ACID = 75, WOUND = 15)
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF|LAVA_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
-	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
+	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/bag/ore, /obj/item/kinetic_crusher, /obj/item/resonator)
+	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	skins = list(
 		"mining" = list(
+			HELMET_LAYER = null,
+			HELMET_FLAGS = list(
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
+				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+			),
+			CHESTPLATE_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+			),
+			GAUNTLETS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+			BOOTS_FLAGS = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+			),
+		),
+		"asteroid" = list(
 			HELMET_LAYER = null,
 			HELMET_FLAGS = list(
 				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
@@ -285,6 +321,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/bag/mail)
 	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader, /obj/item/mod/module/magnet)
 	skins = list(
 		"loader" = list(
@@ -706,15 +743,15 @@
 		'Property of the Gorlex Marauders, with assistance from Cybersun Industries. \
 		All rights reserved, tampering with suit will void life expectancy.'"
 	default_skin = "elite"
-	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
+	armor = list(MELEE = 20, BULLET = 10, LASER = 20, ENERGY = 20, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 0.75
-	slowdown_active = 0.25
+	slowdown_inactive = 1
+	slowdown_active = 0.5
 	ui_theme = "syndicate"
-	inbuilt_modules = list(/obj/item/mod/module/armor_booster/elite)
+	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	skins = list(
 		"elite" = list(
 			HELMET_LAYER = null,

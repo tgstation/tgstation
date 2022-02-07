@@ -161,11 +161,8 @@
 		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
 	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
-	if(isnull(new_angle))
+	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return FALSE
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return FALSE
-	new_angle = round(new_angle)
 	set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
