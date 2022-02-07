@@ -207,7 +207,7 @@
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
-	if(target.can_block_magic(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
+	if(target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
 		to_chat(user, span_warning("The spell had no effect!"))
 		to_chat(target, span_warning("You feel a freezing darkness closing in on you, but it rapidly dissipates."))
 		return FALSE

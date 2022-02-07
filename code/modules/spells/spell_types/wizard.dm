@@ -337,12 +337,12 @@
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	for(var/mob/living/L in targets)
-		if(L.can_block_magic(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
+		if(L.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
 			continue
 		L.adjust_fire_stacks(20)
 	if(isliving(user))
 		var/mob/living/U = user
-		if(!U.can_block_magic(MAGIC_RESISTANCE | MAGIC_RESISTANCE_HOLY))
+		if(!U.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
 			U.IgniteMob()
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
