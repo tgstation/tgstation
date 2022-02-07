@@ -1,14 +1,3 @@
-/// Default magic resistance that blocks normal magic (wizard, spells, staffs)
-#define MAGIC_RESISTANCE (1<<0)
-/// Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
-#define MAGIC_RESISTANCE_MIND (1<<1)
-/// Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god, )
-#define MAGIC_RESISTANCE_HOLY (1<<2)
-/// Prevents a user from casting magic
-#define MAGIC_CASTING_RESTRICTION (1<<3)
-/// All magic resistances combined
-#define MAGIC_RESISTANCE_ALL (MAGIC_RESISTANCE | MAGIC_RESISTANCE_MIND | MAGIC_RESISTANCE_HOLY | MAGIC_CASTING_RESTRICTION)
-
 /// This provides different types of magic resistance on an object
 /datum/component/anti_magic
 	var/antimagic_flags

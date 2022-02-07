@@ -19,7 +19,6 @@
 #define SCHOOL_FORBIDDEN "forbidden" //>heretic shit and other fucked up magic
 
 //invocation types - what does the wizard need to do to invoke (cast) the spell?
-
 ///Forces the wizard to shout (and be able to) to cast the spell.
 #define INVOCATION_SHOUT "shout"
 ///Forces the wizard to emote (and be able to) to cast the spell.
@@ -31,3 +30,14 @@
 #define SUMMON_GUNS "guns"
 ///Spawns random wands and spellbooks near players and gives some players antag objectives
 #define SUMMON_MAGIC "magic"
+
+/// Default magic resistance that blocks normal magic (wizard, spells, staffs)
+#define MAGIC_RESISTANCE (1<<0)
+/// Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
+#define MAGIC_RESISTANCE_MIND (1<<1)
+/// Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god, )
+#define MAGIC_RESISTANCE_HOLY (1<<2)
+/// Prevents a user from casting magic
+#define MAGIC_CASTING_RESTRICTION (1<<3)
+/// All magic resistances combined
+#define MAGIC_RESISTANCE_ALL (MAGIC_RESISTANCE | MAGIC_RESISTANCE_MIND | MAGIC_RESISTANCE_HOLY | MAGIC_CASTING_RESTRICTION)
