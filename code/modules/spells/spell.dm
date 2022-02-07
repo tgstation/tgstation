@@ -545,7 +545,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !stat_allowed)
 		return FALSE
 
-	if((user.can_cast_magic(antimagic_flags))
+	if(user.can_cast_magic(antimagic_flags))
 		return FALSE
 
 	if(!ishuman(user))
