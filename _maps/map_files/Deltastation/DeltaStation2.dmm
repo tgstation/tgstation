@@ -43459,11 +43459,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
-"hbv" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/open/space,
-/area/space)
 "hbY" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -153093,7 +153088,7 @@ aaa
 aaa
 aaa
 aaa
-hbv
+aac
 aad
 aad
 aad
