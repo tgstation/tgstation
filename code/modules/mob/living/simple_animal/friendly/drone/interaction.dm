@@ -107,11 +107,15 @@
 /mob/living/simple_animal/drone/wrench_act(mob/living/user, obj/item/tool)
 	if(user == src)
 		return FALSE
-	user.visible_message(span_notice("[user] starts resetting [src]..."), \
-		span_notice("You press down on [src]'s factory reset control..."))
-	if(tool.use_tool(src, user, 50, volume=50))
-		user.visible_message(span_notice("[user] resets [src]!"), \
-			span_notice("You reset [src]'s directives to factory defaults!"))
+	user.visible_message(
+		span_notice("[user] starts resetting [src]..."),
+		span_notice("You press down on [src]'s factory reset control...")
+		)
+	if(tool.use_tool(src, user, 5 SECONDS, volume=50))
+		user.visible_message(
+			span_notice("[user] resets [src]!"),
+			span_notice("You reset [src]'s directives to factory defaults!")
+			)
 		update_drone_hack(FALSE)
 	return TRUE
 

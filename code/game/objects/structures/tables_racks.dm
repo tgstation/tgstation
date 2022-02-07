@@ -173,7 +173,7 @@
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start disassembling [src]..."))
-	if(tool.use_tool(src, user, 20, volume=50))
+	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
 		deconstruct(TRUE)
 	return TRUE
 
@@ -181,8 +181,8 @@
 	if(flags_1 & NODECONSTRUCT_1 || !deconstruction_ready)
 		return FALSE
 	to_chat(user, span_notice("You start deconstructing [src]..."))
-	if(tool.use_tool(src, user, 40, volume=50))
-		playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 		deconstruct(TRUE, 1)
 	return TRUE
 
