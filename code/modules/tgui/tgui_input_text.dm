@@ -138,7 +138,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TextInputModal")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_input_text/ui_close(mob/user)
@@ -148,20 +147,16 @@
 /datum/tgui_input_text/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/tgui_input_text/ui_static_data(mob/user)
-	. = list(
-		"max_length" = max_length,
-		"message" = message,
-		"multiline" = multiline,
-		"placeholder" = default, // You cannot use default as a const
-		"preferences" = list(),
-		"title" = title
-	)
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
-
 /datum/tgui_input_text/ui_data(mob/user)
 	. = list()
+	.["max_length"] = max_length
+	.["message"] = message
+	.["multiline"] = multiline
+	.["placeholder"] = default // Default is a reserved keyword
+	.["preferences"] = list()
+	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["title"] = title
 	if(timeout)
 		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 
