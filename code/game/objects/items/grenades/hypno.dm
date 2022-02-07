@@ -9,6 +9,9 @@
 
 /obj/item/grenade/hypnotic/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
