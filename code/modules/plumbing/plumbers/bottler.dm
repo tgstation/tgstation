@@ -76,7 +76,7 @@
 		return PROCESS_KILL
 
 	///see if machine has enough to fill, is anchored down and has any inputspot objects to pick from
-	if(reagents.total_volume >= wanted_amount && anchored && inputspot.contents.len)
+	if(reagents.total_volume >= wanted_amount && anchored && length(inputspot.contents))
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		if((istype(AM, /obj/item/reagent_containers) && !istype(AM, /obj/item/reagent_containers/hypospray/medipen)) || istype(AM, /obj/item/ammo_casing/shotgun/dart))
 			var/obj/item/reagent_containers/B = AM
