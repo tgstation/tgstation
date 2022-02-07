@@ -18,6 +18,13 @@
  * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
  * * reaction (optional) The proc that is triggered when magic has been successfully blocked
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
+ * *
+ * antimagic bitflags: (see code/__DEFINES/magic.dm)
+ * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
+ * * MAGIC_RESISTANCE_MIND - Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
+ * * MAGIC_RESISTANCE_HOLY - Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god)
+ * * MAGIC_CASTING_RESTRICTION - Prevents a user from casting magic
+ * * MAGIC_RESISTANCE_ALL - All magic resistances combined
 **/
 /datum/component/anti_magic/Initialize(
 		antimagic_flags = MAGIC_RESISTANCE,
