@@ -390,19 +390,10 @@
 									span_notice("You cut \the [src] apart with \the [W]."))
 				deconstruct(TRUE)
 				return
-		if(W.tool_behaviour == TOOL_WRENCH && anchorable) // The locker is open and we're using a wrench
-			if(isinspace() && !anchored)
-				return
-			set_anchored(!anchored)
-			W.play_tool_sound(src, 75)
-			user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
-			return // This return prevents us from putting the wrench inside the locker when we bolt/unbolt it
 		if (user.combat_mode)
 			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
-	else if(W.tool_behaviour == TOOL_WRENCH && anchorable) // Bolts are on the inside now, so we make sure that the locker isn't closed
-		balloon_alert(user, "locker must be open!")
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
 		if(!W.tool_start_check(user, amount=0))
 			return
@@ -470,6 +461,18 @@
 			togglelock(user)
 	else
 		return FALSE
+
+/obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(opened && anchorable) // The locker bolts are on the inside, so we make sure the locker is open before we mess with them
+		if(isinspace() && !anchored)
+			return
+		set_anchored(!anchored)
+		tool.play_tool_sound(src, 75)
+		user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+		return TRUE
+	if(!opened) // The locker is closed, so the bolts aren't accessible
+		balloon_alert(user, "locker must be open!")
+		return TRUE
 
 /obj/structure/closet/proc/after_weld(weld_state)
 	return
