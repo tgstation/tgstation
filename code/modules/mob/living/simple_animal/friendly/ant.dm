@@ -30,8 +30,8 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 	health = 75
 	maxHealth = 75
-	light_range = 2 // Bioluminescance!
-	light_color = "#d43229" // Sprite is black because it's covered in maint sludge. The ants that make the big ant still glow red.
+	light_range = 3 // Bioluminescence!
+	light_color = "#d43229" // The ants that comprise the giant ant still glow red despite the sludge.
 	// randomizes hunting intervals, minimum 5 turns
 	var/time_to_hunt = 5
 
