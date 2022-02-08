@@ -738,7 +738,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/electronic_marketing_den
 	name = "\improper Electronic Marketing Den"
-	icon_state = "abandoned_m_den"
+	icon_state = "abandoned_marketing_den"
 
 /area/service/abandoned_gambling_den
 	name = "\improper Abandoned Gambling Den"
