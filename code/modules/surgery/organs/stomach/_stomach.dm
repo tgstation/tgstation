@@ -44,12 +44,14 @@
 /obj/item/organ/stomach/attack_self(mob/user, modifiers)
 	. = ..()
 
-	if(length(contents))
-		to_chat(user, span_notice("You begin squeezing out the contents of [src]..."))
-		if(do_after(user, length(contents) SECONDS / 2))
-			to_chat(user, span_notice("You squeeze out the contents of [src]."))
-			for(var/atom/movable/thing in contents)
-				thing.forceMove(user.drop_location())
+	if(!length(contents))
+		return
+	to_chat(user, span_notice("You begin squeezing out the contents of [src]..."))
+	if(!do_after(user, length(contents) SECONDS / 2))
+		return
+	to_chat(user, span_notice("You squeeze out the contents of [src]."))
+	for(var/atom/movable/thing in contents)
+		thing.forceMove(user.drop_location())
 
 /obj/item/organ/stomach/on_life(delta_time, times_fired)
 	. = ..()
@@ -222,15 +224,17 @@
 /obj/item/organ/stomach/proc/handle_contents(mob/living/carbon/human/mule, delta_time)
 	var/indigestibles_size = 0
 	for(var/atom/movable/thing in contents)
-		if(!IsEdible(thing) && isitem(thing))
-			var/obj/item/indigestible_item = thing
-			indigestibles_size += 1 * indigestible_item.w_class
+		if(IsEdible(thing) || !isitem(thing))
+			continue
+		var/obj/item/indigestible_item = thing
+		indigestibles_size += 1 * indigestible_item.w_class
 
 	if(get_contents_size() > max_combined_w_class)
 		to_chat(mule, span_danger("Your stomach feels uncomfortably full!"))
 		var/spew_blood = indigestibles_size ? TRUE : FALSE
 		mule.vomit(100, spew_blood, distance = 0)
 		damage += indigestibles_size
+		return
 
 	if(!indigestibles_size)
 		return
