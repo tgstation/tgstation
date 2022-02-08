@@ -522,6 +522,7 @@
 		var/mob/living/M = target
 		if(M.can_block_magic())
 			visible_message(span_warning("[src] vanishes into smoke on contact with [target]!"))
+			qdel(src)
 			return BULLET_ACT_BLOCK
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
