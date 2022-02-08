@@ -1,13 +1,12 @@
-
-// patronage thresholds for different paintings. The prestigiousness of their frames scales with the amount of credits spent on them.
+// Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
 #define PATRONAGE_OK_PAINTING PAYCHECK_ASSISTANT * STARTING_PAYCHECKS // iron/bamboo/bones
-#define PATRONAGE_NICE_FRAME PAYCHECK_COMMAND * STARTING_PAYCHECKS // bronze/clown/frog/orange
-#define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME + 1100 // silver/woodwork/necropolis
+#define PATRONAGE_NICE_FRAME PAYCHECK_HARD * STARTING_PAYCHECKS // bronze/clown/frog/orange
+#define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME + 1300 // silver/woodwork/necropolis
 #define PATRONAGE_EXCELLENT_FRAME PATRONAGE_GREAT_FRAME * 2 //gold/platinum
 #define PATRONAGE_AMAZING_FRAME PATRONAGE_GREAT_FRAME * 2 //diamond/sanctuary/fleshy
 #define PATRONAGE_SUPERB_FRAME PATRONAGE_FANTASTIC_FRAME * 2 // rainbow/bluespace
 #define PATRONAGE_LEGENDARY_FRAME PATRONAGE_SUPERB_FRAME * 2.5 // singulo/supermatter/TCs
-#define PATRONAGE_OMEGA_FRAME PATRONAGE_SUPERB_FRAME * 2 // anomalous/flashing
+#define PATRONAGE_OMEGA_FRAME PATRONAGE_SUPERB_FRAME * 2.5 // anomalous/flashing
 
 ///////////
 // EASEL //
@@ -427,10 +426,8 @@
 	painting.pixel_x = current_canvas.framed_offset_x
 	painting.pixel_y = current_canvas.framed_offset_y
 	. += painting
-	var/frame_tier = ""
-	switch(current_canvas.painting_metadata.credit_value)
-		if(PAYCHECK_ASSISTANT * STARTING_PAYCHECKS to PAYCHECK_HARD * STARTING_PAYCHECKS)
-	. += mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame") //add the frame
+	var/frame_type = current_canvas.painting_metadata.frame_type
+	. += mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame[frame_type]") //add the frame
 
 /**
  * Loads a painting from SSpersistence. Called globally by said subsystem when it inits
@@ -534,3 +531,12 @@
 	var/chosen_color = input(user,"Pick new color","Palette") as color|null
 	if(chosen_color)
 		current_color = chosen_color
+
+#undef PATRONAGE_OK_PAINTING
+#undef PATRONAGE_NICE_FRAME
+#undef PATRONAGE_GREAT_FRAME
+#undef PATRONAGE_EXCELLENT_FRAME
+#undef PATRONAGE_AMAZING_FRAME
+#undef PATRONAGE_SUPERB_FRAME
+#undef PATRONAGE_LEGENDARY_FRAME
+#undef PATRONAGE_OMEGA_FRAME

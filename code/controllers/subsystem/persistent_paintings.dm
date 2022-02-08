@@ -41,6 +41,8 @@
 	var/patron_ckey
 	/// Patron name
 	var/patron_name
+	/// The aspect the frame will assume when the canvas put in it.
+	var/frame_type
 	/// Amount paid by last patron for this painting
 	var/credit_value = 0
 	/// painting width
