@@ -449,7 +449,7 @@ DEFINE_BITFIELD(turret_flags, list(
 				if(in_faction(sillyconerobot))
 					continue
 				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged)
-					targets+= sillyconerobot
+					targets += sillyconerobot
 
 		else if(iscarbon(A))
 			var/mob/living/carbon/C = A
