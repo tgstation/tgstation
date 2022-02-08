@@ -45,6 +45,7 @@
 	. = ..()
 
 	if(!length(contents))
+		to_chat(user, span_notice("[src] is empty."))
 		return
 	to_chat(user, span_notice("You begin squeezing out the contents of [src]..."))
 	if(!do_after(user, length(contents) SECONDS / 2))
@@ -52,6 +53,12 @@
 	to_chat(user, span_notice("You squeeze out the contents of [src]."))
 	for(var/atom/movable/thing in contents)
 		thing.forceMove(user.drop_location())
+
+/obj/item/organ/stomach/examine(mob/user)
+	. = ..()
+
+	if(length(contents))
+		. += span_info("Use in-hand to empty it.")
 
 /obj/item/organ/stomach/on_life(delta_time, times_fired)
 	. = ..()
