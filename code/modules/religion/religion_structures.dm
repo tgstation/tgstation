@@ -94,18 +94,13 @@
 	AddComponent(/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		charges = 1, \
-		drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
 		expiration = CALLBACK(src, .proc/expire), \
 	)
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
-/// When the ritual totem is drained of antimagic
-/obj/item/ritual_totem/proc/drain_antimagic(mob/user)
-	to_chat(user, span_warning("[src] consumes the magic within itself!"))
-
 /// When the ritual totem is depleted of antimagic
 /obj/item/ritual_totem/proc/expire(mob/user)
-	to_chat(user, span_warning("[src] quickly decays into rot!"))
+	to_chat(user, span_warning("[src] consumes the magic within itself and quickly decays into rot!"))
 	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
 
