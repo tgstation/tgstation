@@ -150,14 +150,3 @@
 	if(user.incapacitated())
 		return
 	return relaydrive(user, direction)
-
-/mob/living/basic/emp_act(severity)
-	. = ..()
-	if (mob_biotypes & MOB_ROBOTIC)
-		switch (severity)
-			if (EMP_LIGHT)
-				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
-				apply_damage(maxHealth * 0.6)
-			if (EMP_HEAVY)
-				visible_message(span_danger("[src] suddenly bursts apart!"))
-				apply_damage(maxHealth)
