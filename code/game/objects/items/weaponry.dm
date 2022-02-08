@@ -281,37 +281,43 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	flags_1 = CONDUCT_1
 	force = 9
 	throwforce = 10
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=75)
 	attack_verb_continuous = list("hits", "bludgeons", "whacks", "bonks")
 	attack_verb_simple = list("hit", "bludgeon", "whack", "bonk")
 
-/obj/item/wirerod/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/shard))
-		var/obj/item/spear/S = new /obj/item/spear
+/obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/shard))
+		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/spear
+		user.balloon_alert(user, "crafting spear...")
+		if(do_after(user, initial(recipe_to_use.time), src)) // we do initial work here to get the correct timer
+			var/obj/item/spear/crafted_spear = new /obj/item/spear()
 
-		remove_item_from_storage(user)
-		if (!user.transferItemToLoc(I, S))
-			return
-		S.CheckParts(list(I))
-		qdel(src)
+			remove_item_from_storage(user)
+			if (!user.transferItemToLoc(attacking_item, crafted_spear))
+				return
+			crafted_spear.CheckParts(list(attacking_item))
+			qdel(src)
 
-		user.put_in_hands(S)
-		to_chat(user, span_notice("You fasten the glass shard to the top of the rod with the cable."))
+			user.put_in_hands(crafted_spear)
+			user.balloon_alert(user, "crafted spear")
+		return
 
-	else if(istype(I, /obj/item/assembly/igniter) && !(HAS_TRAIT(I, TRAIT_NODROP)))
-		var/obj/item/melee/baton/security/cattleprod/prod = new
+	if(istype(attacking_item, /obj/item/assembly/igniter) && !(HAS_TRAIT(attacking_item, TRAIT_NODROP)))
+		var/datum/crafting_recipe/recipe_to_use = /datum/crafting_recipe/stunprod
+		user.balloon_alert(user, "crafting cattleprod...")
+		if(do_after(user, initial(recipe_to_use.time), src))
+			var/obj/item/melee/baton/security/cattleprod/prod = new
 
-		remove_item_from_storage(user)
+			remove_item_from_storage(user)
 
-		to_chat(user, span_notice("You fasten [I] to the top of the rod with the cable."))
+			qdel(attacking_item)
+			qdel(src)
 
-		qdel(I)
-		qdel(src)
-
-		user.put_in_hands(prod)
-	else
-		return ..()
+			user.put_in_hands(prod)
+			user.balloon_alert(user, "crafted cattleprod")
+		return
+	return ..()
 
 
 /obj/item/throwing_star
