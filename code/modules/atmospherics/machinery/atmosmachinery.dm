@@ -148,7 +148,7 @@
 /**
  * Getter for node_connects
  *
- * Return a list of directions where there are nodes that can connect to other us, get called by atmos_init()
+ * Return a list of directions where there are nodes that can connect to us, get called by atmos_init()
  */
 /obj/machinery/atmospherics/proc/get_node_connects()
 	var/list/node_connects = list()
