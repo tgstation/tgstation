@@ -97,7 +97,7 @@
 		if((istype(bumped_thing, /obj/machinery/disposal/bin)))
 			rider.Paralyze(8 SECONDS)
 			rider.forceMove(bumped_thing)
-			src.forceMove(bumped_thing)
+			forceMove(bumped_thing)
 			visible_message(span_danger("[src] crashes into [bumped_thing], and gets dumped straight into it!"))
 			return
 		rider.throw_at(throw_target, 3, 2)
