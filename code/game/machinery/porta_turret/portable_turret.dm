@@ -441,10 +441,12 @@ DEFINE_BITFIELD(turret_flags, list(
 
 			if(iscyborg(sillycone))
 				var/mob/living/silicon/robot/sillyconerobot = A
-				if((turret_flags & TURRET_FLAG_SHOOT_BORGS) && sillyconerobot.stat != DEAD)
+				if(sillyconerobot.stat != CONSCIOUS)
+					continue
+				if((turret_flags & TURRET_FLAG_SHOOT_BORGS))
 					targets += sillyconerobot
 					continue
-				if(sillyconerobot.stat || in_faction(sillyconerobot))
+				if(in_faction(sillyconerobot))
 					continue
 				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged)
 					targets+= sillyconerobot
