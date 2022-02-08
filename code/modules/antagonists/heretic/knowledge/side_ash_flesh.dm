@@ -37,13 +37,23 @@
 	cost = 1
 	route = PATH_SIDE
 
-/datum/heretic_knowledge/curse/paralysis/curse(mob/living/chosen_mob)
+/datum/heretic_knowledge/curse/paralysis/curse(mob/living/carbon/human/chosen_mob)
+	if(chosen_mob.usable_legs <= 0) // What're you gonna do, curse someone who already can't walk?
+		to_chat(chosen_mob, span_notice("You feel a slight pain for a moment, but it passes shortly. Odd."))
+	else
+		to_chat(chosen_mob, span_danger("You suddenly lose feeling in your leg[chosen_mob.usable_legs == 1 ? "":"s"]!"))
+
 	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
 	ADD_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
 
-/datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/chosen_mob)
+/datum/heretic_knowledge/curse/paralysis/uncurse(mob/living/carbon/human/chosen_mob)
 	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_L_LEG, type)
 	REMOVE_TRAIT(chosen_mob, TRAIT_PARALYSIS_R_LEG, type)
+
+	if(chosen_mob.usable_legs <= 0) // What're you gonna do, curse someone who already can't walk?
+		to_chat(chosen_mob, span_notice("The slight pain returns, but disperses shortly."))
+	else
+		to_chat(chosen_mob, span_notice("You regain feeling in your leg[chosen_mob.usable_legs == 1 ? "":"s"]!"))
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"

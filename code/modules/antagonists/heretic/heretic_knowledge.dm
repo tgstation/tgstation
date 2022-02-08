@@ -225,12 +225,12 @@
 /**
  * Calls a curse onto [chosen_mob].
  */
-/datum/heretic_knowledge/curse/proc/curse(mob/living/chosen_mob)
+/datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob)
 
 /**
  * Removes a curse from [chosen_mob]. Used in timers / callbacks.
  */
-/datum/heretic_knowledge/curse/proc/uncurse(mob/living/chosen_mob)
+/datum/heretic_knowledge/curse/proc/uncurse(mob/living/carbon/human/chosen_mob)
 
 /*
  * A knowledge subtype lets the heretic summon a monster with the ritual.
@@ -266,7 +266,7 @@
 	summoned.key = picked_candidate.key
 
 	log_game("[key_name(user)] created a [summoned.name], controlled by [key_name(picked_candidate)].")
-	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(picked_candidate)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
@@ -280,7 +280,7 @@
  * A subtype of knowledge that generates random ritual components.
  */
 /datum/heretic_knowledge/knowledge_ritual
-	name = "Minor Ritual of Knowledge"
+	name = "Ritual of Knowledge"
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
 	cost = 1
@@ -385,6 +385,10 @@
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(heretic_datum.ascended)
 		return FALSE
+
+	for(var/datum/objective/must_be_done as anything in heretic_datum.objectives)
+		if(!must_be_done.check_completion())
+			return FALSE
 
 	// Remove all non-dead humans from the atoms list.
 	// (We only want to sacrifice dead folk.)

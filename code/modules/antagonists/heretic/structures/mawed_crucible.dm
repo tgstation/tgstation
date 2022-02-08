@@ -1,3 +1,4 @@
+// The mawed crucible, a heretic structure that can create potions from bodyparts and organs.
 /obj/structure/destructible/eldritch_crucible
 	name = "mawed crucible"
 	desc = "A deep basin made of cast iron, immortalized by steel-like teeth holding it in place. \

@@ -606,6 +606,26 @@
 		return FALSE
 	return length(heretic_datum.researched_knowledge) >= target_amount
 
+/datum/objective/heretic_summon
+	name = "summon monsters"
+	target_amount = 2
+	explanation_text = "Summon 2 monsters from the Mansus into this realm."
+
+/datum/objective/heretic_summon/check_completion()
+
+	var/num_we_have = 0
+	for(var/datum/antagonist/heretic_monster/monster in GLOB.antagonists)
+		if(!monster.master)
+			continue
+		if(ishuman(monster.owner.current))
+			continue
+		if(monster.master != owner)
+			continue
+
+		num_we_have++
+
+	return num_we_have >= target_amount
+
 /datum/outfit/heretic
 	name = "Heretic (Preview only)"
 

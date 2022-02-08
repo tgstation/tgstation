@@ -58,6 +58,13 @@
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	our_heretic.heretic_path = route
 
+	var/datum/objective/heretic_summon/summon_objective = new()
+	summon_objective.owner = our_heretic.owner
+	our_heretic.objectives += summon_objective
+
+	to_chat(user, span_hierophant("Undertaking the Path of Flesh, you are given another objective."))
+	our_heretic.owner.announce_objectives()
+
 /datum/heretic_knowledge/limited_amount/flesh_grasp
 	name = "Grasp of Flesh"
 	desc = "Your Mansus Grasp gains the ability to create a single ghoul out of corpse with a soul. \

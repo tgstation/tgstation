@@ -925,7 +925,7 @@
 
 /datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
 	. = ..()
-	to_chat(owner, span_danger("Your feel your body starting to break apart..."))
+	to_chat(owner, span_userdanger("Your body starts to break apart!"))
 
 /datum/status_effect/corrosion_curse/tick()
 	. = ..()

@@ -93,6 +93,10 @@
 	return ..()
 
 /datum/action/item_action/organ_action/track_target/IsAvailable()
+	. = ..()
+	if(!.)
+		return
+
 	if(!IS_HERETIC(owner))
 		return FALSE
 	if(!HAS_TRAIT(target, TRAIT_LIVING_HEART))
@@ -100,9 +104,7 @@
 	if(!COOLDOWN_FINISHED(src, track_cooldown))
 		return FALSE
 	if(radial_open)
-		return
-
-	return ..()
+		return FALSE
 
 /datum/action/item_action/organ_action/track_target/Trigger(trigger_flags)
 	. = ..()
@@ -141,12 +143,12 @@
 
 	// If our last tracked name is still null, skip the trigger
 	if(isnull(last_tracked_name))
-		return
+		return FALSE
 
 	var/mob/living/carbon/human/tracked_mob = human_targets[last_tracked_name]
 	if(QDELETED(tracked_mob))
 		last_tracked_name = null
-		return
+		return FALSE
 
 	COOLDOWN_START(src, track_cooldown, track_cooldown_lenth)
 	var/balloon_message = "error text!"
@@ -172,6 +174,7 @@
 		balloon_message = "they're dead, " + balloon_message
 
 	owner.balloon_alert(owner, balloon_message)
+	return TRUE
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/item_action/organ_action/track_target/proc/check_menu()

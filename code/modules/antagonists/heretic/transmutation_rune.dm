@@ -131,8 +131,7 @@
 		// We temporarily make all of our chosen atoms invisible,
 		// as some rituals may sleep, and we don't want people
 		// to be able to run off with ritual items.
-		var/list/atoms_to_disappear = selected_atoms.Copy()
-		for(var/atom/to_disappear as anything in atoms_to_disappear)
+		for(var/atom/to_disappear as anything in selected_atoms)
 			to_disappear.invisibility = INVISIBILITY_ABSTRACT
 
 		// on_finished_recipe may sleep in the case of some rituals like summons.
@@ -140,12 +139,13 @@
 			knowledge.cleanup_atoms(selected_atoms)
 
 		// Re-appear anything left in the list
-		for(var/atom/to_appear as anything in atoms_to_disappear)
+		for(var/atom/to_appear as anything in selected_atoms)
 			to_appear.invisibility = initial(to_appear.invisibility)
 
+		loc.balloon_alert(user, "ritual complete")
 		return TRUE
 
-	balloon_alert(user, "ritual failed, incorrect components!")
+	loc.balloon_alert(user, "ritual failed!")
 	return FALSE
 
 /obj/effect/heretic_rune/big
