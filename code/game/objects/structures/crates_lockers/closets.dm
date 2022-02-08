@@ -463,16 +463,16 @@
 		return FALSE
 
 /obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(opened && anchorable) // The locker bolts are on the inside, so we make sure the locker is open before we mess with them
+	if(!opened) // The locker is closed, so the bolts aren't accessible
+		balloon_alert(user, "locker must be open!")
+		return TRUE
+	else if(anchorable) // The locker bolts are on the inside, so we make sure the locker is open before we mess with them
 		if(isinspace() && !anchored)
 			balloon_alert(user, "nothing to anchor to!")
 			return TRUE
 		set_anchored(!anchored)
 		tool.play_tool_sound(src, 75)
 		user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
-		return TRUE
-	if(!opened) // The locker is closed, so the bolts aren't accessible
-		balloon_alert(user, "locker must be open!")
 		return TRUE
 
 /obj/structure/closet/proc/after_weld(weld_state)
