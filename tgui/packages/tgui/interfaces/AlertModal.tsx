@@ -1,5 +1,4 @@
 import { Loader } from './common/Loader';
-import { Preferences } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
@@ -8,8 +7,9 @@ import { Window } from '../layouts';
 type AlertModalData = {
   autofocus: boolean;
   buttons: string[];
+  large_buttons: boolean;
   message: string;
-  preferences: Preferences;
+  swapped_buttons: boolean;
   timeout: number;
   title: string;
 };
@@ -22,19 +22,18 @@ export const AlertModal = (_, context) => {
   const {
     autofocus,
     buttons = [],
+    large_buttons,
     message,
-    preferences,
     timeout,
     title,
   } = data;
-  const { large_buttons } = preferences;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window height
-  const windowHeight
-  = 115
-  + (message.length > 30 ? Math.ceil(message.length / 3) : 0)
-  + (message.length && large_buttons ? 5 : 0)
-  + (buttons.length > 2 ? buttons.length * 25 : 0);
+  let windowHeight
+    = 115
+    + (message.length > 30 ? Math.ceil(message.length / 3) : 0)
+    + (message.length && large_buttons ? 5 : 0)
+    + (buttons.length > 2 ? buttons.length * 25 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -47,7 +46,7 @@ export const AlertModal = (_, context) => {
 
   return (
     <Window height={windowHeight} title={title} width={325}>
-      {timeout && <Loader value={timeout} />}
+      {!!timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
@@ -71,7 +70,9 @@ export const AlertModal = (_, context) => {
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
-              <Box color="label" overflow="hidden">{message}</Box>
+              <Box color="label" overflow="hidden">
+                {message}
+              </Box>
             </Stack.Item>
             <Stack.Item>
               {!!autofocus && <Autofocus />}
@@ -91,9 +92,8 @@ export const AlertModal = (_, context) => {
  */
 const ButtonDisplay = (props, context) => {
   const { data } = useBackend<AlertModalData>(context);
-  const { buttons = [], preferences } = data;
+  const { buttons = [], large_buttons, swapped_buttons } = data;
   const { selected } = props;
-  const { large_buttons, swapped_buttons } = preferences;
   const buttonDirection
     = (buttons.length > 2 ? 'column' : 'row')
     + (!swapped_buttons ? '-reverse' : '');
@@ -132,8 +132,7 @@ const ButtonDisplay = (props, context) => {
  */
 const AlertButton = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
-  const { preferences } = data;
-  const { large_buttons } = preferences;
+  const { large_buttons } = data;
   const { button, selected } = props;
 
   return (

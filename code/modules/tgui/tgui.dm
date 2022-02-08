@@ -31,6 +31,8 @@
 	var/closing = FALSE
 	/// The status/visibility of the UI.
 	var/status = UI_INTERACTIVE
+	/// Timed refreshing state
+	var/refreshing = FALSE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
 	/// Rate limit client refreshes to prevent DoS.
@@ -182,6 +184,7 @@
 /datum/tgui/proc/send_full_update(custom_data, force)
 	if(!user.client || !initialized || closing)
 		return
+	refreshing = FALSE
 	var/should_update_data = force || status >= UI_UPDATE
 	window.send_message("update", get_payload(
 		custom_data,
@@ -217,6 +220,7 @@
 		"title" = title,
 		"status" = status,
 		"interface" = interface,
+		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,
 			"size" = window_size,
@@ -305,8 +309,13 @@
 	switch(type)
 		if("ready")
 			// Send a full update when the user manually refreshes the UI
-			if (initialized && COOLDOWN_FINISHED(src, refresh_cooldown))
-				send_full_update()
+			if (initialized)
+				if(!COOLDOWN_FINISHED(src, refresh_cooldown))
+					if(!refreshing)
+						addtimer(CALLBACK(src, .proc/send_full_update), TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
+					refreshing = TRUE
+				else
+					send_full_update()
 				COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
 			initialized = TRUE
 		if("pingReply")

@@ -1,16 +1,16 @@
 import { Loader } from './common/Loader';
-import { InputButtons, Preferences } from './common/InputButtons';
+import { InputButtons } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type TextInputData = {
+  large_buttons: boolean;
   max_length: number;
   message: string;
   multiline: boolean;
   placeholder: string;
-  preferences: Preferences;
   timeout: number;
   title: string;
 };
@@ -18,15 +18,14 @@ type TextInputData = {
 export const TextInputModal = (_, context) => {
   const { act, data } = useBackend<TextInputData>(context);
   const {
+    large_buttons,
     max_length,
     message,
     multiline,
     placeholder,
-    preferences,
     timeout,
     title,
   } = data;
-  const { large_buttons } = preferences;
   const [input, setInput] = useLocalState<string>(
     context,
     'input',

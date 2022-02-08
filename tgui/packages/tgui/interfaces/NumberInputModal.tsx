@@ -1,24 +1,24 @@
 import { Loader } from './common/Loader';
-import { InputButtons, Preferences } from './common/InputButtons';
+import { InputButtons } from './common/InputButtons';
 import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, RestrictedInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type NumberInputData = {
+  init_value: number;
+  large_buttons: boolean;
   max_value: number | null;
   message: string;
   min_value: number | null;
-  init_value: number;
-  preferences: Preferences;
   timeout: number;
   title: string;
 };
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, init_value, preferences, timeout, title } = data;
-  const { large_buttons } = preferences;
+  const { message, init_value, large_buttons, timeout, title }
+    = data;
   const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
     if (value === input) {
