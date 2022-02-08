@@ -439,15 +439,13 @@ DEFINE_BITFIELD(turret_flags, list(
 			if(ispAI(A))
 				continue
 
-			if((turret_flags & TURRET_FLAG_SHOOT_BORGS) && sillycone.stat != DEAD && iscyborg(sillycone))
-				targets += sillycone
-				continue
-
-			if(sillycone.stat || in_faction(sillycone))
-				continue
-
 			if(iscyborg(sillycone))
 				var/mob/living/silicon/robot/sillyconerobot = A
+				if((turret_flags & TURRET_FLAG_SHOOT_BORGS) && sillyconerobot.stat != DEAD)
+					targets += sillyconerobot
+					continue
+				if(sillyconerobot.stat || in_faction(sillyconerobot))
+					continue
 				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged && LAZYLEN(faction))
 					targets+= sillyconerobot
 
