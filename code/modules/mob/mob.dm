@@ -931,13 +931,14 @@
  * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
 **/
 /mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
-	var/static/charge_cost = 0 // charge cost will always be zero when checking if we can cast magic
-	var/has_casting_restrictions = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags, charge_cost)
+	if(magic_flags == NONE) // magic with the NONE flag can always be cast
+		return TRUE
+
+	var/has_casting_restrictions = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags)
 
 	if(!has_casting_restrictions)
 		return TRUE
-	// if we have this trait the magic casting restrictions can be bypassed
-	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) // this trait bypasses magic casting restrictions 
 		return TRUE
 
 	return FALSE
@@ -950,14 +951,25 @@
  * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
 **/
 /mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
+	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
+		return FALSE
+
 	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost)
-	
-	if(is_magic_blocked)
-		return TRUE
+
 	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
-		return TRUE
+		is_magic_blocked = TRUE
 	if(casted_magic_flags & MAGIC_RESISTANCE_HOLY && HAS_TRAIT(src, TRAIT_HOLY))
-		return TRUE 
+		is_magic_blocked = TRUE
+
+	if(is_magic_blocked)
+		var/mob/living/target = src
+		if(istype(target))
+			target.mob_light(_range = 2, _color = LIGHT_COLOR_HOLY_MAGIC, _duration = 5 SECONDS)
+			var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
+			target.add_overlay(forbearance)
+			addtimer(CALLBACK(target, /atom/proc/cut_overlay, forbearance), 50)
+		return TRUE
+
 	return FALSE
 
 /**
