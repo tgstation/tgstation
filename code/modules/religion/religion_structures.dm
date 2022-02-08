@@ -94,27 +94,16 @@
 	AddComponent(/datum/component/anti_magic, \
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		charges = 1, \
-		reaction = CALLBACK(src, .proc/block_magic), \
+		drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
 		expiration = CALLBACK(src, .proc/expire), \
 	)
 	AddComponent(/datum/component/religious_tool, RELIGION_TOOL_INVOKE, FALSE)
 
-/*
- * The proc called when the ritual totem successfully blocks magic
- *
- * user - the mob in possession of the antimagic
- * casted_magic_flags - the type of magic being used
- * charge_cost - whether the magic that was blocked drained an antimagic charge
- */
-/obj/item/ritual_totem/proc/block_magic(mob/user, casted_magic_flags, charge_cost)
-	if(charge_cost)
-		to_chat(user, span_warning("[src] consumes the magic within itself!"))
+/// When the ritual totem is drained of antimagic
+/obj/item/ritual_totem/proc/drain_antimagic(mob/user)
+	to_chat(user, span_warning("[src] consumes the magic within itself!"))
 
-/*
- * The proc called when the ritual totem is depleted of antimagic
- *
- * user - the mob in possession of the antimagic
- */
+/// When the ritual totem is depleted of antimagic
 /obj/item/ritual_totem/proc/expire(mob/user)
 	to_chat(user, span_warning("[src] quickly decays into rot!"))
 	qdel(src)

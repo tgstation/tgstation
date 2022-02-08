@@ -19,28 +19,15 @@
 		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_HANDS, \
 		charges = shield_uses, \
-		reaction = CALLBACK(src, .proc/block_magic), \
+		drain_antimagic = CALLBACK(src, .proc/drain_antimagic), \
 		expiration = CALLBACK(src, .proc/expire), \
 	)
 
-/*
- * The proc called when the antimagic planet gene successfully blocks a spell.
- *
- * user - the mob in possession of the antimagic
- * casted_magic_flags - the type of magic being used 
- * charge_cost - whether the magic that was blocked drained an antimagic charge
- * our_plant - our plant, who's eating the magic spell
- */
-/datum/plant_gene/trait/anti_magic/proc/block_magic(mob/user, casted_magic_flags, charge_cost, obj/item/our_plant)
-	if(charge_cost)
-		to_chat(user, "<span class='warning'>[our_plant] hums slightly, and seems to decay a bit.</span>")
+/// When the antimagic plant gene is drained a anti-magic charge.
+/datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)
+	to_chat(user, "<span class='warning'>[our_plant] hums slightly, and seems to decay a bit.</span>")
 
-/*
- * The proc called when the antimagic plant gene uses up all of its anti-magic charges.
- *
- * user - the mob who's using the plant
- * our_plant - our plant, who tragically melted protecting us from magics
- */
+/// When the antimagic plant gene uses up all of its anti-magic charges.
 /datum/plant_gene/trait/anti_magic/proc/expire(mob/user, obj/item/our_plant)
 	to_chat(user, "<span class='warning'>[our_plant] rapidly turns into ash!</span>")
 	new /obj/effect/decal/cleanable/ash(our_plant.drop_location())

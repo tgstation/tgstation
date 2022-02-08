@@ -3,7 +3,7 @@
 	var/antimagic_flags
 	var/charges
 	var/inventory_flags
-	var/datum/callback/reaction
+	var/datum/callback/drain_antimagic
 	var/datum/callback/expiration
 
 /**
@@ -16,7 +16,7 @@
  * * antimagic_flags (optional) A bitflag with the types of magic resistance on the object
  * * charges (optional) The amount of times the object can protect the user from magic 
  * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
- * * reaction (optional) The proc that is triggered when magic has been successfully blocked
+ * * drain_antimagic (optional) The proc that is triggered when an object has been drained a antimagic charge
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
  * *
  * antimagic bitflags: (see code/__DEFINES/magic.dm)
@@ -29,7 +29,7 @@
 		antimagic_flags = MAGIC_RESISTANCE,
 		charges = INFINITY, 
 		inventory_flags = ~ITEM_SLOT_BACKPACK, // items in a backpack won't activate, anywhere else is fine
-		reaction, 
+		drain_antimagic, 
 		expiration
 	)
 
@@ -45,7 +45,7 @@
 	src.antimagic_flags = antimagic_flags
 	src.charges = charges
 	src.inventory_flags = inventory_flags 
-	src.reaction = reaction
+	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
 
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
@@ -70,20 +70,22 @@
 /datum/component/anti_magic/proc/block_receiving_magic(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
-	// disclaimer - All anti_magic sources will be drained a charge_cost
-	if(casted_magic_flags & antimagic_flags) 
-		reaction?.Invoke(user, casted_magic_flags, charge_cost, parent)
-		charges -= charge_cost
-		if(charges <= 0)
-			expiration?.Invoke(user, parent)
-			qdel(src)
+	if(casted_magic_flags & antimagic_flags) // disclaimer - All anti_magic sources will be drained a charge_cost
+		to_chat(user, span_warning("Your [parent] begins to glow hot as it absorbs magic!"))
+
+		var/has_limited_charges = !(charges == INFINITY)
+		var/charge_was_drained = charge_cost > 0
+		if(has_limited_charges && charge_was_drained)
+			drain_antimagic?.Invoke(user, parent)
+			charges -= charge_cost
+			if(charges <= 0)
+				expiration?.Invoke(user, parent)
+				qdel(src)
 		return TRUE
 	return FALSE
 
+/// cannot cast magic with the same type of antimagic present
 /datum/component/anti_magic/proc/restrict_casting_magic(datum/source, mob/user, magic_flags)
 	SIGNAL_HANDLER
-
-	if(magic_flags & antimagic_flags)
-		return TRUE // cannot cast magic with the same type of antimagic present
-	else
-		return FALSE
+	
+	return magic_flags & antimagic_flags

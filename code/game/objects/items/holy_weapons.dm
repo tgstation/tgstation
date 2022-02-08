@@ -150,7 +150,7 @@
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, reaction = CALLBACK(src, .proc/block_magic))
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
@@ -179,16 +179,6 @@
 		log_game("[target_rune.cultist_name] rune erased by [key_name(user)] using a null rod.")
 		message_admins("[ADMIN_LOOKUPFLW(user)] erased a [target_rune.cultist_name] rune with a null rod.")
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
-
-/*
- * The proc called when the nullrod successfully blocks magic.
- *
- * user - the mob in possession of the antimagic
- * casted_magic_flags - the type of magic being used 
- */
-/obj/item/nullrod/proc/block_magic(mob/user, casted_magic_flags)
-	user.visible_message(span_warning("[user] starts to glow in a halo of light!"), \
-	span_userdanger("Your [src] begins to glow, emitting a blanket of holy light which surrounds and protects you!"))
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
