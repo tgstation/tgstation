@@ -324,20 +324,23 @@
 	return ..()
 
 /obj/item/food/deepfryholder/proc/On_Consume(eater, feeder)
-	if(contents)
-		if(isliving(eater))
-			var/mob/living/guy_fieri = eater
-			var/obj/item/organ/stomach/stomach = guy_fieri.getorganslot(ORGAN_SLOT_STOMACH)
-			if(stomach)
-				var/inedible = FALSE
-				for(var/atom/movable/thing in contents)
-					if(!IsEdible(thing))
-						inedible = TRUE
-						thing.forceMove(stomach)
-
-				if(inedible)
-					to_chat(guy_fieri, span_notice("That didn't taste very good...")) //this isn't flavortown
+	if(!contents)
+		return
+	if(!isliving(eater))
 		QDEL_LIST(contents)
+
+	var/mob/living/guy = eater
+	var/obj/item/organ/stomach/stomach = guy.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!stomach)
+		return
+	var/inedible = FALSE
+	for(var/atom/movable/thing in contents)
+		if(!IsEdible(thing))
+			inedible = TRUE
+			thing.forceMove(stomach)
+
+	if(inedible)
+		to_chat(guy, span_notice("That didn't taste very good...")) //this isn't flavortown
 
 
 /obj/item/food/deepfryholder/proc/fry(cook_time = 30)
