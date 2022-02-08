@@ -106,9 +106,12 @@
 		tooltips = TRUE,
 		)
 
-	var/to_make = names_to_path[picked_choice]
-	if(isnull(to_make))
+	if(isnull(picked_choice))
 		return
+
+	var/to_make = names_to_path[picked_choice]
+	if(!ispath(to_make, /obj/structure/trap/eldritch))
+		CRASH("[type] attempted to create a rune of incorrect type! (got: [to_make])")
 
 	target_turf.balloon_alert(user, "carving [picked_choice]...")
 	user.playsound_local(target_turf, 'sound/items/sheath.ogg', 50, vary = TRUE)
@@ -154,7 +157,7 @@
 	if(!.)
 		return
 
-	owner.playsound(get_turf(owner), 'sound/magic/blind.ogg', 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	owner.playsound_local(get_turf(owner), 'sound/magic/blind.ogg', 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/melee/rune_carver/target_sword = target
 	QDEL_LIST(target_sword.current_runes)
 	target_sword.SpinAnimation(5, 1)
