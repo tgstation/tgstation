@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - admin: "Cult rune creation (inscribing?) is now logged on the player panel logs as well as the game log."
