@@ -29,6 +29,14 @@
 	SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\
 	target.ex_act(##args);
 
+/// like EX_ACT() but just for turfs
+#define EX_ACT_TURF(turf, args...)\
+	var/old_underfloor_access = turf.underfloor_accessibility;\
+	EX_ACT(turf, args);\
+	if(old_underfloor_access != turf.underfloor_accessibility && turf.underfloor_accessibility == UNDERFLOOR_INTERACTABLE) {\
+		turf.explode_nullspaced_contents(##args);\
+	};
+
 // Internal explosion argument list keys.
 // Must match the arguments to [/datum/controller/subsystem/explosions/proc/propagate_blastwave]
 /// The origin atom of the explosion.

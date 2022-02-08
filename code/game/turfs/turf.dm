@@ -73,7 +73,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
 	var/rcd_memory
 
-	/// lazy list of all movables that can get nullspaced but still associated with this loc. causes bugs, but also maptick savings.
+	/// lazy list of all movables that can get nullspaced but still associated with this loc.
 	///dont use this unless you have a good reason. everything in this list may or may not actually be in this turf's contents
 	var/list/nullspaced_contents
 
@@ -499,7 +499,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		for(var/obj/O in (contents | nullspaced_contents)) //this is for deleting things like wires contained in the turf
-			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE)) //TODOKYLER: this sucks fix it
+			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				O.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	return(2)
@@ -520,7 +520,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /turf/contents_explosion(severity, target)
-	for(var/atom/movable/movable_thing as anything in contents | nullspaced_contents)
+	for(var/atom/movable/movable_thing as anything in contents)
 		if(QDELETED(movable_thing))
 			continue
 		switch(severity)
@@ -531,6 +531,18 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			if(EXPLODE_LIGHT)
 				SSexplosions.low_mov_atom += movable_thing
 
+///called on turfs after an explosion causes them its nullspaced contents to be exposed, adds them to SSexplosions movable queue if it isnt already there
+/turf/proc/explode_nullspaced_contents(severity, target)
+	for(var/atom/movable/movable_thing as anything in nullspaced_contents)
+		if(QDELETED(movable_thing))
+			continue
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.high_mov_atom |= movable_thing
+			if(EXPLODE_HEAVY)
+				SSexplosions.med_mov_atom |= movable_thing
+			if(EXPLODE_LIGHT)
+				SSexplosions.low_mov_atom |= movable_thing
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
