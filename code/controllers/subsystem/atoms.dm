@@ -20,6 +20,10 @@ SUBSYSTEM_DEF(atoms)
 	/// Atoms that will be deleted once the subsystem is initialized
 	var/list/queued_deletions = list()
 
+	#ifdef PROFILE_MAPLOAD_INIT_ATOM
+	var/list/mapload_init_times = list()
+	#endif
+
 	initialized = INITIALIZATION_INSSATOMS
 
 /datum/controller/subsystem/atoms/Initialize(timeofday)
@@ -29,7 +33,16 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
 	initialized = INITIALIZATION_INNEW_REGULAR
+
 	return ..()
+
+#ifdef PROFILE_MAPLOAD_INIT_ATOM
+#define PROFILE_INIT_ATOM_BEGIN(...) var/__profile_stat_time = TICK_USAGE
+#define PROFILE_INIT_ATOM_END(atom) mapload_init_times[##atom.type] += TICK_USAGE_TO_MS(__profile_stat_time)
+#else
+#define PROFILE_INIT_ATOM_BEGIN(...)
+#define PROFILE_INIT_ATOM_END(...)
+#endif
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms, list/atoms_to_return = null)
 	if(initialized == INITIALIZATION_INSSATOMS)
@@ -50,12 +63,16 @@ SUBSYSTEM_DEF(atoms)
 			var/atom/A = atoms[I]
 			if(!(A.flags_1 & INITIALIZED_1))
 				CHECK_TICK
+				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, TRUE, mapload_arg)
+				PROFILE_INIT_ATOM_END(A)
 	else
 		count = 0
 		for(var/atom/A in world)
 			if(!(A.flags_1 & INITIALIZED_1))
+				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, FALSE, mapload_arg)
+				PROFILE_INIT_ATOM_END(A)
 				++count
 				CHECK_TICK
 
@@ -83,6 +100,10 @@ SUBSYSTEM_DEF(atoms)
 
 	testing("[queued_deletions.len] atoms were queued for deletion.")
 	queued_deletions.Cut()
+
+	#ifdef PROFILE_MAPLOAD_INIT_ATOM
+	rustg_file_write(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
+	#endif
 
 /// Init this specific atom
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, from_template = FALSE, list/arguments)

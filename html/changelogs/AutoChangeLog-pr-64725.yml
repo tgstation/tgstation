@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Making medbots through the crafting menu will now account for using different types of medkit and health analyser."

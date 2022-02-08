@@ -1,0 +1,4 @@
+author: "NamelessFairy"
+delete-after: True
+changes: 
+  - bugfix: "CTF Limbo's control point timer is now correctly set to 3 minutes rather than 6"

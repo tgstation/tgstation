@@ -1,0 +1,102 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/mine/explored)
+"j" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/rack,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"k" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"m" = (
+/obj/modular_map_connector,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/door_assembly/door_assembly_ext,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"q" = (
+/obj/item/stack/ore/iron,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"v" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"A" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/rack,
+/obj/item/relic,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"E" = (
+/turf/closed/wall/rock/porous,
+/area/mine/explored)
+"G" = (
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"J" = (
+/turf/template_noop,
+/area/template_noop)
+"M" = (
+/obj/modular_map_root/tramstation{
+	key = "maintenance_miningsolar_attachment"
+	},
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"R" = (
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"W" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+
+(1,1,1) = {"
+a
+E
+m
+a
+"}
+(2,1,1) = {"
+a
+v
+v
+a
+"}
+(3,1,1) = {"
+q
+v
+v
+J
+"}
+(4,1,1) = {"
+A
+v
+v
+v
+"}
+(5,1,1) = {"
+j
+v
+v
+W
+"}
+(6,1,1) = {"
+k
+v
+R
+M
+"}
+(7,1,1) = {"
+J
+v
+G
+E
+"}

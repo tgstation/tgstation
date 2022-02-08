@@ -82,25 +82,37 @@
 		set_density(FALSE)
 	return ..()
 
-/obj/vehicle/ridden/scooter/skateboard/Bump(atom/A)
+/obj/vehicle/ridden/scooter/skateboard/Bump(atom/bumped_thing)
 	. = ..()
-	if(!A.density || !has_buckled_mobs() || world.time < next_crash)
+	if(!bumped_thing.density || !has_buckled_mobs() || world.time < next_crash)
 		return
 
 	next_crash = world.time + 10
 	var/mob/living/rider = buckled_mobs[1]
 	rider.adjustStaminaLoss(instability*6)
 	playsound(src, 'sound/effects/bang.ogg', 40, TRUE)
-	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding)
+	if(!iscarbon(rider) || rider.getStaminaLoss() >= 100 || grinding || iscarbon(bumped_thing))
 		var/atom/throw_target = get_edge_target_turf(rider, pick(GLOB.cardinals))
 		unbuckle_mob(rider)
+		if((istype(bumped_thing, /obj/machinery/disposal/bin)))
+			rider.Paralyze(8 SECONDS)
+			rider.forceMove(bumped_thing)
+			forceMove(bumped_thing)
+			visible_message(span_danger("[src] crashes into [bumped_thing], and gets dumped straight into it!"))
+			return
 		rider.throw_at(throw_target, 3, 2)
 		var/head_slot = rider.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))
 			rider.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 			rider.updatehealth()
-		visible_message(span_danger("[src] crashes into [A], sending [rider] flying!"))
-		rider.Paralyze(80)
+		visible_message(span_danger("[src] crashes into [bumped_thing], sending [rider] flying!"))
+		rider.Paralyze(8 SECONDS)
+		if(iscarbon(bumped_thing))
+			var/mob/living/carbon/victim = bumped_thing
+			var/grinding_mulitipler = 1
+			if(grinding)
+				grinding_mulitipler = 2
+			victim.Knockdown(4 * grinding_mulitipler SECONDS)
 	else
 		var/backdir = turn(dir, 180)
 		step(src, backdir)
@@ -116,24 +128,33 @@
 		return
 
 	var/mob/living/skater = buckled_mobs[1]
-	skater.adjustStaminaLoss(instability*0.5)
-	if (skater.getStaminaLoss() >= 100)
+	skater.adjustStaminaLoss(instability*0.3)
+	if(skater.getStaminaLoss() >= 100)
 		obj_flags = CAN_BE_HIT
 		playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 		unbuckle_mob(skater)
 		var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 		skater.throw_at(throw_target, 2, 2)
 		visible_message(span_danger("[skater] loses [skater.p_their()] footing and slams on the ground!"))
-		skater.Paralyze(40)
+		skater.Paralyze(4 SECONDS)
 		grinding = FALSE
 		icon_state = "[initial(icon_state)]"
 		return
 	playsound(src, 'sound/vehicles/skateboard_roll.ogg', 50, TRUE)
-	if(prob(25))
-		var/turf/location = get_turf(src)
-		if(location)
+	var/turf/location = get_turf(src)
+
+	if(location)
+		if(prob(25))
 			location.hotspot_expose(1000,1000)
-		sparks.start() //the most radical way to start plasma fires
+			sparks.start() //the most radical way to start plasma fires
+	for(var/mob/living/carbon/victim in location)
+		if(victim.body_position == LYING_DOWN)
+			playsound(location, 'sound/items/trayhit2.ogg', 40)
+			var/body_part = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_CHEST)
+			victim.apply_damage(damage = 25, damagetype = BRUTE, def_zone = body_part, wound_bonus = 20)
+			victim.Paralyze(1.5 SECONDS)
+			skater.adjustStaminaLoss(instability)
+			victim.visible_message(span_danger("[victim] straight up gets grinded into the ground by [skater]'s [src]! Radical!"))
 	addtimer(CALLBACK(src, .proc/grind), 1)
 
 /obj/vehicle/ridden/scooter/skateboard/MouseDrop(atom/over_object)
