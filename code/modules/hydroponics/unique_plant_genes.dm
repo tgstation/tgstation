@@ -24,21 +24,21 @@
 	)
 
 /*
- * The proc called when the holymelon successfully blocks a spell.
+ * The proc called when the antimagic planet gene successfully blocks a spell.
  *
- * user - the mob who's using the melon
- * major - whether the spell was 'major' or not
+ * user - the mob in possession of the antimagic
+ * casted_magic_flags - the type of magic being used 
+ * charge_cost - whether the magic that was blocked drained an antimagic charge
  * our_plant - our plant, who's eating the magic spell
  */
-/datum/plant_gene/trait/anti_magic/proc/block_magic(mob/user, major, obj/item/our_plant)
-	if(major)
+/datum/plant_gene/trait/anti_magic/proc/block_magic(mob/user, casted_magic_flags, charge_cost, obj/item/our_plant)
+	if(charge_cost)
 		to_chat(user, "<span class='warning'>[our_plant] hums slightly, and seems to decay a bit.</span>")
 
 /*
- * The proc called when the holymelon uses up all of its anti-magic charges.
+ * The proc called when the antimagic plant gene uses up all of its anti-magic charges.
  *
- * user - the mob who's using the melon
- * major - whether the spell was 'major' or not
+ * user - the mob who's using the plant
  * our_plant - our plant, who tragically melted protecting us from magics
  */
 /datum/plant_gene/trait/anti_magic/proc/expire(mob/user, obj/item/our_plant)

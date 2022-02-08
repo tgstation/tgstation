@@ -70,12 +70,9 @@
 /datum/component/anti_magic/proc/block_receiving_magic(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
-	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
-		return FALSE
-
 	// disclaimer - All anti_magic sources will be drained a charge_cost
 	if(casted_magic_flags & antimagic_flags) 
-		reaction?.Invoke(user, charge_cost, parent)
+		reaction?.Invoke(user, casted_magic_flags, charge_cost, parent)
 		charges -= charge_cost
 		if(charges <= 0)
 			expiration?.Invoke(user, parent)
