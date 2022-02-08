@@ -13,7 +13,7 @@
 	. = ..()
 	if(!warped)
 		AddComponent(/datum/component/anti_magic, \
-			antimagic_flags = MAGIC_RESISTANCE_MIND|MAGIC_CASTING_RESTRICTION, \
+			antimagic_flags = MAGIC_RESISTANCE_MIND, \
 			inventory_flags = ITEM_SLOT_HEAD, \
 			charges = 6, \
 			expiration = CALLBACK(src, .proc/warp_up) \

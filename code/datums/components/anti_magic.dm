@@ -23,7 +23,6 @@
  * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
  * * MAGIC_RESISTANCE_MIND - Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
  * * MAGIC_RESISTANCE_HOLY - Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god)
- * * MAGIC_CASTING_RESTRICTION - Prevents a user from casting magic
  * * MAGIC_RESISTANCE_ALL - All magic resistances combined
 **/
 /datum/component/anti_magic/Initialize(
@@ -87,12 +86,7 @@
 /datum/component/anti_magic/proc/restrict_casting_magic(datum/source, mob/user, magic_flags)
 	SIGNAL_HANDLER
 
-	// if we are trying to cast wizard spells (not mime abilities, abductor telepathy, etc.)
-	var/is_casting_wizard_magic = magic_flags & MAGIC_RESISTANCE
-	// any antimagic equipment on the mob or antimagic traits
-	var/has_magic_casting_restriction = antimagic_flags & MAGIC_CASTING_RESTRICTION
-
-	if(is_casting_wizard_magic && has_magic_casting_restriction)
-		return TRUE // cannot cast wizard magic with antimagic present
+	if(magic_flags & antimagic_flags)
+		return TRUE // cannot cast magic with the same type of antimagic present
 	else
 		return FALSE

@@ -16,7 +16,7 @@
 	shield_uses = round(our_seed.potency / 20)
 	//deliver us from evil o melon god
 	our_plant.AddComponent(/datum/component/anti_magic, \
-		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY|MAGIC_CASTING_RESTRICTION, \
+		antimagic_flags = MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, \
 		inventory_flags = ITEM_SLOT_HANDS, \
 		charges = shield_uses, \
 		reaction = CALLBACK(src, .proc/block_magic), \
