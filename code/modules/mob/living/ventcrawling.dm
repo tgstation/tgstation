@@ -16,12 +16,12 @@
 	package.forceMove(src)
 	current_node = starting_node
 	package.ventcrawl_layer = starting_node.piping_layer
-	RegisterSignal(package, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PREQDELETED), .proc/check_package)
+	RegisterSignal(package, COMSIG_MOVABLE_MOVED, .proc/check_package)
 
 /obj/effect/ventcrawl_holder/proc/check_package(mob/living/package)
 	SIGNAL_HANDLER
 
-	if(QDELETED(package) || package.loc != src)
+	if(package.loc != src)
 		qdel(src)
 
 // Handles mob movement inside a pipenet

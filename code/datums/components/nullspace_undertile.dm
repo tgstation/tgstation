@@ -1,3 +1,8 @@
+///an alternate version of undertile component that nullspaces parent when its not visible,
+///or when its visible but not interactable. intended to reduce maptick as without this
+///undertile objects are invisible to most players but take up a large majority of the
+///movables in view of players, this increases maptick and thus hurts performance.
+///now those movables arent being sent to players when they dont need to be
 /datum/component/nullspace_undertile
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 

@@ -442,7 +442,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return new_baseturfs
 
 /turf/proc/levelupdate()
-	var/list/check_list = contents | nullspaced_contents
+	var/list/check_list = nullspaced_contents ? contents | nullspaced_contents : contents
 
 	for(var/obj/O in check_list)
 		if(O.flags_1 & INITIALIZED_1)
@@ -498,7 +498,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/singularity_act()
 	if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		for(var/obj/O in (contents | nullspaced_contents)) //this is for deleting things like wires contained in the turf
+		for(var/obj/O in (nullspaced_contents ? contents | nullspaced_contents : contents)) //this is for deleting things like wires contained in the turf
 			if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 				O.singularity_act()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
@@ -546,7 +546,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
-	for(var/atom/A as anything in src)
+	for(var/atom/A as anything in nullspaced_contents ? nullspaced_contents | contents : contents)
 		if(ignore_mobs && ismob(A))
 			continue
 		if(ismob(A) || .)

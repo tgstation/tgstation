@@ -101,20 +101,12 @@
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)
 	. = ..()
-	var/static/list/pipes_typecache = typecacheof(/obj/structure/disposalpipe)
-	//Moved to nullspace gang
+
 	if(!loc)
 		return
 	var/turf/turf_loc = get_turf(src)
 
-	var/has_possible_loc = FALSE
-
-	for(var/obj/structure/disposalpipe/possible_loc in turf_loc?.nullspaced_contents)
-		if(pipes_typecache[possible_loc.type])
-			has_possible_loc = TRUE
-			break
-
-	if(has_possible_loc)
+	if(locate(/obj/structure/disposalpipe) in turf_loc?.nullspaced_contents)
 		return
 
 	vent_gas(turf_loc)
