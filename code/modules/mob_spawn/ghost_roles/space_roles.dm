@@ -11,8 +11,7 @@
 	flavour_text = "You vaguely recall rushing into a cryogenics pod due to an oncoming radiation storm. \
 	The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
-	important_text = "Work as a team with your fellow survivors and do not abandon them. You know nothing of Space Station 13, current day \
-	Nanotrasen's state, or anything of the sort."
+	important_text = "Work as a team with your fellow survivors and do not abandon them."
 	outfit = /datum/outfit/oldsec
 	spawner_job_path = /datum/job/ancient_crew
 
@@ -39,8 +38,7 @@
 	flavour_text = "You vaguely recall rushing into a cryogenics pod due to an oncoming radiation storm. The last thing \
 	you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
-	important_text = "Work as a team with your fellow survivors and do not abandon them. You know nothing of Space Station 13, current day \
-	Nanotrasen's state, or anything of the sort."
+	important_text = "Work as a team with your fellow survivors and do not abandon them."
 	outfit = /datum/outfit/oldeng
 	spawner_job_path = /datum/job/ancient_crew
 
@@ -74,8 +72,7 @@
 	flavour_text = "You vaguely recall rushing into a cryogenics pod due to an oncoming radiation storm. \
 	The last thing you remember is the station's Artificial Program telling you that you would only be asleep for eight hours. As you open \
 	your eyes, everything seems rusted and broken, a dark feeling swells in your gut as you climb out of your pod."
-	important_text = "Work as a team with your fellow survivors and do not abandon them. You know nothing of Space Station 13, current day \
-	Nanotrasen's state, or anything of the sort."
+	important_text = "Work as a team with your fellow survivors and do not abandon them."
 	outfit = /datum/outfit/oldsci
 	spawner_job_path = /datum/job/ancient_crew
 
@@ -108,7 +105,7 @@
 /obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	you_are_text = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
-	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the power flowing."
+	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the engine running. If you are not familiar with how the supermatter engine functions: do not attempt to start it."
 	important_text = "The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives."
 	prompt_name = "a battlecruiser crewmember"
 	outfit = /datum/outfit/syndicate_empty/battlecruiser
