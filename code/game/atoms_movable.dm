@@ -149,6 +149,9 @@
 
 	. = ..()
 
+	if(associated_loc)
+		move_associated_loc(null)
+
 	for(var/movable_content in contents)
 		qdel(movable_content)
 

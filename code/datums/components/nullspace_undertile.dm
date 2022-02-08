@@ -4,7 +4,7 @@
 	///the overlay applied to parent's associated_loc when the turf doesnt show its undertiles at all
 	var/mutable_appearance/tile_overlay
 
-	///the underlaylay applied to parent's associated_loc when the turf is UNDERFLOOR_VISIBLE and parent is set to nullspace in that case.
+	///the underlay applied to parent's associated_loc when the turf is UNDERFLOOR_VISIBLE and parent is set to nullspace in that case.
 	///essentially its parents appearance manually copied on any changes and applied as an underlay to its associated_loc.
 	///used so we can keep our maptick improvements when parent is on a turf that shows undertiles but doesnt allow interacting with them.
 	var/mutable_appearance/nullspace_underlay
@@ -30,7 +30,7 @@
 
 /datum/component/nullspace_undertile/UnregisterFromParent()
 	. = ..()
-	on_hide(parent, UNDERFLOOR_VISIBLE)
+	on_hide(parent, UNDERFLOOR_INTERACTABLE)
 
 /datum/component/nullspace_undertile/proc/on_hide(obj/source, underfloor_accessibility)
 	SIGNAL_HANDLER
@@ -52,7 +52,7 @@
 		if(UNDERFLOOR_VISIBLE)
 			if(nullspace_underlay) //if this exists then we nullspace in this case
 				source.loc = null
-				real_loc.underlays += nullspace_underlay
+				real_loc.underlays |= nullspace_underlay
 			else
 				source.loc = real_loc
 			if(tile_overlay)
@@ -82,5 +82,5 @@
 	nullspace_underlay.appearance = source.appearance
 
 	if(real_loc.underfloor_accessibility == UNDERFLOOR_VISIBLE)
-		real_loc.underlays += nullspace_underlay
+		real_loc.underlays |= nullspace_underlay
 

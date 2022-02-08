@@ -18,10 +18,6 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 
-	var/obj/object_target = source
-
-	object_target.move_associated_loc(null)
-
 /datum/element/associated_loc_updater/proc/on_target_moved(obj/target, atom/old_loc)
 	SIGNAL_HANDLER
 

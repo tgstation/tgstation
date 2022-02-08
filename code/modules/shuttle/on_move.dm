@@ -4,17 +4,17 @@ All ShuttleMove procs go here
 
 /************************************Base procs************************************/
 
-// Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
-// returns the new move_mode (based on the old)
+/// Called on every turf in the shuttle region, returns a bitflag for allowed movements of that turf
+/// returns the new move_mode (based on the old)
 /turf/proc/fromShuttleMove(turf/newT, move_mode)
 	if(!(move_mode & MOVE_AREA) || !isshuttleturf(src))
 		return move_mode
 
 	return move_mode | MOVE_TURF | MOVE_CONTENTS
 
-// Called from the new turf before anything has been moved
-// Only gets called if fromShuttleMove returns true first
-// returns the new move_mode (based on the old)
+/// Called from the new turf before anything has been moved
+/// Only gets called if fromShuttleMove returns true first
+/// returns the new move_mode (based on the old)
 /turf/proc/toShuttleMove(turf/oldT, move_mode, obj/docking_port/mobile/shuttle)
 	. = move_mode
 	if(!(. & MOVE_TURF))
@@ -45,7 +45,7 @@ All ShuttleMove procs go here
 			else
 				qdel(thing)
 
-// Called on the old turf to move the turf data
+/// Called on the old turf to move the turf data
 /turf/proc/onShuttleMove(turf/newT, list/movement_force, move_dir)
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
@@ -68,7 +68,7 @@ All ShuttleMove procs go here
 
 	return TRUE
 
-// Called on the new turf after everything has been moved
+/// Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT, rotation)
 	//Dealing with the turf we left behind
 	oldT.TransferComponents(src)
@@ -93,9 +93,9 @@ All ShuttleMove procs go here
 
 /////////////////////////////////////////////////////////////////////////////////////
 
-// Called on every atom in shuttle turf contents before anything has been moved
-// returns the new move_mode (based on the old)
-// WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
+/// Called on every atom in shuttle turf contents before anything has been moved
+/// returns the new move_mode (based on the old)
+/// WARNING: Do not leave turf contents in beforeShuttleMove or dock() will runtime
 /atom/movable/proc/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	return move_mode
 
@@ -104,7 +104,7 @@ All ShuttleMove procs go here
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return
 
-	if(associated_loc == oldT)
+	if(associated_loc && associated_loc == oldT)
 		move_associated_loc(newT)//if we're nullspaced or nullspaceable, update our associated loc to the new turf
 
 	if(loc != oldT) // This is for multi tile objects
@@ -241,7 +241,7 @@ All ShuttleMove procs go here
 			var/obj/machinery/atmospherics/node = nodes[i]
 			var/connected = FALSE
 			for(var/D in GLOB.cardinals)
-				if(node.associated_loc == get_step(associated_loc, D))//TODOKYLER: dicey
+				if(node.associated_loc == get_step(associated_loc, D))
 					connected = TRUE
 					break
 
