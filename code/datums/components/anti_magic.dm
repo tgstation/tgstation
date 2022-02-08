@@ -49,9 +49,6 @@
 	src.reaction = reaction
 	src.expiration = expiration
 
-	//debug stuff that I need to delete before PR is merged
-	message_admins("[parent] has antimagic_flags: [antimagic_flags] enabled")
-
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
@@ -94,9 +91,6 @@
 	var/is_casting_wizard_magic = magic_flags & MAGIC_RESISTANCE
 	// any antimagic equipment on the mob or antimagic traits
 	var/has_magic_casting_restriction = antimagic_flags & MAGIC_CASTING_RESTRICTION
-
-	//debug stuff that I need to delete before PR is merged
-	message_admins("[parent] has antimagic_flags: [antimagic_flags] enabled")
 
 	if(is_casting_wizard_magic && has_magic_casting_restriction)
 		return TRUE // cannot cast wizard magic with antimagic present
