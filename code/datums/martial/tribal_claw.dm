@@ -7,98 +7,98 @@
 	name = "Tribal Claw"
 	id = MARTIALART_TRIBALCLAW
 	allow_temp_override = FALSE
-	help_verb = /mob/living/carbon/human/proc/tribal_claw_help
+	help_verb = /mob/living/carbon/proc/tribal_claw_help
 	display_combos = TRUE
 
-/datum/martial_art/tribal_claw/proc/check_streak(mob/living/A, mob/living/D)
-	if(findtext(streak,TAIL_SWEEP_COMBO))
+/datum/martial_art/tribal_claw/proc/check_streak(mob/living/carbon/attacker, mob/living/carbon/defender)
+	if(findtext(streak, TAIL_SWEEP_COMBO))
 		streak = ""
-		tailSweep(A,D)
+		tailSweep(attacker, defender)
 		return TRUE
-	if(findtext(streak,FACE_SCRATCH_COMBO))
+	if(findtext(streak, FACE_SCRATCH_COMBO))
 		streak = ""
-		faceScratch(A,D)
+		faceScratch(attacker, defender)
 		return TRUE
-	if(findtext(streak,JUGULAR_CUT_COMBO))
+	if(findtext(streak, JUGULAR_CUT_COMBO))
 		streak = ""
-		jugularCut(A,D)
+		jugularCut(attacker, defender)
 		return TRUE
-	if(findtext(streak,TAIL_GRAB_COMBO))
+	if(findtext(streak, TAIL_GRAB_COMBO))
 		streak = ""
-		tailGrab(A,D)
+		tailGrab(attacker, defender)
 		return TRUE
 	return FALSE
 
 //Tail Sweep, triggers an effect similar to Space Dragon's tail sweep but only affects stuff 1 tile next to you, basically 3x3.
-/datum/martial_art/tribal_claw/proc/tailSweep(mob/living/A, mob/living/D)
-	if(A == current_target)
+/datum/martial_art/tribal_claw/proc/tailSweep(mob/living/carbon/attacker, mob/living/carbon/defender)
+	if(attacker == current_target)
 		return
-	log_combat(A, D, "tail sweeped(Tribal Claw)")
-	D.visible_message("<span class='warning'>[A] sweeps [D]'s legs with their tail!</span>", \
-						"<span class='userdanger'>[A] sweeps your legs with their tail!</span>")
-	var/obj/effect/proc_holder/spell/aoe_turf/repulse/spacedragon/R = new
-	R.cast(RANGE_TURFS(1,A))
+	log_combat(attacker, defender, "tail sweeped(Tribal Claw)")
+	defender.visible_message("<span class='warning'>[attacker] sweeps [defender]'s legs with their tail!</span>", \
+						"<span class='userdanger'>[attacker] sweeps your legs with their tail!</span>")
+	var/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/R = new
+	R.cast(RANGE_TURFS(1,attacker))
 
 //Face Scratch, deals 10 brute to head(reduced by armor), blurs the target's vision and gives them the confused effect for a short time.
-/datum/martial_art/tribal_claw/proc/faceScratch(mob/living/A, mob/living/D)
-	var/def_check = D.getarmor(BODY_ZONE_HEAD, "melee")
-	log_combat(A, D, "face scratched (Tribal Claw)")
-	D.visible_message("<span class='warning'>[A] scratches [D]'s face with their claws!</span>", \
-						"<span class='userdanger'>[A] scratches your face with their claws!</span>")
-	D.apply_damage(10, BRUTE, BODY_ZONE_HEAD, def_check)
-	D.confused += 5
-	D.blur_eyes(5)
-	A.do_attack_animation(D, ATTACK_EFFECT_CLAW)
-	playsound(get_turf(D), 'sound/weapons/slash.ogg', 50, 1, -1)
+/datum/martial_art/tribal_claw/proc/faceScratch(mob/living/carbon/attacker, mob/living/carbon/defender)
+	var/def_check = defender.getarmor(BODY_ZONE_HEAD, "melee")
+	log_combat(attacker, defender, "face scratched (Tribal Claw)")
+	defender.visible_message("<span class='warning'>[attacker] scratches [defender]'s face with their claws!</span>", \
+						"<span class='userdanger'>[attacker] scratches your face with their claws!</span>")
+	defender.apply_damage(10, BRUTE, BODY_ZONE_HEAD, def_check)
+	defender.add_confusion(5)
+	defender.blur_eyes(5)
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
+	playsound(get_turf(defender), 'sound/weapons/slash.ogg', 50, 1, -1)
 
 /*
 Jugular Cut, can only be done if the target is in crit, being held in a tier 3 grab by the user or if they are sleeping.
 Deals 15 brute to head(reduced by armor) and causes a rapid bleeding effect similar to throat slicing someone with a sharp item.
 */
-/datum/martial_art/tribal_claw/proc/jugularCut(mob/living/A, mob/living/D)
-	var/def_check = D.getarmor(BODY_ZONE_HEAD, "melee")
-	if((D.health <= D.crit_threshold || (A.pulling == D && A.grab_state >= GRAB_NECK) || D.IsSleeping()))
-		log_combat(A, D, "jugular cut (Tribal Claw)")
-		D.visible_message("<span class='warning'>[A] cuts [D]'s jugular vein with their claws!</span>", \
-							"<span class='userdanger'>[A] cuts your jugular vein!</span>")
-		D.apply_damage(15, BRUTE, BODY_ZONE_HEAD, def_check)
-		D.bleed_rate = CLAMP(D.bleed_rate + 20, 0, 30)
-		D.apply_status_effect(/datum/status_effect/neck_slice)
-		A.do_attack_animation(D, ATTACK_EFFECT_CLAW)
-		playsound(get_turf(D), 'sound/weapons/slash.ogg', 50, 1, -1)
-	else
-		return basic_hit(A,D)
+/datum/martial_art/tribal_claw/proc/jugularCut(mob/living/carbon/attacker, mob/living/carbon/defender)
+	var/def_check = defender.getarmor(BODY_ZONE_HEAD, "melee")
+	if((defender.health <= defender.crit_threshold || (attacker.pulling == defender && attacker.grab_state >= GRAB_NECK) || defender.IsSleeping()))
+		log_combat(attacker, defender, "jugular cut (Tribal Claw)")
+		defender.visible_message("<span class='warning'>[attacker] cuts [defender]'s jugular vein with their claws!</span>", \
+							"<span class='userdanger'>[attacker] cuts your jugular vein!</span>")
+		defender.apply_damage(15, BRUTE, BODY_ZONE_HEAD, def_check)
+	//	defender.bleed_rate = CLAMP(defender.bleed_rate + 20, 0, 30)
+		for(var/obj/item/bodypart/head/body_head in defender.bodyparts)
+			body_head.generic_bleedstacks += 15 //Test if this is remotely balanced
+		defender.apply_status_effect(/datum/status_effect/neck_slice)
+		attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
+		playsound(get_turf(defender), 'sound/weapons/slash.ogg', 50, 1, -1)
 
 //Tail Grab, instantly puts your target in a T3 grab and makes them unable to talk for a short time.
-/datum/martial_art/tribal_claw/proc/tailGrab(mob/living/A, mob/living/D)
-	log_combat(A, D, "tail grabbed (Tribal Claw)")
-	D.visible_message("<span class='warning'>[A] grabs [D] with their tail!</span>", \
-						"<span class='userdanger'>[A] grabs you with their tail!</span>")
-	D.grabbedby(A, 1)
-	D.Knockdown(5) //Without knockdown target still stands up while T3 grabbed.
-	A.setGrabState(GRAB_NECK)
-	if(D.silent <= 10)
-		D.silent = CLAMP(D.silent + 10, 0, 10)
+/datum/martial_art/tribal_claw/proc/tailGrab(mob/living/carbon/attacker, mob/living/carbon/defender)
+	log_combat(attacker, defender, "tail grabbed (Tribal Claw)")
+	defender.visible_message("<span class='warning'>[attacker] grabs [defender] with their tail!</span>", \
+						"<span class='userdanger'>[attacker] grabs you with their tail!</span>")
+	defender.grabbedby(attacker, 1)
+	defender.Knockdown(5) //Without knockdown target still stands up while T3 grabbed.
+	attacker.setGrabState(GRAB_NECK)
+	if(defender.silent <= 10)
+		defender.silent = clamp(defender.silent + 10, 0, 10)
 
-/datum/martial_art/tribal_claw/harm_act(mob/living/A, mob/living/D)
-	add_to_streak("H",D)
-	if(check_streak(A,D))
+/datum/martial_art/tribal_claw/harm_act(mob/living/carbon/attacker, mob/living/carbon/defender)
+	add_to_streak("H", defender)
+	if(check_streak(attacker, defender))
 		return TRUE
 	return FALSE
 
-/datum/martial_art/tribal_claw/disarm_act(mob/living/A, mob/living/D)
-	add_to_streak("D",D)
-	if(check_streak(A,D))
+/datum/martial_art/tribal_claw/disarm_act(mob/living/carbon/attacker, mob/living/carbon/defender)
+	add_to_streak("defender", defender)
+	if(check_streak(attacker, defender))
 		return TRUE
 	return FALSE
 
-/datum/martial_art/tribal_claw/grab_act(mob/living/A, mob/living/D)
-	add_to_streak("G",D)
-	if(check_streak(A,D))
+/datum/martial_art/tribal_claw/grab_act(mob/living/carbon/attacker, mob/living/carbon/defender)
+	add_to_streak("G", defender)
+	if(check_streak(attacker, defender))
 		return TRUE
 	return FALSE
 
-/mob/living/carbon/human/proc/tribal_claw_help()
+/mob/living/carbon/proc/tribal_claw_help()
 	set name = "Recall Teachings"
 	set desc = "Remember the martial techniques of the Tribal Claw"
 	set category = "Tribal Claw"
