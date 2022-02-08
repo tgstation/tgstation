@@ -30,8 +30,8 @@
 	///The rate that the stomach will transfer reagents to the body
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
-	///The max combined weight class of inedible objects held before we vomit.
-	var/max_combined_w_class = 14
+	///The max combined weight class of objects held before we vomit.
+	var/max_combined_w_class = 15
 
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
@@ -220,28 +220,35 @@
 	return !(NOSTOMACH in owner_species.inherent_traits)
 
 /obj/item/organ/stomach/proc/handle_contents(mob/living/carbon/human/mule, delta_time)
-	var/inedibles = 0
+	var/indigestibles_size = 0
 	for(var/atom/movable/thing in contents)
-		if(!IsEdible(thing))
-			var/size = 1
-			if(isitem(thing))
-				var/obj/item/inedible_item = thing
-				size = inedible_item.w_class
-			inedibles += 1 * size
+		if(!IsEdible(thing) && isitem(thing))
+			var/obj/item/indigestible_item = thing
+			indigestibles_size += 1 * indigestible_item.w_class
 
-	if(!inedibles)
+	if(get_contents_size() > max_combined_w_class)
+		to_chat(mule, span_danger("Your stomach feels uncomfortably full!"))
+		var/spew_blood = indigestibles_size ? TRUE : FALSE
+		mule.vomit(100, spew_blood, distance = 0)
+		damage += indigestibles_size
+
+	if(!indigestibles_size)
 		return
-
-	if(inedibles > max_combined_w_class)
-		to_chat(mule, span_danger("Your stomach is much too full!"))
-		mule.vomit(100, TRUE, distance = 0)
 
 	if(DT_PROB(2.5, delta_time))
 		to_chat(mule, span_warning("Your stomach hurts!"))
-		damage += inedibles
+		damage += indigestibles_size
 
 	if(DT_PROB(5, delta_time))
-		mule.adjust_disgust(5*inedibles)
+		mule.adjust_disgust(2*indigestibles_size)
+
+/obj/item/organ/stomach/proc/get_contents_size()
+	var/contents_size = 0
+	for(var/atom/movable/thing in contents)
+		if(isitem(thing))
+			var/obj/item/this_item = thing
+			contents_size += 1 * this_item.w_class
+	return contents_size
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)
 	if(disgusted.disgust)

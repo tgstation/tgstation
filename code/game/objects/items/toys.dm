@@ -287,13 +287,13 @@
 	if(!user)
 		return
 
-	if(mystomach.contents.len > 1) // if he's (un)bright enough to have a round and full belly...
-		user.visible_message(span_suicide("And pretty much, [user] was beyond full, and died from having his insides completely damaged!"))
-		sleep(20)
+	if(mystomach.get_contents_size() > 10) // if he's (un)bright enough to have a round and full belly...
 		user.vomit(100, TRUE, distance = 0)
 		for(var/obj/item/organ/current_organ in user.internal_organs)
 			if(current_organ.zone == BODY_ZONE_CHEST)
 				current_organ.damage = current_organ.maxHealth
+		sleep(3 SECONDS) //let them feel it first
+		user.visible_message(span_suicide("And pretty much, [user] was beyond full, and died from having his insides completely damaged!"))
 		user.death(FALSE)
 		user.suicide_log()
 		user.set_suicide(TRUE)
