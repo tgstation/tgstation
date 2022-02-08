@@ -39,8 +39,8 @@ export const TextInputModal = (_, context) => {
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 125
-    + Math.ceil(message.length / 3)
+    = 135
+    + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
     + (multiline || input.length >= 30 ? 75 : 0)
     + (message.length && large_buttons ? 5 : 0);
 
@@ -94,6 +94,7 @@ const InputArea = (props, context) => {
         const keyCode = window.event ? event.which : event.keyCode;
         if (keyCode === KEY_ENTER) {
           act('submit', { entry: input });
+          event.preventDefault();
         }
         if (keyCode === KEY_ESCAPE) {
           act('cancel');

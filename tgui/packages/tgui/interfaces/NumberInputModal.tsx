@@ -17,7 +17,7 @@ type NumberInputData = {
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, init_value, large_buttons, timeout, title }
+  const { init_value, large_buttons, message, timeout, title }
     = data;
   const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
@@ -34,8 +34,8 @@ export const NumberInputModal = (_, context) => {
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 130
-    + Math.ceil(message.length / 3)
+    = 140
+    + (message.length > 30 ? Math.ceil(message.length / 3) : 0)
     + (message.length && large_buttons ? 5 : 0);
 
   return (

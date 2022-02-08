@@ -29,9 +29,9 @@ export const AlertModal = (_, context) => {
   } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
   // Dynamically sets window height
-  let windowHeight
+  const windowHeight
     = 115
-    + (message.length > 30 ? Math.ceil(message.length / 3) : 0)
+    + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
     + (message.length && large_buttons ? 5 : 0)
     + (buttons.length > 2 ? buttons.length * 25 : 0);
   const onKey = (direction: number) => {
