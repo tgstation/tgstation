@@ -1,0 +1,4 @@
+author: "Kubisopplay"
+delete-after: True
+changes: 
+  - bugfix: "you shouldn't get permanently locked by malf ai robofab now"
