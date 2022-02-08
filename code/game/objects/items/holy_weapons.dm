@@ -188,7 +188,7 @@
  */
 /obj/item/nullrod/proc/block_magic(mob/user, casted_magic_flags)
 	user.visible_message(span_warning("[user] starts to glow in a halo of light!"), \
-	span_userdanger("Your [src] begins to glow, emitting a blanket of holy light which surrounds you and protects you from the flash of light!"))
+	span_userdanger("Your [src] begins to glow, emitting a blanket of holy light which surrounds and protects you!"))
 
 /obj/item/nullrod/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
