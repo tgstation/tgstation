@@ -7553,9 +7553,9 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/duct,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron,
 /area/service/bar)
 "bbI" = (
@@ -31585,13 +31585,13 @@
 	},
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/chair/stool/bar/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	name = "sorting disposal pipe (Bar)";
 	sortType = 19
 	},
 /obj/structure/cable,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron,
 /area/service/bar)
 "jTA" = (
@@ -48748,10 +48748,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/structure/chair/stool/bar/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/hangover,
 /obj/structure/cable,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron,
 /area/service/bar)
 "qmq" = (
@@ -61016,8 +61016,8 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron,
 /area/service/bar)
 "uMu" = (
@@ -62860,8 +62860,8 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/assistant,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron,
 /area/service/bar)
 "vDM" = (
