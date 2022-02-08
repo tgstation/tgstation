@@ -954,7 +954,7 @@
 	
 	if(is_magic_blocked)
 		return TRUE
-	if(casted_magic_flags & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		return TRUE
 	if(casted_magic_flags & MAGIC_RESISTANCE_HOLY && HAS_TRAIT(src, TRAIT_HOLY))
 		return TRUE 
