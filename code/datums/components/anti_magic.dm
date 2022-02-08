@@ -71,7 +71,7 @@
 	SIGNAL_HANDLER
 
 	if(casted_magic_flags & antimagic_flags) // disclaimer - All anti_magic sources will be drained a charge_cost
-		to_chat(user, span_warning("Your [parent] begins to glow hot as it absorbs magic!"))
+		to_chat(user, span_warning("Your [parent] begins to glow as it absorbs magic!"))
 
 		var/has_limited_charges = !(charges == INFINITY)
 		var/charge_was_drained = charge_cost > 0
