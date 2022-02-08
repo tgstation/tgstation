@@ -310,7 +310,7 @@
 	switch(type)
 		if("ready")
 			// Send a full update when the user manually refreshes the UI
-			if (!initialized)
+			if(!initialized)
 				initialized = TRUE
 				return
 			if(!COOLDOWN_FINISHED(src, refresh_cooldown))
