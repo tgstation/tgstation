@@ -287,7 +287,7 @@
 	if(!user)
 		return
 
-	if(mystomach.get_contents_size() > 10) // if he's (un)bright enough to have a round and full belly...
+	if(mystomach.get_contents_size() >= mystomach.max_combined_w_class - 5) // if he's (un)bright enough to have a round and full belly...
 		user.visible_message(span_suicide("And pretty much, [user] was beyond full, and died from having [user.p_their()] insides completely damaged!"))
 		sleep(2 SECONDS) //let them read the message
 		user.vomit(100, TRUE, distance = 0)

@@ -1,5 +1,7 @@
 //The contant in the rate of reagent transfer on life ticks
 #define STOMACH_METABOLISM_CONSTANT 0.25
+//How much inedible garbage it can hold before you immediately chuck
+#define STANDARD_STOMACH_MAX_COMBINED_W_CLASS 12
 
 /obj/item/organ/stomach
 	name = "stomach"
@@ -31,7 +33,7 @@
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
 	///The max combined weight class of objects held before we vomit.
-	var/max_combined_w_class = 15
+	var/max_combined_w_class = STANDARD_STOMACH_MAX_COMBINED_W_CLASS //so 4 normal-sized objects
 
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
@@ -340,6 +342,7 @@
 	desc = "A basic device designed to mimic the functions of a human stomach"
 	organ_flags = ORGAN_SYNTHETIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
+	max_combined_w_class = STANDARD_STOMACH_MAX_COMBINED_W_CLASS * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 	metabolism_efficiency = 0.35 // not as good at digestion
 
@@ -348,6 +351,7 @@
 	icon_state = "stomach-c-u"
 	desc = "An electronic device designed to mimic the functions of a human stomach. Handles disgusting food a bit better."
 	maxHealth = 1.5 * STANDARD_ORGAN_THRESHOLD
+	max_combined_w_class = 1.5 * STANDARD_STOMACH_MAX_COMBINED_W_CLASS
 	disgust_metabolism = 2
 	emp_vulnerability = 40
 	metabolism_efficiency = 0.07
@@ -357,6 +361,7 @@
 	icon_state = "stomach-c-u2"
 	desc = "An upgraded version of the cybernetic stomach, designed to improve further upon organic stomachs. Handles disgusting food very well."
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
+	max_combined_w_class = 2 * STANDARD_STOMACH_MAX_COMBINED_W_CLASS
 	disgust_metabolism = 3
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
@@ -373,3 +378,4 @@
 
 
 #undef STOMACH_METABOLISM_CONSTANT
+#undef STANDARD_STOMACH_MAX_COMBINED_W_CLASS
