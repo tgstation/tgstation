@@ -2744,11 +2744,13 @@
 	/// Tells the debuff how many ants we are being covered with.
 	var/amount_left = 0
 	/// List of possible common statements to scream when eating ants
-	var/list/ant_screams = list("THEY'RE UNDER MY SKIN!!",
-							"GET THEM OUT OF ME!!",
-							"HOLY HELL THEY BURN!!",
-							"MY GOD THEY'RE INSIDE ME!!",
-							"GET THEM OUT!!")
+	var/list/ant_screams = list(
+		"THEY'RE UNDER MY SKIN!!",
+		"GET THEM OUT OF ME!!",
+		"HOLY HELL THEY BURN!!",
+		"MY GOD THEY'RE INSIDE ME!!",
+		"GET THEM OUT!!"
+		)
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
