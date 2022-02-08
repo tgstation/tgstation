@@ -968,6 +968,8 @@
 			var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			target.add_overlay(forbearance)
 			addtimer(CALLBACK(target, /atom/proc/cut_overlay, forbearance), 50)
+			target.visible_message(span_warning("[target] starts to glow in a halo of light!"), \
+			span_userdanger("A feeling of warmth washes over you, rays of light surround your body and protect you!"))
 		return TRUE
 
 	return FALSE
