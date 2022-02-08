@@ -190,6 +190,7 @@
 		custom_data,
 		with_data = should_update_data,
 		with_static_data = TRUE))
+	COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
 
 /**
  * public
@@ -309,15 +310,14 @@
 	switch(type)
 		if("ready")
 			// Send a full update when the user manually refreshes the UI
-			if (initialized)
-				if(!COOLDOWN_FINISHED(src, refresh_cooldown))
-					if(!refreshing)
-						addtimer(CALLBACK(src, .proc/send_full_update), TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
-					refreshing = TRUE
-				else
-					send_full_update()
-				COOLDOWN_START(src, refresh_cooldown, TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
-			initialized = TRUE
+			if (!initialized)
+				initialized = TRUE
+				return
+			if(!COOLDOWN_FINISHED(src, refresh_cooldown))
+				refreshing = TRUE
+				addtimer(CALLBACK(src, .proc/send_full_update), TGUI_REFRESH_FULL_UPDATE_COOLDOWN, TIMER_UNIQUE)
+			else
+				send_full_update()
 		if("pingReply")
 			initialized = TRUE
 		if("suspend")
