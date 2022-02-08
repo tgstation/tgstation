@@ -310,8 +310,9 @@
 		if("ready")
 			// Send a full update when the user manually refreshes the UI
 			if (initialized)
-				if(!COOLDOWN_FINISHED(src, refresh_cooldown) && !refreshing)
-					addtimer(CALLBACK(src, .proc/send_full_update), TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
+				if(!COOLDOWN_FINISHED(src, refresh_cooldown))
+					if(!refreshing)
+						addtimer(CALLBACK(src, .proc/send_full_update), TGUI_REFRESH_FULL_UPDATE_COOLDOWN)
 					refreshing = TRUE
 				else
 					send_full_update()
