@@ -466,14 +466,16 @@
 	if(!opened) // The locker is closed, so the bolts aren't accessible
 		balloon_alert(user, "locker must be open!")
 		return TRUE
-	else if(anchorable) // The locker bolts are on the inside, so we make sure the locker is open before we mess with them
-		if(isinspace() && !anchored)
-			balloon_alert(user, "nothing to anchor to!")
-			return TRUE
-		set_anchored(!anchored)
-		tool.play_tool_sound(src, 75)
-		user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+	if(!anchorable) // The locker is open, but cannot be anchored
+		balloon_alert(user, "no anchor bolts!")
 		return TRUE
+	if(isinspace() && !anchored) // We want to prevent anchoring a locker in space, but we should still be able to unanchor it there
+		balloon_alert(user, "nothing to anchor to!")
+		return TRUE
+	set_anchored(!anchored)
+	tool.play_tool_sound(src, 75)
+	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+	return TRUE
 
 /obj/structure/closet/proc/after_weld(weld_state)
 	return
