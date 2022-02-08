@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "The Security Outpost in MetaStation's Engineering no longer has an intercom installed between the walls. It is now actually accessible to those who can not phase into walls."
