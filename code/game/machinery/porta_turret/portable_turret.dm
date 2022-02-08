@@ -446,7 +446,7 @@ DEFINE_BITFIELD(turret_flags, list(
 					continue
 				if(sillyconerobot.stat || in_faction(sillyconerobot))
 					continue
-				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged && LAZYLEN(faction))
+				if((ROLE_SYNDICATE in faction) && !sillyconerobot.emagged)
 					targets+= sillyconerobot
 
 		else if(iscarbon(A))
