@@ -463,10 +463,7 @@
 		return FALSE
 
 /obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(!opened) // The locker is closed, so the bolts aren't accessible
-		balloon_alert(user, "locker must be open!")
-		return TRUE
-	if(!anchorable) // The locker is open, but cannot be anchored
+	if(!anchorable)
 		balloon_alert(user, "no anchor bolts!")
 		return TRUE
 	if(isinspace() && !anchored) // We want to prevent anchoring a locker in space, but we should still be able to unanchor it there
