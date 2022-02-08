@@ -30,6 +30,7 @@
 	///The rate that the stomach will transfer reagents to the body
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
+	///The max combined weight class of inedible objects held before we vomit.
 	var/max_combined_w_class = 14
 
 /obj/item/organ/stomach/Initialize(mapload)
@@ -232,7 +233,12 @@
 		return
 
 	if(inedibles > max_combined_w_class)
-		mule.adjust_disgust(5)
+		to_chat(mule, span_danger("Your stomach is much too full!"))
+		mule.vomit(100, TRUE, distance = 0)
+
+	if(DT_PROB(2.5, delta_time))
+		to_chat(mule, span_warning("Your stomach hurts!"))
+		damage += inedibles
 
 	if(DT_PROB(5, delta_time))
 		mule.adjust_disgust(5*inedibles)

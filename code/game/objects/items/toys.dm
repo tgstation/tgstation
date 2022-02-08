@@ -262,13 +262,16 @@
 
 /obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
-	if(!myhead)
-		user.visible_message(span_suicide("[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!")) // and i must scream
+	var/obj/item/organ/stomach/mystomach = user.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!myhead || !mystomach)
+		var/missing_bodypart = myhead ? "stomach" : "head"
+		user.visible_message(span_suicide("[user] tries to consume [src]... but [user.p_they()] [user.p_have()] no [missing_bodypart]!")) // and i must [verb]
 		return SHAME
 	user.visible_message(span_suicide("[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), (3SECONDS))
+	user.transferItemToLoc(src, mystomach, TRUE)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user, mystomach), (3SECONDS))
 	return MANUAL_SUICIDE
 
 /**
@@ -280,25 +283,23 @@
  * Arguments:
  * * user - Whoever is doing the suiciding
  */
-/obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
+/obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user, obj/item/organ/stomach/mystomach)
 	if(!user)
 		return
-	if(!user.is_holding(src)) // Half digestion? Start choking to death
-		user.visible_message(span_suicide("[user] panics and starts choking [user.p_them()]self to death!"))
-		user.adjustOxyLoss(200)
-		user.death(FALSE) // unfortunately you have to handle the suiciding yourself with a manual suicide
-		user.ghostize(FALSE) // get the fuck out of our body
-		return
-	var/obj/item/bodypart/chest/CH = user.get_bodypart(BODY_ZONE_CHEST)
-	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
-		user.visible_message(span_danger("[user] regurgitates [src]!")) // I swear i dont have a fetish
+
+	if(mystomach.contents.len > 1) // if he's (un)bright enough to have a round and full belly...
+		user.visible_message(span_suicide("And pretty much, [user] was beyond full, and died from having his insides completely damaged!"))
+		sleep(20)
 		user.vomit(100, TRUE, distance = 0)
-		user.adjustOxyLoss(120)
-		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
-		user.set_suicide(FALSE)
+		for(var/obj/item/organ/current_organ in user.internal_organs)
+			if(current_organ.zone == BODY_ZONE_CHEST)
+				current_organ.damage = current_organ.maxHealth
+		user.death(FALSE)
+		user.suicide_log()
+		user.set_suicide(TRUE)
 		return
-	user.transferItemToLoc(src, user, TRUE)
-	CH.cavity_item = src // The mother came inside and found Andy, dead with a HUGE belly full of toys
+
+	user.visible_message(span_suicide("[user] chokes to death on [src]!"))
 	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
