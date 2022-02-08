@@ -432,12 +432,10 @@
 
 		var/anti_magic_source = L.can_block_magic()
 		if(anti_magic_source)
-
 			L.mob_light(_range = 2, _color = LIGHT_COLOR_HOLY_MAGIC, _duration = 10 SECONDS)
 			var/mutable_appearance/forbearance = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			L.add_overlay(forbearance)
 			addtimer(CALLBACK(L, /atom/proc/cut_overlay, forbearance), 100)
-
 			if(istype(anti_magic_source, /obj/item))
 				var/obj/item/ams_object = anti_magic_source
 				target.visible_message(span_warning("[L] starts to glow in a halo of light!"), \
@@ -445,7 +443,6 @@
 			else
 				target.visible_message(span_warning("[L] starts to glow in a halo of light!"), \
 									   span_userdanger("A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!"))
-
 		else
 			to_chat(user, span_cultitalic("In a brilliant flash of red, [L] falls to the ground!"))
 			L.Paralyze(16 SECONDS)
