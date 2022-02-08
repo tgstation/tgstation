@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "The area where you get to sit with your alcohol has been renamed to the Bar Lounge across all the stations."
+  - rscadd: "Instead of the area between the chapel/holodeck/library/laundry room on TramStation being referred to as the \"lounge\", it's now called \"Crew Facilities\". Because it's, y'know, facilities for the crew."

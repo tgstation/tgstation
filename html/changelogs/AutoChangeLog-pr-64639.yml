@@ -1,7 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes: 
-  - imageadd: "The Suit Storage Units now have a Locked indicator on their lights! In exchange, decontamination above safe levels has a slightly different indicator (flashing red/yellow)"
-  - qol: "SSU gives chat warnings as to why it blocks decontamination (no items/safeties on)"
-  - bugfix: "SSU panel/super-decontamination icons work properly now"
-  - rscadd: "The SSU super-decontamination also creates a plume of black smoke at the end, as the flavor description said it did."

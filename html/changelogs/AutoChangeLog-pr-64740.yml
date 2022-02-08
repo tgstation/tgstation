@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - bugfix: "Restores the lost sprites for the Centcom gas mask."
