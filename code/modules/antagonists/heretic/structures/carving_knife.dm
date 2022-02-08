@@ -156,10 +156,7 @@
 
 	owner.playsound(get_turf(owner), 'sound/magic/blind.ogg', 50, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/melee/rune_carver/target_sword = target
-	for(var/datum/weakref/rune_ref as anything in target_sword.current_runes)
-		qdel(rune_ref)
-
-	target_sword.current_runes.Cut()
+	QDEL_LIST(target_sword.current_runes)
 	target_sword.SpinAnimation(5, 1)
 	return TRUE
 
