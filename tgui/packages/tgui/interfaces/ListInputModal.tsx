@@ -18,7 +18,7 @@ export const ListInputModal = (_, context) => {
   const { act, data } = useBackend<ListInputData>(context);
   const {
     items = [],
-    message,
+    message = "",
     init_value,
     large_buttons,
     timeout,

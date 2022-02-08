@@ -20,7 +20,7 @@ export const TextInputModal = (_, context) => {
   const {
     large_buttons,
     max_length,
-    message,
+    message = "",
     multiline,
     placeholder,
     timeout,

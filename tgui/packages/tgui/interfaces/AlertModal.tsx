@@ -23,7 +23,7 @@ export const AlertModal = (_, context) => {
     autofocus,
     buttons = [],
     large_buttons,
-    message,
+    message = "",
     timeout,
     title,
   } = data;
