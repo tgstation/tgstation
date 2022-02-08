@@ -38,8 +38,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_magic)
-		RegisterSignal(parent, COMSIG_MOB_CAST_MAGIC, .proc/can_cast_magic)
+		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic)
+		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -49,23 +49,29 @@
 	src.reaction = reaction
 	src.expiration = expiration
 
+	//debug stuff that I need to delete before PR is merged
+	message_admins("[parent] has antimagic_flags: [antimagic_flags] enabled")
+
 /datum/component/anti_magic/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
 	if(!(inventory_flags & slot)) //Check that the slot is valid for antimagic
 		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
-		UnregisterSignal(equipper, COMSIG_MOB_CAST_MAGIC)
+		UnregisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC)
+		equipper.update_action_buttons()
 		return
-	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_magic, TRUE)
-	RegisterSignal(equipper, COMSIG_MOB_CAST_MAGIC, .proc/can_cast_magic)
+	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic)
+	RegisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
+	equipper.update_action_buttons()
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
-	UnregisterSignal(user, COMSIG_MOB_CAST_MAGIC)
+	UnregisterSignal(user, COMSIG_MOB_RESTRICT_MAGIC)
+	user.update_action_buttons()
 
-/datum/component/anti_magic/proc/block_magic(datum/source, mob/user, casted_magic_flags, charge_cost)
+/datum/component/anti_magic/proc/block_receiving_magic(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
@@ -81,7 +87,7 @@
 		return TRUE
 	return FALSE
 
-/datum/component/anti_magic/proc/can_cast_magic(datum/source, mob/user, magic_flags)
+/datum/component/anti_magic/proc/restrict_casting_magic(datum/source, mob/user, magic_flags)
 	SIGNAL_HANDLER
 
 	// if we are trying to cast wizard spells (not mime abilities, abductor telepathy, etc.)
@@ -89,7 +95,10 @@
 	// any antimagic equipment on the mob or antimagic traits
 	var/has_magic_casting_restriction = antimagic_flags & MAGIC_CASTING_RESTRICTION
 
+	//debug stuff that I need to delete before PR is merged
+	message_admins("[parent] has antimagic_flags: [antimagic_flags] enabled")
+
 	if(is_casting_wizard_magic && has_magic_casting_restriction)
-		return FALSE // cannot cast wizard magic with antimagic present
-	else 
-		return TRUE
+		return TRUE // cannot cast wizard magic with antimagic present
+	else
+		return FALSE

@@ -932,9 +932,9 @@
 **/
 /mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
 	var/static/charge_cost = 0 // charge cost will always be zero when checking if we can cast magic
+	var/has_casting_restrictions = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags, charge_cost)
 
-	// if all equipped antimagic items don't have a casting magic restriction we can cast magic
-	if(SEND_SIGNAL(src, COMSIG_MOB_CAST_MAGIC, src, magic_flags, charge_cost))
+	if(!has_casting_restrictions)
 		return TRUE
 	// if we have this trait the magic casting restrictions can be bypassed
 	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
@@ -950,7 +950,9 @@
  * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
 **/
 /mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost))
+	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost)
+	
+	if(is_magic_blocked)
 		return TRUE
 	if(casted_magic_flags & MAGIC_RESISTANCE && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		return TRUE

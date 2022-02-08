@@ -50,7 +50,7 @@
 	#define LOCKED_ATOM_INCOMPATIBLE (1<<2)
 
 ///from base of mob/can_cast_magic(): (mob/user, magic_flags, charge_cost)
-#define COMSIG_MOB_CAST_MAGIC "mob_cast_magic"
+#define COMSIG_MOB_RESTRICT_MAGIC "mob_cast_magic"
 ///from base of mob/can_block_magic(): (mob/user, casted_magic_flags, charge_cost)
 #define COMSIG_MOB_RECEIVE_MAGIC "mob_receive_magic"
 
