@@ -31582,13 +31582,13 @@
 	},
 /obj/effect/landmark/start/assistant,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/chair/stool/bar/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/sorting/mail/flip{
 	name = "sorting disposal pipe (Bar)";
 	sortType = 19
 	},
 /obj/structure/cable,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "jTA" = (
@@ -32813,10 +32813,10 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/duct,
 /obj/machinery/airalarm/directional/east,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "kqw" = (
@@ -48709,10 +48709,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
-/obj/structure/chair/stool/bar/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/hangover,
 /obj/structure/cable,
+/obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "qmq" = (
@@ -60993,8 +60993,8 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/hangover,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "uMu" = (
@@ -62851,8 +62851,8 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
-/obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/assistant,
+/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "vDM" = (
