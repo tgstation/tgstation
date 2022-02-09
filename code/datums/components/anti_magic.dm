@@ -70,11 +70,11 @@
 /datum/component/anti_magic/proc/block_receiving_magic(datum/source, mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
-	if(casted_magic_flags & antimagic_flags) // disclaimer - All anti_magic sources will be drained a charge_cost
-		
+	// disclaimer - All anti_magic sources will be drained a charge_cost
+	if(casted_magic_flags & antimagic_flags)
+		// im a programmer not shakesphere to the future grammar nazis that come after me for this
 		var/visible_subject = ismob(parent) ? "[user.p_they()]" : "[user.p_their()] [parent]"
 		var/self_subject = ismob(parent) ? "you" : "your [parent]"
-
 		if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE)
 			user.visible_message(span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"), \
 			span_userdanger("An intense magical aura pulses around [self_subject] as it dissipates into the air!"))
