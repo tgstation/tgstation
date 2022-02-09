@@ -158,10 +158,6 @@
 			var/obj/item/gun/energy/gun = module
 			if(!gun.chambered)
 				gun.recharge_newshot() //try to reload a new shot.
-		else if(istype(module, /obj/item/soap))
-			var/obj/item/soap/soap = module
-			soap.uses = 300
-
 	cyborg.toner = cyborg.tonermax
 
 /obj/item/robot_model/proc/get_or_create_estorage(storage_type)
@@ -342,7 +338,7 @@
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
-		/obj/item/soap/nanotrasen,
+		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
@@ -580,6 +576,11 @@
 	var/obj/item/reagent_containers/spray/cyborg_lube/lube = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(lube)
 		lube.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
+
+	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
+	if(soap)
+		if(soap.uses < 300)
+			soap.uses += 3 * coeff
 
 /obj/item/robot_model/medical
 	name = "Medical"
