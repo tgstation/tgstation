@@ -4,45 +4,66 @@
 
 /datum/component/storage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	var/datum/component/storage/concrete/master //If not null, all actions act on master and this is just an access point.
+	///If not null, all actions act on master and this is just an access point.
+	var/datum/component/storage/concrete/master
 
-	var/list/can_hold //if this is set, only items, and their children, will fit
-	var/list/cant_hold //if this is set, items, and their children, won't fit
-	var/list/exception_hold //if set, these items will be the exception to the max size of object that can fit.
+	///if this is set, only items, and their children, will fit
+	var/list/can_hold
+	///if this is set, items, and their children, won't fit
+	var/list/cant_hold
+	///if set, these items will be the exception to the max size of object that can fit.
+	var/list/exception_hold
 	/// If set can only contain stuff with this single trait present.
 	var/list/can_hold_trait
 
 	var/can_hold_description
 
-	var/list/mob/is_using //lazy list of mobs looking at the contents of this storage.
+	///lazy list of mobs looking at the contents of this storage.
+	var/list/mob/is_using
 
-	var/locked = FALSE //when locked nothing can see inside or use it.
+	///when locked nothing can see inside or use it.
+	var/locked = FALSE
 
-	var/max_w_class = WEIGHT_CLASS_SMALL //max size of objects that will fit.
-	var/max_combined_w_class = 14 //max combined sizes of objects that will fit.
-	var/max_items = 7 //max number of objects that will fit.
+	///max size of objects that will fit.
+	var/max_w_class = WEIGHT_CLASS_SMALL
+	///max combined sizes of objects that will fit.
+	var/max_combined_w_class = 14
+	///max number of objects that will fit.
+	var/max_items = 7
 
 	var/emp_shielded = FALSE
 
-	var/silent = FALSE //whether this makes a message when things are put in.
-	var/click_gather = FALSE //whether this can be clicked on items to pick it up rather than the other way around.
-	var/rustle_sound = TRUE //play rustle sound on interact.
-	var/allow_quick_empty = FALSE //allow empty verb which allows dumping on the floor of everything inside quickly.
-	var/allow_quick_gather = FALSE //allow toggle mob verb which toggles collecting all items from a tile.
+	///whether this makes a message when things are put in.
+	var/silent = FALSE
+	///whether this can be clicked on items to pick it up rather than the other way around.
+	var/click_gather = FALSE
+	///play rustle sound on interact.
+	var/rustle_sound = TRUE
+	///allow empty verb which allows dumping on the floor of everything inside quickly.
+	var/allow_quick_empty = FALSE
+	///allow toggle mob verb which toggles collecting all items from a tile.
+	var/allow_quick_gather = FALSE
 
 	var/collection_mode = COLLECT_EVERYTHING
 
-	var/insert_preposition = "in" //you put things "in" a bag, but "on" a tray.
+	///you put things "in" a bag, but "on" a tray.
+	var/insert_preposition = "in"
 
-	var/display_numerical_stacking = FALSE //stack things of the same type and show as a single object with a number.
+	///stack things of the same type and show as a single object with a number.
+	var/display_numerical_stacking = FALSE
 
-	var/atom/movable/screen/storage/boxes //storage display object
-	var/atom/movable/screen/close/closer //close button object
+	///storage display object
+	var/atom/movable/screen/storage/boxes
+	///close button object
+	var/atom/movable/screen/close/closer
 
-	var/allow_big_nesting = FALSE //allow storage objects of the same or greater size.
+	///allow storage objects of the same or greater size.
+	var/allow_big_nesting = FALSE
 
-	var/attack_hand_interact = TRUE //interact on attack hand.
-	var/quickdraw = FALSE //altclick interact
+	///interact on attack hand.
+	var/attack_hand_interact = TRUE
+	///altclick interact
+	var/quickdraw = FALSE
 
 	var/datum/action/item_action/storage_gather_mode/modeswitch_action
 
@@ -420,6 +441,9 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	M.client.screen |= closer
 	M.client.screen |= real_location.contents
 	M.set_active_storage(src)
+	if(ismovable(real_location))
+		var/atom/movable/movable_loc = real_location
+		movable_loc.become_active_storage(src)
 	LAZYOR(is_using, M)
 	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/mob_deleted)
 	return TRUE
@@ -437,6 +461,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!M.client)
 		return TRUE
 	var/atom/real_location = real_location()
+	if(!length(is_using) && ismovable(real_location))
+		var/atom/movable/movable_loc = real_location
+		movable_loc.lose_active_storage(src)
+
 	M.client.screen -= boxes
 	M.client.screen -= closer
 	M.client.screen -= real_location.contents
