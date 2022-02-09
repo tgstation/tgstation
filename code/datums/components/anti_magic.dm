@@ -71,8 +71,11 @@
 	SIGNAL_HANDLER
 
 	if(casted_magic_flags & antimagic_flags) // disclaimer - All anti_magic sources will be drained a charge_cost
-		to_chat(user, span_warning("Your [parent] begins to glow as it absorbs magic!"))
+		if(ismob(parent))
+			to_chat(user, span_warning("Magic seems to flee from you without causing any effect."))
+			return TRUE
 
+		to_chat(user, span_warning("Your [parent] begins to glow as it absorbs magic!"))
 		var/has_limited_charges = !(charges == INFINITY)
 		var/charge_was_drained = charge_cost > 0
 		if(has_limited_charges && charge_was_drained)
@@ -89,8 +92,13 @@
 	SIGNAL_HANDLER
 
 	if(magic_flags & antimagic_flags)
-		if(!HAS_TRAIT(user, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+		if(HAS_TRAIT(user, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) // this trait bypasses magic casting restrictions
+			return FALSE
+
+		if(isitem(parent))
 			to_chat(user, span_warning("Your [parent] is interfering with your ability to cast magic!"))
+		else if(ismob(parent))
+			to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))		
 		return TRUE	
 
 	return FALSE

@@ -935,13 +935,7 @@
 		return TRUE
 
 	var/has_casting_restrictions = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags)
-
-	if(!has_casting_restrictions)
-		return TRUE
-	if(HAS_TRAIT(src, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) // this trait bypasses magic casting restrictions 
-		return TRUE
-
-	return FALSE
+	return has_casting_restrictions
 
 /**
  * Checks to see if the mob can block magic
