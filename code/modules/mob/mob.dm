@@ -978,7 +978,7 @@
 				target.visible_message(span_warning("[target] starts to glow in a halo of light!"), \
 				span_userdanger("A feeling of warmth washes over you as rays of light surround your body and protect you!"))
 			else if(casted_magic_flags & MAGIC_RESISTANCE_MIND)
-				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER)
+				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 				antimagic_color = LIGHT_COLOR_DARK_BLUE
 				target.visible_message(span_warning("[target] forehead starts to shine as magic is repulsed from their mind!"), \
 				span_userdanger("You feel your forehead become cold as it reflects magic targetting your mind!"))
