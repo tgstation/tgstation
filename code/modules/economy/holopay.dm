@@ -48,6 +48,7 @@
 
 /obj/structure/holopay/Destroy()
 	linked_card?.my_store = null
+	linked_card = null
 	return ..()
 
 /obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, params)
