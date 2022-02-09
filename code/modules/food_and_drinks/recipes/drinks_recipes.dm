@@ -741,8 +741,8 @@
 	required_reagents = list(/datum/reagent/consumable/toechtauese_juice = 6, /datum/reagent/consumable/sugar = 4)
 
 /datum/chemical_reaction/drink/roy_roger
-	results = list(/datum/reagent/consumable/royroger = 3)
-	required_reagents = list(/datum/reagent/consumable/cola = 2, /datum/reagent/consumable/grenadine = 1)
+	results = list(/datum/reagent/consumable/roy_roger = 3)
+	required_reagents = list(/datum/reagent/consumable/space_cola = 2, /datum/reagent/consumable/grenadine = 1)
 
 /datum/chemical_reaction/drink/shirley_temple
 	results = list(/datum/reagent/consumable/shirley_temple = 3)
