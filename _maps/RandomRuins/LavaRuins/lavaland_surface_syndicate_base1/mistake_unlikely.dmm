@@ -2,6 +2,12 @@
 "a" = (
 /turf/template_noop,
 /area/template_noop)
+"b" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
 "c" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/syndicate{
@@ -13,6 +19,9 @@
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
 	pixel_y = -3
+	},
+/obj/machinery/airalarm/directional/north{
+	req_access = list(150)
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
@@ -54,6 +63,10 @@
 "K" = (
 /obj/structure/chair{
 	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west{
+	req_access_txt = "150"
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
@@ -122,7 +135,7 @@ a
 P
 i
 F
-F
+b
 N
 "}
 (4,1,1) = {"

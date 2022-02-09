@@ -16,6 +16,8 @@
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
+	/// Current holder of the linked card
+	var/datum/weakref/holder
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
@@ -171,6 +173,7 @@
 	/// Start checking if the source projection is in range
 	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
 	if(card.loc)
+		holder = WEAKREF(card.loc)
 		RegisterSignal(card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
 	return TRUE
 
@@ -181,6 +184,12 @@
 /obj/structure/holopay/proc/check_operation()
 	SIGNAL_HANDLER
 	var/obj/item/card/id/linked_card = get_card()
+	var/card_holder = holder?.resolve()
+	if(!card_holder || linked_card.loc != card_holder)
+		if(card_holder)
+			UnregisterSignal(card_holder, COMSIG_MOVABLE_MOVED)
+		holder = WEAKREF(linked_card.loc)
+		RegisterSignal(linked_card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range) || !IN_GIVEN_RANGE(src, linked_card.loc, max_holo_range))
 		dissapate()
 
