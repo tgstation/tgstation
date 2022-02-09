@@ -29,15 +29,15 @@
 		return TRUE
 	return FALSE
 
-//Tail Sweep, triggers an effect similar to Space Dragon's tail sweep but only affects stuff 1 tile next to you, basically 3x3.
+//Tail Sweep, triggers an effect similar to a xeno's tail sweep but only affects stuff 1 tile next to you, basically 3x3.
 /datum/martial_art/tribal_claw/proc/tailSweep(mob/living/carbon/attacker, mob/living/carbon/defender)
 	if(attacker == current_target)
 		return
 	log_combat(attacker, defender, "tail sweeped(Tribal Claw)")
 	defender.visible_message("<span class='warning'>[attacker] sweeps [defender]'s legs with their tail!</span>", \
 						"<span class='userdanger'>[attacker] sweeps your legs with their tail!</span>")
-	var/obj/effect/proc_holder/spell/aoe_turf/repulse/xeno/R = new
-	R.cast(RANGE_TURFS(1,attacker))
+	var/obj/effect/proc_holder/spell/aoe_turf/repulse/lizard_tail/tail_hit = new
+	tail_hit.cast(RANGE_TURFS(1,attacker))
 
 //Face Scratch, deals 10 brute to head(reduced by armor), blurs the target's vision and gives them the confused effect for a short time.
 /datum/martial_art/tribal_claw/proc/faceScratch(mob/living/carbon/attacker, mob/living/carbon/defender)
@@ -62,9 +62,10 @@ Deals 15 brute to head(reduced by armor) and causes a rapid bleeding effect simi
 		defender.visible_message("<span class='warning'>[attacker] cuts [defender]'s jugular vein with their claws!</span>", \
 							"<span class='userdanger'>[attacker] cuts your jugular vein!</span>")
 		defender.apply_damage(15, BRUTE, BODY_ZONE_HEAD, def_check)
-	//	defender.bleed_rate = CLAMP(defender.bleed_rate + 20, 0, 30)
-		for(var/obj/item/bodypart/head/body_head in defender.bodyparts)
-			body_head.generic_bleedstacks += 15 //Test if this is remotely balanced
+		var/obj/item/bodypart/slit_throat = defender.get_bodypart(BODY_ZONE_HEAD)
+		if(slit_throat)
+			var/datum/wound/slash/severe/throatcut = new
+			throatcut.apply_wound(slit_throat)
 		defender.apply_status_effect(/datum/status_effect/neck_slice)
 		attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
 		playsound(get_turf(defender), 'sound/weapons/slash.ogg', 50, 1, -1)
@@ -87,7 +88,7 @@ Deals 15 brute to head(reduced by armor) and causes a rapid bleeding effect simi
 	return FALSE
 
 /datum/martial_art/tribal_claw/disarm_act(mob/living/carbon/attacker, mob/living/carbon/defender)
-	add_to_streak("defender", defender)
+	add_to_streak("D", defender)
 	if(check_streak(attacker, defender))
 		return TRUE
 	return FALSE
