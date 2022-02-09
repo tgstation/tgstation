@@ -63,11 +63,9 @@
 	for(var/mob/living/L in view(src, 7))
 		if(L != user)
 			L.flash_act(affect_silicon = FALSE)
-	var/atom/A = target.can_block_magic()
-	if(A)
-		if(isitem(A))
-			target.visible_message(span_warning("[target]'s [A] glows brightly as it wards off the spell!"))
-		user.visible_message(span_warning("The feedback blows [user]'s arm off!"),span_userdanger("The spell bounces from [target]'s skin back into your arm!"))
+	if(target.can_block_magic()
+		user.visible_message(span_warning("The feedback blows [user]'s arm off!"), \
+		span_userdanger("The spell bounces from [target]'s skin back into your arm!"))
 		user.flash_act()
 		var/obj/item/bodypart/part = user.get_holding_bodypart_of_item(src)
 		if(part)
@@ -101,11 +99,10 @@
 		to_chat(user, span_warning("You can't get the words out!"))
 		return
 	var/mob/living/M = target
-	if(M.can_block_magic())
+	if(M.can_block_magic())		
 		to_chat(user, span_warning("The spell can't seem to affect [M]!"))
 		to_chat(M, span_warning("You feel your flesh turn to stone for a moment, then revert back!"))
-		..()
-		return
+		return ..()
 	M.Stun(40)
 	M.petrify()
 	return ..()
@@ -133,8 +130,7 @@
 	if(duffelvictim.can_block_magic())
 		to_chat(user, span_warning("The spell can't seem to affect [duffelvictim]!"))
 		to_chat(duffelvictim, span_warning("You really don't feel like talking about your [elaborate_backstory] with complete strangers today."))
-		..()
-		return
+		return ..()
 
 	duffelvictim.flash_act()
 	duffelvictim.Immobilize(5 SECONDS)
