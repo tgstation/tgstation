@@ -200,7 +200,7 @@
 	usr = null
 
 	var/list/displayArgs = arguments.Copy()
-	log_admin_circuit("[parent.get_creator()] received a signal from [popleft(arguments)] ([registered_signal]) with the parameters \[[arguments.Join(", ")]]")
+	log_admin_circuit("[parent.get_creator()] received a signal from [popleft(displayArgs)] ([registered_signal]) with the parameters \[[displayArgs.Join(", ")]]")
 	SScircuit_component.queue_instant_run()
 	run_ports_on_args(arguments)
 	var/list/output = SScircuit_component.execute_instant_run()
