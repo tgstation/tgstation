@@ -40690,7 +40690,10 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "gtY" = (
-/obj/machinery/atmospherics/components/trinary/mixer/airmix,
+/obj/machinery/atmospherics/components/trinary/mixer/airmix{
+	node1_concentration = 0.21;
+	node2_concentration = 0.79
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
