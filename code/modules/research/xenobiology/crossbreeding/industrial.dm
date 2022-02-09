@@ -118,7 +118,7 @@ Industrial extracts:
 /obj/item/slimecross/industrial/silver/process()
 	itempath = pick(list(get_random_food(), get_random_drink()))
 	if(istype(itempath, /obj/item/food))
-		var/obj/item/food/food = itempath
+		var/obj/item/food/food = new itempath
 		food.food_flags |= FOOD_SILVER_SPAWNED
 	..()
 
