@@ -789,6 +789,9 @@
 	if(tox_to_heal < 0)
 		adjustToxLoss(tox_to_heal, FALSE, TRUE)
 
+	// Run updatehealth once to set health for the revival check
+	updatehealth()
+
 	// We've given them a decent heal.
 	// If they happen to be dead too, try to revive them - if possible.
 	if(stat == DEAD && can_be_revived())
@@ -796,7 +799,7 @@
 		if(revive(FALSE, FALSE, 10) && revive_message)
 			visible_message(revive_message)
 
-	// Update health when we're all done.
+	// Finally update health again after we're all done
 	updatehealth()
 
 	return stat != DEAD

@@ -33,7 +33,7 @@
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_research(mob/user, regained = FALSE)
 	. = ..()
-	obtain_targets(user)
+	obtain_targets(user, silent = TRUE)
 	heretic_mind = user.mind
 	if(!heretic_level_generated)
 		heretic_level_generated = TRUE
@@ -88,7 +88,7 @@
  *
  * Returns FALSE if no targets are found, TRUE if the targets list was populated.
  */
-/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user)
+/datum/heretic_knowledge/hunt_and_sacrifice/proc/obtain_targets(mob/living/user, silent = FALSE)
 
 	// First construct a list of minds that are valid objective targets.
 	var/list/datum/mind/valid_targets = list()
@@ -107,7 +107,8 @@
 		valid_targets += possible_target
 
 	if(!valid_targets.len)
-		to_chat(user, span_danger("No sacrifice targets could be found! Attempt the ritual later."))
+		if(!silent)
+			to_chat(user, span_danger("No sacrifice targets could be found! Attempt the ritual later."))
 		skip_this_ritual = TRUE
 		addtimer(VARSET_CALLBACK(src, skip_this_ritual, FALSE), 5 MINUTES)
 		return FALSE
@@ -150,10 +151,14 @@
 	list_clear_nulls(final_targets)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 
-	to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
+	if(!silent)
+		to_chat(user, span_danger("Your targets have been determined. Your Living Heart will allow you to track their position. Go and sacrifice them!"))
+
 	for(var/datum/mind/chosen_mind as anything in final_targets)
 		heretic_datum.add_sacrifice_target(chosen_mind.current)
-		to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
+		if(!silent)
+			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
+
 	return TRUE
 
 /**
