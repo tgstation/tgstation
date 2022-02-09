@@ -216,8 +216,8 @@
 	..()
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(owner.get_active_held_item())
-		to_chat(owner, span_warning("You can't properly fire your finger guns with something in your hand."))
+	if(caller.get_active_held_item())
+		to_chat(caller, span_warning("You can't properly fire your finger guns with something in your hand."))
 		return
 	if(caller.incapacitated())
 		to_chat(caller, span_warning("You can't properly point your fingers while incapacitated."))
