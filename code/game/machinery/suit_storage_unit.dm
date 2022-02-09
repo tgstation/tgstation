@@ -136,6 +136,9 @@
 	icon_state = "industrial"
 	base_icon_state = "industrial"
 
+/obj/machinery/suit_storage_unit/industrial/loader
+	mod_type = /obj/item/mod/control/pre_equipped/loader
+
 /obj/machinery/suit_storage_unit/Initialize(mapload)
 	. = ..()
 	wires = new /datum/wires/suit_storage_unit(src)
@@ -172,13 +175,13 @@
 			. += "[base_icon_state]_helm"
 		if(storage)
 			. += "[base_icon_state]_storage"
-		if(uv && uv_super)
-			. += "[base_icon_state]_super"
 	if(!(machine_stat & BROKEN || machine_stat & NOPOWER))
 		if(state_open)
 			. += "[base_icon_state]_lights_open"
 		else
 			if(uv)
+				if(uv_super)
+					. += "[base_icon_state]_super"
 				. += "[base_icon_state]_lights_red"
 			else
 				. += "[base_icon_state]_lights_closed"
@@ -188,6 +191,8 @@
 				. += "[base_icon_state]_uvstrong"
 			else
 				. += "[base_icon_state]_uv"
+		else if(locked)
+			. += "[base_icon_state]_locked"
 		else
 			. += "[base_icon_state]_ready"
 
@@ -275,8 +280,10 @@
 				close_machine()
 		if ("disinfect")
 			if (occupant && safeties)
+				say("Alert: safeties triggered, occupant detected!")
 				return
 			else if (!helmet && !mask && !suit && !storage && !occupant)
+				to_chat(user, "There's nothing inside [src] to disinfect!")
 				return
 			else
 				if (occupant)
@@ -286,6 +293,7 @@
 		if ("lock", "unlock")
 			if (!state_open)
 				locked = !locked
+				update_icon()
 		else
 			var/obj/item/item_to_dispense = vars[choice]
 			if (item_to_dispense)
@@ -382,6 +390,9 @@
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
+			var/datum/effect_system/smoke_spread/bad/black/smoke = new
+			smoke.set_up(0, src)
+			smoke.start()
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)
 			QDEL_NULL(mask)
@@ -424,17 +435,11 @@
 
 /obj/machinery/suit_storage_unit/process(delta_time)
 	var/obj/item/stock_parts/cell/cell
-	if(suit)
-		if(!istype(suit))
-			return
-		if(!suit.cell)
-			return
+	if(suit && istype(suit))
 		cell = suit.cell
-	else if(mod)
-		cell = mod.get_charge_source()
-		if(!istype(cell))
-			return
-	else
+	if(mod)
+		cell = mod.get_cell()
+	if(!cell)
 		return
 	use_power(charge_rate * delta_time)
 	cell.give(charge_rate * delta_time)
@@ -535,7 +540,8 @@
 		wires.interact(user)
 		return
 	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "close", I))
+		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", I))	//Set to base_icon_state because the panels for this are overlays
+			update_appearance()
 			return
 	if(default_pry_open(I))
 		dump_inventory_contents()

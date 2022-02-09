@@ -2460,7 +2460,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "Hydroponics APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/green,
@@ -4676,7 +4676,7 @@
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -5687,7 +5687,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Research Division APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/disposalpipe/segment{
@@ -6204,7 +6204,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Gateway APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/rack,
@@ -9372,7 +9372,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Mining APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/machinery/light/small/directional/south,

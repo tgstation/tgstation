@@ -581,6 +581,36 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		UpdateButtonIcon()
 
+/// HIGH IMPACT HONKING
+/datum/ai_module/destructive/megahonk
+	name = "Percussive Intercomm Interference"
+	description = "Emit a debilitatingly percussive auditory blast through the station intercoms. Does not overpower hearing protection. Two uses per purchase."
+	cost = 20
+	power_type = /datum/action/innate/ai/honk
+	unlock_text = "<span class='notice'>You upload a sinister sound file into every intercom...</span>"
+	unlock_sound = 'sound/items/airhorn.ogg'
+
+/datum/action/innate/ai/honk
+	name = "Percussive Intercomm Interference"
+	desc = "Rock the station's intercom system with an obnoxious HONK!"
+	button_icon_state = "intercom"
+	uses = 2
+
+/datum/action/innate/ai/honk/Activate()
+	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
+	for(var/obj/item/radio/intercom/found_intercom in GLOB.intercoms_list)
+		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
+			continue
+		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
+		playsound(found_intercom, 'sound/items/airhorn.ogg', 100, TRUE)
+		for(var/mob/living/carbon/honk_victim in ohearers(6, found_intercom))
+			var/turf/victim_turf = get_turf(honk_victim)
+			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
+				continue
+			if(honk_victim.soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
+				honk_victim.Jitter(60)
+				to_chat(honk_victim, span_clown("HOOOOONK!"))
+
 /// Robotic Factory: Places a large machine that converts humans that go through it into cyborgs. Unlocking this ability removes shunting.
 /datum/ai_module/utility/place_cyborg_transformer
 	name = "Robotic Factory (Removes Shunting)"
@@ -688,7 +718,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	cost = 25
 	power_type = /datum/action/innate/ai/break_fire_alarms
 	unlock_text = "<span class='notice'>You replace the thermal sensing capabilities of all fire alarms with a manual override, allowing you to turn them off at will.</span>"
-	unlock_sound = 'sound/machines/FireAlarm.ogg'
+	unlock_sound = 'sound/machines/FireAlarm1.ogg'
 
 /datum/action/innate/ai/break_fire_alarms
 	name = "Override Thermal Sensors"

@@ -1,0 +1,101 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/tank_holder/extinguisher,
+/obj/structure/sign/poster/official/plasma_effects{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"m" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Fire Safety Closet";
+	req_one_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/modular_map_connector,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/tank_holder/extinguisher,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"J" = (
+/turf/template_noop,
+/area/template_noop)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/closet/firecloset,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+
+(1,1,1) = {"
+J
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+J
+k
+y
+n
+a
+"}
+(3,1,1) = {"
+m
+s
+s
+s
+a
+"}
+(4,1,1) = {"
+J
+S
+U
+l
+a
+"}
+(5,1,1) = {"
+J
+a
+a
+a
+a
+"}
