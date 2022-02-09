@@ -369,7 +369,7 @@
 		pressure_difference = difference
 
 // We max at one tile every ___ second
-#define PRESSURE_DELAY_MAX 0.8 SECONDS
+#define PRESSURE_DELAY_MAX 1 SECONDS
 #define PRESSURE_DELAY_MIN 0.2 SECONDS
 
 /turf/open/proc/high_pressure_movements()
