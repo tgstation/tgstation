@@ -176,7 +176,7 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets."
+	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets. Can't be used if you have something in your hands."
 	school = SCHOOL_MIME
 	panel = "Mime"
 	charge_max = 300
