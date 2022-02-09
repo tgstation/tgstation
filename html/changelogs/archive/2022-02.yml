@@ -389,3 +389,80 @@
   - bugfix: Donk Co. Is sorry. Really, really sorry. Really. They're sorry. They forgot
       to ship out the stuff to make their shiny new supermatters actually.. produce
       power! Nobody was laughing at people trying to run it anyways, nuh uh. Nope!
+2022-02-09:
+  ArcaneDefence:
+  - expansion: Malf AIs can now have an intercom interference module.
+  CameronWoof:
+  - code_imp: wrench->closet interactions migrated to wrench_act_secondary
+  Gamer025:
+  - bugfix: Bottlers no longer runtime if they run out of beakers/containers to fill
+  Ghommie:
+  - bugfix: ACTUALLY fixes the Illegal Technology node being unobtainable.
+  GoblinBackwards:
+  - bugfix: Making medbots through the crafting menu will now account for using different
+      types of medkit and health analyser.
+  - bugfix: Ash mark now deals the correct amount of damage and no longer gets stuck
+      bouncing between the same two targets.
+  - balance: Ash mark is significantly stronger due to this fix.
+  Iamgoofball:
+  - rscdel: Hooch no longer heals assistants.
+  - bugfix: Fixes an exploit allowing players to bypass crafting times on spears and
+      cattleprods.
+  - balance: Wired Rods are now bulky.
+  Jackraxxus:
+  - bugfix: The Tramstation aux base console now uses the correct type, and is no
+      longer a ghetto advanced camera console.
+  Kubisopplay:
+  - balance: Nanotrasen finally realized that installing a powerful explosive in their
+      most popular cyborg model was stupid, so they replaced it with more robust locking
+      system
+  - bugfix: you shouldn't get permanently locked by malf ai robofab now
+  Melbert:
+  - bugfix: Fixes a runtime which causes game start to fail and revert occasionally
+  - bugfix: Obsessed hug objective functions again
+  NamelessFairy:
+  - bugfix: CTF Limbo's control point timer is now correctly set to 3 minutes rather
+      than 6
+  Pepsilawn:
+  - spellcheck: replaced mentions to toxins with ordnance in valentine cards in time
+      for the 14th
+  SmoSmoSmoSmok:
+  - balance: Syndieship turrets now target non emagged or non nukie cyborgs
+  TiviPlus:
+  - bugfix: fixed some hud items layering improperly
+  bobbahbrown:
+  - admin: Cult rune creation (inscribing?) is now logged on the player panel logs
+      as well as the game log.
+  itseasytosee:
+  - expansion: Skateboards have been made considerably more radical
+  - expansion: While grinding on a table with a skateboard, if you grind on top of
+      somebody you are likely to hurt them quite badly
+  - expansion: 'Colliding with another person will now always result in a crash, in
+      which the person hit gets knocked over as well as the skater (protip: crash
+      into someone while grind to double the stun time!)'
+  - expansion: Colliding with a disposal unit while grinding will result in you getting
+      dunked in! Wack!
+  - bugfix: fixed some skateboard related bugs, including the action button for ollieing
+      always being red, and being able to ollie while dead
+  jlsnow301:
+  - bugfix: Fixed an issue where holopay range could be bypassed by handing the card
+      off.
+  necromanceranne:
+  - imageadd: Gives rubbershot and rubbershot boxes a new sprite to differentiate
+      them from beanbags.
+  - bugfix: Restores the lost sprites for the Centcom gas mask.
+  san7890:
+  - rscadd: The area where you get to sit with your alcohol has been renamed to the
+      Bar Lounge across all the stations.
+  - rscadd: Instead of the area between the chapel/holodeck/library/laundry room on
+      TramStation being referred to as the "lounge", it's now called "Crew Facilities".
+      Because it's, y'know, facilities for the crew.
+  - imageadd: On the mapping end, there is now a new area turf sprite for the definition
+      of the area where you store all of the parts for telecommunications, or "Telecommunications
+      Storage". How gorgeous.
+  - rscadd: 'Atmospheric Technicians can now take it easy, as the room that normally
+      holds all of the canisters of highly flammable gas is now cleanly labelled "Gas
+      Storage" instead of being another appendage of the absolute auditorium known
+      as Atmospherics. spriteadd: The Atmospheric Storage Area Turf now has a new
+      sprite. If you know what that means, I hope you enjoy it. If you don''t, that''s
+      also fine.'

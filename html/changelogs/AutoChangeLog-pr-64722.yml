@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes: 
-  - bugfix: "Fixed an issue where holopay range could be bypassed by handing the card off."

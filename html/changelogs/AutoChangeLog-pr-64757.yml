@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "TGUI now alerts the user when it is waiting on a refresh cooldown. In many cases, this will prevent screens from breaking that rely on static data."

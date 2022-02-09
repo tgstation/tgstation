@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - rscadd: "Atmospheric Technicians can now take it easy, as the room that normally holds all of the canisters of highly flammable gas is now cleanly labelled \"Gas Storage\" instead of being another appendage of the absolute auditorium known as Atmospherics.
-spriteadd: The Atmospheric Storage Area Turf now has a new sprite. If you know what that means, I hope you enjoy it. If you don't, that's also fine."
