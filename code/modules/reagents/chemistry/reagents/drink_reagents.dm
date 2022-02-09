@@ -428,6 +428,22 @@
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
+/datum/reagent/consumable/royroger
+	description = "A sweet fizzy drink."
+	color = "#53090B" // rgb: 16, 8, 0
+	quality = DRINK_GOOD
+	taste_description = "fruity overlysweet cola"
+	glass_icon_state = "royroger"
+	glass_name = "Roy Roger"
+	glass_desc = "90% sugar in a glass."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/royroger/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.Jitter(6 * REM * delta_time) //not as strong as coffe, still this is a lot of sugar
+	M.adjust_drowsyness(-5 * REM * delta_time)
+	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	..()
+
 /datum/reagent/consumable/nuka_cola
 	name = "Nuka Cola"
 	description = "Cola, cola never changes."
@@ -785,6 +801,21 @@
 	..()
 	. = TRUE
 
+/datum/reagent/consumable/cinderella
+	name = "Cinderalla"
+	description = "Most definitely a fruity alcohol cocktail to have while partying with your friends."
+	color = "#FF6A50" 
+	quality = DRINK_VERYGOOD
+	taste_description = "sweet tangy fruit"
+	glass_icon_state = "cinderella"
+	glass_name = "Cinderlla"
+	glass_desc = "There is not a single drop of alcohol in this thing."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_disgust(-5 * REM * delta_time)
+	..()
+
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
 	description = "A cherry flavored milkshake."
@@ -827,7 +858,7 @@
 	name = "Caramel Shake"
 	description = "A aramel flavored milkshake. Your teeth hurt looking at it."
 	color = "#E17C00"
-	quality = DRINK_VERYGOOD
+	quality = DRINK_GOOD
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	taste_description = "sweet rich creamy caramel"
 	glass_icon_state = "caramelshake"
@@ -922,12 +953,32 @@
 /datum/reagent/consumable/hot_coco
 	name = "Hot Coco"
 	description = "Made with love! And coco beans."
-	nutriment_factor = 3 * REAGENTS_METABOLISM
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_description = "creamy chocolate"
 	glass_icon_state = "chocolateglass"
 	glass_name = "glass of hot coco"
 	glass_desc = "A favorite winter drink to warm you up."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+	if(M.getBruteLoss() && DT_PROB(10, delta_time))
+		M.heal_bodypart_damage(1, 0, 0)
+		. = TRUE
+	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
+		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2 * REM * delta_time)
+	..()
+
+/datum/reagent/consumable/italiancoco
+	name = "Italian Hot Chocolate"
+	description = "Made with love! You can just imagine a happy Nonna from the smell."
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	color = "#57372A"
+	taste_description = "thick creamy chocolate"
+	glass_icon_state = "italiancoco"
+	glass_name = "glass of italian coco"
+	glass_desc = "A spin on a winter favourite made to please."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
@@ -1014,6 +1065,21 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/sol_dry/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_disgust(-5 * REM * delta_time)
+	..()
+
+/datum/reagent/consumable/shirleytemple
+	name = "Shirley Temple"
+	description = "Here you go kid, now you can drink like the adults."
+	color = "#F43724"
+	quality = DRINK_GOOD
+	taste_description = "sweet cherry syrup and ginger spice"
+	glass_icon_state = "shirleytemple"
+	glass_name = "Shirley Temple"
+	glass_desc = "Ginger ale with processed grenadine. "
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/shirleytemple/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_disgust(-5 * REM * delta_time)
 	..()
 
@@ -1104,6 +1170,24 @@
 	if(M.drowsyness < 3)
 		M.adjust_drowsyness(1 * REM * delta_time)
 	return ..()
+
+/datum/reagent/consumable/aguafresca
+	name = "Agua Fresca"
+	description = "A refreshing watermelon agua fresca. Perfect on a day at the holodeck."
+	color = "#D25B66" 
+	quality = DRINK_VERYGOOD
+	taste_description = "cool refreshing watermelon"
+	glass_icon_state = "aguafresca"
+	glass_name = "Agua Fresca"
+	glass_desc = "90% water, but still refreshing."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/aguafresca/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
+	if(M.getToxLoss() && DT_PROB(10, delta_time))
+		M.adjustToxLoss(-1, 0)
+		. = TRUE
+	..()
 
 /datum/reagent/consumable/mushroom_tea
 	name = "Mushroom Tea"
