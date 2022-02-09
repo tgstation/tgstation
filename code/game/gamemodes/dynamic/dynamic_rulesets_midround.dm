@@ -82,10 +82,8 @@
 		var/threat = round(mode.threat_level/10)
 		if (job_check < required_enemies[threat])
 			return FALSE
-		if(SSshuttle.emergency)
-			switch(SSshuttle.emergency.mode)
-				if(SHUTTLE_DOCKED, SHUTTLE_ESCAPE, SHUTTLE_ENDGAME) //we don't want midrounds triggering here
-					return FALSE
+		if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
+			return FALSE
 	return TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/execute()
