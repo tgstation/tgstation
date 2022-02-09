@@ -58,7 +58,7 @@
 	cleanspeed = 28 //janitor gets this
 	uses = 300
 
-/obj/item/soap/nanotrasen/cyborg
+/obj/item/soap/cyborg
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
 	grind_results = list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
 	icon_state = "soapnt"
@@ -117,11 +117,11 @@
 		skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 	if(prob(skillcheck*100)) //higher level = more uses assuming RNG is nice
 		uses--
-	if(uses <= 0 && !istype(src, /obj/item/soap/nanotrasen/cyborg))
+	if(uses <= 0 && !istype(src, /obj/item/soap/cyborg))
 		to_chat(user, span_warning("[src] crumbles into tiny bits!"))
 		qdel(src)
 
-/obj/item/soap/nanotrasen/cyborg/decreaseUses(mob/user)
+/obj/item/soap/cyborg/decreaseUses(mob/user)
 	. = ..()
 	if(uses <= 0)
 		to_chat(user, span_warning("The soap has ran out of chemicals"))

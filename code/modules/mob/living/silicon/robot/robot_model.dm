@@ -338,7 +338,7 @@
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
-		/obj/item/soap/nanotrasen/cyborg,
+		/obj/item/soap/cyborg,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
@@ -577,7 +577,7 @@
 	if(lube)
 		lube.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
 
-	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
+	var/obj/item/soap/cyborg/soap = locate(/obj/item/soap/cyborg) in basic_modules
 	if(soap)
 		if(soap.uses < 300)
 			soap.uses += 3 * coeff
