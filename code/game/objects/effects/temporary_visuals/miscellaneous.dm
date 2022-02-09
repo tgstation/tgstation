@@ -529,6 +529,7 @@
 	icon_state = "thunderbolt"
 	icon = 'icons/effects/32x96.dmi'
 	duration = 0.6 SECONDS
+<<<<<<< HEAD
 
 /obj/effect/temp_visual/disarm
 	icon_state = "disarm"
@@ -538,3 +539,5 @@
 	icon_state = "light_ash"
 	icon = 'icons/effects/weather_effects.dmi'
 	duration = 3.2 SECONDS
+=======
+>>>>>>> parent of 187c9c12f98 (more)
