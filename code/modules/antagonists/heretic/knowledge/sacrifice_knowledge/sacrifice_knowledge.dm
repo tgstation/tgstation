@@ -92,21 +92,19 @@
 
 	// First construct a list of minds that are valid objective targets.
 	var/list/datum/mind/valid_targets = list()
-	for(var/datum/mind/possible_target in get_crewmember_minds())
+	for(var/datum/mind/possible_target as anything in get_crewmember_minds())
 		if(possible_target == user.mind)
+			continue
+		if(possible_target in target_blacklist)
 			continue
 		if(!ishuman(possible_target.current))
 			continue
 		if(possible_target.current.stat == DEAD)
 			continue
-		if(istype(get_area(possible_target), /area/shuttle/arrival))
-			continue
-		if(possible_target in target_blacklist)
-			continue
 
 		valid_targets += possible_target
 
-	if(!valid_targets.len)
+	if(!length(valid_targets))
 		if(!silent)
 			to_chat(user, span_danger("No sacrifice targets could be found! Attempt the ritual later."))
 		skip_this_ritual = TRUE
@@ -118,37 +116,39 @@
 	// - One from your department
 	// - One from security
 	// - One from heads of staff ("high value")
+	var/list/datum/mind/final_targets = list()
 
-	// First target (and list definition), random
-	var/list/datum/mind/final_targets = list(pick_n_take(valid_targets))
-
-	// Second target, department
-	for(var/datum/mind/department_mind as anything in shuffle_inplace(valid_targets))
-		if(department_mind.assigned_role?.departments_bitflags & user.mind.assigned_role?.departments_bitflags)
-			final_targets += department_mind
-			break
-
-	// Third target, security
-	for(var/datum/mind/sec_mind as anything in shuffle_inplace(valid_targets))
-		if(sec_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
-			final_targets += sec_mind
-			break
-
-	// Fourth target, command
+	// First target, any command.
 	for(var/datum/mind/head_mind as anything in shuffle_inplace(valid_targets))
 		if(head_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			final_targets += head_mind
+			valid_targets -= head_mind
 			break
 
+	// Second target, any security
+	for(var/datum/mind/sec_mind as anything in shuffle_inplace(valid_targets))
+		if(sec_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
+			final_targets += sec_mind
+			valid_targets -= sec_mind
+			break
+
+	// Third target, someone in their department.
+	for(var/datum/mind/department_mind as anything in shuffle_inplace(valid_targets))
+		if(department_mind.assigned_role?.departments_bitflags & user.mind.assigned_role?.departments_bitflags)
+			final_targets += department_mind
+			valid_targets -= department_mind
+			break
+
+	// Final target, just get someone random.
+	final_targets += pick_n_take(valid_targets)
+
 	// If any of our targets failed to aquire,
-	// Let's run a loop until we get four total,
-	// grabbing random targets.
+	// Let's run a loop until we get four total, grabbing random targets.
 	var/target_sanity = 0
-	while(final_targets.len < 4 && valid_targets.len > 4 && target_sanity < 25)
+	while(length(final_targets) < 4 && length(valid_targets) > 4 && target_sanity < 25)
 		final_targets += pick_n_take(valid_targets)
 		target_sanity++
 
-	list_clear_nulls(final_targets)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 
 	if(!silent)

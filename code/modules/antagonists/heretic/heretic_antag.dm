@@ -409,9 +409,31 @@
 
 /datum/antagonist/heretic/get_admin_commands()
 	. = ..()
-	.["Add Heart Target (Marked Mob)"] = CALLBACK(src, .proc/add_marked_as_target)
-	.["Remove Heart Target"] = CALLBACK(src, .proc/remove_target)
+
+	var/obj/item/organ/heart/our_heart = owner.current?.getorganslot(ORGAN_SLOT_HEART)
+	if(our_heart)
+		if(HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
+			.["Add Heart Target (Marked Mob)"] = CALLBACK(src, .proc/add_marked_as_target)
+			.["Remove Heart Target"] = CALLBACK(src, .proc/remove_target)
+		else
+			.["Give Living Heart"] = CALLBACK(src, .proc/give_living_heart)
+
 	.["Adjust Knowledge Points"] = CALLBACK(src, .proc/admin_change_points)
+
+/*
+ * Admin proc for giving a heretic a Living Heart easily.
+ */
+/datum/antagonist/heretic/proc/give_living_heart(mob/admin)
+	if(!admin.client?.holder)
+		to_chat(admin, span_warning("You shouldn't be using this!"))
+		return
+
+	var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
+	if(!heart_knowledge)
+		to_chat(admin, span_warning("The heretic doesn't have a living heart knowledge for some reason. What?"))
+		return
+
+	heart_knowledge.on_research(owner.current)
 
 /*
  * Admin proc for adding a marked mob to a heretic's sac list.
