@@ -20,7 +20,6 @@
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_DEAF))
 		return INFINITY //For all my homies that can not hear in the world
-
 	var/obj/item/organ/ears/E = getorganslot(ORGAN_SLOT_EARS)
 	if(!E)
 		return INFINITY
