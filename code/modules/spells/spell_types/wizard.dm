@@ -279,6 +279,7 @@
 		if(ismob(AM))
 			var/mob/M = AM
 			if(M.can_block_magic(antimagic_flags))
+				to_chat(user, span_warning("The spell can't seem to affect [M]!"))
 				continue
 
 		throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(AM, user)))
@@ -334,16 +335,20 @@
 	selection_type = "view"
 	action_icon_state = "sacredflame"
 	sound = 'sound/magic/fireball.ogg'
+	antimagic_flags = MAGIC_RESISTANCE // the default antimagic_flags for base class is already MAGIC_RESISTANCE I think... double check later
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
-	for(var/mob/living/L in targets)
-		if(L.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
-			continue
-		L.adjust_fire_stacks(20)
 	if(isliving(user))
-		var/mob/living/U = user
-		if(!U.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY))
-			U.IgniteMob()
+		var/mob/living/caster = user
+		if(caster.can_cast_magic(antimagic_flags))
+			caster.IgniteMob()
+		else
+			return 
+	for(var/mob/living/target in targets)
+		if(target.can_block_magic(antimagic_flags))
+			to_chat(user, span_warning("The spell can't seem to affect [target]!"))
+			continue
+		target.adjust_fire_stacks(20)
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
