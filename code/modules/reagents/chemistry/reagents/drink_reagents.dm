@@ -431,7 +431,7 @@
 /datum/reagent/consumable/roy_rogers
 	name = "Roy Rogers"
 	description = "A sweet fizzy drink."
-	color = "#53090B" // rgb: 16, 8, 0
+	color = "#53090B" 
 	quality = DRINK_GOOD
 	taste_description = "fruity overlysweet cola"
 	glass_icon_state = "royrogers"
