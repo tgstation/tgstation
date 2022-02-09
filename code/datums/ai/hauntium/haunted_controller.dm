@@ -31,8 +31,8 @@
 		if(possibly_cool.mob_biotypes & MOB_UNDEAD)
 			haunt_equipper = FALSE
 	if(haunt_equipper)
-		var/list/hauntee_list = blackboard[BB_TO_HAUNT_LIST]
-		hauntee_list[WEAKREF(equipper)] += HAUNTED_ITEM_AGGRO_ADDITION //You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~
+		//You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~
+		blackboard[BB_TO_HAUNT_LIST][WEAKREF(equipper)] += HAUNTED_ITEM_AGGRO_ADDITION
 	else
 		blackboard[BB_LIKES_EQUIPPER] = TRUE
 
