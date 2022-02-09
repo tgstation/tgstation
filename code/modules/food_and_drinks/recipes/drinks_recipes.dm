@@ -740,8 +740,8 @@
 	results = list(/datum/reagent/consumable/toechtauese_syrup = 10)
 	required_reagents = list(/datum/reagent/consumable/toechtauese_juice = 6, /datum/reagent/consumable/sugar = 4)
 
-/datum/chemical_reaction/drink/roy_roger
-	results = list(/datum/reagent/consumable/roy_roger = 3)
+/datum/chemical_reaction/drink/roy_rogers
+	results = list(/datum/reagent/consumable/roy_rogers = 3)
 	required_reagents = list(/datum/reagent/consumable/space_cola = 2, /datum/reagent/consumable/grenadine = 1)
 
 /datum/chemical_reaction/drink/shirley_temple

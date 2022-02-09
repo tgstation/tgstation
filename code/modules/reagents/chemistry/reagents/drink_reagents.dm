@@ -428,14 +428,14 @@
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
-/datum/reagent/consumable/roy_roger
-	name = "Roy Roger"
+/datum/reagent/consumable/roy_rogers
+	name = "Roy Rogers"
 	description = "A sweet fizzy drink."
 	color = "#53090B" // rgb: 16, 8, 0
 	quality = DRINK_GOOD
 	taste_description = "fruity overlysweet cola"
-	glass_icon_state = "royroger"
-	glass_name = "Roy Roger"
+	glass_icon_state = "royrogers"
+	glass_name = "Roy Rogers"
 	glass_desc = "90% sugar in a glass."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -803,7 +803,7 @@
 	. = TRUE
 
 /datum/reagent/consumable/cinderella
-	name = "Cinderalla"
+	name = "Cinderella"
 	description = "Most definitely a fruity alcohol cocktail to have while partying with your friends."
 	color = "#FF6A50" 
 	quality = DRINK_VERYGOOD
