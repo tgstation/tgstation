@@ -183,7 +183,7 @@
 		if("cancel")
 			set_entry(null)
 			SStgui.close_uis(src)
-			return TRUE
+			return FALSE
 
 /datum/tgui_input_text/proc/set_entry(entry)
 	if(entry)
