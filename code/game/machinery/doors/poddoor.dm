@@ -43,7 +43,7 @@
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if (density & hasPower())
+	if (density && hasPower())
 		balloon_alert(user, "open the door first!")
 		return
 	if (!panel_open)
