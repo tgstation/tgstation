@@ -1,6 +1,15 @@
 import { Loader } from './common/Loader';
 import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
+import {
+  KEY_DOWN,
+  KEY_ENTER,
+  KEY_ESCAPE,
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_SPACE,
+  KEY_TAB,
+  KEY_UP,
+} from '../../common/keycodes';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -23,17 +32,20 @@ export const AlertModal = (_, context) => {
     autofocus,
     buttons = [],
     large_buttons,
-    message = "",
+    message = '',
     timeout,
     title,
   } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
-  // Dynamically sets window height
+  const isVertical = buttons.length > 2;
+  // Dynamically sets window dimensions
   const windowHeight
     = 115
     + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
-    + (message.length && large_buttons ? 5 : 0)
-    + (buttons.length > 2 ? buttons.length * 25 : 0);
+    + (message.length && large_buttons ? 5 : 0);
+  const windowWidth
+    = 325
+    + (buttons.length > 2 ? 55 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -45,7 +57,7 @@ export const AlertModal = (_, context) => {
   };
 
   return (
-    <Window height={windowHeight} title={title} width={325}>
+    <Window height={windowHeight} title={title} width={windowWidth}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {
@@ -59,11 +71,17 @@ export const AlertModal = (_, context) => {
           } else if (keyCode === KEY_ESCAPE) {
             act('cancel');
           } else if (
-            keyCode === KEY_LEFT
-            || (e.shiftKey && keyCode === KEY_TAB)
+            (!isVertical && keyCode === KEY_LEFT)
+            || (isVertical && keyCode === KEY_UP)
           ) {
+            e.preventDefault();
             onKey(KEY_DECREMENT);
-          } else if (keyCode === KEY_RIGHT || keyCode === KEY_TAB) {
+          } else if (
+            keyCode === KEY_TAB
+            || (!isVertical && keyCode === KEY_RIGHT)
+            || (isVertical && keyCode === KEY_DOWN)
+          ) {
+            e.preventDefault();
             onKey(KEY_INCREMENT);
           }
         }}>
@@ -94,16 +112,14 @@ const ButtonDisplay = (props, context) => {
   const { data } = useBackend<AlertModalData>(context);
   const { buttons = [], large_buttons, swapped_buttons } = data;
   const { selected } = props;
-  const buttonDirection
-    = (buttons.length > 2 ? 'column' : 'row')
-    + (!swapped_buttons ? '-reverse' : '');
 
   return (
     <Flex
       align="center"
-      direction={buttonDirection}
+      direction={!swapped_buttons ? "row-reverse" : "row"}
       fill
-      justify="space-around">
+      justify="space-around"
+      wrap>
       {buttons?.map((button, index) =>
         !!large_buttons && buttons.length < 3 ? (
           <Flex.Item grow key={index}>
@@ -134,6 +150,7 @@ const AlertButton = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
   const { large_buttons } = data;
   const { button, selected } = props;
+  const buttonWidth = button.length > 7 ? button.length : 7;
 
   return (
     <Button
@@ -145,7 +162,8 @@ const AlertButton = (props, context) => {
       pr={2}
       pt={large_buttons ? 0.33 : 0}
       selected={selected}
-      textAlign="center">
+      textAlign="center"
+      width={!large_buttons && buttonWidth}>
       {!large_buttons ? button : button.toUpperCase()}
     </Button>
   );
