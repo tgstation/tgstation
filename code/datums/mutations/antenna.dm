@@ -65,7 +65,7 @@
 
 	for(var/mob/living/M in targets)
 		if(M.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-			to_chat(usr, span_warning("As you reach out with your mind, you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+			to_chat(usr, span_warning("As you reach out into the target's mind, you are stopped by a mental blockage. It seems you've been foiled."))
 			return
 		if(M.stat == DEAD)
 			to_chat(user, span_boldnotice("[M] is dead!"))

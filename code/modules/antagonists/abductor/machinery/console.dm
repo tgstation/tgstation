@@ -223,7 +223,7 @@
 
 /obj/machinery/abductor/console/proc/AddSnapshot(mob/living/carbon/human/target)
 	if(target.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-		say("Subject wearing specialized protective tinfoil gear, unable to get a proper scan!")
+		say("Unable to get a proper scan of subject! They must have some type of mental protection."
 		return
 	var/datum/icon_snapshot/entry = new
 	entry.name = target.name
