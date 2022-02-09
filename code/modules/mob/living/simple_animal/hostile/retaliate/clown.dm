@@ -97,6 +97,7 @@
 	banana_rustle.Grant(src)
 	banana_bunch = new()
 	banana_bunch.Grant(src)
+	
 /mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
 	. = ..()
 	QDEL_NULL(banana_rustle)
@@ -143,7 +144,7 @@
 	///If we are currently activating our ability.
 	var/activating = FALSE
 
-/datum/action/cooldown/exquisite_bunch/Trigger(atom/target)
+/datum/action/cooldown/exquisite_bunch/Trigger(trigger_flags, atom/target)
 	if(activating)
 		return
 	var/bunch_turf = get_step(owner.loc, owner.dir)
