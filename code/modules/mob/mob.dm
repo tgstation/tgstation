@@ -964,19 +964,13 @@
 			if(casted_magic_flags & MAGIC_RESISTANCE)
 				antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 				antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
-				target.visible_message(span_warning("[target] pulses red as they absorb magic energy!"), \
-				span_userdanger("An intense magical aura pulses around you as it dissipates into the air!"))
 			else if(casted_magic_flags & MAGIC_RESISTANCE_HOLY)
 				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 				antimagic_color = LIGHT_COLOR_HOLY_MAGIC
-				target.visible_message(span_warning("[target] starts to glow in a halo of light!"), \
-				span_userdanger("A feeling of warmth washes over you as rays of light surround your body and protect you!"))
 			else if(casted_magic_flags & MAGIC_RESISTANCE_MIND)
 				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 				antimagic_color = LIGHT_COLOR_DARK_BLUE
-				target.visible_message(span_warning("[target] forehead starts to shine as magic is repulsed from their mind!"), \
-				span_userdanger("You feel your forehead become cold as it reflects magic targetting your mind!"))
-
+				
 			target.mob_light(_range = 2, _color = antimagic_color, _duration = 5 SECONDS)
 			target.add_overlay(antimagic_effect)
 			addtimer(CALLBACK(target, /atom/proc/cut_overlay, antimagic_effect), 50)

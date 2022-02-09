@@ -71,11 +71,23 @@
 	SIGNAL_HANDLER
 
 	if(casted_magic_flags & antimagic_flags) // disclaimer - All anti_magic sources will be drained a charge_cost
+		
+		var/visible_subject = ismob(parent) ? "[user.p_they()]" : "[user.p_their()] [parent]"
+		var/self_subject = ismob(parent) ? "you" : "your [parent]"
+
+		if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE)
+			user.visible_message(span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"), \
+			span_userdanger("An intense magical aura pulses around [self_subject] as it dissipates into the air!"))
+		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_HOLY)
+			user.visible_message(span_warning("[user] starts to glow as [visible_subject] emits a halo of light!"), \
+			span_userdanger("A feeling of warmth washes over [self_subject] as rays of light surround your body and protect you!"))
+		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_MIND)
+			user.visible_message(span_warning("[user] forehead shines as [visible_subject] repulses magic from their mind!"), \
+			span_userdanger("A feeling of cold splashes on [self_subject] as your forehead reflects magic targeting your mind!"))
+
 		if(ismob(parent))
-			to_chat(user, span_warning("Magic seems to flee from you without causing any effect."))
 			return TRUE
 
-		to_chat(user, span_warning("Your [parent] begins to glow as it absorbs magic!"))
 		var/has_limited_charges = !(charges == INFINITY)
 		var/charge_was_drained = charge_cost > 0
 		if(has_limited_charges && charge_was_drained)
