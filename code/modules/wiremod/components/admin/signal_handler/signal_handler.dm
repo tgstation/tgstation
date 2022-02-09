@@ -222,7 +222,7 @@
 		return_values["bitflag"] = NONE
 
 	var/bitflag = input_signal_ports[port]
-	log_admin_circuit("[parent.get_creator()] received bitflag '[bitflag]' on [target_datum]")
+	log_admin_circuit("[parent.get_creator()] received bitflag [bitflag] for '[registered_signal]'")
 	return_values["bitflag"] |= bitflag
 
 #undef COMP_SIGNAL_HANDLER_GLOBAL
