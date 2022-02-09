@@ -33424,10 +33424,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/command/corporate_showroom)
-"eBF" = (
-/obj/structure/lattice/catwalk,
-/turf/open/space/basic,
-/area/space)
 "eBR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -129013,7 +129009,7 @@ wBr
 pFk
 pFk
 vVc
-eBF
+vVc
 vVc
 njZ
 abj
