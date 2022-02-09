@@ -2755,7 +2755,7 @@
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
 	ant_damage++
-	if(amount_left < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
+	if(ant_damage < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
 		return ..()
 	if(DT_PROB(5, delta_time))
 		if(DT_PROB(5, delta_time)) //Super rare statement
