@@ -6,7 +6,6 @@
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
-	generic_can_allow_through = FALSE
 
 	var/eat_dir = SOUTH
 

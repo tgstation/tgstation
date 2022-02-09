@@ -34,10 +34,6 @@
 	var/pass_flags = NONE
 	/// If false makes [CanPass][/atom/proc/CanPass] call [CanPassThrough][/atom/movable/proc/CanPassThrough] on this type instead of using default behaviour
 	var/generic_canpass = TRUE
-	///if FALSE this movable has special rules for blocking/allowing other movables onto the same turf so CanAllowThrough() gets called.
-	///in this case the movable gets added to a bumpable_contents list on the turf when entering it. density also adds this movable to that list.
-	///if TRUE this movable has the normal rules for blocking, so
-	var/generic_can_allow_through = TRUE
 	///0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/moving_diagonally = 0
 	///attempt to resume grab after moving instead of before.
@@ -652,11 +648,6 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(movement_dir)
-	if (client_mobs_in_contents)
-		update_parallax_contents()
-
-	for(var/datum/light_source/light as anything in light_sources)
-		light.source_atom.update_light()
 
 	move_stacks--
 	if(move_stacks > 0) //we want only the first Moved() call in the stack to send this signal, all the other ones have an incorrect old_loc
@@ -664,6 +655,14 @@
 	if(move_stacks < 0)
 		stack_trace("move_stacks is negative in Moved()!")
 		move_stacks = 0 //setting it to 0 so that we dont get every movable with negative move_stacks runtiming on every movement
+
+	//parallax and lights dont convey information except to clients after the final movement, so only update them once per movement stack
+
+	if (client_mobs_in_contents)
+		update_parallax_contents()
+
+	for(var/datum/light_source/light as anything in light_sources)
+		light.source_atom.update_light()
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs)
 
@@ -700,7 +699,7 @@
 /atom/movable/proc/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)
 	return
 
-/mob/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)//TODOKYLER: move this
+/mob/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)//TODOKYLER: move this to a mobs file
 	if(!client)
 		return
 
@@ -726,8 +725,6 @@
 	else
 		closeby_client_mobs = null
 
-// Make sure you know what you're doing if you call this, this is intended to only be called by byond directly.
-// You probably want CanPass()
 ///do not call, deprecated in lieu of CanPass()
 /atom/movable/Cross(atom/movable/AM)
 	SHOULD_NOT_OVERRIDE(TRUE)

@@ -1900,18 +1900,6 @@
 	. = density
 	density = new_value
 
-/atom/movable/set_density(new_value)
-	. = ..()
-	if(isnull(.))
-		return
-
-	if(new_value) //if we are dense, then add ourselves to our turfs bumpable contents list
-		for(var/turf/turf_loc in locs)
-			LAZYOR(turf_loc.bumpable_contents, src)
-	else
-		for(var/turf/turf_loc in locs)
-			LAZYREMOVE(turf_loc.bumpable_contents, src)
-
 ///Setter for the `base_pixel_x` variable to append behavior related to its changing.
 /atom/proc/set_base_pixel_x(new_value)
 	if(base_pixel_x == new_value)

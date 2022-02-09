@@ -59,9 +59,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/tmp/datum/lighting_corner/lighting_corner_SW
 	var/tmp/datum/lighting_corner/lighting_corner_NW
 
-	///lazylist of all movables on this turf that are either dense or have nongeneric_CanPass = TRUE. used by turf/Enter() to sort through blocking contents
-	var/list/bumpable_contents
-
 	///Which directions does this turf block the vision of, taking into account both the turf's opacity and the movable opacity_sources.
 	var/directional_opacity = NONE
 	///Lazylist of movable atoms providing opacity sources.
@@ -349,16 +346,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return FALSE
 
-/turf/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(arrived.density || !arrived.generic_can_allow_through)
-		LAZYADD(bumpable_contents, arrived)
-
-/turf/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(gone.density || !gone.generic_can_allow_through)
-		LAZYREMOVE(bumpable_contents, gone)
-
 /turf/Enter(atom/movable/mover)
 	// Do not call ..()
 	// Byond's default turf/Enter() doesn't have the behaviour we want with Bump()
@@ -366,15 +353,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Here's hoping it doesn't stay like this for years before we finish conversion to step_
 	var/atom/firstbump
 	var/movement_direction = get_dir(src, mover)
-	var/canPassSelf = CanPass(mover, movement_direction)
-	if((mover.movement_type & PHASING) || canPassSelf)
+	var/can_pass_us = CanPass(mover, movement_direction)
+	if((mover.movement_type & PHASING) || can_pass_us)
 
-		for(var/atom/movable/contents_movable as anything in bumpable_contents)//buckled is automatically excluded
-			if(QDELETED(contents_movable))
-				LAZYREMOVE(bumpable_contents, contents_movable)
-				stack_trace("a movable in bumpable_contents was qdeleted or null! this is cringe")
-				continue
-
+		for(var/atom/movable/contents_movable as anything in src)
 			if(contents_movable == mover || contents_movable == mover.loc || (mover in contents_movable.buckled_mobs)) // Multi tile objects and moving out of other objects
 				continue
 
@@ -384,7 +366,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	if(QDELETED(mover))
 		return FALSE
-	if(!canPassSelf) //Even if mover is unstoppable they need to bump us.
+	if(!can_pass_us) //Even if mover is unstoppable they need to bump us.
 		firstbump = src
 	if(firstbump)
 		mover.Bump(firstbump)

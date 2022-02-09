@@ -792,7 +792,6 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	layer = CLOSED_DOOR_LAYER + 1 //for Bump priority
 	var/image/bolt_light
 	var/obj/machinery/door/airlock/airlock
-	generic_can_allow_through = FALSE
 
 /obj/effect/hallucination/fake_door_lock/proc/lock()
 	bolt_light = image(airlock.overlays_file, get_turf(airlock), "lights_bolts",layer=airlock.layer+0.1)

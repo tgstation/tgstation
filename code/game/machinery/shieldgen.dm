@@ -8,7 +8,6 @@
 	opacity = FALSE
 	anchored = TRUE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	generic_can_allow_through = FALSE
 	max_integrity = 200 //The shield can only take so much beating (prevents perma-prisons)
 	can_atmos_pass = ATMOS_PASS_DENSITY
 

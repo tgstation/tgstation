@@ -123,10 +123,6 @@ All ShuttleMove procs go here
 
 	update_parallax_contents()
 
-	if(density || !generic_can_allow_through)
-		LAZYREMOVE(oldT.bumpable_contents, src)
-		LAZYADD(newT.bumpable_contents, src)
-
 	return TRUE
 
 /atom/movable/proc/lateShuttleMove(turf/oldT, list/movement_force, move_dir)

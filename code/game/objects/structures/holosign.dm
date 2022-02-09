@@ -56,7 +56,6 @@
 	pass_flags_self = PASSTABLE | PASSGRILLE | PASSGLASS | LETPASSTHROW
 	density = TRUE
 	max_integrity = 20
-	generic_can_allow_through = FALSE
 	var/allow_walk = TRUE //can we pass through it on walk intent
 
 /obj/structure/holosign/barrier/CanAllowThrough(atom/movable/mover, border_dir)
