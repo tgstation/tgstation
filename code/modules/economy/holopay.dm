@@ -46,6 +46,10 @@
 	dissapate()
 	return ..()
 
+/obj/structure/holopay/Destroy()
+	linked_card?.my_store = null
+	return ..()
+
 /obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, params)
 	var/mob/living/user = item_holder
 	if(!isliving(user))
@@ -196,7 +200,7 @@
 /obj/structure/holopay/proc/dissapate()
 	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
 	visible_message(span_notice("The pay stand vanishes."))
-	QDEL_NULL(linked_card.my_store)
+	qdel(src)
 
 /**
  * Initiates a transaction between accounts.
