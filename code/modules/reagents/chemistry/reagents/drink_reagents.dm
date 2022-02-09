@@ -428,7 +428,7 @@
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	..()
 
-/datum/reagent/consumable/royroger
+/datum/reagent/consumable/roy_roger
 	description = "A sweet fizzy drink."
 	color = "#53090B" // rgb: 16, 8, 0
 	quality = DRINK_GOOD
@@ -438,7 +438,7 @@
 	glass_desc = "90% sugar in a glass."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/royroger/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/roy_roger/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(6 * REM * delta_time) //not as strong as coffe, still this is a lot of sugar
 	M.adjust_drowsyness(-5 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -970,18 +970,18 @@
 		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2 * REM * delta_time)
 	..()
 
-/datum/reagent/consumable/italiancoco
+/datum/reagent/consumable/italian_coco
 	name = "Italian Hot Chocolate"
 	description = "Made with love! You can just imagine a happy Nonna from the smell."
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	color = "#57372A"
 	taste_description = "thick creamy chocolate"
-	glass_icon_state = "italiancoco"
+	glass_icon_state = "italian_coco"
 	glass_name = "glass of italian coco"
-	glass_desc = "A spin on a winter favourite made to please."
+	glass_desc = "A spin on a winter favourite, made to please."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
 	if(M.getBruteLoss() && DT_PROB(10, delta_time))
 		M.heal_bodypart_damage(1, 0, 0)
@@ -1068,9 +1068,9 @@
 	M.adjust_disgust(-5 * REM * delta_time)
 	..()
 
-/datum/reagent/consumable/shirleytemple
+/datum/reagent/consumable/shirley_temple
 	name = "Shirley Temple"
-	description = "Here you go kid, now you can drink like the adults."
+	description = "Here you go little girl, now you can drink like the adults."
 	color = "#F43724"
 	quality = DRINK_GOOD
 	taste_description = "sweet cherry syrup and ginger spice"
@@ -1079,8 +1079,8 @@
 	glass_desc = "Ginger ale with processed grenadine. "
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/shirleytemple/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_disgust(-5 * REM * delta_time)
+/datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+	M.adjust_disgust(-3 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/red_queen
@@ -1171,7 +1171,7 @@
 		M.adjust_drowsyness(1 * REM * delta_time)
 	return ..()
 
-/datum/reagent/consumable/aguafresca
+/datum/reagent/consumable/agua_fresca
 	name = "Agua Fresca"
 	description = "A refreshing watermelon agua fresca. Perfect on a day at the holodeck."
 	color = "#D25B66" 
@@ -1182,7 +1182,7 @@
 	glass_desc = "90% water, but still refreshing."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/aguafresca/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-1, 0)

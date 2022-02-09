@@ -739,3 +739,23 @@
 /datum/chemical_reaction/drink/toechtauese_syrup
 	results = list(/datum/reagent/consumable/toechtauese_syrup = 10)
 	required_reagents = list(/datum/reagent/consumable/toechtauese_juice = 6, /datum/reagent/consumable/sugar = 4)
+
+/datum/chemical_reaction/drink/roy_roger
+	results = list(/datum/reagent/consumable/royroger = 3)
+	required_reagents = list(/datum/reagent/consumable/cola = 2, /datum/reagent/consumable/grenadine = 1)
+
+/datum/chemical_reaction/drink/shirley_temple
+	results = list(/datum/reagent/consumable/shirley_temple = 3)
+	required_reagents = list(/datum/reagent/consumable/sol_dry = 2, /datum/reagent/consumable/grenadine = 1)
+
+/datum/chemical_reaction/drink/agua_fresca
+	results = list(/datum/reagent/consumable/agua_fresca = 3)
+	required_reagents = list(/datum/reagent/consumable/watermelonjuice = 4, /datum/reagent/consumable/ice = 1, /datum/reagent/water = 2, /datum/reagent/consumable/limejuice = 2, /datum/reagent/consumable/menthol = 1)
+
+/datum/chemical_reaction/drink/cinderella
+	results = list(/datum/reagent/consumable/cinderella = 50)
+	required_reagents = list(/datum/reagent/consumable/pineapplejuice = 10, /datum/reagent/consumable/orangejuice = 10, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/ice = 5, /datum/reagent/consumable/sol_dry = 20, /datum/reagent/consumable/ethanol/bitters = 2)
+
+/datum/chemical_reaction/drink/italian_coco
+	results = list(/datum/reagent/consumable/italian_coco = 10)
+	required_reagents = list(/datum/reagent/consumable/hot_coco  = 5, /datum/reagent/consumable/corn_starch = 1, /datum/reagent/consumable/whipped_cream = 4)
