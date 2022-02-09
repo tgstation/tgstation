@@ -790,8 +790,8 @@
 	description = "A cherry flavored milkshake."
 	color = "#FFB6C1"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
-	taste_description = "creamy cherry"
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "creamy tart cherry"
 	glass_icon_state = "cherryshake"
 	glass_name = "cherry shake"
 	glass_desc = "A cherry flavored milkshake."
@@ -803,12 +803,51 @@
 	description = "An exotic milkshake."
 	color = "#00F1FF"
 	quality = DRINK_VERYGOOD
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 8 * REAGENTS_METABOLISM
 	taste_description = "creamy blue cherry"
 	glass_icon_state = "bluecherryshake"
 	glass_name = "blue cherry shake"
 	glass_desc = "An exotic blue milkshake."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/vanillashake
+	name = "Vanilla Shake"
+	description = "A vanilla flavored milkshake. The basics are still good."
+	color = "#E9D2B2"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "sweet creamy vanilla"
+	glass_icon_state = "vanillashake"
+	glass_name = "vanilla shake"
+	glass_desc = "A vanilla flavored milkshake."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
+/datum/reagent/consumable/caramelshake
+	name = "Caramel Shake"
+	description = "A aramel flavored milkshake. Your teeth hurt looking at it."
+	color = "#E17C00"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	taste_description = "sweet rich creamy caramel"
+	glass_icon_state = "caramelshake"
+	glass_name = "caramel shake"
+	glass_desc = "A caramel flavored milkshake."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
+
+/datum/reagent/consumable/choccyshake
+	name = "Chocolate Shake"
+	description = "A frosty chocolate milkshake."
+	color = "#541B00"
+	quality = DRINK_VERYGOOD
+	nutriment_factor = 8 * REAGENTS_METABOLISM
+	taste_description = "sweet creamy chocolate"
+	glass_icon_state = "choccyshake"
+	glass_name = "chocolate shake"
+	glass_desc = "A chocolate flavored milkshake."
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	glass_price = DRINK_PRICE_MEDIUM
 
 /datum/reagent/consumable/pumpkin_latte
 	name = "Pumpkin Latte"
