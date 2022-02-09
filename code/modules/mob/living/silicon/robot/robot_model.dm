@@ -158,6 +158,9 @@
 			var/obj/item/gun/energy/gun = module
 			if(!gun.chambered)
 				gun.recharge_newshot() //try to reload a new shot.
+		else if(istype(module, /obj/item/soap))
+			var/obj/item/soap/soap = module
+			soap.uses = 300
 
 	cyborg.toner = cyborg.tonermax
 

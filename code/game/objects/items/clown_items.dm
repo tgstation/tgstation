@@ -111,8 +111,11 @@
 	if(prob(skillcheck*100)) //higher level = more uses assuming RNG is nice
 		uses--
 	if(uses <= 0)
-		to_chat(user, span_warning("[src] crumbles into tiny bits!"))
-		qdel(src)
+		if(!iscyborg(user))
+			to_chat(user, span_warning("[src] crumbles into tiny bits!"))
+			qdel(src)
+		else
+			to_chat(user, span_warning("The soap has ran out of chemicals!"))
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -123,6 +126,9 @@
 		clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	if(uses <= 0)
+		to_chat(user, span_warning("No good, you need to recharge!"))
+		return
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, span_warning("You need to take that [target.name] off before cleaning it!"))
 	else if(istype(target, /obj/effect/decal/cleanable))
