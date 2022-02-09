@@ -437,9 +437,31 @@
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
 	death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))
+/**
+ * Checks if a mob is incapacitated
+ *
+ * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+ * unless there is a flag being used to check if it's ignored
+ *
+ * args:
+ * * flags (optional) bitflags that determine if special situations are exempt from being considered incapacitated
+ *
+ * bitflags: (see code/__DEFINES/status_effects.dm)
+ * * IGNORE_RESTRAINTS - mob in a restraint (handcuffs) is not considered incapacitated
+ * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
+ * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
+**/
+/mob/living/incapacitated(flags)
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
+
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	if(!(flags & IGNORE_STASIS) && IS_IN_STASIS(src))
+		return TRUE
+	return FALSE
 
 /mob/living/canUseStorage()
 	if (usable_hands <= 0)
@@ -481,7 +503,11 @@
 /mob/proc/get_contents()
 
 
-//Gets ID card from a mob. If hand_firsts is TRUE hands are checked first, otherwise other slots are prioritized (for subtypes at least).
+/**
+ * Gets ID card from a mob.
+ * Argument:
+ * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
+ */
 /mob/living/proc/get_idcard(hand_first)
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
@@ -888,12 +914,13 @@
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(buckled || mob_negates_gravity())
 		return
+
 	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
 
 	var/list/turfs_to_check = list()
 
-	if(has_limbs)
+	if(!has_limbs)
 		var/turf/T = get_step(src, angle2dir(dir2angle(direction)+90))
 		if (T)
 			turfs_to_check += T
@@ -911,11 +938,14 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-	if(!force_moving)
-		..(pressure_difference, direction, pressure_resistance_prob_delta)
+	..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(next_move > world.time)
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		return FALSE
+	return TRUE
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -971,7 +1001,7 @@
 							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
 		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 40
+			client.move_delay = world.time + 4 SECONDS
 	else
 		pulledby.stop_pulling()
 		return FALSE
@@ -1096,7 +1126,7 @@
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 		var/datum/dna/D = has_dna()
-		if(!D || !D.check_mutation(TK) || !tkMaxRangeCheck(src, M))
+		if(!D || !D.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, M))
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 	if(need_hands && !can_hold_items(isitem(M) ? M : null)) //almost redundant if it weren't for mobs,
@@ -1706,7 +1736,7 @@
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !(incapacitated(ignore_restraints = TRUE))
+	return !(incapacitated(IGNORE_RESTRAINTS))
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob

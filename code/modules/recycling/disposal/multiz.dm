@@ -15,35 +15,28 @@
 /obj/structure/disposalpipe/trunk/multiz/transfer(obj/structure/disposalholder/H)
 	if(H.dir == DOWN) //Since we're a trunk, you can still place a chute / bin over us. If theyve entered from there, treat this as a normal trunk
 		return ..()
-	// otherwise, go to the linked object
-	if(multiz_dir) //Are we a trunk that goes up? Or down?
-		var/turf/T = null
-		if(multiz_dir == MULTIZ_PIPE_UP)
-			T = SSmapping.get_turf_above(get_turf(src)) //Get the turf above us
-		if(multiz_dir == MULTIZ_PIPE_DOWN)
-			T = SSmapping.get_turf_below(get_turf(src))
-		if(!T)
-			expel(H, get_turf(src), pick(GLOB.cardinals))
-			return //Nothing located.
-		var/obj/structure/disposalpipe/trunk/multiz/pipe = locate(/obj/structure/disposalpipe/trunk/multiz) in T
-		if(pipe)
-			var/obj/structure/disposalholder/destination = new(pipe) //For future reference, the disposal holder is the thing that carries mobs
-			destination.init(pipe) //This instantiates it
-			destination.merge(H) //This takes the contents of H (Our disposal holder that's travelling into us) and puts them into the destination holder
-			destination.active = TRUE //Active allows it to process and move
-			destination.setDir(DOWN) //This tells the trunk above us NOT to loop it back down to us, or else you get an infinite loop
-			destination.move()
-			return null //Which removes the disposalholder
-	else
-		var/obj/structure/disposaloutlet/O = linked
-		if(istype(O))
-			O.expel(H) // expel at outlet
-		else
-			var/obj/machinery/disposal/D = linked
-			D.expel(H) // expel at disposal
 
-	// Returning null without expelling holder makes the holder expell itself
-	return null
+	//If we for some reason do not have a multiz dir, just like, use the default logic
+	if(!multiz_dir)
+		return ..()
+
+	//Are we a trunk that goes up? Or down?
+	var/turf/target = null
+	if(multiz_dir == MULTIZ_PIPE_UP)
+		target = SSmapping.get_turf_above(get_turf(src))
+	if(multiz_dir == MULTIZ_PIPE_DOWN)
+		target = SSmapping.get_turf_below(get_turf(src))
+	if(!target) //Nothing located.
+		return
+
+	var/obj/structure/disposalpipe/trunk/multiz/pipe = locate(/obj/structure/disposalpipe/trunk/multiz) in target
+	if(!pipe)
+		return
+	var/obj/structure/disposalholder/destination = new(pipe) //For future reference, the disposal holder is the thing that carries mobs
+	destination.merge(H) //This takes the contents of H (Our disposal holder that's travelling into us) and puts them into the destination holder
+	destination.active = TRUE //Active allows it to process and move
+	destination.setDir(DOWN) //This tells the trunk above us NOT to loop it back down to us, or else you get an infinite loop
+	destination.start_moving()
 
 #undef MULTIZ_PIPE_UP
 #undef MULTIZ_PIPE_DOWN

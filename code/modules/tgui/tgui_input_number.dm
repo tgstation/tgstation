@@ -14,7 +14,7 @@
  * * min_value - Specifies a minimum value. Often 0.
  * * timeout - The timeout of the number input, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_number(mob/user, message, title = "Number Input", default = 0, max_value, min_value = 0, timeout = 0)
+/proc/tgui_input_number(mob/user, message, title = "Number Input", default = 0, max_value = 10000, min_value = 0, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -25,7 +25,7 @@
 			return
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		return input(user, message, title, default) as null|num
+		return clamp(round(input(user, message, title, default) as null|num), min_value, max_value)
 	var/datum/tgui_input_number/number_input = new(user, message, title, default, max_value, min_value, timeout)
 	number_input.ui_interact(user)
 	number_input.wait()
@@ -48,7 +48,7 @@
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the number input, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default  = 0, max_value, min_value  = 0, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default = 0, max_value = 10000, min_value = 0, datum/callback/callback, timeout = 60 SECONDS)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -59,7 +59,7 @@
 			return
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		return input(user, message, title, default) as null|num
+		return clamp(round(input(user, message, title, default) as null|num), min_value, max_value)
 	var/datum/tgui_input_number/async/number_input = new(user, message, title, default, max_value, min_value, callback, timeout)
 	number_input.ui_interact(user)
 
@@ -108,6 +108,8 @@
 	/// Sanity check
 	if(default < min_value)
 		src.default = min_value
+	if(default > max_value)
+		CRASH("Default value is greater than max value.")
 
 /datum/tgui_input_number/Destroy(force, ...)
 	SStgui.close_uis(src)
@@ -125,7 +127,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "NumberInputModal")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_input_number/ui_close(mob/user)
@@ -136,16 +137,14 @@
 	return GLOB.always_state
 
 /datum/tgui_input_number/ui_static_data(mob/user)
-	. = list(
-		"init_value" = default, // Default is a reserved keyword
-		"max_value" = max_value,
-		"message" = message,
-		"min_value" = min_value,
-		"preferences" = list(),
-		"title" = title
-	)
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	. = list()
+	.["init_value"] = default // Default is a reserved keyword
+	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["max_value"] = max_value
+	.["message"] = message
+	.["min_value"] = min_value
+	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["title"] = title
 
 /datum/tgui_input_number/ui_data(mob/user)
 	. = list()
@@ -158,15 +157,19 @@
 		return
 	switch(action)
 		if("submit")
-			if(max_value && (params["entry"] > max_value))
-				return FALSE
-			if(min_value && (params["entry"] < min_value))
-				return FALSE
-			set_entry(params["entry"])
+			if(!isnum(params["entry"]))
+				CRASH("A non number was input into tgui input number by [usr]")
+			var/choice = round(params["entry"])
+			if(choice > max_value)
+				CRASH("A number greater than the max value was input into tgui input number by [usr]")
+			if(choice < min_value)
+				CRASH("A number less than the min value was input into tgui input number by [usr]")
+			set_entry(choice)
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			set_entry(null)
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 

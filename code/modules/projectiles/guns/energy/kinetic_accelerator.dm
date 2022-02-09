@@ -496,13 +496,13 @@
 /obj/item/borg/upgrade/modkit/bounty/projectile_prehit(obj/projectile/kinetic/K, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target))
 		var/mob/living/L = target
-		var/list/existing_marks = L.has_status_effect_list(STATUS_EFFECT_SYPHONMARK)
+		var/list/existing_marks = L.has_status_effect_list(/datum/status_effect/syphon_mark)
 		for(var/i in existing_marks)
 			var/datum/status_effect/syphon_mark/SM = i
 			if(SM.reward_target == src) //we want to allow multiple people with bounty modkits to use them, but we need to replace our own marks so we don't multi-reward
 				SM.reward_target = null
 				qdel(SM)
-		L.apply_status_effect(STATUS_EFFECT_SYPHONMARK, src)
+		L.apply_status_effect(/datum/status_effect/syphon_mark, src)
 
 /obj/item/borg/upgrade/modkit/bounty/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target))

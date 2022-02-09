@@ -572,7 +572,7 @@ generate/load female uniform sprites matching all previously decided variables
 /mob/living/carbon/human/generate_icon_render_key()
 	. = "[dna.species.limbs_id]"
 
-	if(dna.check_mutation(HULK))
+	if(dna.check_mutation(/datum/mutation/human/hulk))
 		. += "-coloured-hulk"
 	else if(dna.species.use_skintones)
 		. += "-coloured-[skin_tone]"

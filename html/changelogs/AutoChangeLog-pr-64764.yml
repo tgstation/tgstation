@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "After a union dispute, shuttles can now leave the station in one piece. Fixes an issue where shuttles would just leave sections and players on the way out."

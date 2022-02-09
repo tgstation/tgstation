@@ -1,3 +1,5 @@
+///Dummy mob reserve slot for manifest
+#define DUMMY_HUMAN_SLOT_MANIFEST "dummy_manifest_generation"
 
 GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 
@@ -366,3 +368,5 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 	if(C)
 		P = C.prefs
 	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
+
+#undef DUMMY_HUMAN_SLOT_MANIFEST

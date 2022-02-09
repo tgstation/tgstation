@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - bugfix: "Some food can once again be exported through the cargo shuttle."

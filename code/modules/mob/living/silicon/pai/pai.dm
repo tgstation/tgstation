@@ -154,6 +154,8 @@
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
+	for (var/law in laws.inherent)
+		lawcheck += law
 	if(!istype(pai_card)) //when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = pai_card
 		pai_card = new /obj/item/paicard(newcardloc)

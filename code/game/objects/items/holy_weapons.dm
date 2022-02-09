@@ -701,7 +701,7 @@
 /obj/item/nullrod/spear
 	name = "ancient spear"
 	desc = "An ancient spear made of brass, I mean gold, I mean bronze. It looks highly mechanical."
-	icon = 'icons/obj/clockwork_objects.dmi'
+	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "ratvarian_spear"
 	inhand_icon_state = "ratvarian_spear"
 	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'

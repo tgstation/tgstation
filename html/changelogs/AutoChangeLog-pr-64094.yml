@@ -1,5 +1,0 @@
-author: "itseasytosee"
-delete-after: True
-changes: 
-  - bugfix: "Robot themed wings will now actually be visible"
-  - imageadd: "If synths get wings, they will be robot themed."

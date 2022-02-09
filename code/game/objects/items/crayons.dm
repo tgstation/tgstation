@@ -21,6 +21,7 @@
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
+	worn_icon_state = "crayon"
 
 	var/icon_capped
 	var/icon_uncapped
@@ -659,6 +660,7 @@
 /obj/item/toy/crayon/spraycan
 	name = "spray can"
 	icon_state = "spraycan"
+	worn_icon_state = "spraycan"
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"
