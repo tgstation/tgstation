@@ -105,4 +105,5 @@
 	tattoo_result = memory_to_tattoo.generate_story(STORY_TATTOO)
 	//prevent this memory from being used again this round
 	memory_to_tattoo.memory_flags |= MEMORY_FLAG_ALREADY_USED
+	tattoo_target.AddComponent(/datum/component/tattoo, tattoo_result)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
