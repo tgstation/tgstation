@@ -405,7 +405,7 @@
 
 /atom/movable/proc/start_pressure_move(pressure_ratio, direction, added_flags = MOVEMENT_LOOP_START_FAST)
 	pressure_moving = TRUE
-	var/rate = max(pressure_ratio * PRESSURE_DELAY_MAX, PRESSURE_DELAY_MIN)
+	var/rate = LERP(PRESSURE_DELAY_MIN, PRESSURE_DELAY_MAX, pressure_ratio) // If pressure ratio's 0, we want MIN, if it's 1 we want MAX. Much nicer then a clamp
 	var/datum/move_loop/loop = SSmove_manager.move(src, direction = direction, delay = rate, subsystem = SSpressure_movement, flags = MOVEMENT_LOOP_IGNORE_PRIORITY|added_flags)
 	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, /atom/movable/proc/pre_pressure_move)
 	RegisterSignal(loop, COMSIG_PARENT_QDELETING, /atom/movable/proc/release_pressure)
@@ -462,7 +462,7 @@
 		return
 
 	var/datum/move_loop/move/our_loop = SSmove_manager.processing_on(src, SSpressure_movement)
-	our_loop.delay = max(pressure_ratio * PRESSURE_DELAY_MAX, PRESSURE_DELAY_MIN)
+	our_loop.delay = LERP(PRESSURE_DELAY_MIN, PRESSURE_DELAY_MAX, pressure_ratio)
 	our_loop.direction = our_turf.archived_pressure_direction
 
 /// Returns the amount of pressure this atom will resist from the turf source.
