@@ -407,10 +407,10 @@
 	martialname = "tribal claw"
 	desc = "A scroll filled with ancient draconic markings."
 	greet = "<span class='sciradio'>You have learned the ancient martial art of the Tribal Claw! You are now able to use your tail and claws in a fight much better than before. \
-	Check the combos you are now able to perform using the Recall Teachings verb in the Tribal Claw tab</span>"
+	Check the combos you are now able to perform using the Recall Teachings verb in the Tribal Claw tab.</span>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
-	remarks = list("I must prove myself worthy to the masters of the Knoises clan...", "Use your tail to surprise any enemy...", "Your sharp claws can disorient them...", "I don't think this would combine with other martial arts...", "Ooga Booga...")
+	remarks = list("I must prove myself worthy to the masters of the Knoises clan...", "Use your tail to surprise any enemy...", "Your sharp claws can disorient them...", "I don't think this would combine with other martial arts...")
 
 /obj/item/book/granter/martial/tribal_claw/onlearned(mob/living/carbon/user)
 	..()

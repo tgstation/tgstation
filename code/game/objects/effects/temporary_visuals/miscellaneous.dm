@@ -529,3 +529,7 @@
 	icon_state = "thunderbolt"
 	icon = 'icons/effects/32x96.dmi'
 	duration = 0.6 SECONDS
+
+/obj/effect/temp_visual/disarm
+	icon_state = "disarm"
+	duration = 0.3 SECONDS
