@@ -25,6 +25,9 @@
 
 	footstep_type = FOOTSTEP_MOB_SHOE
 
+/mob/living/simple_animal/hostile/boss/paper_wizard/Destroy()
+	QDEL_LIST(copies)
+	return ..()
 
 //Summon Ability
 //Lets the wizard summon his art to fight for him
@@ -52,7 +55,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/boss/wizard_summon_minions/Trigger()
+/datum/action/boss/wizard_summon_minions/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -88,7 +91,7 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	say_when_triggered = ""
 
-/datum/action/boss/wizard_mimic/Trigger()
+/datum/action/boss/wizard_mimic/Trigger(trigger_flags)
 	if(..())
 		var/mob/living/target
 		if(!boss.client) //AI's target
@@ -126,13 +129,18 @@
 	loot = list()
 	var/mob/living/simple_animal/hostile/boss/paper_wizard/original
 
+/mob/living/simple_animal/hostile/boss/paper_wizard/copy/Destroy()
+	if(original)
+		original.copies -= src
+		original = null
+	return ..()
+
 //Hit a fake? eat pain!
 /mob/living/simple_animal/hostile/boss/paper_wizard/copy/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0) //damage
 		if(original)
 			original.minimum_distance = 3
 			original.retreat_distance = 3
-			original.copies -= src
 			for(var/c in original.copies)
 				qdel(c)
 		for(var/mob/living/L in range(5,src))

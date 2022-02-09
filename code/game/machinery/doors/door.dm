@@ -167,15 +167,14 @@
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
-	add_fingerprint(user)//add_fingerprint() is slow as fuck why is it slow reeeeeeeeeee
-	if(!requiresID())
-		user = null
+	add_fingerprint(user)
+	if(!density || (obj_flags & EMAGGED))
+		return
 
-	if(density && !(obj_flags & EMAGGED))
-		if(allowed(user))
-			open()
-		else
-			do_animate("deny")
+	if(requiresID() && allowed(user))
+		open()
+	else
+		do_animate("deny")
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -244,8 +243,7 @@
 	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user, params)
 		return TRUE
-	else if(!(I.item_flags & NOBLUDGEON) && !user.combat_mode)
-		try_to_activate_door(user)
+	else if((!(I.item_flags & NOBLUDGEON) && !user.combat_mode) && try_to_activate_door(user))
 		return TRUE
 	return ..()
 

@@ -1,0 +1,173 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/machinery/duct,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
+"f" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"i" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"k" = (
+/obj/structure/bed,
+/obj/item/bedsheet/random,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
+"p" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/turf/template_noop,
+/area/template_noop)
+"u" = (
+/obj/machinery/duct,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
+"v" = (
+/obj/structure/toilet{
+	pixel_y = 8
+	},
+/obj/machinery/duct,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"B" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"F" = (
+/obj/structure/curtain,
+/obj/machinery/shower{
+	pixel_y = 12
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"J" = (
+/obj/machinery/door/airlock/silver{
+	name = "Bathroom"
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"M" = (
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
+"R" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"V" = (
+/obj/machinery/duct,
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"W" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"Y" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"Z" = (
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
+
+(1,1,1) = {"
+a
+a
+a
+a
+p
+B
+i
+a
+i
+W
+"}
+(2,1,1) = {"
+a
+a
+i
+k
+Z
+u
+i
+F
+i
+a
+"}
+(3,1,1) = {"
+a
+a
+i
+M
+Z
+d
+V
+v
+i
+Y
+"}
+(4,1,1) = {"
+Y
+a
+i
+k
+Z
+Z
+J
+R
+i
+a
+"}
+(5,1,1) = {"
+Y
+W
+i
+f
+f
+f
+i
+i
+i
+a
+"}
+(6,1,1) = {"
+Y
+a
+W
+a
+a
+a
+a
+W
+a
+a
+"}
+(7,1,1) = {"
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+Y
+a
+a
+"}

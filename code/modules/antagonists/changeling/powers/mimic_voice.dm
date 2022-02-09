@@ -25,3 +25,11 @@
 	to_chat(user, span_notice("We shape our glands to take the voice of <b>[mimic_voice]</b>, this will slow down regenerating chemicals while active."))
 	to_chat(user, span_notice("Use this power again to return to our original voice and return chemical production to normal levels."))
 	return TRUE
+
+/datum/action/changeling/mimicvoice/Remove(mob/user)
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(changeling?.mimicing)
+		changeling.chem_recharge_slowdown = max(0, changeling.chem_recharge_slowdown - 0.25)
+		changeling.mimicing = ""
+		to_chat(user, span_notice("Our vocal glands return to their original position."))
+	. = ..()

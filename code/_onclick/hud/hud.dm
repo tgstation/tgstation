@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/action_buttons_hidden = FALSE
 
 	var/atom/movable/screen/healths
+	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
 	var/atom/movable/screen/internals
 	var/atom/movable/screen/wanted/wanted_lvl
@@ -95,7 +96,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hand_slots = list()
 
-	for(var/mytype in subtypesof(/atom/movable/screen/plane_master))
+	for(var/mytype in subtypesof(/atom/movable/screen/plane_master)- /atom/movable/screen/plane_master/rendering_plate)
 		var/atom/movable/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
@@ -131,6 +132,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(infodisplay)
 
 	healths = null
+	stamina = null
 	healthdoll = null
 	wanted_lvl = null
 	internals = null

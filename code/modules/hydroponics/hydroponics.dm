@@ -4,6 +4,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
@@ -68,12 +69,9 @@
 
 /obj/machinery/hydroponics/constructable/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/plumbing/simple_demand)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
-
-/obj/machinery/hydroponics/constructable/proc/can_be_rotated(mob/user, rotation_type)
-	return !anchored
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0
@@ -937,7 +935,7 @@
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
-	maxnutri = 10
+	maxnutri = 15
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()

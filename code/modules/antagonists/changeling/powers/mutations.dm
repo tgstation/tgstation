@@ -412,12 +412,12 @@
 	weapon_name_simple = "shield"
 
 /datum/action/changeling/weapon/shield/sting_action(mob/user)
-	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling) //So we can read the absorbedcount.
+	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling) //So we can read the absorbed_count.
 	if(!changeling)
 		return
 
 	var/obj/item/shield/changeling/S = ..(user)
-	S.remaining_uses = round(changeling.absorbedcount * 3)
+	S.remaining_uses = round(changeling.absorbed_count * 3)
 	return TRUE
 
 /obj/item/shield/changeling

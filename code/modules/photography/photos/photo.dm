@@ -35,10 +35,15 @@
 
 	if(!P.see_ghosts) ///Dont bother with this last bit if we can't see ghosts
 		return
-	for(var/i in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
-		if(isobserver(i))
-			set_custom_materials(list(/datum/material/hauntium = 2000))
-			break
+	for(var/datum/weakref/seen_ref in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
+		var/mob/seen = seen_ref.resolve()
+		if(!seen)
+			P.mobs_seen -= seen_ref
+			continue
+		if(!isobserver(seen))
+			continue
+		set_custom_materials(list(/datum/material/hauntium = 2000))
+		break
 
 /obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)

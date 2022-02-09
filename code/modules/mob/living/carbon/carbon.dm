@@ -539,7 +539,7 @@
 		REMOVE_TRAIT(src, TRAIT_FLOORED, STAMINA)
 	else
 		return
-	update_health_hud()
+	update_stamina_hud()
 
 /mob/living/carbon/update_sight()
 	if(!client)
@@ -768,6 +768,29 @@
 		else
 			hud_used.healths.icon_state = "health7"
 
+/mob/living/carbon/update_stamina_hud(shown_stamina_amount)
+	if(!client || !hud_used?.stamina)
+		return
+	if(stat == DEAD || IsStun() || IsParalyzed() || IsImmobilized() || IsKnockdown() || IsFrozen())
+		hud_used.stamina.icon_state = "stamina6"
+	else
+		if(shown_stamina_amount == null)
+			shown_stamina_amount = health - getStaminaLoss() - crit_threshold
+		if(shown_stamina_amount >= health)
+			hud_used.stamina.icon_state = "stamina0"
+		else if(shown_stamina_amount > health*0.8)
+			hud_used.stamina.icon_state = "stamina1"
+		else if(shown_stamina_amount > health*0.6)
+			hud_used.stamina.icon_state = "stamina2"
+		else if(shown_stamina_amount > health*0.4)
+			hud_used.stamina.icon_state = "stamina3"
+		else if(shown_stamina_amount > health*0.2)
+			hud_used.stamina.icon_state = "stamina4"
+		else if(shown_stamina_amount > 0)
+			hud_used.stamina.icon_state = "stamina5"
+		else
+			hud_used.stamina.icon_state = "stamina6"
+
 /mob/living/carbon/proc/update_internals_hud_icon(internal_state = 0)
 	if(hud_used?.internals)
 		hud_used.internals.icon_state = "internal[internal_state]"
@@ -809,6 +832,7 @@
 			set_stat(CONSCIOUS)
 	update_damage_hud()
 	update_health_hud()
+	update_stamina_hud()
 	med_hud_set_status()
 
 
@@ -885,7 +909,7 @@
 			return DEFIB_FAIL_FAILING_HEART
 
 	// Carbons with HARS do not need a brain
-	if (!dna?.check_mutation(HARS))
+	if (!dna?.check_mutation(/datum/mutation/human/headless))
 		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 
 		if (QDELETED(BR))
@@ -1329,7 +1353,6 @@
 	log_combat(src, target, "shoved", "into [name]")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
-
 // Checks to see how many hands this person has to sign with.
 /mob/living/carbon/proc/check_signables_state()
 	var/obj/item/bodypart/left_arm = get_bodypart(BODY_ZONE_L_ARM)
@@ -1347,3 +1370,21 @@
 		return SIGN_CUFFED
 	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
 		return SIGN_ONE_HAND
+
+/**
+ * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
+ *
+ * The strength of the splatter in the second argument determines how much it can dirty and how far it can go
+ *
+ * Arguments:
+ * * splatter_direction: Which direction the blood is flying
+ * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
+ */
+/mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
+	if(!isturf(loc))
+		return
+	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
+	our_splatter.add_blood_DNA(return_blood_DNA())
+	our_splatter.blood_dna_info = get_blood_dna_list()
+	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
+	our_splatter.fly_towards(targ, splatter_strength)

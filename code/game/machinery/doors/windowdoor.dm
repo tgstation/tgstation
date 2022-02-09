@@ -295,7 +295,7 @@
 		dropped_electronics = electronics
 		electronics = null
 		dropped_electronics.forceMove(drop_location())
-		qdel(src)
+	qdel(src)
 	return TRUE
 
 /obj/machinery/door/window/interact(mob/user) //for sillycones

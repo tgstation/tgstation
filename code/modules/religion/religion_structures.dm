@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	layer = TABLE_LAYER
-	pass_flags_self = LETPASSTHROW
+	pass_flags_self = PASSSTRUCTURE | PASSTABLE | LETPASSTHROW
 	can_buckle = TRUE
 	buckle_lying = 90 //we turn to you!
 	///Avoids having to check global everytime by referencing it locally.

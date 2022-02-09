@@ -8,7 +8,7 @@
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
-	var/charge_cost = 30
+	var/charge_cost = 1000
 
 /obj/item/borg/stun/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))

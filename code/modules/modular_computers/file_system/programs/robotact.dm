@@ -14,12 +14,6 @@
 	size = 5
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"
-	///A typed reference to the computer, specifying the borg tablet type
-	var/obj/item/modular_computer/tablet/integrated/tablet
-
-/datum/computer_file/program/robotact/Destroy()
-	tablet = null
-	return ..()
 
 /datum/computer_file/program/robotact/run_program(mob/living/user)
 	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
@@ -27,7 +21,7 @@
 		return FALSE
 	. = ..()
 	if(.)
-		tablet = computer
+		var/obj/item/modular_computer/tablet/integrated/tablet = computer
 		if(tablet.device_theme == "syndicate")
 			program_icon_state = "command-syndicate"
 		return TRUE
@@ -37,6 +31,10 @@
 	var/list/data = get_header_data()
 	if(!iscyborg(user))
 		return data
+
+	//Implied, since we can't run on non tablets
+	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+
 	var/mob/living/silicon/robot/borgo = tablet.borgo
 
 	data["name"] = borgo.name
@@ -80,6 +78,8 @@
 	if(!iscyborg(user))
 		return data
 	var/mob/living/silicon/robot/borgo = user
+	//Implied
+	var/obj/item/modular_computer/tablet/integrated/tablet = computer
 
 	data["Laws"] = borgo.laws.get_law_list(TRUE, TRUE, FALSE)
 	data["borgLog"] = tablet.borglog
@@ -90,7 +90,8 @@
 	. = ..()
 	if(.)
 		return
-
+	//Implied type, memes
+	var/obj/item/modular_computer/tablet/integrated/tablet = computer
 	var/mob/living/silicon/robot/borgo = tablet.borgo
 
 	switch(action)
@@ -149,7 +150,9 @@
  * law changes and borg log additions.
  */
 /datum/computer_file/program/robotact/proc/force_full_update()
-	if(tablet)
-		var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.borgo, src)
-		if(active_ui)
-			active_ui.send_full_update()
+	if(!istype(computer, /obj/item/modular_computer/tablet/integrated))
+		return
+	var/obj/item/modular_computer/tablet/integrated/tablet = computer
+	var/datum/tgui/active_ui = SStgui.get_open_ui(tablet.borgo, src)
+	if(active_ui)
+		active_ui.send_full_update()

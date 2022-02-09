@@ -82,7 +82,7 @@
 		return
 	var/mob/living/carbon/itemUser = user
 	usedHand = itemUser.get_held_index_of_item(src)
-	if(itemUser.has_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH))
+	if(itemUser.has_status_effect(/datum/status_effect/hippocratic_oath))
 		to_chat(user, span_warning("You can't possibly handle the responsibility of more than one rod!"))
 		return
 	var/failText = span_warning("The snake seems unsatisfied with your incomplete oath and returns to its previous place on the rod, returning to its dormant, wooden state. You must stand still while completing your oath!")
@@ -108,7 +108,7 @@
 		to_chat(itemUser, failText)
 		return
 	to_chat(itemUser, span_notice("The snake, satisfied with your oath, attaches itself and the rod to your forearm with an inseparable grip. Your thoughts seem to only revolve around the core idea of helping others, and harm is nothing more than a distant, wicked memory..."))
-	var/datum/status_effect/hippocratic_oath/effect = itemUser.apply_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH)
+	var/datum/status_effect/hippocratic_oath/effect = itemUser.apply_status_effect(/datum/status_effect/hippocratic_oath)
 	effect.hand = usedHand
 	activated()
 
@@ -200,7 +200,7 @@
 	name = "Memento Mori"
 	desc = "Bind your life to the pendant."
 
-/datum/action/item_action/hands_free/memento_mori/Trigger()
+/datum/action/item_action/hands_free/memento_mori/Trigger(trigger_flags)
 	var/obj/item/clothing/neck/necklace/memento_mori/MM = target
 	if(!MM.active_owner)
 		if(ishuman(owner))
@@ -633,7 +633,6 @@
 	. += span_notice("Berserk mode is [berserk_charge]% charged.")
 
 /obj/item/clothing/head/hooded/berserker/process(delta_time)
-	. = ..()
 	if(berserk_active)
 		berserk_charge = clamp(berserk_charge - CHARGE_DRAINED_PER_SECOND * delta_time, 0, MAX_BERSERK_CHARGE)
 	if(!berserk_charge)
@@ -771,7 +770,7 @@
 		balloon_alert(ranged_ability_user, "invalid target!")
 		return
 	var/mob/living/living_target = target
-	living_target.apply_status_effect(STATUS_EFFECT_STAGGER)
+	living_target.apply_status_effect(/datum/status_effect/stagger)
 	var/datum/status_effect/agent_pinpointer/scan_pinpointer = ranged_ability_user.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_target = living_target
 	living_target.Jitter(5 SECONDS)

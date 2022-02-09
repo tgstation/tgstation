@@ -12,21 +12,21 @@
 		return FALSE
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/list/names = list()
-	for(var/datum/changelingprofile/prof in changeling.stored_profiles)
+	for(var/datum/changeling_profile/prof in changeling.stored_profiles)
 		names += "[prof.name]"
 
 	var/chosen_name = tgui_input_list(user, "Target DNA", "Transformation", sort_list(names))
 	if(isnull(chosen_name))
 		return
 
-	var/datum/changelingprofile/chosen_prof = changeling.get_dna(chosen_name)
+	var/datum/changeling_profile/chosen_prof = changeling.get_dna(chosen_name)
 	if(!chosen_prof)
 		return
 	if(!user || user.notransform)
 		return FALSE
 	to_chat(user, span_notice("We transform our appearance."))
 	..()
-	changeling.purchasedpowers -= src
+	changeling.purchased_powers -= src
 	Remove(user)
 
 	var/newmob = user.humanize()
@@ -45,7 +45,7 @@
 
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	var/datum/action/changeling/lesserform/monkey_form_ability = new()
-	changeling.purchasedpowers += monkey_form_ability
+	changeling.purchased_powers += monkey_form_ability
 
 	monkey_form_ability.Grant(user)
 

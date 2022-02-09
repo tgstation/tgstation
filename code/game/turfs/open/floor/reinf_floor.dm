@@ -54,7 +54,6 @@
 	return ..()
 
 /turf/open/floor/engine/ex_act(severity, target)
-	contents_explosion(severity, target)
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE

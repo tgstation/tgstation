@@ -87,8 +87,14 @@
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
 			. += ""
-			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
-			. += "Absorbed DNA: [changeling.absorbedcount]"
+			. += "Chemical Storage: [changeling.chem_charges]/[changeling.total_chem_storage]"
+			. += "Absorbed DNA: [changeling.absorbed_count]"
+
+/mob/living/carbon/human/reset_perspective(atom/new_eye, force_reset = FALSE)
+	if(dna?.species?.prevent_perspective_change && !force_reset) // This is in case a species needs to prevent perspective changes in certain cases, like Dullahans preventing perspective changes when they're looking through their head.
+		update_fullscreen()
+		return
+	return ..()
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
@@ -266,7 +272,7 @@
 				var/maxFine = CONFIG_GET(number/maxfine)
 				var/t1 = tgui_input_text(usr, "Citation crime", "Security HUD")
 				var/fine = tgui_input_number(usr, "Citation fine", "Security HUD", 50, maxFine, 5)
-				if(isnull(fine))
+				if(!fine)
 					return
 				if(!R || !t1 || !allowed_access)
 					return
@@ -274,8 +280,6 @@
 					return
 				if(!HAS_TRAIT(H, TRAIT_SECURITY_HUD))
 					return
-				fine = round(fine)
-				fine = min(fine, maxFine)
 
 				var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", allowed_access, station_time_timestamp(), fine)
 				for (var/obj/item/pda/P in GLOB.PDAs)
@@ -378,7 +382,7 @@
 /mob/living/carbon/human/try_inject(mob/user, target_zone, injection_flags)
 	. = ..()
 	if(!. && (injection_flags & INJECT_TRY_SHOW_ERROR_MESSAGE) && user)
-		var/obj/item/bodypart/the_part = get_bodypart(target_zone || user.zone_selected)
+		var/obj/item/bodypart/the_part = get_bodypart(target_zone || check_zone(user.zone_selected))
 		to_chat(user, span_alert("There is no exposed flesh or thin material on [p_their()] [the_part.name]."))
 
 /mob/living/carbon/human/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null)
@@ -536,7 +540,7 @@
 #undef CPR_PANIC_SPEED
 
 /mob/living/carbon/human/cuff_resist(obj/item/I)
-	if(dna?.check_mutation(HULK))
+	if(dna?.check_mutation(/datum/mutation/human/hulk))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		if(..(I, cuff_break = FAST_CUFFBREAK))
 			dropItemToGround(I)
@@ -693,8 +697,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = min(health, maxHealth - getStaminaLoss())
-			if(..(health_amount)) //not dead
+			if(..()) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
 						hud_used.healths.icon_state = "health6"
@@ -882,7 +885,7 @@
 	return ishuman(target) && target.body_position == LYING_DOWN
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	if(!can_be_firemanned(target) || incapacitated(FALSE, TRUE))
+	if(!can_be_firemanned(target) || incapacitated(IGNORE_GRAB))
 		to_chat(src, span_warning("You can't fireman carry [target] while [target.p_they()] [target.p_are()] standing!"))
 		return
 
@@ -902,7 +905,7 @@
 		return
 
 	//Second check to make sure they're still valid to be carried
-	if(!can_be_firemanned(target) || incapacitated(FALSE, TRUE) || target.buckled)
+	if(!can_be_firemanned(target) || incapacitated(IGNORE_GRAB) || target.buckled)
 		visible_message(span_warning("[src] fails to fireman carry [target]!"))
 		return
 
@@ -918,7 +921,7 @@
 		visible_message(span_warning("[target] fails to climb onto [src]!"))
 		return
 
-	if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+	if(target.incapacitated(IGNORE_GRAB) || incapacitated(IGNORE_GRAB))
 		target.visible_message(span_warning("[target] can't hang onto [src]!"))
 		return
 

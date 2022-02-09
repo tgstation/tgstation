@@ -351,7 +351,7 @@
 	R.keyslot = new /obj/item/encryptionkey/headset_service
 	R.recalculateChannels()
 	ADD_TRAIT(H, TRAIT_NAIVE, INNATE_TRAIT)
-	H.dna.add_mutation(CLOWNMUT)
+	H.dna.add_mutation(/datum/mutation/human/clumsy)
 	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
 		M.mutadone_proof = TRUE
 

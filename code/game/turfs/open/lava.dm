@@ -28,7 +28,7 @@
 	var/immunity_resistance_flags = LAVA_PROOF
 
 /turf/open/lava/ex_act(severity, target)
-	contents_explosion(severity, target)
+	return
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return

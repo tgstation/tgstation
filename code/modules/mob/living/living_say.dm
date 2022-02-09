@@ -216,11 +216,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			log_talk(message, LOG_SAY, forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
 	message = treat_message(message) // unfortunately we still need this
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
-	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
-		message = uppertext(message)
-	if(!message)
-		return
 
 	spans |= speech_span
 
@@ -233,6 +228,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args, message_range)
+	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
+		message = uppertext(message)
+	if(!message)
+		if(succumbed)
+			succumb()
+		return
+
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
@@ -241,6 +245,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		// radios don't pick up whispers very well
 		radio_message = stars(radio_message)
 		spans |= SPAN_ITALICS
+
+
 	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
@@ -264,7 +270,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods)//roughly 58% of living/say()'s total cost
 
 	if(succumbed)
-		succumb(1)
+		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
 
 	return TRUE

@@ -141,6 +141,8 @@
 /mob/living/simple_animal/pet/dog/pug/mcgriff
 	name = "McGriff"
 	desc = "This dog can tell something smells around here, and that something is CRIME!"
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/dog/bullterrier
 	name = "\improper bull terrier"

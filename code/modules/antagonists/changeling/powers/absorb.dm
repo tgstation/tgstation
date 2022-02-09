@@ -39,9 +39,9 @@
 	owner.visible_message(span_danger("[owner] sucks the fluids from [target]!"), span_notice("We have absorbed [target]."))
 	to_chat(target, span_userdanger("You are absorbed by the changeling!"))
 
-	if(!changeling.has_dna(target.dna))
+	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
-		changeling.trueabsorbs++
+		changeling.true_absorbs++
 
 	if(owner.nutrition < NUTRITION_LEVEL_WELL_FED)
 		owner.set_nutrition(min((owner.nutrition + target.nutrition), NUTRITION_LEVEL_WELL_FED))
@@ -54,8 +54,8 @@
 
 	is_absorbing = FALSE
 
-	changeling.chem_charges = min(changeling.chem_charges+10, changeling.chem_storage)
-	changeling.canrespec = TRUE
+	changeling.adjust_chemicals(10)
+	changeling.can_respec = TRUE
 
 	target.death(0)
 	target.Drain()
@@ -125,13 +125,21 @@
 	var/datum/antagonist/changeling/target_ling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(target_ling)//If the target was a changeling, suck out their extra juice and objective points!
 		to_chat(owner, span_boldnotice("[target] was one of us. We have absorbed their power."))
-		changeling.geneticpoints += round(target_ling.geneticpoints/2)
-		changeling.total_geneticspoints = changeling.geneticpoints //updates the total sum of genetic points when you absorb another ling
-		changeling.chem_storage += round(target_ling.chem_storage/2)
-		changeling.total_chem_storage = changeling.chem_storage //updates the total sum of chemicals stored for when you absorb another ling
-		changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
-		changeling.absorbedcount += (target_ling.absorbedcount)
 
+		// Gain half of their genetic points.
+		var/genetic_points_to_add = round(target_ling.total_genetic_points / 2)
+		changeling.genetic_points += genetic_points_to_add
+		changeling.total_genetic_points += genetic_points_to_add
+
+		// And half of their chemical charges.
+		var/chems_to_add = round(target_ling.total_chem_storage / 2)
+		changeling.adjust_chemicals(chems_to_add)
+		changeling.total_chem_storage += chems_to_add
+
+		// And of course however many they've absorbed, we've absorbed
+		changeling.absorbed_count += target_ling.absorbed_count
+
+		// Lastly, make them not a ling anymore. (But leave their objectives for round-end purposes).
 		var/list/copied_objectives = target_ling.objectives.Copy()
 		target.mind.remove_antag_datum(/datum/antagonist/changeling)
 		var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)

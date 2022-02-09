@@ -1,6 +1,6 @@
 //temporary visual effects(/obj/effect/temp_visual) used by cult stuff
 /obj/effect/temp_visual/cult
-	icon = 'icons/effects/cult_effects.dmi'
+	icon = 'icons/effects/cult/effects.dmi'
 	randomdir = FALSE
 	duration = 10
 
@@ -18,13 +18,13 @@
 	icon_state = "bloodout"
 
 /obj/effect/temp_visual/dir_setting/cult/phase  // The veil shifter teleport
-	icon = 'icons/effects/cult_effects.dmi'
+	icon = 'icons/effects/cult/effects.dmi'
 	name = "phase glow"
 	duration = 7
 	icon_state = "cultin"
 
 /obj/effect/temp_visual/dir_setting/cult/phase/out
-	icon = 'icons/effects/cult_effects.dmi'
+	icon = 'icons/effects/cult/effects.dmi'
 	icon_state = "cultout"
 
 /obj/effect/temp_visual/cult/sac

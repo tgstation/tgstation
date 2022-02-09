@@ -14,7 +14,7 @@
 	icon_state = "health"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/health_analyzer)
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
@@ -67,7 +67,7 @@
 		or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
 	icon_state = "carry"
 	complexity = 1
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 
 /obj/item/mod/module/quick_carry/on_suit_activation()
@@ -98,7 +98,7 @@
 	icon_state = "injector"
 	module_type = MODULE_ACTIVE
 	complexity = 1
-	active_power_cost = DEFAULT_CELL_DRAIN * 0.3
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	device = /obj/item/reagent_containers/syringe/mod
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
@@ -125,7 +125,7 @@
 	icon_state = "organ_thrower"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/organ_thrower, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
 	var/max_organs = 5

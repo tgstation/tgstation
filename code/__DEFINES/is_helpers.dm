@@ -7,6 +7,8 @@
 
 #define isatom(A) (isloc(A))
 
+#define isdatum(thing) (istype(thing, /datum))
+
 #define isweakref(D) (istype(D, /datum/weakref))
 
 //Turfs
@@ -137,8 +139,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define israt(A) (istype(A, /mob/living/simple_animal/hostile/rat))
 
 #define isregalrat(A) (istype(A, /mob/living/simple_animal/hostile/regalrat))
-
-#define isswarmer(A) (istype(A, /mob/living/simple_animal/hostile/swarmer))
 
 #define isguardian(A) (istype(A, /mob/living/simple_animal/hostile/guardian))
 

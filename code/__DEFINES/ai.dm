@@ -18,6 +18,10 @@
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
+///Does finishing this task not null the current movement target?
+#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
+///Does finishing this task make the AI stop moving towards the target?
+#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)

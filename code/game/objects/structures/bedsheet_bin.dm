@@ -18,6 +18,7 @@ LINEN BINS
 	inhand_icon_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
 	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
@@ -32,7 +33,7 @@ LINEN BINS
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/surgery_initiator)
+	AddComponent(/datum/component/surgery_initiator)
 	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2

@@ -16,6 +16,7 @@
 		"basic_scanning",
 		"bepis",
 		"bucket",
+		"c38_rubber",
 		"c-reader",
 		"circuit_imprinter",
 		"circuit_imprinter_offstation",
@@ -28,11 +29,12 @@
 		"doppler_array",
 		"experi_scanner",
 		"experimentor",
+		"gas_filter",
 		"handlabel",
 		"mechfab",
 		"micro_mani",
+		"oven_tray",
 		"packagewrap",
-		"paystand",
 		"plasmaglass",
 		"plasmareinforcedglass",
 		"plasteel",
@@ -41,6 +43,7 @@
 		"plastic_spoon",
 		"plastitanium",
 		"plastitaniumglass",
+		"plasmaman_gas_filter",
 		"rdconsole",
 		"rdserver",
 		"rdservercontrol",
@@ -55,9 +58,6 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
-		"gas_filter",
-		"plasmaman_gas_filter",
-		"oven_tray"
 	)
 
 /datum/techweb_node/mmi
@@ -118,13 +118,13 @@
 	display_name = "Basic Modular Suits"
 	description = "Specialized back mounted power suits with various different modules."
 	design_ids = list(
-		"mod_armor_standard",
 		"mod_boots",
 		"mod_chestplate",
 		"mod_gauntlets",
 		"mod_helmet",
 		"mod_paint_kit",
 		"mod_shell",
+		"mod_armor_standard",
 		"mod_storage",
 		"mod_welding",
 		"mod_mouthhole",
@@ -132,6 +132,7 @@
 		"mod_longfall",
 		"mod_thermal_regulator",
 		"mod_plasma",
+		"mod_sign_radio",
 	)
 
 /datum/techweb_node/mech_tools
@@ -231,6 +232,7 @@
 		"comp_decimal_convert",
 		"comp_delay",
 		"comp_direction",
+		"comp_element_find",
 		"comp_filter_list",
 		"comp_foreach",
 		"comp_get_column",
@@ -245,8 +247,11 @@
 		"comp_index_table",
 		"comp_length",
 		"comp_light",
-		"comp_list_literal",
+		"comp_list_add",
 		"comp_list_assoc_literal",
+		"comp_list_clear",
+		"comp_list_literal",
+		"comp_list_remove",
 		"comp_logic",
 		"comp_matscanner",
 		"comp_mmi",
@@ -713,11 +718,12 @@
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
+		"comp_mod_action",
 		"controller_shell",
 		"dispenser_shell",
 		"door_shell",
 		"gun_shell",
-		"mod_circuit",
+		"module_shell",
 		"money_bot_shell",
 		"scanner_gate_shell",
 		"scanner_shell",
@@ -1411,23 +1417,11 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	required_experiments = list(/datum/experiment/explosion/maxcap)
 
-/datum/techweb_node/ballistic_weapons
-	id = "ballistic_weapons"
-	display_name = "Ballistic Weaponry"
-	description = "This isn't research.. This is reverse-engineering!"
-	prereq_ids = list("weaponry")
-	design_ids = list(
-		"mag_oldsmg",
-		"mag_oldsmg_ap",
-		"mag_oldsmg_ic",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/exotic_ammo
 	id = "exotic_ammo"
 	display_name = "Exotic Ammunition"
 	description = "They won't know what hit em."
-	prereq_ids = list("adv_weaponry")
+	prereq_ids = list("weaponry")
 	design_ids = list(
 		"c38_hotshot",
 		"c38_iceblox",
@@ -1460,7 +1454,6 @@
 		"mod_clamp",
 		"mod_drill",
 		"mod_orebag",
-		"mod_pathfinder",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -1489,6 +1482,7 @@
 		"mod_jetpack",
 		"mod_rad_protection",
 		"mod_emp_shield",
+		"mod_storage_expanded",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 
@@ -1531,8 +1525,30 @@
 		"mod_armor_cosmohonk",
 		"mod_bikehorn",
 		"mod_microwave_beam",
+		"mod_waddle",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_anomaly
+	id = "mod_anomaly"
+	display_name = "Anomalock Modular Suits"
+	description = "Modules for modular suits that require anomaly cores to function."
+	prereq_ids = list("mod_advanced", "anomaly_research")
+	design_ids = list(
+		"mod_antigrav",
+		"mod_teleporter",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+
+/datum/techweb_node/mod_anomaly_engi
+	id = "mod_anomaly_engi"
+	display_name = "Engineering Anomalock Modular Suits"
+	description = "Advanced modules for modular suits, using anomaly cores to become even better engineers."
+	prereq_ids = list("mod_advanced_engineering", "mod_anomaly")
+	design_ids = list(
+		"mod_kinesis",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 
 ////////////////////////mech technology////////////////////////
 /datum/techweb_node/adv_mecha
@@ -1703,7 +1719,7 @@
 	id = "mecha_tools"
 	display_name = "Exosuit Weapon (LBX AC 10 \"Scattershot\")"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("ballistic_weapons")
+	prereq_ids = list("exotic_ammo")
 	design_ids = list(
 		"mech_scattershot",
 		"mech_scattershot_ammo",
@@ -1714,7 +1730,7 @@
 	id = "mech_carbine"
 	display_name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("ballistic_weapons")
+	prereq_ids = list("exotic_ammo")
 	design_ids = list(
 		"mech_carbine",
 		"mech_carbine_ammo",
@@ -1828,7 +1844,7 @@
 	id = "mech_lmg"
 	display_name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("ballistic_weapons")
+	prereq_ids = list("exotic_ammo")
 	design_ids = list(
 		"mech_lmg",
 		"mech_lmg_ammo",
@@ -1969,12 +1985,24 @@
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
+	if(!SSassets.initialized)
+		RegisterSignal(SSassets, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
+	else
+		register_uplink_items()
+
+/**
+ * This needs some clarification: The uplink_items_by_type list is populated on datum/asset/json/uplink/generate.
+ * SStraitor doesn't actually initialize. I'm bamboozled.
+ */
+/datum/techweb_node/syndicate_basic/proc/register_uplink_items()
+	SIGNAL_HANDLER
+	UnregisterSignal(SSassets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	boost_item_paths = list()
-	for(var/path in GLOB.uplink_items)
-		var/datum/uplink_item/UI = new path
-		if(!UI.item || !UI.illegal_tech)
+	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
+		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
+		if(!item.item || !item.illegal_tech)
 			continue
-		boost_item_paths |= UI.item //allows deconning to unlock.
+		boost_item_paths |= item.item //allows deconning to unlock.
 
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////
@@ -2063,6 +2091,18 @@
 	design_ids = list(
 		"tackle_dolphin",
 		"tackle_rocket",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	hidden = TRUE
+	experimental = TRUE
+
+/datum/techweb_node/mod_experimental
+	id = "mod_experimental"
+	display_name = "Experimental Modular Suits"
+	description = "Applications of experimentality when creating MODsuits has created these..."
+	prereq_ids = list("base")
+	design_ids = list(
+		"mod_disposal",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

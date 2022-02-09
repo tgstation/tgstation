@@ -4,6 +4,7 @@
 	icon = 'icons/obj/machines/kitchenmachines.dmi'
 	icon_state = "griddle1_off"
 	density = TRUE
+	pass_flags_self = PASSMACHINE | PASSTABLE| LETPASSTHROW // It's roughly the height of a table.
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER

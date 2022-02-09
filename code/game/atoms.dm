@@ -376,7 +376,7 @@
 		return FALSE
 
 	if(is_reserved_level(current_turf.z))
-		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile)
+		for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
 			if(mobile_docking_port.launch_status != ENDGAME_TRANSIT)
 				continue
 			for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
@@ -391,7 +391,7 @@
 		return TRUE
 
 	//Check for centcom shuttles
-	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile)
+	for(var/obj/docking_port/mobile/mobile_docking_port as anything in SSshuttle.mobile_docking_ports)
 		if(mobile_docking_port.launch_status == ENDGAME_LAUNCHED)
 			for(var/place as anything in mobile_docking_port.shuttle_areas)
 				var/area/shuttle/shuttle_area = place
@@ -578,7 +578,8 @@
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	. = hitting_projectile.on_hit(src, 0, def_zone, piercing_hit)
+	var/armor = check_projectile_armor(def_zone, hitting_projectile)
+	. = hitting_projectile.on_hit(src, armor, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -805,12 +806,12 @@
 /**
  * React to being hit by an explosion
  *
- * Default behaviour is to call [contents_explosion][/atom/proc/contents_explosion] and send the [COMSIG_ATOM_EX_ACT] signal
+ * Should be called through the [EX_ACT] wrapper macro.
+ * The wrapper takes care of the [COMSIG_ATOM_EX_ACT] signal.
+ * as well as calling [/atom/proc/contents_explosion].
  */
 /atom/proc/ex_act(severity, target)
 	set waitfor = FALSE
-	contents_explosion(severity, target)
-	SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
 
 /**
  * React to a hit by a blob objecd
@@ -1420,6 +1421,7 @@
 			if(TOOL_ANALYZER)
 				act_result = analyzer_act_secondary(user, tool)
 	if(act_result) // A tooltype_act has completed successfully
+		log_tool("[key_name(user)] used [tool] on [src][is_right_clicking ? "(right click)" : ""] at [AREACOORD(src)]")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
@@ -1448,8 +1450,9 @@
 
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
+	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
 	to_chat(user, span_notice("You start working on [src]."))
-	if(process_item.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
+	if(process_item.use_tool(src, user, processing_time, volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
@@ -2044,19 +2047,29 @@
  * Recursive getter method to return a list of all ghosts orbitting this atom
  *
  * This will work fine without manually passing arguments.
+ * * processed - The list of atoms we've already convered
+ * * source - Is this the atom for who we're counting up all the orbiters?
+ * * ignored_stealthed_admins - If TRUE, don't count admins who are stealthmoded and orbiting this
  */
-/atom/proc/get_all_orbiters(list/processed, source = TRUE)
+/atom/proc/get_all_orbiters(list/processed, source = TRUE, ignore_stealthed_admins = TRUE)
 	var/list/output = list()
-	if (!processed)
+	if(!processed)
 		processed = list()
-	if (src in processed)
+	else if(src in processed)
 		return output
-	if (!source)
+
+	if(!source)
 		output += src
+
 	processed += src
-	for (var/atom/atom_orbiter as anything in orbiters?.orbiter_list)
+	for(var/atom/atom_orbiter as anything in orbiters?.orbiter_list)
 		output += atom_orbiter.get_all_orbiters(processed, source = FALSE)
 	return output
+
+/mob/get_all_orbiters(list/processed, source = TRUE, ignore_stealthed_admins = TRUE)
+	if(!source && ignore_stealthed_admins && client?.holder?.fakekey)
+		return list()
+	return ..()
 
 /**
 * Instantiates the AI controller of this atom. Override this if you want to assign variables first.

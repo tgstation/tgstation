@@ -40,6 +40,7 @@
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
 	QDEL_LAZYLIST(diseases)
+	QDEL_LIST(surgeries)
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels, message = TRUE)
@@ -433,9 +434,31 @@
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
 	death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))
+/**
+ * Checks if a mob is incapacitated
+ *
+ * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+ * unless there is a flag being used to check if it's ignored
+ *
+ * args:
+ * * flags (optional) bitflags that determine if special situations are exempt from being considered incapacitated
+ *
+ * bitflags: (see code/__DEFINES/status_effects.dm)
+ * * IGNORE_RESTRAINTS - mob in a restraint (handcuffs) is not considered incapacitated
+ * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
+ * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
+**/
+/mob/living/incapacitated(flags)
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
+
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	if(!(flags & IGNORE_STASIS) && IS_IN_STASIS(src))
+		return TRUE
+	return FALSE
 
 /mob/living/canUseStorage()
 	if (usable_hands <= 0)
@@ -477,7 +500,11 @@
 /mob/proc/get_contents()
 
 
-//Gets ID card from a mob. If hand_firsts is TRUE hands are checked first, otherwise other slots are prioritized (for subtypes at least).
+/**
+ * Gets ID card from a mob.
+ * Argument:
+ * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
+ */
 /mob/living/proc/get_idcard(hand_first)
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
@@ -599,9 +626,8 @@
 /mob/living/get_contents()
 	var/list/ret = list()
 	ret |= contents //add our contents
-	for(var/i in ret.Copy()) //iterate storage objects
-		var/atom/A = i
-		SEND_SIGNAL(A, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
+	for(var/atom/iter_atom as anything in ret.Copy()) //iterate storage objects
+		SEND_SIGNAL(iter_atom, COMSIG_TRY_STORAGE_RETURN_INVENTORY, ret)
 	for(var/obj/item/folder/F in ret.Copy()) //very snowflakey-ly iterate folders
 		ret |= F.contents
 	return ret
@@ -885,12 +911,13 @@
 	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(buckled || mob_negates_gravity())
 		return
+
 	if(client && client.move_delay >= world.time + world.tick_lag*2)
 		pressure_resistance_prob_delta -= 30
 
 	var/list/turfs_to_check = list()
 
-	if(has_limbs)
+	if(!has_limbs)
 		var/turf/T = get_step(src, angle2dir(dir2angle(direction)+90))
 		if (T)
 			turfs_to_check += T
@@ -908,11 +935,14 @@
 				if (AM.density && AM.anchored)
 					pressure_resistance_prob_delta -= 20
 					break
-	if(!force_moving)
-		..(pressure_difference, direction, pressure_resistance_prob_delta)
+	..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(next_move > world.time)
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		return FALSE
+	return TRUE
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -968,7 +998,7 @@
 							span_warning("You struggle as you fail to break free of [pulledby]'s grip!"), null, null, pulledby)
 			to_chat(pulledby, span_danger("[src] struggles as they fail to break free of your grip!"))
 		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 40
+			client.move_delay = world.time + 4 SECONDS
 	else
 		pulledby.stop_pulling()
 		return FALSE
@@ -1093,7 +1123,7 @@
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 		var/datum/dna/D = has_dna()
-		if(!D || !D.check_mutation(TK) || !tkMaxRangeCheck(src, M))
+		if(!D || !D.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, M))
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 	if(need_hands && !can_hold_items(isitem(M) ? M : null)) //almost redundant if it weren't for mobs,
@@ -1335,7 +1365,7 @@
 	if(!on_fire)
 		return
 	on_fire = FALSE
-	fire_stacks = 0 //If it is not called from set_fire_stacks()
+	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
 	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 		qdel(F)
 	clear_alert("fire")
@@ -1367,6 +1397,7 @@
 	fire_stacks = clamp(stacks, -20, 20)
 	if(fire_stacks <= 0)
 		extinguish_mob()
+
 
 //Share fire evenly between the two mobs
 //Called in MobBump()
@@ -1527,12 +1558,16 @@
 /mob/living/reset_perspective(atom/A)
 	if(..())
 		update_sight()
-		if(client.eye && client.eye != src)
-			var/atom/AT = client.eye
-			AT.get_remote_view_fullscreens(src)
-		else
-			clear_fullscreen("remote_view", 0)
+		update_fullscreen()
 		update_pipe_vision()
+
+/// Proc used to handle the fullscreen overlay updates, realistically meant for the reset_perspective() proc.
+/mob/living/proc/update_fullscreen()
+	if(client.eye && client.eye != src)
+		var/atom/client_eye = client.eye
+		client_eye.get_remote_view_fullscreens(src)
+	else
+		clear_fullscreen("remote_view", 0)
 
 /mob/living/update_mouse_pointer()
 	..()
@@ -1698,7 +1733,7 @@
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !(incapacitated(ignore_restraints = TRUE))
+	return !(incapacitated(IGNORE_RESTRAINTS))
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
@@ -1978,6 +2013,10 @@
 /// Whether or not this mob will escape from storages while being picked up/held.
 /mob/living/proc/will_escape_storage()
 	return FALSE
+
+//Used specifically for the clown box suicide act
+/mob/living/carbon/human/will_escape_storage()
+	return TRUE
 
 /// Sets the mob's hunger levels to a safe overall level. Useful for TRAIT_NOHUNGER species changes.
 /mob/living/proc/set_safe_hunger_level()

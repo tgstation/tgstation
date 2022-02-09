@@ -12,8 +12,6 @@
 	program_icon = "robot"
 	///Number of simple robots on-station.
 	var/botcount = 0
-	///Used to find the location of the user for the purposes of summoning robots.
-	var/mob/current_user
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
 
@@ -33,12 +31,11 @@
 		data["access_on_card"] = id_card ? id_card.access : null
 
 	botcount = 0
-	current_user = user
 
 	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
 		if(simple_bot.z != zlevel || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer && !simple_bot.check_access(current_user)) // Only check Bots we can access)
+		if(computer && !simple_bot.check_access(user)) // Only check Bots we can access)
 			continue
 		var/list/newbot = list(
 			"name" = simple_bot.name,
@@ -71,10 +68,11 @@
 
 	return data
 
-/datum/computer_file/program/robocontrol/ui_act(action, list/params)
+/datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
+	var/mob/current_user = ui.user
 	var/obj/item/computer_hardware/card_slot/card_slot
 	var/obj/item/card/id/id_card
 	if(computer)

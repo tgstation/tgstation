@@ -27,8 +27,10 @@
 	use_power = IDLE_POWER_USE
 	circuit = /obj/item/circuitboard/machine/experimentor
 	var/recentlyExperimented = 0
-	var/mob/trackedIan
-	var/mob/trackedRuntime
+	/// Weakref to the first ian we can find at init
+	var/datum/weakref/tracked_ian_ref
+	/// Weakref to the first runtime we can find at init
+	var/datum/weakref/tracked_runtime_ref
 	var/badThingCoeff = 0
 	var/resetTime = 15
 	var/cloneMode = FALSE
@@ -72,8 +74,8 @@
 /obj/machinery/rnd/experimentor/Initialize(mapload)
 	. = ..()
 
-	trackedIan = locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list
-	trackedRuntime = locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list
+	tracked_ian_ref = WEAKREF(locate(/mob/living/simple_animal/pet/dog/corgi/ian) in GLOB.mob_living_list)
+	tracked_runtime_ref = WEAKREF(locate(/mob/living/simple_animal/pet/cat/runtime) in GLOB.mob_living_list)
 	SetTypeReactions()
 
 	critical_items_typecache = typecacheof(list(
@@ -477,9 +479,10 @@
 		if(globalMalf > 16 && globalMalf < 35)
 			visible_message(span_warning("[src] melts [exp_on], ian-izing the air around it!"))
 			throwSmoke(loc)
-			if(trackedIan)
-				throwSmoke(trackedIan.loc)
-				trackedIan.forceMove(loc)
+			var/mob/living/tracked_ian = tracked_ian_ref?.resolve()
+			if(tracked_ian)
+				throwSmoke(tracked_ian.loc)
+				tracked_ian.forceMove(loc)
 				investigate_log("Experimentor has stolen Ian!", INVESTIGATE_EXPERIMENTOR) //...if anyone ever fixes it...
 			else
 				new /mob/living/simple_animal/pet/dog/corgi(loc)
@@ -494,9 +497,10 @@
 		if(globalMalf > 51 && globalMalf < 75)
 			visible_message(span_warning("[src] encounters a run-time error!"))
 			throwSmoke(loc)
-			if(trackedRuntime)
-				throwSmoke(trackedRuntime.loc)
-				trackedRuntime.forceMove(drop_location())
+			var/mob/living/tracked_runtime = tracked_runtime_ref?.resolve()
+			if(tracked_runtime)
+				throwSmoke(tracked_runtime.loc)
+				tracked_runtime.forceMove(drop_location())
 				investigate_log("Experimentor has stolen Runtime!", INVESTIGATE_EXPERIMENTOR)
 			else
 				new /mob/living/simple_animal/pet/cat(loc)
@@ -607,7 +611,7 @@
 	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	CL.detonate()
-	warn_admins(user, "Smoke", 0)
+	warn_admins(user, "Foam", 0)
 
 /obj/item/relic/proc/flash(mob/user)
 	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

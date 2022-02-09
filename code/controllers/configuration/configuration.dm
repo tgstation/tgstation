@@ -297,7 +297,7 @@ special keywords defined in _DEFINES/admin.dm
 
 Example config:
 {
-	"Assistant" : "Don't kill everyone",
+	JOB_ASSISTANT : "Don't kill everyone",
 	"/datum/antagonist/highlander" : "<b>Kill everyone</b>",
 	"Ash Walker" : "Kill all spacemans"
 }
@@ -350,7 +350,9 @@ Example config:
 			if ("map")
 				currentmap = load_map_config(data, MAP_DIRECTORY_MAPS)
 				if(currentmap.defaulted)
-					log_config("Failed to load map config for [data]!")
+					var/error_message = "Failed to load map config for [data]!"
+					log_config(error_message)
+					log_mapping(error_message, TRUE)
 					currentmap = null
 			if ("minplayers","minplayer")
 				currentmap.config_min_users = text2num(data)

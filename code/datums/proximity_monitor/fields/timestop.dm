@@ -17,6 +17,8 @@
 	alpha = 125
 	var/check_anti_magic = FALSE
 	var/check_holy = FALSE
+	///if true, immune atoms moving ends the timestop instead of duration.
+	var/channelled = FALSE
 
 /obj/effect/timestop/Initialize(mapload, radius, time, list/immune_atoms, start = TRUE) //Immune atoms assoc list atom = TRUE
 	. = ..()
@@ -43,11 +45,16 @@
 /obj/effect/timestop/proc/timestop()
 	target = get_turf(src)
 	playsound(src, 'sound/magic/timeparadox2.ogg', 75, TRUE, -1)
-	chronofield = new (src, freezerange, TRUE, immune, check_anti_magic, check_holy)
-	QDEL_IN(src, duration)
+	chronofield = new(src, freezerange, TRUE, immune, check_anti_magic, check_holy, channelled)
+	if(!channelled)
+		QDEL_IN(src, duration)
 
 /obj/effect/timestop/magic
 	check_anti_magic = TRUE
+
+///indefinite version, but only if no immune atoms move.
+/obj/effect/timestop/channelled
+	channelled = TRUE
 
 /datum/proximity_monitor/advanced/timestop
 	var/list/immune = list()
@@ -57,19 +64,25 @@
 	var/list/frozen_turfs = list() //Only aesthetically
 	var/check_anti_magic = FALSE
 	var/check_holy = FALSE
+	///if true, this doesn't time out after a duration but rather when an immune atom inside moves.
+	var/channelled = FALSE
 
 	var/static/list/global_frozen_atoms = list()
 
-/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, check_anti_magic, check_holy)
+/datum/proximity_monitor/advanced/timestop/New(atom/_host, range, _ignore_if_not_on_turf = TRUE, list/immune, check_anti_magic, check_holy, channelled)
 	..()
 	src.immune = immune
 	src.check_anti_magic = check_anti_magic
 	src.check_holy = check_holy
+	src.channelled = channelled
 	recalculate_field()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
 	unfreeze_all()
+	if(channelled)
+		for(var/atom in immune)
+			UnregisterSignal(atom, COMSIG_MOVABLE_MOVED)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
@@ -77,7 +90,11 @@
 	freeze_atom(movable)
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
-	if(immune[A] || global_frozen_atoms[A] || !istype(A))
+	if(global_frozen_atoms[A] || !istype(A))
+		return FALSE
+	if(immune[A]) //a little special logic but yes immune things don't freeze
+		if(channelled)
+			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
@@ -188,7 +205,7 @@
 	frozen_mobs += L
 	L.Stun(20, ignore_canstun = TRUE)
 	ADD_TRAIT(L, TRAIT_MUTE, TIMESTOP_TRAIT)
-	walk(L, 0) //stops them mid pathing even if they're stunimmune
+	SSmove_manager.stop_looping(src) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(L))
 		var/mob/living/simple_animal/S = L
 		S.toggle_ai(AI_OFF)
@@ -211,3 +228,8 @@
 //let's put some colour back into your cheeks
 /datum/proximity_monitor/advanced/timestop/proc/escape_the_negative_zone(atom/A)
 	A.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+
+//signal fired when an immune atom moves in the time freeze zone
+/datum/proximity_monitor/advanced/timestop/proc/atom_broke_channel(datum/source)
+	SIGNAL_HANDLER
+	qdel(host)

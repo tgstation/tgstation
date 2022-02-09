@@ -116,14 +116,14 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 				new item.item_instance.type(grocery_crate)
 		SSshuttle.chef_groceries.Cut() //This lets the console know it can order another round.
 
-	if(!SSshuttle.shoppinglist.len)
+	if(!SSshuttle.shopping_list.len)
 		return
 
 	var/value = 0
 	var/purchases = 0
 	var/list/goodies_by_buyer = list() // if someone orders more than GOODY_FREE_SHIPPING_MAX goodies, we upcharge to a normal crate so they can't carry around 20 combat shotties
 
-	for(var/datum/supply_order/spawning_order in SSshuttle.shoppinglist)
+	for(var/datum/supply_order/spawning_order in SSshuttle.shopping_list)
 		if(!empty_turfs.len)
 			break
 		var/price = spawning_order.pack.get_cost()
@@ -159,8 +159,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
 		value += spawning_order.pack.get_cost()
-		SSshuttle.shoppinglist -= spawning_order
-		SSshuttle.orderhistory += spawning_order
+		SSshuttle.shopping_list -= spawning_order
+		SSshuttle.order_history += spawning_order
 		QDEL_NULL(spawning_order.applied_coupon)
 
 		if(!spawning_order.pack.goody) //we handle goody crates below

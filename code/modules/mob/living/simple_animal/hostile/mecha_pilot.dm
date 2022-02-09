@@ -88,8 +88,8 @@
 	wanted_objects = list()
 	search_objects = 0
 	if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_defense_mode) && !mecha.defense_mode)
-		var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
-		action.Trigger(TRUE)
+		var/datum/action/vehicle/sealed/mecha/mech_defense_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
+		action.Trigger(forced_state = TRUE)
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/exit_mecha(obj/vehicle/sealed/mecha/M)
 	if(!M)
@@ -111,7 +111,7 @@
 	ranged = 0
 	minimum_distance = 1
 
-	walk(M,0)//end any lingering movement loops, to prevent the haunted mecha bug
+	SSmove_manager.stop_looping(src)//end any lingering movement loops, to prevent the haunted mecha bug
 
 //Checks if a mecha is valid for theft
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/proc/is_valid_mecha(obj/vehicle/sealed/mecha/M)
@@ -229,16 +229,16 @@
 		if(mecha.get_integrity() < mecha.max_integrity*0.25)
 			if(prob(defense_mode_chance))
 				if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_defense_mode) && !mecha.defense_mode)
-					var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
-					action.Trigger(TRUE)
+					var/datum/action/vehicle/sealed/mecha/mech_defense_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
+					action.Trigger(forced_state = TRUE)
 					addtimer(CALLBACK(action, /datum/action/vehicle/sealed/mecha/mech_defense_mode.proc/Trigger, FALSE), 100) //10 seconds of defense, then toggle off
 
 			else if(prob(retreat_chance))
 				//Speed boost if possible
 				if(LAZYACCESSASSOC(mecha.occupant_actions, src, /datum/action/vehicle/sealed/mecha/mech_overload_mode) && !mecha.leg_overload_mode)
-					var/datum/action/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_overload_mode]
+					var/datum/action/vehicle/sealed/mecha/mech_overload_mode/action = mecha.occupant_actions[src][/datum/action/vehicle/sealed/mecha/mech_overload_mode]
 					mecha.leg_overload_mode = FALSE
-					action.Trigger(TRUE)
+					action.Trigger(forced_state = TRUE)
 					addtimer(CALLBACK(action, /datum/action/vehicle/sealed/mecha/mech_overload_mode.proc/Trigger, FALSE), 100) //10 seconds of speeeeed, then toggle off
 
 				retreat_distance = 50
@@ -290,6 +290,6 @@
 
 /mob/living/simple_animal/hostile/syndicate/mecha_pilot/Goto(target, delay, minimum_distance)
 	if(mecha)
-		walk_to(mecha, target, minimum_distance, mecha.movedelay)
+		SSmove_manager.move_to(mecha, target, minimum_distance, mecha.movedelay)
 	else
 		..()

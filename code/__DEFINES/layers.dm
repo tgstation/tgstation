@@ -16,6 +16,8 @@
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
 #define OPENSPACE_LAYER 600 //Openspace layer over all
+
+#define TRANSPARENT_FLOOR_PLANE -10 //Transparent plane that shows openspace underneath the floor
 #define OPENSPACE_PLANE -9 //Openspace plane below all turfs
 #define OPENSPACE_BACKDROP_PLANE -8 //Black square just over openspace plane to guaranteed cover all in openspace turf
 
@@ -66,11 +68,11 @@
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
 //#define OBJ_LAYER 3 //For easy recordkeeping; this is a byond define
-#define CLOSED_BLASTDOOR_LAYER 3.05
 #define CLOSED_DOOR_LAYER 3.1
 #define CLOSED_FIREDOOR_LAYER 3.11
-#define SHUTTER_LAYER 3.12 // HERE BE DRAGONS
 #define ABOVE_OBJ_LAYER 3.2
+#define CLOSED_BLASTDOOR_LAYER 3.3 // ABOVE WINDOWS AND DOORS
+#define SHUTTER_LAYER 3.3 // HERE BE DRAGONS
 #define ABOVE_WINDOW_LAYER 3.3
 #define SIGN_LAYER 3.4
 #define CORGI_ASS_PIN_LAYER 3.41

@@ -86,31 +86,31 @@ Difficulty: Extremely Hard
 			if(easy_attack)
 				frost_orbs.shot_count = 8
 				frost_orbs.shot_delay = 10
-				frost_orbs.Trigger(target)
+				frost_orbs.Trigger(target = target)
 			else
 				frost_orbs.shot_count = 16
 				frost_orbs.shot_delay = 5
-				frost_orbs.Trigger(target)
+				frost_orbs.Trigger(target = target)
 		if(2)
 			if(easy_attack)
 				snowball_machine_gun.shot_count = 60
 				snowball_machine_gun.default_projectile_spread = 45
-				snowball_machine_gun.Trigger(target)
+				snowball_machine_gun.Trigger(target = target)
 			else if(ice_shotgun.IsAvailable())
 				ice_shotgun.shot_angles = list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160))
 				INVOKE_ASYNC(ice_shotgun, /datum/action/proc/Trigger, target)
 				snowball_machine_gun.shot_count = 5 * 8
 				snowball_machine_gun.default_projectile_spread = 5
 				snowball_machine_gun.StartCooldown(0)
-				snowball_machine_gun.Trigger(target)
+				snowball_machine_gun.Trigger(target = target)
 		if(3)
 			if(easy_attack)
 				// static lists? remind me later
 				ice_shotgun.shot_angles = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30))
-				ice_shotgun.Trigger(target)
+				ice_shotgun.Trigger(target = target)
 			else
 				ice_shotgun.shot_angles = list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30))
-				ice_shotgun.Trigger(target)
+				ice_shotgun.Trigger(target = target)
 
 /// Pre-ability usage stuff
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
@@ -198,7 +198,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /obj/projectile/colossus/snowball
 	name = "machine-gun snowball"
@@ -220,7 +220,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
