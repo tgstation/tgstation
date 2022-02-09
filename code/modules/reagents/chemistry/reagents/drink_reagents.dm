@@ -977,7 +977,7 @@
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	color = "#57372A"
 	taste_description = "thick creamy chocolate"
-	glass_icon_state = "italian_coco"
+	glass_icon_state = "italiancoco"
 	glass_name = "glass of italian coco"
 	glass_desc = "A spin on a winter favourite, made to please."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
