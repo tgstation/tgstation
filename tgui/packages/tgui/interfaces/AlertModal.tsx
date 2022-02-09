@@ -1,15 +1,6 @@
 import { Loader } from './common/Loader';
 import { useBackend, useLocalState } from '../backend';
-import {
-  KEY_DOWN,
-  KEY_ENTER,
-  KEY_ESCAPE,
-  KEY_LEFT,
-  KEY_RIGHT,
-  KEY_SPACE,
-  KEY_TAB,
-  KEY_UP,
-} from '../../common/keycodes';
+import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -37,15 +28,12 @@ export const AlertModal = (_, context) => {
     title,
   } = data;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
-  const isVertical = buttons.length > 2;
   // Dynamically sets window dimensions
   const windowHeight
     = 115
     + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
     + (message.length && large_buttons ? 5 : 0);
-  const windowWidth
-    = 325
-    + (buttons.length > 2 ? 55 : 0);
+  const windowWidth = 325 + (buttons.length > 2 ? 55 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -70,17 +58,10 @@ export const AlertModal = (_, context) => {
             act('choose', { choice: buttons[selected] });
           } else if (keyCode === KEY_ESCAPE) {
             act('cancel');
-          } else if (
-            (!isVertical && keyCode === KEY_LEFT)
-            || (isVertical && keyCode === KEY_UP)
-          ) {
+          } else if (keyCode === KEY_LEFT) {
             e.preventDefault();
             onKey(KEY_DECREMENT);
-          } else if (
-            keyCode === KEY_TAB
-            || (!isVertical && keyCode === KEY_RIGHT)
-            || (isVertical && keyCode === KEY_DOWN)
-          ) {
+          } else if (keyCode === KEY_TAB || keyCode === KEY_RIGHT) {
             e.preventDefault();
             onKey(KEY_INCREMENT);
           }
@@ -116,7 +97,7 @@ const ButtonDisplay = (props, context) => {
   return (
     <Flex
       align="center"
-      direction={!swapped_buttons ? "row-reverse" : "row"}
+      direction={!swapped_buttons ? 'row-reverse' : 'row'}
       fill
       justify="space-around"
       wrap>
