@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "Fix a freak occurrence where random job allocation would sometimes randomly assign players to roles that were full, fixing bugs like multiple QMs."
