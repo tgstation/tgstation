@@ -533,3 +533,8 @@
 /obj/effect/temp_visual/disarm
 	icon_state = "disarm"
 	duration = 0.3 SECONDS
+
+/obj/effect/temp_visual/light_ash
+	icon_state = "light_ash"
+	icon = 'icons/effects/weather_effects.dmi'
+	duration = 3.2 SECONDS

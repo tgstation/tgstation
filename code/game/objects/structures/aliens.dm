@@ -406,12 +406,12 @@
 	if(status == GROWN || status == GROWING)
 		status = BURSTING
 		proximity_monitor.set_range(0)
-		update_appearance()
 		flick("egg_opening", src)
 		addtimer(CALLBACK(src, .proc/finish_bursting, kill), 15)
 
 /obj/structure/alien/egg/proc/finish_bursting(kill = TRUE)
 	status = BURST
+	update_appearance()
 	if(child)
 		child.forceMove(get_turf(src))
 		// TECHNICALLY you could put non-facehuggers in the child var

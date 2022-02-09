@@ -127,7 +127,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "NumberInputModal")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_input_number/ui_close(mob/user)
@@ -138,16 +137,14 @@
 	return GLOB.always_state
 
 /datum/tgui_input_number/ui_static_data(mob/user)
-	. = list(
-		"init_value" = default, // Default is a reserved keyword
-		"max_value" = max_value,
-		"message" = message,
-		"min_value" = min_value,
-		"preferences" = list(),
-		"title" = title
-	)
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	. = list()
+	.["init_value"] = default // Default is a reserved keyword
+	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["max_value"] = max_value
+	.["message"] = message
+	.["min_value"] = min_value
+	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["title"] = title
 
 /datum/tgui_input_number/ui_data(mob/user)
 	. = list()

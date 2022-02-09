@@ -267,3 +267,202 @@
   - bugfix: Alert modals have been rewritten. Messages no longer clip, they also now
       respond to TGUI input preferences (UI tab) and you can press ESC to close.
   - bugfix: You should now be able to enter a blank text to succumb.
+2022-02-07:
+  Fikou:
+  - bugfix: xeno egg now updates its icon properly when burst
+  Fikou, Imaginos, Azlan, Nerevar:
+  - qol: you can deactivate modsuit device modules with drop key
+  - qol: the cargo modsuit can now hold mail bags
+  - bugfix: fixes modsuit speed potion being fucky
+  - qol: makes the gps module open the gps tgui instead of putting a gps in your hand
+  - balance: Reworks the mining MODsuit, the full suit is bought from the mining vendor.
+  Fikou, PositiveEntropy:
+  - imageadd: the elite nukie suit has new sprites
+  - balance: the elite nukie suit starts with a little armor filled to standard by
+      the armor booster, the elite armor booster is removed
+  - balance: welding protection is now a part of the armor booster module, no longer
+      a separate module in syndie suits
+  - balance: adds a jetpack and holster to traitor modsuit
+  Ghommie:
+  - bugfix: blob overminds can now move vertically through station z-levels while
+      its core hasn't been placed yet.
+  - bugfix: disease mobs can too move vertically while a host hasn't been selected
+      yet.
+  - bugfix: (unrevealed) revenants can now move up and down more freely, without having
+      to be standing on or below open space. This also applies to other living mobs
+      with generic incorporeal movement (not to be confused with the nightmare or
+      wizard's jaunt) as long as they can fly or there's no gravity.
+  Jolly-66:
+  - bugfix: Mapped in firelocks that are closed will STAY closed.
+  MacBlaze1:
+  - bugfix: made blast doors unable to be opened via bumping of any kind
+  - bugfix: made blastdoors unable to be interacted with via tools when closed
+  - balance: blast doors and shutters are now above windows and doors, and will hide
+      them. Both layers have been increased to 3.3.
+  - balance: shutters now cost 5 plasteel and 5 coil and 1 airlock electronic and
+      take 10 seconds to build
+  Melbert:
+  - bugfix: Fixes some active turfs + airlock issues on the icebox mining outpost
+  Mothblocks:
+  - qol: The observe button no longer requires tgui.
+  - refactor: Replaced the old surgery interface with one that is much better to use,
+      and lets you choose the body zone within itself.
+  OneAsianTortoise:
+  - balance: broken drinking/alcohol glass and broken plate shard now hurt you if
+      you step on them barefoot.
+  Ryll/Shaps:
+  - bugfix: Shooting living mobs with projectiles will no longer cause duplicated
+      logs/messages
+  TemporalOroboros:
+  - qol: Used grenades now look used when examined.
+  - bugfix: It should no longer be possible to DC admins by spamming grenades.
+  Wallem:
+  - bugfix: Radio Gloves will no longer vacuum your earpieces when crafted.
+  Wallem, Partheo & Tex:
+  - imageadd: Ports canister sprites made by Partheo & Tex from Yogstation.
+  Watermelon914:
+  - bugfix: Fixed how the diminishing returns of having too much progression scaled.
+      It now properly scales exponentially.
+  - rscdel: Removed the 'take' option for traitor uplinks in the traitor panel.
+  sergeirocks100:
+  - bugfix: The song editor UI now updates properly on pianos/space minimoogs.
+  timothymtorres:
+  - rscdel: Remove rotation from IV drips.
+  - rscdel: Rotating objects will no longer leave fingerprints.
+  - qol: Add right-clicking and left-clicking to rotate objects in different directions
+      for alt click. Left is counterclockwise and right is clockwise.
+  - qol: Replace to_chat rotation messages with balloon alerts to stop redundant chat
+      spamming.
+  - qol: Hotkeys for some pipe interactions had to be changed. Right clicking on an
+      unwrenched pipe now changes the pipe layer.  Right clicking on a unwrenched
+      trinary pipe device now flips it.  Alt clicking handles rotation.
+  - qol: Computer frames now have rotation component
+  - bugfix: Fix rotation on wheelchairs to work properly.
+  - refactor: Refactored the entire rotation component and all objects that use it.  Remove
+      a lot of deprecated code to make things cleaner.
+2022-02-08:
+  Necromanceranne, quin:
+  - rscadd: Adds the Inferno and Cryo Pistols. A hybrid energy/ballistic weapon, to
+      cargo. It can be purchased in either a goodies pack or a normal crate order.
+  - rscadd: Thermal Pistols do more damage and a special based on temperature of the
+      target hit.
+  - rscadd: Inferno pistols cause an explosion when they hit a severely cold target.
+  - rscadd: Cryo pistols cause a knockdown and extra damage if they hit a severely
+      hot target.
+  - rscadd: There is a special nanite pistol, which is admin spawned. Don't tell anyone
+      about the forbidden ballistic energy gun.
+  - rscadd: You can order a .38 revolver as a goodie pack. It is expensive.
+  - rscdel: Removes WT-550's from cargo and related content from the techweb/protolathes.
+  - balance: Exotic Ammo is now much earlier in the tech web to take the place of
+      Ballistic Weaponry.
+  OrionTheFox:
+  - imageadd: The Suit Storage Units now have a Locked indicator on their lights!
+      In exchange, decontamination above safe levels has a slightly different indicator
+      (flashing red/yellow)
+  - qol: SSU gives chat warnings as to why it blocks decontamination (no items/safeties
+      on)
+  - bugfix: SSU panel/super-decontamination icons work properly now
+  - rscadd: The SSU super-decontamination also creates a plume of black smoke at the
+      end, as the flavor description said it did.
+  TiviPlus:
+  - code_imp: changed a code-related default, please report if anything turns invisible
+  jlsnow301:
+  - bugfix: 'Literally unplayable bugs fixed: Pens can now be rotated again.'
+  - bugfix: TGUI alerts now display buttons in a column when there's more than 2 options.
+  - bugfix: TGUI alerts can now be disabled via turning TGUI inputs off in prefs.
+  - bugfix: Fixed some bluescreens related to TGUI inputs.
+  - bugfix: Fixes a runtime with material containers.
+  san7890:
+  - bugfix: The Security Outpost in MetaStation's Engineering no longer has an intercom
+      installed between the walls. It is now actually accessible to those who can
+      not phase into walls.
+  - bugfix: If you've seen a grille with weird lighting on DeltaStation, rest assured
+      that we've completely obliterated (fixed) it. The odds are overwhelming that
+      you have not seen it, however.
+  - bugfix: The transit tube connection between Engineering and the AI Satellite on
+      MetaStation is no longer defined as a part of the Engineering Break Room. Looks
+      like you'll need to drink that coffee elsewhere.
+  - bugfix: Nanotrasen realized that one of their camera technicians improperly configured
+      the settings on one of the security cameras on the exterior of the AI Satellite
+      on TramStation. This has been rectified.
+  unit0016:
+  - bugfix: Donk Co. Is sorry. Really, really sorry. Really. They're sorry. They forgot
+      to ship out the stuff to make their shiny new supermatters actually.. produce
+      power! Nobody was laughing at people trying to run it anyways, nuh uh. Nope!
+2022-02-09:
+  ArcaneDefence:
+  - expansion: Malf AIs can now have an intercom interference module.
+  CameronWoof:
+  - code_imp: wrench->closet interactions migrated to wrench_act_secondary
+  Gamer025:
+  - bugfix: Bottlers no longer runtime if they run out of beakers/containers to fill
+  Ghommie:
+  - bugfix: ACTUALLY fixes the Illegal Technology node being unobtainable.
+  GoblinBackwards:
+  - bugfix: Making medbots through the crafting menu will now account for using different
+      types of medkit and health analyser.
+  - bugfix: Ash mark now deals the correct amount of damage and no longer gets stuck
+      bouncing between the same two targets.
+  - balance: Ash mark is significantly stronger due to this fix.
+  Iamgoofball:
+  - rscdel: Hooch no longer heals assistants.
+  - bugfix: Fixes an exploit allowing players to bypass crafting times on spears and
+      cattleprods.
+  - balance: Wired Rods are now bulky.
+  Jackraxxus:
+  - bugfix: The Tramstation aux base console now uses the correct type, and is no
+      longer a ghetto advanced camera console.
+  Kubisopplay:
+  - balance: Nanotrasen finally realized that installing a powerful explosive in their
+      most popular cyborg model was stupid, so they replaced it with more robust locking
+      system
+  - bugfix: you shouldn't get permanently locked by malf ai robofab now
+  Melbert:
+  - bugfix: Fixes a runtime which causes game start to fail and revert occasionally
+  - bugfix: Obsessed hug objective functions again
+  NamelessFairy:
+  - bugfix: CTF Limbo's control point timer is now correctly set to 3 minutes rather
+      than 6
+  Pepsilawn:
+  - spellcheck: replaced mentions to toxins with ordnance in valentine cards in time
+      for the 14th
+  SmoSmoSmoSmok:
+  - balance: Syndieship turrets now target non emagged or non nukie cyborgs
+  TiviPlus:
+  - bugfix: fixed some hud items layering improperly
+  bobbahbrown:
+  - admin: Cult rune creation (inscribing?) is now logged on the player panel logs
+      as well as the game log.
+  itseasytosee:
+  - expansion: Skateboards have been made considerably more radical
+  - expansion: While grinding on a table with a skateboard, if you grind on top of
+      somebody you are likely to hurt them quite badly
+  - expansion: 'Colliding with another person will now always result in a crash, in
+      which the person hit gets knocked over as well as the skater (protip: crash
+      into someone while grind to double the stun time!)'
+  - expansion: Colliding with a disposal unit while grinding will result in you getting
+      dunked in! Wack!
+  - bugfix: fixed some skateboard related bugs, including the action button for ollieing
+      always being red, and being able to ollie while dead
+  jlsnow301:
+  - bugfix: Fixed an issue where holopay range could be bypassed by handing the card
+      off.
+  necromanceranne:
+  - imageadd: Gives rubbershot and rubbershot boxes a new sprite to differentiate
+      them from beanbags.
+  - bugfix: Restores the lost sprites for the Centcom gas mask.
+  san7890:
+  - rscadd: The area where you get to sit with your alcohol has been renamed to the
+      Bar Lounge across all the stations.
+  - rscadd: Instead of the area between the chapel/holodeck/library/laundry room on
+      TramStation being referred to as the "lounge", it's now called "Crew Facilities".
+      Because it's, y'know, facilities for the crew.
+  - imageadd: On the mapping end, there is now a new area turf sprite for the definition
+      of the area where you store all of the parts for telecommunications, or "Telecommunications
+      Storage". How gorgeous.
+  - rscadd: 'Atmospheric Technicians can now take it easy, as the room that normally
+      holds all of the canisters of highly flammable gas is now cleanly labelled "Gas
+      Storage" instead of being another appendage of the absolute auditorium known
+      as Atmospherics. spriteadd: The Atmospheric Storage Area Turf now has a new
+      sprite. If you know what that means, I hope you enjoy it. If you don''t, that''s
+      also fine.'

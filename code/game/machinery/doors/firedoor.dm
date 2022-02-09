@@ -260,10 +260,14 @@
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
 	update_icon()
-	correct_state()
+
 	if(machine_stat & NOPOWER)
 		soundloop.stop()
-	else if(is_playing_alarm)
+		return
+
+	correct_state()
+
+	if(is_playing_alarm)
 		soundloop.start()
 
 
@@ -472,6 +476,7 @@
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
 	density = TRUE
+	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
@@ -482,6 +487,7 @@
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
 	density = TRUE
+	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
