@@ -29,11 +29,12 @@
 		var/mob/living/possibly_cool = equipper
 		if(possibly_cool.mob_biotypes & MOB_UNDEAD)
 			haunt_equipper = FALSE
-	if(!haunt_equipper)
-		blackboard[BB_LIKES_EQUIPPER] = TRUE
-	else
+	if(haunt_equipper)
 		var/list/hauntee_list = blackboard[BB_TO_HAUNT_LIST]
-		hauntee_list[equipper] = hauntee_list[equipper] + HAUNTED_ITEM_AGGRO_ADDITION //You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~
+		hauntee_list[WEAKREF(equipper)] += HAUNTED_ITEM_AGGRO_ADDITION //You have now become one of the victims of the HAAAAUNTTIIIINNGGG OOOOOO~~~
+	else
+		blackboard[BB_LIKES_EQUIPPER] = TRUE
+
 	RegisterSignal(pawn, COMSIG_ITEM_DROPPED, .proc/on_dropped)
 	SIGNAL_HANDLER
 
