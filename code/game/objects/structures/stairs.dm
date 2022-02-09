@@ -72,7 +72,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/stairs/CanPass(atom/movable/AM, border_dir) //TODOKYLER: check if this works
+/obj/structure/stairs/CanPass(atom/movable/AM, border_dir)
 	if(isTerminator() && (border_dir == dir))
 		return FALSE
 	return ..()

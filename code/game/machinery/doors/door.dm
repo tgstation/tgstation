@@ -125,21 +125,19 @@
 	. = ..()
 	if(operating || (obj_flags & EMAGGED))
 		return
-	if(ismob(AM))
-		var/mob/B = AM
-		if((isdrone(B) || iscyborg(B)) && B.stat)
+	if(isliving(AM))
+		var/mob/living/M = AM
+		if((isdrone(M) || iscyborg(M)) && M.stat)
 			return
-		if(isliving(AM))
-			var/mob/living/M = AM
-			if(world.time - M.last_bumped <= 10)
-				return //Can bump-open one airlock per second. This is to prevent shock spam.
-			M.last_bumped = world.time
-			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null) && !emergency)
-				return
-			if(try_safety_unlock(M))
-				return
-			bumpopen(M)
+
+		if(world.time - M.last_bumped <= 10)
+			return //Can bump-open one airlock per second. This is to prevent shock spam.
+		M.last_bumped = world.time
+		if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null) && !emergency)
 			return
+		if(try_safety_unlock(M))
+			return
+		bumpopen(M)
 		return
 
 	if(isitem(AM))
@@ -169,7 +167,7 @@
 /obj/machinery/door/proc/bumpopen(mob/user)
 	if(operating)
 		return
-	add_fingerprint(user)//add_fingerprint() is slow as fuck ahhhhhhhh
+	add_fingerprint(user)//add_fingerprint() is slow as fuck why is it slow reeeeeeeeeee
 	if(!requiresID())
 		user = null
 

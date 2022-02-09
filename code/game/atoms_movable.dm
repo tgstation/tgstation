@@ -696,32 +696,6 @@
 /atom/movable/proc/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)
 	return
 
-/mob/on_grid_cell_change(datum/spatial_grid_cell/new_cell, datum/spatial_grid_cell/old_cell)//TODOKYLER: move this to a mobs file
-	if(!client)
-		return
-
-	var/list/new_closeby_cells = SSspatial_grid.get_block_of_cells(src, 1)
-
-	var/list/new_closeby_client_mobs = list()
-
-	for(var/datum/spatial_grid_cell/cell as anything in new_closeby_cells)
-		new_closeby_client_mobs += cell.client_contents
-
-	if(closeby_client_mobs)
-		//client mobs that used to be adjacent but arent any more
-		for(var/mob/non_adjacent_client_mob as anything in closeby_client_mobs - new_closeby_client_mobs)
-			LAZYREMOVE(non_adjacent_client_mob.closeby_client_mobs, src)
-
-	//client mobs that were not adjacent previously but are now
-	for(var/mob/newly_adjacent_client_mob as anything in new_closeby_client_mobs - closeby_client_mobs)
-		LAZYADD(newly_adjacent_client_mob.closeby_client_mobs, src)
-
-	if(length(new_closeby_client_mobs))
-		closeby_client_mobs = new_closeby_client_mobs
-
-	else
-		closeby_client_mobs = null
-
 ///do not call, deprecated in lieu of CanPass()
 /atom/movable/Cross(atom/movable/AM)
 	SHOULD_NOT_OVERRIDE(TRUE)

@@ -65,12 +65,11 @@
 	if(ismob(A))
 		if(MobBump(A))
 			return
-	if(isobj(A))
+		PushAM(A, move_force)
+	else if(isobj(A))
 		if(ObjBump(A))
 			return
-	if(ismovable(A))
-		if(PushAM(A, move_force))
-			return
+		PushAM(A, move_force)
 
 /mob/living/Bumped(atom/movable/AM)
 	..()
@@ -231,7 +230,7 @@
 		if(force_push(movable_to_push, move_force, dir_to_target, push_anchored))
 			push_anchored = TRUE
 
-	if(ismob(movable_to_push))//TODOKYLER: put this in pushMob
+	if(ismob(movable_to_push))
 		var/mob/mob_to_push = movable_to_push
 		var/atom/movable/mob_buckle = mob_to_push.buckled
 		// If we can't pull them because of what they're buckled to, make sure we can push the thing they're buckled to instead.
