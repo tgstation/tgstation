@@ -18,7 +18,11 @@
 			to_haunt_list -= target_ref
 			continue
 
-		var/mob/living/real_target = target_ref?.resolve()
+		var/mob/living/real_target = target_ref.resolve()
+		if(QDELETED(real_target))
+			to_haunt_list -= target_ref
+			continue
+
 		if(get_dist(real_target, item_pawn) <= 7)
 			controller.blackboard[BB_HAUNT_TARGET] = target_ref
 			controller.queue_behavior(/datum/ai_behavior/item_move_close_and_attack/ghostly/haunted, BB_HAUNT_TARGET, BB_HAUNTED_THROW_ATTEMPT_COUNT)
