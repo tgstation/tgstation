@@ -2744,7 +2744,7 @@
 	/// Tells the debuff how many ants we are being covered with.
 	var/amount_left = 0
 	/// List of possible common statements to scream when eating ants
-	var/list/ant_screams = list(
+	var/static/list/ant_screams = list(
 		"THEY'RE UNDER MY SKIN!!",
 		"GET THEM OUT OF ME!!",
 		"HOLY HELL THEY BURN!!",

@@ -1002,7 +1002,7 @@
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
 	/// Common phrases people covered in ants scream
-	var/list/ant_debuff_speech = list(
+	var/static/list/ant_debuff_speech = list(
 		"GET THEM OFF ME!!",
 		"OH GOD THE ANTS!!",
 		"MAKE IT END!!",
