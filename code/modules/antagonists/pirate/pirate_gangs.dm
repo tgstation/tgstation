@@ -5,10 +5,6 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 /proc/init_pirate_gangs()
 	var/list/pirate_gangs = list()
 
-	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
-		pirate_gangs += new /datum/pirate_gang/monster_hunters
-		return pirate_gangs
-
 	for(var/type in subtypesof(/datum/pirate_gang))
 		var/datum/pirate_gang/possible_gang = new type
 		if(!possible_gang.can_roll())
@@ -106,23 +102,3 @@ GLOBAL_LIST_INIT(pirate_gangs, init_pirate_gangs())
 	response_received = "Thanks for the credits, landlubbers."
 	response_too_late = "Too late to beg for mercy!"
 	response_not_enough = "Trying to cheat us? You'll regret this!"
-
-///holy crew that shows up on halloween looking to send the monsters back to nothing (also normally, but extremely rare)
-/datum/pirate_gang/monster_hunters
-	name = "Monster Hunters"
-
-	ship_template = /datum/map_template/shuttle/pirate/monster_hunters
-	ship_name_pool = "monsterhunter_names"
-
-	threat_title = "Monster investigations"
-	threat_content = "Hello, disgusting creatures of the night. We've discovered your hive of scum \
-		and villainry. If you're even sentient enough to respond, pay the tithe before we take back \
-		what you plundered from the living."
-	possible_answers = list("Pay Tithe.","Refuse Demand.")
-
-	response_received = "You've bought yourself another day unburied, creatures of the depths."
-	response_too_late = "You're only grovelling by trying to send us money now. We'll take what we need."
-	response_not_enough = "This wasn't what we demanded. We'll take what we need."
-
-/datum/pirate_gang/monster_hunters/can_roll()
-	return prob(1)

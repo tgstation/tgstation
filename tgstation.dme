@@ -2420,7 +2420,6 @@
 #include "code\modules\clothing\neck\_neck.dm"
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\event.dm"
-#include "code\modules\clothing\outfits\monster_hunters.dm"
 #include "code\modules\clothing\outfits\plasmaman.dm"
 #include "code\modules\clothing\outfits\standard.dm"
 #include "code\modules\clothing\outfits\vr.dm"

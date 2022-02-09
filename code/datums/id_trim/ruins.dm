@@ -104,7 +104,3 @@
 /// Trim for the pirate captain.
 /datum/id_trim/pirate/captain/silverscale
 	assignment = "Silver Scale VIP"
-
-/datum/id_trim/pirate/monster_hunters
-	assignment = "Monster Hunter"
-	trim_state = "trim_paladin"
