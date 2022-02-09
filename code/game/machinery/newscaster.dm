@@ -110,6 +110,8 @@ GLOBAL_LIST_EMPTY(allCasters)
  * Based on implementation, we're limiting outselves to only 998 player made channels maximum. How we'd use all of them, I don't know.
  */
 /datum/newscaster/feed_channel/proc/random_channel_id_setup()
+	if(!GLOB.news_network)
+		return //Should only apply to channels made before setup is finished, use hardset_channel for these
 	if(!GLOB.news_network.channel_IDs)
 		GLOB.news_network.channel_IDs += rand(1,999)
 		return //This will almost always be the station annoucements channel here.
@@ -118,7 +120,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 		channel_id = rand(1, 999)
 		if(!GLOB.news_network.channel_IDs["[channel_ID]"])
 			break
-	return channel_id
+	channel_ID = channel_id
+	return channel_ID
 
 /datum/newscaster/feed_channel/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -173,17 +176,18 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/list/channel_IDs = list()
 
 /datum/newscaster/feed_network/New()
-	CreateFeedChannel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!" , 1)
+	CreateFeedChannel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!" , 1, hardset_channel = 1000)
 	wanted_issue = new /datum/newscaster/wanted_message
 
-/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, desc, locked, adminChannel = FALSE)
+/datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel)
 	var/datum/newscaster/feed_channel/newChannel = new /datum/newscaster/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
 	newChannel.channel_desc = desc
 	newChannel.locked = locked
 	newChannel.is_admin_channel = adminChannel
-	newChannel.channel_ID = newChannel.random_channel_id_setup()
+	if(hardset_channel)
+		newChannel.channel_ID = hardset_channel
 	network_channels += newChannel
 
 /datum/newscaster/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)

@@ -1,6 +1,8 @@
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
+import { sanitizeText } from "../sanitize";
+import { createPreview } from "./PaperSheet";
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
@@ -30,7 +32,7 @@ export const Newscaster = (props, context) => {
           </Flex.Item>
         </Flex>
         <Section p={1}>
-          <NewscasterChannelComments />
+          <NewscasterChannelMessages />
         </Section>
       </Window.Content>
     </Window>
@@ -72,8 +74,8 @@ const NewscasterChannelBox = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     channelName,
-    channelOwner,
     channelDesc,
+    author,
   } = data;
   return (
     <Section title={channelName} >
@@ -82,7 +84,7 @@ const NewscasterChannelBox = (props, context) => {
       </BlockQuote>
       <LabeledList mt={1} mb={1}>
         <LabeledList.Item label="Owner">
-          {channelOwner}
+          {author}
         </LabeledList.Item>
       </LabeledList>
       <Box>
@@ -117,7 +119,7 @@ const NewscasterChannelSelector = (props, context) => {
             selected={viewing_channel === channels.ID}
             textColor="white"
             onClick={() => act('setChannel', {
-              channels: channels,
+              channels: channels.ID,
             })}>
             {channels.name}
           </Tabs.Tab>
@@ -128,25 +130,42 @@ const NewscasterChannelSelector = (props, context) => {
 };
 
 /** This is where the channels comments get spangled out (tm) */
-const NewscasterChannelComments = (props, context) => {
+const NewscasterChannelMessages = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    messages,
+    messages = [],
     viewing_channel,
   } = data;
+  const processing = createPreview(
+    0,
+    message.body,
+    false,
+    0,
+    white,
+    arial,
+    null
+  );
+  const textHtml = {
+    __html: sanitizeText(messages.body),
+  };
   return (
     <Section>
       {messages?.map(message => {
-        if (message.channel_num === viewing_channel) {
+        if (message.channel_num !== viewing_channel) {
           return;
         }
         return (
-          <BlockQuote key={message.body}>
-            {message.body}
+          <BlockQuote
+            // textColor="white"
+            key={message.body}>
+            <Section>
+              {processing}
+            </Section>
             <Box
               pl={2.5}
+              textColor="grey"
               italic>
-              by: {message.auth}
+              by: {message.auth} at {message.time}
             </Box>
           </BlockQuote>
         ); }

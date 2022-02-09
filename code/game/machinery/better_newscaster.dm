@@ -19,7 +19,7 @@
 	var/list/channel_list = list()
 	var/list/message_list = list()
 
-	//Code assigning name and Job Information, taken from the player mob's ID card if one exists.
+	//Code displaying name and Job Information, taken from the player mob's ID card if one exists.
 	var/obj/item/card/id/C
 	if(isliving(user))
 		var/mob/living/L = user
@@ -40,8 +40,6 @@
 	for(var/datum/newscaster/feed_channel/channel in GLOB.news_network.network_channels)
 		channel_list += list(list(
 			"name" = channel.channel_name,
-			"auth" = channel.author,
-			"desc" = channel.channel_desc,
 			"censored" = channel.censored,
 			"locked" = channel.locked,
 			"ID" = channel.channel_ID,
@@ -50,9 +48,17 @@
 			message_list += list(list(
 			"auth" = comment_message.author,
 			"body" = comment_message.body,
+			"time" = comment_message.time_stamp,
 			"channel_num" = comment_message.parent_ID,
 			))
-	data["viewing_channel"] = current_channel.channel_ID
+	data["viewing_channel"] = current_channel?.channel_ID
+
+	//Here we display all the information about the current channel.
+	data["channelName"] = current_channel?.channel_name
+	data["channelAuthor"] = current_channel?.author
+	data["channelDesc"] = current_channel?.channel_desc
+
+	//We send all the information about all channels and all messages in existance.
 	data["channel"] = channel_list
 	data["messages"] = message_list
 
@@ -66,9 +72,9 @@
 		if("setChannel")
 			if(isnull(params["channels"]))
 				return
-			var/proto_chan = text2path(params["channels"])
-			if(!(proto_chan in GLOB.news_network.network_channels))
-				return
-			current_channel = params["category"]
-			//say(current_channel)
+			var/proto_chan = (params["channels"])
+			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
+				if(proto_chan == potential_channel.channel_ID)
+					current_channel = potential_channel
+			say("[current_channel.channel_name] has been set yaknow what i'm saying")
 			. = TRUE
