@@ -87,5 +87,10 @@
 /// cannot cast magic with the same type of antimagic present
 /datum/component/anti_magic/proc/restrict_casting_magic(datum/source, mob/user, magic_flags)
 	SIGNAL_HANDLER
-	
-	return magic_flags & antimagic_flags
+
+	if(magic_flags & antimagic_flags)
+		if(!HAS_TRAIT(user, TRAIT_ANTIMAGIC_NO_SELFBLOCK))
+			to_chat(user, span_warning("Your [parent] is interfering with your ability to cast magic!"))
+		return TRUE	
+
+	return FALSE
