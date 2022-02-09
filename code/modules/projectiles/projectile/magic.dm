@@ -484,7 +484,6 @@
 	..()
 
 /obj/projectile/magic/aoe/lightning/on_hit(target)
-	. = ..()
 	if(ismob(target))
 		var/mob/M = target
 		if(M.can_block_magic())
@@ -493,6 +492,7 @@
 			return BULLET_ACT_BLOCK
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
+	..()
 
 /obj/projectile/magic/aoe/lightning/no_zap
 	zap_power = 10000
@@ -501,7 +501,7 @@
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
-	. = ..()
+	..()
 
 /obj/projectile/magic/aoe/fireball
 	name = "bolt of fireball"
@@ -517,7 +517,6 @@
 	var/exp_fire = 2
 
 /obj/projectile/magic/aoe/fireball/on_hit(target)
-	. = ..()
 	if(ismob(target))
 		var/mob/living/M = target
 		if(M.can_block_magic())
@@ -527,7 +526,8 @@
 		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
 	var/turf/T = get_turf(target)
 	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE, explosion_cause = src)
-
+	qdel(src)
+	..()
 
 //still magic related, but a different path
 
