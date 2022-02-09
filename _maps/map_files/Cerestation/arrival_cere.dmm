@@ -1,0 +1,329 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"b" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Engines"
+	},
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"e" = (
+/obj/structure/closet/wardrobe/mixed,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"g" = (
+/obj/structure/shuttle/engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/arrival)
+"i" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Cockpit"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"k" = (
+/obj/structure/frame/computer,
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"m" = (
+/obj/structure/table,
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"o" = (
+/obj/machinery/light/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"p" = (
+/obj/machinery/door/airlock/shuttle,
+/obj/structure/fans/tiny,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/arrival)
+"q" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"r" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"s" = (
+/obj/structure/chair/comfy{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"y" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"z" = (
+/obj/machinery/computer/arcade,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"F" = (
+/obj/structure/shuttle/engine/heater,
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"G" = (
+/obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/item/crowbar/red,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"H" = (
+/obj/machinery/status_display{
+	density = 0;
+	layer = 4
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"I" = (
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"J" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"K" = (
+/obj/machinery/status_display/ai,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
+"N" = (
+/turf/open/space,
+/area/space)
+"O" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"P" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"Q" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/closet/firecloset,
+/obj/item/crowbar/red,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"U" = (
+/obj/machinery/light/directional/west,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"V" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+
+(1,1,1) = {"
+N
+N
+N
+a
+a
+p
+a
+q
+q
+q
+q
+a
+p
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+z
+P
+U
+J
+J
+J
+J
+U
+P
+e
+K
+F
+g
+"}
+(3,1,1) = {"
+a
+I
+V
+H
+G
+P
+P
+P
+P
+P
+P
+P
+P
+P
+b
+F
+g
+"}
+(4,1,1) = {"
+q
+m
+P
+i
+P
+P
+O
+O
+O
+O
+O
+O
+P
+P
+a
+F
+g
+"}
+(5,1,1) = {"
+q
+k
+s
+a
+P
+P
+K
+q
+q
+q
+q
+H
+P
+P
+a
+a
+a
+"}
+(6,1,1) = {"
+q
+m
+P
+i
+P
+P
+J
+J
+J
+J
+J
+J
+P
+P
+a
+F
+g
+"}
+(7,1,1) = {"
+a
+I
+r
+K
+Q
+P
+P
+P
+P
+P
+P
+P
+P
+P
+b
+F
+g
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+y
+P
+o
+O
+O
+O
+O
+o
+P
+e
+H
+F
+g
+"}
+(9,1,1) = {"
+N
+N
+N
+a
+a
+p
+a
+q
+q
+q
+q
+a
+p
+a
+a
+a
+a
+"}

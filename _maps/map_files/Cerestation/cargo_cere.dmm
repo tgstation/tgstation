@@ -78,14 +78,6 @@
 	dwidth = 5;
 	width = 12
 	},
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 5;
-	height = 7;
-	id = "supply_home";
-	name = "Cargo Bay";
-	width = 12
-	},
 /turf/open/floor/plating,
 /area/space)
 "L" = (
