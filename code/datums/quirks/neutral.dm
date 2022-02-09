@@ -316,7 +316,10 @@
 	// Only tongues of people with this quirk can't be removed. Manually spawned or found tongues can be.
 	new_tongue.organ_flags |= ORGAN_UNREMOVABLE
 
-	give_item_to_holder(/obj/item/clothing/gloves/radio, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
+	if(isplasmaman(human_holder))
+		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
+	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
 /datum/quirk/item_quirk/tongue_tied/post_add()
 	to_chat(quirk_holder, span_boldannounce("Because you speak with your hands, having them full hinders your ability to communicate!"))
@@ -359,3 +362,99 @@
 
 /datum/quirk/item_quirk/colorist/add_unique()
 	give_item_to_holder(/obj/item/dyespray, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+
+#define GAMING_WITHDRAWAL_TIME (15 MINUTES)
+/datum/quirk/gamer
+	name = "Gamer"
+	desc = "You are a hardcore gamer, and you have a need to game. You love winning and hate losing. You only like gamer food."
+	icon = "gamepad"
+	value = 0
+	gain_text = span_notice("You feel the sudden urge to game.")
+	lose_text = span_notice("You've lost all interest in gaming.")
+	medical_record_text = "Patient has a severe video game addiction."
+	mob_trait = TRAIT_GAMER
+	/// Timer for gaming withdrawal to kick in
+	var/gaming_withdrawal_timer = TIMER_ID_NULL
+
+/datum/quirk/gamer/add()
+	// Gamer diet
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/datum/species/species = human_holder.dna.species
+	species.liked_food = JUNKFOOD
+	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	RegisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME, .proc/won_game)
+	RegisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME, .proc/lost_game)
+	RegisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME, .proc/gamed)
+
+/datum/quirk/gamer/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+	new_species.liked_food = JUNKFOOD
+
+/datum/quirk/gamer/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/datum/species/species = human_holder.dna.species
+	species.liked_food = initial(species.liked_food)
+	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	UnregisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME)
+	UnregisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME)
+	UnregisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME)
+
+/datum/quirk/gamer/add_unique()
+	// The gamer starts off quelled
+	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
+
+/**
+ * Gamer won a game
+ *
+ * Executed on the COMSIG_MOB_WON_VIDEOGAME signal
+ * This signal should be called whenever a player has won a video game.
+ * (E.g. Orion Trail)
+ */
+/datum/quirk/gamer/proc/won_game()
+	SIGNAL_HANDLER
+	// Epic gamer victory
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_won", /datum/mood_event/gamer_won)
+
+/**
+ * Gamer lost a game
+ *
+ * Executed on the COMSIG_MOB_LOST_VIDEOGAME signal
+ * This signal should be called whenever a player has lost a video game.
+ * (E.g. Orion Trail)
+ */
+/datum/quirk/gamer/proc/lost_game()
+	SIGNAL_HANDLER
+	// Executed when a gamer has lost
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_lost", /datum/mood_event/gamer_lost)
+	// Executed asynchronously due to say()
+	INVOKE_ASYNC(src, .proc/gamer_moment)
+/**
+ * Gamer is playing a game
+ *
+ * Executed on the COMSIG_MOB_PLAYED_VIDEOGAME signal
+ * This signal should be called whenever a player interacts with a video game.
+ */
+/datum/quirk/gamer/proc/gamed()
+	SIGNAL_HANDLER
+	
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	// Remove withdrawal malus
+	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
+	// Reset withdrawal timer
+	if (gaming_withdrawal_timer)
+		deltimer(gaming_withdrawal_timer)
+	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
+	
+
+/datum/quirk/gamer/proc/gamer_moment()
+	// It was a heated gamer moment...
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced = name)
+
+/datum/quirk/gamer/proc/enter_withdrawal()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	SEND_SIGNAL(human_holder, COMSIG_ADD_MOOD_EVENT, "gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
+
+#undef GAMING_WITHDRAWAL_TIME

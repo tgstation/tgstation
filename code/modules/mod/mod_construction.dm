@@ -70,9 +70,6 @@
 /obj/item/mod/construction/armor/atmospheric
 	theme = /datum/mod_theme/atmospheric
 
-/obj/item/mod/construction/armor/mining
-	theme = /datum/mod_theme/mining
-
 /obj/item/mod/construction/armor/medical
 	theme = /datum/mod_theme/medical
 
@@ -85,7 +82,7 @@
 /obj/item/mod/paint
 	name = "MOD paint kit"
 	desc = "This kit will repaint your MODsuit to something unique."
-	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
+	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
 
 #define START_STEP "start"
@@ -242,6 +239,7 @@
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, "suit finished")
 				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_armor.theme, null, core)
+				core = null
 				qdel(src)
 				user.put_in_hands(mod)
 			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct

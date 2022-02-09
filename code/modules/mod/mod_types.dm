@@ -52,15 +52,24 @@
 		/obj/item/mod/module/jetpack,
 	)
 
-/obj/item/mod/control/pre_equipped/mining
-	theme = /datum/mod_theme/mining
+/obj/item/mod/control/pre_equipped/loader
+	theme = /datum/mod_theme/loader
 	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/welding,
-		/obj/item/mod/module/orebag,
 		/obj/item/mod/module/flashlight,
-		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/paper_dispenser,
+		/obj/item/mod/module/stamp,
+	)
+
+/obj/item/mod/control/pre_equipped/mining
+	theme = /datum/mod_theme/mining
+	applied_core = /obj/item/mod/core/plasma
+	initial_modules = list(
+		/obj/item/mod/module/storage,
+		/obj/item/mod/module/gps,
+		/obj/item/mod/module/orebag,
+		/obj/item/mod/module/clamp,
 		/obj/item/mod/module/drill,
 	)
 
@@ -118,7 +127,8 @@
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/hat_stabilizer,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/holster,
 		/obj/item/mod/module/pathfinder,
 	)
@@ -135,11 +145,11 @@
 	applied_cell = /obj/item/stock_parts/cell/super
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/welding,
-		/obj/item/mod/module/tether,
+		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/pathfinder,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/dna_lock,
+		/obj/item/mod/module/holster,
 	)
 
 /obj/item/mod/control/pre_equipped/nuclear
@@ -147,8 +157,7 @@
 	applied_cell = /obj/item/stock_parts/cell/hyper
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/welding,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
 		/obj/item/mod/module/injector,
@@ -159,9 +168,8 @@
 	applied_cell = /obj/item/stock_parts/cell/bluespace
 	initial_modules = list(
 		/obj/item/mod/module/storage/syndicate,
-		/obj/item/mod/module/welding,
 		/obj/item/mod/module/emp_shield,
-		/obj/item/mod/module/jetpack,
+		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
 		/obj/item/mod/module/injector,
@@ -178,7 +186,7 @@
 
 /obj/item/mod/control/pre_equipped/prototype
 	theme = /datum/mod_theme/prototype
-	applied_cell = /obj/item/stock_parts/cell/upgraded
+	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/welding,
@@ -278,6 +286,7 @@
 	applied_core = /obj/item/mod/core/infinite
 	initial_modules = list(
 		/obj/item/mod/module/storage/bluespace,
+		/obj/item/mod/module/hat_stabilizer,
 		/obj/item/mod/module/holster,
 	)
 

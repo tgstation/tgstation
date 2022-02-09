@@ -230,15 +230,15 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
-/obj/machinery/autolathe/attackby(obj/item/O, mob/living/user, params)
+/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(busy)
 		balloon_alert(user, "it's busy!")
 		return TRUE
 
-	if(default_deconstruction_crowbar(O))
+	if(default_deconstruction_crowbar(attacking_item))
 		return TRUE
 
-	if(panel_open && is_wire_tool(O))
+	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE
 
@@ -248,13 +248,13 @@
 	if(machine_stat)
 		return TRUE
 
-	if(istype(O, /obj/item/disk/design_disk))
-		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
+	if(istype(attacking_item, /obj/item/disk/design_disk))
+		user.visible_message(span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
 			balloon_alert(user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		busy = TRUE
 		if(do_after(user, 14.4, target = src))
-			var/obj/item/disk/design_disk/disky = O
+			var/obj/item/disk/design_disk/disky = attacking_item
 			var/list/not_imported
 			for(var/datum/design/blueprint as anything in disky.blueprints)
 				if(!blueprint)
@@ -271,6 +271,13 @@
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
 		return FALSE
+
+	if(istype(attacking_item, /obj/item/storage/bag/trash))
+		for(var/obj/item/content_item in attacking_item.contents)
+			if(!do_after(user, 0.5 SECONDS, src))
+				return FALSE
+			attackby(content_item, user)
+		return TRUE
 
 	return ..()
 

@@ -218,8 +218,7 @@
 	if(HAS_TRAIT(talking_movable, TRAIT_SIGN_LANG)) //Forces Sign Language users to wear the translation gloves to speak over radios
 		var/mob/living/carbon/mute = talking_movable
 		if(istype(mute))
-			var/obj/item/clothing/gloves/radio/G = mute.get_item_by_slot(ITEM_SLOT_GLOVES)
-			if(!istype(G))
+			if(!HAS_TRAIT(talking_movable, TRAIT_CAN_SIGN_ON_COMMS))
 				return FALSE
 			switch(mute.check_signables_state())
 				if(SIGN_ONE_HAND) // One hand full

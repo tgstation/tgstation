@@ -130,11 +130,11 @@
 	icon_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
-	owner.apply_status_effect(STATUS_EFFECT_SURRENDER, src)
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, src)
 	return ..()
 
 /datum/status_effect/grouped/heldup/on_remove()
-	owner.remove_status_effect(STATUS_EFFECT_SURRENDER, src)
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, src)
 	return ..()
 
 // holdup is for the person aiming
@@ -459,7 +459,7 @@
 				human_species.randomize_main_appearance_element(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
-			owner.remove_status_effect(STATUS_EFFECT_EIGEN)
+			owner.remove_status_effect(/datum/status_effect/eigenstasium)
 
 	//Finally increment cycle
 	current_cycle++

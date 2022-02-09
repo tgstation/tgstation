@@ -888,7 +888,7 @@
 	if(!istype(C))
 		to_chat(user, span_warning("The potion can only be used on objects!"))
 		return
-	if(SEND_SIGNAL(C, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_SUCCESSFUL)
+	if(SEND_SIGNAL(C, COMSIG_SPEED_POTION_APPLIED, src, user) & SPEED_POTION_STOP)
 		return
 	if(isitem(C))
 		var/obj/item/I = C
@@ -903,9 +903,8 @@
 	qdel(src)
 
 /obj/item/slimepotion/speed/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
-	. = ..()
 	if(!isitem(storage_holder))
-		return
+		return TRUE
 	if(istype(storage_holder, /obj/item/mod/control))
 		var/obj/item/mod/control/mod = storage_holder
 		return mod.slowdown_inactive <= 0

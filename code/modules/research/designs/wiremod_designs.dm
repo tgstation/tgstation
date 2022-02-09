@@ -243,6 +243,26 @@
 	id = "comp_concat_list"
 	build_path = /obj/item/circuit_component/concat_list
 
+/datum/design/component/list_add
+	name = "List Add"
+	id = "comp_list_add"
+	build_path = /obj/item/circuit_component/variable/list/listadd
+
+/datum/design/component/list_remove
+	name = "List Remove"
+	id = "comp_list_remove"
+	build_path = /obj/item/circuit_component/variable/list/listremove
+
+/datum/design/component/list_clear
+	name = "List Clear"
+	id = "comp_list_clear"
+	build_path = /obj/item/circuit_component/variable/list/listclear
+
+/datum/design/component/element_find
+	name = "Element Find"
+	id = "comp_element_find"
+	build_path = /obj/item/circuit_component/listin
+
 /datum/design/component/select_query
 	name = "Select Query Component"
 	id = "comp_select_query"
@@ -309,7 +329,7 @@
 /datum/design/component/bci/bci_action
 	name = "BCI Action Component"
 	id = "comp_bci_action"
-	build_path = /obj/item/circuit_component/bci_action
+	build_path = /obj/item/circuit_component/equipment_action/bci
 
 /datum/design/component/bci/object_overlay
 	name = "Object Overlay Component"
@@ -340,6 +360,11 @@
 	name = "Filter List Component"
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
+
+/datum/design/component/mod_action
+	name = "MOD Action Component"
+	id = "comp_mod_action"
+	build_path = /obj/item/circuit_component/equipment_action/mod
 
 /datum/design/component/id_getter
 	name = "ID Getter Component"
@@ -505,3 +530,12 @@
 	build_path = /obj/item/assembly/wiremod
 	build_type = PROTOLATHE | COMPONENT_PRINTER
 	category = list("Circuitry", "Shells")
+
+/datum/design/mod_module_shell
+	name = "MOD Module Shell"
+	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
+	id = "module_shell"
+	materials = list(/datum/material/glass = 2000)
+	build_path = /obj/item/mod/module/circuit
+	build_type = MECHFAB | COMPONENT_PRINTER
+	category = list("MOD Modules", "Shells")

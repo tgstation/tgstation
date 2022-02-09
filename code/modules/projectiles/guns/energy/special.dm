@@ -167,6 +167,16 @@
 	else
 		..()
 
+/obj/item/gun/energy/plasmacutter/emp_act(severity)
+	if(!cell.charge)
+		return
+	cell.use(cell.charge/3)
+	if(isliving(loc))
+		var/mob/living/user = loc
+		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
+		user.adjust_fire_stacks(4)
+		user.IgniteMob()
+
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)

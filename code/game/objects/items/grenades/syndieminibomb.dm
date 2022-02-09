@@ -12,6 +12,9 @@
 
 /obj/item/grenade/syndieminibomb/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	qdel(src)
 
@@ -41,6 +44,9 @@
 
 /obj/item/grenade/frag/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	qdel(src)
 
@@ -58,6 +64,9 @@
 
 /obj/item/grenade/gluon/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 	radiation_pulse(src, max_range = rad_range, threshold = rad_threshold, chance = 100)
