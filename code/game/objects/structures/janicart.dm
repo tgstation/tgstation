@@ -111,7 +111,7 @@
 			to_chat(user, span_warning("[src]'s mop bucket is empty!"))
 			return
 		user.visible_message(span_notice("[user] begins to empty the contents of [src]."), span_notice("You begin to empty the contents of [src]..."))
-		if(I.use_tool(src, user, 30))
+		if(I.use_tool(src, user, 5 SECONDS))
 			to_chat(usr, span_notice("You empty the contents of [src]'s mop bucket onto the floor."))
 			reagents.expose(src.loc)
 			src.reagents.clear_reagents()
@@ -129,18 +129,25 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
-		var/obj/item/reagent_containers/attacking_reagent_container = I
+		var/obj/item/reagent_containers/your_container = I
+		var/your_reagents = your_container.reagents.total_volume
+		var/your_capacity = your_container.reagents.maximum_volume
+		var/my_reagents = reagents.total_volume
 
-		if(attacking_reagent_container.reagents.total_volume >= attacking_reagent_container.reagents.maximum_volume)
-			to_chat(user, span_warning("[attacking_reagent_container] is full."))
+		if(your_reagents >= your_capacity)
+			to_chat(user, span_warning("[your_container] is full."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		if(reagents.total_volume < 1)
+		if(my_reagents < 1)
 			to_chat(user, span_warning("[src]'s mop bucket is empty!"))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		reagents.trans_to(attacking_reagent_container, attacking_reagent_container.reagents.maximum_volume, transfered_by = user)
-		user.visible_message(span_warning("[user] fills [attacking_reagent_container] with [src]'s mop bucket."), span_notice("You fill [attacking_reagent_container] with [src]'s mop bucket."))
+		var/do_after_length = round((min(your_capacity-your_reagents, my_reagents) / 20),1) SECONDS //takes 5 seconds to steal whole thing
+		if(!do_after(user, do_after_length))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		reagents.trans_to(your_container, your_container.reagents.maximum_volume, transfered_by = user)
+		user.visible_message(span_warning("[user] fills [your_container] with [src]'s mop bucket."), span_notice("You fill [your_container] with [src]'s mop bucket."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
