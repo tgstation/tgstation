@@ -20,6 +20,7 @@
 	pixel_x = -16
 	base_pixel_x = -16
 	layer = LARGE_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	speed = 10
 	stat_attack = HARD_CRIT
 	robust_searching = 1
@@ -59,6 +60,7 @@
 	icon = 'icons/obj/guns/projectiles.dmi'
 	icon_state = "leaper_bubble_pop"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 3
 
 /obj/effect/temp_visual/leaper_projectile_impact/Initialize(mapload)
@@ -136,6 +138,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "lily_pad"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	pixel_x = -32
 	base_pixel_x = -32
 	pixel_y = -32

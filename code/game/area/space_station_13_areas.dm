@@ -629,6 +629,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/commons/lounge
 	name = "\improper Bar Lounge"
 	icon_state = "lounge"
+	mood_bonus = 5
+	mood_message = "<span class='nicegreen'>I love being in the bar!</span>\n"
+	mood_trait = TRAIT_EXTROVERT
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
 /area/commons/fitness
@@ -738,7 +741,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/electronic_marketing_den
 	name = "\improper Electronic Marketing Den"
-	icon_state = "abandoned_m_den"
+	icon_state = "abandoned_marketing_den"
 
 /area/service/abandoned_gambling_den
 	name = "\improper Abandoned Gambling Den"
@@ -869,6 +872,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Engineering"
 	icon_state = "engine"
 
+/area/engineering/hallway
+	name = "Engineering Hallway"
+	icon_state = "engine_hallway"
+
 /area/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
@@ -942,7 +949,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage/tcomms
 	name = "Telecomms Storage"
-	icon_state = "tcom"
+	icon_state = "tcom_storage"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 //Engineering - Construction

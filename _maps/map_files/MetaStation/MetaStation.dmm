@@ -19996,6 +19996,9 @@
 	req_access_txt = "24"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "eYG" = (
@@ -27586,6 +27589,17 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"hFj" = (
+/obj/machinery/door/airlock/external{
+	name = "Atmospherics External Access";
+	req_access_txt = "24"
+	},
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/engineering/atmos)
 "hFw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -124767,7 +124781,7 @@ aaa
 aaa
 aaa
 mvS
-eYf
+hFj
 mvS
 lMJ
 lMJ
