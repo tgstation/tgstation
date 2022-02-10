@@ -35,7 +35,7 @@
 		return
 
 	var/datum/antagonist/obsessed/our_creeper = user.mind.has_antag_datum(/datum/antagonist/obsessed)
-	 if(our_creeper?.trauma.obsession == owner)
+	if(our_creeper?.trauma.obsession == owner)
 		examine_list += span_nicegreen("This must be [owner]'s family heirloom! It smells just like them...")
 	else
 		examine_list += span_notice("It is the [family_name] family heirloom, belonging to [owner].")
