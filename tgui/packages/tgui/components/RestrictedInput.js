@@ -68,10 +68,10 @@ export class RestrictedInput extends Component {
         const safeNum = getClampedNumber(e.target.value, minValue, maxValue);
         this.setEditing(false);
         if (onChange) {
-          onChange(e, safeNum);
+          onChange(e, +safeNum);
         }
         if (onEnter) {
-          onEnter(e, safeNum);
+          onEnter(e, +safeNum);
         }
         e.target.blur();
         return;

@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Hopefully fixes sparks just, sitting in the air sometimes. At the very least it'll cause more visible complaints"
