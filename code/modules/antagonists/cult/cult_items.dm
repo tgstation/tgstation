@@ -757,17 +757,17 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/halberd/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	var/turf/T = get_turf(hit_atom)
 	if(isliving(hit_atom))
-		var/mob/living/L = hit_atom
+		var/mob/living/target = hit_atom
 
-		if(IS_CULTIST(L) && L.put_in_active_hand(src))
+		if(IS_CULTIST(target) && target.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
-			L.visible_message(span_warning("[L] catches [src] out of the air!"))
+			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
-		if(L.can_block_magic() || IS_CULTIST(L))
-			L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
+		if(target.can_block_magic() || IS_CULTIST(target))
+			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
 			return
 		if(!..())
-			L.Paralyze(50)
+			target.Paralyze(50)
 			break_halberd(T)
 	else
 		..()
@@ -1073,17 +1073,17 @@ Striking a noncultist, however, will tear their flesh."}
 	var/turf/T = get_turf(hit_atom)
 	var/datum/thrownthing/D = throwingdatum
 	if(isliving(hit_atom))
-		var/mob/living/L = hit_atom
+		var/mob/living/target = hit_atom
 
-		if(L.can_block_magic() || IS_CULTIST(L))
-			L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
+		if(target.can_block_magic() || IS_CULTIST(target))
+			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
 			return 
-		if(IS_CULTIST(L) && L.put_in_active_hand(src))
+		if(IS_CULTIST(target) && target.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
-			L.visible_message(span_warning("[L] catches [src] out of the air!"))
+			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
 		if(!..())			
-			L.Paralyze(30)
+			target.Paralyze(30)
 			if(D?.thrower)
 				for(var/mob/living/Next in orange(2, T))
 					if(!Next.density || IS_CULTIST(Next))
