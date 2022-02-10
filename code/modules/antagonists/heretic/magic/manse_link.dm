@@ -5,7 +5,7 @@
 	action_icon_state = "mansus_link"
 	action_background_icon_state = "bg_ecult"
 	invocation = "PI'RC' TH' M'ND"
-	invocation_type = "whisper"
+	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
 	charge_max = 300
 	clothes_req = FALSE

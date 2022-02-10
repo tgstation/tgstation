@@ -46,7 +46,7 @@
 /obj/effect/proc_holder/spell/targeted/worm_contract
 	name = "Force Contract"
 	desc = "Forces your body to contract onto a single tile."
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	school = SCHOOL_FORBIDDEN
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"

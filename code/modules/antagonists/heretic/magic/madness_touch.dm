@@ -8,7 +8,7 @@
 	school = SCHOOL_FORBIDDEN
 	charge_max = 150
 	clothes_req = FALSE
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 2
 
 /obj/effect/proc_holder/spell/pointed/touch/mad_touch/can_target(atom/target, mob/user, silent)
