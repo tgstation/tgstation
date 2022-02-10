@@ -23,9 +23,6 @@
 	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
 	RegisterSignal(loop, COMSIG_MOVELOOP_JPS_REPATH, .proc/repath_incoming)
 
-/datum/ai_movement/jps/allowed_to_move(datum/move_loop/source)
-	. = ..()
-
 /datum/ai_movement/jps/proc/repath_incoming(datum/move_loop/has_target/jps/source)
 	SIGNAL_HANDLER
 	var/datum/ai_controller/controller = source.extra_info

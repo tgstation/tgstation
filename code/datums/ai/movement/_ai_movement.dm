@@ -8,10 +8,9 @@
 //Override this to setup the moveloop you want to use
 /datum/ai_movement/proc/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
 	SHOULD_CALL_PARENT(TRUE)
-	if(allowed_to_move(controller))
-		controller.pathing_attempts = 0
-		controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE] = min_distance
-		moving_controllers[controller] = current_movement_target
+	controller.pathing_attempts = 0
+	controller.blackboard[BB_CURRENT_MIN_MOVE_DISTANCE] = min_distance
+	moving_controllers[controller] = current_movement_target
 
 /datum/ai_movement/proc/stop_moving_towards(datum/ai_controller/controller)
 	controller.pathing_attempts = 0
@@ -52,7 +51,7 @@
 		return MOVELOOP_SKIP_STEP
 
 	if(can_move)
-		return can_move
+		return
 	increment_pathing_failures(controller)
 	return MOVELOOP_SKIP_STEP
 
