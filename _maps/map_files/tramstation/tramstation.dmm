@@ -56499,7 +56499,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/turf/closed/wall/mineral/titanium,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/hallway/primary/tram/center)
 "tiC" = (
 /obj/structure/table/reinforced,
