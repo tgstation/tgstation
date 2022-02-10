@@ -335,7 +335,7 @@
 	action_icon_state = "tailsweep"
 	action_background_icon_state = "bg_alien"
 	anti_magic_check = FALSE
-	maxthrow = 3
+	maxthrow = 4
 
 /obj/effect/proc_holder/spell/aoe_turf/repulse/lizard_tail/cast(list/targets, mob/user = usr)
 	if(iscarbon(user))
