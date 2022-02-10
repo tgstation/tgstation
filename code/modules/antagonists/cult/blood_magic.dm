@@ -430,7 +430,7 @@
 
 		user.mob_light(_range = 3, _color = LIGHT_COLOR_BLOOD_MAGIC, _duration = 0.2 SECONDS)
 
-		if(L.can_block_magic())
+		if(L.can_block_magic(MAGIC_RESISTANCE_HOLY))
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
 			to_chat(user, span_cultitalic("In a brilliant flash of red, [L] falls to the ground!"))

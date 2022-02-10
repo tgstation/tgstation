@@ -763,7 +763,7 @@ Striking a noncultist, however, will tear their flesh."}
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
 			target.visible_message(span_warning("[target] catches [src] out of the air!"))
 			return
-		if(target.can_block_magic() || IS_CULTIST(target))
+		if(target.can_block_magic(MAGIC_RESISTANCE_HOLY) || IS_CULTIST(target))
 			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
 			return
 		if(!..())
@@ -1075,7 +1075,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(isliving(hit_atom))
 		var/mob/living/target = hit_atom
 
-		if(target.can_block_magic() || IS_CULTIST(target))
+		if(target.can_block_magic(MAGIC_RESISTANCE_HOLY) || IS_CULTIST(target))
 			target.visible_message(span_warning("[src] bounces off of [target], as if repelled by an unseen force!"))
 			return 
 		if(IS_CULTIST(target) && target.put_in_active_hand(src))
