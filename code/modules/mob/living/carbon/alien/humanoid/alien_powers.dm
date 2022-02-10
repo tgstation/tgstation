@@ -95,13 +95,13 @@ Doesn't work on other aliens/AI.*/
 	if(isnull(chosen_recipient))
 		return FALSE
 	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-		to_chat(user, span_noticealien("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+		to_chat(user, span_warning("As you reach into [chosen_recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return FALSE
 	var/msg = tgui_input_text(user, title = "Alien Whisper")
 	if(isnull(msg))
 		return FALSE
 	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
-		to_chat(user, span_notice("As you try to communicate with [chosen_recipient], you're suddenly stopped by a vision of a massive tinfoil wall that streches beyond visible range. It seems you've been foiled."))
+		to_chat(user, span_warning("As you reach into [chosen_recipient]'s mind, you are stopped by a mental blockage. It seems you've been foiled."))
 		return
 	log_directed_talk(user, chosen_recipient, msg, LOG_SAY, tag="alien whisper")
 	to_chat(chosen_recipient, "[span_noticealien("You hear a strange, alien voice in your head...")][msg]")

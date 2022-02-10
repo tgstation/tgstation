@@ -82,7 +82,7 @@
 				if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 					to_chat(src, span_revenminor("Something's wrong! [target] seems to be resisting the siphoning, leaving you vulnerable!"))
 					target.visible_message(span_warning("[target] slumps onto the ground."), \
-											   span_revenwarning("Violet lights, dancing in your vision, receding--"))
+					span_revenwarning("Violet lights, dancing in your vision, receding--"))
 					draining = FALSE
 					return
 				var/datum/beam/B = Beam(target,icon_state="drain_life")
@@ -228,10 +228,10 @@
 		if(M == user)
 			continue
 		L.Beam(M,icon_state="purple_lightning", time = 5)
-		if(!M.can_block_magic(MAGIC_RESISTANCE_HOLY))
-			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
+		if(!M.can_block_magic(MAGIC_RESISTANCE_HOLY))
+			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile
@@ -349,6 +349,7 @@
 		if(mob == user)
 			continue
 		if(mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
+			to_chat(user, span_warning("The spell had no effect on [mob]!"))
 			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
 		if(iscarbon(mob))
