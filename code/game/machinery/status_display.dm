@@ -92,15 +92,16 @@
 
 /// Immediately change the display to the given two lines.
 /obj/machinery/status_display/proc/update_display(line1, line2)
+	line1 = uppertext(line1)
+	line2 = uppertext(line2)
+
 	if( \
 		(message1_overlay && message1_overlay.message == line1) && \
-		(message2_overlay && message2_overlay.message == line2))
+		(message2_overlay && message2_overlay.message == line2) \
+	)
 		return
 
 	remove_display()
-
-	line1 = uppertext(line1)
-	line2 = uppertext(line2)
 
 	message1_overlay = new(LINE1_Y, line1)
 	vis_contents += message1_overlay
@@ -188,12 +189,12 @@
 		// Marquee text
 		var/marquee_message = "[line] • [line] • [line]"
 		var/marqee_length = line_length * 3 + 6
-		maptext = generate_text(marquee_message, FALSE)
+		maptext = generate_text(marquee_message, center = FALSE)
 		maptext_width = 6 * marqee_length
 		maptext_x = 32
 
 		// Mask off to fit in screen.
-		filters = filter(type = "alpha", icon = icon(icon, "outline"))
+		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
 
 		// Scroll.
 		var/width = 4 * marqee_length
@@ -202,7 +203,7 @@
 		animate(maptext_x = 32, time = 0)
 	else
 		// Centered text
-		maptext = generate_text(line, TRUE)
+		maptext = generate_text(line, center = TRUE)
 		maptext_x = 0
 
 /obj/effect/overlay/status_display_text/proc/generate_text(text, center)
