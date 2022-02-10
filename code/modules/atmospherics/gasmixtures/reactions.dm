@@ -316,10 +316,10 @@
 	else if(isatom(holder))
 		location = holder
 
+	var/energy_released = FIRE_TRITIUM_ENERGY_RELEASED * burned_fuel * effect_scale
 	if(location && burned_fuel > TRITIUM_RADIATION_MINIMUM_MOLES && energy_released > FIRE_HYDROGEN_ENERGY_RELEASED * air.volume / 2500 && prob(10))
 		radiation_pulse(location, max_range = min(sqrt(burned_fuel * effect_scale) / TRITIUM_RADIATION_RANGE_DIVISOR, 20), threshold = TRITIUM_RADIATION_THRESHOLD_BASE * INVERSE(TRITIUM_RADIATION_THRESHOLD_BASE + (burned_fuel * effect_scale)), chance = 50)
 
-	var/energy_released = FIRE_TRITIUM_ENERGY_RELEASED * burned_fuel * effect_scale
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
