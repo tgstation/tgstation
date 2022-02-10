@@ -60,9 +60,9 @@
 			var/obj/item/stack/rods/S = W
 			if(state == GIRDER_DISPLACED)
 				if(S.get_amount() < 5)
-					to_chat(user, span_warning("You need at least two rods to create a false wall!"))
+					to_chat(user, span_warning("You need at least five rods to create a false wall!"))
 					return
-				to_chat(user, span_notice("You start building a reinforced false wall..."))
+				to_chat(user, span_notice("You start building a false wall..."))
 				if(do_after(user, 20, target = src))
 					if(S.get_amount() < 5)
 						return
@@ -340,7 +340,7 @@
 /obj/structure/girder/cult
 	name = "runed girder"
 	desc = "Framework made of a strange and shockingly cold metal. It doesn't seem to have any bolts."
-	icon = 'icons/obj/cult.dmi'
+	icon = 'icons/obj/cult/structures.dmi'
 	icon_state= "cultgirder"
 	can_displace = FALSE
 
@@ -411,7 +411,6 @@
 /obj/structure/girder/bronze
 	name = "wall gear"
 	desc = "A girder made out of sturdy bronze, made to resemble a gear."
-	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "wall_gear"
 	can_displace = FALSE
 

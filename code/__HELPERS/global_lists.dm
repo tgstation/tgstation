@@ -60,8 +60,6 @@
 
 	init_crafting_recipes(GLOB.crafting_recipes)
 
-	init_subtypes_w_path_keys(/obj/projectile, GLOB.proj_by_path_key)
-
 /// Inits the crafting recipe list, sorting crafting recipe requirements in the process.
 /proc/init_crafting_recipes(list/crafting_recipes)
 	for(var/path in subtypesof(/datum/crafting_recipe))

@@ -15,6 +15,8 @@
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
+	flags_ricochet = RICOCHET_HARD
+	receive_ricochet_chance_mod = 0.5
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
@@ -29,8 +31,8 @@
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
 	var/hit_sound = 'sound/effects/glasshit.ogg'
-	flags_ricochet = RICOCHET_HARD
-	receive_ricochet_chance_mod = 0.5
+	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
+	var/bloodied = FALSE
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -68,6 +70,7 @@
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = .proc/on_exit,
@@ -75,10 +78,6 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/structure/window/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -293,21 +292,8 @@
 	if (fulltile)
 		. += new /obj/item/shard(location)
 
-/obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("[src] cannot be rotated while it is fastened to the floor!"))
-		return FALSE
-
-	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
-
-	if(!valid_window_location(loc, target_dir, is_fulltile = fulltile))
-		to_chat(user, span_warning("[src] cannot be rotated in that direction!"))
-		return FALSE
-	return TRUE
-
-/obj/structure/window/proc/after_rotation(mob/user,rotation_type)
+/obj/structure/window/proc/AfterRotation(mob/user, degrees)
 	air_update_turf(TRUE, FALSE)
-	add_fingerprint(user)
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
@@ -328,7 +314,7 @@
 	if(anchored)
 		move_update_air(T)
 
-/obj/structure/window/can_atmos_pass(turf/T)
+/obj/structure/window/can_atmos_pass(turf/T, vertical = FALSE)
 	if(!anchored || !density)
 		return TRUE
 	return !(fulltile || dir == get_dir(loc, T))
@@ -362,7 +348,7 @@
 /obj/structure/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(round(air.return_volume() / 100), BURN, 0, 0)
 
-/obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/window/get_dumping_location()
 	return null
 
 /obj/structure/window/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)

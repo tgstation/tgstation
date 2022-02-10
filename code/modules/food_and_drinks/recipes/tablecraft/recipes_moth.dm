@@ -90,7 +90,7 @@
 	name = "Green lasagne al forno"
 	reqs = list(
 		/obj/item/food/pesto = 1,
-		/obj/item/food/spaghetti = 2,
+		/obj/item/food/spaghetti/boiledspaghetti = 2,
 		/obj/item/food/bechamel_sauce = 1,
 		/obj/item/food/firm_cheese = 1
 	)

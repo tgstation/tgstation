@@ -75,6 +75,9 @@
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
 	#define COMPONENT_OBJ_ALLOW (1<<0)
 
+#define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
+	#define COMPONENT_AIRLOCK_SHELL_ALLOW (1<<0)
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)
@@ -197,13 +200,18 @@
 #define COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE "obj_attempt_simple_charge_change"
 
 // /obj/item signals for economy
+///called before an item is sold by the exports system.
+#define COMSIG_ITEM_PRE_EXPORT "item_pre_sold"
+	/// Stops the export from calling sell_object() on the item, so you can handle it manually.
+	#define COMPONENT_STOP_EXPORT (1<<0)
 ///called when an item is sold by the exports subsystem
-#define COMSIG_ITEM_SOLD "item_sold"
+#define COMSIG_ITEM_EXPORTED "item_sold"
+	/// Stops the export from adding the export information to the report, so you can handle it manually.
+	#define COMPONENT_STOP_EXPORT_REPORT (1<<0)
 ///called when a wrapped up structure is opened by hand
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"
 ///called when a wrapped up item is opened by hand
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"
-	#define COMSIG_ITEM_SPLIT_VALUE  (1<<0)
 ///called when getting the item's exact ratio for cargo's profit.
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"
 ///called when getting the item's exact ratio for cargo's profit, without selling the item.
@@ -365,3 +373,7 @@
 
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
+
+/// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
+#define COMSIG_SPEED_POTION_APPLIED "speed_potion"
+	#define SPEED_POTION_STOP (1<<0)

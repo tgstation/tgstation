@@ -4,7 +4,7 @@ GLOBAL_DATUM(colored_assistant, /datum/colored_assistant)
 Assistant
 */
 /datum/job/assistant
-	title = "Assistant"
+	title = JOB_ASSISTANT
 	description = "Get your space legs, assist people, ask the HoP to give you a job."
 	faction = FACTION_STATION
 	total_positions = 5
@@ -15,8 +15,6 @@ Assistant
 	outfit = /datum/outfit/job/assistant
 	plasmaman_outfit = /datum/outfit/plasmaman
 	paycheck = PAYCHECK_ASSISTANT // Get a job. Job reassignment changes your paycheck now. Get over it.
-
-	liver_traits = list(TRAIT_GREYTIDE_METABOLISM)
 
 	paycheck_department = ACCOUNT_CIV
 	display_order = JOB_DISPLAY_ORDER_ASSISTANT
@@ -34,11 +32,11 @@ Assistant
 		/obj/item/crowbar/large = 1
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 	rpg_title = "Lout"
 
 /datum/outfit/job/assistant
-	name = "Assistant"
+	name = JOB_ASSISTANT
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
 
@@ -75,6 +73,7 @@ Assistant
 	// This outfit is used by the assets SS, which is ran before the atoms SS
 	if (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		H.w_uniform?.update_greyscale()
+		H.update_inv_w_uniform()
 
 /proc/get_configured_colored_assistant_type()
 	return CONFIG_GET(flag/grey_assistants) ? /datum/colored_assistant/grey : /datum/colored_assistant/random

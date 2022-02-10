@@ -158,11 +158,11 @@
 	lose_text = "<span class='notice'>You feel in control of your muscles again.</span>"
 
 /datum/brain_trauma/mild/muscle_spasms/on_gain()
-	owner.apply_status_effect(STATUS_EFFECT_SPASMS)
+	owner.apply_status_effect(/datum/status_effect/spasms)
 	..()
 
 /datum/brain_trauma/mild/muscle_spasms/on_lose()
-	owner.remove_status_effect(STATUS_EFFECT_SPASMS)
+	owner.remove_status_effect(/datum/status_effect/spasms)
 	..()
 
 /datum/brain_trauma/mild/nervous_cough
@@ -175,7 +175,7 @@
 /datum/brain_trauma/mild/nervous_cough/on_life(delta_time, times_fired)
 	if(DT_PROB(6, delta_time) && !HAS_TRAIT(owner, TRAIT_SOOTHED_THROAT))
 		if(prob(5))
-			to_chat(owner, "<span notice='warning'>[pick("You have a coughing fit!", "You can't stop coughing!")]</span>")
+			to_chat(owner, span_warning("[pick("You have a coughing fit!", "You can't stop coughing!")]"))
 			owner.Immobilize(20)
 			owner.emote("cough")
 			addtimer(CALLBACK(owner, /mob/.proc/emote, "cough"), 6)

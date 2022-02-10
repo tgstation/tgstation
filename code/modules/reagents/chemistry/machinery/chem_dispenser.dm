@@ -329,7 +329,7 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = stripped_input(usr,"Name","What do you want to name this recipe?", "Recipe", MAX_NAME_LEN)
+			var/name = tgui_input_text(usr, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
 			if(!usr.canUseTopic(src, !issilicon(usr)))
 				return
 			if(saved_recipes[name] && tgui_alert(usr, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
@@ -339,7 +339,7 @@
 					var/reagent_id = GLOB.name2reagent[translate_legacy_chem_id(reagent)]
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
-						to_chat(usr, "<span class ='danger'>[src] cannot find <b>[reagent]</b>!</span>")
+						to_chat(usr, span_warning("[src] cannot find <b>[reagent]</b>!"))
 						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
@@ -391,7 +391,7 @@
 	for(var/i in 1 to total)
 		Q.add_reagent(pick(dispensable_reagents), 10, reagtemp = dispensed_temperature)
 	R += Q
-	chem_splash(get_turf(src), 3, R)
+	chem_splash(get_turf(src), null, 3, R)
 	if(beaker?.reagents)
 		beaker.reagents.remove_all()
 	cell.use(total/powerefficiency)
@@ -439,7 +439,7 @@
 
 /obj/machinery/chem_dispenser/drinks/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/chem_dispenser/drinks/setDir()
 	var/old = dir
@@ -474,7 +474,6 @@
 	dispensed_temperature = WATER_MATTERSTATE_CHANGE_TEMP // magical mystery temperature of 274.5, where ice does not melt, and water does not freeze
 	amount = 10
 	pixel_y = 6
-	layer = WALL_OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks
 	working_state = null
 	nopower_state = null

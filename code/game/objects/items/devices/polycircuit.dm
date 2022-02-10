@@ -19,15 +19,15 @@
 	else
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		chosen_circuit = input("What type of circuit would you like to remove?", "Choose a Circuit Type", chosen_circuit) in list("airlock","firelock","fire alarm","air alarm","APC","cancel")
+		chosen_circuit = tgui_input_list(user, "Circuit to remove", "Circuit Removal", list("airlock","firelock","fire alarm","air alarm","APC"), chosen_circuit)
+		if(isnull(chosen_circuit))
+			to_chat(user, span_notice("You wisely avoid putting your hands anywhere near [src]."))
+			return
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
 		if(loc != user)
 			return
 		switch(chosen_circuit)
-			if("cancel")
-				to_chat(user, span_notice("You wisely avoid putting your hands anywhere near [src]."))
-				return
 			if("airlock")
 				circuit_type = /obj/item/electronics/airlock
 			if("firelock")

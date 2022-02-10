@@ -1,5 +1,5 @@
 /datum/antagonist/ninja
-	name = "Space Ninja"
+	name = "\improper Space Ninja"
 	antagpanel_category = "Space Ninja"
 	job_rank = ROLE_NINJA
 	antag_hud_name = "space_ninja"
@@ -99,8 +99,9 @@
 	objectives += survival
 
 /datum/antagonist/ninja/greet()
+	. = ..()
 	SEND_SOUND(owner.current, sound('sound/effects/ninja_greeting.ogg'))
-	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan. A <font color='red'><B>SPACE NINJA</B></font>!")
+	to_chat(owner.current, "I am an elite mercenary of the mighty Spider Clan!")
 	to_chat(owner.current, "Surprise is my weapon. Shadows are my armor. Without them, I am nothing. (//initialize your suit by right clicking on it, to use abilities like stealth)!")
 	owner.announce_objectives()
 

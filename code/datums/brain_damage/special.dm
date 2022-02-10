@@ -101,6 +101,7 @@
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
+	image_plane = GAME_PLANE_UPPER
 	var/obj/effect/hallucination/simple/bluespace_stream/linked_to
 	var/mob/living/carbon/seer
 
@@ -139,6 +140,10 @@
 			return
 
 		user.visible_message(span_warning("[user] [slip_out_message]."), span_notice("...and find your way to the other side."))
+
+/obj/effect/hallucination/simple/bluespace_stream/attack_tk(mob/user)
+	to_chat(user, span_warning("\The [src] actively rejects your mind, and the bluespace energies surrounding it disrupt your telekinesis!"))
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/brain_trauma/special/quantum_alignment
 	name = "Quantum Alignment"

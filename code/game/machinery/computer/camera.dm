@@ -90,6 +90,12 @@
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
 
+/obj/machinery/computer/security/ui_status(mob/user)
+	. = ..()
+	if(. == UI_DISABLED)
+		return UI_CLOSE
+	return .
+
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
 	data["network"] = network
@@ -120,7 +126,7 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
+		var/c_tag = format_text(params["name"])
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		active_camera = selected_camera

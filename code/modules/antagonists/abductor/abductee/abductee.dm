@@ -5,7 +5,7 @@
  * remembering the abduction, plus some random weird objectives for them to act crazy with.
  */
 /datum/antagonist/abductee
-	name = "Abductee"
+	name = "\improper Abductee"
 	roundend_category = "abductees"
 	antagpanel_category = "Other"
 	antag_hud_name = "abductee"

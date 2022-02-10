@@ -183,7 +183,7 @@
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
+	invocation_emote_self = span_danger("You fire your finger gun!")
 	range = 20
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3

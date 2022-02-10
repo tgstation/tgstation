@@ -52,7 +52,7 @@
 
 /obj/structure/reagent_dispensers/proc/boom()
 	visible_message(span_danger("\The [src] ruptures!"))
-	chem_splash(loc, 5, list(reagents))
+	chem_splash(loc, null, 5, list(reagents))
 	qdel(src)
 
 /obj/structure/reagent_dispensers/deconstruct(disassembled = TRUE)
@@ -232,22 +232,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A stationary, plumbed, water tank."
 	can_be_tanked = FALSE
 
+/obj/structure/reagent_dispensers/plumbed/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/plumbing/simple_supply)
+
 /obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I)
 	return TRUE
-
-/obj/structure/reagent_dispensers/plumbed/ComponentInitialize()
-	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/structure/reagent_dispensers/plumbed/storage
 	name = "stationary storage tank"
 	icon_state = "tank_stationary"
 	reagent_id = null //start empty
 
-/obj/structure/reagent_dispensers/plumbed/storage/ComponentInitialize()
+/obj/structure/reagent_dispensers/plumbed/storage/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
 	. = ..()
@@ -260,11 +261,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	var/mutable_appearance/tank_color = mutable_appearance('icons/obj/chemical_tanks.dmi', "tank_chem_overlay")
 	tank_color.color = mix_color_from_reagents(reagents.reagent_list)
 	. += tank_color
-
-/obj/structure/reagent_dispensers/plumbed/storage/proc/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-	return !anchored
 
 /obj/structure/reagent_dispensers/plumbed/fuel
 	name = "stationary fuel tank"

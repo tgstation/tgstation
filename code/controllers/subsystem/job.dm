@@ -33,15 +33,6 @@ SUBSYSTEM_DEF(job)
 	/// Lazylist of mob:occupation_string pairs.
 	var/list/dynamic_forced_occupations
 
-	/// A list of all jobs associated with the station. These jobs also have various icons associated with them including sechud and card trims.
-	var/list/station_jobs
-	/// A list of all Head of Staff jobs.
-	var/list/head_of_staff_jobs
-	/// A list of additional jobs that have various icons associated with them including sechud and card trims.
-	var/list/additional_jobs_with_icons
-	/// A list of jobs associed with Centcom and should use the standard NT Centcom icons.
-	var/list/centcom_jobs
-
 	/**
 	 * Keys should be assigned job roles. Values should be >= 1.
 	 * Represents the chain of command on the station. Lower numbers mean higher priority.
@@ -50,13 +41,14 @@ SUBSYSTEM_DEF(job)
 	 * See [/datum/controller/subsystem/ticker/proc/equip_characters]
 	 */
 	var/list/chain_of_command = list(
-		"Captain" = 1,
-		"Head of Personnel" = 2,
-		"Research Director" = 3,
-		"Chief Engineer" = 4,
-		"Chief Medical Officer" = 5,
-		"Head of Security" = 6,
-		"Quartermaster" = 7)
+		JOB_CAPTAIN = 1,
+		JOB_HEAD_OF_PERSONNEL = 2,
+		JOB_RESEARCH_DIRECTOR = 3,
+		JOB_CHIEF_ENGINEER = 4,
+		JOB_CHIEF_MEDICAL_OFFICER = 5,
+		JOB_HEAD_OF_SECURITY = 6,
+		JOB_QUARTERMASTER = 7,
+	)
 
 	/// If TRUE, some player has been assigned Captaincy or Acting Captaincy at some point during the shift and has been given the spare ID safe code.
 	var/assigned_captain = FALSE
@@ -249,6 +241,7 @@ SUBSYSTEM_DEF(job)
 
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			JobDebug("GRJ job lacks spawn positions to be eligible, Player: [player], Job: [job]")
+			continue
 
 		if(istype(job, GetJobType(overflow_role))) // We don't want to give him assistant, that's boring!
 			JobDebug("GRJ skipping overflow role, Player: [player], Job: [job]")
@@ -326,7 +319,7 @@ SUBSYSTEM_DEF(job)
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
-	var/datum/job/ai_job = GetJob("AI")
+	var/datum/job/ai_job = GetJob(JOB_AI)
 	if(!ai_job)
 		return
 	// In byond for(in to) loops, the iteration is inclusive so we need to stop at ai_job.total_positions - 1
@@ -434,7 +427,7 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				// Filter any job that doesn't fit the current level.
-				var/player_job_level = player.client.prefs.job_preferences[job.title]
+				var/player_job_level = player.client?.prefs.job_preferences[job.title]
 				if(isnull(player_job_level))
 					JobDebug("FOC player job not enabled, Player: [player]")
 					continue
@@ -573,7 +566,7 @@ SUBSYSTEM_DEF(job)
 		return C.holder.auto_deadmin()
 
 /datum/controller/subsystem/job/proc/setup_officer_positions()
-	var/datum/job/J = SSjob.GetJob("Security Officer")
+	var/datum/job/J = SSjob.GetJob(JOB_SECURITY_OFFICER)
 	if(!J)
 		CRASH("setup_officer_positions(): Security officer job is missing")
 
@@ -787,20 +780,6 @@ SUBSYSTEM_DEF(job)
 
 /// Builds various lists of jobs based on station, centcom and additional jobs with icons associated with them.
 /datum/controller/subsystem/job/proc/setup_job_lists()
-	station_jobs = list("Assistant", "Captain", "Head of Personnel", "Bartender", "Cook", "Botanist", "Quartermaster", "Cargo Technician", \
-		"Shaft Miner", "Clown", "Mime", "Janitor", "Curator", "Lawyer", "Chaplain", "Chief Engineer", "Station Engineer", \
-		"Atmospheric Technician", "Chief Medical Officer", "Medical Doctor", "Paramedic", "Chemist", "Geneticist", "Virologist", "Psychologist", \
-		"Research Director", "Scientist", "Roboticist", "Head of Security", "Warden", "Detective", "Security Officer", "Prisoner")
-
-	head_of_staff_jobs = list("Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director", "Head of Security", "Captain")
-
-	additional_jobs_with_icons = list("Emergency Response Team Commander", "Security Response Officer", "Engineering Response Officer", "Medical Response Officer", \
-		"Entertainment Response Officer", "Religious Response Officer", "Janitorial Response Officer", "Death Commando", "Security Officer (Engineering)", \
-		"Security Officer (Cargo)", "Security Officer (Medical)", "Security Officer (Science)")
-
-	centcom_jobs = list("Central Command","VIP Guest","Custodian","Thunderdome Overseer","CentCom Official","Medical Officer","Research Officer", \
-		"Special Ops Officer","Admiral","CentCom Commander","CentCom Bartender","Private Security Force")
-
 	job_priorities_to_strings = list(
 		"[JP_LOW]" = "Low Priority",
 		"[JP_MEDIUM]" = "Medium Priority",

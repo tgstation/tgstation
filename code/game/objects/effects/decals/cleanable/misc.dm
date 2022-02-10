@@ -105,6 +105,7 @@
 	desc = "Somebody should remove that."
 	gender = NEUTER
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	icon_state = "cobweb1"
 	resistance_flags = FLAMMABLE
 	beauty = -100
@@ -251,7 +252,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "garbage"
 	plane = GAME_PLANE
-	layer = OBJ_LAYER //To display the decal over wires.
+	layer = FLOOR_CLEAN_LAYER //To display the decal over wires.
 	beauty = -150
 	clean_type = CLEAN_TYPE_HARD_DECAL
 

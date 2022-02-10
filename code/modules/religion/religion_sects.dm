@@ -55,8 +55,8 @@
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
 	SHOULD_CALL_PARENT(TRUE)
-	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span")
-	to_chat(chap, "<span class='notice'>[desc]</span")
+	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span>")
+	to_chat(chap, "<span class='notice'>[desc]</span>")
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/chap)
@@ -305,7 +305,7 @@
 		to_chat(new_convert, span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(HONORBOUND)
+	holy_dna.add_mutation(/datum/mutation/human/honorbound)
 
 /datum/religion_sect/burden
 	name = "Punished God"

@@ -47,7 +47,7 @@
 	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_overlay.alpha)
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
-	var/new_style = input(user, "Select a hairstyle", "Wig Styling")  as null|anything in (GLOB.hairstyles_list - "Bald")
+	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", GLOB.hairstyles_list - "Bald")
 	var/newcolor = adjustablecolor ? input(usr,"","Choose Color",color) as color|null : null
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return

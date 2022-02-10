@@ -4,7 +4,7 @@
 	if(SEND_SIGNAL(src, COMSIG_OBJ_ALLOWED, accessor) & COMPONENT_OBJ_ALLOW)
 		return TRUE
 	//check if it doesn't require any access at all
-	if(src.check_access(null))
+	if(check_access(null))
 		return TRUE
 	if(issilicon(accessor))
 		if(ispAI(accessor))
@@ -13,21 +13,21 @@
 	if(isAdminGhostAI(accessor))
 		//Access can't stop the abuse
 		return TRUE
-	else if(istype(accessor) && SEND_SIGNAL(accessor, COMSIG_MOB_ALLOWED, src))
+	//If the mob has the simple_access component with the requried access, we let them in.
+	else if(SEND_SIGNAL(accessor, COMSIG_MOB_TRIED_ACCESS, src) & ACCESS_ALLOWED)
 		return TRUE
+	//If the mob is holding a valid ID, we let them in. get_active_held_item() is on the mob level, so no need to copypasta everywhere.
+	else if(check_access(accessor.get_active_held_item()))
+		return TRUE
+	//if they are wearing a card that has access, that works
 	else if(ishuman(accessor))
 		var/mob/living/carbon/human/human_accessor = accessor
-		//if they are holding or wearing a card that has access, that works
-		if(check_access(human_accessor.get_active_held_item()) || src.check_access(human_accessor.wear_id))
+		if(check_access(human_accessor.wear_id))
 			return TRUE
-	else if(isalienadult(accessor))
-		var/mob/living/carbon/george = accessor
-		//they can only hold things :(
-		if(check_access(george.get_active_held_item()))
-			return TRUE
+	//if they have a hacky abstract animal ID with the required access, let them in i guess...
 	else if(isanimal(accessor))
 		var/mob/living/simple_animal/animal = accessor
-		if(check_access(animal.get_active_held_item()) || check_access(animal.access_card))
+		if(check_access(animal.access_card))
 			return TRUE
 	return FALSE
 
@@ -108,20 +108,4 @@
 /obj/item/proc/get_sechud_job_icon_state()
 	var/obj/item/card/id/id_card = GetID()
 
-	if(!id_card)
-		return "hudno_id"
-
-	var/card_assignment = id_card.get_trim_assignment()
-
-	// Is this one of the jobs with dedicated HUD icons?
-	if(card_assignment in SSjob.station_jobs)
-		return "hud[ckey(card_assignment)]"
-	if(card_assignment in SSjob.additional_jobs_with_icons)
-		return "hud[ckey(card_assignment)]"
-
-	// If not, is it one of the jobs that should use the NT logo?
-	if(card_assignment in SSjob.centcom_jobs)
-		return "hudcentcom"
-
-	// If none of the above apply, job name is unknown.
-	return "hudunknown"
+	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID

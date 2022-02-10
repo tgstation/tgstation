@@ -4,61 +4,59 @@
 /datum/ai_movement/jps
 	max_pathing_attempts = 4
 
-///Put your movement behavior in here!
-/datum/ai_movement/jps/process(delta_time)
-	for(var/datum/ai_controller/controller as anything in moving_controllers)
-		if(!COOLDOWN_FINISHED(controller, movement_cooldown))
-			continue
-		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
+/datum/ai_movement/jps/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)
+	. = ..()
+	var/atom/movable/moving = controller.pawn
+	var/delay = controller.movement_delay
 
-		var/atom/movable/movable_pawn = controller.pawn
-		if(!isturf(movable_pawn.loc)) //No moving if not on a turf
-			continue
+	var/datum/move_loop/loop = SSmove_manager.jps_move(moving,
+		current_movement_target,
+		delay,
+		repath_delay = 2 SECONDS,
+		max_path_length = AI_MAX_PATH_LENGTH,
+		minimum_distance = controller.get_minimum_distance(),
+		id = controller.get_access(),
+		subsystem = SSai_movement,
+		extra_info = controller)
 
-		if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && movable_pawn.pulledby)
-			continue
+	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
+	RegisterSignal(loop, COMSIG_MOVELOOP_JPS_REPATH, .proc/repath_incoming)
 
-		var/minimum_distance = controller.max_target_distance
-		// right now I'm just taking the shortest minimum distance of our current behaviors, at some point in the future
-		// we should let whatever sets the current_movement_target also set the min distance and max path length
-		// (or at least cache it on the controller)
-		if(LAZYLEN(controller.current_behaviors))
-			for(var/datum/ai_behavior/iter_behavior as anything in controller.current_behaviors)
-				if(iter_behavior.required_distance < minimum_distance)
-					minimum_distance = iter_behavior.required_distance
+/datum/ai_movement/jps/proc/pre_move(datum/move_loop/source)
+	SIGNAL_HANDLER
+	var/atom/movable/pawn = source.moving
+	var/datum/ai_controller/controller = source.extra_info
+	source.delay = controller.movement_delay
 
-		if(get_dist(movable_pawn, controller.current_movement_target) <= minimum_distance)
-			continue
+	var/can_move = TRUE
+	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby) //Need to store more state. Annoying.
+		can_move = FALSE
 
-		var/generate_path = FALSE // set to TRUE when we either have no path, or we failed a step
-		if(length(controller.movement_path))
-			var/turf/next_step = controller.movement_path[1]
-			movable_pawn.Move(next_step)
+	if(!isturf(pawn.loc)) //No moving if not on a turf
+		can_move = FALSE
 
-			// this check if we're on exactly the next tile may be overly brittle for dense pawns who may get bumped slightly
-			// to the side while moving but could maybe still follow their path without needing a whole new path
-			if(get_turf(movable_pawn) == next_step)
-				controller.movement_path.Cut(1,2)
-			else
-				generate_path = TRUE
-		else
-			generate_path = TRUE
+	// Check if this controller can actually run, so we don't chase people with corpses
+	if(!controller.able_to_run())
+		controller.CancelActions()
+		qdel(source) //stop moving
+		return MOVELOOP_SKIP_STEP
 
-		if(generate_path)
-			if(!COOLDOWN_FINISHED(controller, repath_cooldown))
-				continue
-			controller.pathing_attempts++
-			if(controller.pathing_attempts >= max_pathing_attempts)
-				controller.CancelActions()
-				continue
+	if(can_move)
+		return
+	increment_pathing_failures(controller)
+	return MOVELOOP_SKIP_STEP
 
-			COOLDOWN_START(controller, repath_cooldown, 2 SECONDS)
-			controller.movement_path = get_path_to(movable_pawn, controller.current_movement_target, AI_MAX_PATH_LENGTH, minimum_distance, id=controller.get_access())
+/datum/ai_movement/jps/proc/post_move(datum/move_loop/source, succeeded)
+	SIGNAL_HANDLER
+	if(succeeded)
+		return
+	var/datum/ai_controller/controller = source.extra_info
+	increment_pathing_failures(controller)
 
-/datum/ai_movement/jps/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target)
-	controller.movement_path = null
-	return ..()
+/datum/ai_movement/jps/proc/repath_incoming(datum/move_loop/has_target/jps/source)
+	SIGNAL_HANDLER
+	var/datum/ai_controller/controller = source.extra_info
 
-/datum/ai_movement/jps/stop_moving_towards(datum/ai_controller/controller)
-	controller.movement_path = null
-	return ..()
+	source.id = controller.get_access()
+	source.minimum_distance = controller.get_minimum_distance()

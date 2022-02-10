@@ -84,7 +84,7 @@
 		return
 
 	can_refill = !can_refill
-	to_chat(user, "<span class=notice>You [can_refill ? "en" : "dis"]able the shower's water recycler.</span>")
+	to_chat(user, span_notice("You [can_refill ? "en" : "dis"]able the shower's water recycler."))
 	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
 	return TRUE
 
@@ -113,6 +113,7 @@
 		return
 	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
+	water_falling.plane = GAME_PLANE_UPPER
 	. += water_falling
 
 /obj/machinery/shower/proc/handle_mist()
@@ -204,18 +205,14 @@
 
 /obj/structure/showerframe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-
-/obj/structure/showerframe/proc/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-	return !anchored
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/effect/mist
 	name = "mist"
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

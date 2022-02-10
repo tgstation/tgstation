@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/quantum
-	true_name = "quantic de-observation matrix"
+	abductor_hint = "quantic de-observation matrix. Periodically links with a random person in view, then the abductee later swaps positions with that person."
 	cooldown_low = 150
 	cooldown_high = 150
 	uses = -1

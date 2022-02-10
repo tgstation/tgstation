@@ -17,7 +17,7 @@ LINEN BINS
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
 	slot_flags = ITEM_SLOT_NECK
-	layer = MOB_LAYER
+	layer = BELOW_MOB_LAYER
 	throwforce = 0
 	throw_speed = 1
 	throw_range = 2
@@ -32,7 +32,7 @@ LINEN BINS
 
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/surgery_initiator)
+	AddComponent(/datum/component/surgery_initiator)
 	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
@@ -45,11 +45,13 @@ LINEN BINS
 		return
 	if(layer == initial(layer))
 		layer = ABOVE_MOB_LAYER
+		plane = GAME_PLANE_UPPER
 		to_chat(user, span_notice("You cover yourself with [src]."))
 		pixel_x = 0
 		pixel_y = 0
 	else
 		layer = initial(layer)
+		plane = initial(plane)
 		to_chat(user, span_notice("You smooth [src] out beneath you."))
 	add_fingerprint(user)
 	return
@@ -553,10 +555,10 @@ LINEN BINS
 		if(flags_1 & NODECONSTRUCT_1)
 			return
 		if(amount)
-			to_chat(user, "<span clas='warn'>The [src] must be empty first!</span>")
+			to_chat(user, span_warning("The [src] must be empty first!"))
 			return
 		if(I.use_tool(src, user, 5, volume=50))
-			to_chat(user, "<span clas='notice'>You disassemble the [src].</span>")
+			to_chat(user, span_notice("You disassemble the [src]."))
 			new /obj/item/stack/rods(loc, 2)
 			qdel(src)
 

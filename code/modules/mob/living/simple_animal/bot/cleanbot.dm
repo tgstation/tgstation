@@ -138,7 +138,7 @@
 		if(BOT_CLEANING)
 			icon_state = "[base_icon]-c"
 		else
-			icon_state = "[base_icon][get_bot_flag(BOT_MODE_ON)]"
+			icon_state = "[base_icon][get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
@@ -386,6 +386,7 @@
 	. = ..()
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
+
 	switch(action)
 		if("clean_blood")
 			blood = !blood
@@ -396,4 +397,3 @@
 		if("clean_graffiti")
 			drawn = !drawn
 	get_targets()
-	return

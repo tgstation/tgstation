@@ -54,6 +54,8 @@
 	armour_penetration = 30
 	pixel_x = -16
 	base_pixel_x = -16
+	maptext_height = 64
+	maptext_width = 64
 	turns_per_move = 5
 	ranged = TRUE
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -214,7 +216,7 @@
  * If the name is invalid, will re-prompt the dragon until a proper name is chosen.
  */
 /mob/living/simple_animal/hostile/space_dragon/proc/dragon_name()
-	var/chosen_name = sanitize_name(reject_bad_text(stripped_input(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
+	var/chosen_name = sanitize_name(reject_bad_text(tgui_input_text(src, "What would you like your name to be?", "Choose Your Name", real_name, MAX_NAME_LEN)))
 	if(!chosen_name)
 		to_chat(src, span_warning("Not a valid name, please try again."))
 		dragon_name()
@@ -624,6 +626,8 @@
 
 /obj/structure/carp_rift/attack_ghost(mob/user)
 	. = ..()
+	if(.)
+		return
 	summon_carp(user)
 
 /**
@@ -693,8 +697,8 @@
 			to_chat(user, span_warning("You've already become a carp using this rift!  Either wait for a backlog of carp spawns or until the next rift!"))
 			return FALSE
 		is_listed = TRUE
-	var/carp_ask = tgui_alert(usr,"Become a carp?", "Help bring forth the horde?", list("Yes", "No"))
-	if(carp_ask == "No" || !src || QDELETED(src) || QDELETED(user))
+	var/carp_ask = tgui_alert(user, "Become a carp?", "Carp Rift", list("Yes", "No"))
+	if(carp_ask != "Yes" || !src || QDELETED(src) || QDELETED(user))
 		return FALSE
 	if(carp_stored <= 0)
 		to_chat(user, span_warning("The rift already summoned enough carp!"))

@@ -276,7 +276,7 @@
 /turf/open/floor/mineral/titanium/airless,
 /area/shuttle/abandoned/cargo)
 "aR" = (
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/mineral/titanium/airless,
 /area/shuttle/abandoned/cargo)
 "aS" = (
@@ -302,7 +302,7 @@
 /area/shuttle/abandoned/engine)
 "aW" = (
 /obj/effect/spawner/random/trash/hobo_squat,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/pod,
 /area/shuttle/abandoned/cargo)
 "aX" = (
@@ -326,7 +326,7 @@
 /obj/effect/turf_decal/arrows/red{
 	dir = 8
 	},
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /turf/open/floor/mineral/titanium/white/airless,
 /area/shuttle/abandoned/cargo)
 "bb" = (
@@ -413,7 +413,7 @@
 /area/shuttle/abandoned/cargo)
 "bp" = (
 /obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/mineral/titanium/airless,
 /area/shuttle/abandoned/cargo)
 "bq" = (
@@ -1095,7 +1095,7 @@
 /area/shuttle/abandoned/cargo)
 "lA" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /turf/open/floor/mineral/titanium/airless,
 /area/shuttle/abandoned/cargo)
 "mj" = (
@@ -1227,7 +1227,7 @@
 /area/shuttle/abandoned/bridge)
 "yA" = (
 /obj/structure/bed/pod,
-/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/mob_spawn/corpse/human/nanotrasensoldier,
 /obj/item/bedsheet/hos,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/cold/directional/east,
@@ -1243,7 +1243,7 @@
 /area/shuttle/abandoned/bridge)
 "AC" = (
 /obj/structure/chair/comfy/shuttle,
-/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/mob_spawn/corpse/human/assistant,
 /turf/open/floor/mineral/titanium/blue/airless,
 /area/shuttle/abandoned/cargo)
 "CS" = (
@@ -1302,7 +1302,7 @@
 	},
 /area/shuttle/abandoned/bridge)
 "Io" = (
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1

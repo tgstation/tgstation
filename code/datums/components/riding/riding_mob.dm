@@ -54,10 +54,10 @@
 	if(living_parent.body_position != STANDING_UP) // if we move while on the ground, the rider falls off
 		. = FALSE
 	// for piggybacks and (redundant?) borg riding, check if the rider is stunned/restrained
-	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(TRUE, TRUE)))
+	else if((ride_check_flags & RIDER_NEEDS_ARMS) && (HAS_TRAIT(rider, TRAIT_RESTRAINED) || rider.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
 		. = FALSE
 	// for fireman carries, check if the ridden is stunned/restrained
-	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(TRUE, TRUE)))
+	else if((ride_check_flags & CARRIER_NEEDS_ARM) && (HAS_TRAIT(living_parent, TRAIT_RESTRAINED) || living_parent.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB)))
 		. = FALSE
 
 	if(. || !consequences)
@@ -163,11 +163,11 @@
 		return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 	if(!can_be_driven)
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='notice'>[movable_parent] cannot be driven around. Unbuckle from [movable_parent.p_them()] first.<span>")
+			to_chat(rider, span_warning("[movable_parent] cannot be driven around. Unbuckle from [movable_parent.p_them()] first."))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	if(!ride_check(rider, FALSE))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider, "<span class='warning'>You're unable to ride [movable_parent] right now!</span>")
+			to_chat(rider, span_warning("You're unable to ride [movable_parent] right now!"))
 		return COMPONENT_RIDDEN_STOP_Z_MOVE
 	return COMPONENT_RIDDEN_ALLOW_Z_MOVE
 

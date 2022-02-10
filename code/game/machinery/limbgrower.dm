@@ -105,7 +105,7 @@
 
 /obj/machinery/limbgrower/attackby(obj/item/user_item, mob/living/user, params)
 	if (busy)
-		to_chat(user, "<span class=\"alert\">The Limb Grower is busy. Please wait for completion of previous operation.</span>")
+		to_chat(user, span_warning("The Limb Grower is busy. Please wait for completion of previous operation."))
 		return
 
 	if(istype(user_item, /obj/item/disk/design_disk/limbs))
@@ -137,7 +137,7 @@
 		return
 
 	if (busy)
-		to_chat(usr, span_danger("The limb grower is busy. Please wait for completion of previous operation."))
+		to_chat(usr, span_warning("The limb grower is busy. Please wait for completion of previous operation."))
 		return
 
 	switch(action)
@@ -284,6 +284,6 @@
 		var/datum/design/found_design = SSresearch.techweb_design_by_id(design_id)
 		if((found_design.build_type & LIMBGROWER) && ("emagged" in found_design.category))
 			stored_research.add_design(found_design)
-	to_chat(user, span_warning("A warning flashes onto the screen, stating that safety overrides have been deactivated!"))
+	to_chat(user, span_warning("Safety overrides have been deactivated!"))
 	obj_flags |= EMAGGED
 	update_static_data(user)

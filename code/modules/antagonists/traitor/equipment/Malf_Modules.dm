@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(owner_AI && owner_AI.malf_cooldown > world.time)
 		return
 
-/datum/action/innate/ai/Trigger()
+/datum/action/innate/ai/Trigger(trigger_flags)
 	. = ..()
 	if(auto_use_uses)
 		adjust_uses(-1)
@@ -196,8 +196,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return
 	if (active || owner_AI.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday or while they are dead
-	if (owner_AI.shunted)
-		return //prevent AI from activating doomsday while shunted, fucking abusers
+	if (!isturf(owner_AI.loc))
+		return //prevent AI from activating doomsday while shunted or carded, fucking abusers
 	active = TRUE
 	set_up_us_the_bomb(owner)
 
@@ -207,12 +207,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	var/pass = prob(10) ? "******" : "hunter2"
 	to_chat(owner, "<span class='small boldannounce'>run -o -a 'selfdestruct'</span>")
 	sleep(5)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Running executable 'selfdestruct'...</span>")
 	sleep(rand(10, 30))
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	owner.playsound_local(owner, 'sound/misc/bloblarm.ogg', 50, 0, use_reverb = FALSE)
@@ -220,63 +220,63 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	to_chat(owner, span_boldannounce("This is a class-3 security violation. This incident will be reported to Central Command."))
 	for(var/i in 1 to 3)
 		sleep(20)
-		if(QDELETED(owner) || owner_AI.shunted)
+		if(QDELETED(owner) || !isturf(owner_AI.loc))
 			active = FALSE
 			return
 		to_chat(owner, span_boldannounce("Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%"))
 	sleep(3)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>auth 'akjv9c88asdf12nb' [pass]</span>")
 	owner.playsound_local(owner, 'sound/items/timer.ogg', 50, 0, use_reverb = FALSE)
 	sleep(30)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Welcome, akjv9c88asdf12nb."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(5)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Arm self-destruct device? (Y/N)"))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage1.ogg', 50, 0, use_reverb = FALSE)
 	sleep(20)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(15)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Confirm arming of self-destruct device? (Y/N)"))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(10)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>Y</span>")
 	sleep(rand(15, 25))
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Please repeat password to confirm."))
 	owner.playsound_local(owner, 'sound/misc/compiler-stage2.ogg', 50, 0, use_reverb = FALSE)
 	sleep(14)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, "<span class='small boldannounce'>[pass]</span>")
 	sleep(40)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	to_chat(owner, span_boldnotice("Credentials accepted. Transmitting arming signal..."))
 	owner.playsound_local(owner, 'sound/misc/server-ready.ogg', 50, 0, use_reverb = FALSE)
 	sleep(30)
-	if(QDELETED(owner) || owner_AI.shunted)
+	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
 		return
 	if (owner_AI.stat != DEAD)
@@ -581,6 +581,36 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		desc = "[initial(desc)] It has [uses] use\s remaining."
 		UpdateButtonIcon()
 
+/// HIGH IMPACT HONKING
+/datum/ai_module/destructive/megahonk
+	name = "Percussive Intercomm Interference"
+	description = "Emit a debilitatingly percussive auditory blast through the station intercoms. Does not overpower hearing protection. Two uses per purchase."
+	cost = 20
+	power_type = /datum/action/innate/ai/honk
+	unlock_text = "<span class='notice'>You upload a sinister sound file into every intercom...</span>"
+	unlock_sound = 'sound/items/airhorn.ogg'
+
+/datum/action/innate/ai/honk
+	name = "Percussive Intercomm Interference"
+	desc = "Rock the station's intercom system with an obnoxious HONK!"
+	button_icon_state = "intercom"
+	uses = 2
+
+/datum/action/innate/ai/honk/Activate()
+	to_chat(owner, span_clown("The intercom system plays your prepared file as commanded."))
+	for(var/obj/item/radio/intercom/found_intercom in GLOB.intercoms_list)
+		if(!found_intercom.is_on() || !found_intercom.get_listening() || found_intercom.wires.is_cut(WIRE_RX)) //Only operating intercoms play the honk
+			continue
+		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
+		playsound(found_intercom, 'sound/items/airhorn.ogg', 100, TRUE)
+		for(var/mob/living/carbon/honk_victim in ohearers(6, found_intercom))
+			var/turf/victim_turf = get_turf(honk_victim)
+			if(isspaceturf(victim_turf) && !victim_turf.Adjacent(found_intercom)) //Prevents getting honked in space
+				continue
+			if(honk_victim.soundbang_act(intensity = 1, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
+				honk_victim.Jitter(60)
+				to_chat(honk_victim, span_clown("HOOOOONK!"))
+
 /// Robotic Factory: Places a large machine that converts humans that go through it into cyborgs. Unlocking this ability removes shunting.
 /datum/ai_module/utility/place_cyborg_transformer
 	name = "Robotic Factory (Removes Shunting)"
@@ -688,7 +718,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	cost = 25
 	power_type = /datum/action/innate/ai/break_fire_alarms
 	unlock_text = "<span class='notice'>You replace the thermal sensing capabilities of all fire alarms with a manual override, allowing you to turn them off at will.</span>"
-	unlock_sound = 'goon/sound/machinery/firealarm.ogg'
+	unlock_sound = 'sound/machines/FireAlarm1.ogg'
 
 /datum/action/innate/ai/break_fire_alarms
 	name = "Override Thermal Sensors"
@@ -697,11 +727,15 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	uses = 1
 
 /datum/action/innate/ai/break_fire_alarms/Activate()
-	for(var/obj/machinery/firealarm/F in GLOB.machines)
-		if(!is_station_level(F.z))
+	for(var/obj/machinery/firealarm/bellman in GLOB.machines)
+		if(!is_station_level(bellman.z))
 			continue
-		F.obj_flags |= EMAGGED
-		F.update_appearance()
+		bellman.obj_flags |= EMAGGED
+		bellman.update_appearance()
+	for(var/obj/machinery/door/firedoor/firelock in GLOB.machines)
+		if(!is_station_level(firelock.z))
+			continue
+		firelock.emag_act(owner_AI, src)
 	to_chat(owner, span_notice("All thermal sensors on the station have been disabled. Fire alerts will no longer be recognized."))
 	owner.playsound_local(owner, 'sound/machines/terminal_off.ogg', 50, 0)
 

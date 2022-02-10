@@ -2460,7 +2460,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "Hydroponics APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/green,
@@ -4676,7 +4676,7 @@
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/bar,
@@ -5687,7 +5687,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Research Division APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/disposalpipe/segment{
@@ -6204,7 +6204,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Gateway APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/structure/rack,
@@ -9372,7 +9372,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	locked = 0;
 	name = "UO45 Mining APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 100
 	},
 /obj/machinery/light/small/directional/south,
@@ -12608,7 +12608,7 @@
 "yj" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12668,7 +12668,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yp" = (
 /obj/structure/alien/weeds,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12754,7 +12754,7 @@
 /area/awaymission/undergroundoutpost45/caves)
 "yC" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12765,7 +12765,7 @@
 "yD" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
@@ -12776,7 +12776,7 @@
 "yH" = (
 /obj/structure/alien/weeds,
 /obj/effect/decal/cleanable/blood/gibs/down,
-/obj/effect/mob_spawn/human,
+/obj/effect/mob_spawn/corpse/human,
 /turf/open/floor/plating/asteroid{
 	heat_capacity = 1e+006;
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";

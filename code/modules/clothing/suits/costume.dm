@@ -242,6 +242,47 @@
 	if (user.head == src)
 		user.faction -= "carp"
 
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof
+	name = "carp space suit"
+	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
+	icon_state = "carp_suit"
+	inhand_icon_state = "space_suit_syndicate"
+	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy whimpy whoo
+	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon) //I'm giving you a hint here
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	hoodtype = /obj/item/clothing/head/hooded/carp_hood/spaceproof
+	resistance_flags = NONE
+
+/obj/item/clothing/head/hooded/carp_hood/spaceproof
+	name = "carp helmet"
+	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
+	icon_state = "carp_helm"
+	armor = list(MELEE = -20, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy as a space carp
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR //facial hair will clip with the helm, this'll need a dynamic_fhair_suffix at some point.
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	clothing_flags = STOPSPRESSUREDAMAGE|THICKMATERIAL|SNUG_FIT|PLASMAMAN_HELMET_EXEMPT
+	body_parts_covered = HEAD
+	resistance_flags = NONE
+	flash_protect = FLASH_PROTECTION_WELDER
+	flags_cover = HEADCOVERSEYES|HEADCOVERSMOUTH|PEPPERPROOF
+
+/obj/item/clothing/head/hooded/carp_hood/spaceproof/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, LOCKED_HELMET_TRAIT)
+
+/obj/item/clothing/suit/hooded/carp_costume/spaceproof/old
+	name = "battered carp space suit"
+	desc = "It's covered in bite marks and scratches, yet seems to be still perfectly functional."
+	slowdown = 1
+
 /obj/item/clothing/suit/hooded/ian_costume //It's Ian, rub his bell- oh god what happened to his inside parts?
 	name = "corgi costume"
 	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
@@ -387,7 +428,7 @@
 /obj/item/clothing/suit/bronze
 	name = "bronze suit"
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "clockwork_cuirass_old"
 	armor = list(MELEE = 5, BULLET = 0, LASER = -5, ENERGY = -15, BOMB = 10, BIO = 0, FIRE = 20, ACID = 20)
 

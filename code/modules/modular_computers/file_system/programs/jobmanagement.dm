@@ -14,17 +14,18 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	program_icon = "address-book"
 
 	var/change_position_cooldown = 30
-	//Jobs you cannot open new positions for
+	///Jobs blacklisted from having their slots edited.
 	var/list/blacklisted = list(
-		"AI",
-		"Assistant",
-		"Cyborg",
-		"Captain",
-		"Head of Personnel",
-		"Head of Security",
-		"Chief Engineer",
-		"Research Director",
-		"Chief Medical Officer")
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_PERSONNEL,
+		JOB_HEAD_OF_SECURITY,
+		JOB_RESEARCH_DIRECTOR,
+		JOB_CHIEF_ENGINEER,
+		JOB_CHIEF_MEDICAL_OFFICER,
+		JOB_AI,
+		JOB_CYBORG,
+		JOB_ASSISTANT,
+	)
 
 	//The scaling factor of max total positions in relation to the total amount of people on board the station in %
 	var/max_relative_positions = 30 //30%: Seems reasonable, limit of 6 @ 20 players

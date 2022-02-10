@@ -18,6 +18,7 @@
 	harm_intent_damage = 0 //Punching elites gets you nowhere
 	stat_attack = HARD_CRIT
 	layer = LARGE_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	sentience_type = SENTIENCE_BOSS
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
@@ -191,6 +192,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	INVOKE_ASYNC(src, .proc/arena_checks)
 
 /obj/structure/elite_tumor/proc/mychild_gone_missing()
+	SIGNAL_HANDLER
 	mychild = null
 
 /obj/structure/elite_tumor/proc/return_elite()
@@ -222,6 +224,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/clear_activator)
 
 /obj/structure/elite_tumor/proc/clear_activator(mob/source)
+	SIGNAL_HANDLER
 	if(!activator)
 		return
 	activator = null
@@ -339,7 +342,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 		E.revive(full_heal = TRUE, admin_revive = TRUE)
 		user.visible_message(span_notice("[user] stabs [E] with [src], reviving it."))
 		E.playsound_local(get_turf(E), 'sound/effects/magic.ogg', 40, 0)
-		to_chat(E, "<span class='userdanger'>You have been revived by [user].  While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span")
+		to_chat(E, "<span class='userdanger'>You have been revived by [user]. While you can't speak to them, you owe [user] a great debt.  Assist [user.p_them()] in achieving [user.p_their()] goals, regardless of risk.</span>")
 		to_chat(E, "<span class='big bold'>Note that you now share the loyalties of [user].  You are expected not to intentionally sabotage their faction unless commanded to!</span>")
 		E.maxHealth = E.maxHealth * 0.4
 		E.health = E.maxHealth
@@ -359,6 +362,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
 	duration = 50
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_SOFT_RED

@@ -269,6 +269,11 @@ If you're feeling frisky, examine yourself and click the underlined item to pull
 
 	return carbon_owner.help_shake_act(carbon_owner)
 
+/atom/movable/screen/alert/negative
+	name = "Negative Gravity"
+	desc = "You're getting pulled upwards. While you won't have to worry about falling down anymore, you may accidentally fall upwards!"
+	icon_state = "negative"
+
 /atom/movable/screen/alert/weightless
 	name = "Weightless"
 	desc = "Gravity has ceased affecting you, and you're floating around aimlessly. You'll need something large and heavy, like a \
@@ -424,7 +429,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 	var/mob/living/living_owner = owner
-	var/last_whisper = input("Do you have any last words?", "Final Words") as null | text
+	var/last_whisper = tgui_input_text(usr, "Do you have any last words?", "Final Words")
 	if (isnull(last_whisper) || !CAN_SUCCUMB(living_owner))
 		return
 
@@ -601,7 +606,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
-Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
+		Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "empty_cell"
 
 /atom/movable/screen/alert/lowcell
@@ -623,6 +628,21 @@ Recharging stations are available in robotics, the dormitory bathrooms, and the 
 	name = "Blood Overcharge"
 	desc = "Your charge is running dangerously high, find an outlet for your energy! Right click an APC while not in combat mode."
 	icon_state = "cell_overcharge"
+
+//MODsuit unique
+/atom/movable/screen/alert/nocore
+	name = "Missing Core"
+	desc = "Unit has no core. No modules available until a core is reinstalled. Robotics may provide assistance."
+	icon_state = "no_cell"
+
+/atom/movable/screen/alert/emptycell/plasma
+	name = "Out of Power"
+	desc = "Unit's plasma core has no charge remaining. No modules available until plasma core is recharged. \
+		Unit can be refilled through plasma ore."
+
+/atom/movable/screen/alert/lowcell/plasma
+	name = "Low Charge"
+	desc = "Unit's plasma core is running low. Unit can be refilled through plasma ore."
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /atom/movable/screen/alert/hacked

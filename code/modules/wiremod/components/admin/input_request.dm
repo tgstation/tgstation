@@ -59,21 +59,21 @@
 	var/new_option = input_options.value
 	switch(new_option)
 		if(COMP_INPUT_STRING)
-			var/player_input = input(player, "Input a value", "Input value") as null|text
-			if(!player_input)
+			var/player_input = tgui_input_text(player, "Input a value", "Input value")
+			if(isnull(player_input))
 				return
 			input_response.set_output(player_input)
 		if(COMP_INPUT_NUMBER)
-			var/player_input = input(player, "Input a value", "Input value") as null|num
-			if(!player_input)
+			var/player_input = tgui_input_number(player, "Input a value", "Input value")
+			if(isnull(player_input))
 				return
 			input_response.set_output(player_input)
 		if(COMP_INPUT_LIST)
 			var/list/data = parameter.value
 			if(!islist(data))
 				return
-			var/player_input = input(player, "Input a value", "Input value") as null|anything in data
-			if(!player_input)
+			var/player_input = tgui_input_list(player, "Input a value", "Input value", data)
+			if(isnull(player_input))
 				return
 			input_response.set_output(player_input)
 	input_triggered.set_output(COMPONENT_SIGNAL)

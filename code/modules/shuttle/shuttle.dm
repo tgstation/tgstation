@@ -220,7 +220,7 @@
 	if(!port_destinations)
 		port_destinations = id
 
-	SSshuttle.stationary += src
+	SSshuttle.stationary_docking_ports += src
 
 /obj/docking_port/stationary/Initialize(mapload)
 	. = ..()
@@ -239,7 +239,7 @@
 
 /obj/docking_port/stationary/unregister()
 	. = ..()
-	SSshuttle.stationary -= src
+	SSshuttle.stationary_docking_ports -= src
 
 /obj/docking_port/stationary/Destroy(force)
 	if(force)
@@ -281,13 +281,13 @@
 
 /obj/docking_port/stationary/transit/Initialize(mapload)
 	. = ..()
-	SSshuttle.transit += src
+	SSshuttle.transit_docking_ports += src
 
 /obj/docking_port/stationary/transit/Destroy(force=FALSE)
 	if(force)
 		if(get_docked())
 			log_world("A transit dock was destroyed while something was docked to it.")
-		SSshuttle.transit -= src
+		SSshuttle.transit_docking_ports -= src
 		if(owner)
 			if(owner.assigned_transit == src)
 				owner.assigned_transit = null
@@ -312,12 +312,56 @@
 /obj/docking_port/stationary/picked/whiteship
 	name = "Deep Space"
 	id = "whiteship_away"
-	dheight = 0
+	height = 45 //Width and height need to remain in sync with the size of whiteshipdock.dmm, otherwise we'll get overflow
+	width = 44
+	dheight = 18
+	dwidth = 18
 	dir = 2
-	dwidth = 11
-	height = 22
-	width = 35
 	shuttlekeys = list("whiteship_meta", "whiteship_pubby", "whiteship_box", "whiteship_cere", "whiteship_kilo", "whiteship_donut", "whiteship_delta", "whiteship_tram")
+
+/// Helper proc that tests to ensure all whiteship templates can spawn at their docking port, and logs their sizes
+/// This should be a unit test, but too much of our other code breaks during shuttle movement, so not yet, not yet.
+/proc/test_whiteship_sizes()
+	var/obj/docking_port/stationary/port_type = /obj/docking_port/stationary/picked/whiteship
+	var/datum/turf_reservation/docking_yard = SSmapping.RequestBlockReservation(initial(port_type.width), initial(port_type.height))
+	var/turf/spawnpoint = locate(docking_yard.bottom_left_coords[1] + initial(port_type.dwidth), docking_yard.bottom_left_coords[2] + initial(port_type.dheight), docking_yard.bottom_left_coords[3])
+
+	var/obj/docking_port/stationary/picked/whiteship/port = new(spawnpoint)
+	var/list/ids = port.shuttlekeys
+	var/height = 0
+	var/width = 0
+	var/dheight = 0
+	var/dwidth = 0
+	var/delta_height = 0
+	var/delta_width = 0
+	for(var/id in ids)
+		var/datum/map_template/shuttle/our_template = SSmapping.shuttle_templates[id]
+		// We do a standard load here so any errors will properly runtimes
+		var/obj/docking_port/mobile/ship = SSshuttle.action_load(our_template, port)
+		if(ship)
+			ship.jumpToNullSpace()
+			ship = null
+		// Yes this is very hacky, but we need to both allow loading a template that's too big to be an error state
+		// And actually get the sizing information from every shuttle
+		SSshuttle.load_template(our_template)
+		var/obj/docking_port/mobile/theoretical_ship = SSshuttle.preview_shuttle
+		if(theoretical_ship)
+			height = max(theoretical_ship.height, height)
+			width = max(theoretical_ship.width, width)
+			dheight = max(theoretical_ship.dheight, dheight)
+			dwidth = max(theoretical_ship.dwidth, dwidth)
+			delta_height = max(theoretical_ship.height - theoretical_ship.dheight, delta_height)
+			delta_width = max(theoretical_ship.width - theoretical_ship.dwidth, delta_width)
+			theoretical_ship.jumpToNullSpace()
+	qdel(port, TRUE)
+	log_world("Whitship sizing information. Use this to set the docking port, and the map size\n\
+		Max Height: [height] \n\
+		Max Width: [width] \n\
+		Max DHeight: [dheight] \n\
+		Max DHeight: [dwidth] \n\
+		The following are the safest bet for map sizing. Anything smaller then this could in the worst case not fit in the docking port\n\
+		Max Combined Width: [height + dheight] \n\
+		Max Combinded Height [width + dwidth]")
 
 /obj/docking_port/mobile
 	name = "shuttle"
@@ -385,11 +429,11 @@
 		else
 			SSshuttle.assoc_mobile[id] = 1
 
-	SSshuttle.mobile += src
+	SSshuttle.mobile_docking_ports += src
 
 /obj/docking_port/mobile/unregister()
 	. = ..()
-	SSshuttle.mobile -= src
+	SSshuttle.mobile_docking_ports -= src
 
 /obj/docking_port/mobile/Destroy(force)
 	if(force)
@@ -718,7 +762,7 @@
 		if(!T || !istype(T.loc, area_type))
 			continue
 		for (var/atom/movable/movable as anything in T)
-			if (length(movable.client_mobs_in_contents))
+			if (movable.client_mobs_in_contents)
 				movable.update_parallax_contents()
 
 /obj/docking_port/mobile/proc/check_transit_zone()

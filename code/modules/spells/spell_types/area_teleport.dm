@@ -23,15 +23,17 @@
 	after_cast(targets)
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
-	var/A = null
+	var/target_area = null
 
 	if(!randomise_selection)
-		A = input("Area to teleport to", "Teleport", A) as null|anything in GLOB.teleportlocs
+		target_area = tgui_input_list(usr, "Area to teleport to", "Teleport", GLOB.teleportlocs)
 	else
-		A = pick(GLOB.teleportlocs)
-	if(!A)
+		target_area = pick(GLOB.teleportlocs)
+	if(isnull(target_area))
 		return
-	var/area/thearea = GLOB.teleportlocs[A]
+	if(isnull(GLOB.teleportlocs[target_area]))
+		return
+	var/area/thearea = GLOB.teleportlocs[target_area]
 
 	return thearea
 
@@ -49,7 +51,7 @@
 				if(clear)
 					L+=T
 
-		if(!L.len)
+		if(!length(L))
 			to_chat(usr, span_warning("The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry."))
 			return
 
@@ -59,7 +61,7 @@
 		var/list/tempL = L
 		var/attempt = null
 		var/success = FALSE
-		while(tempL.len)
+		while(length(tempL))
 			attempt = pick(tempL)
 			do_teleport(target, attempt, channel = TELEPORT_CHANNEL_MAGIC)
 			if(get_turf(target) == attempt)

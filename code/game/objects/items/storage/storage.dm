@@ -9,12 +9,11 @@
 	/// SANTA IS EVIL
 	var/preload = FALSE
 
-/obj/item/storage/get_dumping_location(obj/item/storage/source,mob/user)
-	return src
-
 /obj/item/storage/Initialize(mapload)
 	. = ..()
 	PopulateContents()
+	for (var/obj/item/item in src)
+		item.item_flags |= IN_STORAGE
 
 /obj/item/storage/ComponentInitialize()
 	AddComponent(component_type)

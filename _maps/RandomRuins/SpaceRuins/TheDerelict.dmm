@@ -1137,7 +1137,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fw" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fx" = (
@@ -1762,7 +1762,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "in" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ip" = (
@@ -3032,7 +3032,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (

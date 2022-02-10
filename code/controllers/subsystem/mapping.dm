@@ -137,7 +137,7 @@ SUBSYSTEM_DEF(mapping)
 	SSshuttle.transit_requesters.Cut()
 	message_admins("Clearing dynamic reservation space.")
 	var/list/obj/docking_port/mobile/in_transit = list()
-	for(var/i in SSshuttle.transit)
+	for(var/i in SSshuttle.transit_docking_ports)
 		var/obj/docking_port/stationary/transit/T = i
 		if(!istype(T))
 			continue
@@ -387,6 +387,13 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		next_map_config = load_default_map_config()
 		message_admins("Failed to set new map with next_map.json for [VM.map_name]! Using default as backup!")
 		return
+
+	if (VM.config_min_users > 0 && GLOB.clients.len < VM.config_min_users)
+		message_admins("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+		log_game("[VM.map_name] was chosen for the next map, despite there being less current players than its set minimum population range!")
+	if (VM.config_max_users > 0 && GLOB.clients.len > VM.config_max_users)
+		message_admins("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
+		log_game("[VM.map_name] was chosen for the next map, despite there being more current players than its set maximum population range!")
 
 	next_map_config = VM
 	return TRUE

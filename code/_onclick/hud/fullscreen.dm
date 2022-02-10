@@ -1,4 +1,4 @@
-/mob/proc/overlay_fullscreen(category, type, severity, overlay_alpha = 255)
+/mob/proc/overlay_fullscreen(category, type, severity)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
 	if (!screen || screen.type != type)
 		// needs to be recreated
@@ -9,7 +9,6 @@
 		return screen
 
 	screen.icon_state = "[initial(screen.icon_state)][severity]"
-	screen.alpha = overlay_alpha
 	screen.severity = severity
 	if (client && screen.should_show_to(src))
 		screen.update_for_view(client.view)
@@ -150,6 +149,14 @@
 	screen_loc = "WEST,SOUTH to EAST,NORTH"
 	icon_state = "flash"
 	alpha = 80
+
+/atom/movable/screen/fullscreen/bluespace_sparkle
+	icon = 'icons/effects/effects.dmi'
+	screen_loc = "WEST,SOUTH to EAST,NORTH"
+	icon_state = "shieldsparkles"
+	layer = FLASH_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/color_vision/green
 	color = "#00ff00"

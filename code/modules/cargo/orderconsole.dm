@@ -13,9 +13,9 @@
 	var/can_approve_requests = TRUE
 	var/contraband = FALSE
 	var/self_paid = FALSE
-	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle \
-		cannot transport live organisms, human remains, classified nuclear weaponry, mail \
-		homing beacons, unstable eigenstates or machinery housing any form of artificial intelligence."
+	var/safety_warning = "For safety and ethical reasons, the automated supply shuttle cannot transport live organisms, \
+		human remains, classified nuclear weaponry, mail, undelivered departmental order crates, syndicate bombs, \
+		homing beacons, unstable eigenstates, or machinery housing any form of artificial intelligence."
 	var/blockade_warning = "Bluespace instability detected. Shuttle movement impossible."
 	/// radio used by the console to send messages on supply channel
 	var/obj/item/radio/headset/radio
@@ -111,11 +111,11 @@
 	var/message = "Remember to stamp and send back the supply manifests."
 	if(SSshuttle.centcom_message)
 		message = SSshuttle.centcom_message
-	if(SSshuttle.supplyBlocked)
+	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
 	data["cart"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
+	for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 		data["cart"] += list(list(
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
@@ -126,7 +126,7 @@
 		))
 
 	data["requests"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.requestlist)
+	for(var/datum/supply_order/SO in SSshuttle.request_list)
 		data["requests"] += list(list(
 			"object" = SO.pack.name,
 			"cost" = SO.pack.get_cost(),
@@ -168,7 +168,7 @@
 			if(!SSshuttle.supply.canMove())
 				say(safety_warning)
 				return
-			if(SSshuttle.supplyBlocked)
+			if(SSshuttle.supply_blocked)
 				say(blockade_warning)
 				return
 			if(SSshuttle.supply.getDockedId() == docking_home)
@@ -184,7 +184,7 @@
 		if("loan")
 			if(!SSshuttle.shuttle_loan)
 				return
-			if(SSshuttle.supplyBlocked)
+			if(SSshuttle.supply_blocked)
 				say(blockade_warning)
 				return
 			else if(SSshuttle.supply.mode != SHUTTLE_IDLE)
@@ -238,7 +238,7 @@
 
 			var/reason = ""
 			if(requestonly && !self_paid)
-				reason = stripped_input("Reason:", name, "")
+				reason = tgui_input_text(usr, "Reason", name)
 				if(isnull(reason) || ..())
 					return
 
@@ -260,9 +260,9 @@
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account, null, applied_coupon)
 			SO.generateRequisition(T)
 			if(requestonly && !self_paid)
-				SSshuttle.requestlist += SO
+				SSshuttle.request_list += SO
 			else
-				SSshuttle.shoppinglist += SO
+				SSshuttle.shopping_list += SO
 				if(self_paid)
 					say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
 			if(requestonly && message_cooldown < world.time)
@@ -271,7 +271,7 @@
 			. = TRUE
 		if("remove")
 			var/id = text2num(params["id"])
-			for(var/datum/supply_order/SO in SSshuttle.shoppinglist)
+			for(var/datum/supply_order/SO in SSshuttle.shopping_list)
 				if(SO.id != id)
 					continue
 				if(SO.department_destination)
@@ -280,32 +280,32 @@
 				if(SO.applied_coupon)
 					say("Coupon refunded.")
 					SO.applied_coupon.forceMove(get_turf(src))
-				SSshuttle.shoppinglist -= SO
+				SSshuttle.shopping_list -= SO
 				. = TRUE
 				break
 		if("clear")
-			for(var/datum/supply_order/cancelled_order in SSshuttle.shoppinglist)
+			for(var/datum/supply_order/cancelled_order in SSshuttle.shopping_list)
 				if(cancelled_order.department_destination)
 					continue //don't cancel other department's orders
-				SSshuttle.shoppinglist -= cancelled_order
+				SSshuttle.shopping_list -= cancelled_order
 			. = TRUE
 		if("approve")
 			var/id = text2num(params["id"])
-			for(var/datum/supply_order/SO in SSshuttle.requestlist)
+			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
-					SSshuttle.requestlist -= SO
-					SSshuttle.shoppinglist += SO
+					SSshuttle.request_list -= SO
+					SSshuttle.shopping_list += SO
 					. = TRUE
 					break
 		if("deny")
 			var/id = text2num(params["id"])
-			for(var/datum/supply_order/SO in SSshuttle.requestlist)
+			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
-					SSshuttle.requestlist -= SO
+					SSshuttle.request_list -= SO
 					. = TRUE
 					break
 		if("denyall")
-			SSshuttle.requestlist.Cut()
+			SSshuttle.request_list.Cut()
 			. = TRUE
 		if("toggleprivate")
 			self_paid = !self_paid

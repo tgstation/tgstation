@@ -745,7 +745,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/dark/airless,
 /area/shuttle/caravan/freighter3)

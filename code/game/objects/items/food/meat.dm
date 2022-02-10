@@ -22,7 +22,7 @@
 	bite_consumption = 6
 	tastes = list("fish" = 1)
 	foodtypes = SEAFOOD
-	eatverbs = list("bite","chew","gnaw","swallow","chomp")
+	eatverbs = list("bite", "chew", "gnaw", "swallow", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/fishmeat/carp
@@ -297,7 +297,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | RAW
-	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
+	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_sausage/MakeGrillable()
@@ -311,7 +311,7 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT | BREAKFAST
 	food_flags = FOOD_FINGER_FOOD
-	eatverbs = list("bite","chew","nibble","deep throat","gobble","chomp")
+	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
 	burns_on_grill = TRUE
 	venue_value = FOOD_PRICE_CHEAP
@@ -396,32 +396,32 @@
 		visible_message(span_notice("[src] fails to expand!"))
 	qdel(src)
 
-/obj/item/food/monkeycube/suicide_act(mob/living/M)
-	M.visible_message(span_suicide("[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!"))
-	var/eating_success = do_after(M, 1 SECONDS, src)
-	if(QDELETED(M)) //qdeletion: the nuclear option of self-harm
+/obj/item/food/monkeycube/suicide_act(mob/living/user)
+	user.visible_message(span_suicide("[user] is putting [src] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
+	var/eating_success = do_after(user, 1 SECONDS, src)
+	if(QDELETED(user)) //qdeletion: the nuclear option of self-harm
 		return SHAME
 	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
-		M.visible_message(span_suicide("[M] chickens out!"))
+		user.visible_message(span_suicide("[user] chickens out!"))
 		return SHAME
-	if(HAS_TRAIT(M, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
-		M.visible_message(span_suicide("[M] realizes [M.p_their()] body won't activate [src]!")
+	if(HAS_TRAIT(user, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
+		user.visible_message(span_suicide("[user] realizes [user.p_their()] body won't activate [src]!")
 		,span_warning("Your body won't activate [src]..."))
 		return SHAME
-	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
-	addtimer(CALLBACK(src, .proc/finish_suicide, M), 15) //you've eaten it, you can run now
+	playsound(user, 'sound/items/eatfood.ogg', rand(10, 50), TRUE)
+	user.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
+	addtimer(CALLBACK(src, .proc/finish_suicide, user), 15) //you've eaten it, you can run now
 	return MANUAL_SUICIDE
 
-/obj/item/food/monkeycube/proc/finish_suicide(mob/living/M) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
-	if(QDELETED(M) || QDELETED(src))
+/obj/item/food/monkeycube/proc/finish_suicide(mob/living/user) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
+	if(QDELETED(user) || QDELETED(src))
 		return
-	if((src.loc != M)) //how the hell did you manage this
-		to_chat(M, span_warning("Something happened to [src]..."))
+	if(src.loc != user) //how the hell did you manage this
+		to_chat(user, span_warning("Something happened to [src]..."))
 		return
 	Expand()
-	M.visible_message(span_danger("[M]'s torso bursts open as a primate emerges!"))
-	M.gib(null, TRUE, null, TRUE)
+	user.visible_message(span_danger("[user]'s torso bursts open as a primate emerges!"))
+	user.gib(null, TRUE, null, TRUE)
 
 /obj/item/food/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)
@@ -456,7 +456,7 @@
 	icon_state = "stewedsoymeat"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("soy" = 1, "vegetables" = 1)
-	eatverbs = list("slurp","sip","inhale","drink")
+	eatverbs = list("slurp", "sip", "inhale", "drink")
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -615,9 +615,9 @@
 
 /obj/item/food/meat
 	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
+	w_class = WEIGHT_CLASS_SMALL
 	var/subjectname = ""
 	var/subjectjob = null
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/meat/slab
 	name = "meat"
@@ -646,6 +646,7 @@
 	name = "meat"
 	tastes = list("tender meat" = 1)
 	foodtypes = MEAT | RAW | GROSS
+	venue_value = FOOD_MEAT_HUMAN
 
 /obj/item/food/meat/slab/human/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
@@ -659,6 +660,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/toxin/slimejelly = 3)
 	tastes = list("slime" = 1, "jelly" = 1)
 	foodtypes = MEAT | RAW | TOXIC
+	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/golem
 	icon_state = "golemmeat"
@@ -666,6 +668,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/iron = 3)
 	tastes = list("rock" = 1)
 	foodtypes = MEAT | RAW | GROSS
+	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/golem/adamantine
 	icon_state = "agolemmeat"
@@ -677,6 +680,7 @@
 	desc = "Delicious dino damage."
 	tastes = list("meat" = 4, "scales" = 1)
 	foodtypes = MEAT | RAW
+	venue_value = FOOD_MEAT_MUTANT
 
 /obj/item/food/meat/slab/human/mutant/lizard/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -686,12 +690,14 @@
 	desc = "All the joys of healthy eating with all the fun of cannibalism."
 	tastes = list("salad" = 1, "wood" = 1)
 	foodtypes = VEGETABLES
+	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/shadow
 	icon_state = "shadowmeat"
 	desc = "Ow, the edge."
 	tastes = list("darkness" = 1, "meat" = 1)
 	foodtypes = MEAT | RAW
+	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/fly
 	icon_state = "flymeat"
@@ -699,12 +705,14 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/uranium = 3)
 	tastes = list("maggots" = 1, "the inside of a reactor" = 1)
 	foodtypes = MEAT | RAW | GROSS
+	venue_value = FOOD_MEAT_MUTANT
 
 /obj/item/food/meat/slab/human/mutant/moth
 	icon_state = "mothmeat"
 	desc = "Unpleasantly powdery and dry. Kind of pretty, though."
 	tastes = list("dust" = 1, "powder" = 1, "meat" = 2)
 	foodtypes = MEAT | RAW
+	venue_value = FOOD_MEAT_MUTANT
 
 /obj/item/food/meat/slab/human/mutant/skeleton
 	name = "bone"
@@ -712,6 +720,7 @@
 	desc = "There's a point where this needs to stop, and clearly we have passed it."
 	tastes = list("bone" = 1)
 	foodtypes = GROSS
+	venue_value = FOOD_MEAT_MUTANT_RARE
 
 /obj/item/food/meat/slab/human/mutant/skeleton/MakeProcessable()
 	return //skeletons dont have cutlets
@@ -729,6 +738,7 @@
 	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 10)
 	tastes = list("pure electricity" = 2, "meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC
+	venue_value = FOOD_MEAT_MUTANT
 
 ////////////////////////////////////// OTHER MEATS ////////////////////////////////////////////////////////
 
@@ -738,9 +748,11 @@
 	icon_state = "meat_old"
 	desc = "A synthetic slab of meat."
 	foodtypes = RAW | MEAT //hurr durr chemicals we're harmed in the production of this meat thus its non-vegan.
+	venue_value = FOOD_PRICE_WORTHLESS
 
 /obj/item/food/meat/slab/synthmeat/MakeGrillable()
-	AddComponent(/datum/component/grillable,/obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+
 /obj/item/food/meat/slab/meatproduct
 	name = "meat product"
 	icon_state = "meatproduct"
@@ -1071,15 +1083,16 @@
 /obj/item/food/meat/rawcutlet/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/I, list/chosen_option, atom/original_atom)
+/obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	..()
-	if(istype(original_atom, /obj/item/food/meat/slab))
-		var/obj/item/food/meat/slab/original_slab = original_atom
-		var/mutable_appearance/filling = mutable_appearance(icon, "rawcutlet_coloration")
-		filling.color = original_slab.slab_color
-		add_overlay(filling)
-		name = "raw [original_atom.name] cutlet"
-		meat_type = original_atom.name
+	if(!istype(original_atom, /obj/item/food/meat/slab))
+		return
+	var/obj/item/food/meat/slab/original_slab = original_atom
+	var/mutable_appearance/filling = mutable_appearance(icon, "rawcutlet_coloration")
+	filling.color = original_slab.slab_color
+	add_overlay(filling)
+	name = "raw [original_atom.name] cutlet"
+	meat_type = original_atom.name
 
 /obj/item/food/meat/rawcutlet/plain
 	foodtypes = MEAT
@@ -1093,16 +1106,17 @@
 /obj/item/food/meat/rawcutlet/plain/human/MakeGrillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain/human, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
-/obj/item/food/meat/rawcutlet/plain/human/OnCreatedFromProcessing(mob/living/user, obj/item/I, list/chosen_option, atom/original_atom)
+/obj/item/food/meat/rawcutlet/plain/human/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	. = ..()
-	if(istype(original_atom, /obj/item/food/meat))
-		var/obj/item/food/meat/origin_meat = original_atom
-		subjectname = origin_meat.subjectname
-		subjectjob = origin_meat.subjectjob
-		if(subjectname)
-			name = "raw [origin_meat.subjectname] cutlet"
-		else if(subjectjob)
-			name = "raw [origin_meat.subjectjob] cutlet"
+	if(!istype(original_atom, /obj/item/food/meat))
+		return
+	var/obj/item/food/meat/origin_meat = original_atom
+	subjectname = origin_meat.subjectname
+	subjectjob = origin_meat.subjectjob
+	if(subjectname)
+		name = "raw [origin_meat.subjectname] cutlet"
+	else if(subjectjob)
+		name = "raw [origin_meat.subjectjob] cutlet"
 
 /obj/item/food/meat/rawcutlet/killertomato
 	name = "raw killer tomato cutlet"

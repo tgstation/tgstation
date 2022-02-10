@@ -171,7 +171,7 @@
 			var/mob/living/occupant = occus
 			occupant.update_mouse_pointer()
 	if(!equipment_disabled && LAZYLEN(occupants)) //prevent spamming this message with back-to-back EMPs
-		to_chat(occupants, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")
+		to_chat(occupants, span_warning("Error -- Connection to equipment control unit has been lost."))
 	addtimer(CALLBACK(src, /obj/vehicle/sealed/mecha/proc/restore_equipment), 3 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	equipment_disabled = 1
 

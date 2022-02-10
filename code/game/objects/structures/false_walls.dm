@@ -125,7 +125,7 @@
 				new mineral(loc)
 	qdel(src)
 
-/obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/falsewall/get_dumping_location()
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
@@ -288,8 +288,19 @@
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
 
+/obj/structure/falsewall/bamboo
+	name = "bamboo wall"
+	desc = "A wall with bamboo finish. Zen."
+	icon = 'icons/turf/walls/bamboo_wall.dmi'
+	icon_state = "bamboo"
+	mineral = /obj/item/stack/sheet/mineral/bamboo
+	walltype = /turf/closed/wall/mineral/bamboo
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BAMBOO_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
+
 /obj/structure/falsewall/iron
-	name = "rough metal wall"
+	name = "rough iron wall"
 	desc = "A wall with rough metal plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron_wall-0"

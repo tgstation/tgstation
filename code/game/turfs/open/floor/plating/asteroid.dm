@@ -84,8 +84,7 @@
 				SEND_SIGNAL(W, COMSIG_PARENT_ATTACKBY, O)
 
 /turf/open/floor/plating/asteroid/ex_act(severity, target)
-	. = SEND_SIGNAL(src, COMSIG_ATOM_EX_ACT, severity, target)
-	contents_explosion(severity, target)
+	return
 
 /turf/open/floor/plating/lavaland_baseturf
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface

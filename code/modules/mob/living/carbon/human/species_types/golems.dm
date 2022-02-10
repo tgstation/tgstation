@@ -1013,7 +1013,7 @@
 			create_brother(H.loc)
 
 /datum/species/golem/cardboard/proc/create_brother(location)
-	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
 /datum/species/golem/leather
@@ -1066,7 +1066,7 @@
 
 /datum/species/golem/durathread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
-	target.apply_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+	target.apply_status_effect(/datum/status_effect/strandling)
 
 /datum/species/golem/bone
 	name = "Bone Golem"

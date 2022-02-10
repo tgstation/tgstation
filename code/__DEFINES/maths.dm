@@ -1,3 +1,9 @@
+// Remove these once we have Byond implementation.
+#define ISNAN(a) (!(a==a))
+#define ISINF(a) (!ISNAN(a) && ISNAN(a-a))
+#define IS_INF_OR_NAN(a) (ISNAN(a-a))
+// Aight dont remove the rest
+
 // Credits to Nickr5 for the useful procs I've taken from his library resource.
 // This file is quadruple wrapped for your pleasure
 // (
@@ -30,6 +36,8 @@
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
+#define ROUND_UP(x) ( -round(-(x)))
+
 // round() acts like floor(x, 1) by default but can't handle other values
 #define FLOOR(x, y) ( round((x) / (y)) * (y) )
 
@@ -37,7 +45,7 @@
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
 // Real modulus that handles decimals
-#define MODULUS(x, y) ( (x) - (y) * round((x) / (y)) )
+#define MODULUS(x, y) ( (x) - FLOOR(x, y))
 
 // Cotangent
 #define COT(x) (1 / tan(x))
@@ -93,7 +101,7 @@
 	. = list()
 	var/d = b*b - 4 * a * c
 	var/bottom  = 2 * a
-	if(d < 0)
+	if(d < 0 || IS_INF_OR_NAN(d) || IS_INF_OR_NAN(bottom))
 		return
 	var/root = sqrt(d)
 	. += (-b + root) / bottom

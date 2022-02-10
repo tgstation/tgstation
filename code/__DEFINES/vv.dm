@@ -21,9 +21,11 @@
 #define VV_INFINITY "Infinity"
 #define VV_RESTORE_DEFAULT "Restore to Default"
 #define VV_MARKED_DATUM "Marked Datum"
+#define VV_TAGGED_DATUM "Tagged Datum"
 #define VV_BITFIELD "Bitfield"
 #define VV_TEXT_LOCATE "Custom Reference Locate"
 #define VV_PROCCALL_RETVAL "Return Value of Proccall"
+#define VV_WEAKREF "Weak Reference Datum"
 
 #define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
 #define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
@@ -76,6 +78,7 @@
 #define VV_HK_EXPOSE "expose"
 #define VV_HK_CALLPROC "proc_call"
 #define VV_HK_MARK "mark"
+#define VV_HK_TAG "tag"
 #define VV_HK_ADDCOMPONENT "addcomponent"
 #define VV_HK_REMOVECOMPONENT "removecomponent"
 #define VV_HK_MASS_REMOVECOMPONENT "massremovecomponent"
@@ -161,3 +164,5 @@
 #define VV_HK_SPELL_UNSET_HUMANONLY "spell_unset_humanonly"
 /// Abstract mobs such as brains or pAIs can cast this spell.
 #define VV_HK_SPELL_UNSET_NONABSTRACT "spell_unset_nonabstract"
+
+#define VV_HK_WEAKREF_RESOLVE "weakref_resolve"

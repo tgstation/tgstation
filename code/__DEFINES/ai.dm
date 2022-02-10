@@ -18,6 +18,10 @@
 #define AI_BEHAVIOR_REQUIRE_MOVEMENT (1<<0)
 ///Does this task let you perform the action while you move closer? (Things like moving and shooting)
 #define AI_BEHAVIOR_MOVE_AND_PERFORM (1<<1)
+///Does finishing this task not null the current movement target?
+#define AI_BEHAVIOR_KEEP_MOVE_TARGET_ON_FINISH (1<<2)
+///Does finishing this task make the AI stop moving towards the target?
+#define AI_BEHAVIOR_KEEP_MOVING_TOWARDS_TARGET_ON_FINISH (1<<3)
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)
@@ -98,6 +102,13 @@
 #define BB_TARGET_SLOT "BB_target_slot"
 ///Amount of successful hits in a row this item has had
 #define BB_CURSED_THROW_ATTEMPT_COUNT "BB_cursed_throw_attempt_count"
+
+///Mob the MOD is trying to attach to
+#define BB_MOD_TARGET "BB_mod_target"
+///The implant the AI was created from
+#define BB_MOD_IMPLANT "BB_mod_implant"
+///Range for a MOD AI controller.
+#define MOD_AI_RANGE 100
 
 ///Vending machine AI controller blackboard keys
 #define BB_VENDING_CURRENT_TARGET "BB_vending_current_target"

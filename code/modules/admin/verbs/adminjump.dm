@@ -153,21 +153,26 @@
 		usr.forceMove(M.loc)
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Key") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/sendmob(mob/M in sort_mobs())
+/client/proc/sendmob(mob/jumper in sort_mobs())
 	set category = "Admin.Game"
 	set name = "Send Mob"
 	if(!src.holder)
 		to_chat(src, "Only administrators may use this command.", confidential = TRUE)
 		return
-	var/area/A = input(usr, "Pick an area.", "Pick an area") in GLOB.sortedAreas|null
-	if(A && istype(A))
-		var/list/turfs = get_area_turfs(A)
-		if(length(turfs) && M.forceMove(pick(turfs)))
-
-			log_admin("[key_name(usr)] teleported [key_name(M)] to [AREACOORD(M)]")
-			var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(M)] to [AREACOORD(M)]"
-			message_admins(msg)
-			admin_ticket_log(M, msg)
-		else
-			to_chat(src, "Failed to move mob to a valid location.", confidential = TRUE)
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	if(!length(GLOB.sortedAreas))
+		to_chat(src, "No areas found.", confidential = TRUE)
+		return
+	var/area/target_area = tgui_input_list(src, "Pick an area", "Send Mob", GLOB.sortedAreas)
+	if(isnull(target_area))
+		return
+	if(!istype(target_area))
+		return
+	var/list/turfs = get_area_turfs(target_area)
+	if(length(turfs) && jumper.forceMove(pick(turfs)))
+		log_admin("[key_name(usr)] teleported [key_name(jumper)] to [AREACOORD(jumper)]")
+		var/msg = "[key_name_admin(usr)] teleported [ADMIN_LOOKUPFLW(jumper)] to [AREACOORD(jumper)]"
+		message_admins(msg)
+		admin_ticket_log(jumper, msg)
+	else
+		to_chat(src, "Failed to move mob to a valid location.", confidential = TRUE)
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Send Mob") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -114,6 +114,8 @@ GLOBAL_VAR(families_override_theme)
 		current_theme = new theme_to_use
 	else
 		current_theme = new GLOB.families_override_theme
+	message_admins("Families has chosen the theme: [current_theme.name]")
+	log_game("FAMILIES: The following theme has been chosen: [current_theme.name]")
 	var/gangsters_to_make = length(current_theme.involved_gangs) * current_theme.starting_gangsters
 	for(var/i in 1 to gangsters_to_make)
 		if (!antag_candidates.len)
@@ -152,14 +154,14 @@ GLOBAL_VAR(families_override_theme)
  * * return_if_no_gangs - Boolean that determines if the proc should return FALSE should it find no eligible family members. Should be used for dynamic only.
  */
 /datum/gang_handler/proc/post_setup_analogue(return_if_no_gangs = FALSE)
-	var/list/gangs_to_use = current_theme.involved_gangs
+	var/list/gangs_to_use = current_theme.involved_gangs.Copy()
 	var/amount_of_gangs = gangs_to_use.len
 	var/amount_of_gangsters = amount_of_gangs * current_theme.starting_gangsters
 	for(var/_ in 1 to amount_of_gangsters)
 		if(!gangbangers.len) // We ran out of candidates!
 			break
 		if(!gangs_to_use.len)
-			gangs_to_use = current_theme.involved_gangs
+			gangs_to_use = current_theme.involved_gangs.Copy()
 		var/gang_to_use = pick_n_take(gangs_to_use) // Evenly distributes Leaders among the gangs
 		var/datum/mind/gangster_mind = pick_n_take(gangbangers)
 		var/datum/antagonist/gang/new_gangster = new gang_to_use()

@@ -169,7 +169,7 @@ AI MODULES
 	lawpos = 4
 
 /obj/item/ai_module/supplied/safeguard/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter the subject to safeguard.", "Safeguard who?", user.name,MAX_NAME_LEN)
+	var/targName = tgui_input_text(user, "Subject to safeguard.", "Safeguard", user.name, MAX_NAME_LEN)
 	if(!targName)
 		return
 	targetName = targName
@@ -195,7 +195,7 @@ AI MODULES
 	laws = list("Only SUBJECT is human.")
 
 /obj/item/ai_module/zeroth/onehuman/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter the subject who is the only human.", "Who?", user.real_name,MAX_NAME_LEN)
+	var/targName = tgui_input_text(user, "Enter the subject who is the only human.", "One Human", user.real_name, MAX_NAME_LEN)
 	if(!targName)
 		return
 	targetName = targName
@@ -246,16 +246,11 @@ AI MODULES
 	laws = list("")
 
 /obj/item/ai_module/supplied/freeform/attack_self(mob/user)
-	var/newpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num|null
-	if(newpos == null)
+	var/newpos = tgui_input_number(user, "Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority ", lawpos, 50, 15)
+	if(!newpos || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(newpos < 15)
-		var/response = tgui_alert(usr, "Error: The law priority of [newpos] is invalid,  Law priorities below 14 are reserved for core laws,  Would you like to change that that to 15?", "Invalid law priority", list("Change to 15", "Cancel"))
-		if (!response || response == "Cancel")
-			return
-		newpos = 15
-	lawpos = min(newpos, 50)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
+	lawpos = newpos
+	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
 	if(is_ic_filtered(targName))
@@ -290,12 +285,8 @@ AI MODULES
 	var/lawpos = 1
 
 /obj/item/ai_module/remove/attack_self(mob/user)
-	lawpos = input("Please enter the law you want to delete.", "Law Number", lawpos) as num|null
-	if(lawpos == null)
-		return
-	if(lawpos <= 0)
-		to_chat(user, span_warning("Error: The law number of [lawpos] is invalid."))
-		lawpos = 1
+	lawpos = tgui_input_number(user, "Law to delete", "Law Removal", lawpos, 50)
+	if(!lawpos || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	to_chat(user, span_notice("Law [lawpos] selected."))
 	..()
@@ -386,7 +377,7 @@ AI MODULES
 	var/subject = "human being"
 
 /obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
-	var/targName = stripped_input(user, "Please enter a new subject that asimov is concerned with.", "Asimov to whom?", subject, MAX_NAME_LEN)
+	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", subject, MAX_NAME_LEN)
 	if(!targName)
 		return
 	subject = targName
@@ -468,7 +459,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/ai_module/core/freeformcore/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
+	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
 	if(is_ic_filtered(targName))
@@ -496,7 +487,7 @@ AI MODULES
 	laws = list("")
 
 /obj/item/ai_module/syndicate/attack_self(mob/user)
-	var/targName = stripped_input(user, "Please enter a new law for the AI.", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len))
+	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
 	if(!targName)
 		return
 	if(is_ic_filtered(targName)) // not even the syndicate can uwu

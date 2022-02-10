@@ -167,7 +167,7 @@
 	icon_state = "gizmo_scan"
 	inhand_icon_state = "silencer"
 	var/mode = GIZMO_SCAN
-	var/mob/living/marked = null
+	var/datum/weakref/marked_target_weakref
 	var/obj/machinery/abductor/console/console
 
 /obj/item/abductor/gizmo/attack_self(mob/user)
@@ -221,11 +221,12 @@
 		to_chat(user, span_notice("You scan [target] and add [target.p_them()] to the database."))
 
 /obj/item/abductor/gizmo/proc/mark(atom/target, mob/living/user)
+	var/mob/living/marked = marked_target_weakref?.resolve()
 	if(marked == target)
 		to_chat(user, span_warning("This specimen is already marked!"))
 		return
 	if(isabductor(target) || iscow(target))
-		marked = target
+		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You mark [target] for future retrieval."))
 	else
 		prepare(target,user)
@@ -236,12 +237,13 @@
 		return
 	to_chat(user, span_notice("You begin preparing [target] for transport..."))
 	if(do_after(user, 100, target = target))
-		marked = target
+		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You finish preparing [target] for transport."))
 
 /obj/item/abductor/gizmo/Destroy()
 	if(console)
 		console.gizmo = null
+		console = null
 	. = ..()
 
 
@@ -280,12 +282,10 @@
 /obj/item/abductor/silencer/proc/radio_off_mob(mob/living/carbon/human/M)
 	var/list/all_items = M.get_all_contents()
 
-	for(var/obj/I in all_items)
-		if(istype(I, /obj/item/radio/))
-			var/obj/item/radio/r = I
-			r.listening = 0
-			if(!istype(I, /obj/item/radio/headset))
-				r.broadcasting = 0 //goddamned headset hacks
+	for(var/obj/item/radio/radio in all_items)
+		radio.set_listening(FALSE)
+		if(!istype(radio, /obj/item/radio/headset))
+			radio.set_broadcasting(FALSE) //goddamned headset hacks
 
 /obj/item/abductor/mind_device
 	name = "mental interface device"
@@ -332,8 +332,8 @@
 			to_chat(user, span_warning("Your target is already under a mind-controlling influence!"))
 			return
 
-		var/command = stripped_input(user, "Enter the command for your target to follow.\
-											Uses Left: [G.mind_control_uses], Duration: [DisplayTimeText(G.mind_control_duration)]","Enter command")
+		var/command = tgui_input_text(user, "Enter the command for your target to follow.\
+											Uses Left: [G.mind_control_uses], Duration: [DisplayTimeText(G.mind_control_duration)]", "Enter command")
 
 		if(!command)
 			return
@@ -357,7 +357,7 @@
 		if(L.stat == DEAD)
 			to_chat(user, span_warning("Your target is dead!"))
 			return
-		var/message = stripped_input(user, "Write a message to send to your target's brain.","Enter message")
+		var/message = tgui_input_text(user, "Message to send to your target's brain", "Enter message")
 		if(!message)
 			return
 		if(QDELETED(L) || L.stat == DEAD)
@@ -536,7 +536,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/proc/SleepAttack(mob/living/L,mob/living/user)
 	playsound(src, on_stun_sound, 50, TRUE, -1)
-	if(L.incapacitated(TRUE, TRUE))
+	if(L.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 		if(L.anti_magic_check(FALSE, FALSE, TRUE))
 			to_chat(user, span_warning("The specimen's tinfoil protection is interfering with the sleep inducement!"))
 			L.visible_message(span_danger("[user] tried to induced sleep in [L] with [src], but [L.p_their()] tinfoil protection [L.p_them()]!"), \

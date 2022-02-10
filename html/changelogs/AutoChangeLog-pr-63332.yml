@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixed hitting a move input inside a small grace period in move code leading to teleportation. It's a side effect of when movement used to be verbs, and holding a button down meant constantly sending the server move commands"

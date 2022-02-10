@@ -28,8 +28,9 @@
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/heretic/greet()
+	. = ..()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)//subject to change
-	to_chat(owner, "<span class='warningplain'><font color=red><B>You are the Heretic!</B></font></span><br><B>The old ones gave you these tasks to fulfill:</B>")
+	to_chat(owner, "</font></span><br><B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
 	to_chat(owner, span_cult("<span class='warningplain'>The book whispers softly, its forbidden knowledge walks this plane once again!</span>"))
 	var/policy = get_policy(ROLE_HERETIC)

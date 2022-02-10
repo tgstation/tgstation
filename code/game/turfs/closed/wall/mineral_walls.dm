@@ -167,6 +167,17 @@
 	girder_type = /obj/structure/barricade/wooden
 	hardness = 50
 
+/turf/closed/wall/mineral/bamboo
+	name = "bamboo wall"
+	desc = "A wall with a bamboo finish."
+	icon = 'icons/turf/walls/bamboo_wall.dmi'
+	icon_state = "bamboo"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BAMBOO_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
+	sheet_type = /obj/item/stack/sheet/mineral/bamboo
+	hardness = 60
+
 /turf/closed/wall/mineral/iron
 	name = "rough iron wall"
 	desc = "A wall with rough iron plating."
@@ -174,10 +185,11 @@
 	icon_state = "iron_wall-0"
 	base_icon_state = "iron_wall"
 	sheet_type = /obj/item/stack/rods
+	sheet_amount = 5
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_IRON_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_IRON_WALLS)
-	custom_materials = list(/datum/material/iron = 4000)
+	custom_materials = list(/datum/material/iron = 5000)
 
 /turf/closed/wall/mineral/snow
 	name = "packed snow wall"

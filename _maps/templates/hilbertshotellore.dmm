@@ -253,7 +253,7 @@
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/vomit,
-/obj/effect/mob_spawn/human/doctorhilbert,
+/obj/effect/mob_spawn/corpse/human/doctorhilbert,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aZ" = (

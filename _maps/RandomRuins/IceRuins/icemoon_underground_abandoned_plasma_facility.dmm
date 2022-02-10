@@ -2190,7 +2190,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/miner/explorer,
+/obj/effect/mob_spawn/corpse/human/miner/explorer,
 /obj/machinery/light/small/blacklight/directional/south,
 /turf/open/floor/iron/grimy,
 /area/ruin/plasma_facility/commons)

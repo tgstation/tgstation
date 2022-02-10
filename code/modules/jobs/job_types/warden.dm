@@ -1,10 +1,10 @@
 /datum/job/warden
-	title = "Warden"
+	title = JOB_WARDEN
 	description = "Watch over the Brig and Prison Wing, release prisoners when \
 		their time is up, issue equipment to security, be a security officer when \
 		they all eventually die."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list("Head of Security")
+	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -41,7 +41,7 @@
 		/obj/item/storage/box/lethalshot = 5
 	)
 	rpg_title = "Jailor"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/warden

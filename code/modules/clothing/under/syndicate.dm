@@ -53,12 +53,10 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 
 /obj/item/clothing/under/syndicate/sniper
-	name = "Tactical turtleneck suit"
+	name = "tactical turtleneck suit"
 	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."
-	icon = 'icons/obj/clothing/under/suits.dmi'
-	icon_state = "really_black_suit"
+	icon_state = "tactical_suit"
 	inhand_icon_state = "bl_suit"
-	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/camo

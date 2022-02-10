@@ -13,4 +13,4 @@
 	inhand_icon_state = "s-ninja_mask"
 	strip_delay = 120
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	tint = 0.25
+	has_fov = FALSE

@@ -53,7 +53,7 @@
 /obj/structure/chair/wood{
 	dir = 1
 	},
-/obj/effect/mob_spawn/human/pirate/skeleton/gunner,
+/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/gunner,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "am" = (
@@ -304,7 +304,7 @@
 "gP" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/comfy/shuttle,
-/obj/effect/mob_spawn/human/pirate/skeleton/captain,
+/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "gQ" = (
@@ -614,6 +614,7 @@
 /obj/structure/festivus{
 	anchored = 1;
 	color = "#825427";
+	desc = "A sturdy pole designed to hold the vessel's solar sails in place.";
 	name = "mast";
 	pixel_x = -16;
 	pixel_y = 2
@@ -943,7 +944,7 @@
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
 "Ys" = (
-/obj/effect/mob_spawn/human/pirate/skeleton,
+/obj/effect/mob_spawn/ghost_role/human/pirate/skeleton,
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "ZL" = (

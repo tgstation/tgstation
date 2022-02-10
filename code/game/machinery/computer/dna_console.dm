@@ -631,7 +631,7 @@
 			var/datum/mutation/human/target_mutation = get_mut_by_ref(bref, search_flags)
 
 			// Prompt for modifier string
-			var/new_sequence_input = input(usr, "Enter replacement sequence (or nothing to cancel)", "Replace inherent gene","")
+			var/new_sequence_input = tgui_input_text(usr, "Enter a replacement sequence", "Inherent Gene Replacement", 32, encode = FALSE)
 			// Drop out if the string is the wrong length
 			if(length(new_sequence_input) != 32)
 				return
@@ -685,7 +685,7 @@
 				//Start with the bad mutation, overwrite with the desired mutation if it passes the check
 				//assures BAD END is the natural state if things go wrong
 				//I think this should be like with viruses, probability cascade or switch/case on random?
-				var/result_mutation = ACIDFLESH
+				var/result_mutation = /datum/mutation/human/acidflesh
 				//If we found the replacement mutation
 				if(matched_mutation)
 					//and the old sequence matches the real sequence of the old mutation

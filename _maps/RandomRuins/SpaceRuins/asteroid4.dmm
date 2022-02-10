@@ -40,7 +40,7 @@
 	dir = 1
 	},
 /obj/item/shard,
-/obj/effect/mob_spawn/human/clown{
+/obj/effect/mob_spawn/corpse/human/clown{
 	brute_damage = 120;
 	oxy_damage = 75
 	},

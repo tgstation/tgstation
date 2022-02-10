@@ -133,6 +133,9 @@
 	if(!(pushed_mob.pass_flags & PASSTABLE))
 		added_passtable = TRUE
 		pushed_mob.pass_flags |= PASSTABLE
+	for (var/obj/obj in user.loc.contents)
+		if(!obj.CanAllowThrough(pushed_mob))
+			return
 	pushed_mob.Move(src.loc)
 	if(added_passtable)
 		pushed_mob.pass_flags &= ~PASSTABLE

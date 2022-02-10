@@ -12,6 +12,7 @@
 		/datum/surgery_step/gastrectomy,
 		/datum/surgery_step/clamp_bleeders,
 		/datum/surgery_step/close)
+	organ_to_manipulate = ORGAN_SLOT_STOMACH
 
 /datum/surgery/gastrectomy/can_start(mob/user, mob/living/carbon/target)
 	var/obj/item/organ/stomach/target_stomach = target.getorganslot(ORGAN_SLOT_STOMACH)

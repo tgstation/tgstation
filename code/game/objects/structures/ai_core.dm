@@ -197,7 +197,7 @@
 						return
 
 					var/mob/living/brain/B = M.brainmob
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, JOB_AI) && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
 						if(!QDELETED(M))
 							to_chat(user, span_warning("This [M.name] does not seem to fit!"))
 						return

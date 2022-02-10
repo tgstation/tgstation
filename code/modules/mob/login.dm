@@ -27,6 +27,7 @@
 /mob/Login()
 	if(!client)
 		return FALSE
+	canon_client = client
 	add_to_player_list()
 	lastKnownIP = client.address
 	computer_id = client.computer_id
@@ -61,8 +62,7 @@
 	if(!client)
 		return FALSE
 
-	//We do this here to prevent hanging refs from ghostize or whatever, since if we were in another mob before this'll take care of it
-	clear_client_in_contents()
+	enable_client_mobs_in_contents(client)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 

@@ -1,0 +1,172 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"e" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/space/nearstation)
+"h" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/obj/item/stack/rods{
+	pixel_x = 1;
+	pixel_y = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"k" = (
+/obj/item/shard{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/djstation/solars)
+"n" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/djstation/solars)
+"t" = (
+/obj/structure/lattice,
+/obj/item/stack/tile/iron{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"u" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/ruin/space/djstation/solars)
+"z" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"G" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/obj/item/stack/rods{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"M" = (
+/obj/item/shard{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/djstation/solars)
+"O" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/ruin/space/djstation/solars)
+"T" = (
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/structure/cable,
+/obj/machinery/power/solar/fake,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/djstation/solars)
+
+(1,1,1) = {"
+T
+T
+z
+T
+u
+T
+z
+z
+a
+"}
+(2,1,1) = {"
+a
+z
+U
+U
+O
+U
+U
+T
+e
+"}
+(3,1,1) = {"
+a
+T
+z
+T
+O
+T
+z
+T
+h
+"}
+(4,1,1) = {"
+a
+z
+U
+U
+O
+U
+k
+z
+e
+"}
+(5,1,1) = {"
+e
+T
+z
+T
+z
+T
+T
+T
+z
+"}
+(6,1,1) = {"
+e
+z
+M
+n
+z
+t
+T
+T
+T
+"}
+(7,1,1) = {"
+T
+T
+z
+T
+T
+T
+T
+T
+T
+"}
+(8,1,1) = {"
+T
+T
+G
+z
+T
+T
+T
+T
+T
+"}

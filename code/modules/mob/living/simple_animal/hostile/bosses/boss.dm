@@ -52,7 +52,7 @@
 	var/needs_target = TRUE //Does the boss need to have a target? (Only matters for the AI)
 	var/say_when_triggered = "" //What does the boss Say() when the ability triggers?
 
-/datum/action/boss/Trigger()
+/datum/action/boss/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -73,7 +73,7 @@
 
 //Example:
 /*
-/datum/action/boss/selfgib/Trigger()
+/datum/action/boss/selfgib/Trigger(trigger_flags)
 	if(..())
 		boss.gib()
 */

@@ -65,6 +65,7 @@
 #define ADMIN_COORDJMP(src) "[src ? src.Admin_Coordinates_Readable(FALSE, TRUE) : "nonexistent location"]"
 #define ADMIN_VERBOSEJMP(src) "[src ? src.Admin_Coordinates_Readable(TRUE, TRUE) : "nonexistent location"]"
 #define ADMIN_INDIVIDUALLOG(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];individuallog=[REF(user)]'>LOGS</a>)"
+#define ADMIN_TAG(datum) "(<A href='?src=[REF(src)];[HrefToken(TRUE)];tag_datum=[REF(datum)]'>TAG</a>)"
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()

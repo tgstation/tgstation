@@ -85,17 +85,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/dirtype = PIPE_BENDABLE
 	var/all_layers
 
-/datum/pipe_info/proc/Render(dispenser)
-	var/dat = "<li><a href='?src=[REF(dispenser)]&[Params()]'>[name]</a></li>"
-
-	// Stationary pipe dispensers don't allow you to pre-select pipe directions.
-	// This makes it impossble to spawn bent versions of bendable pipes.
-	// We add a "Bent" pipe type with a preset diagonal direction to work around it.
-	if(istype(dispenser, /obj/machinery/pipedispenser) && (dirtype == PIPE_BENDABLE || dirtype == /obj/item/pipe/binary/bendable))
-		dat += "<li><a href='?src=[REF(dispenser)]&[Params()]&dir=[NORTHEAST]'>Bent [name]</a></li>"
-
-	return dat
-
 /datum/pipe_info/proc/Params()
 	return ""
 
@@ -633,7 +622,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 						if(queued_p_flipped)
 							tube.setDir(turn(queued_p_dir, 45))
-							tube.simple_rotate_flip()
+							tube.SimpleRotateFlip()
 
 						tube.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)
@@ -647,7 +636,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source.incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 		return
 
 	if(delta_y < 0)

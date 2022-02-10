@@ -62,7 +62,7 @@
 	contents_thermal_insulation = 0
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
-	/// true whenever someone with the strong pull component is dragging this, preventing opening
+	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
 	var/strong_grab = FALSE
 	///electronics for access
 	var/obj/item/electronics/airlock/electronics
@@ -86,7 +86,6 @@
 	return
 
 /obj/structure/closet/Destroy()
-	dump_contents()
 	QDEL_NULL(door_obj)
 	QDEL_NULL(electronics)
 	return ..()
@@ -187,7 +186,7 @@
 		. += span_notice("It's welded shut.")
 	if(anchored)
 		. += span_notice("It is <b>bolted</b> to the ground.")
-	if(opened)
+	if(opened && cutting_tool == /obj/item/weldingtool)
 		. += span_notice("The parts are <b>welded</b> together.")
 	else if(secure && !opened)
 		. += span_notice("Right-click to [locked ? "unlock" : "lock"].")
@@ -244,7 +243,7 @@
 	for(var/atom/movable/AM in location)
 		if(AM != src && insert(AM, mapload) == LOCKER_FULL) // limit reached
 			if(mapload) // Yea, it's a mapping issue. Blame mappers.
-				WARNING("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
+				log_mapping("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
 			break
 	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
@@ -353,6 +352,7 @@
 			var/obj/item/electronics/airlock/electronics_ref = electronics
 			electronics = null
 			electronics_ref.forceMove(drop_location())
+	dump_contents()
 	qdel(src)
 
 /obj/structure/closet/atom_break(damage_flag)
@@ -390,6 +390,8 @@
 									span_notice("You cut \the [src] apart with \the [W]."))
 				deconstruct(TRUE)
 				return
+		if (user.combat_mode)
+			return FALSE
 		if(user.transferItemToLoc(W, drop_location())) // so we put in unlit welder too
 			return
 	else if(W.tool_behaviour == TOOL_WELDER && can_weld_shut)
@@ -407,14 +409,6 @@
 							span_hear("You hear welding."))
 			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
 			update_appearance()
-	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
-		if(isinspace() && !anchored)
-			return
-		set_anchored(!anchored)
-		W.play_tool_sound(src, 75)
-		user.visible_message(span_notice("[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						span_notice("You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						span_hear("You hear a ratchet."))
 	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
@@ -467,6 +461,18 @@
 			togglelock(user)
 	else
 		return FALSE
+
+/obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(!anchorable)
+		balloon_alert(user, "no anchor bolts!")
+		return TRUE
+	if(isinspace() && !anchored) // We want to prevent anchoring a locker in space, but we should still be able to unanchor it there
+		balloon_alert(user, "nothing to anchor to!")
+		return TRUE
+	set_anchored(!anchored)
+	tool.play_tool_sound(src, 75)
+	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+	return TRUE
 
 /obj/structure/closet/proc/after_weld(weld_state)
 	return
@@ -576,6 +582,8 @@
 	return TRUE
 
 /obj/structure/closet/container_resist_act(mob/living/user)
+	if(isstructure(loc))
+		relay_container_resist_act(user, loc)
 	if(opened)
 		return
 	if(ismovable(loc))
@@ -604,6 +612,10 @@
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
 			to_chat(user, span_warning("You fail to break out of [src]!"))
+
+/obj/structure/closet/relay_container_resist_act(mob/living/user, obj/container)
+	container.container_resist_act()
+
 
 /obj/structure/closet/proc/bust_open()
 	SIGNAL_HANDLER
@@ -694,11 +706,13 @@
 		return
 	if(!opened && !shove_blocked)
 		return
-	if(opened)
+	var/was_opened = opened
+	if(!toggle())
+		return
+	if(was_opened)
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	toggle()
 	update_icon()
 	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
 		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)

@@ -50,7 +50,7 @@
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
 		else
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
-	. += span_notice("Its maintenance panel is <b>screwed</b> in place.")
+	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
@@ -170,14 +170,13 @@
 	if(operating)
 		return
 	add_fingerprint(user)
-	if(!requiresID())
-		user = null
+	if(!density || (obj_flags & EMAGGED))
+		return
 
-	if(density && !(obj_flags & EMAGGED))
-		if(allowed(user))
-			open()
-		else
-			do_animate("deny")
+	if(requiresID() && allowed(user))
+		open()
+	else
+		do_animate("deny")
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -246,8 +245,7 @@
 	else if(I.tool_behaviour == TOOL_WELDER)
 		try_to_weld(I, user, params)
 		return TRUE
-	else if(!(I.item_flags & NOBLUDGEON) && !user.combat_mode)
-		try_to_activate_door(user)
+	else if((!(I.item_flags & NOBLUDGEON) && !user.combat_mode) && try_to_activate_door(user))
 		return TRUE
 	return ..()
 
@@ -432,7 +430,7 @@
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
 
-/obj/machinery/door/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/machinery/door/get_dumping_location()
 	return null
 
 /obj/machinery/door/proc/lock()

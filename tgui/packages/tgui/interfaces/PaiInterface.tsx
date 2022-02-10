@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Icon, NoticeBox, ProgressBar, Section, Stack, Table, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
@@ -104,7 +104,7 @@ const ICON_MAP = {
 };
 
 export const PaiInterface = (_, context) => {
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+  const [tab, setTab] = useLocalState(context, 'tab', 1);
   const setTabHandler = (tab: number) => {
     setTab(tab);
   };
@@ -299,7 +299,7 @@ const DirectiveDisplay = (_, context) => {
  * software info.
  */
 const InstalledDisplay = (_, context) => {
-  const [installSelected, setInstallSelected] = useSharedState(
+  const [installSelected, setInstallSelected] = useLocalState(
     context,
     'software',
     ''

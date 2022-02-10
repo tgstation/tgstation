@@ -50,6 +50,9 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/rocketlauncher,
 	/obj/item/gun/medbeam,
 	/obj/item/gun/energy/laser/scatter,
+	/obj/item/gun/energy/laser/thermal,
+	/obj/item/gun/energy/laser/thermal/inferno,
+	/obj/item/gun/energy/laser/thermal/cryo,
 	/obj/item/gun/energy/gravity_gun))
 
 //if you add anything that isn't covered by the typepaths below, add it to summon_magic_objective_types
@@ -74,7 +77,6 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/gun/magic/staff/door,
 	/obj/item/scrying,
 	/obj/item/warpwhistle,
-	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
 	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword))
 
@@ -89,7 +91,6 @@ GLOBAL_LIST_INIT(summoned_special_magic, list(
 //everything above except for single use spellbooks, because they are counted separately (and are for basic bitches anyways)
 GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/antag_spawner/contract,
-	/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
 	/obj/item/gun/magic,
 	/obj/item/immortality_talisman,
 	/obj/item/melee/ghost_sword,

@@ -1,5 +1,5 @@
 /datum/job/prisoner
-	title = "Prisoner"
+	title = JOB_PRISONER
 	description = "Keep yourself occupied in permabrig."
 	department_head = list("The Security Team")
 	faction = FACTION_STATION
@@ -23,7 +23,7 @@
 
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/prisoner

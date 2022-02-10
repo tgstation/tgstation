@@ -171,7 +171,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark{
@@ -1060,7 +1060,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/mob_spawn/human/corpse/cargo_tech,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/blood,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,

@@ -1,9 +1,9 @@
 /datum/job/security_officer
-	title = "Security Officer"
+	title = JOB_SECURITY_OFFICER
 	description = "Protect company assets, follow the Standard Operating \
 		Procedure, eat donuts."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list("Head of Security")
+	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
 	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
@@ -39,7 +39,7 @@
 		/obj/item/melee/baton/security/boomerang/loaded = 1
 	)
 	rpg_title = "Guard"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY))
@@ -225,10 +225,20 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 	implants = list(/obj/item/implant/mindshield)
 
+/datum/outfit/job/security/mod
+	name = "Security Officer (MODsuit)"
+
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/security
+	suit = null
+	head = null
+	mask = /obj/item/clothing/mask/gas/sechailer
+	internals_slot = ITEM_SLOT_SUITSTORE
+
 /obj/item/radio/headset/headset_sec/alt/department/Initialize(mapload)
 	. = ..()
 	wires = new/datum/wires/radio(src)
-	secure_radio_connections = new
+	secure_radio_connections = list()
 	recalculateChannels()
 
 /obj/item/radio/headset/headset_sec/alt/department/engi

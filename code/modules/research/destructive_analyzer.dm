@@ -90,8 +90,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 				differences[i] = value
 		if(length(worths) && !length(differences))
 			return FALSE
-		var/choice = input("Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?") in list("Proceed", "Cancel")
-		if(choice == "Cancel")
+		var/choice = tgui_alert(user, "Are you sure you want to destroy [loaded_item] to [!length(worths) ? "reveal [TN.display_name]" : "boost [TN.display_name] by [json_encode(differences)] point\s"]?", "Destructive Analyzer", list("Proceed", "Cancel"))
+		if(choice != "Proceed")
 			return FALSE
 		if(QDELETED(loaded_item) || QDELETED(src))
 			return FALSE
