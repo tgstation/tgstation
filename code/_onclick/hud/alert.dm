@@ -76,9 +76,9 @@
 /mob/proc/clear_alert(category, clear_override = FALSE)
 	var/atom/movable/screen/alert/alert = alerts[category]
 	if(!alert)
-		return 0
+		return FALSE
 	if(alert.override_alerts && !clear_override)
-		return 0
+		return FALSE
 
 	alerts -= category
 	if(client && hud_used)

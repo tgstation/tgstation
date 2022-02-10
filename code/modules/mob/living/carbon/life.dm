@@ -68,7 +68,7 @@
 			var/obj/location_as_object = loc
 			location_as_object.handle_internal_lifeform(src,0)
 
-//Second link in a breath chain, calls check_breath()
+///Second link in a breath chain, calls check_breath()
 /mob/living/carbon/proc/breathe(delta_time, times_fired)
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
@@ -129,7 +129,7 @@
 	return FALSE
 
 
-//Third link in a breath chain, calls handle_breath_temperature()
+///Third link in a breath chain, calls handle_breath_temperature()
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
 		failed_last_breath = FALSE

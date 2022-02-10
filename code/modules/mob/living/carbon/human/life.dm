@@ -84,9 +84,14 @@
 
 /mob/living/carbon/human/check_breath(datum/gas_mixture/breath)
 
-	var/L = getorganslot(ORGAN_SLOT_LUNGS)
+	var/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 
-	if(!L)
+	if(lungs)
+		if(istype(lungs, /obj/item/organ/lungs))
+			var/obj/item/organ/lungs/lun = lungs
+			lun.check_breath(breath,src)
+
+	else
 		if(health >= crit_threshold)
 			adjustOxyLoss(HUMAN_MAX_OXYLOSS + 1)
 		else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
@@ -106,10 +111,6 @@
 			throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
 
 		return FALSE
-	else
-		if(istype(L, /obj/item/organ/lungs))
-			var/obj/item/organ/lungs/lun = L
-			lun.check_breath(breath,src)
 
 /// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, delta_time, times_fired)
