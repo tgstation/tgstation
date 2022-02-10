@@ -28,6 +28,8 @@
 	var/speech_action_icon_state = "link_speech"
 	/// The icon background for the speech action handed out.
 	var/speech_action_background_icon_state = "bg_alien"
+	/// The master's speech action. The owner of the link shouldn't lose this as long as the link remains.
+	var/datum/action/innate/linked_speech/master_speech
 	/// An assoc list of [mob/living]s to [datum/action/innate/linked_speech]s. All the mobs that are linked to our network.
 	var/list/mob/living/linked_mobs = list()
 
@@ -62,12 +64,15 @@
 	src.speech_action_icon_state = speech_action_icon_state
 	src.speech_action_background_icon_state = speech_action_background_icon_state
 
-	link_mob(owner)
+	master_speech = new(src)
+	master_speech.Grant(owner)
+	to_chat(owner, span_boldnotice("You establish a [network_name], allowing you to link minds to communicate telepathically."))
 
 /datum/component/mind_linker/Destroy(force, silent)
 	for(var/remaining_mob in linked_mobs)
 		unlink_mob(remaining_mob)
 	linked_mobs.Cut()
+	QDEL_NULL(master_speech)
 	QDEL_NULL(post_unlink_callback)
 	return ..()
 
@@ -96,17 +101,13 @@
 
 	var/mob/living/owner = parent
 
-	if(owner == to_link)
-		to_chat(owner, span_boldnotice("You establish a [network_name], allowing you to link minds to communicate telepathically."))
+	to_chat(to_link, span_notice(link_message))
+	to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
 
-	else
-		to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
-		to_chat(to_link, span_notice(link_message))
-
-		for(var/mob/living/other_link as anything in linked_mobs)
-			if(other_link == owner)
-				continue
-			to_chat(other_link, span_notice("You feel a new pressence within [owner.real_name]'s [network_name]."))
+	for(var/mob/living/other_link as anything in linked_mobs)
+		if(other_link == owner)
+			continue
+		to_chat(other_link, span_notice("You feel a new pressence within [owner.real_name]'s [network_name]."))
 
 	var/datum/action/innate/linked_speech/new_link = new(src)
 	new_link.Grant(to_link)
@@ -139,15 +140,11 @@
 
 	var/mob/living/owner = parent
 
-	if(to_unlink == owner)
-		to_chat(owner, span_boldwarning("Your [network_name] breaks!"))
-
-	else
-		to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
-		for(var/mob/living/other_link as anything in linked_mobs)
-			if(other_link == owner)
-				continue
-			to_chat(other_link, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
+	to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
+	for(var/mob/living/other_link as anything in linked_mobs)
+		if(other_link == owner)
+			continue
+		to_chat(other_link, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
 
 /**
  *  Signal proc sent from any signals given to us initialize.
@@ -155,6 +152,10 @@
  */
 /datum/component/mind_linker/proc/destroy_link(datum/source)
 	SIGNAL_HANDLER
+
+	if(isliving(source))
+		var/mob/living/owner = source
+		to_chat(owner, span_boldwarning("Your [network_name] breaks!"))
 
 	qdel(src)
 
@@ -168,6 +169,7 @@
 /datum/action/innate/linked_speech/New(Target)
 	. = ..()
 	if(!istype(Target, /datum/component/mind_linker))
+		stack_trace("[name] ([type]) was instantiated on a non-mind_linker target, this doesn't work.")
 		qdel(src)
 		return
 
@@ -179,7 +181,7 @@
 	background_icon_state = linker.speech_action_background_icon_state
 
 /datum/action/innate/linked_speech/IsAvailable()
-	return ..() && can_we_talk()
+	return ..() && (owner.stat != DEAD)
 
 /datum/action/innate/linked_speech/Activate()
 
@@ -187,10 +189,10 @@
 	var/mob/living/linker_parent = linker.parent
 
 	var/message = sanitize(tgui_input_text(owner, "Enter a message to transmit.", "[linker.network_name] Telepathy"))
-	if(!message)
+	if(!message || QDELETED(src) || QDELETED(owner) || owner.stat == DEAD)
 		return
 
-	if(QDELETED(linker) || QDELETED(owner) || !can_we_talk())
+	if(QDELETED(linker))
 		to_chat(owner, span_warning("The link seems to have been severed."))
 		return
 
@@ -202,14 +204,3 @@
 
 	for(var/mob/recipient as anything in GLOB.dead_mob_list)
 		to_chat(recipient, "[FOLLOW_LINK(recipient, owner)] [formatted_message]")
-
-/// Simple check for seeing if we can currently talk over the network.
-/datum/action/innate/linked_speech/proc/can_we_talk()
-	if(owner.stat == DEAD)
-		return FALSE
-
-	var/datum/component/mind_linker/linker = target
-	if(!linker.linked_mobs[owner])
-		return FALSE
-
-	return TRUE
