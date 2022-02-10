@@ -754,7 +754,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
 		if(!IS_CULTIST(target) && target.blood_volume)
-			if(target.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0)
+			if(target.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 				continue
 			to_chat(target, span_cultlarge("Your blood boils in your veins!"))
 	animate(src, color = "#FCB56D", time = 4)
