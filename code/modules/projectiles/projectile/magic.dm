@@ -6,19 +6,26 @@
 	nodamage = TRUE
 	armour_penetration = 100
 	flag = NONE
+	/// determines what type of antimagic can block the spell projectile
+	var/antimagic_flags = MAGIC_RESISTANCE
 
+/obj/projectile/magic/prehit_pierce(mob/living/target)
+	. = ..()
+	if(!istype(target) & target.can_block_magic(antimagic_flags))
+		visible_message(span_warning("[src] fizzles on contact with [target]!"))
+		qdel(src)
+		return PROJECTILE_DELETE_WITHOUT_HITTING
+			
 /obj/projectile/magic/death
 	name = "bolt of death"
 	icon_state = "pulse1_bl"
 
 /obj/projectile/magic/death/on_hit(mob/living/target)
 	. = ..()
-	if(!istype(target))
-		return
-
-	if(target.can_block_magic())
-		target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-		return BULLET_ACT_BLOCK
+	if(. == BULLET_ACT_BLOCK_MAGIC)
+		return BULLET_ACT_BLOCK_MAGIC
+	if(!isliving(target))
+		return 
 
 	if(target.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
 		if(target.revive(full_heal = TRUE, admin_revive = TRUE))
@@ -37,20 +44,22 @@
 	damage_type = OXY
 	nodamage = TRUE
 
-/obj/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
+/obj/projectile/magic/resurrection/on_hit(mob/living/target)
 	. = ..()
-	if(isliving(target))
-		if(target.can_block_magic())
-			target.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-			target.death(0)
-		else
-			if(target.revive(full_heal = TRUE, admin_revive = TRUE))
-				target.grab_ghost(force = TRUE) // even suicides
-				to_chat(target, span_notice("You rise with a start, you're alive!!!"))
-			else if(target.stat != DEAD)
-				to_chat(target, span_notice("You feel great!"))
+	if(. == BULLET_ACT_BLOCK_MAGIC)
+		return BULLET_ACT_BLOCK_MAGIC
+	if(!isliving(target))
+		return 
+
+	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+		target.death(0)
+		return
+
+	if(target.revive(full_heal = TRUE, admin_revive = TRUE))
+		target.grab_ghost(force = TRUE) // even suicides
+		to_chat(target, span_notice("You rise with a start, you're alive!!!"))
+	else if(target.stat != DEAD)
+		to_chat(target, span_notice("You feel great!"))
 
 /obj/projectile/magic/teleport
 	name = "bolt of teleportation"
@@ -63,11 +72,9 @@
 
 /obj/projectile/magic/teleport/on_hit(mob/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.can_block_magic())
-			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			return BULLET_ACT_BLOCK
+	if(. == BULLET_ACT_BLOCK_MAGIC)
+		return BULLET_ACT_BLOCK_MAGIC
+
 	var/teleammount = 0
 	var/teleloc = target
 	if(!isturf(target))
@@ -89,11 +96,9 @@
 
 /obj/projectile/magic/safety/on_hit(atom/target)
 	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.can_block_magic())
-			M.visible_message(span_warning("[src] fizzles on contact with [target]!"))
-			return BULLET_ACT_BLOCK
+	if(. == BULLET_ACT_BLOCK_MAGIC)
+		return BULLET_ACT_BLOCK_MAGIC
+
 	if(isturf(target))
 		return BULLET_ACT_HIT
 
@@ -116,6 +121,9 @@
 
 /obj/projectile/magic/door/on_hit(atom/target)
 	. = ..()
+	if(. == BULLET_ACT_BLOCK_MAGIC)
+		return BULLET_ACT_BLOCK_MAGIC
+
 	if(istype(target, /obj/machinery/door))
 		OpenDoor(target)
 	else
@@ -142,16 +150,13 @@
 	damage_type = BURN
 	nodamage = TRUE
 
-/obj/projectile/magic/change/on_hit(atom/change)
+/obj/projectile/magic/change/on_hit(mob/living/target)
 	. = ..()
-	if(isliving(change))
-		var/mob/living/M = change
-		if(M.can_block_magic())
-			M.visible_message(span_warning("[src] fizzles on contact with [M]!"))
-			qdel(src)
-			return BULLET_ACT_BLOCK
-		M.wabbajack()
-	qdel(src)
+	if(. == BULLET_ACT_BLOCK_MAGIC)
+		return BULLET_ACT_BLOCK_MAGIC
+	if(!isliving(target))
+		return 
+	target.wabbajack()
 
 /obj/projectile/magic/animate
 	name = "bolt of animation"
@@ -161,8 +166,11 @@
 	nodamage = TRUE
 
 /obj/projectile/magic/animate/on_hit(atom/target, blocked = FALSE)
+	. = ..()
+	if(. == BULLET_ACT_BLOCK_MAGIC)
+		return BULLET_ACT_BLOCK_MAGIC
 	target.animate_atom_living(firer)
-	..()
+
 
 /atom/proc/animate_atom_living(mob/living/owner = null)
 	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.mimic_blacklist))
@@ -206,15 +214,6 @@
 	dismemberment = 50
 	nodamage = FALSE
 
-/obj/projectile/magic/spellblade/on_hit(target)
-	if(ismob(target))
-		var/mob/M = target
-		if(M.can_block_magic())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			qdel(src)
-			return BULLET_ACT_BLOCK
-	. = ..()
-
 /obj/projectile/magic/arcane_barrage
 	name = "arcane bolt"
 	icon_state = "arcane_barrage"
@@ -222,16 +221,6 @@
 	damage_type = BURN
 	nodamage = FALSE
 	hitsound = 'sound/weapons/barragespellhit.ogg'
-
-/obj/projectile/magic/arcane_barrage/on_hit(target)
-	if(ismob(target))
-		var/mob/M = target
-		if(M.can_block_magic())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			qdel(src)
-			return BULLET_ACT_BLOCK
-	. = ..()
-
 
 /obj/projectile/magic/locker
 	name = "locker bolt"
