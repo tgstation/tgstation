@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed several common issues with planes and layers, most noticeably potted plants and plastic flaps being displayed under mobs and not over."
