@@ -83,7 +83,7 @@
 		speech_action_background_icon_state = "bg_ecult", \
 	)
 
-	link_spell = new /obj/effect/proc_holder/spell/pointed/manse_link()
+	link_spell = new()
 	link_spell.linker = new_linker
 	AddSpell(link_spell)
 
@@ -100,6 +100,9 @@
  * Stuns people who are ejected from the network.
  */
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/proc/after_unlink(mob/living/unlinked_mob)
+	if(QDELETED(unlinked_mob) || unlinked_mob.stat == DEAD)
+		return
+
 	INVOKE_ASYNC(unlinked_mob, /mob.proc/emote, "scream")
 	unlinked_mob.AdjustParalyzed(0.5 SECONDS) //micro stun
 

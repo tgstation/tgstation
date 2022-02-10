@@ -18,9 +18,8 @@
 	var/link_message
 	/// The message sent to someone when unlinked.
 	var/unlink_message
-	/// A callback invoked before a user can message with speak_action.
-	/// Optional, return TRUE or FALSE from it to allow or stop someone from talking over the network.
-	var/datum/callback/can_message_callback
+	/// A list of all signals that will call qdel() on our component if triggered. Optional.
+	var/list/signals_which_destroy_us
 	/// A callback invoked after an unlink is done. Optional.
 	var/datum/callback/post_unlink_callback
 	/// The icon file given to the speech action handed out.
@@ -37,7 +36,7 @@
 	chat_color = "#008CA2",
 	link_message,
 	unlink_message,
-	datum/callback/can_message_callback,
+	signals_which_destroy_us,
 	datum/callback/post_unlink_callback,
 	speech_action_icon = 'icons/mob/actions/actions_slime.dmi',
 	speech_action_icon_state = "link_speech",
@@ -53,8 +52,9 @@
 	src.chat_color = chat_color
 	src.link_message = link_message || "You are now connected to [owner.real_name]'s [network_name]."
 	src.unlink_message = unlink_message || "You are no longer connected to [owner.real_name]'s [network_name]."
-	if(can_message_callback)
-		src.can_message_callback = can_message_callback
+
+	if(islist(signals_which_destroy_us))
+		src.signals_which_destroy_us = signals_which_destroy_us
 	if(post_unlink_callback)
 		src.post_unlink_callback = post_unlink_callback
 
@@ -68,9 +68,16 @@
 	for(var/remaining_mob in linked_mobs)
 		unlink_mob(remaining_mob)
 	linked_mobs.Cut()
-	QDEL_NULL(can_message_callback)
 	QDEL_NULL(post_unlink_callback)
 	return ..()
+
+/datum/component/mind_linker/RegisterWithParent()
+	if(signals_which_destroy_us)
+		RegisterSignal(parent, signals_which_destroy_us, .proc/destroy_link)
+
+/datum/component/mind_linker/UnregisterFromParent()
+	if(signals_which_destroy_us)
+		UnregisterSignal(parent, signals_which_destroy_us)
 
 /**
  * Attempts to link [to_link] to our network, giving them a speech action.
@@ -80,7 +87,7 @@
 /datum/component/mind_linker/proc/link_mob(mob/living/to_link)
 	if(QDELETED(to_link) || to_link.stat == DEAD)
 		return FALSE
-	if(HAS_TRAIT(to_link, TRAIT_MINDSHIELD)) //mindshield implant, no dice
+	if(HAS_TRAIT(to_link, TRAIT_MINDSHIELD)) // Mindshield implant - no dice
 		return FALSE
 	if(to_link.anti_magic_check(FALSE, FALSE, TRUE, 0))
 		return FALSE
@@ -88,13 +95,18 @@
 		return FALSE
 
 	var/mob/living/owner = parent
-	to_chat(to_link, span_notice(link_message))
-	to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
 
-	for(var/mob/living/other_link as anything in linked_mobs)
-		if(other_link == owner)
-			continue
-		to_chat(owner, span_notice("You feel a new pressence within [owner.real_name]'s [network_name]."))
+	if(owner == to_link)
+		to_chat(owner, span_boldnotice("You establish a [network_name], allowing you to link minds to communicate telepathically."))
+
+	else
+		to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
+		to_chat(to_link, span_notice(link_message))
+
+		for(var/mob/living/other_link as anything in linked_mobs)
+			if(other_link == owner)
+				continue
+			to_chat(other_link, span_notice("You feel a new pressence within [owner.real_name]'s [network_name]."))
 
 	var/datum/action/innate/linked_speech/new_link = new(src)
 	new_link.Grant(to_link)
@@ -127,11 +139,24 @@
 
 	var/mob/living/owner = parent
 
-	to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
-	for(var/mob/living/other_link as anything in linked_mobs)
-		if(other_link == owner)
-			continue
-		to_chat(owner, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
+	if(to_unlink == owner)
+		to_chat(owner, span_boldwarning("Your [network_name] breaks!"))
+
+	else
+		to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
+		for(var/mob/living/other_link as anything in linked_mobs)
+			if(other_link == owner)
+				continue
+			to_chat(other_link, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
+
+/**
+ *  Signal proc sent from any signals given to us initialize.
+ *  Destroys our component and unlinks everyone.
+ */
+/datum/component/mind_linker/proc/destroy_link(datum/source)
+	SIGNAL_HANDLER
+
+	qdel(src)
 
 /datum/action/innate/linked_speech
 	name = "Mind Link Speech"
@@ -169,15 +194,14 @@
 		to_chat(owner, span_warning("The link seems to have been severed."))
 		return
 
-	var/msg = "<i><font color=[linker.chat_color]>\[[linker_parent.real_name]'s [linker.network_name]\] <b>[owner]:</b> [message]</font></i>"
-	log_directed_talk(owner, linker_parent, msg, LOG_SAY, "mind link ([linker.network_name])")
+	var/formatted_message = "<i><font color=[linker.chat_color]>\[[linker_parent.real_name]'s [linker.network_name]\] <b>[owner]:</b> [message]</font></i>"
+	log_directed_talk(owner, linker_parent, message, LOG_SAY, "mind link ([linker.network_name])")
 
 	for(var/mob/living/recipient as anything in linker.linked_mobs)
-		to_chat(recipient, msg)
+		to_chat(recipient, formatted_message)
 
 	for(var/mob/recipient as anything in GLOB.dead_mob_list)
-		var/link = FOLLOW_LINK(recipient, owner)
-		to_chat(recipient, "[link] [msg]")
+		to_chat(recipient, "[FOLLOW_LINK(recipient, owner)] [formatted_message]")
 
 /// Simple check for seeing if we can currently talk over the network.
 /datum/action/innate/linked_speech/proc/can_we_talk()
@@ -187,7 +211,5 @@
 	var/datum/component/mind_linker/linker = target
 	if(!linker.linked_mobs[owner])
 		return FALSE
-	if(linker.can_message_callback)
-		return linker.can_message_callback.Invoke()
 
 	return TRUE

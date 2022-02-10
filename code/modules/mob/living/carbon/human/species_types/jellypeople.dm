@@ -590,7 +590,7 @@
 	name = "Stargazer"
 	id = SPECIES_STARGAZER
 	/// Special "project thought" telepathy action for stargazers.
-	var/datum/action/innate/project_action/project_action
+	var/datum/action/innate/project_thought/project_action
 	/// The action our stargazer uses to link people to it's mind network.
 	var/datum/action/innate/link_minds/link_action
 
@@ -601,10 +601,10 @@
 
 	var/datum/component/mind_linker/new_linker = grant_to.AddComponent(/datum/component/mind_linker, \
 		network_name = "Slime Link", \
-		chat_color = "#008CA2", \
+		signals_which_destroy_us = list(COMSIG_SPECIES_LOSS), \
 	)
 
-	link_action = new /datum/action/innate/link_minds(new_linker)
+	link_action = new(new_linker)
 	link_action.Grant(grant_to)
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
@@ -616,17 +616,16 @@
 /datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/remove_from)
 	QDEL_NULL(project_action)
 	QDEL_NULL(link_action)
-	qdel(remove_from.GetComponent(/datum/component/mind_linker))
 	return ..()
 
-/datum/action/innate/project_action
+/datum/action/innate/project_thought
 	name = "Send Thought"
 	desc = "Send a private psychic message to someone you can see."
 	button_icon_state = "send_mind"
 	icon_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 
-/datum/action/innate/project_action/Activate()
+/datum/action/innate/project_thought/Activate()
 	var/mob/living/carbon/human/telepath = owner
 	if(telepath.stat == DEAD)
 		return
@@ -677,9 +676,7 @@
 /datum/action/innate/link_minds/IsAvailable()
 	. = ..()
 	if(!.)
-		return FALSE
-	if(!isliving(owner.pulling))
-		return FALSE
+		return
 	if(!ishuman(owner) || !is_species(owner, req_species))
 		return FALSE
 	if(currently_linking)
@@ -688,7 +685,7 @@
 	return TRUE
 
 /datum/action/innate/link_minds/Activate()
-	if(owner.grab_state < GRAB_AGGRESSIVE)
+	if(!isliving(owner.pulling) || owner.grab_state < GRAB_AGGRESSIVE)
 		to_chat(owner, span_warning("You need to aggressively grab someone to link minds!"))
 		return
 
@@ -707,8 +704,8 @@
 		currently_linking = FALSE
 		return
 
+	currently_linking = FALSE
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(living_target))
-		currently_linking = FALSE
 		return
 
 	var/datum/component/mind_linker/linker = target
@@ -716,7 +713,6 @@
 		to_chat(owner, span_warning("You can't seem to link [living_target]'s mind."))
 		to_chat(living_target, span_warning("The foreign presence leaves your mind."))
 
-	currently_linking = FALSE
 
 /// Callback ran during the do_after of Activate() to see if we can keep linking with someone.
 /datum/action/innate/link_minds/proc/while_link_callback(mob/living/linkee)
@@ -724,7 +720,6 @@
 		return FALSE
 	if(!owner.pulling)
 		return FALSE
-
 	if(owner.pulling != linkee)
 		return FALSE
 	if(owner.grab_state < GRAB_AGGRESSIVE)
