@@ -20045,11 +20045,11 @@
 /turf/open/floor/catwalk_floor,
 /area/maintenance/tram/mid)
 "fEi" = (
-/obj/structure/shuttle/engine/propulsion/in_wall{
-	dir = 4
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "invisible"
+	},
+/obj/structure/shuttle/engine/propulsion/in_wall{
+	dir = 4
 	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -27024,7 +27024,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/starboard/lesser)
@@ -55079,6 +55078,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/lab)
+"sIK" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/starboard/lesser)
 "sIY" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/trimline/neutral/filled/warning,
@@ -56499,7 +56502,8 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/structure/tramwall/titanium,
+/turf/open/openspace,
 /area/hallway/primary/tram/center)
 "tiC" = (
 /obj/structure/table/reinforced,
@@ -60257,9 +60261,6 @@
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Atmospherics Maintenance";
 	req_one_access_txt = "24"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
 	},
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
@@ -68382,12 +68383,6 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron,
 /area/maintenance/tram/mid)
-"xFj" = (
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/maintenance/starboard/lesser)
 "xFk" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -69139,11 +69134,11 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
 "xQR" = (
-/obj/structure/shuttle/engine/propulsion/in_wall{
-	dir = 8
-	},
 /obj/structure/industrial_lift/tram{
 	icon_state = "invisible"
+	},
+/obj/structure/shuttle/engine/propulsion/in_wall{
+	dir = 8
 	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -115522,8 +115517,8 @@ kLe
 kLe
 mvU
 uKp
-xFj
-sKK
+sIK
+sIK
 aLN
 gvk
 fhZ
