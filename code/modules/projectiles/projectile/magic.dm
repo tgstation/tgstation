@@ -8,10 +8,12 @@
 	flag = NONE
 	/// determines what type of antimagic can block the spell projectile
 	var/antimagic_flags = MAGIC_RESISTANCE
+	/// determines the drain cost on the antimagic item
+	var/antimagic_charge_cost = 1
 
 /obj/projectile/magic/prehit_pierce(mob/living/target)
 	. = ..()
-	if(!istype(target) & target.can_block_magic(antimagic_flags))
+	if(!istype(target) & target.can_block_magic(antimagic_flags, antimagic_charge_cost))
 		visible_message(span_warning("[src] fizzles on contact with [target]!"))
 		qdel(src)
 		return PROJECTILE_DELETE_WITHOUT_HITTING
