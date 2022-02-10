@@ -43,10 +43,7 @@
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(machine_stat & NOPOWER)
-		open(TRUE)
-		return
-	if (density && hasPower())
+	if (density)
 		balloon_alert(user, "open the door first!")
 		return
 	if (!panel_open)
@@ -202,6 +199,10 @@
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
 	return
+
+/obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
+	if(machine_stat & NOPOWER)
+		open(TRUE)
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
