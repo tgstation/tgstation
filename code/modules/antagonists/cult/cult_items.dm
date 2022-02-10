@@ -758,15 +758,16 @@ Striking a noncultist, however, will tear their flesh."}
 	var/turf/T = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
-		if(IS_CULTIST(L))
+
+		if(IS_CULTIST(L) && L.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
-			if(L.put_in_active_hand(src))
-				L.visible_message(span_warning("[L] catches [src] out of the air!"))
-			else
-				L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
-		else if(!..())
-			if(!L.can_block_magic())
-				L.Paralyze(50)
+			L.visible_message(span_warning("[L] catches [src] out of the air!"))
+			return
+		if(L.can_block_magic() || IS_CULTIST(L))
+			L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
+			return
+		if(!..())
+			L.Paralyze(50)
 			break_halberd(T)
 	else
 		..()
@@ -1073,21 +1074,22 @@ Striking a noncultist, however, will tear their flesh."}
 	var/datum/thrownthing/D = throwingdatum
 	if(isliving(hit_atom))
 		var/mob/living/L = hit_atom
-		if(IS_CULTIST(L))
+
+		if(L.can_block_magic() || IS_CULTIST(L))
+			L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
+			return 
+		if(IS_CULTIST(L) && L.put_in_active_hand(src))
 			playsound(src, 'sound/weapons/throwtap.ogg', 50)
-			if(L.put_in_active_hand(src))
-				L.visible_message(span_warning("[L] catches [src] out of the air!"))
-			else
-				L.visible_message(span_warning("[src] bounces off of [L], as if repelled by an unseen force!"))
-		else if(!..())
-			if(!L.can_block_magic())
-				L.Paralyze(30)
-				if(D?.thrower)
-					for(var/mob/living/Next in orange(2, T))
-						if(!Next.density || IS_CULTIST(Next))
-							continue
-						throw_at(Next, 3, 1, D.thrower)
-						return
-					throw_at(D.thrower, 7, 1, null)
+			L.visible_message(span_warning("[L] catches [src] out of the air!"))
+			return
+		if(!..())			
+			L.Paralyze(30)
+			if(D?.thrower)
+				for(var/mob/living/Next in orange(2, T))
+					if(!Next.density || IS_CULTIST(Next))
+						continue
+					throw_at(Next, 3, 1, D.thrower)
+					return
+				throw_at(D.thrower, 7, 1, null)
 	else
 		..()
