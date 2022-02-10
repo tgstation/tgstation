@@ -32,6 +32,7 @@
 	"TOXIC", \
 	"PINEAPPLE", \
 	"BREAKFAST", \
+	"ORANGES", \
 	"CLOTH", \
 	"NUTS", \
 	"SEAFOOD", \
