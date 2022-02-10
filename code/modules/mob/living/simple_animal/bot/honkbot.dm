@@ -39,7 +39,7 @@
 /mob/living/simple_animal/bot/secbot/honkbot/on_entered(datum/source, atom/movable/AM)
 	if(prob(70)) //only a chance to slip
 		return
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/bot/secbot/honkbot/knockOver(mob/living/carbon/tripped_target)
 	. = ..()
