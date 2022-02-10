@@ -12,16 +12,16 @@
 /datum/component/mind_linker
 	/// The name of our network, displayed to all users.
 	var/network_name = "Mind Link"
-	/// The color of the network when talkingin chat
+	/// The color of the network when talking in chat
 	var/chat_color
 	/// The message sent to someone when linked up.
 	var/link_message
 	/// The message sent to someone when unlinked.
 	var/unlink_message
 	/// A callback invoked before a user can message with speak_action.
-	/// Optional, return TRUE or FALSE from it to allow to stop someone from talking.
+	/// Optional, return TRUE or FALSE from it to allow or stop someone from talking over the network.
 	var/datum/callback/can_message_callback
-	/// A callback invoked after an unlink is done.
+	/// A callback invoked after an unlink is done. Optional.
 	var/datum/callback/post_unlink_callback
 	/// The icon file given to the speech action handed out.
 	var/speech_action_icon = 'icons/mob/actions/actions_slime.dmi'
@@ -87,7 +87,14 @@
 	if(linked_mobs[to_link])
 		return FALSE
 
+	var/mob/living/owner = parent
 	to_chat(to_link, span_notice(link_message))
+	to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
+
+	for(var/mob/living/other_link as anything in linked_mobs)
+		if(other_link == owner)
+			continue
+		to_chat(owner, span_notice("You feel a new pressence within [owner.real_name]'s [network_name]."))
 
 	var/datum/action/innate/linked_speech/new_link = new(src)
 	new_link.Grant(to_link)
@@ -109,7 +116,7 @@
 	if(!linked_mobs[to_unlink])
 		return
 
-	to_chat(to_unlink, span_notice(unlink_message))
+	to_chat(to_unlink, span_warning(unlink_message))
 	post_unlink_callback?.Invoke(to_unlink)
 
 	UnregisterSignal(to_unlink, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED))
@@ -117,6 +124,14 @@
 	var/datum/action/innate/linked_speech/old_link = linked_mobs[to_unlink]
 	linked_mobs -= to_unlink
 	qdel(old_link)
+
+	var/mob/living/owner = parent
+
+	to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
+	for(var/mob/living/other_link as anything in linked_mobs)
+		if(other_link == owner)
+			continue
+		to_chat(owner, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
 
 /datum/action/innate/linked_speech
 	name = "Mind Link Speech"
@@ -151,7 +166,7 @@
 		return
 
 	if(QDELETED(linker) || QDELETED(owner) || !can_we_talk())
-		to_chat(owner, span_warning("The link seems to have been severed..."))
+		to_chat(owner, span_warning("The link seems to have been severed."))
 		return
 
 	var/msg = "<i><font color=[linker.chat_color]>\[[linker_parent.real_name]'s [linker.network_name]\] <b>[owner]:</b> [message]</font></i>"
@@ -164,6 +179,7 @@
 		var/link = FOLLOW_LINK(recipient, owner)
 		to_chat(recipient, "[link] [msg]")
 
+/// Simple check for seeing if we can currently talk over the network.
 /datum/action/innate/linked_speech/proc/can_we_talk()
 	if(owner.stat == DEAD)
 		return FALSE

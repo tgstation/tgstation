@@ -26,6 +26,9 @@
 		return
 
 	var/mob/living/target = targets[1]
+	if(target.stat == DEAD)
+		to_chat(user, span_warning("They're dead!"))
+		return
 
 	to_chat(user, span_notice("You begin linking [target]'s mind to yours..."))
 	to_chat(target, span_warning("You feel your mind being pulled somewhere... connected... intertwined with the very fabric of reality..."))
@@ -35,8 +38,9 @@
 		to_chat(target, span_warning("The foreign presence leaves your mind."))
 		return
 
-	if(linker.link_mob(target))
-		to_chat(user, span_notice("You connect [target]'s mind to your [linker.network_name]!"))
-	else
+	if(QDELETED(src) || QDELETED(user) || QDELETED(target))
+		return
+
+	if(!linker.link_mob(target))
 		to_chat(user, span_warning("You can't seem to link to [target]'s mind."))
 		to_chat(target, span_warning("The foreign presence leaves your mind."))

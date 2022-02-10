@@ -707,14 +707,18 @@
 		currently_linking = FALSE
 		return
 
+	if(QDELETED(src) || QDELETED(owner) || QDELETED(living_target))
+		currently_linking = FALSE
+		return
+
 	var/datum/component/mind_linker/linker = target
-	if(linker.link_mob(living_target))
-		to_chat(owner, span_notice("You connect [living_target]'s mind to your [linker.network_name]!"))
-	else
+	if(!linker.link_mob(living_target))
 		to_chat(owner, span_warning("You can't seem to link [living_target]'s mind."))
 		to_chat(living_target, span_warning("The foreign presence leaves your mind."))
+
 	currently_linking = FALSE
 
+/// Callback ran during the do_after of Activate() to see if we can keep linking with someone.
 /datum/action/innate/link_minds/proc/while_link_callback(mob/living/linkee)
 	if(!is_species(owner, req_species))
 		return FALSE
