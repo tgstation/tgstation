@@ -976,6 +976,7 @@
 	description = "Made with love! You can just imagine a happy Nonna from the smell."
 	nutriment_factor = 8 * REAGENTS_METABOLISM
 	color = "#57372A"
+	quality = DRINK_VERYGOOD
 	taste_description = "thick creamy chocolate"
 	glass_icon_state = "italiancoco"
 	glass_name = "glass of italian coco"
@@ -984,11 +985,6 @@
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
-	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1, 0, 0)
-		. = TRUE
-	if(holder.has_reagent(/datum/reagent/consumable/capsaicin))
-		holder.remove_reagent(/datum/reagent/consumable/capsaicin, 2 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/menthol
