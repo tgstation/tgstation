@@ -144,7 +144,7 @@
 		var/obj/structure/window/rotated_window = rotated_obj
 		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
 		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
-			rotated_obj.balloon_alert(user, "cannot rotate in that direction!")
+			rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE
 	return TRUE
 
