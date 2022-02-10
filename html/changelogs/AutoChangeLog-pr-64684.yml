@@ -1,0 +1,5 @@
+author: "OneAsianTortoise"
+delete-after: True
+changes: 
+  - bugfix: "fixes not being able to use tools on account registration device and it functioning without power"
+  - imageadd: "gives account registration device a unique sprite instead of weapon recharger sprite"
