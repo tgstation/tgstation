@@ -126,11 +126,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 		return
 	var/mob/living/carbon/human/human_override = mob_override
 	if(removing) // They're a clown becoming an antag, remove clumsy
-		human_override.dna.remove_mutation(CLOWNMUT)
+		human_override.dna.remove_mutation(/datum/mutation/human/clumsy)
 		if(!silent && message)
 			to_chat(human_override, span_boldnotice("[message]"))
 	else
-		human_override.dna.add_mutation(CLOWNMUT) // We're removing their antag status, add back clumsy
+		human_override.dna.add_mutation(/datum/mutation/human/clumsy) // We're removing their antag status, add back clumsy
 
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -309,13 +309,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 //ADMIN TOOLS
 
-//Called when using admin tools to give antag status
+///Called when using admin tools to give antag status
 /datum/antagonist/proc/admin_add(datum/mind/new_owner,mob/admin)
 	message_admins("[key_name_admin(admin)] made [key_name_admin(new_owner)] into [name].")
 	log_admin("[key_name(admin)] made [key_name(new_owner)] into [name].")
 	new_owner.add_antag_datum(src)
 
-//Called when removing antagonist using admin tools
+///Called when removing antagonist using admin tools
 /datum/antagonist/proc/admin_remove(mob/user)
 	if(!user)
 		return

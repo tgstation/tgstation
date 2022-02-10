@@ -316,7 +316,7 @@
 	else if(isatom(holder))
 		location = holder
 
-	if(location && burned_fuel > TRITIUM_RADIATION_MINIMUM_MOLES && prob(10))
+	if(location && burned_fuel > TRITIUM_RADIATION_MINIMUM_MOLES && energy_released > FIRE_HYDROGEN_ENERGY_RELEASED * air.volume / 2500 && prob(10))
 		radiation_pulse(location, max_range = min(sqrt(burned_fuel * effect_scale) / TRITIUM_RADIATION_RANGE_DIVISOR, 20), threshold = TRITIUM_RADIATION_THRESHOLD_BASE * INVERSE(TRITIUM_RADIATION_THRESHOLD_BASE + (burned_fuel * effect_scale)), chance = 50)
 
 	var/energy_released = FIRE_TRITIUM_ENERGY_RELEASED * burned_fuel * effect_scale
@@ -496,11 +496,13 @@
 	requirements = list(
 		/datum/gas/nitrous_oxide = 10,
 		/datum/gas/plasma = 10,
+		"MAX_TEMP" = T20C + 20 // Yes, someone used this as a bomb timer. I hate players
 	)
 
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
 	var/list/cached_gases = air.gases
 	var/pressure = air.return_pressure()
+	// This slows down in relation to pressure, very quickly. Please don't expect it to be anything more then a snail
 	var/reaction_efficency = min(1 / ((pressure / (0.1 * ONE_ATMOSPHERE)) * (max(cached_gases[/datum/gas/plasma][MOLES] / cached_gases[/datum/gas/nitrous_oxide][MOLES], 1))), cached_gases[/datum/gas/nitrous_oxide][MOLES], cached_gases[/datum/gas/plasma][MOLES] * INVERSE(2))
 
 	if ((cached_gases[/datum/gas/nitrous_oxide][MOLES] - reaction_efficency < 0 )|| (cached_gases[/datum/gas/plasma][MOLES] - (2 * reaction_efficency) < 0) || reaction_efficency <= 0) //Shouldn't produce gas from nothing.

@@ -20,7 +20,11 @@
 	///Delay between each move in deci-seconds
 	var/delay = 1
 	///The next time we should process
+	///Used primarially as a hint to be reasoned about by our [controller], and as the id of our bucket
+	///Should not be modified directly outside of [start_loop]
 	var/timer = 0
+	///Is this loop running or not
+	var/running = FALSE
 
 /datum/move_loop/New(datum/movement_packet/owner, datum/controller/subsystem/movement/controller, atom/moving, priority, flags, datum/extra_info)
 	src.owner = owner
@@ -43,6 +47,7 @@
 /datum/move_loop/proc/start_loop()
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_START)
+	running = TRUE
 	//If this is our first time starting to move with this loop
 	//And we're meant to start instantly
 	if(!timer && flags & MOVEMENT_LOOP_START_FAST)
@@ -52,6 +57,7 @@
 
 /datum/move_loop/proc/stop_loop()
 	SHOULD_CALL_PARENT(TRUE)
+	running = FALSE
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_STOP)
 
 /datum/move_loop/proc/info_deleted(datum/source)
@@ -67,10 +73,9 @@
 	extra_info = null
 	return ..()
 
-///Exists as a helper so outside code can modify delay while also modifying timer
+///Exists as a helper so outside code can modify delay in a sane way
 /datum/move_loop/proc/set_delay(new_delay)
 	delay =  max(new_delay, world.tick_lag)
-	timer = world.time + delay
 
 /datum/move_loop/process()
 	var/old_delay = delay //The signal can sometimes change delay
@@ -89,8 +94,10 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_POSTPROCESS, success, delay * visual_delay)
 
-	timer = world.time + delay
 	if(QDELETED(src) || !success) //Can happen
+		return
+
+	if(flags & MOVEMENT_LOOP_IGNORE_GLIDE)
 		return
 
 	moving.set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, visual_delay))
@@ -139,7 +146,8 @@
 	var/atom/old_loc = moving.loc
 	moving.Move(get_step(moving, direction), direction)
 	// We cannot rely on the return value of Move(), we care about teleports and it doesn't
-	return old_loc != moving.loc
+	// Moving also can be null on occasion, if the move deleted it and therefor us
+	return old_loc != moving?.loc
 
 /**
  * Like move(), but it uses byond's pathfinding on a step by step basis
@@ -164,7 +172,7 @@
 /datum/move_loop/move/move_to/move()
 	var/atom/old_loc = moving.loc
 	step_to(moving, get_step(moving, direction))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -190,7 +198,7 @@
 /datum/move_loop/move/force/move()
 	var/atom/old_loc = moving.loc
 	moving.forceMove(get_step(moving, direction))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /datum/move_loop/has_target
@@ -243,7 +251,7 @@
 /datum/move_loop/has_target/force_move/move()
 	var/atom/old_loc = moving.loc
 	moving.forceMove(get_step(moving, get_dir(moving, target)))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -364,7 +372,7 @@
 	var/turf/next_step = movement_path[1]
 	var/atom/old_loc = moving.loc
 	moving.Move(next_step, get_dir(moving, next_step))
-	. = (old_loc != moving.loc)
+	. = (old_loc != moving?.loc)
 
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
 	// to the side while moving but could maybe still follow their path without needing a whole new path
@@ -391,7 +399,6 @@
 
 /datum/move_loop/has_target/dist_bound/move()
 	if(!check_dist()) //If we're too close don't do the move
-		timer = world.time //Make sure to move as soon as possible
 		return FALSE
 	return TRUE
 
@@ -419,7 +426,7 @@
 /datum/move_loop/has_target/dist_bound/move_to
 
 /datum/move_loop/has_target/dist_bound/move_to/check_dist()
-	return (get_dist(moving, target) >= distance) //If you get too close, stop moving closer
+	return (get_dist(moving, target) > distance) //If you get too close, stop moving closer
 
 /datum/move_loop/has_target/dist_bound/move_to/move()
 	. = ..()
@@ -427,7 +434,7 @@
 		return
 	var/atom/old_loc = moving.loc
 	step_to(moving, target)
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 /**
  * Wrapper around walk_away()
@@ -452,7 +459,7 @@
 /datum/move_loop/has_target/dist_bound/move_away
 
 /datum/move_loop/has_target/dist_bound/move_away/check_dist()
-	return (get_dist(moving, target) <= distance) //If you get too far out, stop moving away
+	return (get_dist(moving, target) < distance) //If you get too far out, stop moving away
 
 /datum/move_loop/has_target/dist_bound/move_away/move()
 	. = ..()
@@ -460,7 +467,7 @@
 		return
 	var/atom/old_loc = moving.loc
 	step_away(moving, target)
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -563,7 +570,7 @@
 		x_rate = 0
 		y_rate = 0
 		return
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
@@ -639,7 +646,7 @@
 	var/turf/target_turf = get_step_towards(moving, target)
 	var/atom/old_loc = moving.loc
 	moving.Move(target_turf, get_dir(moving, target_turf))
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 
 /**
@@ -685,7 +692,7 @@
 		var/turf/moving_towards = get_step(moving, testdir)
 		var/atom/old_loc = moving.loc
 		moving.Move(moving_towards, testdir)
-		if(old_loc != moving.loc)  //If it worked, we're done
+		if(old_loc != moving?.loc)  //If it worked, we're done
 			return TRUE
 		potential_dirs -= testdir
 	return FALSE
@@ -713,7 +720,7 @@
 /datum/move_loop/move_to_rand/move()
 	var/atom/old_loc = moving.loc
 	step_rand(moving)
-	return old_loc != moving.loc
+	return old_loc != moving?.loc
 
 /**
  * Snowflake disposal movement. Moves a disposal holder along a chain of disposal pipes
@@ -748,6 +755,8 @@
 
 /datum/move_loop/disposal_holder/move()
 	var/obj/structure/disposalholder/holder = moving
+	if(!holder.current_pipe)
+		return FALSE
 	var/atom/old_loc = moving.loc
-	holder.current_pipe.transfer(holder)
-	return old_loc != moving.loc
+	holder.current_pipe = holder.current_pipe.transfer(holder)
+	return old_loc != moving?.loc

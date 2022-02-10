@@ -81,7 +81,6 @@
 
 /obj/structure/disposalholder/proc/try_expel(datum/move_loop/source, succeed, visual_delay)
 	SIGNAL_HANDLER
-	current_pipe = loc
 	if(current_pipe || !active)
 		return
 	last_pipe.expel(src, get_turf(src), dir)
@@ -90,6 +89,7 @@
 	SIGNAL_HANDLER
 	current_pipe = null
 	last_pipe = null
+	active = FALSE
 
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)
@@ -131,6 +131,9 @@
 		if(ismob(AM))
 			var/mob/M = AM
 			M.reset_perspective(src) // if a client mob, update eye to follow this holder
+			hasmob = TRUE
+	if(destinationTag == 0 && other.destinationTag != 0)
+		destinationTag = other.destinationTag
 	qdel(other)
 
 
