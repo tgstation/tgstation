@@ -69,7 +69,7 @@
 	to_chat(owner, span_boldnotice("You establish a [network_name], allowing you to link minds to communicate telepathically."))
 
 /datum/component/mind_linker/Destroy(force, silent)
-	for(var/remaining_mob in linked_mobs)
+	for(var/mob/living/remaining_mob as anything in linked_mobs)
 		unlink_mob(remaining_mob)
 	linked_mobs.Cut()
 	QDEL_NULL(master_speech)
@@ -100,13 +100,13 @@
 		return FALSE
 
 	var/mob/living/owner = parent
+	if(to_link == owner)
+		return FALSE
 
 	to_chat(to_link, span_notice(link_message))
 	to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
 
 	for(var/mob/living/other_link as anything in linked_mobs)
-		if(other_link == owner)
-			continue
 		to_chat(other_link, span_notice("You feel a new pressence within [owner.real_name]'s [network_name]."))
 
 	var/datum/action/innate/linked_speech/new_link = new(src)
@@ -142,8 +142,6 @@
 
 	to_chat(owner, span_warning("You feel someone disconnect from your [network_name]."))
 	for(var/mob/living/other_link as anything in linked_mobs)
-		if(other_link == owner)
-			continue
 		to_chat(other_link, span_warning("You feel a pressence disappear from [owner.real_name]'s [network_name]."))
 
 /**
@@ -199,7 +197,9 @@
 	var/formatted_message = "<i><font color=[linker.chat_color]>\[[linker_parent.real_name]'s [linker.network_name]\] <b>[owner]:</b> [message]</font></i>"
 	log_directed_talk(owner, linker_parent, message, LOG_SAY, "mind link ([linker.network_name])")
 
-	for(var/mob/living/recipient as anything in linker.linked_mobs)
+	var/list/all_who_can_hear = assoc_to_keys(linker.linked_mobs) + linker_parent
+
+	for(var/mob/living/recipient as anything in all_who_can_hear)
 		to_chat(recipient, formatted_message)
 
 	for(var/mob/recipient as anything in GLOB.dead_mob_list)
