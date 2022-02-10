@@ -59,7 +59,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.can_block_magic())
-			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
+			tar.visible_message(span_danger("The spell bounces off of [target]!"), span_danger("The spell bounces off of you!"))
 			return ..()
 	var/datum/mind/M = user.mind
 	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
@@ -157,7 +157,7 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.can_block_magic())
-			tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
+			tar.visible_message(span_danger("The spell bounces off of [target]!"), span_danger("The spell bounces off of you!"))
 			return ..()
 	var/mob/living/carbon/carbon_user = user
 	if(isliving(target))
@@ -326,8 +326,8 @@
 	for(var/mob/living/carbon/target in targets)
 		if(ishuman(targets))
 			var/mob/living/carbon/human/tar = target
-			if(tar.can_block_magic())
-				tar.visible_message(span_danger("The spell bounces off of [target]!"),span_danger("The spell bounces off of you!"))
+			if(tar.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+				tar.visible_message(span_danger("The spell bounces off of [target]!"), span_danger("The spell bounces off of you!"))
 				return
 		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/heretic))
 			to_chat(user,span_warning("[target.name] has been cursed!"))
@@ -381,7 +381,7 @@
 
 		for(var/mob/living/L in T.contents)
 			if(L.can_block_magic())
-				L.visible_message(span_danger("The spell bounces off of [L]!"),span_danger("The spell bounces off of you!"))
+				L.visible_message(span_danger("The spell bounces off of [L]!"), span_danger("The spell bounces off of you!"))
 				continue
 			if(L in hit_list || L == source)
 				continue
