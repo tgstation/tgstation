@@ -344,7 +344,7 @@
 
 	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
 	if(!mover.generic_canpass)
-		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)//this can be changed with registering to a signal sent in turf/Enter
+		return mover.CanPassThrough(src, REVERSE_DIR(border_dir), .)
 
 /// Returns true or false to allow the mover to move through src
 /atom/proc/CanAllowThrough(atom/movable/mover, border_dir)
