@@ -105,6 +105,11 @@
 	desc = "A standard reliable bluespace engine used by many forms of shuttles."
 	opacity = TRUE
 
+/obj/structure/shuttle/engine/propulsion/in_wall
+	name = "in-wall propulsion engine"
+	icon_state = "propulsion_w"
+	density = FALSE
+
 /obj/structure/shuttle/engine/propulsion/left
 	name = "left propulsion engine"
 	icon_state = "propulsion_l"
@@ -144,6 +149,11 @@
 	bound_height = 64
 	appearance_flags = 0
 
+/obj/structure/shuttle/engine/large/in_wall
+	name = "in-wall engine"
+	icon_state = "large_engine_w"
+	density = FALSE
+
 /obj/structure/shuttle/engine/huge
 	name = "engine"
 	opacity = TRUE
@@ -153,6 +163,11 @@
 	bound_width = 96
 	bound_height = 96
 	appearance_flags = 0
+
+/obj/structure/shuttle/engine/huge/in_wall
+	name = "in-wall engine"
+	icon_state = "huge_engine_w"
+	density = FALSE
 
 #undef ENGINE_UNWRENCHED
 #undef ENGINE_WRENCHED

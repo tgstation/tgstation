@@ -20044,6 +20044,15 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/tram/mid)
+"fEi" = (
+/obj/structure/shuttle/engine/propulsion/in_wall{
+	dir = 4
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "invisible"
+	},
+/turf/open/openspace,
+/area/hallway/primary/tram/center)
 "fEu" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -36403,15 +36412,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
-"lIu" = (
-/obj/structure/industrial_lift/tram{
-	icon_state = "plating"
-	},
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/hallway/primary/tram/center)
 "lIz" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -38061,9 +38061,8 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8
-	},
+/obj/structure/grille,
+/obj/structure/window/reinforced/shuttle,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "mpr" = (
@@ -56496,6 +56495,12 @@
 "tiq" = (
 /turf/open/floor/iron,
 /area/cargo/storage)
+"tiu" = (
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
+	},
+/turf/closed/wall/mineral/titanium,
+/area/hallway/primary/tram/center)
 "tiC" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -69133,6 +69138,15 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
+"xQR" = (
+/obj/structure/shuttle/engine/propulsion/in_wall{
+	dir = 8
+	},
+/obj/structure/industrial_lift/tram{
+	icon_state = "invisible"
+	},
+/turf/open/openspace,
+/area/hallway/primary/tram/center)
 "xQT" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
@@ -166368,11 +166382,11 @@ ebi
 dEF
 avR
 axj
-ayd
+xQR
 xds
 azT
 bgI
-ayd
+xQR
 aBR
 xQk
 rlg
@@ -166625,11 +166639,11 @@ wJP
 dcq
 avK
 axj
-ayd
+tiu
 bWo
 hdO
 cdx
-ayd
+tiu
 aBR
 mgZ
 aFe
@@ -168685,7 +168699,7 @@ tlq
 qCn
 knD
 utC
-tlq
+mph
 avn
 tii
 aFf
@@ -168938,11 +168952,11 @@ xwL
 wgv
 sLw
 rUv
-lIu
+mph
 eGp
 knD
 qkT
-lIu
+mph
 aCl
 ooD
 aFf
@@ -169195,11 +169209,11 @@ wJP
 vLd
 avK
 axr
-ayd
+tiu
 bWo
 qLb
 cdx
-ayd
+tiu
 aCl
 yhy
 aFm
@@ -169452,11 +169466,11 @@ nhO
 aHz
 wrK
 axr
-ayd
+fEi
 xds
 azT
 bgI
-ayd
+fEi
 aCl
 vqB
 aFn
