@@ -1,5 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "Icebox medbay has had a slight change in the lobby and pharmacy to fix some ugly spots"
-  - bugfix: "Icebox dept order consoles now work, both the computer and the wallmounted ones"

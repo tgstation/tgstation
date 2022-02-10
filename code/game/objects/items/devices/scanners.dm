@@ -181,12 +181,17 @@ GENE SCANNER
 			advanced = TRUE
 
 	// Husk detection
-	if(advanced && HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
-		render_list += "<span class='alert ml-1'>Subject has been husked by severe burns.</span>\n"
-	else if (advanced && HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
-		render_list += "<span class='alert ml-1'>Subject has been husked by dessication.</span>\n"
-	else if(HAS_TRAIT(target, TRAIT_HUSK))
-		render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
+	if(HAS_TRAIT(target, TRAIT_HUSK))
+		if(advanced)
+			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
+				render_list += "<span class='alert ml-1'>Subject has been husked by severe burns.</span>\n"
+			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+				render_list += "<span class='alert ml-1'>Subject has been husked by dessication.</span>\n"
+			else
+				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span>\n"
+
+		else
+			render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
 
 	if(target.getStaminaLoss())
 		if(advanced)
@@ -862,7 +867,7 @@ GENE SCANNER
 	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "A wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
+	desc = "A wand that medically scans people. Inserting it into a medical kiosk makes it able to perform a health scan on the patient."
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY

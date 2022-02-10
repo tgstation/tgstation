@@ -383,6 +383,7 @@
 	..()
 
 /datum/status_effect/eldritch
+	id = "heretic_mark"
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
@@ -396,94 +397,116 @@
 	marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_MOB_LAYER)
 	return ..()
 
+/datum/status_effect/eldritch/Destroy()
+	QDEL_NULL(marked_underlay)
+	return ..()
+
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
-		owner.update_appearance()
+		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/update_owner_underlay)
+		owner.update_icon(UPDATE_OVERLAYS)
 		return TRUE
 	return FALSE
 
 /datum/status_effect/eldritch/on_remove()
-	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
-	owner.update_appearance()
+	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
+/**
+ * Signal proc for [COMSIG_ATOM_UPDATE_OVERLAYS].
+ *
+ * Adds the generated mark overlay to the afflicted.
+ */
 /datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
 	SIGNAL_HANDLER
 
 	overlays += marked_underlay
 
-/datum/status_effect/eldritch/Destroy()
-	QDEL_NULL(marked_underlay)
-	return ..()
-
 /**
- * What happens when this mark gets poppedd
- *
- * Adds actual functionality to each mark
+ * Called when the mark is activated by the heretic.
  */
 /datum/status_effect/eldritch/proc/on_effect()
+	SHOULD_CALL_PARENT(TRUE)
+
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
 //Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
 /datum/status_effect/eldritch/flesh
-	id = "flesh_mark"
 	effect_sprite = "emark1"
 
 /datum/status_effect/eldritch/flesh/on_effect()
-
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		var/obj/item/bodypart/bodypart = pick(H.bodyparts)
-		var/datum/wound/slash/severe/crit_wound = new
+		var/mob/living/carbon/human/human_owner = owner
+		var/obj/item/bodypart/bodypart = pick(human_owner.bodyparts)
+		var/datum/wound/slash/severe/crit_wound = new()
 		crit_wound.apply_wound(bodypart)
+
 	return ..()
 
 /datum/status_effect/eldritch/ash
-	id = "ash_mark"
 	effect_sprite = "emark2"
-	///Dictates how much damage and stamina loss this mark will cause.
+	/// Dictates how much stamina and burn damage the mark will cause on trigger.
 	var/repetitions = 1
 
-/datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 5)
+/datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, repetition = 5)
 	. = ..()
-	repetitions = min(1,_repetition)
+	src.repetitions = max(1, repetition)
 
 /datum/status_effect/eldritch/ash/on_effect()
 	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.adjustStaminaLoss(10 * repetitions)
-		carbon_owner.adjustFireLoss(5 * repetitions)
-		for(var/mob/living/carbon/victim in range(1,carbon_owner))
+		carbon_owner.adjustStaminaLoss(6 * repetitions) // first one = 30 stam
+		carbon_owner.adjustFireLoss(3 * repetitions) // first one = 15 burn
+		for(var/mob/living/carbon/victim in shuffle(range(1, carbon_owner)))
 			if(IS_HERETIC(victim) || victim == carbon_owner)
 				continue
-			victim.apply_status_effect(type,repetitions-1)
+			victim.apply_status_effect(type, repetitions - 1)
 			break
+
 	return ..()
 
 /datum/status_effect/eldritch/rust
-	id = "rust_mark"
 	effect_sprite = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
-	if(!iscarbon(owner))
-		return
-	var/mob/living/carbon/carbon_owner = owner
-	for(var/obj/item/I in carbon_owner.get_all_gear())
-		//Affects roughly 75% of items
-		if(!QDELETED(I) && prob(75)) //Just in case
-			I.take_damage(100)
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		var/static/list/organs_to_damage = list(
+			ORGAN_SLOT_BRAIN,
+			ORGAN_SLOT_EARS,
+			ORGAN_SLOT_EYES,
+			ORGAN_SLOT_LIVER,
+			ORGAN_SLOT_LUNGS,
+			ORGAN_SLOT_STOMACH,
+			ORGAN_SLOT_HEART,
+		)
+
+		// Roughly 75% of their organs will take a bit of damage
+		for(var/organ_slot in organs_to_damage)
+			if(prob(75))
+				carbon_owner.adjustOrganLoss(organ_slot, 20)
+
+		// And roughly 75% of their items will take a smack, too
+		for(var/obj/item/thing in carbon_owner.get_all_gear())
+			if(!QDELETED(thing) && prob(75))
+				thing.take_damage(100)
+
 	return ..()
 
 /datum/status_effect/eldritch/void
-	id = "void_mark"
 	effect_sprite = "emark4"
 
 /datum/status_effect/eldritch/void/on_effect()
-	var/turf/open/turfie = get_turf(owner)
-	turfie.TakeTemperature(-40)
+	var/turf/open/our_turf = get_turf(owner)
+	our_turf.TakeTemperature(-40)
 	owner.adjust_bodytemperature(-20)
+
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		carbon_owner.silent += 4
+
 	return ..()
 
 /// A status effect used for specifying confusion on a living mob.
@@ -902,35 +925,36 @@
 
 /datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
 	. = ..()
-	to_chat(owner, span_danger("Your feel your body starting to break apart..."))
+	to_chat(owner, span_userdanger("Your body starts to break apart!"))
 
 /datum/status_effect/corrosion_curse/tick()
 	. = ..()
 	if(!ishuman(owner))
 		return
-	var/mob/living/carbon/human/H = owner
-	var/chance = rand(0,100)
+	var/mob/living/carbon/human/human_owner = owner
+	var/chance = rand(0, 100)
 	switch(chance)
-		if(0 to 19)
-			H.vomit()
-		if(20 to 29)
-			H.Dizzy(10)
-		if(30 to 39)
-			H.adjustOrganLoss(ORGAN_SLOT_LIVER,5)
-		if(40 to 49)
-			H.adjustOrganLoss(ORGAN_SLOT_HEART,5)
-		if(50 to 59)
-			H.adjustOrganLoss(ORGAN_SLOT_STOMACH,5)
-		if(60 to 69)
-			H.adjustOrganLoss(ORGAN_SLOT_EYES,10)
-		if(70 to 79)
-			H.adjustOrganLoss(ORGAN_SLOT_EARS,10)
-		if(80 to 89)
-			H.adjustOrganLoss(ORGAN_SLOT_LUNGS,10)
-		if(90 to 99)
-			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,10)
-		if(100)
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)
+		if(0 to 10)
+			human_owner.vomit()
+		if(20 to 30)
+			human_owner.Dizzy(50)
+			human_owner.Jitter(50)
+		if(30 to 40)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_LIVER, 5)
+		if(40 to 50)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_HEART, 5, 90)
+		if(50 to 60)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_STOMACH, 5)
+		if(60 to 70)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_EYES, 10)
+		if(70 to 80)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_EARS, 10)
+		if(80 to 90)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_LUNGS, 10)
+		if(90 to 95)
+			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
+		if(95 to 100)
+			human_owner.add_confusion(12)
 
 /datum/status_effect/amok
 	id = "amok"
@@ -950,7 +974,7 @@
 
 	var/list/mob/living/targets = list()
 	for(var/mob/living/potential_target in oview(owner, 1))
-		if(IS_HERETIC(potential_target) || IS_HERETIC_MONSTER(potential_target))
+		if(IS_HERETIC_OR_MONSTER(potential_target))
 			continue
 		targets += potential_target
 	if(LAZYLEN(targets))

@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - config: "Added ALLOW_ADMIN_PROFILING entry to the config, controlling whether admins are given access to the server profiler"

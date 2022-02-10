@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes being able to vote for maps which are outside their configured population range (Such as Kilostation)."

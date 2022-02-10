@@ -20,6 +20,9 @@
 
 /obj/item/grenade/clusterbuster/detonate(mob/living/lanced_by)
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	var/numspawned = rand(min_spawned, max_spawned)
 	var/again = 0
@@ -48,6 +51,9 @@
 
 /obj/item/grenade/clusterbuster/segment/Initialize(mapload, obj/item/grenade/clusterbuster/base)
 	. = ..()
+	if(!.)
+		return
+
 	if(base)
 		name = "[base.name] segment"
 		base_state = "[base.base_state]_segment"
