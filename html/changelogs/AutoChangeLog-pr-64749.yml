@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Hiding inside a container no longer allows you to bypass the tramstation perma gate."
