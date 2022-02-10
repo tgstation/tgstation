@@ -175,7 +175,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("Not when you're incapacitated!"))
 		return FALSE
 
-	if(!user.can_cast_magic(antimagic_flags)
+	if(!user.can_cast_magic(antimagic_flags))
 		return FALSE
 
 	if(!phase_allowed && istype(user.loc, /obj/effect/dummy))

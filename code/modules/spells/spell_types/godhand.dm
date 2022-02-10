@@ -63,7 +63,7 @@
 	for(var/mob/living/L in view(src, 7))
 		if(L != user)
 			L.flash_act(affect_silicon = FALSE)
-	if(target.can_block_magic()
+	if(target.can_block_magic())
 		user.visible_message(span_warning("The feedback blows [user]'s arm off!"), \
 		span_userdanger("The spell bounces from [target]'s skin back into your arm!"))
 		user.flash_act()
