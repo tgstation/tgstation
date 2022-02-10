@@ -29,11 +29,7 @@
 	//Body temperature stability and damage
 	dna.species.handle_body_temperature(src, delta_time, times_fired)
 
-	if(IS_IN_STASIS(src))
-		for(var/datum/wound/iter_wound as anything in all_wounds)
-			iter_wound.on_stasis(delta_time, times_fired)
-
-	else
+	if(!IS_IN_STASIS(src))
 		if(.) //not dead
 
 			for(var/datum/mutation/human/HM in dna.mutations) // Handle active genes
@@ -45,12 +41,17 @@
 			handle_liver(delta_time, times_fired)
 
 		dna.species.spec_life(src, delta_time, times_fired) // for mutantraces
+	else
+		for(var/i in all_wounds)
+			var/datum/wound/iter_wound = i
+			iter_wound.on_stasis(delta_time, times_fired)
 
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
 	if(stat != DEAD)
 		return TRUE
+
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
 	var/chest_covered = FALSE

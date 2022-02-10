@@ -8,11 +8,7 @@
 
 	hud_type = /datum/hud/living
 
-	///whether this mob is added to SSmobs processing list to call Life() on it
-	var/uses_life = TRUE
-
-	///Badminnery resize
-	var/resize = 1
+	var/resize = 1 ///Badminnery resize
 	var/lastattacker = null
 	var/lastattackerckey = null
 
@@ -23,27 +19,20 @@
 	var/health = MAX_LIVING_HEALTH
 
 	//Damage related vars, NOTE: THESE SHOULD ONLY BE MODIFIED BY PROCS
-	///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
-	var/bruteloss = 0
-	///Oxygen depravation damage (no air in lungs)
-	var/oxyloss = 0
-	///Toxic damage caused by being poisoned or radiated
-	var/toxloss = 0
-	///Burn damage caused by being way too hot, too cold or burnt.
-	var/fireloss = 0
-	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/cloneloss = 0
-	///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
-	var/staminaloss = 0
-	/// when the mob goes from "normal" to crit
-	var/crit_threshold = HEALTH_THRESHOLD_CRIT
+	var/bruteloss = 0 ///Brutal damage caused by brute force (punching, being clubbed by a toolbox ect... this also accounts for pressure damage)
+	var/oxyloss = 0 ///Oxygen depravation damage (no air in lungs)
+	var/toxloss = 0 ///Toxic damage caused by being poisoned or radiated
+	var/fireloss = 0 ///Burn damage caused by being way too hot, too cold or burnt.
+	var/cloneloss = 0 ///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
+	var/staminaloss = 0 ///Stamina damage, or exhaustion. You recover it slowly naturally, and are knocked down if it gets too high. Holodeck and hallucinations deal this.
+	var/crit_threshold = HEALTH_THRESHOLD_CRIT /// when the mob goes from "normal" to crit
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
 
 	//Damage dealing vars! These are meaningless outside of specific instances where it's checked and defined.
-	/// Lower bound of damage done by unarmed melee attacks. Mob code is a mess, only works where this is checked for.
+	// Lower bound of damage done by unarmed melee attacks. Mob code is a mess, only works where this is checked for.
 	var/melee_damage_lower = 0
-	/// Upper bound of damage done by unarmed melee attacks. Please ensure you check the xyz_defenses.dm for the mobs in question to see if it uses this or hardcoded values.
+	// Upper bound of damage done by unarmed melee attacks. Please ensure you check the xyz_defenses.dm for the mobs in question to see if it uses this or hardcoded values.
 	var/melee_damage_upper = 0
 
 	/// Generic bitflags for boolean conditions at the [/mob/living] level. Keep this for inherent traits of living types, instead of runtime-changeable ones.
@@ -76,33 +65,26 @@
 
 	var/list/quirks = list()
 
-	///a list of surgery datums. generally empty, they're added when the player wants them.
-	var/list/surgeries = list()
+	var/list/surgeries = list() ///a list of surgery datums. generally empty, they're added when the player wants them.
 	///Mob specific surgery speed modifier
 	var/mob_surgery_speed_mod = 1
 
-	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
-	var/now_pushing = null
+	var/now_pushing = null //! Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 
 	var/cameraFollow = null
 
 	/// Time of death
 	var/tod = null
 
-	///The "Are we on fire?" var
-	var/on_fire = FALSE
-	///Tracks how many stacks of fire we have on, max is usually 20
-	var/fire_stacks = 0
+	var/on_fire = FALSE ///The "Are we on fire?" var
+	var/fire_stacks = 0 ///Tracks how many stacks of fire we have on, max is usually 20
 
-	//1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
-	var/limb_destroyer = 0
+	var/limb_destroyer = 0 //1 Sets AI behavior that allows mobs to target and dismember limbs with their basic attack.
 
 	var/mob_size = MOB_SIZE_HUMAN
 	var/mob_biotypes = MOB_ORGANIC
-	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature.
-	var/metabolism_efficiency = 1
-	///does the mob have distinct limbs?(arms,legs, chest,head)
-	var/has_limbs = FALSE
+	var/metabolism_efficiency = 1 ///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
+	var/has_limbs = FALSE ///does the mob have distinct limbs?(arms,legs, chest,head)
 
 	///How many legs does this mob have by default. This shouldn't change at runtime.
 	var/default_num_legs = 2
@@ -121,40 +103,27 @@
 	var/list/pipes_shown = list()
 	var/last_played_vent
 
-	///used to prevent spam with smoke reagent reaction on mob.
-	var/smoke_delay = 0
+	var/smoke_delay = 0 ///used to prevent spam with smoke reagent reaction on mob.
 
-	///what icon the mob uses for speechbubbles
-	var/bubble_icon = "default"
-	///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
-	var/health_doll_icon
+	var/bubble_icon = "default" ///what icon the mob uses for speechbubbles
+	var/health_doll_icon ///if this exists AND the normal sprite is bigger than 32x32, this is the replacement icon state (because health doll size limitations). the icon will always be screen_gen.dmi
 
 	var/last_bumped = 0
-	///if a mob's name should be appended with an id when created e.g. Mob (666)
-	var/unique_name = FALSE
-	///the id a mob gets when it's created
-	var/numba = 0
+	var/unique_name = FALSE ///if a mob's name should be appended with an id when created e.g. Mob (666)
+	var/numba = 0 ///the id a mob gets when it's created
 
-	///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
-	var/list/butcher_results = null
-	///these will always be yielded from butchering
-	var/list/guaranteed_butcher_results = null
-	///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
-	var/butcher_difficulty = 0
+	var/list/butcher_results = null ///these will be yielded from butchering with a probability chance equal to the butcher item's effectiveness
+	var/list/guaranteed_butcher_results = null ///these will always be yielded from butchering
+	var/butcher_difficulty = 0 ///effectiveness prob. is modified negatively by this amount; positive numbers make it more difficult, negative ones make it easier
 
-	///converted to a list of stun absorption sources this mob has when one is added
-	var/stun_absorption = null
+	var/stun_absorption = null ///converted to a list of stun absorption sources this mob has when one is added
 
-	///how much blood the mob has
-	var/blood_volume = 0
-	///Any ranged ability the mob has, as a click override
-	var/obj/effect/proc_holder/ranged_ability
+	var/blood_volume = 0 ///how much blood the mob has
+	var/obj/effect/proc_holder/ranged_ability ///Any ranged ability the mob has, as a click override
 
-	///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
-	var/see_override = 0
+	var/see_override = 0 ///0 for no override, sets see_invisible = see_override in silicon & carbon life process via update_sight()
 
-	///a list of all status effects the mob has
-	var/list/status_effects
+	var/list/status_effects ///a list of all status effects the mob has
 	var/druggy = 0
 
 	//Speech
@@ -165,8 +134,7 @@
 
 	var/list/implants = null
 
-	///used for database logging
-	var/last_words
+	var/last_words ///used for database logging
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
@@ -181,12 +149,10 @@
 	var/losebreath = 0
 
 	//List of active diseases
-	/// list of all diseases in a mob
-	var/list/diseases
+	var/list/diseases /// list of all diseases in a mob
 	var/list/disease_resistances
 
-	///Whether the mob is slowed down when dragging another prone mob
-	var/slowed_by_drag = TRUE
+	var/slowed_by_drag = TRUE ///Whether the mob is slowed down when dragging another prone mob
 
 	/// List of changes to body temperature, used by desease symtoms like fever
 	var/list/body_temp_changes = list()

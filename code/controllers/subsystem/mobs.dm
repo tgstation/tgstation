@@ -6,16 +6,13 @@ SUBSYSTEM_DEF(mobs)
 	wait = 2 SECONDS
 
 	var/list/currentrun = list()
-
-	var/list/processing = list()
-
 	var/static/list/clients_by_zlevel[][]
 	var/static/list/dead_players_by_zlevel[][] = list(list()) // Needs to support zlevel 1 here, MaxZChanged only happens when z2 is created and new_players can login before that.
 	var/static/list/cubemonkeys = list()
 	var/static/list/cheeserats = list()
 
 /datum/controller/subsystem/mobs/stat_entry(msg)
-	msg = "P:[length(processing)]"
+	msg = "P:[length(GLOB.mob_living_list)]"
 	return ..()
 
 /datum/controller/subsystem/mobs/proc/MaxZChanged()
@@ -30,38 +27,18 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/fire(resumed = FALSE)
 	if (!resumed)
-		src.currentrun = processing.Copy()
+		src.currentrun = GLOB.mob_living_list.Copy()
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-
 	var/times_fired = src.times_fired
 	var/delta_time = wait / (1 SECONDS) // TODO: Make this actually responsive to stuff like pausing and resuming
-
 	while(currentrun.len)
-		var/mob/living/living_mob = currentrun[currentrun.len]
+		var/mob/living/L = currentrun[currentrun.len]
 		currentrun.len--
-
-		if(living_mob)
-			living_mob.Life(delta_time, times_fired)
+		if(L)
+			L.Life(delta_time, times_fired)
 		else
-			GLOB.mob_living_list -= living_mob
-			processing -= living_mob
-
+			GLOB.mob_living_list.Remove(L)
 		if (MC_TICK_CHECK)
 			return
-
-/datum/controller/subsystem/mobs/proc/add_to_processing(mob/living/new_life)
-	if(!istype(new_life))
-		return FALSE
-
-	processing |= new_life
-	return TRUE
-
-/datum/controller/subsystem/mobs/proc/remove_from_processing(mob/living/old_life)
-	if(!istype(old_life))
-		return FALSE
-
-	processing -= old_life
-	return TRUE
-

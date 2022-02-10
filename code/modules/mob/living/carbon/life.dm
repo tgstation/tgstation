@@ -24,7 +24,7 @@
 		if(stat != DEAD)
 			handle_brain_damage(delta_time, times_fired)
 
-	if(stat == DEAD)//TODOKYLER: stop the processing idea i think im pretty sure it needs to process for one tick after dying
+	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
 		var/bprv = handle_bodyparts(delta_time, times_fired)

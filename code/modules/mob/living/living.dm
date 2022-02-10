@@ -10,8 +10,6 @@
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
 	SSpoints_of_interest.make_point_of_interest(src)
-	if(uses_life)
-		SSmobs.add_to_processing(src)
 	update_fov()
 
 /mob/living/ComponentInitialize()
@@ -41,7 +39,6 @@
 
 	remove_from_all_data_huds()
 	GLOB.mob_living_list -= src
-	SSmobs.remove_from_processing(src)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LIST(surgeries)
 	return ..()
