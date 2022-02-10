@@ -340,7 +340,6 @@
 	if(mover.movement_type & PHASING)
 		return TRUE
 	. = CanAllowThrough(mover, border_dir) //very complicated and is where most of the mojo is. many overrides
-	//however this is the only big thing i need to check for refactoring
 
 	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
 	if(!mover.generic_canpass)

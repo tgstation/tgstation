@@ -712,7 +712,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(w_class < 4)
 		itempush = 0 //too light to push anything
 
-	if(is_type_in_typecache(hit_atom, GLOB.typecache_living)) //Living mobs handle hit sounds differently.
+	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		if(get_temperature())
 			var/mob/living/living_mob = hit_atom
 			living_mob.IgniteMob()
