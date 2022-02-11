@@ -23,10 +23,9 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 	RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/power_change)
 	printer_ready = world.time + PRINTER_TIMEOUT
-
-/obj/machinery/doppler_array/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
+	// Alt clicking when unwrenched does not rotate. (likely from UI not returning the mouse click)
+	// Also there is no sprite change for rotation dir, this shouldn't even have a rotate component tbh
+	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/RotationMessage))
 
 /datum/data/tachyon_record
 	name = "Log Recording"
@@ -126,7 +125,7 @@
 		return
 	return ..()
 
-/obj/machinery/doppler_array/proc/rot_message(mob/user)
+/obj/machinery/doppler_array/proc/RotationMessage(mob/user)
 	to_chat(user, span_notice("You adjust [src]'s dish to face to the [dir2text(dir)]."))
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 

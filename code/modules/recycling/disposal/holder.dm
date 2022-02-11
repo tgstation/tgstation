@@ -89,6 +89,7 @@
 	SIGNAL_HANDLER
 	current_pipe = null
 	last_pipe = null
+	active = FALSE
 
 //failsafe in the case the holder is somehow forcemoved somewhere that's not a disposal pipe. Otherwise the above loop breaks.
 /obj/structure/disposalholder/Moved(atom/oldLoc, dir)

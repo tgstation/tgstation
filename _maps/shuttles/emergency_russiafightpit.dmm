@@ -528,6 +528,13 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/escape)
+"gn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/stasis{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "iJ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -765,7 +772,7 @@ ax
 ax
 ad
 bA
-bD
+gn
 bA
 bK
 bL

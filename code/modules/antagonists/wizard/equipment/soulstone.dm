@@ -114,7 +114,7 @@
 	icon_state = "purified_soulstone"
 	theme = THEME_HOLY
 
-/obj/item/soulstone/anybody/sparring/Initialize(mapload)
+/obj/item/soulstone/anybody/chaplain/sparring/Initialize(mapload)
 	. = ..()
 	name = "[GLOB.deity]'s punishment"
 	desc = "A prison for those who lost [GLOB.deity]'s game."

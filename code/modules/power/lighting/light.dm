@@ -5,6 +5,7 @@
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
@@ -456,7 +457,8 @@
 				return
 			to_chat(electrician, span_notice("You start channeling some power through the [fitting] into your body."))
 			stomach.drain_time = world.time + LIGHT_DRAIN_TIME
-			if(do_after(user, LIGHT_DRAIN_TIME, target = src))
+			while(do_after(user, LIGHT_DRAIN_TIME, target = src))
+				stomach.drain_time = world.time + LIGHT_DRAIN_TIME
 				if(istype(stomach))
 					to_chat(electrician, span_notice("You receive some charge from the [fitting]."))
 					stomach.adjust_charge(LIGHT_POWER_GAIN)

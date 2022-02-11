@@ -1,4 +1,0 @@
-author: "Zonespace27"
-delete-after: True
-changes: 
-  - bugfix: "Using an autosurgeon on someone else now properly gives them the implant."

@@ -248,6 +248,9 @@
 	connected_pump = null
 	return ..()
 
+/obj/item/circuit_component/atmos_pump/pre_input_received(datum/port/input/port)
+	pressure_value.set_value(clamp(pressure_value.value, 0, MAX_OUTPUT_PRESSURE))
+
 /obj/item/circuit_component/atmos_pump/proc/handle_pump_activation(datum/source, active)
 	SIGNAL_HANDLER
 	is_active.set_output(active)

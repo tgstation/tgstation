@@ -747,7 +747,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Beta Station Main Corridor APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /turf/open/floor/iron,
@@ -1435,7 +1435,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Charlie Station Bridge APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/effect/decal/cleanable/cobweb,
@@ -1473,7 +1473,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Delta Station RnD APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /turf/open/floor/iron/white,
@@ -2215,7 +2215,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Delta Station Artifical Program Core APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
@@ -2441,7 +2441,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	name = "Charlie Station Garden APC ";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 0
 	},
 /obj/item/reagent_containers/glass/bottle/nutrient/ez,
@@ -3272,7 +3272,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Charlie Engineering APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -3920,7 +3920,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Charlie Main Corridor APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -3995,7 +3995,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Beta Atmospherics APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -4066,7 +4066,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Delta Prototype Lab APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -4543,7 +4543,7 @@
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "Delta Station Corridor APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 0
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4559,7 +4559,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Charlie Station Kitchen APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -4922,7 +4922,7 @@
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "Beta Station Medbay APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -5091,7 +5091,7 @@
 "mQ" = (
 /obj/machinery/power/apc{
 	name = "Beta Station Mining Equipment APC ";
-	pixel_y = -23;
+	pixel_y = -25;
 	start_charge = 0
 	},
 /obj/effect/turf_decal/tile/brown{

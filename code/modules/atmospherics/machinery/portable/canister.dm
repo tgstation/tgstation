@@ -403,13 +403,17 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	switch(air_pressure)
 		if((40 * ONE_ATMOSPHERE) to INFINITY)
 			. += mutable_appearance(canister_overlay_file, "can-3")
+			. += emissive_appearance(canister_overlay_file, "can-3-light", alpha = src.alpha)
 		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-2")
+			. += emissive_appearance(canister_overlay_file, "can-2-light", alpha = src.alpha)
 		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-1")
+			. += emissive_appearance(canister_overlay_file, "can-1-light", alpha = src.alpha)
 		if((10) to (5 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-0")
-
+			. += emissive_appearance(canister_overlay_file, "can-0-light", alpha = src.alpha)
+	
 	update_window()
 
 /obj/machinery/portable_atmospherics/canister/update_greyscale()
@@ -706,9 +710,9 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				if("input")
 					var/user_input = tgui_input_number(usr, "Set time to valve toggle", "Canister Timer", timer_set, maximum_timer_set, minimum_timer_set)
-					if(isnull(user_input))
+					if(isnull(user_input) || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, TRUE))
 						return
-					timer_set = clamp(user_input, minimum_timer_set, maximum_timer_set)
+					timer_set = user_input
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

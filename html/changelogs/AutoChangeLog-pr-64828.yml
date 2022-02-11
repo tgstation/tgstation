@@ -1,0 +1,4 @@
+author: "tastyfish"
+delete-after: True
+changes: 
+  - qol: "Status displays now scroll text smoothly."

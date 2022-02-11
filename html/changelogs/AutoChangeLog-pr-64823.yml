@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Chaplain Sparring sect's soulstone now has their intended unique name and description."
