@@ -17,6 +17,7 @@ GLOBAL_VAR_INIT(curse_of_madness_triggered, FALSE)
 		if(T && !is_station_level(T.z))
 			continue
 		if(H.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
+			to_chat(user, span_warning("Something is shielding [H]'s mind!"))
 			to_chat(H, span_notice("You have a strange feeling for a moment, but then it passes."))
 			continue
 		give_madness(H, message)
