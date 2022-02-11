@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "Bad Touch doesn't trigger if the person's dead"

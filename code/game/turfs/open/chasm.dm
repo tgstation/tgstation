@@ -49,6 +49,9 @@
 			return TRUE
 	return FALSE
 
+/turf/open/chasm/rust_heretic_act()
+	return FALSE
+
 /turf/open/chasm/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
 	underlay_appearance.icon_state = "basalt"

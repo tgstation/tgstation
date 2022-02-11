@@ -35,4 +35,5 @@
 		var/list/to_resolve = resolved_new_value
 		resolved_new_value = recursive_list_resolve(to_resolve)
 
+	log_admin_circuit("[parent.get_creator()] set the variable '[var_name]' on [object] to [resolved_new_value].")
 	object.vv_edit_var(var_name, resolved_new_value)

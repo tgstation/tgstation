@@ -24,7 +24,7 @@
 	throw_speed = 3
 	throw_range = 7
 	grind_results = list(/datum/reagent/lye = 10)
-	var/cleanspeed = 35 //slower than mop
+	var/cleanspeed = 3.5 SECONDS //slower than mop
 	force_string = "robust... against germs"
 	var/uses = 100
 
@@ -51,34 +51,38 @@
 				msg = "It's seen some light use, but it's still pretty fresh."
 	. += span_notice("[msg]")
 
+/obj/item/soap/homemade
+	desc = "A homemade bar of soap. Smells of... well...."
+	grind_results = list(/datum/reagent/liquidgibs = 9, /datum/reagent/lye = 9)
+	icon_state = "soapgibs"
+	cleanspeed = 3 SECONDS // faster than base soap to reward chemists for going to the effort
+
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
 	grind_results = list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
 	icon_state = "soapnt"
-	cleanspeed = 28 //janitor gets this
+	cleanspeed = 2.8 SECONDS //janitor gets this
 	uses = 300
-
-/obj/item/soap/homemade
-	desc = "A homemade bar of soap. Smells of... well...."
-	icon_state = "soapgibs"
-	cleanspeed = 30 // faster to reward chemists for going to the effort
 
 /obj/item/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
+	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
 	icon_state = "soapdeluxe"
-	cleanspeed = 20 //captain gets one of these
+	cleanspeed = 2 SECONDS //captain gets one of these
 
 /obj/item/soap/syndie
 	desc = "An untrustworthy bar of soap made of strong chemical agents that dissolve blood faster."
+	grind_results = list(/datum/reagent/toxin/acid = 10, /datum/reagent/lye = 10)
 	icon_state = "soapsyndie"
-	cleanspeed = 5 //faster than mop so it is useful for traitors who want to clean crime scenes
+	cleanspeed = 0.5 SECONDS //faster than mops so it's useful for traitors who want to clean crime scenes
 
 /obj/item/soap/omega
-	name = "omega soap"
-	desc = "The most advanced soap known to mankind."
+	name = "\improper Omega soap"
+	desc = "The most advanced soap known to mankind. The beginning of the end for germs."
+	grind_results = list(/datum/reagent/consumable/potato_juice = 9, /datum/reagent/consumable/ethanol/lizardwine = 9, /datum/reagent/monkey_powder = 9, /datum/reagent/drug/krokodil = 9, /datum/reagent/toxin/acid/nitracid = 9, /datum/reagent/baldium = 9, /datum/reagent/consumable/ethanol/hooch = 9, /datum/reagent/bluespace = 9, /datum/reagent/drug/pumpup = 9, /datum/reagent/consumable/space_cola = 9)
 	icon_state = "soapomega"
-	cleanspeed = 3 //Only the truest of mind soul and body get one of these
-	uses = 301
+	cleanspeed = 0.3 SECONDS //Only the truest of mind soul and body get one of these
+	uses = 800 //In the Greek numeric system, Omega has a value of 800
 
 /obj/item/soap/omega/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -88,7 +92,7 @@
 /obj/item/paper/fluff/stations/soap
 	name = "ancient janitorial poem"
 	desc = "An old paper that has passed many hands."
-	info = "The legend of the omega soap</B><BR><BR> Essence of <B>potato</B>. Juice, not grind.<BR><BR> A <B>lizard's</B> tail, turned into <B>wine</B>.<BR><BR> <B>powder of monkey</B>, to help the workload.<BR><BR> Some <B>Krokodil</B>, because meth would explode.<BR><BR> <B>Nitric acid</B> and <B>Baldium</B>, for organic dissolving.<BR><BR> A cup filled with <B>Hooch</B>, for sinful absolving<BR><BR> Some <B>Bluespace Dust</B>, for removal of stains.<BR><BR> A syringe full of <B>Pump-up</B>, it's security's bane.<BR><BR> Add a can of <B>Space Cola</B>, because we've been paid.<BR><BR> <B>Heat</B> as hot as you can, let the soap be your blade.<BR><BR> <B>Ten units of each regent create a soap that could topple all others.</B>"
+	info = "The legend of the omega soap</B><BR><BR> Essence of <B>potato</B>. Juice, not grind.<BR><BR> A <B>lizard's</B> tail, turned into <B>wine</B>.<BR><BR> <B>powder of monkey</B>, to help the workload.<BR><BR> Some <B>Krokodil</B>, because meth would explode.<BR><BR> <B>Nitric acid</B> and <B>Baldium</B>, for organic dissolving.<BR><BR> A cup filled with <B>Hooch</B>, for sinful absolving<BR><BR> Some <B>Bluespace Dust</B>, for removal of stains.<BR><BR> A syringe full of <B>Pump-up</B>, it's security's bane.<BR><BR> Add a can of <B>Space Cola</B>, because we've been paid.<BR><BR> <B>Heat</B> as hot as you can, let the soap be your blade.<BR><BR> <B>Ten units of each reagent create a soap that could topple all others.</B>"
 
 
 /obj/item/soap/suicide_act(mob/user)
