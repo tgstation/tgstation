@@ -508,3 +508,83 @@
   unit0016:
   - spellcheck: The Starfury's spawners no longer reference the now deleted SM. Long
       live the syndicate sm crystal!
+2022-02-11:
+  GoblinBackwards:
+  - bugfix: Hiding inside a container no longer allows you to bypass the tramstation
+      perma gate.
+  JohnFulpWillard:
+  - bugfix: You can no longer hear things in space (like flashbangs).
+  - bugfix: Wardens have a SecHUD icon again
+  - bugfix: Midround antagonists cannot be rolled while the shuttle is docked at the
+      station, or already gone to Central Command.
+  - bugfix: Fire breath can be used even if you can't speak (you're welcome tongue
+      tied mains).
+  LemonInTheDark:
+  - bugfix: Hopefully fixes sparks just, sitting in the air sometimes. At the very
+      least it'll cause more visible complaints
+  Melbert:
+  - rscadd: Large scale heretic revamp!
+  - expansion: The Codex Cicatrix is no longer a roundstart heretic item. Research
+      is handled through their antag info UI. Rune drawing is done by using a writing
+      tool with Mansus Grasp active in your offhand. The actual Codex is an unlockable
+      ritual item now.
+  - expansion: The Living Heart is no longer a roundstart heretic item - their actual
+      heart now becomes their Living Heart, and it makes a sound when triggered. Losing
+      your heart (being disemboweled) will require you to do a ritual to regain it.
+  - expansion: The Hereic Antag UI has been overhauled, and now hosts much of their
+      mechanics as well as providing some helpful tips for newer players.
+  - expansion: Most heretic spells now require a focus to cast. All heretics can make
+      a basic focus necklace, and some heretic equipment also functions as a focus.
+      (Credit to Imaginos for the focus sprite!)
+  - expansion: Heretics now passively gain +1 influence every 20 minutes.
+  - expansion: Heretic sacrificing  has been reworked. You can now sacrifice people
+      who are in soft crit or weaker. Sacrificing someone heals them, cuffs them,
+      and teleports them to the SHADOW REALM, where they must dodge a barrage of hands
+      to survive. Survive long enough and you return without memory - die, and your
+      body will be thrown back.
+  - expansion: Heretics now have a few new rituals, including the Ritual of Knowledge,
+      a randomly generated ritual that awards knowledge points.
+  - expansion: Heretic ascension now has a few requirements - you must complete your
+      objectives assigned to you prior to learning the final ritual, and all the final
+      rituals have been changed a bit!
+  - qol: 'Using the Heretic''s Mansus Grasp on surfaces (EX: Rust Grasp) now works
+      on right-click, instead of combat mode.'
+  - qol: Used heretic influences can now be removed with a Anomaly Neutralizers.
+  - balance: Some heretic rituals are now limited in the amount they can make. You
+      can only have up to 2 heretic blades crafted at once (3 if you are Path of Flesh).
+  - balance: The Lord of the Night has been buffed to be a little scarier. Did you
+      know the Lord of the Night can eat arms to regain body parts and heal?
+  - balance: Buffed some heretic summons - mostly their health pools.
+  - balance: Nerfed the heretic's Mask of Madness. It can no longer infinite stam-crit
+      you.
+  - balance: Nerfed the heretic's ash mark.
+  - balance: 'Nerfed a bunch of on-hit-heretic-blade effects. Many effects only apply
+      on mark detonation now: Void blade silence, flesh blade wounds, ash blade gasp
+      cooldown refund.'
+  - bugfix: Fixed quite a few bugs and unintended behaviors with heretic code.
+  - refactor: Refactored and improved much of Heretic code. Improved the file structure
+      dramatically.
+  - admin: The heretic's traitor panel has been beefed up a bit.
+  OneAsianTortoise:
+  - bugfix: fixes not being able to use tools on account registration device and it
+      functioning without power
+  - imageadd: gives account registration device a unique sprite instead of weapon
+      recharger sprite
+  RandomGamer123:
+  - spellcheck: Fixes minor spelling error in the guide for synthesising omega soap
+  bun235:
+  - bugfix: Fixes external airlocks on metastation atmospherics
+  carshalash:
+  - qol: Felinids love oranges as much as he loves them!
+  san7890:
+  - rscadd: On IceBoxStation, the Transit Tube Room is no longer mislabelled as a
+      Storage Room.
+  - rscadd: Nanotrasen has come out with a new way to define the loot-laden maintenance
+      tunnels of KiloStation. This shouldn't affect anything more than just how they
+      get their power, though.
+  - rscadd: On KiloStation, there is now a door between Fore and Fore/Starboard Maintenance.
+      I hope this helps you sleep better at night.
+  - bugfix: If you've been noticing some very-dark plating outside of Engineering,
+      it has now been fixed.
+  - rscadd: Engineering Unions are planning strikes after their break rooms have been
+      slashed in half by Nanotrasen on DeltaStation and KiloStation.
