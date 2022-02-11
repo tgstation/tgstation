@@ -964,12 +964,15 @@
 			if(casted_magic_flags & MAGIC_RESISTANCE)
 				antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 				antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
+				playsound(src, 'sound/magic/magic_block.ogg', 50, TRUE)
 			else if(casted_magic_flags & MAGIC_RESISTANCE_HOLY)
 				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 				antimagic_color = LIGHT_COLOR_HOLY_MAGIC
+				playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
 			else if(casted_magic_flags & MAGIC_RESISTANCE_MIND)
 				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 				antimagic_color = LIGHT_COLOR_DARK_BLUE
+				playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
 				
 			target.mob_light(_range = 2, _color = antimagic_color, _duration = 5 SECONDS)
 			target.add_overlay(antimagic_effect)
