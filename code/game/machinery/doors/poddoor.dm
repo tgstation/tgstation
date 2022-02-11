@@ -46,7 +46,7 @@
 	if(machine_stat & NOPOWER)
 		open(TRUE)
 		return
-	if (density && hasPower())
+	if (density)
 		balloon_alert(user, "open the door first!")
 		return
 	if (!panel_open)
