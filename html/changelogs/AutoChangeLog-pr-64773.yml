@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "USB cables no longer allow you to bypass the gas pumps pressure limits of 0-4500 kPa."

@@ -1,0 +1,4 @@
+author: "ike709"
+delete-after: True
+changes: 
+  - bugfix: "Chameleon items now cover the correct slots of whatever they're mimicking"

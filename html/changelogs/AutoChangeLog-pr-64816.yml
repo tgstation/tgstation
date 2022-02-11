@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Role-restricted and species restricted items can be purchased again."
+  - bugfix: "Species-restricted items no longer appear in surplus."

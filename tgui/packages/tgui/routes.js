@@ -5,6 +5,7 @@
  */
 
 import { selectBackend } from './backend';
+import { Icon, Stack } from './components';
 import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
@@ -33,11 +34,31 @@ const SuspendedWindow = () => {
   );
 };
 
+const RefreshingWindow = () => {
+  return (
+    <Window height={130} title="Loading" width={150}>
+      <Window.Content>
+        <Stack align="center" fill justify="center" vertical>
+          <Stack.Item>
+            <Icon color="blue" name="toolbox" spin size={4} />
+          </Stack.Item>
+          <Stack.Item>
+            Please wait...
+          </Stack.Item>
+        </Stack>
+      </Window.Content>
+    </Window>
+  );
+};
+
 export const getRoutedComponent = store => {
   const state = store.getState();
   const { suspended, config } = selectBackend(state);
   if (suspended) {
     return SuspendedWindow;
+  }
+  if (config.refreshing) {
+    return RefreshingWindow;
   }
   if (process.env.NODE_ENV !== 'production') {
     const debug = selectDebug(state);

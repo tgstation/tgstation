@@ -76,14 +76,14 @@
 #define JOB_CHAPLAIN "Chaplain"
 #define JOB_PSYCHOLOGIST "Psychologist"
 //ERTs
+#define JOB_ERT_DEATHSQUAD "Death Commando"
 #define JOB_ERT_COMMANDER "Emergency Response Team Commander"
 #define JOB_ERT_OFFICER "Security Response Officer"
 #define JOB_ERT_ENGINEER "Engineering Response Officer"
 #define JOB_ERT_MEDICAL_DOCTOR "Medical Response Officer"
-#define JOB_ERT_CLOWN "Entertainment Response Officer"
 #define JOB_ERT_CHAPLAIN "Religious Response Officer"
 #define JOB_ERT_JANITOR "Janitorial Response Officer"
-#define JOB_ERT_DEATHSQUAD "Death Commando"
+#define JOB_ERT_CLOWN "Entertainment Response Officer"
 //CentCom
 #define JOB_CENTCOM "Central Command"
 #define JOB_CENTCOM_OFFICIAL "CentCom Official"
@@ -176,6 +176,8 @@
 #define JOB_REOPEN_ON_ROUNDSTART_LOSS (1<<6)
 /// If the player with this job can have quirks assigned to him or not. Relevant for new player joinable jobs and roundstart antags.
 #define JOB_ASSIGN_QUIRKS (1<<7)
+/// Whether this job can be an intern.
+#define JOB_CAN_BE_INTERN (1<<8)
 
 
 #define FACTION_NONE "None"

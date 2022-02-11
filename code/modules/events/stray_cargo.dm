@@ -71,8 +71,8 @@
 		/area/ai_monitored/turret_protected/ai,
 		/area/ai_monitored/turret_protected/ai_upload,
 		/area/engineering,
-		/area/shuttle)
-		)
+		/area/shuttle,
+	))
 
 		///Subtypes from the above that actually should explode.
 		var/static/list/unsafe_area_subtypes = typecacheof(list(/area/engineering/break_room))

@@ -1,0 +1,7 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - admin: "Added a lot more logging to admin circuits"
+  - admin: "Admin circuits display names will now replace the entire name of the shell."
+  - admin: "Save Shell component will no longer load the variables that were saved for a shell."
+  - bugfix: "Fixed several things breaking with mobs whenever an integrated circuit was spawned with a shell."

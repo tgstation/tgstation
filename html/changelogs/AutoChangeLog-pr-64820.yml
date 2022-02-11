@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - expansion: "Adds a trigger version of the current variable setter circuit component."

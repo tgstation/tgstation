@@ -1,5 +1,0 @@
-author: "tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "Objects transitioning through z-levels in disposals no longer lose their delivery destination tag."
-  - bugfix: "Tramstation port-aft disposals loop containing part of service, and engineering now work again."

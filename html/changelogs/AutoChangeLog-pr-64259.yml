@@ -1,4 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "Fixed delivery tagger destinations."

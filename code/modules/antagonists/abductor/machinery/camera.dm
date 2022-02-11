@@ -28,6 +28,7 @@
 
 /obj/machinery/computer/camera_advanced/abductor/GrantActions(mob/living/carbon/user)
 	if(!abduct_created)
+		abduct_created = TRUE
 		actions += new /datum/action/innate/teleport_in(console.pad)
 		actions += new /datum/action/innate/teleport_out(console)
 		actions += new /datum/action/innate/teleport_self(console.pad)

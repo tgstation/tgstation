@@ -394,7 +394,7 @@
 				M.add_confusion(min(M.get_confusion() + 10, 20))
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.adjust_drowsyness(min(M.drowsyness+10, 20))
-				M.apply_status_effect(STATUS_EFFECT_PACIFY, 100)
+				M.apply_status_effect(/datum/status_effect/pacify, 100)
 			else
 				M.apply_status_effect(/datum/status_effect/trance, 200, TRUE)
 
@@ -408,7 +408,7 @@
 		M.add_confusion(min(M.get_confusion() + 4, 20))
 		M.dizziness += min(M.dizziness + 4, 20)
 		M.adjust_drowsyness(min(M.drowsyness+4, 20))
-		M.apply_status_effect(STATUS_EFFECT_PACIFY, 40)
+		M.apply_status_effect(/datum/status_effect/pacify, 40)
 
 #undef CONFUSION_STACK_MAX_MULTIPLIER
 #undef DEVIATION_NONE
