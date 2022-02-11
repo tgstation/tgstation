@@ -13,7 +13,7 @@
 
 /obj/projectile/magic/prehit_pierce(mob/living/target)
 	. = ..()
-	if(!istype(target) & target.can_block_magic(antimagic_flags, antimagic_charge_cost))
+	if(!istype(target) && target.can_block_magic(antimagic_flags, antimagic_charge_cost))
 		visible_message(span_warning("[src] fizzles on contact with [target]!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 			
@@ -405,7 +405,7 @@
 /obj/projectile/magic/aoe/Range()
 	if(proxdet)
 		for(var/mob/living/L in range(1, get_turf(src)))
-			if(L.stat != DEAD && L != firer && !L.can_block_magic(antimagic_flags, antimagic_charges_cost))
+			if(L.stat != DEAD && L != firer && !L.can_block_magic(antimagic_flags, antimagic_charge_cost))
 				return Bump(L)
 	..()
 
