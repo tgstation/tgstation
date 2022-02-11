@@ -64,8 +64,6 @@
 		/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,
 		/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch,
 	)
-	/// A reference to the spell we use to link up to our network.
-	var/obj/effect/proc_holder/spell/pointed/manse_link/link_spell
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
@@ -74,22 +72,15 @@
 
 	var/on_unlink_message = "Your mind shatters as [src]'s Mansus Link leaves your mind."
 
-	var/datum/component/mind_linker/new_linker = AddComponent(/datum/component/mind_linker, \
+	AddComponent(/datum/component/mind_linker, \
 		network_name = "Mansus Link", \
 		chat_color = "#568b00", \
+		linker_action_path = /datum/action/cooldown/manse_link, \
 		link_message = on_link_message, \
 		unlink_message = on_unlink_message, \
 		post_unlink_callback = CALLBACK(src, .proc/after_unlink), \
 		speech_action_background_icon_state = "bg_ecult", \
 	)
-
-	link_spell = new()
-	link_spell.linker = new_linker
-	AddSpell(link_spell)
-
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Destroy()
-	QDEL_NULL(link_spell)
-	return ..()
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Login()
 	. = ..()

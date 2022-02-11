@@ -591,31 +591,25 @@
 	id = SPECIES_STARGAZER
 	/// Special "project thought" telepathy action for stargazers.
 	var/datum/action/innate/project_thought/project_action
-	/// The action our stargazer uses to link people to it's mind network.
-	var/datum/action/innate/link_minds/link_action
 
 /datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species)
 	. = ..()
 	project_action = new(src)
 	project_action.Grant(grant_to)
 
-	var/datum/component/mind_linker/new_linker = grant_to.AddComponent(/datum/component/mind_linker, \
+	grant_to.AddComponent(/datum/component/mind_linker, \
 		network_name = "Slime Link", \
+		linker_action_path = /datum/action/innate/link_minds, \
 		signals_which_destroy_us = list(COMSIG_SPECIES_LOSS), \
 	)
-
-	link_action = new(new_linker)
-	link_action.Grant(grant_to)
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
 /datum/species/jelly/stargazer/Destroy()
 	QDEL_NULL(project_action)
-	QDEL_NULL(link_action)
 	return ..()
 
 /datum/species/jelly/stargazer/on_species_loss(mob/living/carbon/remove_from)
 	QDEL_NULL(project_action)
-	QDEL_NULL(link_action)
 	return ..()
 
 /datum/action/innate/project_thought
@@ -670,8 +664,8 @@
 /datum/action/innate/link_minds/New(Target)
 	. = ..()
 	if(!istype(Target, /datum/component/mind_linker))
+		stack_trace("[name] ([type]) was instantiated on a non-mind_linker target, this doesn't work.")
 		qdel(src)
-		return
 
 /datum/action/innate/link_minds/IsAvailable()
 	. = ..()

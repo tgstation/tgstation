@@ -4,10 +4,6 @@
  * A component that handles linking multiple player's minds
  * into one network which allows them to talk directly to one another.
  * Like telepathy but for multiple people at once!
- *
- * This component only handles managing the link network and text.
- * Adding people to the network itself (in game wise) requires
- * a separate action or spell that you must add for it to function.
  */
 /datum/component/mind_linker
 	/// The name of our network, displayed to all users.
@@ -28,6 +24,8 @@
 	var/speech_action_icon_state = "link_speech"
 	/// The icon background for the speech action handed out.
 	var/speech_action_background_icon_state = "bg_alien"
+	/// The master's linking action, which allows them to link people to the network.
+	var/datum/action/linker_action
 	/// The master's speech action. The owner of the link shouldn't lose this as long as the link remains.
 	var/datum/action/innate/linked_speech/master_speech
 	/// An assoc list of [mob/living]s to [datum/action/innate/linked_speech]s. All the mobs that are linked to our network.
@@ -36,6 +34,7 @@
 /datum/component/mind_linker/Initialize(
 	network_name = "Mind Link",
 	chat_color = "#008CA2",
+	linker_action_path,
 	link_message,
 	unlink_message,
 	signals_which_destroy_us,
@@ -64,14 +63,22 @@
 	src.speech_action_icon_state = speech_action_icon_state
 	src.speech_action_background_icon_state = speech_action_background_icon_state
 
+	if(ispath(linker_action_path))
+		linker_action = new linker_action_path(src)
+		linker_action.Grant(owner)
+	else
+		stack_trace("[type] was created without a valid linker_action_path. No one will be able to link to it.")
+
 	master_speech = new(src)
 	master_speech.Grant(owner)
+
 	to_chat(owner, span_boldnotice("You establish a [network_name], allowing you to link minds to communicate telepathically."))
 
 /datum/component/mind_linker/Destroy(force, silent)
 	for(var/mob/living/remaining_mob as anything in linked_mobs)
 		unlink_mob(remaining_mob)
 	linked_mobs.Cut()
+	QDEL_NULL(linker_action)
 	QDEL_NULL(master_speech)
 	QDEL_NULL(post_unlink_callback)
 	return ..()
@@ -107,7 +114,7 @@
 	to_chat(owner, span_notice("You connect [to_link]'s mind to your [network_name]."))
 
 	for(var/mob/living/other_link as anything in linked_mobs)
-		to_chat(other_link, span_notice("You feel a new pressence within [owner.real_name]'s [network_name]."))
+		to_chat(other_link, span_notice("You feel a new presence within [owner.real_name]'s [network_name]."))
 
 	var/datum/action/innate/linked_speech/new_link = new(src)
 	new_link.Grant(to_link)
