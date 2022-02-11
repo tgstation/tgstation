@@ -126,7 +126,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			INVOKE_ASYNC(user, /mob/proc/emote, "scream")
 			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 
-			our_replacement_heart.Insert(user, special = TRUE, drop_if_replaced = TRUE)
+			our_replacement_heart.Insert(user, TRUE, TRUE)
 			our_new_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
 			our_new_heart = our_replacement_heart
 
