@@ -64,12 +64,7 @@
 	cleanspeed = 2.8 SECONDS //janitor gets this
 	uses = 300
 
-/obj/item/soap/cyborg
-	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
-	grind_results = list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
-	icon_state = "soapnt"
-	cleanspeed = 28
-	uses = 300
+/obj/item/soap/nanotrasen/cyborg
 
 /obj/item/soap/homemade
 	desc = "A homemade bar of soap. Smells of... well...."
@@ -126,14 +121,15 @@
 		skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
 	if(prob(skillcheck*100)) //higher level = more uses assuming RNG is nice
 		uses--
-	if(uses <= 0 && !istype(src, /obj/item/soap/cyborg))
-		to_chat(user, span_warning("[src] crumbles into tiny bits!"))
-		qdel(src)
-
-/obj/item/soap/cyborg/decreaseUses(mob/user)
-	. = ..()
 	if(uses <= 0)
-		to_chat(user, span_warning("The soap has ran out of chemicals"))
+		noUses(user)
+
+/obj/item/soap/proc/noUses(mob/user)
+	to_chat(user, span_warning("[src] crumbles into tiny bits!"))
+	qdel(src)
+
+/obj/item/soap/nanotrasen/cyborg/noUses(mob/user)
+	to_chat(user, span_warning("The soap has ran out of chemicals"))
 
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
@@ -145,9 +141,6 @@
 		clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(uses <= 0)
-		to_chat(user, span_warning("No good, you need to recharge!"))
-		return
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, span_warning("You need to take that [target.name] off before cleaning it!"))
 	else if(istype(target, /obj/effect/decal/cleanable))
@@ -193,6 +186,12 @@
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 	return
+
+/obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
+	if(uses <= 0)
+		to_chat(user, span_warning("No good, you need to recharge!"))
+		return
+	. = ..()
 
 
 /*
