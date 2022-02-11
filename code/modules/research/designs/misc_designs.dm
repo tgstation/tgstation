@@ -377,16 +377,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/cutout
-	name = "Cardboard Cutout"
-	desc = "A vaguley humanoid sheet of synthetic cardboard. Can be customized with a crayon."
-	id = "cardboard_cutout"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/cardboard = 2000)
-	build_path = /obj/item/cardboard_cutout
-	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/adaptive_cutout
 	name = "Adaptive Cutout"
 	desc = "Advanced variety of cardboard cutout typically employed by Syndicate agents."

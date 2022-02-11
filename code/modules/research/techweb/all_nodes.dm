@@ -947,7 +947,6 @@
 		"bike_horn",
 		"borg_transform_clown",
 		"card_deck",
-		"cardboard_cutout",
 		"crayon_box",
 		"dice_bag",
 		"honk_chassis",
