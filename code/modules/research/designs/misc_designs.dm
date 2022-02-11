@@ -127,16 +127,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/air_horn
-	name = "Air Horn"
-	desc = "Damn son, where'd you find this?"
-	id = "air_horn"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
-	build_path = /obj/item/bikehorn/airhorn
-	category = list("Equipment")
-
-
 /datum/design/mesons
 	name = "Optical Meson Scanners"
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
@@ -333,6 +323,109 @@
 	build_path = /obj/item/door_seal
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SCIENCE
+
+/////////////////////////////////////////
+////////Social Psychology Designs////////
+/////////////////////////////////////////
+
+/datum/design/air_horn
+	name = "Air Horn"
+	desc = "Damn son, where'd you find this?"
+	id = "air_horn"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
+	build_path = /obj/item/bikehorn/airhorn
+	category = list("Equipment")
+
+/datum/design/dice_bag
+	name = "Bag of Dice"
+	desc = "An assorted bag of colorful plastic dice."
+	id = "dice_bag"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/storage/dice
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/card_deck
+	name = "Deck of Cards"
+	desc = "A deck of NT standard playing cards."
+	id = "card_deck"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/toy/cards/deck
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/crayon_box
+	name = "Box of Crayons"
+	desc = "A box full of crayons"
+	id = "crayon_box"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/plastic = 500, /datum/material/cardboard = 500)
+	build_path = /obj/item/storage/crayons
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/piano_synth
+	name = "Synthesizer"
+	desc = "An advanced electronic synthesizer that can be used as various instruments."
+	id = "piano_synth"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/silver = 200)
+	build_path = /obj/item/instrument/piano_synth
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/cutout
+	name = "Cardboard Cutout"
+	desc = "A vaguley humanoid sheet of synthetic cardboard. Can be customized with a crayon."
+	id = "cardboard_cutout"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/cardboard = 2000)
+	build_path = /obj/item/cardboard_cutout
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/adaptive_cutout
+	name = "Adaptive Cutout"
+	desc = "Advanced variety of cardboard cutout typically employed by Syndicate agents."
+	id = "adaptive_cutout"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/cardboard = 2000, /datum/material/gold = 500)
+	build_path = /obj/item/cardboard_cutout/adaptive
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/decoy_disk
+	name = "Decoy Nuclear Authentication Disk"
+	desc = "A convincing copy of the nuclear authentication disk. Will not stand up to greater scrutiny."
+	id = "decoy_disk"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/silver = 500, /datum/material/gold = 500)
+	build_path = /obj/item/disk/nuclear/fake
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/bike_horn
+	name = "Bike Horn"
+	desc = "honk honk"
+	id = "bike_horn"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 750)
+	build_path = /obj/item/bikehorn
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/clown_cartridge
+	name = "Clown PDA Cartridge"
+	desc = "PDA Cartridge covered with polytetrafluoroethylene and banana drippings. Very funny."
+	id = "clown_cartridge"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials =  list(/datum/material/iron = 500, /datum/material/bananium = 100)
+	build_path = /obj/item/cartridge/virus/clown
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
