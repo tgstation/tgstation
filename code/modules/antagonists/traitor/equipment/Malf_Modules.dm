@@ -889,7 +889,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	cost = 40
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/voice_changer
-	unlock_text = "<span class='notice'>OTA firmware distribution complete! Voice changer online.</span>"
+	unlock_text = span_notice("OTA firmware distribution complete! Voice changer online.")
 	unlock_sound = 'sound/items/rped.ogg'
 
 /datum/action/innate/ai/voice_changer
@@ -931,24 +931,20 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	say_span = owner.speech_span
 
 /obj/machinery/ai_voicechanger/ui_interact(mob/user, datum/tgui/ui)
-  ui = SStgui.try_update_ui(user, src, ui)
-  if(!ui)
-    ui = new(user, src, "AiVoiceChanger")
-    ui.open()
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AiVoiceChanger")
+		ui.open()
 
 
 /obj/machinery/ai_voicechanger/ui_data(mob/user)
-  var/list/data = list()
-  data["voices"] = list() //manually adding this since i dont see other option
-  data["voices"]+=list("Normal")
-  data["voices"]+=list(SPAN_ROBOT)
-  data["voices"]+=list(SPAN_YELL)
-  data["voices"]+=list(SPAN_CLOWN)
-  data["loud"] = loudvoice
-  data["on"] = changing_voice
-  data["say_verb"] = say_verb
-  data["name"] = say_name
-  return data
+	var/list/data = list()
+	data["voices"] = list("normal",SPAN_ROBOT,SPAN_YELL,SPAN_CLOWN) //manually adding this since i dont see other option
+	data["loud"] = loudvoice
+	data["on"] = changing_voice
+	data["say_verb"] = say_verb
+	data["name"] = say_name
+	return data
 
 /obj/machinery/ai_voicechanger/ui_act(action, params)
 	if(..())
