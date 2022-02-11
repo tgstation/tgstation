@@ -51,6 +51,12 @@
 				msg = "It's seen some light use, but it's still pretty fresh."
 	. += span_notice("[msg]")
 
+/obj/item/soap/homemade
+	desc = "A homemade bar of soap. Smells of... well...."
+	grind_results = list(/datum/reagent/liquidgibs = 9, /datum/reagent/lye = 9)
+	icon_state = "soapgibs"
+	cleanspeed = 3 SECONDS // faster than base soap to reward chemists for going to the effort
+
 /obj/item/soap/nanotrasen
 	desc = "A heavy duty bar of Nanotrasen brand soap. Smells of plasma."
 	grind_results = list(/datum/reagent/toxin/plasma = 10, /datum/reagent/lye = 10)
@@ -59,11 +65,6 @@
 	uses = 300
 
 /obj/item/soap/nanotrasen/cyborg
-
-/obj/item/soap/homemade
-	desc = "A homemade bar of soap. Smells of... well...."
-	icon_state = "soapgibs"
-	cleanspeed = 30 // faster to reward chemists for going to the effort
 
 /obj/item/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
