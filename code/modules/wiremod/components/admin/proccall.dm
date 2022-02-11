@@ -71,7 +71,9 @@
 	if(called_on != GLOBAL_PROC && !hascall(called_on, to_invoke))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_proccall, called_on, to_invoke, recursive_list_resolve(params))
+	var/list/resolved_params = recursive_list_resolve(params)
+	log_admin_circuit("[parent.get_creator()] proccalled '[to_invoke]' on [called_on] with params \[[resolved_params.Join(", ")]].")
+	INVOKE_ASYNC(src, .proc/do_proccall, called_on, to_invoke, resolved_params)
 
 /obj/item/circuit_component/proccall/proc/do_proccall(called_on, to_invoke, params)
 	var/result = HandleUserlessProcCall(parent.get_creator(), called_on, to_invoke, params)
