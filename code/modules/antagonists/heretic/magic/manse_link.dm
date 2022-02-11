@@ -26,6 +26,8 @@
 /datum/action/cooldown/manse_link/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
 	if(!isliving(clicked_on))
 		return FALSE
+	if(clicked_on == caller)
+		return FALSE
 	if(get_dist(caller, clicked_on) > range)
 		to_chat(caller, span_warning("[clicked_on] is too far to establish a link.")) // Not a balloon alert due being so zoomed out.
 		return FALSE
