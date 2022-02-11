@@ -1141,14 +1141,27 @@
 ///This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
+	
 ///Can this mob read (is literate and not blind)
 /mob/proc/can_read(obj/O)
-	if(is_blind())
+	if(is_blind()) // need to check blurry vision
+		/obj/item/clothing/glasses/regular
 		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
-		return
+		return FALSE
 	if(!is_literate())
 		to_chat(src, span_notice("You try to read [O], but can't comprehend any of it."))
-		return
+		return FALSE
+		
+	var/turf/reading_spot = get_turf(src)
+	var/light_amount = reading_spot.get_lumcount()
+
+	if(light_amount > 0.2)
+		if(HAS_TRAIT(TRAIT_XRAY_VISION) || HAS_TRAIT(TRAIT_TRUE_NIGHT_VISION))
+		/obj/item/clothing/glasses/meson/night
+		/obj/item/clothing/glasses/night
+		to_chat(M, span_warning("It's too dark in here to read!"))
+		return FALSE
+	
 	return TRUE
 
 /**
