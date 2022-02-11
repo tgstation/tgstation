@@ -1,9 +1,6 @@
-
-
 /obj/projectile/magic/spell
 	name = "custom spell projectile"
 	var/list/ignored_factions //Do not hit these
-	var/antimagic_flags = NONE
 	var/trigger_range = 0 //How far we do we need to be to hit
 	var/linger = FALSE //Can't hit anything but the intended target
 
