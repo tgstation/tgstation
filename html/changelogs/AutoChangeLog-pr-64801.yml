@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - qol: "Made the balloon alerts for rotating stuff more consistent and less intrusive."
