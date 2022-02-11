@@ -158,6 +158,7 @@
 			var/obj/item/gun/energy/gun = module
 			if(!gun.chambered)
 				gun.recharge_newshot() //try to reload a new shot.
+
 	cyborg.toner = cyborg.tonermax
 
 /obj/item/robot_model/proc/get_or_create_estorage(storage_type)
