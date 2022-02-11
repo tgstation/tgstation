@@ -68,14 +68,13 @@
 		temp_bleed += iter_bleed_rate * delta_time
 		iter_part.generic_bleedstacks = max(0, iter_part.generic_bleedstacks - 1)
 
-		testing("[src] bf: [temp_bleed]")
 		var/new_bleed_icon
 		switch(iter_bleed_rate)
 			if(-INFINITY to 1)
 				new_bleed_icon = null
-			if(1 to 2)
+			if(1 to 3)
 				new_bleed_icon = "[iter_part.body_zone]_1s"
-			if(2 to INFINITY)
+			if(3 to INFINITY)
 				new_bleed_icon = "[iter_part.body_zone]_2s"
 
 		if(new_bleed_icon != iter_part.bleed_icon_severity)
