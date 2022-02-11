@@ -78,9 +78,11 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 	if(where_to_put_our_heart)
 		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
-		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets. \
+		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], \
+			allowing you to track sacrifice targets. \
 			Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
-			to awaken your [where_to_put_our_heart.name] into a Living Heart. If your heart is cybernetic, \
+			to awaken your replacement [where_to_put_our_heart.name] into a Living Heart. \
+			If your [where_to_put_our_heart.name] is cybernetic, \
 			you will additionally require a usable organic [where_to_put_our_heart.name] in the transmutation."
 
 	else
