@@ -57,7 +57,7 @@
 	icon_state = "citrusdelight"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("sourness" = 1, "leaves" = 1)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | ORANGES
 
 /obj/item/food/salad/ricebowl
 	name = "ricebowl"

@@ -64,7 +64,7 @@
 	var/datum/bank_account/registered_account
 
 	/// Linked holopay.
-	var/datum/weakref/holopay_ref
+	var/obj/structure/holopay/my_store
 	/// Cooldown between projecting holopays
 	COOLDOWN_DECLARE(last_holopay_projection)
 	/// List of logos available for holopay customization - via font awesome 5
@@ -117,8 +117,8 @@
 /obj/item/card/id/Destroy()
 	if (registered_account)
 		registered_account.bank_cards -= src
-	if (holopay_ref)
-		QDEL_NULL(holopay_ref)
+	if (my_store)
+		QDEL_NULL(my_store)
 	return ..()
 
 /obj/item/card/id/get_id_examine_strings(mob/user)
@@ -410,8 +410,6 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	/// Sanity checks
-	var/obj/structure/holopay/my_store = holopay_ref?.resolve()
 	if(my_store)
 		my_store.dissapate()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -439,7 +437,7 @@
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
 		playsound(projection, "sound/effects/empulse.ogg", 40, TRUE)
-		holopay_ref = WEAKREF(new_store)
+		my_store = new_store
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**

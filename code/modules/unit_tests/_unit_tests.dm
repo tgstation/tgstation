@@ -71,6 +71,7 @@
 #include "gas_transfer.dm"
 #include "greyscale_config.dm"
 #include "heretic_knowledge.dm"
+#include "heretic_rituals.dm"
 #include "holidays.dm"
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"

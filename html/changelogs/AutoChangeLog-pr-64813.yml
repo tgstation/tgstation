@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - balance: "Omega soap now has 800 uses instead of 301"
+  - expansion: "Gave all soaps custom grind results, mainly for consistency"

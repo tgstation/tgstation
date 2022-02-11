@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - expansion: "Honkbots now handcuff people, if you somehow manage to get caught by one."
+  - bugfix: "Honkbots now no longer spam you and break the game"

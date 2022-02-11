@@ -1,0 +1,4 @@
+author: "Lyn505"
+delete-after: True
+changes: 
+  - bugfix: "blast doors no longer give you a balloon alert about opening it first when you crowbar them open while unpowered"

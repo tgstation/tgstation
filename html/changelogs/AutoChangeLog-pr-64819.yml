@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed active objectives spontaneously failing over time."
