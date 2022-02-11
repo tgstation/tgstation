@@ -54,7 +54,7 @@
 	var/list/datum/ai_module/current_modules = list()
 	var/can_dominate_mechs = FALSE
 	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
-
+	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
 	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
 	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
@@ -1050,3 +1050,10 @@
 	var/datum/job/ai/ai_job_ref = SSjob.GetJobType(/datum/job/ai)
 
 	.[ai_job_ref.title] = minutes
+
+
+/mob/living/silicon/ai/GetVoice()
+	. = ..()
+	if(ai_voicechanger.changing_voice)
+		return ai_voicechanger.say_name
+	return
