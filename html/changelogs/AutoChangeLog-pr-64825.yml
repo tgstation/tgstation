@@ -1,0 +1,5 @@
+author: "ma44"
+delete-after: True
+changes: 
+  - code_imp: "Simple animals can be told (in code) to stop moving around more easily"
+  - refactor: "Simple animals can now be told to go to places more easily"
