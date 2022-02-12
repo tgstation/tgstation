@@ -159,13 +159,6 @@
 	sound1 = 'sound/magic/teleport_diss.ogg'
 	sound2 = 'sound/magic/teleport_app.ogg'
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/santa
-	name = "Santa Teleport"
-
-	invocation = "HO HO HO"
-	clothes_req = FALSE
-	say_destination = FALSE // Santa moves in mysterious ways
-
 /obj/effect/proc_holder/spell/aoe_turf/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
