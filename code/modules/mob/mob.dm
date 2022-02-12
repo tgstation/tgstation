@@ -935,7 +935,7 @@
 		return TRUE
 
 	var/has_casting_restrictions = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags)
-	return has_casting_restrictions
+	return !has_casting_restrictions
 
 /**
  * Checks to see if the mob can block magic
