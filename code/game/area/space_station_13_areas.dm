@@ -474,6 +474,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/hallway/secondary/construction/engineering
 	name = "\improper Engineering Hallway"
+	icon_state = "engine_hallway"
 
 /area/hallway/secondary/exit
 	name = "\improper Escape Shuttle Hallway"
