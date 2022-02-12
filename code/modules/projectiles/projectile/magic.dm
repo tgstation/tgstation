@@ -13,7 +13,7 @@
 
 /obj/projectile/magic/prehit_pierce(mob/living/target)
 	. = ..()
-	if(!istype(target) && target.can_block_magic(antimagic_flags, antimagic_charge_cost))
+	if(istype(target) && target.can_block_magic(antimagic_flags, antimagic_charge_cost))
 		visible_message(span_warning("[src] fizzles on contact with [target]!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 			
