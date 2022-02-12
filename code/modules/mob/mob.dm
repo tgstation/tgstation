@@ -1103,11 +1103,38 @@
 /// Can this mob read
 /mob/proc/can_read(obj/O)
 	if(is_blind())
-		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
-		return
+		to_chat(src, span_warning("You are blind and can't read anything!"))
+		return FALSE
+
+	if(has_nearsight_blindness())
+		to_chat(src, span_warning("Your vision is too blurry to read anything!"))
+		return FALSE
+
 	if(!is_literate())
-		to_chat(src, span_notice("You try to read [O], but can't comprehend any of it."))
-		return
+		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
+		return FALSE
+
+
+
+	var/turf/reading_spot = get_turf(src)
+	var/light_amount = reading_spot.get_lumcount()
+	var/can_see_in_darkness = HAS_TRAIT(TRAIT_XRAY_VISION) || HAS_TRAIT(TRAIT_TRUE_NIGHT_VISION)
+
+	var/mob/living/carbon/human/reader = src
+	var/obj/item/clothing/glasses/eyewear = reader.glasses
+	if(ishuman(reader))
+
+	if(istype(eyewear, /obj/item/clothing/glasses/meson/night) || istype(eyewear,
+
+	var/has_nightvision_glasses =
+
+	if(light_amount < 0.2)
+
+
+		/obj/item/clothing/glasses/night
+		to_chat(M, span_warning("It's too dark in here to read!"))
+		return FALSE
+
 	return TRUE
 
 /**
