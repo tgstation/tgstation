@@ -66,7 +66,7 @@
  */
 /obj/structure/alien/resin/flower_bud/proc/bear_fruit()
 	visible_message(span_danger("The plant has borne fruit!"))
-	var/mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap = new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
+	var/mob/living/simple_animal/hostile/venus_human_trap/spawned_human_trap = new(get_turf(src))
 	if(trait_flags & SPACEVINE_HEAT_RESISTANT)
 		spawned_human_trap.unsuitable_heat_damage = 0
 	if(trait_flags & SPACEVINE_COLD_RESISTANT)
