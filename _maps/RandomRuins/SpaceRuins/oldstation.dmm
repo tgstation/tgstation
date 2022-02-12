@@ -744,7 +744,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "ch" = (
@@ -1373,7 +1375,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/sec)
 "dT" = (
@@ -1424,7 +1428,9 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light_switch/directional/west,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/comm)
 "dX" = (
@@ -1455,7 +1461,9 @@
 "ec" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 0
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "ed" = (
@@ -2194,7 +2202,9 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "gf" = (
@@ -2418,7 +2428,9 @@
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z,
 /obj/item/reagent_containers/glass/bottle/nutrient/rh,
 /obj/structure/closet/crate/hydroponics,
-/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/power/apc/auto_name/directional/south{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "gG" = (
@@ -3248,7 +3260,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/engi)
 "iy" = (
@@ -3890,7 +3904,9 @@
 /obj/item/stack/sheet/glass{
 	amount = 25
 	},
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "jS" = (
@@ -3960,7 +3976,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/pipe/layer_manifold,
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "jZ" = (
@@ -4020,7 +4038,9 @@
 "kg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 0
+	},
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "kh" = (
@@ -4493,7 +4513,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "lw" = (
@@ -4504,7 +4526,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 0
+	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ly" = (
@@ -4867,7 +4891,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north{
+	start_charge = 0
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/ancientstation/medbay)
 "mv" = (
@@ -5031,7 +5057,9 @@
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/power/apc/auto_name/directional/south{
+	start_charge = 0
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/mining)
 "mR" = (
@@ -5906,7 +5934,9 @@
 	},
 /obj/effect/decal/cleanable/glass,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/power/apc/auto_name/directional/west{
+	start_charge = 0
+	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betastorage)
 "oQ" = (
