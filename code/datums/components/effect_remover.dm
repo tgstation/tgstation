@@ -64,4 +64,6 @@
 		real_feedback = replacetext(real_feedback, "%THEWEAPON", "\the [item_parent]")
 		to_chat(user, span_notice(real_feedback))
 	on_clear_callback?.Invoke(target, user)
-	qdel(target)
+
+	if(!QDELETED(target))
+		qdel(target)
