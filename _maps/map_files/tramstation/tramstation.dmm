@@ -37990,8 +37990,6 @@
 	c_tag = "Science - Lower Power Hatch";
 	network = list("ss13","rd")
 	},
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/lesser)
 "mjF" = (
