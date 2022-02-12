@@ -113,10 +113,10 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 //Maipulators
-/datum/design/micro_mani
-	name = "Micro Manipulator"
+/datum/design/basic_manipulator
+	name = "Basic Manipulator"
 	desc = "A stock part used in the construction of various devices."
-	id = "micro_mani"
+	id = "basic_manipulator"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = 100)
 	build_path = /obj/item/stock_parts/manipulator

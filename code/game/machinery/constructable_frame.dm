@@ -32,21 +32,21 @@
 	. = ..()
 	if(state == 3 && req_components && req_component_names)
 		var/hasContent = FALSE
-		var/requires = "It requires"
+		var/requires_string = "It requires"
 
 		for(var/i = 1 to req_components.len)
-			var/tname = req_components[i]
-			var/amt = req_components[tname]
-			if(amt == 0)
+			var/part_name = req_components[i]
+			var/amount_needed = req_components[part_name]
+			if(amount_needed == 0)
 				continue
 			var/use_and = i == req_components.len
-			requires += "[(hasContent ? (use_and ? ", and" : ",") : "")] [amt] [amt == 1 ? req_component_names[tname] : "[req_component_names[tname]]\s"]"
+			requires_string += "[(hasContent ? (use_and ? ", and" : ",") : "")] [amount_needed] [amount_needed == 1 ? req_component_names[part_name] : "[req_component_names[part_name]]\s"]"
 			hasContent = TRUE
 
 		if(hasContent)
-			. += "[requires]."
+			. += span_info("[requires_string].")
 		else
-			. += "It does not require any more components."
+			. += span_info("It does not require any more components.")
 
 /obj/structure/frame/machine/proc/update_namelist()
 	if(!req_components)
