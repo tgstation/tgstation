@@ -1141,13 +1141,17 @@
 ///This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
-	
+
+///Is this mob affected by nearsight effects
+/mob/proc/has_nearsight_blindness()
+	return FALSE
+
 ///Can this mob read (is literate and not blind)
 /mob/proc/can_read(obj/O)
-	if(is_blind()) // need to check blurry vision
-		/obj/item/clothing/glasses/regular
+	if(is_blind())
 		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
 		return FALSE
+
 	if(!is_literate())
 		to_chat(src, span_notice("You try to read [O], but can't comprehend any of it."))
 		return FALSE
