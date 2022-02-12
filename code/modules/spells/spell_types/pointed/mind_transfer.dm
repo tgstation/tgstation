@@ -34,7 +34,7 @@
 		if(stand.summoner)
 			victim = stand.summoner
 	var/datum/mind/VM = victim.mind
-	if(victim.can_block_magic() || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
+	if(victim.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || VM.has_antag_datum(/datum/antagonist/wizard) || VM.has_antag_datum(/datum/antagonist/cult) || VM.has_antag_datum(/datum/antagonist/changeling) || VM.has_antag_datum(/datum/antagonist/rev) || victim.key[1] == "@")
 		if(!silent)
 			to_chat(user, span_warning("[victim.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE
