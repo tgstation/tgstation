@@ -17,7 +17,7 @@
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.heart_organ_slot)
+	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.living_heart_organ_slot)
 	if(!our_living_heart || !HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
 		return FALSE
 

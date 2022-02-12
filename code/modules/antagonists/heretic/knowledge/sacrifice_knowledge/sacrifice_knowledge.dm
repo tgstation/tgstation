@@ -52,7 +52,7 @@
 	// then returns TRUE if skip_this_ritual is FALSE and the user's on top of the rune.
 	// If skip_this_ritual is TRUE, returns FALSE to fail the check and move onto the next ritual.
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.heart_organ_slot)
+	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.living_heart_organ_slot)
 	if(!our_living_heart || !HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
 		return FALSE
 

@@ -56,14 +56,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	. = ..()
 
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	var/obj/item/organ/where_to_put_our_heart = user.getorganslot(our_heretic.heart_organ_slot)
+	var/obj/item/organ/where_to_put_our_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 
 	// If a heretic is made from a species without a heart, we need to find a backup.
 	if(!where_to_put_our_heart)
-
 		var/static/list/backup_organs = list(
 			ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
-			ORGAN_SLOT_LIVER = /obj/item/organ/lungs,
+			ORGAN_SLOT_LIVER = /obj/item/organ/liver,
 			ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
 		)
 
@@ -71,7 +70,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			var/obj/item/organ/look_for_backup = user.getorganslot(backup_slot)
 			if(look_for_backup)
 				where_to_put_our_heart = look_for_backup
-				our_heretic.heart_organ_slot = backup_slot
+				our_heretic.living_heart_organ_slot = backup_slot
 				required_organ_type = backup_organs[backup_slot]
 				to_chat(user, span_boldnotice("As your species does not have a heart, your Living Heart is located in your [look_for_backup.name]."))
 				break
@@ -90,13 +89,13 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/living_heart/on_lose(mob/user)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.heart_organ_slot)
+	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 	if(our_living_heart)
 		qdel(our_living_heart.GetComponent(/datum/component/living_heart))
 
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.heart_organ_slot)
+	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 	if(!our_living_heart || HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
 		return FALSE
 
@@ -117,7 +116,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	var/obj/item/organ/our_new_heart = user.getorganslot(our_heretic.heart_organ_slot)
+	var/obj/item/organ/our_new_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 
 	if(our_new_heart.status != ORGAN_ORGANIC)
 		var/obj/item/organ/our_replacement_heart = locate(required_organ_type) in selected_atoms
