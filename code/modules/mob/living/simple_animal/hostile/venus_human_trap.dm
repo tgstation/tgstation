@@ -203,7 +203,7 @@
 	humanize_plant(user)
 
 /mob/living/simple_animal/hostile/venus_human_trap/Destroy()
-	for(var/datum/beam/vine in vines)
+	for(var/datum/beam/vine as anything in vines)
 		qdel(vine) // reference is automatically deleted by remove_vine
 	return ..()
 
