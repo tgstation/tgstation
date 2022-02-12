@@ -64,6 +64,7 @@
 	adjacent_turfs.Cut()
 	return ..()
 
+///adds a gas or list of gases to our filter_types. used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/add_filters(filter_or_filters)
 	if(!islist(filter_or_filters))
 		filter_or_filters = list(filter_or_filters)
@@ -87,6 +88,7 @@
 	check_atmos_process(our_turf, turf_gas, turf_gas.temperature)
 	return TRUE
 
+///remove a gas or list of gases from our filter_types.used so that the scrubber can check if its supposed to be processing after each change
 /obj/machinery/atmospherics/components/unary/vent_scrubber/proc/remove_filters(filter_or_filters)
 	if(!islist(filter_or_filters))
 		filter_or_filters = list(filter_or_filters)
@@ -217,7 +219,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	if(welded || !is_operational)
 		return FALSE
-	if(!nodes[1] || !on || !filter_types)
+	if(!nodes[1] || !on || (!filter_types && scrubbing != SIPHONING))
 		on = FALSE
 		return FALSE
 
@@ -289,7 +291,6 @@
 				filtered_gases[gas][MOLES] = transfered_moles
 				env_gases[gas][MOLES] -= transfered_moles
 
-			//removed.garbage_collect()
 			environment.garbage_collect()
 
 			//Remix the resulting gases
