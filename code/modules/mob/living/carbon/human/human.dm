@@ -767,6 +767,16 @@
 	heat_exposure_stacks = 0
 	return ..()
 
+/mob/living/carbon/human/has_nearsight_blindness()
+	if(!HAS_TRAIT(src, TRAIT_NEARSIGHT)) // check for x-ray vision and the x-ray trait too?
+		return FALSE
+	if(!src.glasses)
+		return TRUE	
+	var/obj/item/clothing/glasses/glass = src.glasses
+	if(!glass.vision_correction)
+		return TRUE
+	return FALSE
+
 /mob/living/carbon/human/is_literate()
 	return TRUE
 
