@@ -1151,9 +1151,12 @@
 	if(is_blind())
 		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
 		return FALSE
+		
+	if(has_nearsight_blindness())
+		to_chat(src, span_warning("Your vision is too blurry to read anything!"))
 
 	if(!is_literate())
-		to_chat(src, span_notice("You try to read [O], but can't comprehend any of it."))
+		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
 		return FALSE
 		
 	var/turf/reading_spot = get_turf(src)
