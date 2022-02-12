@@ -872,6 +872,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Engineering"
 	icon_state = "engine"
 
+/area/engineering/hallway
+	name = "Engineering Hallway"
+	icon_state = "engine_hallway"
+
 /area/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"

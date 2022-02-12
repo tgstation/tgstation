@@ -9,7 +9,7 @@
 	max_integrity = 15
 	layer = FLY_LAYER
 	/// ID linked to the holopay
-	var/datum/weakref/card_ref
+	var/obj/item/card/id/linked_card
 	/// Max range at which the hologram can be projected before it deletes
 	var/max_holo_range = 4
 	/// The holopay shop icon displayed in the UI
@@ -46,8 +46,13 @@
 	dissapate()
 	return ..()
 
-/obj/structure/holopay/attackby(obj/item/held_item, mob/holder, params)
-	var/mob/living/user = holder
+/obj/structure/holopay/Destroy()
+	linked_card?.my_store = null
+	linked_card = null
+	return ..()
+
+/obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, params)
+	var/mob/living/user = item_holder
 	if(!isliving(user))
 		return ..()
 	/// Users can pay with an ID to skip the UI
@@ -106,8 +111,6 @@
 
 /obj/structure/holopay/ui_static_data(mob/user)
 	. = list()
-	/// Sanity checks
-	var/obj/item/card/id/linked_card = get_card()
 	.["available_logos"] = linked_card.available_logos
 	.["description"] = desc
 	.["max_fee"] = linked_card.holopay_max_fee
@@ -132,7 +135,6 @@
 	. = ..()
 	if(.)
 		return FALSE
-	var/obj/item/card/id/linked_card = get_card()
 	switch(action)
 		if("done")
 			ui.send_full_update()
@@ -162,7 +164,7 @@
  * * TRUE - the card was linked
  */
 /obj/structure/holopay/proc/assign_card(turf/target, obj/item/card/id/card)
-	card_ref = WEAKREF(card)
+	linked_card = card
 	desc = "Pays directly into [card.registered_account.account_holder]'s bank account."
 	force_fee = card.holopay_fee
 	shop_logo = card.holopay_logo
@@ -183,7 +185,6 @@
  */
 /obj/structure/holopay/proc/check_operation()
 	SIGNAL_HANDLER
-	var/obj/item/card/id/linked_card = get_card()
 	var/card_holder = holder?.resolve()
 	if(!card_holder || linked_card.loc != card_holder)
 		if(card_holder)
@@ -198,24 +199,9 @@
  * Deletes the holopay thereafter.
  */
 /obj/structure/holopay/proc/dissapate()
-	var/obj/item/card/id/linked_card = get_card()
 	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
 	visible_message(span_notice("The pay stand vanishes."))
-	QDEL_NULL(linked_card.holopay_ref)
-
-/**
- * Checks that the card is still linked.
- * Deletes the holopay if not.
- *
- * Returns:
- * * /obj/item/card/id/card - The card that is linked to the holopay
- */
-/obj/structure/holopay/proc/get_card()
-	var/obj/item/card/id/linked_card = card_ref?.resolve()
-	if(!linked_card || !istype(linked_card, /obj/item/card/id))
-		stack_trace("Could not link a holopay to a valid card.")
-		qdel(src)
-	return linked_card
+	qdel(src)
 
 /**
  * Initiates a transaction between accounts.
@@ -226,8 +212,6 @@
  * * TRUE - transaction was successful
  */
 /obj/structure/holopay/proc/process_payment(mob/living/user)
-	// Preliminary sanity checks
-	var/obj/item/card/id/linked_card = get_card()
 	/// Account checks
 	var/obj/item/card/id/id_card
 	id_card = user.get_idcard(TRUE)
@@ -263,8 +247,6 @@
  * * TRUE - alert was successful.
  */
 /obj/structure/holopay/proc/alert_buyer(payee, amount)
-	/// Sanity checks
-	var/obj/item/card/id/linked_card = get_card()
 	/// Pay the owner
 	linked_card.registered_account.adjust_money(amount)
 	/// Make alerts

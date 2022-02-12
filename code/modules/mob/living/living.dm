@@ -760,6 +760,50 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 
 
+/*
+ * Heals up the [target] to up to [heal_to] of the main damage types.
+ * EX: If heal_to is 50, and they have 150 brute damage, they will heal 100 brute (up to 50 brute damage)
+ *
+ * If the target is dead, also revives them and heals their organs / restores blood.
+ * If we have a [revive_message], play a visible message if the revive was successful.
+ *
+ * Arguments
+ * * heal_to - the health threshold to heal the mob up to for each of the main damage types.
+ * * revive_message - if provided, a visible message to show on a successful revive.
+ *
+ * Returns TRUE if the mob is alive afterwards, or FALSE if they're still dead (revive failed).
+ */
+/mob/living/proc/heal_and_revive(heal_to = 50, revive_message)
+
+	// Heal their brute and burn up to the threshold we're looking for
+	var/brute_to_heal = heal_to - getBruteLoss()
+	var/burn_to_heal = heal_to - getFireLoss()
+	var/oxy_to_heal = heal_to - getOxyLoss()
+	var/tox_to_heal = heal_to - getToxLoss()
+	if(brute_to_heal < 0)
+		adjustBruteLoss(brute_to_heal, FALSE)
+	if(burn_to_heal < 0)
+		adjustFireLoss(burn_to_heal, FALSE)
+	if(oxy_to_heal < 0)
+		adjustOxyLoss(oxy_to_heal, FALSE)
+	if(tox_to_heal < 0)
+		adjustToxLoss(tox_to_heal, FALSE, TRUE)
+
+	// Run updatehealth once to set health for the revival check
+	updatehealth()
+
+	// We've given them a decent heal.
+	// If they happen to be dead too, try to revive them - if possible.
+	if(stat == DEAD && can_be_revived())
+		// If the revive is successful, show our revival message (if present).
+		if(revive(FALSE, FALSE, 10) && revive_message)
+			visible_message(revive_message)
+
+	// Finally update health again after we're all done
+	updatehealth()
+
+	return stat != DEAD
+
 /mob/living/proc/remove_CC()
 	SetStun(0)
 	SetKnockdown(0)
