@@ -588,3 +588,48 @@
       it has now been fixed.
   - rscadd: Engineering Unions are planning strikes after their break rooms have been
       slashed in half by Nanotrasen on DeltaStation and KiloStation.
+2022-02-12:
+  Bizzonium:
+  - refactor: make SSrunechat to be subsystem of SStimer
+  GoblinBackwards:
+  - bugfix: USB cables no longer allow you to bypass the gas pumps pressure limits
+      of 0-4500 kPa.
+  JohnFulpWillard:
+  - spellcheck: The introduction to the Brig's genpop system has been fixed of a few
+      spelling mistakes.
+  - bugfix: Role-restricted and species restricted items can be purchased again.
+  - bugfix: Species-restricted items no longer appear in surplus.
+  - bugfix: Chaplain Sparring sect's soulstone now has their intended unique name
+      and description.
+  - expansion: Honkbots now handcuff people, if you somehow manage to get caught by
+      one.
+  - bugfix: Honkbots now no longer spam you and break the game
+  - bugfix: Mime finger guns cannot be used while you have something in your hand.
+  Lyn505:
+  - bugfix: blast doors no longer give you a balloon alert about opening it first
+      when you crowbar them open while unpowered
+  Melbert:
+  - bugfix: Fixes uncommon runtimes that could occur when observers examine heirlooms
+  - qol: Bad Touch doesn't trigger if the person's dead
+  - bugfix: Fixes hauntium from runtiming a lot and not haunting people
+  Mothblocks:
+  - qol: Made the balloon alerts for rotating stuff more consistent and less intrusive.
+  RandomGamer123:
+  - bugfix: Dronespeak manuals now can actually only be used on silicons and drones.
+  Watermelon914:
+  - admin: Added a lot more logging to admin circuits
+  - admin: Admin circuits display names will now replace the entire name of the shell.
+  - admin: Save Shell component will no longer load the variables that were saved
+      for a shell.
+  - bugfix: Fixed several things breaking with mobs whenever an integrated circuit
+      was spawned with a shell.
+  - expansion: Adds a trigger version of the current variable setter circuit component.
+  - bugfix: Fixed active objectives spontaneously failing over time.
+  cacogen:
+  - balance: Omega soap now has 800 uses instead of 301
+  - expansion: Gave all soaps custom grind results, mainly for consistency
+  ike709:
+  - bugfix: Chameleon items now cover the correct slots of whatever they're mimicking
+  - refactor: Timer subsystems can now recover from a deleted MC properly.
+  tastyfish:
+  - qol: Status displays now scroll text smoothly.

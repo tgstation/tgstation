@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes uncommon runtimes that could occur when observers examine heirlooms"
