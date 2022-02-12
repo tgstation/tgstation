@@ -897,6 +897,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
+	icon_state = "atmos_projectroom"
 
 /area/engineering/atmos/pumproom
 	name = "\improper Atmospherics Pumping Room"
@@ -912,9 +913,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/office
 	name = "\improper Atmospherics Office"
+	icon_state = "atmos_office"
 
 /area/engineering/atmos/hfr_room
 	name = "\improper Atmospherics HFR Room"
+	icon_state = "atmos_HFR"
 
 /area/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
