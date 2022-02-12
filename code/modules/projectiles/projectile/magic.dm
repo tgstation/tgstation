@@ -312,7 +312,7 @@
 ///Fade away into nothing
 /obj/structure/closet/decay/proc/decay()
 	animate(src, alpha = 0, time = 3 SECONDS)
-	addtimer(CALLBACK(src, .proc/decay_finished), 30)
+	addtimer(CALLBACK(src, .proc/decay_finished), 3 SECONDS)
 
 /obj/structure/closet/decay/proc/decay_finished()
 	dump_contents()
