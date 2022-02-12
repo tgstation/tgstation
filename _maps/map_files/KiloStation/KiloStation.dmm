@@ -15077,12 +15077,6 @@
 /obj/structure/sign/warning/securearea,
 /turf/closed/wall/r_wall,
 /area/maintenance/port/greater)
-"bFG" = (
-/obj/structure/window/reinforced,
-/obj/machinery/light/small/directional/east,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "bFI" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/line{
@@ -55958,7 +55952,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/ai_monitored/turret_protected/ai_upload)
 "nYK" = (
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating{
@@ -58899,12 +58893,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/science/misc_lab)
-"paZ" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/cable,
-/obj/structure/lattice/catwalk,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "pbl" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/neutral,
@@ -68389,10 +68377,6 @@
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"spr" = (
-/obj/machinery/light/directional/south,
-/turf/open/space,
-/area/space/nearstation)
 "spN" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -69717,12 +69701,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
-"sRn" = (
-/obj/machinery/light/directional/east,
-/obj/structure/cable,
-/obj/structure/lattice/catwalk,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "sRp" = (
@@ -72277,7 +72255,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space/basic,
-/area/space/nearstation)
+/area/ai_monitored/turret_protected/ai_upload)
 "tQw" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -112784,10 +112762,10 @@ aeD
 apX
 aox
 acm
-cry
+aaa
 tQr
 acm
-cry
+aaa
 acm
 aox
 jzF
@@ -113043,10 +113021,10 @@ asj
 axf
 axf
 axf
-sRn
 axf
 axf
-paZ
+axf
+axf
 bff
 bff
 tPZ
@@ -113294,8 +113272,8 @@ aRk
 pWz
 aSn
 aTR
-cry
-spr
+aaa
+jAp
 arl
 arl
 bdQ
@@ -114329,7 +114307,7 @@ kHJ
 byK
 byT
 bdQ
-cry
+aaa
 axf
 tPZ
 gJh
@@ -115350,8 +115328,8 @@ aRw
 aPv
 aSn
 aTR
-cry
-spr
+aaa
+jAp
 bha
 arl
 aZQ
@@ -115867,12 +115845,12 @@ aox
 aeD
 aox
 aox
-cry
+aaa
 acm
 nYC
-cry
+aaa
 acm
-cry
+aaa
 acm
 bgP
 xXS
@@ -116645,7 +116623,7 @@ uuQ
 uuQ
 kbw
 apX
-bFG
+bgP
 euE
 xFH
 kRb
