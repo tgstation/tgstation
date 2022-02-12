@@ -121,7 +121,7 @@
 					to_chat(user, span_warning("You need at least two sheets to add plating!"))
 					return
 				to_chat(user, span_notice("You start adding plating..."))
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 4 SECONDS, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -199,7 +199,7 @@
 					to_chat(user, span_warning("You need at least two sheets to add plating!"))
 					return
 				to_chat(user, span_notice("You start adding plating..."))
-				if (do_after(user, 40, target = src))
+				if (do_after(user, 4 SECONDS, target = src))
 					if(S.get_amount() < 2)
 						return
 					S.use(2)
@@ -271,7 +271,7 @@
 		user.visible_message(span_warning("[user] disassembles the girder."),
 			span_notice("You start to disassemble the girder..."),
 			span_hear("You hear clanking and banging noises."))
-		if(tool.use_tool(src, user, 40, volume=100))
+		if(tool.use_tool(src, user, 4 SECONDS, volume=100))
 			if(state != GIRDER_TRAM)
 				return
 			state = GIRDER_DISASSEMBLED

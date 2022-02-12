@@ -32,9 +32,14 @@
 	qdel(initialized_mineral)
 	air_update_turf(TRUE, TRUE)
 
-/obj/structure/tramwall/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WELDER)
-		if(W.use_tool(src, user, 0, volume=50))
+/obj/structure/tramwall/attackby(obj/item/welder, mob/user, params)
+	if(welder.tool_behaviour == TOOL_WELDER)
+		if(!welder.tool_start_check(user, amount=0))
+			return FALSE
+
+		to_chat(user, span_notice("You begin slicing through the outer plating..."))
+		if(welder.use_tool(src, user, 10 SECONDS, volume=100))
+			to_chat(user, span_notice("You remove the outer plating."))
 			dismantle(user, TRUE)
 	else
 		return ..()
