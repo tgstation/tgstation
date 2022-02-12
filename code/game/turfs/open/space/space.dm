@@ -241,6 +241,9 @@
 			return TRUE
 	return FALSE
 
+/turf/open/space/rust_heretic_act()
+	return FALSE
+
 /turf/open/space/ReplaceWithLattice()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
