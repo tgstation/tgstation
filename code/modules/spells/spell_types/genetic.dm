@@ -22,6 +22,7 @@
 	playMagSound()
 	for(var/mob/living/carbon/target in targets)
 		if(target.can_block_magic())
+			to_chat(user, span_warning("The spell had no effect on [target]!"))		
 			continue
 		if(!target.dna)
 			continue

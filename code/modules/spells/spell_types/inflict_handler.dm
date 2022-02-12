@@ -22,6 +22,7 @@
 	for(var/mob/living/target in targets)
 		playsound(target,sound, 50,TRUE)
 		if(target.can_block_magic(antimagic_flags))
+			to_chat(user, span_warning("The spell had no effect on [target]!"))
 			return
 		switch(destroys)
 			if("gib")
