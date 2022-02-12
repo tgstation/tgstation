@@ -308,6 +308,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	if(isnull(options[victim]))
 		return
 	target = options[victim]
+	log_game("[key_name(user)] has aimed the artillery strike at [target].")
 
 
 /obj/machinery/computer/bsa_control/proc/get_target_name()
