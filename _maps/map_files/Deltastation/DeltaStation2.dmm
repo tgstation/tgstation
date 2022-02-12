@@ -65906,7 +65906,6 @@
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
 "mEX" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
