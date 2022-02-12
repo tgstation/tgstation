@@ -26,7 +26,7 @@
 	obj_source.name = replacetext(obj_source.name, "frozen ", "")
 	obj_source.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, GLOB.freon_color_matrix)
 	obj_source.alpha += 25
-	. = ..()
+	return ..()
 
 /datum/element/frozen/proc/on_unfrozen(datum/source)
 	SIGNAL_HANDLER
