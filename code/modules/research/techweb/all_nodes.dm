@@ -11,10 +11,10 @@
 	design_ids = list(
 		"basic_capacitor",
 		"basic_cell",
+		"basic_manipulator",
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
-		"basic_manipulator",
 		"bepis",
 		"bucket",
 		"c38_rubber",
