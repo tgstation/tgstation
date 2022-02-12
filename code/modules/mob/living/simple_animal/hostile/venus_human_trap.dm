@@ -1,6 +1,3 @@
-
-#define VENUS_HUMAN_TRAP_STAMINA_DAMAGE 85
-#define VENUS_HUMAN_TRAP_KNOCKDOWN 1 SECONDS
 #define FINAL_BUD_GROWTH_ICON 3
 /**
  * Kudzu Flower Bud
@@ -188,8 +185,8 @@
 	vines += newVine
 	if(isliving(the_target))
 		var/mob/living/L = the_target
-		L.apply_damage(VENUS_HUMAN_TRAP_STAMINA_DAMAGE, STAMINA, BODY_ZONE_CHEST)
-		L.Knockdown(VENUS_HUMAN_TRAP_KNOCKDOWN)
+		L.apply_damage(85, STAMINA, BODY_ZONE_CHEST)
+		L.Knockdown(1 SECONDS)
 	ranged_cooldown = world.time + ranged_cooldown_time
 
 /mob/living/simple_animal/hostile/venus_human_trap/Login()
@@ -256,6 +253,4 @@
 
 	vines -= vine
 
-#undef VENUS_HUMAN_TRAP_STAMINA_DAMAGE
-#undef VENUS_HUMAN_TRAP_KNOCKDOWN
 #undef FINAL_BUD_GROWTH_ICON
