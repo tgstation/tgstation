@@ -744,12 +744,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Beta Station Main Corridor APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/betacorridor)
 "ch" = (
@@ -1368,12 +1363,6 @@
 "dS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Charlie Security APC";
-	pixel_x = -25;
-	start_charge = 0
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -1384,6 +1373,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/sec)
 "dT" = (
@@ -1432,14 +1422,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Charlie Station Bridge APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/comm)
 "dX" = (
@@ -1470,12 +1455,7 @@
 "ec" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Delta Station RnD APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/rnd)
 "ed" = (
@@ -2212,14 +2192,9 @@
 "ge" = (
 /obj/structure/alien/weeds,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Delta Station Artifical Program Core APC";
-	pixel_x = 25;
-	start_charge = 0
-	},
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/old,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/deltaai)
 "gf" = (
@@ -2439,15 +2414,11 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	name = "Charlie Station Garden APC ";
-	pixel_y = -25;
-	start_charge = 0
-	},
 /obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z,
 /obj/item/reagent_containers/glass/bottle/nutrient/rh,
 /obj/structure/closet/crate/hydroponics,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "gG" = (
@@ -3269,12 +3240,6 @@
 /obj/structure/rack,
 /obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Charlie Engineering APC";
-	pixel_x = 25;
-	start_charge = 0
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -3283,6 +3248,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/engi)
 "iy" = (
@@ -3917,12 +3883,6 @@
 "jQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Charlie Main Corridor APC";
-	pixel_x = 25;
-	start_charge = 0
-	},
 /obj/structure/cable,
 /obj/item/stack/sheet/glass{
 	amount = 50
@@ -3930,6 +3890,7 @@
 /obj/item/stack/sheet/glass{
 	amount = 25
 	},
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation)
 "jS" = (
@@ -3992,12 +3953,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/hydroponics)
 "jY" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Beta Atmospherics APC";
-	pixel_x = 25;
-	start_charge = 0
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow{
@@ -4005,6 +3960,7 @@
 	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/machinery/atmospherics/pipe/layer_manifold,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/atmo)
 "jZ" = (
@@ -4063,13 +4019,8 @@
 /area/ruin/space/has_grav/ancientstation/proto)
 "kg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Delta Prototype Lab APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/proto)
 "kh" = (
@@ -4540,14 +4491,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Delta Station Corridor APC";
-	pixel_x = 25;
-	start_charge = 0
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "lw" = (
@@ -4556,14 +4502,9 @@
 /area/ruin/space/has_grav/ancientstation/deltacorridor)
 "lx" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Charlie Station Kitchen APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
 /obj/structure/cable,
 /obj/machinery/light/small/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/ancientstation/kitchen)
 "ly" = (
@@ -4919,12 +4860,6 @@
 	info = "<b>*Prototype Sleeper*</b><br><br>We have deliverted the lastest in medical technology to the medical bay for your use."
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Beta Station Medbay APC";
-	pixel_y = 25;
-	start_charge = 0
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -4932,6 +4867,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/ancientstation/medbay)
 "mv" = (
@@ -5089,17 +5025,13 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/sec)
 "mQ" = (
-/obj/machinery/power/apc{
-	name = "Beta Station Mining Equipment APC ";
-	pixel_y = -25;
-	start_charge = 0
-	},
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/mining)
 "mR" = (
@@ -5973,13 +5905,8 @@
 	icon_state = "medium"
 	},
 /obj/effect/decal/cleanable/glass,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Beta Storage APC";
-	pixel_x = -25;
-	start_charge = 0
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/betastorage)
 "oQ" = (
