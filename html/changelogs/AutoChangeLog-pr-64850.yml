@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes: 
+  - balance: "Polar bear transformation converts health percentage over when you transform."
