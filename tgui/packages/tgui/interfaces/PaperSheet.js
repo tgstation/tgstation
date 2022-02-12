@@ -359,7 +359,7 @@ class PaperSheetStamper extends Component {
 
 // This creates the html from marked text as well as the form fields
 const createPreview = (
-  value, 
+  value,
   text,
   do_fields = false,
   field_counter,
@@ -420,7 +420,7 @@ class PaperSheetEdit extends Component {
 
   createPreviewFromData(value, do_fields = false) {
     const { data } = useBackend(this.context);
-    return createPreview(value, 
+    return createPreview(value,
       this.state.old_text,
       do_fields,
       this.state.counter,

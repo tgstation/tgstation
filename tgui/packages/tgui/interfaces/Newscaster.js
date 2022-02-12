@@ -1,8 +1,14 @@
+/**
+ * @file
+ * @author Original ArcaneMusic (https://github.com/ArcaneMusic)
+ * @license MIT
+ */
+
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
+import marked from 'marked';
 import { sanitizeText } from "../sanitize";
-import { createPreview } from "./PaperSheet";
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
@@ -129,6 +135,19 @@ const NewscasterChannelSelector = (props, context) => {
   );
 };
 
+const processedText = value => {
+  const textHtml = {
+    __html: sanitizeText(value),
+  };
+  return marked(textHtml, {
+    breaks: true,
+    smartypants: true,
+    smartLists: true,
+    baseUrl: 'thisshouldbreakhttp',
+  });
+};
+
+
 /** This is where the channels comments get spangled out (tm) */
 const NewscasterChannelMessages = (props, context) => {
   const { act, data } = useBackend(context);
@@ -136,18 +155,6 @@ const NewscasterChannelMessages = (props, context) => {
     messages = [],
     viewing_channel,
   } = data;
-  const processing = createPreview(
-    0,
-    message.body,
-    false,
-    0,
-    white,
-    arial,
-    null
-  );
-  const textHtml = {
-    __html: sanitizeText(messages.body),
-  };
   return (
     <Section>
       {messages?.map(message => {
@@ -159,7 +166,7 @@ const NewscasterChannelMessages = (props, context) => {
             // textColor="white"
             key={message.body}>
             <Section>
-              {processing}
+              {processedText(message.body)}
             </Section>
             <Box
               pl={2.5}
