@@ -89,6 +89,7 @@
 	invocation_type = "none"
 	range = -1
 	include_user = TRUE
+	antimagic_flags = NONE // no cast restrictions
 
 	smoke_spread = 1
 	smoke_amt = 2
