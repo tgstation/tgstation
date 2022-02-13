@@ -57282,7 +57282,6 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "tyc" = (
-/obj/machinery/modular_computer/console/preset/civilian,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
@@ -57292,6 +57291,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/computer/rdconsole,
 /turf/open/floor/iron,
 /area/science/lab)
 "tyd" = (

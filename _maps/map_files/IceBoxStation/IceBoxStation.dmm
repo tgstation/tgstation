@@ -53701,14 +53701,14 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
 "xFK" = (
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 4
-	},
 /obj/machinery/requests_console/directional/west{
 	department = "Science";
 	departmentType = 2;
 	name = "Science Requests Console";
 	receive_ore_updates = 1
+	},
+/obj/machinery/computer/rdconsole{
+	dir = 4
 	},
 /turf/open/floor/iron/checker,
 /area/science/lab)

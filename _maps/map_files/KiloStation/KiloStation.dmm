@@ -11279,7 +11279,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/modular_computer/console/preset/civilian{
+/obj/machinery/computer/rdconsole{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
