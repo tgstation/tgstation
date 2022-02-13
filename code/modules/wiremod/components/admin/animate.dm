@@ -83,6 +83,7 @@
 	if(parallel.value)
 		extra_flags |= ANIMATION_PARALLEL
 
+	log_admin_circuit("[parent.get_creator()] performed an animation on [target_atom].")
 	var/list/first_step = popleft(result["animation_steps"])
 	animate(target_for_animation, time = first_step["time"], first_step["vars"], loop = animation_loops.value, easing = first_step["easing"], flags = first_step["flags"]|extra_flags)
 	for(var/list/step as anything in result["animation_steps"])

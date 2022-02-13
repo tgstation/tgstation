@@ -8,11 +8,10 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "be" = (
-/obj/machinery/power/apc/syndicate{
-	name = "Experimentation Lab APC";
-	pixel_y = -23
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south{
+	req_access_txt = "150"
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "bs" = (
@@ -63,18 +62,36 @@
 /obj/item/pen,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
+"fY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
 "gJ" = (
 /obj/structure/table/reinforced,
 /obj/item/paper/crumpled{
 	info = "Explosive testing on site is STRICTLY forbidden, as this outpost's walls are lined with explosives intended for intentional self-destruct purposes that may be set off prematurely through careless experiments.";
 	name = "Explosives Testing Warning";
 	pixel_x = -6;
-	pixel_y = -3
+	pixel_y = 5
 	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/meson{
+	pixel_y = 5
+	},
+/obj/item/clothing/glasses/material/mining{
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/meson,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "gX" = (
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/airalarm/directional/north{
+	req_access = list(150)
+	},
 /obj/item/stock_parts/matter_bin/bluespace,
 /obj/item/stock_parts/matter_bin/bluespace,
 /obj/item/stock_parts/matter_bin/bluespace,
@@ -122,12 +139,16 @@
 /area/ruin/syndicate_lava_base/testlab)
 "kP" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "lR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/power/energy_accumulator/grounding_rod/anchored,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "me" = (
@@ -160,12 +181,26 @@
 /obj/modular_map_connector,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
+"oo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/machinery/power/energy_accumulator/tesla_coil/anchored,
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
 "oV" = (
 /obj/structure/window/reinforced/plasma/spawner,
 /obj/structure/window/reinforced/plasma/spawner/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
+/turf/open/floor/engine,
+/area/ruin/syndicate_lava_base/testlab)
+"qY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "rT" = (
@@ -213,6 +248,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "yO" = (
@@ -261,7 +297,9 @@
 /area/ruin/syndicate_lava_base/testlab)
 "HC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/machinery/airalarm/directional/south,
+/obj/machinery/airalarm/directional/south{
+	req_access = list(150)
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/testlab)
 "It" = (
@@ -286,6 +324,11 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/testlab)
+"Rn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "Rp" = (
 /obj/effect/turf_decal/stripes/line{
@@ -329,6 +372,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/testlab)
 "ZR" = (
@@ -401,9 +445,9 @@ aA
 em
 bs
 Yj
-Yj
-Yj
-Yj
+qY
+qY
+qY
 Ys
 xT
 em
@@ -416,7 +460,7 @@ aA
 hK
 me
 XS
-AS
+fY
 GD
 oV
 js
@@ -431,7 +475,7 @@ aA
 EC
 me
 XS
-AS
+Rn
 js
 yO
 js
@@ -446,7 +490,7 @@ on
 em
 me
 AS
-AS
+oo
 JO
 Ce
 Rp

@@ -37,6 +37,11 @@
 
 //this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection()
+	var/turf/current_turf = get_turf(src)
+	var/datum/gas_mixture/environment = current_turf.return_air()
+	var/pressure = environment ? environment.return_pressure() : 0
+	if(pressure < SOUND_MINIMUM_PRESSURE) //space is empty
+		return 1
 	return 0
 
 /mob/living/proc/is_mouth_covered(head_only = 0, mask_only = 0)
@@ -51,15 +56,16 @@
 
 /mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
-	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration, "", FALSE, P.weak_against_armour)
-	var/on_hit_state = P.on_hit(src, armor, piercing_hit)
-	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
+	if(!P.nodamage && (. != BULLET_ACT_BLOCK))
 		var/attack_direction = get_dir(P.starting, src)
 		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
-	return on_hit_state ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
+	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
+
+/mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile)
+	return run_armor_check(def_zone, impacting_projectile.flag, "","",impacting_projectile.armour_penetration, "", FALSE, impacting_projectile.weak_against_armour)
 
 /mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	return 0

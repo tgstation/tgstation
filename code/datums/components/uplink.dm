@@ -39,7 +39,15 @@
 	/// The failsafe code that causes this uplink to blow up.
 	var/failsafe_code
 
-/datum/component/uplink/Initialize(owner, lockable = TRUE, enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT, has_progression = FALSE, datum/uplink_handler/uplink_handler_override)
+/datum/component/uplink/Initialize(
+	owner,
+	lockable = TRUE,
+	enabled = FALSE,
+	uplink_flag = UPLINK_TRAITORS,
+	starting_tc = TELECRYSTALS_DEFAULT,
+	has_progression = FALSE,
+	datum/uplink_handler/uplink_handler_override,
+)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -57,6 +65,7 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
+
 	if(owner)
 		src.owner = owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
@@ -184,13 +193,14 @@
 			"name" = item.name,
 			"cost" = item.cost,
 			"desc" = item.desc,
-			"category" = item.category? initial(item.category.name) : null,
+			"category" = item.category ? initial(item.category.name) : null,
 			"purchasable_from" = item.purchasable_from,
 			"restricted" = item.restricted,
 			"limited_stock" = item.limited_stock,
 			"restricted_roles" = item.restricted_roles,
+			"restricted_species" = item.restricted_species,
 			"progression_minimum" = item.progression_minimum,
-			"ref" = REF(item)
+			"ref" = REF(item),
 		))
 
 	var/list/remaining_stock = list()
@@ -208,6 +218,7 @@
 	data["has_objectives"] = uplink_handler.has_objectives
 	data["lockable"] = lockable
 	data["assigned_role"] = uplink_handler.assigned_role
+	data["assigned_species"] = uplink_handler.assigned_species
 	data["debug"] = uplink_handler.debug_mode
 	return data
 

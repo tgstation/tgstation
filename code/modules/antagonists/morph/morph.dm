@@ -35,12 +35,13 @@
 	var/eat_while_disguised = FALSE
 	var/atom/movable/form = null
 	var/static/list/blacklist_typecache = typecacheof(list(
-	/atom/movable/screen,
-	/obj/singularity,
-	/obj/energy_ball,
-	/obj/narsie,
-	/mob/living/simple_animal/hostile/morph,
-	/obj/effect))
+		/atom/movable/screen,
+		/obj/singularity,
+		/obj/energy_ball,
+		/obj/narsie,
+		/mob/living/simple_animal/hostile/morph,
+		/obj/effect,
+	))
 
 /mob/living/simple_animal/hostile/morph/Initialize(mapload)
 	. = ..()

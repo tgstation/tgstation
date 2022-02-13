@@ -381,8 +381,32 @@
 				/obj/item/storage/firstaid = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
+	parts = list(
+		/obj/item/storage/firstaid = 1,
+		/obj/item/healthanalyzer = 1,
+		)
 	time = 40
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
+	var/mob/living/simple_animal/bot/medbot/bot = result
+	var/obj/item/storage/firstaid/first_aid = bot.contents[3]
+	bot.firstaid = first_aid
+	bot.healthanalyzer = bot.contents[4]
+
+	if (istype(first_aid, /obj/item/storage/firstaid/fire))
+		bot.skin = "ointment"
+	else if (istype(first_aid, /obj/item/storage/firstaid/toxin))
+		bot.skin = "tox"
+	else if (istype(first_aid, /obj/item/storage/firstaid/o2))
+		bot.skin = "o2"
+	else if (istype(first_aid, /obj/item/storage/firstaid/brute))
+		bot.skin = "brute"
+	else if (istype(first_aid, /obj/item/storage/firstaid/advanced))
+		bot.skin = "advanced"
+
+	bot.damagetype_healer = initial(first_aid.damagetype_healed) ? initial(first_aid.damagetype_healed) : BRUTE
+	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
@@ -631,6 +655,10 @@
 				/obj/item/radio = 1)
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/radiogloves/New()
+	..()
+	blacklist |= subtypesof(/obj/item/radio)
 
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
@@ -948,6 +976,17 @@
 	result = /obj/item/reagent_containers/glass/bucket/wooden
 	category = CAT_PRIMAL
 
+/datum/crafting_recipe/ore_sensor
+	name = "Ore Sensor"
+	time = 3 SECONDS
+	reqs = list(
+		/datum/reagent/brimdust = 15,
+		/obj/item/stack/sheet/bone = 1,
+		/obj/item/stack/sheet/sinew = 1,
+	)
+	result = /obj/item/ore_sensor
+	category = CAT_PRIMAL
+
 /datum/crafting_recipe/headpike
 	name = "Spike Head (Glass Spear)"
 	time = 65
@@ -1193,13 +1232,13 @@
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
-	reqs = list(/obj/item/stack/sheet/plasteel = 10,
-				/obj/item/stack/cable_coil = 10,
+	reqs = list(/obj/item/stack/sheet/plasteel = 5,
+				/obj/item/stack/cable_coil = 5,
 				/obj/item/electronics/airlock = 1
 				)
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
-	time = 15 SECONDS
+	time = 10 SECONDS
 	category = CAT_MISC
 	one_per_turf = TRUE
 
@@ -1225,7 +1264,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/mod_core
+/datum/crafting_recipe/mod_core_standard
 	name = "MOD core (Standard)"
 	result = /obj/item/mod/core/standard
 	tool_behaviors = list(TOOL_SCREWDRIVER)
@@ -1237,7 +1276,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/mod_core
+/datum/crafting_recipe/mod_core_ethereal
 	name = "MOD core (Ethereal)"
 	result = /obj/item/mod/core/ethereal
 	tool_behaviors = list(TOOL_SCREWDRIVER)

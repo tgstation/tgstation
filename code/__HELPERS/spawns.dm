@@ -25,8 +25,11 @@
 	var/obj/structure/closet/supplypod/podspawn/pod = new spawn_type(null, style)
 	if(paths_to_spawn && !islist(paths_to_spawn))
 		paths_to_spawn = list(paths_to_spawn)
-	for(var/atom/path as anything in paths_to_spawn)
-		path = new path(pod)
+	for(var/atom/movable/path as anything in paths_to_spawn)
+		if(!ispath(path))
+			path.forceMove(pod)
+		else
+			path = new path(pod)
 
 	//remove non var edits from specifications
 	specifications -= "target"

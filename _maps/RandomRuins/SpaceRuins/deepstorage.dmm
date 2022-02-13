@@ -128,7 +128,7 @@
 "aE" = (
 /obj/machinery/power/apc/away{
 	name = "Recycling APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -633,7 +633,7 @@
 "bN" = (
 /obj/machinery/power/apc/away{
 	name = "Kitchen APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
@@ -781,7 +781,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Hydroponics APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -790,7 +790,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/away{
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1105,7 +1105,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Storage APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1507,7 +1507,7 @@
 	},
 /obj/machinery/power/apc/away{
 	name = "Main Area APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/decal/cleanable/dirt,
@@ -1564,7 +1564,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Armory APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -1795,7 +1795,7 @@
 /obj/machinery/power/apc/away{
 	dir = 1;
 	name = "Airlock Control APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2062,8 +2062,7 @@
 /obj/machinery/power/apc/away{
 	dir = 8;
 	name = "Power and Atmospherics APC";
-	pixel_x = -25;
-	pixel_y = 1
+	pixel_x = -25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2115,7 +2114,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Dormitory APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,

@@ -21,15 +21,7 @@
 	. = ..()
 	AddElement(art_type, impressiveness)
 	AddElement(/datum/element/beauty, impressiveness * 75)
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
-
-/obj/structure/statue/proc/can_be_rotated(mob/user)
-	if(!anchored)
-		return TRUE
-	to_chat(user, span_warning("It's bolted to the floor, you'll need to unwrench it first."))
-
-/obj/structure/statue/proc/can_user_rotate(mob/user)
-	return user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user))
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)

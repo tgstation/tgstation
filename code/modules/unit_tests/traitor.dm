@@ -1,8 +1,14 @@
 /datum/unit_test/traitor/Run()
 	var/datum/dynamic_ruleset/roundstart/traitor/traitor_ruleset = allocate(/datum/dynamic_ruleset/roundstart/traitor)
-	var/list/possible_jobs = SSjob.station_jobs.Copy()
-	possible_jobs -= traitor_ruleset.protected_roles
-	possible_jobs -= traitor_ruleset.restricted_roles
+	var/list/possible_jobs = list()
+	var/list/restricted_roles = traitor_ruleset.restricted_roles
+	for(var/datum/job/job as anything in SSjob.joinable_occupations)
+		if(!(job.job_flags & JOB_CREW_MEMBER))
+			continue
+		var/rank = job.title
+		if(rank in restricted_roles)
+			continue
+		possible_jobs += rank
 
 	for(var/job_name in possible_jobs)
 		var/datum/job/job = SSjob.GetJob(job_name)

@@ -37,8 +37,9 @@ You can avoid hacky code by using object-oriented methodologies, such as overrid
 
 ### User Interfaces
 
-* All new player-facing user interfaces must use TGUI.
-* Raw HTML is permitted for admin and debug UIs.
+* All new player-facing user interfaces must use TGUI, unless they are critical user interfaces.
+* All critical user interfaces must be done exclusively with HTML or the interface.dmf, with tgui being *optional* for this UI.
+	* Examples of critical user interfaces are the chat box, the observe button, the stat panel, and the chat input.
 * Documentation for TGUI can be found at:
 	* [tgui/README.md](../tgui/README.md)
 	* [tgui/tutorial-and-examples.md](../tgui/docs/tutorial-and-examples.md)

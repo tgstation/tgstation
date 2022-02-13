@@ -16,6 +16,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	see_invisible = SEE_INVISIBLE_LIVING
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
@@ -107,7 +108,16 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 				to_chat(src, "The <b><font color=\"[blobstrain.color]\">[blobstrain.name]</b></font> strain [blobstrain.effectdesc]")
 
 /mob/camera/blob/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
-	return FALSE
+	if(placed) // The blob can't expand vertically (yet)
+		return FALSE
+	. = ..()
+	if(!.)
+		return
+	var/turf/target_turf = .
+	if(!is_valid_turf(target_turf)) // Allows unplaced blobs to travel through station z-levels
+		if(z_move_flags & ZMOVE_FEEDBACK)
+			to_chat(src, "Your destination is invalid. Move somewhere else and try again.")
+		return null
 
 /mob/camera/blob/proc/is_valid_turf(turf/T)
 	var/area/A = get_area(T)

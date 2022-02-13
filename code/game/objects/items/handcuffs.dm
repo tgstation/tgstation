@@ -268,6 +268,21 @@
 	return
 
 /**
+ * # Fake Zipties
+ *
+ * One-use handcuffs that is very easy to break out of, meant as a one-use alternative to regular fake handcuffs.
+ */
+/obj/item/restraints/handcuffs/cable/zipties/fake
+	name = "fake zipties"
+	desc = "Fake zipties meant for gag purposes."
+	breakouttime = 1 SECONDS
+
+/obj/item/restraints/handcuffs/cable/zipties/fake/used
+	desc = "A pair of broken fake zipties."
+	icon_state = "cuff_used"
+	inhand_icon_state = "cuff"
+
+/**
  * # Generic leg cuffs
  *
  * Parent class for everything that can legcuff carbons. Can't legcuff anything itself.
@@ -488,7 +503,7 @@
 /**
  * A pacifying variant of the bola.
  *
- * It's much harder to remove, doesn't cause a slowdown and gives people STATUS_EFFECT_GONBOLAPACIFY.
+ * It's much harder to remove, doesn't cause a slowdown and gives people /datum/status_effect/gonbola_pacify.
  */
 /obj/item/restraints/legcuffs/bola/gonbola
 	name = "gonbola"
@@ -503,7 +518,7 @@
 	. = ..()
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/C = hit_atom
-		effectReference = C.apply_status_effect(STATUS_EFFECT_GONBOLAPACIFY)
+		effectReference = C.apply_status_effect(/datum/status_effect/gonbola_pacify)
 
 /obj/item/restraints/legcuffs/bola/gonbola/dropped(mob/user)
 	. = ..()
