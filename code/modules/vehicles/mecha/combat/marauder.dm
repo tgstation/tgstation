@@ -37,6 +37,13 @@
 	ME.attach(src)
 	max_ammo()
 
+/obj/vehicle/sealed/mecha/combat/marauder/add_cell(obj/item/stock_parts/cell/C=null)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
 /obj/vehicle/sealed/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."
 	name = "\improper Seraph"
