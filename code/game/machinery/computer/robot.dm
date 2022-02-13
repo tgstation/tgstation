@@ -38,11 +38,10 @@
 	else if(isAdminGhostAI(user))
 		data["can_hack"] = TRUE
 
-	data["can_deto"] = FALSE
+	data["can_detonate"] = FALSE
 	if(isAI(user))
-		var/mob/living/silicon/ai/arty = user
-		if(arty.malf_picker)
-			data["can_deto"] = TRUE
+		var/mob/living/silicon/ai/AI = user
+		data["can_detonate"] = !isnull(AI.malf_picker)
 
 	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
@@ -106,13 +105,15 @@
 		if("killbot") //Malf AIs, and AIs with a combat upgrade, can detonate their cyborgs remotely.
 			if(!isAI(usr))
 				return
-			var/mob/living/silicon/ai/arty = usr
-			if(!arty.malf_picker)
+			var/mob/living/silicon/ai/AI = usr
+			if(!AI.malf_picker)
 				return
-			var/mob/living/silicon/robot/rob = locate(params["ref"]) in GLOB.silicon_mobs
-			if(rob.connected_ai != arty)
+			var/mob/living/silicon/robot/target = locate(params["ref"]) in GLOB.silicon_mobs
+			if(!istype(target))
 				return
-			rob.self_destruct(usr)
+			if(target.connected_ai != AI)
+				return
+			target.self_destruct(usr)
 
 		if("magbot")
 			var/mob/living/silicon/S = usr
