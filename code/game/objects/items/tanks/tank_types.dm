@@ -154,7 +154,7 @@
 
 /obj/item/tank/internals/plasmaman/belt/advanced/attackby(obj/item/attacking_object, mob/user)
 	if(istype(attacking_object, /obj/item/stack/sheet/mineral/plasma))
-		if(air_contents.return_pressure() > AUTOFILL_TARGET_PRESSURE)
+		if(air_contents.return_pressure() >= AUTOFILL_TARGET_PRESSURE)
 			balloon_alert(user, "tank too full to autofill!")
 			return TRUE
 		var/obj/item/stack/sheet/mineral/plasma/plasma_sheets = attacking_object
@@ -163,6 +163,9 @@
 		temporary.add_gas(/datum/gas/plasma)
 		temporary.gases[/datum/gas/plasma][MOLES] = AUTOFILL_MOLES_PER_SHEET * plasma_sheets.amount
 		var/moles_to_remove = temporary.gas_pressure_calculate(air_contents, AUTOFILL_TARGET_PRESSURE) // prevents the tank from exploding if i dont know, someone put supercold antinoblium in there
+		if(moles_to_remove < MOLAR_ACCURACY)
+			balloon_alert(user, "tank too full to autofill!")
+			return TRUE
 		var/datum/gas_mixture/removed = temporary.remove(moles_to_remove)
 		air_contents.merge(removed) // actually refill the tank
 		var/sheets_to_use = CEILING(removed.total_moles() / AUTOFILL_MOLES_PER_SHEET, 1)
@@ -240,3 +243,6 @@
 
 /obj/item/tank/internals/generic/populate_gas()
 	return
+
+#undef AUTOFILL_MOLES_PER_SHEET
+#undef AUTOFILL_TARGET_PRESSURE
