@@ -907,7 +907,7 @@
 
 /datum/quirk/illiterate
 	name = "Illiterate"
-	desc = "You dropped out of school and are unable to read or write. This affects books, paper, computers, and other electronics."
+	desc = "You dropped out of school and are unable to read or write. This affects reading, writing, using computers and other electronics."
 	icon = "graduation-cap"
 	value = -6
 	mob_trait = TRAIT_ILLITERATE
