@@ -1,4 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - admin: "Adds a new UI for the proccall circuit component to help with handling. Adds an 'resolve weakref' option to enable/disable automatically resolving weakrefs."

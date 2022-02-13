@@ -633,3 +633,49 @@
   - refactor: Timer subsystems can now recover from a deleted MC properly.
   tastyfish:
   - qol: Status displays now scroll text smoothly.
+2022-02-13:
+  GoblinBackwards:
+  - bugfix: Decaying lockers from the locker staff no longer delete their contents
+      when vanishing.
+  Lyn505:
+  - spellcheck: Fixed missing capitalization in Zealot's blindfold description
+  Melbert:
+  - bugfix: Species without hearts can get Living Hearts now.
+  RandomGamer123:
+  - expansion: 'Kudzu now has a new mutation available: Cold-proofing'
+  - balance: Kudzu now stops spreading if the tile it is on is under 100K without
+      the cold-proofing mutation.
+  - balance: Kudzu now has a severity system for mutations. Different mutations cost
+      different severity based on their effects. There is a maximum severity which
+      is dependent on potency, while more severe mutations also are rarer.
+  - balance: Kudzu's maximum severity is now a linear function of its potency, with
+      it ranging from 10 to 20.
+  - balance: Kudzu's maximum spread cap per seed is now 2/3 of its old value.
+  - balance: Kudzu's spread speed is now 1/2 of its old value, but is still capped
+      at a minimum of 1 new kudzu tile per tick.
+  - balance: Kudzu spawned by the random spacevines event's stats have been slightly
+      buffed to replicate old behavior.
+  - balance: Venus human traps now are affected by the cold without cold-proofing.
+  - balance: Kudzu's thorns and toxicity mutations are now significantly more lethal.
+  - balance: Venus human traps now no longer have a 2 second ranged hardstun, but
+      instead deal 85 stamina damage and a 1 second knockdown.
+  - balance: Venus human traps' damage has been lowered slightly by 20%.
+  - code_imp: Kudzu "severity" values now reflect severity in terms of gameplay, old
+      severity values (used for certain mutations) are now defines instead.
+  - code_imp: Eliminates process_temperature in kudzu and moves to a flags-based system
+      for traits
+  - bugfix: Venus human traps' vines now get deleted after they die.
+  - bugfix: Unsuitable cold and heat damage for simplemobs don't get overrided by
+      unsuitable atmos damage anymore.
+  RaveRadbury:
+  - qol: Added a day to the start of the Valentine's event.
+  Watermelon914:
+  - admin: Adds a new UI for the proccall circuit component to help with handling.
+      Adds an 'resolve weakref' option to enable/disable automatically resolving weakrefs.
+  ma44:
+  - code_imp: Simple animals can be told (in code) to stop moving around more easily
+  - refactor: Simple animals can now be told to go to places more easily
+  necromanceranne:
+  - bugfix: Mice no longer create ants when they decompose. They still create moldy
+      dead mice.
+  - balance: Polar bear transformation converts health percentage over when you transform.
