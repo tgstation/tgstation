@@ -135,12 +135,6 @@
 	sound1 = 'sound/magic/blink.ogg'
 	sound2 = 'sound/magic/blink.ogg'
 
-/obj/effect/proc_holder/spell/targeted/turf_teleport/blink/cult
-	name = "quickstep"
-
-	charge_max = 100
-	clothes_req = TRUE
-
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
 	desc = "This spell teleports you to an area of your selection."
@@ -219,12 +213,6 @@
 
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	cast_sound = 'sound/magic/summonitems_generic.ogg'
-
-/obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
-	name = "Summon Creatures (DANGEROUS)"
-	clothes_req = TRUE
-	charge_max = 5000
-	summon_amt = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
 	name = "Lesser summon bees"
