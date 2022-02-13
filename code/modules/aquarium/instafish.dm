@@ -4,7 +4,7 @@
 
 /obj/item/instafish/Initialize(mapload)
 	. = ..()
-	generate_fish(get_turf(src), behaviour_type)
+	generate_fish(loc, behaviour_type)
 	return INITIALIZE_HINT_QDEL
 
 /obj/item/instafish/ratfish
