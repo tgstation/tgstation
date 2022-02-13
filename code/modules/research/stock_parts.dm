@@ -247,7 +247,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/stock_parts/manipulator
 	name = "micro-manipulator"
-	desc = "A micro-manipulator used in the construction of certain devices."
+	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
 	custom_materials = list(/datum/material/iron=30)
 	base_name = "manipulator"
