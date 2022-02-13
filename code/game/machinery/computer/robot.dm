@@ -40,8 +40,8 @@
 
 	data["can_detonate"] = FALSE
 	if(isAI(user))
-		var/mob/living/silicon/ai/AI = user
-		data["can_detonate"] = !isnull(AI.malf_picker)
+		var/mob/living/silicon/ai/ai = user
+		data["can_detonate"] = !isnull(ai.malf_picker)
 
 	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
@@ -105,13 +105,13 @@
 		if("killbot") //Malf AIs, and AIs with a combat upgrade, can detonate their cyborgs remotely.
 			if(!isAI(usr))
 				return
-			var/mob/living/silicon/ai/AI = usr
-			if(!AI.malf_picker)
+			var/mob/living/silicon/ai/ai = usr
+			if(!ai.malf_picker)
 				return
 			var/mob/living/silicon/robot/target = locate(params["ref"]) in GLOB.silicon_mobs
 			if(!istype(target))
 				return
-			if(target.connected_ai != AI)
+			if(target.connected_ai != ai)
 				return
 			target.self_destruct(usr)
 
