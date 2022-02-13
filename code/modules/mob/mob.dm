@@ -934,8 +934,8 @@
 	if(magic_flags == NONE) // magic with the NONE flag can always be cast
 		return TRUE
 
-	var/has_casting_restrictions = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags)
-	return !has_casting_restrictions
+	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags)
+	return restrict_magic_flags != NONE
 
 /**
  * Checks to see if the mob can block magic
