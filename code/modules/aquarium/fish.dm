@@ -243,7 +243,7 @@
 	random_case_rarity = FISH_RARITY_RARE
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 10 //set by New, but this is the default config value
-	fillet_type = /obj/item/food/fishmeat/donkfish
+	fillet_type = /obj/item/food/meat/slab/human/mutant/zombie //eww...
 
 /datum/aquarium_behaviour/fish/ratfish/New()
 	//stable pop reflects the config for how many mice migrate. powerful...
