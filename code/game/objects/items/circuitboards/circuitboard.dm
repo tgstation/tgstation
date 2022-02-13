@@ -99,5 +99,16 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 		for(var/atom/component as anything in req_components)
 			if(!ispath(component))
 				continue
-			nice_list += list("[req_components[component]] [initial(component.name)]")
+
+			var/component_name = initial(component.name)
+			var/component_amount = req_components[component]
+
+			if(ispath(component, /obj/item/stock_parts))
+				var/obj/item/stock_parts/stock_part = component
+				if(initial(stock_part.base_name))
+					component_name = initial(stock_part.base_name)
+
+			var/s = component_amount > 1 ? "s" : ""
+
+			nice_list += list("[component_amount] [component_name][s]")
 		. += span_notice("Required components: [english_list(nice_list)].")

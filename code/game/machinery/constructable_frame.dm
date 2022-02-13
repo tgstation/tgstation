@@ -31,39 +31,41 @@
 /obj/structure/frame/machine/examine(user)
 	. = ..()
 	if(state == 3 && req_components && req_component_names)
-		var/hasContent = FALSE
-		var/requires_string = "It requires"
-
-		for(var/i = 1 to req_components.len)
-			var/part_name = req_components[i]
-			var/amount_needed = req_components[part_name]
-			if(amount_needed == 0)
+		var/list/nice_list = list()
+		for(var/atom/component as anything in req_components)
+			if(!ispath(component))
 				continue
-			var/use_and = i == req_components.len
-			requires_string += "[(hasContent ? (use_and ? ", and" : ",") : "")] [amount_needed] [amount_needed == 1 ? req_component_names[part_name] : "[req_component_names[part_name]]\s"]"
-			hasContent = TRUE
-
-		if(hasContent)
-			. += span_info("[requires_string].")
-		else
-			. += span_info("It does not require any more components.")
+			if(!req_components[component])
+				continue
+			var/s = req_components[component] > 1 ? "s" : ""
+			nice_list += list("[req_components[component]] [req_component_names[component]][s]")
+		. += span_info("It requires [english_list(nice_list, "no more components.")].")
 
 /obj/structure/frame/machine/proc/update_namelist()
 	if(!req_components)
 		return
 
-	req_component_names = new()
-	for(var/tname in req_components)
-		if(ispath(tname, /obj/item/stack))
-			var/obj/item/stack/S = tname
-			var/singular_name = initial(S.singular_name)
+	req_component_names = list()
+	for(var/atom/component_path as anything in req_components)
+		if(!ispath(component_path))
+			continue
+		if(ispath(component_path, /obj/item/stack))
+			var/obj/item/stack/stack_path = component_path
+			var/singular_name = initial(stack_path.singular_name)
 			if(singular_name)
-				req_component_names[tname] = singular_name
+				req_component_names[component_path] = singular_name
+				continue
 			else
-				req_component_names[tname] = initial(S.name)
-		else
-			var/obj/O = tname
-			req_component_names[tname] = initial(O.name)
+				req_component_names[component_path] = initial(stack_path.name)
+				continue
+
+		var/obj/object_path = component_path
+		if(!ispath(object_path, /obj/item/stock_parts))
+			req_component_names[component_path] = initial(object_path.name)
+			continue
+
+		var/obj/item/stock_parts/stock_part_path = object_path
+		req_component_names[component_path] = initial(stock_part_path.base_name) ? initial(stock_part_path.base_name) : initial(stock_part_path.name)
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
 	var/amt = 0
