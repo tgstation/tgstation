@@ -307,6 +307,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/borg/sight/meson,
 		/obj/item/construction/rcd/borg,
+		/obj/item/lightreplacer/cyborg,
 		/obj/item/pipe_dispenser,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
