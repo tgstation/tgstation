@@ -45,6 +45,15 @@
 	restricted = TRUE
 	illegal_tech = FALSE
 
+/datum/uplink_item/badass/fish
+	name = "Syndicate Fish Case"
+	desc = "A fish kit containing fish lab grown in a vat. They may not all be pretty, but they're a great display of company pride. \
+			Small note of warning: The emulsijack should not be placed in an aquarium with other fish, unless your intent is to emulsify \
+			the other aquatic lifeforms into goopy fishfood. That could be a very noble goal if you drop it into a Nanotrasen aquarium."
+	progression_minimum = 5 MINUTES
+	item = /obj/item/storage/fish_case/syndicate
+	cost = 2
+
 // Ultra high progression
 /datum/uplink_item/badass/costumes/clown
 	name = "Clown Costume"
