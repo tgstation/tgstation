@@ -286,6 +286,15 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/advanced_plasmaman_belt_tank
+	name = "Advanced Plasmaman Belt Tank"
+	desc = "An empty advanced plasmaman belt tank. Contains a mechanism to refill the tank directly with plasma sheets."
+	id = "advanced_plasmaman_belt_tank"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 1200) // normal plasmaman belt tank is 800, 50% more than that
+	build_path = /obj/item/tank/internals/plasmaman/belt/advanced/empty
+	category = list("Equipment")
+	
 /datum/design/id
 	name = "Identification Card"
 	desc = "A card used to provide ID and determine access across the station. Has an integrated digital display and advanced microchips."

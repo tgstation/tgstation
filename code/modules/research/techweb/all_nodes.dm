@@ -706,6 +706,7 @@
 	prereq_ids = list("basic_plasma")
 	design_ids = list(
 		"mech_plasma_cutter",
+		"advanced_plasmaman_belt_tank",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

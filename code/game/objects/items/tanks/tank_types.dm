@@ -8,6 +8,11 @@
  * Generic
  */
 
+/// For advanced plasmaman belt tanks, target pressure that the tank will be autofilled to
+#define AUTOFILL_TARGET_PRESSURE (ONE_ATMOSPHERE * 25)
+/// For advanced plasmaman belt tanks, moles per sheet of plasma, based on crystallizer recipe
+#define AUTOFILL_MOLES_PER_SHEET 450
+
 /*
  * Oxygen
  */
@@ -135,6 +140,43 @@
 /obj/item/tank/internals/plasmaman/belt/empty/populate_gas()
 	return
 
+/// Advanced plasma internals: Accepts plasma sheets, converts any input plasma sheets to 450 moles of 293.15K plasma and fills the tank up to 2533kPa
+/obj/item/tank/internals/plasmaman/belt/advanced
+	name = "advanced plasma internals tank"
+	desc = "A tank of plasma gas designed specifically for use as internals, particularly for plasma-based lifeforms. If you're not a Plasmaman, you probably shouldn't use this. Contains a slot for inputting plasma sheets."
+	icon_state = "plasmaman_tank_belt_advanced"
+	inhand_icon_state = "plasmaman_tank_belt_advanced"
+	worn_icon_state = "plasmaman_tank_belt_advanced"
+
+/obj/item/tank/internals/plasmaman/belt/advanced/examine()
+	. = ..()
+	. += span_notice("There is a slot for inserting <b>plasma sheets</b> to be autofill the tank with breathable plasma gas.")
+
+/obj/item/tank/internals/plasmaman/belt/advanced/attackby(obj/item/attacking_object, mob/user)
+	if(istype(attacking_object, /obj/item/stack/sheet/mineral/plasma))
+		if(air_contents.return_pressure() > AUTOFILL_TARGET_PRESSURE)
+			balloon_alert(user, "tank too full to autofill!")
+			return TRUE
+		var/obj/item/stack/sheet/mineral/plasma/plasma_sheets = attacking_object
+		var/datum/gas_mixture/temporary = new /datum/gas_mixture
+		temporary.temperature = T20C
+		temporary.add_gas(/datum/gas/plasma)
+		temporary.gases[/datum/gas/plasma][MOLES] = AUTOFILL_MOLES_PER_SHEET * plasma_sheets.amount
+		var/moles_to_remove = temporary.gas_pressure_calculate(air_contents, AUTOFILL_TARGET_PRESSURE) // prevents the tank from exploding if i dont know, someone put supercold antinoblium in there
+		var/datum/gas_mixture/removed = temporary.remove(moles_to_remove)
+		air_contents.merge(removed) // actually refill the tank
+		var/sheets_to_use = CEILING(removed.total_moles() / AUTOFILL_MOLES_PER_SHEET, 1)
+		plasma_sheets.use(sheets_to_use)
+		balloon_alert(user, "used [sheets_to_use] sheets to refill tank!")
+		return TRUE
+	..()
+
+/obj/item/tank/internals/plasmaman/belt/advanced/empty/populate_gas()
+	return
+
+/obj/item/tank/internals/plasmaman/belt/advanced/full/populate_gas()
+	air_contents.assert_gas(/datum/gas/plasma)
+	air_contents.gases[/datum/gas/plasma][MOLES] = (10*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 
 
 /*
