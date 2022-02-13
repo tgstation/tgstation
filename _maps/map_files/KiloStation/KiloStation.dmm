@@ -38473,7 +38473,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/computer/atmos_control/incinerator{
+/obj/machinery/computer/atmos_control/ordnancemix{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
