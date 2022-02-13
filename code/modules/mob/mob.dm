@@ -1114,24 +1114,22 @@
 		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
 		return FALSE
 
-
-
 	var/turf/reading_spot = get_turf(src)
-	var/light_amount = reading_spot.get_lumcount()
+	var/has_light_to_read = reading_spot.get_lumcount() > LIGHTING_TILE_IS_DARK
+
 	var/can_see_in_darkness = HAS_TRAIT(TRAIT_XRAY_VISION) || HAS_TRAIT(TRAIT_TRUE_NIGHT_VISION)
+	// we need to check for x-ray implants in eyeballs sight flags and other vision flags since the trait isn't always granted
 
+	var/has_nightvision_glasses = FALSE
 	var/mob/living/carbon/human/reader = src
-	var/obj/item/clothing/glasses/eyewear = reader.glasses
 	if(ishuman(reader))
+		var/obj/item/clothing/glasses/eyewear = reader.glasses
+		if(istype(eyewear, /obj/item/clothing/glasses/meson/night) ||
+		istype(eyewear, /obj/item/clothing/glasses/night) ||
+		istype(eyewear, /obj/item/clothing/glasses/thermal/xray))
+			has_nightvision_glasses = TRUE
 
-	if(istype(eyewear, /obj/item/clothing/glasses/meson/night) || istype(eyewear,
-
-	var/has_nightvision_glasses =
-
-	if(light_amount < 0.2)
-
-
-		/obj/item/clothing/glasses/night
+	if(!has_light_to_read && !can_see_in_darkness && !has_nightvision_glasses)
 		to_chat(M, span_warning("It's too dark in here to read!"))
 		return FALSE
 
