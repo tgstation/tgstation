@@ -935,7 +935,7 @@
 		return TRUE
 
 	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags)
-	return restrict_magic_flags != NONE
+	return restrict_magic_flags == NONE
 
 /**
  * Checks to see if the mob can block magic
