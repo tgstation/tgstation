@@ -18,10 +18,8 @@
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category
 
-	/// Does this production machine have a stripe?
-	var/has_color_stripe = FALSE
-	/// What color is the stripe?
-	var/stripe_color = "#ffffff"
+	/// What color is this machine's stripe? Leave null to not have a stripe.
+	var/stripe_color = null
 
 /obj/machinery/rnd/production/Initialize(mapload)
 	. = ..()
@@ -414,7 +412,7 @@
 
 /obj/machinery/rnd/production/update_overlays()
 	. = ..()
-	if(!has_color_stripe)
+	if(!stripe_color)
 		return
 	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolate_stripe")
 	if(!panel_open)

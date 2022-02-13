@@ -3,7 +3,6 @@
 	desc = "An advanced fabricator designed to print out the latest prototypes and circuits researched from Science. Contains hardware to sync to research networks. This one is department-locked and only possesses a limited set of decryption keys."
 	icon_state = "protolathe"
 	circuit = /obj/item/circuitboard/machine/techfab/department
-	has_color_stripe = TRUE
 
 /obj/machinery/rnd/production/techfab/department/engineering
 	name = "department techfab (Engineering)"
