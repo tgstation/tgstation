@@ -191,7 +191,7 @@
 	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[I.type]"))
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, target_area)
 
-	// the attacked_by code varies alongside species
+	// the attacked_by code varies between species
 	return dna.species.spec_attacked_by(I, user, affecting, src)
 
 

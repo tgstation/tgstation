@@ -30,7 +30,7 @@
 	var/list/restricted_roles = list()
 	/// If set, rule will only accept candidates from those roles. If on a roundstart ruleset, requires the player to have the correct antag pref enabled and any of the possible roles enabled.
 	var/list/exclusive_roles = list()
-	/// If set, there needs to be a certain amount of players doing those roles (alongside the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
+	/// If set, there needs to be a certain amount of players doing those roles (between the players who won't be drafted) for the rule to be drafted IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/list/enemy_roles = list()
 	/// If enemy_roles was set, this is the amount of enemy job workers needed per threat_level range (0-10,10-20,etc) IMPORTANT: DOES NOT WORK ON ROUNDSTART RULESETS.
 	var/required_enemies = list(1,1,0,0,0,0,0,0,0,0)

@@ -283,7 +283,7 @@
 /datum/barsign/the_lightbulb
 	name = "The Lightbulb"
 	icon = "the_lightbulb"
-	desc = "A cafe popular alongside moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
+	desc = "A cafe popular between moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 
 /datum/barsign/goose
 	name = "The Loose Goose"

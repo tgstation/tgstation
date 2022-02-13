@@ -93,7 +93,7 @@
 
 /obj/item/food/chips/shrimp
 	name = "shrimp chips"
-	desc = "Deep-fried, shrimp flavored chips. A favorite junkfood alongside seafood connoisseurs!"
+	desc = "Deep-fried, shrimp flavored chips. A favorite junkfood between seafood connoisseurs!"
 	icon_state = "shrimp_chips"
 	trash_type = /obj/item/trash/shrimp_chips
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/cooking_oil = 3, /datum/reagent/consumable/salt = 1)

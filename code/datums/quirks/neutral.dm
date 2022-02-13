@@ -326,7 +326,7 @@
 
 /datum/quirk/item_quirk/photographer
 	name = "Photographer"
-	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary alongside your coworkers."
+	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary between your coworkers."
 	icon = "camera"
 	value = 0
 	mob_trait = TRAIT_PHOTOGRAPHER

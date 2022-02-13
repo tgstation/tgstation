@@ -10,7 +10,7 @@
 	var/allowed_buildtypes = NONE
 	var/list/datum/design/cached_designs
 	var/list/datum/design/matching_designs
-	var/department_tag = "Unidentified" //used for material distribution alongside other things.
+	var/department_tag = "Unidentified" //used for material distribution as well as other things.
 
 	var/screen = RESEARCH_FABRICATOR_SCREEN_MAIN
 	var/selected_category

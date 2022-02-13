@@ -200,7 +200,7 @@
 
 	var/turf/T = user.loc //get user's location for delay checks
 
-	//the istype cascade has been spread alongside various procs for easy overriding
+	//the istype cascade has been spread throughout various procs for easy overriding
 	if(try_clean(W, user, T) || try_wallmount(W, user, T) || try_decon(W, user, T))
 		return
 

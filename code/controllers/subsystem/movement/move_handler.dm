@@ -17,7 +17,7 @@
  *
  * You can find the logic for this control in this file
  *
- * Specifics of how different loops operate can be found in the movement_types.dm file, alongside the [add to loop][/datum/controller/subsystem/move_manager/proc/add_to_loop] helper procs that use them
+ * Specifics of how different loops operate can be found in the movement_types.dm file, in addition to the [add to loop][/datum/controller/subsystem/move_manager/proc/add_to_loop] helper procs that use them
  *
 **/
 SUBSYSTEM_DEF(move_manager)

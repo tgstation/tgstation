@@ -1,5 +1,5 @@
 /obj/vehicle/sealed/mecha/combat/gygax
-	desc = "A lightweight, security exosuit. Popular alongside private and corporate security."
+	desc = "A lightweight, security exosuit. Popular between private and corporate security."
 	name = "\improper Gygax"
 	icon_state = "gygax"
 	base_icon_state = "gygax"

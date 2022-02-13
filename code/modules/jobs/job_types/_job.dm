@@ -66,7 +66,7 @@
 
 	var/list/mind_traits // Traits added to the mind of the mob assigned this job
 
-	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, alongside others)
+	///Lazylist of traits added to the liver of the mob assigned this job (used for the classic "cops heal from donuts" reaction, as well as others)
 	var/list/liver_traits = null
 
 	var/display_order = JOB_DISPLAY_ORDER_DEFAULT
