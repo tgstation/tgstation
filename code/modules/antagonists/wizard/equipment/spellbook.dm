@@ -118,7 +118,7 @@
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
-	desc = "Fires an explosive fireball at a target. Considered a classic among all wizards."
+	desc = "Fires an explosive fireball at a target. Considered a classic alongside all wizards."
 	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
 
 /datum/spellbook_entry/spell_cards

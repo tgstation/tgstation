@@ -326,7 +326,7 @@
 
 /datum/quirk/item_quirk/photographer
 	name = "Photographer"
-	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary among your coworkers."
+	desc = "You carry your camera and personal photo album everywhere you go, and your scrapbooks are legendary alongside your coworkers."
 	icon = "camera"
 	value = 0
 	mob_trait = TRAIT_PHOTOGRAPHER
@@ -438,7 +438,7 @@
  */
 /datum/quirk/gamer/proc/gamed()
 	SIGNAL_HANDLER
-	
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	// Remove withdrawal malus
 	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
@@ -446,7 +446,7 @@
 	if (gaming_withdrawal_timer)
 		deltimer(gaming_withdrawal_timer)
 	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
-	
+
 
 /datum/quirk/gamer/proc/gamer_moment()
 	// It was a heated gamer moment...

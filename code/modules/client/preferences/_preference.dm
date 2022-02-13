@@ -335,7 +335,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/is_character_preference = savefile_identifier == PREFERENCE_CHARACTER
 	return is_on_character_page == is_character_preference
 
-/// A preference that is a choice of one option among a fixed set.
+/// A preference that is a choice of one option alongside a fixed set.
 /// Used for preferences such as clothing.
 /datum/preference/choiced
 	/// If this is TRUE, icons will be generated.

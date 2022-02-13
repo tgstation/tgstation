@@ -1,7 +1,7 @@
 /**
  * StonedMC
  *
- * Designed to properly split up a given tick among subsystems
+ * Designed to properly split up a given tick alongside subsystems
  * Note: if you read parts of this code and think "why is it doing it that way"
  * Odds are, there is a reason
  *
@@ -109,7 +109,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			for(var/global_var in global.vars)
 				if (istype(global.vars[global_var], /datum/controller/subsystem))
 					existing_subsystems += global.vars[global_var]
-					
+
 			//Either init a new SS or if an existing one was found use that
 			for(var/I in subsystem_types)
 				var/ss_idx = existing_subsystems.Find(I)

@@ -162,7 +162,7 @@ GLOBAL_VAR(families_override_theme)
 			break
 		if(!gangs_to_use.len)
 			gangs_to_use = current_theme.involved_gangs.Copy()
-		var/gang_to_use = pick_n_take(gangs_to_use) // Evenly distributes Leaders among the gangs
+		var/gang_to_use = pick_n_take(gangs_to_use) // Evenly distributes Leaders alongside the gangs
 		var/datum/mind/gangster_mind = pick_n_take(gangbangers)
 		var/datum/antagonist/gang/new_gangster = new gang_to_use()
 		new_gangster.handler = src

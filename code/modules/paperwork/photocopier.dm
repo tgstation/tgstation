@@ -61,7 +61,7 @@
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
-	
+
 	try
 		var/list/blanks = json_decode(file2text("config/blanks.json"))
 		if (blanks != null)
@@ -72,7 +72,7 @@
 			data["forms_exist"] = FALSE
 	catch()
 		data["forms_exist"] = FALSE
-	
+
 	if(photo_copy)
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
@@ -309,7 +309,7 @@
 /**
  * Handles the copying of an ass photo.
  *
- * Calls `check_ass()` first to make sure that `ass` exists, among other conditions. Since this proc is called from a timer, it's possible that it was removed.
+ * Calls `check_ass()` first to make sure that `ass` exists, alongside other conditions. Since this proc is called from a timer, it's possible that it was removed.
  * Additionally checks that the mob has their clothes off.
  */
 /obj/machinery/photocopier/proc/make_ass_copy()

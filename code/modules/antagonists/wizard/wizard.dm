@@ -245,18 +245,18 @@
 	objectives += new_objective
 
 //Random event wizard
-/datum/antagonist/wizard/apprentice/imposter
-	name = "Wizard Imposter"
+/datum/antagonist/wizard/apprentice/lookalike
+	name = "Wizard lookalike"
 	show_in_antagpanel = FALSE
 	allow_rename = FALSE
 	move_to_lair = FALSE
 
-/datum/antagonist/wizard/apprentice/imposter/greet()
+/datum/antagonist/wizard/apprentice/lookalike/greet()
 	. = ..()
 	to_chat(owner, "<B>Trick and confuse the crew to misdirect malice from your handsome original!</B>")
 	owner.announce_objectives()
 
-/datum/antagonist/wizard/apprentice/imposter/equip_wizard()
+/datum/antagonist/wizard/apprentice/lookalike/equip_wizard()
 	var/mob/living/carbon/human/master_mob = master.current
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(master_mob) || !istype(H))

@@ -2,7 +2,7 @@
  * Acts as a namespace for movement packet/type related procs
  *
  * Exists to provide an in code implementation of movement looping
- * Replaces things like walk() or walk_to(), among others
+ * Replaces things like walk() or walk_to(), alongside others
  *
  * Because we're doing things in engine, we have a lot more control over how different operations are performed
  * We also get more say in when things happen, so we can subject movements to the whims of the master controller

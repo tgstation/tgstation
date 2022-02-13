@@ -1,7 +1,7 @@
 /**
  * # animal variety element!
  *
- * bespoke element that picks an suffix to append onto the icon state from a list given on creation, among some pixel shifting stuff
+ * bespoke element that picks an suffix to append onto the icon state from a list given on creation, alongside some pixel shifting stuff
  * basically you will see VARIETY in a batch of simplemobs.
  */
 /datum/element/animal_variety
