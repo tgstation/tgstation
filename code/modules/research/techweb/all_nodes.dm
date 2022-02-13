@@ -490,6 +490,7 @@
 		"grounding_rod",
 		"high_cell",
 		"high_micro_laser",
+		"mega_cell",
 		"mesons",
 		"nano_mani",
 		"oxygen_tank",

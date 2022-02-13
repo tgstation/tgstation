@@ -274,15 +274,20 @@
 	custom_materials = list(/datum/material/glass=60)
 	chargerate = 1500
 
-/obj/item/stock_parts/cell/high/plus
-	name = "high-capacity power cell+"
-	desc = "Where did these come from?"
-	icon_state = "h+cell"
+/obj/item/stock_parts/cell/high/empty/Initialize(mapload)
+	. = ..()
+	charge = 0
+	update_appearance()
+
+/obj/item/stock_parts/cell/mega
+	name = "mega-capacity power cell"
+	icon_state = "mcell"
 	maxcharge = 15000
+	custom_materials = list(/datum/material/glass=200)
 	chargerate = 2250
 	rating = 2
 
-/obj/item/stock_parts/cell/high/empty/Initialize(mapload)
+/obj/item/stock_parts/cell/mega/empty/Initialize(mapload)
 	. = ..()
 	charge = 0
 	update_appearance()

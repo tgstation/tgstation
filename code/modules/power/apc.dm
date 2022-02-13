@@ -185,7 +185,7 @@
 	cell_type = /obj/item/stock_parts/cell/high
 
 /obj/machinery/power/apc/highcap/fifteen_k
-	cell_type = /obj/item/stock_parts/cell/high/plus
+	cell_type = /obj/item/stock_parts/cell/mega
 
 /obj/machinery/power/apc/auto_name
 	auto_name = TRUE

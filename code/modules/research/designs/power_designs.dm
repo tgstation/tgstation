@@ -23,6 +23,17 @@
 	category = list("Misc","Power Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/mega_cell
+	name = "Mega-Capacity Power Cell"
+	desc = "A power cell that holds 15 MJ of energy."
+	id = "mega_cell"
+	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE | MECHFAB
+	materials = list(/datum/material/iron = 700, /datum/material/glass = 65)
+	construction_time=100
+	build_path = /obj/item/stock_parts/cell/mega/empty
+	category = list("Misc","Power Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/super_cell
 	name = "Super-Capacity Power Cell"
 	desc = "A power cell that holds 20 MJ of energy."
