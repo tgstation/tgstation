@@ -224,11 +224,8 @@
 "bd" = (
 /obj/structure/table,
 /obj/item/weldingtool/experimental,
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/engineering/main)
 "bf" = (
@@ -240,11 +237,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Gravity Generator APC";
-	pixel_x = -25
-	},
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
 "bh" = (
@@ -260,15 +253,12 @@
 	},
 /area/engineering/gravity_generator)
 "bj" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/machinery/light/directional/south,
 /obj/structure/table,
 /obj/item/analyzer,
 /obj/item/wrench,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "bk" = (
@@ -358,16 +348,13 @@
 /turf/closed/wall/r_wall,
 /area/hallway/primary/central)
 "bB" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/machinery/airalarm/directional/north{
 	locked = 0;
 	pixel_y = 23
 	},
 /obj/structure/closet/jcloset,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "bC" = (
@@ -395,12 +382,9 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/structure/closet/secure_closet/captains,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron{
 	dir = 8
 	},
@@ -454,12 +438,9 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/structure/closet/firecloset/full,
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron{
 	dir = 9
 	},
@@ -704,14 +685,11 @@
 	locked = 0;
 	pixel_y = 23
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	pixel_x = -25
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "db" = (
