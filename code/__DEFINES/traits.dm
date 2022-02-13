@@ -596,6 +596,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// trait denoting someone will sometimes recover out of crit
 #define TRAIT_UNBREAKABLE "unbreakable"
 
+//vehicle traits
+///whether this mecha is currently in missile mode
+#define AIMING_IVANOV_MISSILE_TRAIT "aiming_ivanov_missile"
+
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0
 #define CAT_QUIRK_NOTES 1
