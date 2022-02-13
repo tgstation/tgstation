@@ -767,6 +767,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+/// Trait given to a ghost when they orbit something.
+#define GHOST_ORBITING_TRAIT "ghost_orbiting"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
