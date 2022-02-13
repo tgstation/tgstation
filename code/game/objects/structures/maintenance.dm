@@ -12,19 +12,21 @@ at the cost of risking a vicious bite.**/
 	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
 	var/list/loot = list(
-					/obj/item/food/meat/slab/human/mutant/skeleton = 35,
-					/obj/item/food/meat/slab/human/mutant/zombie = 15,
-					/obj/item/trash/can = 15,
-					/obj/item/clothing/head/helmet/skull = 10,
-					/obj/item/restraints/handcuffs = 4,
-					/obj/item/restraints/handcuffs/cable/red = 1,
-					/obj/item/restraints/handcuffs/cable/blue = 1,
-					/obj/item/restraints/handcuffs/cable/green = 1,
-					/obj/item/restraints/handcuffs/cable/pink = 1,
-					/obj/item/restraints/handcuffs/alien = 2,
-					/obj/item/coin/bananium = 9,
-					/obj/item/knife/butcher = 5,
-					/obj/item/coin/mythril = 1) //the loot table isn't that great and should probably be improved and expanded later.
+		/obj/item/food/meat/slab/human/mutant/skeleton = 35,
+		/obj/item/food/meat/slab/human/mutant/zombie = 15,
+		/obj/item/trash/can = 15,
+		/obj/item/clothing/head/helmet/skull = 10,
+		/obj/item/restraints/handcuffs = 4,
+		/obj/item/restraints/handcuffs/cable/red = 1,
+		/obj/item/restraints/handcuffs/cable/blue = 1,
+		/obj/item/restraints/handcuffs/cable/green = 1,
+		/obj/item/restraints/handcuffs/cable/pink = 1,
+		/obj/item/restraints/handcuffs/alien = 2,
+		/obj/item/coin/bananium = 9,
+		/obj/item/instafish/ratfish = 10,
+		/obj/item/knife/butcher = 5,
+		/obj/item/coin/mythril = 1,
+	) //the loot table isn't that great and should probably be improved and expanded later.
 
 
 /obj/structure/moisture_trap/Initialize(mapload)
@@ -36,6 +38,7 @@ at the cost of risking a vicious bite.**/
 		hidden_item = new picked_item(src)
 	loot = null
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
+	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)
