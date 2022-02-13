@@ -1,5 +1,5 @@
 /datum/round_event_control/wizard/lookalike //Mirror Mania
-	name = "lookalike Wizard"
+	name = "Lookalike Wizard"
 	weight = 1
 	typepath = /datum/round_event/wizard/lookalike
 	max_occurrences = 1
