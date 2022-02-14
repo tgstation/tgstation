@@ -32047,7 +32047,6 @@
 /area/hallway/secondary/exit/departure_lounge)
 "ehQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron,
 /area/medical/cryo)
 "ehZ" = (
@@ -60090,7 +60089,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "loX" = (
@@ -79651,7 +79649,7 @@
 	dir = 4
 	},
 /obj/machinery/newscaster/directional/west,
-/obj/machinery/vending/wallmed/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "qfA" = (
