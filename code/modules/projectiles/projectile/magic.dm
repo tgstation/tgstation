@@ -221,8 +221,10 @@
 /obj/projectile/magic/locker/prehit_pierce(atom/A)
 	. = ..()
 	if(. == PROJECTILE_DELETE_WITHOUT_HITTING)
+		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
+		qdel(locker_temp_instance)
 		return PROJECTILE_DELETE_WITHOUT_HITTING
-	
+
 	if(isliving(A) && locker_suck)
 		var/mob/living/target = A
 		var/obj/structure/closet/decay/locker_temp_instance = locker_ref.resolve()
