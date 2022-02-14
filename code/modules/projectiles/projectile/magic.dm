@@ -398,7 +398,7 @@
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
 
-/// Gives magic projectiles a 3x3 Area of Effect range when it's traveling that will bump into any nearby mobs it is near  
+/// Gives magic projectiles a 3x3 Area of Effect range that will bump into any nearby mobs
 /obj/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
