@@ -16,7 +16,7 @@
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long
 	name = "Ashen Walk"
-	desc = "A longer range Ashen Passage that allows you unimpeded through walls."
+	desc = "A long range spell that allows you pass unimpeded through multiple walls."
 	jaunt_duration = 5 SECONDS
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/play_sound()
