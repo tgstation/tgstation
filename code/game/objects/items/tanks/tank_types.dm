@@ -11,7 +11,7 @@
 /// For advanced plasmaman belt tanks, target pressure that the tank will be autofilled to
 #define AUTOFILL_TARGET_PRESSURE (ONE_ATMOSPHERE * 25)
 /// For advanced plasmaman belt tanks, moles per sheet of plasma, based on crystallizer recipe
-#define AUTOFILL_MOLES_PER_SHEET 450
+#define AUTOFILL_MOLES_PER_SHEET 2.5 // equivalent to 1015kPa at 6L and 293.15K
 
 /*
  * Oxygen
