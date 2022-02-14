@@ -39,7 +39,7 @@
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic)
 		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
-		to_chat(parent, span_warning("Magic seems to flee from you, you can't gather enough power to cast spells."))	
+		to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells and are unable to cast them."))	
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -65,7 +65,7 @@
 	for(var/datum/action/spell_action/spell/magic_action in equipper.actions)
 		var/obj/effect/proc_holder/spell/magic_spell = magic_action.target
 		if(antimagic_flags & magic_spell.antimagic_flags)
-			to_chat(equipper, span_warning("Your [parent] is interfering with your ability to cast magic!"))
+			to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
 			break
 
 
@@ -82,8 +82,8 @@
 	// disclaimer - All anti_magic sources will be drained a charge_cost
 	if(casted_magic_flags & antimagic_flags)
 		// im a programmer not shakesphere to the future grammar nazis that come after me for this
-		var/visible_subject = ismob(parent) ? "[user.p_they()]" : "[user.p_their()] [parent]"
-		var/self_subject = ismob(parent) ? "you" : "your [parent]"
+		var/visible_subject = ismob(parent) ? "[user.p_they()]" : "[parent]"
+		var/self_subject = ismob(parent) ? "you" : "[parent]"
 		if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE)
 			user.visible_message(span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"), \
 			span_userdanger("An intense magical aura pulses around [self_subject] as it dissipates into the air!"))
