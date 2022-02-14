@@ -29,6 +29,7 @@
 	pressure_resistance = 100
 	del_on_death = TRUE
 	deathmessage = "implodes into itself."
+	loot = list(/obj/effect/gibspawner/human)
 	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
 	/// Innate spells that are added when a beast is created.
@@ -56,26 +57,49 @@
 	status_flags = CANPUSH
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	maxHealth = 50
-	health = 50
+	maxHealth = 60
+	health = 60
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/eyes)
 	spells_to_add = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,
 		/obj/effect/proc_holder/spell/pointed/manse_link,
 		/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,
 		/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch,
 	)
-
+	/// A weakref to the last target we smacked. Hitting targets consecutively does more damage.
+	var/datum/weakref/last_target
 	/// A assoc list of [mob/living ref] to [datum/action ref] - all the mobs linked to our mansus network.
 	var/list/mob/living/linked_mobs = list()
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
+
+	var/datum/action/innate/expand_sight/sight_seer = new(src)
+	sight_seer.Grant(src)
+
 	link_mob(src)
 
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Login()
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(user == src) // Easy to hit yourself + very fragile = accidental suicide, prevent that
+		return
+
+	return ..()
+
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/AttackingTarget(atom/attacked_target)
+	if(WEAKREF(attacked_target) == last_target)
+		melee_damage_lower += 4
+		melee_damage_upper += 4
+	else
+		melee_damage_lower = initial(melee_damage_lower)
+		melee_damage_upper = initial(melee_damage_upper)
+
 	. = ..()
-	client?.view_size.setTo(10)
+	if(!.)
+		return
+
+	SpinAnimation(5, 1)
+	last_target = WEAKREF(attacked_target)
 
 /**
  * Link [linked_mob] to our mansus link, if possible.
