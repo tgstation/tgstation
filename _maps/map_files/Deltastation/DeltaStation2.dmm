@@ -16435,6 +16435,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/nuke_storage)
+"cKj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse,
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "cKP" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -20694,15 +20709,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/white,
-/area/science/lab)
-"deh" = (
-/obj/machinery/modular_computer/console/preset/civilian{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/turf/open/floor/iron,
 /area/science/lab)
 "dei" = (
 /obj/effect/turf_decal/stripes/line,
@@ -40689,21 +40695,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/science/mixing)
-"gtY" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse,
-/turf/open/floor/iron,
-/area/engineering/atmos)
 "guh" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -77002,6 +76993,15 @@
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/iron/dark/textured_large,
 /area/engineering/atmos/hfr_room)
+"pyh" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/machinery/computer/rdconsole{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/science/lab)
 "pyu" = (
 /obj/machinery/space_heater,
 /obj/effect/turf_decal/bot,
@@ -133363,7 +133363,7 @@ gYI
 wRY
 wRY
 wRY
-gtY
+cKj
 obU
 wRY
 wjQ
@@ -148346,7 +148346,7 @@ fnz
 cZp
 daU
 dcI
-deh
+pyh
 dcH
 dgO
 dcH
