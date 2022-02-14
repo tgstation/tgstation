@@ -110,6 +110,16 @@
 	SpinAnimation(5, 1)
 	last_target = WEAKREF(attacked_target)
 
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+	. = ..()
+	var/rotation_degree = (360 / 3)
+	if(movement_dir & WEST || movement_dir & SOUTH)
+		rotation_degree *= -1
+
+	var/matrix/to_turn = matrix(transform)
+	to_turn = turn(transform, rotation_degree)
+	animate(src, transform = to_turn, time = 0.1 SECONDS)
+
 /*
  * Callback for the mind_linker component.
  * Stuns people who are ejected from the network.
