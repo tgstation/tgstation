@@ -1,4 +1,0 @@
-author: "bun235"
-delete-after: True
-changes: 
-  - bugfix: "Fixes air mixer on delta station atmos"

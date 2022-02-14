@@ -679,3 +679,19 @@
   - bugfix: Mice no longer create ants when they decompose. They still create moldy
       dead mice.
   - balance: Polar bear transformation converts health percentage over when you transform.
+2022-02-14:
+  Fikou:
+  - bugfix: fixes modsuit charging
+  - bugfix: fixes using the modsuit sphere transformation in zero gravity
+  Melbert:
+  - refactor: Refactored slime link and mansus link to use a component to cut down
+      on hard-dels and code duplication.
+  PositiveEntropy, SmArtKar, axietheaxolotl:
+  - imageadd: Resprites Black Gloves and Jackboots!
+  bun235:
+  - bugfix: Fixes air mixer on delta station atmos
+  san7890:
+  - bugfix: Mappers have removed the soul of fully variable-edited APCs across any
+      map that still had them.
+  - bugfix: If you've been noticing some absurdly dark rocks on KiloStation, rest
+      assured that we've fixed them.

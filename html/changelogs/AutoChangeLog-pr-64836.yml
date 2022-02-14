@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - refactor: "Refactored slime link and mansus link to use a component to cut down on hard-dels and code duplication."

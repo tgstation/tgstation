@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "fixes modsuit charging"
-  - bugfix: "fixes using the modsuit sphere transformation in zero gravity"
