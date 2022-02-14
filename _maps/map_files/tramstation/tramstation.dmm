@@ -26942,29 +26942,6 @@
 "ikR" = (
 /turf/open/floor/iron/white,
 /area/science/robotics/lab)
-"ikV" = (
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced,
-/obj/item/defibrillator/loaded{
-	pixel_y = 6
-	},
-/obj/item/defibrillator/loaded{
-	pixel_y = 3
-	},
-/obj/item/defibrillator/loaded,
-/obj/effect/turf_decal/siding/white,
-/obj/machinery/door/window/westleft{
-	name = "Secure Medical Storage";
-	req_access_txt = "5"
-	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/glasses/blindfold,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/ears/earmuffs,
-/turf/open/floor/iron/dark,
-/area/medical/storage)
 "ikX" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -37480,6 +37457,25 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/cargo/miningdock)
+"lYG" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced,
+/obj/item/defibrillator/loaded{
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/siding/white,
+/obj/machinery/door/window/westleft{
+	name = "Secure Medical Storage";
+	req_access_txt = "5"
+	},
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/glasses/blindfold,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/ears/earmuffs,
+/turf/open/floor/iron/dark,
+/area/medical/storage)
 "lYN" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -164724,7 +164720,7 @@ snA
 snA
 aRp
 fQo
-ikV
+lYG
 ezE
 hPG
 jaZ
