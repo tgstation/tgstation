@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - qol: "Gas canisters now display their maximum temperature on being examined!"
