@@ -289,6 +289,10 @@
 
 // /obj/effect/proc_holder/spell signals
 
+///called from /obj/effect/proc_holder/spell/cast_check (src)
+#define COMSIG_MOB_PRE_CAST_SPELL "mob_cast_spell"
+	/// Return to cancel the cast from beginning.
+	#define COMPONENT_CANCEL_SPELL (1<<0)
 ///called from /obj/effect/proc_holder/spell/perform (src)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 
@@ -376,4 +380,4 @@
 
 /// from base of /obj/item/slimepotion/speed/afterattack(): (obj/target, /obj/src, mob/user)
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
-	#define SPEED_POTION_SUCCESSFUL (1<<0)
+	#define SPEED_POTION_STOP (1<<0)

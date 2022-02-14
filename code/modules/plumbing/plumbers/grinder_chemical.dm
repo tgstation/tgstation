@@ -3,6 +3,7 @@
 	desc = "chemical grinder."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400
@@ -16,12 +17,6 @@
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/machinery/plumbing/grinder_chemical/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-		return FALSE
-	return TRUE
 
 /obj/machinery/plumbing/grinder_chemical/setDir(newdir)
 	. = ..()

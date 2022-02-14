@@ -42,6 +42,7 @@
 
 # Mothblocks
 
+/code/game/gamemodes/ @Mothblocks
 /code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
 /code/modules/client/preferences/ @Mothblocks
@@ -93,6 +94,10 @@
 # Fikou
 
 /code/modules/mod/ @Fikou
+/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+/code/modules/ruins/lavalandruin_code/ @Fikou
+/code/modules/mining/ @Fikou
+/code/modules/awaymissions/ @Fikou
 
 # Ghilker
 

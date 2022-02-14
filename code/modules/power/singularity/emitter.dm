@@ -59,21 +59,6 @@
 	///stores the direction and orientation of the last projectile
 	var/last_projectile_params
 
-
-/obj/machinery/power/emitter/welded/Initialize(mapload)
-	welded = TRUE
-	. = ..()
-
-/obj/machinery/power/emitter/ctf
-	name = "Energy Cannon"
-	active = TRUE
-	active_power_usage = 0
-	idle_power_usage = 0
-	locked = TRUE
-	req_access_txt = "100"
-	welded = TRUE
-	use_power = NO_POWER_USE
-
 /obj/machinery/power/emitter/Initialize(mapload)
 	. = ..()
 	RefreshParts()
@@ -86,10 +71,12 @@
 	sparks = new
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
-
-/obj/machinery/power/emitter/ComponentInitialize()
-	. = ..()
+	AddComponent(/datum/component/simple_rotation)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+
+/obj/machinery/power/emitter/welded/Initialize(mapload)
+	welded = TRUE
+	. = ..()
 
 /obj/machinery/power/emitter/set_anchored(anchorvalue)
 	. = ..()
@@ -131,16 +118,6 @@
 	else
 		. += span_notice("Its status display reads: Emitting one beam every <b>[DisplayTimeText(fire_delay)]</b>.")
 		. += span_notice("Power consumption at <b>[display_power(active_power_usage)]</b>.")
-
-/obj/machinery/power/emitter/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-
-/obj/machinery/power/emitter/proc/can_be_rotated(mob/user, rotation_type)
-	if(!anchored)
-		return TRUE
-	to_chat(user, span_warning("It is fastened to the floor!"))
-	return FALSE
 
 /obj/machinery/power/emitter/should_have_node()
 	return welded
@@ -559,3 +536,12 @@
 	else if (emitter.charge < 10)
 		playsound(src,'sound/machines/buzz-sigh.ogg', 50, TRUE)
 
+/obj/machinery/power/emitter/ctf
+	name = "Energy Cannon"
+	active = TRUE
+	active_power_usage = 0
+	idle_power_usage = 0
+	locked = TRUE
+	req_access_txt = "100"
+	welded = TRUE
+	use_power = NO_POWER_USE
