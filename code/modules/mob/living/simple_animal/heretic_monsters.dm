@@ -57,8 +57,8 @@
 	status_flags = CANPUSH
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	maxHealth = 60
-	health = 60
+	maxHealth = 65
+	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
 	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/eyes)
 	spells_to_add = list(
@@ -97,8 +97,8 @@
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/AttackingTarget(atom/attacked_target)
 	if(WEAKREF(attacked_target) == last_target)
-		melee_damage_lower += 4
-		melee_damage_upper += 4
+		melee_damage_lower = min(melee_damage_lower + 5, 30)
+		melee_damage_upper = min(melee_damage_upper + 5, 35)
 	else
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
