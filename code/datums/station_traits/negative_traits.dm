@@ -46,7 +46,6 @@
 
 /datum/station_trait/hangover/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, .proc/on_job_after_spawn)
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, .proc/on_job_after_spawn)
 	RegisterSignal(SSmapping, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/create_spawners)
 
@@ -57,7 +56,7 @@
 	UnregisterSignal(SSmapping, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/station_trait/hangover/proc/pick_turfs_and_spawn()
-	var/list/turf/turfs = get_safe_random_station_turfs(typesof(/area/hallway), rand(200, 300))
+	var/list/turf/turfs = get_safe_random_station_turfs((typesof(/area/hallway) | typesof(/area/service/bar) | typesof(/area/commons/dorms)), rand(200, 300))
 	for(var/turf/T as() in turfs)
 		new /obj/effect/spawner/hangover_spawn(T)
 
