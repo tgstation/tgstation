@@ -825,8 +825,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	src << link("?debug=profile&type=sendmaps&window=test")
 
-//)
-
 /**
  * Debug verb that spawns human crewmembers
  * of each job type, gives them a mind and assigns the role,
