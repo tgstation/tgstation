@@ -289,7 +289,7 @@
 	. = ..()
 	if(. || HAS_TRAIT(src, TRAIT_SPACEWALK))
 		return TRUE
-	var/atom/movable/backup = get_spacemove_backup()
+	var/atom/movable/backup = get_spacemove_backup(movement_dir)
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
@@ -298,33 +298,37 @@
 	return FALSE
 
 /**
- * Find movable atoms? near a mob that are viable for pushing off when moving
+ * Finds a target near a mob that is viable for pushing off when moving.
+ * Takes the intended movement direction as input.
  */
-/mob/get_spacemove_backup()
-	for(var/A in orange(1, get_turf(src)))
-		if(isarea(A))
+/mob/get_spacemove_backup(moving_direction)
+	for(var/atom/pushover as anything in orange(1, get_turf(src)))
+		if(isarea(pushover))
 			continue
-		else if(isturf(A))
-			var/turf/turf = A
+		if(moving_direction == get_dir(src, pushover))
+			continue
+		if(isturf(pushover))
+			var/turf/turf = pushover
 			if(isspaceturf(turf))
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue
-			return A
-		else
-			var/atom/movable/AM = A
-			if(AM == buckled)
+			return pushover
+
+		var/atom/movable/rebound = pushover
+		if(rebound == buckled)
+			continue
+		if(ismob(rebound))
+			var/mob/lover = rebound
+			if(lover.buckled)
 				continue
-			if(ismob(AM))
-				var/mob/M = AM
-				if(M.buckled)
-					continue
-			if(AM.density || !AM.CanPass(src, get_dir(AM, src)))
-				if(AM.anchored)
-					return AM
-				if(pulling == AM)
-					continue
-				. = AM
+		if(!rebound.density && rebound.CanPass(src, get_dir(rebound, src)))
+			continue
+		if(rebound.anchored)
+			return rebound
+		if(pulling == rebound)
+			continue
+		return rebound
 
 /mob/has_gravity()
 	return mob_negates_gravity() || ..()
