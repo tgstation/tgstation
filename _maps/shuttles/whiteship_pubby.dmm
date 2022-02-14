@@ -40,7 +40,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "ah" = (
-/turf/closed/wall/mineral/titanium/,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/crew)
 "ai" = (
 /obj/machinery/door/airlock,
