@@ -79,11 +79,13 @@
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "am" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "an" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/abandoned/engine)
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/abandoned/cargo)
 "ao" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/engine)
@@ -104,6 +106,7 @@
 "ar" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset/anchored,
+/obj/item/pickaxe/drill,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "as" = (
@@ -114,7 +117,7 @@
 "at" = (
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "au" = (
 /obj/machinery/light/directional/west,
@@ -122,11 +125,16 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/shuttle/abandoned/engine)
+/area/shuttle/abandoned/cargo)
 "av" = (
 /obj/machinery/light/directional/east,
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
+/obj/item/melee/baseball_bat{
+	desc = "This bat is incredibly unrobust, but is small.";
+	force = 0;
+	w_class = 1
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned/engine)
 "aw" = (
@@ -171,18 +179,24 @@
 /obj/machinery/door/airlock/external/glass/ruin{
 	name = "external airlock"
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "aD" = (
 /obj/structure/cable,
 /turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/medbay)
+/area/shuttle/abandoned/cargo)
 "aE" = (
-/turf/closed/wall/mineral/titanium,
-/area/shuttle/abandoned/medbay)
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/door/poddoor{
+	id = "whiteship_port"
+	},
+/turf/open/floor/plating,
+/area/shuttle/abandoned/cargo)
 "aF" = (
-/turf/closed/wall/mineral/titanium/overspace,
-/area/shuttle/abandoned/medbay)
+/obj/structure/cable,
+/obj/machinery/door/airlock/mining/glass,
+/turf/open/floor/iron/dark,
+/area/shuttle/abandoned/cargo)
 "aG" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
@@ -195,83 +209,23 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "aI" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/obj/structure/ore_box,
+/obj/machinery/light/floor,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "aJ" = (
-/obj/machinery/sleeper,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
-"aK" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/light/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/sleeper,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/obj/structure/closet/crate/engineering,
+/obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed,
+/obj/item/stack/sheet/mineral/plasma/five,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "aL" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/sleeper,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
-"aM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "aN" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bridge)
@@ -291,9 +245,6 @@
 /obj/machinery/suit_storage_unit/mining/eva,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/mod/module/thermal_regulator{
-	desc = "Advanced climate control, using an inner body glove interwoven with thousands of tiny, flexible cooling lines. This circulates coolant at various user-controlled temperatures, ensuring they're comfortable; even if they're some that like it hot. This one has a note on it: put it in the mining MOD, new models don't have this inbuilt."
-	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/engine)
 "aS" = (
@@ -321,52 +272,9 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
-"aW" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
 "aX" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
-"aY" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "aZ" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/command{
@@ -464,6 +372,9 @@
 /obj/structure/closet/secure_closet/miner/unlocked,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/mod/module/thermal_regulator{
+	desc = "Advanced climate control, using an inner body glove interwoven with thousands of tiny, flexible cooling lines. This circulates coolant at various user-controlled temperatures, ensuring they're comfortable; even if they're some that like it hot. This one has a note on it: put it in the mining MOD, new models don't have this inbuilt."
+	},
 /turf/open/floor/iron,
 /area/shuttle/abandoned/engine)
 "bp" = (
@@ -499,20 +410,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bar)
 "bu" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "bv" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
@@ -520,20 +420,18 @@
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/bridge)
 "bw" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/obj/structure/closet/crate/engineering{
+	name = "surplus mining gear crate"
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/sleeper,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/pickaxe,
+/obj/item/storage/bag/ore,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "bx" = (
 /obj/machinery/computer/monitor/secret{
 	desc = "Monitors power across the ship.";
@@ -596,7 +494,7 @@
 /obj/machinery/door/airlock/external/glass/ruin{
 	name = "external airlock"
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
 "bG" = (
 /obj/effect/decal/cleanable/dirt,
@@ -611,7 +509,7 @@
 /obj/structure/window/reinforced/spawner,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/shuttle/abandoned/engine)
+/area/shuttle/abandoned/cargo)
 "bI" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
@@ -639,20 +537,12 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "bM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/secure_closet/medical1,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/obj/structure/cable,
+/obj/structure/closet/crate/medical,
+/obj/item/storage/firstaid,
+/obj/item/storage/firstaid,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "bN" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -670,103 +560,72 @@
 /turf/open/floor/pod/light,
 /area/shuttle/abandoned/bridge)
 "bO" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
+/obj/machinery/light/floor,
+/obj/machinery/mineral/processing_unit_console{
+	pixel_x = -30;
+	pixel_y = -5
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/obj/machinery/vending/wallmed/directional/south,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "bP" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/mineral/unloading_machine{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/machinery/conveyor/auto{
+	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "bQ" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/conveyor/auto{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/machinery/light/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/paper{
-	info = "You have been issued an experimental medical beamgun for field testing, due to the fact that asteroid mining is a hazardous field we expect this to be well-used. Good luck!"
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 "bR" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/mineral/processing_unit{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
-"ph" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
+"jy" = (
 /obj/machinery/door/airlock/external/glass/ruin{
 	name = "external airlock"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/abandoned/bar)
-"wn" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
+"Bq" = (
+/obj/machinery/light/floor,
+/obj/machinery/conveyor/auto{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
+"Fq" = (
+/obj/structure/cable,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
+"LN" = (
+/obj/structure/cable,
+/obj/machinery/light/floor,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
+"Mr" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/medical{
-	desc = "A medical crate containing a piece of prototype technology.";
-	name = "prototype medical crate"
-	},
-/obj/item/gun/medbeam,
+/obj/machinery/door/airlock/mining/glass,
 /turf/open/floor/iron/dark,
-/area/shuttle/abandoned/medbay)
+/area/shuttle/abandoned/cargo)
+"NH" = (
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/pod/light,
+/area/shuttle/abandoned/cargo)
 
 (1,1,1) = {"
 aa
@@ -774,11 +633,11 @@ aa
 aa
 aa
 aa
-an
+ao
 aP
 ao
 aP
-an
+ao
 aa
 aa
 aa
@@ -806,7 +665,7 @@ aa
 aa
 aa
 aa
-an
+ao
 ao
 ao
 ao
@@ -814,7 +673,7 @@ be
 ao
 ao
 ao
-an
+ao
 aa
 aa
 aa
@@ -935,14 +794,14 @@ bz
 aj
 aj
 aj
-ah
+ad
 aa
 "}
 (11,1,1) = {"
 aa
 aa
 ak
-as
+am
 aC
 as
 as
@@ -950,7 +809,7 @@ as
 aU
 aU
 bF
-as
+am
 ak
 aa
 aa
@@ -968,24 +827,24 @@ aU
 bA
 aj
 at
-ph
+jy
 aa
 aa
 "}
 (13,1,1) = {"
 aa
 aa
-am
 aj
 aj
 aj
-aV
 aj
-bt
+aF
+aj
+Mr
 aj
 aj
 aj
-am
+aj
 aa
 aa
 "}
@@ -996,7 +855,7 @@ aa
 au
 aD
 aI
-aW
+bu
 bM
 bu
 bO
@@ -1013,9 +872,9 @@ aa
 aa
 aE
 aJ
-aW
-aM
 aX
+bu
+NH
 bP
 aE
 aa
@@ -1029,10 +888,10 @@ aa
 aa
 aa
 aE
-aK
+aL
 aX
-aM
-aX
+LN
+NH
 bQ
 aE
 aa
@@ -1047,9 +906,9 @@ aa
 aa
 aE
 aL
-aX
-aX
-aX
+bu
+bu
+Fq
 bR
 aE
 aa
@@ -1062,13 +921,13 @@ aa
 aa
 aa
 aa
-aE
+an
 bw
-aY
-wn
 bu
-bR
-aE
+aX
+bu
+Bq
+an
 aa
 aa
 aa
@@ -1079,13 +938,13 @@ aa
 aa
 aa
 aa
-aF
+aN
 aN
 aZ
 aN
 aZ
 aN
-aF
+aN
 aa
 aa
 aa
