@@ -582,7 +582,7 @@
 	if(!soap)
 		return
 	if(soap.uses < initial(soap.uses))
-		soap.uses += 3 * coeff
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
 /obj/item/robot_model/medical
 	name = "Medical"
