@@ -844,6 +844,9 @@
 /datum/quirk/bad_touch/proc/uncomfortable_touch()
 	SIGNAL_HANDLER
 
+	if(quirk_holder.stat == DEAD)
+		return
+
 	new /obj/effect/temp_visual/annoyed(quirk_holder.loc)
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
 	if(mood.sanity <= SANITY_NEUTRAL)
