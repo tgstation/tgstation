@@ -1,0 +1,5 @@
+author: "Aerden"
+delete-after: True
+changes: 
+  - rscadd: "Added the ability to equip the backpack firefighter tanks with atmospheric modsuits."
+  - rscadd: "Added waterbackpackatmos to belt_mirror.dmi"
