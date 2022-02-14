@@ -175,6 +175,11 @@
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS | NOTELEPORT
 
+/area/icemoon/surface/outdoors/noruins // when you want random generation without the chance of getting ruins
+	icon_state = "noruins"
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED | NO_ALERTS
+	map_generator =  /datum/map_generator/cave_generator/icemoon/surface/noruins
+
 /area/icemoon/surface/outdoors/labor_camp
 	name = "Icemoon Labor Camp"
 	area_flags = UNIQUE_AREA | NO_ALERTS

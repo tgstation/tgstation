@@ -269,6 +269,7 @@
 		"comp_router",
 		"comp_select_query",
 		"comp_self",
+		"comp_set_variable_trigger",
 		"comp_soundemitter",
 		"comp_species",
 		"comp_speech",
@@ -1417,23 +1418,11 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	required_experiments = list(/datum/experiment/explosion/maxcap)
 
-/datum/techweb_node/ballistic_weapons
-	id = "ballistic_weapons"
-	display_name = "Ballistic Weaponry"
-	description = "This isn't research.. This is reverse-engineering!"
-	prereq_ids = list("weaponry")
-	design_ids = list(
-		"mag_oldsmg",
-		"mag_oldsmg_ap",
-		"mag_oldsmg_ic",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-
 /datum/techweb_node/exotic_ammo
 	id = "exotic_ammo"
 	display_name = "Exotic Ammunition"
 	description = "They won't know what hit em."
-	prereq_ids = list("adv_weaponry")
+	prereq_ids = list("weaponry")
 	design_ids = list(
 		"c38_hotshot",
 		"c38_iceblox",
@@ -1731,7 +1720,7 @@
 	id = "mecha_tools"
 	display_name = "Exosuit Weapon (LBX AC 10 \"Scattershot\")"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("ballistic_weapons")
+	prereq_ids = list("exotic_ammo")
 	design_ids = list(
 		"mech_scattershot",
 		"mech_scattershot_ammo",
@@ -1742,7 +1731,7 @@
 	id = "mech_carbine"
 	display_name = "Exosuit Weapon (FNX-99 \"Hades\" Carbine)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("ballistic_weapons")
+	prereq_ids = list("exotic_ammo")
 	design_ids = list(
 		"mech_carbine",
 		"mech_carbine_ammo",
@@ -1856,7 +1845,7 @@
 	id = "mech_lmg"
 	display_name = "Exosuit Weapon (\"Ultra AC 2\" LMG)"
 	description = "An advanced piece of mech weaponry"
-	prereq_ids = list("ballistic_weapons")
+	prereq_ids = list("exotic_ammo")
 	design_ids = list(
 		"mech_lmg",
 		"mech_lmg_ammo",
@@ -1997,14 +1986,18 @@
 
 /datum/techweb_node/syndicate_basic/New() //Crappy way of making syndicate gear decon supported until there's another way.
 	. = ..()
-	if(!SStraitor.initialized)
-		RegisterSignal(SStraitor, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
+	if(!SSassets.initialized)
+		RegisterSignal(SSassets, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/register_uplink_items)
 	else
 		register_uplink_items()
 
+/**
+ * This needs some clarification: The uplink_items_by_type list is populated on datum/asset/json/uplink/generate.
+ * SStraitor doesn't actually initialize. I'm bamboozled.
+ */
 /datum/techweb_node/syndicate_basic/proc/register_uplink_items()
 	SIGNAL_HANDLER
-	UnregisterSignal(SStraitor, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSassets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	boost_item_paths = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]

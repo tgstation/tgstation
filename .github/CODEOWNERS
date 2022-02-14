@@ -42,6 +42,7 @@
 
 # Mothblocks
 
+/code/game/gamemodes/ @Mothblocks
 /code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
 /code/modules/client/preferences/ @Mothblocks

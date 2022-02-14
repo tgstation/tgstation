@@ -550,6 +550,7 @@
 /datum/id_trim/job/warden
 	assignment = "Warden"
 	trim_state = "trim_warden"
+	sechud_icon_state = SECHUD_WARDEN
 	extra_access = list(ACCESS_FORENSICS_LOCKERS, ACCESS_MAINT_TUNNELS, ACCESS_MORGUE)
 	minimal_access = list(ACCESS_ARMORY, ACCESS_BRIG, ACCESS_COURT, ACCESS_MECH_SECURITY, ACCESS_MINERAL_STOREROOM,
 					ACCESS_SECURITY, ACCESS_SEC_DOORS, ACCESS_WEAPONS) // See /datum/job/warden/get_access()

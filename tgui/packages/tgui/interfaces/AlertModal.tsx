@@ -1,5 +1,4 @@
 import { Loader } from './common/Loader';
-import { Preferences } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
 import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
@@ -8,8 +7,9 @@ import { Window } from '../layouts';
 type AlertModalData = {
   autofocus: boolean;
   buttons: string[];
+  large_buttons: boolean;
   message: string;
-  preferences: Preferences;
+  swapped_buttons: boolean;
   timeout: number;
   title: string;
 };
@@ -22,19 +22,18 @@ export const AlertModal = (_, context) => {
   const {
     autofocus,
     buttons = [],
-    message,
-    preferences,
+    large_buttons,
+    message = '',
     timeout,
     title,
   } = data;
-  const { large_buttons } = preferences;
   const [selected, setSelected] = useLocalState<number>(context, 'selected', 0);
-  // Dynamically sets window height
+  // Dynamically sets window dimensions
   const windowHeight
-  = 115
-  + (message.length > 30 ? Math.ceil(message.length / 3) : 0)
-  + (message.length && large_buttons ? 5 : 0)
-  + (buttons.length > 2 ? buttons.length * 25 : 0);
+    = 115
+    + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
+    + (message.length && large_buttons ? 5 : 0);
+  const windowWidth = 325 + (buttons.length > 2 ? 55 : 0);
   const onKey = (direction: number) => {
     if (selected === 0 && direction === KEY_DECREMENT) {
       setSelected(buttons.length - 1);
@@ -46,8 +45,8 @@ export const AlertModal = (_, context) => {
   };
 
   return (
-    <Window height={windowHeight} title={title} width={325}>
-      {timeout && <Loader value={timeout} />}
+    <Window height={windowHeight} title={title} width={windowWidth}>
+      {!!timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(e) => {
           const keyCode = window.event ? e.which : e.keyCode;
@@ -59,19 +58,20 @@ export const AlertModal = (_, context) => {
             act('choose', { choice: buttons[selected] });
           } else if (keyCode === KEY_ESCAPE) {
             act('cancel');
-          } else if (
-            keyCode === KEY_LEFT
-            || (e.shiftKey && keyCode === KEY_TAB)
-          ) {
+          } else if (keyCode === KEY_LEFT) {
+            e.preventDefault();
             onKey(KEY_DECREMENT);
-          } else if (keyCode === KEY_RIGHT || keyCode === KEY_TAB) {
+          } else if (keyCode === KEY_TAB || keyCode === KEY_RIGHT) {
+            e.preventDefault();
             onKey(KEY_INCREMENT);
           }
         }}>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
-              <Box color="label" overflow="hidden">{message}</Box>
+              <Box color="label" overflow="hidden">
+                {message}
+              </Box>
             </Stack.Item>
             <Stack.Item>
               {!!autofocus && <Autofocus />}
@@ -91,19 +91,16 @@ export const AlertModal = (_, context) => {
  */
 const ButtonDisplay = (props, context) => {
   const { data } = useBackend<AlertModalData>(context);
-  const { buttons = [], preferences } = data;
+  const { buttons = [], large_buttons, swapped_buttons } = data;
   const { selected } = props;
-  const { large_buttons, swapped_buttons } = preferences;
-  const buttonDirection
-    = (buttons.length > 2 ? 'column' : 'row')
-    + (!swapped_buttons ? '-reverse' : '');
 
   return (
     <Flex
       align="center"
-      direction={buttonDirection}
+      direction={!swapped_buttons ? 'row-reverse' : 'row'}
       fill
-      justify="space-around">
+      justify="space-around"
+      wrap>
       {buttons?.map((button, index) =>
         !!large_buttons && buttons.length < 3 ? (
           <Flex.Item grow key={index}>
@@ -132,9 +129,9 @@ const ButtonDisplay = (props, context) => {
  */
 const AlertButton = (props, context) => {
   const { act, data } = useBackend<AlertModalData>(context);
-  const { preferences } = data;
-  const { large_buttons } = preferences;
+  const { large_buttons } = data;
   const { button, selected } = props;
+  const buttonWidth = button.length > 7 ? button.length : 7;
 
   return (
     <Button
@@ -146,7 +143,8 @@ const AlertButton = (props, context) => {
       pr={2}
       pt={large_buttons ? 0.33 : 0}
       selected={selected}
-      textAlign="center">
+      textAlign="center"
+      width={!large_buttons && buttonWidth}>
       {!large_buttons ? button : button.toUpperCase()}
     </Button>
   );

@@ -16,9 +16,6 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		LOG_ERROR(errors, "Invalid json format!")
 		return
 
-	if(general_data["display_name"])
-		set_display_name(general_data["display_name"])
-
 	var/list/variable_data = general_data["variables"]
 	for(var/list/variable as anything in variable_data)
 		var/variable_name = variable["name"]
@@ -31,6 +28,9 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 			modifiable_circuit_variables[variable_name] = variable_datum
 
 	admin_only = general_data["admin_only"]
+
+	if(general_data["display_name"])
+		set_display_name(general_data["display_name"])
 
 	var/list/circuit_data = general_data["components"]
 	var/list/identifiers_to_circuit = list()

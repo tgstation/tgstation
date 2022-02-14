@@ -37,7 +37,8 @@
 	desc = "This is good for spacecoin because"
 	icon = 'icons/obj/money_machine.dmi'
 	icon_state = "bogdanoff"
-	layer = LARGE_MOB_LAYER
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, FIRE = 100, ACID = 80)
 	density = TRUE
 	pixel_z = -8
@@ -203,6 +204,7 @@
 	pixel_z = 300
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
+	plane = ABOVE_GAME_PLANE
 	icon_state = "missile_blur"
 
 /obj/effect/dumpeet_target
