@@ -350,7 +350,7 @@
 
 //Immortality Talisman
 /obj/item/immortality_talisman
-	name = "\improper Immortality Talisman"
+	name = "immortality talisman"
 	desc = "A dread talisman that can render you completely invulnerable."
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "talisman"
