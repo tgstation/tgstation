@@ -696,17 +696,13 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Cb" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Pirate Cutter APC";
-	pixel_x = -25
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/all_access{
 	dir = 4;
 	pixel_x = 24
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "DY" = (

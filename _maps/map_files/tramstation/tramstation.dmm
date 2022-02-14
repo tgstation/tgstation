@@ -32666,6 +32666,19 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/tram/left)
+"kmY" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/landmark/event_spawn,
+/obj/machinery/computer/rdconsole,
+/turf/open/floor/iron,
+/area/science/lab)
 "knx" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Ladder Access Hatch";
@@ -35634,21 +35647,6 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/red/filled/line,
-/turf/open/floor/iron,
-/area/security/prison)
-"ltl" = (
-/obj/structure/table,
-/obj/item/storage/box/prisoner,
-/obj/item/storage/box/prisoner{
-	pixel_y = 8
-	},
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 1
-	},
-/obj/item/paper{
-	info = "<center><b>INTRUSTIONAL GUIDE TO PROCESSING NEW INMATES</center></b> <br> <br> To process inmates through this genpop system, please see the below described listas to proper processing procedures: <br> 1.Swipe new prisoner ID on a genpop locker to link them together. Store the inmate's equipment in this locker. <br> 2.Swipe your ID on the prisoner ID and assign a time for their sentencing. Attach ID to inmate. <br> 3.Process inmate through the labeled security gate, either willingly or by force. This will activate the timer on their card and start their sentencing. <br> 4.Once their sentence is over, their ID will allow them to pass through the gate once again and they will be able to freely collect their belongings. <br> 5.Escort the newly ex-inmate out through the front brig doors back out into the station.";
-	name = "Genpop - Inmate Processing and You"
-	},
 /turf/open/floor/iron,
 /area/security/prison)
 "ltr" = (
@@ -50893,6 +50891,18 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison)
+"rdY" = (
+/obj/structure/table,
+/obj/item/storage/box/prisoner,
+/obj/item/storage/box/prisoner{
+	pixel_y = 8
+	},
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/item/paper/fluff/genpop_instructions,
+/turf/open/floor/iron,
+/area/security/prison)
 "ref" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/electrical{
@@ -57281,19 +57291,6 @@
 /obj/machinery/bounty_board/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
-"tyc" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/landmark/event_spawn,
-/obj/machinery/computer/rdconsole,
-/turf/open/floor/iron,
-/area/science/lab)
 "tyd" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -87437,7 +87434,7 @@ tQC
 mFt
 gFi
 nTn
-ltl
+rdY
 jbD
 wyA
 otH
@@ -180006,7 +180003,7 @@ kug
 brS
 kGW
 pOY
-tyc
+kmY
 nrs
 aHR
 wwC

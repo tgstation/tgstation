@@ -49,58 +49,94 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	)
 	cost = 0
 	route = PATH_START
+	/// The typepath of the organ type required for our heart.
+	var/required_organ_type = /obj/item/organ/heart
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user)
 	. = ..()
 
-	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
-	if(our_heart)
-		our_heart.AddComponent(/datum/component/living_heart)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/obj/item/organ/where_to_put_our_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+
+	// If a heretic is made from a species without a heart, we need to find a backup.
+	if(!where_to_put_our_heart)
+		var/static/list/backup_organs = list(
+			ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
+			ORGAN_SLOT_LIVER = /obj/item/organ/liver,
+			ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
+		)
+
+		for(var/backup_slot in backup_organs)
+			var/obj/item/organ/look_for_backup = user.getorganslot(backup_slot)
+			if(look_for_backup)
+				where_to_put_our_heart = look_for_backup
+				our_heretic.living_heart_organ_slot = backup_slot
+				required_organ_type = backup_organs[backup_slot]
+				to_chat(user, span_boldnotice("As your species does not have a heart, your Living Heart is located in your [look_for_backup.name]."))
+				break
+
+	if(where_to_put_our_heart)
+		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
+		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], \
+			allowing you to track sacrifice targets. \
+			Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
+			to awaken your replacement [where_to_put_our_heart.name] into a Living Heart. \
+			If your [where_to_put_our_heart.name] is cybernetic, \
+			you will additionally require a usable organic [where_to_put_our_heart.name] in the transmutation."
+
+	else
+		to_chat(user, span_boldnotice("You don't have a heart, or any chest organs for that matter. You didn't get a Living Heart because of it."))
 
 /datum/heretic_knowledge/living_heart/on_lose(mob/user)
-	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
-	if(our_heart)
-		qdel(our_heart.GetComponent(/datum/component/living_heart))
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+	if(our_living_heart)
+		qdel(our_living_heart.GetComponent(/datum/component/living_heart))
 
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
-	if(!our_heart || HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
+	if(!our_living_heart || HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
 		return FALSE
 
-	if(our_heart.status == ORGAN_ORGANIC)
+	if(our_living_heart.status == ORGAN_ORGANIC)
 		return TRUE
 
 	else
-		for(var/obj/item/organ/heart/nearby_heart in atoms)
-			if(nearby_heart.status == ORGAN_ORGANIC && nearby_heart.useable)
-				selected_atoms += nearby_heart
+		for(var/obj/item/organ/nearby_organ in atoms)
+			if(!istype(nearby_organ, required_organ_type))
+				continue
+
+			if(nearby_organ.status == ORGAN_ORGANIC && nearby_organ.useable)
+				selected_atoms += nearby_organ
 				return TRUE
 
 		return FALSE
 
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	var/obj/item/organ/our_new_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 
-	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
-
-	if(our_heart.status != ORGAN_ORGANIC)
-		var/obj/item/organ/heart/our_replacement_heart = locate() in selected_atoms
+	if(our_new_heart.status != ORGAN_ORGANIC)
+		var/obj/item/organ/our_replacement_heart = locate(required_organ_type) in selected_atoms
 		if(our_replacement_heart)
 			user.visible_message("[user]'s [our_replacement_heart.name] bursts suddenly out of [user.p_their()] chest!")
 			INVOKE_ASYNC(user, /mob/proc/emote, "scream")
 			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 
-			our_replacement_heart.Insert(user, special = TRUE, drop_if_replaced = TRUE)
-			our_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
-			our_heart = our_replacement_heart
+			our_replacement_heart.Insert(user, TRUE, TRUE)
+			our_new_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
+			our_new_heart = our_replacement_heart
 
-	if(!our_heart)
+	if(!our_new_heart)
 		CRASH("[type] somehow made it to on_finished_recipe without a heart. What?")
 
-	if(our_heart in selected_atoms)
-		selected_atoms -= our_heart
-	our_heart.AddComponent(/datum/component/living_heart)
-	to_chat(user, span_warning("You feel your [our_heart.name] begin pulse faster and faster as it awakens!"))
+	if(our_new_heart in selected_atoms)
+		selected_atoms -= our_new_heart
+
+	our_new_heart.AddComponent(/datum/component/living_heart)
+	to_chat(user, span_warning("You feel your [our_new_heart.name] begin pulse faster and faster as it awakens!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 	return TRUE
 

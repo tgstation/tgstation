@@ -9122,6 +9122,20 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/maintenance/central)
+"aUp" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/computer/rdconsole{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/science/lab)
 "aUx" = (
 /obj/structure/chair/office/light{
 	dir = 4
@@ -11270,20 +11284,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/science/mixing)
-"bdG" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/machinery/computer/rdconsole{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/science/lab)
 "bdK" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/neutral{
@@ -21476,9 +21476,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/maintenance/port/lesser)
-"cqi" = (
-/turf/closed/mineral/random/labormineral,
-/area/space)
 "cql" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
@@ -27709,10 +27706,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/aft)
-"dNv" = (
-/obj/structure/flora/rock/pile,
-/turf/open/floor/plating/asteroid/airless,
-/area/space)
 "dNJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall/rust,
@@ -93526,10 +93519,10 @@ ahV
 aeu
 aeu
 aeu
-cry
+aaa
 acm
-cry
-cry
+aaa
+aaa
 acK
 aaa
 aaa
@@ -93782,10 +93775,10 @@ uVc
 ahV
 aeu
 aeu
-cqi
-cqi
+aeu
+aeu
 alm
-dNv
+aUz
 aaa
 acK
 aaa
@@ -122292,7 +122285,7 @@ uDO
 aXY
 lpO
 arc
-bdG
+aUp
 beB
 hSp
 jXi

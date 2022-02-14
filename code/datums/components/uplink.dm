@@ -200,7 +200,7 @@
 			"restricted_roles" = item.restricted_roles,
 			"restricted_species" = item.restricted_species,
 			"progression_minimum" = item.progression_minimum,
-			"ref" = REF(item)
+			"ref" = REF(item),
 		))
 
 	var/list/remaining_stock = list()
@@ -218,6 +218,7 @@
 	data["has_objectives"] = uplink_handler.has_objectives
 	data["lockable"] = lockable
 	data["assigned_role"] = uplink_handler.assigned_role
+	data["assigned_species"] = uplink_handler.assigned_species
 	data["debug"] = uplink_handler.debug_mode
 	return data
 
