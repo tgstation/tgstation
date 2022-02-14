@@ -24,7 +24,7 @@
 
 /// Stops the dying station pet from causing issues by overriding persistence data before we respawn it.
 /datum/component/multiple_lives/proc/on_write_memory(mob/living/source, dead, gibbed)
-	if(dead)
+	if(dead && !source.suiciding)
 		return COMPONENT_DONT_WRITE_MEMORY
 
 /datum/component/multiple_lives/proc/respawn(mob/living/source, gibbed)
