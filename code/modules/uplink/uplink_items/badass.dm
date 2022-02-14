@@ -52,7 +52,7 @@
 			the other aquatic lifeforms into goopy fishfood. That could be a very noble goal if you drop it into a Nanotrasen aquarium."
 	progression_minimum = 5 MINUTES
 	item = /obj/item/storage/fish_case/syndicate
-	cost = 2
+	cost = 1
 
 // Ultra high progression
 /datum/uplink_item/badass/costumes/clown
