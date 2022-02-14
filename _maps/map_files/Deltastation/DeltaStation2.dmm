@@ -40690,7 +40690,6 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "gtY" = (
-/obj/machinery/atmospherics/components/trinary/mixer/airmix,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -40702,6 +40701,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/components/trinary/mixer/airmix/inverse,
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "guh" = (

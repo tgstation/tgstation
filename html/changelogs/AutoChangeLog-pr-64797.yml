@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Midround antagonists cannot be rolled while the shuttle is docked at the station, or already gone to Central Command."
