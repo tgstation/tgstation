@@ -398,17 +398,15 @@
 		to_chat(target, span_notice("Your mind has managed to go unnoticed in the spirit world."))
 		qdel(trauma)
 
+/// Gives magic projectiles a 3x3 Area of Effect range when it's traveling that will bump into any nearby mobs it is near  
 /obj/projectile/magic/aoe
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
-	damage = 0
-	var/proxdet = TRUE
 
 /obj/projectile/magic/aoe/Range()
-	if(proxdet)
-		for(var/mob/living/L in range(1, get_turf(src)))
-			if(L.stat != DEAD && L != firer && !L.can_block_magic(antimagic_flags, antimagic_charge_cost))
-				return Bump(L)
+	for(var/mob/living/target in range(1, get_turf(src)))
+		if(target.stat != DEAD && target != firer)
+			return Bump(target)
 	..()
 
 
