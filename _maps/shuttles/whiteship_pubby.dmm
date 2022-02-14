@@ -40,7 +40,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/crew)
 "ah" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium/,
 /area/shuttle/abandoned/crew)
 "ai" = (
 /obj/machinery/door/airlock,
@@ -230,7 +230,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "aO" = (
-/turf/closed/wall/mineral/titanium/overspace,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bridge)
 "aP" = (
 /obj/machinery/door/airlock/external/glass/ruin,
