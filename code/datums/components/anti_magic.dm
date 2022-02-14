@@ -39,6 +39,7 @@
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic)
 		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
+		to_chat(parent, span_warning("Magic seems to flee from you, you can't gather enough power to cast spells."))	
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -59,6 +60,14 @@
 	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic)
 	RegisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
 	equipper.update_action_buttons()
+
+	//if(is_type_in_list(/datum/action/spell_action/spell, equipper.actions))
+	for(var/datum/action/spell_action/spell/magic_action in equipper.actions)
+		var/obj/effect/proc_holder/spell/magic_spell = magic_action.target
+		if(antimagic_flags & magic_spell.antimagic_flags)
+			to_chat(equipper, span_warning("Your [parent] is interfering with your ability to cast magic!"))
+			break
+
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -105,12 +114,7 @@
 
 	if(magic_flags & antimagic_flags)
 		if(HAS_TRAIT(user, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) // this trait bypasses magic casting restrictions
-			return FALSE
-
-		if(isitem(parent))
-			to_chat(user, span_warning("Your [parent] is interfering with your ability to cast magic!"))
-		else if(ismob(parent))
-			to_chat(user, span_warning("Magic seems to flee from you, you can't gather enough power to cast this spell."))		
+			return FALSE	
 		return TRUE	
 
 	return FALSE
