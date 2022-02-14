@@ -6,6 +6,7 @@ again.
 
 /obj/effect/spawner/structure
 	name = "map structure spawner"
+	density = TRUE
 	var/list/spawn_list
 
 /obj/effect/spawner/structure/Initialize(mapload)

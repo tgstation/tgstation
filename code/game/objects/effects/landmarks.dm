@@ -446,70 +446,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 /obj/effect/landmark/unit_test_top_right
 	name = "unit test zone top right"
 
+/obj/effect/spawner/hangover_spawn
+	name = "hangover spawner"
 
-/obj/effect/landmark/start/hangover
-	name = "hangover spawn"
-	icon_state = "hangover_spawn"
-
-	/// A list of everything this hangover spawn created
-	var/list/debris = list()
-
-/obj/effect/landmark/start/hangover/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/landmark/start/hangover/Destroy()
-	debris = null
-	return ..()
-
-/obj/effect/landmark/start/hangover/LateInitialize()
-	. = ..()
-	if(!HAS_TRAIT(SSstation, STATION_TRAIT_HANGOVER))
-		return
+/obj/effect/spawner/hangover_spawn/Initialize(mapload)
+	..()
+	var/turf/T = get_turf(src)
 	if(prob(60))
-		debris += new /obj/effect/decal/cleanable/vomit(get_turf(src))
+		new /obj/effect/decal/cleanable/vomit(T)
 	if(prob(70))
-		var/bottle_count = rand(1, 3)
+		var/bottle_count = pick(10;1, 5;2, 2;3)
 		for(var/index in 1 to bottle_count)
-			var/turf/turf_to_spawn_on = get_step(src, pick(GLOB.alldirs))
-			if(!isopenturf(turf_to_spawn_on))
-				continue
-			var/dense_object = FALSE
-			for(var/atom/content in turf_to_spawn_on.contents)
-				if(content.density)
-					dense_object = TRUE
-					break
-			if(dense_object)
-				continue
-			debris += new /obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty(turf_to_spawn_on)
-
-///Spawns the mob with some drugginess/drunkeness, and some disgust.
-/obj/effect/landmark/start/hangover/proc/make_hungover(mob/hangover_mob)
-	if(!iscarbon(hangover_mob))
-		return
-	var/mob/living/carbon/spawned_carbon = hangover_mob
-	spawned_carbon.set_resting(TRUE, silent = TRUE)
-	if(prob(50))
-		spawned_carbon.adjust_drugginess(rand(15, 20))
-	else
-		spawned_carbon.drunkenness += rand(15, 25)
-	spawned_carbon.adjust_disgust(rand(5, 55)) //How hungover are you?
-	if(spawned_carbon.head)
-		return
-
-/obj/effect/landmark/start/hangover/JoinPlayerHere(mob/joining_mob, buckle)
-	. = ..()
-	make_hungover(joining_mob)
-
-/obj/effect/landmark/start/hangover/closet
-	name = "hangover spawn closet"
-	icon_state = "hangover_spawn_closet"
-
-/obj/effect/landmark/start/hangover/closet/JoinPlayerHere(mob/joining_mob, buckle)
-	make_hungover(joining_mob)
-	for(var/obj/structure/closet/closet in contents)
-		if(closet.opened)
-			continue
-		joining_mob.forceMove(closet)
-		return
-	return ..() //Call parent as fallback
+			var/obj/item/reagent_containers/food/drinks/bottle/beer/almost_empty/beer = new(T)
+			beer.pixel_x += rand(-6, 6)
+			beer.pixel_y += rand(-6, 6)
+	return INITIALIZE_HINT_QDEL

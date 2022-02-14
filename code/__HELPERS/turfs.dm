@@ -331,27 +331,31 @@ Turf and target are separate in case you want to teleport some distance from a t
 	if (length(turfs))
 		return pick(turfs)
 
-///Returns a random turf on the station, excludes dense turfs (like walls) and areas that have valid_territory set to FALSE
-/proc/get_safe_random_station_turf(list/areas_to_pick_from = GLOB.the_station_areas)
-	for (var/i in 1 to 5)
-		var/list/turf_list = get_area_turfs(pick(areas_to_pick_from))
-		var/turf/target
-		while (turf_list.len && !target)
-			var/I = rand(1, turf_list.len)
-			var/turf/checked_turf = turf_list[I]
-			var/area/turf_area = get_area(checked_turf)
-			if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY) && !isgroundlessturf(checked_turf))
-				var/clear = TRUE
-				for(var/obj/checked_object in checked_turf)
-					if(checked_object.density)
-						clear = FALSE
-						break
-				if(clear)
-					target = checked_turf
-			if (!target)
-				turf_list.Cut(I, I + 1)
-		if (target)
-			return target
+///Returns a random turf or turf list on the station, excludes dense turfs (like walls) and areas with valid_territory set to FALSE
+/proc/get_safe_random_station_turfs(list/areas_to_pick_from = GLOB.the_station_areas, amount = 1)
+	var/list/picked_turfs = list()
+	var/list/turf_list = list()
+	for(var/area/A as() in areas_to_pick_from)
+		turf_list += get_area_turfs(A)
+	while(turf_list.len && length(picked_turfs) < amount)
+		var/I = rand(1, length(turf_list))
+		var/turf/checked_turf = turf_list[I]
+		var/area/turf_area = get_area(checked_turf)
+		if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY) && !isgroundlessturf(checked_turf))
+			var/clear = TRUE
+			for(var/obj/checked_object in checked_turf)
+				if(checked_object.density)
+					clear = FALSE
+					break
+			if(clear)
+				picked_turfs |= checked_turf 
+			turf_list.Cut(I,I+1)
+		CHECK_TICK
+	if(!picked_turfs.len)
+		return null
+	if(amount == 1)
+		return picked_turfs[1]
+	return picked_turfs
 
 /**
  * Checks whether the target turf is in a valid state to accept a directional window
