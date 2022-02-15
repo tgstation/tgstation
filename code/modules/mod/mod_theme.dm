@@ -755,7 +755,6 @@
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
-	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/op)
 	skins = list(
 		"elite" = list(
 			HELMET_LAYER = null,
