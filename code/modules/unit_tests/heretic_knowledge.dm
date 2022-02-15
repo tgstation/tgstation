@@ -56,21 +56,28 @@
 /datum/unit_test/heretic_main_paths
 
 /datum/unit_test/heretic_main_paths/Run()
-
-	// Our starting knowledge node, we use this to deduce what main paths we have.
-	var/datum/heretic_knowledge/spell/basic/starter_node = allocate(/datum/heretic_knowledge/spell/basic)
+	// A list of path strings we don't need to check.
+	var/list/paths_we_dont_check = list(PATH_SIDE, PATH_START)
 	// An assoc list of [path string] to [number of nodes we found of that path].
 	var/list/paths = list()
+	// The starting knowledge node, we use this to deduce what main paths we have.
+	var/datum/heretic_knowledge/spell/basic/starter_node = new()
 
 	// Go through and determine what paths exist from our base node.
 	for(var/datum/heretic_knowledge/possible_path as anything in starter_node.next_knowledge)
 		paths[initial(possible_path.route)] = 0
 
+	qdel(starter_node) // Get rid of that starter node, we don't need it anymore.
+
 	// Now go through all the knowledges and record how many of each  main path exist.
 	for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
 		var/knowledge_route = initial(knowledge.route)
 		// null (abstract), side paths, and start paths we can skip
-		if(isnull(knowledge_route) || knowledge_route == PATH_SIDE || knowledge_route == PATH_START)
+		if(isnull(knowledge_route) || knowledge_route in paths_we_dont_check)
+			continue
+
+		if(isnull(paths[knowledge_route]))
+			Fail("Heretic Knowledge: An invalid knowledge route ([knowledge_route]) was found on [knowledge].")
 			continue
 
 		paths[knowledge_route]++
