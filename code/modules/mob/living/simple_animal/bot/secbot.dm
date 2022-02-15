@@ -22,6 +22,8 @@
 
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
+	///The type of cuffs we use on criminals after making arrests
+	var/cuff_type = /obj/item/restraints/handcuffs/cable/zipties/used
 	///The weapon (from baton_type) that will be used to make arrests.
 	var/obj/item/weapon
 	///Their current target
@@ -280,19 +282,16 @@
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
 	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a closet or not adjacent, we cancel cuffing.
-		return
+		return FALSE
 	if(!isturf(current_target.loc))
-		return
+		return FALSE
 	if(!Adjacent(current_target))
-		return
+		return FALSE
 	if(!current_target.handcuffed)
-		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
+		current_target.set_handcuffed(new cuff_type(current_target))
 		current_target.update_handcuffed()
 		playsound(src, "law", 50, FALSE)
 		back_to_idle()
-
-
-
 
 /mob/living/simple_animal/bot/secbot/proc/stun_attack(mob/living/carbon/current_target, harm = FALSE)
 	var/judgement_criteria = judgement_criteria()
@@ -365,13 +364,14 @@
 
 		if(BOT_PREP_ARREST) // preparing to arrest target
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) || target.AmountParalyzed() < 40)
+			if(!Adjacent(target) || !isturf(target.loc) || !HAS_TRAIT(target, TRAIT_FLOORED))
 				back_to_hunt()
 				return
 
 			if(!iscarbon(target) || !target.canBeHandcuffed())
 				back_to_idle()
 				return
+
 			if(security_mode_flags & SECBOT_HANDCUFF_TARGET)
 				if(!target.handcuffed) //he's not cuffed? Try to cuff him!
 					start_handcuffing(target)
@@ -394,7 +394,7 @@
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.AmountParalyzed() < 40)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !HAS_TRAIT(target, TRAIT_FLOORED))) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.

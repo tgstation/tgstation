@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen has come out with a new way to define the loot-laden maintenance tunnels of KiloStation. This shouldn't affect anything more than just how they get their power, though."
-  - rscadd: "On KiloStation, there is now a door between Fore and Fore/Starboard Maintenance. I hope this helps you sleep better at night."

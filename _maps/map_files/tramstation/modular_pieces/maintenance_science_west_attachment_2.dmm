@@ -4,14 +4,15 @@
 /area/maintenance/department/medical)
 "b" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/maintenance/three,
-/obj/effect/spawner/random/engineering/flashlight,
+/obj/structure/table,
+/obj/item/toy/plush/beeplushie,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "f" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/flashlight,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "m" = (
@@ -19,11 +20,16 @@
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "p" = (
-/turf/template_noop,
-/area/template_noop)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
 "r" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/chair/stool/directional/north,
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "v" = (
@@ -31,58 +37,36 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
-"w" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/item/toy/plush/beeplushie,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
 "Y" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
-"Z" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/modular_map_connector,
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
+/obj/structure/chair/stool/directional/west,
+/obj/structure/sign/poster/contraband/random{
+	pixel_y = 32
 	},
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 
 (1,1,1) = {"
-p
-a
-a
-a
-a
-"}
-(2,1,1) = {"
-p
-Y
-m
 b
-a
-"}
-(3,1,1) = {"
-Z
 m
 m
 f
-a
+"}
+(2,1,1) = {"
+Y
+m
+m
+p
+"}
+(3,1,1) = {"
+m
+m
+m
+v
 "}
 (4,1,1) = {"
-p
-w
+a
 r
-v
-a
-"}
-(5,1,1) = {"
-p
-a
-a
 a
 a
 "}

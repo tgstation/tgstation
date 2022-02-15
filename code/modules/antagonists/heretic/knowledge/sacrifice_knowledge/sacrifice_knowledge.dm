@@ -48,14 +48,14 @@
 		CRASH("Failed to initialize heretic sacrifice z-level!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
-	if(!our_heart || !HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
-		return FALSE
-
 	// We've got no targets set, let's try to set some. Adds the user to the list of atoms,
 	// then returns TRUE if skip_this_ritual is FALSE and the user's on top of the rune.
 	// If skip_this_ritual is TRUE, returns FALSE to fail the check and move onto the next ritual.
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.living_heart_organ_slot)
+	if(!our_living_heart || !HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+		return FALSE
+
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		if(skip_this_ritual)
 			return FALSE

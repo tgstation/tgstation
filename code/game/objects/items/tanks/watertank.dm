@@ -33,13 +33,13 @@
 	toggle_mister(user)
 
 /obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot == user.getBackSlot())
+	if(slot == user.getBackSlot() || slot == ITEM_SLOT_SUITSTORE)
 		return 1
 
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
 		return
-	if(user.get_item_by_slot(user.getBackSlot()) != src)
+	if(user.get_item_by_slot(user.getBackSlot()) != src && user.get_item_by_slot(ITEM_SLOT_SUITSTORE) != src)
 		to_chat(user, span_warning("The watertank must be worn properly to use!"))
 		return
 	if(user.incapacitated())
