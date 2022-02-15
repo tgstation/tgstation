@@ -512,7 +512,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
-	inbuilt_modules = list(/obj/item/mod/module/mister/security)
 	skins = list(
 		"security" = list(
 			HELMET_LAYER = null,
@@ -557,7 +556,6 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
-	inbuilt_modules = list(/obj/item/mod/module/mister/security)
 	skins = list(
 		"safeguard" = list(
 			HELMET_LAYER = null,

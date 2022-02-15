@@ -110,6 +110,7 @@
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
+		/obj/item/mod/module/mister/security,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -120,6 +121,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/holster,
+		/obj/item/mod/module/mister/security,
 	)
 
 /obj/item/mod/control/pre_equipped/magnate
