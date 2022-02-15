@@ -160,9 +160,10 @@ Regarding sprites & sounds, you must credit the artist and possibly the codebase
 ## Banned content
 Do not add any of the following in a Pull Request or risk getting the PR closed:
 * National Socialist Party of Germany content, National Socialist Party of Germany related content, or National Socialist Party of Germany references
-* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
-* Code which violates GitHub's [terms of service](https://github.com/site/terms).
 * Imagery which contains any of the protected emblems of the [Red Cross Movement](https://www.ifrc.org/emblems-and-logo). Unauthorised use of these symbols is prohibited by the First Geneva Convention and the laws of some countries.
+* Code which violates GitHub's [terms of service](https://github.com/site/terms).
+* Code adding, removing, or updating the availability of alien races/species/human mutants without prior approval. Pull requests attempting to add or remove features from said races/species/mutants require prior approval as well.
+
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
