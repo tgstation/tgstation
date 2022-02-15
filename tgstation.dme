@@ -3696,7 +3696,6 @@
 #include "code\modules\projectiles\projectile\energy\stun.dm"
 #include "code\modules\projectiles\projectile\energy\tesla.dm"
 #include "code\modules\projectiles\projectile\energy\thermal.dm"
-#include "code\modules\projectiles\projectile\magic\spellcard.dm"
 #include "code\modules\projectiles\projectile\reusable\_reusable.dm"
 #include "code\modules\projectiles\projectile\reusable\foam_dart.dm"
 #include "code\modules\projectiles\projectile\special\curse.dm"

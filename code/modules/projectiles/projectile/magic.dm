@@ -482,3 +482,11 @@
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"
+
+/obj/projectile/magic/spellcard
+	name = "enchanted card"
+	desc = "A piece of paper enchanted to give it extreme durability and stiffness, along with a very hot burn to anyone unfortunate enough to get hit by a charged one."
+	icon_state = "spellcard"
+	damage_type = BURN
+	damage = 2
+	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
