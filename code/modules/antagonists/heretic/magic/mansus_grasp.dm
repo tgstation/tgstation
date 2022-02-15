@@ -67,7 +67,7 @@
  * Returns TRUE If the attack was blocked. FALSE otherwise.
  */
 /obj/item/melee/touch_attack/mansus_fist/proc/antimagic_check(mob/living/carbon/human/target, mob/living/carbon/user)
-	if(target.anti_magic_check())
+	if(target.can_block_magic())
 		target.visible_message(
 			span_danger("The spell bounces off of [target]!"),
 			span_danger("The spell bounces off of you!"),

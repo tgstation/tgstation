@@ -18,7 +18,7 @@
 	var/mob/living/real_target = targets[1]
 	var/mob/living/living_user = user
 	playsound(user, 'sound/magic/demon_attack1.ogg', 75, TRUE)
-	if(real_target.anti_magic_check())
+	if(real_target.can_block_magic())
 		user.balloon_alert(user, "spell blocked!")
 		real_target.visible_message(
 			span_danger("The spell bounces off of [real_target]!"),
