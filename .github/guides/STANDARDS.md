@@ -432,6 +432,18 @@ If you are using `.` in this case (or for another case that might be acceptable,
 	return . // `return .` is used at the end, to signify it has been used
 ```
 
+```dm
+/obj/item/spoon/attack()
+	. = ..()
+	if (!.)
+		return . // `. = ..()` does not require us to `return .` at the end, but in this case, we should make it clear what is being returned here
+
+/obj/item/spoon/super_attack()
+	. = ..()
+	if (. == BIGGER_SUPER_ATTACK)
+		return BIGGER_SUPER_ATTACK // More readable than `.`
+```
+
 ### The BYOND walk procs
 
 BYOND has a few procs that move one atom towards/away from another, `walk()`, `walk_to()`, `walk_towards`, `walk_away()` and `walk_rand()`.
