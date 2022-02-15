@@ -39,7 +39,7 @@
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic)
 		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
-		to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells and are unable to cast them."))	
+		to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells but are unable to cast magic."))	
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -61,7 +61,7 @@
 	RegisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
 	equipper.update_action_buttons()
 
-	//if(is_type_in_list(/datum/action/spell_action/spell, equipper.actions))
+	// Check to see if we have any spells that are blocked due to antimagic
 	for(var/datum/action/spell_action/spell/magic_action in equipper.actions)
 		var/obj/effect/proc_holder/spell/magic_spell = magic_action.target
 		if(antimagic_flags & magic_spell.antimagic_flags)
