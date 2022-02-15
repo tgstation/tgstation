@@ -174,7 +174,6 @@
 	. = ..()
 	allowed += /obj/item/watertank/pepperspray
 
-
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
 	desc = "A tribal armor plate, crafted from animal bone."
