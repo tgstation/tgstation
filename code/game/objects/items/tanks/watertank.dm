@@ -22,7 +22,7 @@
 	. = ..()
 	create_reagents(volume, OPENCONTAINER)
 	noz = make_noz()
-
+	RegisterSignal(noz, COMSIG_MOVABLE_MOVED, .proc/noz_move)
 
 /obj/item/watertank/Destroy()
 	QDEL_NULL(noz)
@@ -47,6 +47,7 @@
 
 	if(QDELETED(noz))
 		noz = make_noz()
+		RegisterSignal(noz, COMSIG_MOVABLE_MOVED, .proc/noz_move)
 	if(noz in src)
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
@@ -63,6 +64,12 @@
 
 /obj/item/watertank/proc/make_noz()
 	return new /obj/item/reagent_containers/spray/mister(src)
+
+/obj/item/watertank/proc/noz_move(atom/movable/mover, atom/oldloc, direction)
+	if(mover.loc == src || mover.loc == loc)
+		return
+	balloon_alert(loc, "nozzle snaps back")
+	mover.forceMove(src)
 
 /obj/item/watertank/equipped(mob/user, slot)
 	..()
@@ -89,10 +96,10 @@
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 	return ..()
 
-/obj/item/watertank/attackby(obj/item/W, mob/user, params)
-	if(W == noz)
+/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item == noz)
 		remove_noz()
-		return 1
+		return TRUE
 	else
 		return ..()
 
@@ -128,13 +135,6 @@
 	if(!istype(tank))
 		return INITIALIZE_HINT_QDEL
 	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
-
-/obj/item/reagent_containers/spray/mister/doMove(atom/destination)
-	if(destination && (destination != tank.loc || !ismob(destination)))
-		if (loc != tank)
-			to_chat(tank.loc, span_notice("The mister snaps back onto the watertank."))
-		destination = tank
-	..()
 
 /obj/item/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it
@@ -248,7 +248,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
 	chem = null //holds no chems of its own, it takes from the tank.
-	var/obj/item/watertank/tank
+	var/obj/item/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
 	COOLDOWN_DECLARE(resin_cooldown)
@@ -256,10 +256,10 @@
 /obj/item/extinguisher/mini/nozzle/Initialize(mapload)
 	. = ..()
 	tank = loc
-	if (!istype(tank))
+	if (!tank?.reagents)
 		return INITIALIZE_HINT_QDEL
 	reagents = tank.reagents
-	max_water = tank.volume
+	max_water = tank.reagents.maximum_volume
 
 
 /obj/item/extinguisher/mini/nozzle/Destroy()
@@ -267,30 +267,26 @@
 	tank = null
 	return ..()
 
-
-/obj/item/extinguisher/mini/nozzle/doMove(atom/destination)
-	if(destination && (destination != tank.loc || !ismob(destination)))
-		if(loc != tank)
-			to_chat(tank.loc, span_notice("The nozzle snaps back onto the tank."))
-		destination = tank
-	..()
-
 /obj/item/extinguisher/mini/nozzle/attack_self(mob/user)
+	var/uses_pack = istype(tank, /obj/item/watertank/atmos)
 	switch(nozzle_mode)
 		if(EXTINGUISHER)
 			nozzle_mode = RESIN_LAUNCHER
-			tank.icon_state = "waterbackpackatmos_1"
-			to_chat(user, span_notice("Swapped to resin launcher."))
+			if(uses_pack)
+				tank.icon_state = "waterbackpackatmos_1"
+			balloon_alert(user, "switched to resin launcher")
 			return
 		if(RESIN_LAUNCHER)
 			nozzle_mode = RESIN_FOAM
-			tank.icon_state = "waterbackpackatmos_2"
-			to_chat(user, span_notice("Swapped to resin foamer."))
+			if(uses_pack)
+				tank.icon_state = "waterbackpackatmos_2"
+			balloon_alert(user, "switched to resin foam")
 			return
 		if(RESIN_FOAM)
 			nozzle_mode = EXTINGUISHER
-			tank.icon_state = "waterbackpackatmos_0"
-			to_chat(user, span_notice("Swapped to water extinguisher."))
+			if(uses_pack)
+				tank.icon_state = "waterbackpackatmos_0"
+			balloon_alert(user, "switched to fire extinguisher")
 			return
 	return
 
@@ -306,10 +302,10 @@
 			return //Safety check so you don't blast yourself trying to refill your tank
 		var/datum/reagents/R = reagents
 		if(R.total_volume < 100)
-			to_chat(user, span_warning("You need at least 100 units of water to use the resin launcher!"))
+			balloon_alert(user, "not enough water!")
 			return
 		if(!COOLDOWN_FINISHED(src, resin_cooldown))
-			to_chat(user, span_warning("Resin launcher is still recharging..."))
+			balloon_alert(user, "still recharging!")
 			return
 		COOLDOWN_START(src, resin_cooldown, 10 SECONDS)
 		R.remove_any(100)
@@ -324,10 +320,11 @@
 
 	if(nozzle_mode == RESIN_FOAM)
 		if(!Adj|| !isturf(target))
+			balloon_alert(user, "too far!")
 			return
 		for(var/S in target)
 			if(istype(S, /obj/effect/particle_effect/foam/metal/resin) || istype(S, /obj/structure/foamedmetal/resin))
-				to_chat(user, span_warning("There's already resin here!"))
+				balloon_alert(user, "already has resin!")
 				return
 		if(metal_synthesis_cooldown < 5)
 			var/obj/effect/particle_effect/foam/metal/resin/F = new (get_turf(target))
@@ -335,7 +332,7 @@
 			metal_synthesis_cooldown++
 			addtimer(CALLBACK(src, .proc/reduce_metal_synth_cooldown), 10 SECONDS)
 		else
-			to_chat(user, span_warning("Resin foam mix is still being synthesized..."))
+			balloon_alert(user, "still being synthesized!")
 			return
 
 /obj/item/extinguisher/mini/nozzle/proc/resin_stop_check(datum/move_loop/source, succeeded)

@@ -258,3 +258,6 @@
 			part.add_atom_colour("#b17f00", FIXED_COLOUR_PRIORITY)
 		mod.wearer.remove_atom_colour(WASHABLE_COLOUR_PRIORITY) // turns purple guy purple
 		mod.wearer.add_atom_colour("#704b96", FIXED_COLOUR_PRIORITY)
+
+///Flamethrower - Launches fire across the area.
+/obj/item/mod/module/flamethrower
