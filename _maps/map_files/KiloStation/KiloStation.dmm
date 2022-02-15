@@ -10823,9 +10823,6 @@
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "bcc" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -37906,9 +37903,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/meter,
-/obj/machinery/light_switch/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/computer/atmos_control/ordnancemix{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "hOw" = (
@@ -64203,7 +64200,6 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "raJ" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -65511,9 +65507,6 @@
 /turf/open/floor/iron/dark,
 /area/science/xenobiology)
 "ruR" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
 /obj/effect/turf_decal/box/corners,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
