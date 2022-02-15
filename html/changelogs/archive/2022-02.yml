@@ -695,3 +695,25 @@
       map that still had them.
   - bugfix: If you've been noticing some absurdly dark rocks on KiloStation, rest
       assured that we've fixed them.
+2022-02-15:
+  Aerden:
+  - rscadd: Added the ability to equip the backpack firefighter tanks with atmospheric
+      modsuits.
+  - rscadd: Added waterbackpackatmos to belt_mirror.dmi
+  MMMiracles:
+  - rscadd: Tramstation's medical wing has been revamped once again to maybe not be
+      as bad as before.
+  Melbert:
+  - expansion: RND labs now have RND consoles again.
+  RandomGamer123:
+  - bugfix: Kilostation toxins now has an ordnance monitoring computer
+  - qol: Gas canisters now display their maximum temperature on being examined!
+  SmoSmoSmoSmok:
+  - bugfix: Janitor cyborg's soap running out of uses will no longer glitch out
+  Watermelon914:
+  - admin: Urgent ahelps will now send more information to admins to assist with handling
+      your ahelp.
+  san7890:
+  - rscadd: Even though it wasn't much of a break room at all, Engineering unions
+      are even more angrier now that the name "break room" has been removed from Engineering
+      on Kilostation.
