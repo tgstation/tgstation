@@ -22818,6 +22818,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/dorms)
+"gHS" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/machinery/vending/wardrobe/medi_wardrobe,
+/turf/open/floor/iron/white,
+/area/medical/medbay/central)
 "gIt" = (
 /turf/closed/wall,
 /area/science/robotics/lab)
@@ -24308,6 +24316,13 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/right)
+"hlf" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/machinery/vending/drugs,
+/turf/open/floor/iron/dark,
+/area/medical/storage)
 "hlj" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -40801,13 +40816,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/medical/coldroom)
-"npr" = (
-/obj/machinery/vending/wardrobe/medi_wardrobe,
-/obj/effect/turf_decal/siding/white{
-	dir = 1
-	},
-/turf/open/floor/iron/dark,
-/area/medical/storage)
 "npC" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -165540,7 +165548,7 @@ ogT
 vhd
 bHn
 wss
-npr
+hlf
 snA
 xcl
 aiP
@@ -166048,7 +166056,7 @@ fKn
 pDB
 owD
 lwN
-qWw
+gHS
 eLP
 mmP
 nhp
