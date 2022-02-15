@@ -183,7 +183,7 @@
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
-		/obj/item/mod/module/flamethrower
+		/obj/item/mod/module/flamethrower,
 	)
 
 /obj/item/mod/control/pre_equipped/enchanted
