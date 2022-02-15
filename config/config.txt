@@ -575,6 +575,11 @@ URGENT_AHELP_COOLDOWN 300
 ## The message that the player receives whenever prompted whether they want to send an urgent ahelp or not.
 #URGENT_AHELP_USER_PROMPT This'll ping the admins!
 
+## The link that the title of a ticket can link to.
+## If not set, it will link nowhere
+## use $RID for the round ID and $TID for the ticket ID
+#ADMINHELP_AHELP_LINK
+
 ## The URL for the pfp of the webhook
 #ADMINHELP_WEBHOOK_PFP
 
