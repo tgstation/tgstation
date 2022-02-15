@@ -436,7 +436,6 @@
 /obj/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
 	tesla_zap(src, zap_range, zap_power, zap_flags)
-	qdel(src)
 
 /obj/projectile/magic/aoe/lightning/no_zap
 	zap_power = 10000
