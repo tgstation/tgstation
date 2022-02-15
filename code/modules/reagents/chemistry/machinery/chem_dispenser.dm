@@ -441,7 +441,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/chem_dispenser/AltClick(mob/user)
-	. = ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"

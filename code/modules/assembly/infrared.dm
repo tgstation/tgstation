@@ -24,7 +24,7 @@
 	refreshBeam()
 
 /obj/item/assembly/infra/AltClick(mob/user)
-	. = ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)

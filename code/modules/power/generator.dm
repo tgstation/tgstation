@@ -216,7 +216,7 @@
 	return TRUE
 
 /obj/machinery/power/generator/AltClick(mob/user)
-	. = ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/power/generator/on_deconstruction()
 	kill_circs()

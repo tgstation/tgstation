@@ -208,7 +208,7 @@
 	return ..()
 
 /obj/structure/showerframe/AltClick(mob/user)
-	. = ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/effect/mist
 	name = "mist"

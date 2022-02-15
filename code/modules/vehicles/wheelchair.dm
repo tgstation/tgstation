@@ -50,7 +50,7 @@
 	return TRUE
 
 /obj/vehicle/ridden/wheelchair/AltClick(mob/user)
-	. = ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()

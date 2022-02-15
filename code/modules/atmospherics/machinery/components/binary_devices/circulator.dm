@@ -26,7 +26,7 @@
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/atmospherics/components/binary/circulator/AltClick(mob/user)
-	. = ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 //default cold circ for mappers
 /obj/machinery/atmospherics/components/binary/circulator/cold
