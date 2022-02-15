@@ -302,7 +302,9 @@
  * Takes the intended movement direction as input.
  */
 /mob/get_spacemove_backup(moving_direction)
-	for(var/atom/pushover as anything in orange(1, get_turf(src)))
+	for(var/atom/pushover as anything in range(1, get_turf(src)))
+		if(pushover == src)
+			continue
 		if(isarea(pushover))
 			continue
 		if(isturf(pushover))
@@ -320,6 +322,7 @@
 			var/mob/lover = rebound
 			if(lover.buckled)
 				continue
+
 		var/pass_allowed = rebound.CanPass(src, get_dir(rebound, src))
 		if(!rebound.density && pass_allowed)
 			continue
