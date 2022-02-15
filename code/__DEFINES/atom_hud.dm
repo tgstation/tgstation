@@ -69,3 +69,57 @@
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20
+
+
+// Security HUD icon_state defines
+
+#define SECHUD_NO_ID "hudno_id"
+#define SECHUD_UNKNOWN "hudunknown"
+#define SECHUD_CENTCOM "hudcentcom"
+#define SECHUD_SYNDICATE "hudsyndicate"
+
+#define SECHUD_ASSISTANT "hudassistant"
+#define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
+#define SECHUD_BARTENDER "hudbartender"
+#define SECHUD_BOTANIST "hudbotanist"
+#define SECHUD_CAPTAIN "hudcaptain"
+#define SECHUD_CARGO_TECHNICIAN "hudcargotechnician"
+#define SECHUD_CHAPLAIN "hudchaplain"
+#define SECHUD_CHEMIST "hudchemist"
+#define SECHUD_CHIEF_ENGINEER "hudchiefengineer"
+#define SECHUD_CHIEF_MEDICAL_OFFICER "hudchiefmedicalofficer"
+#define SECHUD_CLOWN "hudclown"
+#define SECHUD_COOK "hudcook"
+#define SECHUD_CURATOR "hudcurator"
+#define SECHUD_DETECTIVE "huddetective"
+#define SECHUD_GENETICIST "hudgeneticist"
+#define SECHUD_HEAD_OF_PERSONNEL "hudheadofpersonnel"
+#define SECHUD_HEAD_OF_SECURITY "hudheadofsecurity"
+#define SECHUD_JANITOR "hudjanitor"
+#define SECHUD_LAWYER "hudlawyer"
+#define SECHUD_MEDICAL_DOCTOR "hudmedicaldoctor"
+#define SECHUD_MIME "hudmime"
+#define SECHUD_PARAMEDIC "hudparamedic"
+#define SECHUD_PRISONER "hudprisoner"
+#define SECHUD_PSYCHOLOGIST "hudpsychologist"
+#define SECHUD_QUARTERMASTER "hudquartermaster"
+#define SECHUD_RESEARCH_DIRECTOR "hudresearchdirector"
+#define SECHUD_ROBOTICIST "hudroboticist"
+#define SECHUD_SECURITY_OFFICER "hudsecurityofficer"
+#define SECHUD_SCIENTIST "hudscientist"
+#define SECHUD_SHAFT_MINER "hudshaftminer"
+#define SECHUD_STATION_ENGINEER "hudstationengineer"
+#define SECHUD_VIROLOGIST "hudvirologist"
+#define SECHUD_WARDEN "hudwarden"
+
+#define SECHUD_CHEF "hudchef"
+
+#define SECHUD_DEATH_COMMANDO "huddeathcommando"
+
+#define SECHUD_EMERGENCY_RESPONSE_TEAM_COMMANDER "hudemergencyresponseteamcommander"
+#define SECHUD_SECURITY_RESPONSE_OFFICER "hudsecurityresponseofficer"
+#define SECHUD_ENGINEERING_RESPONSE_OFFICER "hudengineeringresponseofficer"
+#define SECHUD_MEDICAL_RESPONSE_OFFICER "hudmedicalresponseofficer"
+#define SECHUD_RELIGIOUS_RESPONSE_OFFICER "hudreligiousresponseofficer"
+#define SECHUD_JANITORIAL_RESPONSE_OFFICER "hudjanitorialresponseofficer"
+#define SECHUD_ENTERTAINMENT_RESPONSE_OFFICER "hudentertainmentresponseofficer"

@@ -6,6 +6,7 @@
 	inhand_icon_state = "holster"
 	worn_icon_state = "holster"
 	alternate_worn_layer = UNDER_SUIT_LAYER
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()
@@ -28,11 +29,36 @@
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
 		/obj/item/food/grown/banana,
+		/obj/item/gun/energy/laser/thermal
 		))
+
+/obj/item/storage/belt/holster/thermal
+	name = "thermal shoulder holsters"
+	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Meant to hold a twinned pair of thermal pistols, but can fit several kinds of energy handguns as well."
+
+/obj/item/storage/belt/holster/thermal/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 2
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.set_holdable(list(
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/dueling,
+		/obj/item/food/grown/banana,
+		/obj/item/gun/energy/laser/thermal
+		))
+
+/obj/item/storage/belt/holster/thermal/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/gun/energy/laser/thermal/inferno = 1,
+		/obj/item/gun/energy/laser/thermal/cryo = 1,
+	),src)
 
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
 	desc = "A holster able to carry handguns and some ammo. WARNING: Badasses only."
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
@@ -53,6 +79,7 @@
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
+		/obj/item/gun/energy/laser/thermal
 		))
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
@@ -80,6 +107,7 @@
 	icon_state = "syndicate_holster"
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
+	w_class = WEIGHT_CLASS_NORMAL
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)

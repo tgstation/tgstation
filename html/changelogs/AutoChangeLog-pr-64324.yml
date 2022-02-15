@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - expansion: "Alarm sounds for Fire Locks and Fire Alarms now loops slightly differently, and will respond to changes quicker."

@@ -16,7 +16,7 @@
 	charge_max = 5 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 2
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "areaconvert"
@@ -36,7 +36,7 @@
 	charge_max = 2 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 0
 	summon_type = list(/turf/open/floor/engine/cult)
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -52,7 +52,7 @@
 	charge_max = 10 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 0
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "lesserconstruct"
@@ -69,7 +69,7 @@
 	charge_max = 30 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 0
 
 	summon_type = list(/turf/closed/wall/r_wall)
@@ -82,7 +82,7 @@
 	charge_max = 4 MINUTES
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 0
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "summonsoulstone"
@@ -110,7 +110,7 @@
 	charge_max = 40 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	wall_type = /obj/effect/forcefield/cult
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultforcewall"
@@ -126,7 +126,7 @@
 	charge_max = 25 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	jaunt_duration = 5 SECONDS
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "phaseshift"
@@ -155,7 +155,7 @@
 	charge_max = 40 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	max_targets = 6
 	action_icon_state = "magicm"
 	action_background_icon_state = "bg_demon"
@@ -173,7 +173,7 @@
 	charge_max = 20 SECONDS
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
@@ -192,7 +192,7 @@
 	school = SCHOOL_EVOCATION
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"
@@ -252,7 +252,7 @@
 	school = SCHOOL_EVOCATION
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"

@@ -250,3 +250,4 @@ If you're bleeding, you can apply pressure to the limb by grabbing yourself whil
 Laying down will help slow down bloodloss. Death will halt it entirely.
 ♪ Hey, have you ever tried appending the % character before your messages when speaking in-game? ♫
 @You can use the |, + and _ characters to emphasize parts of what you say in-game (e.g. say"my _ass_ |is| +heavy+." will be outputted as "my <u>ass</u> <i>is</i> <b>heavy</b>."). You can also escape these emphasizers by appending backslashes before them (e.g. say"1\+2\+3" will come out as "1+2+3" and not "1\<b>2\</b>3").
+If you knock into somebody while doing a wicked grind on a skateboard, they will be floored for double the time. Radical!

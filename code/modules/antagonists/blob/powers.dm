@@ -28,8 +28,7 @@
 		if(T.density)
 			to_chat(src, span_warning("This spot is too dense to place a blob core on!"))
 			return FALSE
-		var/area/A = get_area(T)
-		if(isspaceturf(T) || A && !(A.area_flags & BLOBS_ALLOWED))
+		if(!is_valid_turf(T))
 			to_chat(src, span_warning("You cannot place your core here!"))
 			return FALSE
 		for(var/obj/O in T)

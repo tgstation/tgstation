@@ -67,7 +67,7 @@
 	charge_max = 120
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
@@ -86,7 +86,7 @@
 	charge_max = 360
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	antimagic_flags = NONE // no cast restrictions
@@ -119,7 +119,7 @@
 	charge_max = 20
 	clothes_req = TRUE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	cooldown_min = 5 //4 deciseconds reduction per rank
@@ -192,7 +192,7 @@
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 0
 	summon_type = list(/obj/structure/constructshell)
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
