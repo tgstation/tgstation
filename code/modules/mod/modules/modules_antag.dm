@@ -261,3 +261,22 @@
 
 ///Flamethrower - Launches fire across the area.
 /obj/item/mod/module/flamethrower
+	name = "MOD flamethrower module"
+	desc = "A custom-manufactured flamethrower, used to burn through your path. Burn well."
+	icon_state = "flamethrower"
+	module_type = MODULE_ACTIVE
+	complexity = 3
+	use_power_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/flamethrower)
+	cooldown_time = 1.5 SECONDS
+
+/obj/item/mod/module/flamethrower/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	var/obj/projectile/flame = new /obj/projectile/bullet/incendiary/backblast(mod.wearer.loc)
+	flame.preparePixelProjectile(target, mod.wearer)
+	flame.firer = mod.wearer
+	playsound(src, 'sound/items/modsuit/flamethrower.ogg', 75, TRUE)
+	INVOKE_ASYNC(flame, /obj/projectile.proc/fire)
+	drain_power(use_power_cost)

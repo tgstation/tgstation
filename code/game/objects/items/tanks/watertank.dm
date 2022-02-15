@@ -132,7 +132,7 @@
 /obj/item/reagent_containers/spray/mister/Initialize(mapload)
 	. = ..()
 	tank = loc
-	if(!istype(tank))
+	if(!tank?.reagents)
 		return INITIALIZE_HINT_QDEL
 	reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
@@ -467,37 +467,3 @@
 	reagents.trans_to(user, used_amount, multiplier=usage_ratio, methods = INJECT)
 	update_appearance()
 	user.update_inv_back() //for overlays update
-
-//Operator backpack spray
-/obj/item/watertank/op
-	name = "backpack water tank"
-	desc = "A New Russian backpack spray for systematic cleansing of carbon lifeforms."
-	icon_state = "waterbackpackop"
-	inhand_icon_state = "waterbackpackop"
-	w_class = WEIGHT_CLASS_NORMAL
-	volume = 2000
-	slowdown = 0
-
-/obj/item/watertank/op/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/toxin/mutagen,350)
-	reagents.add_reagent(/datum/reagent/napalm,125)
-	reagents.add_reagent(/datum/reagent/fuel,125)
-	reagents.add_reagent(/datum/reagent/clf3,300)
-	reagents.add_reagent(/datum/reagent/cryptobiolin,350)
-	reagents.add_reagent(/datum/reagent/toxin/plasma,250)
-	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin,500)
-
-/obj/item/reagent_containers/spray/mister/op
-	desc = "A mister nozzle attached to several extended water tanks. It suspiciously has a compressor in the system and is labelled entirely in New Cyrillic."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
-	icon_state = "misterop"
-	inhand_icon_state = "misterop"
-	lefthand_file = 'icons/mob/inhands/equipment/mister_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/mister_righthand.dmi'
-	w_class = WEIGHT_CLASS_BULKY
-	amount_per_transfer_from_this = 100
-	possible_transfer_amounts = list(75,100,150)
-
-/obj/item/watertank/op/make_noz()
-	return new /obj/item/reagent_containers/spray/mister/op(src)
