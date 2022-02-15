@@ -444,7 +444,7 @@
 
 /obj/projectile/magic/aoe/lightning/Destroy()
 	qdel(chain)
-	..()
+	. = ..()
 
 /obj/projectile/magic/aoe/fireball
 	name = "bolt of fireball"
