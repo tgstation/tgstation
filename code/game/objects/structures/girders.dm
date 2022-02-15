@@ -126,7 +126,7 @@
 						return
 					S.use(2)
 					to_chat(user, span_notice("You add the plating."))
-					var/obj/structure/tramwall/tram_wall = new S.tram_wall_type (loc)
+					var/obj/structure/tramwall/tram_wall = new S.tram_wall_type(loc)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
@@ -204,7 +204,7 @@
 						return
 					S.use(2)
 					to_chat(user, span_notice("You add the plating."))
-					var/obj/structure/tramwall/tram_wall = new S.tram_wall_type (loc)
+					var/obj/structure/tramwall/tram_wall = new S.tram_wall_type(loc)
 					transfer_fingerprints_to(tram_wall)
 					qdel(src)
 				return
