@@ -24,7 +24,9 @@
 
 /obj/effect/abstract/particle_holder/Destroy(force)
 	var/atom/movable/attached = weak_attached.resolve()
-	var/atom/movable/additional_attached = weak_additional.resolve()
+	var/atom/movable/additional_attached
+	if(weak_additional)
+		additional_attached = weak_additional.resolve()
 	if(attached)
 		attached.vis_contents -= src
 		UnregisterSignal(loc, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
