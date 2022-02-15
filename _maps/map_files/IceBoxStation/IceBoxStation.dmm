@@ -4675,7 +4675,6 @@
 /area/maintenance/port/fore)
 "aKZ" = (
 /obj/machinery/meter,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/plating,
 /area/maintenance/starboard/upper)
@@ -12302,12 +12301,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/aft)
-"djj" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/maintenance/starboard/upper)
 "djk" = (
 /obj/machinery/camera{
 	c_tag = "Surgery B";
@@ -13320,12 +13313,6 @@
 /obj/item/stock_parts/cell/high/plus,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/eva)
-"dJW" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/maintenance/starboard/upper)
 "dJX" = (
 /obj/structure/grille/broken,
 /obj/structure/disposalpipe/segment{
@@ -20758,14 +20745,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/commons/locker)
-"htl" = (
-/obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "8;12"
-	},
-/obj/effect/mapping_helpers/airlock/abandoned,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/starboard/upper)
 "htn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -25437,7 +25416,6 @@
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "jEW" = (
-/obj/structure/cable,
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -48268,7 +48246,6 @@
 	},
 /area/science/misc_lab)
 "uXb" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
@@ -53097,8 +53074,6 @@
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
 "xsX" = (
-/obj/machinery/power/apc/auto_name/directional/east,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers,
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/decal/cleanable/dirt,
@@ -106165,7 +106140,7 @@ xuJ
 xuJ
 xuJ
 xuJ
-htl
+hce
 xuJ
 xuJ
 onK
@@ -106421,8 +106396,8 @@ lfx
 rwC
 lcV
 aKZ
-dJW
-djj
+rwC
+lcV
 jHk
 xuJ
 xLE
