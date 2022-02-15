@@ -28,16 +28,6 @@
 	trail = TRUE
 	trail_lifespan = 5
 	trail_icon_state = "magicmd"
-	
-/** We should probably delete this?
-/obj/projectile/magic/spell/magic_missile/on_hit(target)
-	. = ..()
-	if(ismob(target))
-		var/mob/M = target
-		if(M.can_block_magic())
-			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-**/
 
 /obj/effect/proc_holder/spell/targeted/genetic/mutate
 	name = "Mutate"
@@ -296,7 +286,6 @@
 	selection_type = "view"
 	action_icon_state = "sacredflame"
 	sound = 'sound/magic/fireball.ogg'
-	antimagic_flags = MAGIC_RESISTANCE // the default antimagic_flags for base class is already MAGIC_RESISTANCE I think... double check later
 
 /obj/effect/proc_holder/spell/targeted/sacred_flame/cast(list/targets, mob/user = usr)
 	if(isliving(user))
