@@ -86,10 +86,6 @@
 	input = /obj/item/food/meat/rawcutlet
 	output = /obj/item/food/meat/rawbacon
 
-/datum/food_processor_process/spidereggs
-	input = /obj/item/food/spidereggs
-	output = /obj/item/food/spidereggs/processed
-
 /datum/food_processor_process/potatowedges
 	input = /obj/item/food/grown/potato/wedges
 	output = /obj/item/food/fries
