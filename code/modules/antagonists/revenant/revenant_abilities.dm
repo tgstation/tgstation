@@ -129,7 +129,7 @@
 	action_background_icon_state = "bg_revenant"
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
-	antimagic_flags = MAGIC_RESISTANCE_HOLY
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	clothes_req = 0
@@ -137,6 +137,7 @@
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
 	name = "Report this to a coder"
+	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	var/reveal = 80 //How long it reveals the revenant in deciseconds
 	var/stun = 20 //How long it stuns the revenant in deciseconds
 	var/locked = TRUE //If it's locked and needs to be unlocked before use
@@ -230,7 +231,7 @@
 		L.Beam(M,icon_state="purple_lightning", time = 5)
 		do_sparks(4, FALSE, M)
 		playsound(M, 'sound/machines/defib_zap.ogg', 50, TRUE, -1)
-		if(!M.can_block_magic(MAGIC_RESISTANCE_HOLY))
+		if(!M.can_block_magic(antimagic_flags))
 			M.electrocute_act(shock_damage, L, flags = SHOCK_NOGLOVES)
 
 //Defile: Corrupts nearby stuff, unblesses floor tiles.
@@ -311,7 +312,7 @@
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
 			continue
-		if(human.can_block_magic(MAGIC_RESISTANCE_HOLY))
+		if(human.can_block_magic(antimagic_flags))
 			continue
 		to_chat(human, span_revenwarning("You feel [pick("your sense of direction flicker out", "a stabbing pain in your head", "your mind fill with static")]."))
 		new /obj/effect/temp_visual/revenant(human.loc)
@@ -348,7 +349,7 @@
 	for(var/mob/living/mob in T)
 		if(mob == user)
 			continue
-		if(mob.can_block_magic(MAGIC_RESISTANCE_HOLY))
+		if(mob.can_block_magic(antimagic_flags))
 			to_chat(user, span_warning("The spell had no effect on [mob]!"))
 			continue
 		new /obj/effect/temp_visual/revenant(mob.loc)
