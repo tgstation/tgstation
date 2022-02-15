@@ -130,6 +130,7 @@
 	name = "MOD pepper spray mister module"
 	desc = "A module containing a container of pepper spray to spray over areas."
 	device = /obj/item/reagent_containers/spray/mister/pepperspray/mod
+	complexity = 1
 
 /obj/item/mod/module/mister/security/Initialize(mapload)
 	. = ..()
