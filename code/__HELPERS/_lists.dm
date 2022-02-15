@@ -678,11 +678,18 @@
 			: null\
 	)
 
-///takes a list, and returns a list with each of the contents as their weakref.
+///takes a list, and returns a list with each of the contents as their weakref. Throws a stack trace if you feed it in non-instances
 /proc/weakref_list(list/real_list)
 	var/list/weakref_list = list()
+	var/error = FALSE
 	for(var/real in real_list)
-		weakref_list += WEAKREF(real)
+		var/weak_real = WEAKREF(real)
+		if(!weak_real)
+			error = TRUE
+			continue //we don't want to add nulls
+		weakref_list += weak_real
+	if(error)
+		stack_trace("non-instance passed into weakref_list()!")
 	return weakref_list
 
 ///Returns a list with items filtered from a list that can call callback

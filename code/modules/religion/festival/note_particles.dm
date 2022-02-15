@@ -37,19 +37,19 @@
 		"holy_9" = 4, //holy theme specific
 	)
 
-/particles/musical_notes/heal
-	icon = 'icons/effects/particles/notes/note_heal.dmi'
+/particles/musical_notes/nullwave
+	icon = 'icons/effects/particles/notes/note_null.dmi'
 	icon_state = list(
-		"heal_1" = 1,
-		"heal_2" = 1,
-		"heal_3" = 1,
-		"heal_4" = 1,
-		"heal_5" = 1,
-		"heal_6" = 1,
-		"heal_7" = 1,
-		"heal_8" = 1,
-		"heal_9" = 2, //heal theme specific
-		"heal_10" = 2, //heal theme specific
+		"null_1" = 1,
+		"null_2" = 1,
+		"null_3" = 1,
+		"null_4" = 1,
+		"null_5" = 1,
+		"null_6" = 1,
+		"null_7" = 1,
+		"null_8" = 1,
+		"null_9" = 2, //heal theme specific
+		"null_10" = 2, //heal theme specific
 	)
 
 /particles/musical_notes/harm
@@ -80,19 +80,4 @@
 		"sleepy_8" = 1,
 		"sleepy_9" = 2, //sleepy theme specific
 		"sleepy_10" = 2, //sleepy theme specific
-	)
-
-/particles/musical_notes/power
-	icon = 'icons/effects/particles/notes/note_power.dmi'
-	icon_state = list(
-		"power_1" = 1,
-		"power_2" = 1,
-		"power_3" = 1,
-		"power_4" = 1,
-		"power_5" = 1,
-		"power_6" = 1,
-		"power_7" = 1,
-		"power_8" = 1,
-		"power_9" = 2, //power theme specific
-		"power_10" = 2, //power theme specific
 	)

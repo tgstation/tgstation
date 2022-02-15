@@ -6,9 +6,9 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	///typepath of the last location we're in, if it's different when moved then we need to update vis contents
 	var/last_attached_location_type
-	var/datum/weakref/weakref_attached
+	var/datum/weakref/weak_attached
 	///besides the item we're also sometimes attached to other stuff (items held emitting particles on mob)
-	var/datum/weakref/additional_attach
+	var/datum/weakref/weak_additional
 
 /obj/effect/abstract/particle_holder/Initialize(mapload, particle_path = /particles/smoke)
 	. = ..()
@@ -18,15 +18,18 @@
 	if(ismovable(loc))
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(loc, COMSIG_PARENT_QDELETING, .proc/on_qdel)
-	weakref_attached = WEAKREF(loc)
+	weak_attached = WEAKREF(loc)
 	particles = new particle_path
 	update_visual_contents(loc)
 
 /obj/effect/abstract/particle_holder/Destroy(force)
-	var/atom/movable/attached = weakref_attached.resolve()
+	var/atom/movable/attached = weak_attached.resolve()
+	var/atom/additional_attached = weak_additional
 	if(attached)
 		attached.vis_contents -= src
 		UnregisterSignal(loc, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	if(additional_attached)
+		additional_attached.vis_contents -= src
 	QDEL_NULL(particles)
 	. = ..()
 
@@ -46,14 +49,15 @@
 ///this base subtype has some logic for items, as the loc of items becomes mobs very often hiding the particles
 /obj/effect/abstract/particle_holder/proc/update_visual_contents(atom/movable/attached_to)
 	//remove old
-	if(additional_attach)
-		var/atom/movable/resolved_location = additional_attach.resolve()
-		resolved_location?.vis_contents -= src
+	if(weak_additional)
+		var/atom/movable/resolved_location = weak_additional.resolve()
+		if(resolved_location)
+			resolved_location.vis_contents -= src
 	//add to new
 	if(isitem(attached_to) && ismob(attached_to.loc)) //special case we want to also be emitting from the mob
 		var/mob/particle_mob = attached_to.loc
 		last_attached_location_type = attached_to.loc
-		additional_attach = WEAKREF(particle_mob)
+		weak_additional = WEAKREF(particle_mob)
 		particle_mob.vis_contents += src
 	//readd to ourselves
 	attached_to.vis_contents |= src

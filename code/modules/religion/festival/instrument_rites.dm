@@ -67,13 +67,13 @@
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
 		SEND_SIGNAL(listener, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 
-/datum/religion_rites/song_tuner/sooth
-	name = "Mending Chord"
-	desc = "Sing a sweet song, healing bruises and burns around you. At the end of a song, you'll seal one wound."
-	particles_path = /particles/musical_notes/heal
-	song_invocation_message = "You've prepared a healing song!"
-	song_start_message = span_nicegreen("This music is closing your wounds!")
-	glow_color = "#44FF84"
+/datum/religion_rites/song_tuner/nullwave
+	name = "Nullwave Vibrato"
+	desc = "Sing a dull song, protecting those who listen from magic and unwanted influences on the mind."
+	particles_path = /particles/musical_notes/nullwave
+	song_invocation_message = "You've prepared a antimagic song!"
+	song_start_message = span_nicegreen("This music makes you feel protected!")
+	glow_color = "#a9a9b8"
 	repeats_okay = FALSE
 
 /datum/religion_rites/song_tuner/sooth/song_effect(atom/song_player, datum/song/song_datum)
@@ -90,7 +90,9 @@
 
 /datum/religion_rites/song_tuner/sooth/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(!listener.all_wounds.len)
+		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+			continue
+		if(!LAZYLEN(listener.all_wounds))
 			continue
 		var/datum/wound/soothed_wound = pick(listener.all_wounds)
 		soothed_wound.remove_wound()
@@ -117,6 +119,8 @@
 
 /datum/religion_rites/song_tuner/pain/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
+		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+			continue
 		var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
 		sliced_limb.force_wound_upwards(/datum/wound/slash/moderate/many_cuts)
 
@@ -151,6 +155,8 @@
 
 /datum/religion_rites/song_tuner/lullaby/finish_effect(atom/song_player, datum/song/song_datum)
 	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
+		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
+			continue
 		to_chat(listener, span_danger("Wow, the ending of that song was... pretty..."))
 		listener.AdjustSleeping(5 SECONDS)
 
