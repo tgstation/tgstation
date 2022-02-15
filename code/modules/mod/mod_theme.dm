@@ -153,7 +153,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
 	slowdown_active = 1
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/atmos)
+	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/atmos)
 	skins = list(
 		"atmospheric" = list(
 			HELMET_LAYER = NECK_LAYER,
