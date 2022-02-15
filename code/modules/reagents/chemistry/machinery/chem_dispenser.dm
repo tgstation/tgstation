@@ -111,6 +111,7 @@
 		. += "<span class='notice'>The status display reads:\n\
 		Recharging <b>[recharge_amount]</b> power units per interval.\n\
 		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
+	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
