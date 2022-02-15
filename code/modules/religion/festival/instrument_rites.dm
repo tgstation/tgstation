@@ -69,33 +69,20 @@
 
 /datum/religion_rites/song_tuner/nullwave
 	name = "Nullwave Vibrato"
-	desc = "Sing a dull song, protecting those who listen from magic and unwanted influences on the mind."
+	desc = "Sing a dull song, protecting those who listen from magic."
 	particles_path = /particles/musical_notes/nullwave
-	song_invocation_message = "You've prepared a antimagic song!"
+	song_invocation_message = "You've prepared an antimagic song!"
 	song_start_message = span_nicegreen("This music makes you feel protected!")
 	glow_color = "#a9a9b8"
 	repeats_okay = FALSE
 
-/datum/religion_rites/song_tuner/sooth/song_effect(atom/song_player, datum/song/song_datum)
+/datum/religion_rites/song_tuner/nullwave/song_effect(atom/song_player, datum/song/song_datum)
 	if(!song_datum)
 		return
 	for(var/mob/living/listener in song_datum.hearing_mobs)
 		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
 			continue
-		var/healy_juice = 0.6
-		if(listener.mind?.holy_role)
-			healy_juice*=3
-		listener.adjustBruteLoss(-healy_juice)
-		listener.adjustFireLoss(-healy_juice)
-
-/datum/religion_rites/song_tuner/sooth/finish_effect(atom/song_player, datum/song/song_datum)
-	for(var/mob/living/carbon/human/listener in song_datum.hearing_mobs)
-		if(listener.anti_magic_check(magic = FALSE, holy = TRUE))
-			continue
-		if(!LAZYLEN(listener.all_wounds))
-			continue
-		var/datum/wound/soothed_wound = pick(listener.all_wounds)
-		soothed_wound.remove_wound()
+		listener.apply_status_effect(/datum/status_effect/antimagic, 2 MINUTES)
 
 /datum/religion_rites/song_tuner/pain
 	name = "Murderous Chord"

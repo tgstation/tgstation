@@ -420,7 +420,7 @@
 	candle_overlay = FALSE
 	rites_list = list(
 		/datum/religion_rites/song_tuner/evangelism,
-		/datum/religion_rites/song_tuner/sooth,
+		/datum/religion_rites/song_tuner/nullwave,
 		/datum/religion_rites/song_tuner/pain,
 		/datum/religion_rites/song_tuner/lullaby,
 	)
