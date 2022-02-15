@@ -488,4 +488,5 @@
 	icon_state = "spellcard"
 	damage_type = BURN
 	damage = 2
+	nodamage = FALSE
 	antimagic_charge_cost = 0 // since the cards gets spammed like a shotgun
