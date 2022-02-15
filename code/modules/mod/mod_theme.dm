@@ -153,7 +153,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
 	slowdown_active = 1
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/atmos)
+	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/atmos)
 	skins = list(
 		"atmospheric" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -513,6 +513,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/pepperspray)
 	skins = list(
 		"security" = list(
 			HELMET_LAYER = null,
@@ -557,6 +558,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/pepperspray)
 	skins = list(
 		"safeguard" = list(
 			HELMET_LAYER = null,
@@ -753,6 +755,7 @@
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/watertank/op)
 	skins = list(
 		"elite" = list(
 			HELMET_LAYER = null,

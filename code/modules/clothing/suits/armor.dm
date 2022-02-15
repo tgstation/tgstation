@@ -170,6 +170,11 @@
 	strip_delay = 80
 	equip_delay_other = 60
 
+/obj/item/clothing/suit/armor/riot/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/watertank/pepperspray
+
+
 /obj/item/clothing/suit/armor/bone
 	name = "bone armor"
 	desc = "A tribal armor plate, crafted from animal bone."
@@ -243,6 +248,10 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+
+/obj/item/clothing/suit/armor/swat/Initialize(mapload)
+	. = ..()
+	allowed += /obj/item/watertank/pepperspray
 
 //All of the armor below is mostly unused
 
