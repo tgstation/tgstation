@@ -35,6 +35,8 @@
 	var/passive_gain_timer = 20 MINUTES
 	/// Assoc list of [typepath] = [knowledge instance]. A list of all knowledge this heretic's reserached.
 	var/list/researched_knowledge = list()
+	/// The organ slot we place our Living Heart in.
+	var/living_heart_organ_slot = ORGAN_SLOT_HEART
 	/// A list of TOTAL how many sacrifices completed. (Includes high value sacrifices)
 	var/total_sacrifices = 0
 	/// A list of TOTAL how many high value sacrifices completed.
@@ -410,9 +412,9 @@
 /datum/antagonist/heretic/get_admin_commands()
 	. = ..()
 
-	var/obj/item/organ/heart/our_heart = owner.current?.getorganslot(ORGAN_SLOT_HEART)
-	if(our_heart)
-		if(HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
+	var/obj/item/organ/our_living_heart = owner.current?.getorganslot(living_heart_organ_slot)
+	if(our_living_heart)
+		if(HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
 			.["Add Heart Target (Marked Mob)"] = CALLBACK(src, .proc/add_marked_as_target)
 			.["Remove Heart Target"] = CALLBACK(src, .proc/remove_target)
 		else
