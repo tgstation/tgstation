@@ -15,11 +15,12 @@
 	route = PATH_SIDE
 
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
-	if(!our_heart || !HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
-		return FALSE
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.living_heart_organ_slot)
+	if(!our_living_heart || !HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+		return FALSE
+
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		return FALSE
 

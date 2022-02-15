@@ -1,4 +1,0 @@
-author: "bun235"
-delete-after: True
-changes: 
-  - bugfix: "Fixes external airlocks on metastation atmospherics"

@@ -269,6 +269,7 @@
 		"comp_router",
 		"comp_select_query",
 		"comp_self",
+		"comp_set_variable_trigger",
 		"comp_soundemitter",
 		"comp_species",
 		"comp_speech",

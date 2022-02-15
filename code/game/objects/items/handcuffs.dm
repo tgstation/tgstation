@@ -268,6 +268,21 @@
 	return
 
 /**
+ * # Fake Zipties
+ *
+ * One-use handcuffs that is very easy to break out of, meant as a one-use alternative to regular fake handcuffs.
+ */
+/obj/item/restraints/handcuffs/cable/zipties/fake
+	name = "fake zipties"
+	desc = "Fake zipties meant for gag purposes."
+	breakouttime = 1 SECONDS
+
+/obj/item/restraints/handcuffs/cable/zipties/fake/used
+	desc = "A pair of broken fake zipties."
+	icon_state = "cuff_used"
+	inhand_icon_state = "cuff"
+
+/**
  * # Generic leg cuffs
  *
  * Parent class for everything that can legcuff carbons. Can't legcuff anything itself.
