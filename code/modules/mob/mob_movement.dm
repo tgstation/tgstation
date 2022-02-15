@@ -305,8 +305,6 @@
 	for(var/atom/pushover as anything in orange(1, get_turf(src)))
 		if(isarea(pushover))
 			continue
-		if(moving_direction == get_dir(src, pushover))
-			continue
 		if(isturf(pushover))
 			var/turf/turf = pushover
 			if(isspaceturf(turf))
@@ -322,7 +320,10 @@
 			var/mob/lover = rebound
 			if(lover.buckled)
 				continue
-		if(!rebound.density && rebound.CanPass(src, get_dir(rebound, src)))
+		var/pass_allowed = rebound.CanPass(src, get_dir(rebound, src))
+		if(!rebound.density && pass_allowed)
+			continue
+		if(moving_direction == get_dir(src, pushover) && !pass_allowed) // Can't push "off" of something that you're walking into
 			continue
 		if(rebound.anchored)
 			return rebound
