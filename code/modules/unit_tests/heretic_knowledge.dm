@@ -73,7 +73,7 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
 		var/knowledge_route = initial(knowledge.route)
 		// null (abstract), side paths, and start paths we can skip
-		if(isnull(knowledge_route) || knowledge_route in paths_we_dont_check)
+		if(isnull(knowledge_route) || (knowledge_route in paths_we_dont_check))
 			continue
 
 		if(isnull(paths[knowledge_route]))
