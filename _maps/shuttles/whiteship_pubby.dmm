@@ -131,7 +131,7 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/structure/window/reinforced/spawner/west,
 /obj/item/melee/baseball_bat{
-	desc = "This bat is incredibly unrobust, but is small.";
+	desc = "This bat is incredibly unrobust, but is small. You couldn't hurt a fly with this damn thing.";
 	force = 0;
 	w_class = 1
 	},
