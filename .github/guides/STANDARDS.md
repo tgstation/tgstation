@@ -415,7 +415,7 @@ Meaning:
 
 For this reason, it is acceptable for `.` to be used in places where consumers can reasonably continue in the event of a runtime.
 
-If you are using `.` in this case (or for another case that might be acceptable other than most uses `. = ..()`), it is still prefered that you explicitly `return .` in order to prevent both editor issues and readability/error-prone issues.
+If you are using `.` in this case (or for another case that might be acceptable, other than most uses of `. = ..()`), it is still prefered that you explicitly `return .` in order to prevent both editor issues and readability/error-prone issues.
 
 ```dm
 /proc/uh_oh()
