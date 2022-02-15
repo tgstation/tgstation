@@ -70,7 +70,6 @@ GLOBAL_LIST_EMPTY(heretic_sacrifice_landmarks)
 	bulb_colour = "#d6b6a6ff"
 	brightness = 3
 	bulb_power = 0.5
-	fitting = "void" // If you set this to "tube" or "bulb" the brightness is reset in LateInitialize()
 
 /obj/machinery/light/very_dim/directional/north
 	dir = NORTH
