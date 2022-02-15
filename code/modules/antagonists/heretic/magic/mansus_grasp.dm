@@ -37,9 +37,14 @@
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag || !isliving(target) || !IS_HERETIC(user) || target == user)
 		return
-	if(ishuman(target) && antimagic_check(target, user))
-		return ..()
-
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		if(human_target.can_block_magic())
+			human_target.visible_message(
+				span_danger("The spell bounces off of [target]!"),
+				span_danger("The spell bounces off of you!"),
+			)
+			return ..()
 	if(!on_mob_hit(target, user))
 		return
 
@@ -60,20 +65,6 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
-
-/**
- * Checks if the [target] has some form of anti-magic.
- *
- * Returns TRUE If the attack was blocked. FALSE otherwise.
- */
-/obj/item/melee/touch_attack/mansus_fist/proc/antimagic_check(mob/living/carbon/human/target, mob/living/carbon/user)
-	if(target.can_block_magic())
-		target.visible_message(
-			span_danger("The spell bounces off of [target]!"),
-			span_danger("The spell bounces off of you!"),
-		)
-		return TRUE
-	return FALSE
 
 /**
  * Called with [hit] is successfully hit by a mansus grasp by [heretic].
