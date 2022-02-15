@@ -579,7 +579,7 @@
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
 	if(!heretic_datum)
 		return FALSE
-	return heretic_datum.total_sacrifices >= target_amount
+	return completed || (heretic_datum.total_sacrifices >= target_amount)
 
 /// Heretic's major sacrifice objective. "Major sacrifices" are heads of staff.
 /datum/objective/major_sacrifice
@@ -591,7 +591,7 @@
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
 	if(!heretic_datum)
 		return FALSE
-	return heretic_datum.high_value_sacrifices >= target_amount
+	return completed || (heretic_datum.high_value_sacrifices >= target_amount)
 
 /// Heretic's research objective. "Research" is heretic knowledge nodes (You start with some).
 /datum/objective/heretic_research
@@ -628,7 +628,7 @@
 	var/datum/antagonist/heretic/heretic_datum = owner?.has_antag_datum(/datum/antagonist/heretic)
 	if(!heretic_datum)
 		return FALSE
-	return length(heretic_datum.researched_knowledge) >= target_amount
+	return completed || (length(heretic_datum.researched_knowledge) >= target_amount)
 
 /datum/objective/heretic_summon
 	name = "summon monsters"
