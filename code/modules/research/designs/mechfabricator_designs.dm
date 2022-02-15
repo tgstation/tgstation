@@ -1343,7 +1343,7 @@
 	build_path = /obj/item/mod/module/signlang_radio
 
 /datum/design/module/mod_mister/atmos
-	name = "MOD module: Resin mister"
+	name = "MOD Module: Resin Mister"
 	id = "mod_mister_atmos"
 	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/mister/atmos
