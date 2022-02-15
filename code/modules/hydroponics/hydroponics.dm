@@ -876,7 +876,12 @@
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 
 /obj/machinery/hydroponics/AltClick(mob/user)
+	. = ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
+/obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!anchored)
 		update_appearance()
 		return FALSE
@@ -884,6 +889,7 @@
 	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		reagents.clear_reagents()
 		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Update Tray Proc
