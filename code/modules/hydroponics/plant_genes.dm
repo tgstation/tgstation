@@ -523,9 +523,10 @@
 
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
 
-	var/static/list/hovering_item_typechecks = list(
+	var/list/hovering_item_typechecks = list(
 		/obj/item/stack/cable_coil = list(
-			SCREENTIP_CONTEXT_LMB = "Make [our_plant.name] battery", // I just think it'll be really funny to see "make potato battery" or "make cannabis leaf battery"
+			// I just think it'll be really funny to see "make potato battery" or "make cannabis leaf battery"
+			SCREENTIP_CONTEXT_LMB = "Make [our_plant.name] battery",
 		),
 	)
 
