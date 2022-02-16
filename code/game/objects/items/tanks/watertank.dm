@@ -179,10 +179,11 @@
 	icon_state = "pepperbackpacksec"
 	inhand_icon_state = "pepperbackpacksec"
 	custom_price = PAYCHECK_MEDIUM * 2
+	volume = 1000
 
 /obj/item/watertank/pepperspray/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 500)
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 1000)
 
 /obj/item/reagent_containers/spray/mister/pepperspray
 	name = "security spray nozzle"
