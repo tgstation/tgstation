@@ -108,6 +108,16 @@
 		do_cardhand(user, list(src, item))
 	if(istype(item, /obj/item/toy/cards/cardhand/))
 		do_cardhand(user, list(src), item)
+	if(istype(item, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = item
+		if(dealer_deck.wielded)
+			var/obj/item/toy/cards/singlecard/card_drawn = draw_card(user, dealer_deck.cards)
+			do_cardhand(user, list(src), card_drawn)
+			user.balloon_alert(user, "deals a card")
+		else
+			dealer_deck.add_card(user, dealer_deck.cards, src)
+			user.balloon_alert(user, "puts card in deck")
+
 	if(istype(item, /obj/item/pen))
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on [src]!"))
@@ -132,6 +142,7 @@
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
+	user.balloon_alert(user, "flips a card")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/cards/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
