@@ -86,9 +86,7 @@
  * * user - The mob interacting with a menu
  */
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
-	if(!istype(user))
-		return FALSE
-	if(user.incapacitated())
+	if(!istype(user) || user.incapacitated())
 		return FALSE
 	return TRUE
 	
