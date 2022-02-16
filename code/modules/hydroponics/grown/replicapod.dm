@@ -43,6 +43,7 @@
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
+	reagents_add = list(/datum/reagent/toxin/mutagen)
 	var/volume = 5
 	var/ckey
 	var/realName
@@ -192,6 +193,7 @@
 		podman.ckey = ckey_holder
 	podman.gender = blood_gender
 	podman.faction |= factions
+	podman.exotic_blood = max(reagents_add)
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
 	for(var/V in quirks)
