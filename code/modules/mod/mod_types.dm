@@ -110,6 +110,7 @@
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
+		/obj/item/mod/module/mister/security,
 	)
 
 /obj/item/mod/control/pre_equipped/safeguard
@@ -120,6 +121,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/holster,
+		/obj/item/mod/module/mister/security,
 	)
 
 /obj/item/mod/control/pre_equipped/magnate
@@ -173,6 +175,17 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/holster,
 		/obj/item/mod/module/injector,
+	)
+
+/obj/item/mod/control/pre_equipped/elite/flamethrower
+	initial_modules = list(
+		/obj/item/mod/module/storage/syndicate,
+		/obj/item/mod/module/emp_shield,
+		/obj/item/mod/module/thermal_regulator,
+		/obj/item/mod/module/jetpack/advanced,
+		/obj/item/mod/module/flashlight,
+		/obj/item/mod/module/holster,
+		/obj/item/mod/module/flamethrower,
 	)
 
 /obj/item/mod/control/pre_equipped/enchanted
