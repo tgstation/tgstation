@@ -29,14 +29,9 @@
 	desc = "A spooky looking tarot deck. You can sense a supernatural presence linked to the cards..."
 	var/mob/living/carbon/psychic // the person holding the cards
 
-/obj/item/toy/cards/deck/tarot/haunted/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-
 /// Triggered on wield of two handed item
 /// Gives the user the SIXTH SENSE trait to communicate with the dead
-/obj/item/toy/cards/deck/tarot/haunted/proc/on_wield(obj/item/source, mob/living/carbon/user)
+/obj/item/toy/cards/deck/tarot/haunted/on_wield(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
 	wielded = TRUE
@@ -45,7 +40,7 @@
 
 /// Triggered on unwield of two handed item
 /// Removes the SIXTH SENSE trait from the user
-/obj/item/toy/cards/deck/tarot/haunted/proc/on_unwield(obj/item/source, mob/living/carbon/user)
+/obj/item/toy/cards/deck/tarot/haunted/on_unwield(obj/item/source, mob/living/carbon/user)
 	SIGNAL_HANDLER
 
 	wielded = FALSE
