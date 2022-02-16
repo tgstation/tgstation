@@ -23,7 +23,8 @@
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
-		if(!M.stat && M.mind)
+		var/turf/current_turf = get_turf(M.mind.current)
+		if(!M.stat && M.mind && !current_turf.onCentCom())
 			valentines |= M
 
 
