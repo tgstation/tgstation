@@ -177,6 +177,18 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Tray efficiency at <b>[rating*100]%</b>.")
 
+/obj/machinery/hydroponics/constructable/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	// Constructible trays will always show that you can activate auto-grow with ctrl+click
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Activate auto-grow"
+	return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
 		QDEL_NULL(myseed)
