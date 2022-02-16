@@ -38,17 +38,6 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		/turf/open/floor/plating/beach/water,
 	))
 
-/obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed)
-	. = ..()
-	var/static/list/hovering_item_typechecks = list(
-		/obj/item/plant_analyzer = list(
-			SCREENTIP_CONTEXT_LMB = "Scan shroom stats",
-			SCREENTIP_CONTEXT_RMB = "Scan shroom chemicals"
-		),
-	)
-
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-
 /obj/structure/glowshroom/glowcap
 	name = "glowcap"
 	desc = "Mycena Ruthenia, a species of mushroom that, while it does glow in the dark, is not actually bioluminescent."
@@ -115,6 +104,15 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
 
 	START_PROCESSING(SSobj, src)
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/plant_analyzer = list(
+			SCREENTIP_CONTEXT_LMB = "Scan shroom stats",
+			SCREENTIP_CONTEXT_RMB = "Scan shroom chemicals"
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 /obj/structure/glowshroom/Destroy()
 	if(isatom(myseed))

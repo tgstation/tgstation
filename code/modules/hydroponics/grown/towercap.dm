@@ -64,6 +64,9 @@
 	mob/living/user,
 )
 
+	if(isnull(held_item))
+		return NONE
+
 	if(held_item.get_sharpness())
 		// May be a little long, but I think "cut into planks" for steel caps may be confusing.
 		context[SCREENTIP_CONTEXT_LMB] = "Cut into [plank_name]"

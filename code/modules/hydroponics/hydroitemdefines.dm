@@ -44,7 +44,6 @@
 
 		context[SCREENTIP_CONTEXT_LMB] = "Scan plant stats"
 		context[SCREENTIP_CONTEXT_RMB] = "Scan plant chemicals"
-
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
