@@ -26,7 +26,6 @@
 		. += span_info("<b>Right-click</b> to quickly remove [mymop].")
 	if(reagents.total_volume > 1)
 		. += span_info("<b>Right-click</b> with a mop to wet it.")
-		. += span_info("<b>Right-click</b> with an open container to fill from it.")
 		. += span_info("<b>Crowbar</b> it to empty it onto [get_turf(src)].")
 	if(mybag)
 		. += span_info("<b>Right-click</b> with an object to put it in [mybag].")
@@ -52,61 +51,62 @@
 
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/mop))
-		if(mymop)
-			to_chat(user, span_warning("There is already a mop in [src]!"))
+	switch(I.type)
+		if(/obj/item/mop)
+			if(mymop)
+				to_chat(user, span_warning("There is already a mop in [src]!"))
+				return
+			mymop = I
+			if(!put_in_cart(I, user))
+				mymop = null
 			return
-		mymop = I
-		if(!put_in_cart(I, user))
-			mymop = null
-		return
 
-	else if(istype(I, /obj/item/pushbroom))
-		if(mybroom)
-			to_chat(user, span_warning("There is already a broom in [src]!"))
+		if(/obj/item/pushbroom)
+			if(mybroom)
+				to_chat(user, span_warning("There is already a broom in [src]!"))
+				return
+			mybroom = I
+			if(!put_in_cart(I, user))
+				mybroom = null
 			return
-		mybroom = I
-		if(!put_in_cart(I, user))
-			mybroom = null
-		return
 
-	else if(istype(I, /obj/item/storage/bag/trash))
-		if(mybag)
-			to_chat(user, span_warning("There is already a trash bag in [src]!"))
+		if(/obj/item/storage/bag/trash)
+			if(mybag)
+				to_chat(user, span_warning("There is already a trash bag in [src]!"))
+				return
+			mybag = I
+			if(!put_in_cart(I, user))
+				mybag = null
 			return
-		mybag = I
-		if(!put_in_cart(I, user))
-			mybag = null
-		return
 
-	else if(istype(I, /obj/item/reagent_containers/spray/cleaner))
-		if(myspray)
-			to_chat(user, span_warning("There is already a spray bottle in [src]!"))
+		if(/obj/item/reagent_containers/spray/cleaner)
+			if(myspray)
+				to_chat(user, span_warning("There is already a spray bottle in [src]!"))
+				return
+			myspray = I
+			if(!put_in_cart(I, user))
+				myspray = null
 			return
-		myspray = I
-		if(!put_in_cart(I, user))
-			myspray = null
-		return
 
-	else if(istype(I, /obj/item/lightreplacer))
-		if(myreplacer)
-			to_chat(user, span_warning("There is already a light replacer in [src]!"))
+		if(/obj/item/lightreplacer)
+			if(myreplacer)
+				to_chat(user, span_warning("There is already a light replacer in [src]!"))
+				return
+			myreplacer = I
+			if(!put_in_cart(I, user))
+				myreplacer = null
 			return
-		myreplacer = I
-		if(!put_in_cart(I, user))
-			myreplacer = null
-		return
 
-	else if(istype(I, /obj/item/clothing/suit/caution))
-		if(signs >= max_signs)
-			to_chat(user, span_warning("[src] can't hold any more signs!"))
+		if(/obj/item/clothing/suit/caution)
+			if(signs >= max_signs)
+				to_chat(user, span_warning("[src] can't hold any more signs!"))
+				return
+			signs++
+			if(!put_in_cart(I, user))
+				signs--
 			return
-		signs++
-		if(!put_in_cart(I, user))
-			signs--
-		return
 
-	else if(I.tool_behaviour == TOOL_CROWBAR)
+	if(I.tool_behaviour == TOOL_CROWBAR)
 		if(reagents.total_volume < 1)
 			to_chat(user, span_warning("[src]'s mop bucket is empty!"))
 			return
@@ -118,8 +118,10 @@
 			update_appearance()
 		return
 
-	..()
-	update_appearance()
+	if(I.is_drainable())
+		return FALSE //so we can fill the cart via our afterattack without bludgeoning it
+
+	return ..()
 
 /obj/structure/janitorialcart/attackby_secondary(obj/item/I, mob/user, params)
 
@@ -128,32 +130,12 @@
 		wet_mop(your_mop, user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())
-		var/obj/item/reagent_containers/your_container = I
-		var/your_reagents = your_container.reagents.total_volume
-		var/your_capacity = your_container.reagents.maximum_volume
-		var/my_reagents = reagents.total_volume
+	if(I.is_refillable())
+		return SECONDARY_ATTACK_CONTINUE_CHAIN //so we can empty the cart via our afterattack without trying to put the item in the bag
 
-		if(your_reagents >= your_capacity)
-			to_chat(user, span_warning("[your_container] is full."))
+	if(mybag)
+		if(mybag.attackby(I, user))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-		if(my_reagents < 1)
-			to_chat(user, span_warning("[src]'s mop bucket is empty!"))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-		var/do_after_length = round((min(your_capacity-your_reagents, my_reagents) / 20),1) SECONDS //takes 5 seconds to steal whole thing
-		if(!do_after(user, do_after_length))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-		reagents.trans_to(your_container, your_container.reagents.maximum_volume, transfered_by = user)
-		user.visible_message(span_warning("[user] fills [your_container] with [src]'s mop bucket."), span_notice("You fill [your_container] with [src]'s mop bucket."))
-		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if(mybag.attackby(I, user))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
