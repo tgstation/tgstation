@@ -69,14 +69,6 @@
 
 /obj/machinery/seed_extractor/Initialize(mapload, obj/item/seeds/new_seed)
 	. = ..()
-
-	var/static/list/hovering_item_typechecks = list(
-		/obj/item/storage/bag/plants = list(
-			SCREENTIP_CONTEXT_LMB = "Store seeds",
-		),
-	)
-
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 	register_context()
 
 /obj/machinery/seed_extractor/add_context(
@@ -88,6 +80,10 @@
 
 	if(held_item?.get_plant_seed())
 		context[SCREENTIP_CONTEXT_LMB] = "Make seeds"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/storage/bag/plants) && (locate(/obj/item/seeds) in held_item.contents))
+		context[SCREENTIP_CONTEXT_LMB] = "Store seeds"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
