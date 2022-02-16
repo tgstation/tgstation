@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes: 
-  - qol: "Hovering over specific objects, over hovering with specific items, will now tell you what they can do. For example, hovering a firelock with a crowbar will tell you can both left-click to hold open, and right-click to keep open. The preference for screentips has been changed from on/off to on/off/only with tips. If you had your preference on off before, it has been changed to \"only with tips\". That way, it's not as intrusive as when it's always on, but you can still pick up information when it can actually be provided. Try to give it a shot, and don't disable it right away."

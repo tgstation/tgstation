@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Ghosts will now get back to bobbing up and down after they're done orbiting something, as intended."
