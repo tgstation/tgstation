@@ -24,9 +24,12 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/transfer_overlays = FALSE
 
 /datum/atom_hud/alternate_appearance/New(key)
-	..()
-	GLOB.active_alternate_appearances += src
+	// We use hud_icons to register our hud, so we need to do this before the parent call
 	appearance_key = key
+	hud_icons = list(appearance_key)
+	..()
+
+	GLOB.active_alternate_appearances += src
 
 	for(var/mob in GLOB.player_list)
 		if(mobShouldSee(mob))
@@ -72,7 +75,6 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(transfer_overlays)
 		I.copy_overlays(target)
 
-	hud_icons = list(appearance_key)
 	add_atom_to_hud(target, I)
 	target.set_hud_image_active(appearance_key)
 
