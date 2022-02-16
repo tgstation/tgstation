@@ -1451,7 +1451,7 @@
 "eS" = (
 /obj/structure/rack,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "eT" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/airalarm/directional/west,
@@ -1670,7 +1670,7 @@
 "fH" = (
 /obj/structure/table,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "fI" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -1886,7 +1886,7 @@
 /obj/structure/table,
 /obj/item/flashlight/lantern,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "gl" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -3071,8 +3071,9 @@
 /area/medical/virology)
 "jP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "jQ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -3209,6 +3210,17 @@
 /obj/item/melee/roastingstick,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
+"ks" = (
+/obj/machinery/door/airlock/external{
+	name = "Service Hall Exit";
+	req_one_access_txt = "73"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/dark/textured,
+/area/hallway/secondary/service)
 "kt" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 5
@@ -4854,16 +4866,15 @@
 /turf/open/floor/iron/smooth_edge,
 /area/medical/chemistry)
 "pB" = (
-/obj/machinery/door/window/westleft{
-	name = "Exterior Access"
-	},
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
+/obj/effect/turf_decal/caution/stand_clear,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/caution{
+	pixel_y = 9
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "pC" = (
 /obj/structure/rack,
@@ -5156,6 +5167,15 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
+"qF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/service)
 "qG" = (
 /obj/structure/sign/poster/contraband/random,
 /turf/closed/wall/r_wall,
@@ -5285,7 +5305,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "ra" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green{
@@ -5634,6 +5654,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/side{
 	dir = 8
 	},
@@ -5950,16 +5971,15 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "sW" = (
-/obj/machinery/door/window/westright{
-	name = "Exterior Access"
-	},
 /obj/structure/sign/warning{
 	pixel_y = 32
 	},
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/caution/stand_clear,
 /obj/effect/turf_decal/stripes/line{
-	dir = 4
+	dir = 1
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "sX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6545,6 +6565,22 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/eva)
+"uJ" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Service Hall Exit";
+	req_one_access_txt = "73"
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/textured_half{
+	dir = 1
+	},
+/area/hallway/secondary/service)
 "uK" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -6922,7 +6958,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "we" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
@@ -7215,6 +7251,7 @@
 /area/mine/living_quarters)
 "xg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "xh" = (
@@ -7345,6 +7382,9 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"xF" = (
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
 "xG" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -7573,6 +7613,12 @@
 	req_one_access_txt = "73"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
@@ -7794,6 +7840,11 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
+"zk" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
 "zm" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningdorm_A";
@@ -7929,7 +7980,7 @@
 "zH" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "zI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
@@ -8594,7 +8645,7 @@
 "BT" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "BU" = (
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/plating,
@@ -9022,7 +9073,7 @@
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "Dm" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
@@ -9637,7 +9688,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "Fo" = (
 /turf/closed/wall/r_wall,
 /area/engineering/lobby)
@@ -10059,10 +10110,11 @@
 	req_access_txt = "48"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/mine/production)
+/area/maintenance/department/cargo)
 "GE" = (
 /obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
@@ -11075,8 +11127,9 @@
 	req_access_txt = "48"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "JE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -11325,7 +11378,7 @@
 /turf/open/floor/iron/dark/textured_half{
 	dir = 1
 	},
-/area/mine/production)
+/area/maintenance/department/cargo)
 "Kt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -11424,6 +11477,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/production)
+"KJ" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
 "KL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11557,6 +11616,15 @@
 /area/service/chapel)
 "Lb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/sign/directions/engineering{
+	desc = "A sign that shows there are doors here. There are doors everywhere!";
+	icon_state = "doors";
+	name = "WARNING: EXTERNAL AIRLOCK";
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
 "Lc" = (
@@ -13365,6 +13433,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"QR" = (
+/obj/machinery/door/airlock/external{
+	name = "Service Hall Exit";
+	req_one_access_txt = "73"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "service-hall-external"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/hallway/secondary/service)
 "QS" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/firealarm/directional/south,
@@ -15054,8 +15135,10 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/cargo/warehouse)
 "VS" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "VT" = (
 /obj/structure/sign/poster/random{
 	pixel_x = -32
@@ -15213,6 +15296,9 @@
 /obj/item/queen_bee/bought,
 /turf/open/floor/grass,
 /area/service/hydroponics)
+"Ws" = (
+/turf/closed/wall/r_wall,
+/area/maintenance/department/cargo)
 "Wt" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/engine,
@@ -15303,8 +15389,9 @@
 "WH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "WJ" = (
 /obj/structure/sink/kitchen{
 	pixel_y = 20
@@ -16037,7 +16124,7 @@
 "Ze" = (
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "Zf" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 8
@@ -16076,7 +16163,7 @@
 /obj/machinery/recharge_station,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
-/area/mine/production)
+/area/maintenance/department/cargo)
 "Zm" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner,
@@ -16338,6 +16425,9 @@
 "ZY" = (
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"ZZ" = (
+/turf/closed/wall,
+/area/maintenance/department/cargo)
 
 (1,1,1) = {"
 ak
@@ -35778,7 +35868,7 @@ of
 vC
 mO
 mO
-vC
+Ws
 Fp
 Fp
 Fp
@@ -36033,10 +36123,10 @@ Zq
 SU
 of
 bq
-QV
-QV
-bq
-vC
+KJ
+KJ
+ZZ
+Ws
 Fp
 Fp
 Fp
@@ -36280,10 +36370,10 @@ uI
 xq
 iy
 iy
-bq
+ZZ
 Kr
-bq
-bq
+ZZ
+ZZ
 bq
 Ck
 tZ
@@ -36293,7 +36383,7 @@ bq
 gk
 wc
 fH
-vC
+Ws
 Fp
 Fp
 Fp
@@ -36537,20 +36627,20 @@ KG
 uS
 iy
 iy
-bq
+ZZ
 zH
 zH
 zH
 bq
 bq
 bq
-bq
+ZZ
 bq
 bq
 VS
 qZ
 zH
-vC
+Ws
 Fp
 VW
 Fp
@@ -36794,9 +36884,9 @@ Yx
 sO
 XK
 bf
-bq
+ZZ
 zH
-VS
+xF
 WH
 WH
 jP
@@ -36806,8 +36896,8 @@ WH
 JD
 WH
 Fn
-zH
-vC
+zk
+Ws
 Fp
 Fp
 Fp
@@ -37053,7 +37143,7 @@ gi
 bf
 Ze
 zH
-bq
+ZZ
 GD
 bf
 bf
@@ -37063,8 +37153,8 @@ BT
 bq
 Zl
 eS
-bq
-vC
+ZZ
+Ws
 Fp
 Fp
 yg
@@ -56024,7 +56114,7 @@ ak
 Et
 qJ
 qJ
-Ji
+LA
 Ji
 TV
 fK
@@ -56283,7 +56373,7 @@ Et
 qJ
 qJ
 Lb
-TV
+qF
 GN
 rQ
 rQ
@@ -56539,8 +56629,8 @@ ak
 Et
 Et
 qJ
-LA
-Ji
+QR
+ks
 fK
 fK
 fK
@@ -57053,7 +57143,7 @@ ak
 ak
 Et
 qJ
-yv
+uJ
 yv
 qJ
 Et
