@@ -138,6 +138,7 @@
 /obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
 	if(wielded)
 		fire_kinetic_blast(target, user, clickparams)
+		user.changeNext_move(CLICK_CD_MELEE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, clickparams)
