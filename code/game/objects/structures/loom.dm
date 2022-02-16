@@ -20,7 +20,6 @@
 	)
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
-	register_context()
 
 /obj/structure/loom/attackby(obj/item/I, mob/user)
 	if(weave(I, user))
