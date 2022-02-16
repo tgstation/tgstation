@@ -29,6 +29,10 @@
 #define COMSIG_MOB_CLIENT_PRE_MOVE "mob_client_pre_move"
 	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+	/// From base of /client/Move()
+#define COMSIG_MOB_CLIENT_PRE_LIVING_MOVE "mob_client_pre_living_move"
+	/// Should we stop the current living movement attempt
+	#define COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 /// From base of /client/Move()
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
@@ -76,6 +80,7 @@
 	#define SPEECH_LANGUAGE 5
 	/* #define SPEECH_IGNORE_SPAM 6
 	#define SPEECH_FORCED 7 */
+	#define SPEECH_RANGE 8
 
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
@@ -113,9 +118,9 @@
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
+///from base of obj/item/afterattack(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
+///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
@@ -127,3 +132,6 @@
 #define COMSIG_MOB_CTRL_CLICKED "mob_ctrl_clicked"
 ///From base of mob/update_movespeed():area
 #define COMSIG_MOB_MOVESPEED_UPDATED "mob_update_movespeed"
+/// From /atom/movable/screen/zone_sel/proc/set_selected_zone.
+/// Fires when the user has changed their selected body target.
+#define COMSIG_MOB_SELECTED_ZONE_SET "mob_set_selected_zone"

@@ -12,7 +12,7 @@
 /obj/docking_port/mobile/proc/admin_fly_shuttle(mob/user)
 	var/list/options = list()
 
-	for(var/port in SSshuttle.stationary)
+	for(var/port in SSshuttle.stationary_docking_ports)
 		if (istype(port, /obj/docking_port/stationary/transit))
 			continue  // please don't do this
 		var/obj/docking_port/stationary/S = port
@@ -60,7 +60,7 @@
 
 	var/list/options = list()
 
-	for(var/port in SSshuttle.stationary)
+	for(var/port in SSshuttle.stationary_docking_ports)
 		if (istype(port, /obj/docking_port/stationary/transit))
 			continue  // please don't do this
 		var/obj/docking_port/stationary/S = port

@@ -60,7 +60,7 @@
 
 /obj/machinery/launchpad/attackby(obj/item/I, mob/user, params)
 	if(stationary)
-		if(default_deconstruction_screwdriver(user, "lpad-idle-o", "lpad-idle", I))
+		if(default_deconstruction_screwdriver(user, "lpad-idle-open", "lpad-idle", I))
 			update_indicator()
 			return
 
@@ -406,7 +406,7 @@
 			our_pad.display_name = new_name
 		if("remove")
 			. = TRUE
-			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("I'm Sure", "Abort")) == "I'm Sure")
+			if(usr && tgui_alert(usr, "Are you sure?", "Unlink Launchpad", list("Confirm", "Abort")) == "I'm Sure")
 				our_pad = null
 		if("launch")
 			sending = TRUE

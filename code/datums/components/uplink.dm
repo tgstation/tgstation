@@ -9,31 +9,47 @@
 **/
 /datum/component/uplink
 	dupe_mode = COMPONENT_DUPE_UNIQUE
+	/// Name of the uplink
 	var/name = "syndicate uplink"
+	/// Whether the uplink is currently active or not
 	var/active = FALSE
+	/// Whether this uplink can be locked or not
 	var/lockable = TRUE
+	/// Whether the uplink is locked or not.
 	var/locked = TRUE
+	/// Whether this uplink allows restricted items to be accessed
 	var/allow_restricted = TRUE
-	var/telecrystals
-	var/selected_cat
+	/// Current owner of the uplink
 	var/owner = null
-	var/uplink_flag
+	/// Purchase log, listing all the purchases this uplink has made
 	var/datum/uplink_purchase_log/purchase_log
-	var/list/uplink_items
-	var/hidden_crystals = 0
-	var/unlock_note
+	/// The current linked uplink handler.
+	var/datum/uplink_handler/uplink_handler
+	/// Code to unlock the uplink.
 	var/unlock_code
-	var/failsafe_code
-	var/compact_mode = FALSE
-	var/debug = FALSE
-	///Instructions on how to access the uplink based on location
-	var/unlock_text
+	/// Used for pen uplink
 	var/list/previous_attempts
 
-/datum/component/uplink/Initialize(_owner, _lockable = TRUE, _enabled = FALSE, uplink_flag = UPLINK_TRAITORS, starting_tc = TELECRYSTALS_DEFAULT)
+	// Not modular variables. These variables should be removed sometime in the future
+
+	/// The unlock text that is sent to the traitor with this uplink. This is not modular and not recommended to expand upon
+	var/unlock_text
+	/// The unlock note that is sent to the traitor with this uplink. This is not modular and not recommended to expand upon
+	var/unlock_note
+	/// The failsafe code that causes this uplink to blow up.
+	var/failsafe_code
+
+/datum/component/uplink/Initialize(
+	owner,
+	lockable = TRUE,
+	enabled = FALSE,
+	uplink_flag = UPLINK_TRAITORS,
+	starting_tc = TELECRYSTALS_DEFAULT,
+	has_progression = FALSE,
+	datum/uplink_handler/uplink_handler_override,
+)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
@@ -49,96 +65,68 @@
 		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
-	if(_owner)
-		owner = _owner
+
+	if(owner)
+		src.owner = owner
 		LAZYINITLIST(GLOB.uplink_purchase_logs_by_key)
 		if(GLOB.uplink_purchase_logs_by_key[owner])
 			purchase_log = GLOB.uplink_purchase_logs_by_key[owner]
 		else
 			purchase_log = new(owner, src)
-	lockable = _lockable
-	active = _enabled
-	src.uplink_flag = uplink_flag
-	update_items()
-	telecrystals = starting_tc
+	src.lockable = lockable
+	src.active = enabled
+	if(!uplink_handler_override)
+		uplink_handler = new()
+		uplink_handler.has_objectives = FALSE
+		uplink_handler.uplink_flag = uplink_flag
+		uplink_handler.telecrystals = starting_tc
+		uplink_handler.has_progression = has_progression
+		uplink_handler.purchase_log = purchase_log
+	else
+		uplink_handler = uplink_handler_override
+	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, .proc/handle_uplink_handler_update)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE
 
 	previous_attempts = list()
 
-/datum/component/uplink/InheritComponent(datum/component/uplink/U)
-	lockable |= U.lockable
-	active |= U.active
-	uplink_flag |= U.uplink_flag
-	telecrystals += U.telecrystals
-	if(purchase_log && U.purchase_log)
-		purchase_log.MergeWithAndDel(U.purchase_log)
+/datum/component/uplink/proc/handle_uplink_handler_update()
+	SIGNAL_HANDLER
+	SStgui.update_uis(src)
+
+/// Adds telecrystals to the uplink. It is bad practice to use this outside of the component itself.
+/datum/component/uplink/proc/add_telecrystals(telecrystals_added)
+	set_telecrystals(uplink_handler.telecrystals + telecrystals_added)
+
+/// Sets the telecrystals of the uplink. It is bad practice to use this outside of the component itself.
+/datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
+	uplink_handler.telecrystals = new_telecrystal_amount
+
+/datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
+	lockable |= uplink.lockable
+	active |= uplink.active
+	uplink_handler.uplink_flag |= uplink.uplink_handler.uplink_flag
 
 /datum/component/uplink/Destroy()
 	purchase_log = null
 	return ..()
 
-/datum/component/uplink/proc/update_items(user)
-	var/updated_items
-	updated_items = get_uplink_items(uplink_flag, TRUE, allow_restricted)
-	update_sales(updated_items)
-	update_special_equipment(user, updated_items)
-	uplink_items = updated_items
-
-/datum/component/uplink/proc/update_sales(updated_items)
-	var/discount_categories = list("Discounted Gear", "Discounted Team Gear", "Limited Stock Team Gear")
-	if (uplink_items == null)
-		return
-	for (var/category in discount_categories) // Makes sure discounted items aren't renewed or replaced
-		if (uplink_items[category] != null && updated_items[category] != null)
-			updated_items[category] = uplink_items[category]
-
-/datum/component/uplink/proc/update_special_equipment(mob/user, updated_items)
-	if(!user?.mind?.failed_special_equipment)
-		return
-	for(var/obj/item/equipment_path as anything in user.mind.failed_special_equipment)
-		var/datum/uplink_item/special_equipment/equipment_uplink_item = new
-		if(!updated_items[equipment_uplink_item.category])
-			updated_items[equipment_uplink_item.category] = list()
-		var/list/name_words = splittext(initial(equipment_path.name), " ")
-		var/capitalized_name
-		for(var/i in 1 to name_words.len)
-			name_words[i] = capitalize(name_words[i])
-		capitalized_name = name_words.Join(" ")
-		equipment_uplink_item.item = equipment_path
-		equipment_uplink_item.name = capitalized_name
-		equipment_uplink_item.desc = initial(equipment_path.desc)
-		updated_items[equipment_uplink_item.category][equipment_uplink_item.name] = equipment_uplink_item
-
-/datum/component/uplink/proc/LoadTC(mob/user, obj/item/stack/telecrystal/TC, silent = FALSE)
+/datum/component/uplink/proc/load_tc(mob/user, obj/item/stack/telecrystal/telecrystals, silent = FALSE)
 	if(!silent)
-		to_chat(user, span_notice("You slot [TC] into [parent] and charge its internal uplink."))
-	var/amt = TC.amount
-	telecrystals += amt
-	TC.use(amt)
+		to_chat(user, span_notice("You slot [telecrystals] into [parent] and charge its internal uplink."))
+	var/amt = telecrystals.amount
+	uplink_handler.telecrystals += amt
+	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
 
-/datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/I, mob/user)
+/datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/item, mob/user)
 	SIGNAL_HANDLER
-
 	if(!active)
 		return //no hitting everyone/everything just to try to slot tcs in!
-	if(istype(I, /obj/item/stack/telecrystal))
-		LoadTC(user, I)
-	for(var/category in uplink_items)
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/UI = uplink_items[category][item]
-			var/path = UI.refund_path || UI.item
-			var/cost = UI.refund_amount || UI.cost
-			if(I.type == path && UI.refundable && I.check_uplink_validity())
-				telecrystals += cost
-				log_uplink("[key_name(user)] refunded [UI] for [cost] telecrystals using [parent]'s uplink")
-				if(purchase_log)
-					purchase_log.total_spent -= cost
-				to_chat(user, span_notice("[I] refunded."))
-				qdel(I)
-				return
+
+	if(istype(item, /obj/item/stack/telecrystal))
+		load_tc(user, item)
 
 /datum/component/uplink/proc/interact(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -146,7 +134,6 @@
 	if(locked)
 		return
 	active = TRUE
-	update_items(user)
 	if(user)
 		INVOKE_ASYNC(src, .proc/ui_interact, user)
 	// an unlocked uplink blocks also opening the PDA or headset menu
@@ -170,44 +157,77 @@
 	if(!user.mind)
 		return
 	var/list/data = list()
-	data["telecrystals"] = telecrystals
-	data["lockable"] = lockable
-	data["compactMode"] = compact_mode
+	data["telecrystals"] = uplink_handler.telecrystals
+	data["progression_points"] = uplink_handler.progression_points
+	data["current_expected_progression"] = SStraitor.current_global_progression
+	data["maximum_active_objectives"] = uplink_handler.maximum_active_objectives
+	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
+	data["current_progression_scaling"] = SStraitor.current_progression_scaling
+
+	data["maximum_potential_objectives"] = uplink_handler.maximum_potential_objectives
+	if(uplink_handler.has_objectives)
+		var/list/potential_objectives = list()
+		for(var/index in 1 to uplink_handler.potential_objectives.len)
+			var/datum/traitor_objective/objective = uplink_handler.potential_objectives[index]
+			var/list/objective_data = objective.uplink_ui_data(user)
+			objective_data["id"] = index
+			potential_objectives += list(objective_data)
+		var/list/active_objectives = list()
+		for(var/index in 1 to uplink_handler.active_objectives.len)
+			var/datum/traitor_objective/objective = uplink_handler.active_objectives[index]
+			var/list/objective_data = objective.uplink_ui_data(user)
+			objective_data["id"] = index
+			active_objectives += list(objective_data)
+		data["potential_objectives"] = potential_objectives
+		data["active_objectives"] = active_objectives
+
+	var/list/stock_list = uplink_handler.item_stock.Copy()
+	var/list/extra_purchasable_stock = list()
+	var/list/extra_purchasable = list()
+	for(var/datum/uplink_item/item as anything in uplink_handler.extra_purchasable)
+		if(item in stock_list)
+			extra_purchasable_stock[REF(item)] = stock_list[item]
+			stock_list -= item
+		extra_purchasable += list(list(
+			"id" = item.type,
+			"name" = item.name,
+			"cost" = item.cost,
+			"desc" = item.desc,
+			"category" = item.category ? initial(item.category.name) : null,
+			"purchasable_from" = item.purchasable_from,
+			"restricted" = item.restricted,
+			"limited_stock" = item.limited_stock,
+			"restricted_roles" = item.restricted_roles,
+			"restricted_species" = item.restricted_species,
+			"progression_minimum" = item.progression_minimum,
+			"ref" = REF(item),
+		))
+
+	var/list/remaining_stock = list()
+	for(var/datum/uplink_item/item as anything in stock_list)
+		remaining_stock[item.type] = stock_list[item]
+	data["extra_purchasable"] = extra_purchasable
+	data["extra_purchasable_stock"] = extra_purchasable_stock
+	data["current_stock"] = remaining_stock
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
-	data["categories"] = list()
-	for(var/category in uplink_items)
-		var/list/cat = list(
-			"name" = category,
-			"items" = (category == selected_cat ? list() : null))
-		for(var/item in uplink_items[category])
-			var/datum/uplink_item/I = uplink_items[category][item]
-			if(I.limited_stock == 0)
-				continue
-			if(length(I.restricted_roles))
-				if(!debug && !(user.mind.assigned_role.title in I.restricted_roles))
-					continue
-			if(I.restricted_species)
-				if(ishuman(user))
-					var/is_inaccessible = TRUE
-					var/mob/living/carbon/human/H = user
-					for(var/F in I.restricted_species)
-						if(F == H.dna.species.id || debug)
-							is_inaccessible = FALSE
-							break
-					if(is_inaccessible)
-						continue
-			cat["items"] += list(list(
-				"name" = I.name,
-				"cost" = I.cost,
-				"desc" = I.desc,
-			))
-		data["categories"] += list(cat)
+	data["uplink_flag"] = uplink_handler.uplink_flag
+	data["has_progression"] = uplink_handler.has_progression
+	data["has_objectives"] = uplink_handler.has_objectives
+	data["lockable"] = lockable
+	data["assigned_role"] = uplink_handler.assigned_role
+	data["assigned_species"] = uplink_handler.assigned_species
+	data["debug"] = uplink_handler.debug_mode
 	return data
 
-/datum/component/uplink/ui_act(action, params)
+/datum/component/uplink/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/json/uplink)
+	)
+
+/datum/component/uplink/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -215,49 +235,63 @@
 		return
 	switch(action)
 		if("buy")
-			var/item_name = params["name"]
-			var/list/buyable_items = list()
-			for(var/category in uplink_items)
-				buyable_items += uplink_items[category]
-			if(item_name in buyable_items)
-				var/datum/uplink_item/I = buyable_items[item_name]
-				MakePurchase(usr, I)
-				return TRUE
+			var/datum/uplink_item/item
+			if(params["ref"])
+				item = locate(params["ref"]) in uplink_handler.extra_purchasable
+				if(!item)
+					return
+			else
+				var/datum/uplink_item/item_path = text2path(params["path"])
+				if(!ispath(item_path, /datum/uplink_item))
+					return
+				item = SStraitor.uplink_items_by_type[item_path]
+			uplink_handler.purchase_item(ui.user, item)
 		if("lock")
 			active = FALSE
 			locked = TRUE
-			telecrystals += hidden_crystals
-			hidden_crystals = 0
 			SStgui.close_uis(src)
-		if("select")
-			selected_cat = params["category"]
+
+	if(!uplink_handler.has_objectives)
+		return TRUE
+
+	if(uplink_handler.owner?.current != ui.user || !uplink_handler.can_take_objectives)
+		return TRUE
+
+	switch(action)
+		if("regenerate_objectives")
+			uplink_handler.generate_objectives()
 			return TRUE
-		if("compact_toggle")
-			compact_mode = !compact_mode
-			return TRUE
 
-/datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
-	if(!istype(U))
+	var/list/objectives
+	switch(action)
+		if("start_objective")
+			objectives = uplink_handler.potential_objectives
+		if("objective_act", "finish_objective", "objective_abort")
+			objectives = uplink_handler.active_objectives
+
+	if(!objectives)
 		return
-	if (!user || user.incapacitated())
-		return
-	if(U.restricted_roles.len && !(user.mind.assigned_role.title in U.restricted_roles))
-		return
 
-	if(telecrystals < U.cost || U.limited_stock == 0)
-		return
-	telecrystals -= U.cost
+	var/objective_index = round(text2num(params["index"]))
+	if(objective_index < 1 || objective_index > length(objectives))
+		return TRUE
+	var/datum/traitor_objective/objective = objectives[objective_index]
 
-	U.purchase(user, src)
-
-	if(U.limited_stock > 0)
-		U.limited_stock -= 1
-
-	SSblackbox.record_feedback("nested tally", "traitor_uplink_items_bought", 1, list("[initial(U.name)]", "[U.cost]"))
+	// Objective actions
+	switch(action)
+		if("start_objective")
+			uplink_handler.take_objective(ui.user, objective)
+		if("objective_act")
+			uplink_handler.ui_objective_act(ui.user, objective, params["objective_action"])
+		if("finish_objective")
+			if(!objective.finish_objective(ui.user))
+				return
+			uplink_handler.complete_objective(objective)
+		if("objective_abort")
+			uplink_handler.abort_objective(objective)
 	return TRUE
 
 // Implant signal responses
-
 /datum/component/uplink/proc/implant_activation()
 	SIGNAL_HANDLER
 
@@ -286,7 +320,7 @@
 /datum/component/uplink/proc/new_implant(datum/source, datum/component/uplink/uplink)
 	SIGNAL_HANDLER
 
-	uplink.telecrystals += telecrystals
+	uplink.add_telecrystals(uplink_handler.telecrystals)
 	return COMPONENT_DELETE_NEW_IMPLANT
 
 // PDA signal responses

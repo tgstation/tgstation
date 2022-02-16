@@ -19,5 +19,5 @@
 	var/obj/item/mod/control/mod = client_owner.back
 	if(!mod.selected_module)
 		return
-	UnregisterSignal(mod.wearer, mod.selected_module.used_signal)
+	mod.selected_module.UnregisterSignal(mod.wearer, mod.selected_module.used_signal)
 	mod.selected_module.update_signal(value)

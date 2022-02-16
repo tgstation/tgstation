@@ -112,7 +112,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.species = new species.type
 	new_dna.species.species_traits = species.species_traits
 	new_dna.real_name = real_name
-	new_dna.mutations = mutations.Copy()
+	// Mutations aren't gc managed, but they still aren't templates
+	// Let's do a proper copy
+	for(var/datum/mutation/human/mutation in mutations)
+		new_dna.add_mutation(mutation, mutation.class, mutation.timeout)
 
 //See mutation.dm for what 'class' does. 'time' is time till it removes itself in decimals. 0 for no timer
 /datum/dna/proc/add_mutation(mutation, class = MUT_OTHER, time)
@@ -218,8 +221,8 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	mutation_index.Cut()
 	default_mutation_genes.Cut()
 	shuffle_inplace(mutations_temp)
-	mutation_index[RACEMUT] = create_sequence(RACEMUT, FALSE)
-	default_mutation_genes[RACEMUT] = mutation_index[RACEMUT]
+	mutation_index[/datum/mutation/human/race] = create_sequence(/datum/mutation/human/race, FALSE)
+	default_mutation_genes[/datum/mutation/human/race] = mutation_index[/datum/mutation/human/race]
 	for(var/i in 2 to DNA_MUTATION_BLOCKS)
 		var/datum/mutation/human/M = mutations_temp[i]
 		mutation_index[M.type] = create_sequence(M.type, FALSE, M.difficulty)
@@ -362,9 +365,16 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
  * * target_dna The DNA that we are comparing to
  */
 /datum/dna/proc/is_same_as(datum/dna/target_dna)
-	if(unique_identity == target_dna.unique_identity && mutation_index == target_dna.mutation_index && real_name == target_dna.real_name)
-		if(species.type == target_dna.species.type && compare_list(features, target_dna.features) && blood_type == target_dna.blood_type)
-			return TRUE
+	if( \
+		unique_identity == target_dna.unique_identity \
+		&& mutation_index == target_dna.mutation_index \
+		&& real_name == target_dna.real_name \
+		&& species.type == target_dna.species.type \
+		&& compare_list(features, target_dna.features) \
+		&& blood_type == target_dna.blood_type \
+	)
+		return TRUE
+
 	return FALSE
 
 /datum/dna/proc/update_instability(alert=TRUE)
@@ -389,7 +399,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				if(-INFINITY to 0)
 					message = span_boldwarning("You can feel your DNA exploding, we need to do something fast!")
 		if(stability <= 0)
-			holder.apply_status_effect(STATUS_EFFECT_DNA_MELT)
+			holder.apply_status_effect(/datum/status_effect/dna_melt)
 		if(message)
 			to_chat(holder, message)
 
@@ -688,7 +698,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		if((!sequence || dna.mutation_in_sequence(A.type)) && !dna.get_mutation(A.type))
 			possible += A.type
 	if(exclude_monkey)
-		possible.Remove(RACEMUT)
+		possible.Remove(/datum/mutation/human/race)
 	if(LAZYLEN(possible))
 		var/mutation = pick(possible)
 		. = dna.activate_mutation(mutation)
@@ -794,7 +804,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 				reagents.add_reagent(/datum/reagent/aslimetoxin, 10)
 			if(6)
-				apply_status_effect(STATUS_EFFECT_GO_AWAY)
+				apply_status_effect(/datum/status_effect/go_away)
 			if(7)
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
 				ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS

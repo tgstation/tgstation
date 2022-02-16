@@ -49,9 +49,10 @@ All ShuttleMove procs go here
 /turf/proc/onShuttleMove(turf/newT, list/movement_force, move_dir)
 	if(newT == src) // In case of in place shuttle rotation shenanigans.
 		return
-	//Destination turf changes
-	//Baseturfs is definitely a list or this proc wouldnt be called
+	// Destination turf changes.
+	// Baseturfs is definitely a list or this proc wouldnt be called.
 	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+
 	if(!shuttle_boundary)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
 	var/depth = baseturfs.len - shuttle_boundary + 1
@@ -74,6 +75,7 @@ All ShuttleMove procs go here
 
 	SSexplosions.wipe_turf(src)
 	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)
+
 	if(shuttle_boundary)
 		oldT.ScrapeAway(baseturfs.len - shuttle_boundary + 1)
 

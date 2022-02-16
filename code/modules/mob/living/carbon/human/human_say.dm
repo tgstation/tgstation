@@ -27,7 +27,7 @@
 			return real_name
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling?.mimicing )
+		if(changeling?.mimicing)
 			return changeling.mimicing
 	if(GetSpecialVoice())
 		return GetSpecialVoice()

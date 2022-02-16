@@ -121,7 +121,7 @@
 				for(var/i = 1 to rand(1,3))
 					new pickedcoin(get_turf(king))
 			if(6 to 33)
-				say(pick("Treasure!","Our precious!","Cheese!"))
+				king.say(pick("Treasure!","Our precious!","Cheese!"))
 				to_chat(king, span_notice("Score! You find some cheese!"))
 				new /obj/item/food/cheese(get_turf(king))
 			else

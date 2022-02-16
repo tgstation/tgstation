@@ -126,12 +126,14 @@
 	. = ..()
 	if(.)
 		return
-
-	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (1-360)", "Rotate Pen Head", max_value = 360)
-	if(isnull(deg))
+	if(loc != user)
+		to_chat(user, span_warning("You must be holding the pen to continue!"))
 		return
-	degrees = round(deg)
-	to_chat(user, span_notice("You rotate the top of the pen to [degrees] degrees."))
+	var/deg = tgui_input_number(user, "What angle would you like to rotate the pen head to? (0-360)", "Rotate Pen Head", max_value = 360)
+	if(isnull(deg) || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || loc != user)
+		return
+	degrees = deg
+	to_chat(user, span_notice("You rotate the top of the pen to [deg] degrees."))
 	SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 
 /obj/item/pen/attack(mob/living/M, mob/user, params)
@@ -148,7 +150,7 @@
 	. = ..()
 	//Changing name/description of items. Only works if they have the UNIQUE_RENAME object flag set
 	if(isobj(O) && proximity && (O.obj_flags & UNIQUE_RENAME))
-		var/penchoice = tgui_alert(user, "What would you like to edit?", "Pen Setting", list("Rename","Description","Reset"))
+		var/penchoice = tgui_input_list(user, "What would you like to edit?", "Pen Setting", list("Rename", "Description", "Reset"))
 		if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 			return
 		if(penchoice == "Rename")
@@ -167,7 +169,7 @@
 				to_chat(user, span_notice("You have successfully renamed \the [oldname] to [O]."))
 				O.renamedByPlayer = TRUE
 
-		if(penchoice == "Change description")
+		if(penchoice == "Description")
 			var/input = tgui_input_text(user, "Describe [O]", "Description", "[O.desc]", 140)
 			var/olddesc = O.desc
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
@@ -225,6 +227,10 @@
 	sharpness = SHARP_POINTY
 	/// The real name of our item when extended.
 	var/hidden_name = "energy dagger"
+	/// The real desc of our item when extended.
+	var/hidden_desc = "It's a normal black ink pen."
+	/// The real icons used when extended.
+	var/hidden_icon = "edagger"
 	/// Whether or pen is extended
 	var/extended = FALSE
 
@@ -259,13 +265,15 @@
 	extended = active
 	if(active)
 		name = hidden_name
-		icon_state = "edagger"
-		inhand_icon_state = "edagger"
+		desc = hidden_desc
+		icon_state = hidden_icon
+		inhand_icon_state = hidden_icon
 		lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 		righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 		embedding = list(embed_chance = 100) // Rule of cool
 	else
 		name = initial(name)
+		desc = initial(desc)
 		icon_state = initial(icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 		lefthand_file = initial(lefthand_file)
@@ -276,6 +284,15 @@
 	balloon_alert(user, "[hidden_name] [active ? "active":"concealed"]")
 	playsound(user ? user : src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+///syndicate prototype for smuggling missions
+/obj/item/pen/edagger/prototype
+	name = "odd pen"
+	desc = "It's an abnormal black ink pen, with weird chunks of metal sticking out of it..."
+	hidden_name = "prototype hardlight dagger"
+	hidden_desc = "Waffle Corp R&D's prototype for energy daggers. Hardlight may be inferior \
+	to energy weapons, but it's still surprisingly deadly."
+	hidden_icon = "eprototypedagger"
 
 /obj/item/pen/survival
 	name = "survival pen"

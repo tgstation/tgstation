@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { multiline } from 'common/string';
-import { GenericUplink } from './Uplink';
+import { GenericUplink, Item } from './Uplink/GenericUplink';
 import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
 import { BooleanLike } from 'common/react';
 import { Window } from '../layouts';
@@ -36,6 +36,7 @@ type Info = {
   intro: string;
   processingTime: string;
   objectives: Objective[];
+  categories: any[];
 };
 
 const ObjectivePrintout = (props, context) => {
@@ -191,14 +192,32 @@ const CodewordsSection = (props, context) => {
 };
 
 export const AntagInfoMalf = (props, context) => {
-  const { data } = useBackend<Info>(context);
+  const { act, data } = useBackend<Info>(context);
   const {
     processingTime,
+    categories,
   } = data;
   const [
     antagInfoTab,
     setAntagInfoTab,
   ] = useLocalState(context, 'antagInfoTab', 0);
+  const categoriesList: string[] = [];
+  const items: Item[] = [];
+  for (let i = 0; i < categories.length; i++) {
+    const category = categories[i];
+    categoriesList.push(category.name);
+    for (let itemIndex = 0; itemIndex < category.items.length; itemIndex++) {
+      const item = category.items[itemIndex];
+      items.push({
+        id: item.name,
+        name: item.name,
+        category: category.name,
+        cost: `${item.cost} PT`,
+        desc: item.desc,
+        disabled: processingTime < item.cost,
+      });
+    }
+  }
   return (
     <Window
       width={660}
@@ -245,12 +264,13 @@ export const AntagInfoMalf = (props, context) => {
             <Stack.Item>
               <Section>
                 <GenericUplink
-                  currencyAmount={processingTime}
-                  currencySymbol="PT" />
+                  categories={categoriesList}
+                  items={items}
+                  currency={`${processingTime} PT`}
+                  handleBuy={(item) => act("buy", { name: item.name })}
+                />
               </Section>
             </Stack.Item>
-
-
           )}
         </Stack>
       </Window.Content>

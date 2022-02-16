@@ -4,7 +4,7 @@
 		ui = new(user, src, "MODsuit", name)
 		ui.open()
 
-/obj/item/mod/control/ui_data()
+/obj/item/mod/control/ui_data(mob/user)
 	var/data = list()
 	data["interface_break"] = interface_break
 	data["malfunctioning"] = malfunctioning
@@ -16,8 +16,8 @@
 	data["wearer_name"] = wearer ? (wearer.get_authentification_name("Unknown") || "Unknown") : "No Occupant"
 	data["wearer_job"] = wearer ? wearer.get_assignment("Unknown", "Unknown", FALSE) : "No Job"
 	data["AI"] = ai?.name
-	data["cell"] = cell?.name
-	data["charge"] = cell ? round(cell.percent(), 1) : 0
+	data["core"] = core?.name
+	data["charge"] = get_charge_percent()
 	data["modules"] = list()
 	for(var/obj/item/mod/module/module as anything in modules)
 		var/list/module_data = list(
@@ -25,6 +25,7 @@
 			description = module.desc,
 			module_type = module.module_type,
 			active = module.active,
+			pinned = module.pinned_to[user],
 			idle_power = module.idle_power_cost,
 			active_power = module.active_power_cost,
 			use_power = module.use_power_cost,
@@ -77,4 +78,9 @@
 			if(!module)
 				return
 			module.configure_edit(params["key"], params["value"])
+		if("pin")
+			var/obj/item/mod/module/module = locate(params["ref"]) in modules
+			if(!module)
+				return
+			module.pin(usr)
 	return TRUE

@@ -26,7 +26,7 @@
 		return FALSE
 	else
 		var/obj/item/mop/M = mop
-		reagents.trans_to(mop, M.mopcap, transfered_by = user)
+		reagents.trans_to(mop, M.max_reagent_volume, transfered_by = user)
 		to_chat(user, span_notice("You wet [mop] in [src]."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return TRUE
@@ -177,7 +177,10 @@
 /obj/structure/janitorialcart/update_overlays()
 	. = ..()
 	if(mybag)
-		. += "cart_garbage"
+		if(istype(mybag, /obj/item/storage/bag/trash/bluespace))
+			. += "cart_bluespace_garbage"
+		else
+			. += "cart_garbage"
 	if(mymop)
 		. += "cart_mop"
 	if(mybroom)

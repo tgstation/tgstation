@@ -1,0 +1,203 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"e" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"l" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/item/storage/box/donkpockets{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+"n" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+"o" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/machinery/cell_charger,
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+"u" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/disposalpipe/trunk,
+/obj/machinery/disposal/bin,
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+"x" = (
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/ruin/space/djstation)
+"D" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"J" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"L" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"N" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/djstation)
+"O" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/turf/template_noop,
+/area/template_noop)
+"P" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+"S" = (
+/obj/structure/disposalpipe/segment,
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"V" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"W" = (
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/structure/table,
+/obj/machinery/microwave{
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/djstation)
+
+(1,1,1) = {"
+e
+e
+e
+e
+e
+e
+e
+a
+e
+a
+"}
+(2,1,1) = {"
+e
+a
+V
+a
+a
+a
+V
+a
+e
+a
+"}
+(3,1,1) = {"
+e
+V
+L
+N
+N
+N
+L
+x
+e
+a
+"}
+(4,1,1) = {"
+e
+a
+L
+l
+P
+u
+S
+D
+e
+a
+"}
+(5,1,1) = {"
+a
+a
+L
+W
+P
+n
+L
+V
+b
+e
+"}
+(6,1,1) = {"
+a
+a
+L
+o
+P
+P
+L
+a
+V
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+O
+J
+L
+a
+V
+V
+"}

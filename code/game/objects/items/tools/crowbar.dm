@@ -60,6 +60,17 @@
 	force = 20
 	icon_state = "crowbar_powergame"
 
+/obj/item/crowbar/large/old
+	name = "old crowbar"
+	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
+	throwforce = 10
+	throw_speed = 2
+
+/obj/item/crowbar/large/old/Initialize()
+	. = ..()
+	if(prob(50))
+		icon_state = "crowbar_powergame"
+
 /obj/item/crowbar/power
 	name = "jaws of life"
 	desc = "A set of jaws of life, compressed through the magic of science."
@@ -128,11 +139,11 @@
 		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
 		qdel(attacked_carbon.handcuffed)
 		return
-	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND) && tool_behaviour == TOOL_WIRECUTTER)
+	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(/datum/status_effect/strandling) && tool_behaviour == TOOL_WIRECUTTER)
 		user.visible_message(span_notice("[user] attempts to cut the durathread strand from around [attacked_carbon]'s neck."))
 		if(do_after(user, 1.5 SECONDS, attacked_carbon))
 			user.visible_message(span_notice("[user] succesfully cuts the durathread strand from around [attacked_carbon]'s neck."))
-			attacked_carbon.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			attacked_carbon.remove_status_effect(/datum/status_effect/strandling)
 			playsound(loc, usesound, 50, TRUE, -1)
 		return
 	else

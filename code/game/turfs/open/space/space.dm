@@ -14,6 +14,7 @@
 	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
@@ -240,6 +241,9 @@
 			return TRUE
 	return FALSE
 
+/turf/open/space/rust_heretic_act()
+	return FALSE
+
 /turf/open/space/ReplaceWithLattice()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
@@ -261,7 +265,7 @@
 
 /turf/open/space/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, FALSE)
+	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
 
 /turf/open/space/openspace/zAirIn()
 	return TRUE

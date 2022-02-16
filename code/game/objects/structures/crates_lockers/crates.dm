@@ -16,6 +16,7 @@
 	close_sound_volume = 50
 	drag_slowdown = 0
 	door_anim_time = 0 // no animation
+	pass_flags_self = PASSSTRUCTURE | LETPASSTHROW
 	var/crate_climb_time = 20
 	var/obj/item/paper/fluff/jobs/cargo/manifest/manifest
 
@@ -28,17 +29,9 @@
 		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	update_appearance()
 
-/obj/structure/closet/crate/update_overlays()
-	. = ..()
-	if(broken)
-		. += "securecrateemag"
-		return
-	if(locked)
-		. += "securecrater"
-		return
-	if(secure)
-		. += "securecrateg"
-		return
+/obj/structure/closet/crate/Destroy()
+	QDEL_NULL(manifest)
+	return ..()
 
 /obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -58,6 +51,12 @@
 	. = new_overlays
 	if(manifest)
 		. += "manifest"
+	if(broken)
+		. += "securecrateemag"
+	else if(locked)
+		. += "securecrater"
+	else if(secure)
+		. += "securecrateg"
 
 /obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -79,7 +78,7 @@
 
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
 	. = ..()
-	if(. && manifest)
+	if(. && !QDELETED(manifest))
 		to_chat(user, span_notice("The manifest is torn off [src]."))
 		playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
 		manifest.forceMove(get_turf(src))

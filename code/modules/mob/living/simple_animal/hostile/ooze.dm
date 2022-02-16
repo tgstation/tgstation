@@ -153,10 +153,16 @@
 	return (ooze.ooze_nutrition >= nutrition_cost && !active)
 
 ///Give the mob a speed boost, heat it up every second, and end the ability in 6 seconds
-/datum/action/cooldown/metabolicboost/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/metabolicboost/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_boost()
+	StartCooldown()
+	return TRUE
+
+/*
+ * Actually trigger the boost.
+ */
+/datum/action/cooldown/metabolicboost/proc/trigger_boost()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
@@ -202,7 +208,7 @@
 	stop_consuming() //Shit out the vored mob before u go go
 
 ///Try to consume the pulled mob
-/datum/action/consume/Trigger()
+/datum/action/consume/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -410,11 +416,13 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_IMMOBILE
 	cooldown_time = 10 SECONDS
 
+/datum/action/cooldown/gel_cocoon/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	gel_cocoon()
+	StartCooldown()
+
 ///Try to put the pulled mob in a cocoon
-/datum/action/cooldown/gel_cocoon/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/gel_cocoon/proc/gel_cocoon()
 	var/mob/living/simple_animal/hostile/ooze/grapes/ooze = owner
 	if(!iscarbon(ooze.pulling))
 		to_chat(src, span_warning("You need to be pulling an intelligent enough creature to assist it with a cocoon!"))
@@ -439,7 +447,6 @@
 	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(target))
 	cocoon.insert_target(target)
 	owner.visible_message(span_nicegreen("[owner] has put [target] into a gel cocoon!"), span_notice("You put [target] into a gel cocoon."))
-	StartCooldown()
 
 /obj/structure/gel_cocoon
 	name = "gel cocoon"

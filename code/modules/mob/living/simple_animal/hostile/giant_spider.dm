@@ -86,7 +86,9 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/giant_spider/mob_negates_gravity()
-	return (locate(/obj/structure/spider/stickyweb) in loc) || ..()
+	if(locate(/obj/structure/spider/stickyweb) in loc)
+		return TRUE
+	return ..()
 
 /**
  * # Spider Hunter
@@ -209,7 +211,7 @@
 /mob/living/simple_animal/hostile/giant_spider/tarantula/OpenFire()
 	if(client)
 		return
-	charge.Trigger(target)
+	charge.Trigger(target = target)
 
 /mob/living/simple_animal/hostile/giant_spider/tarantula/Moved(atom/oldloc, dir)
 	. = ..()
@@ -528,7 +530,7 @@
 			return FALSE
 		return TRUE
 
-/datum/action/innate/spider/comm/Trigger()
+/datum/action/innate/spider/comm/Trigger(trigger_flags)
 	var/input = tgui_input_text(owner, "Input a command for your legions to follow.", "Command")
 	if(QDELETED(src) || !input || !IsAvailable())
 		return FALSE
@@ -671,10 +673,9 @@
 	web_speed = 0.7
 	menu_description = "Self-sufficient spider variant capable of healing themselves and producing webbbing fast, but has less health and damage. Toxin injection of 10u per bite."
 
-/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/Moved(atom/oldloc, dir)
+/mob/living/simple_animal/hostile/giant_spider/hunter/flesh/Initialize(mapload)
 	. = ..()
-	if(prob(5))
-		new /obj/effect/decal/cleanable/blood/bubblegum(loc)
+	AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, blood_spawn_chance = 5)
 
 /mob/living/simple_animal/hostile/giant_spider/hunter/flesh/AttackingTarget()
 	if(is_busy)

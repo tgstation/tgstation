@@ -94,7 +94,7 @@
 				specific_info = "[resolved_subsystem.stat_entry()]"
 			// else, it's just a /datum
 
-			dat += "\t[index]: [iter_datum] | [specific_info] | [ADMIN_VV(iter_datum)]| [TAG_DEL(iter_datum)] | [iter_datum == marked_datum ? "<b>Marked</b>" : TAG_MARK(iter_datum)] "
+			dat += "\t[index]: [iter_datum] | [specific_info] | [ADMIN_VV(iter_datum)] | [TAG_DEL(iter_datum)] | [iter_datum == marked_datum ? "<b>Marked</b>" : TAG_MARK(iter_datum)] "
 			dat += "\t(<b><font size='2'>[iter_datum.type])</font></b>"
 	else
 		dat += "No datums tagged :("

@@ -5,7 +5,7 @@
 	icon_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "random"
 
-/datum/action/item_action/chameleon/drone/randomise/Trigger()
+/datum/action/item_action/chameleon/drone/randomise/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return
 
@@ -32,7 +32,7 @@
 	if (istype(target, /obj/item/clothing/mask/chameleon/drone))
 		button_icon_state = "drone_camogear_mask"
 
-/datum/action/item_action/chameleon/drone/togglehatmask/Trigger()
+/datum/action/item_action/chameleon/drone/togglehatmask/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return
 
@@ -87,7 +87,7 @@
 		sortTim(standard_outfit_options, /proc/cmp_text_asc)
 	outfit_options = standard_outfit_options
 
-/datum/action/chameleon_outfit/Trigger()
+/datum/action/chameleon_outfit/Trigger(trigger_flags)
 	return select_outfit(owner)
 
 /datum/action/chameleon_outfit/proc/select_outfit(mob/user)
@@ -231,7 +231,7 @@
 				item_target.righthand_file = SSgreyscale.GetColoredIconByType(initial(picked_item.greyscale_config_inhand_right), initial(picked_item.greyscale_colors))
 		item_target.worn_icon_state = initial(picked_item.worn_icon_state)
 		item_target.inhand_icon_state = initial(picked_item.inhand_icon_state)
-		if(istype(item_target, /obj/item/clothing) && istype(initial(picked_item), /obj/item/clothing))
+		if(istype(item_target, /obj/item/clothing) && ispath(picked_item, /obj/item/clothing))
 			var/obj/item/clothing/clothing_target = item_target
 			var/obj/item/clothing/picked_clothing = picked_item
 			clothing_target.flags_cover = initial(picked_clothing.flags_cover)
@@ -240,7 +240,7 @@
 	else
 		atom_target.icon = initial(picked_item.icon)
 
-/datum/action/item_action/chameleon/change/Trigger()
+/datum/action/item_action/chameleon/change/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return
 

@@ -790,6 +790,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if((last_text && world.time < last_text + 10) || (everyone && last_everyone && world.time < last_everyone + PDA_SPAM_DELAY))
 		return FALSE
 
+	var/turf/position = get_turf(src)
+	for(var/obj/item/jammer/jammer as anything in GLOB.active_jammers)
+		var/turf/jammer_turf = get_turf(jammer)
+		if(position?.z == jammer_turf.z && (get_dist(position, jammer_turf) <= jammer.range))
+			return FALSE
+
 	var/list/filter_result = CAN_BYPASS_FILTER(user) ? null : is_ic_filtered_for_pdas(message)
 	if (filter_result)
 		REPORT_CHAT_FILTER_TO_USER(user, filter_result)
@@ -1064,8 +1070,8 @@ GLOBAL_LIST_EMPTY(PDAs)
 		sig_list += list(COMSIG_AIRLOCK_OPEN, COMSIG_AIRLOCK_CLOSE)
 	else
 		sig_list += list(COMSIG_ATOM_ATTACK_HAND)
-	target.AddComponent(/datum/component/sound_player, amount = (rand(15,20)), signal_or_sig_list = sig_list)
-	installed_cartridge.charges --
+	target.AddComponent(/datum/component/sound_player, uses = rand(15,20), signal_list = sig_list)
+	installed_cartridge.charges--
 	return TRUE
 
 

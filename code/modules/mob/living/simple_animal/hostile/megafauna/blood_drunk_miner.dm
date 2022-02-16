@@ -82,12 +82,12 @@ Difficulty: Medium
 
 	Goto(target, move_to_delay, minimum_distance)
 	if(get_dist(src, target) > 4)
-		if(dash.Trigger(target))
+		if(dash.Trigger(target = target))
 			kinetic_accelerator.StartCooldown(0)
-			kinetic_accelerator.Trigger(target)
+			kinetic_accelerator.Trigger(target = target)
 	else
-		kinetic_accelerator.Trigger(target)
-	transform_weapon.Trigger(target)
+		kinetic_accelerator.Trigger(target = target)
+	transform_weapon.Trigger(target = target)
 
 /obj/item/melee/cleaving_saw/miner //nerfed saw because it is very murdery
 	force = 6
@@ -121,7 +121,7 @@ Difficulty: Medium
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/ex_act(severity, target)
-	if(dash.Trigger(target))
+	if(dash.Trigger(target = target))
 		return FALSE
 	return ..()
 

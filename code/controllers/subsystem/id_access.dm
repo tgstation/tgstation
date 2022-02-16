@@ -312,6 +312,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access["[ACCESS_MECH_SCIENCE]"] = "Science Mech Access"
 	desc_by_access["[ACCESS_MECH_ENGINE]"] = "Engineering Mech Access"
 	desc_by_access["[ACCESS_AUX_BASE]"] = "Auxiliary Base"
+	desc_by_access["[ACCESS_SERVICE]"] = "Service Hallway"
 	desc_by_access["[ACCESS_CENT_GENERAL]"] = "Code Grey"
 	desc_by_access["[ACCESS_CENT_THUNDER]"] = "Code Yellow"
 	desc_by_access["[ACCESS_CENT_STORAGE]"] = "Code Orange"
@@ -428,6 +429,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_icon_override = trim.trim_icon
 	id_card.trim_state_override = trim.trim_state
 	id_card.trim_assignment_override = trim.assignment
+	id_card.sechud_icon_state_override = trim.sechud_icon_state
 
 	if(!check_forged || !id_card.forged)
 		id_card.assignment = trim.assignment
@@ -444,6 +446,7 @@ SUBSYSTEM_DEF(id_access)
 	id_card.trim_icon_override = null
 	id_card.trim_state_override = null
 	id_card.trim_assignment_override = null
+	id_card.sechud_icon_state_override = null
 
 /**
  * Adds the accesses associated with a trim to an ID card.

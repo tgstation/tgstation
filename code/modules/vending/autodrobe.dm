@@ -86,6 +86,9 @@
 		/obj/item/clothing/mask/animal/frog = 1,
 		/obj/item/clothing/mask/animal/rat/tribal = 1,
 		/obj/item/clothing/mask/animal/rat = 1,
+		/obj/item/clothing/mask/animal/pig = 1,
+		/obj/item/clothing/mask/animal/cowmask = 1,
+		/obj/item/clothing/mask/animal/horsehead = 1,
 		/obj/item/clothing/suit/apron/overalls = 1,
 		/obj/item/clothing/head/rabbitears =1,
 		/obj/item/clothing/accessory/vest_sheriff =1,
@@ -161,9 +164,6 @@
 	extra_price = PAYCHECK_HARD
 	payment_department = ACCOUNT_SRV
 	light_mask="theater-light-mask"
-
-/obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
 
 /obj/machinery/vending/autodrobe/all_access
 	desc = "A vending machine for costumes. This model appears to have no access restrictions."

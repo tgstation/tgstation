@@ -21,6 +21,7 @@
 
 /obj/machinery/computer/med_data/syndie
 	icon_keyboard = "syndie_key"
+	req_one_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/med_data/ui_interact(mob/user)
 	. = ..()

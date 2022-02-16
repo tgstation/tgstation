@@ -242,9 +242,7 @@
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
 	new_reagent.ph = added_ph
-	if(data)
-		new_reagent.data = data
-		new_reagent.on_new(data)
+	new_reagent.on_new(data)
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete
@@ -424,6 +422,21 @@
 					if(needs_metabolizing && !holder_reagent.metabolizing)
 						return FALSE
 					return holder_reagent
+	return FALSE
+
+/**
+ * Check if this holder contains a reagent with a chemical_flags containing this flag
+ * Reagent takes the bitflag to search for
+ * Amount checks for having a specific amount of reagents matching that chemical
+ */
+/datum/reagents/proc/has_chemical_flag(chemical_flag, amount = 0)
+	var/found_amount = 0
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
+		if (holder_reagent.chemical_flags & chemical_flag)
+			found_amount += holder_reagent.volume
+			if(found_amount >= amount)
+				return TRUE
 	return FALSE
 
 
@@ -1949,6 +1962,10 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
+
+/atom/movable/chem_holder
+	name = "This atom exists to hold chems. If you can see this, make an issue report"
+	desc = "God this is stupid"
 
 #undef REAGENT_TRANSFER_AMOUNT
 #undef REAGENT_PURITY

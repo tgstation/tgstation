@@ -6,6 +6,7 @@
 	name = "automatic buffer"
 	desc = "A chemical holding tank that waits for neighbouring automatic buffers to complete before allowing a withdrawal. Connect/reset by screwdrivering"
 	icon_state = "buffer"
+	pass_flags_self = PASSMACHINE | LETPASSTHROW // It looks short enough.
 	buffer = 200
 
 	var/datum/buffer_net/buffer_net
@@ -77,10 +78,9 @@
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/new_volume = tgui_input_number(user, "Enter new activation threshold", "Beepityboop", activation_volume, buffer)
-	if(isnull(new_volume))
+	if(!new_volume || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-
-	activation_volume = round(new_volume)
+	activation_volume = new_volume
 	to_chat(user, span_notice("New activation threshold is now [activation_volume]."))
 	return
 

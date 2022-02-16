@@ -19,6 +19,7 @@
 	icon_state = "kiosk"
 	base_icon_state = "kiosk"
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/medical_kiosk
 	payment_department = ACCOUNT_MED
@@ -36,14 +37,10 @@
 	/// Do we have someone paying to use this?
 	var/paying_customer = FALSE //Ticked yes if passing inuse()
 
-	/// Who's pockets are we sifting through when we're used?
-	var/datum/bank_account/account  //payer's account.
 	/// Who's paying?
-	var/mob/living/carbon/human/H   //The person using the console in each instance. Used for paying for the kiosk.
+	var/datum/weakref/paying_ref //The person using the console in each instance. Used for paying for the kiosk.
 	/// Who's getting scanned?
-	var/mob/living/carbon/human/altPatient   //If scanning someone else, this will be the target.
-	/// Used to find the money.
-	var/obj/item/card/id/C //the account of the person using the console.
+	var/datum/weakref/patient_ref //If scanning someone else, this will be the target.
 
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
@@ -51,16 +48,20 @@
 	scanner_wand = new/obj/item/scanner_wand(src)
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
-	if(C?.registered_account)
-		account = C.registered_account
-	if(account?.account_job?.paycheck_department == payment_department)
+	var/mob/living/carbon/human/paying = paying_ref?.resolve()
+	if(!paying)
+		paying_ref = null
+		return
+
+	var/obj/item/card/id/card = paying.get_idcard(TRUE)
+	if(card?.registered_account?.account_job?.paycheck_department == payment_department)
 		use_power(20)
 		paying_customer = TRUE
 		say("Hello, esteemed medical staff!")
 		RefreshParts()
 		return
 	var/bonus_fee = pandemonium ? rand(10,30) : 0
-	if(attempt_charge(src, H, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
+	if(attempt_charge(src, paying, bonus_fee) & COMPONENT_OBJ_CANCEL_CHARGE )
 		return
 	use_power(20)
 	paying_customer = TRUE
@@ -113,9 +114,10 @@
 		span_notice("You press [O] into the side of [src], clicking into place."))
 		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 		if(W.selected_target)
-			if(!(altPatient == W.return_patient()))
+			var/datum/weakref/target_ref = WEAKREF(W.return_patient())
+			if(patient_ref != target_ref)
 				clearScans()
-			altPatient = W.return_patient()
+			patient_ref = target_ref
 			user.visible_message(span_notice("[W.return_patient()] has been set as the current patient."))
 			W.selected_target = null
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -168,12 +170,13 @@
 		if (ui)
 			ui.close()
 		return
-	patient_distance = get_dist(src.loc,altPatient)
-	if(altPatient == null)
+	var/mob/living/carbon/human/patient = patient_ref?.resolve()
+	patient_distance = get_dist(src.loc, patient)
+	if(patient == null)
 		say("Scanner reset.")
-		altPatient = user
+		patient_ref = WEAKREF(user)
 	else if(patient_distance>5)
-		altPatient = null
+		patient_ref = null
 		say("Patient out of range. Resetting biometrics.")
 		clearScans()
 		return
@@ -183,19 +186,22 @@
 		ui.open()
 		icon_state = "[base_icon_state]_active"
 		RefreshParts()
-		H = user
-		C = H.get_idcard(TRUE)
+		var/mob/living/carbon/human/paying = user
+		paying_ref = WEAKREF(paying)
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
+	var/mob/living/carbon/human/patient = patient_ref?.resolve()
 	var/list/data = list()
-	var/patient_name = altPatient.name
+	if(!patient)
+		return
+	var/patient_name = patient.name
 	var/patient_status = "Alive."
-	var/max_health = altPatient.maxHealth
-	var/total_health = altPatient.health
-	var/brute_loss = altPatient.getBruteLoss()
-	var/fire_loss = altPatient.getFireLoss()
-	var/tox_loss = altPatient.getToxLoss()
-	var/oxy_loss = altPatient.getOxyLoss()
+	var/max_health = patient.maxHealth
+	var/total_health = patient.health
+	var/brute_loss = patient.getBruteLoss()
+	var/fire_loss = patient.getFireLoss()
+	var/tox_loss = patient.getToxLoss()
+	var/oxy_loss = patient.getOxyLoss()
 	var/chaos_modifier = 0
 
 	var/sickness = "Patient does not show signs of disease."
@@ -203,18 +209,18 @@
 
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
-	var/blood_percent = round((altPatient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
-	var/blood_type = altPatient.dna.blood_type
+	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+	var/blood_type = patient.dna.blood_type
 	var/blood_warning = " "
 
-	for(var/thing in altPatient.diseases) //Disease Information
+	for(var/thing in patient.diseases) //Disease Information
 		var/datum/disease/D = thing
 		if(!(D.visibility_flags & HIDDEN_SCANNER))
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(altPatient.has_dna()) //Blood levels Information
-		if(altPatient.is_bleeding())
+	if(patient.has_dna()) //Blood levels Information
+		if(patient.is_bleeding())
 			bleed_status = "Patient is currently bleeding!"
 		if(blood_percent <= 80)
 			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
@@ -223,12 +229,12 @@
 		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
-	var/clone_loss = altPatient.getCloneLoss()
-	var/brain_loss = altPatient.getOrganLoss(ORGAN_SLOT_BRAIN)
+	var/clone_loss = patient.getCloneLoss()
+	var/brain_loss = patient.getOrganLoss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
-	if(LAZYLEN(altPatient.get_traumas()))
+	if(LAZYLEN(patient.get_traumas()))
 		var/list/trauma_text = list()
-		for(var/t in altPatient.get_traumas())
+		for(var/t in patient.get_traumas())
 			var/datum/brain_trauma/trauma = t
 			var/trauma_desc = ""
 			switch(trauma.resilience)
@@ -247,15 +253,15 @@
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	if(altPatient.reagents.reagent_list.len) //Chemical Analysis details.
-		for(var/r in altPatient.reagents.reagent_list)
+	if(patient.reagents.reagent_list.len) //Chemical Analysis details.
+		for(var/r in patient.reagents.reagent_list)
 			var/datum/reagent/reagent = r
 			if(reagent.chemical_flags & REAGENT_INVISIBLE) //Don't show hidden chems
 				continue
 			chemical_list += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01)))
 			if(reagent.overdosed)
 				overdose_list += list(list("name" = reagent.name))
-	var/obj/item/organ/stomach/belly = altPatient.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/belly = patient.getorganslot(ORGAN_SLOT_STOMACH)
 	if(belly?.reagents.reagent_list.len) //include the stomach contents if it exists
 		for(var/bile in belly.reagents.reagent_list)
 			var/datum/reagent/bit = bile
@@ -267,13 +273,13 @@
 				var/bit_vol = bit.volume - belly.food_reagents[bit.type]
 				if(bit_vol > 0)
 					chemical_list += list(list("name" = bit.name, "volume" = round(bit_vol, 0.01)))
-	for(var/datum/addiction/addiction_type as anything in altPatient.mind.active_addictions)
+	for(var/datum/addiction/addiction_type as anything in patient.mind.active_addictions)
 		addict_list += list(list("name" = initial(addiction_type.name)))
 
-	if (altPatient.hallucinating())
+	if (patient.hallucinating())
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
-	if(altPatient.stat == DEAD || HAS_TRAIT(altPatient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 200))  //Patient status checks.
+	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 200))  //Patient status checks.
 		patient_status = "Dead."
 	if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 80)
 		patient_status = "Gravely Injured"
@@ -357,6 +363,6 @@
 				scan_active |= KIOSK_SCANNING_REAGENTS
 				paying_customer = FALSE
 		if("clearTarget")
-			altPatient = null
+			patient_ref = null
 			clearScans()
 			. = TRUE

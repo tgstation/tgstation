@@ -143,7 +143,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
  * Spider Clan = "'Leaping Viper' MSO"
  * Stations? = "System Port 10"
  * Arguments:
- * * is_ai - boolean to decide whether the name has "Core" (AI) or "Assistant" (Cyborg)
+ * * is_ai - boolean to decide whether the name has "Core" (AI) or JOB_ASSISTANT (Cyborg)
  */
 /datum/anonymous_theme/proc/anonymous_ai_name(is_ai = FALSE)
 	return pick(GLOB.ai_names)
@@ -167,7 +167,7 @@ GLOBAL_DATUM(current_anonymous_theme, /datum/anonymous_theme)
 /datum/anonymous_theme/employees/anonymous_ai_name(is_ai = FALSE)
 	var/verbs = capitalize(pick(GLOB.ing_verbs))
 	var/phonetic = pick(GLOB.phonetic_alphabet)
-	return "Employee [is_ai ? "Core" : "Assistant"] [verbs] [phonetic]"
+	return "Employee [is_ai ? "Core" : JOB_ASSISTANT] [verbs] [phonetic]"
 
 /datum/anonymous_theme/wizards
 	name = "Wizard Academy"

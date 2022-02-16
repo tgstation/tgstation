@@ -200,7 +200,8 @@ Primarily used in reagents/reaction_agents
 
 /// Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
-	return
+	if(data)
+		src.data = data
 
 /// Called when two reagents of the same are mixing.
 /datum/reagent/proc/on_merge(data, amount)
@@ -208,10 +209,6 @@ Primarily used in reagents/reaction_agents
 
 /// Called by [/datum/reagents/proc/conditional_update]
 /datum/reagent/proc/on_update(atom/A)
-	return
-
-/// Called when the reagent container is hit by an explosion
-/datum/reagent/proc/on_ex_act(severity)
 	return
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects

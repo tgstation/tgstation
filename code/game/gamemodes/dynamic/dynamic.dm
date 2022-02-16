@@ -1,5 +1,6 @@
 #define RULESET_STOP_PROCESSING 1
 
+#define FAKE_GREENSHIFT_FORM_CHANCE 15
 #define FAKE_REPORT_CHANCE 8
 #define REPORT_NEG_DIVERGENCE -15
 #define REPORT_POS_DIVERGENCE 15
@@ -184,8 +185,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_injection_chance(dry_run = TRUE)]%</b> latejoin chance, <b>[get_midround_injection_chance(dry_run = TRUE)]%</b> midround chance)<BR>"
-	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [DisplayTimeText(midround_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -260,12 +261,16 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
-			if(!GLOB.current_living_antags.len)
-				. += "<b>Peaceful Waypoint</b></center><BR>"
-				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
-			else
+			var/show_core_territory = (GLOB.current_living_antags.len > 0)
+			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
+				show_core_territory = !show_core_territory
+
+			if (show_core_territory)
 				. += "<b>Core Territory</b></center><BR>"
 				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
+			else
+				. += "<b>Peaceful Waypoint</b></center><BR>"
+				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
 		if(20 to 39)
 			. += "<b>Anomalous Exogeology</b></center><BR>"
 			. += "Although your station lies within what is generally considered Nanotrasen-controlled space, the course of its orbit has caused it to cross unusually close to exogeological features with anomalous readings. Although these features offer opportunities for our research department, it is known that these little understood readings are often correlated with increased activity from competing interstellar organizations and individuals, among them the Wizard Federation and Cult of the Geometer of Blood - all known competitors for Anomaly Type B sites. Exercise elevated caution."
@@ -283,13 +288,24 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
 			. += "Good luck."
 
+	var/min_threat = 100
+	for(var/datum/dynamic_ruleset/ruleset as anything in init_rulesets(/datum/dynamic_ruleset))
+		if(ruleset.weight <= 0 || ruleset.cost <= 0)
+			continue
+		min_threat = min(ruleset.cost, min_threat)
+	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+
+	generate_station_goals(greenshift)
 	. += generate_station_goal_report()
 	. += generate_station_trait_report()
 
 	print_command_report(., "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
-	if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
-		set_security_level(SEC_LEVEL_BLUE)
+	if(greenshift)
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound())
+	else
+		priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
+		if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
+			set_security_level(SEC_LEVEL_BLUE)
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
@@ -601,7 +617,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time)
 
 		// Time to inject some threat into the round
-		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
+		if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // Unless the shuttle is past the point of no return
 			return
 
 		message_admins("DYNAMIC: Checking for midround injection.")
@@ -730,7 +746,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		ruleset.restricted_roles |= "Assistant"
+		ruleset.restricted_roles |= JOB_ASSISTANT
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
@@ -781,5 +797,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: [text]")
 
 #undef FAKE_REPORT_CHANCE
+#undef FAKE_GREENSHIFT_FORM_CHANCE
 #undef REPORT_NEG_DIVERGENCE
 #undef REPORT_POS_DIVERGENCE

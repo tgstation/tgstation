@@ -8,7 +8,7 @@
 	button_icon_state = "strained_muscles"
 	chemical_cost = 0
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 	var/stacks = 0 //Increments every 5 seconds; damage increases over time
 	active = FALSE //Whether or not you are a hedgehog
 
@@ -29,8 +29,15 @@
 
 	return TRUE
 
+/datum/action/changeling/strained_muscles/Remove(mob/user)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
+	return ..()
+
 /datum/action/changeling/strained_muscles/proc/muscle_loop(mob/living/carbon/user)
 	while(active)
+		if(QDELETED(src) || QDELETED(user))
+			return
+
 		user.add_movespeed_modifier(/datum/movespeed_modifier/strained_muscles)
 		if(user.stat != CONSCIOUS || user.staminaloss >= 90)
 			active = !active
@@ -49,5 +56,8 @@
 		sleep(40)
 
 	while(!active && stacks) //Damage stacks decrease fairly rapidly while not in sanic mode
+		if(QDELETED(src) || QDELETED(user))
+			return
+
 		stacks--
 		sleep(20)

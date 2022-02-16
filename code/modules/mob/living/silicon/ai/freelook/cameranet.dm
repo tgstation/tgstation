@@ -7,25 +7,24 @@
 GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 /datum/cameranet
-	var/name = "Camera Net" // Name to show for VV and stat()
+	/// Name to show for VV and stat()
+	var/name = "Camera Net"
 
-	// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
+	/// The cameras on the map, no matter if they work or not. Updated in obj/machinery/camera.dm by New() and Del().
 	var/list/cameras = list()
-	// The chunks of the map, mapping the areas that the cameras can see.
+	/// The chunks of the map, mapping the areas that the cameras can see.
 	var/list/chunks = list()
 	var/ready = 0
 
-	///this object is the static that ais see on obscured turfs, added to the turfs vis_contents
-	var/obj/effect/overlay/camera_static/vis_contents_opaque
-
-	///The image given to the effect in vis_contents on AI clients
+	///The image cloned by all chunk static images put onto turfs cameras cant see
 	var/image/obscured
 
 /datum/cameranet/New()
-	vis_contents_opaque = new /obj/effect/overlay/camera_static()
 
-	obscured = new('icons/effects/cameravis.dmi', vis_contents_opaque, null)
+	obscured = new('icons/effects/cameravis.dmi')
 	obscured.plane = CAMERA_STATIC_PLANE
+	obscured.appearance_flags = RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | KEEP_APART
+	obscured.override = TRUE
 
 /// Checks if a chunk has been Generated in x, y, z.
 /datum/cameranet/proc/chunkGenerated(x, y, z)
@@ -52,9 +51,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 	else
 		other_eyes = list()
 
-	if(C && use_static)
-		C.images += obscured
-
 	for(var/mob/camera/ai_eye/eye as anything in moved_eyes)
 		var/list/visibleChunks = list()
 		if(eye.loc)
@@ -78,11 +74,6 @@ GLOBAL_DATUM_INIT(cameranet, /datum/cameranet, new)
 
 		for(var/datum/camerachunk/chunk as anything in add)
 			chunk.add(eye)
-
-		if(!eye.visibleCameraChunks.len)
-			var/client/client = eye.GetViewerClient()
-			if(client && eye.use_static)
-				client.images -= obscured
 
 /// Updates the chunks that the turf is located in. Use this when obstacles are destroyed or when doors open.
 /datum/cameranet/proc/updateVisibility(atom/A, opacity_check = 1)

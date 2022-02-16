@@ -108,8 +108,9 @@
 /datum/asset/spritesheet/antagonists
 	name = "antagonists"
 	early = TRUE
+	cross_round_cachable = TRUE
 
-/datum/asset/spritesheet/antagonists/register()
+/datum/asset/spritesheet/antagonists/create_spritesheets()
 	// Antagonists that don't have a dynamic ruleset, but do have a preference
 	var/static/list/non_ruleset_antagonists = list(
 		ROLE_FUGITIVE = /datum/antagonist/fugitive,
@@ -155,8 +156,6 @@
 
 	for (var/spritesheet_key in to_insert)
 		Insert(spritesheet_key, to_insert[spritesheet_key])
-
-	return ..()
 
 /// Serializes an antag name to be used for preferences UI
 /proc/serialize_antag_name(antag_name)

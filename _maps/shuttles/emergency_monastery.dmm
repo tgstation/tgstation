@@ -2828,7 +2828,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "IK" = (
-/obj/structure/destructible/cult/tome,
+/obj/structure/destructible/cult/item_dispenser/archives/library,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "IL" = (
