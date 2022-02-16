@@ -523,6 +523,14 @@
 
 	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
 
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/stack/cable_coil = list(
+			SCREENTIP_CONTEXT_LMB = "Make plant battery",
+		),
+	)
+
+	our_plant.AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /*
  * When a plant with this gene is hit (attackby) with cables, we turn it into a battery.
  *

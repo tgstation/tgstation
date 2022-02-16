@@ -67,6 +67,31 @@
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
+/obj/machinery/seed_extractor/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/storage/bag/plants = list(
+			SCREENTIP_CONTEXT_LMB = "Store seeds",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	register_context()
+
+/obj/machinery/seed_extractor/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	if(held_item?.get_plant_seed())
+		context[SCREENTIP_CONTEXT_LMB] = "Make seeds"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		max_seeds = initial(max_seeds) * B.rating
