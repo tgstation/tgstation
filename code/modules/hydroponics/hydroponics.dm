@@ -99,7 +99,8 @@
 	// With a hand we can harvest or remove dead plants
 	// If the plant's not in either state, we can't do much else, so early return.
 	if(isnull(held_item))
-		if(issilicon(user)) // Silicons can't interact with trays :frown:
+		// Silicons can't interact with trays :frown:
+		if(issilicon(user))
 			return NONE
 
 		switch(plant_status)
@@ -113,7 +114,7 @@
 
 		return NONE
 
-	// If the plant is harvestable, we can graft or harvest it with a plant bag
+	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
 	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
 		if(istype(held_item, /obj/item/secateurs))
 			context[SCREENTIP_CONTEXT_LMB] = "Graft plant"
@@ -123,23 +124,24 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	// If the plant's in good health, we can shear it
+	// If the plant's in good health, we can shear it.
 	if(istype(held_item, /obj/item/geneshears) && plant_health > GENE_SHEAR_MIN_HEALTH)
 		context[SCREENTIP_CONTEXT_LMB] = "Remove plant gene"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	// If we've got a charged somatoray, we can mutation lock it
+	// If we've got a charged somatoray, we can mutation lock it.
 	if(istype(held_item, /obj/item/gun/energy/floragun) && myseed.endurance > FLORA_GUN_MIN_ENDURANCE && LAZYLEN(myseed.mutatelist))
 		var/obj/item/gun/energy/floragun/flower_gun = held_item
 		if(flower_gun.cell.charge >= flower_gun.cell.maxcharge)
 			context[SCREENTIP_CONTEXT_LMB] = "Lock mutation"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	// Edibles and pills can be composted
+	// Edibles and pills can be composted.
 	if(IS_EDIBLE(held_item) || istype(held_item, /obj/item/reagent_containers/pill))
 		context[SCREENTIP_CONTEXT_LMB] = "Compost"
 		return CONTEXTUAL_SCREENTIP_SET
 
+	// Aand if a reagent container has water or plant fertilizer in it, we can use it on the plant.
 	if(is_reagent_container(held_item) && length(held_item.reagents.reagent_list))
 		var/datum/reagent/most_common_reagent = held_item.reagents.get_master_reagent()
 		context[SCREENTIP_CONTEXT_LMB] = "[istype(most_common_reagent, /datum/reagent/water) ? "Water" : "Feed"] plant"
