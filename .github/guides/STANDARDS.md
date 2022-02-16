@@ -433,11 +433,6 @@ If you are using `.` in this case (or for another case that might be acceptable,
 ```
 
 ```dm
-/obj/item/spoon/attack()
-	. = ..()
-	if (!.)
-		return . // `. = ..()` does not require us to `return .` at the end, but in this case, we should make it clear what is being returned here
-
 /obj/item/spoon/super_attack()
 	. = ..()
 	if (. == BIGGER_SUPER_ATTACK)
