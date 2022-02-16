@@ -86,6 +86,8 @@
 		preexisting = FALSE
 		var/obj/item/toy/cards/singlecard/card = cards[1]
 		new_cardhand = new /obj/item/toy/cards/cardhand(card.loc)
+		new_cardhand.pixel_x = card.pixel_x
+		new_cardhand.pixel_y = card.pixel_y
 
 	for (var/obj/item/toy/cards/singlecard/card in cards)
 		user.dropItemToGround(card) // drop them all so the loc will properly update
