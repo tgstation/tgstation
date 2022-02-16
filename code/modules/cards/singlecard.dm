@@ -77,11 +77,15 @@
 			to_chat(user, span_warning("You can't mix cards from other decks!"))
 			return
 
+	if(!LAZYLEN(cards))
+		CRASH("[src] is being made into a cardhand without a list of cards to combine")
+
 	var/obj/item/toy/cards/cardhand/new_cardhand = given_hand
 	var/preexisting = TRUE // does the cardhand already exist, or are we making a new one
 	if (!new_cardhand)
 		preexisting = FALSE
-		new_cardhand = new /obj/item/toy/cards/cardhand(user.loc)
+		var/obj/item/toy/cards/singlecard/card = cards[1]
+		new_cardhand = new /obj/item/toy/cards/cardhand(card.loc)
 
 	for (var/obj/item/toy/cards/singlecard/card in cards)
 		user.dropItemToGround(card) // drop them all so the loc will properly update
@@ -112,7 +116,7 @@
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(dealer_deck.wielded)
 			var/obj/item/toy/cards/singlecard/card_drawn = draw_card(user, dealer_deck.cards)
-			do_cardhand(user, list(src), card_drawn)
+			do_cardhand(user, list(src, card_drawn))
 			user.balloon_alert(user, "deals a card")
 		else
 			dealer_deck.add_card(user, dealer_deck.cards, src)
