@@ -531,7 +531,7 @@
  * Signal proc for [COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM] to add context to plant batteries.
  */
 /datum/plant_gene/trait/battery/proc/on_requesting_context_from_item(
-	datum/source,
+	obj/item/source,
 	list/context,
 	obj/item/held_item,
 	mob/living/user,
@@ -545,7 +545,7 @@
 	if(cabling.amount < cables_needed_per_battery)
 		return NONE
 
-	context[SCREENTIP_CONTEXT_LMB] = "Make [source] battery"
+	context[SCREENTIP_CONTEXT_LMB] = "Make [source.name] battery"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /*
