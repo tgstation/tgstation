@@ -457,9 +457,6 @@
 	var/animate_time = 0.25 SECONDS
 
 /obj/item/mod/module/sphere_transform/on_activation()
-	if(!mod.wearer.has_gravity())
-		balloon_alert(mod.wearer, "no gravity!")
-		return FALSE
 	. = ..()
 	if(!.)
 		return

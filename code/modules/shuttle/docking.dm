@@ -103,7 +103,7 @@
 	return DOCKING_SUCCESS
 
 /obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, rotation)
-	for(var/i in 1 to length(old_turfs))
+	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK
 		var/turf/oldT = old_turfs[i]
 		var/turf/newT = new_turfs[i]
@@ -115,8 +115,10 @@
 		var/area/old_area = oldT.loc
 		var/move_mode = old_area.beforeShuttleMove(shuttle_areas) //areas
 
-		for(var/atom/movable/moving_atom as anything in oldT.contents)
+		var/list/old_contents = oldT.contents
+		for(var/k in 1 to old_contents.len)
 			CHECK_TICK
+			var/atom/movable/moving_atom = old_contents[k]
 			if(moving_atom.loc != oldT) //fix for multi-tile objects
 				continue
 			move_mode = moving_atom.beforeShuttleMove(newT, rotation, move_mode, src) //atoms
@@ -178,7 +180,7 @@
 				new_ceiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/openspace))
 			else if (istype(new_ceiling, /turf/open/space/openspace))
 				new_ceiling.ChangeTurf(/turf/open/floor/engine/hull/ceiling, list(/turf/open/space/openspace))
-		var/turf/old_ceiling = get_step_multiz(old_turf, UP)
+		var/turf/old_ceiling = get_step_multiz(old_turf, UP) 
 		if(old_ceiling && istype(old_ceiling, /turf/open/floor/engine/hull/ceiling)) // check if a ceiling was generated previously
 			// remove old ceiling
 			var/turf/open/floor/engine/hull/ceiling/old_shuttle_ceiling = old_ceiling

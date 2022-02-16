@@ -2,8 +2,7 @@ import { useBackend } from '../../backend';
 import { Box, Button, Flex } from '../../components';
 
 type InputButtonsData = {
-  large_buttons: boolean;
-  swapped_buttons: boolean;
+  preferences: Preferences;
 };
 
 type InputButtonsProps = {
@@ -11,9 +10,14 @@ type InputButtonsProps = {
   message?: string;
 };
 
+export type Preferences = {
+  large_buttons: boolean;
+  swapped_buttons: boolean;
+};
+
 export const InputButtons = (props: InputButtonsProps, context) => {
   const { act, data } = useBackend<InputButtonsData>(context);
-  const { large_buttons, swapped_buttons } = data;
+  const { large_buttons, swapped_buttons } = data.preferences;
   const { input, message } = props;
   const submitButton = (
     <Button
