@@ -140,6 +140,11 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Compost"
 		return CONTEXTUAL_SCREENTIP_SET
 
+	if(is_reagent_container(held_item) && length(held_item.reagents.reagent_list))
+		var/datum/reagent/most_common_reagent = held_item.reagents.get_master_reagent()
+		context[SCREENTIP_CONTEXT_LMB] = "[istype(most_common_reagent, /datum/reagent/water) ? "Water" : "Feed"] plant"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	return NONE
 
 /obj/machinery/hydroponics/constructable
