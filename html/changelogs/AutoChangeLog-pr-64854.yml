@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "Gunpowder and teslium once again use their intended explosion scaling. Which is to say \"more\" and \"not\"."
