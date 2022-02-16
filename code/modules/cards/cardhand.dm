@@ -10,20 +10,25 @@
 	///List of cards to add into the hand on initialization (used for mapping mostly)
 	var/list/init_cards = list()
 
-/obj/item/toy/cards/cardhand/Initialize()
+/obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine)
 	. = ..()
-	if (init_cards.len > 0)
-		for (var/card in init_cards)
+	if(!LAZYLEN(init_cards) || !LAZYLEN(cards_to_combine)) // if both lists are empty 
+		CRASH("[src] is being made into a cardhand without a list of cards to combine")
+
+	if(LAZYLEN(init_cards))
+		for(var/card in init_cards)
 			var/obj/item/toy/cards/singlecard/new_card = new /obj/item/toy/cards/singlecard(src)
 			new_card.cardname = card
 			new_card.Flip()
 			cards += new_card
-		update_sprite()
+		update_appearance()
+	if(LAZYLEN(cards_to_combine))
+		for(var/obj/item/toy/cards/singlecard/new_card as 
 
 /obj/item/toy/cards/cardhand/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
 	. = ..()
 	interact(user)
-	update_sprite()
+	update_appearance()
 
 /obj/item/toy/cards/cardhand/attack_self(mob/user)
 	if(ishuman(user))
@@ -51,7 +56,7 @@
 		user.put_in_hands(last_card)
 		to_chat(user, span_notice("You also take [last_card.cardname] and hold it."))
 	else
-		update_sprite()
+		update_appearance()
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/card, mob/living/user, params)
 	if(istype(card))
@@ -62,7 +67,7 @@
 /obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj, obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
-	update_sprite()
+	update_appearance()
 	newobj.card_hitsound = sourceobj.card_hitsound
 	newobj.card_force = sourceobj.card_force
 	newobj.card_throwforce = sourceobj.card_throwforce
@@ -86,13 +91,9 @@
 	if(user.incapacitated())
 		return FALSE
 	return TRUE
-
-/**
- * ## update_sprite
- *
- * This proc updates the sprite for when you create a hand of cards
- */
-/obj/item/toy/cards/cardhand/proc/update_sprite()
+	
+/obj/item/toy/cards/cardhand/update_overlays()
+	. = ..()
 	cut_overlays()
 	var/overlay_cards = cards.len
 
