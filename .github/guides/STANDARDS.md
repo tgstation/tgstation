@@ -437,6 +437,8 @@ If you are using `.` in this case (or for another case that might be acceptable,
 	. = ..()
 	if (. == BIGGER_SUPER_ATTACK)
 		return BIGGER_SUPER_ATTACK // More readable than `.`
+	
+	// Due to how common it is, most uses of `. = ..()` do not need a trailing `return .`
 ```
 
 ### The BYOND walk procs
