@@ -823,6 +823,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Chapel Dock"
 	icon_state = "construction"
 
+/area/service/chapel/storage
+	name = "\improper Chapel Storage"
+	icon_state = "chapelstorage"
+
 /area/service/lawoffice
 	name = "\improper Law Office"
 	icon_state = "law"
@@ -1192,6 +1196,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/brig
 	name = "\improper Brig"
 	icon_state = "brig"
+
+/area/security/medical
+	name = "\improper Security Medical"
+	icon_state = "security_medical"
 
 /area/security/brig/upper
 	name = "\improper Brig Overlook"

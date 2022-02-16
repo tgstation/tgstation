@@ -542,7 +542,9 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "WY" = (
 /obj/machinery/air_sensor/atmos/plasma_tank,
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "XB" = (
 /obj/machinery/power/terminal,
