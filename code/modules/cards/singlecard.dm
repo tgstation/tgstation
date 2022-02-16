@@ -119,10 +119,10 @@
 		if(dealer_deck.wielded)
 			var/obj/item/toy/cards/singlecard/card_drawn = draw_card(user, dealer_deck.cards)
 			do_cardhand(user, list(src, card_drawn))
-			user.balloon_alert(user, "deals a card")
+			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 		else
 			dealer_deck.add_card(user, dealer_deck.cards, src)
-			user.balloon_alert(user, "puts card in deck")
+			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 
 	if(istype(item, /obj/item/pen))
 		if(!user.is_literate())
