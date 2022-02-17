@@ -52,6 +52,10 @@
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 	soundloop = new(src, FALSE)
 
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/firealarm,
+	))
+
 	AddElement( \
 		/datum/element/contextual_screentip_bare_hands, \
 		lmb_text = "Turn on", \
@@ -176,6 +180,7 @@
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
+	SEND_SIGNAL(src, COMSIG_FIREALARM_USED)
 
 /**
  * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
@@ -193,6 +198,7 @@
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 	soundloop.stop()
+	SEND_SIGNAL(src, COMSIG_FIREALARM_USED)
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
@@ -419,3 +425,37 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	if (!party_overlay)
 		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
 	area.add_overlay(party_overlay)
+
+/obj/item/circuit_component/firealarm
+	display_name = "Fire Alarm"
+	desc = "Allows you to interface with the Fire Alarm."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+
+	/////When the firealarm is used
+	var/datum/port/output/is_on
+
+	var/obj/machinery/firealarm/attached_alarm
+
+/obj/item/circuit_component/firealarm/populate_ports()
+	is_on = add_output_port("Active", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/firealarm/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/firealarm))
+		attached_alarm = parent
+		RegisterSignal(parent, COMSIG_FIREALARM_USED, .proc/on_firealarm_used)
+
+/obj/item/circuit_component/firealarm/unregister_usb_parent(atom/movable/parent)
+	attached_alarm = null
+	UnregisterSignal(parent, COMSIG_FIREALARM_USED)
+	return ..()
+
+/obj/item/circuit_component/firealarm/proc/on_firealarm_used(datum/source)
+	SIGNAL_HANDLER
+	is_on.set_output(attached_alarm.my_area.fire)
+
+/obj/item/circuit_component/firealarm/input_received(datum/port/input/port)
+	if(attached_alarm.my_area.fire)
+		attached_alarm?.reset()
+	else
+		attached_alarm?.alarm()
