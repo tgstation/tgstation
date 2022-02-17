@@ -5,7 +5,7 @@
  */
 
 import { useBackend } from '../backend';
-import { RequestKioskContent } from './RequestKiosk';
+import { BountyBoardContent } from './BountyBoard';
 import { BlockQuote, Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import marked from 'marked';
@@ -44,7 +44,7 @@ export const Newscaster = (props, context) => {
         if (screenmode == 1) {
           <NewscasterContent />
         } else if (screenmode == 2) {
-          <RequestKioskContent />
+          <BountyBoardContent />
         } else {
           <Box>
             Not done yet :)

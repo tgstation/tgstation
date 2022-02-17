@@ -3,19 +3,19 @@ import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stac
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-export const RequestKiosk = (props, context) => {
+export const BountyBoard = (props, context) => {
   return (
     <Window
       width={550}
       height={600}>
       <Window.Content scrollable>
-        <RequestKioskContent />
+        <BountyBoardContent />
       </Window.Content>
     </Window>
   );
 };
 
-export const RequestKioskContent = (props, context) => {
+export const BountyBoardContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     accountName,

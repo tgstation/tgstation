@@ -55,7 +55,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bounty_board, 32)
 /obj/machinery/bounty_board/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "RequestKiosk", name)
+		ui = new(user, src, "BountyBoard", name)
 		ui.open()
 
 /obj/machinery/bounty_board/ui_data(mob/user)
