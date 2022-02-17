@@ -87,7 +87,7 @@
 			message += " and you're finally able to forgive yourself"
 			if(all_player_mobs.color == "#FF0000" || all_player_mobs.color == "#00FF00")
 				all_player_mobs.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-		message += "...</span>“
+		message += "...</span>"
 		if(!quiet)
 			to_chat(all_player_mobs, message)
 	return ..()
