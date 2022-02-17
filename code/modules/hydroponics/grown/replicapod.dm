@@ -43,13 +43,13 @@
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
-	reagents_add = list(/datum/reagent/toxin/mutagen)
 	var/volume = 5
 	var/ckey
 	var/realName
 	var/datum/mind/mind
 	var/blood_gender
 	var/blood_type
+	var/datum/exotic_blood
 	var/list/features
 	var/factions
 	var/list/quirks
@@ -193,14 +193,14 @@
 		podman.ckey = ckey_holder
 	podman.gender = blood_gender
 	podman.faction |= factions
-	podman.exotic_blood = max(reagents_add)
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
 	for(var/V in quirks)
 		new V(podman)
 	podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 	podman.set_cloned_appearance()
+	var/datum/species/species = podman.dna.species
+	species.exotic_blood = max(reagents_add)
 	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
-
 	parent.update_tray(user, 1)
 	return result
