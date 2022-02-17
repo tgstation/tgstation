@@ -2629,6 +2629,7 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
 	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	self_consuming = TRUE //this works on objects, so it should work on skeletons and robots too
 
 /datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
 	. = ..()
@@ -2639,7 +2640,7 @@
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
 	return ..()
 
-/datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/gravitum/on_mob_delete(mob/living/L)
 	L.RemoveElement(/datum/element/forced_gravity, 0)
 
 /datum/reagent/cellulose
