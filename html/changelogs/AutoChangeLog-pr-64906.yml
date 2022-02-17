@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "The Lizard's Gas will no longer start out with Active Turfs at the start of a round."
