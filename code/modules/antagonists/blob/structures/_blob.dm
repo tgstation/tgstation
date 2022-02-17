@@ -107,7 +107,7 @@
 		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 		var/area/A = get_area(src)
 		if(!(A.area_flags & BLOBS_ALLOWED))
-			add_atom_colour(BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.2), FIXED_COLOUR_PRIORITY) //lighten it slightly to indicate an off-station blob
+			add_atom_colour(BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.3), FIXED_COLOUR_PRIORITY) //lighten it slightly to indicate an off-station blob
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
@@ -139,12 +139,12 @@
 		var/mob/camera/blob/BO = controller
 		O.color = BO.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
-			O.color = BlendRGB(O.color, COLOR_WHITE, 0.2) //lighten it slightly to indicate an off-station blob
+			O.color = BlendRGB(O.color, COLOR_WHITE, 0.3) //lighten it slightly to indicate an off-station blob
 		O.alpha = 200
 	else if(overmind)
 		O.color = overmind.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
-			O.color = BlendRGB(O.color, COLOR_WHITE, 0.2) //lighten it slightly to indicate an off-station blob
+			O.color = BlendRGB(O.color, COLOR_WHITE, 0.3) //lighten it slightly to indicate an off-station blob
 	if(A)
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.

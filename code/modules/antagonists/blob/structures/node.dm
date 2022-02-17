@@ -34,7 +34,7 @@
 		blob_overlay.color = overmind.blobstrain.color
 		var/area/A = get_area(src)
 		if(!(A.area_flags & BLOBS_ALLOWED))
-			blob_overlay.color = BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.2) //lighten it slightly to indicate an off-station blob
+			blob_overlay.color = BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.3) //lighten it slightly to indicate an off-station blob
 	. += blob_overlay
 	. += mutable_appearance('icons/mob/blob.dmi', "blob_node_overlay")
 
