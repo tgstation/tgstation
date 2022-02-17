@@ -93,6 +93,7 @@
 		var/area/A = get_area(src)
 		if(!(A.area_flags & BLOBS_ALLOWED)) //factory and resource blobs must be legit
 			to_chat(src, span_warning("This type of blob must be placed on the station!"))
+			balloon_alert(src, "can't place off-station!")
 			return
 		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
 			to_chat(src, span_warning("You need to place this blob closer to a node or core!"))

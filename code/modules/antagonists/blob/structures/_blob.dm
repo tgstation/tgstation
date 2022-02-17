@@ -40,6 +40,8 @@
 		var/area/Ablob = get_area(src)
 		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
 			overmind.blobs_legit += src
+		else
+			balloon_alert(overmind, "off-station!")
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_appearance()
