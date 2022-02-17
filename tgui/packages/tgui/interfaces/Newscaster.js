@@ -1,6 +1,6 @@
 /**
  * @file
- * @author Original ArcaneMusic (https://github.com/ArcaneMusic)
+ * @author Original by ArcaneMusic (https://github.com/ArcaneMusic)
  * @license MIT
  */
 
