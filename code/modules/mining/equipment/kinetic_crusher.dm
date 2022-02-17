@@ -57,7 +57,7 @@
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
-	. += span_notice("Mark a large creature with the destabilizing force with right click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
+	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
 	. += span_notice("Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.")
 	for(var/t in trophies)
 		var/obj/item/crusher_trophy/T = t
@@ -125,40 +125,38 @@
 					C.total_damage += detonation_damage
 				L.apply_damage(detonation_damage, BRUTE, blocked = def_check)
 
-/obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user) //This is for aiming at yourself/adjacent mobs
-	if(target != user && wielded)
-		fire_kinetic_blast(target, user)
-	if(target == user)
-		to_chat(user, span_warning("You can't aim [src] at yourself!"))
-	if(!wielded)
-		to_chat(user, span_warning("[src] is too heavy to use with one hand! You fumble and drop everything."))
-		user.drop_all_held_items()
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/kinetic_crusher/attack_secondary(atom/target, mob/living/user, clickparams)
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
-	if(wielded)
-		fire_kinetic_blast(target, user, clickparams)
-		user.changeNext_move(CLICK_CD_MELEE)
+	if(!wielded)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(target == user)
+		to_chat(user, span_warning("You can't aim [src] at yourself!"))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	fire_kinetic_blast(target, user, clickparams)
+	user.changeNext_move(CLICK_CD_MELEE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/kinetic_crusher/proc/fire_kinetic_blast(atom/target, mob/living/user, clickparams)
+	if(!charged)
+		return
 	var/modifiers = params2list(clickparams)
-	if(charged)
-		var/turf/proj_turf = user.loc
-		if(!isturf(proj_turf))
-			return
-		var/obj/projectile/destabilizer/D = new /obj/projectile/destabilizer(proj_turf)
-		for(var/t in trophies)
-			var/obj/item/crusher_trophy/T = t
-			T.on_projectile_fire(D, user)
-		D.preparePixelProjectile(target, user, modifiers)
-		D.firer = user
-		D.hammer_synced = src
-		playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
-		D.fire()
-		charged = FALSE
-		update_appearance()
-		addtimer(CALLBACK(src, .proc/Recharge), charge_time)
+	var/turf/proj_turf = user.loc
+	if(!isturf(proj_turf))
+		return
+	var/obj/projectile/destabilizer/D = new /obj/projectile/destabilizer(proj_turf)
+	for(var/t in trophies)
+		var/obj/item/crusher_trophy/T = t
+		T.on_projectile_fire(D, user)
+	D.preparePixelProjectile(target, user, modifiers)
+	D.firer = user
+	D.hammer_synced = src
+	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
+	D.fire()
+	charged = FALSE
+	update_appearance()
+	addtimer(CALLBACK(src, .proc/Recharge), charge_time)
 
 /obj/item/kinetic_crusher/proc/Recharge()
 	if(!charged)
