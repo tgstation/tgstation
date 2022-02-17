@@ -12,7 +12,7 @@
 
 /obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine)
 	. = ..()
-	if(!LAZYLEN(init_cards) || !LAZYLEN(cards_to_combine)) // if both lists are empty 
+	if(!LAZYLEN(init_cards) && !LAZYLEN(cards_to_combine)) // if both lists are empty 
 		CRASH("[src] is being made into a cardhand without a list of cards to combine")
 
 	if(LAZYLEN(init_cards))
