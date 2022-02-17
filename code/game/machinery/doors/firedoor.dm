@@ -113,10 +113,12 @@
 	if(!isliving(user))
 		return .
 
+	var/mob/living/living_user = user
+
 	if (isnull(held_item))
 		if (density)
 			// This should be LMB/RMB one day
-			if (user.combat_mode)
+			if (living_user.combat_mode)
 				context[SCREENTIP_CONTEXT_LMB] = "Knock"
 			else
 				context[SCREENTIP_CONTEXT_LMB] = "Bash"
