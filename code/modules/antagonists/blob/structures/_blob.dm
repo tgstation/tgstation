@@ -59,7 +59,7 @@
 		return .
 
 	if(!istype(src, /obj/structure/blob/shield))
-		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create shield blob"
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create strong blob"
 	else if(!istype(src, /obj/structure/blob/shield/reflective))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create reflective blob"
 

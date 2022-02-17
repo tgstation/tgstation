@@ -107,8 +107,11 @@
 	else
 		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
 
-/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+
+	if(!isliving(user))
+		return .
 
 	if (isnull(held_item))
 		if (density)

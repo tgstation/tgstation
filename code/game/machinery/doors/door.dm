@@ -52,8 +52,11 @@
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
 	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
-/obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+
+	if(!isliving(user))
+		return .
 
 	if (isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Open"
