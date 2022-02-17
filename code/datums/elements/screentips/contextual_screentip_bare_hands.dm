@@ -61,16 +61,18 @@
 )
 	SIGNAL_HANDLER
 
-	if(isliving(user))
+	if(!isliving(user))
 		return .
 
 	if (!isnull(held_item))
 		return NONE
 
+	var/mob/living/living_user = user
+
 	if (!isnull(lmb_text))
-		context[SCREENTIP_CONTEXT_LMB] = user.combat_mode ? lmb_text_combat_mode : lmb_text
+		context[SCREENTIP_CONTEXT_LMB] = living_user.combat_mode ? lmb_text_combat_mode : lmb_text
 
 	if (!isnull(rmb_text))
-		context[SCREENTIP_CONTEXT_RMB] = user.combat_mode ? rmb_text_combat_mode : rmb_text
+		context[SCREENTIP_CONTEXT_RMB] = living_user.combat_mode ? rmb_text_combat_mode : rmb_text
 
 	return CONTEXTUAL_SCREENTIP_SET
