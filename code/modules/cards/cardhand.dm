@@ -23,7 +23,9 @@
 			cards += new_card
 		update_appearance()
 	if(LAZYLEN(cards_to_combine))
-		for(var/obj/item/toy/cards/singlecard/new_card as 
+		for(var/obj/item/toy/cards/singlecard/new_card in cards_to_combine)
+			cards += new_card
+		update_appearance()
 
 /obj/item/toy/cards/cardhand/add_card(mob/user, list/cards, obj/item/toy/cards/card_to_add)
 	. = ..()
@@ -98,5 +100,5 @@
 	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
 	for(var/i = k; i <= overlay_cards; i++)
 		var/obj/item/toy/cards/singlecard/card = cards[i]
-		var/mutable_appearance/card_overlay = mutable_appearance(src.icon, card.icon_state, pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
+		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
 		add_overlay(card_overlay)

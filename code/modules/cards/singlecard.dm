@@ -95,7 +95,7 @@
 
 	if (preexisting)
 		new_cardhand.interact(user)
-		new_cardhand.update_sprite()
+		new_cardhand.update_appearance()
 
 		user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
 	else
