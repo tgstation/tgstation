@@ -734,3 +734,41 @@
       and don't disable it right away.
   carshalash:
   - expansion: Gives food processor function to make spider eggs and carp meat non-toxic.
+2022-02-17:
+  Amrabol:
+  - balance: Nanotrasen upgrades Anti-Tider back pack and find a way to make a compact
+      version for security modsuit, researchers still high on caffeine creates module
+      version of atmos resin backpack
+  - bugfix: Syndicate quickly steals designs and applies them to their pyro backpack
+      transforming it into module names:Fikou for almost entire code work, TGMC for
+      sound and Cursed Birb
+  Dr-Pope:
+  - spellcheck: Makes it so the loader modsuit says it is not airtight with examined.
+  JoshAdamPowell:
+  - bugfix: Staff at Centcom are busy people! They are no longer allowed to go on
+      valentines dates.
+  Melbert:
+  - admin: Force-completing heretic objectives in the traitor panel count for ascension,
+      if you wanna skip the queue.
+  Nari Harimoto:
+  - bugfix: icebox now has one, and only one, APC per area
+  Sheits:
+  - imageadd: resprites the mailman outfit
+  TemporalOroboros:
+  - bugfix: Gunpowder and teslium once again use their intended explosion scaling.
+      Which is to say "more" and "not".
+  san7890:
+  - bugfix: The Lizard's Gas will no longer start out with Active Turfs at the start
+      of a round.
+  - rscadd: Across all of Nanotrasen's active stations, the little cubby pocket colloquially
+      known as "Security's Medical Ward" has now been standardized with it's own area
+      name. Our little buddy is growing up!
+  - rscadd: In order to give such an important area a much needed upgrade, Nanotrasen
+      added an whole extra three cubic meters to the medical area of the Security
+      division of the station. Feel free to kick out those legs.
+  - rscadd: The Chaplain's office was split in two by maintenance on Kilostation,
+      and Nanotrasen has finally bothered to install an APC in the part where all
+      of the caskets were kept.
+  unit0016:
+  - imageadd: RCDs' Radial Menu new uses the updated Chairs, ID Cards, Stools, and
+      Walls. 2562.
