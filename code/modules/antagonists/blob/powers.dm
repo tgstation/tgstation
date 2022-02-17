@@ -3,6 +3,7 @@
 /mob/camera/blob/proc/can_buy(cost = 15)
 	if(blob_points < cost)
 		to_chat(src, span_warning("You cannot afford this, you need at least [cost] resources!"))
+		balloon_alert(src, "need [cost-blob_points] more resource\s!")
 		return FALSE
 	add_points(-cost)
 	return TRUE
@@ -85,9 +86,11 @@
 	var/obj/structure/blob/B = (locate(/obj/structure/blob) in T)
 	if(!B)
 		to_chat(src, span_warning("There is no blob here!"))
+		balloon_alert(src, "no blob here!")
 		return
 	if(!istype(B, /obj/structure/blob/normal))
 		to_chat(src, span_warning("Unable to use this blob, find a normal one."))
+		balloon_alert(src, "need normal blob!")
 		return
 	if(needsNode)
 		var/area/A = get_area(src)
@@ -97,11 +100,13 @@
 			return
 		if(nodes_required && !(locate(/obj/structure/blob/special/node) in orange(BLOB_NODE_PULSE_RANGE, T)) && !(locate(/obj/structure/blob/special/core) in orange(BLOB_CORE_PULSE_RANGE, T)))
 			to_chat(src, span_warning("You need to place this blob closer to a node or core!"))
+			balloon_alert(src, "too far from node or core!")
 			return //handholdotron 2000
 	if(minSeparation)
 		for(var/obj/structure/blob/L in orange(minSeparation, T))
 			if(L.type == blobstrain)
 				to_chat(src, span_warning("There is a similar blob nearby, move more than [minSeparation] tiles away from it!"))
+				L.balloon_alert(src, "too close!")
 				return
 	if(!can_buy(price))
 		return

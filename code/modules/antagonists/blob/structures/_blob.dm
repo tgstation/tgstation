@@ -32,7 +32,7 @@
 	var/mob/camera/blob/overmind
 
 
-/obj/structure/blob/Initialize(mapload, owner_overmind)
+/obj/structure/blob/Initialize(mapload, owner_overmind, hand_placed = FALSE)
 	. = ..()
 	if(owner_overmind)
 		overmind = owner_overmind
@@ -40,8 +40,8 @@
 		var/area/Ablob = get_area(src)
 		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
 			overmind.blobs_legit += src
-		else
-			balloon_alert(overmind, "off-station!")
+		else if(hand_placed)
+			balloon_alert(overmind, "off-station, won't count!")
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_appearance()
@@ -161,7 +161,7 @@
 		A.blob_act(src) //also hit everything in the turf
 
 	if(make_blob) //well, can we?
-		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind))
+		var/obj/structure/blob/B = new /obj/structure/blob/normal(src.loc, (controller || overmind), controller)
 		B.set_density(TRUE)
 		if(T.Enter(B)) //NOW we can attempt to move into the tile
 			B.set_density(initial(B.density))
