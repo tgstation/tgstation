@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes: 
+  - bugfix: "TGUI static data loading screens no longer resize the window temporarily. Note: If you are using a UI that gets a lot of these, please make an issue report."
