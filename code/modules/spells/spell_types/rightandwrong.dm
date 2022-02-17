@@ -187,9 +187,9 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	if(GLOB.summon_magic)
 		GLOB.summon_magic.survivor_probability = survivor_probability
-		GLOB.summon_magic.give_out_gear()
 	else
 		GLOB.summon_magic = new /datum/summon_things_controller(/proc/give_magic, survivor_probability)
+	GLOB.summon_magic.give_out_gear()
 
 /*
  * Triggers Summon Guns from [user].
@@ -207,9 +207,9 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 	if(GLOB.summon_guns)
 		GLOB.summon_guns.survivor_probability = survivor_probability
-		GLOB.summon_guns.give_out_gear()
 	else
 		GLOB.summon_guns = new /datum/summon_things_controller(/proc/give_guns, survivor_probability)
+	GLOB.summon_guns.give_out_gear()
 
 /*
  * Triggers Summon Events from [user].
@@ -260,17 +260,15 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/// The number of equipment we give to latejoiners, to make sure they catch up if it was casted multiple times.
 	var/num_to_give_to_latejoiners = 0
 
-/datum/summon_things_controller/New(give_proc_path, survivor_probability)
+/datum/summon_things_controller/New(give_proc_path, survivor_probability = 0)
 	. = ..()
-	if(isnum(survivor_probability))
-		src.survivor_probability = survivor_probability
-
 	if(isnull(give_proc_path))
 		CRASH("[type] was created without a give_proc_path (the proc that gives people stuff)!")
+
+	src.survivor_probability = survivor_probability
 	src.give_proc_path = give_proc_path
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/gear_up_new_crew)
-	give_out_gear()
 
 /datum/summon_things_controller/Destroy(force, ...)
 	. = ..()

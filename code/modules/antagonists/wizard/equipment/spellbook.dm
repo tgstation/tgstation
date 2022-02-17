@@ -582,11 +582,6 @@
 	// Also must be config enabled
 	return !CONFIG_GET(flag/no_summon_guns)
 
-/datum/spellbook_entry/summon/guns/CanBuy(mob/living/carbon/human/user, obj/item/spellbook/book)
-	if(GLOB.summon_guns)
-		return FALSE
-	return ..()
-
 /datum/spellbook_entry/summon/guns/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	summon_guns(user, 10)
 	playsound(get_turf(user), 'sound/magic/castsummon.ogg', 50, TRUE)
@@ -604,11 +599,6 @@
 			return FALSE
 	// Also must be config enabled
 	return !CONFIG_GET(flag/no_summon_magic)
-
-/datum/spellbook_entry/summon/magic/CanBuy(mob/living/carbon/human/user, obj/item/spellbook/book)
-	if(GLOB.summon_magic)
-		return FALSE
-	return ..()
 
 /datum/spellbook_entry/summon/magic/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	summon_magic(user, 10)
