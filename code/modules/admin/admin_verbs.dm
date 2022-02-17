@@ -79,6 +79,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/known_alts_panel,
 	/datum/admins/proc/paintings_manager,
 	/datum/admins/proc/display_tags,
+	/client/proc/toggle_orbitability,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -461,32 +462,71 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 
 	if(holder.fakekey)
-		holder.fakekey = null
-		if(isobserver(mob))
-			mob.invisibility = initial(mob.invisibility)
-			mob.alpha = initial(mob.alpha)
-			if(mob.mind)
-				if(mob.mind.ghostname)
-					mob.name = mob.mind.ghostname
-				else
-					mob.name = mob.mind.name
-			else
-				mob.name = mob.real_name
-			mob.mouse_opacity = initial(mob.mouse_opacity)
+		disable_stealth_mode()
 	else
-		var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
-		if(!new_key)
-			return
-		holder.fakekey = new_key
-		createStealthKey()
-		if(isobserver(mob))
-			mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
-			mob.alpha = 0 //JUUUUST IN CASE
-			mob.name = " "
-			mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	log_admin("[key_name(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
-	message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
+		enable_stealth_mode()
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+#define STEALTH_MODE_TRAIT "stealth_mode"
+
+/client/proc/enable_stealth_mode()
+	var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
+	if(!new_key)
+		return
+	holder.fakekey = new_key
+	createStealthKey()
+	if(isobserver(mob))
+		mob.invisibility = INVISIBILITY_MAXIMUM //JUST IN CASE
+		mob.alpha = 0 //JUUUUST IN CASE
+		mob.name = " "
+		mob.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+	ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
+	QDEL_NULL(mob.orbiters)
+
+	log_admin("[key_name(usr)] has turned stealth mode ON")
+	message_admins("[key_name_admin(usr)] has turned stealth mode ON")
+
+/client/proc/disable_stealth_mode()
+	holder.fakekey = null
+	if(isobserver(mob))
+		mob.invisibility = initial(mob.invisibility)
+		mob.alpha = initial(mob.alpha)
+		if(mob.mind)
+			if(mob.mind.ghostname)
+				mob.name = mob.mind.ghostname
+			else
+				mob.name = mob.mind.name
+		else
+			mob.name = mob.real_name
+		mob.mouse_opacity = initial(mob.mouse_opacity)
+
+	REMOVE_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, STEALTH_MODE_TRAIT)
+
+	log_admin("[key_name(usr)] has turned stealth mode OFF")
+	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
+
+#undef STEALTH_MODE_TRAIT
+
+#define TOGGLE_ORBITABILITY_TRAIT "toggle_orbitability"
+
+/client/proc/toggle_orbitability()
+	set category = "Admin"
+	set name = "Toggle Orbitability"
+
+	if (!holder)
+		return
+
+	if (HAS_TRAIT_FROM(mob, TRAIT_ORBITING_FORBIDDEN, TOGGLE_ORBITABILITY_TRAIT))
+		REMOVE_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, TOGGLE_ORBITABILITY_TRAIT)
+		to_chat(mob, span_notice("You can now be orbitted again."))
+	else
+		ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, TOGGLE_ORBITABILITY_TRAIT)
+		to_chat(mob, span_warning("You can no longer be orbitted."))
+		QDEL_NULL(mob.orbiters)
+
+#undef TOGGLE_ORBITABILITY_TRAIT
 
 /client/proc/drop_bomb()
 	set category = "Admin.Fun"
