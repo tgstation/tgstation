@@ -41,11 +41,10 @@
 	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
-///Delayed death proc of the suit after the wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/snap_shut()
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	if(!mod.wearer) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
 		return
+	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
 	mod.wearer.Paralyze(10000)
@@ -54,38 +53,26 @@
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
 	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_R_ARM, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
 	ADD_TRAIT(mod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	sleep(15)
-	mod.wearer.bleed(8)
-	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	sleep(25)
+	sleep(35)
 	mod.wearer.emote("scream")
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.apply_damage(damage = 40, damagetype = BRUTE, def_zone = BODY_ZONE_R_LEG, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
-	sleep(15)
-	mod.wearer.bleed(8)
-	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	sleep(25)
+	sleep(35)
 	mod.wearer.emote("scream")
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_L_ARM, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
-	sleep(15)
-	mod.wearer.bleed(8)
-	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	sleep(25)
+	sleep(35)
 	mod.wearer.emote("scream")
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.vomit(0, TRUE, TRUE, 4)
 	mod.wearer.apply_damage(damage = 40, damagetype = BRUTE, def_zone = BODY_ZONE_L_LEG, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
-	sleep(15)
-	mod.wearer.bleed(8)
-	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	sleep(25)
+	sleep(35)
 	mod.wearer.emote("scream")
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
@@ -99,6 +86,7 @@
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
 		mod.wearer.death()
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
+
 
 ///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
 /obj/item/mod/module/visor/rave
