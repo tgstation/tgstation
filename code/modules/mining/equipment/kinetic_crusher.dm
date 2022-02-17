@@ -130,9 +130,10 @@
 
 /obj/item/kinetic_crusher/afterattack_secondary(atom/target, mob/living/user, clickparams)
 	if(!wielded)
+		balloon_alert(user, "wield it first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target == user)
-		to_chat(user, span_warning("You can't aim [src] at yourself!"))
+		balloon_alert(user, "can't aim at yourself!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	fire_kinetic_blast(target, user, clickparams)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -145,15 +146,14 @@
 	var/turf/proj_turf = user.loc
 	if(!isturf(proj_turf))
 		return
-	var/obj/projectile/destabilizer/D = new /obj/projectile/destabilizer(proj_turf)
-	for(var/t in trophies)
-		var/obj/item/crusher_trophy/T = t
-		T.on_projectile_fire(D, user)
-	D.preparePixelProjectile(target, user, modifiers)
-	D.firer = user
-	D.hammer_synced = src
+	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
+	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
+		attached_trophy.on_projectile_fire(destabilizer, user)
+	destabilizer.preparePixelProjectile(target, user, modifiers)
+	destabilizer.firer = user
+	destabilizer.hammer_synced = src
 	playsound(user, 'sound/weapons/plasma_cutter.ogg', 100, TRUE)
-	D.fire()
+	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
 	addtimer(CALLBACK(src, .proc/Recharge), charge_time)
