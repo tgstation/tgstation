@@ -2636,11 +2636,11 @@
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
 	addtimer(CALLBACK(exposed_obj, .proc/_RemoveElement, list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
 
-/datum/reagent/gravitum/on_mob_add(mob/living/L)
+/datum/reagent/gravitum/on_mob_metabolize(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
 	return ..()
 
-/datum/reagent/gravitum/on_mob_delete(mob/living/L)
+/datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
 	L.RemoveElement(/datum/element/forced_gravity, 0)
 
 /datum/reagent/cellulose
