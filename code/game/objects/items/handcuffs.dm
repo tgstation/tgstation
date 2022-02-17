@@ -145,6 +145,21 @@
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
+/obj/item/restraints/handcuffs/cable/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/stack/rods = list(
+			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
+		),
+
+		/obj/item/stack/sheet/iron = list(
+			SCREENTIP_CONTEXT_LMB = "Craft bola",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /**
  * # Sinew restraints
  *

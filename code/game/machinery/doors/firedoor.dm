@@ -107,6 +107,44 @@
 	else
 		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
 
+/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if (isnull(held_item))
+		if (density)
+			// This should be LMB/RMB one day
+			if (user.combat_mode)
+				context[SCREENTIP_CONTEXT_LMB] = "Knock"
+			else
+				context[SCREENTIP_CONTEXT_LMB] = "Bash"
+
+			return CONTEXTUAL_SCREENTIP_SET
+		else
+			return .
+
+	switch (held_item.tool_behaviour)
+		if (TOOL_CROWBAR)
+			if (density)
+				context[SCREENTIP_CONTEXT_LMB] = "Close"
+			else if (!welded)
+				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
+				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
+
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WELDER)
+			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WRENCH)
+			if (welded && !boltslocked)
+				context[SCREENTIP_CONTEXT_LMB] = "Unfasten bolts"
+				return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_SCREWDRIVER)
+			if (welded)
+				context[SCREENTIP_CONTEXT_LMB] = "Unlock bolts"
+				return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
 /**
  * Calculates what areas we should worry about.
  *

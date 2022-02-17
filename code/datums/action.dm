@@ -693,7 +693,7 @@
 	// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
 
-/datum/action/cooldown/New()
+/datum/action/cooldown/New(Target)
 	..()
 	button.maptext = ""
 	button.maptext_x = 8

@@ -64,6 +64,8 @@
 	cleanspeed = 2.8 SECONDS //janitor gets this
 	uses = 300
 
+/obj/item/soap/nanotrasen/cyborg
+
 /obj/item/soap/deluxe
 	desc = "A deluxe Waffle Co. brand bar of soap. Smells of high-class luxury."
 	grind_results = list(/datum/reagent/consumable/aloejuice = 10, /datum/reagent/lye = 10)
@@ -115,8 +117,15 @@
 	if(prob(skillcheck*100)) //higher level = more uses assuming RNG is nice
 		uses--
 	if(uses <= 0)
-		to_chat(user, span_warning("[src] crumbles into tiny bits!"))
-		qdel(src)
+		noUses(user)
+
+/obj/item/soap/proc/noUses(mob/user)
+	to_chat(user, span_warning("[src] crumbles into tiny bits!"))
+	qdel(src)
+
+/obj/item/soap/nanotrasen/cyborg/noUses(mob/user)
+	to_chat(user, span_warning("The soap has ran out of chemicals"))
+
 
 /obj/item/soap/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -172,6 +181,12 @@
 			user.mind?.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 	return
+
+/obj/item/soap/nanotrasen/cyborg/afterattack(atom/target, mob/user, proximity)
+	if(uses <= 0)
+		to_chat(user, span_warning("No good, you need to recharge!"))
+		return
+	. = ..()
 
 
 /*
