@@ -24,8 +24,8 @@
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."
 
 /obj/structure/blob/special/node/update_icon()
+	. = ..()
 	color = null
-	return ..()
 
 /obj/structure/blob/special/node/update_overlays()
 	. = ..()
