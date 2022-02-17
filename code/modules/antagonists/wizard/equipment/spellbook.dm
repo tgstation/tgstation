@@ -622,7 +622,7 @@
 
 /datum/spellbook_entry/summon/events/GetInfo()
 	if(times > 0)
-		. += "You have cast it [times] times.<br>"
+		. += "You have cast it [times] time[times == 1 ? "":"s"].<br>"
 	return .
 
 /datum/spellbook_entry/summon/curse_of_madness
