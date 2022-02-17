@@ -215,7 +215,7 @@
 	if(B.point_return)
 		add_points(B.point_return)
 		to_chat(src, span_notice("Gained [B.point_return] resources from removing \the [B]."))
-		balloon_alert(src, "+[B.point_return] resource\s")
+		B.balloon_alert(src, "+[B.point_return] resource\s")
 	qdel(B)
 
 /mob/camera/blob/proc/expand_blob(turf/T)

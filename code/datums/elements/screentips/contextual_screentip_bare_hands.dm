@@ -57,9 +57,12 @@
 	datum/source,
 	list/context,
 	obj/item/held_item,
-	mob/living/user,
+	mob/user,
 )
 	SIGNAL_HANDLER
+
+	if(isliving(user))
+		return .
 
 	if (!isnull(held_item))
 		return NONE
