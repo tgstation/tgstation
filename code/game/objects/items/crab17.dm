@@ -81,9 +81,6 @@
 		to_chat(user, span_warning("It appears that your funds are safe from draining!"))
 		return
 
-	if(!card.registered_account.being_dumped)
-		return
-
 	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
 	card.registered_account.being_dumped = FALSE
 
