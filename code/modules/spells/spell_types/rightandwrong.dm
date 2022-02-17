@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
  * Used for summon magic and summon guns.
  */
 /datum/summon_things_controller
-	/// Prob cjamce someone who is given things will be made a survivalist antagonist.
+	/// Prob. chance someone who is given things will be made a survivalist antagonist.
 	var/survivor_probability = 0
 	/// The proc path we call on someone to equip them with stuff. Cannot function without it.
 	var/give_proc_path
