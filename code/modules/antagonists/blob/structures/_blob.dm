@@ -58,7 +58,7 @@
 	if(istype(src, /obj/structure/blob/shield) && !istype(src, /obj/structure/blob/shield/reflective))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create reflective blob"
 
-	if(point_return > 0)
+	if(!point_return < 0)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove blob"
 
 	return CONTEXTUAL_SCREENTIP_SET
