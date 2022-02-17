@@ -34,6 +34,7 @@
 
 /obj/structure/blob/Initialize(mapload, owner_overmind, hand_placed = FALSE)
 	. = ..()
+	register_context()
 	if(owner_overmind)
 		overmind = owner_overmind
 		overmind.all_blobs += src
@@ -50,6 +51,21 @@
 	ConsumeTile()
 	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
 		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
+
+/obj/structure/blob/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if (!isovermind(user))
+		return .
+
+	if(!istype(src, /obj/structure/blob/shield))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create shield blob"
+	else if(!istype(src, /obj/structure/blob/shield/reflective))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create reflective blob"
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove blob"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return

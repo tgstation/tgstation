@@ -2113,7 +2113,7 @@
 		else
 			var/extra_context = ""
 
-			if (isliving(user))
+			if (isliving(user) || iscameramob(user))
 				var/obj/item/held_item = user.get_active_held_item()
 
 				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
@@ -2135,11 +2135,17 @@
 						else if (rmb_text)
 							extra_context = rmb_text
 
-						// Ctrl-LMB and (in the future) Alt-LMB on another
+						// Ctrl-LMB
 						if (SCREENTIP_CONTEXT_CTRL_LMB in context)
 							if (extra_context != "")
 								extra_context += "<br>"
 							extra_context += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+
+						// Alt-LMB
+						if (SCREENTIP_CONTEXT_ALT_LMB in context)
+							if (extra_context != "")
+								extra_context += "<br>"
+							extra_context += "[SCREENTIP_CONTEXT_ALT_LMB]: [context[SCREENTIP_CONTEXT_ALT_LMB]]"
 
 						extra_context = "<br><span style='font-size: 7px'>[extra_context]</span>"
 
