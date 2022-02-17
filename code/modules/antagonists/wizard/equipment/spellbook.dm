@@ -548,11 +548,6 @@
 	refundable = FALSE
 	buy_word = "Cast"
 
-/datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book)
-	if(times < limit)
-		return FALSE
-	return ..()
-
 /datum/spellbook_entry/summon/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
 	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
