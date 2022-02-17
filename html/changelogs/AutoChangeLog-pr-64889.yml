@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - imageadd: "Departmental protolathes/techfabs have colored stripes to tell the departments apart."
