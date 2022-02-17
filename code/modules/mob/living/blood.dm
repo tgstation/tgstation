@@ -72,10 +72,14 @@
 		switch(iter_bleed_rate)
 			if(-INFINITY to 1)
 				new_bleed_icon = null
-			if(1 to 3)
-				new_bleed_icon = "[iter_part.body_zone]_1s"
-			if(3 to INFINITY)
-				new_bleed_icon = "[iter_part.body_zone]_2s"
+			if(1 to 2.5)
+				new_bleed_icon = "[iter_part.body_zone]_1"
+			if(2.5 to 4)
+				new_bleed_icon = "[iter_part.body_zone]_2"
+				if(body_position == LYING_DOWN)
+					new_bleed_icon += "s"
+			if(4 to INFINITY)
+				new_bleed_icon = "[iter_part.body_zone]_3"
 
 		if(new_bleed_icon != iter_part.bleed_icon_severity)
 			update_bleed_icons = TRUE
