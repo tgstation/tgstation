@@ -104,7 +104,7 @@
 /mob/living/carbon/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
 
-	var/mutable_appearance/wound_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -WOUND_LAYER)
+	var/mutable_appearance/wound_overlay = mutable_appearance('icons/mob/bleed_overlays.dmi', "blank", -WOUND_LAYER)
 	overlays_standing[WOUND_LAYER] = wound_overlay
 
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
