@@ -13715,10 +13715,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/greater)
 "dYL" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Secure Tech Storage"
-	},
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "dZu" = (
@@ -16098,8 +16096,8 @@
 /area/service/bar/atrium)
 "fmv" = (
 /obj/structure/rack,
-/obj/machinery/light/small/directional/west,
 /obj/effect/spawner/random/techstorage/command_all,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "fmJ" = (
@@ -33833,6 +33831,9 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port/fore)
+"ocP" = (
+/turf/closed/wall/r_wall,
+/area/engineering/storage/tech)
 "ocR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/west{
@@ -80208,7 +80209,7 @@ aJw
 gKh
 dzF
 dzF
-dzF
+ocP
 dzF
 dzF
 gKh
