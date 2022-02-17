@@ -130,11 +130,11 @@
 			to_chat(src, span_warning("This shield blob is too damaged to be modified properly!"))
 			return
 		to_chat(src, span_warning("You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity."))
-		S.change_to(/obj/structure/blob/shield/reflective, src)
-		S.balloon_alert(src, "upgraded to [S]!")
+		S = S.change_to(/obj/structure/blob/shield/reflective, src)
+		S.balloon_alert(src, "upgraded to [S.name]!")
 	else
 		S = createSpecial(BLOB_UPGRADE_STRONG_COST, /obj/structure/blob/shield, 0, FALSE, T)
-		S?.balloon_alert(src, "upgraded to [S]!")
+		S?.balloon_alert(src, "upgraded to [S.name]!")
 
 /mob/camera/blob/proc/create_blobbernaut()
 	var/turf/T = get_turf(src)
