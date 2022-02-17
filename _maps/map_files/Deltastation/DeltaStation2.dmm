@@ -39391,7 +39391,7 @@
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/door/window/southleft{
 	name = "Ore Redemption Access";
-	req_access_txt = "31;48;64"
+	req_access_txt = "64"
 	},
 /turf/open/floor/iron,
 /area/cargo/sorting)
