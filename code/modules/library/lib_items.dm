@@ -239,9 +239,9 @@
 			var/is_book_manual = unique
 			if(has_not_read_book || !is_book_manual) // any new books give bonus mood except for boring manuals zzzzz
 				if(HAS_TRAIT(reader, TRAIT_BOOKWORM))
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_worm", /datum/mood_event/book_worm)
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "reading_excited", /datum/mood_event/reading_excited)
 				else
-					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "reading", /datum/mood_event/reading)
 			if(is_book_manual && reader.drowsyness) // manuals are so boring they put us to sleep if we are already drowsy
 				to_chat(user, span_warning("As you are reading the boring [src], you suddenly doze off!"))
 				reader.AdjustSleeping(100)
