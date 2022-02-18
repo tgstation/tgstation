@@ -638,7 +638,7 @@
 			context[SCREENTIP_CONTEXT_SHIFT_LMB] = density ? "Open" : "Close"
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = locked ? "Unbolt" : "Bolt"
 			context[SCREENTIP_CONTEXT_ALT_LMB] = isElectrified() ? "Unelectrify" : "Electrify"
-			context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = emergency ? "Unset EA" : "Set EA"
+			context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = emergency ? "Unset emergency access" : "Set emergency access"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(!isliving(user))
