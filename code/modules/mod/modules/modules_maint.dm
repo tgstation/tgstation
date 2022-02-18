@@ -33,12 +33,12 @@
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
+	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
 
-	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
@@ -48,12 +48,60 @@
 		return
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
+	mod.wearer.Paralyze(10000)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
-	mod.wearer.apply_damage(500, BRUTE, forced = TRUE, spread_damage = TRUE, sharpness = SHARP_POINTY) //boggers, bogchamp, etc
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_R_ARM, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
+	ADD_TRAIT(mod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+	addtimer(CALLBACK(src, .proc/stage_2), rand(8 SECONDS, 10 SECONDS))
+
+///Stage 2
+/obj/item/mod/module/springlock/proc/stage_2()
+	mod.wearer.emote("scream")
+	mod.wearer.bleed(8)
+	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
+	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+	mod.wearer.apply_damage(damage = 40, damagetype = BRUTE, def_zone = BODY_ZONE_R_LEG, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
+	addtimer(CALLBACK(src, .proc/stage_3), rand(8 SECONDS, 10 SECONDS))
+
+///Stage 3
+/obj/item/mod/module/springlock/proc/stage_3()
+	mod.wearer.emote("scream")
+	mod.wearer.bleed(8)
+	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
+	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_L_ARM, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
+	addtimer(CALLBACK(src, .proc/stage_4), rand(8 SECONDS, 10 SECONDS))
+
+
+///Stage 4
+/obj/item/mod/module/springlock/proc/stage_4()
+	mod.wearer.emote("scream")
+	mod.wearer.bleed(8)
+	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
+	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_L_LEG, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
+	addtimer(CALLBACK(src, .proc/stage_5), rand(8 SECONDS, 10 SECONDS))
+
+
+///Stage 5
+/obj/item/mod/module/springlock/proc/stage_5()
+	mod.wearer.emote("scream")
+	mod.wearer.bleed(8)
+	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
+	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+	mod.wearer.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_CHEST, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
+	addtimer(CALLBACK(src, .proc/stage_6), rand(8 SECONDS, 10 SECONDS))
+
+///Stage 6
+/obj/item/mod/module/springlock/proc/stage_6()
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD , forced = TRUE, spread_damage = TRUE, sharpness = WOUND_BLUNT)
+	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
+	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
+	mod.wearer.bleed(8)
 	if(!HAS_TRAIT(mod.wearer, TRAIT_NODEATH))
-		mod.wearer.death() //just in case, for some reason, they're still alive
+		mod.wearer.death()
 	flash_color(mod.wearer, flash_color = "#FF0000", flash_time = 10 SECONDS)
 
 ///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
