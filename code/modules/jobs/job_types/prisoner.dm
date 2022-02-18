@@ -36,6 +36,7 @@
 	belt = null
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange
+	head = /obj/item/clothing/head/beanie/black
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()
