@@ -14,6 +14,10 @@
 	icon_state = "beanie"
 	color = "#4A4A4B" //Grey but it looks black
 
+/obj/item/clothing/head/beanie/black/dboy
+	name = "test subject beanie"
+	desc = "A dingy and torn black beanie. It's covered in otherworldly markings only your eyes have been ruined enough to see."
+
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"
 	icon_state = "beanie"
