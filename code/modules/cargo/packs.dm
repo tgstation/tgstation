@@ -1868,6 +1868,22 @@
 	crate_name = "hydroponics backpack crate"
 	crate_type = /obj/structure/closet/crate/secure
 
+/datum/supply_pack/organic/hydroponics/cytology
+	name = "Cytology crate"
+	desc = "Ranching for the modern era. Skip the horrors of birth by watching them develop in a damp tube!"
+	cost = CARGO_CRATE_VALUE * 6
+	access = ACCESS_HYDROPONICS
+	contains = list(/obj/item/plunger,
+					/obj/item/storage/box/petridish,
+					/obj/item/biopsy_tool,
+					/obj/item/construction/plumbing/research,
+					/obj/structure/microscope,
+					/obj/item/storage/box/swab,
+					/obj/item/book/manual/wiki/cytology
+					/obj/item/stack/ducts/fifty)
+	crate_name = "cytology crate"
+	crate_type = /obj/structure/closet/crate/hydroponics
+
 /datum/supply_pack/organic/pizza
 	name = "Pizza Crate"
 	desc = "Why visit the kitchen when you can have five random pizzas in a fraction of the time? \
@@ -2178,6 +2194,7 @@
 					/mob/living/simple_animal/hostile/retaliate/snake,
 					/mob/living/simple_animal/hostile/retaliate/snake)
 	crate_name = "snake crate"
+	
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Costumes & Toys /////////////////////////////////
