@@ -1879,7 +1879,7 @@
 					/obj/item/construction/plumbing/research,
 					/obj/structure/microscope,
 					/obj/item/storage/box/swab,
-					/obj/item/book/manual/wiki/cytology
+					/obj/item/book/manual/wiki/cytology,
 					/obj/item/stack/ducts/fifty)
 	crate_name = "cytology crate"
 	crate_type = /obj/structure/closet/crate/hydroponics
