@@ -328,7 +328,7 @@
 		exposed_open_turf.MakeSlippery(wet_setting=TURF_WET_ICE, min_wet_time=100, wet_time_to_add=reac_volume SECONDS) // Is less effective in high pressure/high heat capacity environments. More effective in low pressure.
 		var/temperature = exposed_open_turf.air.temperature
 		var/heat_capacity = exposed_open_turf.air.heat_capacity()
-		exposed_open_turf.air.temperature -= max(((temperature - TCMB) * (heat_capacity * reac_volume * 40) / (heat_capacity + reac_volume * 40)) / heat_capacity, TCMB) // Exchanges environment temperature with reagent. Reagent is at 2.7K with a heat capacity of 40J per unit.
+		exposed_open_turf.air.temperature = max(exposed_open_turf.air.temperature - ((temperature - TCMB) * (heat_capacity * reac_volume * 40) / (heat_capacity + reac_volume * 40)) / heat_capacity, TCMB) // Exchanges environment temperature with reagent. Reagent is at 2.7K with a heat capacity of 40J per unit.
 	if(reac_volume < 5)
 		return
 	for(var/mob/living/simple_animal/slime/exposed_slime in exposed_turf)
