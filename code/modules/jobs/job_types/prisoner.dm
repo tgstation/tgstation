@@ -38,7 +38,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/orange
 
 /datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
-	. = ..()
+	..()
 	if(prob(1)) // D BOYYYYSSSSS
 		head = /obj/item/clothing/head/beanie/black/dboy
 

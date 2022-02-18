@@ -14,10 +14,6 @@
 	icon_state = "beanie"
 	color = "#4A4A4B" //Grey but it looks black
 
-/obj/item/clothing/head/beanie/black/dboy
-	name = "test subject beanie"
-	desc = "A dingy and torn black beanie. It's covered in otherworldly markings only your eyes have been ruined enough to see."
-
 /obj/item/clothing/head/beanie/red
 	name = "red beanie"
 	icon_state = "beanie"
@@ -92,3 +88,19 @@
 	icon_state = "beanierasta"
 
 //No dog fashion sprites yet :(  poor Ian can't be dope like the rest of us yet
+
+/obj/item/clothing/head/beanie/black/dboy
+	name = "test subject beanie"
+	desc = "A dingy and torn black beanie. Is that slime or grease?"
+	/// Used for the extra flavor text the d-boy himself sees
+	var/mob/living/carbon/human/owner = null
+
+/obj/item/clothing/head/beanie/black/dboy/equipped(mob/user, slot)
+	. = ..()
+	if(iscarbon(user) && !owner)
+		owner = user
+
+/obj/item/clothing/head/beanie/black/dboy/examine(mob/user)
+	. = ..()
+	if(user == owner)
+		. += span_purple("It's covered in otherworldly debris only your eyes have been ruined enough to see.")
