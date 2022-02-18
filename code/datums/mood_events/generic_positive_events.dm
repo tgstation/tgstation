@@ -276,13 +276,3 @@
 	description = span_nicegreen("I love winning videogames!\n")
 	mood_change = 10
 	timeout = 5 MINUTES
-
-/// lets keep this seperated from the rest of the mood_events
-
-/datum/mood_event/area
-	description = "" //Fill this out in the area
-	mood_change = 0
-
-/datum/mood_event/area/add_effects(_mood_change, _description)
-	mood_change = _mood_change
-	description = _description
