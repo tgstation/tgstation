@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen has fixed up the space area surrounding the AI Upload on KiloStation. The cameras should work a bit better now, and the excess lights were removed. You probably won't notice the latter, though."
