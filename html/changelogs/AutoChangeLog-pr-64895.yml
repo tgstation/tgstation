@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - admin: "SDQL2 commands that attempted to _new some very simple datums will no longer runtime."
