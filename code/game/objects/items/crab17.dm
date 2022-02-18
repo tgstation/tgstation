@@ -47,6 +47,10 @@
 	var/mob/living/bogdanoff
 	var/canwalk = FALSE
 
+/obj/structure/checkoutmachine/examine(mob/living/user)
+	. = ..()
+	. += span_info("It has a flashing <b>ID card reader</b> for convenient cashing out.")
+
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
@@ -61,7 +65,7 @@
 
 	var/obj/item/card/id/card = attacking_item.GetID()
 	if(!card)
-		balloon_alert(user, "your [attacking_item.name] gets repelled by the id card reader!")
+		balloon_alert(user, "your [attacking_item.name] gets repelled by the id card reader")
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
