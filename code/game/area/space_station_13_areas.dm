@@ -1410,6 +1410,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/science/breakroom
 	name = "\improper Science Break Room"
+	icon_state = "science_breakroom"
 
 /area/science/lab
 	name = "Research and Development"
