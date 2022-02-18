@@ -419,7 +419,7 @@
 	if(!(internal_damage & MECHA_INT_TEMP_CONTROL))
 		if(cabin_air && cabin_air.return_volume() > 0)
 			var/delta = cabin_air.temperature - T20C
-			cabin_air.temperature -= clamp(round(delta / 8, 0.1), -5, 5) * delta_time
+			cabin_air.temperature -= min(clamp(round(delta / 8, 0.1), -5, 5) * delta_time, delta)
 
 	if(internal_tank)
 		var/datum/gas_mixture/tank_air = internal_tank.return_air()
