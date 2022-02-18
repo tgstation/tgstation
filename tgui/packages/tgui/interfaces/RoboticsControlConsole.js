@@ -75,6 +75,15 @@ const Cyborgs = (props, context) => {
               onClick={() => act('stopbot', {
                 ref: cyborg.ref,
               })} />
+            {!!can_hack && (
+              <Button.Confirm
+                icon="bomb"
+                content="Detonate"
+                color="bad"
+                onClick={() => act('killbot', {
+                  ref: cyborg.ref,
+                })} />
+            )}
           </>
         )}>
         <LabeledList>

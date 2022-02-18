@@ -77,6 +77,20 @@
 		return
 
 	switch(action)
+		if("killbot")
+			if(!isAI(usr))
+				//no message, because they shouldn't be able to see this button.
+				return
+			var/mob/living/silicon/ai/shodan = usr
+			if(!shodan.hack_software)
+				//no message, because they shouldn't be able to see this button.
+				return
+			if(!allowed(shodan))
+				to_chat(shodan, span_danger("Access Denied."))
+				return
+			var/mob/living/silicon/robot/protocol_droid = locate(params["ref"]) in GLOB.silicon_mobs
+			if(can_control(shodan, protocol_droid))
+				protocol_droid.self_destruct(shodan)
 		if("stopbot")
 			if(allowed(usr))
 				var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
