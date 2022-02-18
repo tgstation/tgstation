@@ -53370,7 +53370,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/north,
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/machinery/suit_storage_unit/medical,
 /turf/open/floor/iron/dark,
 /area/medical/paramedic)
 "mVX" = (
