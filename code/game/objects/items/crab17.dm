@@ -47,10 +47,6 @@
 	var/mob/living/bogdanoff
 	var/canwalk = FALSE
 
-/obj/structure/checkoutmachine/examine(mob/living/user)
-	. = ..()
-	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [atom_integrity]</b>.")
-
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
 		var/datum/bank_account/B = i
