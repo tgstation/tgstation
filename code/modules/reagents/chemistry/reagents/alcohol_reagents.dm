@@ -2824,9 +2824,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Helianthus"
 	glass_desc = "Another reason to cut off an ear..."
 	var/hal_amt = 4
+	var/hal_cap = 24
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/helianthus/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	if(DT_PROB(5, delta_time))
+	if(drinker.hallucination < hal_cap && DT_PROB(5, delta_time))
 		drinker.hallucination += hal_amt
 	..()
