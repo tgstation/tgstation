@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "On KiloStation, Atmospherics no longer owns a weird sliver of the Incinerator room. It didn't make sense, but now it is fixed."

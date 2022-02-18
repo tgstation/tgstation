@@ -5,6 +5,7 @@
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = 2
@@ -90,11 +91,9 @@
 	. = ..()
 	switch(fitting)
 		if("tube")
-			brightness = 8
 			if(prob(2))
 				break_light_tube(TRUE)
 		if("bulb")
-			brightness = 4
 			if(prob(5))
 				break_light_tube(TRUE)
 	addtimer(CALLBACK(src, .proc/update, FALSE), 0.1 SECONDS)

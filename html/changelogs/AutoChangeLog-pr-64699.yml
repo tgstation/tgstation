@@ -1,5 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - bugfix: "Ash mark now deals the correct amount of damage and no longer gets stuck bouncing between the same two targets."
-  - balance: "Ash mark is significantly stronger due to this fix."

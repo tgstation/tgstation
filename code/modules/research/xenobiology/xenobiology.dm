@@ -155,7 +155,8 @@
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
 			var/food_type = get_random_food()
-			var/obj/item/food_item = new food_type
+			var/obj/item/food/food_item = new food_type
+			food_item.food_flags |= FOOD_SILVER_SPAWNED
 			if(!user.put_in_active_hand(food_item))
 				food_item.forceMove(user.drop_location())
 			playsound(user, 'sound/effects/splat.ogg', 50, TRUE)

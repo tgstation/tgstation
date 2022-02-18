@@ -508,6 +508,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_STRIP "no_strip"
 /// Disallows this item from being pricetagged with a barcode
 #define TRAIT_NO_BARCODES "no_barcode"
+/// Allows heretics to cast their spells.
+#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
+/// Designates a heart as a living heart for a heretic.
+#define TRAIT_LIVING_HEART "living_heart"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -767,6 +771,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
 /// Given by the multiple_lives component to the previous body of the mob upon death.
 #define EXPIRED_LIFE_TRAIT "expired_life"
+/// Trait given to a ghost when they orbit something.
+#define GHOST_ORBITING_TRAIT "ghost_orbiting"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
