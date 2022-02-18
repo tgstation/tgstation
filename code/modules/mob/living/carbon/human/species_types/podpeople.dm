@@ -4,11 +4,15 @@
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
 	default_color = "59CE00"
-	species_traits = list(MUTCOLORS,EYECOLOR, HAS_FLESH, HAS_BONE)
+	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_PLANT_SAFE,
+	)
+	external_organs = list(
+		/obj/item/organ/external/snout = "Round",
+		/obj/item/organ/external/pod_hair = "Podperson",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list("plants", "vines")
@@ -50,3 +54,9 @@
 		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
+
+/datum/species/pod/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	var/hairstyle = pick(GLOB.pod_hair_list)
+	human_mob.dna.features["pod_hair"] = hairstyle
+	mutant_bodyparts["pod_hair"] = hairstyle
+	human_mob.update_body()

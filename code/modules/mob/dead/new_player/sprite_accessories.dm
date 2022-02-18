@@ -1757,6 +1757,11 @@
 	icon_state = "monkey"
 	color_src = FALSE
 
+/datum/sprite_accessory/pod_hair
+	name = "Podperson"
+	icon = 'icons/mob/podperson_hair.dmi'
+	em_block = FALSE
+
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	em_block = TRUE
