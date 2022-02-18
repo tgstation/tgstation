@@ -1,0 +1,6 @@
+author: "tastyfish"
+delete-after: True
+changes: 
+  - rscadd: "Newscasters, request consoles, and status displays now have a backlight on their displays and emit a soft glow."
+  - imageadd: "Updated the newscaster, request console, and status display sprites to work with being emissive."
+  - refactor: "Internally refactored status display visual updating, so that it retains state across power loss, etc."
