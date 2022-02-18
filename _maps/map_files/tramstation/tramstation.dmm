@@ -31973,7 +31973,7 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical Freezer";
-	req_access_txt = "5"
+	req_access_txt = "45"
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
@@ -36315,7 +36315,7 @@
 "lFr" = (
 /obj/machinery/door/airlock/medical{
 	name = "Surgery";
-	req_access_txt = "5"
+	req_access_txt = "45"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -46620,7 +46620,7 @@
 	},
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medical Freezer";
-	req_access_txt = "5"
+	req_access_txt = "45"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/freezer,
@@ -51791,7 +51791,7 @@
 "rsD" = (
 /obj/machinery/door/airlock/medical{
 	name = "Surgery B";
-	req_access_txt = "5"
+	req_access_txt = "45"
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
