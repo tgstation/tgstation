@@ -45,12 +45,12 @@
 /datum/mood_event/maintenance_adaptation/add_effects()
 	description = "<span class='nicegreen'>[GLOB.deity] has helped me adapt to the maintenance shafts!</span>\n"
 
-/datum/mood_event/book_nerd
+/datum/mood_event/reading
 	description = "<span class='nicegreen'>I have recently read a book.</span>\n"
 	mood_change = 1
 	timeout = 5 MINUTES
 
-/datum/mood_event/book_worm
+/datum/mood_event/reading_excited
 	description = "<span class='nicegreen'>I was excited to read a book recently.</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
