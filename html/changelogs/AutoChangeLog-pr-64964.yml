@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - qol: "Kinetic crushers now fire their projectile with the right mouse button, allowing you to fire at targets that are adjacent to you without moving your mouse away from your target."
