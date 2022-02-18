@@ -27903,7 +27903,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/engineering/atmos)
+/area/maintenance/disposal/incinerator)
 "dQV" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -29006,16 +29006,6 @@
 	},
 /obj/item/analyzer,
 /turf/open/floor/iron/dark,
-/area/engineering/atmos)
-"enJ" = (
-/obj/machinery/door/airlock/external{
-	name = "Atmospherics External Airlock";
-	req_access_txt = "24"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/turf/open/floor/plating/airless,
 /area/engineering/atmos)
 "enL" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -31689,11 +31679,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/showroomfloor,
 /area/security/prison)
-"fhA" = (
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/engineering/atmos)
 "fhH" = (
 /obj/structure/flora/grass/jungle/b,
 /obj/structure/flora/ausbushes/fullgrass,
@@ -46236,7 +46221,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/engineering/atmos)
+/area/maintenance/disposal/incinerator)
 "kxi" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -55927,7 +55912,7 @@
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
-/area/engineering/atmos)
+/area/maintenance/disposal/incinerator)
 "nYc" = (
 /obj/machinery/mass_driver{
 	id = "trash"
@@ -60975,16 +60960,6 @@
 /obj/machinery/door/poddoor/massdriver_ordnance,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard)
-"pKi" = (
-/obj/machinery/door/airlock/external{
-	name = "Atmospherics External Airlock";
-	req_access_txt = "24"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/engineering/atmos)
 "pKt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -78162,9 +78137,6 @@
 "wei" = (
 /turf/closed/wall/rust,
 /area/cargo/sorting)
-"wev" = (
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "weD" = (
 /obj/machinery/modular_computer/console/preset/engineering{
 	dir = 4
@@ -110776,7 +110748,7 @@ bvF
 idD
 acm
 rJU
-enJ
+jOO
 aFI
 tIV
 wDG
@@ -111033,7 +111005,7 @@ oaK
 oLp
 tvH
 rJU
-fhA
+kpf
 aFI
 gzy
 tXc
@@ -112061,7 +112033,7 @@ gBn
 bDZ
 rgj
 nHA
-wev
+tNt
 aFI
 lrB
 rok
@@ -112318,7 +112290,7 @@ ehj
 inL
 cKv
 wEf
-pKi
+xSr
 aFJ
 aFJ
 aFJ
