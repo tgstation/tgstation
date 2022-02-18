@@ -2815,7 +2815,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/helianthus
 	name = "Helianthus"
-	description = "A radiant golden mixture of absinthe and hallucinogens. The choice of all true artists."
+	description = "A dark yet radiant mixture of absinthe and hallucinogens. The choice of all true artists."
 	boozepwr = 75
 	color = "#fba914"
 	quality = DRINK_VERYGOOD
