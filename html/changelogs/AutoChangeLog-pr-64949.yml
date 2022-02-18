@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - qol: "The sprays that come off extinguishers will no longer stick around after they've hit the ground, and they'll also fade out before disappearing"
