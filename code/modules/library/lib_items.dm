@@ -235,11 +235,17 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/reader = user
 			LAZYINITLIST(reader.book_titles_read)
-			if(isnull(reader.book_titles_read[title])) // only new books give bonus mood
+			var/has_not_read_book = isnull(reader.book_titles_read[title])
+			var/is_manual = !unique
+			if(has_not_read_book || !is_manual) // any new books give bonus mood (except for boring manuals)
 				if(HAS_TRAIT(reader, TRAIT_BOOKWORM))
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_worm", /datum/mood_event/book_worm)
 				else
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+			if(is_manual && reader.drowsyness) // manuals are so boring they put us to sleep if we are already drowsy
+				to_chat(user, span_warning("As you are reading the boring [src], you suddenly doze off!"))
+				reader.AdjustSleeping(100)
+				
 			reader.book_titles_read[title] = TRUE
 			
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
