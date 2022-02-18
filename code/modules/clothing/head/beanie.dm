@@ -93,7 +93,7 @@
 	name = "test subject beanie"
 	desc = "A dingy and torn black beanie. Is that slime or grease?"
 	/// Used for the extra flavor text the d-boy himself sees
-	var/mob/living/carbon/human/beanie_owner = null
+	var/datum/weakref/beanie_owner = null
 
 /obj/item/clothing/head/beanie/black/dboy/equipped(mob/user, slot)
 	. = ..()
