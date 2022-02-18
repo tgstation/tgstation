@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - refactor: "The Anomaly Neutralizer uses the effect remover component now"

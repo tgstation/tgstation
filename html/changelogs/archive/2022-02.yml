@@ -772,3 +772,15 @@
   unit0016:
   - imageadd: RCDs' Radial Menu new uses the updated Chairs, ID Cards, Stools, and
       Walls. 2562.
+2022-02-18:
+  Melbert:
+  - refactor: The Anomaly Neutralizer uses the effect remover component now
+  Wallem:
+  - imageadd: Departmental protolathes/techfabs have colored stripes to tell the departments
+      apart.
+  jlsnow301:
+  - bugfix: 'TGUI static data loading screens no longer resize the window temporarily.
+      Note: If you are using a UI that gets a lot of these, please make an issue report.'
+  san7890:
+  - imageadd: Cytology Lab and two different variations of the Central Hall have had
+      their sprites corrected into splendidly new ones.
