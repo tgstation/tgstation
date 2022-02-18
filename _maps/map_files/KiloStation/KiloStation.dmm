@@ -12454,6 +12454,17 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
+"bma" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/vending/games,
+/obj/effect/turf_decal/bot_white,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron/dark,
+/area/service/library)
 "bmf" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -27447,13 +27458,6 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/fore)
-"dHK" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-21"
-	},
-/obj/machinery/light_switch/directional/south,
-/turf/open/floor/carpet/green,
-/area/service/library)
 "dHM" = (
 /obj/structure/table,
 /obj/item/wallframe/airalarm,
@@ -34046,23 +34050,6 @@
 /obj/structure/sign/departments/evac,
 /turf/closed/wall,
 /area/security/checkpoint/customs)
-"gfH" = (
-/obj/structure/rack,
-/obj/effect/turf_decal/bot,
-/obj/machinery/light/small/directional/north,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/rcl/pre_loaded,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/service/library)
 "gfK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -43216,6 +43203,15 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"jti" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-21"
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 12
+	},
+/turf/open/floor/carpet/green,
+/area/service/library)
 "jtj" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -46967,20 +46963,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
 /area/service/chapel)
-"kLn" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/vending/games,
-/obj/effect/turf_decal/bot_white,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/item/radio/intercom/directional/east,
-/obj/structure/sign/painting/library{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/service/library)
 "kLr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -62906,6 +62888,24 @@
 /obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/chemistry)
+"qwW" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/bot,
+/obj/machinery/light/small/directional/north,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/stack/pipe_cleaner_coil/random,
+/obj/item/rcl/pre_loaded,
+/obj/item/storage/crayons,
+/obj/item/storage/crayons,
+/obj/structure/sign/painting/library{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/floor/iron/dark,
+/area/service/library)
 "qxd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/stripes/line{
@@ -108899,7 +108899,7 @@ kxy
 dXx
 gXK
 sim
-gfH
+qwW
 pkU
 pBc
 thp
@@ -109668,7 +109668,7 @@ uTl
 vdA
 nqA
 xTO
-dHK
+jti
 sim
 cjG
 lxQ
@@ -110178,7 +110178,7 @@ lKW
 hPN
 soW
 sim
-kLn
+bma
 hUi
 fcQ
 fyv
