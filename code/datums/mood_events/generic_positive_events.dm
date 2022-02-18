@@ -50,6 +50,11 @@
 	mood_change = 1
 	timeout = 5 MINUTES
 
+/datum/mood_event/book_worm
+	description = "<span class='nicegreen'>I was excited to read a book recently.</span>\n"
+	mood_change = 3
+	timeout = 5 MINUTES
+
 /datum/mood_event/exercise
 	description = "<span class='nicegreen'>Working out releases those endorphins!</span>\n"
 	mood_change = 2
@@ -191,14 +196,6 @@
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
 	mood_change = 10
 
-/datum/mood_event/area
-	description = "" //Fill this out in the area
-	mood_change = 0
-
-/datum/mood_event/area/add_effects(_mood_change, _description)
-	mood_change = _mood_change
-	description = _description
-
 /datum/mood_event/confident_mane
 	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>\n"
 	mood_change = 2
@@ -280,3 +277,12 @@
 	mood_change = 10
 	timeout = 5 MINUTES
 
+/// lets keep this seperated from the rest of the mood_events
+
+/datum/mood_event/area
+	description = "" //Fill this out in the area
+	mood_change = 0
+
+/datum/mood_event/area/add_effects(_mood_change, _description)
+	mood_change = _mood_change
+	description = _description
