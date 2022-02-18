@@ -228,11 +228,20 @@
 	if(!user.can_read(src))
 		return
 	user.visible_message(span_notice("[user] opens a book titled \"[title]\" and begins reading intently."))
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
 	on_read(user)
 
-/obj/item/book/proc/on_read(mob/user)
+/obj/item/book/proc/on_read(mob/user)		
 	if(dat)
+		if(ishuman(user))
+			var/mob/living/carbon/human/reader = user
+			LAZYINITLIST(reader.book_titles_read)
+			if(isnull(reader.book_titles_read[title])) // only new books give bonus mood
+				if(HAS_TRAIT(reader, TRAIT_BOOKWORM))
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_worm", /datum/mood_event/book_worm)
+				else
+					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "book_nerd", /datum/mood_event/book_nerd)
+			reader.book_titles_read[title] = TRUE
+			
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		onclose(user, "book")
 	else
