@@ -238,3 +238,5 @@
 	
 /datum/quirk/item_quirk/bookworm/add_unique()
 	give_item_to_holder(/obj/item/book/random, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(/obj/item/storage/bag/books, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	
