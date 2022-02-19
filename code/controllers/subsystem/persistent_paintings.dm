@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 	var/list/painting_data = list()
 	for(var/datum/painting/painting as anything in paintings)
-		collated_data["md5"] = painting.to_json() //Current data has priority over old data
+		collated_data[painting.md5] = painting.to_json() //Current data has priority over old data
 
 	// Remove deleted paintings from the list
 	collated_data -= deleted_paintings_md5s
