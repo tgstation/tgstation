@@ -1104,7 +1104,42 @@
 /mob/proc/has_nearsight_blindness()
 	return FALSE
 
-///Can this mob read
+///Can this mob write (is literate and not blind)
+/mob/proc/can_write(obj/O)
+	if(is_blind())
+		to_chat(src, span_warning("You are blind and can't write anything!"))
+		return FALSE
+
+	if(has_nearsight_blindness())
+		to_chat(src, span_warning("Your vision is too blurry to write anything!"))
+		return FALSE
+
+	if(!is_literate())
+		to_chat(src, span_warning("You don't know how to write."))
+		return FALSE
+
+	var/turf/writing_spot = get_turf(src)
+	var/has_light_to_write = writing_spot.get_lumcount() > LIGHTING_TILE_IS_DARK
+
+	var/can_see_in_darkness = HAS_TRAIT(TRAIT_XRAY_VISION) || HAS_TRAIT(TRAIT_TRUE_NIGHT_VISION)
+	// we need to check for x-ray implants in eyeballs sight flags and other vision flags since the trait isn't always granted
+
+	var/has_nightvision_glasses = FALSE
+	var/mob/living/carbon/human/reader = src
+	if(ishuman(reader))
+		var/obj/item/clothing/glasses/eyewear = reader.glasses
+		if(istype(eyewear, /obj/item/clothing/glasses/meson/night) ||
+		istype(eyewear, /obj/item/clothing/glasses/night) ||
+		istype(eyewear, /obj/item/clothing/glasses/thermal/xray))
+			has_nightvision_glasses = TRUE
+
+	if(!has_light_to_read && !can_see_in_darkness && !has_nightvision_glasses)
+		to_chat(M, span_warning("It's too dark in here to read!"))
+		return FALSE
+
+	return TRUE
+
+///Can this mob read (is literate and not blind)
 /mob/proc/can_read(obj/O)
 	if(is_blind())
 		to_chat(src, span_warning("As you are trying to read [O], you suddenly feel very stupid!"))
