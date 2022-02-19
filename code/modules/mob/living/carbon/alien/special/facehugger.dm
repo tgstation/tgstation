@@ -132,7 +132,7 @@
 	// gotta be able to have the xeno implanted
 	if(HAS_TRAIT(hit_mob, TRAIT_XENO_IMMUNE))
 		return FALSE
-	// carbon, has head, not alien or devil, has no hivenode or embryo: valid
+	// carbon, has head, not an alien nor has an hivenode or embryo: valid
 	return TRUE
 
 /obj/item/clothing/mask/facehugger/proc/Leap(mob/living/hit_mob)
