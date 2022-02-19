@@ -18155,7 +18155,7 @@
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
-/area/security/courtroom)
+/area/hallway/primary/fore)
 "gjg" = (
 /obj/structure/chair{
 	dir = 4
@@ -26221,7 +26221,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
-/area/security/courtroom)
+/area/hallway/primary/fore)
 "kdK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -86576,7 +86576,7 @@ iIk
 dZz
 aiX
 kdH
-ajn
+anz
 gjb
 eMl
 wCm
