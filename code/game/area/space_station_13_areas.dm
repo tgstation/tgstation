@@ -1408,6 +1408,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/science/lobby
+	name = "\improper Science Lobby"
+	icon_state = "science_lobby"
+
 /area/science/breakroom
 	name = "\improper Science Break Room"
 	icon_state = "science_breakroom"
