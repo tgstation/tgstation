@@ -127,7 +127,9 @@
 	if(overlay)
 		qdel(overlay)
 
-	return new/obj/effect/overlay/status_display_text(src, line_y, message)
+	var/obj/effect/overlay/status_display_text/new_status_display_text = new/obj/effect/overlay/status_display_text(line_y, message)
+	vis_contents += new_status_display_text
+	return new_status_display_text
 
 /obj/machinery/status_display/update_appearance(updates=ALL)
 	. = ..()
@@ -239,12 +241,10 @@
 	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
 
 	var/message
-	var/obj/sd_parent
 
-/obj/effect/overlay/status_display_text/New(obj/parent, yoffset, line)
+/obj/effect/overlay/status_display_text/New(yoffset, line)
 	maptext_y = yoffset
 	message = line
-	sd_parent = parent
 
 	var/line_length = length_char(line)
 
@@ -268,12 +268,6 @@
 		// Centered text
 		maptext = generate_text(line, center = TRUE)
 		maptext_x = 0
-
-	parent.vis_contents += src
-
-/obj/effect/overlay/status_display_text/Destroy()
-	sd_parent.vis_contents -= src
-	return ..()
 
 /obj/effect/overlay/status_display_text/proc/generate_text(text, center)
 	return {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]'[center ? ";text-align:center" : ""]" valign="top">[text]</div>"}
