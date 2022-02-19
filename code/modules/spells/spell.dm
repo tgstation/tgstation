@@ -125,9 +125,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
 	var/phase_allowed = FALSE // If true, the spell can be cast while phased, eg. blood crawling, ethereal jaunting
 
-	/// This determines what antimagic component can block the magic
+	/// This determines what type of antimagic is needed to block the spell (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
 	var/antimagic_flags = MAGIC_RESISTANCE
-	
+
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
 	var/invocation_type = INVOCATION_NONE //can be none, whisper, emote and shout
