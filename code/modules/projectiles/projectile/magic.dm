@@ -392,7 +392,7 @@
 		var/mob/dead/observer/ghost = pick(candidates)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
-		target.ghostize(0)
+		target.ghostize(FALSE)
 		target.key = ghost.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)
