@@ -52,7 +52,7 @@
 
 /// When the foilhat is drained an anti-magic charge.
 /obj/item/clothing/head/foilhat/proc/drain_antimagic(mob/user)
-	to_chat(user, "<span class='warning'>Your [src] crumples slightly. Something is trying to get inside your mind!</span>")
+	to_chat(user, span_warning("[src] crumples slightly. Something is trying to get inside your mind!"))
 
 /obj/item/clothing/head/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
