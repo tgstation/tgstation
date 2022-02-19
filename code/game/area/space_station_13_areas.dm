@@ -1412,6 +1412,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Science Lobby"
 	icon_state = "science_lobby"
 
+/area/science/lower
+	name = "\improper Lower Science Division"
+	icon_state = "lower_science"
+
 /area/science/breakroom
 	name = "\improper Science Break Room"
 	icon_state = "science_breakroom"
