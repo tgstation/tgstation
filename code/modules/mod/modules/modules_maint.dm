@@ -48,7 +48,7 @@
 		return
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
-	mod.wearer.Paralyze(10000)
+	mod.wearer.Paralyze(10000, TRUE)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
