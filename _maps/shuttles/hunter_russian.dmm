@@ -360,7 +360,7 @@
 	name = "voytek's crate"
 	},
 /mob/living/simple_animal/hostile/bear{
-	desc = "A very friendly yet still extremely menacing space-bear. Comrade until the end." ;
+	desc = "A very friendly yet still extremely menacing space-bear. Comrade until the end.";
 	name = "Voytek"
 	},
 /obj/machinery/firealarm/directional/north,
