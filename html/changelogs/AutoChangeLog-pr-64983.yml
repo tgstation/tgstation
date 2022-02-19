@@ -1,0 +1,4 @@
+author: "tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "Windoor blocking ORM on Delta Station now has correct access."

@@ -126,7 +126,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/datum/admin_help/T = C.current_ticket
 		T.AddInteraction("Client disconnected.")
 		//Gotta async this cause clients only logout on destroy, and sleeping in destroy is disgusting
-		INVOKE_ASYNC(SSblackbox, /datum/controller/subsystem/blackbox/proc/LogAhelp, T, "Disconnected", "Client disconnected", C.ckey)
+		INVOKE_ASYNC(SSblackbox, /datum/controller/subsystem/blackbox/proc/LogAhelp, T.id, "Disconnected", "Client disconnected", C.ckey)
 		T.initiator = null
 
 //Get a ticket given a ckey
@@ -235,12 +235,49 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	var/message_to_send = message
 
 	if(urgent)
-		var/extra_message_to_send = "[message] - Requested an admin"
 		var/extra_message = CONFIG_GET(string/urgent_ahelp_message)
-		if(extra_message)
-			extra_message_to_send += " ([extra_message])"
 		to_chat(initiator, span_boldwarning("Notified admins to prioritize your ticket"))
-		send2adminchat_webhook("RELAY: [initiator_ckey] | Ticket #[id]: [extra_message_to_send]")
+		var/datum/discord_embed/embed = new()
+		embed.title = "Ticket #[id]"
+		embed.author = key_name(initiator_ckey)
+		var/round_state
+		switch(SSticker.current_state)
+			if(GAME_STATE_STARTUP, GAME_STATE_PREGAME, GAME_STATE_SETTING_UP)
+				round_state = "Round has not started"
+			if(GAME_STATE_PLAYING)
+				round_state = "Round is ongoing."
+				if(SSshuttle.emergency.getModeStr())
+					round_state += "\n[SSshuttle.emergency.getModeStr()]: [SSshuttle.emergency.getTimerStr()]"
+					if(SSticker.emergency_reason)
+						round_state += ", Shuttle call reason: [SSticker.emergency_reason]"
+			if(GAME_STATE_FINISHED)
+				round_state = "Round has ended"
+		var/list/admin_counts = get_admin_counts(R_BAN)
+		var/stealth_admins = jointext(admin_counts["stealth"], ", ")
+		var/afk_admins = jointext(admin_counts["afk"], ", ")
+		var/other_admins = jointext(admin_counts["noflags"], ", ")
+		var/admin_text = ""
+		if(stealth_admins)
+			admin_text += "**Stealthed**: [stealth_admins]\n"
+		if(afk_admins)
+			admin_text += "**AFK**: [afk_admins]\n"
+		if(other_admins)
+			admin_text += "**Lacks +BAN**: [other_admins]\n"
+		embed.fields = list(
+			"CKEY" = initiator_ckey,
+			"ROUND STATE" = round_state,
+			"ROUND ID" = GLOB.round_id,
+			"ROUND TIME" = ROUND_TIME,
+			"MESSAGE" = message,
+			"ADMINS" = admin_text,
+		)
+		embed.content = extra_message
+		if(CONFIG_GET(string/adminhelp_ahelp_link))
+			var/ahelp_link = replacetext(CONFIG_GET(string/adminhelp_ahelp_link), "$RID", GLOB.round_id)
+			ahelp_link = replacetext(ahelp_link, "$TID", id)
+			embed.url = ahelp_link
+		embed.footer = "This player requested an admin"
+		send2adminchat_webhook(embed)
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
 	log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
@@ -248,13 +285,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent to admins who are available through IRC or Discord."), confidential = TRUE)
 		heard_by_no_admins = TRUE
 
-/proc/send2adminchat_webhook(message)
+/proc/send2adminchat_webhook(message_or_embed)
 	if(!CONFIG_GET(string/adminhelp_webhook_url))
 		return
-	var/message_content = replacetext(replacetext(message, "\proper", ""), "\improper", "")
-	message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message, "`", ""), " ```$1``` ")
 	var/list/webhook_info = list()
-	webhook_info["content"] = message_content
+	if(istext(message_or_embed))
+		var/message_content = replacetext(replacetext(message_or_embed, "\proper", ""), "\improper", "")
+		message_content = GLOB.has_discord_embeddable_links.Replace(replacetext(message_content, "`", ""), " ```$1``` ")
+		webhook_info["content"] = message_content
+	else
+		var/datum/discord_embed/embed = message_or_embed
+		webhook_info["embeds"] = list(embed.convert_to_list())
+		if(embed.content)
+			webhook_info["content"] = embed.content
 	if(CONFIG_GET(string/adminhelp_webhook_name))
 		webhook_info["username"] = CONFIG_GET(string/adminhelp_webhook_name)
 	if(CONFIG_GET(string/adminhelp_webhook_pfp))
