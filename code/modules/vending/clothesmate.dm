@@ -177,7 +177,7 @@
 		/obj/item/clothing/shoes/basil_boys = 20,
 		/obj/item/clothing/suit/mothcoat = 3,
 		/obj/item/clothing/suit/mothcoat/winter = 3,
-		/obj/item/clothing/head/mothcap = 3
+		/obj/item/clothing/head/mothcap = 3,
 	)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool = 1,
