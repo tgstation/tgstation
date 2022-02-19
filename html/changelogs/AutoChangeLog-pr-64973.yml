@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - balance: "The CRAB-17/Nanotrasen Space-Coin Market is now indestructible. Attacking it repulses you back one tile instead. ID cards now instantly swipe on it instead of requiring a progress bar, and ID card holders like PDAs and wallets can also be directly used on it without having to remove IDs. It still blows up when all ID cards with bank accounts have been swiped on it or after 8 minutes."
