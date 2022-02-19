@@ -43,6 +43,7 @@
 		cell = C
 		return
 	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
 	button_icon_state = "mech_smoke"
