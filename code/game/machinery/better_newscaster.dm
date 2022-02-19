@@ -8,7 +8,7 @@
 	///The message that's currently being written for a feed story.
 	var/feed_channel_message
 	///The current image that will be submitted with the newscaster story.
-	var/icon/current_image
+	var/obj/item/photo/current_image
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
@@ -17,6 +17,11 @@
 	var/bounty_value = 1
 	///Text of the currently written bounty
 	var/bounty_text = ""
+
+/obj/item/newser/proc/send_photo_data()
+	if(current_image)
+		return current_image?.picture
+	return null
 
 /obj/item/newser/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -54,6 +59,10 @@
 	data["security_mode"] = FALSE
 	if(Card && (ACCESS_ARMORY in Card?.GetAccess()))
 		data["security_mode"] = TRUE
+
+	data["photo_data"] = FALSE
+	if(current_image)
+		data["photo_data"] = TRUE
 
 	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
@@ -150,6 +159,9 @@
 					current_channel = potential_channel
 
 		if("createStory")
+			if(!current_channel)
+				balloon_alert(usr, "Please select a channel first!")
+				return
 			var/proto_chan = (params["current"])
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
 				if(proto_chan == potential_channel.channel_ID)
@@ -160,7 +172,7 @@
 				return
 			if(temp_message)
 				feed_channel_message = temp_message
-			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, null, 0, FALSE)
+			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data() , 0, FALSE)
 			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 			feed_channel_message = ""
 
@@ -169,10 +181,10 @@
 				balloon_alert(usr,"Current photo cleared.")
 				current_image = null
 				return
-			if(iscarbon, usr)
+			if(iscarbon(usr))
 				var/mob/living/carbon/user = usr
-				for(var/obj/item/photo/scan_photo in H.held_items)
-					current_image = scan_photo.picture_image
+				for(var/obj/item/photo/scan_photo in user.held_items)
+					current_image = scan_photo
 					balloon_alert(usr,"[scan_photo?.picture.picture_name] selected.")
 					break
 

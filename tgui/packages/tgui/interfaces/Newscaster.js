@@ -59,13 +59,7 @@ export const Newscaster = (props, context) => {
 export const NewscasterContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    index,
-    name,
-    description,
-    icon,
-    viewing_channel,
     current_channel = [],
-    security_mode,
   } = data;
   return (
     <>
@@ -129,6 +123,7 @@ const NewscasterChannelBox = (props, context) => {
     channelCensored,
     viewing_channel,
     security_mode,
+    photo_data,
     user,
   } = data;
   return (
@@ -161,6 +156,11 @@ const NewscasterChannelBox = (props, context) => {
             || channelCensored}
           onClick={() => act('createStory', { current: viewing_channel })}
           mt={1} />
+        <Button
+          icon="camera"
+          selected={photo_data}
+          content="Select Photo"
+          onClick={() => act('togglePhoto')} />
         {security_mode === 1 && (
           <Button
             icon={"ban"}
