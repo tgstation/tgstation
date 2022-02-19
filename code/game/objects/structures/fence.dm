@@ -114,7 +114,7 @@
 /obj/structure/fence/door/Initialize(mapload)
 	. = ..()
 
-	update_door_status()
+	update_icon_state()
 
 /obj/structure/fence/door/opened
 	icon_state = "door_opened"
@@ -129,10 +129,10 @@
 /obj/structure/fence/door/proc/toggle(mob/user)
 	visible_message(span_notice("\The [user] [density ? "opens" : "closes"] \the [src]."))
 	set_density(!density)
-	update_door_status()
+	update_icon_state()
 	playsound(src, 'sound/machines/click.ogg', 100, TRUE)
 
-/obj/structure/fence/door/proc/update_door_status()
+/obj/structure/fence/door/update_icon_state()
 	icon_state = density ? "door_closed" : "door_opened"
 
 /obj/structure/fence/door/proc/can_open(mob/user)
