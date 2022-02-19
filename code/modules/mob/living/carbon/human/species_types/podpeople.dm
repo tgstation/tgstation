@@ -12,7 +12,7 @@
 	)
 	external_organs = list(
 		/obj/item/organ/external/snout = "Round",
-		/obj/item/organ/external/pod_hair = "Podperson",
+		/obj/item/organ/external/pod_hair = "None",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list("plants", "vines")
