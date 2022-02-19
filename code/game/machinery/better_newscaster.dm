@@ -7,6 +7,8 @@
 	var/datum/newscaster/feed_channel/current_channel
 	///The message that's currently being written for a feed story.
 	var/feed_channel_message
+	///The current image that will be submitted with the newscaster story.
+	var/icon/current_image
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///The station request datum being affected by UI actions.
@@ -161,6 +163,18 @@
 			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, null, 0, FALSE)
 			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 			feed_channel_message = ""
+
+		if("togglePhoto")
+			if(current_image)
+				balloon_alert(usr,"Current photo cleared.")
+				current_image = null
+				return
+			if(iscarbon, usr)
+				var/mob/living/carbon/user = usr
+				for(var/obj/item/photo/scan_photo in H.held_items)
+					current_image = scan_photo.picture_image
+					balloon_alert(usr,"[scan_photo?.picture.picture_name] selected.")
+					break
 
 		if("createChannel")
 			//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
