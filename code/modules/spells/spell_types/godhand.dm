@@ -98,7 +98,7 @@
 	icon_state = "fleshtostone"
 	inhand_icon_state = "fleshtostone"
 
-/obj/item/melee/touch_attack/fleshtostone/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/melee/touch_attack/fleshtostone/afterattack(mob/living/target, mob/living/carbon/user, proximity)
 	if(!proximity || target == user || !isliving(target) || !iscarbon(user)) //getting hard after touching yourself would also be bad
 		return
 	if(!(user.mobility_flags & MOBILITY_USE))
@@ -107,13 +107,12 @@
 	if(!user.can_speak_vocal())
 		to_chat(user, span_warning("You can't get the words out!"))
 		return
-	var/mob/living/M = target
-	if(M.can_block_magic())		
-		to_chat(user, span_warning("The spell can't seem to affect [M]!"))
-		to_chat(M, span_warning("You feel your flesh turn to stone for a moment, then revert back!"))
+	if(target.can_block_magic())
+		to_chat(user, span_warning("The spell can't seem to affect [target]!"))
+		to_chat(target, span_warning("You feel your flesh turn to stone for a moment, then revert back!"))
 		return ..()
-	M.Stun(40)
-	M.petrify()
+	target.Stun(40)
+	target.petrify()
 	return ..()
 
 
