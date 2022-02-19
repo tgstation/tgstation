@@ -49,7 +49,7 @@
 		return 
 
 	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-		target.death(0)
+		target.death()
 		return
 
 	if(target.revive(full_heal = TRUE, admin_revive = TRUE))
@@ -392,7 +392,7 @@
 		var/mob/dead/observer/ghost = pick(candidates)
 		to_chat(target, span_boldnotice("You have been noticed by a ghost and it has possessed you!"))
 		var/oldkey = target.key
-		target.ghostize(0)
+		target.ghostize(FALSE)
 		target.key = ghost.key
 		trauma.friend.key = oldkey
 		trauma.friend.reset_perspective(null)

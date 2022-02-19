@@ -101,8 +101,8 @@
 /// When the ritual totem is depleted of antimagic
 /obj/item/ritual_totem/proc/expire(mob/user)
 	to_chat(user, span_warning("[src] consumes the magic within itself and quickly decays into rot!"))
-	qdel(src)
 	new /obj/effect/decal/cleanable/ash(drop_location())
+	qdel(src)
 
 /obj/item/ritual_totem/can_be_pulled(user, grab_state, force)
 	. = ..()
