@@ -362,8 +362,10 @@
 /area/shuttle/hunter/russian)
 "Fy" = (
 /obj/structure/cable,
-/obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/power/smes/engineering{
+	charge = 1e+006
+	},
 /turf/open/floor/plating,
 /area/shuttle/hunter/russian)
 "FG" = (
