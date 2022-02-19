@@ -115,7 +115,7 @@
 		var/obj/effect/proc_holder/spell/cone/staggered/firebreath/our_spell = power
 		our_spell.cone_levels += 2 // Cone fwooshes further, and...
 		our_spell.self_throw_range += 1 // the breath throws the user back more
-		our_spell.antimagic_flags = NONE // cannot be restricted or blocked by antimagic
+
 
 /obj/effect/proc_holder/spell/cone/staggered/firebreath
 	name = "Fire Breath"
@@ -132,6 +132,7 @@
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
 	respect_density = TRUE
 	cone_levels = 3
+	antimagic_flags = NONE // cannot be restricted or blocked by antimagic
 	/// The range our user is thrown backwards after casting the spell
 	var/self_throw_range = 1
 
