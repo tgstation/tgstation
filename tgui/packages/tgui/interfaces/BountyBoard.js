@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stack, TextArea } from '../components';
+import { BlockQuote, Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stack, TextArea } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -25,7 +25,7 @@ export const BountyBoardContent = (props, context) => {
     bountyText,
   } = data;
   const color = 'rgba(13, 13, 213, 0.7)';
-  const backColor = 'rgba(0, 0, 69, 0.5)';
+  const backColor = 'rgba(50, 50, 170, 0.5)';
   return (
     <>
       <Section>
@@ -35,15 +35,18 @@ export const BountyBoardContent = (props, context) => {
             buttons={(
               <Button
                 icon="power-off"
-                content="Log out"
+                content="Reset Account"
                 onClick={() => act('clear')} />
             )}>
             {accountName || 'N/A'}
           </LabeledList.Item>
         </LabeledList>
       </Section>
-      <Flex mb={1}>
-        <Flex.Item grow={1} basis={0}>
+      <Flex
+        mb={1}>
+        <Flex.Item
+          grow={1}
+          basis={0}>
           {requests?.map(request => (
             <Collapsible
               key={request.name}
@@ -64,6 +67,9 @@ export const BountyBoardContent = (props, context) => {
                       fluid
                       icon="pen-fancy"
                       content="Apply"
+                      disabled={
+                        request.owner === accountName
+                      }
                       onClick={() => act('apply', {
                         request: request.acc_number,
                       })} />
@@ -77,9 +83,11 @@ export const BountyBoardContent = (props, context) => {
                       })} />
                   </Stack.Item>
                 </Stack>
-                <Section align="center">
+                <BlockQuote
+                  pt={1}
+                  align="center">
                   <i>&quot;{request.description}&quot;</i>
-                </Section>
+                </BlockQuote>
                 <Section
                   title="Request Applicants">
                   {applicants?.map(applicant => (
@@ -89,7 +97,8 @@ export const BountyBoardContent = (props, context) => {
                           grow={1}
                           p={0.5}
                           backgroundColor={backColor}
-                          width="510px"
+                          width="500px"
+                          textAlign="center"
                           style={{
                             border: `2px solid ${color}`,
                           }}>
@@ -99,7 +108,9 @@ export const BountyBoardContent = (props, context) => {
                           align="end">
                           <Button
                             fluid
+                            p={1}
                             icon="cash-register"
+                            tooltip="Pay out to this applicant."
                             onClick={() => act('payApplicant', {
                               applicant: applicant.requestee_id,
                               request: request.acc_number,
@@ -121,7 +132,7 @@ export const BountyBoardContent = (props, context) => {
             <Section>
               <TextArea
                 fluid
-                height="250px"
+                height="150px"
                 width="200px"
                 backgroundColor="black"
                 textColor="white"
@@ -139,11 +150,11 @@ export const BountyBoardContent = (props, context) => {
                   onChange={(e, value) => act('bountyVal', {
                     bountyval: value,
                   })} />
+                <Button
+                  icon="print"
+                  content="Submit bounty"
+                  onClick={() => act('createBounty')} />
               </Box>
-              <Button
-                icon="print"
-                content="Submit bounty"
-                onClick={() => act('createBounty')} />
             </Section>
           </Collapsible>
         </Flex.Item>

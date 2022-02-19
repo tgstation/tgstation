@@ -123,6 +123,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/bounty_board, 32)
 			if(current_user.account_holder == active_request.owner)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
+			for(var/new_apply in active_request?.applicants)
+				if(current_user.account_holder == active_request?.applicants[new_apply])
+					playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+					return TRUE
 			active_request.applicants += list(current_user)
 		if("payApplicant")
 			if(!current_user)

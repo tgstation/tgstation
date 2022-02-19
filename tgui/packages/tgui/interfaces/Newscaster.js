@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { BlockQuote, Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
@@ -13,44 +13,44 @@ import { sanitizeText } from "../sanitize";
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    screenmode,
-  } = data;
+  const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', 1);
   return (
     <Window
       width={575}
-      height={420}>
+      height={550}>
       <Window.Content scrollable>
         <Tabs fluid textAlign="center">
           <Tabs.Tab
             color="Green"
-            selected={screenmode == 1}
-            onClick={() => setTab_main(1)}>
+            selected={screenmode === 1}
+            onClick={() => setScreenmode(1)}>
             Newscaster
           </Tabs.Tab>
           <Tabs.Tab
-            color="Blue"
-            selected={screenmode == 2}
-            onClick={() => setTab_main(2)}>
+            Color="Blue"
+            selected={screenmode === 2}
+            onClick={() => setScreenmode(2)}>
             Bounty Board
           </Tabs.Tab>
           <Tabs.Tab
             color="Purple"
-            selected={screenmode == 3}
-            onClick={() => setTab_main(3)}>
+            selected={screenmode === 3}
+            onClick={() => setScreenmode(3)}>
             Station Mandates
           </Tabs.Tab>
         </Tabs>
-        if (screenmode == 1) {
+
+        {screenmode === 1 && (
           <NewscasterContent />
-        } else if (screenmode == 2) {
+        )}
+        {screenmode === 2 && (
           <BountyBoardContent />
-        } else {
+        )}
+        {screenmode === 3 && (
           <Box>
             Not done yet :)
           </Box>
-        }
-
+        )}
       </Window.Content>
     </Window>
   );
@@ -126,25 +126,51 @@ const NewscasterChannelBox = (props, context) => {
     channelDesc,
     channelBlocked,
     channelAuthor,
+    channelCensored,
     viewing_channel,
+    security_mode,
+    user,
   } = data;
   return (
     <Section title={channelName} >
-      <BlockQuote italic mb={1} ml={1} fontSize={1.2}>
-        {channelDesc}
-      </BlockQuote>
-      <LabeledList mt={1} mb={1}>
-        <LabeledList.Item label="Owner">
-          {channelAuthor}
-        </LabeledList.Item>
-      </LabeledList>
+      {channelCensored === 1 && (
+        <Section>
+          <BlockQuote color="Red">
+            <b>ATTENTION:</b> This channel has been deemed as threatening to
+            the welfare of the station, and marked with a Nanotrasen D-Notice.
+          </BlockQuote>
+        </Section>
+      )}
+      {channelCensored !== 1 &&(
+        <Box>
+          <BlockQuote italic mb={1} ml={1} fontSize={1.2}>
+            {channelDesc}
+          </BlockQuote>
+          <LabeledList mt={1} mb={1}>
+            <LabeledList.Item label="Owner">
+              {channelAuthor}
+            </LabeledList.Item>
+          </LabeledList>
+        </Box>
+      )}
       <Box>
         <Button
           icon="print"
           content="Submit Story"
-          disabled={channelBlocked}
+          disabled={(channelBlocked && (channelAuthor !== user.name))
+            || channelCensored}
           onClick={() => act('createStory', { current: viewing_channel })}
           mt={1} />
+        {security_mode === 1 && (
+          <Button
+            icon={"ban"}
+            content={"D-Notice"}
+            tooltip="Censor the whole channel and it's contents as dangerous to the station. Cannot be undone."
+            disabled={!security_mode}
+            onClick={() => act('channelDNotice',
+              { secure: security_mode,
+                channel: viewing_channel })} />
+        )}
       </Box>
     </Section>
   );
@@ -169,13 +195,22 @@ const NewscasterChannelSelector = (props, context) => {
             pb={0.75}
             mr={1}
             selected={viewing_channel === channels.ID}
-            textColor="white"
+            icon={channels.censored ? 'ban' : null}
+            textColor={channels.censored ? "Red" :"white"}
             onClick={() => act('setChannel', {
               channels: channels.ID,
             })}>
             {channels.name}
           </Tabs.Tab>
         ))}
+        <Tabs.Tab
+          pt={0.75}
+          pb={0.75}
+          mr={1}
+          textColor="white"
+          onClick={() => act('createChannel')}>
+          Create Channel
+        </Tabs.Tab>
       </Tabs>
     </Section>
   );
@@ -201,6 +236,7 @@ const NewscasterChannelMessages = (props, context) => {
     messages = [],
     viewing_channel,
     security_mode,
+    channelCensored,
   } = data;
   return (
     <Section scrollable>
@@ -213,29 +249,59 @@ const NewscasterChannelMessages = (props, context) => {
             key={message.body}
             title={(
               <i>
-                By: {message.auth} at {message.time}
+                {message.censored_author === 1 && (
+                  <Box textColor="Red">
+                    By: [REDACTED]. <b>D-Notice Notice</b> .
+                  </Box>
+                )}
+                {message.censored_author !== 1 && (
+                  <>
+                    By: {message.auth} at {message.time}
+                  </>
+                )}
               </i>
             )}
             buttons={(
               <>
-                <Button
-                  icon={"comment-slash"}
-                  tooltip={"Censor Story"}
-                  disabled={!security_mode}
-                  onClick={() => act('storyCensor', { secure: security_mode })} />
-                <Button
-                  icon={'user-slash'}
-                  tooltip={"Censor Author"}
-                  disabled={!security_mode}
-                  onClick={() => act('authorCensor', { secure: security_mode })} />
+                {security_mode === 1 && (
+                  <Button
+                    icon={"comment-slash"}
+                    tooltip={"Censor Story"}
+                    disabled={!security_mode}
+                    onClick={() => act('storyCensor', {
+                      secure: security_mode,
+                      messageID: message.ID })} />
+                )}
+                {security_mode === 1 && (
+                  <Button
+                    icon={'user-slash'}
+                    tooltip={"Censor Author"}
+                    disabled={!security_mode}
+                    onClick={() => act('authorCensor', {
+                      secure: security_mode,
+                      messageID: message.ID })} />
+                )}
               </>
             )} >
             <BlockQuote
               textColor="white">
-              <Section
-                color="label"
-                dangerouslySetInnerHTML={processedText(message.body)}
-                pl={1} />
+              {message.censored_message === 1 &&(
+                <Section textColor="Red">
+                  This message was deemed dangerous to the general welfare
+                  of the station and therefore marked with a <b>D-Notice</b>.
+                </Section>
+              )}
+              {message.censored_message !== 1 &&(
+                <Section
+                  color="label"
+                  dangerouslySetInnerHTML={processedText(message.body)}
+                  pl={1} />
+              )}
+              {message.photo !== null &&(
+                <Box
+                  as="img"
+                  src={message.Photo} />
+              )}
             </BlockQuote>
             <Divider />
           </Section>

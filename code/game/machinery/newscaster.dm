@@ -42,6 +42,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/photo_file
 	///What is the channel ID of the parent channel?
 	var/parent_ID
+	///What number message is this? IE: The first message sent in a round including automated messages is message 1.
+	var/message_ID
 
 /datum/newscaster/feed_message/proc/returnAuthor(censor)
 	if(censor == -1)
@@ -174,6 +176,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/redactedText = "\[REDACTED\]"
 	/// List of all the network_channels Channel Id numbers, kept in a global easy to find place.
 	var/list/channel_IDs = list()
+	/// How many messages currently exist on this feed_network? Increments as new messages are written.
+	var/message_count = 0
 
 /datum/newscaster/feed_network/New()
 	CreateFeedChannel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!" , 1, hardset_channel = 1000)
@@ -210,6 +214,8 @@ GLOBAL_LIST_EMPTY(allCasters)
 		NEWSCASTER.newsAlert(channel_name, update_alert)
 	lastAction ++
 	newMsg.creationTime = lastAction
+	message_count ++
+	newMsg.message_ID = message_count
 
 /datum/newscaster/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = FALSE, newMessage = FALSE)
 	wanted_issue.active = TRUE
