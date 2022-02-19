@@ -60,7 +60,7 @@
 	action_icon_state = "mindread"
 
 /obj/effect/proc_holder/spell/targeted/mindread/cast(list/targets, mob/living/carbon/human/user = usr)
-	if(!usr.can_cast_magic(MAGIC_RESISTANCE_MIND))
+	if(!user.can_cast_magic(MAGIC_RESISTANCE_MIND))
 		return
 
 	for(var/mob/living/M in targets)
