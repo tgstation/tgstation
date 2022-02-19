@@ -1144,6 +1144,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Chemistry"
 	icon_state = "chem"
 
+/area/medical/chemistry/storage
+	name = "\improper Chemistry Storage Room"
+	icon_state = "chem_storage"
+
 /area/medical/pharmacy
 	name = "\improper Pharmacy"
 	icon_state = "pharmacy"
