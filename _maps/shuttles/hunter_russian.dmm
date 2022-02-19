@@ -468,7 +468,7 @@
 /area/shuttle/hunter/russian)
 "JU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/arrows{
+/obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -638,9 +638,6 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/hunter/russian)
 "Ys" = (
-/obj/effect/turf_decal/arrows{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
