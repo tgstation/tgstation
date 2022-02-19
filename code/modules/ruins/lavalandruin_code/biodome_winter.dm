@@ -45,5 +45,5 @@
 			hit_object.make_frozen_visual()
 	else if(isliving(hit_atom))
 		var/mob/living/hit_mob = hit_atom
-		walk(hit_mob, 0) //stops them mid pathing even if they're stunimmune
+		SSmove_manager.stop_looping(hit_mob) //stops them mid pathing even if they're stunimmune
 		hit_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 3 SECONDS)

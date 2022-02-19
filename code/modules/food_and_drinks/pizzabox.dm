@@ -82,11 +82,11 @@
 	if(open)
 		if(pizza)
 			var/mutable_appearance/pizza_overlay = mutable_appearance(pizza.icon, pizza.icon_state)
-			pizza_overlay.pixel_y = -3
+			pizza_overlay.pixel_y = -2
 			. += pizza_overlay
 		if(bomb)
 			var/mutable_appearance/bomb_overlay = mutable_appearance(bomb.icon, bomb.icon_state)
-			bomb_overlay.pixel_y = 5
+			bomb_overlay.pixel_y = 8
 			. += bomb_overlay
 		return
 
@@ -150,17 +150,12 @@
 				update_appearance()
 				return
 			else
-				bomb_timer = tgui_input_number(user, "Set the timer for [bomb].", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
-
-				if (isnull(bomb_timer))
+				bomb_timer = tgui_input_number(user, "Set the bomb timer", "Pizza Bomb", bomb_timer, bomb_timer_max, bomb_timer_min)
+				if(!bomb_timer || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 					return
-
-				bomb_timer = round(bomb_timer)
 				bomb_defused = FALSE
-
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer] seconds")
 				bomb.adminlog = "The [bomb.name] in [src.name] that [key_name(user)] activated has detonated!"
-
 				to_chat(user, span_warning("You trap [src] with [bomb]."))
 				update_appearance()
 	else if(boxes.len)
@@ -363,6 +358,7 @@
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	if(ishuman(user))
 		attune_pizza(user)
+		to_chat(user, span_notice("Another pizza immediately appears in the box, what the hell?"))
 	return ..()
 
 /obj/item/pizzabox/infinite/proc/attune_pizza(mob/living/carbon/human/nommer) //tonight on "proc names I never thought I'd type"

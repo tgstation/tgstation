@@ -138,7 +138,8 @@
 	phasing = "flying"
 	movedelay = 1
 	density = FALSE
-	layer = FLY_LAYER
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	animate(src, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(src, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
 	addtimer(CALLBACK(src, .proc/begin_landing, pilot), 2 SECONDS)
@@ -173,6 +174,7 @@
 	movedelay = initial(movedelay)
 	density = TRUE
 	layer = initial(layer)
+	plane = initial(plane)
 	skyfall_charge_level = 0
 	update_icon_state()
 	for(var/mob/living/shaken in range(7, src))
@@ -304,7 +306,7 @@
 	name = "Savannah Skyfall"
 	button_icon_state = "mech_savannah"
 
-/datum/action/vehicle/sealed/mecha/skyfall/Trigger()
+/datum/action/vehicle/sealed/mecha/skyfall/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/savannah_mecha = chassis
@@ -333,7 +335,7 @@
 	name = "Ivanov Strike"
 	button_icon_state = "mech_ivanov"
 
-/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger()
+/datum/action/vehicle/sealed/mecha/ivanov_strike/Trigger(trigger_flags)
 	if(!owner || !chassis || !(owner in chassis.occupants))
 		return
 	var/obj/vehicle/sealed/mecha/combat/savannah_ivanov/ivanov_mecha = chassis

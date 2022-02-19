@@ -157,13 +157,13 @@ SUBSYSTEM_DEF(shuttle)
 	has_purchase_shuttle_access = init_has_purchase_shuttle_access()
 
 	if(!arrivals)
-		WARNING("No /obj/docking_port/mobile/arrivals placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/arrivals placed on the map!")
 	if(!emergency)
-		WARNING("No /obj/docking_port/mobile/emergency placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/emergency placed on the map!")
 	if(!backup_shuttle)
-		WARNING("No /obj/docking_port/mobile/emergency/backup placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/emergency/backup placed on the map!")
 	if(!supply)
-		WARNING("No /obj/docking_port/mobile/supply placed on the map!")
+		log_mapping("No /obj/docking_port/mobile/supply placed on the map!")
 	return ..()
 
 /datum/controller/subsystem/shuttle/proc/setup_shuttles(list/stationary)
@@ -766,8 +766,7 @@ SUBSYSTEM_DEF(shuttle)
 	// but we can ignore the someone else docked error because we'll
 	// be moving into their place shortly
 	if((result != SHUTTLE_CAN_DOCK) && (result != SHUTTLE_SOMEONE_ELSE_DOCKED))
-		WARNING("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
-		return
+		CRASH("Template shuttle [preview_shuttle] cannot dock at [D] ([result]).")
 
 	if(existing_shuttle && replace)
 		existing_shuttle.jumpToNullSpace()
@@ -818,11 +817,11 @@ SUBSYSTEM_DEF(shuttle)
 				found++
 				if(found > 1)
 					qdel(P, force=TRUE)
-					log_world("Map warning: Shuttle Template [S.mappath] has multiple mobile docking ports.")
+					log_mapping("Shuttle Template [S.mappath] has multiple mobile docking ports.")
 				else
 					preview_shuttle = P
 			if(istype(P, /obj/docking_port/stationary))
-				log_world("Map warning: Shuttle Template [S.mappath] has a stationary docking port.")
+				log_mapping("Shuttle Template [S.mappath] has a stationary docking port.")
 	if(!found)
 		var/msg = "load_template(): Shuttle Template [S.mappath] has no mobile docking port. Aborting import."
 		for(var/T in affected)

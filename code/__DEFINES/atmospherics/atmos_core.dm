@@ -193,3 +193,6 @@
 #define MAKE_ACTIVE 2
 ///Disable excited group
 #define KILL_EXCITED 3
+
+/// How many maximum iterations do we allow the Newton-Raphson approximation for gas pressure to do.
+#define ATMOS_PRESSURE_APPROXIMATION_ITERATIONS 10

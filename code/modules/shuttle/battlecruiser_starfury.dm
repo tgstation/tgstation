@@ -84,19 +84,19 @@
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_one
 	shuttleId = "SBC_fighter1"
 	shuttlePortId = "SBC_fighter1_custom"
-	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter1_bay" = 1)
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter1_bay" = 1)
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_two
 	shuttleId = "SBC_fighter2"
 	shuttlePortId = "SBC_fighter2_custom"
-	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter2_bay" = 1)
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter2_bay" = 1)
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/fighter/fighter_three
 	shuttleId = "SBC_fighter3"
 	shuttlePortId = "SBC_fighter3_custom"
-	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter3_bay" = 1)
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_fighter3_bay" = 1)
 	req_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/corvette
@@ -104,7 +104,7 @@
 	desc = "Used to pilot the syndicate corvette to board enemy stations and ships."
 	shuttleId = "SBC_corvette"
 	shuttlePortId = "SBC_corvette_custom"
-	jumpto_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_corvette_bay" = 1)
+	jump_to_ports = list("syndicate_ne" = 1, "syndicate_nw" = 1, "syndicate_n" = 1, "syndicate_se" = 1, "syndicate_sw" = 1, "syndicate_s" = 1, "SBC_corvette_bay" = 1)
 	y_offset = 3
 	x_offset = 0
 
@@ -139,7 +139,7 @@
  * Summons the SBC Starfury, a large syndicate battlecruiser, in Deep Space.
  * It can be piloted into the station's area.
  */
-/proc/summon_battlecruiser()
+/proc/summon_battlecruiser(datum/team/battlecruiser/team)
 
 	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for battlecruiser crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
@@ -158,12 +158,13 @@
 	if(!ship.load(battlecruiser_loading_turf))
 		CRASH("Loading battlecruiser ship failed!")
 
-	var/datum/team/battlecruiser/team = new()
-	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
-	if(nuke.r_code == "ADMIN")
-		nuke.r_code = random_nukecode()
-	team.nuke = nuke
-	team.update_objectives()
+	if(!team)
+		team = new()
+		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+		if(nuke.r_code == "ADMIN")
+			nuke.r_code = random_nukecode()
+		team.nuke = nuke
+		team.update_objectives()
 
 	for(var/turf/open/spawned_turf as anything in ship.get_affected_turfs(battlecruiser_loading_turf)) //not as anything to filter out closed turfs
 		for(var/obj/effect/mob_spawn/ghost_role/human/syndicate/battlecruiser/spawner in spawned_turf)

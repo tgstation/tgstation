@@ -123,7 +123,7 @@
 /mob/living/simple_animal/hostile/jungle/seedling/proc/WarmupAttack()
 	if(combatant_state == SEEDLING_STATE_NEUTRAL)
 		combatant_state = SEEDLING_STATE_WARMUP
-		walk(src,0)
+		SSmove_manager.stop_looping(src)
 		update_icons()
 		var/target_dist = get_dist(src,target)
 		var/living_target_check = isliving(target)

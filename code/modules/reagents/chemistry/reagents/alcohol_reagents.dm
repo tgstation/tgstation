@@ -41,18 +41,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	addiction_types = list(/datum/addiction/alcohol = 0.05 * boozepwr)
 	return ..()
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	if(C.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
+/datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.drunkenness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
-		if(HAS_TRAIT(C, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
+		if(HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE)) //we're an accomplished drinker
 			booze_power *= 0.7
-		if(HAS_TRAIT(C, TRAIT_LIGHT_DRINKER))
+		if(HAS_TRAIT(drinker, TRAIT_LIGHT_DRINKER))
 			booze_power *= 2
-		C.drunkenness = max((C.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE * REM * delta_time)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
+		drinker.drunkenness = max((drinker.drunkenness + (sqrt(volume) * booze_power * ALCOHOL_RATE * REM * delta_time)), 0) //Volume, power, and server alcohol rate effect how quickly one gets drunk
 		if(boozepwr > 0)
-			var/obj/item/organ/liver/L = C.getorganslot(ORGAN_SLOT_LIVER)
-			if (istype(L))
-				L.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * L.alcohol_tolerance * delta_time, 0))/150))
+			var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+			if (istype(liver))
+				liver.applyOrganDamage(((max(sqrt(volume) * (boozepwr ** ALCOHOL_EXPONENT) * liver.alcohol_tolerance * delta_time, 0))/150))
 	return ..()
 
 /datum/reagent/consumable/ethanol/expose_obj(obj/exposed_obj, reac_volume)
@@ -142,13 +142,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
-/datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.color != color)
-		M.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
+/datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.color != color)
+		drinker.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
-/datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/M)
-	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
+/datum/reagent/consumable/ethanol/beer/green/on_mob_end_metabolize(mob/living/drinker)
+	drinker.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
 
 /datum/reagent/consumable/ethanol/kahlua
 	name = "Kahlua"
@@ -162,12 +162,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	ph = 6
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness = max(M.dizziness - (5 * REM * delta_time), 0)
-	M.adjust_drowsyness(-3 * REM * delta_time)
-	M.AdjustSleeping(-40 * REM * delta_time)
-	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Jitter(5)
+/datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.dizziness = max(drinker.dizziness - (5 * REM * delta_time), 0)
+	drinker.adjust_drowsyness(-3 * REM * delta_time)
+	drinker.AdjustSleeping(-40 * REM * delta_time)
+	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+		drinker.Jitter(0.5 SECONDS)
 	..()
 	. = TRUE
 
@@ -205,9 +205,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/hal_amt = 4
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/whiskey/candycorn/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(5, delta_time))
-		M.hallucination += hal_amt //conscious dreamers can be treasurers to their own currency
+		drinker.hallucination += hal_amt //conscious dreamers can be treasurers to their own currency
 	..()
 
 /datum/reagent/consumable/ethanol/thirteenloko
@@ -224,55 +224,55 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "This is a glass of Thirteen Loko, it appears to be of the highest quality. The drink, not the glass."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_drowsyness(-7 * REM * delta_time)
-	M.AdjustSleeping(-40 * REM * delta_time)
-	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
-	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.Jitter(5)
+/datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_drowsyness(-7 * REM * delta_time)
+	drinker.AdjustSleeping(-40 * REM * delta_time)
+	drinker.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, drinker.get_body_temp_normal())
+	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+		drinker.Jitter(0.5 SECONDS)
 	..()
 	return TRUE
 
-/datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/M)
-	to_chat(M, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
-	M.Jitter(20)
-	M.Stun(15)
+/datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/drinker)
+	to_chat(drinker, span_userdanger("Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!"))
+	drinker.Jitter(2 SECONDS)
+	drinker.Stun(1.5 SECONDS)
 
-/datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/M, delta_time, times_fired)
-	if(DT_PROB(3.5, delta_time) && iscarbon(M))
-		var/obj/item/I = M.get_active_held_item()
-		if(I)
-			M.dropItemToGround(I)
-			to_chat(M, span_notice("Your hands jitter and you drop what you were holding!"))
-			M.Jitter(10)
+/datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/drinker, delta_time, times_fired)
+	if(DT_PROB(3.5, delta_time) && iscarbon(drinker))
+		var/obj/item/held_item = drinker.get_active_held_item()
+		if(held_item)
+			drinker.dropItemToGround(held_item)
+			to_chat(drinker, span_notice("Your hands jitter and you drop what you were holding!"))
+			drinker.Jitter(1 SECONDS)
 
 	if(DT_PROB(3.5, delta_time))
-		to_chat(M, span_notice("[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
+		to_chat(drinker, span_notice("[pick("You have a really bad headache.", "Your eyes hurt.", "You find it hard to stay still.", "You feel your heart practically beating out of your chest.")]"))
 
-	if(DT_PROB(2.5, delta_time) && iscarbon(M))
-		var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
-		if(M.is_blind())
+	if(DT_PROB(2.5, delta_time) && iscarbon(drinker))
+		var/obj/item/organ/eyes/eyes = drinker.getorganslot(ORGAN_SLOT_EYES)
+		if(drinker.is_blind())
 			if(istype(eyes))
-				eyes.Remove(M)
-				eyes.forceMove(get_turf(M))
-				to_chat(M, span_userdanger("You double over in pain as you feel your eyeballs liquify in your head!"))
-				M.emote("scream")
-				M.adjustBruteLoss(15)
+				eyes.Remove(drinker)
+				eyes.forceMove(get_turf(drinker))
+				to_chat(drinker, span_userdanger("You double over in pain as you feel your eyeballs liquify in your head!"))
+				drinker.emote("scream")
+				drinker.adjustBruteLoss(15)
 		else
-			to_chat(M, span_userdanger("You scream in terror as you go blind!"))
+			to_chat(drinker, span_userdanger("You scream in terror as you go blind!"))
 			eyes.applyOrganDamage(eyes.maxHealth)
-			M.emote("scream")
+			drinker.emote("scream")
 
-	if(DT_PROB(1.5, delta_time) && iscarbon(M))
-		M.visible_message(span_danger("[M] starts having a seizure!"), span_userdanger("You have a seizure!"))
-		M.Unconscious(100)
-		M.Jitter(350)
+	if(DT_PROB(1.5, delta_time) && iscarbon(drinker))
+		drinker.visible_message(span_danger("[drinker] starts having a seizure!"), span_userdanger("You have a seizure!"))
+		drinker.Unconscious(10 SECONDS)
+		drinker.Jitter(35 SECONDS)
 
-	if(DT_PROB(0.5, delta_time) && iscarbon(M))
-		var/datum/disease/D = new /datum/disease/heart_failure
-		M.ForceContractDisease(D)
-		to_chat(M, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
-		M.playsound_local(M, 'sound/effects/singlebeat.ogg', 100, 0)
+	if(DT_PROB(0.5, delta_time) && iscarbon(drinker))
+		var/datum/disease/heart_attack = new /datum/disease/heart_failure
+		drinker.ForceContractDisease(heart_attack)
+		to_chat(drinker, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
+		drinker.playsound_local(drinker, 'sound/effects/singlebeat.ogg', 100, 0)
 
 /datum/reagent/consumable/ethanol/vodka
 	name = "Vodka"
@@ -285,7 +285,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The glass contain wodka. Xynta."
 	shot_glass_icon_state = "shotglassclear"
 	ph = 8.1
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS //Very high proof
 
 /datum/reagent/consumable/ethanol/bilk
 	name = "Bilk"
@@ -299,9 +299,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A brew of milk and beer. For those alcoholics who fear osteoporosis."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.getBruteLoss() && DT_PROB(5, delta_time))
-		M.heal_bodypart_damage(brute = 1)
+/datum/reagent/consumable/ethanol/bilk/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.getBruteLoss() && DT_PROB(5, delta_time))
+		drinker.heal_bodypart_damage(brute = 1)
 		. = TRUE
 	return ..() || .
 
@@ -318,8 +318,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	ph = 3.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_drugginess(50 * REM * delta_time)
+/datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.set_drugginess(50 * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/gin
@@ -464,9 +464,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassgreen"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(DT_PROB(5, delta_time) && !HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.hallucination += 4 //Reference to the urban myth
+/datum/reagent/consumable/ethanol/absinthe/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(DT_PROB(5, delta_time) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+		drinker.hallucination += 4 //Reference to the urban myth
 	..()
 
 /datum/reagent/consumable/ethanol/hooch
@@ -480,13 +480,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "You've really hit rock bottom now... your liver packed its bags and left last night."
 	addiction_types = list(/datum/addiction/alcohol = 5, /datum/addiction/maintenance_drugs = 2)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && HAS_TRAIT(liver, TRAIT_GREYTIDE_METABOLISM))
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		. = TRUE
-	return ..() || .
 
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
@@ -529,13 +522,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	return ..()
 
-/datum/reagent/consumable/ethanol/goldschlager/on_transfer(atom/A, methods = TOUCH, trans_volume)
+/datum/reagent/consumable/ethanol/goldschlager/on_transfer(atom/atom, methods = TOUCH, trans_volume)
 	if(!(methods & INGEST))
 		return ..()
 
 	var/convert_amount = trans_volume * min(GOLDSCHLAGER_GOLD_RATIO, 1)
-	A.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
-	A.reagents.add_reagent(/datum/reagent/gold, convert_amount)
+	atom.reagents.remove_reagent(/datum/reagent/consumable/ethanol/goldschlager, convert_amount)
+	atom.reagents.add_reagent(/datum/reagent/gold, convert_amount)
 	return ..()
 
 /datum/reagent/consumable/ethanol/patron
@@ -592,12 +585,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A classic mix of rum, cola, and lime. A favorite of revolutionaries everywhere!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.mind && M.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
-		M.adjustBruteLoss(-1 * REM * delta_time, 0)
-		M.adjustFireLoss(-1 * REM * delta_time, 0)
-		M.adjustToxLoss(-1 * REM * delta_time, 0)
-		M.adjustOxyLoss(-5 * REM * delta_time, 0)
+/datum/reagent/consumable/ethanol/cuba_libre/on_mob_life(mob/living/carbon/cubano, delta_time, times_fired)
+	if(cubano.mind && cubano.mind.has_antag_datum(/datum/antagonist/rev)) //Cuba Libre, the traditional drink of revolutions! Heals revolutionaries.
+		cubano.adjustBruteLoss(-1 * REM * delta_time, 0)
+		cubano.adjustFireLoss(-1 * REM * delta_time, 0)
+		cubano.adjustToxLoss(-1 * REM * delta_time, 0)
+		cubano.adjustOxyLoss(-5 * REM * delta_time, 0)
 		. = TRUE
 	return ..() || .
 
@@ -663,17 +656,17 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
-		ADD_TRAIT(M, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
-		if (HAS_TRAIT(M, TRAIT_IRRADIATED))
-			M.adjustToxLoss(-2 * REM * delta_time)
+		ADD_TRAIT(drinker, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+		if (HAS_TRAIT(drinker, TRAIT_IRRADIATED))
+			drinker.adjustToxLoss(-2 * REM * delta_time)
 
 	return ..()
 
-/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_end_metabolize(mob/living/drinker)
+	REMOVE_TRAIT(drinker, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
 	return ..()
 
 /datum/reagent/consumable/ethanol/booger
@@ -699,9 +692,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Tomato juice, mixed with Vodka and a li'l bit of lime. Tastes like liquid murder."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	if(C.blood_volume < BLOOD_VOLUME_NORMAL)
-		C.blood_volume = min(C.blood_volume + (3 * REM * delta_time), BLOOD_VOLUME_NORMAL) //Bloody Mary quickly restores blood loss.
+/datum/reagent/consumable/ethanol/bloody_mary/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
+		drinker.blood_volume = min(drinker.blood_volume + (3 * REM * delta_time), BLOOD_VOLUME_NORMAL) //Bloody Mary quickly restores blood loss.
 	..()
 
 /datum/reagent/consumable/ethanol/brave_bull
@@ -718,16 +711,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/tough_text
 	glass_price = DRINK_PRICE_EASY
 
-/datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/M)
+/datum/reagent/consumable/ethanol/brave_bull/on_mob_metabolize(mob/living/drinker)
 	tough_text = pick("brawny", "tenacious", "tough", "hardy", "sturdy") //Tuff stuff
-	to_chat(M, span_notice("You feel [tough_text]!"))
-	M.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
-	M.health += 10
+	to_chat(drinker, span_notice("You feel [tough_text]!"))
+	drinker.maxHealth += 10 //Brave Bull makes you sturdier, and thus capable of withstanding a tiny bit more punishment.
+	drinker.health += 10
 
-/datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/M)
-	to_chat(M, span_notice("You no longer feel [tough_text]."))
-	M.maxHealth -= 10
-	M.health = min(M.health - 10, M.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
+/datum/reagent/consumable/ethanol/brave_bull/on_mob_end_metabolize(mob/living/drinker)
+	to_chat(drinker, span_notice("You no longer feel [tough_text]."))
+	drinker.maxHealth -= 10
+	drinker.health = min(drinker.health - 10, drinker.maxHealth) //This can indeed crit you if you're alive solely based on alchol ingestion
 
 /datum/reagent/consumable/ethanol/tequila_sunrise
 	name = "Tequila Sunrise"
@@ -743,20 +736,20 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	var/obj/effect/light_holder
 	glass_price = DRINK_PRICE_MEDIUM
 
-/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_metabolize(mob/living/M)
-	to_chat(M, span_notice("You feel gentle warmth spread through your body!"))
-	light_holder = new(M)
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_metabolize(mob/living/drinker)
+	to_chat(drinker, span_notice("You feel gentle warmth spread through your body!"))
+	light_holder = new(drinker)
 	light_holder.set_light(3, 0.7, "#FFCC00") //Tequila Sunrise makes you radiate dim light, like a sunrise!
 
-/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(QDELETED(light_holder))
 		holder.del_reagent(type) //If we lost our light object somehow, remove the reagent
-	else if(light_holder.loc != M)
-		light_holder.forceMove(M)
+	else if(light_holder.loc != drinker)
+		light_holder.forceMove(drinker)
 	return ..()
 
-/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/M)
-	to_chat(M, span_notice("The warmth in your body fades."))
+/datum/reagent/consumable/ethanol/tequila_sunrise/on_mob_end_metabolize(mob/living/drinker)
+	to_chat(drinker, span_notice("The warmth in your body fades."))
 	QDEL_NULL(light_holder)
 
 /datum/reagent/consumable/ethanol/toxins_special
@@ -772,8 +765,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "toxinsspecialglass"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/M, delta_time, times_fired)
-	M.adjust_bodytemperature(15 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/drinker, delta_time, times_fired)
+	drinker.adjust_bodytemperature(15 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/beepsky_smash
@@ -788,43 +781,43 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Beepsky Smash"
 	glass_desc = "Heavy, hot and strong. Just like the Iron fist of the LAW."
 	overdose_threshold = 40
-	var/datum/brain_trauma/special/beepsky/B
+	var/datum/brain_trauma/special/beepsky/beepsky_hallucination
 	ph = 2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_metabolize(mob/living/carbon/M)
-	if(HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_metabolize(mob/living/carbon/drinker)
+	if(HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		metabolization_rate = 0.8
 	// if you don't have a liver, or your liver isn't an officer's liver
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		B = new()
-		M.gain_trauma(B, TRAUMA_RESILIENCE_ABSOLUTE)
+		beepsky_hallucination = new()
+		drinker.gain_trauma(beepsky_hallucination, TRAUMA_RESILIENCE_ABSOLUTE)
 	..()
 
-/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.Jitter(2)
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.Jitter(2)
+	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	// if you have a liver and that liver is an officer's liver
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.adjustStaminaLoss(-10 * REM * delta_time, 0)
+		drinker.adjustStaminaLoss(-10 * REM * delta_time, 0)
 		if(DT_PROB(10, delta_time))
-			new /datum/hallucination/items_other(M)
+			new /datum/hallucination/items_other(drinker)
 		if(DT_PROB(5, delta_time))
-			new /datum/hallucination/stray_bullet(M)
+			new /datum/hallucination/stray_bullet(drinker)
 	..()
 	. = TRUE
 
-/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_end_metabolize(mob/living/carbon/M)
-	if(B)
-		QDEL_NULL(B)
+/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_end_metabolize(mob/living/carbon/drinker)
+	if(beepsky_hallucination)
+		QDEL_NULL(beepsky_hallucination)
 	return ..()
 
-/datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/M)
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+/datum/reagent/consumable/ethanol/beepsky_smash/overdose_start(mob/living/carbon/drinker)
+	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	// if you don't have a liver, or your liver isn't an officer's liver
 	if(!liver || !HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
+		drinker.gain_trauma(/datum/brain_trauma/mild/phobia/security, TRAUMA_RESILIENCE_BASIC)
 
 /datum/reagent/consumable/ethanol/irish_cream
 	name = "Irish Cream"
@@ -851,18 +844,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/dorf_mode
 
-/datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/M)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(HAS_TRAIT(H, TRAIT_DWARF))
-			to_chat(H, span_notice("Now THAT is MANLY!"))
+/datum/reagent/consumable/ethanol/manly_dorf/on_mob_metabolize(mob/living/drinker)
+	if(ishuman(drinker))
+		var/mob/living/carbon/human/potential_dwarf = drinker
+		if(HAS_TRAIT(potential_dwarf, TRAIT_DWARF))
+			to_chat(potential_dwarf, span_notice("Now THAT is MANLY!"))
 			boozepwr = 50 // will still smash but not as much.
 			dorf_mode = TRUE
 
-/datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/manly_dorf/on_mob_life(mob/living/carbon/dwarf, delta_time, times_fired)
 	if(dorf_mode)
-		M.adjustBruteLoss(-2 * REM * delta_time)
-		M.adjustFireLoss(-2 * REM * delta_time)
+		dwarf.adjustBruteLoss(-2 * REM * delta_time)
+		dwarf.adjustFireLoss(-2 * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/longislandicedtea
@@ -971,8 +964,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 
-/datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_drugginess(30 * REM * delta_time)
+/datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.set_drugginess(30 * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/whiskeysoda
@@ -999,8 +992,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The ultimate refreshment."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, drinker.get_body_temp_normal() + 20) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/barefoot
@@ -1015,11 +1008,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Barefoot and pregnant."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/barefoot/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(ishuman(M)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
-		var/mob/living/carbon/human/H = M
-		if(!H.shoes)
-			H.adjustBruteLoss(-3 * REM * delta_time, 0)
+/datum/reagent/consumable/ethanol/barefoot/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(ishuman(drinker)) //Barefoot causes the imbiber to quickly regenerate brute trauma if they're not wearing shoes.
+		var/mob/living/carbon/human/unshoed = drinker
+		if(!unshoed.shoes)
+			unshoed.adjustBruteLoss(-3 * REM * delta_time, 0)
 			. = TRUE
 	return ..() || .
 
@@ -1121,8 +1114,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A spicy mix of Vodka and Spice. Very hot."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_bodytemperature(50 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, BODYTEMP_HEAT_DAMAGE_LIMIT) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/red_mead
@@ -1161,8 +1154,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A beer so frosty, the air around it freezes."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, T0C) //310.15 is the normal bodytemp.
+/datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, T0C) //310.15 is the normal bodytemp.
 	return ..()
 
 /datum/reagent/consumable/ethanol/grog
@@ -1283,9 +1276,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A syndicate bomb."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/syndicatebomb/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(2.5, delta_time))
-		playsound(get_turf(M), 'sound/effects/explosionfar.ogg', 100, TRUE)
+		playsound(get_turf(drinker), 'sound/effects/explosionfar.ogg', 100, TRUE)
 	return ..()
 
 /datum/reagent/consumable/ethanol/hiveminderaser
@@ -1338,10 +1331,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink from Clown Heaven."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
-	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(M))
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+/datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
+	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || ismonkey(drinker))
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..() || .
 
@@ -1358,10 +1351,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink from Mime Heaven."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(ishuman(M) && M.mind?.miming)
-		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+/datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(ishuman(drinker) && drinker.mind?.miming)
+		drinker.silent = max(drinker.silent, MIMEDRINK_SILENCE_DURATION)
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..() || .
 
@@ -1436,13 +1429,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Aromatic beverage served piping hot. According to folk tales it can almost wake the dead."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.health <= 0)
-		M.adjustBruteLoss(-3 * REM * delta_time, 0)
-		M.adjustFireLoss(-3 * REM * delta_time, 0)
-		M.adjustCloneLoss(-5 * REM * delta_time, 0)
-		M.adjustOxyLoss(-4 * REM * delta_time, 0)
-		M.adjustToxLoss(-3 * REM * delta_time, 0)
+/datum/reagent/consumable/ethanol/hearty_punch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.health <= 0)
+		drinker.adjustBruteLoss(-3 * REM * delta_time, 0)
+		drinker.adjustFireLoss(-3 * REM * delta_time, 0)
+		drinker.adjustCloneLoss(-5 * REM * delta_time, 0)
+		drinker.adjustOxyLoss(-4 * REM * delta_time, 0)
+		drinker.adjustToxLoss(-3 * REM * delta_time, 0)
 		. = TRUE
 	return ..() || .
 
@@ -1472,21 +1465,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_drugginess(50 * REM * delta_time)
-	if(!HAS_TRAIT(M, TRAIT_ALCOHOL_TOLERANCE))
-		M.set_confusion(max(M.get_confusion() + (2 * REM * delta_time),0))
-		M.Dizzy(10 * REM * delta_time)
-	if (!M.slurring)
-		M.slurring = 1 * REM * delta_time
-	M.slurring += 3 * REM * delta_time
+/datum/reagent/consumable/ethanol/atomicbomb/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.set_drugginess(50 * REM * delta_time)
+	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+		drinker.set_confusion(max(drinker.get_confusion() + (2 * REM * delta_time),0))
+		drinker.Dizzy(10 * REM * delta_time)
+	if (!drinker.slurring)
+		drinker.slurring = 1 * REM * delta_time
+	drinker.slurring += 3 * REM * delta_time
 	switch(current_cycle)
 		if(51 to 200)
-			M.Sleeping(100 * REM * delta_time)
+			drinker.Sleeping(100 * REM * delta_time)
 			. = TRUE
 		if(201 to INFINITY)
-			M.AdjustSleeping(40 * REM * delta_time)
-			M.adjustToxLoss(2 * REM * delta_time, 0)
+			drinker.AdjustSleeping(40 * REM * delta_time)
+			drinker.adjustToxLoss(2 * REM * delta_time, 0)
 			. = TRUE
 	..()
 
@@ -1502,20 +1495,20 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Like having your brain smashed out by a slice of lemon wrapped around a large gold brick."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.dizziness += 1.5 * REM * delta_time
+/datum/reagent/consumable/ethanol/gargle_blaster/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.dizziness += 1.5 * REM * delta_time
 	switch(current_cycle)
 		if(15 to 45)
-			if(!M.slurring)
-				M.slurring = 1 * REM * delta_time
-			M.slurring += 3 * REM * delta_time
+			if(!drinker.slurring)
+				drinker.slurring = 1 * REM * delta_time
+			drinker.slurring += 3 * REM * delta_time
 		if(45 to 55)
 			if(DT_PROB(30, delta_time))
-				M.set_confusion(max(M.get_confusion() + 3, 0))
+				drinker.set_confusion(max(drinker.get_confusion() + 3, 0))
 		if(55 to 200)
-			M.set_drugginess(55 * REM * delta_time)
+			drinker.set_drugginess(55 * REM * delta_time)
 		if(200 to INFINITY)
-			M.adjustToxLoss(2 * REM * delta_time, 0)
+			drinker.adjustToxLoss(2 * REM * delta_time, 0)
 			. = TRUE
 	..()
 
@@ -1532,38 +1525,38 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink that is guaranteed to knock you silly."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/neurotoxin/proc/pickt()
+/datum/reagent/consumable/ethanol/neurotoxin/proc/pick_paralyzed_limb()
 	return (pick(TRAIT_PARALYSIS_L_ARM,TRAIT_PARALYSIS_R_ARM,TRAIT_PARALYSIS_R_LEG,TRAIT_PARALYSIS_L_LEG))
 
-/datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.set_drugginess(50 * REM * delta_time)
-	M.dizziness += 2 * REM * delta_time
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150)
+/datum/reagent/consumable/ethanol/neurotoxin/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.set_drugginess(50 * REM * delta_time)
+	drinker.dizziness += 2 * REM * delta_time
+	drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1 * REM * delta_time, 150)
 	if(DT_PROB(10, delta_time))
-		M.adjustStaminaLoss(10)
-		M.drop_all_held_items()
-		to_chat(M, span_notice("You cant feel your hands!"))
+		drinker.adjustStaminaLoss(10)
+		drinker.drop_all_held_items()
+		to_chat(drinker, span_notice("You cant feel your hands!"))
 	if(current_cycle > 5)
 		if(DT_PROB(10, delta_time))
-			var/t = pickt()
-			ADD_TRAIT(M, t, type)
-			M.adjustStaminaLoss(10)
+			var/paralyzed_limb = pick_paralyzed_limb()
+			ADD_TRAIT(drinker, paralyzed_limb, type)
+			drinker.adjustStaminaLoss(10)
 		if(current_cycle > 30)
-			M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time)
+			drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2 * REM * delta_time)
 			if(current_cycle > 50 && DT_PROB(7.5, delta_time))
-				if(!M.undergoing_cardiac_arrest() && M.can_heartattack())
-					M.set_heartattack(TRUE)
-					if(M.stat == CONSCIOUS)
-						M.visible_message(span_userdanger("[M] clutches at [M.p_their()] chest as if [M.p_their()] heart stopped!"))
+				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
+					drinker.set_heartattack(TRUE)
+					if(drinker.stat == CONSCIOUS)
+						drinker.visible_message(span_userdanger("[drinker] clutches at [drinker.p_their()] chest as if [drinker.p_their()] heart stopped!"))
 	. = TRUE
 	..()
 
-/datum/reagent/consumable/ethanol/neurotoxin/on_mob_end_metabolize(mob/living/carbon/M)
-	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_ARM, type)
-	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_ARM, type)
-	REMOVE_TRAIT(M, TRAIT_PARALYSIS_R_LEG, type)
-	REMOVE_TRAIT(M, TRAIT_PARALYSIS_L_LEG, type)
-	M.adjustStaminaLoss(10)
+/datum/reagent/consumable/ethanol/neurotoxin/on_mob_end_metabolize(mob/living/carbon/drinker)
+	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_L_ARM, type)
+	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_R_ARM, type)
+	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_R_LEG, type)
+	REMOVE_TRAIT(drinker, TRAIT_PARALYSIS_L_LEG, type)
+	drinker.adjustStaminaLoss(10)
 	..()
 
 /datum/reagent/consumable/ethanol/hippies_delight
@@ -1580,35 +1573,35 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink enjoyed by people during the 1960's."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if (!M.slurring)
-		M.slurring = 1 * REM * delta_time
+/datum/reagent/consumable/ethanol/hippies_delight/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if (!drinker.slurring)
+		drinker.slurring = 1 * REM * delta_time
 	switch(current_cycle)
 		if(1 to 5)
-			M.Dizzy(10 * REM * delta_time)
-			M.set_drugginess(30 * REM * delta_time)
+			drinker.Dizzy(10 * REM * delta_time)
+			drinker.set_drugginess(30 * REM * delta_time)
 			if(DT_PROB(5, delta_time))
-				M.emote(pick("twitch","giggle"))
+				drinker.emote(pick("twitch","giggle"))
 		if(5 to 10)
-			M.Jitter(20 * REM * delta_time)
-			M.Dizzy(20 * REM * delta_time)
-			M.set_drugginess(45 * REM * delta_time)
+			drinker.Jitter(20 * REM * delta_time)
+			drinker.Dizzy(20 * REM * delta_time)
+			drinker.set_drugginess(45 * REM * delta_time)
 			if(DT_PROB(10, delta_time))
-				M.emote(pick("twitch","giggle"))
+				drinker.emote(pick("twitch","giggle"))
 		if (10 to 200)
-			M.Jitter(40 * REM * delta_time)
-			M.Dizzy(40 * REM * delta_time)
-			M.set_drugginess(60 * REM * delta_time)
+			drinker.Jitter(40 * REM * delta_time)
+			drinker.Dizzy(40 * REM * delta_time)
+			drinker.set_drugginess(60 * REM * delta_time)
 			if(DT_PROB(16, delta_time))
-				M.emote(pick("twitch","giggle"))
+				drinker.emote(pick("twitch","giggle"))
 		if(200 to INFINITY)
-			M.Jitter(60 * REM * delta_time)
-			M.Dizzy(60 * REM * delta_time)
-			M.set_drugginess(75 * REM * delta_time)
+			drinker.Jitter(60 * REM * delta_time)
+			drinker.Dizzy(60 * REM * delta_time)
+			drinker.set_drugginess(75 * REM * delta_time)
 			if(DT_PROB(23, delta_time))
-				M.emote(pick("twitch","giggle"))
+				drinker.emote(pick("twitch","giggle"))
 			if(DT_PROB(16, delta_time))
-				M.adjustToxLoss(2, 0)
+				drinker.adjustToxLoss(2, 0)
 				. = TRUE
 	..()
 
@@ -1638,9 +1631,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A new hit cocktail inspired by THE ARM Breweries will have you shouting Fuu ma'jin in no time!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.cultslurring = min(M.cultslurring + (3 * REM * delta_time), 3)
-	M.stuttering = min(M.stuttering + (3 * REM * delta_time), 3)
+/datum/reagent/consumable/ethanol/narsour/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.cultslurring = min(drinker.cultslurring + (3 * REM * delta_time), 3)
+	drinker.stuttering = min(drinker.stuttering + (3 * REM * delta_time), 3)
 	..()
 
 /datum/reagent/consumable/ethanol/triple_sec
@@ -1699,11 +1692,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "An intimidating and lawful beverage dares you to violate the law and make its day. Still can't drink it on duty, though."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/quadruple_sec/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..()
 
@@ -1719,11 +1712,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Now you are become law, destroyer of clowns."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/quintuple_sec/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	//Securidrink in line with the Screwdriver for engineers or Nothing for mimes but STRONG..
-	var/obj/item/organ/liver/liver = M.getorganslot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
-		M.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time, 2 * REM * delta_time)
+		drinker.heal_bodypart_damage(2 * REM * delta_time, 2 * REM *  delta_time, 2 * REM * delta_time)
 		. = TRUE
 	return ..()
 
@@ -1767,27 +1760,27 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_metabolize(mob/living/L)
+/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_metabolize(mob/living/drinker)
 	var/heal_points = 10
-	if(L.health <= 0)
+	if(drinker.health <= 0)
 		heal_points = 20 //heal more if we're in softcrit
-	for(var/i in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
-		L.adjustBruteLoss(-1)
-		L.adjustFireLoss(-1)
-		L.adjustToxLoss(-1)
-		L.adjustOxyLoss(-1)
-		L.adjustStaminaLoss(-1)
-	L.visible_message(span_warning("[L] shivers with renewed vigor!"), span_notice("One taste of [lowertext(name)] fills you with energy!"))
-	if(!L.stat && heal_points == 20) //brought us out of softcrit
-		L.visible_message(span_danger("[L] lurches to [L.p_their()] feet!"), span_boldnotice("Up and at 'em, kid."))
+	for(var/counter in 1 to min(volume, heal_points)) //only heals 1 point of damage per unit on add, for balance reasons
+		drinker.adjustBruteLoss(-1)
+		drinker.adjustFireLoss(-1)
+		drinker.adjustToxLoss(-1)
+		drinker.adjustOxyLoss(-1)
+		drinker.adjustStaminaLoss(-1)
+	drinker.visible_message(span_warning("[drinker] shivers with renewed vigor!"), span_notice("One taste of [lowertext(name)] fills you with energy!"))
+	if(!drinker.stat && heal_points == 20) //brought us out of softcrit
+		drinker.visible_message(span_danger("[drinker] lurches to [drinker.p_their()] feet!"), span_boldnotice("Up and at 'em, kid."))
 
-/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/L, delta_time, times_fired)
-	if(L.health > 0)
-		L.adjustBruteLoss(-1 * REM * delta_time)
-		L.adjustFireLoss(-1 * REM * delta_time)
-		L.adjustToxLoss(-0.5 * REM * delta_time)
-		L.adjustOxyLoss(-3 * REM * delta_time)
-		L.adjustStaminaLoss(-5 * REM * delta_time)
+/datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/drinker, delta_time, times_fired)
+	if(drinker.health > 0)
+		drinker.adjustBruteLoss(-1 * REM * delta_time)
+		drinker.adjustFireLoss(-1 * REM * delta_time)
+		drinker.adjustToxLoss(-0.5 * REM * delta_time)
+		drinker.adjustOxyLoss(-3 * REM * delta_time)
+		drinker.adjustStaminaLoss(-5 * REM * delta_time)
 		. = TRUE
 	..()
 
@@ -1804,8 +1797,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	shot_glass_icon_state = "shotglassgreen"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/squirt_cider/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.satiety += 5 * REM * delta_time //for context, vitamins give 15 satiety per second
+/datum/reagent/consumable/ethanol/squirt_cider/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.satiety += 5 * REM * delta_time //for context, vitamins give 15 satiety per second
 	..()
 	. = TRUE
 
@@ -1834,8 +1827,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "If you can't mix a Sugar Rush, you can't tend bar."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/sugar_rush/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.satiety -= 10 * REM * delta_time //junky as hell! a whole glass will keep you from being able to eat junk food
+/datum/reagent/consumable/ethanol/sugar_rush/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.satiety -= 10 * REM * delta_time //junky as hell! a whole glass will keep you from being able to eat junk food
 	..()
 	. = TRUE
 
@@ -1851,8 +1844,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "It'll either knock the drunkenness out of you or knock you out cold. Both, probably."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/crevice_spike/on_mob_metabolize(mob/living/L) //damage only applies when drink first enters system and won't again until drink metabolizes out
-	L.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
+/datum/reagent/consumable/ethanol/crevice_spike/on_mob_metabolize(mob/living/drinker) //damage only applies when drink first enters system and won't again until drink metabolizes out
+	drinker.adjustBruteLoss(3 * min(5,volume)) //minimum 3 brute damage on ingestion to limit non-drink means of injury - a full 5 unit gulp of the drink trucks you for the full 15
 
 /datum/reagent/consumable/ethanol/sake
 	name = "Sake"
@@ -1878,9 +1871,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A boozy minty hot cocoa that warms your belly on a cold night."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.apply_status_effect(/datum/status_effect/throat_soothed)
-	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
+/datum/reagent/consumable/ethanol/peppermint_patty/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
+	drinker.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, drinker.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/ethanol/alexander
@@ -1896,24 +1889,24 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/obj/item/shield/mighty_shield
 
-/datum/reagent/consumable/ethanol/alexander/on_mob_metabolize(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/thehuman = L
-		for(var/obj/item/shield/theshield in thehuman.contents)
-			mighty_shield = theshield
+/datum/reagent/consumable/ethanol/alexander/on_mob_metabolize(mob/living/drinker)
+	if(ishuman(drinker))
+		var/mob/living/carbon/human/the_human = drinker
+		for(var/obj/item/shield/the_shield in the_human.contents)
+			mighty_shield = the_shield
 			mighty_shield.block_chance += 10
-			to_chat(thehuman, span_notice("[theshield] appears polished, although you don't recall polishing it."))
+			to_chat(the_human, span_notice("[the_shield] appears polished, although you don't recall polishing it."))
 			return TRUE
 
-/datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/L, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, delta_time, times_fired)
 	..()
-	if(mighty_shield && !(mighty_shield in L.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
+	if(mighty_shield && !(mighty_shield in drinker.contents)) //If you had a shield and lose it, you lose the reagent as well. Otherwise this is just a normal drink.
 		holder.remove_reagent(type)
 
-/datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/consumable/ethanol/alexander/on_mob_end_metabolize(mob/living/drinker)
 	if(mighty_shield)
 		mighty_shield.block_chance -= 10
-		to_chat(L,span_notice("You notice [mighty_shield] looks worn again. Weird."))
+		to_chat(drinker,span_notice("You notice [mighty_shield] looks worn again. Weird."))
 	..()
 
 /datum/reagent/consumable/ethanol/amaretto_alexander
@@ -1954,18 +1947,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_MEDIUM
 
-/datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/L, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/between_the_sheets/on_mob_life(mob/living/drinker, delta_time, times_fired)
 	..()
-	if(L.IsSleeping())
-		if(L.getBruteLoss() && L.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
+	if(drinker.IsSleeping())
+		if(drinker.getBruteLoss() && drinker.getFireLoss()) //If you are damaged by both types, slightly increased healing but it only heals one. The more the merrier wink wink.
 			if(prob(50))
-				L.adjustBruteLoss(-0.25 * REM * delta_time)
+				drinker.adjustBruteLoss(-0.25 * REM * delta_time)
 			else
-				L.adjustFireLoss(-0.25 * REM * delta_time)
-		else if(L.getBruteLoss()) //If you have only one, it still heals but not as well.
-			L.adjustBruteLoss(-0.2 * REM * delta_time)
-		else if(L.getFireLoss())
-			L.adjustFireLoss(-0.2 * REM * delta_time)
+				drinker.adjustFireLoss(-0.25 * REM * delta_time)
+		else if(drinker.getBruteLoss()) //If you have only one, it still heals but not as well.
+			drinker.adjustBruteLoss(-0.2 * REM * delta_time)
+		else if(drinker.getFireLoss())
+			drinker.adjustFireLoss(-0.2 * REM * delta_time)
 
 /datum/reagent/consumable/ethanol/kamikaze
 	name = "Kamikaze"
@@ -2014,11 +2007,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A glass of pure Fernet. Only an absolute madman would drink this alone." //Hi Kevum
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(1 * REM * delta_time, 0)
-	M.adjust_nutrition(-5 * REM * delta_time)
-	M.overeatduration = 0
+/datum/reagent/consumable/ethanol/fernet/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.nutrition <= NUTRITION_LEVEL_STARVING)
+		drinker.adjustToxLoss(1 * REM * delta_time, 0)
+	drinker.adjust_nutrition(-5 * REM * delta_time)
+	drinker.overeatduration = 0
 	return ..()
 
 /datum/reagent/consumable/ethanol/fernet_cola
@@ -2033,11 +2026,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A sawed-off cola bottle filled with Fernet Cola. Nothing better after eating like a lardass."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.nutrition <= NUTRITION_LEVEL_STARVING)
-		M.adjustToxLoss(0.5 * REM * delta_time, 0)
-	M.adjust_nutrition(-3 * REM * delta_time)
-	M.overeatduration = 0
+/datum/reagent/consumable/ethanol/fernet_cola/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.nutrition <= NUTRITION_LEVEL_STARVING)
+		drinker.adjustToxLoss(0.5 * REM * delta_time, 0)
+	drinker.adjust_nutrition(-3 * REM * delta_time)
+	drinker.overeatduration = 0
 	return ..()
 
 /datum/reagent/consumable/ethanol/fanciulli
@@ -2054,14 +2047,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_HIGH
 
-/datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_nutrition(-5 * REM * delta_time)
-	M.overeatduration = 0
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_nutrition(-5 * REM * delta_time)
+	drinker.overeatduration = 0
 	return ..()
 
-/datum/reagent/consumable/ethanol/fanciulli/on_mob_metabolize(mob/living/M)
-	if(M.health > 0)
-		M.adjustStaminaLoss(20)
+/datum/reagent/consumable/ethanol/fanciulli/on_mob_metabolize(mob/living/drinker)
+	if(drinker.health > 0)
+		drinker.adjustStaminaLoss(20)
 		. = TRUE
 	..()
 
@@ -2080,13 +2073,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_price = DRINK_PRICE_MEDIUM
 
 
-/datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, T0C)
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_bodytemperature(-20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, T0C)
 	return ..()
 
-/datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/M)
-	if(M.health > 0)
-		M.adjustStaminaLoss(35)
+/datum/reagent/consumable/ethanol/branca_menta/on_mob_metabolize(mob/living/drinker)
+	if(drinker.health > 0)
+		drinker.adjustStaminaLoss(35)
 		. = TRUE
 	..()
 
@@ -2103,10 +2096,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A fizzy cocktail for those looking to start fresh."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(ishuman(M) && M.mind?.miming)
-		M.silent = max(M.silent, MIMEDRINK_SILENCE_DURATION)
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
+/datum/reagent/consumable/ethanol/blank_paper/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(ishuman(drinker) && drinker.mind?.miming)
+		drinker.silent = max(drinker.silent, MIMEDRINK_SILENCE_DURATION)
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
 		. = TRUE
 	return ..()
 
@@ -2243,12 +2236,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The glass bubbles and froths with an almost magical intensity."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/wizz_fizz/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	//A healing drink similar to Quadruple Sec, Ling Stings, and Screwdrivers for the Wizznerds; the check is consistent with the changeling sting
-	if(M?.mind?.has_antag_datum(/datum/antagonist/wizard))
-		M.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 1 * REM * delta_time)
-		M.adjustOxyLoss(-1 * REM * delta_time, 0)
-		M.adjustToxLoss(-1 * REM * delta_time, 0)
+	if(drinker?.mind?.has_antag_datum(/datum/antagonist/wizard))
+		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time, 1 * REM * delta_time)
+		drinker.adjustOxyLoss(-1 * REM * delta_time, 0)
+		drinker.adjustToxLoss(-1 * REM * delta_time, 0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray
@@ -2263,16 +2256,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Your eyes begin to water as the sting of alcohol reaches them."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	//Bugs should not drink Bug spray.
-	if(ismoth(M) || isflyperson(M))
-		M.adjustToxLoss(1 * REM * delta_time, 0)
+	if(ismoth(drinker) || isflyperson(drinker))
+		drinker.adjustToxLoss(1 * REM * delta_time, 0)
 	return ..()
 
-/datum/reagent/consumable/ethanol/bug_spray/on_mob_metabolize(mob/living/carbon/M)
+/datum/reagent/consumable/ethanol/bug_spray/on_mob_metabolize(mob/living/carbon/drinker)
 
-	if(ismoth(M) || isflyperson(M))
-		M.emote("scream")
+	if(ismoth(drinker) || isflyperson(drinker))
+		drinker.emote("scream")
 	return ..()
 
 
@@ -2311,10 +2304,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A turbulent cocktail for outlaw hoverbikers."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/turbo/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	if(DT_PROB(2, delta_time))
-		to_chat(M, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
-	M.adjustStaminaLoss(-0.25 * M.drunkenness * REM * delta_time)
+		to_chat(drinker, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
+	drinker.adjustStaminaLoss(-0.25 * drinker.drunkenness * REM * delta_time)
 	return ..()
 
 /datum/reagent/consumable/ethanol/old_timer
@@ -2360,12 +2353,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A popular drink amongst those adhering to an all synthetic diet."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/L)
+/datum/reagent/consumable/ethanol/rubberneck/on_mob_metabolize(mob/living/drinker)
 	. = ..()
-	ADD_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+	ADD_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
 
-/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_SHOCKIMMUNE, type)
+/datum/reagent/consumable/ethanol/rubberneck/on_mob_end_metabolize(mob/living/drinker)
+	REMOVE_TRAIT(drinker, TRAIT_SHOCKIMMUNE, type)
 	return ..()
 
 /datum/reagent/consumable/ethanol/duplex
@@ -2392,11 +2385,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "boozy Catholicism in a glass."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.mind?.holy_role)
-		M.adjustFireLoss(-2.5 * REM * delta_time, 0)
-		M.jitteriness = max(M.jitteriness - (1 * REM * delta_time), 0)
-		M.stuttering = max(M.stuttering - (1 * REM * delta_time), 0)
+/datum/reagent/consumable/ethanol/trappist/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.mind?.holy_role)
+		drinker.adjustFireLoss(-2.5 * REM * delta_time, 0)
+		drinker.jitteriness = max(drinker.jitteriness - (1 * REM * delta_time), 0)
+		drinker.stuttering = max(drinker.stuttering - (1 * REM * delta_time), 0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/blazaam
@@ -2410,16 +2403,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The glass seems to be sliding between realities. Doubles as a Berenstain remover."
 	var/stored_teleports = 0
 
-/datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.drunkenness > 40)
+/datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.drunkenness > 40)
 		if(stored_teleports)
-			do_teleport(M, get_turf(M), rand(1,3), channel = TELEPORT_CHANNEL_WORMHOLE)
+			do_teleport(drinker, get_turf(drinker), rand(1,3), channel = TELEPORT_CHANNEL_WORMHOLE)
 			stored_teleports--
 
 		if(DT_PROB(5, delta_time))
 			stored_teleports += rand(2, 6)
 			if(prob(70))
-				M.vomit(vomit_type = VOMIT_PURPLE)
+				drinker.vomit(vomit_type = VOMIT_PURPLE)
 	return ..()
 
 
@@ -2445,12 +2438,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Lavaland in a drink... mug... volcano... thing."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/ethanol/mauna_loa/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
 	// Heats the user up while the reagent is in the body. Occasionally makes you burst into flames.
-	M.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
+	drinker.adjust_bodytemperature(25 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time)
 	if (DT_PROB(2.5, delta_time))
-		M.adjust_fire_stacks(1)
-		M.IgniteMob()
+		drinker.adjust_fire_stacks(1)
+		drinker.IgniteMob()
 	..()
 
 /datum/reagent/consumable/ethanol/painkiller
@@ -2488,8 +2481,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_disgust(5 * REM * delta_time)
+/datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_disgust(5 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/ethanol/ginger_amaretto
@@ -2541,9 +2534,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "The fermented nectar of the Korta nut, as enjoyed by lizards galaxywide."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.getBruteLoss() && DT_PROB(10, delta_time))
-		M.heal_bodypart_damage(1,0, 0)
+/datum/reagent/consumable/ethanol/kortara/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.getBruteLoss() && DT_PROB(10, delta_time))
+		drinker.heal_bodypart_damage(1,0, 0)
 		. = TRUE
 
 /datum/reagent/consumable/ethanol/sea_breeze
@@ -2558,8 +2551,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Minty, chocolatey, and creamy. It's like drinkable mint chocolate chip!"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/sea_breeze/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.apply_status_effect(/datum/status_effect/throat_soothed)
+/datum/reagent/consumable/ethanol/sea_breeze/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
 	..()
 
 /datum/reagent/consumable/ethanol/white_tiziran
@@ -2586,9 +2579,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A drink to make facing death easier."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/C, delta_time, times_fired)
-	C.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
-	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
+/datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.hal_screwyhud = SCREWYHUD_HEALTHY //almost makes you forget how much it hurts
+	SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 	..()
 
 /datum/reagent/consumable/ethanol/protein_blend
@@ -2604,12 +2597,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	nutriment_factor = 3 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	M.adjust_nutrition(2 * REM * delta_time)
-	if(!islizard(M))
-		M.adjust_disgust(5 * REM * delta_time)
+/datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	drinker.adjust_nutrition(2 * REM * delta_time)
+	if(!islizard(drinker))
+		drinker.adjust_disgust(5 * REM * delta_time)
 	else
-		M.adjust_disgust(2 * REM * delta_time)
+		drinker.adjust_disgust(2 * REM * delta_time)
 	..()
 
 /datum/reagent/consumable/ethanol/mushi_kombucha
@@ -2636,9 +2629,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "A toast to the Empire, long may it stand."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(islizard(M))
-		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
+/datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(islizard(drinker))
+		SEND_SIGNAL(drinker, COMSIG_ADD_MOOD_EVENT, "triumph", /datum/mood_event/memories_of_home, name)
 	..()
 
 /datum/reagent/consumable/ethanol/the_juice
@@ -2654,12 +2647,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/datum/brain_trauma/special/bluespace_prophet/prophet_trauma
 
-/datum/reagent/consumable/ethanol/the_juice/on_mob_metabolize(mob/living/carbon/victim)
+/datum/reagent/consumable/ethanol/the_juice/on_mob_metabolize(mob/living/carbon/drinker)
 	. = ..()
 	prophet_trauma = new()
-	victim.gain_trauma(prophet_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
+	drinker.gain_trauma(prophet_trauma, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/reagent/consumable/ethanol/the_juice/on_mob_end_metabolize(mob/living/carbon/victim)
+/datum/reagent/consumable/ethanol/the_juice/on_mob_end_metabolize(mob/living/carbon/drinker)
 	if(prophet_trauma)
 		QDEL_NULL(prophet_trauma)
 	return ..()

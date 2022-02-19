@@ -22,6 +22,11 @@
 	if(!current_area)
 		return
 	RegisterSignal(current_area, COMSIG_AREA_POWER_CHANGE, .proc/AreaPowerCheck)
+	GLOB.intercoms_list += src
+
+/obj/item/radio/intercom/Destroy()
+	. = ..()
+	GLOB.intercoms_list -= src
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
@@ -31,32 +36,31 @@
 	else
 		. += span_notice("It's <i>unscrewed</i> from the wall, and can be <b>detached</b>.")
 
-/obj/item/radio/intercom/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(unscrewed)
-			user.visible_message(span_notice("[user] starts tightening [src]'s screws..."), span_notice("You start screwing in [src]..."))
-			if(I.use_tool(src, user, 30, volume=50))
-				user.visible_message(span_notice("[user] tightens [src]'s screws!"), span_notice("You tighten [src]'s screws."))
-				unscrewed = FALSE
-		else
-			user.visible_message(span_notice("[user] starts loosening [src]'s screws..."), span_notice("You start unscrewing [src]..."))
-			if(I.use_tool(src, user, 40, volume=50))
-				user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
-				unscrewed = TRUE
+/obj/item/radio/intercom/screwdriver_act(mob/living/user, obj/item/tool)
+	if(unscrewed)
+		user.visible_message(span_notice("[user] starts tightening [src]'s screws..."), span_notice("You start screwing in [src]..."))
+		if(tool.use_tool(src, user, 30, volume=50))
+			user.visible_message(span_notice("[user] tightens [src]'s screws!"), span_notice("You tighten [src]'s screws."))
+			unscrewed = FALSE
+	else
+		user.visible_message(span_notice("[user] starts loosening [src]'s screws..."), span_notice("You start unscrewing [src]..."))
+		if(tool.use_tool(src, user, 40, volume=50))
+			user.visible_message(span_notice("[user] loosens [src]'s screws!"), span_notice("You unscrew [src], loosening it from the wall."))
+			unscrewed = TRUE
+	return TRUE
+
+/obj/item/radio/intercom/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(!unscrewed)
+		to_chat(user, span_warning("You need to unscrew [src] from the wall first!"))
 		return
-	else if(I.tool_behaviour == TOOL_WRENCH)
-		if(!unscrewed)
-			to_chat(user, span_warning("You need to unscrew [src] from the wall first!"))
-			return
-		user.visible_message(span_notice("[user] starts unsecuring [src]..."), span_notice("You start unsecuring [src]..."))
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 80))
-			user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			new/obj/item/wallframe/intercom(get_turf(src))
-			qdel(src)
-		return
-	return ..()
+	user.visible_message(span_notice("[user] starts unsecuring [src]..."), span_notice("You start unsecuring [src]..."))
+	tool.play_tool_sound(src)
+	if(tool.use_tool(src, user, 80))
+		user.visible_message(span_notice("[user] unsecures [src]!"), span_notice("You detach [src] from the wall."))
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		new/obj/item/wallframe/intercom(get_turf(src))
+		qdel(src)
 
 /**
  * Override attack_tk_grab instead of attack_tk because we actually want attack_tk's

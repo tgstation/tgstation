@@ -5,12 +5,13 @@
  * @author Changes stylemistake
  * @author Changes ThePotato97
  * @author Changes Ghommie
+ * @author Changes Timberpoes
  * @license MIT
  */
 
 import { classes } from 'common/react';
 import { Component } from 'inferno';
-import marked from 'marked';
+import { marked } from 'marked';
 import { useBackend } from '../backend';
 import { Box, Flex, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';

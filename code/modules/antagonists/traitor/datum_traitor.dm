@@ -51,17 +51,20 @@
 		SStraitor.register_uplink_handler(uplink_handler)
 
 		uplink_handler.has_objectives = TRUE
-		uplink_handler.owner = owner
-		uplink_handler.assigned_role = owner.assigned_role.title
 		uplink_handler.generate_objectives()
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-			if(item.item && (!length(item.restricted_roles) || (uplink_handler.assigned_role in item.restricted_roles)) \
-				&&  !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
-				uplink_items += item
+			if(item.item && !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+				if(!length(item.restricted_roles) && !length(item.restricted_species))
+					uplink_items += item
+					continue
+				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
+					uplink_items += item
+					continue
 		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
 
 	if(give_objectives)
@@ -76,6 +79,59 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 	return ..()
+
+/datum/antagonist/traitor/on_removal()
+	if(uplink_handler)
+		uplink_handler.has_objectives = FALSE
+	return ..()
+
+/datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)
+	var/string = "[to_display.name]"
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE || to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
+		string += " <a href='?src=[REF(owner)];edit_obj_tc=[REF(to_display)]'>[to_display.telecrystal_reward] TC</a>"
+		string += " <a href='?src=[REF(owner)];edit_obj_pr=[REF(to_display)]'>[to_display.progression_reward] PR</a>"
+	else
+		string += ", [to_display.telecrystal_reward] TC"
+		string += ", [to_display.progression_reward] PR"
+	if(to_display.objective_state == OBJECTIVE_STATE_ACTIVE)
+		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Fail this objective</a>"
+		string += " <a href='?src=[REF(owner)];succeed_objective=[REF(to_display)]'>Succeed this objective</a>"
+	if(to_display.objective_state == OBJECTIVE_STATE_INACTIVE)
+		string += " <a href='?src=[REF(owner)];fail_objective=[REF(to_display)]'>Dispose of this objective</a>"
+
+	if(to_display.skipped)
+		string += " - <b>Skipped</b>"
+	else if(to_display.objective_state == OBJECTIVE_STATE_FAILED)
+		string += " - <b><font color='red'>Failed</font></b>"
+	else if(to_display.objective_state == OBJECTIVE_STATE_INVALID)
+		string += " - <b>Invalidated</b>"
+	else if(to_display.objective_state == OBJECTIVE_STATE_COMPLETED)
+		string += " - <b><font color='green'>Succeeded</font></b>"
+
+	return string
+
+/datum/antagonist/traitor/antag_panel_objectives()
+	var/result = ..()
+	if(!uplink_handler)
+		return result
+	result += "<i><b>Traitor specific objectives</b></i><br>"
+	result += "<i><b>Concluded Objectives</b></i>:<br>"
+	for(var/datum/traitor_objective/objective as anything in uplink_handler.completed_objectives)
+		result += "[traitor_objective_to_html(objective)]<br>"
+	if(!length(uplink_handler.completed_objectives))
+		result += "EMPTY<br>"
+	result += "<i><b>Ongoing Objectives</b></i>:<br>"
+	for(var/datum/traitor_objective/objective as anything in uplink_handler.active_objectives)
+		result += "[traitor_objective_to_html(objective)]<br>"
+	if(!length(uplink_handler.active_objectives))
+		result += "EMPTY<br>"
+	result += "<i><b>Potential Objectives</b></i>:<br>"
+	for(var/datum/traitor_objective/objective as anything in uplink_handler.potential_objectives)
+		result += "[traitor_objective_to_html(objective)]<br>"
+	if(!length(uplink_handler.potential_objectives))
+		result += "EMPTY<br>"
+	result += "<a href='?src=[REF(owner)];common=give_objective'>Force add objective</a><br>"
+	return result
 
 /datum/antagonist/traitor/on_removal()
 	owner.special_role = null
@@ -230,7 +286,7 @@
 	if(uplink_owned)
 		var/uplink_text = "(used [used_telecrystals] TC) [purchases]"
 		if((used_telecrystals == 0) && traitor_won)
-			var/static/icon/badass = icon('icons/badass.dmi', "badass")
+			var/static/icon/badass = icon('icons/ui_icons/antags/badass.dmi', "badass")
 			uplink_text += "<BIG>[icon2html(badass, world)]</BIG>"
 		result += uplink_text
 

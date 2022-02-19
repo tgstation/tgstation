@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "Guns can once again target individual pixels rather than always shooting at the center of their target."

@@ -40,6 +40,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	slot_flags = null
+	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
@@ -222,6 +223,21 @@
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
 
+/obj/item/storage/bag/plants/portaseeder/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/storage/bag/plants/portaseeder/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user
+)
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Make seeds"
+	return CONTEXTUAL_SCREENTIP_SET
+
+
 /obj/item/storage/bag/plants/portaseeder/examine(mob/user)
 	. = ..()
 	. += span_notice("Ctrl-click to activate seed extraction.")
@@ -346,8 +362,8 @@
 	var/list/obj/item/oldContents = contents.Copy()
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY)
 	// Make each item scatter a bit
-	for(var/obj/item/I in oldContents)
-		INVOKE_ASYNC(src, .proc/do_scatter, I)
+	for(var/obj/item/tray_item in oldContents)
+		do_scatter(tray_item)
 
 	if(prob(50))
 		playsound(M, 'sound/items/trayhit1.ogg', 50, TRUE)
@@ -359,11 +375,18 @@
 			M.Paralyze(40)
 	update_appearance()
 
-/obj/item/storage/bag/tray/proc/do_scatter(obj/item/I)
-	for(var/i in 1 to rand(1,2))
-		if(I)
-			step(I, pick(NORTH,SOUTH,EAST,WEST))
-			sleep(rand(2,4))
+/obj/item/storage/bag/tray/proc/do_scatter(obj/item/tray_item)
+	var/delay = rand(2,4)
+	var/datum/move_loop/loop = SSmove_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
+	//This does mean scattering is tied to the tray. Not sure how better to handle it
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/change_speed)
+
+/obj/item/storage/bag/tray/proc/change_speed(datum/move_loop/source)
+	SIGNAL_HANDLER
+	var/new_delay = rand(2, 4)
+	var/count = source.lifetime / source.delay
+	source.lifetime = count * new_delay
+	source.delay = new_delay
 
 /obj/item/storage/bag/tray/update_overlays()
 	. = ..()

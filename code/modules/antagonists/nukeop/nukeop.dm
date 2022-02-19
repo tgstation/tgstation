@@ -208,7 +208,7 @@
 	r_hand = /obj/item/shield/energy
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/mod/module/armor_booster/elite/booster = locate() in H.back
+	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
 	booster.active = TRUE
 	H.update_inv_back()
 	var/obj/item/shield/energy/shield = locate() in H.held_items
@@ -439,7 +439,7 @@
 	text += "<br>"
 	text += "(Syndicates used [TC_uses] TC) [purchases]"
 	if(TC_uses == 0 && GLOB.station_was_nuked && !operatives_dead())
-		text += "<BIG>[icon2html('icons/badass.dmi', world, "badass")]</BIG>"
+		text += "<BIG>[icon2html('icons/ui_icons/antags/badass.dmi', world, "badass")]</BIG>"
 
 	parts += text
 

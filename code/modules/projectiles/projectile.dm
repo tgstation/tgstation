@@ -13,6 +13,7 @@
 	wound_bonus = CANT_WOUND // can't wound by default
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
+	layer = MOB_LAYER
 	plane = GAME_PLANE_FOV_HIDDEN
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
@@ -367,6 +368,7 @@
 			decayedRange = max(0, decayedRange - reflect_range_decrease)
 			ricochet_chance *= ricochet_decay_chance
 			damage *= ricochet_decay_damage
+			stamina *= ricochet_decay_damage
 			range = decayedRange
 			if(hitscan)
 				store_hitscan_collision(point_cache)

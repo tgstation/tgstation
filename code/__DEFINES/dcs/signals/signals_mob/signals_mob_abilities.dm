@@ -10,9 +10,6 @@
 #define COMSIG_BLOOD_WARP "mob_ability_blood_warp"
 /// from base of /datum/action/cooldown/mob_cooldown/charge/proc/do_charge(): ()
 #define COMSIG_STARTED_CHARGE "mob_ability_charge_started"
-/// from base of /datum/action/cooldown/mob_cooldown/charge/proc/on_bump(): (atom/target)
-#define COMSIG_BUMPED_CHARGE "mob_ability_charge_bumped"
-	#define COMPONENT_OVERRIDE_CHARGE_BUMP (1<<0)
 /// from base of /datum/action/cooldown/mob_cooldown/charge/proc/do_charge(): ()
 #define COMSIG_FINISHED_CHARGE "mob_ability_charge_finished"
 /// from base of /datum/action/cooldown/mob_cooldown/lava_swoop/proc/swoop_attack(): ()

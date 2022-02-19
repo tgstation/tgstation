@@ -156,7 +156,7 @@
 	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 /*
  * Water reaction to turf
@@ -241,7 +241,7 @@
 	glass_desc = "A glass of holy water."
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 	ph = 7.5 //God is alkaline
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -1151,7 +1151,7 @@
 	penetrates_skin = NONE
 	var/clean_types = CLEAN_WASH
 	ph = 5.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 /datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2668,13 +2668,13 @@
 			var/datum/wound/W = thing
 			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 6, severe = 9, critical = 12) when the determination wears off if it was a combat rush
 		M.adjustStaminaLoss(stam_crash)
-	M.remove_status_effect(STATUS_EFFECT_DETERMINED)
+	M.remove_status_effect(/datum/status_effect/determined)
 	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
 		significant = TRUE
-		M.apply_status_effect(STATUS_EFFECT_DETERMINED) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
+		M.apply_status_effect(/datum/status_effect/determined) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
 
 	volume = min(volume, WOUND_DETERMINATION_MAX)
 
@@ -2686,32 +2686,39 @@
 		M.adjustStaminaLoss(-0.25 * REM * delta_time) // the more wounds, the more stamina regen
 	..()
 
-/datum/reagent/eldritch //unholy water, but for eldritch cultists. why couldn't they have both just used the same reagent? who knows. maybe nar'sie is considered to be too "mainstream" of a god to worship in the cultist community.
+// unholy water, but for heretics.
+// why couldn't they have both just used the same reagent?
+// who knows.
+// maybe nar'sie is considered to be too "mainstream" of a god to worship in the heretic community.
+/datum/reagent/eldritch
 	name = "Eldritch Essence"
-	description = "A strange liquid that defies the laws of physics. It re-energizes and heals those who can see beyond this fragile reality, but is incredibly harmful to the closed-minded. It metabolizes very quickly."
+	description = "A strange liquid that defies the laws of physics. \
+		It re-energizes and heals those who can see beyond this fragile reality, \
+		but is incredibly harmful to the closed-minded. It metabolizes very quickly."
 	taste_description = "Ag'hsj'saje'sh"
 	color = "#1f8016"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/eldritch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(IS_HERETIC(M))
-		M.adjust_drowsyness(-5 * REM * delta_time)
-		M.AdjustAllImmobility(-40 * REM * delta_time)
-		M.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
-		M.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
-		M.adjustOxyLoss(-2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(-2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
-		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3 * REM * delta_time
+/datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(IS_HERETIC(drinker))
+		drinker.adjust_drowsyness(-5 * REM * delta_time)
+		drinker.AdjustAllImmobility(-40 * REM * delta_time)
+		drinker.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
+		drinker.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
+		drinker.adjustOxyLoss(-2 * REM * delta_time, FALSE)
+		drinker.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+		drinker.adjustFireLoss(-2 * REM * delta_time, FALSE)
+		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
+			drinker.blood_volume += 3 * REM * delta_time
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
-		M.adjustToxLoss(2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(2 * REM * delta_time, FALSE)
-		M.adjustOxyLoss(2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
+		drinker.adjustToxLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustFireLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustOxyLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustBruteLoss(2 * REM * delta_time, FALSE)
 	..()
+	return TRUE
 
 /datum/reagent/universal_indicator
 	name = "Universal Indicator"
@@ -2769,7 +2776,7 @@
 		return
 	if(methods & (PATCH|TOUCH|VAPOR))
 		amount_left = round(reac_volume,0.1)
-		exposed_mob.apply_status_effect(STATUS_EFFECT_ANTS, amount_left)
+		exposed_mob.apply_status_effect(/datum/status_effect/ants, amount_left)
 
 /datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2821,3 +2828,24 @@
 	. = ..()
 	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
+
+/datum/reagent/brimdust
+	name = "Brimdust"
+	description = "A brimdemon's dust. Consumption is not recommended, although plants like it."
+	reagent_state = SOLID
+	color = "#522546"
+	taste_description = "burning"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/brimdust/on_mob_life(mob/living/carbon/carbon, delta_time, times_fired)
+	. = ..()
+	carbon.adjustFireLoss((ispodperson(carbon) ? -1 : 1) * delta_time)
+
+/datum/reagent/brimdust/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjust_weedlevel(-1)
+		mytray.adjust_pestlevel(-1)
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		if(myseed)
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))

@@ -2,7 +2,7 @@
 	name = "Tiny Prick"
 	desc = "Stabby stabby"
 
-/datum/action/changeling/sting/Trigger()
+/datum/action/changeling/sting/Trigger(trigger_flags)
 	var/mob/user = owner
 	if(!user || !user.mind)
 		return
@@ -72,7 +72,7 @@
 	dna_cost = 3
 	var/datum/changeling_profile/selected_dna = null
 
-/datum/action/changeling/sting/transformation/Trigger()
+/datum/action/changeling/sting/transformation/Trigger(trigger_flags)
 	var/mob/user = usr
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(changeling.chosen_sting)

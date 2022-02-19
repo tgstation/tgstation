@@ -44,12 +44,39 @@
 	attack_verb_simple = list("bash", "batter", "bludgeon", "whack")
 	var/plank_type = /obj/item/stack/sheet/mineral/wood
 	var/plank_name = "wooden planks"
-	var/static/list/accepted = typecacheof(list(/obj/item/food/grown/tobacco,
-	/obj/item/food/grown/tea,
-	/obj/item/food/grown/ash_flora/mushroom_leaf,
-	/obj/item/food/grown/ambrosia/vulgaris,
-	/obj/item/food/grown/ambrosia/deus,
-	/obj/item/food/grown/wheat))
+	var/static/list/accepted = typecacheof(list(
+		/obj/item/food/grown/tobacco,
+		/obj/item/food/grown/tea,
+		/obj/item/food/grown/ash_flora/mushroom_leaf,
+		/obj/item/food/grown/ambrosia/vulgaris,
+		/obj/item/food/grown/ambrosia/deus,
+		/obj/item/food/grown/wheat,
+	))
+
+/obj/item/grown/log/Initialize(mapload, obj/item/seeds/new_seed)
+	. = ..()
+	register_context()
+
+/obj/item/grown/log/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.get_sharpness())
+		// May be a little long, but I think "cut into planks" for steel caps may be confusing.
+		context[SCREENTIP_CONTEXT_LMB] = "Cut into [plank_name]"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(CheckAccepted(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Make torch"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/item/grown/log/attackby(obj/item/W, mob/user, params)
 	if(W.get_sharpness())

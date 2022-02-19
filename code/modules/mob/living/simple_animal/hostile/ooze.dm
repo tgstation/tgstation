@@ -208,7 +208,7 @@
 	stop_consuming() //Shit out the vored mob before u go go
 
 ///Try to consume the pulled mob
-/datum/action/consume/Trigger()
+/datum/action/consume/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return

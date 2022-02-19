@@ -111,7 +111,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/fugu/proc/Deflate()
 	if(wumbo)
-		walk(src, 0)
+		SSmove_manager.stop_looping(src)
 		wumbo = 0
 		icon_state = "Fugu0"
 		obj_damage = 0

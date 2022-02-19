@@ -29,7 +29,7 @@
 #_maps/RandomRuins/SpaceRuins/derelict8.dmm
 #_maps/RandomRuins/SpaceRuins/djstation.dmm
 #_maps/RandomRuins/SpaceRuins/emptyshell.dmm
-#_maps/RandomRuins/SpaceRuins/gasthelizards.dmm
+#_maps/RandomRuins/SpaceRuins/thelizardsgas.dmm
 #_maps/RandomRuins/SpaceRuins/gondolaasteroid.dmm
 #_maps/RandomRuins/SpaceRuins/hilbertshoteltestingsite.dmm
 #_maps/RandomRuins/SpaceRuins/intactemptyship.dmm
@@ -51,4 +51,4 @@
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
 #_maps/RandomRuins/SpaceRuins/forgottenship.dmm
 #_maps/RandomRuins/SpaceRuins/hellfactory.dmm
-
+#_maps/RandomRuins/SpaceRuins/space_billboard.dmm
