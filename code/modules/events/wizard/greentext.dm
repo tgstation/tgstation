@@ -25,7 +25,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "greentext"
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	resistance_flags = FIRE_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	///The last person to touch the greentext, used for failures.
 	var/mob/living/last_holder
 	///The current holder of the greentext.
@@ -76,9 +76,6 @@
 		last_holder = new_holder //long live the king
 
 /obj/item/greentext/Destroy(force)
-	if(!(resistance_flags & ON_FIRE) && !force)
-		return QDEL_HINT_LETMELIVE
-
 	LAZYREMOVE(SSticker.round_end_events, roundend_callback)
 	QDEL_NULL(roundend_callback) //This ought to free the callback datum, and prevent us from harddeling
 	for(var/mob/all_player_mobs as anything in GLOB.player_list)
