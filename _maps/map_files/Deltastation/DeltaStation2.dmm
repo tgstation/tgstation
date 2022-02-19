@@ -15241,9 +15241,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/hallway/primary/central/aft)
-"cvU" = (
-/turf/open/space/basic,
-/area/construction/mining/aux_base)
 "cvX" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security/glass{
@@ -153544,7 +153541,7 @@ bsg
 acL
 adi
 ace
-cvU
+aaa
 abi
 aeF
 aeF
