@@ -25,7 +25,7 @@
 
 /// When the antimagic plant gene is drained a anti-magic charge.
 /datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)
-	to_chat(user, "<span class='warning'>[our_plant] hums slightly, and seems to decay a bit.</span>")
+	to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
 
 /// When the antimagic plant gene uses up all of its anti-magic charges.
 /datum/plant_gene/trait/anti_magic/proc/expire(mob/user, obj/item/our_plant)
