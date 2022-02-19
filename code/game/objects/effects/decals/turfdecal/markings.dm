@@ -376,5 +376,5 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark/corner
 	icon_state = "siding_wideplating_new_corner"
 
-/obj/effect/turf_decal/siding/wideplating/dark/end
+/obj/effect/turf_decal/siding/wideplating_new/dark/end
 	icon_state = "siding_wideplating_new_end"
