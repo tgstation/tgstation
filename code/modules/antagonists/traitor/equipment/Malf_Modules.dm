@@ -895,7 +895,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/voice_changer
 	name="Voice Changer"
 	button_icon_state = "voice_changer"
-	description = "Allows you to change the AI's voice."
+	desc = "Allows you to change the AI's voice."
 	auto_use_uses  = FALSE
 	var/obj/machinery/ai_voicechanger/voice_changer_machine
 
@@ -910,13 +910,13 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	icon_state = "nuclearbomb_base"
 	var/mob/living/silicon/ai/owner
 	var/loudvoice = FALSE
-	var/say_verb
-	var/say_name
-	var/say_span
-	var/changing_voice = FALSE
-	var/prev_loud
-	var/prev_verbs
-	var/prev_span
+	var/say_verb //verb used when voicechanger is on
+	var/say_name //name used when voicechanger is on
+	var/say_span //span used when voicechanger is on
+	var/changing_voice = FALSE //TRUE if the AI is changing its voice
+	var/prev_loud // saved loudvoice state, used to restore after a voice change
+	var/prev_verbs // saved verb state, used to restore after a voice change
+	var/prev_span // saved span state, used to restore after a voice change
 
 /obj/machinery/ai_voicechanger/Initialize(mapload)
 	. = ..()

@@ -6,7 +6,7 @@ export const AiVoiceChanger = (props, context) => {
   const { act, data } = useBackend(context);
 
   return (
-    <Window title="Voice changer settings">
+    <Window title="Voice changer settings" width={400} height={200} >
       <Section>
         <LabeledList>
           <LabeledList.Item label="Power">
