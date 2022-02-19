@@ -356,12 +356,12 @@
 /obj/structure/closet/crate/critter{
 	anchorable = 0;
 	anchored = 1;
-	desc = "A large wood and steel-reinforced crate owned by a certain bear.";
-	name = "wojtek's crate"
+	desc = "A large wood and steel-reinforced crate.";
+	name = "voytek's crate"
 	},
 /mob/living/simple_animal/hostile/bear{
-	desc = "A very friendly yet still extremely menacing space-bear.";
-	name = "Wojtek"
+	desc = "A very friendly yet still extremely menacing space-bear. Comrade until the end." ;
+	name = "Voytek"
 	},
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/mineral/plastitanium,
