@@ -27,7 +27,7 @@
 /datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)
 	to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
 
-/// When the antimagic plant gene uses up all of its anti-magic charges.
+/// When the plant our gene is hosted in is drained of all of its anti-magic charges.
 /datum/plant_gene/trait/anti_magic/proc/expire(mob/user, obj/item/our_plant)
 	to_chat(user, "<span class='warning'>[our_plant] rapidly turns into ash!</span>")
 	new /obj/effect/decal/cleanable/ash(our_plant.drop_location())
