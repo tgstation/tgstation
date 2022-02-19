@@ -1,5 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - bugfix: "Adjusts the posters in Metastation's Atmospherics to not block an APC"
-  - bugfix: "Adjusts a poster in Kilostation's library to not block the above bar APC."

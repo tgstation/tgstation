@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes: 
-  - bugfix: "Fixes sign language users not being able to sign in space. Fixes the visual indicator when attempting to sign while cuffed."

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Icebox's medical surgery area is now locked behind Surgery access rather than Medical."
