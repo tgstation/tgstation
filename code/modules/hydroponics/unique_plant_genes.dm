@@ -23,7 +23,7 @@
 		expiration = CALLBACK(src, .proc/expire), \
 	)
 
-/// When the antimagic plant gene is drained a anti-magic charge.
+/// When the plant our gene is hosted in is drained of an anti-magic charge.
 /datum/plant_gene/trait/anti_magic/proc/drain_antimagic(mob/user, obj/item/our_plant)
 	to_chat(user, span_warning("[our_plant] hums slightly, and seems to decay a bit."))
 
