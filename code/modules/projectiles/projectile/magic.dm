@@ -49,7 +49,7 @@
 		return 
 
 	if(target.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
-		target.death(0)
+		target.death()
 		return
 
 	if(target.revive(full_heal = TRUE, admin_revive = TRUE))
