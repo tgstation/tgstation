@@ -5825,7 +5825,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "bcp" = (
@@ -7373,7 +7373,7 @@
 /turf/open/floor/iron/dark,
 /area/hallway/primary/central)
 "bCC" = (
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron,
 /area/command/heads_quarters/hop)
@@ -14456,7 +14456,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/security/brig)
 "eqG" = (
@@ -19250,7 +19250,7 @@
 /turf/open/floor/iron/white,
 /area/science/genetics)
 "gLw" = (
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /obj/item/radio/intercom/directional/west{
 	pixel_y = -31
 	},
@@ -19605,7 +19605,7 @@
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "gTM" = (
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
@@ -24305,7 +24305,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /obj/machinery/camera{
 	c_tag = "Research Lobby";
 	dir = 10;
@@ -25982,7 +25982,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/full,
 /turf/open/floor/iron/dark/smooth_large,
@@ -28013,7 +28013,7 @@
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
 "kYG" = (
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /obj/machinery/camera/directional/west{
 	c_tag = "Head of Security's Office"
 	},
@@ -28489,7 +28489,7 @@
 /area/command/meeting_room)
 "lnF" = (
 /obj/structure/chair/sofa/left,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/science/breakroom)
 "loi" = (
@@ -31548,7 +31548,7 @@
 /obj/structure/table/reinforced,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/command/bridge)
 "mTE" = (
@@ -34809,7 +34809,7 @@
 /turf/open/floor/iron,
 /area/commons/locker)
 "oCa" = (
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /obj/machinery/keycard_auth/directional/south,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
@@ -36399,7 +36399,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/cargo/qm)
 "prW" = (
@@ -46673,7 +46673,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
 "ulM" = (
@@ -47008,7 +47008,7 @@
 /area/science/lab)
 "usG" = (
 /obj/structure/cable,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
@@ -49184,7 +49184,7 @@
 	pixel_x = 5
 	},
 /obj/item/storage/box/evidence,
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "vzX" = (
@@ -50125,7 +50125,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
 	},
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/machinery/light/directional/south,
 /obj/machinery/computer/department_orders/science{
 	dir = 1
@@ -51685,7 +51685,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "wJz" = (
 /obj/machinery/skill_station,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/wood,
 /area/service/library)
 "wJF" = (

@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/radio/intercom,
 	/obj/item/storage/secure/safe,
 	/obj/machinery/airalarm,
-	/obj/machinery/bounty_board,
+	/obj/machinery/newscaster,
 	/obj/machinery/button,
 	/obj/machinery/computer/security/telescreen,
 	/obj/machinery/computer/security/telescreen/entertainment,

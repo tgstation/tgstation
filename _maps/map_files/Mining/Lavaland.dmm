@@ -2859,7 +2859,7 @@
 /obj/effect/turf_decal/tile/brown{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/mine/production)
 "pR" = (

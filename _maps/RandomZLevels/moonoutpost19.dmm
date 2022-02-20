@@ -2907,7 +2907,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit{
+/obj/machinery/newscaster{
 	pixel_x = -30
 	},
 /obj/effect/turf_decal/tile/red{

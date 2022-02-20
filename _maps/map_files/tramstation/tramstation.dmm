@@ -1269,7 +1269,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /obj/effect/landmark/start/lawyer,
 /turf/open/floor/wood,
 /area/service/lawoffice)
@@ -5271,7 +5271,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/detective,
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "aGG" = (
@@ -11386,7 +11386,7 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/recharger,
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hop)
 "cFU" = (
@@ -13757,7 +13757,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "dwJ" = (
@@ -14420,7 +14420,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "dJd" = (
@@ -16792,7 +16792,7 @@
 "ewV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
@@ -23935,7 +23935,7 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "hdb" = (
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 1
@@ -25183,7 +25183,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
-/obj/machinery/newscaster/security_unit/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
@@ -33307,7 +33307,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Command - Bridge South"
 	},
-/obj/machinery/newscaster/security_unit/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/command/bridge)
@@ -39805,7 +39805,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/security,
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/security/checkpoint/escape)
 "mVo" = (
@@ -45584,7 +45584,7 @@
 /obj/structure/chair/office{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /obj/effect/landmark/start/lawyer,
 /obj/machinery/light/directional/south,
 /turf/open/floor/wood,
@@ -47624,7 +47624,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
@@ -48142,7 +48142,7 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/construction/engineering)
 "pTN" = (
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/machinery/modular_computer/console/preset/id,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/hos)
@@ -48750,7 +48750,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /obj/effect/landmark/start/depsec/science,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
@@ -53010,7 +53010,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 6
 	},
-/obj/machinery/newscaster/security_unit/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/security/checkpoint)
 "rQC" = (
@@ -54178,7 +54178,7 @@
 /obj/machinery/modular_computer/console/preset/cargochat/security{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -56703,7 +56703,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "tiE" = (
@@ -57489,7 +57489,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "tyd" = (
@@ -58761,7 +58761,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/structure/reagent_dispensers/water_cooler,
 /turf/open/floor/iron,
 /area/engineering/break_room)

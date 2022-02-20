@@ -3140,7 +3140,7 @@
 	dir = 4
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/science/research)
 "aox" = (
@@ -31891,7 +31891,7 @@
 	},
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/engineering/atmos)
 "fmM" = (
@@ -32554,7 +32554,7 @@
 	pixel_y = 5
 	},
 /obj/machinery/light/directional/east,
-/obj/machinery/bounty_board/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark,
 /area/service/library)
 "fyC" = (
@@ -35554,7 +35554,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/engineering/storage_shared)
 "gHj" = (
@@ -37603,7 +37603,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "hwx" = (
@@ -60682,7 +60682,7 @@
 	dir = 8
 	},
 /obj/machinery/light/directional/west,
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/command/bridge)
 "pET" = (
@@ -63205,7 +63205,7 @@
 "qFo" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/caution/stand_clear,
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/security/brig)
 "qFu" = (
@@ -77750,7 +77750,7 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/chemistry)
 "vUM" = (
@@ -79327,7 +79327,7 @@
 	pixel_x = -10;
 	pixel_y = -4
 	},
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/effect/turf_decal/tile/brown,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -83343,7 +83343,7 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/item/storage/belt/utility,
 /obj/item/crowbar/red,
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron/dark,
 /area/commons/storage/primary)
 "xUy" = (

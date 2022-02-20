@@ -1344,7 +1344,7 @@
 			src.admincaster_screen=4
 
 		for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-			NEWSCASTER.newsAlert(src.admincaster_feed_channel.channel_name)
+			NEWSCASTER.news_alert(src.admincaster_feed_channel.channel_name)
 
 		log_admin("[key_name(usr)] submitted a feed story to channel: [src.admincaster_feed_channel.channel_name]!")
 		src.access_news_network()

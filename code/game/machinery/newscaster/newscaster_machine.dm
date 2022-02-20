@@ -1,4 +1,4 @@
-#define ALERT_DELAY = 50 SECONDS
+#define ALERT_DELAY 50 SECONDS
 
 /obj/machinery/newscaster
 	name = "newscaster"
@@ -22,7 +22,7 @@
 	///The message that's currently being written for a feed story.
 	var/feed_channel_message
 	///The current image that will be submitted with the newscaster story.
-	var/obj/item/photo/current_image
+	var/datum/picture/current_image
 	///Is there currently an alert on this newscaster that hasn't been seen yet?
 	var/alert = FALSE
 
@@ -37,12 +37,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()
-
 	GLOB.allCasters += src
+	GLOB.allbountyboards += src
 	update_appearance()
 
 /obj/machinery/newscaster/Destroy()
 	GLOB.allCasters -= src
+	GLOB.allbountyboards -= src
 	current_channel = null
 	current_image = null
 	active_request = null
@@ -81,15 +82,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		else
 			. += "crack3"
 			. += emissive_blocker(icon, "crack3", alpha = src.alpha)
-
-/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
-	. = ..()
-	update_appearance()
-
-/obj/machinery/newscaster/proc/send_photo_data()
-	if(current_image)
-		return current_image?.picture
-	return null
 
 /obj/machinery/newscaster/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -242,14 +234,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data() , 0, FALSE)
 			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 			feed_channel_message = ""
+			current_image = null
 
 		if("togglePhoto")
 			if(current_image)
-				balloon_alert(usr,"Current photo cleared.")
+				balloon_alert(usr, "Current photo cleared.")
 				current_image = null
 				return
 			else
-				AttachPhoto(usr)
+				attach_photo(usr)
+				if(current_image)
+					balloon_alert(usr, "Photo selected.")
+				else
+					balloon_alert(usr, "No photo identified.")
 
 		if("createChannel")
 			//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
@@ -286,27 +283,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("storyCensor")
 			if (!params["secure"])
-				say("Secure was not found.")
+				say("Clearance not found.")
 				return
 			var/questionable_message = params["messageID"]
 			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
 				if(mess.message_ID == questionable_message)
-					say("[mess.body]")
 					mess.toggleCensorBody()
 					break
 
 		if("authorCensor")
 			if (!params["secure"])
+				say("Clearance not found.")
 				return
 			var/questionable_message = params["messageID"]
 			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
 				if(mess.message_ID == questionable_message)
-					say("[mess.body]")
 					mess.toggleCensorAuthor()
 					break
 
 		if("channelDNotice")
 			if (!params["secure"])
+				say("Clearance not found.")
 				return
 			var/proto_chan = (params["channel"])
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
@@ -329,7 +326,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
 			GLOB.request_list += list(curr_request)
 			for(var/obj/i in GLOB.allbountyboards)
-				i.say("New bounty has been added!")
+				balloon_alert_to_viewers("New bounty has been added!")
 				playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 		if("apply")
 			if(!current_user)
@@ -446,7 +443,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	else
 		take_damage(5, BRUTE, MELEE)
 
-/obj/machinery/newscaster/proc/AttachPhoto(mob/user)
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_appearance()
+
+/**
+ *	Sends photo data to build the newscaster article.
+ */
+/obj/machinery/newscaster/proc/send_photo_data()
+	if(!current_image)
+		return null
+	return current_image
+
+/obj/machinery/newscaster/proc/attach_photo(mob/user)
 	var/obj/item/photo/photo = user.is_holding_item_of_type(/obj/item/photo)
 	if(photo)
 		current_image = photo.picture
@@ -493,7 +502,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	alert = FALSE
 	update_appearance()
 
-/obj/machinery/newscaster/proc/newsAlert(channel, update_alert = TRUE)
+/obj/machinery/newscaster/proc/news_alert(channel, update_alert = TRUE)
 	if(channel)
 		if(update_alert)
 			say("Breaking news from [channel]!")

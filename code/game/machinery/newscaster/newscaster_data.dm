@@ -1,6 +1,9 @@
 GLOBAL_DATUM_INIT(news_network, /datum/newscaster/feed_network, new)
 GLOBAL_LIST_EMPTY(allCasters)
 
+GLOBAL_LIST_EMPTY(allbountyboards)
+GLOBAL_LIST_EMPTY(request_list)
+
 /datum/newscaster
 
 /datum/newscaster/feed_comment
@@ -211,7 +214,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			newMsg.parent_ID = FC.channel_ID
 			break
 	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		NEWSCASTER.newsAlert(channel_name, update_alert)
+		NEWSCASTER.news_alert(channel_name, update_alert)
 	lastAction ++
 	newMsg.creationTime = lastAction
 	message_count ++
@@ -228,7 +231,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		wanted_issue.photo_file = save_photo(picture.picture_image)
 	if(newMessage)
 		for(var/obj/machinery/newscaster/N in GLOB.allCasters)
-			N.newsAlert()
+			N.news_alert()
 			N.update_appearance()
 
 /datum/newscaster/feed_network/proc/deleteWanted()
@@ -249,3 +252,34 @@ GLOBAL_LIST_EMPTY(allCasters)
 		fcopy(clean, "[GLOB.log_directory]/photos/[photo_file].png")
 	return photo_file
 
+//**************************
+//	 Bounty Board Datums
+//**************************
+
+
+/**
+ * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
+ * All of this is passed to the Request Console UI in order to present in organized way.
+ */
+/datum/station_request
+	///Name of the Request Owner.
+	var/owner
+	///Value of the request.
+	var/value
+	///Text description of the request to be shown within the UI.
+	var/description
+	///Internal number of the request for organizing. Id card number.
+	var/req_number
+	///The account of the request owner.
+	var/datum/bank_account/owner_account
+	///the account of the request fulfiller.
+	var/list/applicants = list()
+
+/datum/station_request/New(owned, newvalue, newdescription, reqnum, own_account)
+	. = ..()
+	owner = owned
+	value = newvalue
+	description = newdescription
+	req_number = reqnum
+	if(istype(own_account, /datum/bank_account))
+		owner_account = own_account

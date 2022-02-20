@@ -2194,7 +2194,7 @@
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
-/obj/machinery/newscaster/security_unit{
+/obj/machinery/newscaster{
 	pixel_x = -30
 	},
 /obj/effect/decal/cleanable/dirt,

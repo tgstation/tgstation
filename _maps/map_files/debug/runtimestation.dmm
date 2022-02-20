@@ -116,7 +116,7 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "aB" = (
-/obj/machinery/newscaster/security_unit,
+/obj/machinery/newscaster,
 /turf/closed/wall/r_wall,
 /area/engineering/main)
 "aC" = (

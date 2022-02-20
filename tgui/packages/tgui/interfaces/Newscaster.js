@@ -36,7 +36,7 @@ export const Newscaster = (props, context) => {
             color="Purple"
             selected={screenmode === 3}
             onClick={() => setScreenmode(3)}>
-            Station Mandates
+            Requests Console
           </Tabs.Tab>
         </Tabs>
 
@@ -160,6 +160,8 @@ const NewscasterChannelBox = (props, context) => {
           icon="camera"
           selected={photo_data}
           content="Select Photo"
+          disabled={(channelBlocked && (channelAuthor !== user.name))
+            || channelCensored}
           onClick={() => act('togglePhoto')} />
         {security_mode === 1 && (
           <Button
@@ -297,7 +299,7 @@ const NewscasterChannelMessages = (props, context) => {
                   dangerouslySetInnerHTML={processedText(message.body)}
                   pl={1} />
               )}
-              {message.photo !== null &&(
+              {message.photo !== null && message.censored_message !== 1 &&(
                 <Box
                   as="img"
                   src={message.Photo} />

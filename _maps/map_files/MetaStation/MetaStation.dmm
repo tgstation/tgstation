@@ -5688,7 +5688,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -5953,7 +5953,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/security/office)
 "bhU" = (
@@ -8550,7 +8550,7 @@
 	dir = 8
 	},
 /obj/machinery/syndicatebomb/training,
-/obj/machinery/newscaster/security_unit/directional/south{
+/obj/machinery/newscaster/directional/south{
 	pixel_x = -28
 	},
 /turf/open/floor/iron,
@@ -21499,7 +21499,7 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/security/brig)
 "fyU" = (
@@ -24657,7 +24657,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/machinery/duct,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29515,7 +29515,7 @@
 /area/ai_monitored/command/storage/eva)
 "iqd" = (
 /obj/machinery/computer/secure_data,
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -30784,7 +30784,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/greater)
 "iOc" = (
-/obj/machinery/bounty_board/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "iOs" = (
@@ -32855,7 +32855,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/east{
+/obj/machinery/newscaster/directional/east{
 	pixel_y = 12
 	},
 /turf/open/floor/iron/dark,
@@ -34234,7 +34234,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -36102,7 +36102,7 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/item/screwdriver{
 	pixel_y = 10
 	},
@@ -43573,7 +43573,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark,
 /area/security/lockers)
 "ngS" = (
@@ -44316,7 +44316,7 @@
 /turf/open/floor/iron,
 /area/service/hydroponics)
 "ntK" = (
-/obj/machinery/bounty_board/directional/east,
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "ntZ" = (
@@ -46694,7 +46694,7 @@
 /obj/effect/turf_decal/siding/purple,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/white,
 /area/science/research)
 "ojW" = (
@@ -51376,7 +51376,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/south,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "pSs" = (
@@ -56175,7 +56175,7 @@
 /area/commons/storage/primary)
 "rDv" = (
 /obj/structure/table/wood,
-/obj/machinery/newscaster/security_unit/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
 "rDC" = (
@@ -62316,7 +62316,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "tMo" = (
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /obj/machinery/computer/security/mining{
 	dir = 8
 	},
@@ -73447,7 +73447,7 @@
 /area/maintenance/department/science/xenobiology)
 "xKc" = (
 /obj/structure/table,
-/obj/machinery/newscaster/security_unit/directional/east,
+/obj/machinery/newscaster/directional/east,
 /obj/machinery/camera/directional/south{
 	c_tag = "Departure Lounge - Security Post"
 	},
@@ -74053,7 +74053,7 @@
 /obj/structure/chair{
 	dir = 4
 	},
-/obj/machinery/newscaster/security_unit/directional/south,
+/obj/machinery/newscaster/directional/south,
 /obj/effect/landmark/start/depsec/engineering,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
