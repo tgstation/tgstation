@@ -1216,10 +1216,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"eo" = (
-/obj/machinery/vending/sovietsoda,
-/turf/open/floor/plating,
-/area/construction)
 "ep" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -1996,20 +1992,12 @@
 	},
 /turf/open/floor/iron,
 /area/medical/chemistry)
-"hS" = (
-/obj/machinery/vending/games,
-/turf/open/floor/plating,
-/area/construction)
 "ii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
-/area/construction)
-"iL" = (
-/obj/machinery/vending/modularpc,
-/turf/open/floor/plating,
 /area/construction)
 "jb" = (
 /obj/machinery/door/airlock,
@@ -2027,10 +2015,6 @@
 /obj/item/melee/energy/axe,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"kg" = (
-/obj/machinery/vending/sustenance,
-/turf/open/floor/plating,
-/area/construction)
 "kj" = (
 /obj/machinery/door/airlock,
 /obj/structure/cable,
@@ -2068,10 +2052,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"mj" = (
-/obj/machinery/vending/engineering,
-/turf/open/floor/plating,
-/area/construction)
 "mE" = (
 /obj/structure/cable,
 /obj/machinery/chem_mass_spec,
@@ -2083,10 +2063,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/science/misc_lab)
-"no" = (
-/obj/machinery/vending/robotics,
-/turf/open/floor/plating,
-/area/construction)
 "nq" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -2098,14 +2074,6 @@
 /obj/item/storage/toolbox/syndicate,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"nC" = (
-/obj/machinery/vending/magivend,
-/turf/open/floor/plating,
-/area/construction)
-"nL" = (
-/obj/machinery/vending/hydroseeds,
-/turf/open/floor/plating,
-/area/construction)
 "od" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2143,10 +2111,6 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/engineering/atmos)
-"qr" = (
-/obj/machinery/vending/drugs,
-/turf/open/floor/plating,
-/area/construction)
 "qQ" = (
 /turf/open/floor/engine,
 /area/cargo/miningoffice)
@@ -2157,10 +2121,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
-"rs" = (
-/obj/machinery/vending/cigarette,
-/turf/open/floor/plating,
-/area/construction)
 "rK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2172,10 +2132,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"rZ" = (
-/obj/machinery/vending/hydronutrients,
-/turf/open/floor/plating,
-/area/construction)
 "sr" = (
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
@@ -2190,10 +2146,6 @@
 /obj/item/storage/box/shipping,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"sR" = (
-/obj/machinery/vending/toyliberationstation,
-/turf/open/floor/plating,
-/area/construction)
 "tE" = (
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
@@ -2230,14 +2182,6 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/engineering/atmos)
-"uE" = (
-/obj/machinery/vending/coffee,
-/turf/open/floor/plating,
-/area/construction)
-"uI" = (
-/obj/machinery/vending/syndichem,
-/turf/open/floor/plating,
-/area/construction)
 "uO" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/structure/cable,
@@ -2273,10 +2217,6 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
-"vK" = (
-/obj/machinery/vending/tool,
-/turf/open/floor/plating,
-/area/construction)
 "vP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -2298,24 +2238,12 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"wp" = (
-/obj/machinery/vending/cola,
-/turf/open/floor/plating,
-/area/construction)
-"wq" = (
-/obj/machinery/vending/liberationstation,
-/turf/open/floor/plating,
-/area/construction)
 "wB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
-"wF" = (
-/obj/machinery/vending/plasmaresearch,
-/turf/open/floor/plating,
-/area/construction)
 "wM" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -2333,10 +2261,6 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
-"yr" = (
-/obj/machinery/vending/cart,
-/turf/open/floor/plating,
-/area/construction)
 "yK" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2408,10 +2332,6 @@
 /obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/science/misc_lab)
-"DT" = (
-/obj/machinery/vending/autodrobe,
-/turf/open/floor/plating,
-/area/construction)
 "DW" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -2421,10 +2341,6 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/medical/medbay)
-"Ew" = (
-/obj/machinery/vending/assist,
-/turf/open/floor/plating,
-/area/construction)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -2465,14 +2381,6 @@
 	},
 /turf/open/floor/iron,
 /area/medical/chemistry)
-"Fm" = (
-/obj/machinery/vending/boozeomat,
-/turf/open/floor/plating,
-/area/construction)
-"GL" = (
-/obj/machinery/vending/clothing,
-/turf/open/floor/plating,
-/area/construction)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/iron,
@@ -2542,20 +2450,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"Mu" = (
-/obj/machinery/vending/snack,
-/turf/open/floor/plating,
-/area/construction)
 "ME" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
-"MJ" = (
-/obj/machinery/vending/medical,
-/turf/open/floor/plating,
-/area/construction)
 "MY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -2590,14 +2490,6 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/science)
-"Pt" = (
-/obj/machinery/vending/dinnerware,
-/turf/open/floor/plating,
-/area/construction)
-"Pu" = (
-/obj/machinery/vending/wallmed,
-/turf/open/floor/plating,
-/area/construction)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -2612,10 +2504,6 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /turf/open/floor/plating,
 /area/medical/medbay)
-"QA" = (
-/obj/machinery/vending/security,
-/turf/open/floor/plating,
-/area/construction)
 "Rb" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2643,10 +2531,6 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/medical/medbay)
-"SQ" = (
-/obj/machinery/vending/engivend,
-/turf/open/floor/plating,
-/area/construction)
 "Td" = (
 /obj/machinery/light/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -2679,10 +2563,6 @@
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/medical/medbay)
-"UQ" = (
-/obj/machinery/vending/wardrobe,
-/turf/open/floor/plating,
-/area/construction)
 "Vg" = (
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
@@ -2810,10 +2690,6 @@
 "ZP" = (
 /turf/open/floor/iron/dark,
 /area/science/misc_lab)
-"ZT" = (
-/obj/machinery/vending/donksofttoyvendor,
-/turf/open/floor/plating,
-/area/construction)
 
 (1,1,1) = {"
 aa
@@ -6343,13 +6219,13 @@ Mh
 TV
 EA
 dn
-Ew
 dn
-Pt
 dn
-wq
 dn
-eo
+dn
+dn
+dn
+dn
 dn
 dn
 dL
@@ -6435,13 +6311,13 @@ bE
 ef
 cY
 dn
-DT
 dn
-ZT
 dn
-nC
 dn
-kg
+dn
+dn
+dn
+dn
 dn
 dn
 dL
@@ -6527,13 +6403,13 @@ bE
 cN
 dW
 dn
-Fm
 dn
-qr
 dn
-MJ
 dn
-uI
+dn
+dn
+dn
+dn
 dn
 dn
 dL
@@ -6619,13 +6495,13 @@ bE
 cN
 cY
 dn
-yr
 dn
-mj
 dn
-iL
 dn
-vK
+dn
+dn
+dn
+dn
 dn
 dn
 dL
@@ -6711,13 +6587,13 @@ bE
 cN
 cY
 dn
-rs
 dn
-SQ
 dn
-wF
 dn
-sR
+dn
+dn
+dn
+dn
 dn
 dn
 dZ
@@ -6803,13 +6679,13 @@ bE
 cN
 cY
 dn
-GL
 dn
-hS
 dn
-no
 dn
-Pu
+dn
+dn
+dn
+dn
 dn
 dn
 dL
@@ -6895,13 +6771,13 @@ bE
 cN
 cY
 dn
-uE
 dn
-rZ
 dn
-QA
 dn
-UQ
+dn
+dn
+dn
+dn
 dn
 dn
 dL
@@ -6987,11 +6863,11 @@ bE
 ef
 cY
 dn
-wp
 dn
-nL
 dn
-Mu
+dn
+dn
+dn
 dn
 dn
 dn
