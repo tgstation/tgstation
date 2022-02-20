@@ -20,7 +20,7 @@
 		'sound/roundend/disappointed.ogg',
 		'sound/roundend/scrunglartiy.ogg',
 		'sound/roundend/petersondisappointed.ogg',
-		'sound/roundend/bully2.ogg'
+		'sound/roundend/bully2.ogg',
 		'hippiestation/sound/roundend/disappointed.ogg',
 		'hippiestation/sound/roundend/enjoyedyourchaos.ogg',
 		'hippiestation/sound/roundend/yamakemesick.ogg',
