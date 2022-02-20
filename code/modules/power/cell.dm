@@ -205,7 +205,8 @@
 		return 0
 
 /obj/item/stock_parts/cell/get_part_rating()
-	return rating * maxcharge
+	rating = max(round(maxcharge/8000,1),1)
+	return rating * maxcharge + charge
 
 /obj/item/stock_parts/cell/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
 	var/obj/item/mod/control/mod = storage_holder
