@@ -1,5 +1,0 @@
-author: "tastyfish"
-delete-after: True
-changes: 
-  - rscadd: "Made air alarm and keycard authenticator emissive."
-  - imageadd: "Updated air alarm and keycard authenticator sprites to work with being emissive."

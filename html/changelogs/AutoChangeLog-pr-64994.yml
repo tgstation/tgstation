@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - admin: "asay pings now have their own unique sound instead of sharing the vote prompt sound"

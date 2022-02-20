@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On DeltaStation, the Auxiliary Base Construction room no longer possesses a bit of space."

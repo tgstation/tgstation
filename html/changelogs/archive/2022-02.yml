@@ -840,3 +840,42 @@
   timothymtorres:
   - qol: Replace regular card deck on wizard ship with wizoff and tarot card decks.
   - bugfix: Fix cigarettes icon to update properly when extinguished.
+2022-02-20:
+  JohnFulpWillard:
+  - balance: Paramedics no longer have access to Auxiliary base, the Supermatter engine
+      room (including insuls), the Cargo shuttle, and EVA. Use a Medical MODsuit instead,
+      you lazy bum!
+  - balance: Paramedics now have access to Mining bay.
+  Mickyan:
+  - expansion: Added some outfits based on moth culture, available at the clothesmate
+  - expansion: Added a new construction based bundle for the curator, themed after
+      moth fleet engineers
+  Ryll/Shaps:
+  - admin: asay pings now have their own unique sound instead of sharing the vote
+      prompt sound
+  Timberpoes:
+  - balance: The CRAB-17/Nanotrasen Space-Coin Market is now indestructible. Attacking
+      it repulses you back one tile instead. ID cards now instantly swipe on it instead
+      of requiring a progress bar, and ID card holders like PDAs and wallets can also
+      be directly used on it without having to remove IDs. It still blows up when
+      all ID cards with bank accounts have been swiped on it or after 8 minutes.
+  Watermelon914:
+  - bugfix: Fixed progression traitor uplinks suddenly changing owners when implanted
+      with an uplink implant.
+  san7890:
+  - rscadd: On MetaStation, DeltaStation, and TramStation, the area colloquially known
+      as the "Science Lobby" now has a proper definition and it's own APC to boot.
+      Please enjoy.
+  - rscadd: MetaStation and Deltastation now have their Medbay Lobbies officially
+      defined.
+  - bugfix: On DeltaStation, the Auxiliary Base Construction room no longer possesses
+      a bit of space.
+  - bugfix: As far as the Secure Tech Storage on IceBoxStation, Nanotrasen has finally
+      realized that they should stop installing lights and cameras on their windows.
+  tastyfish:
+  - bugfix: Windoor blocking ORM on Delta Station now has correct access.
+  - rscadd: Made air alarm and keycard authenticator emissive.
+  - imageadd: Updated air alarm and keycard authenticator sprites to work with being
+      emissive.
+  zxaber:
+  - balance: Malf AIs can detonate their borgs at the robotics console once again.
