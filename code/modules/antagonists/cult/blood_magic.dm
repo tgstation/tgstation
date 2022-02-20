@@ -418,29 +418,28 @@
 	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
-/obj/item/melee/blood_magic/stun/afterattack(atom/target, mob/living/carbon/user, proximity)
+/obj/item/melee/blood_magic/stun/afterattack(mob/living/target, mob/living/carbon/user, proximity)
 	if(!isliving(target) || !proximity)
 		return
-	var/mob/living/L = target
-	if(IS_CULTIST(L))
+	if(IS_CULTIST(target))
 		return
 	if(IS_CULTIST(user))
 		user.visible_message(span_warning("[user] holds up [user.p_their()] hand, which explodes in a flash of red light!"), \
-							span_cultitalic("You attempt to stun [L] with the spell!"))
+							span_cultitalic("You attempt to stun [target] with the spell!"))
 
 		user.mob_light(_range = 3, _color = LIGHT_COLOR_BLOOD_MAGIC, _duration = 0.2 SECONDS)
 
-		if(L.can_block_magic(MAGIC_RESISTANCE_HOLY))
+		if(target.can_block_magic(MAGIC_RESISTANCE_HOLY))
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
 			to_chat(user, span_cultitalic("In a brilliant flash of red, [L] falls to the ground!"))
-			L.Paralyze(16 SECONDS)
-			L.flash_act(1,TRUE)
+			target.Paralyze(16 SECONDS)
+			target.flash_act(1, TRUE)
 			if(issilicon(target))
-				var/mob/living/silicon/S = L
+				var/mob/living/silicon/S = target
 				S.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
-				var/mob/living/carbon/C = L
+				var/mob/living/carbon/C = target
 				C.silent += 6
 				C.stuttering += 15
 				C.cultslurring += 15
