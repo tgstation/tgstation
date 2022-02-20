@@ -178,12 +178,8 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "pepperbackpacksec"
 	inhand_icon_state = "pepperbackpacksec"
-<<<<<<< HEAD
 	custom_price = PAYCHECK_CREW * 2
-=======
-	custom_price = PAYCHECK_MEDIUM * 2
 	volume = 1000
->>>>>>> upstream/master
 
 /obj/item/watertank/pepperspray/Initialize(mapload)
 	. = ..()

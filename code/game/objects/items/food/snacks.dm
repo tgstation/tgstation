@@ -321,7 +321,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 1) //a healthy but expensive snack
 	tastes = list("pistachios" = 4, "subtle sweetness" = 1)
 	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_MEDIUM//pistachios are even more expensive.
+	custom_price = PAYCHECK_CREW//pistachios are even more expensive.
 	junkiness = 10 //on par with peanuts
 	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/consumable/peanut_butter = 5, /datum/reagent/consumable/cooking_oil = 2)
@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	food_reagents = list(/datum/reagent/consumable/cornoil  = 1, /datum/reagent/consumable/salt = 6) //1 cornoil is equal to 1.33 nutriment
 	tastes = list("sunflowers" = 5)
 	foodtypes = JUNKFOOD | NUTS
-	custom_price = PAYCHECK_ASSISTANT * 0.4 //sunflowers are cheap in real life.
+	custom_price = PAYCHECK_LOWER * 0.4 //sunflowers are cheap in real life.
 	bite_consumption = 1
 	junkiness = 25
 	w_class = WEIGHT_CLASS_SMALL
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	bite_consumption = 2
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/salt = 3)
 	junkiness = 20
-	custom_price = PAYCHECK_ASSISTANT * 0.8  //we are filled to the brim with flavor
+	custom_price = PAYCHECK_LOWER * 0.8  //we are filled to the brim with flavor
 	tastes = list("fried corn" = 1)
 	foodtypes = JUNKFOOD | FRIED
 	w_class = WEIGHT_CLASS_SMALL
