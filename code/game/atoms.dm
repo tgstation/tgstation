@@ -570,9 +570,8 @@
  * def_zone - zone hit
  * piercing_hit - is this hit piercing or normal?
  */
-/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
+/atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE, armor = 0)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	var/armor = check_projectile_armor(def_zone, hitting_projectile)
 	. = hitting_projectile.on_hit(src, armor, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
