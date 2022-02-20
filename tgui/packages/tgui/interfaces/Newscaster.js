@@ -199,7 +199,7 @@ const NewscasterChannelSelector = (props, context) => {
           mr={1}
           textColor="white"
           onClick={() => act('createChannel')}>
-          Create Channel
+          Create Channel[+]
         </Tabs.Tab>
       </Tabs>
     </Section>
