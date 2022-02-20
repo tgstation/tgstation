@@ -130,3 +130,42 @@ If the cell isn't stabilised by a stabiliser, it may emit a radiation pulse.
 		if(!microfusion_cell.stabilised && DT_PROB(1, delta_time))
 			radiation_pulse(src, 1, RAD_MEDIUM_INSULATION)
 
+
+
+/*
+RELOAD GRIP ATTACHMENT
+
+Makes normal reloads easier
+*/
+/obj/item/microfusion_cell_attachment/reloader
+	name = "reloading handle microfusion cell attachment"
+	desc = "An aftermarket modification that makes the process of loading a MF cell far easier."
+	icon_state = "attachment_reloader"
+	attachment_overlay_icon_state = "microfusion_reloader"
+
+/obj/item/microfusion_cell_attachment/reloader/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+	. = ..()
+	microfusion_cell.reloading_time = 2 SECONDS
+
+/obj/item/microfusion_cell_attachment/reloader/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+	. = ..()
+	microfusion_cell.reloading_time = microfusion_cell?.reloading_time
+
+/*
+TACTICAL GRIP ATTACHMENT
+
+Makes tactical reloads easier
+*/
+/obj/item/microfusion_cell_attachment/tactical
+	name = "tac-reload handle microfusion cell attachment"
+	desc = "An aftermarket modification that makes the process of tactically loading a MF cell far easier and cooler."
+	icon_state = "attachment_tactical"
+	attachment_overlay_icon_state = "microfusion_tactical"
+
+/obj/item/microfusion_cell_attachment/tactical/add_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+	. = ..()
+	microfusion_cell.reloading_time_tactical = 3 SECONDS
+
+/obj/item/microfusion_cell_attachment/tactical/remove_attachment(obj/item/stock_parts/cell/microfusion/microfusion_cell)
+	. = ..()
+	microfusion_cell.reloading_time_tactical = microfusion_cell?.reloading_time_tactical

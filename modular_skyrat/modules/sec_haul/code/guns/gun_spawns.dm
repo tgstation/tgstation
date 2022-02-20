@@ -72,6 +72,8 @@
 /obj/item/storage/box/ammo_box/microfusion
 	name = "microfusion cell container"
 	desc = "A box filled with microfusion cells."
+	icon = 'modular_skyrat/modules/microfusion/icons/microfusion_cells.dmi'
+	icon_state = "microfusion_box"
 
 /obj/item/storage/box/ammo_box/microfusion/PopulateContents()
 	new /obj/item/storage/bag/ammo(src)

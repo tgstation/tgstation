@@ -33,6 +33,10 @@ These are basically advanced cells.
 	var/empty_alarm_sound = 'sound/weapons/gun/general/empty_alarm.ogg'
 	/// Do we have the self charging upgrade?
 	var/self_charging = FALSE
+	/// We use this to edit the reload time of the gun
+	var/reloading_time = 4 SECONDS
+	/// We use this to edit the tactical reload time of the gun
+	var/reloading_time_tactical = 6 SECONDS
 
 /obj/item/stock_parts/cell
 	/// Is this cell stabilised? (used in microfusion guns)
@@ -114,7 +118,7 @@ These are basically advanced cells.
 			. += span_notice("It has a [microfusion_cell_attachment.name] installed.")
 		. += span_notice("Use a <b>screwdriver</b> to remove the attachments.")
 
-/obj/item/stock_parts/cell/microfusion/proc/add_attachment(obj/item/microfusion_cell_attachment/microfusion_cell_attachment, mob/living/user)
+/obj/item/stock_parts/cell/microfusion/proc/add_attachment(obj/item/microfusion_cell_attachment/microfusion_cell_attachment, mob/living/user, obj/item/gun/microfusion/microfusion_gun)
 	if(attachments.len >= max_attachments)
 		to_chat(user, span_warning("[src] cannot fit any more attachments!"))
 		return FALSE
@@ -172,14 +176,14 @@ These are basically advanced cells.
 	desc = "A third generation microfusion cell, boasting a much higher shot count. Additionally, these come with support for up to three modifications to the cell itself."
 	icon_state = "microfusion_advanced"
 	maxcharge = 1700
-	max_attachments = 3
+	max_attachments = 2
 
 /obj/item/stock_parts/cell/microfusion/bluespace
 	name = "bluespace microfusion cell"
 	desc = "A fourth generation microfusion cell, employing bluespace technology to store power in a medium that's bigger on the inside. This has the highest capacity of any man-portable cell, and has flexibility for four different attachments to the cell itself."
 	icon_state = "microfusion_bluespace"
 	maxcharge = 2000
-	max_attachments = 4
+	max_attachments = 3
 
 /obj/item/stock_parts/cell/microfusion/nanocarbon
 	name = "nanocarbon fusion cell"
@@ -187,3 +191,4 @@ These are basically advanced cells.
 	icon_state = "microfusion_nanocarbon"
 	maxcharge = 30000
 	max_attachments = 420
+
