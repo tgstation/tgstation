@@ -657,7 +657,7 @@ SUBSYSTEM_DEF(ticker)
 
 	world.Reboot()
 
-/*	/hippie start roundend sounds
+/*	//hippie start roundend sounds
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
