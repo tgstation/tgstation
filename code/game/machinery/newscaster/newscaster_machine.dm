@@ -89,6 +89,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!ui)
 		ui = new(user, src, "Newscaster", name)
 		ui.open()
+	alert = FALSE //We're checking our messages!
+	update_overlays()
+
 
 /obj/machinery/newscaster/ui_data(mob/user)
 	. = ..()
