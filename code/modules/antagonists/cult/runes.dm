@@ -350,8 +350,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 		sacrificial.gib(TRUE)
 	return TRUE
 
-
-
 /obj/effect/rune/empower
 	cultist_name = "Empower"
 	cultist_desc = "allows cultists to prepare greater amounts of blood magic at far less of a cost."
