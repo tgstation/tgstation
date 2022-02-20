@@ -41,11 +41,8 @@
 	maxHealth = 100
 	light_range = 1.5 // Bioluminescence!
 	light_color = "#d43229" // The ants that comprise the giant ant still glow red despite the sludge.
-	// randomizes hunting intervals, minimum 5 turns
-	var/time_to_hunt = 5
 
 /mob/living/simple_animal/hostile/ant/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	time_to_hunt = rand(5,10)
 	AddElement(/datum/element/pet_bonus, "clacks happily!")
