@@ -255,7 +255,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			to_chat(M, span_warning("You need at least two invokers to convert [convertee]!"))
 		log_game("Offer rune failed - tried conversion with one invoker")
 		return FALSE
-	if(convertee.can_block_magic(MAGIC_RESISTANCE_MIND|MAGIC_RESISTANCE_HOLY, charge_cost = 0)) //No charge_cost because it can be spammed
+	if(convertee.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, charge_cost = 0)) //No charge_cost because it can be spammed
 		for(var/M in invokers)
 			to_chat(M, span_warning("Something is shielding [convertee]'s mind!"))
 		log_game("Offer rune failed - convertee had anti-magic")
@@ -754,7 +754,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
 		if(!IS_CULTIST(target) && target.blood_volume)
-			if(target.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
+			if(target.can_block_magic(charge_cost = 0))
 				continue
 			to_chat(target, span_cultlarge("Your blood boils in your veins!"))
 	animate(src, color = "#FCB56D", time = 4)
@@ -779,7 +779,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	set_light(6, 1, color)
 	for(var/mob/living/target in viewers(T))
 		if(!IS_CULTIST(target) && target.blood_volume)
-			if(target.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
+			if(target.can_block_magic(charge_cost = 0))
 				continue
 			target.take_overall_damage(tick_damage*multiplier, tick_damage*multiplier)
 
