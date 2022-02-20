@@ -150,9 +150,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	for(var/i in 1 to STR.max_items - 2)
-		new /obj/item/stack/spacecash/c1000(src)
+	new /obj/item/stack/spacecash/c500(src)
 
 
 // -----------------------------
