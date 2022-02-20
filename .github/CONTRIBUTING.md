@@ -83,10 +83,10 @@ This should help you understand what you can and can't do with your newfound git
 Things you **CAN** do:
 * Label issues appropriately
 * Close issues when appropriate
-* Label PRs when appropriate
 
 Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
+* Label PRs, leave that for maintainers to handle.
 
 </details>
 
