@@ -392,7 +392,6 @@
 
 /mob/living/emp_act(severity)
 	. = ..()
-
 	if(. & EMP_PROTECT_CONTENTS)
 		return
 	for(var/obj/O in contents)
