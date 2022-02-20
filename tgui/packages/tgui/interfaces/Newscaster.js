@@ -32,24 +32,12 @@ export const Newscaster = (props, context) => {
             onClick={() => setScreenmode(2)}>
             Bounty Board
           </Tabs.Tab>
-          <Tabs.Tab
-            color="Purple"
-            selected={screenmode === 3}
-            onClick={() => setScreenmode(3)}>
-            Requests Console
-          </Tabs.Tab>
         </Tabs>
-
         {screenmode === 1 && (
           <NewscasterContent />
         )}
         {screenmode === 2 && (
           <BountyBoardContent />
-        )}
-        {screenmode === 3 && (
-          <Box>
-            Not done yet :)
-          </Box>
         )}
       </Window.Content>
     </Window>

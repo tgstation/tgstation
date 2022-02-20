@@ -154,8 +154,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	//Here we display all the information about the current channel.
 	data["channelName"] = current_channel?.channel_name
 	data["channelAuthor"] = current_channel?.author
+	if(!current_channel)
+		data["channelAuthor"] = "Nanotrasen Inc"
 	data["channelDesc"] = current_channel?.channel_desc
+	if(!current_channel)
+		data["channelDesc"] = "Welcome to Newscaster Net. Interface & News networks Operational."
 	data["channelBlocked"] = current_channel?.locked || current_channel?.censored
+	if(!current_channel)
+		data["channelBlocked"] = TRUE
 	data["channelCensored"] = current_channel?.censored
 
 	//We send all the information about all channels and all messages in existance.
