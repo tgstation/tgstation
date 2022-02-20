@@ -431,6 +431,9 @@
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()
+	new_uplink.uplink_handler.owner = traitor_mob.mind
+	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
+	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 	if(uplink_loc == R)
 		unlock_text = "Your Uplink is cunningly disguised as your [R.name]. Simply dial the frequency [format_frequency(new_uplink.unlock_code)] to unlock its hidden features."
 	else if(uplink_loc == PDA)
@@ -440,7 +443,8 @@
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
 		to_chat(traitor_mob, span_boldnotice(unlock_text))
-	antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
+	if(antag_datum)
+		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 
 
 //Link a new mobs mind to the creator of said mob. They will join any team they are currently on, and will only switch teams when their creator does.
@@ -486,7 +490,7 @@
 		A.admin_remove(usr)
 
 	if (href_list["role_edit"])
-		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.station_jobs)
+		var/new_role = input("Select new role", "Assigned role", assigned_role.title) as null|anything in sort_list(SSjob.name_occupations)
 		if(isnull(new_role))
 			return
 		var/datum/job/new_job = SSjob.GetJob(new_role)
@@ -611,6 +615,41 @@
 					message_admins("[key_name_admin(usr)] has unemag'ed [ai]'s Cyborgs.")
 					log_admin("[key_name(usr)] has unemag'ed [ai]'s Cyborgs.")
 
+	else if(href_list["edit_obj_tc"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_tc"])
+		if(!istype(objective))
+			return
+		var/telecrystal = input("Set new telecrystal reward for [objective.name]","Syndicate uplink", objective.telecrystal_reward) as null | num
+		if(isnull(telecrystal))
+			return
+		objective.telecrystal_reward = telecrystal
+		message_admins("[key_name_admin(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+		log_admin("[key_name(usr)] changed [objective]'s telecrystal reward count to [telecrystal].")
+	else if(href_list["edit_obj_pr"])
+		var/datum/traitor_objective/objective = locate(href_list["edit_obj_pr"])
+		if(!istype(objective))
+			return
+		var/progression = input("Set new progression reward for [objective.name]","Syndicate uplink", objective.progression_reward) as null | num
+		if(isnull(progression))
+			return
+		objective.progression_reward = progression
+		message_admins("[key_name_admin(usr)] changed [objective]'s progression reward count to [progression].")
+		log_admin("[key_name(usr)] changed [objective]'s progression reward count to [progression].")
+	else if(href_list["fail_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["fail_objective"])
+		if(!istype(objective))
+			return
+		var/performed = objective.objective_state == OBJECTIVE_STATE_INACTIVE? "skipped" : "failed"
+		message_admins("[key_name_admin(usr)] forcefully [performed] [objective].")
+		log_admin("[key_name(usr)] forcefully [performed] [objective].")
+		objective.fail_objective()
+	else if(href_list["succeed_objective"])
+		var/datum/traitor_objective/objective = locate(href_list["succeed_objective"])
+		if(!istype(objective))
+			return
+		message_admins("[key_name_admin(usr)] forcefully succeeded [objective].")
+		log_admin("[key_name(usr)] forcefully succeeded [objective].")
+		objective.succeed_objective()
 	else if (href_list["common"])
 		switch(href_list["common"])
 			if("undress")
@@ -663,7 +702,8 @@
 					message_admins("[key_name_admin(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 					log_admin("[key_name(usr)] failed to give [current] a traitor objective ([objective_typepath]).")
 			if("uplink")
-				if(!give_uplink(antag_datum = has_antag_datum(/datum/antagonist/traitor)))
+				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
+				if(!give_uplink(antag_datum = traitor_datum || null))
 					to_chat(usr, span_danger("Equipping a syndicate failed!"))
 					log_admin("[key_name(usr)] tried and failed to give [current] an uplink.")
 				else

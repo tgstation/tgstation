@@ -390,8 +390,7 @@
 	auto_name = 1;
 	dir = 4;
 	name = "Engineering APC";
-	pixel_x = 24;
-	pixel_y = 2
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -780,7 +779,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	name = "Gateway APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -1077,7 +1076,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Genetics APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -1811,20 +1810,6 @@
 	dir = 8
 	},
 /area/awaymission/research/interior)
-"eo" = (
-/obj/structure/chair/stool/directional/north,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/research/interior/security)
 "ep" = (
 /obj/structure/rack,
 /obj/item/gun/ballistic/automatic/pistol/m1911,
@@ -2132,7 +2117,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Cryostatis APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
@@ -2314,7 +2299,7 @@
 /obj/machinery/power/apc/highcap/fifteen_k{
 	dir = 4;
 	name = "Vault APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -4525,7 +4510,7 @@
 /obj/machinery/power/apc/highcap/five_k{
 	dir = 4;
 	name = "Dorms APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -4701,10 +4686,6 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/pen/fourcolor,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/dorm)
-"kU" = (
-/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "kV" = (
@@ -5613,10 +5594,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
-"qo" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/iron,
-/area/awaymission/research/interior/dorm)
 "qS" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,

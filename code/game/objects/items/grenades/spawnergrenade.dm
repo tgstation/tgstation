@@ -9,6 +9,9 @@
 
 /obj/item/grenade/spawnergrenade/detonate(mob/living/lanced_by) // Prime now just handles the two loops that query for people in lockers and people who can see it.
 	. = ..()
+	if(!.)
+		return
+
 	update_mob()
 	if(spawner_type && deliveryamt)
 		// Make a quick flash

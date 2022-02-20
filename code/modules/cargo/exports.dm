@@ -87,7 +87,7 @@ Then the player gets the profit from selling his own wasted time.
 	..()
 	SSprocessing.processing += src
 	init_cost = cost
-	export_types = typecacheof(export_types, FALSE, !include_subtypes)
+	export_types = typecacheof(export_types, only_root_path = !include_subtypes, ignore_root_path = FALSE)
 	exclude_types = typecacheof(exclude_types)
 
 /datum/export/Destroy()

@@ -55,7 +55,7 @@
 		return FALSE
 	return TRUE
 
-/datum/action/boss/wizard_summon_minions/Trigger()
+/datum/action/boss/wizard_summon_minions/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -91,7 +91,7 @@
 	boss_type = /mob/living/simple_animal/hostile/boss/paper_wizard
 	say_when_triggered = ""
 
-/datum/action/boss/wizard_mimic/Trigger()
+/datum/action/boss/wizard_mimic/Trigger(trigger_flags)
 	if(..())
 		var/mob/living/target
 		if(!boss.client) //AI's target
@@ -172,6 +172,7 @@
 	name = "scattering paper"
 	desc = "Pieces of paper scattering to the wind."
 	layer = ABOVE_OPEN_TURF_LAYER
+	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paper_scatter"
 	anchored = TRUE
@@ -182,6 +183,7 @@
 	name = "craft portal"
 	desc = "A wormhole sucking the wizard into the void. Neat."
 	layer = ABOVE_OPEN_TURF_LAYER
+	plane = GAME_PLANE
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "paperwiz_poof"
 	anchored = TRUE

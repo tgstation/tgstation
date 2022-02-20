@@ -99,7 +99,7 @@
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
 	if(iscarbon(living_mob))
 		var/mob/living/carbon/carbon_mob = living_mob
-		carbon_mob.apply_status_effect(STATUS_EFFECT_EIGEN)
+		carbon_mob.apply_status_effect(/datum/status_effect/eigenstasium)
 	return ..()
 
 /datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly

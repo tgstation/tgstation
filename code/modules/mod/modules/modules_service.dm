@@ -8,7 +8,7 @@
 	icon_state = "bikehorn"
 	module_type = MODULE_USABLE
 	complexity = 1
-	use_power_cost = DEFAULT_CELL_DRAIN
+	use_power_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
 
@@ -28,7 +28,7 @@
 	icon_state = "microwave_beam"
 	module_type = MODULE_ACTIVE
 	complexity = 2
-	use_power_cost = DEFAULT_CELL_DRAIN * 5
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 5
 	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
 	cooldown_time = 10 SECONDS
 
@@ -64,8 +64,8 @@
 		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \
 		to waddle around, bouncing to and fro with a pep in their step."
 	icon_state = "waddle"
-	idle_power_cost = DEFAULT_CELL_DRAIN * 0.2
-	removable = FALSE
+	complexity = 1
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/waddle)
 
 /obj/item/mod/module/waddle/on_suit_activation()

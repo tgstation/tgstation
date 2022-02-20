@@ -108,6 +108,7 @@
 	name = "Look Out, Sir!"
 	desc = "Either awarded for making the ultimate sacrifice for your comrades, or a really dumb attempt at grenade jumping."
 	database_id = MEDAL_LOOKOUTSIR
+	icon = "martyr" // purple heart on an explosive danger warning sign (well, sort of)
 
 /datum/award/achievement/misc/gottem
 	name = "HA, GOTTEM"
@@ -192,3 +193,9 @@
 	desc = "Even interdimensional space deitys need a friend."
 	database_id = MEDAL_NARSUPREME
 	icon = "narsupreme"
+
+/datum/award/achievement/misc/springlock
+	name = "The Man Inside the MODsuit"
+	desc = "Ignore the warning label on a springlock MODsuit."
+	database_id = MEDAL_SPRINGLOCK
+	icon = "springlock"

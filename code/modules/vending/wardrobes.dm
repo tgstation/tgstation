@@ -9,9 +9,6 @@
 	panel_type = "panel19"
 	light_mask = "wardrobe-light-mask"
 
-/obj/machinery/vending/wardrobe/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
-
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	name = "\improper SecDrobe"
 	desc = "A vending machine for security and security-related clothing!"
@@ -69,6 +66,7 @@
 					/obj/item/clothing/shoes/sneakers/white = 4,
 					/obj/item/clothing/head/beret/medical/paramedic = 4,
 					/obj/item/clothing/head/soft/paramedic = 4,
+					/obj/item/clothing/shoes/sneakers/blue = 4,
 					/obj/item/clothing/suit/apron/surgical = 4,
 					/obj/item/clothing/mask/surgical = 4)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe

@@ -572,7 +572,8 @@
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	. = hitting_projectile.on_hit(src, 0, def_zone, piercing_hit)
+	var/armor = check_projectile_armor(def_zone, hitting_projectile)
+	. = hitting_projectile.on_hit(src, armor, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -1414,6 +1415,7 @@
 			if(TOOL_ANALYZER)
 				act_result = analyzer_act_secondary(user, tool)
 	if(act_result) // A tooltype_act has completed successfully
+		log_tool("[key_name(user)] used [tool] on [src][is_right_clicking ? "(right click)" : ""] at [AREACOORD(src)]")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
@@ -1442,8 +1444,9 @@
 
 
 /atom/proc/StartProcessingAtom(mob/living/user, obj/item/process_item, list/chosen_option)
+	var/processing_time = chosen_option[TOOL_PROCESSING_TIME]
 	to_chat(user, span_notice("You start working on [src]."))
-	if(process_item.use_tool(src, user, chosen_option[TOOL_PROCESSING_TIME], volume=50))
+	if(process_item.use_tool(src, user, processing_time, volume=50))
 		var/atom/atom_to_create = chosen_option[TOOL_PROCESSING_RESULT]
 		var/list/atom/created_atoms = list()
 		for(var/i = 1 to chosen_option[TOOL_PROCESSING_AMOUNT])
@@ -1969,10 +1972,6 @@
  * Override this if you want custom behaviour in whatever gets hit by the rust
  */
 /atom/proc/rust_heretic_act()
-	if(HAS_TRAIT(src, TRAIT_RUSTY))
-		return
-
-	AddElement(/datum/element/rust)
 
 /**
  * Used to set something as 'open' if it's being used as a supplypod
@@ -2102,15 +2101,53 @@
 	SHOULD_NOT_SLEEP(TRUE)
 
 	var/mob/user = client?.mob
+	if (isnull(user))
+		return
 
 	// Screentips
-	var/datum/hud/active_hud = user?.hud_used
+	var/datum/hud/active_hud = user.hud_used
 	if(active_hud)
-		if(!active_hud.screentips_enabled || (flags_1 & NO_SCREENTIPS_1))
+		var/screentips_enabled = active_hud.screentips_enabled
+		if(screentips_enabled == SCREENTIP_PREFERENCE_DISABLED || (flags_1 & NO_SCREENTIPS_1))
 			active_hud.screentip_text.maptext = ""
 		else
-			//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
-			active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [active_hud.screentip_color]'>[name]</span>"
+			var/extra_context = ""
+
+			if (isliving(user))
+				var/obj/item/held_item = user.get_active_held_item()
+
+				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
+					var/list/context = list()
+
+					var/contextual_screentip_returns = \
+						SEND_SIGNAL(src, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, context, held_item, user) \
+						| (held_item && SEND_SIGNAL(held_item, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, context, src, user))
+
+					if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
+						// LMB and RMB on one line...
+						var/lmb_text = (SCREENTIP_CONTEXT_LMB in context) ? "[SCREENTIP_CONTEXT_LMB]: [context[SCREENTIP_CONTEXT_LMB]]" : ""
+						var/rmb_text = (SCREENTIP_CONTEXT_RMB in context) ? "[SCREENTIP_CONTEXT_RMB]: [context[SCREENTIP_CONTEXT_RMB]]" : ""
+
+						if (lmb_text)
+							extra_context = lmb_text
+							if (rmb_text)
+								extra_context += " | [rmb_text]"
+						else if (rmb_text)
+							extra_context = rmb_text
+
+						// Ctrl-LMB and (in the future) Alt-LMB on another
+						if (SCREENTIP_CONTEXT_CTRL_LMB in context)
+							if (extra_context != "")
+								extra_context += "<br>"
+							extra_context += "[SCREENTIP_CONTEXT_CTRL_LMB]: [context[SCREENTIP_CONTEXT_CTRL_LMB]]"
+
+						extra_context = "<br><span style='font-size: 7px'>[extra_context]</span>"
+
+			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
+				active_hud.screentip_text.maptext = ""
+			else
+				//We inline a MAPTEXT() here, because there's no good way to statically add to a string like this
+				active_hud.screentip_text.maptext = "<span class='maptext' style='text-align: center; font-size: 32px; color: [active_hud.screentip_color]'>[name][extra_context]</span>"
 
 /// Gets a merger datum representing the connected blob of objects in the allowed_types argument
 /atom/proc/GetMergeGroup(id, list/allowed_types)

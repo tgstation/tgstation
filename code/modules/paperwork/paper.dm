@@ -137,7 +137,7 @@
 	set category = "Object"
 	set src in usr
 
-	if(!usr.can_read(src) || usr.incapacitated(TRUE, TRUE) || (isobserver(usr) && !isAdminGhostAI(usr)))
+	if(!usr.can_read(src) || usr.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
@@ -147,6 +147,8 @@
 			H.update_damage_hud()
 			return
 	var/n_name = tgui_input_text(usr, "Enter a paper label", "Paper Labelling", max_length = MAX_NAME_LEN)
+	if(isnull(n_name) || n_name == "")
+		return
 	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
 		name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
@@ -178,7 +180,7 @@
 		return UI_CLOSE
 	if(!in_range(user, src) && !isobserver(user))
 		return UI_CLOSE
-	if(user.incapacitated(TRUE, TRUE) || (isobserver(user) && !isAdminGhostAI(user)))
+	if(user.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB) || (isobserver(user) && !isAdminGhostAI(user)))
 		return UI_UPDATE
 	// Even harder to read if your blind...braile? humm
 	// .. or if you cannot read
@@ -247,11 +249,14 @@
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
-		to_chat(user, span_notice("You ready your stamp over the paper! "))
-		if(!ui_interact(user))
+		if(!user.can_read(src))
 			//The paper window is 400x500
 			stamp(rand(0, 400), rand(0, 500), rand(0, 360), P.icon_state)
-			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"), span_notice("You stamp [src] with \the [P.name] the best you can!"))
+			user.visible_message(span_notice("[user] blindly stamps [src] with \the [P.name]!"))
+			to_chat(user, span_notice("You stamp [src] with \the [P.name] the best you can!"))
+		else
+			to_chat(user, span_notice("You ready your stamp over the paper! "))
+			ui_interact(user)
 
 		return /// Normaly you just stamp, you don't need to read the thing
 	else

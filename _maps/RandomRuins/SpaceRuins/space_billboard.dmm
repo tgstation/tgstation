@@ -1,0 +1,100 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"j" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"s" = (
+/turf/closed/mineral/asteroid,
+/area/ruin/unpowered/no_grav)
+"t" = (
+/obj/structure/lattice/catwalk,
+/obj/item/toy/crayon/spraycan{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"D" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/ruin/unpowered/no_grav)
+"G" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"S" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"Z" = (
+/obj/effect/spawner/random/structure/billboard,
+/turf/open/floor/plating/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+s
+S
+j
+a
+"}
+(3,1,1) = {"
+a
+s
+s
+S
+Z
+D
+"}
+(4,1,1) = {"
+a
+s
+s
+S
+S
+D
+"}
+(5,1,1) = {"
+a
+a
+s
+S
+S
+t
+"}
+(6,1,1) = {"
+a
+a
+s
+s
+G
+D
+"}
+(7,1,1) = {"
+a
+a
+a
+s
+S
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}

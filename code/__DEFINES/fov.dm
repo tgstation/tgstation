@@ -9,3 +9,9 @@
 
 /// Range at which FOV effects treat nearsightness as blind and play
 #define NEARSIGHTNESS_FOV_BLINDNESS 2
+
+//Fullscreen overlay resolution in tiles for the clients view.
+/// The fullscreen overlay in tiles for x axis
+#define FULLSCREEN_OVERLAY_RESOLUTION_X 15
+/// The fullscreen overlay in tiles for y axis
+#define FULLSCREEN_OVERLAY_RESOLUTION_Y 15

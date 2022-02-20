@@ -626,12 +626,14 @@
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/suits/noslip
-	name = "MODsuit Anti-Slip Module"
-	desc = "A MODsuit module preventing the user from slipping on water."
-	item = /obj/item/mod/module/noslip
-	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
+/datum/uplink_item/suits/paint
+	name = "MODsuit Funny Paint Kit"
+	desc = "A highly advanced piece of technology that will change the theme \
+			of your MODsuit. Highly recommended by clowns."
+	item = /obj/item/mod/paint
+	cost = 0
+	limited_stock = 1 // they're infinite usage so we don't need millions floating around
+	purchasable_from = UPLINK_CLOWN_OPS // right now, only intended to let clown ops use honkerative modsuit, but could be made available to all uplinks if we get different suit variations.
 
 /datum/uplink_item/device_tools/magboots
 	name = "Blood-Red Magboots"

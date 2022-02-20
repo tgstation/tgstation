@@ -211,20 +211,25 @@
 
 		//This entire if/else chain could be in two lines but isn't for readibilties sake.
 		var/msg = message
+		var/msg_type = MSG_VISUAL
+
 		if(M.see_invisible < invisibility)//if src is invisible to M
 			msg = blind_message
+			msg_type = MSG_AUDIBLE
 		else if(T != loc && T != src) //if src is inside something and not a turf.
 			if(M != loc) // Only give the blind message to hearers that aren't the location
 				msg = blind_message
+				msg_type = MSG_AUDIBLE
 		else if(M.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
 			msg = blind_message
+			msg_type = MSG_AUDIBLE
 		if(!msg)
 			continue
 
 		if(visible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, visible_message_flags) && !M.is_blind())
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = visible_message_flags)
 
-		M.show_message(msg, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+		M.show_message(msg, msg_type, blind_message, MSG_AUDIBLE)
 
 
 ///Adds the functionality to self_message.
@@ -296,7 +301,7 @@
 
 
 ///Is the mob incapacitated
-/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
+/mob/proc/incapacitated(flags)
 	return
 
 /**
@@ -966,7 +971,7 @@
 	if(isAdminGhostAI(src) || Adjacent(A))
 		return TRUE
 	var/datum/dna/mob_dna = has_dna()
-	if(mob_dna?.check_mutation(TK) && tkMaxRangeCheck(src, A))
+	if(mob_dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(src, A))
 		return TRUE
 
 	//range check
@@ -1035,7 +1040,7 @@
 	if(!istext(newname) && !isnull(newname))
 		stack_trace("[src] attempted to change its name from [oldname] to the non string value [newname]")
 		return FALSE
-		
+
 	log_message("[src] name changed from [oldname] to [newname]", LOG_OWNERSHIP)
 
 	log_played_names(ckey, newname)
@@ -1100,6 +1105,10 @@
 	return
 
 /mob/proc/update_health_hud()
+	return
+
+/// Changes the stamina HUD based on new information
+/mob/proc/update_stamina_hud()
 	return
 
 ///Update the lighting plane and sight of this mob (sends COMSIG_MOB_UPDATE_SIGHT)
@@ -1325,7 +1334,7 @@
 /mob/proc/become_uncliented()
 	if(!canon_client)
 		return
-		
+
 	for(var/foo in canon_client.player_details.post_logout_callbacks)
 		var/datum/callback/CB = foo
 		CB.Invoke()

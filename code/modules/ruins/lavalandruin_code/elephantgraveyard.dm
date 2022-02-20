@@ -5,6 +5,7 @@
 	max_integrity = 120
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bone
 
@@ -122,7 +123,8 @@
 	anchorable = FALSE
 	anchored = TRUE
 	locked = TRUE
-	breakout_time = 900
+	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
+	breakout_time = 90 SECONDS
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	cutting_tool = /obj/item/shovel
@@ -155,12 +157,18 @@
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
+		else
+			//empty grave
+			return
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
 	if(!opened)
 		to_chat(user, span_notice("The ground here is too hard to dig up with your bare hands. You'll need a shovel."))
 	else
 		to_chat(user, span_notice("The grave has already been dug up."))
+
+/obj/structure/closet/crate/grave/closet_update_overlays(list/new_overlays)
+	return
 
 /obj/structure/closet/crate/grave/tool_interact(obj/item/S, mob/living/carbon/user)
 	if(!user.combat_mode) //checks to attempt to dig the grave, must be done with combat mode off only.

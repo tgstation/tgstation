@@ -24,7 +24,7 @@
 			OUTPUT_ITEMS = list(/obj/item/clothing/suit/hooded/cultrobes/berserker),
 			),
 		ELDRITCH_SWORD = list(
-			PREVIEW_IMAGE = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "cultblade"),
+			PREVIEW_IMAGE = image(icon = 'icons/obj/cult/items_and_weapons.dmi', icon_state = "cultblade"),
 			OUTPUT_ITEMS = list(/obj/item/melee/cultblade),
 			),
 	)

@@ -1,0 +1,4 @@
+author: "Watermelon914"
+delete-after: True
+changes: 
+  - bugfix: "Fixed progression traitor uplinks suddenly changing owners when implanted with an uplink implant."

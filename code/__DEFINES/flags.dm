@@ -56,6 +56,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define HTML_USE_INITAL_ICON_1 (1<<20)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
 #define IS_PLAYER_COLORABLE_1 (1<<21)
+/// Whether or not this atom has contextual screentips when hovered OVER
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<22)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -256,3 +258,21 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// 33554431 (2^24 - 1) is the maximum value our bitflags can reach.
 #define MAX_BITFLAG_DIGITS 8
 
+// timed_action_flags parameter for `/proc/do_after_mob`, `/proc/do_mob` and `/proc/do_after`
+/// Can do the action even if mob moves location
+#define IGNORE_USER_LOC_CHANGE (1<<0)
+/// Can do the action even if the target moves location
+#define IGNORE_TARGET_LOC_CHANGE (1<<1)
+/// Can do the action even if the item is no longer being held
+#define IGNORE_HELD_ITEM (1<<2)
+/// Can do the action even if the mob is incapacitated (ex. handcuffed)
+#define IGNORE_INCAPACITATED (1<<3)
+/// Used to prevent important slowdowns from being abused by drugs like kronkaine
+#define IGNORE_SLOWDOWNS (1<<4)
+
+
+// Spacevine-related flags
+/// Is the spacevine / flower bud heat resistant
+#define SPACEVINE_HEAT_RESISTANT (1 << 0)
+/// Is the spacevine / flower bud cold resistant
+#define SPACEVINE_COLD_RESISTANT (1 << 1)

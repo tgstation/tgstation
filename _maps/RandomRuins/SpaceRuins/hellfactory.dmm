@@ -72,10 +72,6 @@
 /obj/item/storage/cans/sixbeer,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hellfactoryoffice)
-"am" = (
-/obj/machinery/paystand,
-/turf/open/floor/iron/grimy,
-/area/ruin/space/has_grav/hellfactoryoffice)
 "an" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
@@ -693,7 +689,8 @@
 "cm" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/highcap/ten_k{
-	dir = 1
+	dir = 1;
+	pixel_y = 25
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
@@ -973,7 +970,8 @@
 /area/ruin/space/has_grav/hellfactory)
 "wv" = (
 /obj/machinery/power/apc/highcap/ten_k{
-	dir = 1
+	dir = 1;
+	pixel_y = 25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
@@ -1367,7 +1365,7 @@ aa
 aa
 aa
 ah
-am
+ao
 ao
 aH
 ao

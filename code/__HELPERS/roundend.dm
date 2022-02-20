@@ -207,9 +207,8 @@
 	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
 	log_game("The round has ended.")
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
-		cb.InvokeAsync()
+	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
+		roundend_callbacks.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
 	var/speed_round = FALSE
@@ -643,7 +642,7 @@
 	name = "Show roundend report"
 	button_icon_state = "round_end"
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 

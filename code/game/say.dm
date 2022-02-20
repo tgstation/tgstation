@@ -221,7 +221,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		var/mob/living/silicon/robot/B = M
 		job = "[B.designation] Cyborg"
 	else if(istype(M, /mob/living/silicon/pai))  // Personal AI (pAI)
-		job = "Personal AI"
+		job = JOB_PERSONAL_AI
 	else if(isobj(M))  // Cold, emotionless machines
 		job = "Machine"
 	else  // Unidentifiable mob

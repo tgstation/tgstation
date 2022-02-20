@@ -376,10 +376,12 @@
 	var/last_high_pressure_movement_air_cycle = 0
 
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+	set waitfor = FALSE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_PRE_PRESSURE_PUSH) & COMSIG_ATOM_BLOCKS_PRESSURE)
+		return
 	var/const/PROBABILITY_OFFSET = 25
 	var/const/PROBABILITY_BASE_PRECENT = 75
 	var/max_force = sqrt(pressure_difference) * (MOVE_FORCE_DEFAULT / 5)
-	set waitfor = FALSE
 	var/move_prob = 100
 	if (pressure_resistance > 0)
 		move_prob = (pressure_difference / pressure_resistance * PROBABILITY_BASE_PRECENT) - PROBABILITY_OFFSET

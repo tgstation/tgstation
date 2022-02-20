@@ -32,7 +32,7 @@
 	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
 	icon_state = "adamantine_cords"
 
-/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
+/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return
 	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate")
@@ -86,7 +86,7 @@
 			return FALSE
 	return TRUE
 
-/datum/action/item_action/organ_action/colossus/Trigger()
+/datum/action/item_action/organ_action/colossus/Trigger(trigger_flags)
 	. = ..()
 	if(!IsAvailable())
 		if(world.time < cords.next_command)

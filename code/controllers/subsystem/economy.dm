@@ -3,6 +3,11 @@ SUBSYSTEM_DEF(economy)
 	wait = 5 MINUTES
 	init_order = INIT_ORDER_ECONOMY
 	runlevels = RUNLEVEL_GAME
+<<<<<<< HEAD
+=======
+	///How many paychecks should players start out the round with?
+	var/roundstart_paychecks = 5
+>>>>>>> upstream/master
 	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
@@ -14,7 +19,11 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/generated_accounts = list()
 	/**
+<<<<<<< HEAD
 	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
+=======
+	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
+>>>>>>> upstream/master
 	 * Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
 	 */
 	var/full_ancap = FALSE

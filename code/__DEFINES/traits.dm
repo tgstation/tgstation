@@ -305,6 +305,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Galactic Common Sign Language
 #define TRAIT_SIGN_LANG "sign_language"
+/// This mob is able to use sign language over the radio.
+#define TRAIT_CAN_SIGN_ON_COMMS "can_sign_on_comms"
 /// nobody can use martial arts on this mob
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
 /// You've been cursed with a living duffelbag, and can't have more added
@@ -351,6 +353,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPARRING "sparring"
 /// The user is currently challenging an elite mining mob. Prevents him from challenging another until he's either lost or won.
 #define TRAIT_ELITE_CHALLENGER "elite_challenger"
+/// For living mobs. It signals that the mob shouldn't have their data written in an external json for persistence.
+#define TRAIT_DONT_WRITE_MEMORY "dont_write_memory"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -382,6 +386,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait used by fugu glands to avoid double buffing
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
 
+/// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
+#define TRAIT_DOUBLE_TAP "double_tap"
+
 /// Trait applied to [/datum/mind] to stop someone from using the cursed hot springs to polymorph more than once.
 #define TRAIT_HOT_SPRING_CURSED "hot_spring_cursed"
 
@@ -399,7 +406,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CULINARY_METABOLISM "culinary_metabolism"
 #define TRAIT_COMEDY_METABOLISM "comedy_metabolism"
 #define TRAIT_MEDICAL_METABOLISM "medical_metabolism"
-#define TRAIT_GREYTIDE_METABOLISM "greytide_metabolism"
 #define TRAIT_ENGINEER_METABOLISM "engineer_metabolism"
 #define TRAIT_ROYAL_METABOLISM "royal_metabolism"
 #define TRAIT_PRETENDER_ROYAL_METABOLISM "pretender_royal_metabolism"
@@ -502,6 +508,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_STRIP "no_strip"
 /// Disallows this item from being pricetagged with a barcode
 #define TRAIT_NO_BARCODES "no_barcode"
+/// Allows heretics to cast their spells.
+#define TRAIT_ALLOW_HERETIC_CASTING "allow_heretic_casting"
+/// Designates a heart as a living heart for a heretic.
+#define TRAIT_LIVING_HEART "living_heart"
 
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
@@ -535,6 +545,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SMOKER "smoker"
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
+
+///Trait for the gamer quirk.
+#define TRAIT_GAMER "gamer"
 
 ///Trait for dryable items
 #define TRAIT_DRYABLE "trait_dryable"
@@ -756,6 +769,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+/// Given by the multiple_lives component to the previous body of the mob upon death.
+#define EXPIRED_LIFE_TRAIT "expired_life"
+/// Trait given to a ghost when they orbit something.
+#define GHOST_ORBITING_TRAIT "ghost_orbiting"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

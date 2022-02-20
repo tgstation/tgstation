@@ -244,6 +244,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/processes = TRUE
 	///Stores the time of when the last zap occurred
 	var/last_power_zap = 0
+	///Do we show this crystal in the CIMS modular program
+	var/include_in_cims = TRUE
 
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
@@ -263,6 +265,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	AddElement(/datum/element/bsa_blocker)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
+
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/tram_contents_consume,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
 	soundloop = new(src, TRUE)
 	if(ispath(psyOverlay))
@@ -481,6 +488,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	SIGNAL_HANDLER
 
 	explode()
+
+/// Consume things that run into the supermatter from the tram. The tram calls forceMove (doesn't call Bump/ed) and not Move, and I'm afraid changing it will do something chaotic
+/obj/machinery/power/supermatter_crystal/proc/tram_contents_consume(datum/source, list/tram_contents)
+	SIGNAL_HANDLER
+
+	for(var/atom/thing_to_consume as anything in tram_contents)
+		Bumped(thing_to_consume)
 
 /obj/machinery/power/supermatter_crystal/process_atmos()
 	if(!processes) //Just fuck me up bro
@@ -1165,6 +1179,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	gasefficency = 0.125
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	moveable = TRUE
 	psyOverlay = /obj/overlay/psy/shard
 
