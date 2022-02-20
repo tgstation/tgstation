@@ -85,11 +85,16 @@
 	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, .proc/on_wearer_set)
+	if(mod.wearer)
+		on_wearer_set(mod, mod.wearer)
 
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	UnregisterSignal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY, COMSIG_MOD_WEARER_SET))
+	if(mod.wearer)
+		on_wearer_unset(mod, mod.wearer)
 	return ..()
 
 /obj/item/mod/core/standard/charge_source()
@@ -201,6 +206,24 @@
 		mod.update_charge_alert()
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
+
+/obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, .proc/on_wearer_unset)
+
+/obj/item/mod/core/standard/proc/on_wearer_unset(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(mod, COMSIG_MOD_WEARER_UNSET)
+
+/obj/item/mod/core/standard/proc/on_borg_charge(datum/source, amount)
+	SIGNAL_HANDLER
+
+	add_charge(amount)
+	mod.update_charge_alert()
 
 /obj/item/mod/core/ethereal
 	name = "MOD ethereal core"

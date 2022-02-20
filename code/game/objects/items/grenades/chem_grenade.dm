@@ -105,7 +105,7 @@
 		balloon_alert(user, span_notice("resetting trigger..."))
 		if (do_after(user, 2 SECONDS, src))
 			balloon_alert(user, span_notice("trigger reset"))
-			dud_flags &= GRENADE_USED
+			dud_flags &= ~GRENADE_USED
 		return
 
 	if(stage == GRENADE_WIRED)

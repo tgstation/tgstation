@@ -167,7 +167,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	nonabstract_req = TRUE
 	phase_allowed = TRUE
 	antimagic_allowed = TRUE
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 
 /obj/effect/proc_holder/spell/self/special_equipment_fallback/cast(list/targets, mob/user)
 	var/datum/mind/mind = user.mind

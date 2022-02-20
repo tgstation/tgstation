@@ -102,3 +102,10 @@
 		return
 
 	return ..()
+
+/obj/item/language_manual/dronespeak_manual/attack_self(mob/living/user)
+	if(!(isdrone(user) || issilicon(user)))
+		to_chat(user, span_danger("You beat yourself over the head with [src]!"))
+		return
+
+	return ..()

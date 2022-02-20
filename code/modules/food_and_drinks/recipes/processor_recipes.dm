@@ -76,6 +76,10 @@
 /datum/food_processor_process/cutlet/chicken
 	input = /obj/item/food/meat/cutlet/chicken
 	output = /obj/item/food/raw_meatball/chicken
+
+/datum/food_processor_process/fishmeat
+	input = /obj/item/food/fishmeat/carp
+	output = /obj/item/food/fishmeat
 	blacklist = null
 
 /datum/food_processor_process/bacon
@@ -86,9 +90,9 @@
 	input = /obj/item/food/grown/potato/wedges
 	output = /obj/item/food/fries
 
-/datum/food_processor_process/sweetpotato
-	input = /obj/item/food/grown/potato/sweet
-	output = /obj/item/food/yakiimo
+/datum/food_processor_process/spidereggs
+	input = /obj/item/food/spidereggs
+	output = /obj/item/food/spidereggs/processed
 
 /datum/food_processor_process/potato
 	input = /obj/item/food/grown/potato

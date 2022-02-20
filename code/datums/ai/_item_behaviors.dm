@@ -56,7 +56,5 @@
 
 /datum/ai_behavior/item_move_close_and_attack/ghostly/haunted/finish_action(datum/ai_controller/controller, succeeded, target_key, throw_count_key)
 	var/datum/weakref/target_ref = controller.blackboard[target_key]
-	var/atom/throw_target = target_ref?.resolve()
-	var/list/hauntee_list = controller.blackboard[BB_TO_HAUNT_LIST]
-	hauntee_list[throw_target]--
+	controller.blackboard[BB_TO_HAUNT_LIST][target_ref]--
 	return ..()

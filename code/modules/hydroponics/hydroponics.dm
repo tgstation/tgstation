@@ -62,6 +62,93 @@
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
 
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/plant_analyzer = list(
+			SCREENTIP_CONTEXT_LMB = "Scan tray stats",
+			SCREENTIP_CONTEXT_RMB = "Scan tray chemicals"
+		),
+		/obj/item/cultivator = list(
+			SCREENTIP_CONTEXT_LMB = "Remove weeds",
+		),
+		/obj/item/shovel = list(
+			SCREENTIP_CONTEXT_LMB = "Clear tray",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	register_context()
+
+/obj/machinery/hydroponics/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	// If we don't have a seed, we can't do much.
+
+	// The only option is to plant a new seed.
+	if(!myseed)
+		if(istype(held_item, /obj/item/seeds))
+			context[SCREENTIP_CONTEXT_LMB] = "Plant seed"
+			return CONTEXTUAL_SCREENTIP_SET
+		return NONE
+
+	// If we DO have a seed, we can do a few things!
+
+	// With a hand we can harvest or remove dead plants
+	// If the plant's not in either state, we can't do much else, so early return.
+	if(isnull(held_item))
+		// Silicons can't interact with trays :frown:
+		if(issilicon(user))
+			return NONE
+
+		switch(plant_status)
+			if(HYDROTRAY_PLANT_DEAD)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove dead plant"
+				return CONTEXTUAL_SCREENTIP_SET
+
+			if(HYDROTRAY_PLANT_HARVESTABLE)
+				context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
+				return CONTEXTUAL_SCREENTIP_SET
+
+		return NONE
+
+	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
+	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
+		if(istype(held_item, /obj/item/secateurs))
+			context[SCREENTIP_CONTEXT_LMB] = "Graft plant"
+			return CONTEXTUAL_SCREENTIP_SET
+
+		if(istype(held_item, /obj/item/storage/bag/plants))
+			context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	// If the plant's in good health, we can shear it.
+	if(istype(held_item, /obj/item/geneshears) && plant_health > GENE_SHEAR_MIN_HEALTH)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove plant gene"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	// If we've got a charged somatoray, we can mutation lock it.
+	if(istype(held_item, /obj/item/gun/energy/floragun) && myseed.endurance > FLORA_GUN_MIN_ENDURANCE && LAZYLEN(myseed.mutatelist))
+		var/obj/item/gun/energy/floragun/flower_gun = held_item
+		if(flower_gun.cell.charge >= flower_gun.cell.maxcharge)
+			context[SCREENTIP_CONTEXT_LMB] = "Lock mutation"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	// Edibles and pills can be composted.
+	if(IS_EDIBLE(held_item) || istype(held_item, /obj/item/reagent_containers/pill))
+		context[SCREENTIP_CONTEXT_LMB] = "Compost"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	// Aand if a reagent container has water or plant fertilizer in it, we can use it on the plant.
+	if(is_reagent_container(held_item) && length(held_item.reagents.reagent_list))
+		var/datum/reagent/most_common_reagent = held_item.reagents.get_master_reagent()
+		context[SCREENTIP_CONTEXT_LMB] = "[istype(most_common_reagent, /datum/reagent/water) ? "Water" : "Feed"] plant"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
+
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
@@ -89,6 +176,18 @@
 	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>Alt-Click</b> to empty the tray's nutrients.")
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Tray efficiency at <b>[rating*100]%</b>.")
+
+/obj/machinery/hydroponics/constructable/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	// Constructible trays will always show that you can activate auto-grow with ctrl+click
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Activate auto-grow"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
@@ -805,7 +904,7 @@
 		if(!myseed)
 			to_chat(user, span_warning("[src] is empty!"))
 			return
-		if(myseed.endurance <= 20)
+		if(myseed.endurance <= FLORA_GUN_MIN_ENDURANCE)
 			to_chat(user, span_warning("[myseed.plantname] isn't hardy enough to sequence it's mutation!"))
 			return
 		if(!LAZYLEN(myseed.mutatelist))
