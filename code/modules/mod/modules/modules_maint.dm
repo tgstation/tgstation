@@ -39,6 +39,7 @@
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
 
+	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
@@ -46,15 +47,15 @@
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 	if(!mod.wearer) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
 		return
+	mod.wearer.Paralyze(amount = 100000, ignore_canstun = TRUE)
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
 	mod.wearer.emote("scream")
-	mod.wearer.Paralyze(10000, TRUE)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.client?.give_award(/datum/award/achievement/misc/springlock, mod.wearer)
-	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_R_ARM, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_R_ARM, forced = FALSE, spread_damage = FALSE, sharpness = SHARP_POINTY)
 	ADD_TRAIT(mod, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	addtimer(CALLBACK(src, .proc/stage_2), rand(8 SECONDS, 10 SECONDS))
+	addtimer(CALLBACK(src, .proc/stage_2), rand(3 SECONDS, 5 SECONDS))
 
 ///Stage 2
 /obj/item/mod/module/springlock/proc/stage_2()
@@ -62,8 +63,8 @@
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	mod.wearer.apply_damage(damage = 40, damagetype = BRUTE, def_zone = BODY_ZONE_R_LEG, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
-	addtimer(CALLBACK(src, .proc/stage_3), rand(8 SECONDS, 10 SECONDS))
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_R_LEG, forced = FALSE, spread_damage = FALSE, sharpness = SHARP_POINTY)
+	addtimer(CALLBACK(src, .proc/stage_3), rand(3 SECONDS, 5 SECONDS))
 
 ///Stage 3
 /obj/item/mod/module/springlock/proc/stage_3()
@@ -71,8 +72,8 @@
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_L_ARM, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
-	addtimer(CALLBACK(src, .proc/stage_4), rand(8 SECONDS, 10 SECONDS))
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_L_ARM, forced = FALSE, spread_damage = FALSE, sharpness = SHARP_POINTY)
+	addtimer(CALLBACK(src, .proc/stage_4), rand(3 SECONDS, 5 SECONDS))
 
 
 ///Stage 4
@@ -81,8 +82,8 @@
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_L_LEG, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
-	addtimer(CALLBACK(src, .proc/stage_5), rand(8 SECONDS, 10 SECONDS))
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_L_LEG, forced = FALSE, spread_damage = FALSE, sharpness = SHARP_POINTY)
+	addtimer(CALLBACK(src, .proc/stage_5), rand(3 SECONDS, 5 SECONDS))
 
 
 ///Stage 5
@@ -91,12 +92,12 @@
 	mod.wearer.bleed(8)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
-	mod.wearer.apply_damage(damage = 50, damagetype = BRUTE, def_zone = BODY_ZONE_CHEST, forced = FALSE, spread_damage = FALSE, sharpness = WOUND_BLUNT)
-	addtimer(CALLBACK(src, .proc/stage_6), rand(8 SECONDS, 10 SECONDS))
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_CHEST, forced = FALSE, spread_damage = FALSE, sharpness = SHARP_POINTY)
+	addtimer(CALLBACK(src, .proc/stage_6), rand(3 SECONDS, 5 SECONDS))
 
 ///Stage 6
 /obj/item/mod/module/springlock/proc/stage_6()
-	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD , forced = TRUE, spread_damage = TRUE, sharpness = WOUND_BLUNT)
+	mod.wearer.apply_damage(damage = 45, damagetype = BRUTE, def_zone = BODY_ZONE_HEAD , forced = FALSE, spread_damage = FALSE, sharpness = SHARP_POINTY)
 	playsound(mod.wearer, 'sound/effects/snap.ogg', 75, TRUE, frequency = 0.5)
 	playsound(mod.wearer, 'sound/effects/splat.ogg', 50, TRUE, frequency = 0.5)
 	mod.wearer.bleed(8)
