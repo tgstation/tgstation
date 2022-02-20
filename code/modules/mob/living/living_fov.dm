@@ -45,7 +45,7 @@
 		. = TRUE
 
 	// Handling nearsightnedness
-	if(. && has_nearsight_blindness())					
+	if(. && is_nearsighted())					
 		if((rel_x >= NEARSIGHTNESS_FOV_BLINDNESS || rel_x <= -NEARSIGHTNESS_FOV_BLINDNESS) || (rel_y >= NEARSIGHTNESS_FOV_BLINDNESS || rel_y <= -NEARSIGHTNESS_FOV_BLINDNESS))
 			return FALSE
 
