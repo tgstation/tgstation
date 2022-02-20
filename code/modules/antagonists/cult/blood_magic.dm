@@ -432,7 +432,7 @@
 		if(target.can_block_magic())
 			to_chat(user, span_warning("The spell had no effect!"))
 		else
-			to_chat(user, span_cultitalic("In a brilliant flash of red, [L] falls to the ground!"))
+			to_chat(user, span_cultitalic("In a brilliant flash of red, [target] falls to the ground!"))
 			target.Paralyze(16 SECONDS)
 			target.flash_act(1, TRUE)
 			if(issilicon(target))
