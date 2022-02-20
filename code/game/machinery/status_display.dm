@@ -127,7 +127,7 @@
 	if(overlay)
 		qdel(overlay)
 
-	var/obj/effect/overlay/status_display_text/new_status_display_text = new/obj/effect/overlay/status_display_text(line_y, message)
+	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message)
 	vis_contents += new_status_display_text
 	return new_status_display_text
 
@@ -233,6 +233,10 @@
 	else
 		return "The display says:<br>\t<tt>Shuttle missing!</tt>"
 
+/obj/machinery/status_display/Destroy()
+	remove_messages()
+	return ..()
+
 /**
  * Nice overlay to make text smoothly scroll with no client updates after setup.
  */
@@ -242,7 +246,9 @@
 
 	var/message
 
-/obj/effect/overlay/status_display_text/New(yoffset, line)
+/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line)
+	. = ..()
+
 	maptext_y = yoffset
 	message = line
 
@@ -251,16 +257,16 @@
 	if(line_length > CHARS_PER_LINE)
 		// Marquee text
 		var/marquee_message = "[line] • [line] • [line]"
-		var/marqee_length = line_length * 3 + 6
+		var/marquee_length = line_length * 3 + 6
 		maptext = generate_text(marquee_message, center = FALSE)
-		maptext_width = 6 * marqee_length
+		maptext_width = 6 * marquee_length
 		maptext_x = 32
 
 		// Mask off to fit in screen.
 		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
 
 		// Scroll.
-		var/width = 4 * marqee_length
+		var/width = 4 * marquee_length
 		var/time = (width + 32) * SCROLL_RATE
 		animate(src, maptext_x = -width, time = time, loop = -1)
 		animate(maptext_x = 32, time = 0)
