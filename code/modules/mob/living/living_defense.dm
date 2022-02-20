@@ -388,16 +388,6 @@
 /mob/living/emp_act(severity)
 	. = ..()
 
-	// Damage robotic simplemobs and basicmobs when EMPd
-	if((istype(src, /mob/living/simple_animal) || istype(src, /mob/living/basic)) && mob_biotypes & MOB_ROBOTIC)
-		switch (severity)
-			if (EMP_LIGHT)
-				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
-				apply_damage(maxHealth * 0.6)
-			if (EMP_HEAVY)
-				visible_message(span_danger("[src] suddenly bursts apart!"))
-				apply_damage(maxHealth)
-
 	if(. & EMP_PROTECT_CONTENTS)
 		return
 	for(var/obj/O in contents)
