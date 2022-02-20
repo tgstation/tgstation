@@ -112,6 +112,7 @@ const NewscasterChannelBox = (props, context) => {
     viewing_channel,
     security_mode,
     photo_data,
+    paper,
     user,
   } = data;
   return (
@@ -161,6 +162,13 @@ const NewscasterChannelBox = (props, context) => {
               { secure: security_mode,
                 channel: viewing_channel })} />
         )}
+      </Box>
+      <Box>
+        <Button
+          icon={"Newspaper"}
+          content={"Print Newspaper"}
+          disabled={paper <= 0}
+          onClick={() => act('paper')} />
       </Box>
     </Section>
   );

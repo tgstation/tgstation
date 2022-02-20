@@ -153,6 +153,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"Photo" = photo_ID,
 			))
 	data["viewing_channel"] = current_channel?.channel_ID
+	data["paper"] = paper_remaining
 
 	//Here we display all the information about the current channel.
 	data["channelName"] = current_channel?.channel_name
@@ -320,6 +321,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					current_channel = potential_channel
 					break
 			current_channel.toggleCensorDclass()
+
+		if("printNewspaper")
+			if(paper_remaining <= 0)
+				balloon_alert_to_viewers("Unit out of Paper!")
+				return
+			print_paper()
 
 		//**************************
 		//	  Bounty Board Acts
