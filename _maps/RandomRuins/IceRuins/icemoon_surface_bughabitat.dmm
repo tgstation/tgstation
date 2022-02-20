@@ -30,7 +30,7 @@
 /area/ruin/bughabitat)
 "cK" = (
 /mob/living/simple_animal/hostile/ant{
-	obj_damage = 0
+	environment_smash = 0
 	},
 /turf/open/floor/grass,
 /area/ruin/bughabitat)
