@@ -1,16 +1,31 @@
-/obj/item/newser
-	name = "newser"
-	desc = "I'm going to delete this anyway, if it still exists Arcane fucked up!"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "scanner_wand"
+#define ALERT_DELAY = 50 SECONDS
+
+/obj/machinery/newscaster
+	name = "newscaster"
+	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
+	icon = 'icons/obj/terminals.dmi'
+	icon_state = "newscaster_off"
+	base_icon_state = "newscaster"
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
+	armor = list(MELEE = 50, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 30)
+	max_integrity = 200
+	integrity_failure = 0.25
+	///Reference to the currently logged in user.
+	var/datum/bank_account/current_user
+	///How much paper is contained within the newscaster?
+	var/paper_remaining = 0
+
 	///What newscaster channel is currently being viewed by the player?
 	var/datum/newscaster/feed_channel/current_channel
 	///The message that's currently being written for a feed story.
 	var/feed_channel_message
 	///The current image that will be submitted with the newscaster story.
 	var/obj/item/photo/current_image
-	///Reference to the currently logged in user.
-	var/datum/bank_account/current_user
+	///Is there currently an alert on this newscaster that hasn't been seen yet?
+	var/alert = FALSE
+
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
 	///Value of the currently bounty input
@@ -18,19 +33,72 @@
 	///Text of the currently written bounty
 	var/bounty_text = ""
 
-/obj/item/newser/proc/send_photo_data()
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
+
+/obj/machinery/newscaster/Initialize(mapload, ndir, building)
+	. = ..()
+
+	GLOB.allCasters += src
+	update_appearance()
+
+/obj/machinery/newscaster/Destroy()
+	GLOB.allCasters -= src
+	current_channel = null
+	current_image = null
+	active_request = null
+	current_user = null
+	return ..()
+
+/obj/machinery/newscaster/update_appearance(updates=ALL)
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
+		set_light(0)
+		return
+	set_light(1.4,0.7,"#34D352") // green light
+
+/obj/machinery/newscaster/update_overlays()
+	. = ..()
+
+	if(!(machine_stat & (NOPOWER|BROKEN)))
+		var/state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
+		. += mutable_appearance(icon, state)
+		. += emissive_appearance(icon, state, alpha = src.alpha)
+
+		if(!GLOB.news_network.wanted_issue.active && alert)
+			. += mutable_appearance(icon, "[base_icon_state]_alert")
+			. += emissive_appearance(icon, "[base_icon_state]_alert", alpha = src.alpha)
+
+	var/hp_percent = atom_integrity * 100 /max_integrity
+	switch(hp_percent)
+		if(75 to 100)
+			return
+		if(50 to 75)
+			. += "crack1"
+			. += emissive_blocker(icon, "crack1", alpha = src.alpha)
+		if(25 to 50)
+			. += "crack2"
+			. += emissive_blocker(icon, "crack2", alpha = src.alpha)
+		else
+			. += "crack3"
+			. += emissive_blocker(icon, "crack3", alpha = src.alpha)
+
+/obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
+	. = ..()
+	update_appearance()
+
+/obj/machinery/newscaster/proc/send_photo_data()
 	if(current_image)
 		return current_image?.picture
 	return null
 
-/obj/item/newser/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/newscaster/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "Newscaster", name)
 		ui.open()
 
-/obj/item/newser/ui_data(mob/user)
+/obj/machinery/newscaster/ui_data(mob/user)
 	. = ..()
 	//**************************
 	//		Newscaster Data
@@ -124,7 +192,7 @@
 
 	return data
 
-/obj/item/newser/ui_act(action, params)
+/obj/machinery/newscaster/ui_act(action, params)
 	. = ..()
 	if(.)
 		return
@@ -144,7 +212,6 @@
 			if("[j.account_id]" == "[current_app_num]")
 				request_target = j
 				break
-
 
 	switch(action)
 		//**************************
@@ -181,12 +248,8 @@
 				balloon_alert(usr,"Current photo cleared.")
 				current_image = null
 				return
-			if(iscarbon(usr))
-				var/mob/living/carbon/user = usr
-				for(var/obj/item/photo/scan_photo in user.held_items)
-					current_image = scan_photo
-					balloon_alert(usr,"[scan_photo?.picture.picture_name] selected.")
-					break
+			else
+				AttachPhoto(usr)
 
 		if("createChannel")
 			//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
@@ -311,3 +374,145 @@
 		if("bountyText")
 			bounty_text = (params["bountytext"])
 	. = TRUE
+
+
+/obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)
+	if(I.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, span_notice("You start [anchored ? "un" : ""]securing [name]..."))
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 60))
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			if(machine_stat & BROKEN)
+				to_chat(user, span_warning("The broken remains of [src] fall on the ground."))
+				new /obj/item/stack/sheet/iron(loc, 5)
+				new /obj/item/shard(loc)
+				new /obj/item/shard(loc)
+			else
+				to_chat(user, span_notice("You [anchored ? "un" : ""]secure [name]."))
+				new /obj/item/wallframe/newscaster(loc)
+			qdel(src)
+	else if(I.tool_behaviour == TOOL_WELDER && !user.combat_mode)
+		if(machine_stat & BROKEN)
+			if(!I.tool_start_check(user, amount=0))
+				return
+			user.visible_message(span_notice("[user] is repairing [src]."), \
+							span_notice("You begin repairing [src]..."), \
+							span_hear("You hear welding."))
+			if(I.use_tool(src, user, 40, volume=50))
+				if(!(machine_stat & BROKEN))
+					return
+				to_chat(user, span_notice("You repair [src]."))
+				atom_integrity = max_integrity
+				set_machine_stat(machine_stat & ~BROKEN)
+				update_appearance()
+		else
+			to_chat(user, span_notice("[src] does not need repairs."))
+
+	else if(istype(I, /obj/item/paper))
+		if(!user.temporarilyRemoveItemFromInventory(I))
+			return
+		else
+			to_chat(user, span_notice("You insert the [I] into \the [src]! It now holds [paper_remaining] sheets of paper."))
+			qdel(I)
+		return ..()
+
+/obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
+	switch(damage_type)
+		if(BRUTE)
+			if(machine_stat & BROKEN)
+				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 100, TRUE)
+			else
+				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+		if(BURN)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+
+
+/obj/machinery/newscaster/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/iron(loc, 2)
+		new /obj/item/shard(loc)
+		new /obj/item/shard(loc)
+	qdel(src)
+
+/obj/machinery/newscaster/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+
+
+/obj/machinery/newscaster/attack_paw(mob/living/user, list/modifiers)
+	if(!user.combat_mode)
+		to_chat(user, span_warning("The newscaster controls are far too complicated for your tiny brain!"))
+	else
+		take_damage(5, BRUTE, MELEE)
+
+/obj/machinery/newscaster/proc/AttachPhoto(mob/user)
+	var/obj/item/photo/photo = user.is_holding_item_of_type(/obj/item/photo)
+	if(photo)
+		current_image = photo.picture
+	if(issilicon(user))
+		var/obj/item/camera/siliconcam/targetcam
+		if(isAI(user))
+			var/mob/living/silicon/ai/R = user
+			targetcam = R.aicamera
+		else if(ispAI(user))
+			var/mob/living/silicon/pai/R = user
+			targetcam = R.aicamera
+		else if(iscyborg(user))
+			var/mob/living/silicon/robot/R = user
+			if(R.connected_ai)
+				targetcam = R.connected_ai.aicamera
+			else
+				targetcam = R.aicamera
+		else
+			to_chat(user, span_warning("You cannot interface with silicon photo uploading!"))
+		if(!targetcam.stored.len)
+			to_chat(usr, span_boldannounce("No images saved."))
+			return
+		var/datum/picture/selection = targetcam.selectpicture(user)
+		if(selection)
+			current_image = selection
+
+/obj/machinery/newscaster/proc/print_paper()
+	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
+	var/obj/item/newspaper/NEWSPAPER = new /obj/item/newspaper
+	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+		NEWSPAPER.news_content += FC
+	if(GLOB.news_network.wanted_issue.active)
+		NEWSPAPER.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
+		NEWSPAPER.wantedCriminal = GLOB.news_network.wanted_issue.criminal
+		NEWSPAPER.wantedBody = GLOB.news_network.wanted_issue.body
+		if(GLOB.news_network.wanted_issue.img)
+			NEWSPAPER.wantedPhoto = GLOB.news_network.wanted_issue.img
+	NEWSPAPER.forceMove(drop_location())
+	NEWSPAPER.creationTime = GLOB.news_network.lastAction
+	paper_remaining--
+
+
+/obj/machinery/newscaster/proc/remove_alert()
+	alert = FALSE
+	update_appearance()
+
+/obj/machinery/newscaster/proc/newsAlert(channel, update_alert = TRUE)
+	if(channel)
+		if(update_alert)
+			say("Breaking news from [channel]!")
+			playsound(loc, 'sound/machines/twobeep_high.ogg', 75, TRUE)
+		alert = TRUE
+		update_appearance()
+		addtimer(CALLBACK(src, .proc/remove_alert), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+	else if(!channel && update_alert)
+		say("Attention! Wanted issue distributed!")
+		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
+
+
+/obj/item/wallframe/newscaster
+	name = "newscaster frame"
+	desc = "Used to build newscasters, just secure to the wall."
+	icon_state = "newscaster"
+	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	result_path = /obj/machinery/newscaster
+	pixel_shift = 30
+
+#undef ALERT_DELAY

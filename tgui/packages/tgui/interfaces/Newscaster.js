@@ -8,7 +8,7 @@ import { useBackend, useSharedState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { BlockQuote, Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import marked from 'marked';
+import { marked } from 'marked';
 import { sanitizeText } from "../sanitize";
 
 export const Newscaster = (props, context) => {
