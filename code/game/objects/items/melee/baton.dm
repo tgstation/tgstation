@@ -565,6 +565,8 @@
 			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
+	if (!cell || cell.charge < cell_hit_cost)
+		return
 	active = !active
 	playsound(src, "sparks", 75, TRUE, -1)
 	update_appearance()
