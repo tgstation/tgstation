@@ -1,7 +1,7 @@
 #define ARMORID "armor-[melee]-[bullet]-[laser]-[energy]-[bomb]-[bio]-[fire]-[acid]-[wound]-[consume]"
 
 #define MAXIMUM_DR 85 // 85%, set this to 100 to disable maximum resistance with DR but not recommended
-#define DT_THRESHOLD 0.2 // 20%, set this to 0 to disable minimum damage w/ DT but not recommended
+#define DT_THRESHOLD 0 // 20%, set this to 0 to disable minimum damage w/ DT but not recommended
 #define WEAK_AGAINST_ARMOR_MULTIPLIER 3 // 3x
 #define CALCULATE_DR(damage, DR) (damage * ((100 - min(DR, MAXIMUM_DR)) / 100))
 #define CALCULATE_DT(damage_DR, DT, damage_base) (max(damage_DR - DT, damage_base * DT_THRESHOLD))
