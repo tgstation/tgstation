@@ -27,6 +27,45 @@
 	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
 	hair_color = "fixedmutcolor"
 	hair_alpha = 140
+
+	pref_species_desc = "Coming from the planet of Sprout, the theocratic ethereals are \
+		separated socially by caste, and espouse a dogma of aiding the weak and \
+		downtrodden."
+
+	pref_species_lore = "Ethereals are a species native to the planet Sprout. \
+		When they were originally discovered, they were at a medieval level of technological progression, \
+		but due to their natural acclimation with electricity, they felt easy among the large NanoTrasen installations."
+
+	pref_species_positives = list(
+		list(
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Shockingly Tasty",
+			SPECIES_PERK_DESC = "Ethereals can feed on electricity from APCs, and do not otherwise need to eat.",
+		),
+		list(
+			SPECIES_PERK_ICON = "lightbulb",
+			SPECIES_PERK_NAME = "Disco Ball",
+			SPECIES_PERK_DESC = "Ethereals passively generate their own light.",
+		),
+	)
+
+	pref_species_neutrals = list(
+		list(
+			SPECIES_PERK_ICON = "gem",
+			SPECIES_PERK_NAME = "Crystal Core",
+			SPECIES_PERK_DESC = "The hearts of ethereals will protect them in a cystal when they die, reviving them with a permanent brain trauma.",
+		),
+
+	)
+
+	pref_species_negatives = list(
+		list(
+			SPECIES_PERK_ICON = "biohazard",
+			SPECIES_PERK_NAME = "Starving Artist",
+			SPECIES_PERK_DESC = "Ethereals take toxin damage while starving.",
+		),
+	)
+
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
@@ -37,6 +76,8 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	var/obj/effect/dummy/lighting_obj/ethereal_light
+
+
 
 /datum/species/ethereal/Destroy(force)
 	if(ethereal_light)

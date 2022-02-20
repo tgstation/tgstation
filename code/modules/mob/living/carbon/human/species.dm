@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Does the species use skintones or not? As of now only used by humans.
 	var/use_skintones = FALSE
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
-	var/exotic_blood = ""
+	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
 	///What the species drops when gibbed by a gibber machine.
@@ -220,17 +220,30 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
 
+	// -- Stuff for the preference menu --
+
+	var/pref_species_desc = "This species has no description. File a report!"
+	var/pref_species_lore = "This species has no lore. File a report!"
+	var/list/pref_species_positives
+	var/list/pref_species_neutrals
+	var/list/pref_species_negatives
+
 ///////////
 // PROCS //
 ///////////
 
 
 /datum/species/New()
-
 	if(!limbs_id) //if we havent set a limbs id to use, just use our own id
 		limbs_id = id
 	wings_icons = string_list(wings_icons)
-	..()
+
+	create_pref_blood_perks()
+	create_pref_combat_perks()
+	create_pref_damage_perks()
+	create_pref_language_perk()
+
+	return ..()
 
 /// Gets a list of all species available to choose in roundstart.
 /proc/get_selectable_species()
@@ -2185,3 +2198,69 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_owner_login(mob/living/carbon/human/owner)
 	return
+
+/*
+ * Generates a list of languages our species can speak
+ * based on our species_language holder, and adds the list
+ * to our pref_species_positives.
+ *
+ * If our species can only speak common, nothing is added.
+ */
+/datum/species/proc/create_pref_language_perk()
+	var/datum/language/common_language = /datum/language/common
+
+	var/list/bonus_languages = list()
+	var/datum/language_holder/temp_holder = new species_language_holder()
+	for(var/datum/language/language_type as anything in temp_holder.spoken_languages)
+		if(ispath(language_type, common_language))
+			continue
+		bonus_languages += initial(language_type.name)
+
+	if(length(bonus_languages))
+		var/language_text = "Alongside [initial(common_language.name)], gain the ability to speak " + english_list(bonus_languages)
+		ADD_PREF_PERK(pref_species_positives, "comment", "Native Speaker", language_text)
+
+	qdel(temp_holder)
+
+/datum/species/proc/create_pref_combat_perks()
+	if(attack_type != BRUTE)
+		ADD_PREF_PERK(pref_species_neutrals, "fist-raised", "Brutal Weakness", "[name]\s deal [attack_type] damage with their punches instead of brute.")
+
+/datum/species/proc/create_pref_damage_perks()
+	// Brute related
+	if(brutemod > 1)
+		ADD_PREF_PERK(pref_species_negatives, "fist-raised", "Brutal Weakness", "[name]\s are weak to brute damage.")
+
+	if(brutemod < 1)
+		ADD_PREF_PERK(pref_species_positives, "fist-raised", "Brutal Resiliance", "[name]\s are resilient to bruising and brute damage.")
+
+	// Burn related / Hot temperature tolerance
+	if(burnmod > 1 || heatmod > 1 || bodytemp_heat_damage_limit < BODYTEMP_HEAT_DAMAGE_LIMIT)
+		ADD_PREF_PERK(pref_species_negatives, "fire-alt", "Flammable", "[name]\s are weak to fire and heat.")
+
+	if(burnmod < 1 || heatmod < 1 || bodytemp_heat_damage_limit > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		ADD_PREF_PERK(pref_species_positives, "fire", "Fire Resilience", "[name]\s are resilient to heat, flames, and burn damage.")
+
+	// Cold temperature tolerance
+	if(coldmod > 1 || bodytemp_cold_damage_limit > BODYTEMP_COLD_DAMAGE_LIMIT)
+		ADD_PREF_PERK(pref_species_negatives, "temperature-low", "Cold Vulnerability", "[name]\s are vulnerable to cold temperatures.")
+
+	if(coldmod < 1 || bodytemp_cold_damage_limit < BODYTEMP_COLD_DAMAGE_LIMIT)
+		ADD_PREF_PERK(pref_species_negatives, "temperature-low", "Cold Resilience", "[name]\s are resilient to cold temperatures.")
+
+	// Shock resilience
+	if(siemens_coeff > 1)
+		ADD_PREF_PERK(pref_species_positives, "bolt", "Shock Vulnerability", "[name]\s are vulnerable to being shocked.")
+
+	if(siemens_coeff < 1)
+		ADD_PREF_PERK(pref_species_negatives, "bolt", "Shock Resilience", "[name]\s are resilient to being shocked.")
+
+/datum/species/proc/create_pref_blood_perks()
+	if(ispath(exotic_blood))
+		ADD_PREF_PERK(pref_species_neutrals, "tint", "[initial(exotic_blood.name)]", "[name]\s blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.")
+
+	else if(exotic_bloodtype)
+		ADD_PREF_PERK(pref_species_neutrals, "tint", "Exotic blood", "[name]\s blood is of type \"[exotic_bloodtype]\", which can make recieving medical treatment harder.")
+
+	else if(NOBLOOD in species_traits)
+		ADD_PREF_PERK(pref_species_positives, "tint-slash", "Bloodletted", "[name]\s do not have blood.")

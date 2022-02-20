@@ -242,3 +242,14 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_GOLEM_BONE "bone_golem"
 #define SPECIES_GOLEM_SNOW "snow_golem"
 #define SPECIES_GOLEM_HYDROGEN "metallic_hydrogen_golem"
+
+#define SPECIES_PERK_ICON "ui_icon"
+#define SPECIES_PERK_NAME "name"
+#define SPECIES_PERK_DESC "description"
+
+#define ADD_PREF_PERK(to_list, perk_icon, perk_name, perk_desc)\
+	LAZYADD(to_list, list(list(\
+		SPECIES_PERK_ICON = perk_icon,\
+		SPECIES_PERK_NAME = perk_name,\
+		SPECIES_PERK_DESC = perk_desc,\
+	)))
