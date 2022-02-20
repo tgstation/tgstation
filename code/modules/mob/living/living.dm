@@ -2196,3 +2196,17 @@
 			span_userdanger("You're thrown violently into [lattice], smashing through it and punching straight through!"))
 		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
 		lattice.deconstruct(FALSE)
+
+/**
+ * Proc used by different station pets such as Ian and Poly so that some of their data can persist between rounds.
+ * This base definition only contains a trait and comsig to stop memory from being (over)written.
+ * Specific behavior is defined on subtypes that use it.
+ */
+/mob/living/proc/Write_Memory(dead, gibbed)
+	SHOULD_CALL_PARENT(TRUE)
+	if(HAS_TRAIT(src, TRAIT_DONT_WRITE_MEMORY)) //always prevent data from being written.
+		return FALSE
+	// for selective behaviors that may or may not prevent data from being written.
+	if(SEND_SIGNAL(src, COMSIG_LIVING_WRITE_MEMORY, dead, gibbed) & COMPONENT_DONT_WRITE_MEMORY)
+		return FALSE
+	return TRUE

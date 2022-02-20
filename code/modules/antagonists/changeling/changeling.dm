@@ -318,6 +318,7 @@
 	genetic_points -= new_action.dna_cost
 	purchased_powers[sting_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
+	log_changeling_power("[key_name(owner)] adapted the [new_action] power")
 	return TRUE
 
 /*
@@ -326,20 +327,22 @@
 /datum/antagonist/changeling/proc/readapt()
 	if(!ishuman(owner.current) || ismonkey(owner.current))
 		to_chat(owner.current, span_warning("We can't remove our evolutions in this form!"))
-		return
+		return FALSE
+
 	if(HAS_TRAIT_FROM(owner.current, TRAIT_DEATHCOMA, CHANGELING_TRAIT))
 		to_chat(owner.current, span_warning("We are too busy reforming ourselves to readapt right now!"))
-		return
+		return FALSE
 
-	if(can_respec)
-		to_chat(owner.current, span_notice("We have removed our evolutions from this form, and are now ready to readapt."))
-		remove_changeling_powers()
-		can_respec = FALSE
-		SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
-		return TRUE
+	if(!can_respec)
+		to_chat(owner.current, span_warning("You lack the power to readapt your evolutions!"))
+		return FALSE
 
-	to_chat(owner.current, span_warning("You lack the power to readapt your evolutions!"))
-	return FALSE
+	to_chat(owner.current, span_notice("We have removed our evolutions from this form, and are now ready to readapt."))
+	remove_changeling_powers()
+	can_respec = FALSE
+	SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
+	log_changeling_power("[key_name(owner)] readapted their changeling powers")
+	return TRUE
 
 /*
  * Get the corresponding changeling profile for the passed name.

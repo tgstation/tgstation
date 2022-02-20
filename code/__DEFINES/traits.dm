@@ -353,6 +353,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPARRING "sparring"
 /// The user is currently challenging an elite mining mob. Prevents him from challenging another until he's either lost or won.
 #define TRAIT_ELITE_CHALLENGER "elite_challenger"
+/// For living mobs. It signals that the mob shouldn't have their data written in an external json for persistence.
+#define TRAIT_DONT_WRITE_MEMORY "dont_write_memory"
 
 #define TRAIT_NOBLEED "nobleed" //This carbon doesn't bleed
 /// This atom can ignore the "is on a turf" check for simple AI datum attacks, allowing them to attack from bags or lockers as long as any other conditions are met
@@ -767,6 +769,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define DRONE_SHY_TRAIT "drone_shy"
 /// Pacifism trait given by stabilized light pink extracts.
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
+/// Given by the multiple_lives component to the previous body of the mob upon death.
+#define EXPIRED_LIFE_TRAIT "expired_life"
+/// Trait given to a ghost when they orbit something.
+#define GHOST_ORBITING_TRAIT "ghost_orbiting"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

@@ -124,3 +124,18 @@
 /obj/item/mod/module/holster/Destroy()
 	QDEL_NULL(holstered)
 	return ..()
+
+///Pepper Spray Mister - Sprays pepper spray over criminals.
+/obj/item/mod/module/mister/security
+	name = "MOD pepper spray mister module"
+	desc = "A module containing a container of pepper spray to spray over areas."
+	device = /obj/item/reagent_containers/spray/mister/pepperspray/mod
+	complexity = 1
+
+/obj/item/mod/module/mister/security/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, volume)
+
+/obj/item/reagent_containers/spray/mister/pepperspray/mod
+	name = "MOD pepper spray mister"
+	desc = "A mister full of pepper spray, perfect for riots."

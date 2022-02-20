@@ -1,150 +1,144 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/turf/template_noop,
-/area/template_noop)
 "b" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/sand,
+/obj/structure/rack,
+/obj/item/storage/bag/ore,
+/turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "d" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/pickaxe/rusted,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/maintenance/department/medical)
 "h" = (
-/obj/item/relic,
-/obj/item/stack/ore/iron{
-	pixel_x = -9;
-	pixel_y = 11
-	},
-/turf/open/floor/plating/asteroid,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
 /area/maintenance/department/medical)
 "n" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/engineering/material,
-/obj/effect/spawner/random/engineering/material,
-/turf/open/floor/iron/smooth,
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
 /area/maintenance/department/medical)
 "s" = (
-/obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid,
-/area/maintenance/department/medical)
-"v" = (
+/obj/effect/turf_decal/sand,
 /obj/modular_map_connector,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
-/obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
+"v" = (
+/obj/effect/turf_decal/sand,
+/obj/item/stack/ore/glass,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/department/medical)
 "z" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/sand/plating,
-/obj/effect/spawner/random/engineering/tool,
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'CAVE IN HAZARD: WEAR PROTECTIVE HEAD GEAR'.";
+	name = "\improper CAVE IN HAZARD sign";
+	pixel_x = 32
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "A" = (
 /turf/open/floor/plating/asteroid,
 /area/maintenance/department/medical)
 "B" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/rack,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"C" = (
 /obj/item/stack/ore/glass,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/department/medical)
-"C" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/rack,
-/obj/effect/spawner/random/engineering/material_cheap,
-/obj/effect/spawner/random/engineering/material_cheap,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
 "N" = (
-/obj/item/storage/bag/ore,
+/obj/item/relic,
+/obj/item/stack/ore/iron,
+/obj/item/stack/ore/iron{
+	pixel_x = -9;
+	pixel_y = 11
+	},
 /turf/open/floor/plating/asteroid,
 /area/maintenance/department/medical)
 "R" = (
-/obj/item/clothing/head/cone{
-	pixel_x = -10;
-	pixel_y = -10
-	},
-/obj/item/clothing/head/cone{
-	pixel_x = 11;
-	pixel_y = -10
-	},
-/turf/template_noop,
-/area/template_noop)
-"T" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"T" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
 /area/maintenance/department/medical)
 "U" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid,
+/obj/effect/turf_decal/sand/plating,
+/obj/item/shovel,
+/turf/open/floor/plating,
 /area/maintenance/department/medical)
 "W" = (
-/turf/closed/wall/rock/porous,
+/obj/effect/spawner/random/structure/girder,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
 /area/maintenance/department/medical)
 "X" = (
-/turf/closed/wall,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden,
+/turf/open/floor/catwalk_floor,
 /area/maintenance/department/medical)
 
 (1,1,1) = {"
-a
-a
-X
-b
-B
-a
-a
+h
 A
-a
-a
+C
+A
 "}
 (2,1,1) = {"
-a
-a
-T
-T
-z
+b
+A
 N
-A
-A
-A
-a
+C
 "}
 (3,1,1) = {"
-R
-v
-T
-b
-b
-A
 B
-A
+v
 U
-W
+A
 "}
 (4,1,1) = {"
-a
-a
-C
-n
-b
 d
-A
 s
 h
-a
+W
 "}
 (5,1,1) = {"
-a
-a
+n
+z
+R
 X
-X
-W
-A
-A
-A
-a
-a
+"}
+(6,1,1) = {"
+x
+d
+T
+d
 "}

@@ -43,12 +43,15 @@
 	var/slowdown_active = 0.75
 	/// Theme used by the MOD TGUI.
 	var/ui_theme = "ntos"
-	/// Allowed items in the chestplate's suit storage.
-	var/list/allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals)
 	/// List of inbuilt modules. These are different from the pre-equipped suits, you should mainly use these for unremovable modules with 0 complexity.
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
 	var/list/module_blacklist = list()
+	/// Allowed items in the chestplate's suit storage.
+	var/list/allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+	)
 	/// List of skins with their appropriate clothing flags.
 	var/list/skins = list(
 		"standard" = list(
@@ -113,6 +116,12 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 1.5
 	slowdown_active = 1
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/construction/rcd,
+		/obj/item/storage/bag/construction,
+	)
 	skins = list(
 		"engineering" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -153,6 +162,13 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	slowdown_inactive = 1.5
 	slowdown_active = 1
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/t_scanner,
+		/obj/item/pipe_dispenser,
+	)
 	skins = list(
 		"atmospheric" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -196,6 +212,16 @@
 	slowdown_inactive = 1
 	slowdown_active = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/t_scanner,
+		/obj/item/pipe_dispenser,
+		/obj/item/construction/rcd,
+		/obj/item/storage/bag/construction,
+		/obj/item/melee/baton/telescopic,
+	)
 	skins = list(
 		"advanced" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -249,7 +275,17 @@
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/bag/ore, /obj/item/kinetic_crusher, /obj/item/resonator)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/resonator,
+		/obj/item/mining_scanner,
+		/obj/item/t_scanner/adv_mining_scanner,
+		/obj/item/pickaxe,
+		/obj/item/kinetic_crusher,
+		/obj/item/stack/ore/plasma,
+		/obj/item/storage/bag/ore,
+	)
 	inbuilt_modules = list(/obj/item/mod/module/ash_accretion, /obj/item/mod/module/sphere_transform)
 	skins = list(
 		"mining" = list(
@@ -302,7 +338,7 @@
 
 /datum/mod_theme/loader
 	name = "loader"
-	desc = "An experimental powered harness manufactured by Scarborough Arms for quick and efficient munition supplies."
+	desc = "An unsealed experimental motorized harness manufactured by Scarborough Arms for quick and efficient munition supplies"
 	extended_desc = "This powered suit is an experimental spinoff of in-atmosphere Engineering suits. \
 		This fully articulated titanium exoskeleton is Scarborough Arms' suit of choice for their munition delivery men, \
 		and what it lacks in EVA protection, it makes up for in strength and flexibility. The primary feature of \
@@ -321,7 +357,14 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.5
 	slowdown_active = 0
-	allowed_suit_storage = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/bag/mail)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/mail,
+		/obj/item/small_delivery,
+		/obj/item/paper,
+		/obj/item/storage/bag/mail,
+	)
 	inbuilt_modules = list(/obj/item/mod/module/hydraulic, /obj/item/mod/module/clamp/loader, /obj/item/mod/module/magnet)
 	skins = list(
 		"loader" = list(
@@ -358,6 +401,22 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/stack/medical,
+		/obj/item/sensor_device,
+		/obj/item/storage/pill_bottle,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/bag/bio,
+	)
 	skins = list(
 		"medical" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -424,6 +483,23 @@
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/healthanalyzer,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/stack/medical,
+		/obj/item/sensor_device,
+		/obj/item/storage/pill_bottle,
+		/obj/item/storage/bag/chemistry,
+		/obj/item/storage/bag/bio,
+		/obj/item/melee/baton/telescopic,
+	)
 	skins = list(
 		"rescue" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -470,6 +546,16 @@
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/dnainjector,
+		/obj/item/biopsy_tool,
+		/obj/item/experi_scanner,
+		/obj/item/storage/bag/bio,
+		/obj/item/melee/baton/telescopic,
+	)
 	skins = list(
 		"research" = list(
 			HELMET_LAYER = null,
@@ -512,6 +598,16 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 1
 	slowdown_active = 0.5
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"security" = list(
 			HELMET_LAYER = null,
@@ -556,6 +652,16 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/reagent_containers/spray/pepper,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"safeguard" = list(
 			HELMET_LAYER = null,
@@ -602,6 +708,15 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	slowdown_inactive = 0.75
 	slowdown_active = 0.25
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"magnate" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -641,6 +756,15 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.25
 	slowdown_inactive = 1.75
 	slowdown_active = 1.25
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/bikehorn,
+		/obj/item/food/grown/banana,
+		/obj/item/grown/bananapeel,
+		/obj/item/reagent_containers/spray/waterflower,
+		/obj/item/instrument,
+	)
 	skins = list(
 		"cosmohonk" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -686,6 +810,17 @@
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+	)
 	skins = list(
 		"syndicate" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -752,6 +887,17 @@
 	slowdown_active = 0.5
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+	)
 	skins = list(
 		"elite" = list(
 			HELMET_LAYER = null,
@@ -798,6 +944,12 @@
 	slowdown_active = 0.25
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/teleportation_scroll,
+		/obj/item/highfrequencyblade/wizard,
+	)
 	skins = list(
 		"enchanted" = list(
 			HELMET_LAYER = null,
@@ -844,6 +996,14 @@
 	slowdown_active = 1.5
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prebuilt/prototype)
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/analyzer,
+		/obj/item/t_scanner,
+		/obj/item/pipe_dispenser,
+		/obj/item/construction/rcd,
+	)
 	skins = list(
 		"prototype" = list(
 			HELMET_LAYER = null,
@@ -885,6 +1045,15 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"responsory" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -949,6 +1118,17 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 10
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+		/obj/item/melee/energy/sword,
+		/obj/item/shield/energy,
+	)
 	skins = list(
 		"apocryphal" = list(
 			HELMET_LAYER = null,
@@ -991,6 +1171,15 @@
 	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/restraints/handcuffs,
+		/obj/item/assembly/flash,
+		/obj/item/melee/baton,
+	)
 	skins = list(
 		"corporate" = list(
 			HELMET_LAYER = null,
@@ -1031,6 +1220,11 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
 	slowdown_inactive = 0
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/restraints/handcuffs,
+	)
 	skins = list(
 		"chrono" = list(
 			HELMET_LAYER = NECK_LAYER,
@@ -1071,6 +1265,11 @@
 	complexity_max = 50
 	slowdown_inactive = 0.5
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/gun,
+	)
 	skins = list(
 		"debug" = list(
 			HELMET_LAYER = null,
@@ -1114,6 +1313,11 @@
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0
 	slowdown_inactive = 0
 	slowdown_active = 0
+	allowed_suit_storage = list(
+		/obj/item/flashlight,
+		/obj/item/tank/internals,
+		/obj/item/gun,
+	)
 	skins = list(
 		"debug" = list(
 			HELMET_LAYER = null,

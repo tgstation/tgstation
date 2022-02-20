@@ -1342,6 +1342,13 @@
 	materials = list(/datum/material/iron = 750, /datum/material/glass = 500)
 	build_path = /obj/item/mod/module/signlang_radio
 
+/datum/design/module/mister_atmos
+	name = "MOD Module: Resin Mister"
+	id = "mod_mister_atmos"
+	materials = list(/datum/material/iron = 1500, /datum/material/glass = 500, /datum/material/silver = 1000, /datum/material/titanium = 1500, /datum/material/uranium = 500)
+	build_path = /obj/item/mod/module/mister/atmos
+	department_type = MODULE_ENGINEERING
+
 //MODsuit bepis modules
 
 /datum/design/module/disposal

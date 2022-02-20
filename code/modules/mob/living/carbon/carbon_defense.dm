@@ -26,7 +26,7 @@
 	else
 		. += E.bang_protect
 
-/mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
+/mob/living/carbon/is_mouth_covered(head_only = FALSE, mask_only = FALSE)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return TRUE
 

@@ -823,6 +823,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Chapel Dock"
 	icon_state = "construction"
 
+/area/service/chapel/storage
+	name = "\improper Chapel Storage"
+	icon_state = "chapelstorage"
+
 /area/service/lawoffice
 	name = "\improper Law Office"
 	icon_state = "law"
@@ -1193,6 +1197,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Brig"
 	icon_state = "brig"
 
+/area/security/medical
+	name = "\improper Security Medical"
+	icon_state = "security_medical"
+
 /area/security/brig/upper
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
@@ -1400,8 +1408,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/science/lobby
+	name = "\improper Science Lobby"
+	icon_state = "science_lobby"
+
 /area/science/breakroom
 	name = "\improper Science Break Room"
+	icon_state = "science_breakroom"
 
 /area/science/lab
 	name = "Research and Development"
