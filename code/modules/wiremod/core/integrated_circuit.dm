@@ -541,16 +541,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			var/new_name = params["display_name"]
 
 			if(new_name)
-				set_display_name(strip_html(params["display_name"], label_max_length))
+				set_display_name(params["display_name"])
 			else
 				set_display_name("")
-
-			if(shell)
-				if(display_name != "")
-					shell.name = "[initial(shell.name)] ([display_name])"
-				else
-					shell.name = initial(shell.name)
-
 			. = TRUE
 		if("set_examined_component")
 			var/component_id = text2num(params["component_id"])
@@ -666,7 +659,17 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /// Sets the display name that appears on the shell.
 /obj/item/integrated_circuit/proc/set_display_name(new_name)
-	display_name = new_name
+	display_name = copytext(new_name, 1, label_max_length)
+	if(!shell)
+		return
+
+	if(display_name != "")
+		if(!admin_only)
+			shell.name = "[initial(shell.name)] ([strip_html(display_name)])"
+		else
+			shell.name = display_name
+	else
+		shell.name = initial(shell.name)
 
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.

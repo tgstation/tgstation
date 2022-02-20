@@ -1346,7 +1346,7 @@
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/grav)
-	crate_name = "raw pyro anomaly"
+	crate_name = "raw gravitational anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/raw_vortex_anomaly

@@ -302,7 +302,7 @@
 
 /datum/mod_theme/loader
 	name = "loader"
-	desc = "An experimental powered harness manufactured by Scarborough Arms for quick and efficient munition supplies."
+	desc = "An unsealed experimental motorized harness manufactured by Scarborough Arms for quick and efficient munition supplies"
 	extended_desc = "This powered suit is an experimental spinoff of in-atmosphere Engineering suits. \
 		This fully articulated titanium exoskeleton is Scarborough Arms' suit of choice for their munition delivery men, \
 		and what it lacks in EVA protection, it makes up for in strength and flexibility. The primary feature of \

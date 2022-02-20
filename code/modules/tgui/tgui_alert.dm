@@ -123,15 +123,17 @@
 /datum/tgui_modal/ui_state(mob/user)
 	return GLOB.always_state
 
-/datum/tgui_modal/ui_data(mob/user)
+/datum/tgui_modal/ui_static_data(mob/user)
 	. = list()
 	.["autofocus"] = autofocus
 	.["buttons"] = buttons
 	.["message"] = message
-	.["preferences"] = list()
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
 	.["title"] = title
+
+/datum/tgui_modal/ui_data(mob/user)
+	. = list()
 	if(timeout)
 		.["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 

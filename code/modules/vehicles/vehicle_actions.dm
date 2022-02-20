@@ -287,18 +287,18 @@
 	name = "Ollie"
 	desc = "Get some air! Land on a table to do a gnarly grind."
 	button_icon_state = "skateboard_ollie"
-	///Cooldown to next jump
-	var/next_ollie
+	check_flags = AB_CHECK_CONSCIOUS
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie/Trigger(trigger_flags)
-	if(world.time > next_ollie)
+	. = ..()
+	if(.)
 		var/obj/vehicle/ridden/scooter/skateboard/vehicle = vehicle_target
 		vehicle.obj_flags |= BLOCK_Z_OUT_DOWN
 		if (vehicle.grinding)
 			return
 		var/mob/living/rider = owner
 		var/turf/landing_turf = get_step(vehicle.loc, vehicle.dir)
-		rider.adjustStaminaLoss(vehicle.instability*2)
+		rider.adjustStaminaLoss(vehicle.instability* 0.75)
 		if (rider.getStaminaLoss() >= 100)
 			vehicle.obj_flags &= ~CAN_BE_HIT
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)

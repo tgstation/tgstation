@@ -85,7 +85,13 @@
 	return min(arglist(args))
 
 /proc/_new(type, arguments)
-	var/datum/result = new type(arglist(arguments))
+	var/datum/result
+
+	if(!length(arguments))
+		result = new type()
+	else
+		result = new type(arglist(arguments))
+
 	if(istype(result))
 		result.datum_flags |= DF_VAR_EDITED
 	return result
