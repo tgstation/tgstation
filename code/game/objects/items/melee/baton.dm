@@ -553,6 +553,8 @@
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()
+	if (!cell)
+		return
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
 	if (cell.charge >= cell_hit_cost)
