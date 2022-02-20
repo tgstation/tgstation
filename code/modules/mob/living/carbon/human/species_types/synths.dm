@@ -34,7 +34,7 @@
 /datum/species/synth/military
 	name = "Military Synth"
 	id = SPECIES_SYNTH_MILITARY
-	armor = 25
+	armor = LIGHT_DT
 	punchdamagelow = 10
 	punchdamagehigh = 19
 	punchstunthreshold = 14 //about 50% chance to stun

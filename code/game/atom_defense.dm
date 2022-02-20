@@ -71,10 +71,13 @@
 			return 0
 	var/armor_protection = 0
 	if(damage_flag)
-		armor_protection = armor.getRating(damage_flag)
-	if(armor_protection) //Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = clamp(armor_protection - armour_penetration, min(armor_protection, 0), 100)
-	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
+		armor_protection = armor.getRating(damage_flag) * 0.2
+	if(armor_protection > 20)
+		armor_protection = 20 // No DT larger than 20 on objects!
+	var/penetrated_dt = armour_penetration * 0.2 // 100 Penetration = 20 DT ignored
+	armor_protection = max(0, armor_protection - penetrated_dt)
+	var/damage_done = CALCULATE_DT(CALCULATE_DR(damage_amount, 0), armor_protection, damage_amount)
+	return round(damage_done, DAMAGE_PRECISION)
 
 ///the sound played when the atom is damaged.
 /atom/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -130,7 +133,3 @@
 		atom_break(damage_type)
 		return TRUE
 	return FALSE
-
-/// A cut-out proc for [/atom/proc/bullet_act] so living mobs can have their own armor behavior checks without causing issues with needing their own on_hit call
-/atom/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile)
-	return 0

@@ -45,7 +45,7 @@
 	desc = "A luxurious winter coat woven in the bright green and gold colours of Central Command. It has a small pin in the shape of the Nanotrasen logo for a zipper."
 	icon_state = "coatcentcom"
 	inhand_icon_state = "coatcentcom"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, FIRE = 10, ACID = 60)
+	armor = ARMOR_HEAVY_ENERGY_CHEST
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/centcom
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize(mapload)
@@ -54,7 +54,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/centcom
 	icon_state = "hood_centcom"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 10, FIRE = 10, ACID = 60)
+	armor = ARMOR_HEAVY_ENERGY_HEAD
 
 // Captain
 /obj/item/clothing/suit/hooded/wintercoat/captain
@@ -64,7 +64,7 @@
 			Extremely lavish, and extremely durable."
 	icon_state = "coatcaptain"
 	inhand_icon_state = "coatcaptain"
-	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 0, ACID = 50)
+	armor = ARMOR_MEDIUM_ENERGY_CHEST
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
@@ -73,7 +73,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
-	armor = list(MELEE = 25, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 0, ACID = 50)
+	armor = ARMOR_MEDIUM_ENERGY_HEAD
 
 // Head of Personnel
 /obj/item/clothing/suit/hooded/wintercoat/hop
@@ -81,7 +81,7 @@
 	desc = "A cozy winter coat, covered in thick fur. The breast features a proud yellow chevron, reminding everyone that you're the second banana."
 	icon_state = "coathop"
 	inhand_icon_state = "coathop"
-	armor = list(MELEE = 10, BULLET = 15, LASER = 15, ENERGY = 25, BOMB = 10, BIO = 0, FIRE = 0, ACID = 35)
+	armor = ARMOR_LIGHT_ENERGY_CHEST
 	allowed = list(
 		/obj/item/melee/baton/telescopic,
 	)
@@ -137,7 +137,7 @@
 	desc = "A red, armour-padded winter coat. It glitters with a mild ablative coating and a robust air of authority.  The zipper tab is a pair of jingly little handcuffs that get annoying after the first ten seconds."
 	icon_state = "coatsecurity"
 	inhand_icon_state = "coatsecurity"
-	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 0, ACID = 45)
+	armor = ARMOR_LIGHT_ENERGY_CHEST
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
@@ -147,7 +147,7 @@
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
 	icon_state = "hood_security"
-	armor = list(MELEE = 25, BULLET = 15, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 0, ACID = 45)
+	armor = ARMOR_LIGHT_ENERGY_HEAD
 
 // Head of Security
 /obj/item/clothing/suit/hooded/wintercoat/security/hos
@@ -155,12 +155,13 @@
 	desc = "A red, armour-padded winter coat, lovingly woven with a Kevlar interleave and reinforced with semi-ablative polymers and a silver azide fill material. The zipper tab looks like a tiny replica of Beepsky."
 	icon_state = "coathos"
 	inhand_icon_state = "coathos"
-	armor = list(MELEE = 35, BULLET = 25, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 0, FIRE = 0, ACID = 55)
+	armor = ARMOR_HEAVY_ENERGY_CHEST
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/hos
 
 /obj/item/clothing/head/hooded/winterhood/security/hos
 	desc = "A red, armour-padded winter hood, lovingly woven with a Kevlar interleave. Definitely not bulletproof, especially not the part where your face goes."
 	icon_state = "hood_hos"
+	armor = ARMOR_HEAVY_ENERGY_HEAD
 
 // Medical Doctor
 /obj/item/clothing/suit/hooded/wintercoat/medical
@@ -430,13 +431,13 @@
 		/obj/item/tank/internals,
 		/obj/item/storage/bag/ore,
 	)
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor = ARMOR_LIGHT_BLUNT_CHEST
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
 /obj/item/clothing/head/hooded/winterhood/miner
 	desc = "A dusty winter coat hood."
 	icon_state = "hood_miner"
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor = ARMOR_LIGHT_BLUNT_HEAD
 
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"

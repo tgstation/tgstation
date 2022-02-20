@@ -878,7 +878,7 @@
 		'Property of the Gorlex Marauders, with assistance from Cybersun Industries. \
 		All rights reserved, tampering with suit will void life expectancy.'"
 	default_skin = "elite"
-	armor = list(MELEE = 20, BULLET = 10, LASER = 20, ENERGY = 20, BOMB = 55, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
+	armor = ARMOR_LIGHT_ENERGY_CHEST
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -935,7 +935,7 @@
 		default means of power. The hood and platform boots are of unknown usage, but it's speculated that \
 		wizards trend towards the dramatic."
 	default_skin = "enchanted"
-	armor = list(MELEE = 40, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 35, BIO = 100, FIRE = 100, ACID = 100, WOUND = 30)
+	armor = ARMOR_HEAVY_ENERGY_CHEST
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
@@ -1038,7 +1038,7 @@
 		it keeps the wearer safe from the harsh void of space while sacrificing no speed whatsoever. \
 		While wearing it you feel an extreme deference to darkness. "
 	default_skin = "responsory"
-	armor = list(MELEE = 35, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 50, BIO = 100, FIRE = 100, ACID = 90, WOUND = 15)
+	armor = ARMOR_MEDIUM_ENERGY_CHEST
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -1112,7 +1112,7 @@
 		Whether the wearer uses it or not is up to them. \
 		There seems to be a little inscription on the wrist that reads; \'squiddie', d'aww."
 	default_skin = "apocryphal"
-	armor = list(MELEE = 80, BULLET = 80, LASER = 50, ENERGY = 60, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 25)
+	armor = ARMOR_HEAVY_BLUNT_CHEST
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -1164,7 +1164,7 @@
 		counted as a war-crime and reason for immediate execution in over fifty Nanotrasen space stations. \
 		The resemblance to a Gorlex Marauder helmet is purely coincidental."
 	default_skin = "corporate"
-	armor = list(MELEE = 35, BULLET = 40, LASER = 40, ENERGY = 50, BOMB = 50, BIO = 100, FIRE = 100, ACID = 100, WOUND = 15)
+	armor = ARMOR_HEAVY_ENERGY_CHEST
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -1214,7 +1214,7 @@
 		and sometimes hilariously painful side effects of jumping timelines, while providing inbuilt equipment for \
 		making timeline adjustments to correct a bad course."
 	default_skin = "chrono"
-	armor = list(MELEE = 60, BULLET = 60, LASER = 60, ENERGY = 60, BOMB = 30, BIO = 100, FIRE = 100, ACID = 100)
+	armor = ARMOR_HEAVY_ENERGY_CHEST
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
@@ -1258,7 +1258,7 @@
 		Contains an internal self-recharging high-current capacitor for short, powerful bo- \
 		Oh wait, this is not actually a flight suit. Fuck."
 	default_skin = "debug"
-	armor = list(MELEE = 50, BULLET = 50, LASER = 50, ENERGY = 50, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 0)
+	armor = ARMOR_HEAVY_ENERGY_CHEST
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
@@ -1305,7 +1305,7 @@
 		have all the fun. If this continues to be a pattern for your \"events\" (Admin Abuse) \
 		there will be an admin complaint. You have been warned."
 	default_skin = "debug"
-	armor = list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100, WOUND = 100)
+	armor = ARMOR_INVINCIBLE
 	resistance_flags = INDESTRUCTIBLE|LAVA_PROOF|FIRE_PROOF|UNACIDABLE|ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT

@@ -1,23 +1,24 @@
 /mob/living/carbon/human/getarmor(def_zone, type)
-	var/armorval = 0
-	var/organnum = 0
+	var/base_dt = physiology.armor.getRating(type)
 
 	if(def_zone)
 		if(isbodypart(def_zone))
 			var/obj/item/bodypart/bp = def_zone
 			if(bp)
-				return checkarmor(def_zone, type)
+				return checkarmor(def_zone, type) + base_dt
 		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 		if(affecting)
-			return checkarmor(affecting, type)
+			return checkarmor(affecting, type) + base_dt
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
-	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and averages out the values
+	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and takes the highest value.
+	var/highest_dt = 0
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		armorval += checkarmor(BP, type)
-		organnum++
-	return (armorval/max(organnum, 1))
+		var/damage_threshold = checkarmor(BP, type)
+		if(damage_threshold > highest_dt)
+			highest_dt = damage_threshold
+	return highest_dt + base_dt
 
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
@@ -28,11 +29,11 @@
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
-		if(bp && istype(bp , /obj/item/clothing))
+		if(bp && istype(bp, /obj/item/clothing))
 			var/obj/item/clothing/C = bp
 			if(C.body_parts_covered & def_zone.body_part)
-				protection += C.armor.getRating(d_type)
-	protection += physiology.armor.getRating(d_type)
+				if(C.armor.getRating(d_type) > protection)
+					protection = C.armor.getRating(d_type)
 	return protection
 
 ///Get all the clothing on a specific body part

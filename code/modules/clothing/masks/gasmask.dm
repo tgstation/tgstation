@@ -130,7 +130,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	custom_materials = list(/datum/material/iron=4000, /datum/material/glass=2000)
 	tint = 2
-	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 55)
+	armor = ARMOR_LIGHT_BLUNT_HEAD
 	actions_types = list(/datum/action/item_action/toggle)
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	flags_cover = MASKCOVERSEYES

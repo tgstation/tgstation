@@ -231,7 +231,7 @@
 	icon_state = "gold"
 	medaltype = "medal-gold"
 	custom_materials = list(/datum/material/gold=1000)
-	
+
 /obj/item/clothing/accessory/medal/med_medal
 	name = "exemplary performance medal"
 	desc = "A medal awarded to those who have shown distinguished conduct, performance, and initiative within the medical department."
@@ -414,7 +414,6 @@
 	name = "bone talisman"
 	desc = "A hunter's talisman, some say the old gods smile on those who wear it."
 	icon_state = "talisman"
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
 	attachment_slot = null
 
 /obj/item/clothing/accessory/skullcodpiece
@@ -422,7 +421,6 @@
 	desc = "A skull shaped ornament, intended to protect the important things in life."
 	icon_state = "skull"
 	above_suit = TRUE
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
 	attachment_slot = GROIN
 
 /obj/item/clothing/accessory/skilt
@@ -431,7 +429,6 @@
 	icon_state = "skilt"
 	above_suit = TRUE
 	minimize_when_attached = FALSE
-	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 5, BOMB = 20, BIO = 20, FIRE = 0, ACID = 25)
 	attachment_slot = GROIN
 
 /obj/item/clothing/accessory/allergy_dogtag

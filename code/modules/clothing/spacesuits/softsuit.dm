@@ -66,7 +66,7 @@
 	desc = "A bulky, air-tight helmet meant to protect the user during emergency situations. It doesn't look very durable."
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange"
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor = ARMOR_LIGHT_BLUNT_HEAD
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile
@@ -76,7 +76,7 @@
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
 	slowdown = 2
-	armor = list(MELEE = 5, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
+	armor = ARMOR_LIGHT_BLUNT_CHEST
 	strip_delay = 65
 
 /obj/item/clothing/suit/space/fragile/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)

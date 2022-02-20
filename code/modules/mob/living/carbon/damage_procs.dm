@@ -2,8 +2,8 @@
 
 /mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone)
-	var/hit_percent = (100-blocked)/100
-	if(!damage || (!forced && hit_percent <= 0))
+	var/damage_done = CALCULATE_DT(CALCULATE_DR(damage, 0), blocked, damage)
+	if(!damage_done || (!forced && damage_done <= 0))
 		return 0
 
 	var/obj/item/bodypart/BP = null
@@ -17,7 +17,7 @@
 			if(!BP)
 				BP = bodyparts[1]
 
-	var/damage_amount = forced ? damage : damage * hit_percent
+	var/damage_amount = damage_done
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)

@@ -1,32 +1,22 @@
-
 /mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
-	var/armor = getarmor(def_zone, attack_flag)
+	var/damage_threshold = getarmor(def_zone, attack_flag)
+	var/penetrated_dt = armour_penetration * 0.2 // 100 Penetration = 20 DT ignored
 
-	if(armor <= 0)
-		return armor
-	if(weak_against_armour && armor >= 0)
-		armor *= ARMOR_WEAKENED_MULTIPLIER
+	if(damage_threshold <= 0)
+		return damage_threshold
+	if(weak_against_armour && damage_threshold >= 0)
+		damage_threshold *= WEAK_AGAINST_ARMOR_MULTIPLIER
 	if(silent)
-		return max(0, armor - armour_penetration)
+		return max(0, damage_threshold - penetrated_dt)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armour_penetration)
-		armor = max(0, armor - armour_penetration)
+		damage_threshold = max(0, damage_threshold - penetrated_dt)
 		if(penetrated_text)
 			to_chat(src, span_userdanger("[penetrated_text]"))
 		else
 			to_chat(src, span_userdanger("Your armor was penetrated!"))
-	else if(armor >= 100)
-		if(absorb_text)
-			to_chat(src, span_notice("[absorb_text]"))
-		else
-			to_chat(src, span_notice("Your armor absorbs the blow!"))
-	else
-		if(soften_text)
-			to_chat(src, span_warning("[soften_text]"))
-		else
-			to_chat(src, span_warning("Your armor softens the blow!"))
-	return armor
+	return damage_threshold
 
 /mob/living/proc/getarmor(def_zone, type)
 	return 0
@@ -55,7 +45,8 @@
 	return BULLET_ACT_HIT
 
 /mob/living/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
-	. = ..()
+	var/armor = check_projectile_armor(def_zone, P)
+	. = ..(P, def_zone, piercing_hit, armor)
 	if(!P.nodamage && (. != BULLET_ACT_BLOCK))
 		var/attack_direction = get_dir(P.starting, src)
 		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
@@ -64,7 +55,7 @@
 			check_projectile_dismemberment(P, def_zone)
 	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
-/mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile)
+/mob/living/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile)
 	return run_armor_check(def_zone, impacting_projectile.flag, "","",impacting_projectile.armour_penetration, "", FALSE, impacting_projectile.weak_against_armour)
 
 /mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)

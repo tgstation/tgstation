@@ -1,5 +1,38 @@
 #define ARMORID "armor-[melee]-[bullet]-[laser]-[energy]-[bomb]-[bio]-[fire]-[acid]-[wound]-[consume]"
 
+#define MAXIMUM_DR 85 // 85%, set this to 100 to disable maximum resistance with DR but not recommended
+#define DT_THRESHOLD 0.2 // 20%, set this to 0 to disable minimum damage w/ DT but not recommended
+#define WEAK_AGAINST_ARMOR_MULTIPLIER 3 // 3x
+#define CALCULATE_DR(damage, DR) (damage * ((100 - min(DR, MAXIMUM_DR)) / 100))
+#define CALCULATE_DT(damage_DR, DT, damage_base) (max(damage_DR - DT, damage_base * DT_THRESHOLD))
+
+#define NO_DT 0
+#define LIGHT_DT 10
+#define MEDIUM_DT 15
+#define HEAVY_DT 20
+
+#define LIGHT_DT_HEAD 1
+#define MEDIUM_DT_HEAD 3
+#define HEAVY_DT_HEAD 5
+
+#define ARMOR_LIGHT_BLUNT_CHEST list(MELEE = 10, BULLET = 10)
+#define ARMOR_MEDIUM_BLUNT_CHEST list(MELEE = 15, BULLET = 15)
+#define ARMOR_HEAVY_BLUNT_CHEST list(MELEE = 20, BULLET = 20)
+
+#define ARMOR_LIGHT_BLUNT_HEAD list(MELEE = 1, BULLET = 1)
+#define ARMOR_MEDIUM_BLUNT_HEAD list(MELEE = 3, BULLET = 3)
+#define ARMOR_HEAVY_BLUNT_HEAD list(MELEE = 5, BULLET = 5)
+
+#define ARMOR_LIGHT_ENERGY_CHEST list(LASER = 10, ENERGY = 10)
+#define ARMOR_MEDIUM_ENERGY_CHEST list(LASER = 15, ENERGY = 15)
+#define ARMOR_HEAVY_ENERGY_CHEST list(LASER = 20, ENERGY = 20)
+
+#define ARMOR_LIGHT_ENERGY_HEAD list(LASER = 1, ENERGY = 1)
+#define ARMOR_MEDIUM_ENERGY_HEAD list(LASER = 3, ENERGY = 3)
+#define ARMOR_HEAVY_ENERGY_HEAD list(LASER = 5, ENERGY = 5)
+
+#define ARMOR_INVINCIBLE list(MELEE = 100, BULLET = 100, LASER = 100, ENERGY = 100, BOMB = 100, BIO = 100, FIRE = 100, ACID = 100)
+
 /proc/getArmor(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, fire = 0, acid = 0, wound = 0, consume = 0)
 	. = locate(ARMORID)
 	if (!.)

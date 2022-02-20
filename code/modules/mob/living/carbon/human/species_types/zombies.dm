@@ -46,7 +46,7 @@
 	id = SPECIES_ZOMBIE
 	limbs_id = "zombie"
 	mutanthands = /obj/item/zombie_hand
-	armor = 20 // 120 damage to KO a zombie, which kills it
+	armor = LIGHT_DT
 	speedmod = 1.6
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
