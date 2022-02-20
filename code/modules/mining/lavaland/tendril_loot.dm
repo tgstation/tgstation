@@ -555,7 +555,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
 	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
-	armor = list(MELEE = NO_DT, BULLET = NO_DT, LASER = NO_DT, ENERGY = NO_DT, BOMB = 100, BIO = 0, FIRE = 100, ACID = 30) //mostly bone bracer armor
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = NO_DAMAGE_THRESHOLD, ENERGY = NO_DAMAGE_THRESHOLD, BOMB = 100, BIO = 0, FIRE = 100, ACID = 30) //mostly bone bracer armor
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()

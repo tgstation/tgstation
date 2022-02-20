@@ -61,7 +61,7 @@
 	desc = "Use in case of bomb."
 	icon_state = "bombsuit"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
-	armor = list(MELEE = NO_DT, BULLET = NO_DT, LASER = MEDIUM_DT_HEAD, ENERGY = MEDIUM_DT_HEAD, BOMB = 100, BIO = 0, FIRE = 80, ACID = 50)
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = MEDIUM_DAMAGE_THRESHOLD_HEAD, ENERGY = MEDIUM_DAMAGE_THRESHOLD_HEAD, BOMB = 100, BIO = 0, FIRE = 80, ACID = 50)
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	dynamic_hair_suffix = ""
 	dynamic_fhair_suffix = ""
@@ -85,7 +85,7 @@
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 2
-	armor = list(MELEE = NO_DT, BULLET = NO_DT, LASER = MEDIUM_DT, ENERGY = MEDIUM_DT, BOMB = 100, BIO = 0, FIRE = 80, ACID = 50)
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = MEDIUM_DAMAGE_THRESHOLD, ENERGY = MEDIUM_DAMAGE_THRESHOLD, BOMB = 100, BIO = 0, FIRE = 80, ACID = 50)
 	flags_inv = HIDEJUMPSUIT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
@@ -124,7 +124,7 @@
 	desc = "A hood with radiation protective properties. The label reads, 'Made with lead. Please do not consume insulation.'"
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	flags_inv = HIDEMASK|HIDEEARS|HIDEFACE|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	armor = list(MELEE = NO_DT, BULLET = NO_DT, LASER = LIGHT_DT_HEAD, ENERGY = LIGHT_DT_HEAD, BOMB = 0, BIO = 60, FIRE = 30, ACID = 30)
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = LIGHT_DAMAGE_THRESHOLD_HEAD, ENERGY = LIGHT_DAMAGE_THRESHOLD_HEAD, BOMB = 0, BIO = 60, FIRE = 30, ACID = 30)
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
@@ -145,7 +145,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/geiger_counter)
 	slowdown = 1.5
-	armor = list(MELEE = NO_DT, BULLET = NO_DT, LASER = LIGHT_DT, ENERGY = LIGHT_DT, BOMB = 0, BIO = 60, FIRE = 30, ACID = 30)
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = LIGHT_DAMAGE_THRESHOLD, ENERGY = LIGHT_DAMAGE_THRESHOLD, BOMB = 0, BIO = 60, FIRE = 30, ACID = 30)
 	strip_delay = 60
 	equip_delay_other = 60
 	flags_inv = HIDEJUMPSUIT

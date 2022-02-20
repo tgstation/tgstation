@@ -155,7 +155,7 @@ Lizard subspecies: SILVER SCALED
 	)
 	species_language_holder = /datum/language_holder/lizard/silver
 	mutanttongue = /obj/item/organ/tongue/lizard/silver
-	armor = LIGHT_DT //very light silvery scales soften blows
+	armor = LIGHT_DAMAGE_THRESHOLD //very light silvery scales soften blows
 	changesource_flags = MIRROR_BADMIN | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
 	///stored mutcolor for when we turn back off of a silverscale.
 	var/old_mutcolor

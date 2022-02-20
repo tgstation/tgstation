@@ -247,7 +247,7 @@
 	desc = "A slimming piece of dubious space carp technology, you suspect it won't stand up to hand-to-hand blows."
 	icon_state = "carp_suit"
 	inhand_icon_state = "space_suit_syndicate"
-	armor = list(MELEE = -20, BULLET = NO_DT, LASER = NO_DT, ENERGY = NO_DT, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy whimpy whoo
+	armor = list(MELEE = -20, BULLET = NO_DAMAGE_THRESHOLD, LASER = NO_DAMAGE_THRESHOLD, ENERGY = NO_DAMAGE_THRESHOLD, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy whimpy whoo
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon) //I'm giving you a hint here
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -263,7 +263,7 @@
 	name = "carp helmet"
 	desc = "Spaceworthy and it looks like a space carp's head, smells like one too."
 	icon_state = "carp_helm"
-	armor = list(MELEE = -20, BULLET = NO_DT, LASER = NO_DT, ENERGY = NO_DT, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy as a space carp
+	armor = list(MELEE = -20, BULLET = NO_DAMAGE_THRESHOLD, LASER = NO_DAMAGE_THRESHOLD, ENERGY = NO_DAMAGE_THRESHOLD, BOMB = 0, BIO = 100, FIRE = 60, ACID = 75) //As whimpy as a space carp
 	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR //facial hair will clip with the helm, this'll need a dynamic_fhair_suffix at some point.
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -430,7 +430,7 @@
 	desc = "A big and clanky suit made of bronze that offers no protection and looks very unfashionable. Nice."
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "clockwork_cuirass_old"
-	armor = list(MELEE = NO_DT, BULLET = NO_DT, LASER = NO_DT, ENERGY = NO_DT, BOMB = 10, BIO = 0, FIRE = 20, ACID = 20)
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = NO_DAMAGE_THRESHOLD, ENERGY = NO_DAMAGE_THRESHOLD, BOMB = 10, BIO = 0, FIRE = 20, ACID = 20)
 
 /obj/item/clothing/suit/hooded/mysticrobe
 	name = "mystic's robe"

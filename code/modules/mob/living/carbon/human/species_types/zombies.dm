@@ -46,7 +46,7 @@
 	id = SPECIES_ZOMBIE
 	limbs_id = "zombie"
 	mutanthands = /obj/item/zombie_hand
-	armor = LIGHT_DT
+	armor = LIGHT_DAMAGE_THRESHOLD
 	speedmod = 1.6
 	mutanteyes = /obj/item/organ/eyes/night_vision/zombie
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
