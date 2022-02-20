@@ -172,6 +172,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			cmd_admin_mute(src, mute_type, 1)
 			return TRUE
 		if(src.last_message_count >= SPAM_TRIGGER_WARNING)
+			//"auto-ban" sends the message that the cold and uncaring gamecode has been designed to quiash you like a bug in short measure should you continue, and it's quite intentional that the user isn't told exactly what that entails.
 			to_chat(src, span_danger("You are nearing the auto-ban limit for identical messages."))
 			return FALSE
 	else
