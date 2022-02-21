@@ -134,6 +134,7 @@
 
 /obj/structure/fence/door/update_icon_state()
 	icon_state = density ? "door_closed" : "door_opened"
+	return ..()
 
 /obj/structure/fence/door/proc/can_open(mob/user)
 	return TRUE
