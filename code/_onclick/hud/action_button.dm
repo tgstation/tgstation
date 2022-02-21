@@ -174,22 +174,16 @@
 		if(reload_screen)
 			client.screen += button
 
-	// Yes I know this doesn't work, the landings aren't added to the client's screen again
-	// But setting the screen to a new list is dumb regardless, and I refuse to design around it. Suck my nuts
-	hud_used.refresh_landings()
+	if(reload_screen)
+		hud_used.update_our_owner()
 	// This holds the logic for the palette buttons
 	hud_used.palette_actions.refresh_actions()
-
-	if(reload_screen)
-		client.screen += hud_used.toggle_palette
-		client.screen += hud_used.palette_down
-		client.screen += hud_used.palette_up
 
 /atom/movable/screen/button_palette
 	name = "Show Palette"
 	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click</b> this to reset all buttons"
-	icon = 'icons/hud/64x32_actions.dmi'
-	icon_state = "expand"
+	icon = 'icons/hud/64x16_actions.dmi'
+	icon_state = "screen_gen_palette"
 	screen_loc = ui_action_palette
 	var/datum/hud/our_hud
 	var/expanded = FALSE
@@ -201,14 +195,29 @@
 		our_hud = null
 	return ..()
 
+/atom/movable/screen/button_palette/proc/set_hud(datum/hud/our_hud)
+	src.our_hud = our_hud
+	refresh_owner()
+
+/atom/movable/screen/button_palette/proc/refresh_owner()
+	var/mob/viewer = our_hud.mymob
+	if(viewer.client)
+		viewer.client.screen |= src
+
+	var/list/settings = our_hud.get_action_buttons_icons()
+	var/ui_icon = "[settings["bg_icon"]]"
+	var/list/ui_segments = splittext(ui_icon, ".")
+	var/list/ui_paths = splittext(ui_segments[1], "/")
+	var/ui_name = ui_paths[length(ui_paths)]
+
+	icon_state = "[ui_name]_palette"
+
 /atom/movable/screen/button_palette/update_name(updates)
 	. = ..()
 	if(expanded)
 		name = "Hide Palette"
-		icon_state = "contract"
 	else
 		name = "Show Palette"
-		icon_state = "expand"
 
 /atom/movable/screen/button_palette/MouseEntered(location, control, params)
 	. = ..()
@@ -267,7 +276,7 @@
 	closeToolTip(usr) //Our tooltips are now invalid, can't seem to update them in one frame, so here, just close them
 
 /atom/movable/screen/palette_scroll
-	icon = 'icons/hud/64x35_actions.dmi' // Need to resprite this, but if the size isn't exact tooltips get sad
+	icon = 'icons/hud/screen_gen.dmi'
 	screen_loc = ui_palette_scroll
 	/// How should we move the palette's actions?
 	/// Positive scrolls down the list, negative scrolls back
@@ -279,6 +288,18 @@
 		var/mob/dead/observer/O = user
 		return !O.observetarget
 	return TRUE
+
+/atom/movable/screen/palette_scroll/proc/set_hud(datum/hud/our_hud)
+	src.our_hud = our_hud
+	refresh_owner()
+
+/atom/movable/screen/palette_scroll/proc/refresh_owner()
+	var/mob/viewer = our_hud.mymob
+	if(viewer.client)
+		viewer.client.screen |= src
+
+	var/list/settings = our_hud.get_action_buttons_icons()
+	icon = settings["bg_icon"]
 
 /atom/movable/screen/palette_scroll/Click(location, control, params)
 	if(!can_use(usr))
@@ -298,7 +319,7 @@
 /atom/movable/screen/palette_scroll/down
 	name = "Scroll Down"
 	desc = "<b>Click</b> on this to scroll the actions above down"
-	icon_state = "down"
+	icon_state = "scroll_down"
 	scroll_direction = 1
 
 /atom/movable/screen/button_palette/down/Destroy()
@@ -311,7 +332,7 @@
 /atom/movable/screen/palette_scroll/up
 	name = "Scroll Up"
 	desc = "<b>Click</b> on this to scroll the actions above up"
-	icon_state = "up"
+	icon_state = "scroll_up"
 	scroll_direction = -1
 
 /atom/movable/screen/button_palette/up/Destroy()
@@ -339,16 +360,15 @@
 	return ..()
 
 /atom/movable/screen/action_landing/proc/set_owner(datum/action_group/owner)
+	src.owner = owner
+	refresh_owner()
+
+/atom/movable/screen/action_landing/proc/refresh_owner()
 	var/datum/hud/our_hud = owner.owner
 	var/mob/viewer = our_hud.mymob
-
 	if(viewer.client)
-		viewer.client.screen += src
-	src.owner = owner
-	update_style()
+		viewer.client.screen |= src
 
-/atom/movable/screen/action_landing/proc/update_style()
-	var/datum/hud/our_hud = owner.owner
 	var/list/settings = our_hud.get_action_buttons_icons()
 	icon = settings["bg_icon"]
 

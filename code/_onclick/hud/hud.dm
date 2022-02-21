@@ -95,11 +95,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		ui_style = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	toggle_palette = new()
-	toggle_palette.our_hud = src
+	toggle_palette.set_hud(src)
 	palette_down = new()
-	palette_down.our_hud = src
+	palette_down.set_hud(src)
 	palette_up = new()
-	palette_up.our_hud = src
+	palette_up.set_hud(src)
 
 	hand_slots = list()
 
@@ -408,8 +408,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	listed_actions.clear_landing()
 	palette_actions.clear_landing()
 
-// Updates any existing landing visuals
-/datum/hud/proc/refresh_landings()
+// Updates any existing "owned" visuals, ensures they continue to be visible
+/datum/hud/proc/update_our_owner()
+	toggle_palette.refresh_owner()
+	palette_down.refresh_owner()
+	palette_up.refresh_owner()
 	listed_actions.update_landing()
 	palette_actions.update_landing()
 
@@ -568,7 +571,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/action_group/proc/update_landing()
 	if(!landing)
 		return
-	landing.update_style()
+	landing.refresh_owner()
 
 /datum/action_group/proc/scroll(amount)
 	row_offset += amount
@@ -576,7 +579,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/action_group/palette
 	north_offset = 2
-	pixel_north_offset = 20
 	column_max = 3
 	max_rows = 3
 	location = SCRN_OBJ_IN_PALETTE
