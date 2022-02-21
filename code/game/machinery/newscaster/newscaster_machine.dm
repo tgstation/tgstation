@@ -25,6 +25,12 @@
 	var/datum/picture/current_image
 	///Is there currently an alert on this newscaster that hasn't been seen yet?
 	var/alert = FALSE
+	///Is the current user creating a new channel at the moment?
+	var/creating_channel = FALSE
+	///What is the current, in-creation channel's name going to be?
+	var/channel_name
+	///What is the current, in-creation channel's description going to be?
+	var/channel_desc
 
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
@@ -126,6 +132,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["photo_data"] = FALSE
 	if(current_image)
 		data["photo_data"] = TRUE
+	data["creating_channel"] = creating_channel
 
 	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
@@ -258,7 +265,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				else
 					balloon_alert(usr, "No photo identified.")
 
-		if("createChannel")
+		if("startCreateChannel")
 			//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
 			var/list/existing_authors = list()
 			for(var/datum/newscaster/feed_channel/FeedC in GLOB.news_network.network_channels)
@@ -269,27 +276,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(current_user?.account_holder == ("Unknown" || null) || (current_user.account_holder in existing_authors))
 				tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
 				return
+			creating_channel = TRUE
+		if("channelName")
+			channel_name = (params["channeltext"])
+		if("channelDesc")
+			channel_desc = (params["channeldesc"])
 
-			//This is where we set the feed channel name. We break for duplicates.
-			var/channel_name = tgui_input_text(usr, "Provide a Feed Channel Name", "Network Channel Handler", max_length = MAX_NAME_LEN)
+		if("createChannel")
 			if(!channel_name)
 				return
 			for(var/datum/newscaster/feed_channel/FeedC in GLOB.news_network.network_channels)
 				if(FeedC.channel_name == channel_name)
 					tgui_alert(usr, "ERROR: Feed Channel with that name already exists on the Network.", list("Okay"))
 					return
-
-			var/channel_desc = tgui_input_text(usr, "Provide a Feed Channel Description", "Network Channel Handler", max_length = MAX_BROADCAST_LEN)
 			if(!channel_desc)
 				return
-			var/choice = tgui_alert(usr, "Public or Private?", "Should the feed be public or private? Public feeds can accept new articles from all crew.", list("Public", "Private"))
-			var/locked = FALSE
-			if(choice == "Private")
-				locked = TRUE
-			choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
+			var/locked = (params["publicmode"])
+			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
 				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc , locked)
 				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
+			creating_channel = FALSE
 
 		if("storyCensor")
 			if (!params["secure"])
@@ -425,6 +432,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(!user.temporarilyRemoveItemFromInventory(I))
 			return
 		else
+			paper_remaining ++
 			to_chat(user, span_notice("You insert the [I] into \the [src]! It now holds [paper_remaining] sheets of paper."))
 			qdel(I)
 		return ..()

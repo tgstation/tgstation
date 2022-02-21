@@ -6,7 +6,7 @@
 
 import { useBackend, useSharedState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
-import { BlockQuote, Box, Button, Divider, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Tabs } from '../components';
+import { BlockQuote, Box, Button, Divider, Flex, Icon, LabeledList, Modal, NoticeBox, Section, Stack, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { marked } from 'marked';
 import { sanitizeText } from "../sanitize";
@@ -18,18 +18,21 @@ export const Newscaster = (props, context) => {
     <Window
       width={575}
       height={550}>
+      <NewscasterChannelCreation />
       <Window.Content scrollable>
         <Tabs fluid textAlign="center">
           <Tabs.Tab
             color="Green"
             selected={screenmode === 1}
-            onClick={() => setScreenmode(1)}>
+            onClick={() => setScreenmode(1),
+              {tabvalue : screenmode}}>
             Newscaster
           </Tabs.Tab>
           <Tabs.Tab
             Color="Blue"
             selected={screenmode === 2}
-            onClick={() => setScreenmode(2)}>
+            onClick={() => setScreenmode(2),
+            {tabvalue : screenmode}}>
             Bounty Board
           </Tabs.Tab>
         </Tabs>
@@ -165,9 +168,9 @@ const NewscasterChannelBox = (props, context) => {
       </Box>
       <Box>
         <Button
-          icon={"Newspaper"}
+          icon={"newspaper"}
           content={"Print Newspaper"}
-          disabled={paper <= 0}
+          disabled={paper <= 1}
           onClick={() => act('paper')} />
       </Box>
     </Section>
@@ -206,8 +209,8 @@ const NewscasterChannelSelector = (props, context) => {
           pb={0.75}
           mr={1}
           textColor="white"
-          onClick={() => act('createChannel')}>
-          Create Channel[+]
+          onClick={() => act('startCreateChannel')}>
+          Create Channel [+]
         </Tabs.Tab>
       </Tabs>
     </Section>
@@ -308,3 +311,75 @@ const NewscasterChannelMessages = (props, context) => {
     </Section>
   );
 };
+
+/** Channel select is the left-hand menu where all the channels are listed. */
+const NewscasterChannelCreation = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    creating_channel,
+    channel = [],
+    viewing_channel,
+    name,
+    desc,
+  } = data;
+  if (!creating_channel) {
+    return null;
+  }
+  const [publicmode, setPublicmode] = useSharedState(context, 'publicmode', 1);
+  return (
+    <Modal textAlign="center">
+      <Flex>
+        <Flex.Item>
+          Enter Channel Name Here:
+          <TextArea
+            fluid
+            height="40px"
+            width="200px"
+            backgroundColor="black"
+            textColor="white"
+            onChange={(e, name) => act('channelName', {
+              channeltext: name,
+            })}>
+              Channel Name
+            </TextArea>
+        </Flex.Item>
+        <Flex.Item>
+          Enter Channel Description Here:
+          <TextArea
+            fluid
+            height="150px"
+            width="200px"
+            backgroundColor="black"
+            textColor="white"
+            onChange={(e, desc) => act('channelDesc', {
+              channeldesc: desc,
+            })}>
+            Channel Description
+          </TextArea>
+          </Flex.Item>
+          <Flex.Item>
+          Set Channel as Public or Private
+          <Button
+            selected={publicmode===1}
+            content="Public"
+            onClick={() => act(setPublicmode(1))} />
+          <Button
+            selected={publicmode===0}
+            content="Private"
+            onClick={() => act(setPublicmode(0))} />
+        </Flex.Item>
+        <Flex.Item>
+          <Button
+            content={"Submit Channel"}
+            selected={ length(name) > 0
+              && length(desc) > 0 }
+              onChange={(e, name) => act('createChannel', {
+                publicmode: publicmode,
+                viewing_channel: viewing_channel,
+              })} />
+        </Flex.Item>
+      </Flex>
+    </Modal>
+  );
+};
+
