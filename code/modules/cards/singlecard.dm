@@ -117,8 +117,10 @@
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(dealer_deck.wielded)
-			var/obj/item/toy/cards/singlecard/card_drawn = draw_card(user, dealer_deck.cards)
-			do_cardhand(user, list(src, card_drawn))
+			var/obj/item/toy/cards/singlecard/card_drawn = dealer_deck.draw_card(user)
+			var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card_drawn))
+			new_cardhand.pixel_x = src.pixel_x
+			new_cardhand.pixel_y = src.pixel_y
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 		else
 			dealer_deck.add_card(user, dealer_deck.cards, src)
@@ -175,7 +177,7 @@
 **/
 	return ..()
 
-/obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj,obj/item/toy/cards/sourceobj)
+/obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj, obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
 	newobj.has_unique_card_icons = sourceobj.has_unique_card_icons

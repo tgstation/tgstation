@@ -90,10 +90,9 @@
  * * obj/item/toy/cards/singlecard/forced_card (optional) - Used to force the card drawn from the deck
  * * place_on_table (optional) - Used to ignore putting a card in a users hand (for placing cards on tables)
  */
-/obj/item/toy/cards/proc/draw_card(mob/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null, place_on_table = FALSE)
+/obj/item/toy/cards/proc/draw_card(mob/living/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null, place_on_table = FALSE)
 	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!(living_user.mobility_flags & MOBILITY_PICKUP))
+		if(!(user.mobility_flags & MOBILITY_PICKUP))
 			return
 	if(cards.len == 0)
 		to_chat(user, span_warning("There are no more cards to draw!"))
