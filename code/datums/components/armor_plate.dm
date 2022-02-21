@@ -2,7 +2,7 @@
 	var/amount = 0
 	var/maxamount = 3
 	var/upgrade_item = /obj/item/stack/sheet/animalhide/goliath_hide
-	var/datum/armor/added_armor = list(MELEE = 2)
+	var/datum/armor/added_armor = list(MELEE = LIGHT_DAMAGE_THRESHOLD_HEAD)
 	var/upgrade_name
 
 /datum/component/armor_plate/Initialize(_maxamount,obj/item/_upgrade_item,datum/armor/_added_armor)
