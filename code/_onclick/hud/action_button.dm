@@ -177,7 +177,7 @@
 /atom/movable/screen/button_palette
 	name = "Show Palette"
 	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click</b> this to reset all buttons"
-	icon = 'icons/hud/64x64actions.dmi'
+	icon = 'icons/hud/64x32_actions.dmi'
 	icon_state = "expand"
 	screen_loc = ui_action_palette
 	var/datum/hud/our_hud
@@ -256,7 +256,7 @@
 	closeToolTip(usr) //Our tooltips are now invalid, can't seem to update them in one frame, so here, just close them
 
 /atom/movable/screen/palette_scroll
-	icon = 'icons/hud/64x64actions.dmi'
+	icon = 'icons/hud/64x35_actions.dmi' // Need to resprite this, but if the size isn't exact tooltips get sad
 	screen_loc = ui_palette_scroll
 	/// How should we move the palette's actions?
 	/// Positive scrolls down the list, negative scrolls back
