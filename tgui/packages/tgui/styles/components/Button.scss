@@ -138,17 +138,17 @@ $bg-map: colors.$bg-map !default;
 }
 
 .Button--verticalAlign--top {
-	align-items: flex-start;
-  }
+  align-items: flex-start;
+}
   
-  .Button--verticalAlign--middle {
-	align-items: center;
-  }
+.Button--verticalAlign--middle {
+  align-items: center;
+}
   
-  .Button--verticalAlign--bottom {
-	align-items: flex-end;
-  }
+.Button--verticalAlign--bottom {
+  align-items: flex-end;
+}
   
-  .Button__content--fluid {
-	flex: 1 0 auto;
-  }
+.Button__content--fluid {
+  flex: 1 0 auto;
+}
