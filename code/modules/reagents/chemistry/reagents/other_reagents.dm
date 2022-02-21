@@ -255,7 +255,7 @@
 	..()
 	ADD_TRAIT(L, TRAIT_HOLY, type)
 	if(data)
-		data.Remove("misc")
+		data["misc"] = 0
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, type)
