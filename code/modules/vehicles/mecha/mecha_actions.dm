@@ -38,7 +38,7 @@
 	button_icon_state = "mech_internals_[chassis.use_internal_tank ? "on" : "off"]"
 	chassis.balloon_alert(owner, "taking air from [chassis.use_internal_tank ? "internal airtank" : "environment"]")
 	chassis.log_message("Now taking air from [chassis.use_internal_tank?"internal airtank":"environment"].", LOG_MECHA)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_cycle_equip
 	name = "Cycle Equipment"
@@ -64,7 +64,7 @@
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
 		button_icon_state = "mech_cycle_equip_on"
 		playsound(chassis,'sound/machines/piston_raise.ogg', 40, TRUE)
-		UpdateButtonIcon()
+		UpdateButtons()
 		return
 	var/number = 0
 	for(var/equipment in available_equipment)
@@ -82,7 +82,7 @@
 			button_icon_state = "mech_cycle_equip_on"
 			playsound(chassis,'sound/machines/piston_raise.ogg', 40, TRUE)
 		send_byjax(chassis.occupants,"exosuit.browser","eq_list",chassis.get_equipment_list())
-		UpdateButtonIcon()
+		UpdateButtons()
 		return
 
 
@@ -106,7 +106,7 @@
 	chassis.balloon_alert(owner, "toggled lights [chassis.mecha_flags & LIGHTS_ON ? "on":"off"]")
 	playsound(chassis,'sound/machines/clockcult/brass_skewer.ogg', 40, TRUE)
 	chassis.log_message("Toggled lights [(chassis.mecha_flags & LIGHTS_ON)?"on":"off"].", LOG_MECHA)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/mech_view_stats
 	name = "View Stats"
@@ -152,7 +152,7 @@
 
 	for(var/occupant in occupants)
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/strafe)
-		action?.UpdateButtonIcon()
+		action?.UpdateButtons()
 
 ///swap seats, for two person mecha
 /datum/action/vehicle/sealed/mecha/swap_seat

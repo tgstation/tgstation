@@ -337,7 +337,7 @@
 				if(ishuman(living_target) && (living_target.stat != DEAD || !consumed_mobs[living_target.tag])) //if they're not dead, you can consume them anyway
 					consumed_mobs[living_target.tag] = TRUE
 					fed++
-					lay_eggs_enriched.UpdateButtonIcon(TRUE)
+					lay_eggs_enriched.UpdateButtons(TRUE)
 					visible_message(span_danger("[src] sticks a proboscis into [living_target] and sucks a viscous substance out."),span_notice("You suck the nutriment out of [living_target], feeding you enough to lay a cluster of eggs."))
 					living_target.death() //you just ate them, they're dead.
 				else
@@ -403,7 +403,7 @@
 
 /obj/effect/proc_holder/wrap/update_icon()
 	action.button_icon_state = "wrap_[active]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 	return ..()
 
 /obj/effect/proc_holder/wrap/Click()
@@ -486,7 +486,7 @@
 					new_eggs.faction = spider.faction
 					if(enriched)
 						spider.fed--
-					UpdateButtonIcon(TRUE)
+					UpdateButtons(TRUE)
 		spider.is_busy = FALSE
 		spider.stop_automated_movement = FALSE
 

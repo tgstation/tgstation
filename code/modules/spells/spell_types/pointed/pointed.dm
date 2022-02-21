@@ -62,7 +62,7 @@
 
 	. = ..()
 	action.button_icon_state = "[action_icon_state][active ? 1 : null]"
-	action.UpdateButtonIcon()
+	action.UpdateButtons()
 
 /obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())

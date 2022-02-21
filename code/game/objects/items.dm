@@ -1225,7 +1225,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
  */
 /obj/item/proc/update_action_buttons(status_only = FALSE, force = FALSE)
 	for(var/datum/action/current_action as anything in actions)
-		current_action.UpdateButtonIcon(status_only, force)
+		current_action.UpdateButtons(status_only, force)
 
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)

@@ -124,7 +124,7 @@
 	COOLDOWN_START(src, skyfall_cooldown, skyfall_cooldown_time)
 	var/datum/action/vehicle/sealed/mecha/savannah_action = occupant_actions[pilot][/datum/action/vehicle/sealed/mecha/skyfall]
 	savannah_action.button_icon_state = "mech_savannah_cooldown"
-	savannah_action.UpdateButtonIcon()
+	savannah_action.UpdateButtons()
 	addtimer(CALLBACK(savannah_action, /datum/action/vehicle/sealed/mecha/skyfall.proc/reset_button_icon), skyfall_cooldown_time)
 	for(var/mob/living/shaken in range(7, src))
 		shake_camera(shaken, 3, 3)
@@ -297,7 +297,7 @@
 	))
 	var/datum/action/vehicle/sealed/mecha/strike_action = occupant_actions[gunner][/datum/action/vehicle/sealed/mecha/ivanov_strike]
 	strike_action.button_icon_state = "mech_ivanov_cooldown"
-	strike_action.UpdateButtonIcon()
+	strike_action.UpdateButtons()
 	addtimer(CALLBACK(strike_action, /datum/action/vehicle/sealed/mecha/ivanov_strike.proc/reset_button_icon), strike_cooldown_time)
 
 
@@ -329,7 +329,7 @@
  */
 /datum/action/vehicle/sealed/mecha/skyfall/proc/reset_button_icon()
 	button_icon_state = "mech_savannah"
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike
 	name = "Ivanov Strike"
@@ -355,7 +355,7 @@
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/reset_button_icon()
 	button_icon_state = "mech_ivanov"
-	UpdateButtonIcon()
+	UpdateButtons()
 
 //misc effects
 

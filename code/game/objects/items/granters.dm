@@ -105,13 +105,13 @@
 	to_chat(owner, span_notice("You will now fold origami planes."))
 	button_icon_state = "origami_on"
 	active = TRUE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/origami/Deactivate()
 	to_chat(owner, span_notice("You will no longer fold origami planes."))
 	button_icon_state = "origami_off"
 	active = FALSE
-	UpdateButtonIcon()
+	UpdateButtons()
 
 ///SPELLS///
 
