@@ -299,7 +299,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	ui_style = new_ui_style
 	build_hand_slots()
-	// Initialize palette icon. God I fucking hate hud styles whyyyyyyyyyy
 
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12()

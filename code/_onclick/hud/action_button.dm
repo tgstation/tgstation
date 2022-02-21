@@ -1,7 +1,5 @@
 // Todo:
-// Make the palette icon state smaller
 // Add green/red shimmer for add/remove to palette
-// Make the palette match theme
 // Add proper garbage collection
 // Cry yourself to sleep over the existence of hud code
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
