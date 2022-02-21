@@ -924,6 +924,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		winset(src, null, "input.focus=true input.background-color=[COLOR_INPUT_ENABLED]")
 
+	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
+
 	..()
 
 /client/proc/add_verbs_from_config()
