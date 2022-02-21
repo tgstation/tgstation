@@ -99,6 +99,8 @@
 			if(totalTransmittable() > competition.totalResistance())
 				if(!istype(competition, /datum/disease/advance/sentient_disease)) // I FUCKING SPAWNED, 30 SECONDS LATER IT WAS OVER, BECAUSE OF THIS FUCKING CODE
 					competition.cure(FALSE)
+				else
+					return FALSE // FUCK THIS MECHANIC
 			else
 				return FALSE //we are not strong enough to bully our way in
 	infect(infectee, make_copy)
