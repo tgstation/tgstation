@@ -36,7 +36,7 @@
 		CRASH("Heretic datum didn't have a hunt_and_sacrifice knowledge learned, what?")
 
 	if(!target_finder.obtain_targets(user))
-		loc.balloon_alert("ritual failed, no targets!")
+		loc.balloon_alert(user, "ritual failed, no targets!")
 		return FALSE
 
 	return TRUE
