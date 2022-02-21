@@ -1,5 +1,5 @@
 import { BooleanLike } from '../../common/react';
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Collapsible, Input, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
@@ -241,7 +241,7 @@ const AntibodyInfoDisplay = (_, context) => {
 /** Displays info for the loaded blood, if any */
 const SpecimenDisplay = (_, context) => {
   const { act, data } = useBackend<PandemicContext>(context);
-  const [tab, setTab] = useSharedState(context, 'tab', 0);
+  const [tab, setTab] = useLocalState(context, 'tab', 0);
   const { is_ready, viruses = [] } = data;
   const virus = viruses[tab];
   const setTabHandler = (index: number) => {
