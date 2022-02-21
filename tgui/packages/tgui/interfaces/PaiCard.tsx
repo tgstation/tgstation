@@ -119,7 +119,7 @@ const CandidateDisplay = (props, context) => {
         fill
         height={12}
         scrollable
-        title={"Candidate " + index}>
+        title={'Candidate ' + index}>
         <Box color="green" fontSize="16px">
           Name: {name || 'Randomized Name'}
         </Box>
@@ -138,10 +138,7 @@ const PaiOptions = (_, context) => {
   const { can_holo, dna, emagged, laws, master, name, transmit, receive } = pai;
 
   return (
-    <Section
-      fill
-      scrollable
-      title={`Settings: ${name.toUpperCase()}`}>
+    <Section fill scrollable title={`Settings: ${name.toUpperCase()}`}>
       <LabeledList>
         <LabeledList.Item label="Master">
           {master || (
