@@ -24895,15 +24895,15 @@
 /area/medical/surgery/room_b)
 "gGb" = (
 /obj/structure/table/reinforced,
-/obj/item/stock_parts/cell/high/plus{
+/obj/item/stock_parts/cell/high{
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/obj/item/stock_parts/cell/high/plus{
+/obj/item/stock_parts/cell/high{
 	pixel_x = -8;
 	pixel_y = 9
 	},
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/machinery/cell_charger,
 /obj/item/borg/upgrade/rename{
 	pixel_x = 3;
