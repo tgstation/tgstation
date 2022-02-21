@@ -93,7 +93,7 @@
 	desc = "A bulletproof combat helmet that excels in protecting the wearer against traditional projectile weaponry and explosives to a minor extent."
 	icon_state = "helmetalt"
 	inhand_icon_state = "helmetalt"
-	armor = ARMOR_HEAVY_BLUNT_HEAD
+	armor = ARMOR_BULLETPROOF_HELMET
 	can_flashlight = TRUE
 	dog_fashion = null
 
@@ -147,7 +147,7 @@
 	toggle_message = "You pull the visor down on"
 	alt_toggle_message = "You push the visor up on"
 	can_toggle = 1
-	armor = ARMOR_MEDIUM_BLUNT_HEAD
+	armor = ARMOR_RIOT_HELM
 	flags_inv = HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 80
 	actions_types = list(/datum/action/item_action/toggle)

@@ -165,7 +165,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = ARMOR_MEDIUM_BLUNT_CHEST
+	armor = ARMOR_RIOT_SUIT
 	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
@@ -185,7 +185,7 @@
 	icon_state = "bulletproof"
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
-	armor = ARMOR_HEAVY_BLUNT_CHEST
+	armor = ARMOR_BULLETPROOF_VEST
 	strip_delay = 70
 	equip_delay_other = 50
 
