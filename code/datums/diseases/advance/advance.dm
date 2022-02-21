@@ -97,7 +97,8 @@
 		for(var/i in 1 to replace_num)
 			var/datum/disease/advance/competition = advance_diseases[i]
 			if(totalTransmittable() > competition.totalResistance())
-				competition.cure(FALSE)
+				if(!istype(competition, /datum/disease/advance/sentient_disease)) // I FUCKING SPAWNED, 30 SECONDS LATER IT WAS OVER, BECAUSE OF THIS FUCKING CODE
+					competition.cure(FALSE)
 			else
 				return FALSE //we are not strong enough to bully our way in
 	infect(infectee, make_copy)
