@@ -69,11 +69,11 @@
 #define ui_alert5 "EAST-1:28,CENTER+1:19"
 
 //Upper left (action buttons)
-#define ui_action_palette "WEST+0:23,NORTH-2:5"
-#define ui_action_palette_offset(north_offset) ("WEST+0:23,NORTH-[2+north_offset]:5")
+#define ui_action_palette "WEST+0:23,NORTH-2:18"
+#define ui_action_palette_offset(north_offset) ("WEST+0:23,NORTH-[2+north_offset]:18")
 
-#define ui_palette_scroll "WEST+0:23,NORTH-5:5"
-#define ui_palette_scroll_offset(north_offset) ("WEST+0:23,NORTH-[7+north_offset]:5")
+#define ui_palette_scroll "WEST+0:23,NORTH-6"
+#define ui_palette_scroll_offset(north_offset) ("WEST+0:23,NORTH-[6+north_offset]")
 
 //Middle right (status indicators)
 #define ui_healthdoll "EAST-1:28,CENTER-2:13"

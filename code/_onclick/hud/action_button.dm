@@ -64,6 +64,8 @@
 // Very much byond logic, but I want nice behavior, so we fake it with drag
 /atom/movable/screen/movable/action_button/MouseDrag(atom/over_object, src_location, over_location, src_control, over_control, params)
 	. = ..()
+	if(!can_use(usr))
+		return
 	if(IS_WEAKREF_OF(over_object, last_hovored_ref))
 		return
 	var/atom/old_object
@@ -94,6 +96,9 @@
 	if(!can_use(usr))
 		return
 	var/datum/hud/our_hud = usr.hud_used
+	if(over_object == src)
+		our_hud.hide_landings()
+		return
 	if(istype(over_object, /atom/movable/screen/action_landing))
 		var/atom/movable/screen/action_landing/reserve = over_object
 		reserve.hit_by(src)
@@ -106,7 +111,7 @@
 		our_hud.position_action(src, SCRN_OBJ_IN_PALETTE)
 		save_position()
 		return
-	if(istype(over_object, /atom/movable/screen/movable/action_button) && over_object != src)
+	if(istype(over_object, /atom/movable/screen/movable/action_button))
 		var/atom/movable/screen/movable/action_button/button = over_object
 		our_hud.position_action_relative(src, button)
 		save_position()
@@ -136,6 +141,12 @@
 		return
 	var/position_info = user.client?.prefs?.action_buttons_screen_locs["[name]_[id]"] || SCRN_OBJ_DEFAULT
 	user.hud_used.position_action(src, position_info)
+
+/atom/movable/screen/movable/action_button/proc/dump_save()
+	var/mob/user = our_hud.mymob
+	if(!user?.client)
+		return
+	user.client.prefs.action_buttons_screen_locs -= "[name]_[id]"
 
 /datum/hud/proc/get_action_buttons_icons()
 	. = list()
@@ -274,7 +285,19 @@
 		return
 	our_hud.palette_actions.scroll(scroll_direction)
 
+/atom/movable/screen/palette_scroll/MouseEntered(location, control, params)
+	. = ..()
+	if(QDELETED(src))
+		return
+	openToolTip(usr, src, params, title = name, content = desc)
+
+/atom/movable/screen/palette_scroll/MouseExited()
+	closeToolTip(usr)
+	return ..()
+
 /atom/movable/screen/palette_scroll/down
+	name = "Scroll Down"
+	desc = "<b>Click</b> on this to scroll the actions above down"
 	icon_state = "down"
 	scroll_direction = 1
 
@@ -286,6 +309,8 @@
 	return ..()
 
 /atom/movable/screen/palette_scroll/up
+	name = "Scroll Up"
+	desc = "<b>Click</b> on this to scroll the actions above up"
 	icon_state = "up"
 	scroll_direction = -1
 

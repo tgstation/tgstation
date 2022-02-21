@@ -353,6 +353,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		hide_action(button)
 	switch(position)
 		if(SCRN_OBJ_DEFAULT) // Reset to the default
+			button.dump_save() // Nuke any existing saves
 			position_action(button, button.linked_action.default_button_position)
 			return
 		if(SCRN_OBJ_IN_LIST)
@@ -490,18 +491,16 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	total_rows -= max_rows // Lets get the amount of rows we're off from our max
 	row_offset = clamp(row_offset, 0, total_rows) // You're not allowed to offset so far that we have a row of blank space
 
-	var/visible_buttons = 0
-	for(var/button_number in 1 to length(actions))
-		var/atom/movable/screen/button = actions[button_number]
-		var/postion = ButtonNumberToScreenCoords(button_number - 1)
+	var/button_number = 0
+	for(var/atom/movable/screen/button as anything in actions)
+		var/postion = ButtonNumberToScreenCoords(button_number )
 		button.screen_loc = postion
-		if(postion)
-			visible_buttons++
+		button_number++
 
 	if(landing)
-		var/postion = ButtonNumberToScreenCoords(visible_buttons, landing = TRUE) // Need a good way to count buttons off screen, but allow this to display in the right place if it's being placed with no concern for dropdown
+		var/postion = ButtonNumberToScreenCoords(button_number, landing = TRUE) // Need a good way to count buttons off screen, but allow this to display in the right place if it's being placed with no concern for dropdown
 		landing.screen_loc = postion
-		visible_buttons++
+		button_number++
 
 /// Accepts a number represeting our position in the group, indexes at 0 to make the math nicer
 /datum/action_group/proc/ButtonNumberToScreenCoords(number, landing = FALSE)
@@ -607,9 +606,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /datum/action_group/palette/ButtonNumberToScreenCoords(number, landing)
 	var/atom/movable/screen/button_palette/palette = owner.toggle_palette
-	if(!palette.expanded && !landing)
+	if(palette.expanded)
+		return ..()
+	if(!landing)
 		return null
-	return ..()
+	// We only render the landing in this case, so we force it to be the second item displayed (Second rather then first since it looks nicer)
+	// Remember the number var indexes at 0
+	return ..(1, landing)
 
 /datum/action_group/listed
 	pixel_north_offset = 6
