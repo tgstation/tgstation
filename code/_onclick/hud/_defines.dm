@@ -68,6 +68,13 @@
 #define ui_alert4 "EAST-1:28,CENTER+2:21"
 #define ui_alert5 "EAST-1:28,CENTER+1:19"
 
+//Upper left (action buttons)
+#define ui_action_palette "WEST+0:23,NORTH-2:5"
+#define ui_action_palette_offset(north_offset) ("WEST+0:23,NORTH-[2+north_offset]:5")
+
+#define ui_palette_scroll "WEST+0:23,NORTH-5:5"
+#define ui_palette_scroll_offset(north_offset) ("WEST+0:23,NORTH-[7+north_offset]:5")
+
 //Middle right (status indicators)
 #define ui_healthdoll "EAST-1:28,CENTER-2:13"
 #define ui_health "EAST-1:28,CENTER-1:15"
@@ -178,3 +185,15 @@
 
 //Families
 #define ui_wanted_lvl "NORTH,11"
+
+// Defines relating to action button positions
+
+/// Whatever the base action datum thinks is best
+#define SCRN_OBJ_DEFAULT "default"
+/// Floating somewhere on the hud, not in any predefined place
+#define SCRN_OBJ_FLOATING "floating"
+/// In the list of buttons stored at the top of the screen
+#define SCRN_OBJ_IN_LIST "list"
+/// In the collapseable palette
+#define SCRN_OBJ_IN_PALETTE "palette"
+
