@@ -254,6 +254,9 @@
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_HOLY, type)
+
+/datum/reagent/water/holywater/on_mob_add(mob/living/L, amount)
+	. = ..()
 	if(data)
 		data["misc"] = 0
 
