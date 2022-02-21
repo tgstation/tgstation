@@ -118,7 +118,7 @@
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
-/obj/item/mod/module/jetpack/on_deactivation(mob/user)
+/obj/item/mod/module/jetpack/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -173,7 +173,11 @@
 
 /obj/item/mod/module/jetpack/advanced
 	name = "MOD advanced ion jetpack module"
+	desc = "An improvement on the previous model of electric thrusters. This one achieves higher speeds through \
+		mounting of more jets and a red paint applied on it."
 	icon_state = "jetpack_advanced"
+	overlay_state_inactive = "module_jetpackadv"
+	overlay_state_active = "module_jetpackadv_on"
 	full_speed = TRUE
 
 ///Eating Apparatus - Lets the user eat/drink with the suit on.
@@ -255,7 +259,7 @@
 	set_light_on(active)
 	active_power_cost = base_power * light_range
 
-/obj/item/mod/module/flashlight/on_deactivation()
+/obj/item/mod/module/flashlight/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return

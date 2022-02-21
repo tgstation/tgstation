@@ -463,6 +463,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "bM" = (
@@ -520,6 +521,7 @@
 	desc = "Powered by the tears and sweat of laborers.";
 	name = "Prison Ofitser"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "cf" = (
@@ -2706,6 +2708,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"nA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "nI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -2861,7 +2869,6 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "pV" = (
-/obj/structure/cable,
 /obj/machinery/door/airlock{
 	name = "Restroom"
 	},
@@ -2876,6 +2883,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
 "qt" = (
@@ -3172,6 +3180,7 @@
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "xT" = (
@@ -3225,6 +3234,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "zH" = (
@@ -3238,6 +3248,12 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"zS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/mine/laborcamp/security)
 "zT" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/loading_area{
@@ -3603,6 +3619,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"GY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "Hd" = (
 /turf/closed/wall/r_wall,
 /area/mine/laborcamp/security)
@@ -3775,6 +3798,8 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/iron/cafeteria,
 /area/mine/laborcamp)
 "KP" = (
@@ -3839,6 +3864,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "LL" = (
@@ -3988,6 +4014,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/newscaster/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "PZ" = (
@@ -4151,6 +4178,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Sh" = (
@@ -4186,10 +4214,8 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "SM" = (
-/obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/plating,
-/area/mine/laborcamp)
+/area/mine/laborcamp/security)
 "SS" = (
 /obj/machinery/camera/autoname/directional/south{
 	network = list("mine")
@@ -10467,18 +10493,18 @@ ar
 aB
 vj
 vj
-En
-En
-En
-En
-En
-Iv
-Iv
-En
+GY
+GY
+GY
+GY
+GY
+nA
+nA
+GY
 bL
 cc
-bw
-bw
+zS
+zS
 oU
 Hd
 Ym
@@ -10724,7 +10750,7 @@ ay
 aq
 aE
 vj
-En
+GY
 vj
 tZ
 nq
@@ -10981,7 +11007,7 @@ aq
 aq
 aq
 oS
-En
+GY
 vj
 VA
 bc
@@ -11238,7 +11264,7 @@ uB
 Xb
 aq
 Tb
-En
+GY
 vj
 sK
 Jd
@@ -11495,7 +11521,7 @@ Nz
 En
 aF
 Iv
-En
+GY
 aS
 aW
 be
@@ -11759,7 +11785,7 @@ aq
 aq
 aq
 yr
-yr
+Hd
 Hd
 cg
 cB
@@ -12266,7 +12292,7 @@ YV
 aq
 nm
 aJ
-En
+GY
 En
 rG
 En
@@ -12523,7 +12549,7 @@ vj
 aq
 aq
 aq
-Iv
+nA
 jt
 aq
 aq
@@ -13294,7 +13320,7 @@ pR
 En
 En
 FO
-En
+GY
 vj
 aq
 aq
@@ -13808,7 +13834,7 @@ wQ
 az
 QO
 aq
-En
+GY
 En
 Gz
 En

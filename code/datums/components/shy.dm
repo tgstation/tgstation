@@ -86,7 +86,7 @@
 			if(person.stat == DEAD && !dead_shy)
 				if(!dead_shy_immediate)
 					continue
-				else if(!owner.DirectAccess(person))
+				else if(!owner.Adjacent(person))
 					continue
 			to_chat(owner, span_warning("[replacetext(message, "%TARGET", person)]"))
 			result = TRUE

@@ -1,6 +1,6 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
-	desc = "A little security robot.  He looks less than thrilled."
+	desc = "A little security robot. He looks less than thrilled."
 	icon = 'icons/mob/aibots.dmi'
 	icon_state = "secbot"
 	density = FALSE
@@ -22,6 +22,8 @@
 
 	///The type of baton this Secbot will use
 	var/baton_type = /obj/item/melee/baton/security
+	///The type of cuffs we use on criminals after making arrests
+	var/cuff_type = /obj/item/restraints/handcuffs/cable/zipties/used
 	///The weapon (from baton_type) that will be used to make arrests.
 	var/obj/item/weapon
 	///Their current target
@@ -107,9 +109,6 @@
 	access_card.add_access(det_trim.access + det_trim.wildcard_access)
 	prev_access = access_card.access.Copy()
 
-	//SECHUD
-	var/datum/atom_hud/secsensor = GLOB.huds[DATA_HUD_SECURITY_ADVANCED]
-	secsensor.add_hud_to(src)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -232,12 +231,18 @@
 	if(user)
 		to_chat(user, span_danger("You short out [src]'s target assessment circuits."))
 		oldtarget_name = user.name
-	audible_message(span_danger("[src] buzzes oddly!"))
+
+	if(bot_type == HONK_BOT)
+		audible_message(span_danger("[src] gives out an evil laugh!"))
+		playsound(src, 'sound/machines/honkbot_evil_laugh.ogg', 75, TRUE, -1) // evil laughter
+	else
+		audible_message(span_danger("[src] buzzes oddly!"))
+
 	security_mode_flags &= ~SECBOT_DECLARE_ARRESTS
 	update_appearance()
 
 /mob/living/simple_animal/bot/secbot/bullet_act(obj/projectile/Proj)
-	if(istype(Proj , /obj/projectile/beam)||istype(Proj, /obj/projectile/bullet))
+	if(istype(Proj, /obj/projectile/beam) || istype(Proj, /obj/projectile/bullet))
 		if((Proj.damage_type == BURN) || (Proj.damage_type == BRUTE))
 			if(!Proj.nodamage && Proj.damage < src.health && ishuman(Proj.firer))
 				retaliate(Proj.firer)
@@ -273,13 +278,17 @@
 	playsound(src, 'sound/weapons/cablecuff.ogg', 30, TRUE, -2)
 	current_target.visible_message(span_danger("[src] is trying to put zipties on [current_target]!"),\
 						span_userdanger("[src] is trying to put zipties on you!"))
-	addtimer(CALLBACK(src, .proc/handcuff_target, target), 60)
+	addtimer(CALLBACK(src, .proc/handcuff_target, current_target), 6 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/proc/handcuff_target(mob/living/carbon/current_target)
-	if(!(bot_mode_flags & BOT_MODE_ON) || !Adjacent(current_target) || !isturf(current_target.loc)) //if he's in a closet or not adjacent, we cancel cuffing.
-		return
+	if(!(bot_mode_flags & BOT_MODE_ON)) //if he's in a closet or not adjacent, we cancel cuffing.
+		return FALSE
+	if(!isturf(current_target.loc))
+		return FALSE
+	if(!Adjacent(current_target))
+		return FALSE
 	if(!current_target.handcuffed)
-		current_target.set_handcuffed(new /obj/item/restraints/handcuffs/cable/zipties/used(current_target))
+		current_target.set_handcuffed(new cuff_type(current_target))
 		current_target.update_handcuffed()
 		playsound(src, "law", 50, FALSE)
 		back_to_idle()
@@ -310,6 +319,9 @@
 	current_target.visible_message(span_danger("[src] stuns [current_target]!"),\
 							span_userdanger("[src] stuns you!"))
 
+	target_lastloc = target.loc
+	mode = BOT_PREP_ARREST
+
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
 	. = ..()
 	if(!.)
@@ -339,9 +351,7 @@
 				else
 					stun_attack(target)
 
-				mode = BOT_PREP_ARREST
 				set_anchored(TRUE)
-				target_lastloc = target.loc
 				return
 
 			// not next to perp
@@ -354,13 +364,14 @@
 
 		if(BOT_PREP_ARREST) // preparing to arrest target
 			// see if he got away. If he's no no longer adjacent or inside a closet or about to get up, we hunt again.
-			if(!Adjacent(target) || !isturf(target.loc) || target.AmountParalyzed() < 40)
+			if(!Adjacent(target) || !isturf(target.loc) || !HAS_TRAIT(target, TRAIT_FLOORED))
 				back_to_hunt()
 				return
 
 			if(!iscarbon(target) || !target.canBeHandcuffed())
 				back_to_idle()
 				return
+
 			if(security_mode_flags & SECBOT_HANDCUFF_TARGET)
 				if(!target.handcuffed) //he's not cuffed? Try to cuff him!
 					start_handcuffing(target)
@@ -383,7 +394,7 @@
 				back_to_idle()
 				return
 
-			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && target.AmountParalyzed() < 40)) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
+			if(!Adjacent(target) || !isturf(target.loc) || (target.loc != target_lastloc && !HAS_TRAIT(target, TRAIT_FLOORED))) //if he's changed loc and about to get up or not adjacent or got into a closet, we prep arrest again.
 				back_to_hunt()
 				return
 			else //Try arresting again if the target escapes.
@@ -416,7 +427,7 @@
 /mob/living/simple_animal/bot/secbot/proc/look_for_perp()
 	set_anchored(FALSE)
 	var/judgement_criteria = judgement_criteria()
-	for(var/mob/living/carbon/nearby_carbons in view(7,src)) //Let's find us a criminal
+	for(var/mob/living/carbon/nearby_carbons in view(7, src)) //Let's find us a criminal
 		if((nearby_carbons.stat) || (nearby_carbons.handcuffed))
 			continue
 
@@ -431,11 +442,17 @@
 		if(threatlevel >= 4)
 			target = nearby_carbons
 			oldtarget_name = nearby_carbons.name
-			speak("Level [threatlevel] infraction alert!")
-			if(bot_type == ADVANCED_SEC_BOT)
-				playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
-			else
-				playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+			switch(bot_type)
+				if(ADVANCED_SEC_BOT)
+					speak("Level [threatlevel] infraction alert!")
+					playsound(src, pick('sound/voice/ed209_20sec.ogg', 'sound/voice/edplaceholder.ogg'), 50, FALSE)
+				if(HONK_BOT)
+					speak("Honk!")
+					playsound(src, pick('sound/items/bikehorn.ogg'), 50, FALSE)
+				else
+					speak("Level [threatlevel] infraction alert!")
+					playsound(src, pick('sound/voice/beepsky/criminal.ogg', 'sound/voice/beepsky/justice.ogg', 'sound/voice/beepsky/freeze.ogg'), 50, FALSE)
+
 			visible_message("<b>[src]</b> points at [nearby_carbons.name]!")
 			mode = BOT_HUNT
 			INVOKE_ASYNC(src, .proc/handle_automated_action)
@@ -449,31 +466,38 @@
 /mob/living/simple_animal/bot/secbot/explode()
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
-	if(bot_type == ADVANCED_SEC_BOT)
-		var/obj/item/bot_assembly/ed209/ed_assembly = new(Tsec)
-		ed_assembly.build_step = ASSEMBLY_FIRST_STEP
-		ed_assembly.add_overlay("hs_hole")
-		ed_assembly.created_name = name
-		new /obj/item/assembly/prox_sensor(Tsec)
-		var/obj/item/gun/energy/disabler/disabler_gun = new(Tsec)
-		disabler_gun.cell.charge = 0
-		disabler_gun.update_appearance()
-		if(prob(50))
-			new /obj/item/bodypart/l_leg/robot(Tsec)
-			if(prob(25))
-				new /obj/item/bodypart/r_leg/robot(Tsec)
-		if(prob(25))//50% chance for a helmet OR vest
+	switch(bot_type)
+		if(ADVANCED_SEC_BOT)
+			var/obj/item/bot_assembly/ed209/ed_assembly = new(Tsec)
+			ed_assembly.build_step = ASSEMBLY_FIRST_STEP
+			ed_assembly.add_overlay("hs_hole")
+			ed_assembly.created_name = name
+			new /obj/item/assembly/prox_sensor(Tsec)
+			var/obj/item/gun/energy/disabler/disabler_gun = new(Tsec)
+			disabler_gun.cell.charge = 0
+			disabler_gun.update_appearance()
 			if(prob(50))
-				new /obj/item/clothing/head/helmet(Tsec)
-			else
-				new /obj/item/clothing/suit/armor/vest(Tsec)
-	else
-		var/obj/item/bot_assembly/secbot/secbot_assembly = new(Tsec)
-		secbot_assembly.build_step = ASSEMBLY_FIRST_STEP
-		secbot_assembly.add_overlay("hs_hole")
-		secbot_assembly.created_name = name
-		new /obj/item/assembly/prox_sensor(Tsec)
-		drop_part(baton_type, Tsec)
+				new /obj/item/bodypart/l_leg/robot(Tsec)
+				if(prob(25))
+					new /obj/item/bodypart/r_leg/robot(Tsec)
+			if(prob(25))//50% chance for a helmet OR vest
+				if(prob(50))
+					new /obj/item/clothing/head/helmet(Tsec)
+				else
+					new /obj/item/clothing/suit/armor/vest(Tsec)
+		if(HONK_BOT)
+			var/obj/item/bot_assembly/honkbot/honkbot_assembly = new(Tsec)
+			honkbot_assembly.build_step = ASSEMBLY_FIRST_STEP
+			honkbot_assembly.created_name = name
+			new /obj/item/assembly/prox_sensor(Tsec)
+			drop_part(baton_type, Tsec)
+		else
+			var/obj/item/bot_assembly/secbot/secbot_assembly = new(Tsec)
+			secbot_assembly.build_step = ASSEMBLY_FIRST_STEP
+			secbot_assembly.add_overlay("hs_hole")
+			secbot_assembly.created_name = name
+			new /obj/item/assembly/prox_sensor(Tsec)
+			drop_part(baton_type, Tsec)
 
 	do_sparks(3, TRUE, src)
 

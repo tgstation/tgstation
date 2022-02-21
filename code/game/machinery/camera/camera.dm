@@ -1,6 +1,6 @@
-#define CAMERA_UPGRADE_XRAY 1
-#define CAMERA_UPGRADE_EMP_PROOF 2
-#define CAMERA_UPGRADE_MOTION 4
+#define CAMERA_UPGRADE_XRAY (1<<0)
+#define CAMERA_UPGRADE_EMP_PROOF (1<<1)
+#define CAMERA_UPGRADE_MOTION (1<<2)
 
 /obj/machinery/camera
 	name = "security camera"
@@ -11,6 +11,7 @@
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 90, ACID = 50)
@@ -61,14 +62,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	light_range = 10
 	start_active = TRUE
 
-/obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
+/obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/old_assembly)
 	. = ..()
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
 	var/obj/structure/camera_assembly/assembly
-	if(CA)
-		assembly = CA
+	if(old_assembly) //check to see if the camera assembly was upgraded at all.
+		assembly = old_assembly
+		assembly_ref = WEAKREF(assembly) //important to do this now since upgrades call back to the assembly_ref
 		if(assembly.xray_module)
 			upgradeXRay()
 		else if(assembly.malf_xray_firmware_present) //if it was secretly upgraded via the MALF AI Upgrade Camera Network ability
@@ -84,7 +86,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	else
 		assembly = new(src)
 		assembly.state = 4 //STATE_FINISHED
-	assembly_ref = WEAKREF(assembly)
+		assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))

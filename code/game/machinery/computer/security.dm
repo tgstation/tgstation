@@ -769,10 +769,8 @@ What a mess.*/
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = tgui_input_number(usr, "Input age", "Security records", active1.fields["age"], AGE_MAX, AGE_MIN)
-
 							if (!t1)
 								return
-
 							if(!canUseSecurityRecordsConsole(usr, "age", a1))
 								return
 							active1.fields["age"] = t1
@@ -856,15 +854,11 @@ What a mess.*/
 							var/maxFine = CONFIG_GET(number/maxfine)
 
 							var/t1 = tgui_input_text(usr, "Input citation crime", "Security Records")
-							var/fine = round(tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine, 1))
-
-							if (isnull(fine))
+							if(!t1)
 								return
-							fine = min(fine, maxFine)
-
-							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
+							var/fine = tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine)
+							if (!fine || QDELETED(usr) || QDELETED(src) || !canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-
 							var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
 							for (var/obj/item/pda/P in GLOB.PDAs)
 								if(P.owner == active1.fields["name"])
@@ -914,8 +908,10 @@ What a mess.*/
 						if((istype(active1, /datum/data/record) && L.Find(rank)))
 							temp = "<h5>Rank:</h5>"
 							temp += "<ul>"
-							for(var/rank in SSjob.station_jobs)
-								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
+							var/list/station_job_templates = SSid_access.station_job_templates
+							for(var/path in station_job_templates)
+								var/rank = station_job_templates[path]
+								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[path]'>[rank]</a></li>"
 							temp += "</ul>"
 						else
 							tgui_alert(usr, "You do not have the required rank to do this!")
@@ -925,8 +921,19 @@ What a mess.*/
 				switch(href_list["choice"])
 					if("Change Rank")
 						if(active1)
-							active1.fields["rank"] = strip_html(href_list["rank"])
-							active1.fields["trim"] = active1.fields["rank"]
+							var/text = strip_html(href_list["rank"])
+							var/path = text2path(text)
+							if(ispath(path))
+								var/rank = SSid_access.station_job_templates[path]
+								if(rank)
+									active1.fields["rank"] = rank
+									active1.fields["trim"] = active1.fields["rank"]
+								else
+									message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+									log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+							else if(!isnull(text))
+								message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
+								log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
 
 					if("Change Criminal Status")
 						if(active2)

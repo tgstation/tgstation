@@ -1,8 +1,9 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Stack } from '../../components';
+import { Box, Button, Flex } from '../../components';
 
 type InputButtonsData = {
-  preferences: Preferences;
+  large_buttons: boolean;
+  swapped_buttons: boolean;
 };
 
 type InputButtonsProps = {
@@ -10,22 +11,19 @@ type InputButtonsProps = {
   message?: string;
 };
 
-export type Preferences = {
-  large_buttons: boolean;
-  swapped_buttons: boolean;
-};
-
 export const InputButtons = (props: InputButtonsProps, context) => {
   const { act, data } = useBackend<InputButtonsData>(context);
-  const { large_buttons = false, swapped_buttons = true } = data.preferences;
+  const { large_buttons, swapped_buttons } = data;
   const { input, message } = props;
-
   const submitButton = (
     <Button
       color="good"
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
       onClick={() => act('submit', { entry: input })}
+      m={0.5}
+      pl={2}
+      pr={2}
       pt={large_buttons ? 0.33 : 0}
       textAlign="center"
       tooltip={large_buttons && message}
@@ -39,34 +37,39 @@ export const InputButtons = (props: InputButtonsProps, context) => {
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
       onClick={() => act('cancel')}
+      m={0.5}
+      pl={2}
+      pr={2}
       pt={large_buttons ? 0.33 : 0}
       textAlign="center"
       width={!large_buttons && 6}>
       {large_buttons ? 'CANCEL' : 'Cancel'}
     </Button>
   );
-  const leftButton = !swapped_buttons ? cancelButton : submitButton;
-  const rightButton = !swapped_buttons ? submitButton : cancelButton;
 
   return (
-    <Stack>
+    <Flex
+      align="center"
+      direction={!swapped_buttons ? 'row' : 'row-reverse'}
+      fill
+      justify="space-around">
       {large_buttons ? (
-        <Stack.Item grow>{leftButton}</Stack.Item>
+        <Flex.Item grow>{cancelButton}</Flex.Item>
       ) : (
-        <Stack.Item>{leftButton}</Stack.Item>
+        <Flex.Item>{cancelButton}</Flex.Item>
       )}
-      {!large_buttons && (
-        <Stack.Item grow>
+      {!large_buttons && message && (
+        <Flex.Item>
           <Box color="label" textAlign="center">
             {message}
           </Box>
-        </Stack.Item>
+        </Flex.Item>
       )}
       {large_buttons ? (
-        <Stack.Item grow>{rightButton}</Stack.Item>
+        <Flex.Item grow>{submitButton}</Flex.Item>
       ) : (
-        <Stack.Item>{rightButton}</Stack.Item>
+        <Flex.Item>{submitButton}</Flex.Item>
       )}
-    </Stack>
+    </Flex>
   );
 };

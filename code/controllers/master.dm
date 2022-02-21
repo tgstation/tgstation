@@ -101,18 +101,20 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 		else
 			//Code used for first master on game boot or if existing master got deleted
 			Master = src
-			var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-			sortTim(subsytem_types, /proc/cmp_subsystem_init)
+			var/list/subsystem_types = subtypesof(/datum/controller/subsystem)
+			sortTim(subsystem_types, /proc/cmp_subsystem_init)
+
 			//Find any abandoned subsystem from the previous master (if there was any)
 			var/list/existing_subsystems = list()
 			for(var/global_var in global.vars)
 				if (istype(global.vars[global_var], /datum/controller/subsystem))
 					existing_subsystems += global.vars[global_var]
+					
 			//Either init a new SS or if an existing one was found use that
-			for(var/I in subsytem_types)
-				var/datum/controller/subsystem/existing_subsystem = locate(I) in existing_subsystems
-				if (istype(existing_subsystem))
-					_subsystems += existing_subsystem
+			for(var/I in subsystem_types)
+				var/ss_idx = existing_subsystems.Find(I)
+				if (ss_idx)
+					_subsystems += existing_subsystems[ss_idx]
 				else
 					_subsystems += new I
 

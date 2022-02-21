@@ -51,17 +51,20 @@
 		SStraitor.register_uplink_handler(uplink_handler)
 
 		uplink_handler.has_objectives = TRUE
-		uplink_handler.owner = owner
-		uplink_handler.assigned_role = owner.assigned_role.title
 		uplink_handler.generate_objectives()
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-			if(item.item && (!length(item.restricted_roles) || (uplink_handler.assigned_role in item.restricted_roles)) \
-				&&  !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
-				uplink_items += item
+			if(item.item && !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+				if(!length(item.restricted_roles) && !length(item.restricted_species))
+					uplink_items += item
+					continue
+				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
+					uplink_items += item
+					continue
 		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
 
 	if(give_objectives)
@@ -75,6 +78,11 @@
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
+	return ..()
+
+/datum/antagonist/traitor/on_removal()
+	if(uplink_handler)
+		uplink_handler.has_objectives = FALSE
 	return ..()
 
 /datum/antagonist/traitor/proc/traitor_objective_to_html(datum/traitor_objective/to_display)

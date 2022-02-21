@@ -285,4 +285,4 @@
 	var/mob/living/M = AM
 	M.forceMove(get_turf(LA))
 	to_chat(M, "<span class='reallybig redtext'>You're trapped in a deadly arena! To escape, you'll need to drag a severed head to the escape portals.</span>", confidential = TRUE)
-	M.apply_status_effect(STATUS_EFFECT_MAYHEM)
+	M.apply_status_effect(/datum/status_effect/mayhem)

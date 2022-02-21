@@ -37,11 +37,31 @@
 	/// Whether the stun attack is logged. Only relevant for abductor batons, which have different modes.
 	var/log_stun_attack = TRUE
 
+	/// The context to show when the baton is active and targetting a living thing
+	var/context_living_target_active = "Stun"
+
+	/// The context to show when the baton is active and targetting a living thing in combat mode
+	var/context_living_target_active_combat_mode = "Stun"
+
+	/// The context to show when the baton is inactive and targetting a living thing
+	var/context_living_target_inactive = "Prod"
+
+	/// The context to show when the baton is inactive and targetting a living thing in combat mode
+	var/context_living_target_inactive_combat_mode = "Attack"
+
+	/// The RMB context to show when the baton is active and targetting a living thing
+	var/context_living_rmb_active = "Attack"
+
+	/// The RMB context to show when the baton is inactive and targetting a living thing
+	var/context_living_rmb_inactive = "Attack"
+
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
 	// Adding an extra break for the sake of presentation
 	if(stamina_damage != 0)
 		offensive_notes = "\nVarious interviewed security forces report being able to beat criminals into exhaustion with only [span_warning("[CEILING(100 / stamina_damage, 1)] hit\s!")]"
+
+	register_item_context()
 
 /**
  * Ok, think of baton attacks like a melee attack chain:
@@ -69,6 +89,30 @@
 			return ..()
 		if(BATON_ATTACKING)
 			finalize_baton_attack(target, user, modifiers)
+
+/obj/item/melee/baton/add_item_context(datum/source, list/context, atom/target, mob/living/user)
+	if (isturf(target))
+		return NONE
+
+	if (isobj(target))
+		context[SCREENTIP_CONTEXT_LMB] = "Attack"
+	else
+		if (active)
+			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_active
+
+			if (user.combat_mode)
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active_combat_mode
+			else
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_active
+		else
+			context[SCREENTIP_CONTEXT_RMB] = context_living_rmb_inactive
+
+			if (user.combat_mode)
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive_combat_mode
+			else
+				context[SCREENTIP_CONTEXT_LMB] = context_living_target_inactive
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/melee/baton/proc/baton_attack(mob/living/target, mob/living/user, modifiers)
 	. = BATON_ATTACKING
@@ -176,7 +220,7 @@
 	. = list()
 
 	.["visible"] = span_danger("[user] tries to knock down [target] with [src], and predictably fails!") //look at this duuuuuude
-	.["local"] = span_userdanger("[target] tries to... knock you down with [src]?") //look at the top of his head!
+	.["local"] = span_userdanger("[user] tries to... knock you down with [src]?") //look at the top of his head!
 
 	return .
 
@@ -353,6 +397,8 @@
 	on_stun_volume = 50
 	active = FALSE
 
+	context_living_rmb_active = "Harmful Stun"
+
 	var/throw_stun_chance = 35
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
@@ -427,6 +473,11 @@
 	else
 		. += span_warning("\The [src] does not have a power source installed.")
 
+/obj/item/melee/baton/security/screwdriver_act(mob/living/user, obj/item/tool)
+	if(tryremovecell(user))
+		tool.play_tool_sound(src)
+	return TRUE
+
 /obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/stock_parts/cell))
 		var/obj/item/stock_parts/cell/active_cell = item
@@ -441,9 +492,6 @@
 			cell = item
 			to_chat(user, span_notice("You install a cell in [src]."))
 			update_appearance()
-
-	else if(item.tool_behaviour == TOOL_SCREWDRIVER)
-		tryremovecell(user)
 	else
 		return ..()
 
@@ -451,6 +499,8 @@
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
+		return TRUE
+	return FALSE
 
 /obj/item/melee/baton/security/attack_self(mob/user)
 	if(cell?.charge >= cell_hit_cost)
@@ -626,12 +676,9 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/obj/item/melee/baton/security/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin = 1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
-	if(active)
-		if(ishuman(thrower))
-			var/mob/living/carbon/human/human_thrower = thrower
-			human_thrower.throw_mode_off(THROW_MODE_TOGGLE) //so they can catch it on the return.
-	return ..()
+/obj/item/melee/baton/security/boomerang/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 
 /obj/item/melee/baton/security/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!active)
@@ -640,8 +687,6 @@
 	var/mob/thrown_by = thrownby?.resolve()
 	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
 		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
-	if(thrown_by && !caught)
-		addtimer(CALLBACK(src, /atom/movable.proc/throw_at, thrown_by, throw_range+2, throw_speed, null, TRUE), 1)
 
 /obj/item/melee/baton/security/boomerang/loaded //Same as above, comes with a cell.
 	preload_cell_type = /obj/item/stock_parts/cell/high

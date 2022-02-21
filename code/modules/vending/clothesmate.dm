@@ -174,7 +174,10 @@
 		/obj/item/clothing/suit/basil_boys = 20,
 		/obj/item/clothing/under/costume/basil_boys = 20,
 		/obj/item/clothing/head/basil_boys = 20,
-		/obj/item/clothing/shoes/basil_boys = 20
+		/obj/item/clothing/shoes/basil_boys = 20,
+		/obj/item/clothing/suit/mothcoat = 3,
+		/obj/item/clothing/suit/mothcoat/winter = 3,
+		/obj/item/clothing/head/mothcap = 3,
 	)
 	contraband = list(
 		/obj/item/clothing/under/syndicate/tacticool = 1,
@@ -207,9 +210,6 @@
 	payment_department = NO_FREEBIES
 	light_mask = "wardrobe-light-mask"
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN
-
-/obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
-	return (I.type in products)
 
 /obj/item/vending_refill/clothing
 	machine_name = "ClothesMate"

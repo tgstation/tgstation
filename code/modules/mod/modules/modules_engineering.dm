@@ -61,7 +61,7 @@
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	mod.wearer.update_equipment_speed_mods()
 
-/obj/item/mod/module/magboot/on_deactivation()
+/obj/item/mod/module/magboot/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -112,7 +112,6 @@
 	name = "tether"
 	icon_state = "tether_projectile"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	pass_flags = PASSTABLE
 	damage = 0
 	nodamage = TRUE
 	range = 10
@@ -204,3 +203,35 @@
 		return
 	rcd_scan(src, fade_time = 10 SECONDS)
 	drain_power(use_power_cost)
+
+///Mister - Sprays water over an area.
+/obj/item/mod/module/mister
+	name = "MOD water mister module"
+	desc = "A module containing a mister, able to spray it over areas."
+	icon_state = "mister"
+	module_type = MODULE_ACTIVE
+	complexity = 2
+	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	device = /obj/item/reagent_containers/spray/mister
+	incompatible_modules = list(/obj/item/mod/module/mister)
+	cooldown_time = 0.5 SECONDS
+	var/volume = 500
+
+/obj/item/mod/module/mister/Initialize(mapload)
+	create_reagents(volume, OPENCONTAINER)
+	return ..()
+
+///Resin Mister - Sprays resin over an area.
+/obj/item/mod/module/mister/atmos
+	name = "MOD resin mister module"
+	desc = "An atmospheric resin mister, able to fix up areas quickly."
+	device = /obj/item/extinguisher/mini/nozzle/mod
+	volume = 250
+
+/obj/item/mod/module/mister/atmos/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/water, volume)
+
+/obj/item/extinguisher/mini/nozzle/mod
+	name = "MOD atmospheric mister"
+	desc = "An atmospheric resin mister with three modes, mounted as a module."

@@ -83,7 +83,7 @@ Slimecrossing Potions
 	if(user == love_target)
 		to_chat(user, span_warning("You can't drink the love potion. What are you, a narcissist?"))
 		return ..()
-	if(love_target.has_status_effect(STATUS_EFFECT_INLOVE))
+	if(love_target.has_status_effect(/datum/status_effect/in_love))
 		to_chat(user, span_warning("[love_target] is already lovestruck!"))
 		return ..()
 
@@ -95,7 +95,7 @@ Slimecrossing Potions
 	to_chat(user, span_notice("You feed [love_target] the love potion!"))
 	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
 	love_target.faction |= "[REF(user)]"
-	love_target.apply_status_effect(STATUS_EFFECT_INLOVE, user)
+	love_target.apply_status_effect(/datum/status_effect/in_love, user)
 	qdel(src)
 
 //Pressure potion - Charged Dark Blue
