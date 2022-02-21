@@ -1,0 +1,9 @@
+author: "Thunder12345"
+delete-after: True
+changes: 
+  - imageadd: "Power cells and the cell charger have been resprited, the charger will now look correct with a much wider variety of non-standard power cells"
+  - rscdel: "Removed the uncraftable 15k charge high-capacity power cell+, all instances have been replaced with the regular 10k charge high-capacity cell"
+  - bugfix: "Erroneous power cell charge indicators have been removed from many non-standard types of power cells"
+  - bugfix: "All varieties of marauder mech including the nuke ops mauler come with a bluespace power cell, consistent with other nuke op mechs"
+  - bugfix: "Power cell charge indicators will now update while in a cell charger"
+  - bugfix: "Potato and other crop batteries will not have their wires disappear when on cell chargers"
