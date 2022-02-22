@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Holy water's cult deconvertion timer now resets when transferred to a new mob"
