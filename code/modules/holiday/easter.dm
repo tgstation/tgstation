@@ -157,7 +157,7 @@
 
 /obj/item/food/scotchegg
 	name = "scotch egg"
-	desc = "A boiled egg wrapped in a delicious, seasoned meatball."
+	desc = "A boiled egg wrapped in a delicious, seasoned meatball. If you can make this you are better at cooking than binging with babish."
 	icon_state = "scotchegg"
 	bite_consumption = 3
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 2)
