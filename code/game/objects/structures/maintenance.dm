@@ -23,7 +23,7 @@ at the cost of risking a vicious bite.**/
 		/obj/item/restraints/handcuffs/cable/pink = 1,
 		/obj/item/restraints/handcuffs/alien = 2,
 		/obj/item/coin/bananium = 9,
-		/obj/item/instafish/ratfish = 10,
+		/datum/aquarium_behaviour/fish/ratfish = 10,
 		/obj/item/knife/butcher = 5,
 		/obj/item/coin/mythril = 1,
 	) //the loot table isn't that great and should probably be improved and expanded later.
@@ -35,7 +35,10 @@ at the cost of risking a vicious bite.**/
 		critter_infested = FALSE
 	if(prob(75))
 		var/picked_item = pick_weight(loot)
-		hidden_item = new picked_item(src)
+		if(istype(picked_item, /datum/aquarium_behaviour/fish))
+			hidden_item = generate_fish(src, picked_item)
+		else
+			hidden_item = new picked_item(src)
 	loot = null
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
 	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
