@@ -658,7 +658,8 @@
 
 /datum/crafting_recipe/radiogloves/New()
 	..()
-	blacklist |= subtypesof(/obj/item/radio)
+	blacklist |= typesof(/obj/item/radio/headset)
+	blacklist |= typesof(/obj/item/radio/intercom)
 
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
