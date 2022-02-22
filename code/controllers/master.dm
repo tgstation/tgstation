@@ -513,19 +513,19 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 				if (!bg_calc)
 					current_tick_budget = queue_priority_count_bg
 					bg_calc = TRUE
-				else
-					//error state, do sane fallback behavior
-					if (. == 0)
-						log_world("MC: Queue logic failure, non-background subsystem queued to run after a background subsystem: [queue_node] queue_prev:[queue_node.queue_prev]")
-					. = -1
-					current_tick_budget = queue_priority_count //this won't even be right, but is the closet we have.
-					bg_calc = FALSE
-					
+			else if (bg_calc)
+				//error state, do sane fallback behavior
+				if (. == 0)
+					log_world("MC: Queue logic failure, non-background subsystem queued to run after a background subsystem: [queue_node] queue_prev:[queue_node.queue_prev]")
+				. = -1
+				current_tick_budget = queue_priority_count //this won't even be right, but is the best we have.
+				bg_calc = FALSE
+
 
 			tick_remaining = TICK_LIMIT_RUNNING - TICK_USAGE
 
-			if (current_tick_budget > 0 && queue_node_priority > 0)
-				//Give the subsystem a precentage of the remaining tick based on the remaning priority
+			if (queue_node_priority >= 0 && current_tick_budget > 0 && current_tick_budget >= queue_node_priority)
+				//Give the subsystem a precentage of the remaining tick based on the remaining priority
 				tick_precentage = tick_remaining * (queue_node_priority / current_tick_budget)
 			else
 				//error state
