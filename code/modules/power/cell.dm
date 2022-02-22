@@ -211,7 +211,7 @@
 		return 0
 
 /obj/item/stock_parts/cell/get_part_rating()
-	return maxcharge + charge
+	return maxcharge * 10 + charge
 
 /obj/item/stock_parts/cell/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
 	var/obj/item/mod/control/mod = storage_holder
@@ -317,8 +317,8 @@
 	icon_state = "icell"
 	maxcharge = INFINITY //little disappointing if you examine it and it's not huge
 	custom_materials = list(/datum/material/glass=1000)
-	rating = INFINITY
 	chargerate = INFINITY
+	ratingdesc = FALSE
 
 /obj/item/stock_parts/cell/infinite/use()
 	return TRUE
