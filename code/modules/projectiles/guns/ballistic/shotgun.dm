@@ -184,7 +184,7 @@
 /obj/item/gun/ballistic/shotgun/doublebarrel/slugs
 	name = "hunting shotgun"
 	desc = "A hunting shotgun used by the wealthy to hunt \"game\"."
-	sawn_desc = "Sawing off a hunting shotguns makes it remarkably less effective. At least it's slightly more badass now."
+	sawn_desc = "A sawn-off hunting shotgun. In its new state, it's remarkably less effective at hunting... anything."
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/slugs
 
 /obj/item/gun/ballistic/shotgun/hook
