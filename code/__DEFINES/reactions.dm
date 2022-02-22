@@ -1,13 +1,13 @@
 //Defines used in atmos gas reactions. Used to be located in ..\modules\atmospherics\gasmixtures\reactions.dm, but were moved here because fusion added so fucking many.
 
 // Atmos reaction priorities:
-/// The priority used for reactions that come before formation reactions.
+/// The prority used to indicate that a reaction should run immediately at the start of a reaction cycle. Currently used by a jumble of decomposition reactions and purgative reactions.
 #define PRIORITY_PRE_FORMATION 1
-/// The priority used for formation reactions.
+/// The priority used for reactions that produce a useful or more advanced product. Goes after purgative reactions so that the purgers can be slightly more useful.
 #define PRIORITY_FORMATION 2
-/// The priority used for reactions that come between formation reactions and combustion reactions.
+/// The priority used for indicate that a reactions should run immediately before most forms of combustion. Used by two decomposition reactions and steam condensation.
 #define PRIORITY_POST_FORMATION 3
-/// The priority used for combustion reactions.
+/// The priority used to indicate that a reactions should run after all other types of reactions. Exclusively used for combustion reactions that produce fire or are freon.
 #define PRIORITY_FIRE 4
 
 
@@ -67,17 +67,17 @@
 
 // - Tritium:
 /// The minimum temperature tritium combusts at.
-#define TRITIUM_MINIMUM_BURN_TEMPERATURE HYDROGEN_MINIMUM_BURN_TEMPERATURE
+#define TRITIUM_MINIMUM_BURN_TEMPERATURE FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 /// The minimum thermal energy necessary for tritium fires to use the [TRITIUM_OXYBURN_MULTIPLIER]. Used to prevent overpowered tritium/oxygen singletank bombs to moderate success.
-#define MINIMUM_TRITIUM_OXYBURN_ENERGY MINIMUM_HYDROGEN_OXYBURN_ENERGY
+#define MINIMUM_TRITIUM_OXYBURN_ENERGY 2e6
 /// A multiplier to all secondary tritium fire effects when in an oxygen-rich mix.
 #define TRITIUM_OXYBURN_MULTIPLIER 10
 /// What fraction of the oxygen content of the mix is used for the burn rate in an oxygen-poor mix.
-#define TRITIUM_BURN_OXY_FACTOR HYDROGEN_BURN_OXY_FACTOR
+#define TRITIUM_BURN_OXY_FACTOR 100
 /// What fraction of the tritium content of the mix is used for the burn rate in an oxygen-rich mix.
-#define TRITIUM_BURN_TRIT_FACTOR HYDROGEN_BURN_H2_FACTOR
-/// The amount of energy released by burning one mole of tritium. (Before [HYDROGEN_OXYBURN_MULTIPLIER] is applied if applicable.)
-#define FIRE_TRITIUM_ENERGY_RELEASED FIRE_HYDROGEN_ENERGY_RELEASED
+#define TRITIUM_BURN_TRIT_FACTOR 10
+/// The amount of energy released by burning one mole of tritium. (Before [TRITIUM_OXYBURN_MULTIPLIER] is applied if applicable.)
+#define FIRE_TRITIUM_ENERGY_RELEASED 2.8e5
 /// The minimum number of moles of trit that must be burnt for a tritium fire reaction to produce a radiation pulse. (0.01 moles trit or 10 moles oxygen to start producing rads.)
 #define TRITIUM_RADIATION_MINIMUM_MOLES 0.1
 /// A scaling factor for the range of radiation pulses produced by tritium fires.
@@ -121,8 +121,8 @@
 #define N2O_DECOMPOSITION_MIN_SCALE_TEMP 0
 /// The other root of the parabola used to scale N2O decomposition rates.
 #define N2O_DECOMPOSITION_MAX_SCALE_TEMP 100000
-/// The divisor used to normalize the N2O decomp scaling parabola.
-#define N2O_DECOMPOSITION_SCALE_DIVISOR ((-1/4) * ((N2O_DECOMPOSITION_MIN_SCALE_TEMP - N2O_DECOMPOSITION_MAX_SCALE_TEMP)**2))
+/// The divisor used to normalize the N2O decomp scaling parabola. Basically the value of the apex/nadir of (x - [N2O_DECOMPOSITION_MIN_SCALE_TEMP]) * (x - [N2O_DECOMPOSITION_MAX_SCALE_TEMP]).
+#define N2O_DECOMPOSITION_SCALE_DIVISOR ((-1/4) * ((N2O_DECOMPOSITION_MAX_SCALE_TEMP - N2O_DECOMPOSITION_MIN_SCALE_TEMP)**2))
 /// The amount of energy released when one mole of N2O decomposes into nitrogen and oxygen.
 #define N2O_DECOMPOSITION_ENERGY 200000
 
