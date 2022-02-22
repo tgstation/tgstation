@@ -1,0 +1,9 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - balance: "Blobs can destroy mineral turfs like they can walls"
+  - qol: "Adds balloon alerts for blob overmind"
+  - qol: "Adds contextual screen tips for blob overmind"
+  - qol: "Off-station blobs are lighter than regular blobs"
+  - bugfix: "Fixes bug where on-station blobs were not counted towards victory when expanded from off-station blobs"
+  - bugfix: "Fixes issue with cores and nodes having their color applied twice"
