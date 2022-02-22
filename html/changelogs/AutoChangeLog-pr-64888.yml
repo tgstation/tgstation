@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - rscadd: "Ratfish can now be found in moisture traps."

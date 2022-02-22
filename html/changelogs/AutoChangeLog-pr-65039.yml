@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - bugfix: "Eldritch Amulet no longer gives thermal vision when it shouldn't"

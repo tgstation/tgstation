@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "An odysseus' sleeper will now realize when a previously contained patient has left the sleeper through unconventional means."
