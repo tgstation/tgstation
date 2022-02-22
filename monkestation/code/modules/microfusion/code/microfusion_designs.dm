@@ -107,7 +107,22 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/plasma = 1000, /datum/material/silver = 1000)
 	build_path = /obj/item/microfusion_cell_attachment/reloader
 
-// GUN UPGRADES
+// RAIL MODS
+/datum/design/microfusion/gun_attachment_scope
+	name = "Microfusion Weapon Scope"
+	desc = "A scope... for microfusion weapon platforms."
+	id = "microfusion_gun_attachment_scope"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 500)
+	build_path = /obj/item/microfusion_gun_attachment/scope
+
+/datum/design/microfusion/gun_attachment_rail
+	name = "Microfusion Weapon Rail"
+	desc = "A rail system for any additional attachments, such as a torch."
+	id = "microfusion_gun_attachment_rail"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 500, /datum/material/gold = 500)
+	build_path = /obj/item/microfusion_gun_attachment/rail
+
+// BARREL MODS
 /datum/design/microfusion/phase_emitter_undercharger
 	name = "Microfusion Phase Emitter Undercharger"
 	desc = "Inverts the output beam of the phase emitter, popular amongst law enforcement as a non-lethal upgrade."
@@ -123,48 +138,6 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 500)
 	build_path = /obj/item/microfusion_gun_attachment/grip
 
-/datum/design/microfusion/gun_attachment_scope
-	name = "Microfusion Weapon Scope"
-	desc = "A scope... for microfusion weapon platforms."
-	id = "microfusion_gun_attachment_scope"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 500)
-	build_path = /obj/item/microfusion_gun_attachment/scope
-
-/datum/design/microfusion/gun_attachment_black_camo
-	name = "Black Camo Microfusion Frame"
-	desc = "A frame modification for the MCR-10, changing the color of the gun to black."
-	id = "microfusion_gun_attachment_black_camo"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/gold = 500)
-	build_path = /obj/item/microfusion_gun_attachment/black_camo
-
-/datum/design/microfusion/gun_attachment_nt_camo
-	name = "Nanotrasen Camo Microfusion Frame"
-	desc = "A frame modification for the MCR-01, changing the color of the gun to blue."
-	id = "microfusion_gun_attachment_nt_camo"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/plasma. = 500)
-	build_path = /obj/item/microfusion_gun_attachment/nt_camo
-
-/datum/design/microfusion/gun_attachment_syndi_camo
-	name = "Blood Red Camo Microfusion Frame"
-	desc = "A frame modification for the MCR-01, changing the color of the gun to a slick blood red."
-	id = "microfusion_gun_attachment_syndi_camo"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/titanium = 500)
-	build_path = /obj/item/microfusion_gun_attachment/syndi_camo
-
-/datum/design/microfusion/gun_attachment_honk_camo
-	name = "Bananium Microfusion Frame"
-	desc = "A frame modification for the MCR-01, plating the gun in bananium."
-	id = "microfusion_gun_attachment_honk_camo"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/bananium = 500)
-	build_path = /obj/item/microfusion_gun_attachment/honk_camo
-
-/datum/design/microfusion/gun_attachment_rail
-	name = "Microfusion Weapon Rail"
-	desc = "A rail system for any additional attachments, such as a torch."
-	id = "microfusion_gun_attachment_rail"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 500, /datum/material/gold = 500)
-	build_path = /obj/item/microfusion_gun_attachment/rail
-
 /datum/design/microfusion/gun_attachment_heatsink
 	name = "Phase Emitter Heatsink"
 	desc = "A heatsink attachment for your microfusion weapon. Massively increases cooling potential."
@@ -172,6 +145,28 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 500, /datum/material/gold = 500)
 	build_path = /obj/item/microfusion_gun_attachment/heatsink
 
+/datum/design/microfusion/gun_attachment_suppressor
+	name = "Suppressor Lens Attachment"
+	desc = "An experimental barrel attachment that dampens the soundwave of the emitter, making the laser shots far more stealthy!"
+	id = "microfusion_gun_attachment_suppressor"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 1000)
+	build_path = /obj/item/microfusion_gun_attachment/suppressor
+
+/datum/design/microfusion/gun_attachment_honk
+	name = "Bananium Phase Emitter Upgrade"
+	desc = "Makes your lasers into the greatest clowning tool ever made. HONK!"
+	id = "microfusion_gun_attachment_honk"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/bananium = 1000)
+	build_path = /obj/item/microfusion_gun_attachment/honk
+
+/datum/design/microfusion/gun_attachment_lance
+	name = "Lance Induction Carriage"
+	desc = "Turns the gun into a designated marksman rifle."
+	id = "microfusion_gun_attachment_lance"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/diamond = 500, /datum/material/plasma = 500, /datum/material/bluespace = 500)
+	build_path = /obj/item/microfusion_gun_attachment/lance
+
+// EMITTER UPGRADES
 /datum/design/microfusion/gun_attachment_scatter
 	name = "Diffuser Microfusion Lens Attachment"
 	desc = "Splits the microfusion laser beam entering the lens!"
@@ -207,27 +202,6 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/diamond = 500, /datum/material/silver = 1000)
 	build_path = /obj/item/microfusion_gun_attachment/scattermax
 
-/datum/design/microfusion/gun_attachment_lance
-	name = "Lance Induction Carriage"
-	desc = "Turns the gun into a designated marksman rifle."
-	id = "microfusion_gun_attachment_lance"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/diamond = 500, /datum/material/plasma = 500, /datum/material/bluespace = 500)
-	build_path = /obj/item/microfusion_gun_attachment/lance
-
-/datum/design/microfusion/gun_attachment_suppressor
-	name = "Suppressor Lens Attachment"
-	desc = "An experimental barrel attachment that dampens the soundwave of the emitter, making the laser shots far more stealthy!"
-	id = "microfusion_gun_attachment_suppressor"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 1000)
-	build_path = /obj/item/microfusion_gun_attachment/suppressor
-
-/datum/design/microfusion/gun_attachment_honk
-	name = "Bananium Phase Emitter Upgrade"
-	desc = "Makes your lasers into the greatest clowning tool ever made. HONK!"
-	id = "microfusion_gun_attachment_honk"
-	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/bananium = 1000)
-	build_path = /obj/item/microfusion_gun_attachment/honk
-
 /datum/design/microfusion/gun_attachment_repeater
 	name = "Repeating Phase Emitter Upgrade"
 	desc = "Upgrades the central phase emitter to repeat twice."
@@ -242,9 +216,38 @@
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/diamond = 1000, /datum/material/uranium = 500, /datum/material/bluespace = 500)
 	build_path = /obj/item/microfusion_gun_attachment/xray
 
+// COSMETICS
 /datum/design/microfusion/gun_attachment_rgb
 	name = "Phase Emitter Spectrograph"
 	desc = "An attachment hooked up to the phase emitter, allowing the user to adjust the color of the beam outputted. This has seen widespread use by various factions capable of getting their hands on microfusion weapons, whether as a calling card or simply for entertainment."
 	id = "microfusion_gun_attachment_rgb"
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/silver = 500, /datum/material/gold = 500)
 	build_path = /obj/item/microfusion_gun_attachment/rgb
+
+/datum/design/microfusion/gun_attachment_black_camo
+	name = "Black Camo Microfusion Frame"
+	desc = "A frame modification for the MCR-10, changing the color of the gun to black."
+	id = "microfusion_gun_attachment_black_camo"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/gold = 500)
+	build_path = /obj/item/microfusion_gun_attachment/black_camo
+
+/datum/design/microfusion/gun_attachment_nt_camo
+	name = "Nanotrasen Camo Microfusion Frame"
+	desc = "A frame modification for the MCR-01, changing the color of the gun to blue."
+	id = "microfusion_gun_attachment_nt_camo"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/plasma = 500)
+	build_path = /obj/item/microfusion_gun_attachment/nt_camo
+
+/datum/design/microfusion/gun_attachment_syndi_camo
+	name = "Blood Red Camo Microfusion Frame"
+	desc = "A frame modification for the MCR-01, changing the color of the gun to a slick blood red."
+	id = "microfusion_gun_attachment_syndi_camo"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/titanium = 500)
+	build_path = /obj/item/microfusion_gun_attachment/syndi_camo
+
+/datum/design/microfusion/gun_attachment_honk_camo
+	name = "Bananium Microfusion Frame"
+	desc = "A frame modification for the MCR-01, plating the gun in bananium."
+	id = "microfusion_gun_attachment_honk_camo"
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/bananium = 500)
+	build_path = /obj/item/microfusion_gun_attachment/honk_camo
