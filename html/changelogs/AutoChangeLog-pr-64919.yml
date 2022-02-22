@@ -1,0 +1,10 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - bugfix: "Fixed gygax smash not logging the driver"
+  - bugfix: "Fixed mechs being punched using power but punching as a mech not using power"
+  - bugfix: "Fixed mechs not taking damage from mech punches if punched while having no power"
+  - bugfix: "Fixed weapon damage types only being respected for mech punches sometimes"
+  - bugfix: "Fixed toxins mech damage mode playing sounds on punches despite doing nothing"
+  - refactor: "Mech punch code partly redone"
+  - admin: "mech punches will now ALWAYS be logged, even against objects"
