@@ -278,6 +278,8 @@
 		var/limb_hit = hit_limb
 		var/sound_to_use = hitsound
 		var/damage_threshold = L.getarmor(limb_hit, flag)
+		if(weak_against_armour && damage_threshold > 0)
+			damage_threshold *= 3
 		var/penetrated_dt = armour_penetration * 0.2 // 100 Penetration = 20 DT ignored
 		var/final_dt = max(0, damage_threshold - penetrated_dt)
 		var/damage_resistance = 0
