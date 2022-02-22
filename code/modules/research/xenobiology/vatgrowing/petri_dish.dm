@@ -60,6 +60,3 @@
 	sample = new
 	sample.GenerateSample(chosen[1],chosen[2],chosen[3],chosen[4])
 	update_appearance()
-
-/obj/item/petri_dish/bovine
-	var/datum/micro_organism/cell_line/cow
