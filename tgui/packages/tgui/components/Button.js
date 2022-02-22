@@ -35,7 +35,7 @@ export const Button = props => {
     children,
     onclick,
     onClick,
-    verticalAlign,
+    verticalAlignContent,
     ...rest
   } = props;
   const hasContent = !!(content || children);
@@ -68,7 +68,8 @@ export const Button = props => {
         circular && 'Button--circular',
         compact && 'Button--compact',
         iconPosition && 'Button--iconPosition--' + iconPosition,
-        verticalAlign && 'Button--verticalAlign--' + verticalAlign,
+        verticalAlignContent && (fluid ? "Button--flex--block" : "Button--flex--inline"),
+        verticalAlignContent && 'Button--verticalAlignContent--' + verticalAlignContent,
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
@@ -96,7 +97,7 @@ export const Button = props => {
         }
       }}
       {...computeBoxProps(rest)}>
-      <div className={fluid && 'Button__content--fluid'}>
+      <div className="Button__content">
         {icon && iconPosition !== 'right' && (
           <Icon
             name={icon}
