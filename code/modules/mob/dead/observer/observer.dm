@@ -493,14 +493,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/orbit()
 	setDir(2)//reset dir so the right directional sprites show up
-	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, GHOST_ORBITING_TRAIT)
 	return ..()
 
 /mob/dead/observer/stop_orbit(datum/component/orbiter/orbits)
 	. = ..()
 	//restart our floating animation after orbit is done.
 	pixel_y = base_pixel_y
-	REMOVE_TRAIT(src, TRAIT_NO_FLOATING_ANIM, GHOST_ORBITING_TRAIT)
 
 /mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 	set category = "Ghost"
