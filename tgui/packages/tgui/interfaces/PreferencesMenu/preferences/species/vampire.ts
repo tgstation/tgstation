@@ -15,7 +15,7 @@ const Vampire: Species = {
       description: "Minor undead enjoy some of the perks of being dead, like \
         not needing to breathe or eat, but do not get many of the \
         environmental immunities involved with being fully undead.",
-    }
+    }],
     neutral: [],
     bad: [{
       icon: "tint",
