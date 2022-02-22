@@ -135,12 +135,12 @@ $bg-map: colors.$bg-map !default;
   @include button-color($color-selected);
 }
 
-.Button--flex{
+.Button--flex {
   display: inline-flex; //Inline even for fluid
   flex-direction: column;
 }
 
-.Button--flex--fluid{
+.Button--flex--fluid {
   width: 100%;
 }
 
@@ -156,7 +156,7 @@ $bg-map: colors.$bg-map !default;
   justify-content: flex-end;
 }
 
-.Button__content{
+.Button__content {
   display: block;
   align-self: stretch;
 }
