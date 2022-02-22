@@ -886,16 +886,6 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/boris_ai_controller
-	name = "B.O.R.I.S. AI-Cyborg Remote Control"
-	id = "borg_ai_control"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/ai
-	materials = list(/datum/material/iron = 1200, /datum/material/glass = 1500, /datum/material/gold = 200)
-	construction_time = 50
-	category = list("Control Interfaces")
-	search_metadata = "boris"
-
 /datum/design/borg_upgrade_rped
 	name = "Cyborg Upgrade (RPED)"
 	id = "borg_upgrade_rped"
