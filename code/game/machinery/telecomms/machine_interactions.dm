@@ -9,7 +9,7 @@
 	var/temp = "" // output message
 	var/tempfreq = FREQ_COMMON
 	var/mob/living/operator
-	///Illegal frequencies that can't be set to by players.
+	///Illegal frequencies that can't be listened to by telecommunication servers.
 	var/list/banned_frequencies = list(
 		FREQ_SYNDICATE,
 		FREQ_CENTCOM,
