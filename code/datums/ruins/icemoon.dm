@@ -4,6 +4,7 @@
 	prefix = "_maps/RandomRuins/IceRuins/"
 	allow_duplicates = FALSE
 	cost = 5
+	ruin_type = RUIN_TYPE_ICE
 
 // above ground only
 
@@ -71,6 +72,7 @@
 
 /datum/map_template/ruin/icemoon/underground
 	name = "underground ruin"
+	ruin_type = RUIN_TYPE_ICE_UNDERGROUND
 
 /datum/map_template/ruin/icemoon/underground/abandonedvillage
 	name = "Abandoned Village"

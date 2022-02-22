@@ -1,6 +1,7 @@
 // Hey! Listen! Update \config\lavaruinblacklist.txt with your new ruins!
 
 /datum/map_template/ruin/lavaland
+	ruin_type = RUIN_TYPE_LAVA
 	prefix = "_maps/RandomRuins/LavaRuins/"
 
 /datum/map_template/ruin/lavaland/biodome
