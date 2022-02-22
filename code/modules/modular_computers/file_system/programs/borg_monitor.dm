@@ -132,8 +132,6 @@
 				if(!isAI(usr))
 					return //We got an AI action from a non-AI user, abandon ship
 				sendername = "[usr.name], Station AI"
-			else
-				sendername = checkID()
 
 			if(!sendername)
 				return
