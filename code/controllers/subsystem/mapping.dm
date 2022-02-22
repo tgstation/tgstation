@@ -193,10 +193,10 @@ Used by the AI doomsday and the self-destruct nuke.
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
-	themed_ruins[RUIN_TYPE_SPACE] = SSmapping.themed_ruins[RUIN_TYPE_SPACE]
-	themed_ruins[RUIN_TYPE_LAVA] = SSmapping.themed_ruins[RUIN_TYPE_LAVA]
-	themed_ruins[RUIN_TYPE_ICE] = SSmapping.themed_ruins[RUIN_TYPE_ICE]
-	themed_ruins[RUIN_TYPE_ICE_UNDERGROUND] = SSmapping.themed_ruins[RUIN_TYPE_ICE_UNDERGROUND]
+
+	for (var/theme in SSmapping.themed_ruins)
+		themed_ruins[theme] = SSmapping.themed_ruins[theme]
+
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 	unused_turfs = SSmapping.unused_turfs
