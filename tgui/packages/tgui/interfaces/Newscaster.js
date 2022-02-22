@@ -15,6 +15,8 @@ import { sanitizeText } from "../sanitize";
 
 const CENSOR_MESSAGE = "This channel has been deemed as threatening to \
 the welfare of the station, and marked with a Nanotrasen D-Notice.";
+const TRUE = 1; // Look, fellas, I'm gonna be real with you
+const FALSE = 0; // This is just to clean up lots of === moments
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
@@ -113,13 +115,13 @@ const NewscasterChannelCreation = (props, context) => {
             Set Channel as Public or Private
             <Box pt={1}>
               <Button
-                selected={publicmode===1}
+                selected={publicmode===TRUE}
                 content="Public"
-                onClick={() => act(setPublicmode(1))} />
+                onClick={() => act(setPublicmode(TRUE))} />
               <Button
-                selected={publicmode===0}
+                selected={publicmode===FALSE}
                 content="Private"
-                onClick={() => act(setPublicmode(0))} />
+                onClick={() => act(setPublicmode(FALSE))} />
             </Box>
           </Section>
         </Stack.Item>
@@ -334,12 +336,12 @@ const NewscasterChannelMessages = (_, context) => {
             key={message.body}
             title={(
               <i>
-                {message.censored_author === 1 && (
+                {message.censored_author === TRUE && (
                   <Box textColor="Red">
                     By: [REDACTED]. <b>D-Notice Notice</b> .
                   </Box>
                 )}
-                {message.censored_author !== 1 && (
+                {message.censored_author !== TRUE && (
                   <>
                     By: {message.auth} at {message.time}
                   </>
@@ -348,7 +350,7 @@ const NewscasterChannelMessages = (_, context) => {
             )}
             buttons={(
               <>
-                {security_mode === 1 && (
+                {security_mode === TRUE && (
                   <Button
                     icon={"comment-slash"}
                     tooltip={"Censor Story"}
@@ -357,7 +359,7 @@ const NewscasterChannelMessages = (_, context) => {
                       secure: security_mode,
                       messageID: message.ID })} />
                 )}
-                {security_mode === 1 && (
+                {security_mode === TRUE && (
                   <Button
                     icon={'user-slash'}
                     tooltip={"Censor Author"}
@@ -370,19 +372,19 @@ const NewscasterChannelMessages = (_, context) => {
             )} >
             <BlockQuote
               textColor="white">
-              {message.censored_message === 1 &&(
+              {message.censored_message === TRUE &&(
                 <Section textColor="Red">
                   This message was deemed dangerous to the general welfare
                   of the station and therefore marked with a <b>D-Notice</b>.
                 </Section>
               )}
-              {message.censored_message !== 1 &&(
+              {message.censored_message !== TRUE &&(
                 <Section
                   color="label"
                   dangerouslySetInnerHTML={processedText(message.body)}
                   pl={1} />
               )}
-              {message.photo !== null && message.censored_message !== 1 &&(
+              {message.photo !== null && message.censored_message !== TRUE &&(
                 <Box
                   as="img"
                   src={message.Photo} />

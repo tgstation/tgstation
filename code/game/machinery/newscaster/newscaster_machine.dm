@@ -117,13 +117,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		current_user = Card.registered_account
 		data["user"] = list()
 		data["user"]["name"] = Card.registered_account.account_holder
-		data["user"]["cash"] = Card.registered_account.account_balance
 		if(Card?.registered_account.account_job)
 			data["user"]["job"] = Card.registered_account.account_job.title
 			data["user"]["department"] = Card.registered_account.account_job.paycheck_department
 		else
 			data["user"]["job"] = "No Job"
 			data["user"]["department"] = "No Department"
+	else
+		data["user"] = list()
+		data["user"]["name"] = user.name
+		data["user"]["job"] = "N/A"
+		data["user"]["department"] = "N/A"
 
 	data["security_mode"] = FALSE
 	if(Card && (ACCESS_ARMORY in Card?.GetAccess()))
