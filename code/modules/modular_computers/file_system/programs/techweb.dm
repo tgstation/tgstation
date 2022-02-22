@@ -7,7 +7,7 @@
 	size = 16
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = list(ACCESS_HEADS, ACCESS_RESEARCH)
+	required_access = list(ACCESS_HEADS, ACCESS_RND)
 	transfer_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
