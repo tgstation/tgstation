@@ -627,8 +627,11 @@
 		. += span_notice("Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.")
 		. += span_notice("Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.")
 
-/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
+
+	if(!isliving(user))
+		return .
 
 	switch (held_item?.tool_behaviour)
 		if (TOOL_CROWBAR)

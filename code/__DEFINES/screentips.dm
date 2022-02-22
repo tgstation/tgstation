@@ -7,6 +7,9 @@
 /// Context applied to Ctrl-LMB actions
 #define SCREENTIP_CONTEXT_CTRL_LMB "Ctrl-LMB"
 
+/// Context applied to Alt-LMB actions
+#define SCREENTIP_CONTEXT_ALT_LMB "Alt-LMB"
+
 /// Screentips are always disabled
 #define SCREENTIP_PREFERENCE_DISABLED "Disabled"
 

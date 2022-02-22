@@ -24,14 +24,17 @@
 	return "Gradually expands and sustains nearby blob spores and blobbernauts."
 
 /obj/structure/blob/special/node/update_icon()
+	. = ..()
 	color = null
-	return ..()
 
 /obj/structure/blob/special/node/update_overlays()
 	. = ..()
 	var/mutable_appearance/blob_overlay = mutable_appearance('icons/mob/blob.dmi', "blob")
 	if(overmind)
 		blob_overlay.color = overmind.blobstrain.color
+		var/area/A = get_area(src)
+		if(!(A.area_flags & BLOBS_ALLOWED))
+			blob_overlay.color = BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 	. += blob_overlay
 	. += mutable_appearance('icons/mob/blob.dmi', "blob_node_overlay")
 
