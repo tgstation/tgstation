@@ -51,7 +51,7 @@
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
-	rating = max(round(maxcharge / 8000, 1), 1)
+	rating = max(round(maxcharge / 10000, 1), 1)
 	if(!charge)
 		charge = maxcharge
 	if(empty)
@@ -211,7 +211,7 @@
 		return 0
 
 /obj/item/stock_parts/cell/get_part_rating()
-	return rating * maxcharge + charge
+	return maxcharge + charge
 
 /obj/item/stock_parts/cell/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
 	var/obj/item/mod/control/mod = storage_holder
@@ -287,7 +287,6 @@
 	maxcharge = 20000
 	custom_materials = list(/datum/material/glass=300)
 	chargerate = 2000
-	rating = 3
 
 /obj/item/stock_parts/cell/super/empty
 	empty = TRUE
@@ -298,7 +297,6 @@
 	maxcharge = 30000
 	custom_materials = list(/datum/material/glass=400)
 	chargerate = 3000
-	rating = 4
 
 /obj/item/stock_parts/cell/hyper/empty
 	empty = TRUE
@@ -310,7 +308,6 @@
 	maxcharge = 40000
 	custom_materials = list(/datum/material/glass=600)
 	chargerate = 4000
-	rating = 5
 
 /obj/item/stock_parts/cell/bluespace/empty
 	empty = TRUE
@@ -355,7 +352,6 @@
 	name = "\improper EMP-proof cell"
 	desc = "An EMP-proof cell."
 	maxcharge = 500
-	rating = 3
 
 /obj/item/stock_parts/cell/emproof/ComponentInitialize()
 	. = ..()
@@ -376,7 +372,6 @@
 	maxcharge = 5000
 	charge_light_type = null
 	connector_type = "slimecore"
-	rating = 5
 
 /obj/item/stock_parts/cell/beam_rifle
 	name = "beam rifle capacitor"
@@ -416,7 +411,6 @@
 	connector_type = "crystal"
 	custom_materials = null
 	grind_results = null
-	rating = 5
 
 /obj/item/stock_parts/cell/inducer_supply
 	maxcharge = 5000
