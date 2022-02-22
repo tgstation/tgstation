@@ -25,14 +25,14 @@ export const Newscaster = (props, context) => {
             color="Green"
             selected={screenmode === 1}
             onClick={() => setScreenmode(1),
-              {tabvalue : screenmode}}>
+            { tabvalue: screenmode }}>
             Newscaster
           </Tabs.Tab>
           <Tabs.Tab
             Color="Blue"
             selected={screenmode === 2}
             onClick={() => setScreenmode(2),
-            {tabvalue : screenmode}}>
+            { tabvalue: screenmode }}>
             Bounty Board
           </Tabs.Tab>
         </Tabs>
@@ -312,12 +312,12 @@ const NewscasterChannelMessages = (props, context) => {
   );
 };
 
-/** Channel select is the left-hand menu where all the channels are listed. */
+/** The modal menu that contains the prompts to making new channels. */
 const NewscasterChannelCreation = (props, context) => {
   const { act, data } = useBackend(context);
+  const [publicmode, setPublicmode] = useSharedState(context, 'publicmode', 1);
   const {
     creating_channel,
-    channel = [],
     viewing_channel,
     name,
     desc,
@@ -325,11 +325,10 @@ const NewscasterChannelCreation = (props, context) => {
   if (!creating_channel) {
     return null;
   }
-  const [publicmode, setPublicmode] = useSharedState(context, 'publicmode', 1);
   return (
     <Modal textAlign="center">
-      <Flex>
-        <Flex.Item>
+      <Stack>
+        <Stack.Item>
           Enter Channel Name Here:
           <TextArea
             fluid
@@ -340,10 +339,10 @@ const NewscasterChannelCreation = (props, context) => {
             onChange={(e, name) => act('channelName', {
               channeltext: name,
             })}>
-              Channel Name
-            </TextArea>
-        </Flex.Item>
-        <Flex.Item>
+            Channel Name
+          </TextArea>
+        </Stack.Item>
+        <Stack.Item>
           Enter Channel Description Here:
           <TextArea
             fluid
@@ -356,8 +355,8 @@ const NewscasterChannelCreation = (props, context) => {
             })}>
             Channel Description
           </TextArea>
-          </Flex.Item>
-          <Flex.Item>
+        </Stack.Item>
+        <Stack.Item>
           Set Channel as Public or Private
           <Button
             selected={publicmode===1}
@@ -367,18 +366,18 @@ const NewscasterChannelCreation = (props, context) => {
             selected={publicmode===0}
             content="Private"
             onClick={() => act(setPublicmode(0))} />
-        </Flex.Item>
-        <Flex.Item>
+        </Stack.Item>
+        <Stack.Item>
           <Button
             content={"Submit Channel"}
-            selected={ length(name) > 0
-              && length(desc) > 0 }
-              onChange={(e, name) => act('createChannel', {
-                publicmode: publicmode,
-                viewing_channel: viewing_channel,
-              })} />
-        </Flex.Item>
-      </Flex>
+            selected={length(name) > 0
+              && length(desc) > 0}
+            onClick={() => act('createChannel', {
+              publicmode: publicmode,
+              viewing_channel: viewing_channel,
+            })} />
+        </Stack.Item>
+      </Stack>
     </Modal>
   );
 };
