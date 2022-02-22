@@ -139,6 +139,7 @@
 	if(iseffect(AM)) //and no accidentally wasting your moment of glory on graffiti
 		return
 	user.say("[war_cry]", forced="spear warcry")
+	explosive.forceMove(get_turf(user))
 	explosive.detonate(lanced_by=user)
 	qdel(src)
 
