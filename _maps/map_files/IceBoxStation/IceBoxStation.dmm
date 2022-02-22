@@ -6620,7 +6620,7 @@
 "bpU" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/machinery/ecto_sniffer{
 	pixel_x = 6;
 	pixel_y = 6
@@ -8535,7 +8535,7 @@
 /obj/structure/table,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/ai_monitored/command/storage/eva)
 "bWo" = (
@@ -13192,7 +13192,7 @@
 	pixel_y = -7
 	},
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/command/storage/eva)
 "dKh" = (
@@ -13715,10 +13715,8 @@
 /turf/open/floor/plating,
 /area/maintenance/port/greater)
 "dYL" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Secure Tech Storage"
-	},
 /obj/structure/cable,
+/obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "dZu" = (
@@ -16098,8 +16096,8 @@
 /area/service/bar/atrium)
 "fmv" = (
 /obj/structure/rack,
-/obj/machinery/light/small/directional/west,
 /obj/effect/spawner/random/techstorage/command_all,
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/engineering/storage/tech)
 "fmJ" = (
@@ -17189,7 +17187,7 @@
 	pixel_y = 3
 	},
 /obj/item/stack/cable_coil,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "fMZ" = (
@@ -18155,7 +18153,7 @@
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
-/area/security/courtroom)
+/area/hallway/primary/fore)
 "gjg" = (
 /obj/structure/chair{
 	dir = 4
@@ -20457,7 +20455,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/light_switch/directional/north,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
@@ -21508,7 +21506,7 @@
 "hQl" = (
 /obj/structure/table,
 /obj/item/plant_analyzer,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "hQO" = (
@@ -23629,7 +23627,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/electronics/airlock,
 /obj/item/electronics/airlock,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
@@ -25773,7 +25771,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/item/stack/cable_coil,
 /obj/item/pen{
 	pixel_x = -5;
@@ -26221,7 +26219,7 @@
 	pixel_y = 32
 	},
 /turf/open/floor/iron,
-/area/security/courtroom)
+/area/hallway/primary/fore)
 "kdK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -30136,7 +30134,7 @@
 "mhV" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/item/rcl/pre_loaded,
 /turf/open/floor/iron,
 /area/command/heads_quarters/ce)
@@ -33833,6 +33831,9 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/port/fore)
+"ocP" = (
+/turf/closed/wall/r_wall,
+/area/engineering/storage/tech)
 "ocR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/directional/west{
@@ -44639,8 +44640,8 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high/plus,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /obj/item/crowbar,
 /obj/item/radio/headset/headset_sci{
 	pixel_x = -3
@@ -45291,7 +45292,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/airlock/medical{
 	name = "Surgery B";
-	req_access_txt = "5"
+	req_access_txt = "45"
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -49977,8 +49978,8 @@
 /obj/structure/cable,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/maintenance/department/electrical)
 "vRo" = (
@@ -53177,7 +53178,7 @@
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/item/reagent_containers/pill/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -80208,7 +80209,7 @@ aJw
 gKh
 dzF
 dzF
-dzF
+ocP
 dzF
 dzF
 gKh
@@ -86576,7 +86577,7 @@ iIk
 dZz
 aiX
 kdH
-ajn
+anz
 gjb
 eMl
 wCm
