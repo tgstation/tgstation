@@ -81,6 +81,7 @@
 	data["card"] = FALSE
 	if(checkID())
 		data["card"] = TRUE
+	data["ai_user"] = isAI(user)
 
 	data["cyborgs"] = list()
 	for(var/mob/living/silicon/robot/R in GLOB.silicon_mobs)
@@ -121,26 +122,41 @@
 		return
 
 	switch(action)
-		if("messagebot")
-			var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
-			if(!istype(R))
+		if("messagebot" , "messagebot_ai")
+			var/mob/living/silicon/robot/borgo = locate(params["ref"]) in GLOB.silicon_mobs
+			if(!istype(borgo))
 				return
-			var/ID = checkID()
-			if(!ID)
+
+			var/sendername = checkID()
+			if(action == "messagebot_ai")
+				if(!isAI(usr))
+					return //We got an AI action from a non-AI user, abandon ship
+				sendername = "[usr.name], Station AI"
+			else
+				sendername = checkID()
+
+			if(!sendername)
 				return
-			if(R.stat == DEAD) //Dead borgs will listen to you no longer
-				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[R]"))
+
+			var/borgname = borgo.name //This is just so that we can supply a name if the borg gets deleted before the message box closes
 			var/message = tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
 			if(!message)
 				return
-			to_chat(R, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
-			to_chat(usr, "Message sent to [R]: [message]")
-			R.logevent("Message from [ID] -- \"[message]\"")
-			SEND_SOUND(R, 'sound/machines/twobeep_high.ogg')
-			if(R.connected_ai)
-				to_chat(R.connected_ai, "<br><br>[span_notice("Message from [ID] to [R] -- \"[message]\"")]<br>")
-				SEND_SOUND(R.connected_ai, 'sound/machines/twobeep_high.ogg')
-			usr.log_talk(message, LOG_PDA, tag="Cyborg Monitor Program: ID name \"[ID]\" to [R]")
+
+			if(!borgo || borgo.stat == DEAD) //Dead borgs will listen to you no longer. Also catches suddenly deleted borgs.
+				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[borgname]"))
+				return
+
+
+			to_chat(borgo, "<br><br>[span_notice("Message from [sendername] -- \"[message]\"")]<br>")
+			to_chat(usr, "Message sent to [borgo]: [message]")
+			borgo.logevent("Message from [sendername] -- \"[message]\"")
+			SEND_SOUND(borgo, 'sound/machines/twobeep_high.ogg')
+
+			if(borgo.connected_ai)
+				to_chat(borgo.connected_ai, "<br><br>[span_notice("Message from [sendername] to [borgo] -- \"[message]\"")]<br>")
+				SEND_SOUND(borgo.connected_ai, 'sound/machines/twobeep_high.ogg')
+			usr.log_talk(message, LOG_PDA, tag="Cyborg Monitor Program: ID name \"[sendername]\" to [borgo]")
 
 ///This proc is used to determin if a borg should be shown in the list (based on the borg's scrambledcodes var). Syndicate version overrides this to show only syndicate borgs.
 /datum/computer_file/program/borg_monitor/proc/evaluate_borg(mob/living/silicon/robot/R)
@@ -157,7 +173,9 @@
 		if(emagged)
 			return "STDERR:UNDF"
 		return FALSE
-	return ID.registered_name
+	. = ID.registered_name
+	if(ID.assignment)
+		. += ", [ID.assignment]"
 
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"

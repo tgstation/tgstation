@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
+import { Box, Button, Fragment, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosCyborgRemoteMonitor = (props, context) => {
@@ -36,6 +36,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
   const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
   const {
     card,
+    ai_user,
     cyborgs = [],
     DL_progress,
   } = data;
@@ -85,6 +86,16 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                   key={cyborg.ref}
                   title={cyborg.name}
                   buttons={(
+                  <Fragment>
+                    {!!ai_user && (
+                      <Button
+                      icon="terminal"
+                      content={"Send Message As AI"}
+                      color="blue"
+                      onClick={() => act('messagebot_ai', {
+                        ref: cyborg.ref,
+                      })} /> 
+                    )}
                     <Button
                       icon="terminal"
                       content="Send Message"
@@ -93,6 +104,7 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                       onClick={() => act('messagebot', {
                         ref: cyborg.ref,
                       })} />
+                  </Fragment>
                   )}>
                   <LabeledList>
                     <LabeledList.Item label="Status">
