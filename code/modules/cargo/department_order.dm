@@ -114,6 +114,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 
 	. = TRUE
 	var/id = text2path(params["id"])
+	if(!ispath(id, /datum/supply_pack)) // this means its not a valid path, used only in the case of dynamically generated canister packs
+		id = params["id"]
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!pack)
 		say("Something went wrong!")
