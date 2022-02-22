@@ -516,7 +516,7 @@
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
-	armour_penetration = 20
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 	slot_flags = ITEM_SLOT_BACK
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")

@@ -34,6 +34,7 @@
 #include "code\__DEFINES\alarm.dm"
 #include "code\__DEFINES\antagonists.dm"
 #include "code\__DEFINES\aquarium.dm"
+#include "code\__DEFINES\armor.dm"
 #include "code\__DEFINES\art.dm"
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\basic_mobs.dm"

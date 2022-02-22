@@ -23,7 +23,7 @@
 	icon = 'icons/mecha/mecha.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	max_integrity = 300
-	armor = list(MELEE = 20, BULLET = 10, LASER = 0, ENERGY = 0, BOMB = 10, BIO = 0, FIRE = 100, ACID = 100)
+	armor = list(MELEE = LIGHT_DAMAGE_THRESHOLD, BULLET = LIGHT_DAMAGE_THRESHOLD, LASER = NO_DAMAGE_THRESHOLD, ENERGY = NO_DAMAGE_THRESHOLD, BOMB = 10, BIO = 0, FIRE = 100, ACID = 100)
 	force = 5
 	movedelay = 1 SECONDS
 	move_force = MOVE_FORCE_VERY_STRONG

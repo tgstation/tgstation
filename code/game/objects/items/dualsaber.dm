@@ -15,7 +15,7 @@
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
-	armour_penetration = 35
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	light_system = MOVABLE_LIGHT
 	light_range = 6 //TWICE AS BRIGHT AS A REGULAR ESWORD
 	light_color = LIGHT_COLOR_ELECTRIC_GREEN

@@ -100,7 +100,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 0.6, TOX = 0.5, CLONE = 1.5, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
-	armour_penetration = 15
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	obj_damage = 20
 	deathmessage = "collapses into a pile of goo!"
 	///The ability to give yourself a metabolic speed boost which raises heat

@@ -269,7 +269,7 @@
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
 	tastes = list("cobwebs" = 1)
-	foodtypes = MEAT 
+	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spiderling
@@ -397,7 +397,7 @@
 	force = 30
 	throwforce = 15
 	block_chance = 55
-	armour_penetration = 80
+	armour_penetration = HEAVY_ARMOR_PENETRATION
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")

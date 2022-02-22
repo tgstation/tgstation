@@ -242,6 +242,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 8)
 
+/datum/reagent/drug/aranesp/on_mob_metabolize(mob/living/L)
+	..()
+	L.apply_status_effect(/datum/status_effect/drug_damage_resist/aranesp)
+
+/datum/reagent/drug/aranesp/on_mob_end_metabolize(mob/living/L)
+	L.remove_status_effect(/datum/status_effect/drug_damage_resist/aranesp)
+	..()
+
 /datum/reagent/drug/aranesp/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(DT_PROB(2.5, delta_time))
@@ -311,9 +319,11 @@
 
 /datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
 	..()
+	L.apply_status_effect(/datum/status_effect/drug_damage_resist/pumpup)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
+	L.remove_status_effect(/datum/status_effect/drug_damage_resist/pumpup)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 

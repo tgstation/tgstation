@@ -95,7 +95,7 @@
 	melee_damage_lower = 18
 	melee_damage_upper = 20
 	wound_bonus = 0
-	armour_penetration = 20
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	health = 120
 	maxHealth = 120
 	armored = TRUE
@@ -137,7 +137,7 @@
 	melee_damage_lower = 0
 	melee_damage_upper = 0
 	sharpness = NONE //it's made of butter
-	armour_penetration = 0
+	armour_penetration = NO_ARMOR_PENETRATION
 	response_harm_continuous = "takes a bite out of"
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'

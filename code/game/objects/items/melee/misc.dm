@@ -66,7 +66,7 @@
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
 	block_chance = 50
-	armour_penetration = 75
+	armour_penetration = HEAVY_ARMOR_PENETRATION
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
 	attack_verb_simple = list("slash", "cut")
@@ -152,7 +152,7 @@
 	sharpness = SHARP_EDGED
 	throwforce = 10
 	block_chance = 20
-	armour_penetration = 65
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
@@ -182,7 +182,7 @@
 	slot_flags = null
 	w_class = WEIGHT_CLASS_BULKY
 	force = 0.001
-	armour_penetration = 1000
+	armour_penetration = COMPLETE_ARMOR_PENETRATION
 	force_string = "INFINITE"
 	var/obj/machinery/power/supermatter_crystal/shard
 	var/balanced = 1
@@ -435,6 +435,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
 	block_chance = 10
-	armour_penetration = 50
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")

@@ -103,6 +103,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/punchdamagelow = 1
 	///Highest possible punch damage this species can give.
 	var/punchdamagehigh = 10
+	///How much armor penetration should the species have on punches?
+	var/puncharmorpen = NO_ARMOR_PENETRATION
 	///Damage at which punches from this race will stun
 	var/punchstunthreshold = 10 //yes it should be to the attacked race but it's not useful that way even if it's logical
 	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
@@ -1351,7 +1353,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/armor_block = target.run_armor_check(affecting, MELEE)
 
-		playsound(target.loc, user.dna.species.attack_sound, 25, TRUE, -1)
+		var/damage_threshold = target.getarmor(affecting, MELEE)
+		var/penetrated_dt = puncharmorpen * 0.2 // 100 Penetration = 20 DT ignored
+		var/final_dt = max(0, damage_threshold - penetrated_dt)
+		var/damage_resistance = target.physiology.damage_resistance
+		var/damage_done = round(CALCULATE_DT(CALCULATE_DR(damage, damage_resistance), final_dt, damage), DAMAGE_PRECISION)
+		if(damage_done <= damage * DAMAGE_THRESHOLD_MINIMUM)
+			playsound(target.loc, 'sound/weapons/melee_dt_block.wav', 25, TRUE, -1)
+			new /obj/effect/temp_visual/heal/armor(get_turf(target), ARMOR_EFFECT_COLOR)
+		else
+			playsound(target.loc, user.dna.species.attack_sound, 25, TRUE, -1)
+			if(damage_threshold && final_dt <= 0) // if there was any DT to begin with, and if it was broken past
+				new /obj/effect/temp_visual/heal/armor_break(get_turf(target), ARMOR_BREAK_EFFECT_COLOR)
 
 		target.visible_message(span_danger("[user] [atk_verb]ed [target]!"), \
 						span_userdanger("You're [atk_verb]ed by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)

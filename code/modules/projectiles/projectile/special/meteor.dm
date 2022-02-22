@@ -5,7 +5,7 @@
 	damage = 90
 	paralyze = 100
 	dismemberment = 90
-	armour_penetration = 100
+	armour_penetration = COMPLETE_ARMOR_PENETRATION
 	damage_type = BRUTE
 	flag = BULLET
 

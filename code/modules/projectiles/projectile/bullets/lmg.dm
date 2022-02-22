@@ -29,13 +29,13 @@
 /obj/projectile/bullet/mm712x82
 	name = "7.12x82mm bullet"
 	damage = 30
-	armour_penetration = 5
+	armour_penetration = NO_ARMOR_PENETRATION
 	wound_bonus = -50
 	wound_falloff_tile = 0
 
 /obj/projectile/bullet/mm712x82/ap
 	name = "7.12x82mm armor-piercing bullet"
-	armour_penetration = 75
+	armour_penetration = HEAVY_ARMOR_PENETRATION
 
 /obj/projectile/bullet/mm712x82/hp
 	name = "7.12x82mm hollow-point bullet"

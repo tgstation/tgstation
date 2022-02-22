@@ -97,7 +97,7 @@
 	banana_rustle.Grant(src)
 	banana_bunch = new()
 	banana_bunch.Grant(src)
-	
+
 /mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
 	. = ..()
 	QDEL_NULL(banana_rustle)
@@ -288,7 +288,7 @@
 	maxHealth = 500
 	health = 500
 	speed = -2
-	armour_penetration = 20
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
 	attack_sound = 'sound/items/airhorn2.ogg'
@@ -332,7 +332,7 @@
 	harm_intent_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 40
-	armour_penetration = 30
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	stat_attack = HARD_CRIT
 	attack_verb_continuous = "acts out divine vengeance on"
 	attack_verb_simple = "act out divine vengeance on"

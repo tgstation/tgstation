@@ -319,27 +319,27 @@
 	. = ..()
 
 	if(href_list["list_armor"])
-		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES (I-X)</u></b>")
+		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES</u></b>")
 		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
 			readout += "\n<b>ARMOR</b>"
 			if(armor.bio)
-				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
+				readout += "\nTOXIN [armor.bio]%"
 			if(armor.bomb)
-				readout += "\nEXPLOSIVE [armor_to_protection_class(armor.bomb)]"
+				readout += "\nEXPLOSIVE [armor.bomb]%"
 			if(armor.bullet)
-				readout += "\nBULLET [armor_to_protection_class(armor.bullet)]"
+				readout += "\nBULLET Damage Threshold: [armor.bullet]"
 			if(armor.energy)
-				readout += "\nENERGY [armor_to_protection_class(armor.energy)]"
+				readout += "\nENERGY Damage Threshold: [armor.energy]"
 			if(armor.laser)
-				readout += "\nLASER [armor_to_protection_class(armor.laser)]"
+				readout += "\nLASER Damage Threshold: [armor.laser]"
 			if(armor.melee)
-				readout += "\nMELEE [armor_to_protection_class(armor.melee)]"
+				readout += "\nMELEE Damage Threshold: [armor.melee]"
 		if(armor.fire || armor.acid)
 			readout += "\n<b>DURABILITY</b>"
 			if(armor.fire)
-				readout += "\nFIRE [armor_to_protection_class(armor.fire)]"
+				readout += "\nFIRE [armor.fire]%"
 			if(armor.acid)
-				readout += "\nACID [armor_to_protection_class(armor.acid)]"
+				readout += "\nACID [armor.acid]%"
 		readout += "</span>"
 
 		to_chat(usr, "[readout.Join()]")

@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE
-	armour_penetration = 100
+	armour_penetration = COMPLETE_ARMOR_PENETRATION
 	flag = NONE
 
 /obj/projectile/magic/death
@@ -540,7 +540,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = FALSE
-	armour_penetration = 100
+	armour_penetration = COMPLETE_ARMOR_PENETRATION
 	temperature = -200 // Cools you down greatly per hit
 
 /obj/projectile/magic/nothing

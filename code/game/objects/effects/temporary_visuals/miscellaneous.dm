@@ -317,6 +317,17 @@
 	pixel_x = rand(-12, 12)
 	pixel_y = rand(-9, 0)
 
+/obj/effect/temp_visual/heal/armor
+	name = "armor effect"
+	icon_state = "armor"
+	duration = 15
+
+/obj/effect/temp_visual/heal/armor_break
+	name = "armor break effect"
+	icon_state = "armor_broken"
+	duration = 15
+
+
 /obj/effect/temp_visual/kinetic_blast
 	name = "kinetic explosion"
 	icon = 'icons/obj/guns/projectiles.dmi'

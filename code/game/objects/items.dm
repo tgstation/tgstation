@@ -130,7 +130,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// How much clothing is slowing you down. Negative values speeds you up
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
-	var/armour_penetration = 0
+	var/armour_penetration = NO_ARMOR_PENETRATION
 	///Whether or not our object is easily hindered by the presence of armor
 	var/weak_against_armour = FALSE
 	///What objects the suit storage can store

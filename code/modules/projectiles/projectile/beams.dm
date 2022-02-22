@@ -58,7 +58,7 @@
 	damage = 15
 
 /obj/projectile/beam/weak/penetrator
-	armour_penetration = 50
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 
 /obj/projectile/beam/practice
 	name = "practice laser"

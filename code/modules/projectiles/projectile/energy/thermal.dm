@@ -4,7 +4,7 @@
 	damage = 20
 	damage_type = BURN
 	flag = ENERGY
-	armour_penetration = 10
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	reflectable = NONE
 	wound_bonus = 0
 	bare_wound_bonus = 10
@@ -28,7 +28,7 @@
 	icon_state = "cryoshot"
 	damage = 20
 	damage_type = BRUTE
-	armour_penetration = 10
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	flag = ENERGY
 	sharpness = SHARP_POINTY //it's a big ol' shard of ice
 	reflectable = NONE

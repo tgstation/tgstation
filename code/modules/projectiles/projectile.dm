@@ -276,17 +276,39 @@
 
 		var/organ_hit_text = ""
 		var/limb_hit = hit_limb
+		var/sound_to_use = hitsound
+		var/damage_threshold = L.getarmor(limb_hit, flag)
+		var/penetrated_dt = armour_penetration * 0.2 // 100 Penetration = 20 DT ignored
+		var/final_dt = max(0, damage_threshold - penetrated_dt)
+		var/damage_resistance = 0
+		if(ishuman(L))
+			var/mob/living/carbon/human/human_target = L
+			damage_resistance = human_target.physiology.damage_resistance
+		var/damage_done = round(CALCULATE_DT(CALCULATE_DR(damage, damage_resistance), final_dt, damage), DAMAGE_PRECISION)
+		if(damage_done <= damage * DAMAGE_THRESHOLD_MINIMUM)
+			switch(flag)
+				if(BULLET)
+					sound_to_use = 'sound/weapons/bullet_dt_block.wav'
+				if(LASER)
+					sound_to_use = 'sound/weapons/energy_dt_block.wav'
+				if(ENERGY)
+					sound_to_use = 'sound/weapons/energy_dt_block.wav'
+			new /obj/effect/temp_visual/heal/armor(get_turf(L), ARMOR_EFFECT_COLOR)
+		else if(damage_threshold && final_dt <= 0) // if there was any DT to begin with, and if it was broken past
+			new /obj/effect/temp_visual/heal/armor_break(get_turf(L), ARMOR_BREAK_EFFECT_COLOR)
 		if(limb_hit)
 			organ_hit_text = " in \the [parse_zone(limb_hit)]"
 		if(suppressed==SUPPRESSED_VERY)
-			playsound(loc, hitsound, 5, TRUE, -1)
+			playsound(loc, sound_to_use, 5, TRUE, -1)
 		else if(suppressed)
-			playsound(loc, hitsound, 5, TRUE, -1)
+			playsound(loc, sound_to_use, 5, TRUE, -1)
 			to_chat(L, span_userdanger("You're shot by \a [src][organ_hit_text]!"))
 		else
-			if(hitsound)
+			if(sound_to_use)
 				var/volume = vol_by_damage()
-				playsound(src, hitsound, volume, TRUE, -1)
+				if(damage_done <= damage * DAMAGE_THRESHOLD_MINIMUM)
+					volume = 25
+				playsound(src, sound_to_use, volume, TRUE, -1)
 			L.visible_message(span_danger("[L] is hit by \a [src][organ_hit_text]!"), \
 					span_userdanger("You're hit by \a [src][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 		L.on_hit(src)

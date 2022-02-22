@@ -30,7 +30,7 @@
 	health = 1000
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	armour_penetration = 30
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	attack_verb_continuous = "beats down on"
 	attack_verb_simple = "beat down on"
 	attack_sound = 'sound/weapons/punch1.ogg'

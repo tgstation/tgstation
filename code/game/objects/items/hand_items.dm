@@ -491,7 +491,7 @@
 	damage_type = BRUTE
 	damage = 0
 	nodamage = TRUE // love can't actually hurt you
-	armour_penetration = 100 // but if it could, it would cut through even the thickest plate
+	armour_penetration = COMPLETE_ARMOR_PENETRATION // but if it could, it would cut through even the thickest plate
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer)

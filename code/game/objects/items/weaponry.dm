@@ -97,7 +97,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 20
 	throw_speed = 3
 	throw_range = 5
-	armour_penetration = 35
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
@@ -346,7 +346,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 10 //10 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 18 damage on hit due to guaranteed embedding
 	throw_speed = 4
 	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
-	armour_penetration = 40
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = SHARP_POINTY
@@ -458,7 +458,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armour_penetration = 100
+	armour_penetration = COMPLETE_ARMOR_PENETRATION
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
 	resistance_flags = FLAMMABLE

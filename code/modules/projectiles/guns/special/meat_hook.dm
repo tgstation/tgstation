@@ -33,7 +33,7 @@
 	pass_flags = PASSTABLE
 	damage = 20
 	stamina = 20
-	armour_penetration = 60
+	armour_penetration = HEAVY_ARMOR_PENETRATION
 	damage_type = BRUTE
 	hitsound = 'sound/effects/splat.ogg'
 	var/chain

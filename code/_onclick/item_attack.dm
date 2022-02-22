@@ -185,11 +185,22 @@
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
-
-	if(!force)
-		playsound(loc, 'sound/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+	var/damage_threshold = M.getarmor(check_zone(user.zone_selected), MELEE)
+	var/penetrated_dt = armour_penetration * 0.2 // 100 Penetration = 20 DT ignored
+	var/final_dt = max(0, damage_threshold - penetrated_dt)
+	var/damage_resistance = 0
+	if(ishuman(M))
+		var/mob/living/carbon/human/human_target = M
+		damage_resistance = human_target.physiology.damage_resistance
+	var/damage_done = round(CALCULATE_DT(CALCULATE_DR(force, damage_resistance), final_dt, force), DAMAGE_PRECISION)
+	if(damage_done <= force * DAMAGE_THRESHOLD_MINIMUM)
+		playsound(loc, 'sound/weapons/melee_dt_block.wav', get_clamped_volume(), TRUE, -1)
+		new /obj/effect/temp_visual/heal/armor(get_turf(M), ARMOR_EFFECT_COLOR)
 	else if(hitsound)
 		playsound(loc, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
+		if(damage_threshold && final_dt <= 0) // if there was any DT to begin with, and if it was broken past
+			new /obj/effect/temp_visual/heal/armor_break(get_turf(M), ARMOR_BREAK_EFFECT_COLOR)
+
 
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey

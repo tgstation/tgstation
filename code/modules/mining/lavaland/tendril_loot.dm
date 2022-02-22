@@ -859,7 +859,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
-	armour_penetration = 30
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	block_chance = 30
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_HUGE

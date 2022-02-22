@@ -226,4 +226,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe/caps_spare, 32)
 	new /obj/item/card/id/advanced/gold/captains_spare(src)
 
 /obj/item/storage/secure/safe/caps_spare/rust_heretic_act()
-	take_damage(damage_amount = 100, damage_type = BRUTE, damage_flag = MELEE, armour_penetration = 100)
+	take_damage(damage_amount = 100, damage_type = BRUTE, damage_flag = MELEE, armour_penetration = COMPLETE_ARMOR_PENETRATION)

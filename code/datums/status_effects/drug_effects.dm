@@ -35,8 +35,6 @@
 	desc = "Your blood pressure is real high right now ... You'd probably bleed like a stuck pig."
 	icon_state = "highbloodpressure"
 
-
-
 /datum/status_effect/seizure
 	id = "seizure"
 	tick_interval = -1
@@ -96,3 +94,60 @@
 	name = "Stoned"
 	desc = "Cannabis is impairing your speed, motor skills, and mental cognition."
 	icon_state = "stoned"
+
+/datum/status_effect/drug_damage_resist
+	id = "damage_resist"
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/pumpup
+	var/color = "#0000FF"
+	var/amount_of_damage_resist = 0
+
+/datum/status_effect/drug_damage_resist/on_apply()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.damage_resistance += amount_of_damage_resist
+	return TRUE
+
+/datum/status_effect/drug_damage_resist/tick()
+	new /obj/effect/temp_visual/heal/armor(get_turf(owner), color)
+
+/datum/status_effect/drug_damage_resist/on_remove()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.physiology.damage_resistance -= amount_of_damage_resist
+
+/datum/status_effect/drug_damage_resist/pumpup
+	id = "pumpup"
+	alert_type = /atom/movable/screen/alert/status_effect/pumpup
+	color = "#e38e44"
+	amount_of_damage_resist = 35
+
+/atom/movable/screen/alert/status_effect/pumpup
+	name = "Pump Up"
+	desc = "GOTTA GET A GRIP"
+	icon_state = "pumpup"
+
+/datum/status_effect/drug_damage_resist/morphine
+	id = "morphine"
+	alert_type = /atom/movable/screen/alert/status_effect/morphine
+	color = "#A9FBFB"
+	amount_of_damage_resist = 25
+
+/atom/movable/screen/alert/status_effect/morphine
+	name = "Morphine"
+	desc = "Eases the pain, but feels a bit sleepy..."
+	icon_state = "morphine"
+
+/datum/status_effect/drug_damage_resist/aranesp
+	id = "aranesp"
+	alert_type = /atom/movable/screen/alert/status_effect/aranesp
+	color = "#78FFF0"
+	amount_of_damage_resist = 25
+
+/atom/movable/screen/alert/status_effect/aranesp
+	name = "Aranesp"
+	desc = "Move like a butterfly, sting like a bee! Push it to the limit!"
+	icon_state = "aranesp"
+
+
+

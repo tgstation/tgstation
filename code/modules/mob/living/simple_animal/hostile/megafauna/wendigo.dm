@@ -27,7 +27,7 @@ Difficulty: Hard
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	weather_immunities = list(TRAIT_SNOWSTORM_IMMUNE)
 	speak_emote = list("roars")
-	armour_penetration = 40
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	vision_range = 9

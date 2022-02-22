@@ -49,14 +49,17 @@
 	. = ..(P, def_zone, piercing_hit, armor)
 	if(!P.nodamage && (. != BULLET_ACT_BLOCK))
 		var/attack_direction = get_dir(P.starting, src)
-		apply_damage(P.damage, P.damage_type, def_zone, armor, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
+		// we need a second, silent armor check to actually know how much to reduce damage taken, as opposed to
+		// on [/atom/proc/bullet_act] where it's just to pass it to the projectile's on_hit().
+		var/armor_check = check_projectile_armor(def_zone, P, is_silent = TRUE)
+		apply_damage(P.damage, P.damage_type, def_zone, armor_check, wound_bonus=P.wound_bonus, bare_wound_bonus=P.bare_wound_bonus, sharpness = P.sharpness, attack_direction = attack_direction)
 		apply_effects(P.stun, P.knockdown, P.unconscious, P.slur, P.stutter, P.eyeblur, P.drowsy, armor, P.stamina, P.jitter, P.paralyze, P.immobilize)
 		if(P.dismemberment)
 			check_projectile_dismemberment(P, def_zone)
 	return . ? BULLET_ACT_HIT : BULLET_ACT_BLOCK
 
-/mob/living/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile)
-	return run_armor_check(def_zone, impacting_projectile.flag, "","",impacting_projectile.armour_penetration, "", FALSE, impacting_projectile.weak_against_armour)
+/mob/living/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
+	return run_armor_check(def_zone, impacting_projectile.flag, "","",impacting_projectile.armour_penetration, "", is_silent, impacting_projectile.weak_against_armour)
 
 /mob/living/proc/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	return 0

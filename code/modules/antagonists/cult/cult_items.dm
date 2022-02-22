@@ -23,7 +23,7 @@
 	block_chance = 25
 	wound_bonus = -10
 	bare_wound_bonus = 20
-	armour_penetration = 35
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
@@ -125,7 +125,7 @@ Striking a noncultist, however, will tear their flesh."}
 	block_chance = 50
 	throwforce = 20
 	force = 35
-	armour_penetration = 45
+	armour_penetration = MEDIUM_ARMOR_PENETRATION
 	throw_speed = 1
 	throw_range = 3
 	sharpness = SHARP_EDGED
@@ -712,7 +712,7 @@ Striking a noncultist, however, will tear their flesh."}
 	force = 17
 	throwforce = 40
 	throw_speed = 2
-	armour_penetration = 30
+	armour_penetration = LIGHT_ARMOR_PENETRATION
 	block_chance = 30
 	slot_flags = null
 	attack_verb_continuous = list("attacks", "slices", "shreds", "sunders", "lacerates", "cleaves")

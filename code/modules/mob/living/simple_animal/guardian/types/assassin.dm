@@ -70,7 +70,7 @@
 			return
 		melee_damage_lower = 50
 		melee_damage_upper = 50
-		armour_penetration = 100
+		armour_penetration = COMPLETE_ARMOR_PENETRATION
 		obj_damage = 0
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))
