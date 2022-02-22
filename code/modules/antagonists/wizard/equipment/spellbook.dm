@@ -794,8 +794,7 @@
 					if(entry.limit)
 						entry.limit--
 					uses -= entry.cost
-			update_static_data(wizard) //update statics!
-			return
+			return TRUE
 		if("refund")
 			var/datum/spellbook_entry/entry = locate(params["spellref"]) in entries
 			if(entry?.refundable)
@@ -804,8 +803,7 @@
 					if(!isnull(entry.limit))
 						entry.limit += result
 					uses += result
-			update_static_data(wizard) //update statics!
-			return
+			return TRUE
 	//actions that are only available if you have full spell points
 	if(uses < initial(uses))
 		to_chat(wizard, span_warning("You need to have all your spell points to do this!"))
