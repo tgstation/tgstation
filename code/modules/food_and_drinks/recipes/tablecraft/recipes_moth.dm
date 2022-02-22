@@ -146,7 +146,7 @@
 	name = "Mozzarella sticks"
 	reqs = list(
 		/obj/item/food/mozzarella = 1,
-		/obj/item/food/breadslice = 2,
+		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1
 	)
 	result = /obj/item/food/mozzarella_sticks
@@ -321,7 +321,7 @@
 	reqs = list(
 		/obj/item/food/soup/cheesy_porridge = 1,
 		/obj/item/food/grown/eggplant = 1,
-		/obj/item/food/breadslice = 2,
+		/obj/item/food/breadslice/plain = 2,
 		/obj/item/food/tomato_sauce = 1,
 		/obj/item/food/mozzarella = 1
 	)
@@ -345,7 +345,7 @@
 	reqs = list(
 		/obj/item/food/mothic_salad = 1,
 		/obj/item/food/grilled_cheese = 1,
-		/obj/item/food/breadslice = 1,
+		/obj/item/food/breadslice/plain = 1,
 		/obj/item/food/grown/carrot = 1,
 		/datum/reagent/consumable/quality_oil = 2,
 		/datum/reagent/consumable/vinegar = 2

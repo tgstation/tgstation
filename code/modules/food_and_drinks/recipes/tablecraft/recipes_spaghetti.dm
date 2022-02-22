@@ -75,7 +75,7 @@
 		/obj/item/food/spaghetti/boiledspaghetti = 1,
 		/obj/item/food/bechamel_sauce = 1,
 		/obj/item/food/cheese = 2,
-		/obj/item/food/breadslice = 1,
+		/obj/item/food/breadslice/plain = 1,
 		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/food/spaghetti/mac_n_cheese
