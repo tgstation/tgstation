@@ -181,6 +181,12 @@
 	if(.)
 		weapon_weight = WEAPON_MEDIUM
 
+/obj/item/gun/ballistic/shotgun/doublebarrel/slugs
+	name = "hunting shotgun"
+	desc = "A hunting shotgun used by the wealthy to hunt \"game\"."
+	sawn_desc = "Sawing off a hunting shotguns makes it remarkably less effective. At least it's slightly more badass now."
+	mag_type = /obj/item/ammo_box/magazine/internal/shot/dual/slugs
+
 /obj/item/gun/ballistic/shotgun/hook
 	name = "hook modified sawn-off shotgun"
 	desc = "Range isn't an issue when you can bring your victim to you."
