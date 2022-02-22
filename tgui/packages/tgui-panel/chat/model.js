@@ -15,9 +15,7 @@ export const createPage = obj => {
   let acceptedTypes = {};
 
   for (let typeDef of MESSAGE_TYPES) {
-    if (typeDef.important) {
-      acceptedTypes[typeDef.type] = true;
-    }
+    acceptedTypes[typeDef.type] = !!typeDef.important;
   }
 
   return {
