@@ -981,8 +981,8 @@
 	},
 /obj/item/storage/box/lethalshot,
 /obj/item/storage/box/lethalshot,
-/obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/effect/turf_decal/bot,
+/obj/item/gun/ballistic/shotgun/doublebarrel/slugs,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
 "YD" = (
