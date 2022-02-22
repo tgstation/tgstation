@@ -86,25 +86,25 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                   key={cyborg.ref}
                   title={cyborg.name}
                   buttons={(
-                  <Fragment>
-                    {!!ai_user && (
+                    <Fragment>
+                      {!!ai_user && (
+                        <Button
+                        icon="terminal"
+                        content={"Send Message As AI"}
+                        color="blue"
+                        onClick={() => act('messagebot_ai', {
+                          ref: cyborg.ref,
+                        })} /> 
+                      )}
                       <Button
-                      icon="terminal"
-                      content={"Send Message As AI"}
-                      color="blue"
-                      onClick={() => act('messagebot_ai', {
-                        ref: cyborg.ref,
-                      })} /> 
-                    )}
-                    <Button
-                      icon="terminal"
-                      content="Send Message"
-                      color="blue"
-                      disabled={!card}
-                      onClick={() => act('messagebot', {
-                        ref: cyborg.ref,
-                      })} />
-                  </Fragment>
+                        icon="terminal"
+                        content="Send Message"
+                        color="blue"
+                        disabled={!card}
+                        onClick={() => act('messagebot', {
+                          ref: cyborg.ref,
+                        })} />
+                    </Fragment>
                   )}>
                   <LabeledList>
                     <LabeledList.Item label="Status">
