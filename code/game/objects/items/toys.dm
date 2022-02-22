@@ -26,13 +26,11 @@
  * Fake Pierced Reality
  * Intento
  */
-
 /obj/item/toy
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	force = 0
-
 
 /*
  * Balloons
@@ -43,7 +41,6 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "waterballoon-e"
 	inhand_icon_state = "balloon-empty"
-
 
 /obj/item/toy/waterballoon/Initialize(mapload)
 	. = ..()
@@ -151,7 +148,6 @@
 	else
 		return ..()
 
-
 /obj/item/toy/balloon/proc/pop_balloon(monkey_pop = FALSE)
 	playsound(src, 'sound/effects/cartoon_pop.ogg', 50, vary = TRUE)
 	if(monkey_pop) // Monkeys make money from popping bloons
@@ -190,13 +186,11 @@
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
 
-
 /obj/item/toy/balloon/syndicate/Destroy()
 	if(ismob(loc))
 		var/mob/M = loc
 		SEND_SIGNAL(M, COMSIG_CLEAR_MOOD_EVENT, "badass_antag", /datum/mood_event/badass_antag)
 	. = ..()
-
 
 /obj/item/toy/balloon/arrest
 	name = "arreyst balloon"
@@ -301,8 +295,6 @@
 	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 	user.death(FALSE)
 	user.ghostize(FALSE)
-
-
 
 /*
  * Toy gun: Why isn't this an /obj/item/gun?
@@ -411,7 +403,6 @@
 		clumsy_check = FALSE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
-
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
  *
@@ -471,7 +462,6 @@
 	attack_verb_simple = list("prick", "absorb", "gore")
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
-
 
 /obj/item/toy/windup_toolbox
 	name = "windup toolbox"
@@ -579,7 +569,6 @@
 /*
  * Snap pops
  */
-
 /obj/item/toy/snappop
 	name = "snap pop"
 	desc = "Wow!"
@@ -735,7 +724,6 @@
 /*
  * Fake nuke
  */
-
 /obj/item/toy/nuke
 	name = "\improper Nuclear Fission Explosive toy"
 	desc = "A plastic model of a Nuclear Fission Explosive."
@@ -769,16 +757,15 @@
 		to_chat(user, span_alert("Nothing happens, and '</span>[round(timeleft/10)]<span class='alert'>' appears on the small display."))
 		sleep(5)
 
-
 /obj/item/toy/nuke/emag_act(mob/user)
 	if (obj_flags & EMAGGED)
 		return
 	to_chat(user, span_warning("You short-circuit \the [src]."))
 	obj_flags |= EMAGGED
+
 /*
  * Fake meteor
  */
-
 /obj/item/toy/minimeteor
 	name = "\improper Mini-Meteor"
 	desc = "Relive the excitement of a meteor shower! SweetMeat-eor Co. is not responsible for any injuries, headaches or hearing loss caused by Mini-Meteor."
@@ -833,7 +820,6 @@
 /*
  * Snowballs
  */
-
 /obj/item/toy/snowball
 	name = "snowball"
 	desc = "A compact ball of snow. Good for throwing at people."
@@ -869,7 +855,6 @@
 /*
  * Clockwork Watch
  */
-
 /obj/item/toy/clockwork_watch
 	name = "steampunk watch"
 	desc = "A stylish steampunk watch made out of thousands of tiny cogwheels."
@@ -895,7 +880,6 @@
 /*
  * Toy Dagger
  */
-
 /obj/item/toy/toy_dagger
 	name = "toy dagger"
 	desc = "A cheap plastic replica of a dagger. Produced by THE ARM Toys, Inc."
@@ -909,7 +893,6 @@
 /*
  * Xenomorph action figure
  */
-
 /obj/item/toy/toy_xeno
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "toy_xeno"
@@ -934,7 +917,6 @@
 		return
 
 // TOY MOUSEYS :3 :3 :3
-
 /obj/item/toy/cattoy
 	name = "toy mouse"
 	desc = "A colorful toy mouse!"
@@ -948,7 +930,6 @@
 /*
  * Action Figures
  */
-
 /obj/item/toy/figure
 	name = "\improper Non-Specific Action Figure action figure"
 	icon = 'icons/obj/toy.dmi'
@@ -1171,7 +1152,6 @@
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 
-
 /obj/item/toy/dummy
 	name = "ventriloquist dummy"
 	desc = "It's a dummy, dummy."
@@ -1244,11 +1224,9 @@
 		cooldown = (world.time + 10)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, src, 'sound/effects/blobattack.ogg', 50, FALSE), 0.5 SECONDS)
 
-
 /*
  * Eldritch Toys
  */
-
 /obj/item/toy/eldritch_book
 	name = "Codex Cicatrix"
 	desc = "A toy book that closely resembles the Codex Cicatrix. Covered in fake polyester human flesh and has a huge goggly eye attached to the cover. The runes are gibberish and cannot be used to summon demons... Hopefully?"
@@ -1271,7 +1249,6 @@
 /*
  * Fake tear
  */
-
 /obj/item/toy/reality_pierce
 	name = "Pierced reality"
 	desc = "Hah. You thought it was the real deal!"
@@ -1341,7 +1318,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 #define TIME_TO_BEGIN 1.6 SECONDS
 #define TIME_PER_DEMO_STEP 0.6 SECONDS
 #define TIME_TO_RESET_ICON 0.5 SECONDS
-
 
 /obj/item/toy/intento
 	name = "\improper Intento"
@@ -1423,7 +1399,6 @@ GLOBAL_LIST_EMPTY(intento_players)
 
 		state = STATE_STARTING
 		COOLDOWN_START(src, next_process, TIME_TO_BEGIN)
-
 
 /obj/item/toy/intento/process()
 	if(next_icon_reset && next_icon_reset <= world.time)
