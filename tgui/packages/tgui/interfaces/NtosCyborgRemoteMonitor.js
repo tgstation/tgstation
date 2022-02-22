@@ -89,12 +89,12 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                     <Fragment>
                       {!!ai_user && (
                         <Button
-                        icon="terminal"
-                        content={"Send Message As AI"}
-                        color="blue"
-                        onClick={() => act('messagebot_ai', {
-                          ref: cyborg.ref,
-                        })} /> 
+                          icon="terminal"
+                          content={"Send Message As AI"}
+                          color="blue"
+                          onClick={() => act('messagebot_ai', {
+                            ref: cyborg.ref,
+                          })} /> 
                       )}
                       <Button
                         icon="terminal"
