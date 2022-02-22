@@ -1,15 +1,20 @@
 /**
  * @file
  * @author Original by ArcaneMusic (https://github.com/ArcaneMusic)
+ * @author Changes Shadowh4nD/jlsnow301
  * @license MIT
  */
 
 import { useBackend, useSharedState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
-import { BlockQuote, Box, Button, Divider, Flex, Icon, LabeledList, Modal, NoticeBox, Section, Stack, Tabs, TextArea } from '../components';
+import { UserDetails } from './Vending';
+import { BlockQuote, Box, Button, Divider, Modal, Section, Stack, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { marked } from 'marked';
 import { sanitizeText } from "../sanitize";
+
+const CENSOR_MESSAGE = "This channel has been deemed as threatening to \
+the welfare of the station, and marked with a Nanotrasen D-Notice.";
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
@@ -17,33 +22,125 @@ export const Newscaster = (props, context) => {
   return (
     <Window
       width={575}
-      height={550}>
+      height={560}>
       <NewscasterChannelCreation />
       <Window.Content scrollable>
-        <Tabs fluid textAlign="center">
-          <Tabs.Tab
-            color="Green"
-            selected={screenmode === 1}
-            onClick={() => setScreenmode(1),
-            { tabvalue: screenmode }}>
-            Newscaster
-          </Tabs.Tab>
-          <Tabs.Tab
-            Color="Blue"
-            selected={screenmode === 2}
-            onClick={() => setScreenmode(2),
-            { tabvalue: screenmode }}>
-            Bounty Board
-          </Tabs.Tab>
-        </Tabs>
-        {screenmode === 1 && (
-          <NewscasterContent />
-        )}
-        {screenmode === 2 && (
-          <BountyBoardContent />
-        )}
+        <Stack fill vertical>
+          <Stack.Item>
+            <Tabs fluid textAlign="center">
+              <Tabs.Tab
+                color="Green"
+                selected={screenmode === 1}
+                onClick={() => setScreenmode(1)}>
+                Newscaster
+              </Tabs.Tab>
+              <Tabs.Tab
+                Color="Blue"
+                selected={screenmode === 2}
+                onClick={() => setScreenmode(2)}>
+                Bounty Board
+              </Tabs.Tab>
+            </Tabs>
+          </Stack.Item>
+          <Stack.Item grow>
+            {screenmode === 1 && (
+              <NewscasterContent />
+            )}
+            {screenmode === 2 && (
+              <BountyBoardContent />
+            )}
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
+  );
+};
+
+/** The modal menu that contains the prompts to making new channels. */
+const NewscasterChannelCreation = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [publicmode, setPublicmode] = useSharedState(context, 'publicmode', 1);
+  const {
+    creating_channel,
+    viewing_channel,
+    name,
+    desc,
+  } = data;
+  if (!creating_channel) {
+    return null;
+  }
+  return (
+    <Modal
+      textAlign="center"
+      mr={1.5}>
+      <Stack vertical>
+        <Stack.Item vertical>
+          <Box pb={1}>
+            Enter Channel Name Here:
+          </Box>
+          <TextArea
+            fluid
+            height="40px"
+            width="240px"
+            backgroundColor="black"
+            textColor="white"
+            maxLength={42}
+            onChange={(e, name) => act('channelName', {
+              channeltext: name,
+            })}>
+            Channel Name
+          </TextArea>
+        </Stack.Item>
+        <Stack.Item>
+          <Box pb={1}>
+            Enter Channel Description Here:
+          </Box>
+          <TextArea
+            fluid
+            height="150px"
+            width="240px"
+            backgroundColor="black"
+            textColor="white"
+            maxLength={512}
+            onChange={(e, desc) => act('channelDesc', {
+              channeldesc: desc,
+            })}>
+            Channel Description
+          </TextArea>
+        </Stack.Item>
+        <Stack.Item>
+          <Section>
+            Set Channel as Public or Private
+            <Box pt={1}>
+              <Button
+                selected={publicmode===1}
+                content="Public"
+                onClick={() => act(setPublicmode(1))} />
+              <Button
+                selected={publicmode===0}
+                content="Private"
+                onClick={() => act(setPublicmode(0))} />
+            </Box>
+          </Section>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Box>
+            <Button
+              content={"Submit Channel"}
+              onClick={() => act('createChannel', {
+                publicmode: publicmode,
+                viewing_channel: viewing_channel,
+              })} />
+            <Button
+              content={"Cancel"}
+              color={"red"}
+              onClick={() => act('cancelChannel')} />
+          </Box>
+
+        </Stack.Item>
+      </Stack>
+    </Modal>
   );
 };
 
@@ -53,58 +150,36 @@ export const NewscasterContent = (props, context) => {
     current_channel = [],
   } = data;
   return (
-    <>
-      <Flex mb={1}>
-        <Flex.Item mr={1}>
-          <NewscasterChannelSelector />
-        </Flex.Item>
-        <Flex.Item grow={1} basis={0}>
-          <NewscasterInfobox />
-          <NewscasterChannelBox
-            channelName={current_channel.name}
-            channelOwner={current_channel.owner}
-            channelDesc={current_channel.desc} />
-        </Flex.Item>
-      </Flex>
-      <Section p={1}>
+    <Stack fill vertical>
+      <Stack.Item grow>
+        <Stack fill>
+          <Stack.Item grow>
+            <NewscasterChannelSelector />
+          </Stack.Item>
+          <Stack.Item grow={2}>
+            <Stack fill vertical>
+              <Stack.Item>
+                <UserDetails />
+              </Stack.Item>
+              <Stack.Item grow>
+                <NewscasterChannelBox
+                  channelName={current_channel.name}
+                  channelOwner={current_channel.owner}
+                  channelDesc={current_channel.desc} />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item grow>
         <NewscasterChannelMessages />
-      </Section>
-    </>
+      </Stack.Item>
+    </Stack>
   );
 };
 
-/** The Infobox is the user information panel in the top right. */
-const NewscasterInfobox = (props, context) => {
-  const { data } = useBackend(context);
-  const { user } = data;
-
-  if (!user) {
-    return (
-      <NoticeBox>No ID detected! Contact the Head of Personnel.</NoticeBox>
-    );
-  } else {
-    return (
-      <Section>
-        <Stack>
-          <Stack.Item>
-            <Icon name="id-card" size={3} mr={1} />
-          </Stack.Item>
-          <Stack.Item>
-            <LabeledList>
-              <LabeledList.Item label="User">{user.name}</LabeledList.Item>
-              <LabeledList.Item label="Occupation">
-                {user.job || 'Unemployed'}
-              </LabeledList.Item>
-            </LabeledList>
-          </Stack.Item>
-        </Stack>
-      </Section>
-    );
-  }
-};
-
 /** The Channel Box is the basic channel information where buttons live.*/
-const NewscasterChannelBox = (props, context) => {
+const NewscasterChannelBox = (_, context) => {
   const { act, data } = useBackend(context);
   const {
     channelName,
@@ -119,60 +194,60 @@ const NewscasterChannelBox = (props, context) => {
     user,
   } = data;
   return (
-    <Section title={channelName} >
-      {channelCensored === 1 && (
-        <Section>
-          <BlockQuote color="Red">
-            <b>ATTENTION:</b> This channel has been deemed as threatening to
-            the welfare of the station, and marked with a Nanotrasen D-Notice.
-          </BlockQuote>
-        </Section>
-      )}
-      {channelCensored !== 1 &&(
-        <Box>
-          <BlockQuote italic mb={1} ml={1} fontSize={1.2}>
-            {channelDesc}
-          </BlockQuote>
-          <LabeledList mt={1} mb={1}>
-            <LabeledList.Item label="Owner">
-              {channelAuthor}
-            </LabeledList.Item>
-          </LabeledList>
-        </Box>
-      )}
-      <Box>
-        <Button
-          icon="print"
-          content="Submit Story"
-          disabled={(channelBlocked && (channelAuthor !== user.name))
+    <Section fill title={channelName}>
+      <Stack fill vertical>
+        <Stack.Item grow>
+          {channelCensored ? (
+            <Section>
+              <BlockQuote color="Red">
+                <b>ATTENTION:</b> {CENSOR_MESSAGE}
+              </BlockQuote>
+            </Section>)
+            : (
+              <Section fill scrollable>
+                <BlockQuote italic fontSize={1.2} wrap>
+                  {deconvertHtmlString(channelDesc)}
+                </BlockQuote>
+              </Section>
+            )}
+        </Stack.Item>
+        <Stack.Item>
+          <Box>
+            <Button
+              icon="print"
+              content="Submit Story"
+              disabled={(channelBlocked && (channelAuthor !== user.name))
             || channelCensored}
-          onClick={() => act('createStory', { current: viewing_channel })}
-          mt={1} />
-        <Button
-          icon="camera"
-          selected={photo_data}
-          content="Select Photo"
-          disabled={(channelBlocked && (channelAuthor !== user.name))
+              onClick={() => act('createStory', { current: viewing_channel })}
+              mt={1} />
+            <Button
+              icon="camera"
+              selected={photo_data}
+              content="Select Photo"
+              disabled={(channelBlocked && (channelAuthor !== user.name))
             || channelCensored}
-          onClick={() => act('togglePhoto')} />
-        {security_mode === 1 && (
-          <Button
-            icon={"ban"}
-            content={"D-Notice"}
-            tooltip="Censor the whole channel and it's contents as dangerous to the station. Cannot be undone."
-            disabled={!security_mode}
-            onClick={() => act('channelDNotice',
-              { secure: security_mode,
-                channel: viewing_channel })} />
-        )}
-      </Box>
-      <Box>
-        <Button
-          icon={"newspaper"}
-          content={"Print Newspaper"}
-          disabled={paper <= 1}
-          onClick={() => act('paper')} />
-      </Box>
+              onClick={() => act('togglePhoto')} />
+            {!!security_mode && (
+              <Button
+                icon={"ban"}
+                content={"D-Notice"}
+                tooltip="Censor the whole channel and it's \
+                  contents as dangerous to the station. Cannot be undone."
+                disabled={!security_mode}
+                onClick={() => act('channelDNotice',
+                  { secure: security_mode,
+                    channel: viewing_channel })} />
+            )}
+          </Box>
+          <Box>
+            <Button
+              icon={"newspaper"}
+              content={"Print Newspaper"}
+              disabled={paper <= 0}
+              onClick={() => act('printNewspaper')} />
+          </Box>
+        </Stack.Item>
+      </Stack>
     </Section>
   );
 };
@@ -209,6 +284,7 @@ const NewscasterChannelSelector = (props, context) => {
           pb={0.75}
           mr={1}
           textColor="white"
+          color={"Green"}
           onClick={() => act('startCreateChannel')}>
           Create Channel [+]
         </Tabs.Tab>
@@ -231,7 +307,7 @@ const processedText = value => {
 
 
 /** This is where the channels comments get spangled out (tm) */
-const NewscasterChannelMessages = (props, context) => {
+const NewscasterChannelMessages = (_, context) => {
   const { act, data } = useBackend(context);
   const {
     messages = [],
@@ -239,8 +315,16 @@ const NewscasterChannelMessages = (props, context) => {
     security_mode,
     channelCensored,
   } = data;
+  if (channelCensored) {
+    return (
+      <Section color="Red">
+        <b>ATTENTION:</b> Comments cannot be read at this time.<br />
+        Thank you for your understanding, and have a secure day.
+      </Section>
+    );
+  }
   return (
-    <Section scrollable>
+    <Section fill scrollable>
       {messages?.map(message => {
         if (message.channel_num !== viewing_channel) {
           return;
@@ -312,73 +396,8 @@ const NewscasterChannelMessages = (props, context) => {
   );
 };
 
-/** The modal menu that contains the prompts to making new channels. */
-const NewscasterChannelCreation = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [publicmode, setPublicmode] = useSharedState(context, 'publicmode', 1);
-  const {
-    creating_channel,
-    viewing_channel,
-    name,
-    desc,
-  } = data;
-  if (!creating_channel) {
-    return null;
-  }
-  return (
-    <Modal textAlign="center">
-      <Stack>
-        <Stack.Item>
-          Enter Channel Name Here:
-          <TextArea
-            fluid
-            height="40px"
-            width="200px"
-            backgroundColor="black"
-            textColor="white"
-            onChange={(e, name) => act('channelName', {
-              channeltext: name,
-            })}>
-            Channel Name
-          </TextArea>
-        </Stack.Item>
-        <Stack.Item>
-          Enter Channel Description Here:
-          <TextArea
-            fluid
-            height="150px"
-            width="200px"
-            backgroundColor="black"
-            textColor="white"
-            onChange={(e, desc) => act('channelDesc', {
-              channeldesc: desc,
-            })}>
-            Channel Description
-          </TextArea>
-        </Stack.Item>
-        <Stack.Item>
-          Set Channel as Public or Private
-          <Button
-            selected={publicmode===1}
-            content="Public"
-            onClick={() => act(setPublicmode(1))} />
-          <Button
-            selected={publicmode===0}
-            content="Private"
-            onClick={() => act(setPublicmode(0))} />
-        </Stack.Item>
-        <Stack.Item>
-          <Button
-            content={"Submit Channel"}
-            selected={length(name) > 0
-              && length(desc) > 0}
-            onClick={() => act('createChannel', {
-              publicmode: publicmode,
-              viewing_channel: viewing_channel,
-            })} />
-        </Stack.Item>
-      </Stack>
-    </Modal>
-  );
+export const deconvertHtmlString = (text) => {
+  return text.replace(/&#(\d+);/g, (_, dec) => {
+    return String.fromCharCode(dec);
+  });
 };
-
