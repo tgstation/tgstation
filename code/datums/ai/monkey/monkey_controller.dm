@@ -183,7 +183,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(crossed) && crossed.density)
+	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(crossed))
 		var/mob/living/in_the_way_mob = crossed
 		in_the_way_mob.knockOver(living_pawn)
 		return
