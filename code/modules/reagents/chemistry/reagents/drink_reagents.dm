@@ -1182,9 +1182,9 @@
 /datum/reagent/consumable/agua_fresca/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
-		M.adjustToxLoss(-1, 0)
-		. = TRUE
-	..()
+		M.adjustToxLoss(-0.5, 0)
+		..()
+	. = TRUE
 
 /datum/reagent/consumable/mushroom_tea
 	name = "Mushroom Tea"
