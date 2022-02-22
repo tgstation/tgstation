@@ -63,4 +63,3 @@
 
 /obj/item/petri_dish/bovine
 	var/datum/micro_organism/cell_line/cow
-	. = ..()
