@@ -135,15 +135,13 @@ $bg-map: colors.$bg-map !default;
   @include button-color($color-selected);
 }
 
-.Button--flex--inline{
-  display: inline-flex;
+.Button--flex{
+  display: inline-flex; //Inline even for fluid
   flex-direction: column;
 }
 
-// Companion to fluid prop
-.Button--flex--block{
-  display: flex;
-  flex-direction: column;
+.Button--flex--fluid{
+  width: 100%;
 }
 
 .Button--verticalAlignContent--top {

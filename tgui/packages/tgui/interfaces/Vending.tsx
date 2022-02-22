@@ -290,6 +290,7 @@ const ProductButton = (props, context) => {
   return custom ? (
     <Button
       fluid
+      verticalAlignContent="top"
       disabled={disabled}
       onClick={() =>
         act('dispense', {
@@ -300,6 +301,7 @@ const ProductButton = (props, context) => {
   ) : (
     <Button
       fluid
+      verticalAlignContent="top"
       disabled={disabled}
       onClick={() =>
         act('vend', {

@@ -68,7 +68,8 @@ export const Button = props => {
         circular && 'Button--circular',
         compact && 'Button--compact',
         iconPosition && 'Button--iconPosition--' + iconPosition,
-        verticalAlignContent && (fluid ? "Button--flex--block" : "Button--flex--inline"),
+        verticalAlignContent && ("Button--flex"),
+        (verticalAlignContent && fluid) && "Button--flex--fluid",
         verticalAlignContent && 'Button--verticalAlignContent--' + verticalAlignContent,
         (color && typeof color === 'string')
           ? 'Button--color--' + color
