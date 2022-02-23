@@ -39,16 +39,16 @@ export const AirlockController = (props, context) => {
   return (
     <Window width={500} height={190}>
       <Window.Content>
-        <Section title="Airlock Status"  buttons={(
-          ((airlockState === "pressurize" || airlockState === "depressurize") && 
-            <Button
+        <Section title="Airlock Status" buttons={(
+          ((airlockState === "pressurize" || airlockState === "depressurize")
+            && <Button
               icon="stop-circle"
               content="Abort"
               onClick={() => act("abort")}
             />
           ) || (
-          airlockState === "closed" && 
-            <>
+            airlockState === "closed"
+            && <>
               <Button
                 icon="lock-open"
                 content="Open Interior Airlock"
@@ -61,22 +61,22 @@ export const AirlockController = (props, context) => {
               />
             </>
           ) || (
-          airlockState === "inopen" && 
-            <>
-            <Button
-              icon="lock"
-              content="Close Interior Airlock"
-              onClick={() => act("cycleClosed")}
-            />
-            <Button
-              icon="sync"
-              content="Cycle to Exterior Airlock"
-              onClick={() => act("cycleExterior")}
-            />
+            airlockState === "inopen"
+            && <>
+              <Button
+                icon="lock"
+                content="Close Interior Airlock"
+                onClick={() => act("cycleClosed")}
+              />
+              <Button
+                icon="sync"
+                content="Cycle to Exterior Airlock"
+                onClick={() => act("cycleExterior")}
+              />
             </>
           ) || (
-          airlockState === "outopen" && 
-            <>
+            airlockState === "outopen"
+            && <>
               <Button
                 icon="lock"
                 content="Close Exterior Airlock"
