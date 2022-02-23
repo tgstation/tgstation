@@ -15,7 +15,7 @@
 	maxbodytemp = INFINITY
 	unique_name = 1
 	combat_mode = TRUE
-	see_in_dark = 8
+	see_in_dark = NIGHTVISION_FOV_RANGE
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	initial_language_holder = /datum/language_holder/empty
 	var/mob/camera/blob/overmind = null
