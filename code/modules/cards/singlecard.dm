@@ -28,7 +28,7 @@
 	/// The card is blank and can be written on with a pen.
 	var/blank = FALSE
 
-/obj/item/toy/singlecard/Initialize(mapload, name, /obj/item/toy/cards/deck/parent_deck)
+/obj/item/toy/singlecard/Initialize(mapload, name, obj/item/toy/cards/deck/parent_deck)
 	. = ..()
 	cardname = name || cardname
 	if(istype(parent_deck))
