@@ -206,8 +206,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	//**************************
 	//	  Bounty Board Data
 	//**************************
-	var/current_ref_num = params[request]
-	var/current_app_num = params[applicant]
+	var/current_ref_num = params["request"]
+	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
 	if(current_ref_num)
 		for(var/datum/station_request/i in GLOB.request_list)
@@ -222,7 +222,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	switch(action)
 		if("setChannel")
-			var/prototype_channel = (params[channel])
+			var/prototype_channel = params["channel"]
 			if(isnull(prototype_channel))
 				return TRUE
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
@@ -233,7 +233,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(!current_channel)
 				balloon_alert(usr, "select a channel first!")
 				return TRUE
-			var/prototype_channel = (params[current])
+			var/prototype_channel = params["current"]
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
 				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
@@ -273,9 +273,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 			creating_channel = TRUE
 		if("channelName")
-			channel_name = (params[channeltext])
+			channel_name = params["channeltext"]
 		if("channelDesc")
-			channel_desc = (params[channeldesc])
+			channel_desc = params["channeldesc"]
 
 		if("createChannel")
 			if(!channel_name)
@@ -286,38 +286,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					return TRUE
 			if(!channel_desc)
 				return TRUE
-			var/locked = (params[publicmode])
+			var/locked = params["publicmode"]
 			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
-				GLOB.news_network.Createiterated_feed_channelhannel(channel_name, current_user.account_holder, channel_desc , locked)
+				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc , locked)
 				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 			creating_channel = FALSE
 
 		if("storyCensor")
-			if (!params[secure])
+			if (!params["secure"])
 				say("Clearance not found.")
 				return TRUE
-			var/questionable_message = params[messageID]
+			var/questionable_message = params["messageID"]
 			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
 				if(mess.message_ID == questionable_message)
 					mess.toggleCensorBody()
 					break
 
 		if("authorCensor")
-			if (!params[secure])
+			if (!params["secure"])
 				say("Clearance not found.")
 				return TRUE
-			var/questionable_message = params[messageID]
+			var/questionable_message = params["messageID"]
 			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
 				if(mess.message_ID == questionable_message)
 					mess.toggleCensorAuthor()
 					break
 
 		if("channelDNotice")
-			if (!params[secure])
+			if (!params["secure"])
 				say("Clearance not found.")
 				return TRUE
-			var/prototype_channel = (params[channel])
+			var/prototype_channel = (params["channel"])
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
 				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
@@ -380,11 +380,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("bountyVal")
-			bounty_value = text2num(params[bountyval])
+			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
 		if("bountyText")
-			bounty_text = (params[bountytext])
+			bounty_text = (params["bountytext"])
 	. = TRUE
 
 

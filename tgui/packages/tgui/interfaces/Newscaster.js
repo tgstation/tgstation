@@ -76,7 +76,7 @@ const NewscasterChannelCreation = (props, context) => {
       textAlign="center"
       mr={1.5}>
       <Stack vertical>
-        <Stack.Item vertical>
+        <Stack.Item>
           <Box pb={1}>
             Enter Channel Name Here:
           </Box>
@@ -115,13 +115,13 @@ const NewscasterChannelCreation = (props, context) => {
             Set Channel as Public or Private
             <Box pt={1}>
               <Button
-                selected={publicmode===TRUE}
+                selected={!!publicmode}
                 content="Public"
-                onClick={() => act(setPublicmode(TRUE))} />
+                onClick={() => act(setPublicmode(true))} />
               <Button
-                selected={publicmode===FALSE}
+                selected={!publicmode}
                 content="Private"
-                onClick={() => act(setPublicmode(FALSE))} />
+                onClick={() => act(setPublicmode(false))} />
             </Box>
           </Section>
         </Stack.Item>
@@ -337,12 +337,12 @@ const NewscasterChannelMessages = (_, context) => {
             key={message.body}
             title={(
               <i>
-                {message.censored_author === TRUE && (
+                {!!message.censored_author && (
                   <Box textColor="Red">
                     By: [REDACTED]. <b>D-Notice Notice</b> .
                   </Box>
                 )}
-                {message.censored_author !== TRUE && (
+                {!message.censored_author && (
                   <>
                     By: {message.auth} at {message.time}
                   </>
@@ -351,7 +351,7 @@ const NewscasterChannelMessages = (_, context) => {
             )}
             buttons={(
               <>
-                {security_mode === TRUE && (
+                {!!security_mode && (
                   <Button
                     icon={"comment-slash"}
                     tooltip={"Censor Story"}
@@ -361,7 +361,7 @@ const NewscasterChannelMessages = (_, context) => {
                       messageID: message.ID,
                     })} />
                 )}
-                {security_mode === TRUE && (
+                {!!security_mode && (
                   <Button
                     icon={'user-slash'}
                     tooltip={"Censor Author"}
@@ -375,19 +375,19 @@ const NewscasterChannelMessages = (_, context) => {
             )} >
             <BlockQuote
               textColor="white">
-              {message.censored_message === TRUE &&(
+              {!!message.censored_message &&(
                 <Section textColor="Red">
                   This message was deemed dangerous to the general welfare
                   of the station and therefore marked with a <b>D-Notice</b>.
                 </Section>
               )}
-              {message.censored_message !== TRUE &&(
+              {!message.censored_message &&(
                 <Section
                   color="label"
                   dangerouslySetInnerHTML={processedText(message.body)}
                   pl={1} />
               )}
-              {message.photo !== null && message.censored_message !== TRUE &&(
+              {message.photo !== null && !message.censored_message &&(
                 <Box
                   as="img"
                   src={message.Photo} />
