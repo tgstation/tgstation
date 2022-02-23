@@ -89,7 +89,7 @@
 		if(!(user.mobility_flags & MOBILITY_PICKUP))
 			return CARD_DRAW_CANCEL
 
-	var/has_no_cards = LAZYLEN(cards)
+	var/has_no_cards = !LAZYLEN(cards)
 	if(has_no_cards)
 		to_chat(user, span_warning("There are no more cards to draw!"))
 		return CARD_DRAW_CANCEL

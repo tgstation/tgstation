@@ -28,11 +28,11 @@
 	if(deckstyle == "nanotrasen" || deckstyle == "syndicate") 
 		// generate a normal playing card deck
 		for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
-			cards += new /obj/item/toy/singlecard(loc, "Ace of [suit]", src)
+			cards += new /obj/item/toy/singlecard(null, "Ace of [suit]", src)
 			for(var/i in 2 to 10)
-				cards += new /obj/item/toy/singlecard(loc, "[i] of [suit]", src)
+				cards += new /obj/item/toy/singlecard(null, "[i] of [suit]", src)
 			for(var/person in list("Jack", "Queen", "King"))
-				cards += new /obj/item/toy/singlecard(loc, "[person] of [suit]", src)
+				cards += new /obj/item/toy/singlecard(null, "[person] of [suit]", src)
 
 /// triggered on wield of two handed item
 /obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)
