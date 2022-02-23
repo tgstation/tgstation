@@ -48,46 +48,49 @@ export const AirlockController = (props, context) => {
             />
           ) || (
             airlockState === "closed" && (
-            <>
-              <Button
-                icon="lock-open"
-                content="Open Interior Airlock"
-                onClick={() => act("cycleInterior")}
-              />
-              <Button
-                icon="lock-open"
-                content="Open Exterior Airlock"
-                onClick={() => act("cycleExterior")}
-              />
-            </>)
+              <>
+                <Button
+                  icon="lock-open"
+                  content="Open Interior Airlock"
+                  onClick={() => act("cycleInterior")}
+                />
+                <Button
+                  icon="lock-open"
+                  content="Open Exterior Airlock"
+                  onClick={() => act("cycleExterior")}
+                />
+              </>
+            )
           ) || (
             airlockState === "inopen" && (
-            <>
-              <Button
-                icon="lock"
-                content="Close Interior Airlock"
-                onClick={() => act("cycleClosed")}
-              />
-              <Button
-                icon="sync"
-                content="Cycle to Exterior Airlock"
-                onClick={() => act("cycleExterior")}
-              />
-            </>)
+              <>
+                <Button
+                  icon="lock"
+                  content="Close Interior Airlock"
+                  onClick={() => act("cycleClosed")}
+                />
+                <Button
+                  icon="sync"
+                  content="Cycle to Exterior Airlock"
+                  onClick={() => act("cycleExterior")}
+                />
+              </>
+            )
           ) || (
             airlockState === "outopen" && (
-            <>
-              <Button
-                icon="lock"
-                content="Close Exterior Airlock"
-                onClick={() => act("cycleClosed")}
-              />
-              <Button
-                icon="sync"
-                content="Cycle to Interior Airlock"
-                onClick={() => act("cycleInterior")}
-              />
-            </>)
+              <>
+                <Button
+                  icon="lock"
+                  content="Close Exterior Airlock"
+                  onClick={() => act("cycleClosed")}
+                />
+                <Button
+                  icon="sync"
+                  content="Cycle to Interior Airlock"
+                  onClick={() => act("cycleInterior")}
+                />
+              </>
+            )
           )
         )}>
           <LabeledList>
