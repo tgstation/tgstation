@@ -11,9 +11,6 @@
 /// Determines the probability that a kudzu plant with the flowering mutation will spawn a venus flower bud
 #define FLOWERING_MUTATION_SPAWN_PROB 10
 
-/// Temperature below which the kudzu can't spread
-#define VINE_FREEZING_POINT 100
-
 /// Kudzu severity values for traits, based on severity in terms of how severely it impacts the game, the lower the severity, the more likely it is to appear
 #define SEVERITY_TRIVIAL 1
 #define SEVERITY_MINOR 2
@@ -25,7 +22,7 @@
 #define MUTATIVENESS_SCALE_FACTOR 0.1
 
 /// Kudzu maximum mutation severity is a linear function of potency
-#define MAX_SEVERITY_LINEAR_COEFF 0.1
+#define MAX_SEVERITY_LINEAR_COEFF 0.3
 #define MAX_SEVERITY_CONSTANT_TERM 10
 
 /// The maximum possible productivity value of a (normal) kudzu plant, used for calculating a plant's spread cap and multiplier
@@ -142,7 +139,7 @@
 	name = "Explosive"
 	hue = "#D83A56"
 	quality = NEGATIVE
-	severity = SEVERITY_ABOVE_AVERAGE
+	severity = SEVERITY_MAJOR
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity < 3)
@@ -169,16 +166,6 @@
 		. = 0
 	else
 		. = expected_damage
-
-/datum/spacevine_mutation/cold_proof
-	name = "Cold proof"
-	hue = "#0BD5D9"
-	quality = MINOR_NEGATIVE
-	severity = SEVERITY_AVERAGE
-
-/datum/spacevine_mutation/cold_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
-	. = ..()
-	holder.trait_flags |= SPACEVINE_COLD_RESISTANT
 
 /datum/spacevine_mutation/vine_eating
 	name = "Vine eating"
@@ -489,7 +476,7 @@
 	var/list/vine_mutations_list
 	var/mutativeness = 1
 	///Maximum sum of mutation severities
-	var/max_mutation_severity = 20
+	var/max_mutation_severity = 40
 
 /datum/spacevine_controller/New(turf/location, list/muts, potency, production, datum/round_event/event = null)
 	vines = list()
@@ -505,7 +492,7 @@
 		vine_mutations_list[mutation] = max_mutation_severity - mutation.severity // this is intended to be before the potency check as the ideal maximum potency is used for weighting
 	if(potency != null)
 		mutativeness = potency * MUTATIVENESS_SCALE_FACTOR // If potency is 100, 10 mutativeness; if 1: 0.1 mutativeness
-		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 20 max mutation severity; if 1, 10 max mutation severity
+		max_mutation_severity = round(potency * MAX_SEVERITY_LINEAR_COEFF + MAX_SEVERITY_CONSTANT_TERM) // If potency is 100, 40 max mutation severity; if 1, 10 max mutation severity
 	if(production != null && production <= MAX_POSSIBLE_PRODUCTIVITY_VALUE) //Prevents runtime in case production is set to 11.
 		spread_cap = SPREAD_CAP_SCALE_FACTOR * (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) //Best production speed of 1 increases spread_cap to 40, worst production speed of 10 lowers it to 4, even distribution
 		spread_multiplier = SPREAD_MULTIPLIER_MAX / (MAX_POSSIBLE_PRODUCTIVITY_VALUE + 1 - production) // Best production speed of 1: 10% of total vines will spread per second, worst production speed of 10: 1% of total vines (with minimum of 1) will spread per second
@@ -664,15 +651,11 @@
 		qdel(src)
 
 /obj/structure/spacevine/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || exposed_temperature < VINE_FREEZING_POINT || !can_spread)//if you're room temperature you're safe
+	return (exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || !can_spread)//if you're not hot you're safe
 
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
-		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
 	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
 		qdel(src)
-	else if (exposed_temperature < VINE_FREEZING_POINT && !(trait_flags & SPACEVINE_COLD_RESISTANT))
-		can_spread = FALSE
 
 /obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -696,7 +679,6 @@
 #undef GAS_MUTATION_REMOVAL_MULTIPLIER
 #undef THORN_MUTATION_CUT_PROB
 #undef FLOWERING_MUTATION_SPAWN_PROB
-#undef VINE_FREEZING_POINT
 #undef SEVERITY_TRIVIAL
 #undef SEVERITY_MINOR
 #undef SEVERITY_AVERAGE
