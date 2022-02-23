@@ -64,6 +64,7 @@ const NewscasterChannelCreation = (props, context) => {
   const [publicmode, setPublicmode] = useLocalState(context, 'publicmode', 1);
   const {
     creating_channel,
+    creating_message,
     viewing_channel,
     name,
     desc,
@@ -78,7 +79,7 @@ const NewscasterChannelCreation = (props, context) => {
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
-            Enter Channel Name Here:
+            Enter channel name Here:
           </Box>
           <TextArea
             fluid
@@ -95,7 +96,7 @@ const NewscasterChannelCreation = (props, context) => {
         </Stack.Item>
         <Stack.Item>
           <Box pb={1}>
-            Enter Channel Description Here:
+            Enter channel description here:
           </Box>
           <TextArea
             fluid
@@ -125,7 +126,6 @@ const NewscasterChannelCreation = (props, context) => {
             </Box>
           </Section>
         </Stack.Item>
-
         <Stack.Item>
           <Box>
             <Button
@@ -137,9 +137,59 @@ const NewscasterChannelCreation = (props, context) => {
             <Button
               content={"Cancel"}
               color={"red"}
-              onClick={() => act('cancelChannel')} />
+              onClick={() => act('cancelChannelCreation')} />
           </Box>
+        </Stack.Item>
+      </Stack>
+    </Modal>
+  );
+};
 
+/** The modal menu that contains the prompts to making new channels. */
+const NewscasterCommentCreation = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [publicmode, setPublicmode] = useLocalState(context, 'publicmode', 1);
+  const {
+    creating_message,
+    viewing_channel,
+  } = data;
+  if (!creating_message) {
+    return null;
+  }
+  return (
+    <Modal
+      textAlign="center"
+      mr={1.5}>
+      <Stack vertical>
+        <Stack.Item>
+          <Box pb={1}>
+            Enter comment:
+          </Box>
+          <TextArea
+            fluid
+            height="120px"
+            width="240px"
+            backgroundColor="black"
+            textColor="white"
+            maxLength={512}
+            onChange={(e, comment) => act('commentBody', {
+              commenttext: comment,
+            })}>
+            Channel Name
+          </TextArea>
+        </Stack.Item>
+        <Stack.Item>
+          <Box>
+            <Button
+              content={"Submit Channel"}
+              onClick={() => act('createComment', {
+                viewing_channel: viewing_channel,
+              })} />
+            <Button
+              content={"Cancel"}
+              color={"red"}
+              onClick={() => act('cancelCommentCreation')} />
+          </Box>
         </Stack.Item>
       </Stack>
     </Modal>
@@ -259,7 +309,7 @@ const NewscasterChannelBox = (_, context) => {
 const NewscasterChannelSelector = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    channel = [],
+    channels = [],
     viewing_channel,
   } = data;
   return (
@@ -317,6 +367,7 @@ const NewscasterChannelMessages = (_, context) => {
     viewing_channel,
     security_mode,
     channelCensored,
+    user,
   } = data;
   if (channelCensored) {
     return (
@@ -371,6 +422,16 @@ const NewscasterChannelMessages = (_, context) => {
                       messageID: message.ID,
                     })} />
                 )}
+                <Button
+                  icon={'comment'}
+                  tooltip={"Leave a Comment."}
+                  disabled={
+                    message.censored_author
+                  || message.censored_message
+                  || user.name === "Unknown"
+                  }
+                  onClick={() => act('comment')}
+                />
               </>
             )} >
             <BlockQuote

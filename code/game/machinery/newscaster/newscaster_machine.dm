@@ -27,6 +27,8 @@
 	var/alert = FALSE
 	///Is the current user creating a new channel at the moment?
 	var/creating_channel = FALSE
+	///Is the current user creating a new comment at the moment?
+	var/creating_comment = FALSE
 	///What is the current, in-creation channel's name going to be?
 	var/channel_name
 	///What is the current, in-creation channel's description going to be?
@@ -293,14 +295,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 			creating_channel = FALSE
 
+		if("cancelChannelCreation")
+			creating_channel = FALSE
+			return TRUE
+
 		if("storyCensor")
 			if (!params["secure"])
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
-			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
-				if(mess.message_ID == questionable_message)
-					mess.toggleCensorBody()
+			for(var/datum/newscaster/feed_message/iterated_feed_message in current_channel.messages)
+				if(iterated_feed_message.message_ID == questionable_message)
+					iterated_feed_message.toggleCensorBody()
 					break
 
 		if("authorCensor")
@@ -308,9 +314,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
-			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
-				if(mess.message_ID == questionable_message)
-					mess.toggleCensorAuthor()
+			for(var/datum/newscaster/feed_message/iterated_feed_message in current_channel.messages)
+				if(iterated_feed_message.message_ID == questionable_message)
+					iterated_feed_message.toggleCensorAuthor()
 					break
 
 		if("channelDNotice")

@@ -1,5 +1,6 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stack, TextArea } from '../components';
+import { UserDetails } from './Vending';
+import { BlockQuote, Box, Button, Collapsible, Flex, NumberInput, Section, Stack, TextArea } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -23,24 +24,21 @@ export const BountyBoardContent = (props, context) => {
     applicants = [],
     bountyValue,
     bountyText,
+    user,
   } = data;
   const color = 'rgba(13, 13, 213, 0.7)';
   const backColor = 'rgba(50, 50, 170, 0.5)';
   return (
     <>
-      <Section>
-        <LabeledList>
-          <LabeledList.Item
-            label="Current Account"
-            buttons={(
-              <Button
-                icon="power-off"
-                content="Reset Account"
-                onClick={() => act('clear')} />
-            )}>
-            {accountName || 'N/A'}
-          </LabeledList.Item>
-        </LabeledList>
+      <Section
+        title={"User Details"}
+        buttons={(
+          <Button
+            icon="power-off"
+            content="Reset Account"
+            onClick={() => act('clear')} />
+        )}>
+        <UserDetails />
       </Section>
       <Flex
         mb={1}>
@@ -153,6 +151,7 @@ export const BountyBoardContent = (props, context) => {
                 <Button
                   icon="print"
                   content="Submit bounty"
+                  disabled={user.name === "Unknown"}
                   onClick={() => act('createBounty')} />
               </Box>
             </Section>
