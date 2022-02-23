@@ -105,6 +105,8 @@
 		else
 			to_chat(user, span_warning("You need at least two lengths of cable!"))
 		return TRUE
+	if (broken)
+		return TRUE
 	else
 		return ..()
 

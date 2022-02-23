@@ -187,7 +187,6 @@
 	return ..()
 
 /obj/structure/window/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(atom_integrity < max_integrity)
 		if(!tool.tool_start_check(user, amount = 0))
 			return FALSE

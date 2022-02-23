@@ -388,8 +388,8 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/screwdriver_act(mob/living/user, obj/item/tool)
-	tool.play_tool_sound(src)
 	if(!(bot_cover_flags & BOT_COVER_LOCKED))
+		tool.play_tool_sound(src)
 		bot_cover_flags ^= BOT_COVER_OPEN
 		to_chat(user, span_notice("The maintenance panel is now [bot_cover_flags & BOT_COVER_OPEN ? "opened" : "closed"]."))
 	else
@@ -399,7 +399,7 @@
 /mob/living/simple_animal/bot/welder_act(mob/living/user, obj/item/tool)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(user.combat_mode)
-		return
+		return FALSE
 
 	. = TRUE
 	if(health >= maxHealth)
