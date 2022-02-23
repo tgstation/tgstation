@@ -128,18 +128,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		data["user"]["job"] = "N/A"
 		data["user"]["department"] = "N/A"
 
-	data["security_mode"] = FALSE
-	if(card && (ACCESS_ARMORY in card?.GetAccess()))
-		data["security_mode"] = TRUE
-
-	data["photo_data"] = FALSE
-	if(current_image)
-		data["photo_data"] = TRUE
+	data["security_mode"] = (ACCESS_ARMORY in card?.GetAccess())
+	data["photo_data"] = !isnull(current_image)
 	data["creating_channel"] = creating_channel
 
 	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
-	for(var/datum/newscaster/feed_channel/channel in GLOB.news_network.network_channels)
+	for(var/datum/newscaster/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		channel_list += list(list(
 			"name" = channel.channel_name,
 			"author" = channel.author,
@@ -147,36 +142,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"locked" = channel.locked,
 			"ID" = channel.channel_ID,
 			))
-		for(var/datum/newscaster/feed_message/comment_message in channel.messages)
+		for(var/datum/newscaster/feed_message/comment_message as anything in channel.messages)
 			var/photo_ID = null
 			if(comment_message.img)
 				user << browse_rsc(comment_message.img, "tmp_photo[comment_message.message_ID].png")
 				photo_ID = "tmp_photo[comment_message.message_ID].png"
 			message_list += list(list(
-			"auth" = comment_message.author,
-			"body" = comment_message.body,
-			"time" = comment_message.time_stamp,
-			"channel_num" = comment_message.parent_ID,
-			"censored_message" = comment_message.bodyCensor,
-			"censored_author" = comment_message.authorCensor,
-			"ID" = comment_message.message_ID,
-			"Photo" = photo_ID,
+				"auth" = comment_message.author,
+				"body" = comment_message.body,
+				"time" = comment_message.time_stamp,
+				"channel_num" = comment_message.parent_ID,
+				"censored_message" = comment_message.bodyCensor,
+				"censored_author" = comment_message.authorCensor,
+				"ID" = comment_message.message_ID,
+				"Photo" = photo_ID,
 			))
 	data["viewing_channel"] = current_channel?.channel_ID
 	data["paper"] = paper_remaining
-
 	//Here we display all the information about the current channel.
 	data["channelName"] = current_channel?.channel_name
 	data["channelAuthor"] = current_channel?.author
+
 	if(!current_channel)
 		data["channelAuthor"] = "Nanotrasen Inc"
-	data["channelDesc"] = current_channel?.channel_desc
-	if(!current_channel)
 		data["channelDesc"] = "Welcome to Newscaster Net. Interface & News networks Operational."
-	data["channelBlocked"] = current_channel?.locked || current_channel?.censored
-	if(!current_channel)
 		data["channelBlocked"] = TRUE
-	data["channelCensored"] = current_channel?.censored
+	else
+		data["channelDesc"] = current_channel.channel_desc
+		data["channelBlocked"] = (current_channel.locked || current_channel.censored)
+		data["channelCensored"] = current_channel.censored
 
 	//We send all the information about all channels and all messages in existance.
 	data["channels"] = channel_list
@@ -184,14 +178,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
-	for(var/i in GLOB.request_list)
-		if(!i)
-			continue
-		var/datum/station_request/request = i
+	for (var/datum/station_request/request as anything in GLOB.request_list)
 		formatted_requests += list(list("owner" = request.owner, "value" = request.value, "description" = request.description, "acc_number" = request.req_number))
 		if(request.applicants)
-			for(var/datum/bank_account/j in request.applicants)
-				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
+			for(var/datum/bank_account/bank_account_b as anything in request.applicants)
+				formatted_applicants += list(list("name" = bank_account_b.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = bank_account_b.account_id))
 	data["requests"] = formatted_requests
 	data["applicants"] = formatted_applicants
 	data["bountyValue"] = bounty_value
@@ -210,14 +201,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
 	if(current_ref_num)
-		for(var/datum/station_request/i in GLOB.request_list)
-			if(i.req_number == current_ref_num)
-				active_request = i
+		for(var/datum/station_request/iterated_station_request as anything in GLOB.request_list)
+			if(iterated_station_request.req_number == current_ref_num)
+				active_request = iterated_station_request
 				break
 	if(active_request)
-		for(var/datum/bank_account/j in active_request.applicants)
-			if(j.account_id == current_app_num)
-				request_target = j
+		for(var/datum/bank_account/iterated_bank_account as anything in active_request.applicants)
+			if(iterated_bank_account.account_id == current_app_num)
+				request_target = iterated_bank_account
 				break
 
 	switch(action)
@@ -225,7 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			var/prototype_channel = params["channel"]
 			if(isnull(prototype_channel))
 				return TRUE
-			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
 				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
 
@@ -234,7 +225,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				balloon_alert(usr, "select a channel first!")
 				return TRUE
 			var/prototype_channel = params["current"]
-			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
 				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
 					break
@@ -263,7 +254,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if("startCreateChannel")
 			//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
 			var/list/existing_authors = list()
-			for(var/datum/newscaster/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
 				if(iterated_feed_channel.authorCensor)
 					existing_authors += GLOB.news_network.redactedText
 				else
@@ -280,7 +271,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if("createChannel")
 			if(!channel_name)
 				return
-			for(var/datum/newscaster/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
+			for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
 				if(iterated_feed_channel.channel_name == channel_name)
 					tgui_alert(usr, "ERROR: Feed Channel with that name already exists on the Network.", list("Okay"))
 					return TRUE
