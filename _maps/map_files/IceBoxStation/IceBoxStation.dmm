@@ -29978,8 +29978,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet,
 /obj/machinery/light/directional/south,
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1
+	},
 /turf/open/floor/iron,
 /area/commons/locker)
 "meo" = (
@@ -33171,20 +33173,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/commons/fitness)
-"nNx" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet,
-/turf/open/floor/iron,
-/area/commons/locker)
 "nNy" = (
 /obj/structure/railing{
 	dir = 4
@@ -34459,7 +34447,6 @@
 /turf/open/floor/iron/dark,
 /area/engineering/lobby)
 "osf" = (
-/obj/structure/closet/secure_closet,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -34469,6 +34456,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/closet/secure_closet/personal{
+	anchored = 1
 	},
 /turf/open/floor/iron,
 /area/commons/locker)
@@ -73760,7 +73750,7 @@ oUp
 xmX
 uZN
 kdK
-nNx
+osf
 jhN
 wuD
 wBP
@@ -74017,7 +74007,7 @@ mHA
 dca
 lTi
 kdK
-nNx
+osf
 jhN
 hWp
 mRa
@@ -74274,7 +74264,7 @@ oUp
 htj
 htj
 jJz
-nNx
+osf
 jhN
 rYD
 fMZ
