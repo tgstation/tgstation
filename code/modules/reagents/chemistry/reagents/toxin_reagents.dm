@@ -214,6 +214,17 @@
 	ph = 12
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+///Emulsijack poison
+/datum/reagent/toxin/emulsifying_agent
+	name = "Emulsifying Agent"
+	description = "A goopy slime that is emitted from the emulsijack."
+	silent_toxin = TRUE
+	color = "#088a03" // rgb: 0, 51, 51
+	toxpwr = 3
+	taste_description = "acidic slime"
+	ph = 1.5
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."

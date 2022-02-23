@@ -30,8 +30,7 @@
 		if(!probability_table)
 			probability_table = list()
 		var/chance_table = list()
-		for(var/_fish_behavior in subtypesof(/datum/aquarium_behaviour/fish))
-			var/datum/aquarium_behaviour/fish/fish_behavior = _fish_behavior
+		for(var/datum/aquarium_behaviour/fish/fish_behavior as anything in subtypesof(/datum/aquarium_behaviour/fish))
 			if(required_fluid && initial(fish_behavior.required_fluid_type) != required_fluid)
 				continue
 			if(initial(fish_behavior.available_in_random_cases) || !case_fish_only)
@@ -172,6 +171,7 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 2
 	fillet_type = /obj/item/food/fishmeat/moonfish
+	fish_sources = list("Tizira")
 
 /datum/aquarium_behaviour/fish/gunner_jellyfish
 	name = "gunner jellyfish"
@@ -180,6 +180,7 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/gunner_jellyfish
+	fish_sources = list("Tizira")
 
 /datum/aquarium_behaviour/fish/needlefish
 	name = "needlefish"
@@ -188,6 +189,7 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 12
 	fillet_type = null
+	fish_sources = list("Tizira")
 
 /datum/aquarium_behaviour/fish/armorfish
 	name = "armorfish"
@@ -196,6 +198,7 @@
 	required_fluid_type = AQUARIUM_FLUID_SALTWATER
 	stable_population = 10
 	fillet_type = /obj/item/food/fishmeat/armorfish
+	fish_sources = list("Tizira")
 
 /obj/item/storage/box/fish_debug
 	name = "box full of fish"
@@ -212,6 +215,7 @@
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 4
 	fillet_type = /obj/item/food/fishmeat/donkfish
+	fish_sources = list("The Syndicate")
 
 /datum/aquarium_behaviour/fish/emulsijack
 	name = "toxic emulsijack"
@@ -219,22 +223,26 @@
 	icon_state = "emulsijack"
 	random_case_rarity = FISH_RARITY_GOOD_LUCK_FINDING_THIS
 	required_fluid_type = AQUARIUM_FLUID_ANADROMOUS
+	food = /datum/reagent/yuck
 	stable_population = 3
+	fish_sources = list("The Syndicate")
+
+/datum/aquarium_behaviour/fish/emulsijack/Initialize(datum/component/aquarium_content/content, obj/item/properties_of)
+	. = ..()
+	//hey look, it's gross!
+	properties_of.create_reagents(1, NONE)
+	properties_of.reagents.add_reagent(/datum/reagent/toxin/emulsifying_agent, 1)
 
 /datum/aquarium_behaviour/fish/emulsijack/process(delta_time = SSOBJ_DT)
-	var/emulsified = FALSE
 	if(parent.current_aquarium)
-		for(var/obj/item/fish/victim in parent.current_aquarium.contents)
-			var/datum/component/aquarium_content/content_component = victim.GetComponent(/datum/component/aquarium_content)
-			var/datum/aquarium_behaviour/fish/fish_properties = content_component.properties
-			if(istype(fish_properties, /datum/aquarium_behaviour/fish/emulsijack))
-				continue //no team killing
-			fish_properties.adjust_health((fish_properties.health - 3) * delta_time) //the victim may heal a bit but this will quickly kill
-			emulsified = TRUE
-	if(emulsified)
-		adjust_health((health + 3) * delta_time)
-		last_feeding = world.time //emulsijack feeds on the emulsion!
+		var/obj/item/fish/fish = parent.parent
+		fish.reagents.expose(parent.current_aquarium)
 	..()
+
+/datum/aquarium_behaviour/fish/emulsijack/on_feeding(datum/reagents/feed_reagents)
+	if(feed_reagents.has_reagent(food))
+		last_feeding = world.time
+	//doesn't take damage from toxins or yuck, two things it produces
 
 /datum/aquarium_behaviour/fish/ratfish
 	name = "ratfish"
@@ -244,6 +252,7 @@
 	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 	stable_population = 10 //set by New, but this is the default config value
 	fillet_type = /obj/item/food/meat/slab/human/mutant/zombie //eww...
+	fish_sources = list("Maintenance")
 
 /datum/aquarium_behaviour/fish/ratfish/New()
 	//stable pop reflects the config for how many mice migrate. powerful...

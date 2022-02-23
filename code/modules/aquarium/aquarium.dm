@@ -43,8 +43,6 @@
 /obj/structure/aquarium/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	RegisterSignal(src,COMSIG_PARENT_ATTACKBY, .proc/feed_feedback)
-
 
 /obj/structure/aquarium/proc/request_layer(layer_type)
 	/**
@@ -128,12 +126,6 @@
 		else
 			return ..()
 	return ..()
-
-/obj/structure/aquarium/proc/feed_feedback(datum/source, obj/item/thing, mob/user, params)
-	SIGNAL_HANDLER
-	if(istype(thing, /obj/item/fish_feed))
-		to_chat(user,span_notice("You feed the fish."))
-	return NONE
 
 /obj/structure/aquarium/interact(mob/user)
 	if(!broken && user.pulling && isliving(user.pulling))

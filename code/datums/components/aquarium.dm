@@ -26,7 +26,7 @@
 		properties = new property_type
 	else
 		CRASH("Invalid property type provided for aquarium content component")
-	properties.parent = src
+	properties.Initialize(src)
 
 	ADD_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/enter_aquarium)
@@ -73,6 +73,7 @@
 	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_SURFACE_CHANGED, .proc/on_surface_changed)
 	RegisterSignal(current_aquarium, COMSIG_AQUARIUM_FLUID_CHANGED,.proc/on_fluid_changed)
 	RegisterSignal(current_aquarium, COMSIG_PARENT_ATTACKBY, .proc/attack_reaction)
+	RegisterSignal(current_aquarium, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_reagent_exposed)
 	properties.on_inserted()
 
 	//If we don't have vc object yet build it
@@ -86,6 +87,11 @@
 	//Finally add it to to objects vis_contents
 	current_aquarium.vis_contents |= vc_obj
 
+///Signal fired when new reagents are introduced to the tank.
+/datum/component/aquarium_content/proc/on_reagent_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
+	SIGNAL_HANDLER
+	properties.on_feeding(source_reagents)
+
 /// Aquarium surface changed in some way, we need to recalculate base position and aninmation
 /datum/component/aquarium_content/proc/on_surface_changed()
 	SIGNAL_HANDLER
@@ -95,12 +101,8 @@
 /// Our aquarium is hit with stuff
 /datum/component/aquarium_content/proc/attack_reaction(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
-	if(istype(thing, /obj/item/fish_feed))
-		properties.on_feeding(thing.reagents)
-		return COMPONENT_NO_AFTERATTACK
-	else
-		//stirred effect
-		generate_animation()
+	//stirred effect. fish feed and other stuff is handled by the fish feeder
+	generate_animation()
 
 /datum/component/aquarium_content/proc/on_fluid_changed()
 	SIGNAL_HANDLER
