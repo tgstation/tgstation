@@ -724,9 +724,9 @@
 	required_candidates = 1
 	weight = 3
 	cost = 6 //very cheap cost for the round
-	scaling_cost = 9
+	scaling_cost = 0
 	requirements = list(8,8,8,8,8,8,8,8,8,8)
-	antag_cap = list("denominator" = 24)
+	antag_cap = list("denominator" = 24, "offset" = 2)
 
 /datum/dynamic_ruleset/roundstart/thieves/pre_execute(population)
 	. = ..()
