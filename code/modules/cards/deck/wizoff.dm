@@ -7,10 +7,11 @@
 	deckstyle = "wizoff"
 	var/theme = "wizard"
 
-/obj/item/toy/cards/deck/wizoff/populate_deck()
+/obj/item/toy/cards/deck/wizoff/Initialize(mapload)
+	. = ..()
 	var/card_list = strings("wizoff.json", theme)
 	for(var/card in card_list)
-		cards += generate_card("[card]")
+		cards += new /obj/item/toy/singlecard(loc, card, src)
 
 /obj/item/toy/cards/deck/wizoff/examine_more(mob/user)
 	var/list/msg = list(span_notice("Remember the rules of Wiz-Off!"))

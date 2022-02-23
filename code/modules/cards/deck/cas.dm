@@ -17,7 +17,8 @@
 	icon_state = "deck_black_full"
 	deckstyle = "black"
 
-/obj/item/toy/cards/deck/cas/populate_deck()
+/obj/item/toy/cards/deck/cas/Initialize(mapload)
+	. = ..()
 	var/cards_against_space = world.file2list("strings/[deckstyle].txt")
 	for(var/card in cards_against_space)
-		cards += generate_card("[card]")
+		cards += new /obj/item/toy/singlecard(loc, card, src)

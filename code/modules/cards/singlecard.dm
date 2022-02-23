@@ -1,27 +1,57 @@
 #define CARD_FACEDOWN 0
 #define CARD_FACEUP 1
 
-/obj/item/toy/cards/singlecard
+/obj/item/toy/singlecard
 	name = "card"
 	desc = "A playing card used to play card games like poker."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "singlecard_down_nanotrasen"
+	icon = 'icons/obj/playing_cards.dmi'
+	icon_state = "sc_Ace of Spades_nanotrasen"
 	w_class = WEIGHT_CLASS_TINY
 	worn_icon_state = "card"
 	pixel_x = -5
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	force = 0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	attack_verb_continuous = list("attacks")
+	attack_verb_simple = list("attack")
+	///Artistic style of the deck
+	var/deckstyle = "nanotrasen"
+	///If the cards in the deck have different card faces icons (blank and CAS decks do not)
+	var/has_unique_card_icons = TRUE
 	///The name of the card
-	var/cardname = null
-	///is the card facedown (F), or faceup (T)?
+	var/cardname = "Ace of Spades"
+	///is the card flipped facedown (FALSE) or flipped faceup (TRUE)
 	var/flipped = FALSE
 	/// The card is blank and can be written on with a pen.
 	var/blank = FALSE
 
-/obj/item/toy/cards/singlecard/examine(mob/user)
+/obj/item/toy/singlecard/Initialize(mapload, name, /obj/item/toy/cards/deck/parent_deck)
+	. = ..()
+	cardname = name || cardname
+	if(istype(parent_deck))
+		deckstyle = parent_deck.deckstyle
+		has_unique_card_icons = parent_deck.has_unique_card_icons
+		icon_state = "singlecard_down_[parent_deck.deckstyle]"
+		hitsound = parent_deck.card_hitsound
+		force = parent_deck.card_force
+		throwforce = parent_deck.card_throwforce
+		throw_speed = parent_deck.card_throw_speed
+		throw_range = parent_deck.card_throw_range
+		attack_verb_continuous = parent_deck.card_attack_verb_continuous || attack_verb_continuous
+		attack_verb_simple = parent_deck.card_attack_verb_simple || attack_verb_simple
+
+	// we need to figure out how to do holodeck cards
+	//if(holo)
+	//	holo.spawned += card_to_add
+
+/obj/item/toy/singlecard/examine(mob/living/carbon/human/user)
 	. = ..()
 	if(ishuman(user))
-		var/mob/living/carbon/human/cardUser = user
-		if(cardUser.is_holding(src))
-			cardUser.visible_message(span_notice("[cardUser] checks [cardUser.p_their()] card."), span_notice("The card reads: [cardname]."))
+		if(user.is_holding(src))
+			user.visible_message(span_notice("[user] checks [user.p_their()] card."), span_notice("The card reads: [cardname]."))
 			if(blank)
 				. += span_notice("The card is blank. Write on it with a pen.")
 		else if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
@@ -32,14 +62,14 @@
 		. += span_notice("Alt-click to rotate it 90 degrees.")
 
 /**
- * ## Flip
+ * Flip
  *
  * Flips the card over
  * 
  * * Arguments:
- * * orientation (optional) - Force the card to be flipped faceup or facedown
+ * * orientation (optional) - Sets flipped state to CARD_FACEDOWN or CARD_FACEUP if given orientation (otherwise just invert the flipped state)
  */
-/obj/item/toy/cards/singlecard/proc/Flip(orientation)
+/obj/item/toy/singlecard/proc/Flip(orientation)
 	if(!isnull(orientation))
 		flipped = orientation
 	else
@@ -48,14 +78,13 @@
 	name = flipped ? cardname : "card"
 	update_appearance()
 
-/obj/item/toy/cards/singlecard/update_icon_state()
+/obj/item/toy/singlecard/update_icon_state()
 	if(!flipped) 
 		icon_state = "singlecard_down_[deckstyle]"
 	else if(has_unique_card_icons) // each card in a deck has a different icon
 		icon_state = "sc_[cardname]_[deckstyle]"
 	else // all cards are the same icon state (blank or scribble)
 		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]" 
-
 	return ..()
 
 /**
@@ -65,14 +94,13 @@
  *
  * Arguments:
  * * mob/living/user - the user
- * * list/cards - the list of cards being added together (/obj/item/toy/cards/singlecard)
+ * * list/cards - the list of cards being added together (/obj/item/toy/singlecard)
  * * obj/item/toy/cards/cardhand/given_hand (optional) - the cardhand to add said cards into
- */
-/obj/item/toy/cards/singlecard/proc/do_cardhand(mob/living/user, list/cards, obj/item/toy/cards/cardhand/given_hand = null)
+/obj/item/toy/singlecard/proc/do_cardhand(mob/living/user, list/cards, obj/item/toy/cards/cardhand/given_hand = null)
 	if (given_hand && (given_hand?.parentdeck != parentdeck))
 		to_chat(user, span_warning("You can't mix cards from other decks!"))
 		return
-	for (var/obj/item/toy/cards/singlecard/card in cards)
+	for (var/obj/item/toy/singlecard/card in cards)
 		if (card.parentdeck != parentdeck)
 			to_chat(user, span_warning("You can't mix cards from other decks!"))
 			return
@@ -84,12 +112,12 @@
 	var/preexisting = TRUE // does the cardhand already exist, or are we making a new one
 	if (!new_cardhand)
 		preexisting = FALSE
-		var/obj/item/toy/cards/singlecard/card = cards[1]
+		var/obj/item/toy/singlecard/card = cards[1]
 		new_cardhand = new /obj/item/toy/cards/cardhand(card.loc)
 		new_cardhand.pixel_x = card.pixel_x
 		new_cardhand.pixel_y = card.pixel_y
 
-	for (var/obj/item/toy/cards/singlecard/card in cards)
+	for (var/obj/item/toy/singlecard/card in cards)
 		user.dropItemToGround(card) // drop them all so the loc will properly update
 		new_cardhand.cards += card
 
@@ -106,25 +134,30 @@
 		new_cardhand.pickup(user)
 		user.put_in_active_hand(new_cardhand)
 
-	for (var/obj/item/toy/cards/singlecard/card in cards)
+	for (var/obj/item/toy/singlecard/card in cards)
 		card.loc = new_cardhand // move the cards into the cardhand
+*/
 
-/obj/item/toy/cards/singlecard/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/cards/singlecard/))
-		do_cardhand(user, list(src, item))
+/obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
+	if(istype(item, /obj/item/toy/singlecard/))
+		//do_cardhand(user, list(src, item))
+		return
 	if(istype(item, /obj/item/toy/cards/cardhand/))
-		do_cardhand(user, list(src), item)
+		//do_cardhand(user, list(src), item)
+		return
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(dealer_deck.wielded)
-			var/obj/item/toy/cards/singlecard/card_drawn = dealer_deck.draw_card(user)
-			var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card_drawn))
+			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+			var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card))
 			new_cardhand.pixel_x = src.pixel_x
 			new_cardhand.pixel_y = src.pixel_y
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
+			return
 		else
-			dealer_deck.add_card(user, dealer_deck.cards, src)
+			//dealer_deck.insert(user, src)
 			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+			return
 
 	if(istype(item, /obj/item/pen))
 		if(!user.is_literate())
@@ -140,10 +173,10 @@
 		cardname = cardtext
 		blank = FALSE
 		update_appearance()
-	else
-		return ..()
+		return 
+	return ..()
 
-/obj/item/toy/cards/singlecard/attack_hand_secondary(mob/living/carbon/human/user, params)
+/obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
@@ -153,17 +186,17 @@
 	user.balloon_alert(user, "flips a card")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/toy/cards/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
+/obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
+/obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
 
-/obj/item/toy/cards/singlecard/AltClick(mob/living/carbon/human/user)
+/obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		src.transform = turn(src.transform, 90)
 /**		
@@ -177,7 +210,9 @@
 **/
 	return ..()
 
-/obj/item/toy/cards/singlecard/apply_card_vars(obj/item/toy/cards/singlecard/newobj, obj/item/toy/cards/sourceobj)
+
+/**
+/obj/item/toy/singlecard/apply_card_vars(obj/item/toy/singlecard/newobj, obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
 	newobj.has_unique_card_icons = sourceobj.has_unique_card_icons
@@ -194,3 +229,4 @@
 	newobj.throw_range = newobj.card_throw_range
 	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
 	newobj.attack_verb_simple = newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
+**/

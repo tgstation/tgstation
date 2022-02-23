@@ -13,7 +13,7 @@
 
 /obj/item/toy/cards/deck/blank/populate_deck()
 	for(var/x in 1 to blanks)
-		var/obj/item/toy/cards/singlecard/blank_card = generate_card("blank card")
+		var/obj/item/toy/cards/singlecard/blank_card = new(loc, "blank card", src)
 		blank_card.name = "blank card"
 		blank_card.blank = TRUE
 		cards += blank_card

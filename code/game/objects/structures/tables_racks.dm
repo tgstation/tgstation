@@ -115,13 +115,15 @@
 	return ..()
 
 /obj/structure/table/attackby_secondary(obj/item/weapon, mob/user, params)
+	/**
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/deck = weapon 
-		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table = TRUE)
+		var/obj/item/toy/singlecard/card = deck.draw_card(user, deck.cards, place_on_table = TRUE)
 		if(card)
 			card.Flip()
 			src.attackby(card, user, params)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	**/
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
@@ -221,12 +223,14 @@
 			return
 		// If the tray IS empty, continue on (tray will be placed on the table like other items)
 
+	/**
 	if(istype(I, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/deck = I 
-		var/obj/item/toy/cards/singlecard/card = deck.draw_card(user, deck.cards, place_on_table = TRUE)
+		var/obj/item/toy/singlecard/card = deck.draw_card(user, deck.cards, place_on_table = TRUE)
 		if(card)
 			src.attackby(card, user, params)
 		return
+	**/
 
 	if(istype(I, /obj/item/riding_offhand))
 		var/obj/item/riding_offhand/riding_item = I

@@ -4,7 +4,7 @@
 /obj/item/toy/cards/deck
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
@@ -23,10 +23,18 @@
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/drag_pickup)
-	populate_deck()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
+
+	if(deckstyle == "nanotrasen" || deckstyle == "syndicate") 
+		// generate a normal playing card deck
+		for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
+			cards += new /obj/item/toy/singlecard(loc, "Ace of [suit]", src)
+			for(var/i in 2 to 10)
+				cards += new /obj/item/toy/singlecard(loc, "[i] of [suit]", src)
+			for(var/person in list("Jack", "Queen", "King"))
+				cards += new /obj/item/toy/singlecard(loc, "[person] of [suit]", src)
 
 /// triggered on wield of two handed item
 /obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)
@@ -46,83 +54,41 @@
 		if(cards.len == 0)
 			. += span_warning("You scan the deck with your x-ray vision but there are no cards left!")
 		else
-			var/obj/item/toy/cards/singlecard/card = cards[1]
+			var/obj/item/toy/singlecard/card = cards[1]
 			. += span_notice("You scan the deck with your x-ray vision and the top card reads: [card.cardname].")
+
 	. += span_notice("Left-click to draw a card face down.")
 	. += span_notice("Right-click to draw a card face up.")
 	. += span_notice("Alt-Click to shuffle the deck.")
 	. += span_notice("Click and drag the deck to yourself to pickup.")
 
 /**
- * ## draw_card
+ * draw
  *
- * Draws a card from the deck (or hand of cards).
+ * Draws a card from the deck.
  *
  * Arguments:
- * * mob/user - The user drawing from the deck.
- * * list/cards - The list of cards the user is drawing from.
- * * obj/item/toy/cards/singlecard/forced_card (optional) - Used to force the card drawn from the deck
+ * * mob/living/user - The user drawing from the deck.
  * * place_on_table (optional) - Used to ignore putting a card in a users hand (for placing cards on tables)
  */
-/obj/item/toy/cards/deck/proc/draw_card(mob/user, list/cards, obj/item/toy/cards/singlecard/forced_card = null, place_on_table = FALSE)
-	if(isliving(user))
-		var/mob/living/living_user = user
-		if(!(living_user.mobility_flags & MOBILITY_PICKUP))
-			return
-	if(cards.len == 0)
-		to_chat(user, span_warning("There are no more cards to draw!"))
-		return
-
+/obj/item/toy/cards/deck/draw(mob/living/user, place_on_table = FALSE)
 	. = ..()
+	if(. == CARD_DRAW_CANCEL)
+		return 
 
-	if(. == )
-
-	var/obj/item/toy/cards/singlecard/card_to_draw
-	card_to_draw = cards[1]
-
-	cards -= card_to_draw
+	var/obj/item/toy/singlecard/card
+	card = cards[1] //draw the card on top
+	cards -= card
 
 	if(!place_on_table)
-		card_to_draw.pickup(user)
-		user.put_in_hands(card_to_draw)
+		card.pickup(user)
+		user.put_in_hands(card)
 		user.visible_message(span_notice("[user] draws a card from [src]."), span_notice("You draw a card from [src]."))
 	else
 		user.visible_message(span_notice("[user] deals a card from [src]."), span_notice("You deal a card from [src]."))
 
-	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
 	update_appearance()
-	return card_to_draw
-
-/**
- * ## generate_card
- *
- * Generates a new playing card, and assigns all of the necessary variables.
- *
- * Arguments:
- * * name - The name of the playing card.
- */
-/obj/item/toy/cards/deck/proc/generate_card(name)
-	var/obj/item/toy/cards/singlecard/card_to_add = new/obj/item/toy/cards/singlecard()
-	if(holo)
-		holo.spawned += card_to_add
-	card_to_add.cardname = name
-	card_to_add.parentdeck = WEAKREF(src)
-	card_to_add.apply_card_vars(card_to_add, src)
-	return card_to_add
-
-/**
- * ## populate_deck
- *
- * Generates all the cards within the deck.
- */
-/obj/item/toy/cards/deck/proc/populate_deck()
-	icon_state = "deck_[deckstyle]_full"
-	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
-		cards += generate_card("Ace of [suit]")
-		for(var/i in 2 to 10)
-			cards += generate_card("[i] of [suit]")
-		for(var/person in list("Jack", "Queen", "King"))
-			cards += generate_card("[person] of [suit]")
+	return card
 
 /**
  * ## shuffle_cards
@@ -141,10 +107,10 @@
 	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers)
-	draw_card(user, cards)
+	draw(user)
 
 /obj/item/toy/cards/deck/attack_self_secondary(mob/living/user, list/modifiers)
-	var/obj/item/toy/cards/singlecard/card = draw_card(user, cards)
+	var/obj/item/toy/singlecard/card = draw(user)
 	card.Flip()
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
@@ -168,8 +134,8 @@
 	return ..()
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/cards/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
-		add_card(user, cards, item)
+	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
+		//insert(user, item)
 	else
 		return ..()
 
