@@ -2205,6 +2205,23 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return "No lore set, yell at a loremaster!"
 
 /**
+ * Translate the species liked foods from bitfields into strings
+ * and returns it in the form of an associated list.
+ *
+ * Returns a list.
+ */
+/datum/species/proc/get_species_diet()
+	if(TRAIT_NOHUNGER in inherent_traits)
+		return list() // just an empty list since they don't have tastes
+
+	var/list/food_flags = FOOD_FLAGS
+	return list(
+		"liked_food" = bitfield_to_list(liked_food, food_flags),
+		"disliked_food" = bitfield_to_list(disliked_food, food_flags),
+		"toxic_food" = bitfield_to_list(toxic_food, food_flags),
+	)
+
+/**
  * Generates a list of "perks" related to this species
  * (Postives, neutrals, and negatives)
  * in the format of a list of lists.
@@ -2223,6 +2240,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/get_species_perks()
 	var/list/species_perks = list()
 
+	// Let us get every perk we can concieve of in one big list.
 	species_perks += create_pref_unique_perks()
 	species_perks += create_pref_blood_perks()
 	species_perks += create_pref_combat_perks()
@@ -2231,10 +2249,28 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	species_perks += create_pref_biotypes_perks()
 	species_perks += create_pref_language_perk()
 
-	// Some overrides may return `null`, prevent those from jamming up the list
+	// Some overrides may return `null`, prevent those from jamming up the list.
 	list_clear_nulls(species_perks)
 
-	return species_perks
+	// Now let's sort them out for cleanliness and sanity
+	var/list/perks_to_return = list(
+		SPECIES_POSITIVE_PERK = list(),
+		SPECIES_NEUTRAL_PERK = list(),
+		SPECIES_NEGATIVE_PERK =  list(),
+	)
+
+	for(var/list/perk as anything in species_perks)
+		var/perk_type = perk[SPECIES_PERK_TYPE]
+		// If we find a perk that isn't postiive, negative, or neutral,
+		// it's a bad entry - don't add it to our list. Throw a stack trace and skip it instead.
+		if(isnull(perks_to_return[perk_type]))
+			stack_trace("Invalid species perk ([perk[SPECIES_PERK_NAME]]) found for species [name]. \
+				The type should be positive, negative, or neutral. (Got: [perk_type])")
+			continue
+
+		perks_to_return[perk_type] += list(perk)
+
+	return perks_to_return
 
 /**
  * Used to add any species specific perks to the perk list.

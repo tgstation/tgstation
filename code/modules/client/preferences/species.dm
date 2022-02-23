@@ -32,29 +32,31 @@
 /datum/preference/choiced/species/compile_constant_data()
 	var/list/data = list()
 
-	var/list/food_flags = FOOD_FLAGS
-
 	for (var/species_id in get_selectable_species())
 		var/species_type = GLOB.species_list[species_id]
-		var/datum/species/species = new species_type
+		var/datum/species/species = new species_type()
 
-		var/list/diet = list()
-
-		if (!(TRAIT_NOHUNGER in species.inherent_traits))
-			diet = list(
-				"liked_food" = bitfield_to_list(species.liked_food, food_flags),
-				"disliked_food" = bitfield_to_list(species.disliked_food, food_flags),
-				"toxic_food" = bitfield_to_list(species.toxic_food, food_flags),
-			)
+		var/list/diet = species.get_species_diet()
+		var/list/perk_cards = species.get_species_perks()
 
 		data[species_id] = list(
 			"name" = species.name,
+			"desc" = species.get_species_description(),
+			"lore" = species.get_species_lore()
 			"icon" = sanitize_css_class_name(species.name),
 
 			"use_skintones" = species.use_skintones,
 			"sexes" = species.sexes,
 
 			"enabled_features" = species.get_features(),
-		) + diet
+
+			"positives" = perk_cards[SPECIES_POSITIVE_PERK],
+			"neutrals" = perk_cards[SPECIES_NEUTRAL_PERK],
+			"negatives" = perk_cards[SPECIES_NEGATIVE_PERK],
+
+		) += diet
+
+		for(var/list/perk as anything in perk_cards)
+			data[species_id][perk[SPECIES_PERK_TYPE]] += list(perk)
 
 	return data
