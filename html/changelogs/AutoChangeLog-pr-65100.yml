@@ -1,0 +1,6 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Ratfish can now properly show up in moisture traps"
+  - code_imp: "Moisture traps are coded a little better now"
+  - spellcheck: "fixed some wording in the moisture trap bite feedback"
