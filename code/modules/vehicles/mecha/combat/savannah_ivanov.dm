@@ -225,9 +225,10 @@
 	var/strike_cooldown_time = 40 SECONDS
 	///how many rockets can we send with ivanov strike
 	var/rockets_left = 0
+	var/aiming_missile = FALSE
 
 /datum/action/vehicle/sealed/mecha/ivanov_strike/Destroy()
-	if(HAS_TRAIT(chassis, AIMING_IVANOV_MISSILE_TRAIT))
+	if(aiming_missile)
 		end_missile_targeting()
 	return ..()
 
@@ -238,7 +239,7 @@
 		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(chassis, COOLDOWN_MECHA_MISSILE_STRIKE)
 		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before firing another Ivanov Strike."))
 		return
-	if(HAS_TRAIT(chassis, AIMING_IVANOV_MISSILE_TRAIT))
+	if(aiming_missile)
 		end_missile_targeting()
 	else
 		start_missile_targeting()
@@ -260,7 +261,7 @@
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/start_missile_targeting()
 	chassis.balloon_alert(owner, "missile mode on (click to target)")
-	ADD_TRAIT(chassis, AIMING_IVANOV_MISSILE_TRAIT, VEHICLE_TRAIT)
+	aiming_missile = TRUE
 	rockets_left = 3
 	RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
 	RegisterSignal(chassis, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
@@ -276,7 +277,7 @@
  * Unhooks signals into clicking to call drop_missile plus other flavor like the overlay
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/end_missile_targeting()
-	REMOVE_TRAIT(chassis, AIMING_IVANOV_MISSILE_TRAIT, VEHICLE_TRAIT)
+	aiming_missile = FALSE
 	rockets_left = 0
 	UnregisterSignal(chassis, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
 	owner.client.mouse_override_icon = null
