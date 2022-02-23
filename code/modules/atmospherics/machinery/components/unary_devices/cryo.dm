@@ -41,7 +41,6 @@
 		REMOVE_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 		REMOVE_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
 
-
 	occupant = new_occupant
 	if(!occupant)
 		return
