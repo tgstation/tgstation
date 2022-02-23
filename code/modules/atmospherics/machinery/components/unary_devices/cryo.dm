@@ -32,7 +32,6 @@
 	RegisterSignal(parent, COMSIG_MACHINERY_SET_OCCUPANT, .proc/on_set_occupant)
 	RegisterSignal(parent, COMSIG_CRYO_SET_ON, .proc/on_set_on)
 
-/* hippie start cryo tweaks, remove immobilized to allow relaymove to work
 /// COMSIG_MACHINERY_SET_OCCUPANT callback
 /atom/movable/visual/cryo_occupant/proc/on_set_occupant(datum/source, mob/living/new_occupant)
 	SIGNAL_HANDLER
@@ -53,7 +52,6 @@
 	ADD_TRAIT(occupant, TRAIT_IMMOBILIZED, CRYO_TRAIT)
 	// Keep them standing! They'll go sideways in the tube when they fall asleep otherwise.
 	ADD_TRAIT(occupant, TRAIT_FORCED_STANDING, CRYO_TRAIT)
-*/	//hippie end cryo tweaks, remove immobilized to allow relaymove to work
 
 /// COMSIG_CRYO_SET_ON callback
 /atom/movable/visual/cryo_occupant/proc/on_set_on(datum/source, on)
@@ -224,7 +222,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	else //Turned on
 		begin_processing()
 
-/* //hippie start cryo tweaks, stop occupant falling asleep so they can get out
+/* //hippie start cryo tweaks, stop occupant falling asleep if they are a player
 /obj/machinery/atmospherics/components/unary/cryo_cell/process(delta_time)
 	..()
 
@@ -272,8 +270,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
 			consume_gas = TRUE
 	return TRUE
-*/ 	//hippie end cryo tweaks, stop occupant falling asleep so they can get out
-
+*/ 	//hippie end cryo tweaks, stop occupant falling asleep if they are a player
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos(delta_time)
 	..()
 
@@ -329,7 +326,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
 */	//hippie end cryo tweaks, allows self cryo
 
-/*	hippie start cryo tweaks, add cryoxadone to mob to heal cold damage on exit
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
 	if(!state_open && !panel_open)
 		set_on(FALSE)
@@ -338,7 +334,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	set_occupant(null)
 	flick("pod-open-anim", src)
 	..()
-*/	//hippie end cryo tweaks, add cryoxadone to mob to heal cold damage on exit
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/close_machine(mob/living/carbon/user)
 	treating_wounds = FALSE
