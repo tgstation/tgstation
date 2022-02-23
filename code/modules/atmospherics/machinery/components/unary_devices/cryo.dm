@@ -8,7 +8,7 @@
 #define CRYO_TX_QTY 0.5
 // The minimum O2 moles in the cryotube before it switches off.
 #define CRYO_MIN_GAS_MOLES 5
-#define CRYO_BREAKOUT_TIME 5 SECONDS	//hippie start cryo tweaks, manual resist changed from 30 seconds to 5 seconds as a backup
+#define CRYO_BREAKOUT_TIME 5 SECONDS	//hippie start cryo tweaks, manual resist changed from 30 seconds to 5 seconds to allow quicker exiting when power is off
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
