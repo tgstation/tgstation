@@ -1,14 +1,21 @@
-/mob/living/carbon/human/getarmor(def_zone, type)
+/mob/living/carbon/human/getarmor(def_zone, type, facing_eachother)
 	var/base_dt = physiology.armor.getRating(type)
+	var/block_dt = 0
+	if(facing_eachother)
+		for(var/obj/item/I in held_items)
+			if(!istype(I, /obj/item/clothing))
+				if(I.damage_threshold_bonus > block_dt)
+					block_dt = I.damage_threshold_bonus
+				continue
 
 	if(def_zone)
 		if(isbodypart(def_zone))
 			var/obj/item/bodypart/bp = def_zone
 			if(bp)
-				return checkarmor(def_zone, type) + base_dt
+				return checkarmor(def_zone, type) + base_dt + block_dt
 		var/obj/item/bodypart/affecting = get_bodypart(check_zone(def_zone))
 		if(affecting)
-			return checkarmor(affecting, type) + base_dt
+			return checkarmor(affecting, type) + base_dt + block_dt
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL your bodyparts for protection, and takes the highest value.
@@ -18,7 +25,7 @@
 		var/damage_threshold = checkarmor(BP, type)
 		if(damage_threshold > highest_dt)
 			highest_dt = damage_threshold
-	return highest_dt + base_dt
+	return highest_dt + base_dt + block_dt
 
 
 /mob/living/carbon/human/proc/checkarmor(obj/item/bodypart/def_zone, d_type)
@@ -266,7 +273,8 @@
 			if(check_shields(user, damage, "the [user.name]"))
 				return FALSE
 			if(stat != DEAD)
-				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE))
+				var/is_facing = check_target_facings(user, src) == FACING_EACHOTHER
+				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, MELEE, facing_eachother = is_facing))
 		return TRUE
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
@@ -308,7 +316,8 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(user.zone_selected))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, MELEE,"","",10)
+		var/is_facing = check_target_facings(user, src) == FACING_EACHOTHER
+		var/armor_block = run_armor_check(affecting, MELEE,"","",10, facing_eachother = is_facing)
 
 		playsound(loc, 'sound/weapons/slice.ogg', 25, TRUE, -1)
 		visible_message(span_danger("[user] slashes at [src]!"), \
@@ -336,7 +345,8 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(L.zone_selected))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
-		var/armor_block = run_armor_check(affecting, MELEE)
+		var/is_facing = check_target_facings(L, src) == FACING_EACHOTHER
+		var/armor_block = run_armor_check(affecting, MELEE, facing_eachother = is_facing)
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 
@@ -353,7 +363,8 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
+	var/is_facing = check_target_facings(user, src) == FACING_EACHOTHER
+	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration, facing_eachother = is_facing)
 	var/attack_direction = get_dir(user, src)
 	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness, attack_direction = attack_direction)
 
@@ -371,7 +382,8 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration)
+	var/is_facing = check_target_facings(user, src) == FACING_EACHOTHER
+	var/armor = run_armor_check(affecting, MELEE, armour_penetration = user.armour_penetration, facing_eachother = is_facing)
 	var/attack_direction = get_dir(user, src)
 	apply_damage(damage, user.melee_damage_type, affecting, armor, wound_bonus = user.wound_bonus, bare_wound_bonus = user.bare_wound_bonus, sharpness = user.sharpness, attack_direction = attack_direction)
 
@@ -398,7 +410,8 @@
 	var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 	if(!affecting)
 		affecting = get_bodypart(BODY_ZONE_CHEST)
-	var/armor_block = run_armor_check(affecting, MELEE)
+	var/is_facing = check_target_facings(M, src) == FACING_EACHOTHER
+	var/armor_block = run_armor_check(affecting, MELEE, facing_eachother = is_facing)
 	apply_damage(damage, BRUTE, affecting, armor_block, wound_bonus=wound_mod)
 
 

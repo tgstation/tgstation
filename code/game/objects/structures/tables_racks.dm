@@ -157,8 +157,10 @@
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
 	pushed_mob.Knockdown(30)
-	pushed_mob.apply_damage(10, BRUTE)
-	pushed_mob.apply_damage(40, STAMINA)
+	var/is_facing = check_target_facings(user, pushed_mob) == FACING_EACHOTHER
+	var/armor_block = pushed_mob.run_armor_check(BODY_ZONE_CHEST, MELEE, facing_eachother = is_facing)
+	pushed_mob.apply_damage(10, BRUTE, blocked = armor_block)
+	pushed_mob.apply_damage(40, STAMINA, blocked = armor_block)
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
@@ -174,7 +176,9 @@
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		extra_wound = 20
 	banged_limb?.receive_damage(30, wound_bonus = extra_wound)
-	pushed_mob.apply_damage(60, STAMINA)
+	var/is_facing = check_target_facings(user, pushed_mob) == FACING_EACHOTHER
+	var/armor_block = pushed_mob.run_armor_check(BODY_ZONE_CHEST, MELEE, facing_eachother = is_facing)
+	pushed_mob.apply_damage(60, STAMINA, blocked = armor_block)
 	take_damage(50)
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
 		deconstruct(FALSE)

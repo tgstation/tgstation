@@ -188,7 +188,9 @@
 		target.Paralyze((isnull(stun_override) ? stun_time_cyborg : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_cyborg(target, user)
 	else
-		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+		var/is_facing = check_target_facings(user, target) == FACING_EACHOTHER
+		var/armor_block = target.run_armor_check(BODY_ZONE_CHEST, MELEE, facing_eachother = is_facing)
+		target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST, armor_block)
 		target.Knockdown((isnull(stun_override) ? knockdown_time : stun_override) * (trait_check ? 0.1 : 1))
 		additional_effects_non_cyborg(target, user)
 	return TRUE
@@ -255,7 +257,8 @@
 			playsound(get_turf(src), 'sound/effects/bang.ogg', 10, TRUE)
 	else
 		user.Knockdown(clumsy_knockdown_time)
-		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
+		var/armor_block = user.run_armor_check(BODY_ZONE_HEAD, MELEE)
+		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD, armor_block)
 		additional_effects_non_cyborg(user, user) // user is the target here
 		if(on_stun_sound)
 			playsound(get_turf(src), on_stun_sound, on_stun_volume, TRUE, -1)

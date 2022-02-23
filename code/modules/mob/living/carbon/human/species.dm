@@ -1350,10 +1350,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
 			log_combat(user, target, "attempted to punch")
 			return FALSE
+		var/is_facing = check_target_facings(user, target) == FACING_EACHOTHER
+		var/armor_block = target.run_armor_check(affecting, MELEE, facing_eachother = is_facing)
 
-		var/armor_block = target.run_armor_check(affecting, MELEE)
-
-		var/damage_threshold = target.getarmor(affecting, MELEE)
+		var/damage_threshold = target.getarmor(affecting, MELEE, is_facing)
 		var/penetrated_dt = puncharmorpen * 0.2 // 100 Penetration = 20 DT ignored
 		var/final_dt = max(0, damage_threshold - penetrated_dt)
 		var/damage_resistance = target.physiology.damage_resistance
@@ -1460,9 +1460,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	hit_area = affecting.name
 	var/def_zone = affecting.body_zone
-
-	var/armor_block = H.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),I.armour_penetration, weak_against_armour = I.weak_against_armour)
-	armor_block = min(90,armor_block) //cap damage reduction at 90%
+	var/is_facing = check_target_facings(user, H) == FACING_EACHOTHER
+	var/armor_block = H.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),I.armour_penetration, weak_against_armour = I.weak_against_armour, facing_eachother = is_facing)
 	var/Iwound_bonus = I.wound_bonus
 
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
@@ -1494,7 +1493,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		switch(hit_area)
 			if(BODY_ZONE_HEAD)
-				if(!I.get_sharpness() && armor_block < 50)
+				if(!I.get_sharpness() && armor_block < MEDIUM_DAMAGE_THRESHOLD)
 					if(prob(I.force))
 						H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 						if(H.stat == CONSCIOUS)
@@ -1524,7 +1523,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						H.update_inv_glasses()
 
 			if(BODY_ZONE_CHEST)
-				if(H.stat == CONSCIOUS && !I.get_sharpness() && armor_block < 50)
+				if(H.stat == CONSCIOUS && !I.get_sharpness() && armor_block < MEDIUM_DAMAGE_THRESHOLD)
 					if(prob(I.force))
 						H.visible_message(span_danger("[H] is knocked down!"), \
 									span_userdanger("You're knocked down!"))

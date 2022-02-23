@@ -65,7 +65,7 @@
 	force = 15
 	throwforce = 10
 	w_class = WEIGHT_CLASS_BULKY
-	block_chance = 50
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	armour_penetration = HEAVY_ARMOR_PENETRATION
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("slashes", "cuts")
@@ -151,7 +151,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = SHARP_EDGED
 	throwforce = 10
-	block_chance = 20
+	damage_threshold_bonus = LIGHT_DAMAGE_THRESHOLD_HEAD
 	armour_penetration = MEDIUM_ARMOR_PENETRATION
 	attack_verb_continuous = list("slashes", "stings", "prickles", "pokes")
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
@@ -434,7 +434,7 @@
 	force = 14
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 8
-	block_chance = 10
+	damage_threshold_bonus = LIGHT_DAMAGE_THRESHOLD_HEAD
 	armour_penetration = MEDIUM_ARMOR_PENETRATION
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")

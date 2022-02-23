@@ -162,7 +162,7 @@
 	throw_speed = 3
 	throw_range = 5
 	armour_penetration = LIGHT_ARMOR_PENETRATION
-	block_chance = 50
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	embedding = list("embed_chance" = 75, "impact_pain_mult" = 10)
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)

@@ -20,7 +20,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
-	block_chance = 25
+	damage_threshold_bonus = LIGHT_DAMAGE_THRESHOLD_HEAD
 	wound_bonus = -10
 	bare_wound_bonus = 20
 	armour_penetration = LIGHT_ARMOR_PENETRATION
@@ -68,7 +68,7 @@ Striking a noncultist, however, will tear their flesh."}
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
 	throwforce = 10
-	block_chance = 50 // now it's officially a cult esword
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	wound_bonus = -50
 	bare_wound_bonus = 20
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -107,7 +107,7 @@ Striking a noncultist, however, will tear their flesh."}
 	force = 19 //can't break normal airlocks
 	item_flags = NEEDS_PERMIT | DROPDEL
 	flags_1 = NONE
-	block_chance = 25 //these dweebs don't get full block chance, because they're free cultists
+	damage_threshold_bonus = LIGHT_DAMAGE_THRESHOLD_HEAD
 
 /obj/item/melee/cultblade/ghost/Initialize(mapload)
 	. = ..()
@@ -122,7 +122,7 @@ Striking a noncultist, however, will tear their flesh."}
 	name = "bloody bastard sword"
 	desc = "An enormous sword used by Nar'Sien cultists to rapidly harvest the souls of non-believers."
 	w_class = WEIGHT_CLASS_HUGE
-	block_chance = 50
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	throwforce = 20
 	force = 35
 	armour_penetration = MEDIUM_ARMOR_PENETRATION
@@ -280,14 +280,14 @@ Striking a noncultist, however, will tear their flesh."}
 	holder.changeNext_move(50)
 	holder.apply_status_effect(/datum/status_effect/sword_spin)
 	sword.spinning = TRUE
-	sword.block_chance = 100
+	sword.damage_threshold_bonus = HEAVY_DAMAGE_THRESHOLD_HEAD
 	sword.slowdown += 1.5
 	addtimer(CALLBACK(src, .proc/stop_spinning), 50)
 	holder.update_action_buttons_icon()
 
 /datum/action/innate/cult/spin2win/proc/stop_spinning()
 	sword.spinning = FALSE
-	sword.block_chance = 50
+	sword.damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	sword.slowdown -= 1.5
 	sleep(sword.spin_cooldown)
 	holder.update_action_buttons_icon()
@@ -713,7 +713,7 @@ Striking a noncultist, however, will tear their flesh."}
 	throwforce = 40
 	throw_speed = 2
 	armour_penetration = LIGHT_ARMOR_PENETRATION
-	block_chance = 30
+	damage_threshold_bonus = LIGHT_DAMAGE_THRESHOLD_HEAD
 	slot_flags = null
 	attack_verb_continuous = list("attacks", "slices", "shreds", "sunders", "lacerates", "cleaves")
 	attack_verb_simple = list("attack", "slice", "shred", "sunder", "lacerate", "cleave")

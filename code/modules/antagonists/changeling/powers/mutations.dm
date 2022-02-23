@@ -428,7 +428,7 @@
 	icon_state = "ling_shield"
 	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
-	block_chance = 50
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 
 	var/remaining_uses //Set by the changeling ability.
 

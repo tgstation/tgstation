@@ -172,6 +172,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	///How fast does the tool work
 	var/toolspeed = 1
 
+	/// How much bonus DT should this item give when held?
+	var/damage_threshold_bonus = NO_DAMAGE_THRESHOLD
+
 	var/block_chance = 0
 	var/hit_reaction_chance = 0 //If you want to have something unrelated to blocking/armour piercing etc. Maybe not needed, but trying to think ahead/allow more freedom
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default

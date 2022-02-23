@@ -166,7 +166,7 @@
 	base_icon_state = "bostaff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	block_chance = 50
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	var/wielded = FALSE // track wielded status on item
 
 /obj/item/staff/bostaff/Initialize(mapload)

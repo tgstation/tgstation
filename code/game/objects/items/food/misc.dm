@@ -396,7 +396,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/cherryjelly = 5)
 	force = 30
 	throwforce = 15
-	block_chance = 55
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	armour_penetration = HEAVY_ARMOR_PENETRATION
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")

@@ -93,6 +93,8 @@
 			readout += "If you decide to throw this object instead, then you will have trouble damaging anything."
 		if(source.armour_penetration > 0 || source.block_chance > 0)
 			readout += "This item has proven itself [span_warning("[weapon_tag_convert(source.armour_penetration)]")] of piercing armor and [span_warning("[weapon_tag_convert(source.block_chance)]")] of blocking attacks."
+		if(source.damage_threshold_bonus)
+			readout += "This item provides a bonus Damage Threshold of [source.damage_threshold_bonus]."
 	// Custom manual notes
 	if(source.offensive_notes)
 		readout += source.offensive_notes

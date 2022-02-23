@@ -1,5 +1,5 @@
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE)
-	var/damage_threshold = getarmor(def_zone, attack_flag)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = MELEE, absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE, weak_against_armour = FALSE, facing_eachother = FALSE)
+	var/damage_threshold = getarmor(def_zone, attack_flag, facing_eachother)
 	var/penetrated_dt = armour_penetration * 0.2 // 100 Penetration = 20 DT ignored
 
 	if(damage_threshold <= 0)
@@ -18,7 +18,7 @@
 			to_chat(src, span_userdanger("Your armor was penetrated!"))
 	return damage_threshold
 
-/mob/living/proc/getarmor(def_zone, type)
+/mob/living/proc/getarmor(def_zone, type, facing_eachother = FALSE)
 	return 0
 
 //this returns the mob's protection against eye damage (number between -1 and 2) from bright lights

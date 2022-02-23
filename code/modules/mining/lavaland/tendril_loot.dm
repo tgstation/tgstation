@@ -860,7 +860,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 15
 	armour_penetration = LIGHT_ARMOR_PENETRATION
-	block_chance = 30
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")

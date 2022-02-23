@@ -12,7 +12,7 @@
 	desc = "May the force be with you. Sorta."
 	damtype = STAMINA
 	throw_speed = 2
-	block_chance = 0
+	damage_threshold_bonus = NO_DAMAGE_THRESHOLD
 	throwforce = 0
 	embedding = null
 	sword_color_icon = null

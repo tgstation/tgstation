@@ -173,7 +173,7 @@
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	force = 20
 	armour_penetration = HEAVY_ARMOR_PENETRATION
-	block_chance = 50
+	damage_threshold_bonus = MEDIUM_DAMAGE_THRESHOLD_HEAD
 	sharpness = SHARP_EDGED
 	max_charges = 4
 	school = SCHOOL_EVOCATION

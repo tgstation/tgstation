@@ -185,7 +185,8 @@
 	if(force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return
-	var/damage_threshold = M.getarmor(check_zone(user.zone_selected), MELEE)
+	var/is_facing = check_target_facings(user, M) == FACING_EACHOTHER
+	var/damage_threshold = M.getarmor(check_zone(user.zone_selected), MELEE, facing_eachother = is_facing)
 	var/penetrated_dt = armour_penetration * 0.2 // 100 Penetration = 20 DT ignored
 	var/final_dt = max(0, damage_threshold - penetrated_dt)
 	var/damage_resistance = 0
