@@ -60,7 +60,7 @@
 	usr.set_machine(src)
 	addtimer(CALLBACK(src, .proc/updateDialog), 5)
 
-/obj/machinery/embedded_controller/proc/process_command(var/command)
+/obj/machinery/embedded_controller/proc/process_command(command)
 	if(program)
 		program.receive_user_command(command)
 		addtimer(CALLBACK(program, /datum/computer/file/embedded_program.proc/process), 5)
