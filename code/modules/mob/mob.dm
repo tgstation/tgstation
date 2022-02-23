@@ -1137,7 +1137,7 @@
 	if(client.mouse_override_icon)
 		client.mouse_pointer_icon = client.mouse_override_icon
 
-/// This mob is abile to read books
+/// Is this mob able to read and write
 /mob/proc/is_literate()
 	return FALSE
 
@@ -1162,7 +1162,7 @@
 	var/turf/mob_location = get_turf(src)
 	return mob_location.get_lumcount() > light_amount
 
-///Can this mob write (is literate and not blind)
+/// Can this mob write
 /mob/proc/can_write(obj/O)
 	if(is_blind())
 		to_chat(src, span_warning("You are blind and can't write anything!"))
@@ -1173,11 +1173,11 @@
 		return FALSE
 
 	if(!is_literate())
-		to_chat(src, span_warning("You don't know how to write."))
+		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
 		return FALSE
 
 	if(!has_light_nearby() && !has_nightvision())
-		to_chat(src, span_warning("It's too dark in here to write!"))
+		to_chat(src, span_warning("It's too dark in here to write anything!"))
 		return FALSE
 	
 	return TRUE
@@ -1193,11 +1193,11 @@
 		return FALSE
 
 	if(!is_literate())
-		to_chat(src, span_warning("You try to read [O], but can't comprehend any of it."))
+		to_chat(src, span_warning("You try to read [O], but can't comprehend anything!"))
 		return FALSE
 	
 	if(!has_light_nearby() && !has_nightvision())
-		to_chat(src, span_warning("It's too dark in here to read!"))
+		to_chat(src, span_warning("It's too dark in here to read anything!"))
 		return FALSE
 	
 	return TRUE
