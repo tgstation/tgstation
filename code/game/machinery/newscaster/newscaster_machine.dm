@@ -101,9 +101,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/ui_data(mob/user)
 	. = ..()
-	//**************************
-	//		Newscaster Data
-	//**************************
 	var/list/data = list()
 	var/list/channel_list = list()
 	var/list/message_list = list()
@@ -180,12 +177,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["channelCensored"] = current_channel?.censored
 
 	//We send all the information about all channels and all messages in existance.
-	data["channel"] = channel_list
+	data["channels"] = channel_list
 	data["messages"] = message_list
 
-	//**************************
-	//	  Bounty Board Data
-	//**************************
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
 	for(var/i in GLOB.request_list)
@@ -212,44 +206,41 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	//**************************
 	//	  Bounty Board Data
 	//**************************
-	var/current_ref_num = params["request"]
-	var/current_app_num = params["applicant"]
+	var/current_ref_num = params[request]
+	var/current_app_num = params[applicant]
 	var/datum/bank_account/request_target
 	if(current_ref_num)
 		for(var/datum/station_request/i in GLOB.request_list)
-			if("[i.req_number]" == "[current_ref_num]")
+			if(i.req_number == current_ref_num)
 				active_request = i
 				break
 	if(active_request)
 		for(var/datum/bank_account/j in active_request.applicants)
-			if("[j.account_id]" == "[current_app_num]")
+			if(j.account_id == current_app_num)
 				request_target = j
 				break
 
 	switch(action)
-		//**************************
-		//		Newscaster Acts
-		//**************************
 		if("setChannel")
-			if(isnull(params["channels"]))
-				return
-			var/proto_chan = (params["channels"])
+			var/prototype_channel = (params[channel])
+			if(isnull(prototype_channel))
+				return TRUE
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
-				if(proto_chan == potential_channel.channel_ID)
+				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
 
 		if("createStory")
 			if(!current_channel)
-				balloon_alert(usr, "Please select a channel first!")
-				return
-			var/proto_chan = (params["current"])
+				balloon_alert(usr, "select a channel first!")
+				return TRUE
+			var/prototype_channel = (params[current])
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
-				if(proto_chan == potential_channel.channel_ID)
+				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
 					break
 			var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, multiline = TRUE)
 			if(length(temp_message) <= 1)
-				return
+				return TRUE
 			if(temp_message)
 				feed_channel_message = temp_message
 			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data() , 0, FALSE)
@@ -259,102 +250,99 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("togglePhoto")
 			if(current_image)
-				balloon_alert(usr, "Current photo cleared.")
+				balloon_alert(usr, "current photo cleared.")
 				current_image = null
-				return
+				return TRUE
 			else
 				attach_photo(usr)
 				if(current_image)
-					balloon_alert(usr, "Photo selected.")
+					balloon_alert(usr, "photo selected.")
 				else
-					balloon_alert(usr, "No photo identified.")
+					balloon_alert(usr, "no photo identified.")
 
 		if("startCreateChannel")
 			//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
 			var/list/existing_authors = list()
-			for(var/datum/newscaster/feed_channel/FeedC in GLOB.news_network.network_channels)
-				if(FeedC.authorCensor)
+			for(var/datum/newscaster/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
+				if(iterated_feed_channel.authorCensor)
 					existing_authors += GLOB.news_network.redactedText
 				else
-					existing_authors += FeedC.author
+					existing_authors += iterated_feed_channel.author
 			if(current_user?.account_holder == ("Unknown" || null) || (current_user.account_holder in existing_authors))
 				tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
-				return
+				return TRUE
 			creating_channel = TRUE
 		if("channelName")
-			channel_name = (params["channeltext"])
+			channel_name = (params[channeltext])
 		if("channelDesc")
-			channel_desc = (params["channeldesc"])
+			channel_desc = (params[channeldesc])
 
 		if("createChannel")
 			if(!channel_name)
 				return
-			for(var/datum/newscaster/feed_channel/FeedC in GLOB.news_network.network_channels)
-				if(FeedC.channel_name == channel_name)
+			for(var/datum/newscaster/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
+				if(iterated_feed_channel.channel_name == channel_name)
 					tgui_alert(usr, "ERROR: Feed Channel with that name already exists on the Network.", list("Okay"))
-					return
+					return TRUE
 			if(!channel_desc)
-				return
-			var/locked = (params["publicmode"])
+				return TRUE
+			var/locked = (params[publicmode])
 			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
-				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc , locked)
+				GLOB.news_network.Createiterated_feed_channelhannel(channel_name, current_user.account_holder, channel_desc , locked)
 				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 			creating_channel = FALSE
 
 		if("storyCensor")
-			if (!params["secure"])
+			if (!params[secure])
 				say("Clearance not found.")
-				return
-			var/questionable_message = params["messageID"]
+				return TRUE
+			var/questionable_message = params[messageID]
 			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
 				if(mess.message_ID == questionable_message)
 					mess.toggleCensorBody()
 					break
 
 		if("authorCensor")
-			if (!params["secure"])
+			if (!params[secure])
 				say("Clearance not found.")
-				return
-			var/questionable_message = params["messageID"]
+				return TRUE
+			var/questionable_message = params[messageID]
 			for(var/datum/newscaster/feed_message/mess in current_channel.messages)
 				if(mess.message_ID == questionable_message)
 					mess.toggleCensorAuthor()
 					break
 
 		if("channelDNotice")
-			if (!params["secure"])
+			if (!params[secure])
 				say("Clearance not found.")
-				return
-			var/proto_chan = (params["channel"])
+				return TRUE
+			var/prototype_channel = (params[channel])
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
-				if(proto_chan == potential_channel.channel_ID)
+				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
 					break
 			current_channel.toggleCensorDclass()
 
 		if("printNewspaper")
 			if(paper_remaining <= 0)
-				balloon_alert_to_viewers("Unit out of Paper!")
-				return
+				balloon_alert_to_viewers("out of paper!")
+				return TRUE
 			print_paper()
 
-		//**************************
-		//	  Bounty Board Acts
-		//**************************
 		if("createBounty")
 			if(!current_user || !bounty_text)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			for(var/datum/station_request/i in GLOB.request_list)
-				if("[i.req_number]" == "[current_user.account_id]")
+			for(var/datum/station_request/iterated_station_request in GLOB.request_list)
+				if(iterated_station_request.req_number == current_user.account_id)
 					say("Account already has active bounty.")
-					return
+					return TRUE
 			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
 			GLOB.request_list += list(curr_request)
-			for(var/obj/i in GLOB.allbountyboards)
-				balloon_alert_to_viewers("New bounty has been added!")
-				playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
+			for(var/obj/iterated_bounty_board in GLOB.allbountyboards)
+				iterated_bounty_board.say("New bounty added!")
+				playsound(iterated_bounty_board.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 		if("apply")
 			if(!current_user)
 				say("Please equip a valid ID first.")
@@ -369,10 +357,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			active_request.applicants += list(current_user)
 		if("payApplicant")
 			if(!current_user)
-				return
+				return TRUE
 			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-				return
+				return TRUE
 			request_target.transfer_money(current_user, active_request.value)
 			say("Paid out [active_request.value] credits.")
 			return TRUE
@@ -392,11 +380,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("bountyVal")
-			bounty_value = text2num(params["bountyval"])
+			bounty_value = text2num(params[bountyval])
 			if(!bounty_value)
 				bounty_value = 1
 		if("bountyText")
-			bounty_text = (params["bountytext"])
+			bounty_text = (params[bountytext])
 	. = TRUE
 
 

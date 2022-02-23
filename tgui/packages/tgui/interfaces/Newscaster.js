@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { useBackend, useSharedState } from '../backend';
+import { useBackend, useSharedState, useLocalState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
 import { BlockQuote, Box, Button, Divider, Modal, Section, Stack, Tabs, TextArea } from '../components';
@@ -15,12 +15,12 @@ import { sanitizeText } from "../sanitize";
 
 const CENSOR_MESSAGE = "This channel has been deemed as threatening to \
 the welfare of the station, and marked with a Nanotrasen D-Notice.";
-const TRUE = 1; // Look, fellas, I'm gonna be real with you
-const FALSE = 0; // This is just to clean up lots of === moments
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
   const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', 1);
+  const NewscasterScreen = 1;
+  const BountyboardScreen = 2;
   return (
     <Window
       width={575}
@@ -32,13 +32,13 @@ export const Newscaster = (props, context) => {
             <Tabs fluid textAlign="center">
               <Tabs.Tab
                 color="Green"
-                selected={screenmode === 1}
+                selected={screenmode === NewscasterScreen}
                 onClick={() => setScreenmode(1)}>
                 Newscaster
               </Tabs.Tab>
               <Tabs.Tab
                 Color="Blue"
-                selected={screenmode === 2}
+                selected={screenmode === BountyboardScreen}
                 onClick={() => setScreenmode(2)}>
                 Bounty Board
               </Tabs.Tab>
@@ -61,7 +61,7 @@ export const Newscaster = (props, context) => {
 /** The modal menu that contains the prompts to making new channels. */
 const NewscasterChannelCreation = (props, context) => {
   const { act, data } = useBackend(context);
-  const [publicmode, setPublicmode] = useSharedState(context, 'publicmode', 1);
+  const [publicmode, setPublicmode] = useLocalState(context, 'publicmode', 1);
   const {
     creating_channel,
     viewing_channel,
@@ -231,14 +231,15 @@ const NewscasterChannelBox = (_, context) => {
               onClick={() => act('togglePhoto')} />
             {!!security_mode && (
               <Button
-                icon={"ban"}
+                icon="ban"
                 content={"D-Notice"}
                 tooltip="Censor the whole channel and it's \
                   contents as dangerous to the station. Cannot be undone."
                 disabled={!security_mode}
-                onClick={() => act('channelDNotice',
-                  { secure: security_mode,
-                    channel: viewing_channel })} />
+                onClick={() => act('channelDNotice', {
+                  secure: security_mode,
+                  channel: viewing_channel,
+                })} />
             )}
           </Box>
           <Box>
@@ -266,19 +267,19 @@ const NewscasterChannelSelector = (props, context) => {
       minHeight="100%"
       width={(window.innerWidth - 410) + "px"}>
       <Tabs vertical>
-        {channel?.map(channels => (
+        {channels.map(channel => (
           <Tabs.Tab
-            key={channels.name}
+            key={channel.name}
             pt={0.75}
             pb={0.75}
             mr={1}
-            selected={viewing_channel === channels.ID}
-            icon={channels.censored ? 'ban' : null}
-            textColor={channels.censored ? "Red" :"white"}
+            selected={viewing_channel === channel.ID}
+            icon={channel.censored ? 'ban' : null}
+            textColor={channel.censored ? "Red" : "white"}
             onClick={() => act('setChannel', {
-              channels: channels.ID,
+              channel: channel.ID,
             })}>
-            {channels.name}
+            {channel.name}
           </Tabs.Tab>
         ))}
         <Tabs.Tab
@@ -327,7 +328,7 @@ const NewscasterChannelMessages = (_, context) => {
   }
   return (
     <Section fill scrollable>
-      {messages?.map(message => {
+      {messages.map(message => {
         if (message.channel_num !== viewing_channel) {
           return;
         }
@@ -357,7 +358,8 @@ const NewscasterChannelMessages = (_, context) => {
                     disabled={!security_mode}
                     onClick={() => act('storyCensor', {
                       secure: security_mode,
-                      messageID: message.ID })} />
+                      messageID: message.ID,
+                    })} />
                 )}
                 {security_mode === TRUE && (
                   <Button
@@ -366,7 +368,8 @@ const NewscasterChannelMessages = (_, context) => {
                     disabled={!security_mode}
                     onClick={() => act('authorCensor', {
                       secure: security_mode,
-                      messageID: message.ID })} />
+                      messageID: message.ID,
+                    })} />
                 )}
               </>
             )} >
