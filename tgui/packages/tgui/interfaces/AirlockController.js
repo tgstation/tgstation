@@ -47,8 +47,8 @@ export const AirlockController = (props, context) => {
               onClick={() => act("abort")}
             />
           ) || (
-            airlockState === "closed"
-            && <>
+            airlockState === "closed" && (
+            <>
               <Button
                 icon="lock-open"
                 content="Open Interior Airlock"
@@ -59,10 +59,10 @@ export const AirlockController = (props, context) => {
                 content="Open Exterior Airlock"
                 onClick={() => act("cycleExterior")}
               />
-            </>
+            </>)
           ) || (
-            airlockState === "inopen"
-            && <>
+            airlockState === "inopen" && (
+            <>
               <Button
                 icon="lock"
                 content="Close Interior Airlock"
@@ -73,10 +73,10 @@ export const AirlockController = (props, context) => {
                 content="Cycle to Exterior Airlock"
                 onClick={() => act("cycleExterior")}
               />
-            </>
+            </>)
           ) || (
-            airlockState === "outopen"
-            && <>
+            airlockState === "outopen" && (
+            <>
               <Button
                 icon="lock"
                 content="Close Exterior Airlock"
@@ -87,7 +87,7 @@ export const AirlockController = (props, context) => {
                 content="Cycle to Interior Airlock"
                 onClick={() => act("cycleInterior")}
               />
-            </>
+            </>)
           )
         )}>
           <LabeledList>
