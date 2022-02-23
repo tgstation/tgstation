@@ -15,8 +15,6 @@
 	COOLDOWN_DECLARE(shuffle_cooldown)
 	///Tracks holodeck cards, since they shouldn't be infinite
 	var/obj/machinery/computer/holodeck/holo = null
-	///Cards in this deck
-	var/list/cards = list()
 	///Wielding status for holding with two hands
 	var/wielded = FALSE
 
