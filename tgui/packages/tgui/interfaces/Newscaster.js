@@ -129,14 +129,14 @@ const NewscasterChannelCreation = (props, context) => {
         <Stack.Item>
           <Box>
             <Button
-              content={"Submit Channel"}
+              content="Submit Channel"
               onClick={() => act('createChannel', {
                 publicmode: publicmode,
                 viewing_channel: viewing_channel,
               })} />
             <Button
-              content={"Cancel"}
-              color={"red"}
+              content="Cancel"
+              color="red"
               onClick={() => act('cancelChannelCreation')} />
           </Box>
         </Stack.Item>
@@ -294,8 +294,8 @@ const NewscasterChannelBox = (_, context) => {
           </Box>
           <Box>
             <Button
-              icon={"newspaper"}
-              content={"Print Newspaper"}
+              icon="newspaper"
+              content="Print Newspaper"
               disabled={paper <= 0}
               onClick={() => act('printNewspaper')} />
           </Box>
@@ -404,8 +404,8 @@ const NewscasterChannelMessages = (_, context) => {
               <>
                 {!!security_mode && (
                   <Button
-                    icon={"comment-slash"}
-                    tooltip={"Censor Story"}
+                    icon="comment-slash"
+                    tooltip="Censor Story"
                     disabled={!security_mode}
                     onClick={() => act('storyCensor', {
                       secure: security_mode,
@@ -414,8 +414,8 @@ const NewscasterChannelMessages = (_, context) => {
                 )}
                 {!!security_mode && (
                   <Button
-                    icon={'user-slash'}
-                    tooltip={"Censor Author"}
+                    icon="user-slash"
+                    tooltip="Censor Author"
                     disabled={!security_mode}
                     onClick={() => act('authorCensor', {
                       secure: security_mode,
@@ -423,8 +423,8 @@ const NewscasterChannelMessages = (_, context) => {
                     })} />
                 )}
                 <Button
-                  icon={'comment'}
-                  tooltip={"Leave a Comment."}
+                  icon="comment"
+                  tooltip="Leave a Comment."
                   disabled={
                     message.censored_author
                   || message.censored_message
