@@ -234,6 +234,7 @@
 		return
 	// no need for sanitisation, command just changes target_state and can't do anything else
 	process_command(action)
+	return TRUE
 
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix
 	name = "Incinerator Access Console"
