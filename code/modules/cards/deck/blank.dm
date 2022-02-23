@@ -11,9 +11,10 @@
 	icon_state = "deck_black_full"
 	deckstyle = "black"
 
-/obj/item/toy/cards/deck/blank/populate_deck()
-	for(var/x in 1 to blanks)
-		var/obj/item/toy/cards/singlecard/blank_card = new(loc, "blank card", src)
+/obj/item/toy/cards/deck/blank/Initialize(mapload)
+	. = ..()
+	for(var/_ in 1 to blanks)
+		var/obj/item/toy/singlecard/blank_card = new(loc, "blank card", src)
 		blank_card.name = "blank card"
 		blank_card.blank = TRUE
 		cards += blank_card
