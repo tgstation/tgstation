@@ -220,14 +220,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
 
-	// -- Stuff for the preference menu --
-
-	var/pref_species_desc = "This species has no description. File a report!"
-	var/pref_species_lore = "This species has no lore. File a report!"
-	var/list/pref_species_positives
-	var/list/pref_species_neutrals
-	var/list/pref_species_negatives
-
 ///////////
 // PROCS //
 ///////////
@@ -237,11 +229,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!limbs_id) //if we havent set a limbs id to use, just use our own id
 		limbs_id = id
 	wings_icons = string_list(wings_icons)
-
-	create_pref_blood_perks()
-	create_pref_combat_perks()
-	create_pref_damage_perks()
-	create_pref_language_perk()
 
 	return ..()
 
@@ -2199,14 +2186,285 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/on_owner_login(mob/living/carbon/human/owner)
 	return
 
-/*
- * Generates a list of languages our species can speak
- * based on our species_language holder, and adds the list
- * to our pref_species_positives.
+/**
+ * Gets a short description for the specices. Should be relatively succinct.
+ * Used in the preference menu.
  *
- * If our species can only speak common, nothing is added.
+ * Returns a string.
+ */
+/datum/species/proc/get_species_description()
+	return "No description set, yell at a coder!"
+
+/**
+ * Gets the lore behind the type of species. Can be long.
+ * Used in the preference menu.
+ *
+ * Returns a string.
+ */
+/datum/species/proc/get_species_lore()
+	return "No lore set, yell at a loremaster!"
+
+/**
+ * Generates a list of "perks" related to this species
+ * (Postives, neutrals, and negatives)
+ * in the format of a list of lists.
+ * Used in the preference menu.
+ *
+ * "Perk" format is as followed:
+ * list(
+ *   SPECIES_PERK_TYPE = type of perk (postiive, negative, neutral - use the defines)
+ *   SPECIES_PERK_ICON = icon shown within the UI
+ *   SPECIES_PERK_NAME = name of the perk on hover
+ *   SPECIES_PERK_DESC = description of the perk on hover
+ * )
+ *
+ * Returns a list of lists. The outer list can be empty, but won't be null.
+ */
+/datum/species/proc/get_species_perks()
+	var/list/species_perks = list()
+
+	species_perks += create_pref_unique_perks()
+	species_perks += create_pref_blood_perks()
+	species_perks += create_pref_combat_perks()
+	species_perks += create_pref_damage_perks()
+	species_perks += create_pref_traits_perks()
+	species_perks += create_pref_biotypes_perks()
+	species_perks += create_pref_language_perk()
+
+	// Some overrides may return `null`, prevent those from jamming up the list
+	list_clear_nulls(species_perks)
+
+	return species_perks
+
+/**
+ * Used to add any species specific perks to the perk list.
+ *
+ * Returns null by default. When overriding, return a list of perks.
+ */
+/datum/species/proc/create_pref_unique_perks()
+	return null
+
+/**
+ * Adds adds any perks related to combat.
+ * For example, the damage type of their punches.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_combat_perks()
+	var/list/to_add = list()
+
+	if(attack_type != BRUTE)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Elemental Attacker",
+			SPECIES_PERK_DESC = "[name]\s deal [attack_type] damage with their punches instead of brute.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to sustaining damage.
+ * For example, brute damage vulnerability, or fire damage resistance.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_damage_perks()
+	var/list/to_add = list()
+
+	// Brute related
+	if(brutemod > 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "band-aid",
+			SPECIES_PERK_NAME = "Brutal Weakness",
+			SPECIES_PERK_DESC = "[name]\s are weak to brute damage.",
+		))
+
+	if(brutemod < 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Brutal Resiliance",
+			SPECIES_PERK_DESC = "[name]\s are resilient to bruising and brute damage.",
+		))
+
+	// Burn related / Hot temperature tolerance
+	if(burnmod > 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "burn",
+			SPECIES_PERK_NAME = "Fire Weakness",
+			SPECIES_PERK_DESC = "[name]\s are weak to fire and burn damage.",
+		))
+
+	if(burnmod < 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Fire Resiliance",
+			SPECIES_PERK_DESC = "[name]\s are resilient to flames, and burn damage.",
+		))
+
+	// Shock resilience
+	if(siemens_coeff > 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Shock Vulnerability",
+			SPECIES_PERK_DESC = "[name]\s are vulnerable to being shocked.",
+		))
+
+	if(siemens_coeff < 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Shock Resiliance",
+			SPECIES_PERK_DESC = "[name]\s are resilient to being shocked.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to how the species deals with temperature.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_temperature_perks()
+	var/list/to_add = list()
+
+	// Hot temperature tolerance
+	if(heatmod > 1 || bodytemp_heat_damage_limit < BODYTEMP_HEAT_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "temperature-high",
+			SPECIES_PERK_NAME = "Heat Vulnerability",
+			SPECIES_PERK_DESC = "[name]\s are vulnerable to high temperatures.",
+		))
+
+	if(heatmod < 1 || bodytemp_heat_damage_limit > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "thermometer-empty",
+			SPECIES_PERK_NAME = "Heat Resiliance",
+			SPECIES_PERK_DESC = "[name]\s are resilient to hotter environments.",
+		))
+
+	// Cold temperature tolerance
+	if(coldmod > 1 || bodytemp_cold_damage_limit > BODYTEMP_COLD_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "temperature-low",
+			SPECIES_PERK_NAME = "Cold Vulnerability",
+			SPECIES_PERK_DESC = "[name]\s are vulnerable to cold temperatures.",
+		))
+
+	if(coldmod < 1 || bodytemp_cold_damage_limit < BODYTEMP_COLD_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "thermometer-empty",
+			SPECIES_PERK_NAME = "Cold Resiliance",
+			SPECIES_PERK_DESC = "[name]\s are resilient to colder environments.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to the species' blood (or lack thereof).
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_blood_perks()
+	var/list/to_add = list()
+
+	if(NOBLOOD in species_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "tint-slash",
+			SPECIES_PERK_NAME = "Bloodletted",
+			SPECIES_PERK_DESC = "[name]\s do not have blood.",
+		))
+
+	else if(ispath(exotic_blood))
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = initial(exotic_blood.name),
+			SPECIES_PERK_DESC = "[name]\s blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
+		))
+
+	else if(exotic_bloodtype)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = "Exotic blood",
+			SPECIES_PERK_DESC = "[name]\s blood is of type \"[exotic_bloodtype]\", which can make recieving medical treatment harder.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to the species' inherent_traits list.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_traits_perks()
+	var/list/to_add = list()
+
+	if(TRAIT_LIMBATTACHMENT in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "user-plus",
+			SPECIES_PERK_NAME = "Limbs Easily Reattached",
+			SPECIES_PERK_DESC = "[name] limbs are easily readded, and as such do not \
+				require surgery to restore. Simply pick it up and pop it back in, champ!",
+		))
+
+	if(TRAIT_EASYDISMEMBER in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "user-times",
+			SPECIES_PERK_NAME = "Limbs Easily Dismembered",
+			SPECIES_PERK_DESC = "[name] limbs are not secured well, and as such they are easily dismembered.",
+		))
+
+	if(TRAIT_EASILY_WOUNDED in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "user-times",
+			SPECIES_PERK_NAME = "Easily Wounded",
+			SPECIES_PERK_DESC = "[name] skin is very weak and fragile. They are much easier to apply serious wounds to.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to the species' inherent_biotypes flags.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_biotypes_perks()
+	var/list/to_add = list()
+
+	if(inherent_biotypes & MOB_UNDEAD)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "skull",
+			SPECIES_PERK_NAME = "Undead",
+			SPECIES_PERK_DESC = "[name] are of the undead! The undead do not have the need to eat or breathe, and \
+				most viruses will not be able to infect a walking corpse. Their worries mostly stop at remaining in one piece, really.",
+		))
+
+	return to_add
+
+/**
+ * Adds in a language perk based on all the languages the species
+ * can speak by default (according to their language holder).
+ *
+ * Returns a list containing perks, or an empty list.
  */
 /datum/species/proc/create_pref_language_perk()
+	var/list/to_add = list()
 	var/datum/language/common_language = /datum/language/common
 
 	var/list/bonus_languages = list()
@@ -2217,50 +2475,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		bonus_languages += initial(language_type.name)
 
 	if(length(bonus_languages))
-		var/language_text = "Alongside [initial(common_language.name)], gain the ability to speak " + english_list(bonus_languages)
-		ADD_PREF_PERK(pref_species_positives, "comment", "Native Speaker", language_text)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "comment",
+			SPECIES_PERK_NAME = "Native Speaker",
+			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], gain the ability to speak [english_list(bonus_languages)].",
+		))
 
 	qdel(temp_holder)
 
-/datum/species/proc/create_pref_combat_perks()
-	if(attack_type != BRUTE)
-		ADD_PREF_PERK(pref_species_neutrals, "fist-raised", "Brutal Weakness", "[name]\s deal [attack_type] damage with their punches instead of brute.")
-
-/datum/species/proc/create_pref_damage_perks()
-	// Brute related
-	if(brutemod > 1)
-		ADD_PREF_PERK(pref_species_negatives, "fist-raised", "Brutal Weakness", "[name]\s are weak to brute damage.")
-
-	if(brutemod < 1)
-		ADD_PREF_PERK(pref_species_positives, "fist-raised", "Brutal Resiliance", "[name]\s are resilient to bruising and brute damage.")
-
-	// Burn related / Hot temperature tolerance
-	if(burnmod > 1 || heatmod > 1 || bodytemp_heat_damage_limit < BODYTEMP_HEAT_DAMAGE_LIMIT)
-		ADD_PREF_PERK(pref_species_negatives, "fire-alt", "Flammable", "[name]\s are weak to fire and heat.")
-
-	if(burnmod < 1 || heatmod < 1 || bodytemp_heat_damage_limit > BODYTEMP_HEAT_DAMAGE_LIMIT)
-		ADD_PREF_PERK(pref_species_positives, "fire", "Fire Resilience", "[name]\s are resilient to heat, flames, and burn damage.")
-
-	// Cold temperature tolerance
-	if(coldmod > 1 || bodytemp_cold_damage_limit > BODYTEMP_COLD_DAMAGE_LIMIT)
-		ADD_PREF_PERK(pref_species_negatives, "temperature-low", "Cold Vulnerability", "[name]\s are vulnerable to cold temperatures.")
-
-	if(coldmod < 1 || bodytemp_cold_damage_limit < BODYTEMP_COLD_DAMAGE_LIMIT)
-		ADD_PREF_PERK(pref_species_negatives, "temperature-low", "Cold Resilience", "[name]\s are resilient to cold temperatures.")
-
-	// Shock resilience
-	if(siemens_coeff > 1)
-		ADD_PREF_PERK(pref_species_positives, "bolt", "Shock Vulnerability", "[name]\s are vulnerable to being shocked.")
-
-	if(siemens_coeff < 1)
-		ADD_PREF_PERK(pref_species_negatives, "bolt", "Shock Resilience", "[name]\s are resilient to being shocked.")
-
-/datum/species/proc/create_pref_blood_perks()
-	if(ispath(exotic_blood))
-		ADD_PREF_PERK(pref_species_neutrals, "tint", "[initial(exotic_blood.name)]", "[name]\s blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.")
-
-	else if(exotic_bloodtype)
-		ADD_PREF_PERK(pref_species_neutrals, "tint", "Exotic blood", "[name]\s blood is of type \"[exotic_bloodtype]\", which can make recieving medical treatment harder.")
-
-	else if(NOBLOOD in species_traits)
-		ADD_PREF_PERK(pref_species_positives, "tint-slash", "Bloodletted", "[name]\s do not have blood.")
+	return to_add

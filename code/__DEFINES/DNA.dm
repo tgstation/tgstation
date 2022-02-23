@@ -246,10 +246,8 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_PERK_ICON "ui_icon"
 #define SPECIES_PERK_NAME "name"
 #define SPECIES_PERK_DESC "description"
+#define SPECIES_PERK_TYPE "perk_type"
 
-#define ADD_PREF_PERK(to_list, perk_icon, perk_name, perk_desc)\
-	LAZYADD(to_list, list(list(\
-		SPECIES_PERK_ICON = perk_icon,\
-		SPECIES_PERK_NAME = perk_name,\
-		SPECIES_PERK_DESC = perk_desc,\
-	)))
+#define SPECIES_POSITIVE_PERK "positive"
+#define SPECIES_NEGATIVE_PERK "negative"
+#define SPECIES_NEUTRAL_PERK "neutral"
