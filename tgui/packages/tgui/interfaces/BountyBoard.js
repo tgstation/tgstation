@@ -66,7 +66,7 @@ export const BountyBoardContent = (props, context) => {
                       icon="pen-fancy"
                       content="Apply"
                       disabled={
-                        request.owner === accountName
+                        request.owner === user.name
                       }
                       onClick={() => act('apply', {
                         request: request.acc_number,

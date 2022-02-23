@@ -108,17 +108,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/list/message_list = list()
 
 	//Code displaying name and Job Information, taken from the player mob's ID card if one exists.
-	var/obj/item/card/id/Card
+	var/obj/item/card/id/card
 	if(isliving(user))
-		var/mob/living/L = user
-		Card = L.get_idcard(TRUE)
-	if(Card?.registered_account)
-		current_user = Card.registered_account
+		var/mob/living/living_user = user
+		card = living_user.get_idcard(TRUE)
+	if(card?.registered_account)
+		current_user = card.registered_account
 		data["user"] = list()
-		data["user"]["name"] = Card.registered_account.account_holder
-		if(Card?.registered_account.account_job)
-			data["user"]["job"] = Card.registered_account.account_job.title
-			data["user"]["department"] = Card.registered_account.account_job.paycheck_department
+		data["user"]["name"] = card.registered_account.account_holder
+		if(card?.registered_account.account_job)
+			data["user"]["job"] = card.registered_account.account_job.title
+			data["user"]["department"] = card.registered_account.account_job.paycheck_department
 		else
 			data["user"]["job"] = "No Job"
 			data["user"]["department"] = "No Department"
@@ -129,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		data["user"]["department"] = "N/A"
 
 	data["security_mode"] = FALSE
-	if(Card && (ACCESS_ARMORY in Card?.GetAccess()))
+	if(card && (ACCESS_ARMORY in card?.GetAccess()))
 		data["security_mode"] = TRUE
 
 	data["photo_data"] = FALSE
@@ -192,8 +192,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(request.applicants)
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
-	if(Card?.registered_account) //work out current user.
-		data["accountName"] = Card.registered_account.account_holder
 	data["requests"] = formatted_requests
 	data["applicants"] = formatted_applicants
 	data["bountyValue"] = bounty_value
