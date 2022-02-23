@@ -346,7 +346,7 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	corgi_source.update_corgi_fluff()
 	corgi_source.regenerate_icons()
 
-/mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type)
+/mob/living/simple_animal/pet/dog/corgi/getarmor(def_zone, type, facing_eachother)
 	var/armorval = 0
 
 	if(def_zone)
