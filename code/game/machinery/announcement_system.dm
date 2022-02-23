@@ -88,6 +88,10 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 		message = CompileText(newhead, user, rank)
 	else if(message_type == "ARRIVALS_BROKEN")
 		message = "The arrivals shuttle has been damaged. Docking for repairs..."
+	else if(message_type == "AICRYO" && newheadToggle)
+		message = CompileText("%PERSON has been moved to intelligence storage.", user, rank)
+	else if(message_type == "CRYOSTORAGE")
+		message = CompileText("%PERSON, %RANK has been moved to cryogenic storage.", user, rank)
 
 	broadcast(message, channels)
 

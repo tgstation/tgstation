@@ -349,6 +349,32 @@
 /mob/living/silicon/ai/cancel_camera()
 	view_core()
 
+/mob/living/silicon/ai/verb/aicryo()
+	set name = "Hibernate"
+	set category = "OOC"
+	set desc = "Put yourself into hibernation. This is functionally equivalent to cryo, freeing up your job slot."
+
+	// Guard against misclicks, this isn't the sort of thing we want happening accidentally
+	if(alert("WARNING: This will immediately ghost you, removing your character from the round permanently (similar to cryo). Are you entirely sure you want to do this?",
+					"Hibernate", "No", "No", "Yes") != "Yes")
+		return
+
+	// We warned you.
+	var/obj/structure/ai_core/latejoin_inactive/inactivecore = new(get_turf(src))
+	transfer_fingerprints_to(inactivecore)
+
+	if(GLOB.announcement_systems.len)
+		var/obj/machinery/announcement_system/announcer = pick(GLOB.announcement_systems)
+		announcer.announce("AICRYO", real_name, mind.assigned_role, list())
+
+	if(!get_ghost(TRUE))
+		if(world.time < 30 MINUTES)//before the 30 minute mark
+			ghostize(FALSE) // Players despawned too early may not re-enter the game
+	else
+		ghostize(TRUE)
+
+	QDEL_NULL(src)
+
 /mob/living/silicon/ai/verb/toggle_anchor()
 	set category = "AI Commands"
 	set name = "Toggle Floor Bolts"
