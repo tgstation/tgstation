@@ -13,7 +13,7 @@
 /// Context applied to Alt-LMB actions
 #define SCREENTIP_CONTEXT_ALT_LMB "Alt-LMB"
 
-/// Context applied to Ctrl-LMB actions
+/// Context applied to Ctrl-Shift-LMB actions
 #define SCREENTIP_CONTEXT_CTRL_SHIFT_LMB "Ctrl-Shift-LMB"
 
 /// Screentips are always disabled

@@ -2116,7 +2116,7 @@
 			var/shift_lmb_ctrl_shift_lmb_line = ""
 			var/extra_context = ""
 
-			if (isliving(user) || isovermind(user))
+			if (isliving(user) || isovermind(user) || isaicamera(user))
 				var/obj/item/held_item = user.get_active_held_item()
 
 				if ((flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1) || (held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS))
@@ -2158,7 +2158,8 @@
 								shift_lmb_ctrl_shift_lmb_line += " | "
 							shift_lmb_ctrl_shift_lmb_line += "[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]: [context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB]]"
 
-						extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_alt_lmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
+						if(lmb_rmb_line != "" || ctrl_lmb_alt_lmb_line != "" || shift_lmb_ctrl_shift_lmb_line != "")
+							extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_alt_lmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
 
 			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 				active_hud.screentip_text.maptext = ""
