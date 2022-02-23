@@ -126,6 +126,7 @@
 	icon_state = "beret"
 	dog_fashion = /datum/dog_fashion/head/beret
 	dynamic_hair_suffix = ""
+	armor = ARMOR_LIGHT_ENERGY_HEAD
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
@@ -247,7 +248,7 @@
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#972A2A#F2F2F2"
-	armor = ARMOR_MEDIUM_BLUNT_HEAD
+	armor = ARMOR_MEDIUM_ENERGY_HEAD
 	strip_delay = 60
 	dog_fashion = null
 	flags_1 = NONE

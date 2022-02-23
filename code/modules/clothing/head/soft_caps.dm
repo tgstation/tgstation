@@ -3,6 +3,7 @@
 	desc = "It's a baseball hat in a tasteless yellow colour."
 	icon_state = "cargosoft"
 	inhand_icon_state = "helmet"
+	armor = ARMOR_LIGHT_ENERGY_HEAD
 	var/soft_type = "cargo"
 
 	dog_fashion = /datum/dog_fashion/head/cargo_tech
@@ -126,7 +127,7 @@
 	desc = "It's a robust baseball hat in tasteful red colour."
 	icon_state = "secsoft"
 	soft_type = "sec"
-	armor = ARMOR_MEDIUM_BLUNT_HEAD
+	armor = ARMOR_MEDIUM_ENERGY_HEAD
 	strip_delay = 60
 	dog_fashion = null
 

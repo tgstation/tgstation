@@ -6,6 +6,7 @@
 	icon_state = "coatwinter"
 	worn_icon = 'icons/mob/clothing/suits/wintercoat.dmi'
 	inhand_icon_state = "coatwinter"
+	armor = ARMOR_LIGHT_ENERGY_CHEST
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
@@ -36,6 +37,7 @@
 	body_parts_covered = HEAD
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	armor = ARMOR_LIGHT_ENERGY_HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 10, FIRE = 0, ACID = 0)
 
@@ -137,7 +139,7 @@
 	desc = "A red, armour-padded winter coat. It glitters with a mild ablative coating and a robust air of authority.  The zipper tab is a pair of jingly little handcuffs that get annoying after the first ten seconds."
 	icon_state = "coatsecurity"
 	inhand_icon_state = "coatsecurity"
-	armor = ARMOR_LIGHT_ENERGY_CHEST
+	armor = ARMOR_MEDIUM_ENERGY_CHEST
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
@@ -147,7 +149,7 @@
 /obj/item/clothing/head/hooded/winterhood/security
 	desc = "A red, armour-padded winter hood. Definitely not bulletproof, especially not the part where your face goes."
 	icon_state = "hood_security"
-	armor = ARMOR_LIGHT_ENERGY_HEAD
+	armor = ARMOR_MEDIUM_ENERGY_HEAD
 
 // Head of Security
 /obj/item/clothing/suit/hooded/wintercoat/security/hos
