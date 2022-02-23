@@ -559,8 +559,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	return ..()
 
 /obj/item/circuit_component/status_display/input_received(datum/port/input/port)
-	// Just use command handling built into status display,
-	// but do checks in case user is doing something weird
+	// Just use command handling built into status display.
+	// The option inputs thankfully sanitize command and picture for us.
 
 	var/command_value = command_map[command.value]
 	var/datum/signal/status_signal = new(list("command" = command_value))
