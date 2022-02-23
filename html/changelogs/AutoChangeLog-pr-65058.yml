@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - admin: "Fixes some heretic logs. Final knowledge uplink log should be clearer, and ghoul admin message no longer has a typo."

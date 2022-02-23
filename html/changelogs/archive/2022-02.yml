@@ -908,3 +908,60 @@
       on cell chargers
   san7890:
   - bugfix: On IceBoxStation, the courtroom no longer owns a bit of the hall.
+2022-02-23:
+  ArcaneDefence:
+  - bugfix: An odysseus' sleeper will now realize when a previously contained patient
+      has left the sleeper through unconventional means.
+  GoblinBackwards:
+  - bugfix: Holy water's cult deconvertion timer now resets when transferred to a
+      new mob
+  - bugfix: Fixes beam rifle not causing an explosion on impact mode.
+  - bugfix: Fixes radio gloves being uncraftable
+  GoldenAlpharex:
+  - bugfix: Ghosts are 100% less afraid of bobbing up and down, and will no longer
+      keep their orbit when they shouldn't be keeping it.
+  Greniza:
+  - code_imp: adds p_theirs() proc
+  JohnFulpWillard:
+  - bugfix: 'Non-dense mobs will no longer knock monkeys over (Ex: Revenants, Bots,
+      Lizards, Alien larvas).'
+  Melbert:
+  - bugfix: Eldritch Amulet no longer gives thermal vision when it shouldn't
+  - admin: Fixes some heretic logs. Final knowledge uplink log should be clearer,
+      and ghoul admin message no longer has a typo.
+  SmoSmoSmoSmok:
+  - bugfix: Players are no longer able to create walls using sheets that arent linked
+      to a material
+  TiviPlus:
+  - bugfix: Fixed gygax smash not logging the driver
+  - bugfix: Fixed mechs being punched using power but punching as a mech not using
+      power
+  - bugfix: Fixed mechs not taking damage from mech punches if punched while having
+      no power
+  - bugfix: Fixed weapon damage types only being respected for mech punches sometimes
+  - bugfix: Fixed toxins mech damage mode playing sounds on punches despite doing
+      nothing
+  - refactor: Mech punch code partly redone
+  - admin: mech punches will now ALWAYS be logged, even against objects
+  - code_imp: reshuffled some mech bay code please report issues on the github
+  - bugfix: fixed distortion effects cutting each other
+  Wallem:
+  - rscadd: Some prisoners have been complaining about the cold weather in the permabrig,
+      so we've dug through disposals and found a couple hats for 'em.
+  cacogen:
+  - qol: RPED now swaps in cell with greatest charge (of highest tier) first
+  - balance: Blobs can destroy mineral turfs like they can walls
+  - qol: Adds balloon alerts for blob overmind
+  - qol: Adds contextual screen tips for blob overmind
+  - qol: Off-station blobs are lighter than regular blobs
+  - bugfix: Fixes bug where on-station blobs were not counted towards victory when
+      expanded from off-station blobs
+  - bugfix: Fixes issue with cores and nodes having their color applied twice
+  jlsnow301:
+  - bugfix: Fixes a blue screen in the Pandemic from loading multiple viruses.
+  san7890:
+  - balance: On IceBoxStation, Nanotrasen has finally stopped clearing out excessively
+      large swatches of land for the gulagged prisoners in order to help them work
+      for their points.
+  tralezab:
+  - rscadd: Ratfish can now be found in moisture traps.
