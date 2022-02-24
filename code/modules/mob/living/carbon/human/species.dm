@@ -2219,11 +2219,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Translate the species liked foods from bitfields into strings
  * and returns it in the form of an associated list.
  *
- * Returns a list.
+ * Returns a list, or null if they have no diet.
  */
 /datum/species/proc/get_species_diet()
 	if(TRAIT_NOHUNGER in inherent_traits)
-		return list() // just an empty list since they don't have tastes
+		return null
 
 	var/list/food_flags = FOOD_FLAGS
 

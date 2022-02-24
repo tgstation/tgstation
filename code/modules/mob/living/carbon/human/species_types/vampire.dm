@@ -121,14 +121,14 @@
 	var/list/to_add = list()
 
 	to_add += list(list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = "The Thirst",
-			SPECIES_PERK_DESC = "In place of eating, Vampires suffer from The Thirst. \
-				Thirst of what? Blood! Their tongue allows them to grab people and drink \
-				their blood, and they will die if they run out. As a note, it doesn't \
-				matter whose blood you drink, it will all be converted into your blood \
-				type when consumed.",
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "tint",
+		SPECIES_PERK_NAME = "The Thirst",
+		SPECIES_PERK_DESC = "In place of eating, Vampires suffer from The Thirst. \
+			Thirst of what? Blood! Their tongue allows them to grab people and drink \
+			their blood, and they will die if they run out. As a note, it doesn't \
+			matter whose blood you drink, it will all be converted into your blood \
+			type when consumed.",
 	))
 
 	return to_add

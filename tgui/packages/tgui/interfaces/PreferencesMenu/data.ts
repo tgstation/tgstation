@@ -51,7 +51,7 @@ export type Species = {
     neutral: Perk[];
   };
 
-  diet: {
+  diet?: {
     liked_food: Food[];
     disliked_food: Food[];
     toxic_food: Food[];

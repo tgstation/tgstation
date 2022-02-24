@@ -14,7 +14,7 @@ const FOOD_ICONS = {
   [Food.Gross]: "trash",
   [Food.Junkfood]: "pizza-slice",
   [Food.Meat]: "hamburger",
-  [Food.Nuts]: "acorn",
+  [Food.Nuts]: "seedling",
   [Food.Raw]: "drumstick-bite",
   [Food.Seafood]: "fish",
   [Food.Sugar]: "candy-cane",
@@ -97,15 +97,16 @@ const FoodList = (props: {
 };
 
 const Diet = (props: {
-  likedFood: Food[],
-  dislikedFood: Food[],
-  toxicFood: Food[],
+  diet: Species["diet"],
 }) => {
+
+  const { liked_food, disliked_food, toxic_food } = props.diet;
+
   return (
     <Stack>
       <Stack.Item>
         <FoodList
-          food={props.likedFood}
+          food={liked_food}
           icon="heart"
           name="Liked food"
           className="color-pink"
@@ -114,7 +115,7 @@ const Diet = (props: {
 
       <Stack.Item>
         <FoodList
-          food={props.dislikedFood.filter(notIn(IGNORE_UNLESS_LIKED))}
+          food={disliked_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="thumbs-down"
           name="Disliked food"
           className="color-red"
@@ -123,7 +124,7 @@ const Diet = (props: {
 
       <Stack.Item>
         <FoodList
-          food={props.toxicFood.filter(notIn(IGNORE_UNLESS_LIKED))}
+          food={toxic_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="biohazard"
           name="Toxic food"
           className="color-olive"
@@ -287,22 +288,21 @@ const SpeciesPageInner = (props: {
               <Box>
                 <Stack fill>
                   <Stack.Item width="70%">
-                    <Section title={currentSpecies.name} buttons={
-                      // Species with no hunger don't have diets
-                      currentSpecies.diet.liked_food
-                  && (<Diet
-                    likedFood={currentSpecies.diet.liked_food}
-                    dislikedFood={currentSpecies.diet.disliked_food}
-                    toxicFood={currentSpecies.diet.toxic_food}
-                  />)
-                    }>
+                    <Section
+                      title={currentSpecies.name}
+                      buttons={
+                        // It's safe to assume species without any liked foods
+                        // don't have a diet worth displaying
+                        (currentSpecies.diet
+                          && <Diet diet={currentSpecies.diet} />)
+                      }>
+
                       <Section title="Description">
                         {currentSpecies.desc}
                       </Section>
 
                       <Section title="Features">
-                        <SpeciesPerks
-                          perks={currentSpecies.perks} />
+                        <SpeciesPerks perks={currentSpecies.perks} />
                       </Section>
                     </Section>
                   </Stack.Item>
