@@ -2167,8 +2167,8 @@
 
 						if(extra_lines)
 							extra_context = "<br><span style='font-size: 7px'>[lmb_rmb_line][ctrl_lmb_alt_lmb_line][shift_lmb_ctrl_shift_lmb_line]</span>"
-							active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9 //first extra line pushes atom name line up 10px, subsequent lines push it up 9px, \
-																								this offsets that and keeps the first line in the same place
+							//first extra line pushes atom name line up 10px, subsequent lines push it up 9px, this offsets that and keeps the first line in the same place
+							active_hud.screentip_text.maptext_y = -10 + (extra_lines - 1) * -9
 
 			if (screentips_enabled == SCREENTIP_PREFERENCE_CONTEXT_ONLY && extra_context == "")
 				active_hud.screentip_text.maptext = ""
