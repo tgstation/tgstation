@@ -2199,10 +2199,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Gets the lore behind the type of species. Can be long.
  * Used in the preference menu.
  *
- * Returns a string.
+ * Returns a list of strings.
+ * Between each entry in the list, a newline will be inserted, for formatting.
  */
 /datum/species/proc/get_species_lore()
-	return "No lore set, yell at a loremaster!"
+	return list("No lore set, yell at a loremaster!")
 
 /**
  * Translate the species liked foods from bitfields into strings
@@ -2246,6 +2247,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	species_perks += create_pref_blood_perks()
 	species_perks += create_pref_combat_perks()
 	species_perks += create_pref_damage_perks()
+	species_perks += create_pref_temperature_perks()
 	species_perks += create_pref_traits_perks()
 	species_perks += create_pref_biotypes_perks()
 	species_perks += create_pref_language_perk()
@@ -2422,7 +2424,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[name]\s do not have blood.",
 		))
 
-	else if(ispath(exotic_blood))
+	if(ispath(exotic_blood))
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
@@ -2516,7 +2518,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "comment",
 			SPECIES_PERK_NAME = "Native Speaker",
-			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], gain the ability to speak [english_list(bonus_languages)].",
+			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [name]\s gain the ability to speak [english_list(bonus_languages)].",
 		))
 
 	qdel(temp_holder)

@@ -2,7 +2,7 @@ import { classes } from "common/react";
 import { useBackend } from "../../backend";
 import { BlockQuote, Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
 import { CharacterPreview } from "./CharacterPreview";
-import { createSetPreference, Food, Feature, PreferencesMenuData, ServerData, Species } from "./data";
+import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Species } from "./data";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 
 const FOOD_ICONS = {
@@ -133,23 +133,23 @@ const Diet = (props: {
   );
 };
 
-const SpeciesFeature = (props: {
+const SpeciesPerk = (props: {
   className: string,
-  feature: Feature,
+  perk: Perk,
 }) => {
-  const { className, feature } = props;
+  const { className, perk } = props;
 
   return (
     <Tooltip position="bottom-end" content={
       <Box>
-        <Box as="b">{feature.name}</Box>
+        <Box as="b">{perk.name}</Box>
         <Divider />
-        <Box>{feature.description}</Box>
+        <Box>{perk.description}</Box>
       </Box>
     }>
       <Box class={className} width="32px" height="32px">
         <Icon
-          name={feature.ui_icon}
+          name={perk.ui_icon}
           size={1.5}
           ml={0}
           mt={1}
@@ -164,22 +164,22 @@ const SpeciesFeature = (props: {
   );
 };
 
-const SpeciesFeatures = (props: {
-  positives: Species["positives"],
-  negatives: Species["negatives"],
-  neutrals: Species["neutrals"],
+const SpeciesPerks = (props: {
+  perks: Species["perks"],
 }) => {
+
+  const { positive, negative, neutral } = props.perks;
 
   return (
     <Stack fill justify="space-between">
       <Stack.Item>
         <Stack>
-          {props.positives.map(feature => {
+          {positive.map(perk => {
             return (
-              <Stack.Item key={feature.name}>
-                <SpeciesFeature
+              <Stack.Item key={perk.name}>
+                <SpeciesPerk
                   className="color-bg-green"
-                  feature={feature} />
+                  perk={perk} />
               </Stack.Item>
             );
           })}
@@ -187,24 +187,24 @@ const SpeciesFeatures = (props: {
       </Stack.Item>
 
       <Stack grow>
-        {props.neutrals.map(feature => {
+        {neutral.map(perk => {
           return (
-            <Stack.Item key={feature.name}>
-              <SpeciesFeature
+            <Stack.Item key={perk.name}>
+              <SpeciesPerk
                 className="color-bg-grey"
-                feature={feature} />
+                perk={perk} />
             </Stack.Item>
           );
         })}
       </Stack>
 
       <Stack>
-        {props.negatives.map(feature => {
+        {negative.map(perk => {
           return (
-            <Stack.Item key={feature.name}>
-              <SpeciesFeature
+            <Stack.Item key={perk.name}>
+              <SpeciesPerk
                 className="color-bg-red"
-                feature={feature} />
+                perk={perk} />
             </Stack.Item>
           );
         })}
@@ -289,11 +289,11 @@ const SpeciesPageInner = (props: {
                   <Stack.Item width="70%">
                     <Section title={currentSpecies.name} buttons={
                       // Species with no hunger don't have diets
-                      currentSpecies.liked_food
+                      currentSpecies.diet.liked_food
                   && (<Diet
-                    likedFood={currentSpecies.liked_food}
-                    dislikedFood={currentSpecies.disliked_food}
-                    toxicFood={currentSpecies.toxic_food}
+                    likedFood={currentSpecies.diet.liked_food}
+                    dislikedFood={currentSpecies.diet.disliked_food}
+                    toxicFood={currentSpecies.diet.toxic_food}
                   />)
                     }>
                       <Section title="Description">
@@ -301,11 +301,8 @@ const SpeciesPageInner = (props: {
                       </Section>
 
                       <Section title="Features">
-                        <SpeciesFeatures
-                          positives={currentSpecies.positives}
-                          negatives={currentSpecies.negatives}
-                          neutrals={currentSpecies.neutrals}
-                        />
+                        <SpeciesPerks
+                          perks={currentSpecies.perks} />
                       </Section>
                     </Section>
                   </Stack.Item>
@@ -322,10 +319,17 @@ const SpeciesPageInner = (props: {
               <Box mt={1}>
                 <Section title="Lore">
                   <BlockQuote>
-                    {currentSpecies.lore}
+                    {currentSpecies.lore.map((text, index) => (
+                      <Box key={index} maxWidth="100%">
+                        {text}
+                        {index !== currentSpecies.lore.length - 1
+                          && (<><br /><br /></>)}
+                      </Box>
+                    ))}
                   </BlockQuote>
                 </Section>
               </Box>
+
             </Box>
           </Stack.Item>
         </Stack>

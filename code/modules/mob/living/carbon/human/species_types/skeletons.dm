@@ -81,7 +81,9 @@
 		Every year to spook the crew! \"I've got a BONE to pick with you!\""
 
 /datum/species/skeleton/get_species_lore()
-	return "Skeletons want to be feared again! Their presence in media has been destroyed, \
+	return list(
+		"Skeletons want to be feared again! Their presence in media has been destroyed, \
 		or at least that's what they firmly believe. They're always the first thing fought in an RPG, \
 		they're Flanderized into pun rolling JOKES, and it's really starting to get to them. \
 		You could say they're deeply RATTLED. Hah."
+	)

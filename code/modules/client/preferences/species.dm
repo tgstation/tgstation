@@ -36,22 +36,17 @@
 		var/species_type = GLOB.species_list[species_id]
 		var/datum/species/species = new species_type()
 
-		var/list/diet = species.get_species_diet()
-		var/list/perk_cards = species.get_species_perks()
+		data[species_id] = list()
+		data[species_id]["name"] = species.name
+		data[species_id]["desc"] = species.get_species_description()
+		data[species_id]["lore"] = species.get_species_lore()
+		data[species_id]["icon"] = sanitize_css_class_name(species.name)
+		data[species_id]["use_skintones"] = species.use_skintones
+		data[species_id]["sexes"] = species.sexes
+		data[species_id]["enabled_features"] = species.get_features()
+		data[species_id]["perks"] = species.get_species_perks()
+		data[species_id]["diet"] =  species.get_species_diet()
 
-		data[species_id] = list(
-			"name" = species.name,
-			"desc" = species.get_species_description(),
-			"lore" = species.get_species_lore(),
-			"icon" = sanitize_css_class_name(species.name),
-			"use_skintones" = species.use_skintones,
-			"sexes" = species.sexes,
-			// "Features" includes things like wings, tails, frills.
-			"enabled_features" = species.get_features(),
-			// Species perks here - small cards that explain goods and bads about the species
-			"positives" = perk_cards[SPECIES_POSITIVE_PERK],
-			"neutrals" = perk_cards[SPECIES_NEUTRAL_PERK],
-			"negatives" = perk_cards[SPECIES_NEGATIVE_PERK],
-		) += diet
+		qdel(species)
 
 	return data

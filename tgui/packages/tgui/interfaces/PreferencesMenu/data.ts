@@ -37,7 +37,7 @@ export type Name = {
 export type Species = {
   name: string;
   desc: string;
-  lore: string;
+  lore: string[];
   icon: string;
 
   use_skintones: BooleanLike;
@@ -45,16 +45,21 @@ export type Species = {
 
   enabled_features: string[];
 
-  positives: Feature[];
-  negatives: Feature[];
-  neutrals: Feature[];
+  perks: {
+    positive: Perk[];
+    negative: Perk[];
+    neutral: Perk[];
+  };
 
-  liked_food: Food[];
-  disliked_food: Food[];
-  toxic_food: Food[];
+  diet: {
+    liked_food: Food[];
+    disliked_food: Food[];
+    toxic_food: Food[];
+  };
+
 };
 
-export type Feature = {
+export type Perk = {
   ui_icon: string;
   name: string;
   description: string;
