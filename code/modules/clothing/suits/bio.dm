@@ -45,11 +45,11 @@
 
 //Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
-	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = MEDIUM_DAMAGE_THRESHOLD, ENERGY = MEDIUM_DAMAGE_THRESHOLD, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = LIGHT_DAMAGE_THRESHOLD, ENERGY = LIGHT_DAMAGE_THRESHOLD, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
 	icon_state = "bio_security"
 
 /obj/item/clothing/suit/bio_suit/security
-	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = MEDIUM_DAMAGE_THRESHOLD, ENERGY = MEDIUM_DAMAGE_THRESHOLD, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
+	armor = list(MELEE = NO_DAMAGE_THRESHOLD, BULLET = NO_DAMAGE_THRESHOLD, LASER = LIGHT_DAMAGE_THRESHOLD, ENERGY = LIGHT_DAMAGE_THRESHOLD, BOMB = 25, BIO = 100, FIRE = 30, ACID = 100)
 	icon_state = "bio_security"
 
 /obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
