@@ -2260,6 +2260,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	species_perks += create_pref_temperature_perks()
 	species_perks += create_pref_traits_perks()
 	species_perks += create_pref_biotypes_perks()
+	species_perks += create_pref_faction_perks()
 	species_perks += create_pref_language_perk()
 
 	// Some overrides may return `null`, prevent those from jamming up the list.
@@ -2434,7 +2435,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[plural_form] do not have blood.",
 		))
 
-	if(ispath(exotic_blood))
+	else if(ispath(exotic_blood))
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
@@ -2465,7 +2466,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "user-plus",
 			SPECIES_PERK_NAME = "Limbs Easily Reattached",
-			SPECIES_PERK_DESC = "[name] limbs are easily readded, and as such do not \
+			SPECIES_PERK_DESC = "[plural_form] limbs are easily readded, and as such do not \
 				require surgery to restore. Simply pick it up and pop it back in, champ!",
 		))
 
@@ -2474,7 +2475,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "user-times",
 			SPECIES_PERK_NAME = "Limbs Easily Dismembered",
-			SPECIES_PERK_DESC = "[name] limbs are not secured well, and as such they are easily dismembered.",
+			SPECIES_PERK_DESC = "[plural_form] limbs are not secured well, and as such they are easily dismembered.",
 		))
 
 	if(TRAIT_EASILY_WOUNDED in inherent_traits)
@@ -2482,7 +2483,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "user-times",
 			SPECIES_PERK_NAME = "Easily Wounded",
-			SPECIES_PERK_DESC = "[name] skin is very weak and fragile. They are much easier to apply serious wounds to.",
+			SPECIES_PERK_DESC = "[plural_form] skin is very weak and fragile. They are much easier to apply serious wounds to.",
+		))
+
+	if(TRAIT_TOXINLOVER in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "syringe",
+			SPECIES_PERK_NAME = "Toxins Lover",
+			SPECIES_PERK_DESC = "Toxins damage dealt to [plural_form] are reversed - healing toxins will instead cause harm, and \
+				causing toxins will instead cause healing. Be careful around purging chemicals!",
 		))
 
 	return to_add
@@ -2500,9 +2510,33 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "skull",
 			SPECIES_PERK_NAME = "Undead",
-			SPECIES_PERK_DESC = "[name] are of the undead! The undead do not have the need to eat or breathe, and \
+			SPECIES_PERK_DESC = "[plural_form] are of the undead! The undead do not have the need to eat or breathe, and \
 				most viruses will not be able to infect a walking corpse. Their worries mostly stop at remaining in one piece, really.",
 		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to the species' inherent_factions.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_faction_perks()
+	if(!LAZYLEN(inherent_factions))
+		return null
+
+	var/list/to_add = list()
+
+	var/list/formatted_factions = list()
+	for(var/faction in inherent)
+		formatted_factions += "[faction]\s"
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "user-friends",
+		SPECIES_PERK_NAME = "Friend to [capitalize(inherent_factions[1])]",
+		SPECIES_PERK_DESC = "[plural_form] are friendly with [english_list(formatted_factions)].",
+	))
 
 	return to_add
 

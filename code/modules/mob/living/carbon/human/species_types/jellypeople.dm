@@ -76,6 +76,19 @@
 	qdel(consumed_limb)
 	H.blood_volume += 20
 
+/datum/species/jelly/create_pref_blood_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "tint",
+		SPECIES_PERK_NAME = "Jelly Blood",
+		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have extremely toxic [initial(exotic_blood.name)]! \
+			Jelly is extremely important, as losing it will cause you to lose limbs. Medical treatment is also extremely difficult.",
+	))
+
+	return to_add
+
 /datum/action/innate/regenerate_limbs
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS
