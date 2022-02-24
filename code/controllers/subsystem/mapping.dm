@@ -438,7 +438,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 		if (!(R.ruin_type in themed_ruins))
 			themed_ruins[R.ruin_type] = list()
-		themed_ruins[R.ruin_type] |= list(R.name = R)
+		themed_ruins[R.ruin_type][R.name] = R
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("unbuyableshuttles.txt")
