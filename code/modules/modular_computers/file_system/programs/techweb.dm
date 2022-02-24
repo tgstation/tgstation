@@ -11,7 +11,7 @@
 	transfer_access = ACCESS_RD
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
-	///Access needed to lock/unlock the console
+	/// Access needed to lock/unlock the console
 	var/lock_access = ACCESS_RND
 	/// Determines if the console is locked, and consequently if actions can be performed with it
 	var/locked = FALSE
