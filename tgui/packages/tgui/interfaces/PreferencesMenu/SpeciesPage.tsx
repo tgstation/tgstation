@@ -100,6 +100,10 @@ const Diet = (props: {
   diet: Species["diet"],
 }) => {
 
+  if (!props.diet) {
+    return null;
+  }
+
   const { liked_food, disliked_food, toxic_food } = props.diet;
 
   return (
