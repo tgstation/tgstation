@@ -30,6 +30,7 @@ export const chatReducer = (state = initialState, action) => {
     }
     // Enable any filters that are not explicitly set, that are
     // enabled by default on the main page.
+    // NOTE: This mutates acceptedTypes on the state.
     for (let id of Object.keys(payload.pageById)) {
       const page = payload.pageById[id];
       const filters = page.acceptedTypes;
