@@ -33,7 +33,7 @@
 	/// Override for the visual attack effect shown on 'do_attack_animation()'.
 	var/attack_vis_effect
 	///Played when someone punches the creature.
-	var/attacked_sound = "punch" //This should be an element
+	var/attacked_sound = SFX_PUNCH //This should be an element
 
 	///What kind of objects this mob can smash.
 	var/environment_smash = ENVIRONMENT_SMASH_NONE

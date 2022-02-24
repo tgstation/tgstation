@@ -156,7 +156,7 @@
 	if(prob(33))
 		var/obj/item/shard/S = new(drop_location())
 		target.Bumped(S)
-	playsound(src, "shatter", 70, TRUE)
+	playsound(src, SFX_SHATTER, 70, TRUE)
 	transfer_fingerprints_to(B)
 	qdel(src)
 	target.Bumped(B)
@@ -703,7 +703,7 @@
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	reagents.flags |= OPENCONTAINER
-	playsound(src, "can_open", 50, TRUE)
+	playsound(src, SFX_CAN_OPEN, 50, TRUE)
 	spillable = TRUE
 	throwforce = 0
 

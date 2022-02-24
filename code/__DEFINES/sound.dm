@@ -133,3 +133,32 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 	ANNOUNCER_SHUTTLERECALLED,
 	ANNOUNCER_SPANOMALIES,
 ))
+
+/// List of all of our sound keys.
+#define SFX_SHATTER "shatter"
+#define SFX_EXPLOSION "explosion"
+#define SFX_EXPLOSION_CREAKING "explosion_creaking"
+#define SFX_HULL_CREAKING "hull_creaking"
+#define SFX_SPARKS "sparks"
+#define SFX_RUSTLE "rustle"
+#define SFX_BODYFALL "bodyfall"
+#define SFX_PUNCH "punch"
+#define SFX_CLOWNSTEP "clownstep"
+#define SFX_SUITSTEP "suitstep"
+#define SFX_SWING_HIT "swing_hit"
+#define SFX_HISS "hiss"
+#define SFX_PAGETURN "pageturn"
+#define SFX_RICOCHET "ricochet"
+#define SFX_TERMINAL_TYPE "terminal_type"
+#define SFX_DESECRATION "desecration"
+#define SFX_IM_HERE "im_here"
+#define SFX_CAN_OPEN "can_open"
+#define SFX_BULLET_MISS "bullet_miss"
+#define SFX_REVOLVER_SPIN "revolver_spin"
+#define SFX_LAW "law"
+#define SFX_HONKBOT_E "honkbot_e"
+#define SFX_WARPSPEED "warpspeed"
+#define SFX_SMCALM "smcalm"
+#define SFX_SMDELAM "smdelam"
+#define SFX_HYPERTORUSCALM "hypertoruscalm"
+#define SFX_HYPERTORUSMELTING "hypertorusmelting"
