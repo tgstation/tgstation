@@ -654,10 +654,18 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		exists[L.ruin_template] = landmark
 
 	var/list/names = list()
-	for(var/theme in SSmapping.themed_ruins)
-		names += "---- [theme] ----"
-		for(var/name in SSmapping.themed_ruins[theme])
-			names[name] = list(SSmapping.themed_ruins[theme][name], ZTRAIT_SPACE_RUINS, list(/area/space))
+	names += "---- Space Ruins ----"
+	for(var/name in SSmapping.themed_ruins[RUIN_TYPE_SPACE])
+		names[name] = list(SSmapping.themed_ruins[RUIN_TYPE_SPACE][name], ZTRAIT_SPACE_RUINS, list(/area/space))
+	names += "---- Lava Ruins ----"
+	for(var/name in SSmapping.themed_ruins[RUIN_TYPE_SPACE])
+		names[name] = list(SSmapping.themed_ruins[RUIN_TYPE_LAVA][name], ZTRAIT_LAVA_RUINS, list(/area/lavaland/surface/outdoors/unexplored))
+	names += "---- Ice Ruins ----"
+	for(var/name in SSmapping.themed_ruins[RUIN_TYPE_ICE])
+		names[name] = list(SSmapping.themed_ruins[RUIN_TYPE_ICE][name], ZTRAIT_ICE_RUINS, list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored))
+	names += "---- Ice Underground Ruins ----"
+	for(var/name in SSmapping.themed_ruins[RUIN_TYPE_ICE_UNDERGROUND])
+		names[name] = list(SSmapping.themed_ruins[RUIN_TYPE_ICE_UNDERGROUND][name], ZTRAIT_ICE_RUINS_UNDERGROUND, list(/area/icemoon/underground/unexplored))
 
 	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in sort_list(names)
 	var/data = names[ruinname]
