@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/limbs_id
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
-	/// The formatting of the name of the species in plural context. Defaults to the [name]\s if unset.
+	/// The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
 	/// Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
 	var/plural_form
 	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
@@ -2247,7 +2247,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
  *   SPECIES_PERK_DESC = description of the perk on hover
  * )
  *
- * Returns a list of lists. The outer list can be empty, but won't be null.
+ * Returns a list of lists.
+ * The outer list is an assoc list of [perk type]s to a list of perks.
+ * The innter list is a list of perks. Can be empty, but won't be null.
  */
 /datum/species/proc/get_species_perks()
 	var/list/species_perks = list()
@@ -2429,6 +2431,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species/proc/create_pref_blood_perks()
 	var/list/to_add = list()
 
+	// NOBLOOD takes priority by default
 	if(NOBLOOD in species_traits)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
@@ -2437,6 +2440,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[plural_form] do not have blood.",
 		))
 
+	// Otherwise, check if their exotic blood is a valid typepath
 	else if(ispath(exotic_blood))
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
@@ -2445,6 +2449,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
 		))
 
+	// Otherwise otherwise, see if they have an exotic bloodtype set
 	else if(exotic_bloodtype)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
@@ -2526,8 +2531,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/create_pref_language_perk()
 	var/list/to_add = list()
+
+	// Grab galactic common as a path, for comparisons
 	var/datum/language/common_language = /datum/language/common
 
+	// Now let's find all the languages they can speak that aren't common
 	var/list/bonus_languages = list()
 	var/datum/language_holder/temp_holder = new species_language_holder()
 	for(var/datum/language/language_type as anything in temp_holder.spoken_languages)
@@ -2535,6 +2543,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			continue
 		bonus_languages += initial(language_type.name)
 
+	// If we have any languages we can speak: create a perk for them all
 	if(length(bonus_languages))
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,

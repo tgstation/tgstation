@@ -22,6 +22,6 @@
 		if(isnull(species_lore))
 			Fail("Species [species] ([species_type]) is selectable, but did not implement get_species_lore().")
 		else if(!islist(species_lore))
-			Fail("Species [species] ([species_type]) is selectable, implemented get_species_lore() incorrectly (Did not return a list).")
+			Fail("Species [species] ([species_type]) is selectable, but implemented get_species_lore() incorrectly (Did not return a list).")
 
 		qdel(species)
