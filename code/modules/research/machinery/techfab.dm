@@ -30,5 +30,5 @@
 								"Circuitry"
 								)
 	console_link = FALSE
-	production_animation = "protolathe_n"
+	production_animation = "techfab_n"
 	allowed_buildtypes = PROTOLATHE | IMPRINTER
