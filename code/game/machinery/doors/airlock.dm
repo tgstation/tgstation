@@ -630,7 +630,7 @@
 /obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(isaicamera(user) || iscyborg(user))
+	if(isAI(user) || iscyborg(user))
 		if(!(machine_stat & BROKEN))
 			var/ui = SStgui.try_update_ui(user, src)
 			if(!ui && !held_item)
@@ -642,6 +642,9 @@
 			. = CONTEXTUAL_SCREENTIP_SET
 
 	if(!isliving(user))
+		return .
+
+	if(!Adjacent(user))
 		return .
 
 	switch (held_item?.tool_behaviour)
