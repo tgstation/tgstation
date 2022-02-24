@@ -23,7 +23,7 @@
 
 /obj/vehicle/ridden/bicycle/welder_act(mob/living/user, obj/item/I)
 	if(fried)
-		balloon_alert(user, "cannot repair a fried bicycle")
+		balloon_alert(user, "it's fried!")
 		return TRUE
 	if(atom_integrity >= max_integrity)
 		return TRUE
