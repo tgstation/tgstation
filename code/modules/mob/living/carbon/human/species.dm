@@ -2440,7 +2440,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
 			SPECIES_PERK_NAME = initial(exotic_blood.name),
-			SPECIES_PERK_DESC = "[plural_form] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
+			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
 		))
 
 	else if(exotic_bloodtype)
@@ -2536,7 +2536,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "user-friends",
-		SPECIES_PERK_NAME = "Friend to [capitalize(formatted_factions[1])]", // For the title let's just get the first element, list is probably 1 len anyways
+		SPECIES_PERK_NAME = "Friend of [capitalize(formatted_factions[1])]", // For the title let's just get the first element, list is probably 1 len anyways
 		SPECIES_PERK_DESC = "[plural_form] are friendly with [english_list(formatted_factions)].",
 	))
 
