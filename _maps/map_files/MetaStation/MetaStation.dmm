@@ -18303,7 +18303,7 @@
 /obj/machinery/button/door/directional/north{
 	id = "hydro_service";
 	name = "Service Shutter Control";
-	req_access_txt = "28"
+	req_access_txt = "35"
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics)
