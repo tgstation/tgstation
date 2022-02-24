@@ -266,38 +266,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("channelName")
 			var/pre_channel_name = params["channeltext"]
-			if(!istext(pre_channel_name))
+			if(!pre_channel_name)
 				return
 			channel_name = pre_channel_name
 
 		if("channelDesc")
 			var/pre_channel_desc = params["channeldesc"]
-			if(!istext(params[pre_channel_desc]))
+			if(!pre_channel_desc)
 				return
 			channel_desc = pre_channel_desc
 
 		if("createChannel")
 			if(!channel_name)
-				say("Issue 1")
 				return
 			for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
 				if(iterated_feed_channel.channel_name == channel_name)
 					tgui_alert(usr, "ERROR: Feed Channel with that name already exists on the Network.", list("Okay"))
-					say("Issue 2")
 					return TRUE
 			if(!channel_desc)
-				say("Issue 3")
 				return TRUE
 			var/locked = params["publicmode"]
 			if(isnull(locked))
-				say("Issue 4")
 				return TRUE
 			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
 				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc, locked)
 				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
-				say("Worked")
-			say("Issue 5")
 			creating_channel = FALSE
 
 		if("cancelChannelCreation")
