@@ -965,3 +965,19 @@
       for their points.
   tralezab:
   - rscadd: Ratfish can now be found in moisture traps.
+2022-02-24:
+  ErdinyoBarboza:
+  - bugfix: Makes the IceBoxStation Underground (Level 2) wastes immune to radiation
+      and also paints the maintenance as such to let people take shelter.
+  - qol: Makes the IceBoxStation Service Hall Exit into a properly cycled airlock
+      system.
+  - qol: Icebox Locker Room now has real personal lockers once more.
+  - qol: Icebox Service Exit is not properly mapped with external airlocks and cycled
+      doors.
+  san7890:
+  - rscadd: Nanotrasen has now made it so that the room that you launch your home-made
+      bombs from is now known as the "Launch Site" across all five stations.
+  tralezab:
+  - bugfix: Ratfish can now properly show up in moisture traps
+  - code_imp: Moisture traps are coded a little better now
+  - spellcheck: fixed some wording in the moisture trap bite feedback
