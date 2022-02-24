@@ -125,6 +125,9 @@
 		return
 	return ..()
 
+/obj/machinery/doppler_array/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/machinery/doppler_array/proc/RotationMessage(mob/user)
 	to_chat(user, span_notice("You adjust [src]'s dish to face to the [dir2text(dir)]."))
 	playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
