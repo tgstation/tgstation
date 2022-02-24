@@ -2527,6 +2527,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/list/to_add = list()
 
+	// Some factions aren't plural so we get "friend to slime" (as an example)
+	// which is less cute than "friend to slimes" so we format them all here
 	var/list/formatted_factions = list()
 	for(var/faction in inherent_factions)
 		formatted_factions += "[faction]\s"
@@ -2534,7 +2536,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 		SPECIES_PERK_ICON = "user-friends",
-		SPECIES_PERK_NAME = "Friend to [capitalize(inherent_factions[1])]",
+		SPECIES_PERK_NAME = "Friend to [capitalize(formatted_factions[1])]", // For the title let's just get the first element, list is probably 1 len anyways
 		SPECIES_PERK_DESC = "[plural_form] are friendly with [english_list(formatted_factions)].",
 	))
 
