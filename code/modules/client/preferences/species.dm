@@ -42,21 +42,16 @@
 		data[species_id] = list(
 			"name" = species.name,
 			"desc" = species.get_species_description(),
-			"lore" = species.get_species_lore()
+			"lore" = species.get_species_lore(),
 			"icon" = sanitize_css_class_name(species.name),
-
 			"use_skintones" = species.use_skintones,
 			"sexes" = species.sexes,
-
+			// "Features" includes things like wings, tails, frills.
 			"enabled_features" = species.get_features(),
-
+			// Species perks here - small cards that explain goods and bads about the species
 			"positives" = perk_cards[SPECIES_POSITIVE_PERK],
 			"neutrals" = perk_cards[SPECIES_NEUTRAL_PERK],
 			"negatives" = perk_cards[SPECIES_NEGATIVE_PERK],
-
 		) += diet
-
-		for(var/list/perk as anything in perk_cards)
-			data[species_id][perk[SPECIES_PERK_TYPE]] += list(perk)
 
 	return data

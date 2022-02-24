@@ -2215,6 +2215,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		return list() // just an empty list since they don't have tastes
 
 	var/list/food_flags = FOOD_FLAGS
+
 	return list(
 		"liked_food" = bitfield_to_list(liked_food, food_flags),
 		"disliked_food" = bitfield_to_list(disliked_food, food_flags),

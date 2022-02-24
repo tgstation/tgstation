@@ -2,11 +2,8 @@ import { classes } from "common/react";
 import { useBackend } from "../../backend";
 import { BlockQuote, Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
 import { CharacterPreview } from "./CharacterPreview";
-import { createSetPreference, Food, PreferencesMenuData, ServerData, ServerSpeciesData } from "./data";
-import { Feature, Species, fallbackSpecies } from "./preferences/species/base";
+import { createSetPreference, Food, Feature, PreferencesMenuData, ServerData, Species } from "./data";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
-
-const requireSpecies = require.context("./preferences/species");
 
 const FOOD_ICONS = {
   [Food.Cloth]: "tshirt",
@@ -152,7 +149,7 @@ const SpeciesFeature = (props: {
     }>
       <Box class={className} width="32px" height="32px">
         <Icon
-          name={feature.icon}
+          name={feature.ui_icon}
           size={1.5}
           ml={0}
           mt={1}
@@ -168,15 +165,16 @@ const SpeciesFeature = (props: {
 };
 
 const SpeciesFeatures = (props: {
-  features: Species["features"],
+  positives: Species["positives"],
+  negatives: Species["negatives"],
+  neutrals: Species["neutrals"],
 }) => {
-  const { good, neutral, bad } = props.features;
 
   return (
     <Stack fill justify="space-between">
       <Stack.Item>
         <Stack>
-          {good.map(feature => {
+          {props.positives.map(feature => {
             return (
               <Stack.Item key={feature.name}>
                 <SpeciesFeature
@@ -189,7 +187,7 @@ const SpeciesFeatures = (props: {
       </Stack.Item>
 
       <Stack grow>
-        {neutral.map(feature => {
+        {props.neutrals.map(feature => {
           return (
             <Stack.Item key={feature.name}>
               <SpeciesFeature
@@ -201,7 +199,7 @@ const SpeciesFeatures = (props: {
       </Stack>
 
       <Stack>
-        {bad.map(feature => {
+        {props.negatives.map(feature => {
           return (
             <Stack.Item key={feature.name}>
               <SpeciesFeature
@@ -219,20 +217,16 @@ const SpeciesPageInner = (props: {
   handleClose: () => void,
   species: ServerData["species"],
 }, context) => {
+
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const setSpecies = createSetPreference(act, "species");
 
-  let species: [string, Species & ServerSpeciesData][]
+  let species: [string, Species][]
     = Object.entries(props.species)
-      .map(([species, serverData]) => {
+      .map(([species, data]) => {
         return [
           species,
-          {
-            ...serverData,
-            ...(requireSpecies.keys().indexOf(`./${species}`) === -1
-              ? fallbackSpecies
-              : requireSpecies(`./${species}`).default) as Species,
-          },
+          data,
         ];
       });
 
@@ -246,14 +240,14 @@ const SpeciesPageInner = (props: {
     return speciesKey === data.character_preferences.misc.species;
   })[0][1];
 
-  const { lore } = currentSpecies;
-
   return (
     <Stack vertical fill>
       <Stack.Item>
-        <Button icon="arrow-left" onClick={props.handleClose}>
-          Go back
-        </Button>
+        <Button
+          icon="arrow-left"
+          onClick={props.handleClose}
+          content="Go Back"
+        />
       </Stack.Item>
 
       <Stack.Item grow>
@@ -303,11 +297,15 @@ const SpeciesPageInner = (props: {
                   />)
                     }>
                       <Section title="Description">
-                        {currentSpecies.description}
+                        {currentSpecies.desc}
                       </Section>
 
                       <Section title="Features">
-                        <SpeciesFeatures features={currentSpecies.features} />
+                        <SpeciesFeatures
+                          positives={currentSpecies.positives}
+                          negatives={currentSpecies.negatives}
+                          neutrals={currentSpecies.neutrals}
+                        />
                       </Section>
                     </Section>
                   </Stack.Item>
@@ -321,21 +319,13 @@ const SpeciesPageInner = (props: {
                 </Stack>
               </Box>
 
-              {lore && (
-                <Box mt={1}>
-                  <Section title="Lore">
-                    <BlockQuote>
-                      {lore.map((text, index) => (
-                        <Box key={index} maxWidth="100%">
-                          {text}
-                          {index !== lore.length - 1
-                            && (<><br /><br /></>)}
-                        </Box>
-                      ))}
-                    </BlockQuote>
-                  </Section>
-                </Box>
-              )}
+              <Box mt={1}>
+                <Section title="Lore">
+                  <BlockQuote>
+                    {currentSpecies.lore}
+                  </BlockQuote>
+                </Section>
+              </Box>
             </Box>
           </Stack.Item>
         </Stack>
