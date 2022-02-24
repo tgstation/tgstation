@@ -1,6 +1,7 @@
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
 	name = "Jellyperson"
+	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
 	default_color = "00FF90"
 	say_mod = "chirps"
@@ -121,6 +122,7 @@
 
 /datum/species/jelly/slime
 	name = "Slimeperson"
+	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
 	default_color = "00FFFF"
 	species_traits = list(MUTCOLORS,EYECOLOR,HAIR,FACEHAIR,NOBLOOD)
@@ -406,6 +408,7 @@
 
 /datum/species/jelly/luminescent
 	name = "Luminescent"
+	plural_form = null
 	id = SPECIES_LUMINESCENT
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
@@ -588,6 +591,7 @@
 
 /datum/species/jelly/stargazer
 	name = "Stargazer"
+	plural_form = null
 	id = SPECIES_STARGAZER
 	/// Special "project thought" telepathy action for stargazers.
 	var/datum/action/innate/project_thought/project_action

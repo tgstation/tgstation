@@ -1,5 +1,6 @@
 /datum/species/moth
 	name = "Mothman"
+	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	say_mod = "flutters"
 	default_color = "00FF00"

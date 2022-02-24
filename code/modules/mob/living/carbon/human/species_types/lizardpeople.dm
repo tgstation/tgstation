@@ -1,6 +1,7 @@
 /datum/species/lizard
 	// Reptilian humanoids with scaled skin and tails.
 	name = "Lizardperson"
+	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
 	say_mod = "hisses"
 	default_color = COLOR_VIBRANT_LIME

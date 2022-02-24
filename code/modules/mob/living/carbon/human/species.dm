@@ -19,6 +19,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/limbs_id
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
+	/// The formatting of the name of the species in plural context. Defaults to the [name]\s if unset.
+	/// Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
+	var/plural_form
 	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
 	var/default_color = "#FFFFFF"
 
@@ -229,6 +232,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!limbs_id) //if we havent set a limbs id to use, just use our own id
 		limbs_id = id
 	wings_icons = string_list(wings_icons)
+
+	if(!plural_form)
+		plural_form = "[name]\s"
 
 	return ..()
 
@@ -2193,7 +2199,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Returns a string.
  */
 /datum/species/proc/get_species_description()
-	return "No description set, yell at a coder!"
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("Species [name] ([type]) did not have a description set, and is a selectable roundstart race! Override get_species_description.")
 
 /**
  * Gets the lore behind the type of species. Can be long.
@@ -2203,7 +2210,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Between each entry in the list, a newline will be inserted, for formatting.
  */
 /datum/species/proc/get_species_lore()
-	return list("No lore set, yell at a loremaster!")
+	SHOULD_CALL_PARENT(FALSE)
+	RETURN_TYPE(/list)
+
+	CRASH("Species [name] ([type]) did not have lore set, and is a selectable roundstart race! Override get_species_lore.")
 
 /**
  * Translate the species liked foods from bitfields into strings
@@ -2297,7 +2307,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "fist-raised",
 			SPECIES_PERK_NAME = "Elemental Attacker",
-			SPECIES_PERK_DESC = "[name]\s deal [attack_type] damage with their punches instead of brute.",
+			SPECIES_PERK_DESC = "[plural_form] deal [attack_type] damage with their punches instead of brute.",
 		))
 
 	return to_add
@@ -2317,15 +2327,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "band-aid",
 			SPECIES_PERK_NAME = "Brutal Weakness",
-			SPECIES_PERK_DESC = "[name]\s are weak to brute damage.",
+			SPECIES_PERK_DESC = "[plural_form] are weak to brute damage.",
 		))
 
 	if(brutemod < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Brutal Resiliance",
-			SPECIES_PERK_DESC = "[name]\s are resilient to bruising and brute damage.",
+			SPECIES_PERK_NAME = "Brutal Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to bruising and brute damage.",
 		))
 
 	// Burn related
@@ -2334,15 +2344,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "burn",
 			SPECIES_PERK_NAME = "Fire Weakness",
-			SPECIES_PERK_DESC = "[name]\s are weak to fire and burn damage.",
+			SPECIES_PERK_DESC = "[plural_form] are weak to fire and burn damage.",
 		))
 
 	if(burnmod < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Fire Resiliance",
-			SPECIES_PERK_DESC = "[name]\s are resilient to flames, and burn damage.",
+			SPECIES_PERK_NAME = "Fire Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
 		))
 
 	// Shock damage
@@ -2351,15 +2361,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "bolt",
 			SPECIES_PERK_NAME = "Shock Vulnerability",
-			SPECIES_PERK_DESC = "[name]\s are vulnerable to being shocked.",
+			SPECIES_PERK_DESC = "[plural_form] are vulnerable to being shocked.",
 		))
 
 	if(siemens_coeff < 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "shield-alt",
-			SPECIES_PERK_NAME = "Shock Resiliance",
-			SPECIES_PERK_DESC = "[name]\s are resilient to being shocked.",
+			SPECIES_PERK_NAME = "Shock Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to being shocked.",
 		))
 
 	return to_add
@@ -2378,15 +2388,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "temperature-high",
 			SPECIES_PERK_NAME = "Heat Vulnerability",
-			SPECIES_PERK_DESC = "[name]\s are vulnerable to high temperatures.",
+			SPECIES_PERK_DESC = "[plural_form] are vulnerable to high temperatures.",
 		))
 
 	if(heatmod < 1 || bodytemp_heat_damage_limit > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "thermometer-empty",
-			SPECIES_PERK_NAME = "Heat Resiliance",
-			SPECIES_PERK_DESC = "[name]\s are resilient to hotter environments.",
+			SPECIES_PERK_NAME = "Heat Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to hotter environments.",
 		))
 
 	// Cold temperature tolerance
@@ -2395,15 +2405,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "temperature-low",
 			SPECIES_PERK_NAME = "Cold Vulnerability",
-			SPECIES_PERK_DESC = "[name]\s are vulnerable to cold temperatures.",
+			SPECIES_PERK_DESC = "[plural_form] are vulnerable to cold temperatures.",
 		))
 
 	if(coldmod < 1 || bodytemp_cold_damage_limit < BODYTEMP_COLD_DAMAGE_LIMIT)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "thermometer-empty",
-			SPECIES_PERK_NAME = "Cold Resiliance",
-			SPECIES_PERK_DESC = "[name]\s are resilient to colder environments.",
+			SPECIES_PERK_NAME = "Cold Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to colder environments.",
 		))
 
 	return to_add
@@ -2421,7 +2431,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "tint-slash",
 			SPECIES_PERK_NAME = "Bloodletted",
-			SPECIES_PERK_DESC = "[name]\s do not have blood.",
+			SPECIES_PERK_DESC = "[plural_form] do not have blood.",
 		))
 
 	if(ispath(exotic_blood))
@@ -2429,15 +2439,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
 			SPECIES_PERK_NAME = initial(exotic_blood.name),
-			SPECIES_PERK_DESC = "[name]\s blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
+			SPECIES_PERK_DESC = "[plural_form] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
 		))
 
 	else if(exotic_bloodtype)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = "Exotic blood",
-			SPECIES_PERK_DESC = "[name]\s blood is of type \"[exotic_bloodtype]\", which can make recieving medical treatment harder.",
+			SPECIES_PERK_NAME = "Exotic Blood",
+			SPECIES_PERK_DESC = "[plural_form] have \"[exotic_bloodtype]\" type blood, which can make recieving medical treatment harder.",
 		))
 
 	return to_add
@@ -2518,7 +2528,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "comment",
 			SPECIES_PERK_NAME = "Native Speaker",
-			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [name]\s gain the ability to speak [english_list(bonus_languages)].",
+			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [plural_form] gain the ability to speak [english_list(bonus_languages)].",
 		))
 
 	qdel(temp_holder)
