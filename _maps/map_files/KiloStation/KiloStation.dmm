@@ -21161,7 +21161,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "cow" = (
-/obj/structure/lattice,
 /obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/space/nearstation)
@@ -35504,6 +35503,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/cargo/office)
+"gGF" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "gGG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -53630,7 +53634,6 @@
 /turf/open/floor/engine,
 /area/engineering/gravity_generator)
 "mZT" = (
-/obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/closed/wall/rust,
 /area/space/nearstation)
@@ -59358,6 +59361,11 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/disposal/incinerator)
+"pjr" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space/nearstation)
 "pjy" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -112304,7 +112312,7 @@ aGc
 cFX
 dKD
 aaa
-aeo
+pjr
 aaa
 aaa
 aaa
@@ -113583,9 +113591,9 @@ rko
 idD
 alm
 acm
-aaQ
+gGF
 acm
-aaQ
+gGF
 aaa
 aaa
 aaa
@@ -114098,7 +114106,7 @@ idD
 acK
 aaa
 cow
-aaQ
+gGF
 cow
 aaa
 aaa
@@ -115382,7 +115390,7 @@ oNT
 idD
 acm
 aaa
-aaQ
+gGF
 aaa
 aeU
 aeU
