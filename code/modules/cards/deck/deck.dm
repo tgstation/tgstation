@@ -36,7 +36,7 @@
 
 /obj/item/toy/cards/deck/Destroy()
 	QDEL_LIST(cards)
-    return ..()
+	return ..()
 
 /// triggered on wield of two handed item
 /obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)

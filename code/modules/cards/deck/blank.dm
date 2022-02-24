@@ -14,7 +14,7 @@
 /obj/item/toy/cards/deck/blank/Initialize(mapload)
 	. = ..()
 	for(var/_ in 1 to blanks)
-		var/obj/item/toy/singlecard/blank_card = new(name = "blank card", parent_deck = src)
+		var/obj/item/toy/singlecard/blank_card = new (name = "blank card", parent_deck = src)
 		blank_card.name = "blank card"
 		blank_card.blank = TRUE
 		cards += blank_card
