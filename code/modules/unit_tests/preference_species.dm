@@ -4,9 +4,9 @@
  * selectable within the preferences menu
  * have their info / page setup correctly.
  */
-/datum/unit_test/preferences_species
+/datum/unit_test/preference_species
 
-/datum/unit_test/preferences_species/Run()
+/datum/unit_test/preference_species/Run()
 
 	// Go though all selectable species to see if they have their page setup correctly.
 	for(var/species_id in get_selectable_species())
