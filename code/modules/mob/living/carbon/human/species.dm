@@ -2253,6 +2253,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/species_perks = list()
 
 	// Let us get every perk we can concieve of in one big list.
+	// The order these are called (kind of) matters.
+	// Species unique perks first, as they're more important than genetic perks,
+	// and language perk last, as it comes at the end of the perks list
 	species_perks += create_pref_unique_perks()
 	species_perks += create_pref_blood_perks()
 	species_perks += create_pref_combat_perks()
@@ -2260,7 +2263,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	species_perks += create_pref_temperature_perks()
 	species_perks += create_pref_traits_perks()
 	species_perks += create_pref_biotypes_perks()
-	species_perks += create_pref_faction_perks()
 	species_perks += create_pref_language_perk()
 
 	// Some overrides may return `null`, prevent those from jamming up the list.
@@ -2513,32 +2515,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[plural_form] are of the undead! The undead do not have the need to eat or breathe, and \
 				most viruses will not be able to infect a walking corpse. Their worries mostly stop at remaining in one piece, really.",
 		))
-
-	return to_add
-
-/**
- * Adds adds any perks related to the species' inherent_factions.
- *
- * Returns a list containing perks, or an empty list.
- */
-/datum/species/proc/create_pref_faction_perks()
-	if(!LAZYLEN(inherent_factions))
-		return null
-
-	var/list/to_add = list()
-
-	// Some factions aren't plural so we get "friend to slime" (as an example)
-	// which is less cute than "friend to slimes" so we format them all here
-	var/list/formatted_factions = list()
-	for(var/faction in inherent_factions)
-		formatted_factions += "[faction]\s"
-
-	to_add += list(list(
-		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-		SPECIES_PERK_ICON = "user-friends",
-		SPECIES_PERK_NAME = "Friend of [capitalize(formatted_factions[1])]", // For the title let's just get the first element, list is probably 1 len anyways
-		SPECIES_PERK_DESC = "[plural_form] are friendly with [english_list(formatted_factions)].",
-	))
 
 	return to_add
 

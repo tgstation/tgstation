@@ -116,7 +116,7 @@
 
 	return to_add
 
-// Vampire blood is species, so it needs to be handled with its own entry.
+// Vampire blood is special, so it needs to be handled with its own entry.
 /datum/species/vampire/create_pref_blood_perks()
 	var/list/to_add = list()
 
@@ -133,7 +133,7 @@
 
 	return to_add
 
-// There isn't a "Minor Undead" biotype, so we have to explain it in an override
+// There isn't a "Minor Undead" biotype, so we have to explain it in an override (see: dullahans)
 /datum/species/vampire/create_pref_biotypes_perks()
 	var/list/to_add = list()
 

@@ -181,7 +181,7 @@
 	var/datum/language/monkey_language = /datum/language/monkey
 
 	to_add += list(list(
-		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 		SPECIES_PERK_ICON = "comment",
 		SPECIES_PERK_NAME = "Primitive Tongue",
 		SPECIES_PERK_DESC = "You may be able to understand [initial(common_language.name)], but you can't speak it. \

@@ -138,7 +138,7 @@
 
 	return to_add
 
-// There isn't a "Minor Undead" biotype, so we have to explain it in an override
+// There isn't a "Minor Undead" biotype, so we have to explain it in an override (see: vampires)
 /datum/species/dullahan/create_pref_biotypes_perks()
 	var/list/to_add = list()
 
