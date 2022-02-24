@@ -295,8 +295,8 @@ const SpeciesPageInner = (props: {
                     <Section
                       title={currentSpecies.name}
                       buttons={
-                        // It's safe to assume species without any liked foods
-                        // don't have a diet worth displaying
+                        // NOHUNGER species have no diet (diet = null),
+                        // so we have nothing to show
                         (currentSpecies.diet
                           && <Diet diet={currentSpecies.diet} />)
                       }>
@@ -308,6 +308,7 @@ const SpeciesPageInner = (props: {
                       <Section title="Features">
                         <SpeciesPerks perks={currentSpecies.perks} />
                       </Section>
+
                     </Section>
                   </Stack.Item>
 
