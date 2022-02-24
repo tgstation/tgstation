@@ -24,8 +24,9 @@
 		return TRUE
 	if(!I.use_tool(src, user, 0, volume=50, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user] repairs some damage to [name]."), span_notice("You repair some damage to \the [src]."))
 	atom_integrity += min(10, max_integrity-atom_integrity)
 	if(atom_integrity == max_integrity)
-		to_chat(user, span_notice("It looks to be fully repaired now."))
+		balloon_alert(user, "fully repaired")
+	else
+		balloon_alert(user, "repaired some damages")
 	return TRUE
