@@ -1,3 +1,5 @@
+from the man who gave you such classics as "nerfs berets" and "the lizard's gas", bruhstation. don't expect too much.
+
 ## /tg/station codebase
 
 [![Build Status](https://github.com/tgstation/tgstation/workflows/CI%20Suite/badge.svg)](https://github.com/tgstation/tgstation/actions?query=workflow%3A%22CI+Suite%22)
