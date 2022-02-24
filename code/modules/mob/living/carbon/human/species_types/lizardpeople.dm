@@ -117,9 +117,11 @@
 	human_mob.update_body()
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
-	return pick('sound/voice/lizard/lizard_scream_1.ogg',
-				'sound/voice/lizard/lizard_scream_2.ogg',
-				'sound/voice/lizard/lizard_scream_3.ogg')
+	return pick(
+		'sound/voice/lizard/lizard_scream_1.ogg',
+		'sound/voice/lizard/lizard_scream_2.ogg',
+		'sound/voice/lizard/lizard_scream_3.ogg',
+	)
 
 /datum/species/lizard/get_species_description()
 	return "The militaristic Lizardpeople hail originally from Tizira, but have grown \

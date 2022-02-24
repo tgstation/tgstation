@@ -152,9 +152,11 @@
 	return features
 
 /datum/species/ethereal/get_scream_sound(mob/living/carbon/human/ethereal)
-	return pick('sound/voice/ethereal/ethereal_scream_1.ogg',
-				'sound/voice/ethereal/ethereal_scream_2.ogg',
-				'sound/voice/ethereal/ethereal_scream_3.ogg')
+	return pick(
+		'sound/voice/ethereal/ethereal_scream_1.ogg',
+		'sound/voice/ethereal/ethereal_scream_2.ogg',
+		'sound/voice/ethereal/ethereal_scream_3.ogg',
+	)
 
 /datum/species/ethereal/get_species_description()
 	return "Coming from the planet of Sprout, the theocratic ethereals are \
