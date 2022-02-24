@@ -937,6 +937,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		ui = new(user, src, "AiVoiceChanger")
 		ui.open()
 
+/obj/machinery/ai_voicechanger/Destroy()
+	if(owner)
+		owner.ai_voicechanger = null
+		owner = null
 
 /obj/machinery/ai_voicechanger/ui_data(mob/user)
 	var/list/data = list()

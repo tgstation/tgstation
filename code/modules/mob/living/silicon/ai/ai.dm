@@ -229,6 +229,9 @@
 	controlled_equipment = null
 	linked_core = null
 	apc_override = null
+	if(ai_voicechanger)
+		ai_voicechanger.owner = null
+		ai_voicechanger = null
 	return ..()
 
 /// Removes all malfunction-related abilities from the AI
