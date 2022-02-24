@@ -106,6 +106,7 @@
 				return
 			request_target.transfer_money(current_user, active_request.value)
 			computer.say("Paid out [active_request.value] credits.")
+			GLOB.request_list.Remove(active_request)
 			return TRUE
 		if("clear")
 			if(current_user)

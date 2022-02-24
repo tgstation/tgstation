@@ -98,7 +98,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		ui = new(user, src, "Newscaster", name)
 		ui.open()
 	alert = FALSE //We're checking our messages!
-	update_overlays()
+	update_icon()
 
 
 /obj/machinery/newscaster/ui_data(mob/user)
@@ -259,29 +259,45 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					existing_authors += GLOB.news_network.redactedText
 				else
 					existing_authors += iterated_feed_channel.author
-			if(current_user?.account_holder == ("Unknown" || null) || (current_user.account_holder in existing_authors))
+			if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
 				tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
 				return TRUE
 			creating_channel = TRUE
+
 		if("channelName")
-			channel_name = params["channeltext"]
+			var/pre_channel_name = params["channeltext"]
+			if(!istext(pre_channel_name))
+				return
+			channel_name = pre_channel_name
+
 		if("channelDesc")
-			channel_desc = params["channeldesc"]
+			var/pre_channel_desc = params["channeldesc"]
+			if(!istext(params[pre_channel_desc]))
+				return
+			channel_desc = pre_channel_desc
 
 		if("createChannel")
 			if(!channel_name)
+				say("Issue 1")
 				return
 			for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
 				if(iterated_feed_channel.channel_name == channel_name)
 					tgui_alert(usr, "ERROR: Feed Channel with that name already exists on the Network.", list("Okay"))
+					say("Issue 2")
 					return TRUE
 			if(!channel_desc)
+				say("Issue 3")
 				return TRUE
 			var/locked = params["publicmode"]
+			if(isnull(locked))
+				say("Issue 4")
+				return TRUE
 			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 			if(choice=="Confirm")
-				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc , locked)
+				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc, locked)
 				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
+				say("Worked")
+			say("Issue 5")
 			creating_channel = FALSE
 
 		if("cancelChannelCreation")
@@ -292,14 +308,28 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if (!params["secure"])
 				say("Clearance not found.")
 				return TRUE
+			var/obj/item/card/id/id_card
+			if(isliving(usr))
+				var/mob/living/living_user = usr
+				id_card = living_user.get_idcard(TRUE)
+			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+				say("Clearance not found.")
+				return TRUE
 			var/questionable_message = params["messageID"]
-			for(var/datum/newscaster/feed_message/iterated_feed_message in current_channel.messages)
+			for(var/datum/newscaster/feed_message/iterated_feed_message as anything in current_channel.messages)
 				if(iterated_feed_message.message_ID == questionable_message)
 					iterated_feed_message.toggleCensorBody()
 					break
 
 		if("authorCensor")
 			if (!params["secure"])
+				say("Clearance not found.")
+				return TRUE
+			var/obj/item/card/id/id_card
+			if(isliving(usr))
+				var/mob/living/living_user = usr
+				id_card = living_user.get_idcard(TRUE)
+			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
@@ -329,13 +359,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(!current_user || !bounty_text)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			for(var/datum/station_request/iterated_station_request in GLOB.request_list)
+			for(var/datum/station_request/iterated_station_request as anything in GLOB.request_list)
 				if(iterated_station_request.req_number == current_user.account_id)
 					say("Account already has active bounty.")
 					return TRUE
 			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
 			GLOB.request_list += list(curr_request)
-			for(var/obj/iterated_bounty_board in GLOB.allbountyboards)
+			for(var/obj/iterated_bounty_board as anything in GLOB.allbountyboards)
 				iterated_bounty_board.say("New bounty added!")
 				playsound(iterated_bounty_board.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 		if("apply")
@@ -358,6 +388,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 			request_target.transfer_money(current_user, active_request.value)
 			say("Paid out [active_request.value] credits.")
+			GLOB.request_list.Remove(active_request)
+			qdel(active_request)
 			return TRUE
 		if("clear")
 			if(current_user)
@@ -367,7 +399,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if("deleteRequest")
 			if(!active_request || !current_user)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-				return FALSE
+				return TRUE
 			if(active_request?.owner != current_user?.account_holder)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
@@ -379,8 +411,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(!bounty_value)
 				bounty_value = 1
 		if("bountyText")
-			bounty_text = (params["bountytext"])
-	. = TRUE
+			var/pre_bounty_text = params["bountytext"]
+			if(!pre_bounty_text)
+				return
+			bounty_text = pre_bounty_text
+	return TRUE
 
 
 /obj/machinery/newscaster/attackby(obj/item/I, mob/living/user, params)

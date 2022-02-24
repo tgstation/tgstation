@@ -45,10 +45,10 @@ export const Newscaster = (props, context) => {
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {screenmode === 1 && (
+            {screenmode === NewscasterScreen && (
               <NewscasterContent />
             )}
-            {screenmode === 2 && (
+            {screenmode === BountyboardScreen && (
               <BountyBoardContent />
             )}
           </Stack.Item>
@@ -132,7 +132,6 @@ const NewscasterChannelCreation = (props, context) => {
               content="Submit Channel"
               onClick={() => act('createChannel', {
                 publicmode: publicmode,
-                viewing_channel: viewing_channel,
               })} />
             <Button
               content="Cancel"
