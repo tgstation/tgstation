@@ -633,7 +633,7 @@
 	if(isaicamera(user) || iscyborg(user))
 		if(!(machine_stat & BROKEN))
 			var/ui = SStgui.try_update_ui(user, src)
-			if(!ui)
+			if(!ui && !held_item)
 				context[SCREENTIP_CONTEXT_LMB] = "Open UI"
 			context[SCREENTIP_CONTEXT_SHIFT_LMB] = density ? "Open" : "Close"
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = locked ? "Unbolt" : "Bolt"
