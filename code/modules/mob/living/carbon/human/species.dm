@@ -2528,7 +2528,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/to_add = list()
 
 	var/list/formatted_factions = list()
-	for(var/faction in inherent)
+	for(var/faction in inherent_factions)
 		formatted_factions += "[faction]\s"
 
 	to_add += list(list(
