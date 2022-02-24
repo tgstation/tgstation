@@ -2328,7 +2328,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[name]\s are resilient to bruising and brute damage.",
 		))
 
-	// Burn related / Hot temperature tolerance
+	// Burn related
 	if(burnmod > 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
@@ -2345,7 +2345,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			SPECIES_PERK_DESC = "[name]\s are resilient to flames, and burn damage.",
 		))
 
-	// Shock resilience
+	// Shock damage
 	if(siemens_coeff > 1)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
