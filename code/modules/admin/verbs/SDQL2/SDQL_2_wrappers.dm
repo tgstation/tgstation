@@ -238,3 +238,9 @@
 /proc/_remove_trait(datum/thing,trait,source)
 	REMOVE_TRAIT(thing,trait,source)
 
+/proc/_winset(player, control_id, params)
+	winset(player, control_id, params)
+	
+/proc/_winget(player, control_id, params)
+	winget(player, control_id, params)
+
