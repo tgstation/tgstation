@@ -111,6 +111,7 @@
 		. += "<span class='notice'>The status display reads:\n\
 		Recharging <b>[recharge_amount]</b> power units per interval.\n\
 		Power efficiency increased by <b>[round((powerefficiency*1000)-100, 1)]%</b>.</span>"
+	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
@@ -431,38 +432,17 @@
 		beaker = null
 	return ..()
 
-/obj/machinery/chem_dispenser/AltClick(mob/living/user)
+/obj/machinery/chem_dispenser/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/simple_rotation)
-
-/obj/machinery/chem_dispenser/drinks/setDir()
-	var/old = dir
-	. = ..()
-	if(dir != old)
-		update_appearance()  // the beaker needs to be re-positioned if we rotate
-
-/obj/machinery/chem_dispenser/drinks/display_beaker()
-	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
-	switch(dir)
-		if(NORTH)
-			b_o.pixel_y = 7
-			b_o.pixel_x = rand(-9, 9)
-		if(EAST)
-			b_o.pixel_x = 4
-			b_o.pixel_y = rand(-5, 7)
-		if(WEST)
-			b_o.pixel_x = -5
-			b_o.pixel_y = rand(-5, 7)
-		else//SOUTH
-			b_o.pixel_y = -7
-			b_o.pixel_x = rand(-9, 9)
-	return b_o
+/obj/machinery/chem_dispenser/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/machinery/chem_dispenser/drinks
 	name = "soda dispenser"
@@ -511,6 +491,33 @@
 		/datum/reagent/toxin/mindbreaker,
 		/datum/reagent/toxin/staminatoxin
 	)
+
+/obj/machinery/chem_dispenser/drinks/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+
+/obj/machinery/chem_dispenser/drinks/setDir()
+	var/old = dir
+	. = ..()
+	if(dir != old)
+		update_appearance()  // the beaker needs to be re-positioned if we rotate
+
+/obj/machinery/chem_dispenser/drinks/display_beaker()
+	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
+	switch(dir)
+		if(NORTH)
+			b_o.pixel_y = 7
+			b_o.pixel_x = rand(-9, 9)
+		if(EAST)
+			b_o.pixel_x = 4
+			b_o.pixel_y = rand(-5, 7)
+		if(WEST)
+			b_o.pixel_x = -5
+			b_o.pixel_y = rand(-5, 7)
+		else//SOUTH
+			b_o.pixel_y = -7
+			b_o.pixel_x = rand(-9, 9)
+	return b_o
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."

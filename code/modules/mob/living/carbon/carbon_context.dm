@@ -1,4 +1,4 @@
-/mob/living/carbon/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/mob/living/carbon/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
 	if (!isnull(held_item))
@@ -7,15 +7,17 @@
 	if (!ishuman(user))
 		return .
 
-	if (user.combat_mode)
+	var/mob/living/carbon/human/human_user = user
+
+	if (human_user.combat_mode)
 		context[SCREENTIP_CONTEXT_LMB] = "Attack"
-	else if (user == src)
+	else if (human_user == src)
 		context[SCREENTIP_CONTEXT_LMB] = "Check injuries"
 
-		if (get_bodypart(user.zone_selected)?.get_bleed_rate())
+		if (get_bodypart(human_user.zone_selected)?.get_bleed_rate())
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Grab limb"
 
-	if (user != src)
+	if (human_user != src)
 		context[SCREENTIP_CONTEXT_RMB] = "Shove"
 
 		if (body_position == STANDING_UP)

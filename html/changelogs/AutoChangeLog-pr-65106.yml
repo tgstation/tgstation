@@ -1,0 +1,4 @@
+author: "Christmas5"
+delete-after: True
+changes: 
+  - bugfix: "Added the missing variable \"plane\" to floor lights."

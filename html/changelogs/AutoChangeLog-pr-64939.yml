@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - qol: "Chem dispensers have been changed to eject beakers using RMB instead of AltClick."
+  - qol: "Hydroponics trays have been changed to empty reagents using RMB instead of AltClick."
+  - code_imp: "Any object that inherits the simple_rotation component will always use AltClick."

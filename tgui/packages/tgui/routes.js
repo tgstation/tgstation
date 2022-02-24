@@ -5,7 +5,7 @@
  */
 
 import { selectBackend } from './backend';
-import { Icon, Stack } from './components';
+import { Icon, Section, Stack } from './components';
 import { selectDebug } from './debug/selectors';
 import { Window } from './layouts';
 
@@ -35,17 +35,20 @@ const SuspendedWindow = () => {
 };
 
 const RefreshingWindow = () => {
+
   return (
-    <Window height={130} title="Loading" width={150}>
+    <Window title="Loading">
       <Window.Content>
-        <Stack align="center" fill justify="center" vertical>
-          <Stack.Item>
-            <Icon color="blue" name="toolbox" spin size={4} />
-          </Stack.Item>
-          <Stack.Item>
-            Please wait...
-          </Stack.Item>
-        </Stack>
+        <Section fill>
+          <Stack align="center" fill justify="center" vertical>
+            <Stack.Item>
+              <Icon color="blue" name="toolbox" spin size={4} />
+            </Stack.Item>
+            <Stack.Item>
+              Please wait...
+            </Stack.Item>
+          </Stack>
+        </Section>
       </Window.Content>
     </Window>
   );
