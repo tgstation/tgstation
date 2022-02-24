@@ -1,4 +1,0 @@
-author: "SmoSmoSmoSmok"
-delete-after: True
-changes: 
-  - bugfix: "Players are no longer able to create walls using sheets that arent linked to a material"

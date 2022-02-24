@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - qol: "RPED now swaps in cell with greatest charge (of highest tier) first"

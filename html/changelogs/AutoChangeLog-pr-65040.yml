@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Non-dense mobs will no longer knock monkeys over (Ex: Revenants, Bots, Lizards, Alien larvas)."
