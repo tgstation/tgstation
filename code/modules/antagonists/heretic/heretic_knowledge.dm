@@ -378,7 +378,7 @@
 		total_points += knowledge.cost
 
 	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [worldtime2text()]. \
-		They have [length(heretic_datum)] knowledge nodes researched, totalling [total_points] points \
+		They have [length(heretic_datum.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [heretic_datum.total_sacrifices] people ([heretic_datum.high_value_sacrifices] of which were high value)")
 
 /datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)

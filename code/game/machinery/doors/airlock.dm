@@ -627,10 +627,30 @@
 		. += span_notice("Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.")
 		. += span_notice("Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.")
 
-/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
+	if(isAI(user) || iscyborg(user))
+		if(!(machine_stat & BROKEN))
+			var/ui = SStgui.try_update_ui(user, src)
+			if(!ui && !held_item)
+				context[SCREENTIP_CONTEXT_LMB] = "Open UI"
+			context[SCREENTIP_CONTEXT_SHIFT_LMB] = density ? "Open" : "Close"
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = locked ? "Unbolt" : "Bolt"
+			context[SCREENTIP_CONTEXT_ALT_LMB] = isElectrified() ? "Unelectrify" : "Electrify"
+			context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = emergency ? "Unset emergency access" : "Set emergency access"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(!isliving(user))
+		return .
+
+	if(!Adjacent(user))
+		return .
+
 	switch (held_item?.tool_behaviour)
+		if (TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_CROWBAR)
 			if (panel_open)
 				if (security_level == AIRLOCK_SECURITY_PLASTEEL_O_S || security_level == AIRLOCK_SECURITY_PLASTEEL_I_S)

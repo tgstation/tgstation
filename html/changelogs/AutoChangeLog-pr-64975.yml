@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - bugfix: "Buckling yourself to and then unbuckling yourself from a stasis bed will no longer permanently halt the effects of any gravitum in your system."
+  - bugfix: "Liverless creatures can no longer retain the effects of gravitum indefinitely, as it will now decay in their bodies (just as it does in the bodies of livered creatures)."
