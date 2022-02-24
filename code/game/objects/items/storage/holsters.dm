@@ -101,6 +101,10 @@
 		/obj/item/ammo_box/magazine/m45 = 2,
 	),src)
 
+/// I know this is disgusting don't talk about it
+/obj/item/storage/belt/holster/detective/full/ert/security
+	name = "security sidearm holster"
+
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
 	desc = "A hip holster that uses chameleon technology to disguise itself, due to the added chameleon tech, it cannot be mounted onto armor."

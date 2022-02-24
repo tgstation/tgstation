@@ -983,3 +983,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		balloon_alert(user, "you're too weak!")
 		return
 	return ..()
+
+/obj/item/highfrequencyblade/security
+	desc = "Cheaper than most normal high frequency weapons, this more common variant is being loaned to Nanotrasen security teams for scientific testing."
+	force = 5
+	throwforce = 15
+	wound_bonus = 20
+	bare_wound_bonus = 25

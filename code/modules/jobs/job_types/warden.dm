@@ -49,20 +49,20 @@
 	jobtype = /datum/job/warden
 
 	id_trim = /datum/id_trim/job/warden
-	uniform = /obj/item/clothing/under/rank/security/warden
-	suit = /obj/item/clothing/suit/armor/vest/warden/alt
-	suit_store = /obj/item/gun/energy/disabler
+	uniform = /obj/item/clothing/under/rank/centcom/military
+	suit = /obj/item/clothing/suit/armor/vest/blueshirt
+	suit_store = /obj/item/storage/belt/holster/detective/full/ert/security
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
 		/obj/item/modular_computer/tablet/preset/advanced/security = 1,
 		)
-	belt = /obj/item/pda/warden
+	belt = /obj/item/storage/belt/hf
 	ears = /obj/item/radio/headset/headset_sec/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
 	shoes = /obj/item/clothing/shoes/jackboots
-	l_pocket = /obj/item/restraints/handcuffs
+	l_pocket = /obj/item/pda/warden
 	r_pocket = /obj/item/assembly/flash/handheld
 
 	backpack = /obj/item/storage/backpack/security

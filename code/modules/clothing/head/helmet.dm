@@ -135,8 +135,8 @@
 /obj/item/clothing/head/helmet/blueshirt
 	name = "blue helmet"
 	desc = "A reliable, blue tinted helmet reminding you that you <i>still</i> owe that engineer a beer."
-	icon_state = "blueshift"
-	inhand_icon_state = "blueshift"
+	icon_state = "allies_helmet"
+	inhand_icon_state = "allies_helmet"
 	custom_premium_price = PAYCHECK_HARD
 
 /obj/item/clothing/head/helmet/riot

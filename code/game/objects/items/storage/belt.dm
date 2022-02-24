@@ -838,3 +838,52 @@
 		/obj/item/shovel/spade,
 		/obj/item/gun/energy/floragun
 		))
+
+/// This is copypasted code I know but it doesn't matter for a one-off pr
+/obj/item/storage/belt/hf
+	name = "high frequency blade sheath"
+	desc = "A utilitarian sheath used to hold high frequency blades"
+	icon_state = "hfbelt"
+	inhand_icon_state = "hfbelt"
+	worn_icon_state = "hfbelt"
+	w_class = WEIGHT_CLASS_BULKY
+
+/obj/item/storage/belt/hf/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 1
+	STR.rustle_sound = FALSE
+	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.set_holdable(list(
+		/obj/item/highfrequencyblade
+		))
+
+/obj/item/storage/belt/hf/examine(mob/user)
+	. = ..()
+	if(length(contents))
+		. += span_notice("Alt-click it to quickly draw the blade.")
+
+/obj/item/storage/belt/hf/AltClick(mob/user)
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		return
+	if(length(contents))
+		var/obj/item/I = contents[1]
+		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
+		user.put_in_hands(I)
+		update_appearance()
+	else
+		to_chat(user, span_warning("[src] is empty!"))
+
+/obj/item/storage/belt/hf/update_icon_state()
+	icon_state = initial(inhand_icon_state)
+	inhand_icon_state = initial(inhand_icon_state)
+	worn_icon_state = initial(worn_icon_state)
+	if(contents.len)
+		icon_state += "-full"
+		worn_icon_state += "-full"
+	return ..()
+
+/obj/item/storage/belt/hf/PopulateContents()
+	new /obj/item/highfrequencyblade/security(src)
+	update_appearance()
