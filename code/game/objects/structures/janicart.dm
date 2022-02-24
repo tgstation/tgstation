@@ -51,8 +51,7 @@
 
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user, params)
-	switch(I.type)
-		if(/obj/item/mop)
+	if(istype(I, /obj/item/mop))
 			if(mymop)
 				to_chat(user, span_warning("There is already a mop in [src]!"))
 				return
@@ -61,7 +60,7 @@
 				mymop = null
 			return
 
-		if(/obj/item/pushbroom)
+	else if(istype(I, /obj/item/pushbroom))
 			if(mybroom)
 				to_chat(user, span_warning("There is already a broom in [src]!"))
 				return
@@ -70,7 +69,7 @@
 				mybroom = null
 			return
 
-		if(/obj/item/storage/bag/trash)
+	else if(istype(I, /obj/item/storage/bag/trash))
 			if(mybag)
 				to_chat(user, span_warning("There is already a trash bag in [src]!"))
 				return
@@ -79,7 +78,7 @@
 				mybag = null
 			return
 
-		if(/obj/item/reagent_containers/spray/cleaner)
+	else if(istype(I, /obj/item/reagent_containers/spray/cleaner))
 			if(myspray)
 				to_chat(user, span_warning("There is already a spray bottle in [src]!"))
 				return
@@ -88,7 +87,7 @@
 				myspray = null
 			return
 
-		if(/obj/item/lightreplacer)
+	else if(istype(I, /obj/item/lightreplacer))
 			if(myreplacer)
 				to_chat(user, span_warning("There is already a light replacer in [src]!"))
 				return
@@ -97,7 +96,7 @@
 				myreplacer = null
 			return
 
-		if(/obj/item/clothing/suit/caution)
+	else if(istype(I, /obj/item/clothing/suit/caution))
 			if(signs >= max_signs)
 				to_chat(user, span_warning("[src] can't hold any more signs!"))
 				return
@@ -106,7 +105,7 @@
 				signs--
 			return
 
-	if(I.tool_behaviour == TOOL_CROWBAR)
+	else if(I.tool_behaviour == TOOL_CROWBAR)
 		if(reagents.total_volume < 1)
 			to_chat(user, span_warning("[src]'s mop bucket is empty!"))
 			return
