@@ -76,6 +76,11 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_admin))
 		WRITE_LOG(GLOB.world_game_log, "ADMIN: [text]")
 
+/proc/log_admin_circuit(text)
+	GLOB.admin_log.Add(text)
+	if(CONFIG_GET(flag/log_admin))
+		WRITE_LOG(GLOB.world_game_log, "ADMIN: CIRCUIT: [text]")
+
 /proc/log_admin_private(text)
 	GLOB.admin_log.Add(text)
 	if (CONFIG_GET(flag/log_admin))
@@ -122,6 +127,10 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 /proc/log_silicon(text)
 	if (CONFIG_GET(flag/log_silicon))
 		WRITE_LOG(GLOB.world_silicon_log, "SILICON: [text]")
+
+/proc/log_tool(text, mob/initiator)
+	if(CONFIG_GET(flag/log_tools))
+		WRITE_LOG(GLOB.world_tool_log, "TOOL: [text]")
 
 /**
  * Writes to a special log file if the log_suspicious_login config flag is set,
@@ -216,9 +225,13 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 	if (CONFIG_GET(flag/log_uplink))
 		WRITE_LOG(GLOB.world_uplink_log, "SPELLBOOK: [text]")
 
-/proc/log_codex_ciatrix(text)
+/proc/log_heretic_knowledge(text)
 	if (CONFIG_GET(flag/log_uplink))
-		WRITE_LOG(GLOB.world_uplink_log, "CODEX: [text]")
+		WRITE_LOG(GLOB.world_uplink_log, "HERETIC RESEARCH: [text]")
+
+/proc/log_changeling_power(text)
+	if (CONFIG_GET(flag/log_uplink))
+		WRITE_LOG(GLOB.world_uplink_log, "CHANGELING: [text]")
 
 /proc/log_telecomms(text)
 	if (CONFIG_GET(flag/log_telecomms))

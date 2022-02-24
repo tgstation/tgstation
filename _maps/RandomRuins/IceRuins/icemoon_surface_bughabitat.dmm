@@ -2,7 +2,7 @@
 "as" = (
 /obj/machinery/door/airlock/public,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "ax" = (
 /obj/effect/turf_decal/stripes/white/line{
 	color = "#236F26";
@@ -120,7 +120,7 @@
 "ma" = (
 /obj/structure/statue/snow/snowman,
 /turf/open/floor/grass/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "mM" = (
 /obj/machinery/light/warm/directional/west,
 /obj/structure/tank_holder/oxygen,
@@ -349,7 +349,7 @@
 /area/ruin/bughabitat)
 "Qd" = (
 /turf/open/floor/grass/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "Qp" = (
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
 	dir = 8
@@ -401,7 +401,7 @@
 /area/ruin/bughabitat)
 "Xn" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "Xt" = (
 /obj/structure/window/reinforced/spawner/east,
 /turf/open/floor/grass/snow/basalt/safe,

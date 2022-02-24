@@ -225,6 +225,9 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	merge_type = /obj/item/stack/sheet/titaniumglass
 	tableVariant = /obj/structure/table/reinforced/titaniumglass
 
+/obj/item/stack/sheet/titaniumglass/fifty
+	amount = 50
+
 /obj/item/stack/sheet/titaniumglass/get_main_recipes()
 	. = ..()
 	. += GLOB.titaniumglass_recipes

@@ -53,6 +53,8 @@
 	var/purchasable_from = ALL
 	/// If this uplink item is only available to certain roles. Roles are dependent on the frequency chip or stored ID.
 	var/list/restricted_roles = list()
+	/// The species able to purchase this uplink item.
+	var/restricted_species = list()
 	/// The minimum amount of progression needed for this item to be added to uplinks.
 	var/progression_minimum = 0
 	/// Whether this purchase is visible in the purchase log.

@@ -10,7 +10,7 @@
 
 /datum/addiction/opiods/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.apply_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
+	affected_carbon.apply_status_effect(/datum/status_effect/high_blood_pressure)
 
 /datum/addiction/opiods/withdrawal_stage_3_process(mob/living/carbon/affected_carbon, delta_time)
 	. = ..()
@@ -20,7 +20,7 @@
 
 /datum/addiction/opiods/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.remove_status_effect(STATUS_EFFECT_HIGHBLOODPRESSURE)
+	affected_carbon.remove_status_effect(/datum/status_effect/high_blood_pressure)
 	affected_carbon.set_disgust(affected_carbon.disgust * 0.5) //half their disgust to help
 
 ///Stimulants
@@ -35,7 +35,7 @@
 
 /datum/addiction/stimulants/withdrawal_enters_stage_2(mob/living/carbon/affected_carbon)
 	. = ..()
-	affected_carbon.apply_status_effect(STATUS_EFFECT_WOOZY)
+	affected_carbon.apply_status_effect(/datum/status_effect/woozy)
 
 /datum/addiction/stimulants/withdrawal_enters_stage_3(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -44,7 +44,7 @@
 /datum/addiction/stimulants/end_withdrawal(mob/living/carbon/affected_carbon)
 	. = ..()
 	affected_carbon.remove_actionspeed_modifier(ACTIONSPEED_ID_STIMULANTS)
-	affected_carbon.remove_status_effect(STATUS_EFFECT_WOOZY)
+	affected_carbon.remove_status_effect(/datum/status_effect/woozy)
 	affected_carbon.remove_movespeed_modifier(MOVESPEED_ID_STIMULANTS)
 
 ///Alcohol
@@ -67,7 +67,7 @@
 	affected_carbon.hallucination = max(5 SECONDS, affected_carbon.hallucination)
 	if(DT_PROB(4, delta_time))
 		if(!HAS_TRAIT(affected_carbon, TRAIT_ANTICONVULSANT))
-			affected_carbon.apply_status_effect(STATUS_EFFECT_SEIZURE)
+			affected_carbon.apply_status_effect(/datum/status_effect/seizure)
 
 /datum/addiction/hallucinogens
 	name = "hallucinogen"
@@ -124,11 +124,6 @@
 		return
 	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
 	var/mob/living/carbon/human/affected_human = affected_carbon
-
-	var/obj/item/organ/liver/empowered_liver = affected_carbon.getorgan(/obj/item/organ/liver)
-	if(empowered_liver)
-		ADD_TRAIT(empowered_liver, TRAIT_GREYTIDE_METABOLISM, "maint_drug_addiction")
-
 	var/obj/item/organ/eyes/empowered_eyes = affected_human.getorgan(/obj/item/organ/eyes)
 	if(empowered_eyes)
 		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")

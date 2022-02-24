@@ -5,6 +5,7 @@
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	var/list/hit_sounds = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg',\
 	'sound/weapons/punch1.ogg', 'sound/weapons/punch2.ogg', 'sound/weapons/punch3.ogg', 'sound/weapons/punch4.ogg')
 
@@ -17,7 +18,7 @@
 	if(isliving(user))
 		var/mob/living/L = user
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
-		L.apply_status_effect(STATUS_EFFECT_EXERCISED)
+		L.apply_status_effect(/datum/status_effect/exercised)
 
 /obj/structure/weightmachine
 	name = "weight machine"
@@ -56,7 +57,7 @@
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "exercise", /datum/mood_event/exercise)
 		icon_state = initial(icon_state)
 		to_chat(user, finishmessage)
-		user.apply_status_effect(STATUS_EFFECT_EXERCISED)
+		user.apply_status_effect(/datum/status_effect/exercised)
 
 /obj/structure/weightmachine/stacklifter
 	icon = 'goon/icons/obj/fitness.dmi'
@@ -82,6 +83,7 @@
 
 /obj/structure/weightmachine/weightlifter/AnimateMachine(mob/living/user)
 	var/mutable_appearance/swole_overlay = mutable_appearance(icon, "fitnessweight-w", WALL_OBJ_LAYER)
+	swole_overlay.plane = GAME_PLANE_UPPER
 	add_overlay(swole_overlay)
 	var/reps = 0
 	user.pixel_y = 5

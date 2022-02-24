@@ -35,7 +35,7 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	throw_message = "doesn't affect the sturdiness of"
 	speed = 1
-	move_to_delay = 1.5
+	move_to_delay = 3
 	mouse_opacity = MOUSE_OPACITY_ICON
 	deathsound = 'sound/magic/curse.ogg'
 	deathmessage = "'s arms reach out before it falls apart onto the floor, lifeless."
@@ -253,7 +253,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	throw_message = "simply misses"
 	speed = 0
-	move_to_delay = 1
+	move_to_delay = 2
 	del_on_death = 1
 	deathmessage = "crumbles away!"
 	faction = list()

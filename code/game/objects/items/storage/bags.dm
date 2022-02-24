@@ -40,6 +40,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	slot_flags = null
+	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
@@ -221,6 +222,21 @@
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
+
+/obj/item/storage/bag/plants/portaseeder/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/storage/bag/plants/portaseeder/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user
+)
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Make seeds"
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/item/storage/bag/plants/portaseeder/examine(mob/user)
 	. = ..()

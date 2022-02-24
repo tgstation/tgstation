@@ -30,7 +30,7 @@
 	animate(mod.wearer, alpha = stealth_alpha, time = 1.5 SECONDS)
 	drain_power(use_power_cost)
 
-/obj/item/mod/module/stealth/on_deactivation()
+/obj/item/mod/module/stealth/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -45,7 +45,7 @@
 	to_chat(mod.wearer, span_warning("[src] gets discharged from contact!"))
 	do_sparks(2, TRUE, src)
 	drain_power(use_power_cost)
-	on_deactivation()
+	on_deactivation(display_message = TRUE)
 
 /obj/item/mod/module/stealth/proc/on_unarmed_attack(datum/source, atom/target)
 	SIGNAL_HANDLER
@@ -124,3 +124,18 @@
 /obj/item/mod/module/holster/Destroy()
 	QDEL_NULL(holstered)
 	return ..()
+
+///Pepper Spray Mister - Sprays pepper spray over criminals.
+/obj/item/mod/module/mister/security
+	name = "MOD pepper spray mister module"
+	desc = "A module containing a container of pepper spray to spray over areas."
+	device = /obj/item/reagent_containers/spray/mister/pepperspray/mod
+	complexity = 1
+
+/obj/item/mod/module/mister/security/Initialize(mapload)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/consumable/condensedcapsaicin, volume)
+
+/obj/item/reagent_containers/spray/mister/pepperspray/mod
+	name = "MOD pepper spray mister"
+	desc = "A mister full of pepper spray, perfect for riots."

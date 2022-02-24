@@ -15,7 +15,8 @@
 	data_hud_type = DATA_HUD_SECURITY_BASIC //show jobs
 
 	baton_type = /obj/item/bikehorn
-	security_mode_flags = SECBOT_CHECK_WEAPONS
+	cuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake/used
+	security_mode_flags = SECBOT_CHECK_WEAPONS | SECBOT_HANDCUFF_TARGET
 
 	///Keeping track of how much we honk to prevent spamming it
 	var/limiting_spam = FALSE
@@ -36,17 +37,12 @@
 	prev_access = access_card.access.Copy()
 
 /mob/living/simple_animal/bot/secbot/honkbot/on_entered(datum/source, atom/movable/AM)
-	if(!ismob(AM) || !(bot_mode_flags & BOT_MODE_ON))
+	if(prob(70)) //only a chance to slip
 		return
-	if(prob(70))
-		return
-	var/mob/living/carbon/entered_carbon = AM
-	if(!istype(entered_carbon) || !entered_carbon || in_range(src, target))
-		return
-	knockOver(entered_carbon)
+	return ..()
 
 /mob/living/simple_animal/bot/secbot/honkbot/knockOver(mob/living/carbon/tripped_target)
-	..()
+	. = ..()
 	INVOKE_ASYNC(src, /mob/living/simple_animal/bot.proc/speak, "Honk!")
 	playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
@@ -60,6 +56,7 @@
 	if(limiting_spam)
 		return
 
+	var/judgement_criteria = judgement_criteria()
 	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1) //HEEEEEEEEEEEENK!!
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
@@ -81,7 +78,6 @@
 		threatlevel = 6 // will never let you go
 	else
 		//HONK once, then leave
-		var/judgement_criteria = judgement_criteria()
 		if(ishuman(current_target))
 			var/mob/living/carbon/human/human_target = current_target
 			threatlevel = human_target.assess_threat(judgement_criteria)
@@ -96,27 +92,30 @@
 	)
 
 	target_lastloc = target.loc
-	back_to_idle()
+	mode = BOT_PREP_ARREST
 
 /mob/living/simple_animal/bot/secbot/honkbot/retaliate(mob/living/carbon/human/attacking_human)
-	..()
+	. = ..()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
 	icon_state = "[initial(icon_state)]-c"
 	addtimer(CALLBACK(src, /atom.proc/update_appearance), 0.2 SECONDS)
 
 /mob/living/simple_animal/bot/secbot/honkbot/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	if(!(bot_mode_flags & BOT_MODE_ON))
-		return
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!limiting_spam)
 		bike_horn()
-	. = ..()
 
 /mob/living/simple_animal/bot/secbot/honkbot/handle_automated_action()
 	. = ..()
+	if(!.)
+		return
 	if(!limiting_spam && prob(30))
 		bike_horn()
 
 /mob/living/simple_animal/bot/secbot/honkbot/start_handcuffing(mob/living/carbon/current_target)
+	. = ..()
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //emagged honkbots will spam short and memorable sounds.
 		if(!limiting_spam)
 			playsound(src, "honkbot_e", 50, FALSE)
@@ -128,7 +127,6 @@
 	limiting_spam = TRUE // prevent spam
 	addtimer(CALLBACK(src, .proc/limiting_spam_false), cooldowntimehorn)
 	addtimer(CALLBACK(src, /atom.proc/update_appearance), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
-	back_to_idle()
 
 //Honkbots don't care for NAP violations
 /mob/living/simple_animal/bot/secbot/honkbot/check_nap_violations()

@@ -5,7 +5,9 @@
 #define FONT_SIZE "5pt"
 #define FONT_COLOR "#09f"
 #define FONT_STYLE "Small Fonts"
-#define SCROLL_SPEED 2
+#define SCROLL_RATE (0.04 SECONDS) // time per pixel
+#define LINE1_Y -8
+#define LINE2_Y -15
 
 #define SD_BLANK 0  // 0 = Blank
 #define SD_EMERGENCY 1  // 1 = Emergency Shuttle timer
@@ -27,21 +29,19 @@
 	idle_power_usage = 10
 	layer = ABOVE_WINDOW_LAYER
 
-	maptext_height = 26
-	maptext_width = 32
-	maptext_y = -1
-
-	var/message1 = "" // message line 1
-	var/message2 = "" // message line 2
-	var/index1 // display index for scrolling messages or 0 if non-scrolling
-	var/index2
+	var/obj/effect/overlay/status_display_text/message1_overlay
+	var/obj/effect/overlay/status_display_text/message2_overlay
+	var/current_picture = ""
+	var/current_mode = SD_BLANK
+	var/message1 = ""
+	var/message2 = ""
 
 /obj/item/wallframe/status_display
 	name = "status display frame"
 	desc = "Used to build status displays, just secure to the wall."
 	icon_state = "unanchoredstatusdisplay"
 	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
-	result_path = /obj/machinery/status_display
+	result_path = /obj/machinery/status_display/evac
 	pixel_shift = 32
 
 /obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
@@ -80,70 +80,104 @@
 		new /obj/item/wallframe/status_display(drop_location())
 	qdel(src)
 
-/// Immediately blank the display.
-/obj/machinery/status_display/proc/remove_display()
-	cut_overlays()
-	if(maptext)
-		maptext = ""
-
 /// Immediately change the display to the given picture.
 /obj/machinery/status_display/proc/set_picture(state)
-	remove_display()
-	add_overlay(state)
+	if(state != current_picture)
+		current_picture = state
+
+	update_appearance()
 
 /// Immediately change the display to the given two lines.
-/obj/machinery/status_display/proc/update_display(line1, line2)
+/obj/machinery/status_display/proc/set_messages(line1, line2)
 	line1 = uppertext(line1)
 	line2 = uppertext(line2)
-	var/new_text = {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]';text-align:center;" valign="top">[line1]<br>[line2]</div>"}
-	if(maptext != new_text)
-		maptext = new_text
 
-/// Prepare the display to marquee the given two lines.
-///
-/// Call with no arguments to disable.
-/obj/machinery/status_display/proc/set_message(m1, m2)
-	if(m1)
-		index1 = (length_char(m1) > CHARS_PER_LINE)
-		message1 = m1
-	else
-		message1 = ""
-		index1 = 0
+	if(line1 != message1)
+		message1 = line1
 
-	if(m2)
-		index2 = (length_char(m2) > CHARS_PER_LINE)
-		message2 = m2
-	else
-		message2 = ""
-		index2 = 0
+	if(line2 != message2)
+		message2 = line2
 
-// Timed process - performs default marquee action if so needed.
+	update_appearance()
+
+/**
+ * Remove both message objs and null the fields.
+ * Don't call this in subclasses.
+ */
+/obj/machinery/status_display/proc/remove_messages()
+	if(message1_overlay)
+		QDEL_NULL(message1_overlay)
+	if(message2_overlay)
+		QDEL_NULL(message2_overlay)
+
+/**
+ * Create/update message overlay.
+ * They must be handled as real objects for the animation to run.
+ * Don't call this in subclasses.
+ * Arguments:
+ * * overlay - the current /obj/effect/overlay/status_display_text instance
+ * * line_y - The Y offset to render the text.
+ * * message - the new message text.
+ * Returns new /obj/effect/overlay/status_display_text or null if unchanged.
+ */
+/obj/machinery/status_display/proc/update_message(obj/effect/overlay/status_display_text/overlay, line_y, message)
+	if(overlay && message == overlay.message)
+		return null
+
+	if(overlay)
+		qdel(overlay)
+
+	var/obj/effect/overlay/status_display_text/new_status_display_text = new(src, line_y, message)
+	vis_contents += new_status_display_text
+	return new_status_display_text
+
+/obj/machinery/status_display/update_appearance(updates=ALL)
+	. = ..()
+	if( \
+		(machine_stat & (NOPOWER|BROKEN)) || \
+		(current_mode == SD_BLANK) || \
+		(current_mode != SD_PICTURE && message1 == "" && message2 == "") \
+	)
+		set_light(0)
+		return
+	set_light(1.4, 0.7, LIGHT_COLOR_BLUE) // blue light
+
+/obj/machinery/status_display/update_overlays()
+	. = ..()
+
+	if(machine_stat & (NOPOWER|BROKEN))
+		remove_messages()
+		return
+
+	switch(current_mode)
+		if(SD_BLANK)
+			remove_messages()
+			// Turn off backlight.
+			return
+		if(SD_PICTURE)
+			remove_messages()
+			. += mutable_appearance(icon, current_picture)
+		else
+			var/overlay = update_message(message1_overlay, LINE1_Y, message1)
+			if(overlay)
+				message1_overlay = overlay
+			overlay = update_message(message2_overlay, LINE2_Y, message2)
+			if(overlay)
+				message2_overlay = overlay
+
+			// Turn off backlight if message is blank
+			if(message1 == "" && message2 == "")
+				return
+
+	. += emissive_appearance(icon, "outline", alpha = src.alpha)
+
+// Timed process - performs nothing in the base class
 /obj/machinery/status_display/process()
 	if(machine_stat & NOPOWER)
 		// No power, no processing.
-		remove_display()
-		return PROCESS_KILL
+		update_appearance()
 
-	var/line1 = message1
-	if(index1)
-		line1 = copytext_char("[message1]|[message1]", index1, index1 + CHARS_PER_LINE)
-		var/message1_len = length_char(message1)
-		index1 += SCROLL_SPEED
-		if(index1 > message1_len + 1)
-			index1 -= (message1_len + 1)
-
-	var/line2 = message2
-	if(index2)
-		line2 = copytext_char("[message2]|[message2]", index2, index2 + CHARS_PER_LINE)
-		var/message2_len = length_char(message2)
-		index2 += SCROLL_SPEED
-		if(index2 > message2_len + 1)
-			index2 -= (message2_len + 1)
-
-	update_display(line1, line2)
-	if (!index1 && !index2)
-		// No marquee, no processing.
-		return PROCESS_KILL
+	return PROCESS_KILL
 
 /// Update the display and, if necessary, re-enable processing.
 /obj/machinery/status_display/proc/update()
@@ -158,22 +192,23 @@
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
+	current_mode = SD_PICTURE
 	set_picture("ai_bsod")
 
 /obj/machinery/status_display/examine(mob/user)
 	. = ..()
-	if (message1 || message2)
+	if (message1_overlay || message2_overlay)
 		. += "The display says:"
-		if (message1)
-			. += "<br>\t<tt>[html_encode(message1)]</tt>"
-		if (message2)
-			. += "<br>\t<tt>[html_encode(message2)]</tt>"
+		if (message1_overlay.message)
+			. += "<br>\t<tt>[html_encode(message1_overlay.message)]</tt>"
+		if (message2_overlay.message)
+			. += "<br>\t<tt>[html_encode(message2_overlay.message)]</tt>"
 
 // Helper procs for child display types.
 /obj/machinery/status_display/proc/display_shuttle_status(obj/docking_port/mobile/shuttle)
 	if(!shuttle)
 		// the shuttle is missing - no processing
-		update_display("shutl?","")
+		set_messages("shutl?","")
 		return PROCESS_KILL
 	else if(shuttle.timer)
 		var/line1 = "-[shuttle.getModeStr()]-"
@@ -181,10 +216,10 @@
 
 		if(length_char(line2) > CHARS_PER_LINE)
 			line2 = "error"
-		update_display(line1, line2)
+		set_messages(line1, line2)
 	else
 		// don't kill processing, the timer might turn back on
-		remove_display()
+		set_messages("", "")
 
 /obj/machinery/status_display/proc/examine_shuttle(mob/user, obj/docking_port/mobile/shuttle)
 	if (shuttle)
@@ -198,11 +233,55 @@
 	else
 		return "The display says:<br>\t<tt>Shuttle missing!</tt>"
 
+/obj/machinery/status_display/Destroy()
+	remove_messages()
+	return ..()
+
+/**
+ * Nice overlay to make text smoothly scroll with no client updates after setup.
+ */
+/obj/effect/overlay/status_display_text
+	icon = 'icons/obj/status_display.dmi'
+	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+
+	var/message
+
+/obj/effect/overlay/status_display_text/Initialize(mapload, yoffset, line)
+	. = ..()
+
+	maptext_y = yoffset
+	message = line
+
+	var/line_length = length_char(line)
+
+	if(line_length > CHARS_PER_LINE)
+		// Marquee text
+		var/marquee_message = "[line] • [line] • [line]"
+		var/marquee_length = line_length * 3 + 6
+		maptext = generate_text(marquee_message, center = FALSE)
+		maptext_width = 6 * marquee_length
+		maptext_x = 32
+
+		// Mask off to fit in screen.
+		add_filter("mask", 1, alpha_mask_filter(icon = icon(icon, "outline")))
+
+		// Scroll.
+		var/width = 4 * marquee_length
+		var/time = (width + 32) * SCROLL_RATE
+		animate(src, maptext_x = -width, time = time, loop = -1)
+		animate(maptext_x = 32, time = 0)
+	else
+		// Centered text
+		maptext = generate_text(line, center = TRUE)
+		maptext_x = 0
+
+/obj/effect/overlay/status_display_text/proc/generate_text(text, center)
+	return {"<div style="font-size:[FONT_SIZE];color:[FONT_COLOR];font:'[FONT_STYLE]'[center ? ";text-align:center" : ""]" valign="top">[text]</div>"}
 
 /// Evac display which shows shuttle timer or message set by Command.
 /obj/machinery/status_display/evac
+	current_mode = SD_EMERGENCY
 	var/frequency = FREQ_STATUS_DISPLAYS
-	var/mode = SD_EMERGENCY
 	var/friendc = FALSE      // track if Friend Computer mode
 	var/last_picture  // For when Friend Computer mode is undone
 
@@ -225,23 +304,23 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/evac/process()
 	if(machine_stat & NOPOWER)
 		// No power, no processing.
-		remove_display()
+		update_appearance()
 		return PROCESS_KILL
 
 	if(friendc) //Makes all status displays except supply shuttle timer display the eye -- Urist
+		current_mode = SD_PICTURE
 		set_picture("ai_friend")
 		return PROCESS_KILL
 
-	switch(mode)
+	switch(current_mode)
 		if(SD_BLANK)
-			remove_display()
 			return PROCESS_KILL
 
 		if(SD_EMERGENCY)
 			return display_shuttle_status(SSshuttle.emergency)
 
 		if(SD_MESSAGE)
-			return ..()
+			return PROCESS_KILL
 
 		if(SD_PICTURE)
 			set_picture(last_picture)
@@ -249,7 +328,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
 /obj/machinery/status_display/evac/examine(mob/user)
 	. = ..()
-	if(mode == SD_EMERGENCY)
+	if(current_mode == SD_EMERGENCY)
 		. += examine_shuttle(user, SSshuttle.emergency)
 	else if(!message1 && !message2)
 		. += "The display is blank."
@@ -257,16 +336,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/evac/receive_signal(datum/signal/signal)
 	switch(signal.data["command"])
 		if("blank")
-			mode = SD_BLANK
-			set_message(null, null)
+			current_mode = SD_BLANK
+			update_appearance()
 		if("shuttle")
-			mode = SD_EMERGENCY
-			set_message(null, null)
+			current_mode = SD_EMERGENCY
+			set_messages("", "")
 		if("message")
-			mode = SD_MESSAGE
-			set_message(signal.data["msg1"], signal.data["msg2"])
+			current_mode = SD_MESSAGE
+			set_messages(signal.data["msg1"] || "", signal.data["msg2"] || "")
 		if("alert")
-			mode = SD_PICTURE
+			current_mode = SD_PICTURE
 			last_picture = signal.data["picture_state"]
 			set_picture(last_picture)
 		if("friendcomputer")
@@ -277,11 +356,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /// Supply display which shows the status of the supply shuttle.
 /obj/machinery/status_display/supply
 	name = "supply display"
+	current_mode = SD_MESSAGE
 
 /obj/machinery/status_display/supply/process()
 	if(machine_stat & NOPOWER)
 		// No power, no processing.
-		remove_display()
+		update_appearance()
 		return PROCESS_KILL
 
 	var/line1
@@ -295,12 +375,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 		if(is_station_level(SSshuttle.supply.z))
 			line1 = "CARGO"
 			line2 = "Docked"
+		else
+			line1 = ""
+			line2 = ""
 	else
 		line1 = "CARGO"
 		line2 = SSshuttle.supply.getTimerStr()
 		if(length_char(line2) > CHARS_PER_LINE)
 			line2 = "Error"
-	update_display(line1, line2)
+	set_messages(line1, line2)
 
 /obj/machinery/status_display/supply/examine(mob/user)
 	. = ..()
@@ -320,12 +403,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /// General-purpose shuttle status display.
 /obj/machinery/status_display/shuttle
 	name = "shuttle display"
+	current_mode = SD_MESSAGE
 	var/shuttle_id
 
 /obj/machinery/status_display/shuttle/process()
 	if(!shuttle_id || (machine_stat & NOPOWER))
 		// No power, no processing.
-		remove_display()
+		update_appearance()
 		return PROCESS_KILL
 
 	return display_shuttle_status(SSshuttle.getShuttle(shuttle_id))
@@ -355,6 +439,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/ai
 	name = "\improper AI display"
 	desc = "A small screen which the AI can use to present itself."
+	current_mode = SD_PICTURE
 
 	var/emotion = AI_EMOTION_BLANK
 
@@ -406,7 +491,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 /obj/machinery/status_display/ai/process()
 	if(machine_stat & NOPOWER)
-		remove_display()
+		update_appearance()
 		return PROCESS_KILL
 
 	set_picture(emotion_map[emotion])
@@ -416,4 +501,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 #undef FONT_SIZE
 #undef FONT_COLOR
 #undef FONT_STYLE
-#undef SCROLL_SPEED
+#undef SCROLL_RATE
+#undef LINE1_Y
+#undef LINE2_Y

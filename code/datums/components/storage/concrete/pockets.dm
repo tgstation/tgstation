@@ -25,9 +25,12 @@
 /datum/component/storage/concrete/pockets/small/fedora/Initialize()
 	. = ..()
 	var/static/list/exception_cache = typecacheof(list(
-		/obj/item/katana, /obj/item/toy/katana, /obj/item/nullrod/claymore/katana,
-		/obj/item/energy_katana, /obj/item/gun/ballistic/automatic/tommygun
-		))
+		/obj/item/katana,
+		/obj/item/toy/katana,
+		/obj/item/nullrod/claymore/katana,
+		/obj/item/energy_katana,
+		/obj/item/gun/ballistic/automatic/tommygun,
+	))
 	exception_hold = exception_cache
 
 /datum/component/storage/concrete/pockets/small/fedora/detective
@@ -159,5 +162,5 @@
 
 /datum/component/storage/concrete/pockets/void_cloak/Initialize()
 	. = ..()
-	var/static/list/exception_cache = typecacheof(list(/obj/item/living_heart,/obj/item/forbidden_book))
+	var/static/list/exception_cache = typecacheof(list(/obj/item/clothing/neck/heretic_focus, /obj/item/codex_cicatrix))
 	exception_hold = exception_cache
