@@ -108,7 +108,7 @@
 				selected_atoms |= nearby_atom
 				// If it's a stack, we gotta see if it has more than one inside,
 				// as our requirements may want more than one item of a stack
-				if(istype(nearby_atom, /obj/item/stack))
+				if(isstack(nearby_atom))
 					var/obj/item/stack/picked_stack = nearby_atom
 					requirements_list[req_type] -= picked_stack.amount // Can go negative, but doesn't matter. Negative = fulfilled
 
