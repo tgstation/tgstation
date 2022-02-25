@@ -57,7 +57,7 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/proc/set_on(active)
 	on = active
-	SEND_SIGNAL(src, COMSIG_PUMP_SET_ON, on)
+	SEND_SIGNAL(src, COMSIG_VOLUME_PUMP_SET_ON, on)
 
 /obj/machinery/atmospherics/components/binary/volume_pump/update_icon_nopipes()
 	icon_state = on && is_operational ? "volpump_on-[set_overlay_offset(piping_layer)]" : "volpump_off-[set_overlay_offset(piping_layer)]"
@@ -284,10 +284,10 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/atmospherics/components/binary/volume_pump))
 		connected_pump = shell
-		RegisterSignal(connected_pump, COMSIG_PUMP_SET_ON, .proc/handle_pump_activation)
+		RegisterSignal(connected_pump, COMSIG_VOLUME_PUMP_SET_ON, .proc/handle_pump_activation)
 
 /obj/item/circuit_component/atmos_volume_pump/unregister_usb_parent(atom/movable/shell)
-	UnregisterSignal(connected_pump, COMSIG_PUMP_SET_ON)
+	UnregisterSignal(connected_pump, COMSIG_VOLUME_PUMP_SET_ON)
 	connected_pump = null
 	return ..()
 
