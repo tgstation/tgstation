@@ -422,6 +422,7 @@
 	if(!..())
 		return FALSE
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [A].</span>", span_notice("You point at [A]."))
+	log_message("points at [A]", LOG_EMOTE)
 	return TRUE
 
 
