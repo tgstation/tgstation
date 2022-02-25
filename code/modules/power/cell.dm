@@ -80,7 +80,7 @@
 	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
 
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
-	return 100*charge/maxcharge
+	return 100 * charge / maxcharge
 
 // use power from a cell
 /obj/item/stock_parts/cell/use(amount, force)
@@ -110,7 +110,7 @@
 	if(rigged)
 		. += span_danger("This power cell seems to be faulty!")
 	else
-		. += "The charge meter reads [round(src.percent() )]%."
+		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
 
 /obj/item/stock_parts/cell/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is licking the electrodes of [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
