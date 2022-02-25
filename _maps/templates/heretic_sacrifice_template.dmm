@@ -1,0 +1,1532 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/turf/open/space/basic,
+/area/space)
+"cd" = (
+/obj/effect/decal/cleanable/ash{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"cS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bonfire/prelit,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"cW" = (
+/obj/structure/no_effect_signpost/void,
+/turf/open/floor/plating/asteroid,
+/area/heretic_sacrifice/void)
+"dX" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"dZ" = (
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/plating/ironsand,
+/area/heretic_sacrifice/rust)
+"fh" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"gJ" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"hZ" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/necropolis/air,
+/area/heretic_sacrifice/flesh)
+"jg" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"jB" = (
+/obj/machinery/light/very_dim/directional/south,
+/turf/open/floor/plating/asteroid,
+/area/heretic_sacrifice/void)
+"lz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"mb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/ironsand,
+/area/heretic_sacrifice/rust)
+"mG" = (
+/obj/effect/turf_decal/weather,
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"mR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"mZ" = (
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"nG" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/plating/dirt/jungle/wasteland{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"nL" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 10
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"nP" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"oh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"ps" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"pt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/plating/ironsand,
+/area/heretic_sacrifice/rust)
+"pN" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"qn" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating/asteroid,
+/area/heretic_sacrifice/void)
+"qu" = (
+/obj/effect/turf_decal/weather/dirt,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"qM" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"rP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/necropolis/air,
+/area/heretic_sacrifice/flesh)
+"sb" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"tF" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"ui" = (
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"uu" = (
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"uT" = (
+/obj/structure/cable,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"vs" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"vv" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"wt" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"wE" = (
+/turf/open/floor/plating/dirt/jungle/wasteland{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"wS" = (
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"wY" = (
+/turf/open/floor/glass{
+	desc = "A peek into the other side.";
+	name = "void glass floor"
+	},
+/area/heretic_sacrifice/void)
+"yC" = (
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"zb" = (
+/obj/structure/stone_tile/slab,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"zU" = (
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"AH" = (
+/obj/effect/turf_decal/trimline/brown/corner,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"AN" = (
+/obj/machinery/light/floor,
+/obj/effect/decal/fakelattice{
+	density = 0
+	},
+/turf/open/floor/plating/ironsand,
+/area/heretic_sacrifice/rust)
+"AO" = (
+/turf/open/floor/fakespace,
+/area/heretic_sacrifice/void)
+"Bv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/brown/line,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"Bw" = (
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"By" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"Cf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"Ck" = (
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"CB" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"CG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"CV" = (
+/obj/effect/decal/cleanable/plasma,
+/obj/effect/landmark/heretic/ash,
+/turf/open/floor/plating/dirt/jungle/wasteland{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"DL" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 4
+	},
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"ER" = (
+/turf/open/floor/plating/ironsand,
+/area/heretic_sacrifice/rust)
+"Fd" = (
+/turf/closed/indestructible/riveted,
+/area/space)
+"Gl" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"GX" = (
+/obj/effect/landmark/heretic/flesh,
+/turf/open/indestructible/necropolis/air,
+/area/heretic_sacrifice/flesh)
+"HE" = (
+/obj/effect/turf_decal/weather,
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"HJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/gibspawner/human,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"HQ" = (
+/turf/closed/indestructible/necropolis,
+/area/heretic_sacrifice/flesh)
+"Ie" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Ii" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Je" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/ironsand,
+/area/heretic_sacrifice/rust)
+"Jy" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"JJ" = (
+/obj/effect/decal/remains/human,
+/turf/open/indestructible/necropolis/air,
+/area/heretic_sacrifice/flesh)
+"Ko" = (
+/obj/machinery/light/very_dim/directional/east,
+/turf/open/floor/fakespace,
+/area/heretic_sacrifice/void)
+"Ku" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Kz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"KO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/gibspawner/generic/animal,
+/obj/structure/bonfire/prelit,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"KP" = (
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"La" = (
+/turf/closed/indestructible/riveted/plastinum,
+/area/heretic_sacrifice/void)
+"LA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/brown/corner{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"Mf" = (
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dirt/jungle/wasteland{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Mw" = (
+/obj/machinery/light/very_dim/directional/west,
+/turf/open/floor/fakespace,
+/area/heretic_sacrifice/void)
+"Nh" = (
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"NA" = (
+/obj/structure/stone_tile/burnt,
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"NQ" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"OD" = (
+/obj/effect/landmark/heretic,
+/turf/open/floor/plating/dirt/jungle/wasteland{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"OG" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Pl" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/floor/plating/ashplanet/wateryrock{
+	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Qi" = (
+/obj/structure/stone_tile,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"QL" = (
+/obj/effect/decal/cleanable/ash/large{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Rb" = (
+/obj/effect/landmark/heretic/void,
+/turf/open/floor/plating/asteroid,
+/area/heretic_sacrifice/void)
+"Rh" = (
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"RW" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"Se" = (
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"St" = (
+/turf/open/indestructible/necropolis/air,
+/area/heretic_sacrifice/flesh)
+"Sy" = (
+/obj/structure/stone_tile/block,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Tf" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/indestructible/necropolis/air,
+/area/heretic_sacrifice/flesh)
+"TC" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"TS" = (
+/obj/effect/turf_decal/trimline/brown/line{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"Ue" = (
+/obj/machinery/light/very_dim/directional/north,
+/turf/open/floor/fakespace,
+/area/heretic_sacrifice/void)
+"UO" = (
+/obj/effect/landmark/heretic/rust,
+/turf/open/floor/plating,
+/area/heretic_sacrifice/rust)
+"Vd" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"VK" = (
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/ash{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating/dirt/jungle/dark{
+	planetary_atmos = 0;
+	slowdown = 0
+	},
+/area/heretic_sacrifice/ash)
+"Wb" = (
+/turf/open/floor/plating/asteroid,
+/area/heretic_sacrifice/void)
+"WD" = (
+/turf/closed/indestructible/iron{
+	opacity = 1
+	},
+/area/heretic_sacrifice/rust)
+"Xk" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/asteroid,
+/area/heretic_sacrifice/void)
+"Xr" = (
+/turf/open/floor/plating/rust,
+/area/heretic_sacrifice/rust)
+"Xt" = (
+/obj/effect/gibspawner/generic/animal,
+/turf/open/floor/stone,
+/area/heretic_sacrifice/flesh)
+"Yp" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/indestructible/necropolis/air,
+/area/heretic_sacrifice/flesh)
+"ZA" = (
+/turf/closed/indestructible/riveted/boss,
+/area/heretic_sacrifice/ash)
+
+(1,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+ab
+"}
+(3,1,1) = {"
+ab
+Fd
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+Fd
+La
+La
+La
+La
+La
+La
+La
+La
+La
+La
+La
+La
+Fd
+ab
+"}
+(4,1,1) = {"
+ab
+Fd
+ZA
+Pl
+wS
+Ii
+Bw
+Bw
+Bw
+Bw
+Pl
+wS
+Ii
+ZA
+Fd
+La
+AO
+AO
+AO
+AO
+Mw
+AO
+AO
+AO
+wY
+Wb
+La
+Fd
+ab
+"}
+(5,1,1) = {"
+ab
+Fd
+ZA
+wS
+nG
+VK
+sb
+Bw
+Bw
+Bw
+Qi
+nG
+Kz
+ZA
+Fd
+La
+AO
+wY
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+wY
+La
+Fd
+ab
+"}
+(6,1,1) = {"
+ab
+Fd
+ZA
+OG
+cd
+pN
+Bw
+Bw
+vv
+Bw
+OG
+TC
+tF
+ZA
+Fd
+La
+wY
+cW
+wY
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+La
+Fd
+ab
+"}
+(7,1,1) = {"
+ab
+Fd
+ZA
+Bw
+Bw
+Bw
+Pl
+nP
+nP
+Ii
+Bw
+Bw
+Bw
+ZA
+Fd
+La
+AO
+wY
+AO
+AO
+wY
+wY
+AO
+AO
+AO
+wY
+La
+Fd
+ab
+"}
+(8,1,1) = {"
+ab
+Fd
+ZA
+Bw
+Bw
+qu
+vs
+wE
+Mf
+Sy
+NQ
+lz
+lz
+ZA
+Fd
+La
+AO
+AO
+AO
+wY
+Wb
+Rb
+wY
+AO
+wY
+jB
+La
+Fd
+ab
+"}
+(9,1,1) = {"
+ab
+Fd
+ZA
+Bw
+Bw
+Bw
+wt
+CV
+OD
+Sy
+NQ
+lz
+Bw
+ZA
+Fd
+La
+Ue
+AO
+AO
+wY
+Xk
+Wb
+wY
+AO
+wY
+Wb
+La
+Fd
+ab
+"}
+(10,1,1) = {"
+ab
+Fd
+ZA
+Bw
+Bw
+Bw
+OG
+DL
+Ku
+Ie
+Bw
+dX
+Bw
+ZA
+Fd
+La
+AO
+AO
+AO
+AO
+wY
+wY
+AO
+AO
+wY
+Wb
+La
+Fd
+ab
+"}
+(11,1,1) = {"
+ab
+Fd
+ZA
+Pl
+gJ
+qM
+Bw
+Bw
+nL
+lz
+Pl
+Kz
+Ii
+ZA
+Fd
+La
+wY
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+wY
+La
+Fd
+ab
+"}
+(12,1,1) = {"
+ab
+Fd
+ZA
+wS
+nG
+Sy
+lz
+Gl
+zb
+NA
+QL
+nG
+wS
+ZA
+Fd
+La
+Wb
+wY
+AO
+AO
+AO
+AO
+AO
+wY
+AO
+AO
+La
+Fd
+ab
+"}
+(13,1,1) = {"
+ab
+Fd
+ZA
+OG
+wS
+tF
+Bw
+Jy
+KP
+Bw
+OG
+wS
+tF
+ZA
+Fd
+La
+Wb
+Xk
+wY
+AO
+AO
+Ko
+wY
+qn
+wY
+AO
+La
+Fd
+ab
+"}
+(14,1,1) = {"
+ab
+Fd
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+ZA
+Fd
+La
+La
+La
+La
+La
+La
+La
+La
+La
+La
+La
+La
+Fd
+ab
+"}
+(15,1,1) = {"
+ab
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+ab
+"}
+(16,1,1) = {"
+ab
+Fd
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+Fd
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+Fd
+ab
+"}
+(17,1,1) = {"
+ab
+Fd
+WD
+dZ
+dZ
+dZ
+ER
+Je
+fh
+Xr
+Xr
+Xr
+Xr
+WD
+Fd
+HQ
+St
+ui
+St
+St
+St
+Yp
+Yp
+St
+ui
+St
+HQ
+Fd
+ab
+"}
+(18,1,1) = {"
+ab
+Fd
+WD
+dZ
+AN
+mb
+HE
+oh
+fh
+Xr
+ps
+AN
+Xr
+WD
+Fd
+HQ
+Xt
+cS
+RW
+ui
+ui
+ui
+RW
+Xt
+Vd
+ui
+HQ
+Fd
+ab
+"}
+(19,1,1) = {"
+ab
+Fd
+WD
+ER
+mG
+jg
+fh
+fh
+uT
+By
+dZ
+pt
+ER
+WD
+Fd
+HQ
+St
+CB
+JJ
+ui
+St
+St
+ui
+hZ
+ui
+St
+HQ
+Fd
+ab
+"}
+(20,1,1) = {"
+ab
+Fd
+WD
+Se
+mR
+zU
+AH
+Rh
+Rh
+LA
+ER
+ps
+Je
+WD
+Fd
+HQ
+St
+ui
+ui
+HJ
+RW
+RW
+ui
+RW
+RW
+St
+HQ
+Fd
+ab
+"}
+(21,1,1) = {"
+ab
+Fd
+WD
+Xr
+mZ
+Se
+Bv
+Xr
+Xr
+Nh
+Xr
+Se
+Se
+WD
+Fd
+HQ
+St
+RW
+St
+ui
+hZ
+Tf
+ui
+St
+RW
+St
+HQ
+Fd
+ab
+"}
+(22,1,1) = {"
+ab
+Fd
+WD
+Se
+Se
+Xr
+Bv
+UO
+Se
+yC
+Se
+zU
+Xr
+WD
+Fd
+HQ
+St
+RW
+Yp
+ui
+GX
+Yp
+ui
+JJ
+ui
+St
+HQ
+Fd
+ab
+"}
+(23,1,1) = {"
+ab
+Fd
+WD
+Xr
+oh
+Xr
+Ck
+TS
+TS
+uu
+Xr
+Xr
+HE
+WD
+Fd
+HQ
+St
+ui
+ui
+ui
+ui
+RW
+CG
+ui
+ui
+St
+HQ
+Fd
+ab
+"}
+(24,1,1) = {"
+ab
+Fd
+WD
+ps
+Se
+Se
+By
+Se
+oh
+Xr
+ps
+pt
+ER
+WD
+Fd
+HQ
+hZ
+ui
+St
+ui
+St
+St
+ui
+rP
+ui
+St
+HQ
+Fd
+ab
+"}
+(25,1,1) = {"
+ab
+Fd
+WD
+Je
+AN
+Cf
+oh
+mR
+zU
+ps
+ER
+AN
+ER
+WD
+Fd
+HQ
+RW
+KO
+ui
+ui
+RW
+ui
+ui
+RW
+cS
+ui
+HQ
+Fd
+ab
+"}
+(26,1,1) = {"
+ab
+Fd
+WD
+ER
+pt
+ER
+HE
+Xr
+Se
+Se
+Je
+ER
+Xr
+WD
+Fd
+HQ
+St
+ui
+JJ
+Yp
+Yp
+St
+St
+Yp
+Xt
+St
+HQ
+Fd
+ab
+"}
+(27,1,1) = {"
+ab
+Fd
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+Fd
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+HQ
+Fd
+ab
+"}
+(28,1,1) = {"
+ab
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+Fd
+ab
+"}
+(29,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}

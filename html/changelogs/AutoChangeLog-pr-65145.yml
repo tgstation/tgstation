@@ -1,0 +1,4 @@
+author: "KubeRoot"
+delete-after: True
+changes: 
+  - qol: "Chat tab filter behavior has been tweaked: System messages will now be enabled in custom tabs and any new message types will be enabled by default. NOTE: This will mess up your custom chat tab filters after the first time you join. You will need to disable any message types that were automatically enabled with this change."

@@ -226,6 +226,9 @@
 
 	return ..()
 
+/obj/structure/window/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/structure/window/set_anchored(anchorvalue)
 	..()
 	air_update_turf(TRUE, anchorvalue)

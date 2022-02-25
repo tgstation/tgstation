@@ -581,7 +581,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 //Commons
 
 /area/commons
-	name = "\improper Crew Quarters"
+	name = "\improper Crew Facilities"
+	icon_state = "commons"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
@@ -626,8 +627,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "locker"
 
 /area/commons/lounge
-	name = "\improper Lounge"
+	name = "\improper Bar Lounge"
 	icon_state = "lounge"
+	mood_bonus = 5
+	mood_message = "<span class='nicegreen'>I love being in the bar!</span>\n"
+	mood_trait = TRAIT_EXTROVERT
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
 /area/commons/fitness
@@ -737,7 +741,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/electronic_marketing_den
 	name = "\improper Electronic Marketing Den"
-	icon_state = "abandoned_m_den"
+	icon_state = "abandoned_marketing_den"
 
 /area/service/abandoned_gambling_den
 	name = "\improper Abandoned Gambling Den"
@@ -819,6 +823,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Chapel Dock"
 	icon_state = "construction"
 
+/area/service/chapel/storage
+	name = "\improper Chapel Storage"
+	icon_state = "chapelstorage"
+
 /area/service/lawoffice
 	name = "\improper Law Office"
 	icon_state = "law"
@@ -868,6 +876,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Engineering"
 	icon_state = "engine"
 
+/area/engineering/hallway
+	name = "Engineering Hallway"
+	icon_state = "engine_hallway"
+
 /area/engineering/atmos
 	name = "Atmospherics"
 	icon_state = "atmos"
@@ -880,6 +892,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/storage
 	name = "\improper Atmospherics Storage Room"
+	icon_state = "atmos_storage"
+
+/area/engineering/atmos/storage/gas
+	name = "\improper Atmospherics Gas Storage"
+	icon_state = "atmos_storage_gas"
 
 /area/engineering/atmos/office
 	name = "\improper Atmospherics Office"
@@ -936,7 +953,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage/tcomms
 	name = "Telecomms Storage"
-	icon_state = "tcom"
+	icon_state = "tcom_storage"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 
 //Engineering - Construction
@@ -1180,6 +1197,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Brig"
 	icon_state = "brig"
 
+/area/security/medical
+	name = "\improper Security Medical"
+	icon_state = "security_medical"
+
 /area/security/brig/upper
 	name = "\improper Brig Overlook"
 	icon_state = "upperbrig"
@@ -1387,8 +1408,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/science/lobby
+	name = "\improper Science Lobby"
+	icon_state = "science_lobby"
+
+/area/science/lower
+	name = "\improper Lower Science Division"
+	icon_state = "lower_science"
+
 /area/science/breakroom
 	name = "\improper Science Break Room"
+	icon_state = "science_breakroom"
 
 /area/science/lab
 	name = "Research and Development"
@@ -1419,6 +1449,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Ordnance Mixing Chamber"
 	icon_state = "ord_mix_chamber"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+/area/science/mixing/hallway
+	name = "\improper Ordnance Mixing Hallway"
+	icon_state = "ord_mix_hallway"
+
+/area/science/mixing/launch
+	name = "\improper Ordnance Mixing Launch Site"
+	icon_state = "ord_mix_launch"
 
 /area/science/genetics
 	name = "\improper Genetics Lab"

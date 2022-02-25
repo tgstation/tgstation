@@ -10,11 +10,43 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	custom_materials = list(/datum/material/iron = 30, /datum/material/glass = 20)
+
+/obj/item/plant_analyzer/Initialize(mapload)
+	. = ..()
+	register_item_context()
 
 /obj/item/plant_analyzer/examine()
 	. = ..()
 	. += span_notice("Left click a plant to scan its growth stats, and right click to scan its chemical reagent stats.")
+
+/obj/item/plant_analyzer/add_item_context(
+	obj/item/source,
+	list/context,
+	atom/target,
+)
+
+	if(isliving(target))
+		// It's a health analyzer, but for podpeople.
+		var/mob/living/living_target = target
+		if(!(living_target.mob_biotypes & MOB_PLANT))
+			return NONE
+
+		context[SCREENTIP_CONTEXT_LMB] = "Scan health"
+		context[SCREENTIP_CONTEXT_RMB] = "Scan chemicals"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(isitem(target))
+		// Easier to handle this here, as grown items are split across two type-paths
+		var/obj/item/item_target = target
+		if(!item_target.get_plant_seed())
+			return NONE
+
+		context[SCREENTIP_CONTEXT_LMB] = "Scan plant stats"
+		context[SCREENTIP_CONTEXT_RMB] = "Scan plant chemicals"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /// When we attack something, first - try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/pre_attack(atom/target, mob/living/user)
@@ -557,7 +589,6 @@
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-
 
 // *************************************
 // Nutrient defines for hydroponics
