@@ -23014,6 +23014,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
+"fTX" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron,
+/area/engineering/atmos)
 "fUk" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -120048,7 +120052,7 @@ uuF
 elN
 wia
 pik
-wLr
+mCT
 pik
 uzC
 gcA
@@ -120305,7 +120309,7 @@ uuF
 elN
 qaf
 cOb
-mCT
+wLr
 pik
 qah
 lOu
@@ -120818,7 +120822,7 @@ qmX
 uuF
 elN
 pDE
-dtQ
+fTX
 bzg
 lye
 uzC
@@ -121075,7 +121079,7 @@ tYt
 tuk
 jYd
 wCh
-lye
+dtQ
 dSC
 lye
 kHI
