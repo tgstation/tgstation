@@ -879,3 +879,146 @@
       emissive.
   zxaber:
   - balance: Malf AIs can detonate their borgs at the robotics console once again.
+2022-02-21:
+  Fikou:
+  - balance: every modsuit theme can hold more stuff in suit storage
+  - bugfix: arm implants breaking the drop key
+  - bugfix: fixes smooth movement breaking sometimes
+  Melbert:
+  - bugfix: Fixes heretic target assignment. They should actually be getting Heads
+      of Staff and such as intended as sacrifice targets.
+  - bugfix: Void's ritual of knowledge is void path correctly
+  Toastgoats:
+  - imageadd: New space dragon sprite!
+2022-02-22:
+  PositiveEntropy, Naevii:
+  - imageadd: Resprites the Head of Security Greatcoat!
+  - imageadd: Resprites the object icon of the Head of Security Trenchcoat
+  Thunder12345:
+  - imageadd: Power cells and the cell charger have been resprited, the charger will
+      now look correct with a much wider variety of non-standard power cells
+  - rscdel: Removed the uncraftable 15k charge high-capacity power cell+, all instances
+      have been replaced with the regular 10k charge high-capacity cell
+  - bugfix: Erroneous power cell charge indicators have been removed from many non-standard
+      types of power cells
+  - bugfix: All varieties of marauder mech including the nuke ops mauler come with
+      a bluespace power cell, consistent with other nuke op mechs
+  - bugfix: Power cell charge indicators will now update while in a cell charger
+  - bugfix: Potato and other crop batteries will not have their wires disappear when
+      on cell chargers
+  san7890:
+  - bugfix: On IceBoxStation, the courtroom no longer owns a bit of the hall.
+2022-02-23:
+  ArcaneDefence:
+  - bugfix: An odysseus' sleeper will now realize when a previously contained patient
+      has left the sleeper through unconventional means.
+  GoblinBackwards:
+  - bugfix: Holy water's cult deconvertion timer now resets when transferred to a
+      new mob
+  - bugfix: Fixes beam rifle not causing an explosion on impact mode.
+  - bugfix: Fixes radio gloves being uncraftable
+  GoldenAlpharex:
+  - bugfix: Ghosts are 100% less afraid of bobbing up and down, and will no longer
+      keep their orbit when they shouldn't be keeping it.
+  Greniza:
+  - code_imp: adds p_theirs() proc
+  JohnFulpWillard:
+  - bugfix: 'Non-dense mobs will no longer knock monkeys over (Ex: Revenants, Bots,
+      Lizards, Alien larvas).'
+  Melbert:
+  - bugfix: Eldritch Amulet no longer gives thermal vision when it shouldn't
+  - admin: Fixes some heretic logs. Final knowledge uplink log should be clearer,
+      and ghoul admin message no longer has a typo.
+  SmoSmoSmoSmok:
+  - bugfix: Players are no longer able to create walls using sheets that arent linked
+      to a material
+  TiviPlus:
+  - bugfix: Fixed gygax smash not logging the driver
+  - bugfix: Fixed mechs being punched using power but punching as a mech not using
+      power
+  - bugfix: Fixed mechs not taking damage from mech punches if punched while having
+      no power
+  - bugfix: Fixed weapon damage types only being respected for mech punches sometimes
+  - bugfix: Fixed toxins mech damage mode playing sounds on punches despite doing
+      nothing
+  - refactor: Mech punch code partly redone
+  - admin: mech punches will now ALWAYS be logged, even against objects
+  - code_imp: reshuffled some mech bay code please report issues on the github
+  - bugfix: fixed distortion effects cutting each other
+  Wallem:
+  - rscadd: Some prisoners have been complaining about the cold weather in the permabrig,
+      so we've dug through disposals and found a couple hats for 'em.
+  cacogen:
+  - qol: RPED now swaps in cell with greatest charge (of highest tier) first
+  - balance: Blobs can destroy mineral turfs like they can walls
+  - qol: Adds balloon alerts for blob overmind
+  - qol: Adds contextual screen tips for blob overmind
+  - qol: Off-station blobs are lighter than regular blobs
+  - bugfix: Fixes bug where on-station blobs were not counted towards victory when
+      expanded from off-station blobs
+  - bugfix: Fixes issue with cores and nodes having their color applied twice
+  jlsnow301:
+  - bugfix: Fixes a blue screen in the Pandemic from loading multiple viruses.
+  san7890:
+  - balance: On IceBoxStation, Nanotrasen has finally stopped clearing out excessively
+      large swatches of land for the gulagged prisoners in order to help them work
+      for their points.
+  tralezab:
+  - rscadd: Ratfish can now be found in moisture traps.
+2022-02-24:
+  ErdinyoBarboza:
+  - bugfix: Makes the IceBoxStation Underground (Level 2) wastes immune to radiation
+      and also paints the maintenance as such to let people take shelter.
+  - qol: Makes the IceBoxStation Service Hall Exit into a properly cycled airlock
+      system.
+  - qol: Icebox Locker Room now has real personal lockers once more.
+  - qol: Icebox Service Exit is not properly mapped with external airlocks and cycled
+      doors.
+  san7890:
+  - rscadd: Nanotrasen has now made it so that the room that you launch your home-made
+      bombs from is now known as the "Launch Site" across all five stations.
+  tralezab:
+  - bugfix: Ratfish can now properly show up in moisture traps
+  - code_imp: Moisture traps are coded a little better now
+  - spellcheck: fixed some wording in the moisture trap bite feedback
+2022-02-25:
+  ATHATH:
+  - bugfix: Buckling yourself to and then unbuckling yourself from a stasis bed will
+      no longer permanently halt the effects of any gravitum in your system.
+  - bugfix: Liverless creatures can no longer retain the effects of gravitum indefinitely,
+      as it will now decay in their bodies (just as it does in the bodies of livered
+      creatures).
+  Christmas5:
+  - bugfix: Added the missing variable "plane" to floor lights.
+  JohnFulpWillard:
+  - spellcheck: Removed wrong text in esniffers saying ghosts using them sends the
+      signaller inside of it's, frequency.
+  - bugfix: Building walls with snow now take time to do, like every other type.
+  Melbert:
+  - expansion: Russian Fugitive Hunters are now stronker. Their ship has been remade,
+      they have a little bit more ammo and equipment, and most importantly they now
+      have a pet bear.
+  Mothblocks:
+  - balance: Thieves can no longer scale, and can only run once.
+  - balance: Increased the number of thieves by 2.
+  OneAsianTortoise:
+  - bugfix: fixes Metastation hydroponics shutter access
+  Pickle-Coding:
+  - bugfix: Frostoil reagent will no longer achieve negative temperature when exposed
+      to air. Changes behaviour to make air converge to 2.7 kelvin instead.
+  Putnam3145:
+  - qol: '"Scrubbing" and "siphoning" are now consistently used'
+  Sealed101:
+  - bugfix: disktoaster storages now have their proper lights. all hail the toaster
+  rellyreri:
+  - spellcheck: Claustrophobics will now breathe instead of breath.
+  sergeirocks100:
+  - bugfix: Adjusted cargo tech jumpsuits and jumpskirts now show your arms from all
+      angles, and the adjusted cargo jumpsuit now uses the normal jumpsuit legs instead
+      of the digitigrade ones.
+  timothymtorres:
+  - qol: Chem dispensers have been changed to eject beakers using RMB instead of AltClick.
+  - qol: Hydroponics trays have been changed to empty reagents using RMB instead of
+      AltClick.
+  - code_imp: Any object that inherits the simple_rotation component will always use
+      AltClick.
