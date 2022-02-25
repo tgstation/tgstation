@@ -11,7 +11,7 @@
 	. = ..()
 	var/card_list = strings("wizoff.json", theme)
 	for(var/card in card_list)
-		cards += new /obj/item/toy/singlecard(name = card, parent_deck = src)
+		cards += new /obj/item/toy/singlecard(cardname = card, parent_deck = src)
 
 /obj/item/toy/cards/deck/wizoff/examine_more(mob/user)
 	var/list/msg = list(span_notice("Remember the rules of Wiz-Off!"))
