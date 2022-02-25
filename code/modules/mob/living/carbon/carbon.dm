@@ -439,11 +439,10 @@
 	if(stun)
 		Paralyze(80)
 
-	var/obj/item/organ/stomach/stomach = src.getorganslot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/stomach = getorganslot(ORGAN_SLOT_STOMACH)
 	if(stomach)
-		for(var/atom/movable/thing in stomach.contents)
-			src.visible_message(span_warning("[src] vomits up [thing]!"), span_userdanger("You suddenly vomit up [thing]!"))
-			thing.forceMove(src.drop_location())
+		var/datum/component/storage/concrete/storage = stomach.GetComponent(/datum/component/storage/concrete)
+		storage.do_quick_empty(drop_location())
 
 	playsound(get_turf(src), 'sound/effects/splat.ogg', 50, TRUE)
 	var/turf/T = get_turf(src)

@@ -1,7 +1,7 @@
 //The contant in the rate of reagent transfer on life ticks
 #define STOMACH_METABOLISM_CONSTANT 0.25
-//How much inedible garbage it can hold before you immediately chuck
-#define STANDARD_STOMACH_MAX_COMBINED_W_CLASS 12
+//The maximum volume of inedible objects the base stomach can hold before vomiting is immediately triggered.
+#define STANDARD_STOMACH_MAX_COMBINED_W_CLASS WEIGHT_CLASS_NORMAL * 4
 
 /obj/item/organ/stomach
 	name = "stomach"
@@ -33,7 +33,7 @@
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
 	///The max combined weight class of objects held before we vomit.
-	var/max_combined_w_class = STANDARD_STOMACH_MAX_COMBINED_W_CLASS //so 4 normal-sized objects
+	var/max_combined_w_class = STANDARD_STOMACH_MAX_COMBINED_W_CLASS
 
 /obj/item/organ/stomach/Initialize(mapload)
 	. = ..()
@@ -43,24 +43,30 @@
 	else
 		reagents.flags |= REAGENT_HOLDER_ALIVE
 
-/obj/item/organ/stomach/attack_self(mob/user, modifiers)
-	. = ..()
+/obj/item/organ/stomach/ComponentInitialize()
+	var/datum/component/storage/concrete/storage_component = AddComponent(/datum/component/storage/concrete)
 
-	if(!length(contents))
-		to_chat(user, span_notice("[src] is empty."))
-		return
-	to_chat(user, span_notice("You begin squeezing out the contents of [src]..."))
-	if(!do_after(user, length(contents) SECONDS / 2))
-		return
-	to_chat(user, span_notice("You squeeze out the contents of [src]."))
-	for(var/atom/movable/thing in contents)
-		thing.forceMove(user.drop_location())
+	storage_component.max_combined_w_class = max_combined_w_class
 
-/obj/item/organ/stomach/examine(mob/user)
-	. = ..()
+	//doesn't provide more inventory slots than it takes up
+	storage_component.max_items = 2
+	storage_component.max_w_class = WEIGHT_CLASS_TINY
 
-	if(length(contents))
-		. += span_info("Use in-hand to empty it.")
+	storage_component.rustle_sound = FALSE
+
+/obj/item/organ/stomach/Remove(mob/living/carbon/organ_owner, special = FALSE)
+	var/datum/component/storage/concrete/storage = GetComponent(/datum/component/storage/concrete)
+	var/list/stomach_contents = storage?.contents()
+
+	if(!length(stomach_contents))
+		return ..()
+
+	var/turf/owner_turf = get_turf(organ_owner)
+	//we don't want people feeding monkeys bulky items and then taking out the stomach and storing it in their box
+	storage.do_quick_empty(owner_turf)
+	owner_turf.visible_message(span_warning("The contents of [src] spills out!"))
+
+	return ..()
 
 /obj/item/organ/stomach/on_life(delta_time, times_fired)
 	. = ..()
@@ -103,11 +109,9 @@
 		// the stomach manages how fast they are feed in a drip style
 		reagents.trans_id_to(body, bit.type, amount=amount)
 
-	//Handle disgust
 	if(body)
 		handle_disgust(body, delta_time, times_fired)
-		if(length(contents))
-			handle_contents(body, delta_time)
+		handle_contents(body, delta_time)
 
 	//If the stomach is not damage exit out
 	if(damage < low_threshold)
@@ -230,18 +234,24 @@
 /obj/item/organ/stomach/get_availability(datum/species/owner_species)
 	return !(NOSTOMACH in owner_species.inherent_traits)
 
-/obj/item/organ/stomach/proc/handle_contents(mob/living/carbon/human/mule, delta_time)
-	var/indigestibles_size = 0
-	for(var/atom/movable/thing in contents)
-		if(IsEdible(thing) || !isitem(thing))
-			continue
-		var/obj/item/indigestible_item = thing
-		indigestibles_size += 1 * indigestible_item.w_class
+/obj/item/organ/stomach/proc/handle_contents(mob/living/carbon/human/eater, delta_time)
+	var/datum/component/storage/concrete/storage = GetComponent(/datum/component/storage/concrete)
+	var/list/stomach_contents = storage?.contents()
 
-	if(get_contents_size() > max_combined_w_class)
-		to_chat(mule, span_danger("Your stomach feels uncomfortably full!"))
+	if(!length(stomach_contents))
+		return
+
+	var/indigestibles_size = 0
+
+	for(var/obj/item/thing in stomach_contents)
+		if(IsEdible(thing))
+			continue
+		indigestibles_size += 1 * thing.w_class
+
+	if(get_contents_size() > storage.max_combined_w_class)
+		to_chat(eater, span_danger("Your stomach feels like it's going to explode!"))
 		var/spew_blood = indigestibles_size ? TRUE : FALSE
-		mule.vomit(100, spew_blood, distance = 0)
+		eater.vomit(100, spew_blood, distance = 0)
 		damage += indigestibles_size
 		return
 
@@ -249,18 +259,17 @@
 		return
 
 	if(DT_PROB(2.5, delta_time))
-		to_chat(mule, span_warning("Your stomach hurts!"))
+		to_chat(eater, span_warning("Something sticks painfully into the wall of your stomach!"))
 		damage += indigestibles_size
 
-	if(DT_PROB(5, delta_time))
-		mule.adjust_disgust(2*indigestibles_size)
+	if(DT_PROB(10, delta_time))
+		eater.adjust_disgust(indigestibles_size)
 
 /obj/item/organ/stomach/proc/get_contents_size()
+	var/datum/component/storage/concrete/storage = GetComponent(/datum/component/storage/concrete)
 	var/contents_size = 0
-	for(var/atom/movable/thing in contents)
-		if(isitem(thing))
-			var/obj/item/this_item = thing
-			contents_size += 1 * this_item.w_class
+	for(var/obj/item/item_in_stomach in storage?.contents())
+		contents_size += item_in_stomach.w_class
 	return contents_size
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, delta_time, times_fired)

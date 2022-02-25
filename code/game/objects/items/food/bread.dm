@@ -329,19 +329,27 @@
 	if(!isliving(eater))
 		QDEL_LIST(contents)
 
-	var/mob/living/guy = eater
-	var/obj/item/organ/stomach/stomach = guy.getorganslot(ORGAN_SLOT_STOMACH)
+	var/mob/living/living_eater = eater
+	var/obj/item/organ/stomach/stomach = living_eater.getorganslot(ORGAN_SLOT_STOMACH)
+
 	if(!stomach)
 		return
+
+	var/datum/component/storage/concrete/storage = stomach.GetComponent(/datum/component/storage/concrete)
+
+	if(!storage)
+		return
+
 	var/inedible = FALSE
-	for(var/atom/movable/thing in contents)
+	for(var/obj/item/thing in contents)
+		if(!isitem(thing))
+			continue
 		if(!IsEdible(thing))
 			inedible = TRUE
-			thing.forceMove(stomach)
+			storage.handle_item_insertion(thing,prevent_warning = TRUE)
 
 	if(inedible)
-		to_chat(guy, span_notice("That didn't taste very good...")) //this isn't flavortown
-
+		to_chat(living_eater, span_warning("That didn't feel very good going down..."))
 
 /obj/item/food/deepfryholder/proc/fry(cook_time = 30)
 	switch(cook_time)

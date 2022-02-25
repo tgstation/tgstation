@@ -7,6 +7,9 @@
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 
+/obj/item/organ/stomach/ethereal/ComponentInitialize()
+	return //biological battery doesn't exactly scream "holds stuff"
+
 /obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
 	. = ..()
 	adjust_charge(-ETHEREAL_CHARGE_FACTOR * delta_time)
