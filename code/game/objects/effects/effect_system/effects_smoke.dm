@@ -273,7 +273,7 @@
 	..()
 	chemholder = new()
 	//This is a safety for now to prevent smoke generating more smoke as the smoke reagents react in the smoke. This is prevented naturally from happening even if this is off, but I want to be sure that any edge cases are prevented before I get a chance to rework smoke reactions (specifically adding water or reacting away stabilizing agent in the middle of it).
-	chemholder.create_reagents(INFINITY, REAGENT_HOLDER_INSTANT_REACT)
+	chemholder.create_reagents(INFINITY)
 
 /datum/effect_system/smoke_spread/chem/Destroy()
 	QDEL_NULL(chemholder)
