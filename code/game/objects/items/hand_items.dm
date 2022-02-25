@@ -112,6 +112,7 @@
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
+	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/noogie/attack(mob/living/carbon/target, mob/living/carbon/human/user)
 	if(!istype(target))
@@ -427,6 +428,7 @@
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
+	w_class = WEIGHT_CLASS_HUGE
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
