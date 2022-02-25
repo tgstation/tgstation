@@ -21,7 +21,7 @@
 	harm_intent_damage = 4
 	obj_damage = 5
 	melee_damage_lower = 5
-	melee_damage_upper = 10 // Higher health than a base carp, so much lower damage.
+	melee_damage_upper = 10 // Higher health than a base carp, so much lower damage. 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 	attack_sound = 'sound/weapons/bite.ogg'
