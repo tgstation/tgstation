@@ -31829,7 +31829,6 @@
 /turf/closed/wall/rust,
 /area/service/chapel)
 "flZ" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Brig Shuttle Airlock";
 	req_access = null;
@@ -33031,7 +33030,6 @@
 	},
 /area/maintenance/central)
 "fGU" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock"
 	},
@@ -39828,7 +39826,6 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "inB" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock";
 	space_dir = 4
@@ -56103,7 +56100,6 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "obh" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Brig Shuttle Airlock";
 	req_access = null;
@@ -75669,7 +75665,6 @@
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
 "vgP" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock"
 	},
