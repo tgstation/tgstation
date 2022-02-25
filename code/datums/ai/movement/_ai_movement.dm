@@ -33,14 +33,6 @@
 	if(controller.ai_traits & STOP_MOVING_WHEN_PULLED && pawn.pulledby) //Need to store more state. Annoying.
 		can_move = FALSE
 
-	if(controller.ai_traits & STOP_MOVING)
-		can_move = FALSE
-
-	if(ismob(pawn))
-		var/mob/mob_pawn = pawn
-		if(controller.ai_traits & STOP_MOVING_DURING_DO_AFTER && LAZYLEN(mob_pawn.do_afters))
-			can_move = FALSE
-
 	if(!isturf(pawn.loc)) //No moving if not on a turf
 		can_move = FALSE
 

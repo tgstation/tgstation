@@ -25,8 +25,6 @@
 
 ///AI flags
 #define STOP_MOVING_WHEN_PULLED (1<<0)
-#define STOP_MOVING (1<<1)
-#define STOP_MOVING_DURING_DO_AFTER (1<<2)
 
 //Base Subtree defines
 
