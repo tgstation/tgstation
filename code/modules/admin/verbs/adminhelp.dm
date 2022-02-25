@@ -969,37 +969,34 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		return admins_to_ping
 
 /**
- * Checks a given message to see if any of the words contain a memory address for a datum
+ * Checks a given message to see if any of the words contain a memory ref for a datum. Said ref should not have brackets around it
  *
- * Returns nothing if no pings are found, otherwise returns an associative list with ckey -> client
- * Also modifies msg to embolden and linkify the [address] so other admins can click on the address to open the VV entry for said datum
+ * Returns nothing if no refs are found, otherwise returns an associative list with ckey -> client
+ * Also modifies msg to underline and linkify the [ref] so other admins can click on the address to open the VV entry for said datum
  *
  * Arguments:
  * * msg - the message being scanned
  */
 /proc/check_memory_refs(msg)
-	testing("check mem ref [msg]")
-	if(!findtext(msg, GLOB.is_memaddress))
-		testing("no address")
+	if(!findtext(msg, GLOB.is_memref))
 		return
 
 	//explode the input msg into a list
 	var/list/msglist = splittext(msg, " ")
-	var/list/atoms_to_mark = list()
+	var/list/datums_to_ref = list()
 
 	var/i = 0
 	for(var/word in msglist)
 		i++
 		if(!length(word))
-			testing("[word] has no len")
 			continue
-		if(!isdatum(REF(word)))
-			testing("[word] has no datum")
-			continue//"(<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
-		testing("ascending [word]")
-		msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(word)]'\[[word]\]</A>)</u>"
-		atoms_to_mark[word] = word
+		var/word_with_brackets = "\[[word]\]" // the actual memory address lookups need the bracket wraps
+		var/datum/check_datum = locate(word_with_brackets)
+		if(!istype(check_datum))
+			continue
+		msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[word_with_brackets]'>[word_with_brackets]</A></u>"
+		datums_to_ref[word] = word
 
-	if(length(atoms_to_mark))
-		atoms_to_mark[ADMINSAY_LINK_DATUM_REF] = jointext(msglist, " ") // without tuples, we must make do!
-		return atoms_to_mark
+	if(length(datums_to_ref))
+		datums_to_ref[ADMINSAY_LINK_DATUM_REF] = jointext(msglist, " ") // without tuples, we must make do!
+		return datums_to_ref
