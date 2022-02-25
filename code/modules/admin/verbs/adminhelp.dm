@@ -967,3 +967,39 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	if(length(admins_to_ping))
 		admins_to_ping[ADMINSAY_PING_UNDERLINE_NAME_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
 		return admins_to_ping
+
+/**
+ * Checks a given message to see if any of the words contain a memory address for a datum
+ *
+ * Returns nothing if no pings are found, otherwise returns an associative list with ckey -> client
+ * Also modifies msg to embolden and linkify the [address] so other admins can click on the address to open the VV entry for said datum
+ *
+ * Arguments:
+ * * msg - the message being scanned
+ */
+/proc/check_memory_refs(msg)
+	testing("check mem ref [msg]")
+	if(!findtext(msg, GLOB.is_memaddress))
+		testing("no address")
+		return
+
+	//explode the input msg into a list
+	var/list/msglist = splittext(msg, " ")
+	var/list/atoms_to_mark = list()
+
+	var/i = 0
+	for(var/word in msglist)
+		i++
+		if(!length(word))
+			testing("[word] has no len")
+			continue
+		if(!isdatum(REF(word)))
+			testing("[word] has no datum")
+			continue//"(<A HREF='?_src_=vars;Vars=[REF(A)]'>VV</A>)"
+		testing("ascending [word]")
+		msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(word)]'\[[word]\]</A>)</u>"
+		atoms_to_mark[word] = word
+
+	if(length(atoms_to_mark))
+		atoms_to_mark[ADMINSAY_LINK_DATUM_REF] = jointext(msglist, " ") // without tuples, we must make do!
+		return atoms_to_mark

@@ -21,6 +21,13 @@
 		window_flash(iter_admin_client)
 		SEND_SOUND(iter_admin_client.mob, sound('sound/misc/bloop.ogg'))
 
+
+	var/list/linked_datums = check_memory_refs(msg)
+	if(length(linked_datums) && linked_datums[ADMINSAY_LINK_DATUM_REF])
+		testing("oh! linked datums")
+		msg = linked_datums[ADMINSAY_LINK_DATUM_REF]
+		linked_datums -= ADMINSAY_LINK_DATUM_REF
+
 	mob.log_talk(msg, LOG_ASAY)
 	msg = keywords_lookup(msg)
 	var/asay_color = prefs.read_preference(/datum/preference/color/asay_color)
