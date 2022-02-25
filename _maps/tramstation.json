@@ -4,7 +4,7 @@
 	"map_path": "map_files/tramstation",
 	"map_file": [
 		"tramstation_lower.dmm",
-		"tramstation_upper.dmm"
+		"tramstation.dmm"
 	],
 	"shuttles": {
 		"cargo": "cargo_box",
