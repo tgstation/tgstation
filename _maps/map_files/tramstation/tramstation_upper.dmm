@@ -20130,6 +20130,7 @@
 /turf/open/floor/iron,
 /area/commons/vacant_room/commissary)
 "lUr" = (
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/commons/vacant_room/office)
 "lUu" = (

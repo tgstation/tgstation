@@ -1806,6 +1806,12 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/commons/dorms/laundry)
+"bqX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/port/central)
 "bra" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -51884,7 +51890,7 @@ ckG
 ckG
 ckG
 dTe
-sKh
+bqX
 sKh
 sKh
 dTe
