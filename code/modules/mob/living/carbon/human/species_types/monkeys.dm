@@ -95,6 +95,8 @@
 			return TRUE
 		for(var/d in user.diseases)
 			var/datum/disease/bite_infection = d
+			if(bite_infection.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+				continue
 			victim.ForceContractDisease(bite_infection)
 		return TRUE
 	target.attack_paw(user, modifiers)
