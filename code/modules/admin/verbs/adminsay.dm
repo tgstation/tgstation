@@ -24,7 +24,6 @@
 
 	var/list/linked_datums = check_memory_refs(msg)
 	if(length(linked_datums) && linked_datums[ADMINSAY_LINK_DATUM_REF])
-		testing("oh! linked datums")
 		msg = linked_datums[ADMINSAY_LINK_DATUM_REF]
 		linked_datums -= ADMINSAY_LINK_DATUM_REF
 
