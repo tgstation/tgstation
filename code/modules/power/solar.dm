@@ -1,10 +1,11 @@
 #define SOLAR_GEN_RATE 1500
 #define OCCLUSION_DISTANCE 20
+#define PANEL_Y_OFFSET 13
 
 /obj/machinery/power/solar
 	name = "solar panel"
 	desc = "A solar panel. Generates electricity when in contact with sunlight."
-	icon = 'goon/icons/obj/power.dmi'
+	icon = 'icons/obj/solar.dmi'
 	icon_state = "sp_base"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -30,12 +31,13 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	panel = new()
-	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
-	vis_contents += panel
-	panel.icon = icon
+	panel.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	panel.appearance_flags = TILE_BOUND
 	panel.icon_state = "solar_panel"
 	panel.layer = FLY_LAYER
 	panel.plane = ABOVE_GAME_PLANE
+	panel.pixel_y = PANEL_Y_OFFSET
+	vis_contents += panel
 	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
@@ -96,6 +98,10 @@
 	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
+		// Make sure user can see it's broken
+		var/new_angle = rand(160, 200)
+		visually_turn(new_angle)
+		azimuth_current = new_angle
 
 /obj/machinery/power/solar/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -112,9 +118,6 @@
 
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
-	var/matrix/turner = matrix()
-	turner.Turn(azimuth_current)
-	panel.transform = turner
 	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
@@ -126,12 +129,46 @@
 
 	needs_to_update_solar_exposure = TRUE //updating right away would be wasteful if we're also turning later
 
+/**
+ * Get the 2.5D transform for the panel, given an angle
+ * Arguments:
+ * * angle - the angle the panel is facing
+ */
+/obj/machinery/power/solar/proc/get_panel_transform(angle)
+	// 2.5D solar panel works by using a magic combination of transforms
+	var/matrix/turner = matrix()
+	// Rotate towards sun
+	turner.Turn(angle)
+	// "Tilt" the panel in 3D towards East and West
+	turner.Shear(0, -1 * sin(angle))
+	// Make it skinny when facing north (away), fat south
+	turner.Scale(1, 0.9 * (cos(angle) * -0.5 + 0.5) + 0.1)
+
+	return turner
+
+/obj/machinery/power/solar/proc/visually_turn(angle)
+	var/mid_azimuth = (azimuth_current + angle) / 2
+
+	// actually flip to other direction?
+	if(abs(angle - azimuth_current) > 180)
+		mid_azimuth = (mid_azimuth + 180) % 360
+
+	// Split into 2 parts so it doesn't distort on large changes
+	animate(panel, \
+		transform = get_panel_transform(mid_azimuth), \
+		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_IN \
+	)
+	animate( \
+		transform = get_panel_transform(angle), \
+		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_OUT \
+	)
+
 /obj/machinery/power/solar/proc/update_turn()
 	needs_to_turn = FALSE
 	if(azimuth_current != azimuth_target)
+		visually_turn(azimuth_target)
 		azimuth_current = azimuth_target
 		occlusion_setup()
-		update_appearance()
 		needs_to_update_solar_exposure = TRUE
 
 ///trace towards sun to see if we're in shadow
@@ -203,7 +240,7 @@
 /obj/item/solar_assembly
 	name = "solar panel assembly"
 	desc = "A solar panel assembly kit, allows constructions of a solar panel, or with a tracking circuit board, a solar tracker."
-	icon = 'goon/icons/obj/power.dmi'
+	icon = 'icons/obj/solar.dmi'
 	icon_state = "sp_base"
 	inhand_icon_state = "electropack"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
@@ -218,6 +255,10 @@
 	. = ..()
 	if(!anchored && !pixel_x && !pixel_y)
 		randomise_offset(random_offset)
+
+/obj/item/solar_assembly/update_icon_state()
+	. = ..()
+	icon_state = tracker ? "tracker_base" : "sp_base"
 
 /obj/item/solar_assembly/proc/randomise_offset(amount)
 	pixel_x = base_pixel_x + rand(-amount, amount)
@@ -276,6 +317,7 @@
 			if(!user.temporarilyRemoveItemFromInventory(W))
 				return
 			tracker = TRUE
+			update_appearance()
 			qdel(W)
 			user.visible_message(span_notice("[user] inserts the electronics into the solar assembly."), span_notice("You insert the electronics into the solar assembly."))
 			return TRUE
@@ -283,6 +325,7 @@
 		if(W.tool_behaviour == TOOL_CROWBAR)
 			new /obj/item/electronics/tracker(src.loc)
 			tracker = FALSE
+			update_appearance()
 			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
 			return TRUE
 	return ..()
@@ -492,3 +535,4 @@
 
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
+#undef PANEL_Y_OFFSET
