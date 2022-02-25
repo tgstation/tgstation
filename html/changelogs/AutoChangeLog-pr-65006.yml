@@ -1,4 +1,0 @@
-author: "Pickle-Coding"
-delete-after: True
-changes: 
-  - bugfix: "Frostoil reagent will no longer achieve negative temperature when exposed to air. Changes behaviour to make air converge to 2.7 kelvin instead."
