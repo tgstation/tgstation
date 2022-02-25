@@ -583,7 +583,7 @@
 /obj/machinery/airalarm/update_overlays()
 	. = ..()
 
-	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
 	var/area/our_area = get_area(src)
