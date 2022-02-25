@@ -7,6 +7,7 @@
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
+	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("bops")
 	attack_verb_simple = list("bop")
 
@@ -207,6 +208,7 @@
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT | HAND_ITEM
+	w_class = WEIGHT_CLASS_HUGE
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
 	hitsound = 'sound/effects/snap.ogg'
