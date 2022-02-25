@@ -981,3 +981,44 @@
   - bugfix: Ratfish can now properly show up in moisture traps
   - code_imp: Moisture traps are coded a little better now
   - spellcheck: fixed some wording in the moisture trap bite feedback
+2022-02-25:
+  ATHATH:
+  - bugfix: Buckling yourself to and then unbuckling yourself from a stasis bed will
+      no longer permanently halt the effects of any gravitum in your system.
+  - bugfix: Liverless creatures can no longer retain the effects of gravitum indefinitely,
+      as it will now decay in their bodies (just as it does in the bodies of livered
+      creatures).
+  Christmas5:
+  - bugfix: Added the missing variable "plane" to floor lights.
+  JohnFulpWillard:
+  - spellcheck: Removed wrong text in esniffers saying ghosts using them sends the
+      signaller inside of it's, frequency.
+  - bugfix: Building walls with snow now take time to do, like every other type.
+  Melbert:
+  - expansion: Russian Fugitive Hunters are now stronker. Their ship has been remade,
+      they have a little bit more ammo and equipment, and most importantly they now
+      have a pet bear.
+  Mothblocks:
+  - balance: Thieves can no longer scale, and can only run once.
+  - balance: Increased the number of thieves by 2.
+  OneAsianTortoise:
+  - bugfix: fixes Metastation hydroponics shutter access
+  Pickle-Coding:
+  - bugfix: Frostoil reagent will no longer achieve negative temperature when exposed
+      to air. Changes behaviour to make air converge to 2.7 kelvin instead.
+  Putnam3145:
+  - qol: '"Scrubbing" and "siphoning" are now consistently used'
+  Sealed101:
+  - bugfix: disktoaster storages now have their proper lights. all hail the toaster
+  rellyreri:
+  - spellcheck: Claustrophobics will now breathe instead of breath.
+  sergeirocks100:
+  - bugfix: Adjusted cargo tech jumpsuits and jumpskirts now show your arms from all
+      angles, and the adjusted cargo jumpsuit now uses the normal jumpsuit legs instead
+      of the digitigrade ones.
+  timothymtorres:
+  - qol: Chem dispensers have been changed to eject beakers using RMB instead of AltClick.
+  - qol: Hydroponics trays have been changed to empty reagents using RMB instead of
+      AltClick.
+  - code_imp: Any object that inherits the simple_rotation component will always use
+      AltClick.

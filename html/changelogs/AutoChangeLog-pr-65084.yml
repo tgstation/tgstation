@@ -1,0 +1,4 @@
+author: "BallastMonster"
+delete-after: True
+changes: 
+  - spellcheck: "fixes false info with vampires becoming bats"

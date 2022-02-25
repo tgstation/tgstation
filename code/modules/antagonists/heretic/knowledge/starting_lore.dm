@@ -155,10 +155,3 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
 	cost = 0
 	route = PATH_START
-
-/datum/heretic_knowledge/amber_focus/cleanup_atoms(list/selected_atoms)
-	var/obj/item/stack/sheet/glass/sheets = locate() in selected_atoms
-	if(sheets)
-		selected_atoms -= sheets
-		sheets.use(1)
-	return ..()
