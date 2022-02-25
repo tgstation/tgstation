@@ -124,7 +124,7 @@
 		if(isliving(sacrificed))
 			continue
 
-		if(istype(sacrificed, /obj/item/stack))
+		if(isstack(sacrificed))
 			var/obj/item/stack/sac_stack = sacrificed
 			var/how_much_to_use = 0
 			for(var/requirement in required_atoms)
