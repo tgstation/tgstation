@@ -420,7 +420,7 @@ There are several things that need to be remembered:
 
 /mob/living/carbon/human/update_inv_legcuffed()
 	remove_overlay(LEGCUFF_LAYER)
-	clear_alert("legcuffed")
+	clear_alert(ALERT_LEGCUFFED)
 	if(legcuffed)
 		var/mutable_appearance/legcuff_overlay = mutable_appearance('icons/mob/mob.dmi', "legcuff1", -LEGCUFF_LAYER)
 		if(legcuffed.blocks_emissive)
@@ -428,7 +428,7 @@ There are several things that need to be remembered:
 
 		overlays_standing[LEGCUFF_LAYER] = legcuff_overlay
 		apply_overlay(LEGCUFF_LAYER)
-		throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
+		throw_alert(ALERT_LEGCUFFED, /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
 
 /proc/wear_female_version(t_color, icon, layer, type, greyscale_colors)
 	var/index = "[t_color]-[greyscale_colors]"

@@ -120,52 +120,52 @@
 /atom/movable/screen/alert/not_enough_oxy
 	name = "Choking (No O2)"
 	desc = "You're not getting enough oxygen. Find some good air before you pass out! The box in your backpack has an oxygen tank and breath mask in it."
-	icon_state = "not_enough_oxy"
+	icon_state = ALERT_NOT_ENOUGH_OXYGEN
 
 /atom/movable/screen/alert/too_much_oxy
 	name = "Choking (O2)"
 	desc = "There's too much oxygen in the air, and you're breathing it in! Find some good air before you pass out!"
-	icon_state = "too_much_oxy"
+	icon_state = ALERT_TOO_MUCH_OXYGEN
 
 /atom/movable/screen/alert/not_enough_nitro
 	name = "Choking (No N2)"
 	desc = "You're not getting enough nitrogen. Find some good air before you pass out!"
-	icon_state = "not_enough_nitro"
+	icon_state = ALERT_NOT_ENOUGH_NITRO
 
 /atom/movable/screen/alert/too_much_nitro
 	name = "Choking (N2)"
 	desc = "There's too much nitrogen in the air, and you're breathing it in! Find some good air before you pass out!"
-	icon_state = "too_much_nitro"
+	icon_state = ALERT_TOO_MUCH_NITRO
 
 /atom/movable/screen/alert/not_enough_co2
 	name = "Choking (No CO2)"
 	desc = "You're not getting enough carbon dioxide. Find some good air before you pass out!"
-	icon_state = "not_enough_co2"
+	icon_state = ALERT_NOT_ENOUGH_CO2
 
 /atom/movable/screen/alert/too_much_co2
 	name = "Choking (CO2)"
 	desc = "There's too much carbon dioxide in the air, and you're breathing it in! Find some good air before you pass out!"
-	icon_state = "too_much_co2"
+	icon_state = ALERT_TOO_MUCH_CO2
 
 /atom/movable/screen/alert/not_enough_plas
 	name = "Choking (No Plasma)"
 	desc = "You're not getting enough plasma. Find some good air before you pass out!"
-	icon_state = "not_enough_plas"
+	icon_state = ALERT_NOT_ENOUGH_PLASMA
 
 /atom/movable/screen/alert/too_much_plas
 	name = "Choking (Plasma)"
 	desc = "There's highly flammable, toxic plasma in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = "too_much_plas"
+	icon_state = ALERT_TOO_MUCH_PLASMA
 
 /atom/movable/screen/alert/not_enough_n2o
 	name = "Choking (No N2O)"
 	desc = "You're not getting enough N2O. Find some good air before you pass out!"
-	icon_state = "not_enough_n2o"
+	icon_state = ALERT_NOT_ENOUGH_N2O
 
 /atom/movable/screen/alert/too_much_n2o
 	name = "Choking (N2O)"
 	desc = "There's sleeping gas in the air and you're breathing it in. Find some fresh air. The box in your backpack has an oxygen tank and gas mask in it."
-	icon_state = "too_much_n2o"
+	icon_state = ALERT_TOO_MUCH_N2O
 
 //End gas alerts
 
@@ -223,8 +223,8 @@
 /atom/movable/screen/alert/blind
 	name = "Blind"
 	desc = "You can't see! This may be caused by a genetic defect, eye trauma, being unconscious, \
-or something covering your eyes."
-	icon_state = "blind"
+		or something covering your eyes."
+	icon_state = ALERT_BLIND
 
 /atom/movable/screen/alert/high
 	name = "High"
@@ -234,13 +234,13 @@ or something covering your eyes."
 /atom/movable/screen/alert/hypnosis
 	name = "Hypnosis"
 	desc = "Something's hypnotizing you, but you're not really sure about what."
-	icon_state = "hypnosis"
+	icon_state = ALERT_HYPNOSIS
 	var/phrase
 
 /atom/movable/screen/alert/mind_control
 	name = "Mind Control"
 	desc = "Your mind has been hijacked! Click to view the mind control command."
-	icon_state = "mind_control"
+	icon_state = ALERT_MIND_CONTROL
 	var/command
 
 /atom/movable/screen/alert/mind_control/Click()
@@ -252,13 +252,13 @@ or something covering your eyes."
 /atom/movable/screen/alert/drunk
 	name = "Drunk"
 	desc = "All that alcohol you've been drinking is impairing your speech, motor skills, and mental cognition. Make sure to act like it."
-	icon_state = "drunk"
+	icon_state = ALERT_DRUNK
 
 /atom/movable/screen/alert/embeddedobject
 	name = "Embedded Object"
 	desc = "Something got lodged into your flesh and is causing major bleeding. It might fall out with time, but surgery is the safest way. \
-If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
-	icon_state = "embeddedobject"
+		If you're feeling frisky, examine yourself and click the underlined item to pull the object out."
+	icon_state = ALERT_EMBEDDED_OBJECT
 
 /atom/movable/screen/alert/embeddedobject/Click()
 	. = ..()
@@ -421,7 +421,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/succumb
 	name = "Succumb"
 	desc = "Shuffle off this mortal coil."
-	icon_state = "succumb"
+	icon_state = ALERT_SUCCUMB
 
 /atom/movable/screen/alert/succumb/Click()
 	. = ..()
@@ -443,20 +443,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/alien_plas
 	name = "Plasma"
 	desc = "There's flammable plasma in the air. If it lights up, you'll be toast."
-	icon_state = "alien_plas"
+	icon_state = ALERT_XENO_PLASMA
 	alerttooltipstyle = "alien"
 
 /atom/movable/screen/alert/alien_fire
 // This alert is temporarily gonna be thrown for all hot air but one day it will be used for literally being on fire
 	name = "Too Hot"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you."
-	icon_state = "alien_fire"
+	icon_state = ALERT_XENO_FIRE
 	alerttooltipstyle = "alien"
 
 /atom/movable/screen/alert/alien_vulnerable
 	name = "Severed Matriarchy"
 	desc = "Your queen has been killed, you will suffer movement penalties and loss of hivemind. A new queen cannot be made until you recover."
-	icon_state = "alien_noqueen"
+	icon_state = ALERT_XENO_NOQUEEN
 	alerttooltipstyle = "alien"
 
 //BLOBS
@@ -648,19 +648,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/hacked
 	name = "Hacked"
 	desc = "Hazardous non-standard equipment detected. Please ensure any usage of this equipment is in line with unit's laws, if any."
-	icon_state = "hacked"
+	icon_state = ALERT_HACKED
 
 /atom/movable/screen/alert/locked
 	name = "Locked Down"
 	desc = "Unit has been remotely locked down. Usage of a Robotics Control Console like the one in the Research Director's \
-office by your AI master or any qualified human may resolve this matter. Robotics may provide further assistance if necessary."
-	icon_state = "locked"
+		office by your AI master or any qualified human may resolve this matter. Robotics may provide further assistance if necessary."
+	icon_state = ALERT_LOCKED
 
 /atom/movable/screen/alert/newlaw
 	name = "Law Update"
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \
-so as to remain in compliance with the most up-to-date laws."
-	icon_state = "newlaw"
+		so as to remain in compliance with the most up-to-date laws."
+	icon_state = ALERT_NEW_LAW
 	timeout = 300
 
 /atom/movable/screen/alert/hackingapc
@@ -668,7 +668,7 @@ so as to remain in compliance with the most up-to-date laws."
 	desc = "An Area Power Controller is being hacked. When the process is \
 		complete, you will have exclusive control of it, and you will gain \
 		additional processing time to unlock more malfunction abilities."
-	icon_state = "hackingapc"
+	icon_state = ALERT_HACKING_APC
 	timeout = 600
 	var/atom/target = null
 
@@ -737,7 +737,7 @@ so as to remain in compliance with the most up-to-date laws."
 /atom/movable/screen/alert/buckled
 	name = "Buckled"
 	desc = "You've been buckled to something. Click the alert to unbuckle unless you're handcuffed."
-	icon_state = "buckled"
+	icon_state = ALERT_BUCKLED
 
 /atom/movable/screen/alert/restrained/handcuffed
 	name = "Handcuffed"
@@ -779,12 +779,12 @@ so as to remain in compliance with the most up-to-date laws."
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"
 	desc = "Your shoes are untied! Click the alert or your shoes to tie them."
-	icon_state = "shoealert"
+	icon_state = ALERT_SHOES_KNOT
 
 /atom/movable/screen/alert/shoes/knotted
 	name = "Knotted Shoes"
 	desc = "Someone tied your shoelaces together! Click the alert or your shoes to undo the knot."
-	icon_state = "shoealert"
+	icon_state = ALERT_SHOES_KNOT
 
 /atom/movable/screen/alert/shoes/Click()
 	. = ..()
