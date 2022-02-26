@@ -15,7 +15,7 @@
 /obj/item/toy/cards/deck/blank/Initialize(mapload)
 	. = ..()
 	for(var/_ in 1 to decksize)
-		var/obj/item/toy/singlecard/blank_card = new (cardname = "blank card", parent_deck = src)
-		blank_card.name = "blank card"
+		var/obj/item/toy/singlecard/blank_card = new (mapload, "blank card", src)
+		blank_card.name = "blank card" // we may want to remove this?  doublecheck the name when flipped up or down
 		blank_card.blank = TRUE
 		cards += blank_card

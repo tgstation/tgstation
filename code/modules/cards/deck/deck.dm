@@ -35,11 +35,11 @@
 
 	if(is_standard_deck) // generate a normal playing card deck
 		for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
-			cards += new /obj/item/toy/singlecard(cardname = "Ace of [suit]", parent_deck = src)
+			cards += new /obj/item/toy/singlecard(mapload, "Ace of [suit]", src)
 			for(var/i in 2 to 10)
-				cards += new /obj/item/toy/singlecard(cardname = "[i] of [suit]", parent_deck = src)
+				cards += new /obj/item/toy/singlecard(mapload, "[i] of [suit]", src)
 			for(var/person in list("Jack", "Queen", "King"))
-				cards += new /obj/item/toy/singlecard(cardname = "[person] of [suit]", parent_deck = src)
+				cards += new /obj/item/toy/singlecard(mapload, "[person] of [suit]", src)
 
 /obj/item/toy/cards/deck/Destroy()
 	QDEL_LIST(cards)
