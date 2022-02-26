@@ -92,13 +92,13 @@
 	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if (src_object && src_location != over_location)
 			middragtime = world.time
-			middragatom = src_object
+			middle_drag_atom_ref = WEAKREF(src_object)
 		else
 			middragtime = 0
-			middragatom = null
+			middle_drag_atom_ref = null
 	mouseParams = params
-	mouseLocation = over_location
-	mouseObject = over_object
+	mouse_location_ref = WEAKREF(over_location)
+	mouse_object_ref = WEAKREF(over_object)
 	if(selected_target[1] && over_object?.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
@@ -111,7 +111,7 @@
 	return
 
 /client/MouseDrop(src_object, over_object, src_location, over_location, src_control, over_control, params)
-	if (middragatom == src_object)
+	if (IS_WEAKREF_OF(src_obj, middle_drag_atom_ref))
 		middragtime = 0
-		middragatom = null
+		middle_drag_atom_ref = null
 	..()
