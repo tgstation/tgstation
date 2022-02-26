@@ -5,6 +5,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_tarot_full"
 	deckstyle = "tarot"
+	is_standard_deck = FALSE
 
 /obj/item/toy/cards/deck/tarot/Initialize(mapload)
 	. = ..()
