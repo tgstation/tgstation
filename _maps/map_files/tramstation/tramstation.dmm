@@ -64521,8 +64521,9 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "wbE" = (
+/obj/structure/lattice/catwalk,
 /turf/open/space/basic,
-/area/science/mixing)
+/area/space/nearstation)
 "wbI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -116434,9 +116435,9 @@ cxb
 wAe
 tjk
 mSi
+jwD
 wbE
-wbE
-wbE
+jwD
 uKp
 aLN
 fhZ
