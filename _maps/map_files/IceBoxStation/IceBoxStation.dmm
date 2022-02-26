@@ -42308,6 +42308,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/button/door/directional/west{
+	id = "briggate";
+	name = "Brig Shutters";
 	pixel_y = 6
 	},
 /turf/open/floor/iron/dark,
