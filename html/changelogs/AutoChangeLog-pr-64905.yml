@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - expansion: "Raw Prophets now have a funny little attack animation."
-  - balance: "Raw Prophets have been adjusted slightly. They now have more max health, a slightly lower sight range (but the ability to toggle it on or off), drop all their component parts on death, and do more damage for every consecutive attack on a target they do."

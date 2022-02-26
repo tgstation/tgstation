@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes a few potential issues with heretic rituals."
-  - code_imp: "Adds proper stack support to heretic rituals. Also allows for more specific \"ritual failure\" feedback."

@@ -1,4 +1,0 @@
-author: "tastyfish"
-delete-after: True
-changes: 
-  - rscadd: "Most status displays now have USB support for circuits."

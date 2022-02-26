@@ -1,5 +1,0 @@
-author: "Wallem & Imaginos"
-delete-after: True
-changes: 
-  - balance: "Splits biobags into virology & science bags. Virology bags can't hold slime cores or cytology equipment, and science bags can't hold medipens & bloodbags."
-  - imageadd: "Changes all storage bag sprites"
