@@ -27,6 +27,8 @@
 	viewer?.client?.screen -= src
 	linked_action.viewers -= our_hud
 	viewer.update_action_buttons()
+	our_hud = null
+	linked_action = null
 	return ..()
 
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
@@ -185,6 +187,8 @@
 	screen_loc = ui_action_palette
 	var/datum/hud/our_hud
 	var/expanded = FALSE
+	/// Id of any currently running timers that set our color matrix
+	var/color_timer_id
 
 /atom/movable/screen/button_palette/Destroy()
 	if(our_hud)
@@ -230,6 +234,25 @@
 /atom/movable/screen/button_palette/proc/show_tooltip(params)
 	openToolTip(usr, src, params, title = name, content = desc)
 
+GLOBAL_LIST_INIT(palette_added_matrix, list(0.4,0.5,0.2,0, 0,1.4,0,0, 0,0.4,0.6,0, 0,0,0,1, 0,0,0,0))
+GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,0, 0,0,0,1, 0,0,0,0))
+
+/atom/movable/screen/button_palette/proc/play_item_added()
+	color_for_now(GLOB.palette_added_matrix)
+
+/atom/movable/screen/button_palette/proc/play_item_removed()
+	color_for_now(GLOB.palette_removed_matrix)
+
+/atom/movable/screen/button_palette/proc/color_for_now(list/color)
+	if(color_timer_id)
+		return
+	add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY) //We unfortunately cannot animate matrix colors. Curse you lummy it would be ~~non~~trivial to interpolate between the two valuessssssssss
+	color_timer_id = addtimer(CALLBACK(src, .proc/remove_color, color), 2 SECONDS)
+
+/atom/movable/screen/button_palette/proc/remove_color(list/to_remove)
+	color_timer_id = null
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, to_remove)
+
 /atom/movable/screen/button_palette/proc/can_use(mob/user)
 	if (isobserver(user))
 		var/mob/dead/observer/O = user
@@ -252,14 +275,6 @@
 
 	set_expanded(!expanded)
 
-	if(!usr.client)
-		return
-
-	if(expanded)
-		RegisterSignal(usr.client, COMSIG_CLIENT_CLICK, .proc/clicked_while_open)
-	else
-		UnregisterSignal(usr.client, COMSIG_CLIENT_CLICK)
-
 /atom/movable/screen/button_palette/proc/clicked_while_open(datum/source, atom/target, atom/location, control, params, mob/user)
 	if(istype(target, /atom/movable/screen/movable/action_button) || istype(target, /atom/movable/screen/palette_scroll) || target == src) // If you're clicking on an action button, or us, you can live
 		return
@@ -268,9 +283,24 @@
 		UnregisterSignal(source, COMSIG_CLIENT_CLICK)
 
 /atom/movable/screen/button_palette/proc/set_expanded(new_expanded)
+	var/datum/action_group/our_group = our_hud.palette_actions
+	if(!length(our_group.actions)) //Looks dumb, trust me lad
+		new_expanded = FALSE
+	if(expanded == new_expanded)
+		return
+
 	expanded = new_expanded
-	our_hud.palette_actions.refresh_actions()
+	our_group.refresh_actions()
 	update_appearance()
+
+	if(!usr.client)
+		return
+
+	if(expanded)
+		RegisterSignal(usr.client, COMSIG_CLIENT_CLICK, .proc/clicked_while_open)
+	else
+		UnregisterSignal(usr.client, COMSIG_CLIENT_CLICK)
+
 	closeToolTip(usr) //Our tooltips are now invalid, can't seem to update them in one frame, so here, just close them
 
 /atom/movable/screen/palette_scroll
