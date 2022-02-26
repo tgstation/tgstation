@@ -21657,7 +21657,6 @@
 	},
 /area/maintenance/port/lesser)
 "cqN" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Ferry Shuttle Airlock"
 	},
@@ -29348,7 +29347,6 @@
 	},
 /area/commons/locker)
 "esc" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock"
 	},
@@ -31829,7 +31827,6 @@
 /turf/closed/wall/rust,
 /area/service/chapel)
 "flZ" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Brig Shuttle Airlock";
 	req_access = null;
@@ -32898,7 +32895,6 @@
 	},
 /area/maintenance/port/fore)
 "fEH" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/sign/warning/xeno_mining{
 	pixel_y = 32
@@ -33031,7 +33027,6 @@
 	},
 /area/maintenance/central)
 "fGU" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock"
 	},
@@ -33305,7 +33300,6 @@
 /turf/open/floor/iron,
 /area/cargo/drone_bay)
 "fMz" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "External Freight Airlock"
 	},
@@ -38542,7 +38536,6 @@
 /turf/open/floor/plating,
 /area/maintenance/department/electrical)
 "hPm" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "External Freight Airlock"
 	},
@@ -38931,7 +38924,6 @@
 	},
 /area/maintenance/port/greater)
 "hVI" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "External Freight Airlock"
 	},
@@ -39828,7 +39820,6 @@
 /turf/open/floor/iron,
 /area/cargo/storage)
 "inB" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock";
 	space_dir = 4
@@ -42248,7 +42239,6 @@
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "jaA" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Ferry Shuttle Airlock"
 	},
@@ -44444,7 +44434,6 @@
 /turf/open/floor/iron/dark,
 /area/medical/paramedic)
 "jTH" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "External Freight Airlock"
 	},
@@ -56103,7 +56092,6 @@
 /turf/open/floor/iron,
 /area/command/bridge)
 "obh" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Brig Shuttle Airlock";
 	req_access = null;
@@ -73161,7 +73149,6 @@
 /turf/open/floor/plating,
 /area/cargo/storage)
 "ufN" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "External Freight Airlock"
 	},
@@ -75669,7 +75656,6 @@
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
 "vgP" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/external{
 	name = "Departure Shuttle Airlock"
 	},
@@ -77993,7 +77979,6 @@
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "waQ" = (
-/obj/machinery/door/firedoor,
 /obj/structure/door_assembly/door_assembly_ext{
 	anchored = 1
 	},
