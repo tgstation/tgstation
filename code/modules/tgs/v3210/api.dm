@@ -68,11 +68,19 @@
 
 	var/list/logs = file2list(".git/logs/HEAD")
 	if(logs.len)
-		logs = splittext(logs[logs.len - 1], " ")
-		commit = logs[2]
+		logs = splittext(logs[logs.len], " ")
+		if (logs.len >= 2)
+			commit = logs[2]
+		else
+			TGS_ERROR_LOG("Error parsing commit logs")
+
 	logs = file2list(".git/logs/refs/remotes/origin/master")
 	if(logs.len)
-		originmastercommit = splittext(logs[logs.len - 1], " ")[2]
+		logs = splittext(logs[logs.len], " ")
+		if (logs.len >= 2)
+			originmastercommit = logs[2]
+		else
+			TGS_ERROR_LOG("Error parsing origin commmit logs")
 
 	if(world.system_type != MS_WINDOWS)
 		TGS_ERROR_LOG("This API version is only supported on Windows. Not running on Windows. Aborting initialization!")
