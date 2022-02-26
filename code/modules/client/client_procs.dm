@@ -875,7 +875,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(dragged && !LAZYACCESS(modifiers, dragged)) //I don't know what's going on here, but I don't trust it
 		return
 
-	if (object && IS_WEAKREF_OF(obj, middle_drag_atom_ref) && LAZYACCESS(modifiers, LEFT_CLICK))
+	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && LAZYACCESS(modifiers, LEFT_CLICK))
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 
 	var/mcl = CONFIG_GET(number/minute_click_limit)
