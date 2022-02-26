@@ -176,6 +176,10 @@
 				gets_drilled(null, FALSE)
 	return
 
+/turf/closed/mineral/blob_act(obj/structure/blob/B)
+	if(prob(50))
+		gets_drilled(give_exp = FALSE)
+
 /turf/closed/mineral/random
 	var/list/mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,
 		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40, /obj/item/stack/ore/titanium = 11,
@@ -592,7 +596,7 @@
 			det_time = 0
 		visible_message(span_notice("The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!"))
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = FALSE)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user, triggered_by_explosion)
@@ -664,7 +668,7 @@
 		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
 
 
-/turf/closed/mineral/strong/gets_drilled(mob/user)
+/turf/closed/mineral/strong/gets_drilled(mob/user, give_exp = FALSE)
 	if(!ishuman(user))
 		return // see attackby
 	var/mob/living/carbon/human/H = user

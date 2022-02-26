@@ -106,7 +106,7 @@
 
 	LAZYADD(created_items, WEAKREF(human_target))
 	log_game("[key_name(source)] created a ghoul, controlled by [key_name(human_target)].")
-	message_admins("[ADMIN_LOOKUPFLW(source)] created a ghuol, [ADMIN_LOOKUPFLW(human_target)].")
+	message_admins("[ADMIN_LOOKUPFLW(source)] created a ghoul, [ADMIN_LOOKUPFLW(human_target)].")
 
 	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
@@ -164,6 +164,7 @@
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
 	if(QDELETED(soon_to_be_ghoul)) // No body? No ritual
+		stack_trace("[type] reached on_finished_recipe without a human in selected_atoms to make a ghoul out of.")
 		return FALSE
 
 	soon_to_be_ghoul.grab_ghost()

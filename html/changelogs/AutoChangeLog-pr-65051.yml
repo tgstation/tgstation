@@ -1,4 +1,0 @@
-author: "GoldenAlpharex"
-delete-after: True
-changes: 
-  - bugfix: "Ghosts are 100% less afraid of bobbing up and down, and will no longer keep their orbit when they shouldn't be keeping it."

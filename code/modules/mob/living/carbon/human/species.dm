@@ -1728,11 +1728,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// display alerts based on how hot it is
 		switch(humi.bodytemperature)
 			if(bodytemp_heat_damage_limit to BODYTEMP_HEAT_WARNING_2)
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
 			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 2)
 			else
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
 
 	// Body temperature is too cold, and we do not have resist traits
 	else if(humi.bodytemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
@@ -1744,15 +1744,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Display alerts based how cold it is
 		switch(humi.bodytemperature)
 			if(BODYTEMP_COLD_WARNING_2 to bodytemp_cold_damage_limit)
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
 			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
 			else
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
 
 	// We are not to hot or cold, remove status and moods
 	else
-		humi.clear_alert("temp")
+		humi.clear_alert(ALERT_TEMPERATURE)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
@@ -1864,34 +1864,34 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * delta_time)
-				H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 			else
-				H.clear_alert("pressure")
+				H.clear_alert(ALERT_PRESSURE)
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
+			H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 1)
 
 		// No pressure issues here clear pressure alerts
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.clear_alert("pressure")
+			H.clear_alert(ALERT_PRESSURE)
 
 		// Low pressure here, show an alert
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			// We have low pressure resit trait, clear alerts
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert("pressure")
+				H.clear_alert(ALERT_PRESSURE)
 			else
-				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
 
 		// Very low pressure, show an alert and take damage
 		else
 			// We have low pressure resit trait, clear alerts
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert("pressure")
+				H.clear_alert(ALERT_PRESSURE)
 			else
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * delta_time)
-				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
 
 //////////

@@ -23,6 +23,9 @@
 /obj/item/assembly/infra/proc/AfterRotation(mob/user, degrees)
 	refreshBeam()
 
+/obj/item/assembly/infra/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/item/assembly/infra/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	listeningTo = null
