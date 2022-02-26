@@ -111,7 +111,7 @@
 	return
 
 /client/MouseDrop(src_object, over_object, src_location, over_location, src_control, over_control, params)
-	if (IS_WEAKREF_OF(src_obj, middle_drag_atom_ref))
+	if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
 		middragtime = 0
 		middle_drag_atom_ref = null
 	..()
