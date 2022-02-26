@@ -324,7 +324,7 @@
 	return ..()
 
 /obj/item/food/deepfryholder/proc/On_Consume(eater, feeder)
-	if(!contents)
+	if(!length(contents))
 		return
 	if(!isliving(eater))
 		QDEL_LIST(contents)
