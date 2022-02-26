@@ -4,15 +4,6 @@
 /obj/item/toy/cards
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	///Artistic style of the deck
-	var/deckstyle = "nanotrasen"
-	var/card_hitsound = null
-	var/card_force = 0
-	var/card_throwforce = 0
-	var/card_throw_speed = 3
-	var/card_throw_range = 7
-	var/list/card_attack_verb_continuous = list("attacks")
-	var/list/card_attack_verb_simple = list("attack")
 	/// List of cards for a hand or deck
 	var/list/cards = list()
 

@@ -35,13 +35,13 @@
 		deckstyle = parent_deck.deckstyle
 		has_unique_card_icons = parent_deck.has_unique_card_icons
 		icon_state = "singlecard_down_[parent_deck.deckstyle]"
-		hitsound = parent_deck.card_hitsound
-		force = parent_deck.card_force
-		throwforce = parent_deck.card_throwforce
-		throw_speed = parent_deck.card_throw_speed
-		throw_range = parent_deck.card_throw_range
-		attack_verb_continuous = parent_deck.card_attack_verb_continuous || attack_verb_continuous
-		attack_verb_simple = parent_deck.card_attack_verb_simple || attack_verb_simple
+		hitsound = parent_deck.hitsound
+		force = parent_deck.force
+		throwforce = parent_deck.throwforce
+		throw_speed = parent_deck.throw_speed
+		throw_range = parent_deck.throw_range
+		attack_verb_continuous = parent_deck.attack_verb_continuous
+		attack_verb_simple = parent_deck.attack_verb_simple
 
 	// we need to figure out how to do holodeck cards
 	//if(holo)

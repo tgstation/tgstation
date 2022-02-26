@@ -5,7 +5,6 @@
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/playing_cards.dmi'
-	deckstyle = "nanotrasen"
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "card"
@@ -17,14 +16,25 @@
 	var/obj/machinery/computer/holodeck/holo = null
 	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
 	var/is_standard_deck = TRUE
-	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
-	var/has_unique_card_icons = TRUE
 	/// The amount of cards to spawn in the deck (optional)
 	var/decksize = INFINITY
 	/// Do all the cards drop out of the deck when thrown
 	var/can_play_52_card_pickup = TRUE
 	///Wielding status for holding with two hands
 	var/wielded = FALSE
+
+	// the below vars will be inherited by the singlecards spawned in the deck
+	hitsound = null
+	force = 0
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	attack_verb_continuous = list("attacks")
+	attack_verb_simple = list("attack")
+	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
+	var/has_unique_card_icons = TRUE
+	/// The art style of deck used (determines both deck and card icons used)
+	var/deckstyle = "nanotrasen"
 
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
@@ -158,13 +168,13 @@
 	desc = "A deck of space-grade playing cards. They seem unusually rigid."
 	icon_state = "deck_syndicate_full"
 	deckstyle = "syndicate"
-	card_hitsound = 'sound/weapons/bladeslice.ogg'
-	card_force = 5
-	card_throwforce = 10
-	card_throw_speed = 3
-	card_throw_range = 7
-	card_attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
-	card_attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	force = 5
+	throwforce = 10
+	throw_speed = 3
+	throw_range = 7
+	attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
+	attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
 	resistance_flags = NONE
 	shuffle_time = DECK_SYNDIE_SHUFFLE_TIME
 

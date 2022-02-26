@@ -45,19 +45,19 @@
 	if(!deck)
 		return
 	if(active)
-		deck.card_hitsound = null
-		deck.card_force = 0
-		deck.card_throwforce = 0
-		deck.card_throw_speed = 3
-		deck.card_throw_range = 7
-		deck.card_attack_verb_continuous = string_list(list("attacks"))
+		deck.hitsound = null
+		deck.force = 0
+		deck.throwforce = 0
+		deck.throw_speed = 3
+		deck.throw_range = 7
+		deck.attack_verb_continuous = string_list(list("attacks"))
 	else
-		deck.card_hitsound = 'sound/weapons/bladeslice.ogg'
-		deck.card_force = 5
-		deck.card_throwforce = 10
-		deck.card_throw_speed = 3
-		deck.card_throw_range = 7
-		deck.card_attack_verb_continuous = string_list(list("attacks", "slices", "dices", "slashes", "cuts"))
+		deck.hitsound = 'sound/weapons/bladeslice.ogg'
+		deck.force = 5
+		deck.throwforce = 10
+		deck.throw_speed = 3
+		deck.throw_range = 7
+		deck.attack_verb_continuous = string_list(list("attacks", "slices", "dices", "slashes", "cuts"))
 
 
 /obj/effect/holodeck_effect/sparks/activate(obj/machinery/computer/holodeck/HC)
