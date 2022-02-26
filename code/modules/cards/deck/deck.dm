@@ -81,8 +81,7 @@
 	if(. == CARD_DRAW_CANCEL)
 		return 
 
-	var/obj/item/toy/singlecard/card
-	card = cards[1] //draw the card on top
+	var/obj/item/toy/singlecard/card = cards[1] //draw the card on top
 	cards -= card
 
 	if(!place_on_table)
