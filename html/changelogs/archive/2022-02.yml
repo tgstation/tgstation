@@ -965,3 +965,116 @@
       for their points.
   tralezab:
   - rscadd: Ratfish can now be found in moisture traps.
+2022-02-24:
+  ErdinyoBarboza:
+  - bugfix: Makes the IceBoxStation Underground (Level 2) wastes immune to radiation
+      and also paints the maintenance as such to let people take shelter.
+  - qol: Makes the IceBoxStation Service Hall Exit into a properly cycled airlock
+      system.
+  - qol: Icebox Locker Room now has real personal lockers once more.
+  - qol: Icebox Service Exit is not properly mapped with external airlocks and cycled
+      doors.
+  san7890:
+  - rscadd: Nanotrasen has now made it so that the room that you launch your home-made
+      bombs from is now known as the "Launch Site" across all five stations.
+  tralezab:
+  - bugfix: Ratfish can now properly show up in moisture traps
+  - code_imp: Moisture traps are coded a little better now
+  - spellcheck: fixed some wording in the moisture trap bite feedback
+2022-02-25:
+  ATHATH:
+  - bugfix: Buckling yourself to and then unbuckling yourself from a stasis bed will
+      no longer permanently halt the effects of any gravitum in your system.
+  - bugfix: Liverless creatures can no longer retain the effects of gravitum indefinitely,
+      as it will now decay in their bodies (just as it does in the bodies of livered
+      creatures).
+  Christmas5:
+  - bugfix: Added the missing variable "plane" to floor lights.
+  JohnFulpWillard:
+  - spellcheck: Removed wrong text in esniffers saying ghosts using them sends the
+      signaller inside of it's, frequency.
+  - bugfix: Building walls with snow now take time to do, like every other type.
+  Melbert:
+  - expansion: Russian Fugitive Hunters are now stronker. Their ship has been remade,
+      they have a little bit more ammo and equipment, and most importantly they now
+      have a pet bear.
+  Mothblocks:
+  - balance: Thieves can no longer scale, and can only run once.
+  - balance: Increased the number of thieves by 2.
+  OneAsianTortoise:
+  - bugfix: fixes Metastation hydroponics shutter access
+  Pickle-Coding:
+  - bugfix: Frostoil reagent will no longer achieve negative temperature when exposed
+      to air. Changes behaviour to make air converge to 2.7 kelvin instead.
+  Putnam3145:
+  - qol: '"Scrubbing" and "siphoning" are now consistently used'
+  Sealed101:
+  - bugfix: disktoaster storages now have their proper lights. all hail the toaster
+  rellyreri:
+  - spellcheck: Claustrophobics will now breathe instead of breath.
+  sergeirocks100:
+  - bugfix: Adjusted cargo tech jumpsuits and jumpskirts now show your arms from all
+      angles, and the adjusted cargo jumpsuit now uses the normal jumpsuit legs instead
+      of the digitigrade ones.
+  timothymtorres:
+  - qol: Chem dispensers have been changed to eject beakers using RMB instead of AltClick.
+  - qol: Hydroponics trays have been changed to empty reagents using RMB instead of
+      AltClick.
+  - code_imp: Any object that inherits the simple_rotation component will always use
+      AltClick.
+2022-02-26:
+  BallastMonster:
+  - spellcheck: fixes false info with vampires becoming bats
+  Capsandi:
+  - bugfix: Took out an extra apc in deltastation transfer center which screwed with
+      the power
+  Cheshify:
+  - bugfix: Monkeys can no longer bite people to give them heart attacks
+  Iamgoofball:
+  - code_imp: Fixes some code style issues for more free GBP
+  - code_imp: Implements some missing SDQL 2 wrappers.
+  JohnFulpWillard:
+  - bugfix: AI's "O" sound on vox now sounds like an O instead of an I.
+  KubeRoot:
+  - qol: 'Chat tab filter behavior has been tweaked: System messages will now be enabled
+      in custom tabs and any new message types will be enabled by default. NOTE: This
+      will mess up your custom chat tab filters after the first time you join. You
+      will need to disable any message types that were automatically enabled with
+      this change.'
+  Melbert:
+  - expansion: Raw Prophets now have a funny little attack animation.
+  - balance: Raw Prophets have been adjusted slightly. They now have more max health,
+      a slightly lower sight range (but the ability to toggle it on or off), drop
+      all their component parts on death, and do more damage for every consecutive
+      attack on a target they do.
+  - bugfix: Fixes a few potential issues with heretic rituals.
+  - code_imp: Adds proper stack support to heretic rituals. Also allows for more specific
+      "ritual failure" feedback.
+  RandomGamer123:
+  - bugfix: Bicycles can now be repaired with a welder and have actually sensible
+      max_integrity and integrity_failure values.
+  Ryll/Shaps:
+  - bugfix: Projectiles now respect armor again
+  Wallem & Imaginos:
+  - balance: Splits biobags into virology & science bags. Virology bags can't hold
+      slime cores or cytology equipment, and science bags can't hold medipens & bloodbags.
+  - imageadd: Changes all storage bag sprites
+  cacogen:
+  - bugfix: Examining cells won't say they have 0% charge when the overlay indicates
+      they don't
+  dragomagol:
+  - qol: pointing is now logged
+  - qol: bodythrow impacts are now logged
+  - qol: individual logs now display in order, even when the server date rolls over!
+  jlsnow301:
+  - spellcheck: Space dragons are now "it" instead of "he".
+  san7890:
+  - rscadd: On Tramstation, Nanotrasen installed new APCs on the lower aspects of
+      the Science Division.
+  tastyfish:
+  - bugfix: Opening an air alarm panel now renders the overlays correctly.
+  - rscadd: Most status displays now have USB support for circuits.
+  unit0016:
+  - imageadd: HONK Co. Pranks have released a new set of stencils for any cardboard
+      cutouts you might find lying around, these ones EXTRA "RR-REAL HELP M-". Whatever
+      that means.

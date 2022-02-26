@@ -55,10 +55,10 @@
 /obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(!isliving(user))
+	if(isaicamera(user) || issilicon(user))
 		return .
 
-	if (isnull(held_item))
+	if (isnull(held_item) && Adjacent(user))
 		context[SCREENTIP_CONTEXT_LMB] = "Open"
 		return CONTEXTUAL_SCREENTIP_SET
 
