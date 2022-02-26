@@ -5,6 +5,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_wizoff_full"
 	deckstyle = "wizoff"
+	is_standard_deck = FALSE
 	var/theme = "wizard"
 
 /obj/item/toy/cards/deck/wizoff/Initialize(mapload)
