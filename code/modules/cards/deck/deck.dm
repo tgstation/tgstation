@@ -20,7 +20,7 @@
 	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
 	var/has_unique_card_icons = TRUE
 	/// The amount of cards to spawn in the deck (optional)
-	var/decksize = INFINITE
+	var/decksize = INFINITY
 	/// Do all the cards drop out of the deck when thrown
 	var/can_play_52_card_pickup = TRUE
 	///Wielding status for holding with two hands
