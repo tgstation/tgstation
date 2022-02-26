@@ -1,3 +1,19 @@
+moderate
+regular
+okay
+somewhat irregular
+weird
+offputting
+ungodly
+off the charts
+earth-shattering
+station-shaking
+REDACTED
+annoying
+nuisance heavy
+intern
+clown
+Poly
 low
 medium
 high
@@ -5,10 +21,10 @@ medium rare
 golem
 cheesy horror flick
 SKELLY TONE
-minimum wage employment
 chair-moving
 hair-raising
-nearby welding tool
-distant explosion
-gasmask assistant
-unpaid student loan
+RUNTIME ERROR
+help
+IT COMES
+NAR
+hi
