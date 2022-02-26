@@ -1101,14 +1101,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Medical Office"
 	icon_state = "med_office"
 
-/area/medical/surgery/room_c
-	name = "Surgery C"
-	icon_state = "surgery"
-
-/area/medical/surgery/room_d
-	name = "Surgery D"
-	icon_state = "surgery"
-
 /area/medical/break_room
 	name = "\improper Medical Break Room"
 	icon_state = "med_break"
@@ -1149,13 +1141,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "pharmacy"
 
 /area/medical/surgery
-	name = "Surgery"
+	name = "\improper Operating Room"
 	icon_state = "surgery"
 
-/area/medical/surgery/room_b
-	name = "Surgery B"
-	icon_state = "surgery"
+/area/medical/surgery/fore
+	name = "\improper Fore Operating Room"
+	icon_state = "foresurgery"
 
+/area/medical/surgery/aft
+	name = "\improper Aft Operating Room"
+	icon_state = "aftsurgery"
+
+/area/medical/surgery/theatre
+	name = "\improper Grand Surgery Theatre"
+	icon_state = "surgerytheatre"
 /area/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
