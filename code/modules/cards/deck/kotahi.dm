@@ -4,6 +4,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_kotahi_full"
 	deckstyle = "kotahi"
+	is_standard_deck = FALSE
 
 /obj/item/toy/cards/deck/kotahi/Initialize(mapload)
 	. = ..()
