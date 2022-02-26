@@ -9762,11 +9762,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/service/chapel)
-"Fz" = (
-/obj/structure/lattice,
-/obj/structure/sign/warning/securearea,
-/turf/closed/wall,
-/area/icemoon/underground/explored)
 "FD" = (
 /obj/structure/chair/plastic{
 	dir = 8
@@ -36882,7 +36877,7 @@ ak
 Fp
 Fp
 Fp
-Fz
+Xo
 Rj
 qs
 mO

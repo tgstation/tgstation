@@ -26,10 +26,6 @@
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
-"ai" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/engineering/main)
 "aj" = (
 /turf/closed/wall/r_wall,
 /area/engineering/main)
@@ -1810,10 +1806,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science)
-"ge" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/hallway/secondary/entry)
 "gf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -5865,7 +5857,7 @@ eh
 rn
 eh
 eh
-ge
+dY
 aa
 aa
 aa
@@ -5957,7 +5949,7 @@ cN
 LH
 en
 dY
-ge
+dY
 dY
 aa
 aa
@@ -7120,7 +7112,7 @@ aa
 aa
 aa
 aa
-ai
+aj
 aj
 aj
 aj
