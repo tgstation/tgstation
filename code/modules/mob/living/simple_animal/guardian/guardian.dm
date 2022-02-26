@@ -508,7 +508,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator
 	name = "enchanted deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
-	icon = 'icons/obj/toy.dmi'
+	icon = 'icons/obj/playing_cards.dmi'
 	icon_state = "deck_tarot_full"
 	var/used = FALSE
 	var/theme = "magic"
