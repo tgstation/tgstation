@@ -18434,6 +18434,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=service5";
+	location = "service4"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "cVr" = (
@@ -35214,22 +35218,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/psychology)
-"fdf" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=service4";
-	location = "service3"
-	},
-/turf/open/floor/iron,
-/area/hallway/primary/fore)
 "fdg" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -38014,17 +38002,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
-"fRk" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=arrivals1";
-	location = "service2"
-	},
-/turf/open/floor/iron,
-/area/hallway/primary/fore)
 "fRt" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -59754,6 +59731,10 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=arrivals1";
+	location = "service2"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "loI" = (
@@ -65972,6 +65953,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=service2";
+	location = "service1"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "mIT" = (
@@ -71703,8 +71688,8 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=service2";
-	location = "service1"
+	codes_txt = "patrol;next_patrol=serviceentrance";
+	location = "service5"
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
@@ -103022,6 +103007,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=service4";
+	location = "service3"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "wgZ" = (
@@ -108237,10 +108226,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "patrol;next_patrol=serviceentrance";
-	location = "service4"
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
@@ -145009,7 +144994,7 @@ xwk
 xNF
 xNF
 xNF
-fRk
+xNF
 xNF
 gxy
 xNF
@@ -145523,7 +145508,7 @@ dfK
 eDr
 eDr
 nHA
-fdf
+miq
 miq
 miq
 miq
