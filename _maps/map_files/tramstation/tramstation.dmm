@@ -3589,11 +3589,12 @@
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "axv" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Chapel South"
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/chair{
+	dir = 8
 	},
-/turf/open/floor/iron/dark,
-/area/service/chapel)
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
 "axw" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/structure/railing,
@@ -5007,40 +5008,16 @@
 "aFw" = (
 /obj/structure/table/glass,
 /obj/item/radio/intercom/directional/north,
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
-/obj/effect/spawner/random/food_or_drink/seed{
-	spawn_all_loot = 1;
-	spawn_random_offset = 1
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
+	},
+/obj/effect/spawner/random/food_or_drink/seed{
+	spawn_all_loot = 1;
+	spawn_random_offset = 1
+	},
+/obj/effect/spawner/random/food_or_drink/seed{
+	spawn_all_loot = 1;
+	spawn_random_offset = 1
 	},
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
@@ -5475,6 +5452,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/security/prison)
+"aIq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/four,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "aIu" = (
 /obj/structure/training_machine,
 /obj/item/target,
@@ -7226,6 +7210,16 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/maintenance/tram/left)
+"bdh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/item/kirbyplants/random,
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Recreational Area North-East"
+	},
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "bdL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/carbon/human/species/monkey,
@@ -8365,6 +8359,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/bridge)
+"bAe" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
 "bAl" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -9767,7 +9769,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
-	dir = 6
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
@@ -9792,15 +9794,11 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 8
-	},
-/obj/machinery/light/directional/east,
 /obj/machinery/camera/directional/east{
-	c_tag = "Civilian - Recreational Area West"
+	c_tag = "Civilian - Dormitories South-East"
 	},
 /turf/open/floor/iron,
-/area/commons/fitness/recreation)
+/area/commons/dorms)
 "bYY" = (
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/circuit/green,
@@ -10188,6 +10186,12 @@
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
+"cgK" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Civilian - Restroom South"
+	},
+/turf/open/floor/iron/freezer,
+/area/commons/toilet)
 "cgO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/cargo_technician,
@@ -11150,11 +11154,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
-"cBG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/turf/open/floor/plating,
-/area/maintenance/department/crew_quarters/dorms)
 "cBL" = (
 /obj/machinery/button/door/directional/west{
 	id = "private_b";
@@ -11961,11 +11960,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/science/robotics/lab)
-"cRe" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/hobo_squat,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/crew_quarters/dorms)
 "cRk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -13800,15 +13794,10 @@
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
 "dyH" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 1
-	},
-/obj/item/kirbyplants/random,
-/obj/machinery/camera/directional/north{
-	c_tag = "Civilian - Recreational Area North-East"
-	},
-/turf/open/floor/iron,
-/area/commons/fitness/recreation)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/maintenance/department/crew_quarters/dorms)
 "dyY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -14506,11 +14495,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation/entertainment)
-"dLY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/emcloset,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "dMm" = (
 /obj/effect/turf_decal/trimline/yellow/warning,
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
@@ -16718,6 +16702,11 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron/smooth,
 /area/maintenance/central/greater)
+"eyP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "ezd" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 5
@@ -18212,6 +18201,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor,
 /area/hallway/primary/tram/center)
+"fan" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Civilian - Library Lounge"
+	},
+/turf/open/floor/iron/grimy,
+/area/service/library/lounge)
 "fap" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/event_spawn,
@@ -18771,6 +18766,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/science/mixing)
+"fjA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
 "fki" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/easel,
@@ -19242,12 +19243,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/cmo)
-"ftx" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Restroom South"
-	},
-/turf/open/floor/iron/freezer,
-/area/commons/toilet)
 "ftz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19509,6 +19504,15 @@
 /obj/structure/closet/l3closet/scientist,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"fwo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "fwx" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/neutral/filled/line,
@@ -21210,6 +21214,11 @@
 /obj/effect/turf_decal/sand/plating,
 /turf/open/floor/plating,
 /area/mine/explored)
+"gau" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "gaA" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -22583,6 +22592,11 @@
 /obj/structure/table/wood,
 /turf/open/floor/wood,
 /area/commons/vacant_room/office)
+"gyR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "gyV" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/shower{
@@ -22738,12 +22752,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/main)
-"gCr" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Civilian - Entertainment Center North"
-	},
-/turf/open/floor/eighties/red,
-/area/commons/fitness/recreation/entertainment)
 "gCs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -23261,12 +23269,12 @@
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
-"gKH" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Library Lounge"
+"gKV" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Chapel West"
 	},
-/turf/open/floor/iron/grimy,
-/area/service/library/lounge)
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "gKY" = (
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
@@ -24224,13 +24232,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
-"hdH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/effect/spawner/random/engineering/tool,
-/obj/effect/spawner/random/engineering/tool,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "hdO" = (
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
@@ -26343,13 +26344,6 @@
 /obj/item/wirecutters,
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/central)
-"hQB" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/maintenance/four,
-/obj/effect/spawner/random/engineering/flashlight,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "hQD" = (
 /obj/structure/table,
 /obj/item/raw_anomaly_core/random{
@@ -28602,14 +28596,14 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/greater)
 "iHw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
-/area/hallway/secondary/entry)
+/area/commons/dorms)
 "iHK" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -31647,11 +31641,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/science/misc_lab)
-"jOw" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/cigbutt,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "jOz" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/landmark/start/hangover,
@@ -31841,6 +31830,13 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
+"jRx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "jRz" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -31867,19 +31863,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /turf/open/floor/iron,
 /area/cargo/office)
-"jRZ" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/thinplating{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/obj/machinery/camera/directional/west{
-	c_tag = "Civilian - Recreational Area East"
-	},
-/turf/open/floor/iron,
-/area/commons/fitness/recreation)
 "jSh" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 8
@@ -32683,13 +32666,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/service/chapel/monastery)
-"kee" = (
-/obj/structure/chair/stool/bar/directional/south,
-/obj/machinery/camera/directional/west{
-	c_tag = "Civilian - Entertainment Center South"
-	},
-/turf/open/floor/eighties,
-/area/commons/fitness/recreation/entertainment)
 "ker" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -33166,18 +33142,6 @@
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
-"kmm" = (
-/obj/effect/turf_decal/trimline/neutral/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/hallway/secondary/entry)
 "kmD" = (
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/turf_decal/tile/blue,
@@ -33834,11 +33798,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/command/teleporter)
-"kzU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "kzV" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -34141,13 +34100,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/central)
-"kEY" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Recreational Area South-West"
-	},
-/turf/open/floor/iron,
-/area/commons/fitness/recreation)
 "kFq" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -36054,6 +36006,11 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/port/central)
+"lkh" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/garbage,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "lkt" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -36245,6 +36202,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/cargo/miningdock)
+"loW" = (
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Entertainment Center North"
+	},
+/turf/open/floor/eighties/red,
+/area/commons/fitness/recreation/entertainment)
 "lpd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing{
@@ -36397,6 +36360,19 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
+"lsq" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Recreational Area East"
+	},
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "lsv" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -36428,11 +36404,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
-"lsG" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "ltb" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -36992,6 +36963,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/lounge)
+"lEX" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "lFi" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 4
@@ -37130,12 +37106,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/tcommsat/computer)
-"lGW" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Civilian - Restroom North"
-	},
-/turf/open/floor/iron/freezer,
-/area/commons/toilet)
 "lGY" = (
 /obj/machinery/camera/motion{
 	c_tag = "Secure - AI Upper External South";
@@ -37729,8 +37699,8 @@
 /area/mine/explored)
 "lPB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/obj/effect/spawner/random/maintenance/two,
+/obj/effect/turf_decal/bot,
+/obj/machinery/space_heater,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/crew_quarters/dorms)
 "lPF" = (
@@ -38328,6 +38298,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/greater)
+"mep" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "meC" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/siding/wideplating/corner{
@@ -38954,13 +38929,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
-"mpL" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/chair{
-	dir = 8
-	},
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/crew_quarters/dorms)
 "mqi" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
@@ -39290,15 +39258,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/science/research)
-"mwi" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Civilian - Dormitories South-East"
-	},
-/turf/open/floor/iron,
-/area/commons/dorms)
 "mwq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/duct,
@@ -44756,6 +44715,15 @@
 /obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/iron/dark,
 /area/cargo/miningdock)
+"oyt" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Dormitories West"
+	},
+/turf/open/floor/iron,
+/area/commons/dorms)
 "oyC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing,
@@ -46401,15 +46369,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"pbX" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Civilian - Dormitories South-West"
-	},
-/turf/open/floor/iron,
-/area/commons/dorms)
 "pco" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/food_packaging,
@@ -47106,6 +47065,12 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
+"poO" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Chapel East"
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "poS" = (
 /obj/structure/sink{
 	dir = 4;
@@ -49196,12 +49161,6 @@
 	},
 /turf/open/floor/plating/asteroid/airless,
 /area/mine/explored)
-"qac" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Civilian - Chapel East"
-	},
-/turf/open/floor/iron/dark,
-/area/service/chapel)
 "qae" = (
 /obj/machinery/restaurant_portal/restaurant,
 /turf/open/floor/glass,
@@ -50042,14 +50001,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/prison/safe)
-"qrx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/obj/structure/closet/crate,
-/obj/effect/spawner/random/engineering/tool,
-/obj/effect/spawner/random/maintenance/two,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/crew_quarters/dorms)
 "qrC" = (
 /obj/machinery/newscaster/directional/east,
 /obj/machinery/camera{
@@ -51716,13 +51667,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/security/interrogation)
-"qZI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/iron,
-/area/hallway/secondary/entry)
 "qZM" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
@@ -52594,6 +52538,18 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
+"rnk" = (
+/obj/effect/turf_decal/trimline/neutral/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "rnt" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 8
@@ -53314,6 +53270,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
+"rCI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
 "rCL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -55849,12 +55810,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/maintenance/central/lesser)
-"syU" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/closet,
-/obj/effect/spawner/random/maintenance/four,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "syY" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55930,6 +55885,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/freezer,
 /area/security/prison/shower)
+"sAz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/camera/directional/south{
+	c_tag = "Civilian - Recreational Area South-East"
+	},
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "sAN" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -57255,13 +57217,6 @@
 	},
 /turf/closed/wall,
 /area/science/test_area)
-"tcB" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/camera/directional/south{
-	c_tag = "Civilian - Recreational Area South-East"
-	},
-/turf/open/floor/iron,
-/area/commons/fitness/recreation)
 "tcF" = (
 /obj/machinery/door/airlock{
 	name = "Water Closet";
@@ -57379,6 +57334,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/security/office)
+"teE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "teF" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -58855,6 +58817,12 @@
 /obj/effect/turf_decal/tile/brown,
 /turf/open/floor/iron,
 /area/cargo/storage)
+"tGl" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Restroom North"
+	},
+/turf/open/floor/iron/freezer,
+/area/commons/toilet)
 "tGm" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -58907,12 +58875,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/greater)
-"tHJ" = (
-/obj/machinery/camera/directional/west{
-	c_tag = "Civilian - Chapel West"
-	},
-/turf/open/floor/iron/dark,
-/area/service/chapel)
 "tHK" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -60909,6 +60871,13 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/tram/left)
+"upA" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line,
+/obj/machinery/camera/directional/south{
+	c_tag = "Civilian - Recreational Area South-West"
+	},
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "upD" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -63007,6 +62976,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"vgT" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/hobo_squat,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/crew_quarters/dorms)
 "vhd" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay Storage";
@@ -63736,15 +63710,6 @@
 	},
 /turf/open/floor/plating,
 /area/command/heads_quarters/hop)
-"vvp" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 4
-	},
-/obj/machinery/camera/directional/east{
-	c_tag = "Civilian - Dormitories North-East"
-	},
-/turf/open/floor/iron,
-/area/commons/dorms)
 "vvu" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -64566,6 +64531,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
+"vNz" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Dormitories South-West"
+	},
+/turf/open/floor/iron,
+/area/commons/dorms)
 "vNB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -65165,12 +65139,6 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron,
 /area/science/misc_lab)
-"vZv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot,
-/obj/machinery/space_heater,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/crew_quarters/dorms)
 "vZz" = (
 /obj/machinery/computer/secure_data,
 /obj/machinery/requests_console/directional/north{
@@ -65331,6 +65299,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen/diner)
+"wca" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Civilian - Chapel South"
+	},
+/turf/open/floor/iron/dark,
+/area/service/chapel)
 "wcz" = (
 /obj/machinery/door/airlock/hatch,
 /obj/effect/decal/cleanable/dirt,
@@ -66553,6 +66527,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/main)
+"wxh" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/thinplating{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Recreational Area West"
+	},
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "wxA" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/carpet,
@@ -67949,6 +67936,15 @@
 	},
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"wXF" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 4
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Civilian - Dormitories North-East"
+	},
+/turf/open/floor/iron,
+/area/commons/dorms)
 "wXK" = (
 /turf/closed/wall,
 /area/security/interrogation)
@@ -68015,14 +68011,11 @@
 /turf/open/floor/iron/white,
 /area/science/research)
 "wZu" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/commons/dorms)
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/four,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
 "wZw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -68139,11 +68132,6 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/security/prison)
-"xaT" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/girder,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "xbu" = (
 /obj/structure/disposaloutlet,
 /obj/structure/disposalpipe/trunk{
@@ -68845,15 +68833,6 @@
 /obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/hallway/secondary/exit)
-"xnK" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Civilian - Dormitories West"
-	},
-/turf/open/floor/iron,
-/area/commons/dorms)
 "xnP" = (
 /obj/structure/cable,
 /turf/closed/wall/r_wall,
@@ -71075,11 +71054,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"xZY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/iron/smooth,
-/area/maintenance/port/aft)
 "yak" = (
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
@@ -71592,6 +71566,13 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"yip" = (
+/obj/structure/chair/stool/bar/directional/south,
+/obj/machinery/camera/directional/west{
+	c_tag = "Civilian - Entertainment Center South"
+	},
+/turf/open/floor/eighties,
+/area/commons/fitness/recreation/entertainment)
 "yit" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -71845,11 +71826,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/service/lawoffice)
-"yme" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/table,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/crew_quarters/dorms)
 
 (1,1,1) = {"
 ajc
@@ -86155,8 +86131,8 @@ jJi
 yee
 ayq
 yee
-vZv
-vZv
+lPB
+lPB
 yee
 yee
 dhe
@@ -86414,7 +86390,7 @@ ayq
 yee
 sVv
 sVv
-qrx
+bAe
 yee
 dhe
 dhe
@@ -86671,7 +86647,7 @@ ayq
 yee
 sVv
 sVv
-qrx
+bAe
 yee
 dhe
 dhe
@@ -86913,12 +86889,12 @@ ism
 ism
 ism
 ism
-lGW
+tGl
 aVX
 ism
 okF
 nOy
-ftx
+cgK
 ism
 ism
 ism
@@ -87185,9 +87161,9 @@ ayq
 yee
 sVv
 sVv
-cBG
-yme
-lPB
+dyH
+rCI
+fjA
 yee
 dhe
 dhe
@@ -87440,10 +87416,10 @@ dhe
 yee
 ayq
 yee
-cBG
+dyH
 sVv
-cBG
-mpL
+dyH
+axv
 sVv
 yee
 dhe
@@ -87958,7 +87934,7 @@ yee
 yee
 sVv
 sVv
-cRe
+vgT
 yee
 dhe
 dhe
@@ -89477,7 +89453,7 @@ ahS
 aaH
 agL
 aaH
-xnK
+oyt
 apJ
 dNn
 aaH
@@ -89491,7 +89467,7 @@ azS
 dNn
 apJ
 aaH
-pbX
+vNz
 dNn
 aaH
 aaH
@@ -89995,12 +89971,12 @@ aXn
 aXn
 aXn
 aXn
-wZu
+iHw
 hpm
-wZu
-wZu
-wZu
-wZu
+iHw
+iHw
+iHw
+iHw
 fZx
 akE
 awO
@@ -94103,7 +94079,7 @@ aVu
 awm
 oQz
 awm
-vvp
+wXF
 aXA
 oQz
 awm
@@ -94117,7 +94093,7 @@ awm
 baC
 aXA
 awm
-mwi
+bYC
 baC
 awm
 awm
@@ -95391,7 +95367,7 @@ dhe
 dhe
 pFx
 aju
-gCr
+loW
 azn
 aoc
 amp
@@ -95402,7 +95378,7 @@ sCd
 amp
 tCO
 asf
-kee
+yip
 nhI
 yee
 rmC
@@ -150643,13 +150619,13 @@ aFJ
 aTj
 atM
 aKl
-lsG
+eyP
 wDZ
 wDZ
 wDZ
 wDZ
 wDZ
-kzU
+lkh
 aKl
 aKl
 aKl
@@ -150908,9 +150884,9 @@ aKl
 aKl
 wDZ
 aKl
-hQB
-xaT
-dLY
+aIq
+gyR
+lEX
 aKl
 aKl
 aKl
@@ -151429,8 +151405,8 @@ aKl
 aKl
 wDZ
 aKl
-hdH
-syU
+teE
+wZu
 aKl
 aBM
 aBM
@@ -151919,8 +151895,8 @@ kWD
 avy
 wxA
 awt
-bYj
-qZI
+rnk
+jRx
 dlD
 aen
 kqc
@@ -152176,7 +152152,7 @@ awt
 aox
 awt
 aRH
-kmm
+bYj
 aBa
 aSD
 abG
@@ -152198,7 +152174,7 @@ eSy
 aGt
 wZS
 aKl
-jOw
+mep
 wDZ
 aKl
 osN
@@ -152433,7 +152409,7 @@ lCz
 tpy
 aFB
 guO
-kmm
+bYj
 aEF
 aSD
 abG
@@ -152456,7 +152432,7 @@ aCa
 aCa
 aKl
 aKl
-xZY
+gau
 wDZ
 iyE
 iyE
@@ -153231,7 +153207,7 @@ fZt
 tVh
 fvI
 tVh
-gKH
+fan
 aKl
 iyE
 aKl
@@ -153461,7 +153437,7 @@ aBa
 doV
 aBa
 aBa
-iHw
+fwo
 aCH
 aSD
 axp
@@ -155281,7 +155257,7 @@ hRt
 hRt
 fEF
 aKk
-kEY
+upA
 axc
 sza
 xnh
@@ -155801,7 +155777,7 @@ dZE
 dZE
 aQe
 xNF
-tHJ
+gKV
 aQe
 qME
 jHj
@@ -156044,7 +156020,7 @@ dKb
 dKb
 dKb
 dKb
-bYC
+wxh
 vSl
 nos
 xHY
@@ -156834,7 +156810,7 @@ pdb
 afH
 qDT
 gIS
-axv
+wca
 gLu
 eJZ
 tCR
@@ -158614,7 +158590,7 @@ lCY
 lCY
 lCY
 lCY
-jRZ
+lsq
 vmY
 sdT
 fGr
@@ -158885,7 +158861,7 @@ ann
 aAb
 aQe
 mtH
-qac
+poO
 aQe
 aQe
 aQe
@@ -159376,7 +159352,7 @@ pIN
 asj
 pkj
 anG
-dyH
+bdh
 kdv
 jdi
 hRt
@@ -159393,7 +159369,7 @@ hRt
 hRt
 fEF
 lez
-tcB
+sAz
 wqA
 oKW
 wqA
