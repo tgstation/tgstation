@@ -4,6 +4,7 @@
 	icon_state = "deck_white_full"
 	deckstyle = "white"
 	has_unique_card_icons = FALSE
+	is_standard_deck = FALSE
 	/// Amount of blank cards in the deck
 	var/blanks = 25
 
