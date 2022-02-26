@@ -37,6 +37,13 @@
 	ME.attach(src)
 	max_ammo()
 
+/obj/vehicle/sealed/mecha/combat/marauder/add_cell(obj/item/stock_parts/cell/C=null)
+	if(C)
+		C.forceMove(src)
+		cell = C
+		return
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
+
 /datum/action/vehicle/sealed/mecha/mech_smoke
 	name = "Smoke"
 	button_icon_state = "mech_smoke"

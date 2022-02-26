@@ -1642,7 +1642,7 @@
 "dY" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
@@ -2370,7 +2370,7 @@
 "gN" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -3626,7 +3626,7 @@
 /area/shuttle/sbc_starfury)
 "jf" = (
 /obj/machinery/power/apc/syndicate{
-	cell_type = /obj/item/stock_parts/cell/high/plus;
+	cell_type = /obj/item/stock_parts/cell/high;
 	dir = 1;
 	name = "Syndicate Battlecruiser APC";
 	pixel_y = 25
@@ -3816,8 +3816,8 @@
 /area/shuttle/sbc_starfury)
 "jT" = (
 /obj/structure/closet/crate,
-/obj/item/stock_parts/cell/high/plus,
-/obj/item/stock_parts/cell/high/plus{
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -4201,7 +4201,7 @@
 "lg" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},

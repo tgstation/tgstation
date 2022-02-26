@@ -1412,6 +1412,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Science Lobby"
 	icon_state = "science_lobby"
 
+/area/science/lower
+	name = "\improper Lower Science Division"
+	icon_state = "lower_science"
+
 /area/science/breakroom
 	name = "\improper Science Break Room"
 	icon_state = "science_breakroom"
@@ -1445,6 +1449,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Ordnance Mixing Chamber"
 	icon_state = "ord_mix_chamber"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+/area/science/mixing/hallway
+	name = "\improper Ordnance Mixing Hallway"
+	icon_state = "ord_mix_hallway"
+
+/area/science/mixing/launch
+	name = "\improper Ordnance Mixing Launch Site"
+	icon_state = "ord_mix_launch"
 
 /area/science/genetics
 	name = "\improper Genetics Lab"
