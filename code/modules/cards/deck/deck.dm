@@ -17,6 +17,8 @@
 	var/obj/machinery/computer/holodeck/holo = null
 	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
 	var/is_standard_deck = TRUE
+	///If the cards in the deck have different card faces icons (blank and CAS decks do not)
+	var/has_unique_card_icons = TRUE
 	///Wielding status for holding with two hands
 	var/wielded = FALSE
 
