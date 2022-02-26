@@ -9,12 +9,14 @@
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "card"
-	///The amount of time it takes to shuffle
+	/// The amount of time it takes to shuffle
 	var/shuffle_time = DECK_SHUFFLE_TIME
-	///Deck shuffling cooldown.
+	/// Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
-	///Tracks holodeck cards, since they shouldn't be infinite
+	/// Tracks holodeck cards, since they shouldn't be infinite
 	var/obj/machinery/computer/holodeck/holo = null
+	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
+	var/is_standard_deck = TRUE
 	///Wielding status for holding with two hands
 	var/wielded = FALSE
 
@@ -25,8 +27,7 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
 
-	if(deckstyle == "nanotrasen" || deckstyle == "syndicate") 
-		// generate a normal playing card deck
+	if(is_standard_deck) // generate a normal playing card deck
 		for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
 			cards += new /obj/item/toy/singlecard(cardname = "Ace of [suit]", parent_deck = src)
 			for(var/i in 2 to 10)
