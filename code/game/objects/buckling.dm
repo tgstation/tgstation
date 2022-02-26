@@ -116,7 +116,7 @@
 		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
 	M.set_buckled(src)
 	buckled_mobs |= M
-	M.throw_alert("buckled", /atom/movable/screen/alert/buckled)
+	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled)
 	M.set_glide_size(glide_size)
 
 	M.Move(loc)
@@ -152,7 +152,7 @@
 	. = buckled_mob
 	buckled_mob.set_buckled(null)
 	buckled_mob.set_anchored(initial(buckled_mob.anchored))
-	buckled_mob.clear_alert("buckled")
+	buckled_mob.clear_alert(ALERT_BUCKLED)
 	buckled_mob.set_glide_size(DELAY_TO_GLIDE_SIZE(buckled_mob.total_multiplicative_slowdown()))
 	buckled_mobs -= buckled_mob
 	if(anchored)

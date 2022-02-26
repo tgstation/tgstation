@@ -112,7 +112,7 @@
 		embedded_objects -= embedded
 		embedded.forceMove(src)
 	if(!phantom_owner.has_embedded_objects())
-		phantom_owner.clear_alert("embeddedobject")
+		phantom_owner.clear_alert(ALERT_EMBEDDED_OBJECT)
 		SEND_SIGNAL(phantom_owner, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 	if(!special)
