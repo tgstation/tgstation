@@ -1,5 +1,4 @@
 // Todo:
-// Add green/red shimmer for add/remove to palette
 // Add proper garbage collection
 // Cry yourself to sleep over the existence of hud code
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
