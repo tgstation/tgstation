@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Examining cells won't say they have 0% charge when the overlay indicates they don't"

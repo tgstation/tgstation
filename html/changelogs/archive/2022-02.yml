@@ -1022,3 +1022,59 @@
       AltClick.
   - code_imp: Any object that inherits the simple_rotation component will always use
       AltClick.
+2022-02-26:
+  BallastMonster:
+  - spellcheck: fixes false info with vampires becoming bats
+  Capsandi:
+  - bugfix: Took out an extra apc in deltastation transfer center which screwed with
+      the power
+  Cheshify:
+  - bugfix: Monkeys can no longer bite people to give them heart attacks
+  Iamgoofball:
+  - code_imp: Fixes some code style issues for more free GBP
+  - code_imp: Implements some missing SDQL 2 wrappers.
+  JohnFulpWillard:
+  - bugfix: AI's "O" sound on vox now sounds like an O instead of an I.
+  KubeRoot:
+  - qol: 'Chat tab filter behavior has been tweaked: System messages will now be enabled
+      in custom tabs and any new message types will be enabled by default. NOTE: This
+      will mess up your custom chat tab filters after the first time you join. You
+      will need to disable any message types that were automatically enabled with
+      this change.'
+  Melbert:
+  - expansion: Raw Prophets now have a funny little attack animation.
+  - balance: Raw Prophets have been adjusted slightly. They now have more max health,
+      a slightly lower sight range (but the ability to toggle it on or off), drop
+      all their component parts on death, and do more damage for every consecutive
+      attack on a target they do.
+  - bugfix: Fixes a few potential issues with heretic rituals.
+  - code_imp: Adds proper stack support to heretic rituals. Also allows for more specific
+      "ritual failure" feedback.
+  RandomGamer123:
+  - bugfix: Bicycles can now be repaired with a welder and have actually sensible
+      max_integrity and integrity_failure values.
+  Ryll/Shaps:
+  - bugfix: Projectiles now respect armor again
+  Wallem & Imaginos:
+  - balance: Splits biobags into virology & science bags. Virology bags can't hold
+      slime cores or cytology equipment, and science bags can't hold medipens & bloodbags.
+  - imageadd: Changes all storage bag sprites
+  cacogen:
+  - bugfix: Examining cells won't say they have 0% charge when the overlay indicates
+      they don't
+  dragomagol:
+  - qol: pointing is now logged
+  - qol: bodythrow impacts are now logged
+  - qol: individual logs now display in order, even when the server date rolls over!
+  jlsnow301:
+  - spellcheck: Space dragons are now "it" instead of "he".
+  san7890:
+  - rscadd: On Tramstation, Nanotrasen installed new APCs on the lower aspects of
+      the Science Division.
+  tastyfish:
+  - bugfix: Opening an air alarm panel now renders the overlays correctly.
+  - rscadd: Most status displays now have USB support for circuits.
+  unit0016:
+  - imageadd: HONK Co. Pranks have released a new set of stencils for any cardboard
+      cutouts you might find lying around, these ones EXTRA "RR-REAL HELP M-". Whatever
+      that means.

@@ -1,6 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - qol: "pointing is now logged"
-  - qol: "bodythrow impacts are now logged"
-  - qol: "individual logs now display in order, even when the server date rolls over!"

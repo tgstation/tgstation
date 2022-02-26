@@ -1,4 +1,0 @@
-author: "Iamgoofball"
-delete-after: True
-changes: 
-  - code_imp: "Implements some missing SDQL 2 wrappers."
