@@ -21,12 +21,13 @@
 	var/datum/weakref/last_hovored_ref
 
 /atom/movable/screen/movable/action_button/Destroy()
-	var/mob/viewer = our_hud.mymob
-	our_hud.hide_action(src)
-	viewer?.client?.screen -= src
-	linked_action.viewers -= our_hud
-	viewer.update_action_buttons()
-	our_hud = null
+	if(our_hud)
+		var/mob/viewer = our_hud.mymob
+		our_hud.hide_action(src)
+		viewer?.client?.screen -= src
+		linked_action.viewers -= our_hud
+		viewer.update_action_buttons()
+		our_hud = null
 	linked_action = null
 	return ..()
 
@@ -380,10 +381,11 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 	var/datum/action_group/owner
 
 /atom/movable/screen/action_landing/Destroy()
-	owner.landing = null
-	owner?.owner?.mymob?.client?.screen -= src
-	owner.refresh_actions()
-	owner = null
+	if(owner)
+		owner.landing = null
+		owner?.owner?.mymob?.client?.screen -= src
+		owner.refresh_actions()
+		owner = null
 	return ..()
 
 /atom/movable/screen/action_landing/proc/set_owner(datum/action_group/owner)
