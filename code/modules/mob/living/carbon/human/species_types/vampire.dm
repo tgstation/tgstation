@@ -83,9 +83,6 @@
 		"Vampires are unholy beings blessed and cursed with The Thirst. \
 		The Thirst requires them to feast on blood to stay alive, and in return it gives them many bonuses. \
 		Because of this, Vampires have split into two clans, one that embraces their powers as a blessing and one that rejects it.",
-
-		"\"I'm not doing the bat trick. It's self deprecating. Okay, fine, but I'm not doing it again!\" - Count Baz, \
-		before venting into security for the third time this week.",
 	)
 
 /datum/species/vampire/create_pref_unique_perks()

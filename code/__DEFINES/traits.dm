@@ -771,8 +771,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STABILIZED_LIGHT_PINK_TRAIT "stabilized_light_pink"
 /// Given by the multiple_lives component to the previous body of the mob upon death.
 #define EXPIRED_LIFE_TRAIT "expired_life"
-/// Trait given to a ghost when they orbit something.
-#define GHOST_ORBITING_TRAIT "ghost_orbiting"
+/// Trait given to an atom/movable when they orbit something.
+#define ORBITING_TRAIT "orbiting"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and

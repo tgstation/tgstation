@@ -154,7 +154,7 @@
 		/datum/heretic_knowledge/knowledge_ritual/rust,
 		/datum/heretic_knowledge/knowledge_ritual/flesh,
 	)
-	route = PATH_RUST
+	route = PATH_VOID
 
 /datum/heretic_knowledge/spell/void_phase
 	name = "Void Phase"
