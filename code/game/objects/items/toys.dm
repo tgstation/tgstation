@@ -287,7 +287,7 @@
 	if(!user)
 		return
 
-	if(mystomach.get_contents_size() >= mystomach.max_combined_w_class - 5) // if he's (un)bright enough to have a round and full belly...
+	if(mystomach.get_contents_size() >= mystomach.max_combined_w_class - 5)
 		user.visible_message(span_suicide("And pretty much, [user] was beyond full, and died from having [user.p_their()] insides completely damaged!"))
 		user.vomit(100, TRUE, distance = 0)
 		for(var/obj/item/organ/current_organ in user.internal_organs)

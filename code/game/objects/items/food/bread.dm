@@ -328,16 +328,19 @@
 		return
 	if(!isliving(eater))
 		QDEL_LIST(contents)
+		return
 
 	var/mob/living/living_eater = eater
 	var/obj/item/organ/stomach/stomach = living_eater.getorganslot(ORGAN_SLOT_STOMACH)
 
 	if(!stomach)
+		QDEL_LIST(contents)
 		return
 
 	var/datum/component/storage/concrete/storage = stomach.GetComponent(/datum/component/storage/concrete)
 
 	if(!storage)
+		QDEL_LIST(contents)
 		return
 
 	var/inedible = FALSE
@@ -347,6 +350,8 @@
 		if(!IsEdible(thing))
 			inedible = TRUE
 			storage.handle_item_insertion(thing,prevent_warning = TRUE)
+
+	QDEL_LIST(contents)
 
 	if(inedible)
 		to_chat(living_eater, span_warning("That didn't feel very good going down..."))
