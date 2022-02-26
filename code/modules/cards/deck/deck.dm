@@ -18,8 +18,6 @@
 	var/is_standard_deck = TRUE
 	/// The amount of cards to spawn in the deck (optional)
 	var/decksize = INFINITY
-	/// Do all the cards drop out of the deck when thrown
-	var/can_play_52_card_pickup = TRUE
 	///Wielding status for holding with two hands
 	var/wielded = FALSE
 
@@ -156,9 +154,6 @@
 		//insert(user, item)
 	else
 		return ..()
-
-/obj/item/toy/cards/deck/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	return
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||

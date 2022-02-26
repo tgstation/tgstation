@@ -4,8 +4,13 @@
 /obj/item/toy/cards
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
+	/// Do all the cards drop out of the deck when thrown
+	var/can_play_52_card_pickup = TRUE
 	/// List of cards for a hand or deck
 	var/list/cards = list()
+
+/obj/item/toy/cards/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	return
 
 /**
 /obj/item/toy/cards/Initialize(mapload)
