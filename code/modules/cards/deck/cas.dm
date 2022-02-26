@@ -11,12 +11,15 @@
 	deckstyle = "white"
 	has_unique_card_icons = FALSE
 	is_standard_deck = FALSE
+	decksize = 150
+	can_play_52_card_pickup = FALSE
 
 /obj/item/toy/cards/deck/cas/black
 	name = "\improper CAS deck (black)"
 	desc = "A deck for the game Cards Against Spess, still popular after all these centuries. Warning: may include traces of broken fourth wall. This is the black deck."
 	icon_state = "deck_black_full"
 	deckstyle = "black"
+	decksize = 50
 
 /obj/item/toy/cards/deck/cas/Initialize(mapload)
 	. = ..()

@@ -5,8 +5,8 @@
 	deckstyle = "white"
 	has_unique_card_icons = FALSE
 	is_standard_deck = FALSE
-	/// Amount of blank cards in the deck
-	var/blanks = 25
+	decksize = 25
+	can_play_52_card_pickup = FALSE
 
 /obj/item/toy/cards/deck/blank/black
 	icon_state = "deck_black_full"
@@ -14,7 +14,7 @@
 
 /obj/item/toy/cards/deck/blank/Initialize(mapload)
 	. = ..()
-	for(var/_ in 1 to blanks)
+	for(var/_ in 1 to decksize)
 		var/obj/item/toy/singlecard/blank_card = new (cardname = "blank card", parent_deck = src)
 		blank_card.name = "blank card"
 		blank_card.blank = TRUE

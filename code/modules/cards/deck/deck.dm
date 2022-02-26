@@ -17,8 +17,12 @@
 	var/obj/machinery/computer/holodeck/holo = null
 	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
 	var/is_standard_deck = TRUE
-	///If the cards in the deck have different card faces icons (blank and CAS decks do not)
+	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
 	var/has_unique_card_icons = TRUE
+	/// The amount of cards to spawn in the deck (optional)
+	var/decksize = INFINITE
+	/// Do all the cards drop out of the deck when thrown
+	var/can_play_52_card_pickup = TRUE
 	///Wielding status for holding with two hands
 	var/wielded = FALSE
 
@@ -142,6 +146,9 @@
 		//insert(user, item)
 	else
 		return ..()
+
+/obj/item/toy/cards/deck/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	return
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
