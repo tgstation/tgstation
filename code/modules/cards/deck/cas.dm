@@ -10,6 +10,7 @@
 	icon_state = "deck_white_full"
 	deckstyle = "white"
 	has_unique_card_icons = FALSE
+	is_standard_deck = FALSE
 
 /obj/item/toy/cards/deck/cas/black
 	name = "\improper CAS deck (black)"
