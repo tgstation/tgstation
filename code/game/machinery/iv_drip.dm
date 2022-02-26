@@ -24,10 +24,12 @@
 	///Set false to block beaker use and instead use an internal reagent holder
 	var/use_internal_storage = FALSE
 	///Typecache of containers we accept
-	var/static/list/drip_containers = typecacheof(list(/obj/item/reagent_containers/blood,
-									/obj/item/reagent_containers/food,
-									/obj/item/reagent_containers/glass,
-									/obj/item/reagent_containers/chem_pack))
+	var/static/list/drip_containers = typecacheof(list(
+		/obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/food,
+		/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/chem_pack,
+	))
 	// If the blood draining tab should be greyed out
 	var/inject_only = FALSE
 
@@ -344,13 +346,7 @@
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload)
 	. = ..()
-
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
-
-///Check if we can be rotated for the rotation component
-/obj/machinery/iv_drip/plumbing/proc/can_be_rotated(mob/user,rotation_type)
-	return !anchored
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()

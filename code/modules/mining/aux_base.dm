@@ -206,13 +206,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 		to_chat(user, span_warning("This station is not equipped with an auxiliary base. Please contact your Nanotrasen contractor."))
 		return
 	if(!no_restrictions)
-		var/static/list/disallowed_turf_types = typecacheof(list(
-			/turf/closed,
-			/turf/open/lava,
-			/turf/open/indestructible,
-			)) - typecacheof(list(
-			/turf/closed/mineral,
-			))
+		var/static/list/disallowed_turf_types = zebra_typecacheof(list(
+			/turf/closed = TRUE,
+			/turf/open/lava = TRUE,
+			/turf/open/indestructible = TRUE,
+			/turf/closed/mineral = FALSE,
+		))
 
 		if(!is_mining_level(T.z))
 			return BAD_ZLEVEL

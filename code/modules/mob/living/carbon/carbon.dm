@@ -3,6 +3,7 @@
 	create_reagents(1000, REAGENT_HOLDER_ALIVE)
 	assign_bodypart_ownership()
 	update_body_parts() //to update the carbon's new bodyparts appearance
+	register_context()
 
 	// Carbons cannot taste anything without a tongue; the tongue organ removes this on Insert
 	ADD_TRAIT(src, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
@@ -114,7 +115,7 @@
 			visible_message(span_danger("[src] crashes into [victim][extra_speed ? " really hard" : ""], knocking them both over!"),\
 				span_userdanger("You violently crash into [victim][extra_speed ? " extra hard" : ""]!"))
 		playsound(src,'sound/weapons/punch1.ogg',50,TRUE)
-
+		log_combat(src, victim, "crashed into")
 
 //Throwing stuff
 /mob/living/carbon/proc/toggle_throw_mode()
@@ -841,15 +842,29 @@
 	if(handcuffed)
 		drop_all_held_items()
 		stop_pulling()
-		throw_alert("handcuffed", /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
+		throw_alert(ALERT_HANDCUFFED, /atom/movable/screen/alert/restrained/handcuffed, new_master = src.handcuffed)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "handcuffed", /datum/mood_event/handcuffed)
 	else
-		clear_alert("handcuffed")
+		clear_alert(ALERT_HANDCUFFED)
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
 	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
+/mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
+	// We can't heal them if they're missing a heart
+	if(needs_heart() && !getorganslot(ORGAN_SLOT_HEART))
+		return FALSE
+
+	// We can't heal them if they're missing their lungs
+	if(!HAS_TRAIT(src, TRAIT_NOBREATH) && !getorganslot(ORGAN_SLOT_LUNGS))
+		return FALSE
+
+	// And we can't heal them if they're missing their liver
+	if(!getorganslot(ORGAN_SLOT_LIVER))
+		return FALSE
+
+	return ..()
 
 /mob/living/carbon/fully_heal(admin_revive = FALSE)
 	if(reagents)
@@ -909,7 +924,7 @@
 			return DEFIB_FAIL_FAILING_HEART
 
 	// Carbons with HARS do not need a brain
-	if (!dna?.check_mutation(HARS))
+	if (!dna?.check_mutation(/datum/mutation/human/headless))
 		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 
 		if (QDELETED(BR))
@@ -1364,10 +1379,10 @@
 		return SIGN_HANDS_FULL // These aren't booleans
 	if(exit_left && exit_right)//Can't sign with no arms!
 		return SIGN_ARMLESS
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
-		return SIGN_TRAIT_BLOCKED
 	if(handcuffed) // Cuffed, usually will show visual effort to sign
 		return SIGN_CUFFED
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) || HAS_TRAIT(src, TRAIT_EMOTEMUTE))
+		return SIGN_TRAIT_BLOCKED
 	if(length(empty_indexes) == 1 || exit_left || exit_right) // One arm gone
 		return SIGN_ONE_HAND
 

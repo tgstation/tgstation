@@ -138,6 +138,8 @@
 	worn_icon_state = "battlecruisercaller"
 	///whether we have called the battlecruiser
 	var/used = FALSE
+	/// The battlecruiser team that the battlecruiser will get added to
+	var/datum/team/battlecruiser/team
 
 /obj/item/card/emag/battlecruiser/proc/use_charge(mob/user)
 	used = TRUE

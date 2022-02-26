@@ -35,7 +35,7 @@
 	if(!istype(user, /mob/living/simple_animal/mouse) || !isliving(loc) || !prob(mouse_control_probability))
 		return
 	var/mob/living/L = loc
-	if(L.incapacitated(TRUE)) //just in case
+	if(L.incapacitated(IGNORE_RESTRAINTS)) //just in case
 		return
 	step_towards(L, get_step(L, direction))
 
@@ -292,6 +292,11 @@
 	name = "paramedic beret"
 	desc = "For finding corpses in style!"
 	greyscale_colors = "#16313D"
+
+/obj/item/clothing/head/beret/medical/cmo
+	name = "chief medical officer beret"
+	desc = "A beret in a distinct surgical turquoise!"
+	greyscale_colors = "#5EB8B8"
 
 
 //Engineering

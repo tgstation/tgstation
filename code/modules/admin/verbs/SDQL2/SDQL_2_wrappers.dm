@@ -85,7 +85,13 @@
 	return min(arglist(args))
 
 /proc/_new(type, arguments)
-	var/datum/result = new type(arglist(arguments))
+	var/datum/result
+
+	if(!length(arguments))
+		result = new type()
+	else
+		result = new type(arglist(arguments))
+
 	if(istype(result))
 		result.datum_flags |= DF_VAR_EDITED
 	return result
@@ -223,12 +229,18 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
-/proc/_has_trait(datum/thing,trait)
-	return HAS_TRAIT(thing,trait)
+/proc/_has_trait(datum/thing, trait)
+	return HAS_TRAIT(thing, trait)
 
-/proc/_add_trait(datum/thing,trait,source)
-	ADD_TRAIT(thing,trait,source)
+/proc/_add_trait(datum/thing, trait, source)
+	ADD_TRAIT(thing, trait, source)
 
-/proc/_remove_trait(datum/thing,trait,source)
-	REMOVE_TRAIT(thing,trait,source)
+/proc/_remove_trait(datum/thing, trait, source)
+	REMOVE_TRAIT(thing, trait, source)
+
+/proc/_winset(player, control_id, params)
+	winset(player, control_id, params)
+	
+/proc/_winget(player, control_id, params)
+	winget(player, control_id, params)
 

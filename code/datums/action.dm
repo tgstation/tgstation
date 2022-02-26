@@ -398,16 +398,12 @@
 
 /datum/action/item_action/nano_picket_sign
 	name = "Retext Nano Picket Sign"
-	var/obj/item/picket_sign/S
-
-/datum/action/item_action/nano_picket_sign/New(Target)
-	..()
-	if(istype(Target, /obj/item/picket_sign))
-		S = Target
 
 /datum/action/item_action/nano_picket_sign/Trigger(trigger_flags)
-	if(istype(S))
-		S.retext(owner)
+	if(!istype(target, /obj/item/picket_sign))
+		return
+	var/obj/item/picket_sign/sign = target
+	sign.retext(owner)
 
 /datum/action/item_action/adjust
 
@@ -697,7 +693,7 @@
 	// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
 
-/datum/action/cooldown/New()
+/datum/action/cooldown/New(Target)
 	..()
 	button.maptext = ""
 	button.maptext_x = 8

@@ -57,7 +57,7 @@
 	},
 /obj/machinery/power/apc/syndicate{
 	name = "Telecommunications APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,

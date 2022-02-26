@@ -186,13 +186,13 @@
 
 	switch(human.nutrition)
 		if(NUTRITION_LEVEL_FULL to INFINITY)
-			human.throw_alert("nutrition", /atom/movable/screen/alert/fat)
+			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/fat)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
-			human.clear_alert("nutrition")
+			human.clear_alert(ALERT_NUTRITION)
 		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-			human.throw_alert("nutrition", /atom/movable/screen/alert/hungry)
+			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/hungry)
 		if(0 to NUTRITION_LEVEL_STARVING)
-			human.throw_alert("nutrition", /atom/movable/screen/alert/starving)
+			human.throw_alert(ALERT_NUTRITION, /atom/movable/screen/alert/starving)
 
 ///for when mood is disabled and hunger should handle slowdowns
 /obj/item/organ/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
@@ -228,24 +228,24 @@
 		disgusted.adjust_disgust(-0.25 * disgust_metabolism * delta_time)
 	switch(disgusted.disgust)
 		if(0 to DISGUST_LEVEL_GROSS)
-			disgusted.clear_alert("disgust")
+			disgusted.clear_alert(ALERT_DISGUST)
 			SEND_SIGNAL(disgusted, COMSIG_CLEAR_MOOD_EVENT, "disgust")
 		if(DISGUST_LEVEL_GROSS to DISGUST_LEVEL_VERYGROSS)
-			disgusted.throw_alert("disgust", /atom/movable/screen/alert/gross)
+			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/gross)
 			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/gross)
 		if(DISGUST_LEVEL_VERYGROSS to DISGUST_LEVEL_DISGUSTED)
-			disgusted.throw_alert("disgust", /atom/movable/screen/alert/verygross)
+			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/verygross)
 			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/verygross)
 		if(DISGUST_LEVEL_DISGUSTED to INFINITY)
-			disgusted.throw_alert("disgust", /atom/movable/screen/alert/disgusted)
+			disgusted.throw_alert(ALERT_DISGUST, /atom/movable/screen/alert/disgusted)
 			SEND_SIGNAL(disgusted, COMSIG_ADD_MOOD_EVENT, "disgust", /datum/mood_event/disgusted)
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/stomach_owner, special = 0)
 	if(ishuman(stomach_owner))
 		var/mob/living/carbon/human/human_owner = owner
-		human_owner.clear_alert("disgust")
+		human_owner.clear_alert(ALERT_DISGUST)
 		SEND_SIGNAL(human_owner, COMSIG_CLEAR_MOOD_EVENT, "disgust")
-		human_owner.clear_alert("nutrition")
+		human_owner.clear_alert(ALERT_NUTRITION)
 
 	return ..()
 

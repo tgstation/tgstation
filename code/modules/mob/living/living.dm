@@ -422,6 +422,7 @@
 	if(!..())
 		return FALSE
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [A].</span>", span_notice("You point at [A]."))
+	log_message("points at [A]", LOG_EMOTE)
 	return TRUE
 
 
@@ -437,9 +438,31 @@
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
 	death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))) || (!ignore_stasis && IS_IN_STASIS(src)))
+/**
+ * Checks if a mob is incapacitated
+ *
+ * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+ * unless there is a flag being used to check if it's ignored
+ *
+ * args:
+ * * flags (optional) bitflags that determine if special situations are exempt from being considered incapacitated
+ *
+ * bitflags: (see code/__DEFINES/status_effects.dm)
+ * * IGNORE_RESTRAINTS - mob in a restraint (handcuffs) is not considered incapacitated
+ * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
+ * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
+**/
+/mob/living/incapacitated(flags)
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
+
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	if(!(flags & IGNORE_STASIS) && IS_IN_STASIS(src))
+		return TRUE
+	return FALSE
 
 /mob/living/canUseStorage()
 	if (usable_hands <= 0)
@@ -481,7 +504,11 @@
 /mob/proc/get_contents()
 
 
-//Gets ID card from a mob. If hand_firsts is TRUE hands are checked first, otherwise other slots are prioritized (for subtypes at least).
+/**
+ * Gets ID card from a mob.
+ * Argument:
+ * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
+ */
 /mob/living/proc/get_idcard(hand_first)
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
@@ -717,7 +744,7 @@
 		if(admin_revive)
 			get_up(TRUE)
 		update_sight()
-		clear_alert("not_enough_oxy")
+		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
 		. = TRUE
 		if(mind)
@@ -733,6 +760,50 @@
 	// The signal is called after everything else so components can properly check the updated values
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 
+
+/*
+ * Heals up the [target] to up to [heal_to] of the main damage types.
+ * EX: If heal_to is 50, and they have 150 brute damage, they will heal 100 brute (up to 50 brute damage)
+ *
+ * If the target is dead, also revives them and heals their organs / restores blood.
+ * If we have a [revive_message], play a visible message if the revive was successful.
+ *
+ * Arguments
+ * * heal_to - the health threshold to heal the mob up to for each of the main damage types.
+ * * revive_message - if provided, a visible message to show on a successful revive.
+ *
+ * Returns TRUE if the mob is alive afterwards, or FALSE if they're still dead (revive failed).
+ */
+/mob/living/proc/heal_and_revive(heal_to = 50, revive_message)
+
+	// Heal their brute and burn up to the threshold we're looking for
+	var/brute_to_heal = heal_to - getBruteLoss()
+	var/burn_to_heal = heal_to - getFireLoss()
+	var/oxy_to_heal = heal_to - getOxyLoss()
+	var/tox_to_heal = heal_to - getToxLoss()
+	if(brute_to_heal < 0)
+		adjustBruteLoss(brute_to_heal, FALSE)
+	if(burn_to_heal < 0)
+		adjustFireLoss(burn_to_heal, FALSE)
+	if(oxy_to_heal < 0)
+		adjustOxyLoss(oxy_to_heal, FALSE)
+	if(tox_to_heal < 0)
+		adjustToxLoss(tox_to_heal, FALSE, TRUE)
+
+	// Run updatehealth once to set health for the revival check
+	updatehealth()
+
+	// We've given them a decent heal.
+	// If they happen to be dead too, try to revive them - if possible.
+	if(stat == DEAD && can_be_revived())
+		// If the revive is successful, show our revival message (if present).
+		if(revive(FALSE, FALSE, 10) && revive_message)
+			visible_message(revive_message)
+
+	// Finally update health again after we're all done
+	updatehealth()
+
+	return stat != DEAD
 
 /mob/living/proc/remove_CC()
 	SetStun(0)
@@ -915,7 +986,11 @@
 	..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	if(next_move > world.time)
+		return FALSE
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
+		return FALSE
+	return TRUE
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -992,11 +1067,11 @@
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
-	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /atom/movable/screen/alert/weightless)
-	var/was_negative = alerts["gravity"] && istype(alerts["gravity"], /atom/movable/screen/alert/negative)
+	var/was_weightless = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/weightless)
+	var/was_negative = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/negative)
 	switch(gravity)
 		if(NEGATIVE_GRAVITY_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/negative)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
 			if(!was_negative)
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
@@ -1004,15 +1079,15 @@
 				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
 				base_pixel_y += 4
 		if(WEIGHTLESS_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/weightless)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
 			if(!was_weightless)
 				ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 		if(STANDRARD_GRAVITY_RANGE)
-			clear_alert("gravity")
+			clear_alert(ALERT_GRAVITY)
 		if(HIGH_GRAVITY_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/highgravity)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/highgravity)
 		if(CRUSHING_GRAVITY_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/veryhighgravity)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/veryhighgravity)
 	if(!(gravity in WEIGHTLESS_RANGE) && was_weightless)
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 	if(!(gravity in NEGATIVE_GRAVITY_RANGE) && was_negative)
@@ -1096,7 +1171,7 @@
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 		var/datum/dna/D = has_dna()
-		if(!D || !D.check_mutation(TK) || !tkMaxRangeCheck(src, M))
+		if(!D || !D.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, M))
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 	if(need_hands && !can_hold_items(isitem(M) ? M : null)) //almost redundant if it weren't for mobs,
@@ -1322,7 +1397,7 @@
 		src.visible_message(span_warning("[src] catches fire!"), \
 						span_userdanger("You're set on fire!"))
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert("fire", /atom/movable/screen/alert/fire)
+		throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE
@@ -1341,7 +1416,7 @@
 	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
 	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 		qdel(F)
-	clear_alert("fire")
+	clear_alert(ALERT_FIRE)
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 	update_fire()
@@ -1706,7 +1781,7 @@
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !(incapacitated(ignore_restraints = TRUE))
+	return !(incapacitated(IGNORE_RESTRAINTS))
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
@@ -1995,7 +2070,7 @@
 /mob/living/proc/set_safe_hunger_level()
 	// Nutrition reset and alert clearing.
 	nutrition = NUTRITION_LEVEL_FED
-	clear_alert("nutrition")
+	clear_alert(ALERT_NUTRITION)
 	satiety = 0
 
 	// Trait removal if obese
@@ -2122,3 +2197,17 @@
 			span_userdanger("You're thrown violently into [lattice], smashing through it and punching straight through!"))
 		apply_damage(rand(5,10), BRUTE, BODY_ZONE_CHEST)
 		lattice.deconstruct(FALSE)
+
+/**
+ * Proc used by different station pets such as Ian and Poly so that some of their data can persist between rounds.
+ * This base definition only contains a trait and comsig to stop memory from being (over)written.
+ * Specific behavior is defined on subtypes that use it.
+ */
+/mob/living/proc/Write_Memory(dead, gibbed)
+	SHOULD_CALL_PARENT(TRUE)
+	if(HAS_TRAIT(src, TRAIT_DONT_WRITE_MEMORY)) //always prevent data from being written.
+		return FALSE
+	// for selective behaviors that may or may not prevent data from being written.
+	if(SEND_SIGNAL(src, COMSIG_LIVING_WRITE_MEMORY, dead, gibbed) & COMPONENT_DONT_WRITE_MEMORY)
+		return FALSE
+	return TRUE

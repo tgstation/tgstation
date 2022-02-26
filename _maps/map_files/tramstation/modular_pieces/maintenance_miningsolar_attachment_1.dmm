@@ -1,0 +1,69 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/turf/closed/wall,
+/area/mine/explored)
+"l" = (
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"z" = (
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
+"B" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"J" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/ore/iron,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"M" = (
+/turf/closed/wall/rock/porous,
+/area/mine/explored)
+"R" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+"S" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/airless,
+/area/mine/explored)
+"Z" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/stack/rods/ten,
+/turf/open/floor/plating/airless,
+/area/mine/explored)
+
+(1,1,1) = {"
+a
+g
+M
+l
+a
+"}
+(2,1,1) = {"
+z
+B
+B
+R
+S
+"}
+(3,1,1) = {"
+a
+B
+Z
+B
+J
+"}
+(4,1,1) = {"
+a
+B
+M
+g
+a
+"}

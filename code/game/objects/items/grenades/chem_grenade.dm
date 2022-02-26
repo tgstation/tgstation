@@ -99,26 +99,63 @@
 	if(stage == GRENADE_WIRED)
 		wires.interact(user)
 
+/obj/item/grenade/chem_grenade/screwdriver_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(dud_flags & GRENADE_USED)
+		balloon_alert(user, span_notice("resetting trigger..."))
+		if (do_after(user, 2 SECONDS, src))
+			balloon_alert(user, span_notice("trigger reset"))
+			dud_flags &= ~GRENADE_USED
+		return
+
+	if(stage == GRENADE_WIRED)
+		if(beakers.len)
+			stage_change(GRENADE_READY)
+			to_chat(user, span_notice("You lock the [initial(name)] assembly."))
+			tool.play_tool_sound(src, 25)
+		else
+			to_chat(user, span_warning("You need to add at least one beaker before locking the [initial(name)] assembly!"))
+	else if(stage == GRENADE_READY)
+		det_time = det_time == 50 ? 30 : 50 //toggle between 30 and 50
+		if(landminemode)
+			landminemode.time = det_time * 0.1 //overwrites the proxy sensor activation timer
+
+		tool.play_tool_sound(src, 25)
+		to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
+	else
+		to_chat(user, span_warning("You need to add a wire!"))
+
+	return TRUE
+
+/obj/item/grenade/chem_grenade/wirecutter_act(mob/living/user, obj/item/tool)
+	if(stage == GRENADE_READY && !active)
+		tool.play_tool_sound(src)
+		stage_change(GRENADE_WIRED)
+		to_chat(user, span_notice("You unlock the [initial(name)] assembly."))
+		return TRUE
+
+/obj/item/grenade/chem_grenade/wrench_act(mob/living/user, obj/item/tool)
+	if(stage != GRENADE_WIRED)
+		return FALSE
+	if(beakers.len)
+		for(var/obj/beaker in beakers)
+			beaker.forceMove(drop_location())
+			if(!beaker.reagents)
+				continue
+			var/reagent_list = pretty_string_from_reagent_list(beaker.reagents)
+			user.log_message("removed [beaker] ([reagent_list]) from [src]", LOG_GAME)
+		beakers = list()
+		to_chat(user, span_notice("You open the [initial(name)] assembly and remove the payload."))
+		return
+	tool.play_tool_sound(src)
+	wires.detach_assembly(wires.get_wire(1))
+	new /obj/item/stack/cable_coil(get_turf(src), 1)
+	stage_change(GRENADE_EMPTY)
+	to_chat(user, span_notice("You remove the activation mechanism from the [initial(name)] assembly."))
+
 /obj/item/grenade/chem_grenade/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/assembly) && stage == GRENADE_WIRED)
 		wires.interact(user)
-	if(item.tool_behaviour == TOOL_SCREWDRIVER)
-		if(stage == GRENADE_WIRED)
-			if(beakers.len)
-				stage_change(GRENADE_READY)
-				to_chat(user, span_notice("You lock the [initial(name)] assembly."))
-				item.play_tool_sound(src, 25)
-			else
-				to_chat(user, span_warning("You need to add at least one beaker before locking the [initial(name)] assembly!"))
-		else if(stage == GRENADE_READY)
-			det_time = det_time == 50 ? 30 : 50 //toggle between 30 and 50
-			if(landminemode)
-				landminemode.time = det_time * 0.1 //overwrites the proxy sensor activation timer
-
-			to_chat(user, span_notice("You modify the time delay. It's set for [DisplayTimeText(det_time)]."))
-		else
-			to_chat(user, span_warning("You need to add a wire!"))
-		return
 	else if(stage == GRENADE_WIRED && is_type_in_list(item, allowed_containers))
 		. = TRUE //no afterattack
 		if(is_type_in_list(item, banned_containers))
@@ -147,26 +184,6 @@
 		else
 			to_chat(user, span_warning("You need one length of coil to wire the assembly!"))
 			return
-
-	else if(stage == GRENADE_READY && item.tool_behaviour == TOOL_WIRECUTTER && !active)
-		stage_change(GRENADE_WIRED)
-		to_chat(user, span_notice("You unlock the [initial(name)] assembly."))
-
-	else if(stage == GRENADE_WIRED && item.tool_behaviour == TOOL_WRENCH)
-		if(beakers.len)
-			for(var/obj/beaker in beakers)
-				beaker.forceMove(drop_location())
-				if(!beaker.reagents)
-					continue
-				var/reagent_list = pretty_string_from_reagent_list(beaker.reagents)
-				user.log_message("removed [beaker] ([reagent_list]) from [src]", LOG_GAME)
-			beakers = list()
-			to_chat(user, span_notice("You open the [initial(name)] assembly and remove the payload."))
-			return
-		wires.detach_assembly(wires.get_wire(1))
-		new /obj/item/stack/cable_coil(get_turf(src), 1)
-		stage_change(GRENADE_EMPTY)
-		to_chat(user, span_notice("You remove the activation mechanism from the [initial(name)] assembly."))
 	else
 		return ..()
 
@@ -187,9 +204,9 @@
 			continue
 		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
 	if(landminemode)
-		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]")
+		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]", message_admins = !dud_flags)
 	else
-		log_bomber(user, "primed a", src, "containing:[reagent_string]")
+		log_bomber(user, "primed a", src, "containing:[reagent_string]", message_admins = !dud_flags)
 
 /obj/item/grenade/chem_grenade/arm_grenade(mob/user, delayoverride, msg = TRUE, volume = 60)
 	log_grenade(user) //Inbuilt admin procs already handle null users
@@ -214,6 +231,9 @@
 		return
 
 	. = ..()
+	if(!.)
+		return
+
 	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/reagent_containers/glass/glass_beaker in beakers)
 		reactants += glass_beaker.reagents
@@ -241,7 +261,9 @@
 	threatscale = 1.1 // 10% more effective.
 
 /obj/item/grenade/chem_grenade/large/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY)
+	if(stage != GRENADE_READY || dud_flags)
+		active = FALSE
+		update_appearance()
 		return FALSE
 
 
@@ -330,17 +352,16 @@
 	if (active)
 		return
 	var/newspread = tgui_input_number(user, "Please enter a new spread amount", "Grenade Spread", 5, 100, 5)
-	if(isnull(newspread))
+	if(!newspread || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(!user.canUseTopic(src, BE_CLOSE))
-		return
-	newspread = round(newspread)
-	unit_spread = clamp(newspread, 5, 100)
+	unit_spread = newspread
 	to_chat(user, span_notice("You set the time release to [unit_spread] units per detonation."))
 	..()
 
 /obj/item/grenade/chem_grenade/adv_release/detonate(mob/living/lanced_by)
-	if(stage != GRENADE_READY)
+	if(stage != GRENADE_READY || dud_flags)
+		active = FALSE
+		update_appearance()
 		return
 
 	var/total_volume = 0

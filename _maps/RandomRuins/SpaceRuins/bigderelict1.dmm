@@ -62,13 +62,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ao" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Cargo Bay APC";
-	pixel_x = 24;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ap" = (
@@ -655,14 +652,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "ca" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Power Storage APC";
-	pixel_x = 24;
-	pixel_y = 2;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cb" = (
@@ -739,12 +732,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "ck" = (
-/obj/machinery/power/apc{
-	name = "Tradepost APC";
-	pixel_y = -23;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cl" = (
@@ -1453,13 +1444,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "el" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Cargo Storage APC";
-	pixel_x = 24;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eo" = (

@@ -217,6 +217,9 @@
 /obj/item/grenade/chem_grenade/teargas/moustache/detonate(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
+	if(!.)
+		return
+
 	for(var/mob/living/carbon/M in view(6, myloc))
 		if(!istype(M.wear_mask, /obj/item/clothing/mask/gas/clown_hat) && !istype(M.wear_mask, /obj/item/clothing/mask/gas/mime) )
 			if(!M.wear_mask || M.dropItemToGround(M.wear_mask))

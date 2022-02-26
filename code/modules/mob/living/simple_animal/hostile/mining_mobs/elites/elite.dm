@@ -18,6 +18,7 @@
 	harm_intent_damage = 0 //Punching elites gets you nowhere
 	stat_attack = HARD_CRIT
 	layer = LARGE_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	sentience_type = SENTIENCE_BOSS
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
@@ -361,6 +362,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	canSmoothWith = list(SMOOTH_GROUP_HIERO_WALL)
 	duration = 50
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_SOFT_RED

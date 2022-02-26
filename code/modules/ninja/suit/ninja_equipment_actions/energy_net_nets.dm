@@ -18,6 +18,7 @@
 	mouse_opacity = MOUSE_OPACITY_ICON//So you can hit it with stuff.
 	anchored = TRUE//Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	max_integrity = 60 //How much health it has.
 	can_buckle = 1
 	buckle_lying = 0

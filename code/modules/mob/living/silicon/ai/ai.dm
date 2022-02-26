@@ -595,9 +595,9 @@
 	if(incapacitated())
 		return
 	var/input
-	switch(tgui_alert(usr,"Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?",,list("Custom Character","Unique","Animal")))
+	switch(tgui_input_list(usr, "Would you like to select a hologram based on a custom character, an animal, or switch to a unique avatar?", "Customize", list("Custom Character","Unique","Animal")))
 		if("Custom Character")
-			switch(tgui_alert(usr,"Would you like to base it off of your current character loadout, or a member on station?",,list("My Character","Station Member")))
+			switch(tgui_alert(usr,"Would you like to base it off of your current character loadout, or a member on station?", "Customize", list("My Character","Station Member")))
 				if("Station Member")
 					var/list/personnel_list = list()
 
@@ -618,7 +618,7 @@
 						holo_icon = getHologramIcon(icon(character_icon))
 
 				if("My Character")
-					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?",,list("Yes","No")))
+					switch(tgui_alert(usr,"WARNING: Your AI hologram will take the appearance of your currently selected character ([usr.client.prefs?.read_preference(/datum/preference/name/real_name)]). Are you sure you want to proceed?", "Customize", list("Yes","No")))
 						if("Yes")
 							var/mob/living/carbon/human/dummy/ai_dummy = new
 							var/mutable_appearance/appearance = usr.client.prefs.render_new_preview_appearance(ai_dummy)
@@ -904,7 +904,7 @@
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null
 	malfhacking = 0
-	clear_alert("hackingapc")
+	clear_alert(ALERT_HACKING_APC)
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
 		to_chat(src, span_danger("Hack aborted. The designated APC no longer exists on the power network."))
