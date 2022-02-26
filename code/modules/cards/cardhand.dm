@@ -26,6 +26,10 @@
 			cards += new_card
 	update_appearance()
 
+/obj/item/toy/cards/cardhand/Destroy()
+	QDEL_LIST(cards)
+	return ..()
+
 /**
  * draw
  *
