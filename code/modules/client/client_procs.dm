@@ -166,6 +166,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 
 	if(CONFIG_GET(flag/automute_on) && !holder && last_message == message)
+		if(SEND_SIGNAL(src, COMSIG_CLIENT_AUTOMUTE_CHECK, last_message, mute_type) & SIGVAL_WAIVE_AUTOMUTE_CHECK)
+			return FALSE
+
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, span_danger("You have exceeded the spam filter limit for identical messages. A mute was automatically applied for the current round. Contact admins to request its removal."))
