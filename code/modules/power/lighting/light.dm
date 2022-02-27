@@ -91,11 +91,9 @@
 	. = ..()
 	switch(fitting)
 		if("tube")
-			brightness = 8
 			if(prob(2))
 				break_light_tube(TRUE)
 		if("bulb")
-			brightness = 4
 			if(prob(5))
 				break_light_tube(TRUE)
 	addtimer(CALLBACK(src, .proc/update, FALSE), 0.1 SECONDS)
@@ -598,6 +596,7 @@
 	base_state = "floor" // base description and icon_state
 	icon_state = "floor"
 	brightness = 4
-	layer = 2.5
+	layer = LOW_OBJ_LAYER
+	plane = FLOOR_PLANE
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"

@@ -141,6 +141,7 @@
 /obj/machinery/computer/communications/ui_act(action, list/params)
 	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
 	var/static/list/approved_status_pictures = list("biohazard", "blank", "default", "lockdown", "redalert", "shuttle")
+	var/static/list/state_status_pictures = list("blank", "shuttle")
 
 	. = ..()
 	if (.)
@@ -366,7 +367,10 @@
 			var/picture = params["picture"]
 			if (!(picture in approved_status_pictures))
 				return
-			post_status("alert", picture)
+			if(picture in state_status_pictures)
+				post_status(picture)
+			else
+				post_status("alert", picture)
 			playsound(src, "terminal_type", 50, FALSE)
 		if ("toggleAuthentication")
 			// Log out if we're logged in

@@ -57,6 +57,11 @@ if grep -Pzo '/obj/machinery/power/apc[/\w]*?\{\n[^}]*?pixel_[xy] = -?[013-9]\d*
     echo "ERROR: found an APC with a manually set pixel_x or pixel_y that is not +-25."
     st=1
 fi;
+if grep -Pzo '"\w+" = \(\n[^)]*?/obj/structure/lattice[/\w]*?,\n[^)]*?/turf/closed/wall[/\w]*?,\n[^)]*?/area/.+?\)' _maps/**/*.dmm;	then
+	echo
+    echo "ERROR: found lattice stacked with a wall, please remove them."
+    st=1
+fi;
 if grep -P '^/area/.+[\{]' _maps/**/*.dmm;	then
     echo "ERROR: Vareditted /area path use detected in maps, please replace with proper paths."
     st=1

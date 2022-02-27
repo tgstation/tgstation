@@ -5901,7 +5901,7 @@
 /obj/machinery/light/directional/east,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/item/storage/toolbox/electrical{
 	pixel_x = 4;
 	pixel_y = 8

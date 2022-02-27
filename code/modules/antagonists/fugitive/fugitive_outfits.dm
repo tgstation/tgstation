@@ -88,13 +88,70 @@
 	W.update_label()
 	W.update_icon()
 
-/datum/outfit/russiancorpse/hunter
+/datum/outfit/russian_hunter
+	name = "Russian Hunter"
+	id = /obj/item/card/id/advanced
+	uniform = /obj/item/clothing/under/costume/soviet
+	suit = /obj/item/clothing/suit/armor/bulletproof
+	suit_store = /obj/item/gun/ballistic/rifle/boltaction/brand_new
+	back = /obj/item/storage/backpack
 	ears = /obj/item/radio/headset
-	r_hand = /obj/item/gun/ballistic/rifle/boltaction/brand_new
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = /obj/item/clothing/gloves/tackler/combat
+	head = /obj/item/clothing/head/helmet/alt
+	shoes = /obj/item/clothing/shoes/russian
+	l_pocket = /obj/item/ammo_box/a762
+	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 
-/datum/outfit/russiancorpse/hunter/pre_equip(mob/living/carbon/human/H)
+/datum/outfit/russian_hunter/pre_equip(mob/living/carbon/human/equip_to)
+
+	// Let's give the Russians a bit of randomization for style.
+	var/static/list/alt_uniforms = list(
+		/obj/item/clothing/under/syndicate/soviet,
+		/obj/item/clothing/under/syndicate/combat,
+		/obj/item/clothing/under/syndicate/rus_army,
+		/obj/item/clothing/under/syndicate/camo,
+	)
+	var/static/list/alt_suits = list(
+		/obj/item/clothing/suit/armor/vest/russian,
+		/obj/item/clothing/suit/armor/vest/russian_coat,
+	)
+	var/static/list/alt_helmets = list(
+		/obj/item/clothing/head/bearpelt,
+		/obj/item/clothing/head/ushanka,
+		/obj/item/clothing/head/helmet/rus_helmet,
+	)
+
+	if(prob(80))
+		uniform = pick(alt_uniforms)
 	if(prob(50))
-		head = /obj/item/clothing/head/ushanka
+		suit = pick(alt_suits)
+	if(prob(50))
+		head = pick(alt_helmets)
+
+/datum/outfit/russian_hunter/post_equip(mob/living/carbon/human/equip_to, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	if(istype(equip_to.wear_id, /obj/item/card/id))
+		var/obj/item/card/id/equipped_card = equip_to.wear_id
+		equipped_card.assignment = "Russian Bounty Hunter"
+		equipped_card.registered_name = equip_to.real_name
+		equipped_card.update_label()
+		equipped_card.update_icon()
+
+	if(istype(equip_to.w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/uniform = equip_to.w_uniform
+		uniform.sensor_mode = NO_SENSORS
+		uniform.has_sensor = NO_SENSORS
+
+/datum/outfit/russian_hunter/leader
+	name = "Russian Hunter Leader"
+	head = /obj/item/clothing/head/ushanka
+	shoes = /obj/item/clothing/shoes/combat
+
+/datum/outfit/russian_hunter/leader/pre_equip(mob/living/carbon/human/equip_to)
+	return // None of the RNG russian equipment stuff.
 
 /datum/outfit/bountyarmor
 	name = "Bounty Hunter - Armored"
