@@ -161,9 +161,9 @@
 /datum/action/proc/HideFrom(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
 	var/atom/movable/screen/movable/action_button/button = viewers[our_hud]
+	LAZYREMOVE(viewer.actions, src)
 	if(button)
 		qdel(button)
-	LAZYREMOVE(viewer.actions, src)
 
 /datum/action/proc/CreateButton()
 	var/atom/movable/screen/movable/action_button/button = new()
