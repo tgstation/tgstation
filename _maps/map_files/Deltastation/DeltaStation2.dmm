@@ -25985,7 +25985,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket{
 	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
+	icon_state = "noirdet";
 	name = "trenchcoat"
 	},
 /obj/item/clothing/suit/jacket{
@@ -33148,7 +33148,7 @@
 /obj/machinery/light/directional/south,
 /obj/item/clothing/suit/jacket{
 	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
+	icon_state = "noirdet";
 	name = "trenchcoat"
 	},
 /obj/item/clothing/suit/toggle/lawyer/black,
