@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "In MetaStation Atmospherics, the floor light is no longer installed right on top of a canister."

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Fixes summon magic and summon guns"
-  - refactor: "Refactored wizard rituals (events/ghosts/guns/magic/madness) to reduce code copy+paste."

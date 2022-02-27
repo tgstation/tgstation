@@ -1,4 +1,0 @@
-author: "ErdinyoBarboza"
-delete-after: True
-changes: 
-  - bugfix: "Fixes DeltaStation Service area AI pathfinding. Bots will no longer get stuck on the railings."
