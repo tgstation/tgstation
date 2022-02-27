@@ -443,7 +443,7 @@
 	M.Jitter(6 * REM * delta_time) //not as strong as coffe, still this is a lot of sugar
 	M.adjust_drowsyness(-5 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
-	..()
+	return ..()
 
 /datum/reagent/consumable/nuka_cola
 	name = "Nuka Cola"
@@ -815,7 +815,7 @@
 
 /datum/reagent/consumable/cinderella/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_disgust(-5 * REM * delta_time)
-	..()
+	return ..()
 
 /datum/reagent/consumable/cherryshake
 	name = "Cherry Shake"
@@ -985,7 +985,7 @@
 
 /datum/reagent/consumable/italian_coco/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_bodytemperature(5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, 0, M.get_body_temp_normal())
-	..()
+	return ..()
 
 /datum/reagent/consumable/menthol
 	name = "Menthol"
@@ -1078,7 +1078,7 @@
 
 /datum/reagent/consumable/shirley_temple/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.adjust_disgust(-3 * REM * delta_time)
-	..()
+	return ..()
 
 /datum/reagent/consumable/red_queen
 	name = "Red Queen"
@@ -1183,8 +1183,7 @@
 	M.adjust_bodytemperature(-8 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
 	if(M.getToxLoss() && DT_PROB(10, delta_time))
 		M.adjustToxLoss(-0.5, 0)
-		..()
-	. = TRUE
+	return ..()
 
 /datum/reagent/consumable/mushroom_tea
 	name = "Mushroom Tea"
