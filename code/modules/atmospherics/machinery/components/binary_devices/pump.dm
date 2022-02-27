@@ -68,10 +68,6 @@
 	if(air1.pump_gas_to(air2, target_pressure))
 		update_parents()
 
-/obj/machinery/atmospherics/components/binary/pump/proc/set_on(active)
-	on = active
-	SEND_SIGNAL(src, COMSIG_PUMP_SET_ON, on)
-
 /**
  * Called in atmos_init(), used to change or remove the radio frequency from the component
  * Arguments:
@@ -241,10 +237,10 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/atmospherics/components/binary/pump))
 		connected_pump = shell
-		RegisterSignal(connected_pump, COMSIG_PUMP_SET_ON, .proc/handle_pump_activation)
+		RegisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON, .proc/handle_pump_activation)
 
 /obj/item/circuit_component/atmos_pump/unregister_usb_parent(atom/movable/shell)
-	UnregisterSignal(connected_pump, COMSIG_PUMP_SET_ON)
+	UnregisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON)
 	connected_pump = null
 	return ..()
 

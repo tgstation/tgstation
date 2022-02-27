@@ -207,12 +207,12 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	open_machine()
 
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/set_on(new_value)
-	if(on == new_value)
+/obj/machinery/atmospherics/components/unary/cryo_cell/set_on(active)
+	if(on == active)
 		return
-	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, new_value)
+	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
-	on = new_value
+	on = active
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
