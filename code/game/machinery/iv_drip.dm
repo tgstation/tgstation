@@ -7,7 +7,7 @@
 ///Universal IV that can drain blood or feed reagents over a period of time from or to a replaceable container
 /obj/machinery/iv_drip
 	name = "\improper IV drip"
-	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are injected at twice the displayed rate. Right-Click to detach the IV or the attached container. Alt-Click to change the transfer rate to the maximum possible."
+	desc = "An IV drip with an advanced infusion pump that can both drain blood into and inject liquids from attached containers. Blood packs are injected at twice the displayed rate. Right-Click to detach the IV or the attached container."
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	base_icon_state = "iv_drip"
@@ -225,15 +225,6 @@
 		toggle_mode()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/iv_drip/AltClick(mob/user)
-	if(can_interact(user))
-		set_transfer_rate_max()
-	return ..()
-
-/obj/machinery/iv_drip/proc/set_transfer_rate_max()
-	transfer_rate = MAX_IV_TRANSFER_RATE
-	to_chat(usr, span_notice("You set the transfer rate to [transfer_rate] units per metabolism cycle to speed up the [src]."))
-
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(mob/living/target, mob/user)
 	user.visible_message(span_warning("[usr] begins attaching [src] to [target]..."), span_warning("You begin attaching [src] to [target]."))
@@ -351,9 +342,6 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
 	AddComponent(/datum/component/simple_rotation)
-
-/obj/machinery/iv_drip/plumbing/set_transfer_rate_max()
-	return //alt clicking this shouldn't do anything special as it's reserved for rotation
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()
