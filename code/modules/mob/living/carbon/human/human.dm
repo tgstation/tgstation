@@ -774,8 +774,8 @@
 			visible_message(span_warning("[src] dry heaves!"), \
 							span_userdanger("You try to throw up, but there's nothing in your stomach!"))
 		if(stun)
-			Paralyze(200)
-		return 1
+			Paralyze(20 SECONDS)
+		return TRUE
 	..()
 
 /mob/living/carbon/human/vv_get_dropdown()

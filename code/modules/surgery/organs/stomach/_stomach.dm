@@ -261,18 +261,26 @@
 		to_chat(eater, span_danger("Your stomach feels like it's going to explode!"))
 		var/spew_blood = indigestibles_size ? TRUE : FALSE
 		eater.vomit(100, spew_blood, distance = 0)
-		damage += indigestibles_size + sharp_size ^ 2
+		damage += indigestibles_size * 2 + sharp_size ^ 2
 		return
+
+	if(DT_PROB(10, delta_time))
+		eater.adjust_disgust(10)
 
 	if(!indigestibles_size)
 		return
 
 	if(DT_PROB(2.5, delta_time))
-		to_chat(eater, span_warning("You feel a sharp pain in your stomach!"))
-		damage += indigestibles_size + sharp_size ^ 2
+		to_chat(eater, span_danger("You feel something stick uncomfortably into the wall of your stomach!"))
+		damage += indigestibles_size * 2 + sharp_size ^ 2
 
-	if(DT_PROB(10, delta_time))
-		eater.adjust_disgust(10)
+	if(!damage || !sharp_size)
+		return
+
+	if(DT_PROB(2.5, delta_time))
+		to_chat(eater, span_danger("You cough up blood!"))
+		eater.emote("cough")
+		eater.bleed(sharp_size)
 
 /obj/item/organ/stomach/proc/get_contents_size()
 	var/datum/component/storage/concrete/storage = GetComponent(/datum/component/storage/concrete)
