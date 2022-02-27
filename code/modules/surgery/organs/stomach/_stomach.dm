@@ -32,6 +32,9 @@
 	///The rate that the stomach will transfer reagents to the body
 	var/metabolism_efficiency = 0.05 // the lowest we should go is 0.05
 
+	///Whether things consumed by mobs with this stomach go into the stomach. Currently only applies to deep fried inedible items.
+	var/holds_eaten = TRUE
+
 	///The max combined weight class of objects held before we vomit.
 	var/max_combined_w_class = STANDARD_STOMACH_MAX_COMBINED_W_CLASS
 
@@ -43,16 +46,19 @@
 	else
 		reagents.flags |= REAGENT_HOLDER_ALIVE
 
-/obj/item/organ/stomach/ComponentInitialize()
-	var/datum/component/storage/concrete/storage_component = AddComponent(/datum/component/storage/concrete)
+	if(holds_eaten)
+		var/datum/component/storage/concrete/storage_component = AddComponent(/datum/component/storage/concrete)
+		storage_component.max_combined_w_class = max_combined_w_class
+		storage_component.drop_all_on_destroy = TRUE
+		storage_component.rustle_sound = FALSE
 
-	storage_component.max_combined_w_class = max_combined_w_class
+		//doesn't provide more inventory space than it takes up
+		storage_component.max_items = 2
+		storage_component.max_w_class = WEIGHT_CLASS_TINY
 
-	//doesn't provide more inventory slots than it takes up
-	storage_component.max_items = 2
-	storage_component.max_w_class = WEIGHT_CLASS_TINY
-
-	storage_component.rustle_sound = FALSE
+/obj/item/organ/stomach/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+	. = ..()
+	forceMove(reciever) //needs to be inside the mob for things like eaten mobs, explosives and radios to function correctly
 
 /obj/item/organ/stomach/Remove(mob/living/carbon/organ_owner, special = FALSE)
 	var/datum/component/storage/concrete/storage = GetComponent(/datum/component/storage/concrete)
@@ -61,7 +67,7 @@
 	if(!length(stomach_contents))
 		return ..()
 
-	var/turf/owner_turf = get_turf(organ_owner)
+	var/turf/owner_turf = get_turf(organ_owner) || get_turf(src)
 	//we don't want people feeding monkeys bulky items and then taking out the stomach and storing it in their box
 	storage.do_quick_empty(owner_turf)
 	owner_turf.visible_message(span_warning("The contents of [src] spills out!"))
@@ -242,28 +248,31 @@
 		return
 
 	var/indigestibles_size = 0
+	var/sharp_size = 0
 
 	for(var/obj/item/thing in stomach_contents)
 		if(IsEdible(thing))
 			continue
-		indigestibles_size += 1 * thing.w_class
+		if(obj_flags & SHARP_EDGED || obj_flags & SHARP_POINTY)
+			sharp_size += thing.w_class
+		indigestibles_size += thing.w_class
 
 	if(get_contents_size() > storage.max_combined_w_class)
 		to_chat(eater, span_danger("Your stomach feels like it's going to explode!"))
 		var/spew_blood = indigestibles_size ? TRUE : FALSE
 		eater.vomit(100, spew_blood, distance = 0)
-		damage += indigestibles_size
+		damage += indigestibles_size + sharp_size ^ 2
 		return
 
 	if(!indigestibles_size)
 		return
 
 	if(DT_PROB(2.5, delta_time))
-		to_chat(eater, span_warning("Something sticks painfully into the wall of your stomach!"))
-		damage += indigestibles_size
+		to_chat(eater, span_warning("You feel a sharp pain in your stomach!"))
+		damage += indigestibles_size + sharp_size ^ 2
 
 	if(DT_PROB(10, delta_time))
-		eater.adjust_disgust(indigestibles_size)
+		eater.adjust_disgust(10)
 
 /obj/item/organ/stomach/proc/get_contents_size()
 	var/datum/component/storage/concrete/storage = GetComponent(/datum/component/storage/concrete)

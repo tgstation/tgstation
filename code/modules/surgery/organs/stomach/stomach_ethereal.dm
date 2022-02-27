@@ -6,9 +6,7 @@
 	var/crystal_charge = ETHEREAL_CHARGE_FULL
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
-
-/obj/item/organ/stomach/ethereal/ComponentInitialize()
-	return //biological battery doesn't exactly scream "holds stuff"
+	holds_eaten = FALSE //it's a battery, it's not for digesting food
 
 /obj/item/organ/stomach/ethereal/on_life(delta_time, times_fired)
 	. = ..()
