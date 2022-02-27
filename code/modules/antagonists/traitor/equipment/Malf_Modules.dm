@@ -925,10 +925,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		return INITIALIZE_HINT_QDEL
 	owner = loc
 	owner.ai_voicechanger = src
-	prev_verbs = list("say" = "states", "ask" = "queries", "exclaim" = "declares" , "yell" = "alarms"  )
+	prev_verbs = list("say" = owner.verb_say, "ask" = owner.verb_ask, "exclaim" = owner.verb_exclaim , "yell" = owner.verb_yell  )
 	prev_span = owner.speech_span
 	say_name = owner.name
-	say_verb = "states"
+	say_verb = owner.verb_say
 	say_span = owner.speech_span
 
 /obj/machinery/ai_voicechanger/ui_interact(mob/user, datum/tgui/ui)
