@@ -216,6 +216,7 @@
 	if(path_hud)
 		path_hud.add_to_hud(src)
 		path_hud.add_hud_to(src)
+	update_appearance()
 
 
 /mob/living/simple_animal/bot/Destroy()
