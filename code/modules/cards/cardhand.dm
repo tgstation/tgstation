@@ -31,24 +31,6 @@
 	return ..()
 
 /**
- * draw
- *
- * Draws a card from the hand of cards.
- *
- * Arguments:
- * * mob/user - The user drawing from the deck.
- * * obj/item/toy/singlecard/card - The card drawn from the hand
- */
-/obj/item/toy/cards/cardhand/draw(mob/living/user, obj/item/toy/singlecard/card)
-	. = ..()
-	if(. == CARD_DRAW_CANCEL)
-		return 
-
-	cards -= card
-	update_appearance()
-	return card
-
-/**
 /obj/item/toy/cards/cardhand/insert(mob/user, obj/item/toy/cards/card_to_add)
 	. = ..()
 	interact(user)

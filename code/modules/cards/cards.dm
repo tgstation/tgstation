@@ -77,14 +77,19 @@
  *
  * Arguments:
  * * mob/living/user - The user drawing the card.
+ * * obj/item/toy/singlecard/card - The card drawn from the hand
 **/ 
-/obj/item/toy/cards/proc/draw(mob/living/user)
+/obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
 	if(isliving(user))
 		if(!(user.mobility_flags & MOBILITY_PICKUP))
-			return CARD_DRAW_CANCEL
-
+			return
 	var/has_no_cards = !LAZYLEN(cards)
 	if(has_no_cards)
 		to_chat(user, span_warning("There are no more cards to draw!"))
-		return CARD_DRAW_CANCEL
+		return
+
+	card = card || cards[1] //draw the card on top
+	cards -= card
+	update_appearance()
 	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
+	return card	

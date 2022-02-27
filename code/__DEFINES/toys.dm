@@ -5,6 +5,3 @@
 #define DICE_BASICALLY_RIGGED 2
 /// Dice has a 100% chance to land on a rigged value
 #define DICE_TOTALLY_RIGGED 3
-
-/// If a card cannot be drawn from a deck or cardhand 
-#define CARD_DRAW_CANCEL TRUE

@@ -80,25 +80,6 @@
 	. += span_notice("Click and drag the deck to yourself to pickup.")
 
 /**
- * draw
- *
- * Draws a card from the deck.
- *
- * Arguments:
- * * mob/living/user - The user drawing from the deck.
- * * place_on_table (optional) - Used to ignore putting a card in a users hand (for placing cards on tables)
- */
-/obj/item/toy/cards/deck/draw(mob/living/user, place_on_table = FALSE)
-	. = ..()
-	if(. == CARD_DRAW_CANCEL)
-		return 
-
-	var/obj/item/toy/singlecard/card = cards[1] //draw the card on top
-	cards -= card
-	update_appearance()
-	return card
-
-/**
  * ## shuffle_cards
  *
  * Shuffles the cards in the deck
