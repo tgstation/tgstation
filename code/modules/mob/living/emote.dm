@@ -268,6 +268,7 @@
 			else
 				message_param = "[span_userdanger("bumps [user.p_their()] head on the ground")] trying to motion towards %t."
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
+		H.adjustStaminaLoss(25)
 	return ..()
 
 /datum/emote/living/pout
