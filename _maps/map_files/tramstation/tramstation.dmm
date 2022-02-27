@@ -6103,6 +6103,7 @@
 /obj/item/toy/crayon/spraycan{
 	pixel_x = -4
 	},
+/obj/machinery/light/directional/west,
 /turf/open/floor/iron/grimy,
 /area/service/library/lounge)
 "aPX" = (
@@ -21075,9 +21076,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "fXn" = (
-/obj/structure/toilet{
-	dir = 1
-	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/button/door/directional/west{
 	id = "Toilet6";
@@ -21085,6 +21083,7 @@
 	normaldoorcontrol = 1;
 	specialfunctions = 4
 	},
+/obj/machinery/recharge_station,
 /turf/open/floor/iron/freezer,
 /area/commons/toilet)
 "fXp" = (
@@ -26695,6 +26694,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/iron/grimy,
 /area/service/library/lounge)
 "hZp" = (
@@ -41058,6 +41058,7 @@
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
+/obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/solars/port/aft)
 "nfk" = (
@@ -66001,7 +66002,6 @@
 "wpy" = (
 /obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/airalarm/directional/south,
 /turf/open/floor/wood/parquet,
 /area/service/library)
 "wpP" = (
@@ -69398,6 +69398,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/prison/safe)
+"xxj" = (
+/obj/machinery/recharge_station,
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/mine/explored)
 "xxk" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -87410,7 +87414,7 @@ jzB
 nOy
 aVX
 ism
-lvw
+ism
 ism
 dhe
 yee
@@ -175549,7 +175553,7 @@ dhe
 dhe
 dhe
 dhe
-dhe
+xxj
 dhe
 dhe
 dhe
@@ -175806,7 +175810,7 @@ aBM
 aBM
 aBM
 dhe
-dhe
+xxj
 aBM
 aBM
 ieJ
