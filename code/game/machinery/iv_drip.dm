@@ -342,7 +342,8 @@
 	. = ..()
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
 	AddComponent(/datum/component/simple_rotation)
-
+/obj/machinery/iv_drip/plumbing/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()
 	default_unfasten_wrench(user, I)
