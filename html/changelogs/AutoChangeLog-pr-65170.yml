@@ -1,0 +1,4 @@
+author: "cakexensen"
+delete-after: True
+changes: 
+  - bugfix: "Poly's death streak resets upon surviving"

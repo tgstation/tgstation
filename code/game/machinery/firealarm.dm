@@ -52,6 +52,12 @@
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 	soundloop = new(src, FALSE)
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Turn on", \
+		rmb_text = "Turn off", \
+	)
+
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
 		LAZYREMOVE(my_area.firealarms, src)

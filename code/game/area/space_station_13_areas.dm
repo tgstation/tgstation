@@ -629,6 +629,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/commons/lounge
 	name = "\improper Bar Lounge"
 	icon_state = "lounge"
+	mood_bonus = 5
+	mood_message = "<span class='nicegreen'>I love being in the bar!</span>\n"
+	mood_trait = TRAIT_EXTROVERT
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
 /area/commons/fitness
@@ -820,6 +823,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Chapel Dock"
 	icon_state = "construction"
 
+/area/service/chapel/storage
+	name = "\improper Chapel Storage"
+	icon_state = "chapelstorage"
+
 /area/service/lawoffice
 	name = "\improper Law Office"
 	icon_state = "law"
@@ -868,6 +875,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engineering/main
 	name = "Engineering"
 	icon_state = "engine"
+
+/area/engineering/hallway
+	name = "Engineering Hallway"
+	icon_state = "engine_hallway"
 
 /area/engineering/atmos
 	name = "Atmospherics"
@@ -1090,14 +1101,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Medical Office"
 	icon_state = "med_office"
 
-/area/medical/surgery/room_c
-	name = "Surgery C"
-	icon_state = "surgery"
-
-/area/medical/surgery/room_d
-	name = "Surgery D"
-	icon_state = "surgery"
-
 /area/medical/break_room
 	name = "\improper Medical Break Room"
 	icon_state = "med_break"
@@ -1138,13 +1141,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "pharmacy"
 
 /area/medical/surgery
-	name = "Surgery"
+	name = "\improper Operating Room"
 	icon_state = "surgery"
 
-/area/medical/surgery/room_b
-	name = "Surgery B"
-	icon_state = "surgery"
+/area/medical/surgery/fore
+	name = "\improper Fore Operating Room"
+	icon_state = "foresurgery"
 
+/area/medical/surgery/aft
+	name = "\improper Aft Operating Room"
+	icon_state = "aftsurgery"
+
+/area/medical/surgery/theatre
+	name = "\improper Grand Surgery Theatre"
+	icon_state = "surgerytheatre"
 /area/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
@@ -1185,6 +1195,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/brig
 	name = "\improper Brig"
 	icon_state = "brig"
+
+/area/security/medical
+	name = "\improper Security Medical"
+	icon_state = "security_medical"
 
 /area/security/brig/upper
 	name = "\improper Brig Overlook"
@@ -1393,8 +1407,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/science/lobby
+	name = "\improper Science Lobby"
+	icon_state = "science_lobby"
+
+/area/science/lower
+	name = "\improper Lower Science Division"
+	icon_state = "lower_science"
+
 /area/science/breakroom
 	name = "\improper Science Break Room"
+	icon_state = "science_breakroom"
 
 /area/science/lab
 	name = "Research and Development"
@@ -1425,6 +1448,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Ordnance Mixing Chamber"
 	icon_state = "ord_mix_chamber"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+/area/science/mixing/hallway
+	name = "\improper Ordnance Mixing Hallway"
+	icon_state = "ord_mix_hallway"
+
+/area/science/mixing/launch
+	name = "\improper Ordnance Mixing Launch Site"
+	icon_state = "ord_mix_launch"
 
 /area/science/genetics
 	name = "\improper Genetics Lab"

@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - admin: "You can now create links to a datum's VV window in asay by posting the datum's memory reference. The reference is now printed in the VV menu right below the fancytype, for copying purposes.."
+  - admin: "Tagged datums will now show their tag index in VV"

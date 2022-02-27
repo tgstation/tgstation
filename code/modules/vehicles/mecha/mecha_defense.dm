@@ -321,23 +321,6 @@
 		return
 	to_chat(user, span_warning("The [name] is at full integrity!"))
 
-/obj/vehicle/sealed/mecha/proc/mech_toxin_damage(mob/living/target)
-	playsound(src, 'sound/effects/spray2.ogg', 50, TRUE)
-	if(target.reagents)
-		if(target.reagents.get_reagent_amount(/datum/reagent/cryptobiolin) + force < force*2)
-			target.reagents.add_reagent(/datum/reagent/cryptobiolin, force/2)
-		if(target.reagents.get_reagent_amount(/datum/reagent/toxin) + force < force*2)
-			target.reagents.add_reagent(/datum/reagent/toxin, force/2.5)
-
-
-/obj/vehicle/sealed/mecha/mech_melee_attack(obj/vehicle/sealed/mecha/M, mob/living/user)
-	if(!has_charge(melee_energy_drain))
-		return NONE
-	use_power(melee_energy_drain)
-	if(M.damtype == BRUTE || M.damtype == BURN)
-		log_combat(user, src, "attacked", M, "(COMBAT MODE: [uppertext(user.combat_mode)] (DAMTYPE: [uppertext(M.damtype)])")
-		. = ..()
-
 /obj/vehicle/sealed/mecha/proc/full_repair(charge_cell)
 	atom_integrity = max_integrity
 	if(cell && charge_cell)

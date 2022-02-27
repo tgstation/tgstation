@@ -378,10 +378,12 @@ Difficulty: Hard
 /obj/effect/temp_visual/bubblegum_hands/rightpaw
 	icon_state = "rightpawgrab"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 
 /obj/effect/temp_visual/bubblegum_hands/leftpaw
 	icon_state = "leftpawgrab"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 
 /obj/effect/temp_visual/bubblegum_hands/rightsmack
 	icon_state = "rightsmack"

@@ -28,15 +28,13 @@
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	del_on_death = 1
 	loot = list(/obj/effect/mob_spawn/corpse/human/clown)
-
+	initial_language_holder = /datum/language_holder/clown
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 270
 	maxbodytemp = 370
 	unsuitable_atmos_damage = 10
 	unsuitable_heat_damage = 15
 	footstep_type = FOOTSTEP_MOB_SHOE
-	var/banana_time = 0 // If there's no time set it won't spawn.
-	var/banana_type = /obj/item/grown/bananapeel
 	var/attack_reagent
 
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
@@ -48,20 +46,12 @@
 	..()
 	playsound(loc, 'sound/items/bikehorn.ogg', 50, TRUE)
 
-/mob/living/simple_animal/hostile/retaliate/clown/Life(delta_time = SSMOBS_DT, times_fired)
-	. = ..()
-	if(!banana_time || banana_time >= world.time)
-		return
-	banana_time = world.time + rand(30,60)
-	if(!isturf(loc))
-		return
-	var/list/reachable_turfs = list()
-	for(var/turf/adjacent_turf in RANGE_TURFS(1, loc))
-		if(adjacent_turf == loc || !CanReach(adjacent_turf))
-			continue
-		reachable_turfs += adjacent_turf
-	if(length(reachable_turfs))
-		new banana_type(pick(reachable_turfs))
+/mob/living/simple_animal/hostile/retaliate/clown/AttackingTarget(atom/attacked_target)
+	if(!istype(attacked_target, /obj/item/food/grown/banana/bunch))
+		return ..()
+	var/obj/item/food/grown/banana/bunch/unripe_bunch = attacked_target
+	unripe_bunch.start_ripening()
+	log_combat(src, attacked_target, "honksposivley ripened")
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube
 	name = "Living Lube"
@@ -94,9 +84,92 @@
 	emote_see = list("honks", "bites into the banana", "plucks a banana off its head", "photosynthesizes")
 	maxHealth = 120
 	health = 120
-	speed = -10
+	speed = -1
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana)
-	banana_time = 20
+	///Our peel dropping ability
+	var/datum/action/cooldown/rustle/banana_rustle
+	///Our banana bunch spawning ability
+	var/datum/action/cooldown/exquisite_bunch/banana_bunch
+
+/mob/living/simple_animal/hostile/retaliate/clown/banana/Initialize(mapload)
+	. = ..()
+	banana_rustle = new()
+	banana_rustle.Grant(src)
+	banana_bunch = new()
+	banana_bunch.Grant(src)
+	
+/mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
+	. = ..()
+	QDEL_NULL(banana_rustle)
+	QDEL_NULL(banana_bunch)
+
+///drops peels around the mob when activated
+/datum/action/cooldown/rustle
+	name = "Rustle"
+	desc = "Shake loose a few banana peels."
+	cooldown_time = 8 SECONDS
+	button_icon_state = "rustle"
+	icon_icon = 'icons/mob/actions/actions_clown.dmi'
+	background_icon_state = "bg_nature"
+	///which type of peel to spawn
+	var/banana_type = /obj/item/grown/bananapeel
+	///How many peels to spawn
+	var/peel_amount = 3
+
+/datum/action/cooldown/rustle/Activate(atom/target)
+	. = ..()
+	var/list/reachable_turfs = list()
+	for(var/turf/adjacent_turf in RANGE_TURFS(1, owner.loc))
+		if(adjacent_turf == owner.loc || !owner.CanReach(adjacent_turf) || !isopenturf(adjacent_turf))
+			continue
+		reachable_turfs += adjacent_turf
+
+	var/peels_to_spawn = min(peel_amount, reachable_turfs.len)
+	for(var/i in 1 to peels_to_spawn)
+		new banana_type(pick_n_take(reachable_turfs))
+	playsound(owner, 'sound/creatures/clown/clownana_rustle.ogg', 100)
+	animate(owner, time = 1, pixel_x = 6, easing = CUBIC_EASING | EASE_OUT)
+	animate(time = 2, pixel_x = -8, easing = CUBIC_EASING)
+	animate(time = 1, pixel_x = 0, easing = CUBIC_EASING | EASE_IN)
+	StartCooldown()
+
+///spawns a plumb bunch of bananas imbued with mystical power.
+/datum/action/cooldown/exquisite_bunch
+	name = "Exquisite Bunch"
+	desc = "Pluck your finest bunch of bananas from your head. This bunch is especially nutrious to monkeykind. A gentle tap will trigger an explosive ripening process."
+	icon_icon = 'icons/obj/hydroponics/harvest.dmi'
+	cooldown_time = 60 SECONDS
+	button_icon_state = "banana_bunch"
+	background_icon_state = "bg_nature"
+	///If we are currently activating our ability.
+	var/activating = FALSE
+
+/datum/action/cooldown/exquisite_bunch/Trigger(trigger_flags, atom/target)
+	if(activating)
+		return
+	var/bunch_turf = get_step(owner.loc, owner.dir)
+	if(!bunch_turf)
+		return
+	if(!owner.CanReach(bunch_turf) || !isopenturf(bunch_turf))
+		owner.balloon_alert("can't do that here!")
+		return
+	activating = TRUE
+	if(!do_after(owner, 1 SECONDS))
+		activating = FALSE
+		return
+	playsound(owner, 'sound/creatures/clown/hehe.ogg', 100)
+	if(!do_after(owner, 1 SECONDS))
+		activating = FALSE
+		return
+	activating = FALSE
+	return ..()
+
+/datum/action/cooldown/exquisite_bunch/Activate(atom/target)
+	. = ..()
+	new /obj/item/food/grown/banana/bunch(get_step(owner.loc, owner.dir))
+	playsound(owner, 'sound/items/bikehorn.ogg', 60)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, owner, 'sound/creatures/clown/hohoho.ogg', 100, 1), 1 SECONDS)
+	StartCooldown()
 
 /mob/living/simple_animal/hostile/retaliate/clown/honkling
 	name = "Honkling"
@@ -111,7 +184,6 @@
 	attack_verb_continuous = "cheers up"
 	attack_verb_simple = "cheer up"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/human, /obj/item/soap, /obj/item/seeds/banana/bluespace)
-	banana_type = /obj/item/grown/bananapeel
 	attack_reagent = /datum/reagent/consumable/laughter
 
 /mob/living/simple_animal/hostile/retaliate/clown/fleshclown
