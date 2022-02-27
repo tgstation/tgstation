@@ -95,14 +95,6 @@
 
 	var/obj/item/toy/singlecard/card = cards[1] //draw the card on top
 	cards -= card
-
-	if(!place_on_table)
-		card.pickup(user)
-		user.put_in_hands(card)
-		user.visible_message(span_notice("[user] draws a card from [src]."), span_notice("You draw a card from [src]."))
-	else
-		user.visible_message(span_notice("[user] deals a card from [src]."), span_notice("You deal a card from [src]."))
-
 	update_appearance()
 	return card
 
@@ -123,10 +115,17 @@
 	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers)
-	draw(user)
+	var/obj/item/toy/singlecard/card = draw(user)
+	card.pickup(user)
+	user.put_in_hands(card)
+	user.visible_message(span_notice("[user] draws a card from [src]."), span_notice("You draw a card from [src]."))
+	//user.visible_message(span_notice("[user] deals a card from [src]."), span_notice("You deal a card from [src]."))
 
 /obj/item/toy/cards/deck/attack_self_secondary(mob/living/user, list/modifiers)
 	var/obj/item/toy/singlecard/card = draw(user)
+	card.pickup(user)
+	user.put_in_hands(card)
+	user.visible_message(span_notice("[user] draws a card from [src]."), span_notice("You draw a card from [src]."))
 	card.Flip()
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
