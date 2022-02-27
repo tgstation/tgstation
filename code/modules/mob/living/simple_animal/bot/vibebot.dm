@@ -21,6 +21,14 @@
 	///The vibe ability given to vibebots, so sentient ones can still change their color.
 	var/datum/action/innate/vibebot_vibe/vibe_ability
 
+/mob/living/simple_animal/bot/vibebot/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/mob/living/simple_animal/bot/vibebot/Destroy()
+	QDEL_NULL(vibe_ability)
+	return ..()
+
 /mob/living/simple_animal/bot/vibebot/Login()
 	. = ..()
 	if(!. || !client)
@@ -30,10 +38,6 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/vibebot/Logout()
-	QDEL_NULL(vibe_ability)
-	return ..()
-
-/mob/living/simple_animal/bot/vibebot/Destroy()
 	QDEL_NULL(vibe_ability)
 	return ..()
 
