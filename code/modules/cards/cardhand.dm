@@ -45,9 +45,6 @@
 		return 
 
 	cards -= card
-	card.pickup(user)
-	user.put_in_hands(card)
-	user.visible_message(span_notice("[user] draws a card from [user.p_their()] hand."), span_notice("You draw a card from your hand."))
 	update_appearance()
 	return card
 
@@ -58,7 +55,6 @@
 	update_appearance()
 **/
 
-/**
 /obj/item/toy/cards/cardhand/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
@@ -75,18 +71,20 @@
 	var/obj/item/toy/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
-	draw_card(user, cards, choice)
+	var/obj/item/toy/singlecard/selected_card = draw(user, cards, choice)
+	selected_card.pickup(user)
+	user.put_in_hands(selected_card)
+	user.visible_message(span_notice("[user] draws a card from [user.p_their()] hand."), span_notice("You draw a card from your hand."))
 
 	interact(user)
 	if(length(cards) == 1)
-		var/obj/item/toy/singlecard/last_card = draw_card(user, cards)
+		var/obj/item/toy/singlecard/last_card = draw(user, cards)
 		qdel(src)
 		last_card.pickup(user)
 		user.put_in_hands(last_card)
 		to_chat(user, span_notice("You also take [last_card.cardname] and hold it."))
 	else
 		update_appearance()
-**/
 
 /**
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/singlecard/card, mob/living/user, params)
@@ -96,12 +94,8 @@
 		return ..()
 **/
 
-/**
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
-	if(!istype(user) || user.incapacitated())
-		return FALSE
-	return TRUE
-**/
+	return isliving(user) && !user.incapacitated()
 
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
