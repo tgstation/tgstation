@@ -967,3 +967,36 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	if(length(admins_to_ping))
 		admins_to_ping[ADMINSAY_PING_UNDERLINE_NAME_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
 		return admins_to_ping
+
+/**
+ * Checks a given message to see if any of the words contain a memory ref for a datum. Said ref should not have brackets around it
+ *
+ * Returns nothing if no refs are found, otherwise returns an associative list with ckey -> client
+ * Also modifies msg to underline and linkify the [ref] so other admins can click on the address to open the VV entry for said datum
+ *
+ * Arguments:
+ * * msg - the message being scanned
+ */
+/proc/check_memory_refs(msg)
+	if(!findtext(msg, GLOB.is_memref))
+		return
+
+	//explode the input msg into a list
+	var/list/msglist = splittext(msg, " ")
+	var/list/datums_to_ref = list()
+
+	var/i = 0
+	for(var/word in msglist)
+		i++
+		if(!length(word))
+			continue
+		var/word_with_brackets = "\[[word]\]" // the actual memory address lookups need the bracket wraps
+		var/datum/check_datum = locate(word_with_brackets)
+		if(!istype(check_datum))
+			continue
+		msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[word_with_brackets]'>[word_with_brackets]</A></u>"
+		datums_to_ref[word] = word
+
+	if(length(datums_to_ref))
+		datums_to_ref[ADMINSAY_LINK_DATUM_REF] = jointext(msglist, " ") // without tuples, we must make do!
+		return datums_to_ref
