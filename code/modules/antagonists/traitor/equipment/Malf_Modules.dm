@@ -941,6 +941,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(owner)
 		owner.ai_voicechanger = null
 		owner = null
+	return ..()
 
 /obj/machinery/ai_voicechanger/ui_data(mob/user)
 	var/list/data = list()
