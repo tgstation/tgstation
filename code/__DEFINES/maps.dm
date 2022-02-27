@@ -176,13 +176,3 @@ require only minor tweaks.
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
 /// Shelter spot is out of bounds from the maps x/y coordinates
 #define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"
-
-//Ruin types
-///Space ruin
-#define RUIN_TYPE_SPACE "space_ruin"
-///Lava ruin
-#define RUIN_TYPE_LAVA "lava_ruin"
-///Ice ruin
-#define RUIN_TYPE_ICE "ice_ruin"
-///Underground ice ruin
-#define RUIN_TYPE_ICE_UNDERGROUND "underground_ice_ruin"
