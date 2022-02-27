@@ -45,3 +45,48 @@
 		var/list/unreachables = all_possible_knowledge - list_to_check
 		for(var/datum/heretic_knowledge/lost_knowledge as anything in unreachables)
 			Fail("Heretic Knowlege: [lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
+
+
+/*
+ * This test checks that all main heretic paths are of the same length.
+ *
+ * If any two main paths are not equal length, the test will fail and quit, reporting
+ * which two paths did not match. Then, whichever is erroneous can be determined manually.
+ */
+/datum/unit_test/heretic_main_paths
+
+/datum/unit_test/heretic_main_paths/Run()
+	// A list of path strings we don't need to check.
+	var/list/paths_we_dont_check = list(PATH_SIDE, PATH_START)
+	// An assoc list of [path string] to [number of nodes we found of that path].
+	var/list/paths = list()
+	// The starting knowledge node, we use this to deduce what main paths we have.
+	var/datum/heretic_knowledge/spell/basic/starter_node = new()
+
+	// Go through and determine what paths exist from our base node.
+	for(var/datum/heretic_knowledge/possible_path as anything in starter_node.next_knowledge)
+		paths[initial(possible_path.route)] = 0
+
+	qdel(starter_node) // Get rid of that starter node, we don't need it anymore.
+
+	// Now go through all the knowledges and record how many of each  main path exist.
+	for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
+		var/knowledge_route = initial(knowledge.route)
+		// null (abstract), side paths, and start paths we can skip
+		if(isnull(knowledge_route) || (knowledge_route in paths_we_dont_check))
+			continue
+
+		if(isnull(paths[knowledge_route]))
+			Fail("Heretic Knowledge: An invalid knowledge route ([knowledge_route]) was found on [knowledge].")
+			continue
+
+		paths[knowledge_route]++
+
+	// Now all entries in the paths list should have an equal value.
+	// If any two entries do not match, then one of them is incorrect, and the test fails.
+	for(var/main_path in paths)
+		for(var/other_main_path in (paths - main_path))
+			TEST_ASSERT(paths[main_path] == paths[other_main_path], \
+				"Heretic Knowledge: [main_path] had [paths[main_path]] knowledges, \
+				which was not equal to [other_main_path]'s [paths[other_main_path]] knowledges. \
+				All main paths should have the same number of knowledges!")

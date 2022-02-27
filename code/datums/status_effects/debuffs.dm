@@ -1113,7 +1113,7 @@
 /atom/movable/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"
 	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
-	icon_state = "mind_control"
+	icon_state = ALERT_MIND_CONTROL
 
 
 /datum/status_effect/stagger

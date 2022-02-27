@@ -283,9 +283,12 @@
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
 	var/static/list/careful_edits = list("bound_x" = TRUE, "bound_y" = TRUE, "bound_width" = TRUE, "bound_height" = TRUE)
+	var/static/list/not_falsey_edits = list("bound_width" = TRUE, "bound_height" = TRUE)
 	if(banned_edits[var_name])
 		return FALSE //PLEASE no.
-	if((careful_edits[var_name]) && (var_value % world.icon_size) != 0)
+	if(careful_edits[var_name] && (var_value % world.icon_size) != 0)
+		return FALSE
+	if(not_falsey_edits[var_name] && !var_value)
 		return FALSE
 
 	switch(var_name)
