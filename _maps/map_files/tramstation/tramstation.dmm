@@ -9346,10 +9346,10 @@
 "bRK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "bRO" = (
@@ -20466,7 +20466,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "fML" = (
@@ -24956,11 +24955,10 @@
 "hpm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "hpp" = (
@@ -45370,10 +45368,10 @@
 /turf/open/floor/iron/freezer,
 /area/security/prison)
 "oKb" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "oKd" = (
@@ -65603,10 +65601,10 @@
 /turf/open/floor/plating,
 /area/engineering/atmos)
 "wib" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/commons/dorms)
 "wih" = (
@@ -89458,13 +89456,13 @@ aaH
 agL
 aaH
 oyt
-apJ
-dNn
-aaH
-abK
-aEA
-axm
 uyV
+dNn
+aEA
+abK
+aaH
+axm
+apJ
 aHL
 kXU
 azS
@@ -89717,9 +89715,9 @@ dlN
 wbg
 dlN
 evR
-dlN
-dlN
 wib
+dlN
+dlN
 gJl
 dlN
 amU
@@ -89974,9 +89972,9 @@ oDH
 aXn
 aXn
 aXn
-aXn
-iHw
 hpm
+iHw
+iHw
 iHw
 iHw
 iHw
@@ -90231,7 +90229,7 @@ igY
 kAo
 anU
 oQz
-awm
+nnw
 xCF
 fMn
 hLM
@@ -93315,9 +93313,9 @@ uzZ
 eKb
 kAv
 dNn
-aaH
-kaD
 aEA
+kaD
+aaH
 aHL
 aSq
 aSq
@@ -93572,9 +93570,9 @@ gJl
 gJl
 gJl
 gJl
-gJl
-gJl
 bRK
+gJl
+gJl
 gJl
 gJl
 gJl
@@ -93829,9 +93827,9 @@ aUL
 lEm
 aUL
 aXn
-aUL
-aUL
 oKb
+aUL
+aUL
 aXn
 aUL
 juY
@@ -94084,13 +94082,13 @@ awm
 oQz
 awm
 wXF
-aXA
-oQz
-awm
-sqN
-nnw
-bfj
 qjP
+oQz
+nnw
+sqN
+awm
+bfj
+aXA
 sqO
 dVL
 awm
