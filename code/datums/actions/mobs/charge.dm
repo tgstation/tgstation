@@ -182,10 +182,13 @@
 /datum/action/cooldown/mob_cooldown/charge/basic_charge
 	name = "Basic Charge"
 	cooldown_time = 6 SECONDS
+	charge_delay = 1.5 SECONDS
 	charge_distance = 4
+	var/shake_duration = 1 SECONDS
+	var/shake_pixel_shift = 15
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/do_charge_indicator(atom/charger, atom/charge_target)
-	charger.Shake(15, 15, 1 SECONDS)
+	charger.Shake(shake_pixel_shift, shake_pixel_shift, shake_duration)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/hit_target(atom/movable/source, atom/target, damage_dealt)
 	var/mob/living/living_source
