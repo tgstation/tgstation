@@ -97,22 +97,22 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 	if(!our_living_heart || HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+		loc.balloon_alert(user, "ritual failed, already have a living heart!")
 		return FALSE
 
 	if(our_living_heart.status == ORGAN_ORGANIC)
 		return TRUE
 
-	else
-		for(var/obj/item/organ/nearby_organ in atoms)
-			if(!istype(nearby_organ, required_organ_type))
-				continue
+	for(var/obj/item/organ/nearby_organ in atoms)
+		if(!istype(nearby_organ, required_organ_type))
+			continue
 
-			if(nearby_organ.status == ORGAN_ORGANIC && nearby_organ.useable)
-				selected_atoms += nearby_organ
-				return TRUE
+		if(nearby_organ.status == ORGAN_ORGANIC && nearby_organ.useable)
+			selected_atoms += nearby_organ
+			return TRUE
 
-		return FALSE
-
+	loc.balloon_alert(user, "ritual failed, need an organic heart!")
+	return FALSE
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)

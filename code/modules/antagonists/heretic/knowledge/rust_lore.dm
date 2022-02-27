@@ -252,7 +252,7 @@
 	/// If TRUE, then immunities are currently active.
 	var/immunities_active = FALSE
 	/// A typepath to an area that we must finish the ritual in.
-	var/ritual_location = /area/command/bridge
+	var/area/ritual_location = /area/command/bridge
 	/// A static list of traits we give to the heretic when on rust.
 	var/static/list/conditional_immunities = list(
 		TRAIT_STUNIMMUNE,
@@ -270,10 +270,19 @@
 		TRAIT_NOBREATH,
 		)
 
+/datum/heretic_knowledge/final/rust_final/on_research(mob/user)
+	. = ..()
+	// This map doesn't have a Bridge, for some reason??
+	// Let them complete the ritual anywhere
+	if(!GLOB.areas_by_type[ritual_location])
+		ritual_location = null
+
 /datum/heretic_knowledge/final/rust_final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/area/our_area = get_area(loc)
-	if(!istype(our_area, ritual_location))
-		return FALSE
+	if(ritual_location)
+		var/area/our_area = get_area(loc)
+		if(!istype(our_area, ritual_location))
+			loc.balloon_alert(user, "ritual failed, must be in [initial(ritual_location.name)]!")
+			return FALSE
 
 	return ..()
 

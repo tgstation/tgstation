@@ -75,9 +75,7 @@
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/final))
-			for(var/datum/objective/must_be_done as anything in objectives)
-				if(!must_be_done.check_completion())
-					knowledge_data["disabled"] = TRUE
+			knowledge_data["disabled"] = !can_ascend()
 
 		knowledge_data["hereticPath"] = initial(knowledge.route)
 		knowledge_data["color"] = path_to_color[initial(knowledge.route)] || "grey"
@@ -561,6 +559,23 @@
  */
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
+
+/datum/antagonist/heretic/proc/get_rituals()
+	var/list/rituals = list()
+
+	for(var/knowledge_index in researched_knowledge)
+		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
+		if(!knowledge.can_be_invoked(src))
+			continue
+		rituals[knowledge.name] = knowledge
+
+	return rituals
+
+/datum/antagonist/heretic/proc/can_ascend()
+	for(var/datum/objective/must_be_done as anything in objectives)
+		if(!must_be_done.check_completion())
+			return FALSE
+	return TRUE
 
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice

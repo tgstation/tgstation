@@ -157,6 +157,7 @@
 			atoms -= body
 
 	if(!(locate(/mob/living/carbon/human) in atoms))
+		loc.balloon_alert(user, "ritual failed, no valid body!")
 		return FALSE
 
 	return ..()
@@ -165,6 +166,7 @@
 	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
 	if(QDELETED(soon_to_be_ghoul)) // No body? No ritual
 		stack_trace("[type] reached on_finished_recipe without a human in selected_atoms to make a ghoul out of.")
+		loc.balloon_alert(user, "ritual failed, no valid body!")
 		return FALSE
 
 	soon_to_be_ghoul.grab_ghost()
