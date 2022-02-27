@@ -79,7 +79,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/known_alts_panel,
 	/datum/admins/proc/paintings_manager,
 	/datum/admins/proc/display_tags,
-	/client/proc/toggle_orbitability,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -508,25 +507,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
 
 #undef STEALTH_MODE_TRAIT
-
-#define TOGGLE_ORBITABILITY_TRAIT "toggle_orbitability"
-
-/client/proc/toggle_orbitability()
-	set category = "Admin"
-	set name = "Toggle Orbitability"
-
-	if (!holder)
-		return
-
-	if (HAS_TRAIT_FROM(mob, TRAIT_ORBITING_FORBIDDEN, TOGGLE_ORBITABILITY_TRAIT))
-		REMOVE_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, TOGGLE_ORBITABILITY_TRAIT)
-		to_chat(mob, span_notice("You can now be orbitted again."))
-	else
-		ADD_TRAIT(mob, TRAIT_ORBITING_FORBIDDEN, TOGGLE_ORBITABILITY_TRAIT)
-		to_chat(mob, span_warning("You can no longer be orbitted."))
-		QDEL_NULL(mob.orbiters)
-
-#undef TOGGLE_ORBITABILITY_TRAIT
 
 /client/proc/drop_bomb()
 	set category = "Admin.Fun"
