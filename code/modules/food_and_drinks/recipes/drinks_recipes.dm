@@ -727,3 +727,8 @@
 /datum/chemical_reaction/drink/toechtauese_syrup
 	results = list(/datum/reagent/consumable/toechtauese_syrup = 10)
 	required_reagents = list(/datum/reagent/consumable/toechtauese_juice = 6, /datum/reagent/consumable/sugar = 4)
+
+/datum/chemical_reaction/drink/helianthus
+	results = list(/datum/reagent/consumable/ethanol/helianthus = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/toxin/mindbreaker = 1)
+	mix_message = "The drink lets out a soft enlightening laughter..."
