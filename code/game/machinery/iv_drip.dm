@@ -227,9 +227,12 @@
 
 /obj/machinery/iv_drip/AltClick(mob/user)
 	if(can_interact(user))
-		transfer_rate = MAX_IV_TRANSFER_RATE
-		to_chat(usr, span_notice("You set the transfer rate to [transfer_rate] units per metabolism cycle to speed up the [src]."))
+		set_transfer_rate_max()
 	return ..()
+
+/obj/machinery/iv_drip/proc/set_transfer_rate_max()
+	transfer_rate = MAX_IV_TRANSFER_RATE
+	to_chat(usr, span_notice("You set the transfer rate to [transfer_rate] units per metabolism cycle to speed up the [src]."))
 
 ///called when an IV is attached
 /obj/machinery/iv_drip/proc/attach_iv(mob/living/target, mob/user)
@@ -347,6 +350,10 @@
 /obj/machinery/iv_drip/plumbing/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
+	AddComponent(/datum/component/simple_rotation)
+
+/obj/machinery/iv_drip/plumbing/set_transfer_rate_max()
+	return //alt clicking this shouldn't do anything special as it's reserved for rotation
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()
