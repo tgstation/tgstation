@@ -292,7 +292,7 @@
 	var/atom/movable/backup = get_spacemove_backup(movement_dir)
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
-			if(backup.newtonian_move(turn(movement_dir, 180), TRUE)) //You're pushing off something movable, so it moves
+			if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE)) //You're pushing off something movable, so it moves
 				to_chat(src, span_info("You push off of [backup] to propel yourself."))
 		return TRUE
 	return FALSE
@@ -344,7 +344,7 @@
 	var/turf/turf = get_turf(src)
 	return !isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY)
 
-/mob/newtonian_move(direction)
+/mob/newtonian_move(direction, instant = FALSE)
 	. = ..()
 	if(!.) //Only do this if we're actually going somewhere
 		return

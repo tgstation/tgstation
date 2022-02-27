@@ -20,7 +20,7 @@ would spawn and follow the beaker, even if it is carried or thrown.
 	GLOB.cameranet.updateVisibility(src)
 	return ..()
 
-/obj/effect/particle_effect/newtonian_move() // Prevents effects from getting registered for SSspacedrift
+/obj/effect/particle_effect/newtonian_move(direction, instant = FALSE) // Prevents effects from getting registered for SSspacedrift
 	return TRUE
 
 /datum/effect_system
