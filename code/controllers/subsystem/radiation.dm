@@ -69,7 +69,8 @@ SUBSYSTEM_DEF(radiation)
 			continue
 
 		if (irradiate_after_basic_checks(target))
-			target.investigate_log("was irradiated by [source].", INVESTIGATE_RADIATION)
+			var/turf/source_turf = get_turf(source)
+			target.investigate_log("was irradiated by [source] (on [source_turf.x], [source_turf.y], [source_turf.z]).", INVESTIGATE_RADIATION)
 
 /// Will attempt to irradiate the given target, limited through IC means, such as radiation protected clothing.
 /datum/controller/subsystem/radiation/proc/irradiate(atom/target)
