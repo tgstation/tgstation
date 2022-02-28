@@ -921,7 +921,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /obj/machinery/ai_voicechanger/Initialize(mapload)
 	. = ..()
 	if(!isAI(loc))
-		stack_trace("Voice Changer created outside of an AI. Cry at coders")
 		return INITIALIZE_HINT_QDEL
 	owner = loc
 	owner.ai_voicechanger = src
