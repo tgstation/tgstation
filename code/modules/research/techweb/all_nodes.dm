@@ -1978,10 +1978,10 @@
 		"decloner",
 		"donksoft_refill",
 		"donksofttoyvendor",
+		"handcuff_shell",
 		"largecrossbow",
 		"rapidsyringe",
 		"suppressor",
-		"handcuff_shell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	hidden = TRUE
