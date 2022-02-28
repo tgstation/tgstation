@@ -544,3 +544,16 @@
 	build_path = /obj/item/mod/module/circuit
 	build_type = MECHFAB | COMPONENT_PRINTER
 	category = list("MOD Modules", "Shells")
+
+/datum/design/handcuffs_shell
+	name = "Handcuffs Shell"
+	desc = "A small prototype shell meant to be used as a wrist device. However, more common use has been found simply restraining people."
+	id = "handcuff_shell"
+	materials = list(
+		/datum/material/glass = 2000,
+		/datum/material/iron = 1250,
+		/datum/material/gold = 500
+	)
+	build_path = /obj/item/shell/handcuffs
+	build_type = PROTOLATHE | COMPONENT_PRINTER
+	category = list("Circuitry", "Shells")

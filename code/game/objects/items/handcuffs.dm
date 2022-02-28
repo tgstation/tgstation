@@ -105,6 +105,8 @@
 
 	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
+	SEND_SIGNAL(src, COMSIG_HANDCUFFS_APPLIED, target, user)
+
 	if(trashtype && !dispense)
 		qdel(src)
 	return
@@ -539,3 +541,79 @@
 	. = ..()
 	if(effectReference)
 		QDEL_NULL(effectReference)
+
+/**
+ * Illegal handcuff circuit shell
+ * Useful for all your jigsaw trap needs
+ */
+/obj/item/restraints/handcuffs/strand
+	name = "\improper Kheiral cuffs"
+	desc = "A prototype wrist communicator, made illegal because too many people were using them as handcuffs. Can read the wearer's data, send circuit signals, and have its tightness adjusted."
+	icon_state = "strand"
+
+/obj/item/restraints/handcuffs/strand/Initialize()
+	. = ..()
+	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/handcuffs), SHELL_CAPACITY_SMALL)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/restraints/handcuffs/strand/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "strand_light", alpha = src.alpha)
+
+/obj/item/circuit_component/handcuffs
+	display_name = "Handcuffs"
+	desc = "Handcuffs that can read the current captive's data, send signals, and have their tightness adjusted."
+
+	/// The user that is currently captive within the device
+	var/datum/port/output/captive
+	/// Trigger signal when applied to someone
+	var/datum/port/output/cuffed
+	/// Trigger signal when removed from someone
+	var/datum/port/output/uncuffed
+	/// Current time to break out.
+	var/datum/port/output/breakout_time_current
+	/// The amount of time that it takes to break out of these cuffs. Maximum 1 minute, like normal cuffs.
+	var/datum/port/input/breakout_time_change
+
+	/// The handcuffs this circut is attached to.
+	var/obj/item/restraints/handcuffs/cuffs
+
+/obj/item/circuit_component/handcuffs/populate_ports()
+	captive = add_output_port("Current Captive", PORT_TYPE_ATOM)
+	breakout_time_current = add_output_port("Current Uncuff Time (Seconds)", PORT_TYPE_NUMBER)
+	cuffed = add_output_port("Cuffed", PORT_TYPE_SIGNAL)
+	uncuffed = add_output_port("Uncuffed", PORT_TYPE_SIGNAL)
+
+
+	breakout_time_change = add_input_port("Uncuff Time (Seconds)", PORT_TYPE_NUMBER, trigger = .proc/sanitize_breakout_time)
+
+/obj/item/circuit_component/handcuffs/register_shell(atom/movable/shell)
+	. = ..()
+	cuffs = shell
+	RegisterSignal(shell, COMSIG_HANDCUFFS_APPLIED, .proc/on_cuffed)
+	RegisterSignal(shell, COMSIG_HANDCUFFS_REMOVED, .proc/on_uncuffed)
+	breakout_time_current.set_output((cuffs.breakouttime / 10))
+
+/obj/item/circuit_component/handcuffs/unregister_shell(atom/movable/shell)
+	UnregisterSignal(shell, COMSIG_HANDCUFFS_APPLIED)
+	UnregisterSignal(shell, COMSIG_HANDCUFFS_REMOVED)
+	cuffs = null
+	return ..()
+
+/obj/item/circuit_component/handcuffs/proc/sanitize_breakout_time()
+	cuffs.breakouttime = clamp(breakout_time_change.value, 10, 60) SECONDS
+	breakout_time_current.set_output((cuffs.breakouttime / 10))
+	// For testing, remember to remove
+	cuffs.say("Tightness set to [cuffs.breakouttime / 10] seconds.")
+
+/obj/item/circuit_component/handcuffs/proc/on_cuffed(obj/item/restraints/handcuffs/source, atom/target, mob/user)
+	SIGNAL_HANDLER
+
+	captive.set_output(target)
+	cuffed.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/handcuffs/proc/on_uncuffed(obj/item/restraints/handcuffs/source)
+	SIGNAL_HANDLER
+
+	captive.set_output(null)
+	uncuffed.set_output(COMPONENT_SIGNAL)

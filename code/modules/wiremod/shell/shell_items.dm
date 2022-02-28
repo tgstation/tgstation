@@ -68,3 +68,9 @@
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate_black_open"
 	shell_to_spawn = /obj/structure/scanner_gate_shell
+
+/obj/item/shell/handcuffs
+	name = "\improper Kheiral cuffs assembly"
+	icon = 'icons/obj/restraints.dmi'
+	icon_state = "strand_open"
+	shell_to_spawn = /obj/item/restraints/handcuffs/strand
