@@ -1763,43 +1763,43 @@
 
 /datum/sprite_accessory/pod_hair/ivy
 	name = "Ivy"
-	icon_state = "pod_ivy"
+	icon_state = "ivy"
 
 /datum/sprite_accessory/pod_hair/cabbage
 	name = "Cabbage"
-	icon_state = "pod_cabbage"
+	icon_state = "cabbage"
 
 /datum/sprite_accessory/pod_hair/spinach
 	name = "Spinach"
-	icon_state = "pod_spinach"
+	icon_state = "spinach"
 
 /datum/sprite_accessory/pod_hair/prayer
 	name = "Prayer"
-	icon_state = "pod_prayer"
+	icon_state = "prayer"
 
 /datum/sprite_accessory/pod_hair/vine
 	name = "Vine"
-	icon_state = "pod_vine"
+	icon_state = "vine"
 
 /datum/sprite_accessory/pod_hair/shrub
 	name = "Shrub"
-	icon_state = "pod_shrub"
+	icon_state = "shrub"
 
 /datum/sprite_accessory/pod_hair/rose
 	name = "Rose"
-	icon_state = "pod_rose"
+	icon_state = "rose"
 
 /datum/sprite_accessory/pod_hair/orchid
 	name = "Orchid"
-	icon_state = "pod_orchid"
+	icon_state = "orchid"
 
 /datum/sprite_accessory/pod_hair/fig
 	name = "Fig"
-	icon_state = "pod_fig"
+	icon_state = "fig"
 
 /datum/sprite_accessory/pod_hair/hibiscus
 	name = "Hibiscus"
-	icon_state = "pod_hibiscus"
+	icon_state = "hibiscus"
 
 /datum/sprite_accessory/snouts
 	icon = 'icons/mob/mutant_bodyparts.dmi'
