@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 
 	if(CONFIG_GET(flag/automute_on) && !holder && last_message == message)
-		if(SEND_SIGNAL(mob, SIGNAL_CLIENT_AUTOMUTE_CHECK, src, last_message, mute_type) & WAIVE_AUTOMUTE_CHECK)
+		if(SEND_SIGNAL(mob, COMSIG_CLIENT_AUTOMUTE_CHECK, src, last_message, mute_type) & WAIVE_AUTOMUTE_CHECK)
 			return FALSE
 
 		src.last_message_count++
