@@ -1,0 +1,4 @@
+author: "OneAsianTortoise"
+delete-after: True
+changes: 
+  - bugfix: "fixes accounting's alert being cut in half"
