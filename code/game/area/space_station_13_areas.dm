@@ -827,6 +827,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Chapel Storage"
 	icon_state = "chapelstorage"
 
+/area/service/chapel/funeral
+	name = "\improper Chapel Funeral Room"
+	icon_state = "chapelfuneral"
+
 /area/service/lawoffice
 	name = "\improper Law Office"
 	icon_state = "law"
