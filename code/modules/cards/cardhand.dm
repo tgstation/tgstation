@@ -65,13 +65,24 @@
 		user.put_in_hands(last_card)
 		to_chat(user, span_notice("You also take [last_card.cardname] and hold it."))
 
-/**
-/obj/item/toy/cards/cardhand/attackby(obj/item/toy/singlecard/card, mob/living/user, params)
-	if(istype(card))
-		add_card(user, cards, card)
-	else
-		return ..()
-**/
+
+/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params)
+	var/cards_to_add = list()
+
+	if(istype(weapon, /obj/item/toy/singlecard))
+		var/obj/item/toy/singlecard/card = weapon
+		cards_to_add += card
+
+	if(istype(weapon, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/deck = weapon 
+		var/obj/item/toy/singlecard/card = deck.draw(user)
+		cards_to_add += card
+
+	if(LAZYLEN(cards_to_add))
+		insert(cards_to_add)
+		return
+
+	return ..()
 
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	return isliving(user) && !user.incapacitated()
@@ -79,10 +90,7 @@
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
 	cut_overlays()
-	var/overlay_cards = cards.len
-
-	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
-	for(var/i = k; i <= overlay_cards; i++)
+	for(var/i = 1; i <= cards.len; i++)
 		var/obj/item/toy/singlecard/card = cards[i]
-		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = (1 - i + k) * 3, pixel_y = (1 - i + k) * 3)
+		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = (i - 1) * 3, pixel_y = (i - 1) * 3)
 		add_overlay(card_overlay)
