@@ -70,6 +70,12 @@
 	update_appearance()
 */
 
+/obj/item/toy/cards/proc/insert(mob/user, list/cards_to_add)
+	for(var/obj/item/toy/singlecard/card in cards_to_add)
+		card.forceMove(src)
+		cards += card
+	update_appearance()
+
 /**
  * draw
  *
