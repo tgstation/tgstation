@@ -37,31 +37,30 @@
 	update_appearance()
 **/
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
-	if(!isliving(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, NO_TK)
+	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
 		return
 
-	interact(user)
 	var/list/handradial = list()
 	for(var/obj/item/toy/singlecard/card in cards)
 		handradial[card] = image(icon = src.icon, icon_state = card.icon_state)
 
+	//interact(user) i dont think we need this and should remove it
 	var/obj/item/toy/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
-	var/obj/item/toy/singlecard/selected_card = draw(user, cards, choice)
+	//interact(user) i dont think we need this and should remove it
+	var/obj/item/toy/singlecard/selected_card = draw(user, choice)
 	selected_card.pickup(user)
 	user.put_in_hands(selected_card)
 	user.visible_message(span_notice("[user] draws a card from [user.p_their()] hand."), span_notice("You draw a card from your hand."))
+	update_appearance()
 
-	interact(user)
 	if(length(cards) == 1)
-		var/obj/item/toy/singlecard/last_card = draw(user, cards)
+		var/obj/item/toy/singlecard/last_card = draw(user)
 		qdel(src)
 		last_card.pickup(user)
 		user.put_in_hands(last_card)
 		to_chat(user, span_notice("You also take [last_card.cardname] and hold it."))
-	else
-		update_appearance()
 
 /**
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/singlecard/card, mob/living/user, params)
