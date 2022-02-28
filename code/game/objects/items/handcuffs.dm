@@ -603,8 +603,6 @@
 /obj/item/circuit_component/handcuffs/proc/sanitize_breakout_time()
 	cuffs.breakouttime = clamp(breakout_time_change.value, 10, 60) SECONDS
 	breakout_time_current.set_output((cuffs.breakouttime / 10))
-	// For testing, remember to remove
-	cuffs.say("Tightness set to [cuffs.breakouttime / 10] seconds.")
 
 /obj/item/circuit_component/handcuffs/proc/on_cuffed(obj/item/restraints/handcuffs/source, atom/target, mob/user)
 	SIGNAL_HANDLER
