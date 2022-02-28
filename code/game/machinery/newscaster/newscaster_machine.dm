@@ -131,6 +131,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["security_mode"] = (ACCESS_ARMORY in card?.GetAccess())
 	data["photo_data"] = !isnull(current_image)
 	data["creating_channel"] = creating_channel
+	data["creating_comment"] = creating_comment
 
 	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
@@ -289,13 +290,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if(isnull(locked))
 				return TRUE
 			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
-			if(choice=="Confirm")
+			if(choice == "Confirm")
 				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc, locked)
 				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 			creating_channel = FALSE
 
-		if("cancelChannelCreation")
+		if("cancelCreation")
 			creating_channel = FALSE
+			creating_comment = FALSE
 			return TRUE
 
 		if("storyCensor")
@@ -342,6 +344,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					current_channel = potential_channel
 					break
 			current_channel.toggleCensorDclass()
+
+		if("createComment")
+			creating_comment = TRUE
+			return TRUE
 
 		if("printNewspaper")
 			if(paper_remaining <= 0)

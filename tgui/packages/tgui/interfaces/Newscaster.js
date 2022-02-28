@@ -26,6 +26,7 @@ export const Newscaster = (props, context) => {
       width={575}
       height={560}>
       <NewscasterChannelCreation />
+      <NewscasterCommentCreation />
       <Window.Content scrollable>
         <Stack fill vertical>
           <Stack.Item>
@@ -64,7 +65,7 @@ const NewscasterChannelCreation = (props, context) => {
   const [publicmode, setPublicmode] = useLocalState(context, 'publicmode', 1);
   const {
     creating_channel,
-    creating_message,
+    creating_comment,
     viewing_channel,
     name,
     desc,
@@ -136,7 +137,7 @@ const NewscasterChannelCreation = (props, context) => {
             <Button
               content="Cancel"
               color="red"
-              onClick={() => act('cancelChannelCreation')} />
+              onClick={() => act('cancelCreation')} />
           </Box>
         </Stack.Item>
       </Stack>
@@ -149,10 +150,10 @@ const NewscasterCommentCreation = (props, context) => {
   const { act, data } = useBackend(context);
   const [publicmode, setPublicmode] = useLocalState(context, 'publicmode', 1);
   const {
-    creating_message,
+    creating_comment,
     viewing_channel,
   } = data;
-  if (!creating_message) {
+  if (!creating_comment) {
     return null;
   }
   return (
@@ -180,14 +181,14 @@ const NewscasterCommentCreation = (props, context) => {
         <Stack.Item>
           <Box>
             <Button
-              content={"Submit Channel"}
+              content={"Submit Comment"}
               onClick={() => act('createComment', {
                 viewing_channel: viewing_channel,
               })} />
             <Button
               content={"Cancel"}
               color={"red"}
-              onClick={() => act('cancelCommentCreation')} />
+              onClick={() => act('cancelCreation')} />
           </Box>
         </Stack.Item>
       </Stack>
@@ -426,10 +427,12 @@ const NewscasterChannelMessages = (_, context) => {
                   tooltip="Leave a Comment."
                   disabled={
                     message.censored_author
-                  || message.censored_message
-                  || user.name === "Unknown"
+                    || message.censored_message
+                    || user.name === "Unknown"
                   }
-                  onClick={() => act('comment')}
+                  onClick={() => act('createComment', {
+                    messageID: message.ID,
+                  })}
                 />
               </>
             )} >
