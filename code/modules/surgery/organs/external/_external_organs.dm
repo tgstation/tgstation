@@ -261,7 +261,7 @@
 /obj/item/organ/external/pod_hair
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
-	layers = EXTERNAL_ADJACENT
+	layers = EXTERNAL_FRONT|EXTERNAL_ADJACENT
 
 	feature_key = "pod_hair"
 	preference = "feature_pod_hair"
