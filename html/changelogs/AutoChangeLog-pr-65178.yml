@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - admin: "Since _pick doesn't accept lists, I've added _pick_list for you to use in sdql. Please table everyone on the station kthnx"
