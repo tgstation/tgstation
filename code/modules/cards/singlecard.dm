@@ -140,7 +140,8 @@
 
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/singlecard/))
-		//do_cardhand(user, list(src, item))
+		//var/obj/item/toy/singlecard/card = obj/item/item
+		new /obj/item/toy/cards/cardhand(loc, list(src, item))
 		return
 	if(istype(item, /obj/item/toy/cards/cardhand/))
 		//do_cardhand(user, list(src), item)
