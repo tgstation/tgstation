@@ -48,7 +48,7 @@
 	if(istype(P, /obj/item/paper) && !storedpaper)
 		if(!user.transferItemToLoc(P, src))
 			return
-		playsound(loc, SFX_PAGETURN, 60, TRUE)
+		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
 		to_chat(user, span_notice("You place [P] in [src]."))
 		storedpaper = P
 		update_appearance()
