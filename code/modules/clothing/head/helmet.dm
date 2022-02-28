@@ -229,13 +229,6 @@
 	icon_state = "policehelm"
 	dynamic_hair_suffix = ""
 
-/obj/item/clothing/head/helmet/warden
-	name = "warden's hat"
-	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
-	icon_state = "wardenhat"
-	dynamic_hair_suffix = ""
-
-
 /obj/item/clothing/head/helmet/constable
 	name = "constable helmet"
 	desc = "A british looking helmet."
