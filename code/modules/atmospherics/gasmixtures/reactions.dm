@@ -825,8 +825,7 @@
 	var/temperature = air.temperature
 	var/turf/open/location
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
-		var/datum/pipeline/pipenet = holder
-		location = get_turf(pick(pipenet.members))
+		return NO_REACTION // We don't want to irradiate from the pipeline.
 	else
 		location = get_turf(holder)
 	var consumed_amount = min(air.temperature / 2240 * cached_gases[/datum/gas/bz][MOLES] * cached_gases[/datum/gas/proto_nitrate][MOLES] / (cached_gases[/datum/gas/bz][MOLES] + cached_gases[/datum/gas/proto_nitrate][MOLES]), cached_gases[/datum/gas/bz][MOLES], cached_gases[/datum/gas/proto_nitrate][MOLES])
