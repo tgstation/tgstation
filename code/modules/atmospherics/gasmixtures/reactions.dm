@@ -169,7 +169,7 @@
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 		cached_results["fire"] += burned_fuel * 10
 
-	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY && energy_released > FIRE_HYDROGEN_ENERGY_RELEASED * air.volume / 2500) //Reduces chances of radiation getting released from the tritium getting formed from oxygen rich plasmafires in waste.
+	if(location && prob(10) && burned_fuel > TRITIUM_MINIMUM_RADIATION_ENERGY && energy_released > FIRE_HYDROGEN_ENERGY_RELEASED * (air.volume / 2500) ** 2) //We don't want radiation to be released in large pipenets because it will be hard to tell where the source will be from, which goes against the goals of modern radiation.
 		radiation_pulse(location, max_range = min(6 + sqrt(energy_released / FIRE_HYDROGEN_ENERGY_RELEASED) / 4, 20), threshold = 15 * INVERSE(15 + energy_released / FIRE_HYDROGEN_ENERGY_RELEASED), chance = 100 * (1 - 0.5 ** (energy_released / (600 * FIRE_HYDROGEN_ENERGY_RELEASED))))
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -841,7 +841,8 @@
 	cached_gases[/datum/gas/plasma][MOLES] += consumed_amount * 0.8
 	cached_gases[/datum/gas/bz][MOLES] -= consumed_amount
 	energy_released += consumed_amount * 60000
-	radiation_pulse(location, max_range = min(sqrt(consumed_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + consumed_amount), chance = 50)
+	if(energy_released > 60000 * (air.volume / 2500) ** 2)
+		radiation_pulse(location, max_range = min(sqrt(consumed_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + consumed_amount), chance = 50)
 	for(var/mob/living/carbon/L in location)
 		L.hallucination += consumed_amount
 	if(energy_released)
@@ -882,7 +883,8 @@
 	cached_gases[/datum/gas/proto_nitrate][MOLES] -= produced_amount * 0.01
 	cached_gases[/datum/gas/hydrogen][MOLES] += produced_amount
 	energy_released += produced_amount * 10000
-	radiation_pulse(location, max_range = min(sqrt(produced_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + produced_amount), chance = 50)
+	if(energy_released > 10000 * (air.volume / 2500) ** 2)
+		radiation_pulse(location, max_range = min(sqrt(produced_amount) / 1.5, 20), threshold = 15 * INVERSE(15 + produced_amount), chance = 50)
 	if(energy_released)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
