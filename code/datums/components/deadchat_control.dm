@@ -130,17 +130,8 @@
 	SIGNAL_HANDLER
 
 	RegisterSignal(orbiter, COMSIG_MOB_DEADSAY, .proc/deadchat_react)
+	RegisterSignal(orbiter, SIGNAL_CLIENT_AUTOMUTE_CHECK, .proc/waive_automute)
 	orbiters |= orbiter
-
-	if(!ismob(orbiter))
-		return
-
-	var/mob/orbiting = orbiter
-	RegisterSignal(orbiter, COMSIG_MOB_LOGIN, .proc/orbiter_login)
-	RegisterSignal(orbiter, COMSIG_MOB_LOGOUT, .proc/orbiter_logout)
-	if(!orbiting.client)
-		return
-	orbiter_login(orbiter)
 
 
 /datum/component/deadchat_control/proc/orbit_stop(atom/source, atom/orbiter)
@@ -149,52 +140,23 @@
 	if(orbiter in orbiters)
 		UnregisterSignal(orbiter, list(
 			COMSIG_MOB_DEADSAY,
-			COMSIG_MOB_LOGIN,
-			COMSIG_MOB_LOGOUT,
+			SIGNAL_CLIENT_AUTOMUTE_CHECK,
 		))
 		orbiters -= orbiter
-
-		if(!ismob(orbiter))
-			return
-		var/mob/orbiting = orbiter
-		if(!orbiting.client)
-			return
-		orbiter_logout(orbiter)
-
-/**
- * Ensures that the clients of any orbiting mobs can waive the automute for some messages.
- *
- * Arguments:
- * - [orbiter][/mob]: The mob that has just has its client connected.
- */
-/datum/component/deadchat_control/proc/orbiter_login(mob/orbiter)
-	SIGNAL_HANDLER
-	var/client/orbiter_client = orbiter.client
-	RegisterSignal(orbiter_client, COMSIG_CLIENT_AUTOMUTE_CHECK, .proc/waive_automute)
-
-/**
- * Ensures that the clients of any orbiting mobs that leave can no longer bypass the automute for some messages.
- *
- * Arguments:
- * - [orbiter][/mob]: The mob that has just had its client disconnected.
- */
-/datum/component/deadchat_control/proc/orbiter_logout(mob/orbiter)
-	SIGNAL_HANDLER
-	var/client/orbiter_client = orbiter.client
-	UnregisterSignal(orbiter_client, COMSIG_CLIENT_AUTOMUTE_CHECK)
 
 /**
  * Prevents messages used to control the parent from counting towards the automute threshold for repeated identical messages.
  *
  * Arguments:
- * - [speaker][/client]: The client that is trying to speak.
+ * - [speaker][/client]: The mob that is trying to speak.
+ * - [client][/client]: The client that is trying to speak.
  * - message: The message that the speaker is trying to say.
  * - mute_type: Which type of mute the message counts towards.
  */
-/datum/component/deadchat_control/proc/waive_automute(client/speaker, message, mute_type)
+/datum/component/deadchat_control/proc/waive_automute(mob/speaker, client/client, message, mute_type)
 	SIGNAL_HANDLER
 	if(mute_type == MUTE_DEADCHAT && inputs[lowertext(message)])
-		return SIGVAL_WAIVE_AUTOMUTE_CHECK
+		return WAIVE_AUTOMUTE_CHECK
 	return NONE
 
 
