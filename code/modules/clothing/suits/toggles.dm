@@ -84,7 +84,7 @@
 
 /obj/item/clothing/head/hooded
 	var/obj/item/clothing/suit/hooded/suit
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/hooded/Destroy()
 	suit = null

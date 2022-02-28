@@ -227,7 +227,7 @@
 	name = "police officer's hat"
 	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/helmet/constable
 	name = "constable helmet"
