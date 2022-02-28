@@ -44,6 +44,7 @@
 	yield = 1 //seeds if there isn't a dna inside
 	potency = 30
 	var/volume = 5
+	reagents_add = list(/datum/reagent/water = 0.01) //ensures the resulting podperson will have water blood if no other genes are present
 	var/ckey
 	var/realName
 	var/datum/mind/mind
