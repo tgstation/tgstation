@@ -36,16 +36,11 @@
 	interact(user)
 	update_appearance()
 **/
-
-/obj/item/toy/cards/cardhand/attack_self(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		if(!(human_user.mobility_flags & MOBILITY_USE))
-			return
-	if(user.stat || !ishuman(user))
+/obj/item/toy/cards/cardhand/attack_self(mob/living/user)
+	if(!isliving(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, NO_TK)
 		return
-	interact(user)
 
+	interact(user)
 	var/list/handradial = list()
 	for(var/obj/item/toy/singlecard/card in cards)
 		handradial[card] = image(icon = src.icon, icon_state = card.icon_state)

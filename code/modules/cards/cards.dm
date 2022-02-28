@@ -80,9 +80,9 @@
  * * obj/item/toy/singlecard/card - The card drawn from the hand
 **/ 
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
-	if(isliving(user))
-		if(!(user.mobility_flags & MOBILITY_PICKUP))
-			return
+	if(!isliving(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, NO_TK)
+		return
+
 	var/has_no_cards = !LAZYLEN(cards)
 	if(has_no_cards)
 		to_chat(user, span_warning("There are no more cards to draw!"))
