@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a weird bug with spellbooks that may have been locking some spell options when you did some specific actions"

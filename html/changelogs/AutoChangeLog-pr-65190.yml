@@ -1,0 +1,5 @@
+author: "Axietheaxolotl, TetraZeta, PositiveEntropy, FuryMcFlurry"
+delete-after: True
+changes: 
+  - imageadd: "The detective outfits, the blueshift uniform and the constable outfits have been redone!"
+  - rscdel: "Removes the pantyhose from the HoS Parade Skirt"

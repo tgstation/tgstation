@@ -293,6 +293,11 @@
 	desc = "For finding corpses in style!"
 	greyscale_colors = "#16313D"
 
+/obj/item/clothing/head/beret/medical/cmo
+	name = "chief medical officer beret"
+	desc = "A beret in a distinct surgical turquoise!"
+	greyscale_colors = "#5EB8B8"
+
 
 //Engineering
 

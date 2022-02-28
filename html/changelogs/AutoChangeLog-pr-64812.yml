@@ -1,0 +1,5 @@
+author: "carshalash"
+delete-after: True
+changes: 
+  - expansion: "Introduces new non-alcoholic beverages to be made at the bar!"
+  - imageadd: "Sprites for these new beverages! Not just coloured glass"
