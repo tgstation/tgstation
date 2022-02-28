@@ -23,7 +23,10 @@
 **/
 	if(LAZYLEN(cards_to_combine)) // these cards are already initialized
 		for(var/obj/item/toy/singlecard/new_card in cards_to_combine)
+			new_card.forceMove(src)
 			cards += new_card
+
+
 	update_appearance()
 
 /obj/item/toy/cards/cardhand/Destroy()

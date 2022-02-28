@@ -139,11 +139,12 @@
 */
 
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/singlecard/))
-		//var/obj/item/toy/singlecard/card = obj/item/item
-		new /obj/item/toy/cards/cardhand(loc, list(src, item))
+	if(istype(item, /obj/item/toy/singlecard))
+		var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, item))
+		new_cardhand.pixel_x = src.pixel_x
+		new_cardhand.pixel_y = src.pixel_y
 		return
-	if(istype(item, /obj/item/toy/cards/cardhand/))
+	if(istype(item, /obj/item/toy/cards/cardhand))
 		//do_cardhand(user, list(src), item)
 		return
 	if(istype(item, /obj/item/toy/cards/deck))
