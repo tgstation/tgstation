@@ -28,7 +28,8 @@
 	update_appearance()
 
 /obj/item/toy/cards/cardhand/Destroy()
-	QDEL_LIST(cards)
+	if(LAZYLEN(cards))
+		QDEL_LIST(cards)
 	return ..()
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
@@ -50,9 +51,9 @@
 
 	if(length(cards) == 1)
 		var/obj/item/toy/singlecard/last_card = draw(user)
+		qdel(src)
 		last_card.pickup(user)
 		user.put_in_hands(last_card)
-		qdel(src)
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params)
 	var/cards_to_add = list()

@@ -89,9 +89,11 @@
 
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/singlecard)) // combine into cardhand
-		var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, item))
-		new_cardhand.pixel_x = src.pixel_x
-		new_cardhand.pixel_y = src.pixel_y
+		var/was_card_on_turf = isturf(loc) // need to save this loc before it gets changed with new_cardhand
+		var/obj/item/toy/cards/cardhand/new_cardhand = new (src, list(src, item))
+		if(was_card_on_turf)
+			new_cardhand.pixel_x = src.pixel_x
+			new_cardhand.pixel_y = src.pixel_y
 		return
 
 	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand

@@ -50,7 +50,8 @@
 				cards += new /obj/item/toy/singlecard(mapload, "[person] of [suit]", src)
 
 /obj/item/toy/cards/deck/Destroy()
-	QDEL_LIST(cards)
+	if(LAZYLEN(cards))
+		QDEL_LIST(cards)
 	return ..()
 
 /// triggered on wield of two handed item

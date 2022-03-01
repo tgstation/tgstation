@@ -9,7 +9,7 @@
 	/// List of cards for a hand or deck
 	var/list/cards = list()
 
-/obj/item/toy/cards/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/toy/cards/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
 	return
 
 /**
