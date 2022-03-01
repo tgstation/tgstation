@@ -42,6 +42,7 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
+	instability = 15 //allows it to gain reagent genes from nearby plants
 	potency = 30
 	var/volume = 5
 	reagents_add = list(/datum/reagent/water = 0.01) //ensures the resulting podperson will have water blood if no other genes are present
