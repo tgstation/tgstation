@@ -85,7 +85,7 @@
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
 	cut_overlays()
-	for(var/i = 1; i <= cards.len; i++)
+	for(var/i in 1 to cards.len)
 		var/obj/item/toy/singlecard/card = cards[i]
 		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = (i - 1) * 3, pixel_y = (i - 1) * 3)
 		add_overlay(card_overlay)
