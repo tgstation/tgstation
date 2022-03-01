@@ -560,6 +560,12 @@
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
+/*
+ * Get a list of all rituals this heretic can invoke on a rune.
+ * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.
+ *
+ * Returns an associated list of [knowledge name] to [knowledge datum].
+ */
 /datum/antagonist/heretic/proc/get_rituals()
 	var/list/rituals = list()
 
@@ -571,6 +577,12 @@
 
 	return rituals
 
+/*
+ * Get a list of all rituals this heretic can invoke on a rune.
+ * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.
+ *
+ * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
+ */
 /datum/antagonist/heretic/proc/can_ascend()
 	for(var/datum/objective/must_be_done as anything in objectives)
 		if(!must_be_done.check_completion())
@@ -663,7 +675,7 @@
 
 		num_we_have++
 
-	return num_we_have >= target_amount
+	return completed || (num_we_have >= target_amount)
 
 /datum/outfit/heretic
 	name = "Heretic (Preview only)"

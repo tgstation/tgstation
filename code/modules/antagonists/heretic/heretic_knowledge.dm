@@ -200,7 +200,6 @@
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
 		LAZYADD(created_items, WEAKREF(created_thing))
-
 	return TRUE
 
 /*
