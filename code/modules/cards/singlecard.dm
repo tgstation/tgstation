@@ -137,8 +137,8 @@
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()
-	user.balloon_alert(user, "flips a card")
-	user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
+	user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
+	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
