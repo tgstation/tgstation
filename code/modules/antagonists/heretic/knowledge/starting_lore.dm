@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		selected_atoms += nearby_organ
 		return TRUE
 
-	loc.balloon_alert(user, "ritual failed, need an replacement [our_heretic.living_heart_organ_slot]!") // "need an replacement heart!"
+	loc.balloon_alert(user, "ritual failed, need a replacement [our_heretic.living_heart_organ_slot]!") // "need a replacement heart!"
 	return FALSE
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
