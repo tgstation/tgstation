@@ -123,7 +123,7 @@
 		/obj/item/storage/medkit/fire = 10,
 		/obj/item/storage/medkit/brute = 10,
 		/obj/item/storage/medkit/toxin = 10,
-		/obj/effect/spawner/random/medical/firstaid_rare = 1,
+		/obj/effect/spawner/random/medical/medkit_rare = 1,
 	)
 
 /obj/effect/spawner/random/medical/patient_stretcher

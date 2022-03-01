@@ -234,7 +234,7 @@
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	var/healthanalyzer = /obj/item/healthanalyzer
-	var/medkit = /obj/item/storage/medkit
+	var/medkit_type = /obj/item/storage/medkit
 
 /obj/item/bot_assembly/medbot/proc/set_skin(skin)
 	src.skin = skin
@@ -263,11 +263,11 @@
 				var/mob/living/simple_animal/bot/medbot/medbot = new(drop_location(), skin)
 				to_chat(user, span_notice("You complete the Medbot. Beep boop!"))
 				medbot.name = created_name
-				medbot.medkit_type = medkit
+				medbot.medkit_type = medkit_type
 				medbot.robot_arm = robot_arm
 				medbot.healthanalyzer = healthanalyzer
-				var/obj/item/storage/medkit/medkit = medkit
-				S.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+				var/obj/item/storage/medkit/medkit = medkit_type
+				medbot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 				qdel(src)
 
 
