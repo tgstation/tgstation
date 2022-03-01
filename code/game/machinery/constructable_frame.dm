@@ -37,8 +37,7 @@
 				continue
 			if(!req_components[component])
 				continue
-			var/s = req_components[component] > 1 ? "s" : ""
-			nice_list += list("[req_components[component]] [req_component_names[component]][s]")
+			nice_list += list("[req_components[component]] [req_component_names[component]]\s")
 		. += span_info("It requires [english_list(nice_list, "no more components.")].")
 
 /obj/structure/frame/machine/proc/update_namelist()
@@ -49,23 +48,19 @@
 	for(var/atom/component_path as anything in req_components)
 		if(!ispath(component_path))
 			continue
+
+		req_component_names[component_path] = initial(component_path.name)
+
 		if(ispath(component_path, /obj/item/stack))
 			var/obj/item/stack/stack_path = component_path
-			var/singular_name = initial(stack_path.singular_name)
-			if(singular_name)
-				req_component_names[component_path] = singular_name
-				continue
-			else
-				req_component_names[component_path] = initial(stack_path.name)
+			if(initial(stack_path.singular_name))
+				req_component_names[component_path] = initial(stack_path.singular_name)
 				continue
 
-		var/obj/object_path = component_path
-		if(!ispath(object_path, /obj/item/stock_parts))
-			req_component_names[component_path] = initial(object_path.name)
-			continue
-
-		var/obj/item/stock_parts/stock_part_path = object_path
-		req_component_names[component_path] = initial(stock_part_path.base_name) ? initial(stock_part_path.base_name) : initial(stock_part_path.name)
+		if(ispath(component_path, /obj/item/stock_parts))
+			var/obj/item/stock_parts/stock_part = component_path
+			if(initial(stock_part.base_name))
+				req_component_names[component_path] = initial(stock_part.base_name)
 
 /obj/structure/frame/machine/proc/get_req_components_amt()
 	var/amt = 0
