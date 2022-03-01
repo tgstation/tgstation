@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - rscadd: "On Meta, Delta, and Tram Stations, expect to see the word \"Funeral\" dance across your eyes a few times as you enter the chapel."
-  - rscadd: "On IceBoxStation, the Chapel has undergone some new area definitions, and the wiring for the power to these areas have changed a bit from what you were accustomed to previously."

@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - refactor: "redid some savanna-ivanov mech code please report any new issues on the github"

@@ -1,4 +1,0 @@
-author: "adamsong"
-delete-after: True
-changes: 
-  - bugfix: "fixed vv checking if the client is a turf, and instead checked the thing that might be a turf, properly updating the vv window"
