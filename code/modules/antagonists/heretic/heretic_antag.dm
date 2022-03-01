@@ -577,8 +577,7 @@
 	return sortTim(rituals, /proc/cmp_heretic_knowledge, associative = TRUE)
 
 /*
- * Get a list of all rituals this heretic can invoke on a rune.
- * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.
+ * Checks to see if our heretic can ccurrently ascend.
  *
  * Returns FALSE if not all of our objectives are complete, or TRUE otherwise.
  */

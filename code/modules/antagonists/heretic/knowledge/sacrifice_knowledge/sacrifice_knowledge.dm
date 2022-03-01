@@ -163,6 +163,8 @@
 		if(!silent)
 			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
 
+	return TRUE
+
 /**
  * Begin the process of sacrificing the target.
  *
@@ -195,8 +197,6 @@
 
 	if(!begin_sacrifice(sacrifice))
 		disembowel_target(sacrifice)
-
-	return TRUE
 
 /**
  * This proc is called from [proc/sacrifice_process] after the heretic successfully sacrifices [sac_target].
