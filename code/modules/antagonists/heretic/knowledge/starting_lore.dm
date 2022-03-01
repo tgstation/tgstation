@@ -131,9 +131,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			continue
 		if(!nearby_organ.useable)
 			continue
-		if(nearby_organ.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING))
-			continue
-		if(nearby_organ.status != ORGAN_ORGANIC)
+		if(nearby_organ.status != ORGAN_ORGANIC || (nearby_organ.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING)))
 			continue
 
 		selected_atoms += nearby_organ
