@@ -550,6 +550,7 @@
 	name = "Circuit Spellbook (Generic)"
 	desc = "A spellbook shell that allows the behavior of the granted spell to be programmed using a circuit."
 	id = "circuit_spellbook_generic"
+	materials = list(/datum/material/iron = 1)
 	build_type = COMPONENT_PRINTER
 	build_path = /obj/item/book/granter/spell/circuit
 	category = list("Admin", "Shells")
