@@ -164,24 +164,3 @@
 		src.transform = M
 **/
 	return ..()
-
-
-/**
-/obj/item/toy/singlecard/apply_card_vars(obj/item/toy/singlecard/newobj, obj/item/toy/cards/sourceobj)
-	..()
-	newobj.deckstyle = sourceobj.deckstyle
-	newobj.has_unique_card_icons = sourceobj.has_unique_card_icons
-	newobj.icon_state = "singlecard_down_[deckstyle]" // Without this the card is invisible until flipped. It's an ugly hack, but it works.
-	newobj.card_hitsound = sourceobj.card_hitsound
-	newobj.hitsound = newobj.card_hitsound
-	newobj.card_force = sourceobj.card_force
-	newobj.force = newobj.card_force
-	newobj.card_throwforce = sourceobj.card_throwforce
-	newobj.throwforce = newobj.card_throwforce
-	newobj.card_throw_speed = sourceobj.card_throw_speed
-	newobj.throw_speed = newobj.card_throw_speed
-	newobj.card_throw_range = sourceobj.card_throw_range
-	newobj.throw_range = newobj.card_throw_range
-	newobj.attack_verb_continuous = newobj.card_attack_verb_continuous = sourceobj.card_attack_verb_continuous //null or unique list made by string_list()
-	newobj.attack_verb_simple = newobj.card_attack_verb_simple = sourceobj.card_attack_verb_simple //null or unique list made by string_list()
-**/
