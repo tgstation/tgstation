@@ -47,11 +47,10 @@
 	for(var/obj/item/toy/singlecard/card in cards)
 		handradial[card] = image(icon = src.icon, icon_state = card.icon_state)
 
-	//interact(user) i dont think we need this and should remove it
 	var/obj/item/toy/singlecard/choice = show_radial_menu(usr, src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
-	//interact(user) i dont think we need this and should remove it
+
 	var/obj/item/toy/singlecard/selected_card = draw(user, choice)
 	selected_card.pickup(user)
 	user.put_in_hands(selected_card)
