@@ -50,7 +50,7 @@
 	update_appearance()
 
 	if(length(cards) == 1)
-		src.forceMove(get_turf(src)) // drop the cardhand on the floor temporarily so it's not in our other hand
+		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		var/obj/item/toy/singlecard/last_card = draw(user)
 		last_card.pickup(user)
 		user.put_in_hands(last_card)
