@@ -16,7 +16,7 @@
 	deadchat_broadcast("'s <b>laws were changed.</b> <a href='?src=[REF(src)]&dead=1&printlawtext=[url_encode(lawtext)]'>View</a>", span_name("[src]"), follow_target=src, message_type=DEADCHAT_LAWCHANGE)
 
 /mob/living/silicon/proc/post_lawchange(announce = TRUE)
-	throw_alert("newlaw", /atom/movable/screen/alert/newlaw)
+	throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/newlaw)
 	if(announce && last_lawchange_announce != world.time)
 		to_chat(src, "<b>Your laws have been changed.</b>")
 		// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
@@ -32,31 +32,41 @@
 /mob/living/silicon/proc/add_inherent_law(law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_inherent_law(law)
+	lawcheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_inherent_laws(announce = TRUE)
 	laws_sanity_check()
+	for (var/law in laws.inherent)
+		if (law in lawcheck)
+			lawcheck -= law
 	laws.clear_inherent_laws()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/add_supplied_law(number, law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_supplied_law(number, law)
+	lawcheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_supplied_laws(announce = TRUE)
 	laws_sanity_check()
+	for(var/law in laws.supplied)
+		if (law in lawcheck)
+			lawcheck -= law
 	laws.clear_supplied_laws()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/add_ion_law(law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_ion_law(law)
+	ioncheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/add_hacked_law(law, announce = TRUE)
 	laws_sanity_check()
 	laws.add_hacked_law(law)
+	hackedcheck += law
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/replace_random_law(law, groups, announce = TRUE)
@@ -72,16 +82,20 @@
 /mob/living/silicon/proc/remove_law(number, announce = TRUE)
 	laws_sanity_check()
 	. = laws.remove_law(number)
+	if (. in lawcheck)
+		lawcheck -= .
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_ion_laws(announce = TRUE)
 	laws_sanity_check()
 	laws.clear_ion_laws()
+	ioncheck = list()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/clear_hacked_laws(announce = TRUE)
 	laws_sanity_check()
 	laws.clear_hacked_laws()
+	hackedcheck = list()
 	post_lawchange(announce)
 
 /mob/living/silicon/proc/make_laws()
@@ -91,5 +105,7 @@
 
 /mob/living/silicon/proc/clear_zeroth_law(force, announce = TRUE)
 	laws_sanity_check()
-	laws.clear_zeroth_law(force)
+	var/zeroth = laws.zeroth
+	if(laws.clear_zeroth_law(force))
+		lawcheck -= zeroth
 	post_lawchange(announce)

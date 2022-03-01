@@ -69,6 +69,7 @@
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 
 /obj/structure/emergency_shield/cult/barrier
 	density = FALSE //toggled on right away by the parent rune
@@ -184,15 +185,35 @@
 			to_chat(user, span_warning("The device must first be secured to the floor!"))
 	return
 
+/obj/machinery/shieldgen/screwdriver_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 100)
+	panel_open = !panel_open
+	if(panel_open)
+		to_chat(user, span_notice("You open the panel and expose the wiring."))
+	else
+		to_chat(user, span_notice("You close the panel."))
+	return TRUE
+
+/obj/machinery/shieldgen/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(locked)
+		to_chat(user, span_warning("The bolts are covered! Unlocking this would retract the covers."))
+		return
+	if(!anchored && !isinspace())
+		tool.play_tool_sound(src, 100)
+		to_chat(user, span_notice("You secure \the [src] to the floor!"))
+		set_anchored(TRUE)
+	else if(anchored)
+		tool.play_tool_sound(src, 100)
+		to_chat(user, span_notice("You unsecure \the [src] from the floor!"))
+		if(active)
+			to_chat(user, span_notice("\The [src] shuts off!"))
+			shields_down()
+		set_anchored(FALSE)
+
+
 /obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		W.play_tool_sound(src, 100)
-		panel_open = !panel_open
-		if(panel_open)
-			to_chat(user, span_notice("You open the panel and expose the wiring."))
-		else
-			to_chat(user, span_notice("You close the panel."))
-	else if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
+	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
@@ -206,22 +227,6 @@
 			set_machine_stat(machine_stat & ~BROKEN)
 			to_chat(user, span_notice("You repair \the [src]."))
 			update_appearance()
-
-	else if(W.tool_behaviour == TOOL_WRENCH)
-		if(locked)
-			to_chat(user, span_warning("The bolts are covered! Unlocking this would retract the covers."))
-			return
-		if(!anchored && !isinspace())
-			W.play_tool_sound(src, 100)
-			to_chat(user, span_notice("You secure \the [src] to the floor!"))
-			set_anchored(TRUE)
-		else if(anchored)
-			W.play_tool_sound(src, 100)
-			to_chat(user, span_notice("You unsecure \the [src] from the floor!"))
-			if(active)
-				to_chat(user, span_notice("\The [src] shuts off!"))
-				shields_down()
-			set_anchored(FALSE)
 
 	else if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))

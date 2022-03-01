@@ -436,15 +436,16 @@
 	if(force)
 		zeroth = null
 		zeroth_borg = null
-		return
+		return TRUE
 	if(owner?.mind?.special_role)
-		return
+		return FALSE
 	if (istype(owner, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/A=owner
 		if(A?.deployed_shell?.mind?.special_role)
-			return
+			return FALSE
 	zeroth = null
 	zeroth_borg = null
+	return TRUE
 
 /datum/ai_laws/proc/associate(mob/living/silicon/M)
 	if(!owner)

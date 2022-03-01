@@ -1294,7 +1294,7 @@
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
-/mob/living/simple_animal/bot/honkbot,
+/mob/living/simple_animal/bot/secbot/honkbot,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
 "NN" = (

@@ -70,7 +70,7 @@
 		return
 
 	// less limping while we have determination still
-	var/determined_mod = owner.has_status_effect(STATUS_EFFECT_DETERMINED) ? 0.5 : 1
+	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
 	if(next_leg == left)
 		if(prob(limp_chance_left * determined_mod))
