@@ -89,10 +89,8 @@
 /datum/component/effect_remover/proc/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	SIGNAL_HANDLER
 
-	context[SCREENTIP_CONTEXT_RMB] = "[tip_text]"
-
 	if(effects_we_clear[target.type])
-		context[SCREENTIP_CONTEXT_LMB] = "[tip_text]"
+		context[SCREENTIP_CONTEXT_LMB] = tip_text
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return CONTEXTUAL_SCREENTIP_SET
+	return NONE
