@@ -130,12 +130,13 @@
  * Called by [/obj/item/circuit_component] whenever it is disconnected from
  * an integrated circuit
  */
-/datum/port/proc/disconnect_all()
-	value = null
+/datum/port/proc/disconnect_all(clear_value = TRUE)
+	if(clear_value)
+		value = null
 	SEND_SIGNAL(src, COMSIG_PORT_DISCONNECT)
 
-/datum/port/input/disconnect_all()
-	..()
+/datum/port/input/disconnect_all(clear_value = TRUE)
+	..(clear_value)
 	for(var/datum/port/output/output as anything in connected_ports)
 		disconnect(output)
 

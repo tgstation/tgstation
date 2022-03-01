@@ -544,3 +544,52 @@
 	build_path = /obj/item/mod/module/circuit
 	build_type = MECHFAB | COMPONENT_PRINTER
 	category = list("MOD Modules", "Shells")
+
+// Circuit Spellbook designs - necessary to be printable in the debug component printer
+/datum/design/circuit_spellbook
+	name = "Circuit Spellbook (Generic)"
+	desc = "A spellbook shell that allows the behavior of the granted spell to be programmed using a circuit."
+	id = "circuit_spellbook_generic"
+	build_type = COMPONENT_PRINTER
+	build_path = /obj/item/book/granter/spell/circuit
+	category = list("Admin", "Shells")
+
+/datum/design/circuit_spellbook/targeted
+	name = "Circuit Spellbook (Targeted)"
+	id = "circuit_spellbook_targeted"
+	build_path = /obj/item/book/granter/spell/circuit/targeted
+
+/datum/design/circuit_spellbook/aoe_turf
+	name = "Circuit Spellbook (AoE)"
+	id = "circuit_spellbook_aoe"
+	build_path = /obj/item/book/granter/spell/circuit/aoe_turf
+
+/datum/design/circuit_spellbook/self
+	name = "Circuit Spellbook (Self)"
+	id = "circuit_spellbook_self"
+	build_path = /obj/item/book/granter/spell/circuit/self
+
+/datum/design/circuit_spellbook/pointed
+	name = "Circuit Spellbook (Pointed)"
+	id = "circuit_spellbook_pointed"
+	build_path = /obj/item/book/granter/spell/circuit/pointed
+
+/datum/design/circuit_spellbook/aimed
+	name = "Circuit Spellbook (Aimed)"
+	id = "circuit_spellbook_aimed"
+	build_path = /obj/item/book/granter/spell/circuit/aimed
+
+/datum/design/circuit_spellbook/cone
+	name = "Circuit Spellbook (Cone)"
+	id = "circuit_spellbook_cone"
+	build_path = /obj/item/book/granter/spell/circuit/cone
+
+/datum/design/circuit_spellbook/cone/staggered
+	name = "Circuit Spellbook (Staggered Cone)"
+	id = "circuit_spellbook_cone_staggered"
+	build_path = /obj/item/book/granter/spell/circuit/cone/staggered
+
+/datum/design/circuit_spellbook/touch
+	name = "Circuit Spellbook (Touch)"
+	id = "circuit_spellbook_touch"
+	build_path = /obj/item/book/granter/spell/circuit/touch
