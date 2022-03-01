@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			return
 		Expand()
 		if((get_turf(target) in flood_turfs) && !target.internal)
-			new /datum/hallucination/fake_alert(target, TRUE, "too_much_plas")
+			new /datum/hallucination/fake_alert(target, TRUE, ALERT_TOO_MUCH_PLASMA)
 		next_expand = world.time + FAKE_FLOOD_EXPAND_TIME
 
 /datum/hallucination/fake_flood/proc/Expand()
@@ -1112,51 +1112,69 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 /datum/hallucination/fake_alert/New(mob/living/carbon/C, forced = TRUE, specific, duration = 150)
 	set waitfor = FALSE
 	..()
-	alert_type = pick("not_enough_oxy","not_enough_plas","not_enough_co2","too_much_oxy","too_much_co2","too_much_plas","newlaw","nutrition","charge","gravity","fire","locked","hacked","temphot","tempcold","pressure")
+	alert_type = pick(
+		ALERT_NOT_ENOUGH_OXYGEN,
+		ALERT_NOT_ENOUGH_PLASMA,
+		ALERT_NOT_ENOUGH_CO2,
+		ALERT_TOO_MUCH_OXYGEN,
+		ALERT_TOO_MUCH_CO2,
+		ALERT_TOO_MUCH_PLASMA,
+		ALERT_NUTRITION,
+		ALERT_GRAVITY,
+		ALERT_FIRE,
+		ALERT_TEMPERATURE_HOT,
+		ALERT_TEMPERATURE_COLD,
+		ALERT_PRESSURE,
+		ALERT_NEW_LAW,
+		ALERT_LOCKED,
+		ALERT_HACKED,
+		ALERT_CHARGE,
+	)
+
 	if(specific)
 		alert_type = specific
 	feedback_details += "Type: [alert_type]"
 	switch(alert_type)
-		if("not_enough_oxy")
+		if(ALERT_NOT_ENOUGH_OXYGEN)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/not_enough_oxy, override = TRUE)
-		if("not_enough_plas")
+		if(ALERT_NOT_ENOUGH_PLASMA)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/not_enough_plas, override = TRUE)
-		if("not_enough_co2")
+		if(ALERT_NOT_ENOUGH_CO2)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/not_enough_co2, override = TRUE)
-		if("too_much_oxy")
+		if(ALERT_TOO_MUCH_OXYGEN)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/too_much_oxy, override = TRUE)
-		if("too_much_co2")
+		if(ALERT_TOO_MUCH_CO2)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/too_much_co2, override = TRUE)
-		if("too_much_plas")
+		if(ALERT_TOO_MUCH_PLASMA)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/too_much_plas, override = TRUE)
-		if("nutrition")
+		if(ALERT_NUTRITION)
 			if(prob(50))
 				target.throw_alert(alert_type, /atom/movable/screen/alert/fat, override = TRUE)
 			else
 				target.throw_alert(alert_type, /atom/movable/screen/alert/starving, override = TRUE)
-		if("gravity")
+		if(ALERT_GRAVITY)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/weightless, override = TRUE)
-		if("fire")
+		if(ALERT_FIRE)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/fire, override = TRUE)
-		if("temphot")
+		if(ALERT_TEMPERATURE_HOT)
 			alert_type = "temp"
 			target.throw_alert(alert_type, /atom/movable/screen/alert/hot, 3, override = TRUE)
-		if("tempcold")
+		if(ALERT_TEMPERATURE_COLD)
 			alert_type = "temp"
 			target.throw_alert(alert_type, /atom/movable/screen/alert/cold, 3, override = TRUE)
-		if("pressure")
+		if(ALERT_PRESSURE)
 			if(prob(50))
 				target.throw_alert(alert_type, /atom/movable/screen/alert/highpressure, 2, override = TRUE)
 			else
 				target.throw_alert(alert_type, /atom/movable/screen/alert/lowpressure, 2, override = TRUE)
 		//BEEP BOOP I AM A ROBOT
-		if("newlaw")
+		if(ALERT_NEW_LAW)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/newlaw, override = TRUE)
-		if("locked")
+		if(ALERT_LOCKED)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/locked, override = TRUE)
-		if("hacked")
+		if(ALERT_HACKED)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/hacked, override = TRUE)
-		if("charge")
+		if(ALERT_CHARGE)
 			target.throw_alert(alert_type, /atom/movable/screen/alert/emptycell, override = TRUE)
 
 	addtimer(CALLBACK(src, .proc/cleanup), duration)
@@ -1461,7 +1479,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(target.client)
 		target.client.images += fire_overlay
 	to_chat(target, span_userdanger("You're set on fire!"))
-	target.throw_alert("fire", /atom/movable/screen/alert/fire, override = TRUE)
+	target.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire, override = TRUE)
 	times_to_lower_stamina = rand(5, 10)
 	addtimer(CALLBACK(src, .proc/start_expanding), 20)
 
@@ -1510,16 +1528,16 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 
 /datum/hallucination/fire/proc/update_temp()
 	if(stage <= 0)
-		target.clear_alert("temp", clear_override = TRUE)
+		target.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
 	else
-		target.clear_alert("temp", clear_override = TRUE)
-		target.throw_alert("temp", /atom/movable/screen/alert/hot, stage, override = TRUE)
+		target.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
+		target.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, stage, override = TRUE)
 
 /datum/hallucination/fire/proc/clear_fire()
 	if(!active)
 		return
 	active = FALSE
-	target.clear_alert("fire", clear_override = TRUE)
+	target.clear_alert(ALERT_FIRE, clear_override = TRUE)
 	if(target.client)
 		target.client.images -= fire_overlay
 	QDEL_NULL(fire_overlay)

@@ -1,0 +1,33 @@
+2022-03-01:
+  Axietheaxolotl, TetraZeta, PositiveEntropy, FuryMcFlurry:
+  - imageadd: The detective outfits, the blueshift uniform and the constable outfits
+      have been redone!
+  - rscdel: Removes the pantyhose from the HoS Parade Skirt
+  Ebin-Halcyon:
+  - imageadd: New fireaxe inhand, worn, and in cabinet sprites.
+  Fikou:
+  - bugfix: fixes thieves not being able to complete the guns objective
+  Kubisopplay:
+  - expansion: Adds malfunction module that lets you impersonate anyone
+  Mothblocks:
+  - admin: Going stealth mode now drops your orbiters and blocks you from being orbited.
+  OneAsianTortoise:
+  - bugfix: fixes accounting's alert being cut in half
+  TiviPlus:
+  - refactor: redid some savanna-ivanov mech code please report any new issues on
+      the github
+  adamsong:
+  - bugfix: fixed vv checking if the client is a turf, and instead checked the thing
+      that might be a turf, properly updating the vv window
+  carshalash:
+  - expansion: Introduces new non-alcoholic beverages to be made at the bar!
+  - imageadd: Sprites for these new beverages! Not just coloured glass
+  san7890:
+  - rscadd: On Meta, Delta, and Tram Stations, expect to see the word "Funeral" dance
+      across your eyes a few times as you enter the chapel.
+  - rscadd: On IceBoxStation, the Chapel has undergone some new area definitions,
+      and the wiring for the power to these areas have changed a bit from what you
+      were accustomed to previously.
+  tralezab:
+  - bugfix: Fixes a weird bug with spellbooks that may have been locking some spell
+      options when you did some specific actions

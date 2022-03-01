@@ -881,5 +881,120 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/ai_module/upgrade/mecha_domination/upgrade(mob/living/silicon/ai/AI)
 	AI.can_dominate_mechs = TRUE //Yep. This is all it does. Honk!
 
+
+
+/datum/ai_module/upgrade/voice_changer
+	name = "Voice Changer"
+	description = "Allows you to change the AI's voice. Upgrade is active immediately upon purchase."
+	cost = 40
+	one_purchase = TRUE
+	power_type = /datum/action/innate/ai/voice_changer
+	unlock_text = span_notice("OTA firmware distribution complete! Voice changer online.")
+	unlock_sound = 'sound/items/rped.ogg'
+
+/datum/action/innate/ai/voice_changer
+	name="Voice Changer"
+	button_icon_state = "voice_changer"
+	desc = "Allows you to change the AI's voice."
+	auto_use_uses  = FALSE
+	var/obj/machinery/ai_voicechanger/voice_changer_machine
+
+/datum/action/innate/ai/voice_changer/Activate()
+	if(!voice_changer_machine)
+		voice_changer_machine = new(owner_AI)
+	voice_changer_machine.ui_interact(usr)
+
+/obj/machinery/ai_voicechanger
+	icon = 'icons/obj/machines/nuke_terminal.dmi'
+	name = "Voice Changer"
+	icon_state = "nuclearbomb_base"
+	var/mob/living/silicon/ai/owner
+	var/loudvoice = FALSE
+	var/say_verb //verb used when voicechanger is on
+	var/say_name //name used when voicechanger is on
+	var/say_span //span used when voicechanger is on
+	var/changing_voice = FALSE //TRUE if the AI is changing its voice
+	var/prev_loud // saved loudvoice state, used to restore after a voice change
+	var/prev_verbs // saved verb state, used to restore after a voice change
+	var/prev_span // saved span state, used to restore after a voice change
+
+/obj/machinery/ai_voicechanger/Initialize(mapload)
+	. = ..()
+	if(!isAI(loc))
+		return INITIALIZE_HINT_QDEL
+	owner = loc
+	owner.ai_voicechanger = src
+	prev_verbs = list("say" = owner.verb_say, "ask" = owner.verb_ask, "exclaim" = owner.verb_exclaim , "yell" = owner.verb_yell  )
+	prev_span = owner.speech_span
+	say_name = owner.name
+	say_verb = owner.verb_say
+	say_span = owner.speech_span
+
+/obj/machinery/ai_voicechanger/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AiVoiceChanger")
+		ui.open()
+
+/obj/machinery/ai_voicechanger/Destroy()
+	if(owner)
+		owner.ai_voicechanger = null
+		owner = null
+	return ..()
+
+/obj/machinery/ai_voicechanger/ui_data(mob/user)
+	var/list/data = list()
+	data["voices"] = list("normal",SPAN_ROBOT,SPAN_YELL,SPAN_CLOWN) //manually adding this since i dont see other option
+	data["loud"] = loudvoice
+	data["on"] = changing_voice
+	data["say_verb"] = say_verb
+	data["name"] = say_name
+	return data
+
+/obj/machinery/ai_voicechanger/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("power")
+			changing_voice = !changing_voice
+			if(changing_voice)
+				prev_verbs["say"] = owner.verb_say
+				owner.verb_say	= say_verb
+				prev_verbs["ask"] = owner.verb_ask
+				owner.verb_ask	= say_verb
+				prev_verbs["exclaim"] = owner.verb_exclaim
+				owner.verb_exclaim	= say_verb
+				prev_verbs["yell"] = owner.verb_yell
+				owner.verb_yell	= say_verb
+				prev_span = owner.speech_span
+				owner.speech_span = say_span
+				prev_loud = owner.radio.use_command
+				owner.radio.use_command = loudvoice
+			else
+				owner.verb_say	= prev_verbs["say"]
+				owner.verb_ask	= prev_verbs["ask"]
+				owner.verb_exclaim	= prev_verbs["exclaim"]
+				owner.verb_yell	= prev_verbs["yell"]
+				owner.speech_span = prev_span
+				owner.radio.use_command = prev_loud
+		if("loud")
+			loudvoice = !loudvoice
+			if(changing_voice)
+				owner.radio.use_command = loudvoice
+		if("look")
+			say_span = params["look"]
+			if(changing_voice)
+				owner.speech_span = say_span
+		if("verb")
+			say_verb = params["verb"]
+			if(changing_voice)
+				owner.verb_say = say_verb
+				owner.verb_ask = say_verb
+				owner.verb_exclaim = say_verb
+				owner.verb_yell = say_verb
+		if("name")
+			say_name = params["name"]
+
+
 #undef DEFAULT_DOOMSDAY_TIMER
 #undef DOOMSDAY_ANNOUNCE_INTERVAL

@@ -563,17 +563,19 @@
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
+ * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile.
  *
  * @params
- * P - projectile
+ * hitting_projectile - projectile
  * def_zone - zone hit
  * piercing_hit - is this hit piercing or normal?
  */
 /atom/proc/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, hitting_projectile, def_zone)
-	var/armor = check_projectile_armor(def_zone, hitting_projectile)
-	. = hitting_projectile.on_hit(src, armor, def_zone, piercing_hit)
+	// This armor check only matters for the visuals and messages in on_hit(), it's not actually used to reduce damage since
+	// only living mobs use armor to reduce damage, but on_hit() is going to need the value no matter what is shot.
+	var/visual_armor_check = check_projectile_armor(def_zone, hitting_projectile)
+	. = hitting_projectile.on_hit(src, visual_armor_check, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
