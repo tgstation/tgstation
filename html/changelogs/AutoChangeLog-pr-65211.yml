@@ -1,0 +1,6 @@
+author: "Twaticus, PositiveEntropy, Axietheaxolotl"
+delete-after: True
+changes: 
+  - imageadd: "Resprites the Warden's Jackets and Jumpsuit, the HoS Jumpsuit, the Formal Jackets,  the Bulletproof and Regular Security Helmets and the Security Jumpsuit!"
+  - expansion: "adds a red warden hat to match with the warden's red uniform!"
+  - rscdel: "Removes unused helmet camera sprites."
