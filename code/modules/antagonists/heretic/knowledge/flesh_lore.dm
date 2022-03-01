@@ -51,6 +51,7 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	limit = 3 // Bumped up so they can arm up their ghouls too.
 	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/limited_amount/base_flesh/on_research(mob/user)

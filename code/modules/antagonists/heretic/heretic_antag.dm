@@ -410,13 +410,12 @@
 /datum/antagonist/heretic/get_admin_commands()
 	. = ..()
 
-	var/obj/item/organ/our_living_heart = owner.current?.getorganslot(living_heart_organ_slot)
-	if(our_living_heart)
-		if(HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+	switch(has_living_heart())
+		if(HERETIC_NO_LIVING_HEART)
+			.["Give Living Heart"] = CALLBACK(src, .proc/give_living_heart)
+		if(HERETIC_HAS_LIVING_HEART)
 			.["Add Heart Target (Marked Mob)"] = CALLBACK(src, .proc/add_marked_as_target)
 			.["Remove Heart Target"] = CALLBACK(src, .proc/remove_target)
-		else
-			.["Give Living Heart"] = CALLBACK(src, .proc/give_living_heart)
 
 	.["Adjust Knowledge Points"] = CALLBACK(src, .proc/admin_change_points)
 
@@ -564,7 +563,7 @@
  * Get a list of all rituals this heretic can invoke on a rune.
  * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.
  *
- * Returns an associated list of [knowledge name] to [knowledge datum].
+ * Returns an associated list of [knowledge name] to [knowledge datum] sorted by knowledge priority.
  */
 /datum/antagonist/heretic/proc/get_rituals()
 	var/list/rituals = list()
@@ -575,7 +574,7 @@
 			continue
 		rituals[knowledge.name] = knowledge
 
-	return rituals
+	return sortTim(rituals, /proc/cmp_heretic_knowledge, associative = TRUE)
 
 /*
  * Get a list of all rituals this heretic can invoke on a rune.
@@ -588,6 +587,26 @@
 		if(!must_be_done.check_completion())
 			return FALSE
 	return TRUE
+
+/*
+ * Helper to determine if a Heretic
+ * - Has a Living Heart
+ * - Has a an organ in the correct slot that isn't a living heart
+ * - Is missing the organ they need in the slot to make a living heart
+ *
+ * Returns HERETIC_NO_HEART_ORGAN if they have no heart (organ) at all,
+ * Returns HERETIC_NO_LIVING_HEART if they have a heart (organ) but it's not a living one,
+ * and returns HERETIC_HAS_LIVING_HEART if they have a living heart
+ */
+/datum/antagonist/heretic/proc/has_living_heart()
+	var/obj/item/organ/our_living_heart = owner.current?.getorganslot(living_heart_organ_slot)
+	if(!our_living_heart)
+		return HERETIC_NO_HEART_ORGAN
+
+	if(!HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+		return HERETIC_NO_LIVING_HEART
+
+	return HERETIC_HAS_LIVING_HEART
 
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice

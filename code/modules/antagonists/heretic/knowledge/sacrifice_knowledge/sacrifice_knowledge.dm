@@ -14,11 +14,10 @@
 		If you have no targets, stand on a transmutation rune and invoke it to aquire some."
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
+	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	route = PATH_START
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
 	var/static/heretic_level_generated = FALSE
-	/// If TRUE, we skip the ritual when our target list is empty. Done to avoid locking up the heretic.
-	var/recently_tried_for_targets = FALSE
 	/// A weakref to the mind of our heretic.
 	var/datum/mind/heretic_mind
 	/// Lazylist of minds that we won't pick as targets.
@@ -47,14 +46,12 @@
 		message_admins("The heretic sacrifice z-level failed to load. Any heretics are gonna have a field day disemboweling people, probably. Up to you if you're fine with it.")
 		CRASH("Failed to initialize heretic sacrifice z-level!")
 
-/datum/heretic_knowledge/hunt_and_sacrifice/can_be_invoked(datum/antagonist/heretic/invoker)
-	return !recently_tried_for_targets
-
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	// First we have to check if we have a living heart or not.
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.living_heart_organ_slot)
-	if(!our_living_heart || !HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+	// First we have to check if the heretic has a Living Heart.
+	// You may wonder why we don't straight up prevent them from invoking the ritual if they don't have one -
+	// Hunt and sacrifice should always be invokable for clarity's sake, even if it'll fail immediately.
+	if(heretic_datum.has_living_heart() != HERETIC_HAS_LIVING_HEART)
 		loc.balloon_alert(user, "ritual failed, no living heart!")
 		return FALSE
 
@@ -62,7 +59,7 @@
 	// If we recently failed to aquire targets, we will be unable to aquire any.
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		atoms += user
-		return !recently_tried_for_targets
+		return TRUE
 
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
@@ -82,9 +79,14 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	if(!LAZYLEN(heretic_datum.sac_targets))
-		return obtain_targets(user)
+		if(obtain_targets(user))
+			return TRUE
+		else
+			loc.balloon_alert(user, "ritual failed, no targets found!")
+			return FALSE
 
-	return sacrifice_process(user, selected_atoms, loc)
+	sacrifice_process(user, selected_atoms, loc)
+	return TRUE
 
 /**
  * Obtain a list of targets for the user to hunt down and sacrifice.
@@ -110,9 +112,7 @@
 
 	if(!length(valid_targets))
 		if(!silent)
-			to_chat(user, span_hierophant_warning("No sacrifice targets could be found! Attempt the ritual later."))
-		recently_tried_for_targets = TRUE
-		addtimer(VARSET_CALLBACK(src, recently_tried_for_targets, FALSE), 5 MINUTES)
+			to_chat(user, span_hierophant_warning("No sacrifice targets could be found!"))
 		return FALSE
 
 	// Now, let's try to get four targets.
@@ -162,8 +162,6 @@
 		heretic_datum.add_sacrifice_target(chosen_mind.current)
 		if(!silent)
 			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
-
-	return TRUE
 
 /**
  * Begin the process of sacrificing the target.

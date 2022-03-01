@@ -121,14 +121,18 @@
 	var/list/what_are_we_missing = list()
 	for(var/atom/req_type as anything in requirements_list)
 		var/number_of_things = requirements_list[req_type]
+		// <= 0 means it's fulfilled, skip
 		if(number_of_things <= 0)
 			continue
 
-		var/name_of_thing = "[initial(req_type.name)]\s"
+		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
+		// Lets format the thing they're missing and put it into our list
+		var/formatted_thing = "[number_of_things] [initial(req_type.name)]\s"
 		if(ispath(req_type, /mob/living/carbon/human))
-			name_of_thing = number_of_things > 1 ? "bodies" : "body"
+			// If we need a human, there is a high likelihood we actually need a (dead) body
+			formatted_thing = "[number_of_things] [number_of_things > 1 ? "bodies":"body"]"
 
-		what_are_we_missing += "[number_of_things] [name_of_thing]"
+		what_are_we_missing += formatted_thing
 
 	if(length(what_are_we_missing))
 		// Let them know it screwed up

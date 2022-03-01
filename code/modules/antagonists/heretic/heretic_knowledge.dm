@@ -26,6 +26,9 @@
 	var/list/result_atoms = list()
 	/// Cost of knowledge in knowlege points
 	var/cost = 0
+	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
+	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
+	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
 
@@ -317,6 +320,7 @@
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
 	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
 
@@ -405,6 +409,7 @@
  */
 /datum/heretic_knowledge/final
 	cost = 2
+	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
 
 /datum/heretic_knowledge/final/on_research(mob/user)

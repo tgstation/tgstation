@@ -44,6 +44,7 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
 	limit = 2
 	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_VOID
 
 /datum/heretic_knowledge/limited_amount/base_void/on_research(mob/user)

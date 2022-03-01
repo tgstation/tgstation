@@ -16,13 +16,11 @@
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.living_heart_organ_slot)
-	if(!our_living_heart || !HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+	// Check first if they have a Living Heart. If it's missing, we should
+	// throw a fail to show the heretic that there's no point in rerolling
+	// if you don't have a heart to track the targets in the first place.
+	if(heretic_datum.has_living_heart() != HERETIC_HAS_LIVING_HEART)
 		loc.balloon_alert(user, "ritual failed, no living heart!")
-		return FALSE
-
-	if(!LAZYLEN(heretic_datum.sac_targets))
-		loc.balloon_alert(user, "ritual failed, no targets to reroll!")
 		return FALSE
 
 	return TRUE
@@ -36,7 +34,7 @@
 		CRASH("Heretic datum didn't have a hunt_and_sacrifice knowledge learned, what?")
 
 	if(!target_finder.obtain_targets(user))
-		loc.balloon_alert(user, "no targets found!")
+		loc.balloon_alert(user, "ritual failed, no targets found!")
 		return FALSE
 
 	return TRUE

@@ -157,3 +157,7 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 	rhs = ispath(B, /datum/reagent) ? 0 : 1
 
 	return lhs - rhs
+
+/// Orders heretic knowledge by priority
+/proc/cmp_heretic_knowledge(datum/heretic_knowledge/knowledge_a, datum/heretic_knowledge/knowledge_b)
+	return initial(knowledge_b.priority) - initial(knowledge_a.priority)
