@@ -1,0 +1,6 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - qol: "modsuit radial icons highlight on extended pieces"
+  - bugfix: "modsuit clamp can carry wrapped crates"
+  - bugfix: "modsuit activation is no longer affected by do after slowdowns"
