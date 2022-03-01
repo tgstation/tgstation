@@ -1,0 +1,8 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - qol: "Adds a minimum threshold to ingested ant screaming."
+  - qol: "Ants are no longer lavaproof."
+  - balance: "Adds a minimum threshold to ant piles biting through shoes."
+  - balance: "Giant ants are now peaceful hostile mobs. This means they will attack anything that does not have the \"neutral\" factiontype. To compensate, the price to make one has been raised."
+  - imageadd: "It appears the invasive \"space ant\" has gotten into our formerly secret uranium reserves and as such have mutated slightly, gaining a slight bioluminescence."
