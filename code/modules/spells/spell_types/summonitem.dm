@@ -80,7 +80,7 @@
 					else
 						var/obj/retrieved_item = item_to_retrieve.loc
 						if(retrieved_item.anchored)
-							break
+							return
 						if(istype(retrieved_item, /obj/machinery/portable_atmospherics)) //Edge cases for moved machinery
 							var/obj/machinery/portable_atmospherics/P = retrieved_item
 							P.disconnect()
