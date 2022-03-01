@@ -548,7 +548,7 @@
  */
 /obj/item/restraints/handcuffs/strand
 	name = "\improper Kheiral cuffs"
-	desc = "A prototype wrist communicator, made illegal because too many people were using them as handcuffs. Can read the wearer's data, send circuit signals, and have its tightness adjusted."
+	desc = "A prototype wrist communicator, overshadowed by the handcuffs slapped against it. Can read the wearer's data, send circuit signals, and have its tightness adjusted."
 	icon_state = "strand"
 
 /obj/item/restraints/handcuffs/strand/Initialize()
@@ -615,3 +615,25 @@
 
 	captive.set_output(null)
 	uncuffed.set_output(COMPONENT_SIGNAL)
+
+// Circuit conversion frame
+/obj/item/handcuff_circuit_frame
+	name = "\improper Kheiral cuffs frame"
+	desc = "A set of sensors, wires, and a knife-shaped antennae. Hook these up to a pair of handcuffs to let them hold circuits."
+	icon = 'icons/obj/restraints.dmi'
+	icon_state = "strand_frame"
+
+/obj/item/handcuff_circuit_frame/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.type != /obj/item/restraints/handcuffs)
+		return ..()
+	user.visible_message(span_notice("[user] begins inserting [attacking_item] into [src]."), span_notice("You begin inserting [attacking_item] into [src]."))
+	if(!do_after(user, 3 SECONDS, src))
+		return
+	user.visible_message(span_notice("[user] finishes modifying [attacking_item]."), span_notice("You finish modifying [attacking_item]."))
+	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
+	var/turf/drop_loc = drop_location()
+
+	qdel(src)
+	qdel(attacking_item)
+	if(drop_loc)
+		new /obj/item/restraints/handcuffs/strand(drop_loc)
