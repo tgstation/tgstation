@@ -153,7 +153,7 @@
 /obj/item/storage/medkit/fire
 	name = "burn treatment kit"
 	desc = "A specialized medical kit for when the ordnance lab <i>-spontaneously-</i> burns down."
-	icon_state = "medkit_fire"
+	icon_state = "medkit_burn"
 	inhand_icon_state = "medkit-ointment"
 	damagetype_healed = BURN
 
