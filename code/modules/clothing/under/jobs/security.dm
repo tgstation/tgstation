@@ -109,17 +109,17 @@
 	fitted = FEMALE_UNIFORM_TOP
 	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/rank/security/detective/grey
+/obj/item/clothing/under/rank/security/detective/noir
 	name = "noir suit"
-	desc = "A hard-boiled private investigator's grey suit, complete with tie clip."
-	icon_state = "greydet"
+	desc = "A hard-boiled private investigator's dark suit, complete with tie clip."
+	icon_state = "noirdet"
 	inhand_icon_state = "greydet"
 	alt_covers_chest = TRUE
 
-/obj/item/clothing/under/rank/security/detective/grey/skirt
+/obj/item/clothing/under/rank/security/detective/noir/skirt
 	name = "noir suitskirt"
 	desc = "A hard-boiled private investigator's grey suitskirt, complete with tie clip."
-	icon_state = "greydet_skirt"
+	icon_state = "noirdet_skirt"
 	inhand_icon_state = "greydet"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT

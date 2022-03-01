@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - qol: "Pushing off something in space will no longer cause it to be delayed for half a second before drifting properly. Should look nicer now"
+  - bugfix: "Fixed being able to push \"off\" something you're moving towards, allowing for infinite movement in one direction in space, at your walk speed"
