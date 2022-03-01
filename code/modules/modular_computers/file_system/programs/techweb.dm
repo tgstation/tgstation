@@ -11,6 +11,8 @@
 	transfer_access = ACCESS_RD
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
+	/// Access needed to lock/unlock the console
+	var/lock_access = ACCESS_RND
 	/// Determines if the console is locked, and consequently if actions can be performed with it
 	var/locked = FALSE
 	/// Used for compressing data sent to the UI via static_data as payload size is of concern
@@ -93,7 +95,7 @@
 			if(computer.obj_flags & EMAGGED)
 				to_chat(usr, span_boldwarning("Security protocol error: Unable to access locking protocols."))
 				return TRUE
-			if(ACCESS_RND in user_id_card?.access)
+			if(lock_access in user_id_card?.access)
 				locked = !locked
 			else
 				to_chat(usr, span_boldwarning("Unauthorized Access. Please insert research ID card."))
