@@ -256,7 +256,7 @@
 /obj/item/storage/medkit/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
-	icon_state = "medkit_bezerk"
+	icon_state = "medkit_tactical"
 	damagetype_healed = "all"
 
 /obj/item/storage/medkit/tactical/ComponentInitialize()
