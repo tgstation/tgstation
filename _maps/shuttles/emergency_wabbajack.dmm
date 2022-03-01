@@ -123,11 +123,8 @@
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -256,10 +253,7 @@
 "aN" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -1;
-	pixel_y = 1
-	},
+/obj/item/storage/medkit/regular,
 /obj/item/wrench/medical,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)

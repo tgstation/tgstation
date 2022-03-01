@@ -14,7 +14,7 @@
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
 "af" = (
@@ -29,10 +29,7 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
@@ -109,11 +106,8 @@
 /area/shuttle/escape)
 "ay" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
@@ -261,11 +255,8 @@
 /area/shuttle/escape)
 "bb" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/small/directional/east,

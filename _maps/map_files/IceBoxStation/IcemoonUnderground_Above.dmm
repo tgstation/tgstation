@@ -443,10 +443,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/toxin,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "bu" = (
@@ -1881,7 +1878,7 @@
 /area/maintenance/department/medical/morgue)
 "gp" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -14534,14 +14531,8 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/firstaid/fire{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "Uj" = (

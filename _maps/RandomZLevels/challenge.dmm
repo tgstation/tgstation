@@ -449,7 +449,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
 "bE" = (
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/iron/airless,
 /area/awaymission/challenge/main)
 "bF" = (
@@ -896,7 +896,7 @@
 /area/awaymission/challenge/end)
 "dg" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 "dh" = (

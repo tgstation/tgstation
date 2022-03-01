@@ -1547,11 +1547,8 @@
 "zb" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/north,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "zk" = (

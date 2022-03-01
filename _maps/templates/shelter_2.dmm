@@ -85,10 +85,8 @@
 /area/survivalpod)
 "p" = (
 /obj/structure/table/survival_pod,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 5
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/pod,
 /area/survivalpod)
 "q" = (

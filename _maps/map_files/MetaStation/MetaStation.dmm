@@ -10948,19 +10948,10 @@
 /area/engineering/supermatter)
 "cum" = (
 /obj/structure/window/reinforced,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/fire{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
@@ -16483,10 +16474,7 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -19248,10 +19236,7 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "eNN" = (
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/regular,
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -19865,10 +19850,7 @@
 "eWV" = (
 /obj/structure/table,
 /obj/item/paper/fluff/holodeck/disclaimer,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "eXc" = (
@@ -24363,14 +24345,8 @@
 	network = list("ss13","rd")
 	},
 /obj/item/radio/intercom/directional/north,
-/obj/item/storage/firstaid{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/storage/firstaid{
-	pixel_x = -5;
-	pixel_y = -1
-	},
+/obj/item/storage/medkit,
+/obj/item/storage/medkit,
 /obj/item/healthanalyzer{
 	pixel_x = 4;
 	pixel_y = 6
@@ -31224,19 +31200,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin,
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
@@ -31715,7 +31682,7 @@
 /area/hallway/primary/central)
 "jif" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/glass/bottle/multiver,
 /obj/item/reagent_containers/syringe,
@@ -37355,7 +37322,7 @@
 "lhg" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
 /obj/structure/rack,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/stack/medical/suture,
 /obj/item/stack/medical/suture,
 /obj/item/stack/medical/mesh,
@@ -42664,10 +42631,7 @@
 /area/hallway/secondary/service)
 "mUk" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 7;
-	pixel_y = 5
-	},
+/obj/item/storage/medkit/regular,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -48639,19 +48603,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/firstaid/o2{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/o2{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
@@ -58470,19 +58425,10 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/storage/firstaid/brute{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/brute{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute,
 /obj/structure/table/reinforced,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
@@ -58651,7 +58597,7 @@
 	c_tag = "Brig - Infirmary"
 	},
 /obj/item/clothing/under/rank/medical/doctor/purple,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/healthanalyzer{
 	pixel_y = -2
 	},
@@ -58775,7 +58721,7 @@
 /area/engineering/atmos)
 "syl" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "sys" = (
@@ -61510,7 +61456,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/structure/table,
 /obj/item/folder,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -64767,10 +64713,7 @@
 "uGO" = (
 /obj/structure/table,
 /obj/effect/turf_decal/bot,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -4;
-	pixel_y = 4
-	},
+/obj/item/storage/medkit/toxin,
 /obj/item/book/manual/wiki/ordnance{
 	pixel_x = 4;
 	pixel_y = 1
@@ -64807,9 +64750,7 @@
 "uIr" = (
 /obj/item/cigbutt,
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/fire{
-	pixel_y = -4
-	},
+/obj/item/storage/medkit/fire,
 /obj/item/paper{
 	pixel_x = -4;
 	pixel_y = 6
@@ -64981,11 +64922,8 @@
 "uKU" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -74402,10 +74340,7 @@
 "yet" = (
 /obj/structure/table,
 /obj/item/folder/yellow,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},

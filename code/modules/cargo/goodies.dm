@@ -89,31 +89,31 @@
 	name = "Bruise Treatment Kit Single-Pack"
 	desc = "A single brute first-aid kit, perfect for recovering from being crushed in an airlock. Did you know people get crushed in airlocks all the time? Interesting..."
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/brute)
+	contains = list(/obj/item/storage/medkit/brute)
 
 /datum/supply_pack/goody/firstaidburns_single
 	name = "Burn Treatment Kit Single-Pack"
 	desc = "A single burn first-aid kit. The advertisement displays a winking atmospheric technician giving a thumbs up, saying \"Mistakes happen!\""
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/fire)
+	contains = list(/obj/item/storage/medkit/fire)
 
 /datum/supply_pack/goody/firstaid_single
 	name = "First Aid Kit Single-Pack"
 	desc = "A single first-aid kit, fit for healing most types of bodily harm."
 	cost = PAYCHECK_MEDIUM * 3
-	contains = list(/obj/item/storage/firstaid/regular)
+	contains = list(/obj/item/storage/medkit/regular)
 
 /datum/supply_pack/goody/firstaidoxygen_single
 	name = "Oxygen Deprivation Kit Single-Pack"
 	desc = "A single oxygen deprivation first-aid kit, marketed heavily to those with crippling fears of asphyxiation."
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/o2)
+	contains = list(/obj/item/storage/medkit/o2)
 
 /datum/supply_pack/goody/firstaidtoxins_single
 	name = "Toxin Treatment Kit Single-Pack"
 	desc = "A single first aid kit focused on healing damage dealt by heavy toxins."
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/toxin)
+	contains = list(/obj/item/storage/medkit/toxin)
 
 /datum/supply_pack/goody/toolbox // mostly just to water down coupon probability
 	name = "Mechanical Toolbox"

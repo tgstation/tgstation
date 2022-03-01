@@ -4106,7 +4106,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "iN" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/sign/warning/biohazard{
 	pixel_x = -32
 	},
@@ -9521,14 +9521,8 @@
 /area/awaymission/undergroundoutpost45/research)
 "sy" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
 	dir = 1;
@@ -9537,10 +9531,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "sz" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 6
-	},
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white/corner{
 	dir = 1;
 	heat_capacity = 1e+006

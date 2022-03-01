@@ -531,11 +531,8 @@
 /area/shuttle/escape)
 "bS" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/toxin,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bT" = (
@@ -550,11 +547,8 @@
 /area/shuttle/escape)
 "bU" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 4;
-	pixel_y = 4
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bV" = (

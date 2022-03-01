@@ -331,10 +331,7 @@
 	pixel_x = 8;
 	pixel_y = -1
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -9;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "lh" = (

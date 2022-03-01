@@ -17,10 +17,7 @@
 /area/ruin/space/has_grav/whiteship/box)
 "fd" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 6;
-	pixel_y = -5
-	},
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/space/has_grav/whiteship/box)
 "gc" = (

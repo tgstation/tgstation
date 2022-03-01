@@ -29,12 +29,9 @@
 /area/shuttle/escape)
 "ai" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "al" = (
@@ -123,11 +120,8 @@
 /area/shuttle/escape)
 "aE" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -245,11 +239,8 @@
 /area/shuttle/escape)
 "be" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /obj/item/crowbar,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/machinery/light/small/directional/east,

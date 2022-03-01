@@ -10076,7 +10076,7 @@
 "cbi" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/ordnance,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
 /turf/open/floor/iron,
 /area/science/mixing)
 "cbm" = (
@@ -15632,15 +15632,9 @@
 "eea" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin,
 /obj/machinery/door/window/eastright{
 	name = "Secure Medical Storage";
 	req_access_txt = "5"
@@ -18252,7 +18246,7 @@
 	dir = 9
 	},
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/paper/pamphlet/gateway,
 /turf/open/floor/iron,
 /area/command/gateway)
@@ -23372,10 +23366,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/requests_console/directional/south{
@@ -23642,11 +23633,8 @@
 "gUE" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /obj/machinery/camera/directional/south{
 	c_tag = "Medical - Main North";
 	network = list("ss13","medbay")
@@ -40077,15 +40065,9 @@
 "mZJ" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/brute{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute,
 /obj/machinery/door/window/eastright{
 	name = "Secure Medical Storage";
 	req_access_txt = "5"
@@ -43283,10 +43265,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 9
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 6;
-	pixel_y = -5
-	},
+/obj/item/storage/medkit/regular,
 /obj/machinery/status_display/supply{
 	pixel_y = 32
 	},
@@ -43883,15 +43862,9 @@
 "ovW" = (
 /obj/structure/table/reinforced,
 /obj/structure/window/reinforced,
-/obj/item/storage/firstaid/fire{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/fire{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire,
 /obj/machinery/door/window/westleft{
 	name = "Secure Medical Storage";
 	req_access_txt = "5"
@@ -49051,14 +49024,8 @@
 	pixel_x = 4;
 	pixel_y = 6
 	},
-/obj/item/storage/firstaid{
-	pixel_x = 7;
-	pixel_y = -3
-	},
-/obj/item/storage/firstaid{
-	pixel_x = 7;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit,
+/obj/item/storage/medkit,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,
 /obj/item/assembly/prox_sensor,
@@ -56104,7 +56071,7 @@
 /obj/effect/turf_decal/siding/wideplating/dark{
 	dir = 9
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
 "sWu" = (
@@ -59459,11 +59426,8 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron/white,
 /area/security/medical)
@@ -60398,15 +60362,9 @@
 	name = "Secure Medical Storage";
 	req_access_txt = "5"
 	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "uwU" = (
@@ -60739,15 +60697,9 @@
 	dir = 1
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
-/obj/item/storage/firstaid/o2{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/o2{
-	pixel_x = -3;
-	pixel_y = -3
-	},
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2,
 /obj/structure/cable,
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/glasses/hud/health{

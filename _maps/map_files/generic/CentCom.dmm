@@ -644,7 +644,7 @@
 /obj/item/storage/backpack/duffelbag/med/surgery,
 /obj/machinery/iv_drip,
 /obj/item/roller,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
 /obj/item/reagent_containers/medigel/synthflesh,
@@ -3900,7 +3900,7 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "mP" = (
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -6929,7 +6929,7 @@
 /area/wizard_station)
 "vo" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -8268,7 +8268,7 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "yA" = (
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/green,
 /obj/effect/turf_decal/tile/green{
@@ -9095,11 +9095,8 @@
 /turf/open/floor/iron,
 /area/centcom/control)
 "BK" = (
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular,
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -9110,11 +9107,8 @@
 /turf/open/floor/iron/white,
 /area/centcom/control)
 "BL" = (
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/o2{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2,
 /obj/structure/table/reinforced,
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/blue{
@@ -9417,7 +9411,7 @@
 /area/centcom/control)
 "CN" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -13265,31 +13259,20 @@
 /area/centcom/evac)
 "KW" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "KX" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/fire{
-	pixel_x = -2;
-	pixel_y = 4
-	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "KY" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -2;
-	pixel_y = 4
-	},
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evac)
 "KZ" = (
@@ -15081,9 +15064,7 @@
 /area/centcom/supplypod)
 "SK" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -7
-	},
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},

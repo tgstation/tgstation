@@ -1,0 +1,14 @@
+#comment This replaces firstaid kits with medical kits https://github.com/tgstation/tgstation/pull/55614
+
+/obj/item/storage/firstaid : /obj/item/storage/medkit
+/obj/item/storage/firstaid/regular : /obj/item/storage/medkit/regular
+/obj/item/storage/firstaid/emergency : /obj/item/storage/medkit/emergency
+/obj/item/storage/firstaid/medical : /obj/item/storage/medkit/surgery
+/obj/item/storage/firstaid/ancient : /obj/item/storage/medkit/ancient
+/obj/item/storage/firstaid/ancient/heirloom : /obj/item/storage/medkit/ancient/heirloom
+/obj/item/storage/firstaid/fire  : /obj/item/storage/medkit/fire
+/obj/item/storage/firstaid/toxin : /obj/item/storage/medkit/toxin
+/obj/item/storage/firstaid/o2 : /obj/item/storage/medkit/o2
+/obj/item/storage/firstaid/brute : /obj/item/storage/medkit/brute
+/obj/item/storage/firstaid/advanced : /obj/item/storage/medkit/advanced
+/obj/item/storage/firstaid/tactical : /obj/item/storage/medkit/tactical
