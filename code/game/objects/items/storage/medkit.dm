@@ -277,8 +277,8 @@
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
 //medibot assembly
-/obj/item/storage/medkit/attackby(obj/item/bodypart/S, mob/user, params)
-	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
+/obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
+	if((!istype(bodypart, /obj/item/bodypart/l_arm/robot)) && (!istype(bodypart, /obj/item/bodypart/r_arm/robot)))
 		return ..()
 
 	//Making a medibot!
@@ -286,22 +286,22 @@
 		to_chat(user, span_warning("You need to empty [src] out first!"))
 		return
 
-	var/obj/item/bot_assembly/medbot/A = new
+	var/obj/item/bot_assembly/medbot/medbot_assembly = new
 	if (istype(src, /obj/item/storage/medkit/fire))
-		A.set_skin("ointment")
+		medbot_assembly.set_skin("ointment")
 	else if (istype(src, /obj/item/storage/medkit/toxin))
-		A.set_skin("tox")
+		medbot_assembly.set_skin("tox")
 	else if (istype(src, /obj/item/storage/medkit/o2))
-		A.set_skin("o2")
+		medbot_assembly.set_skin("o2")
 	else if (istype(src, /obj/item/storage/medkit/brute))
-		A.set_skin("brute")
+		medbot_assembly.set_skin("brute")
 	else if (istype(src, /obj/item/storage/medkit/advanced))
-		A.set_skin("advanced")
-	user.put_in_hands(A)
-	to_chat(user, span_notice("You add [S] to [src]."))
-	A.robot_arm = S.type
-	A.medkit = type
-	qdel(S)
+		medbot_assembly.set_skin("advanced")
+	user.put_in_hands(medbot_assembly)
+	to_chat(user, span_notice("You add [bodypart] to [src]."))
+	medbot_assembly.robot_arm = bodypart.type
+	medbot_assembly.medkit_type = type
+	qdel(bodypart)
 	qdel(src)
 
 /*
