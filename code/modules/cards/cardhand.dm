@@ -27,11 +27,6 @@
 			cards += new_card
 	update_appearance()
 
-/obj/item/toy/cards/cardhand/Destroy()
-	if(LAZYLEN(cards))
-		QDEL_LIST(cards)
-	return ..()
-
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
 		return

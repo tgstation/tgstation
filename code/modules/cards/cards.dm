@@ -9,6 +9,11 @@
 	/// List of cards for a hand or deck
 	var/list/cards = list()
 
+/obj/item/toy/cards/Destroy()
+	if(LAZYLEN(cards))
+		QDEL_LIST(cards)
+	return ..()
+
 /obj/item/toy/cards/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
 	return
 

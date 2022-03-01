@@ -49,11 +49,6 @@
 			for(var/person in list("Jack", "Queen", "King"))
 				cards += new /obj/item/toy/singlecard(mapload, "[person] of [suit]", src)
 
-/obj/item/toy/cards/deck/Destroy()
-	if(LAZYLEN(cards))
-		QDEL_LIST(cards)
-	return ..()
-
 /// triggered on wield of two handed item
 /obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
