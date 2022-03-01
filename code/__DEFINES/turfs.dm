@@ -64,11 +64,3 @@
  * Use instead of `A.loc.loc`.
  */
 #define get_area(A) (isarea(A) ? A : get_step(A, 0)?.loc)
-
-
-//Turf environment types
-#define ENVIRONMENT_TYPE_ASTEROID "asteroid"
-#define ENVIRONMENT_TYPE_BASALT "basalt"
-#define ENVIRONMENT_TYPE_SNOW "snow"
-#define ENVIRONMENT_TYPE_SNOW_CAVERN "snow_cavern"
-#define ENVIRONMENT_TYPE_WASTELAND "wasteland"
