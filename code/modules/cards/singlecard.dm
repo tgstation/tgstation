@@ -89,11 +89,15 @@
 
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/singlecard)) // combine into cardhand
-		var/was_card_on_turf = isturf(loc) // need to save this loc before it gets changed with new_cardhand
-		var/obj/item/toy/cards/cardhand/new_cardhand = new (src, list(src, item))
-		if(was_card_on_turf)
+		if(isturf(loc)) // this is on the turf already
+			var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, item))
 			new_cardhand.pixel_x = src.pixel_x
 			new_cardhand.pixel_y = src.pixel_y
+		else // make a cardhand in our active hand
+			var/obj/item/toy/cards/cardhand/new_cardhand = new (get_turf(src), list(src, item))
+			user.temporarilyRemoveItemFromInventory(src, TRUE)
+			new_cardhand.pickup(user)
+			user.put_in_active_hand(new_cardhand)
 		return
 
 	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
