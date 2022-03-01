@@ -857,7 +857,7 @@
 
 /datum/reagent/consumable/caramelshake
 	name = "Caramel Shake"
-	description = "A aramel flavored milkshake. Your teeth hurt looking at it."
+	description = "A caramel flavored milkshake. Your teeth hurt looking at it."
 	color = "#E17C00"
 	quality = DRINK_GOOD
 	nutriment_factor = 10 * REAGENTS_METABOLISM
