@@ -4,6 +4,7 @@
 	var/width = 0
 	var/height = 0
 	var/default = ""
+	var/zoom = 0
 	var/is_suppressed = FALSE
 	var/client/chief = null
 
@@ -24,9 +25,12 @@
 
 /datum/view_data/proc/assertFormat()//T-Pose
 	winset(chief, "mapwindow.map", "zoom=0")
+	zoom = 0
 
 /datum/view_data/proc/resetFormat()//Cuck
-	winset(chief, "mapwindow.map", "zoom=[chief.prefs.read_preference(/datum/preference/numeric/pixel_size)]")
+	zoom = chief.prefs.read_preference(/datum/preference/numeric/pixel_size)
+	winset(chief, "mapwindow.map", "zoom=[zoom]")
+	chief.attempt_auto_fit_viewport() // If you change zoom mode, fit the viewport
 
 /datum/view_data/proc/setZoomMode()
 	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.read_preference(/datum/preference/choiced/scaling_method)]")
