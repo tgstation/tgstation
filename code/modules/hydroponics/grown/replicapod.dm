@@ -50,7 +50,6 @@
 	var/datum/mind/mind
 	var/blood_gender
 	var/blood_type
-	var/datum/exotic_blood
 	var/list/features
 	var/factions
 	var/list/quirks
