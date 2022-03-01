@@ -95,8 +95,8 @@
 		return
 
 	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
-		var/obj/item/toy/cards/cardhand/new_cardhand = item
-		new_cardhand.insert(list(src))
+		var/obj/item/toy/cards/cardhand/target_cardhand = item
+		target_cardhand.insert(list(src))
 		return
 
 	if(istype(item, /obj/item/toy/cards/deck))
@@ -138,7 +138,6 @@
 		return
 	Flip()
 	user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
-	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)

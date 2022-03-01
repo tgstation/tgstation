@@ -135,11 +135,17 @@
 	. = ..()
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
-		insert(user, item)
+	if(istype(item, /obj/item/toy/singlecard))
+		insert(list(item))
 		user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
-	else
-		return ..()
+		return
+	if(istype(item, /obj/item/toy/cards/cardhand))
+		var/obj/item/toy/cards/cardhand/recycled_cardhand = item		
+		insert(recycled_cardhand.cards)
+		qdel(recycled_cardhand)
+		user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+		return
+	return ..()
 
 /*
 || Syndicate playing cards, for pretending you're Gambit and playing poker for the nuke disk. ||
