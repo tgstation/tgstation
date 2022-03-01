@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - bugfix: "Bicycles can now be repaired with a welder and have actually sensible max_integrity and integrity_failure values."

@@ -6,6 +6,7 @@ GLOBAL_DATUM_INIT(is_email, /regex, regex("\[a-z0-9_-]+@\[a-z0-9_-]+.\[a-z0-9_-]
 GLOBAL_DATUM_INIT(is_alphanumeric, /regex, regex("\[a-z0-9]+", "i"))
 GLOBAL_DATUM_INIT(is_punctuation, /regex, regex("\[.!?]+", "i"))
 GLOBAL_DATUM_INIT(is_color, /regex, regex("^#\[0-9a-fA-F]{6}$"))
+GLOBAL_DATUM_INIT(is_memref, /regex, regex("0x\[0-9a-fA-F\]{7,8}"))
 
 //finds text strings recognized as links on discord. Mainly used to stop embedding.
 GLOBAL_DATUM_INIT(has_discord_embeddable_links, /regex, regex("(https?://\[^\\s|<\]{2,})"))

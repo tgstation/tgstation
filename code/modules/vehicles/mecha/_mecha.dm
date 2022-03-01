@@ -616,7 +616,7 @@
 	if(.)
 		return
 
-	var/atom/backup = get_spacemove_backup()
+	var/atom/backup = get_spacemove_backup(movement_dir)
 	if(backup && movement_dir)
 		if(isturf(backup)) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
 			return TRUE

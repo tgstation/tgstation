@@ -2,11 +2,8 @@ import { classes } from "common/react";
 import { useBackend } from "../../backend";
 import { BlockQuote, Box, Button, Divider, Icon, Section, Stack, Tooltip } from "../../components";
 import { CharacterPreview } from "./CharacterPreview";
-import { createSetPreference, Food, PreferencesMenuData, ServerData, ServerSpeciesData } from "./data";
-import { Feature, Species, fallbackSpecies } from "./preferences/species/base";
+import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Species } from "./data";
 import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
-
-const requireSpecies = require.context("./preferences/species");
 
 const FOOD_ICONS = {
   [Food.Cloth]: "tshirt",
@@ -17,7 +14,7 @@ const FOOD_ICONS = {
   [Food.Gross]: "trash",
   [Food.Junkfood]: "pizza-slice",
   [Food.Meat]: "hamburger",
-  [Food.Nuts]: "acorn",
+  [Food.Nuts]: "seedling",
   [Food.Raw]: "drumstick-bite",
   [Food.Seafood]: "fish",
   [Food.Sugar]: "candy-cane",
@@ -100,15 +97,20 @@ const FoodList = (props: {
 };
 
 const Diet = (props: {
-  likedFood: Food[],
-  dislikedFood: Food[],
-  toxicFood: Food[],
+  diet: Species["diet"],
 }) => {
+
+  if (!props.diet) {
+    return null;
+  }
+
+  const { liked_food, disliked_food, toxic_food } = props.diet;
+
   return (
     <Stack>
       <Stack.Item>
         <FoodList
-          food={props.likedFood}
+          food={liked_food}
           icon="heart"
           name="Liked food"
           className="color-pink"
@@ -117,7 +119,7 @@ const Diet = (props: {
 
       <Stack.Item>
         <FoodList
-          food={props.dislikedFood.filter(notIn(IGNORE_UNLESS_LIKED))}
+          food={disliked_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="thumbs-down"
           name="Disliked food"
           className="color-red"
@@ -126,7 +128,7 @@ const Diet = (props: {
 
       <Stack.Item>
         <FoodList
-          food={props.toxicFood.filter(notIn(IGNORE_UNLESS_LIKED))}
+          food={toxic_food.filter(notIn(IGNORE_UNLESS_LIKED))}
           icon="biohazard"
           name="Toxic food"
           className="color-olive"
@@ -136,23 +138,23 @@ const Diet = (props: {
   );
 };
 
-const SpeciesFeature = (props: {
+const SpeciesPerk = (props: {
   className: string,
-  feature: Feature,
+  perk: Perk,
 }) => {
-  const { className, feature } = props;
+  const { className, perk } = props;
 
   return (
     <Tooltip position="bottom-end" content={
       <Box>
-        <Box as="b">{feature.name}</Box>
+        <Box as="b">{perk.name}</Box>
         <Divider />
-        <Box>{feature.description}</Box>
+        <Box>{perk.description}</Box>
       </Box>
     }>
       <Box class={className} width="32px" height="32px">
         <Icon
-          name={feature.icon}
+          name={perk.ui_icon}
           size={1.5}
           ml={0}
           mt={1}
@@ -167,21 +169,22 @@ const SpeciesFeature = (props: {
   );
 };
 
-const SpeciesFeatures = (props: {
-  features: Species["features"],
+const SpeciesPerks = (props: {
+  perks: Species["perks"],
 }) => {
-  const { good, neutral, bad } = props.features;
+
+  const { positive, negative, neutral } = props.perks;
 
   return (
     <Stack fill justify="space-between">
       <Stack.Item>
         <Stack>
-          {good.map(feature => {
+          {positive.map(perk => {
             return (
-              <Stack.Item key={feature.name}>
-                <SpeciesFeature
+              <Stack.Item key={perk.name}>
+                <SpeciesPerk
                   className="color-bg-green"
-                  feature={feature} />
+                  perk={perk} />
               </Stack.Item>
             );
           })}
@@ -189,24 +192,24 @@ const SpeciesFeatures = (props: {
       </Stack.Item>
 
       <Stack grow>
-        {neutral.map(feature => {
+        {neutral.map(perk => {
           return (
-            <Stack.Item key={feature.name}>
-              <SpeciesFeature
+            <Stack.Item key={perk.name}>
+              <SpeciesPerk
                 className="color-bg-grey"
-                feature={feature} />
+                perk={perk} />
             </Stack.Item>
           );
         })}
       </Stack>
 
       <Stack>
-        {bad.map(feature => {
+        {negative.map(perk => {
           return (
-            <Stack.Item key={feature.name}>
-              <SpeciesFeature
+            <Stack.Item key={perk.name}>
+              <SpeciesPerk
                 className="color-bg-red"
-                feature={feature} />
+                perk={perk} />
             </Stack.Item>
           );
         })}
@@ -219,20 +222,16 @@ const SpeciesPageInner = (props: {
   handleClose: () => void,
   species: ServerData["species"],
 }, context) => {
+
   const { act, data } = useBackend<PreferencesMenuData>(context);
   const setSpecies = createSetPreference(act, "species");
 
-  let species: [string, Species & ServerSpeciesData][]
+  let species: [string, Species][]
     = Object.entries(props.species)
-      .map(([species, serverData]) => {
+      .map(([species, data]) => {
         return [
           species,
-          {
-            ...serverData,
-            ...(requireSpecies.keys().indexOf(`./${species}`) === -1
-              ? fallbackSpecies
-              : requireSpecies(`./${species}`).default) as Species,
-          },
+          data,
         ];
       });
 
@@ -246,14 +245,14 @@ const SpeciesPageInner = (props: {
     return speciesKey === data.character_preferences.misc.species;
   })[0][1];
 
-  const { lore } = currentSpecies;
-
   return (
     <Stack vertical fill>
       <Stack.Item>
-        <Button icon="arrow-left" onClick={props.handleClose}>
-          Go back
-        </Button>
+        <Button
+          icon="arrow-left"
+          onClick={props.handleClose}
+          content="Go Back"
+        />
       </Stack.Item>
 
       <Stack.Item grow>
@@ -293,22 +292,23 @@ const SpeciesPageInner = (props: {
               <Box>
                 <Stack fill>
                   <Stack.Item width="70%">
-                    <Section title={currentSpecies.name} buttons={
-                      // Species with no hunger don't have diets
-                      currentSpecies.liked_food
-                  && (<Diet
-                    likedFood={currentSpecies.liked_food}
-                    dislikedFood={currentSpecies.disliked_food}
-                    toxicFood={currentSpecies.toxic_food}
-                  />)
-                    }>
+                    <Section
+                      title={currentSpecies.name}
+                      buttons={
+                        // NOHUNGER species have no diet (diet = null),
+                        // so we have nothing to show
+                        (currentSpecies.diet
+                          && <Diet diet={currentSpecies.diet} />)
+                      }>
+
                       <Section title="Description">
-                        {currentSpecies.description}
+                        {currentSpecies.desc}
                       </Section>
 
                       <Section title="Features">
-                        <SpeciesFeatures features={currentSpecies.features} />
+                        <SpeciesPerks perks={currentSpecies.perks} />
                       </Section>
+
                     </Section>
                   </Stack.Item>
 
@@ -321,21 +321,20 @@ const SpeciesPageInner = (props: {
                 </Stack>
               </Box>
 
-              {lore && (
-                <Box mt={1}>
-                  <Section title="Lore">
-                    <BlockQuote>
-                      {lore.map((text, index) => (
-                        <Box key={index} maxWidth="100%">
-                          {text}
-                          {index !== lore.length - 1
-                            && (<><br /><br /></>)}
-                        </Box>
-                      ))}
-                    </BlockQuote>
-                  </Section>
-                </Box>
-              )}
+              <Box mt={1}>
+                <Section title="Lore">
+                  <BlockQuote>
+                    {currentSpecies.lore.map((text, index) => (
+                      <Box key={index} maxWidth="100%">
+                        {text}
+                        {index !== currentSpecies.lore.length - 1
+                          && (<><br /><br /></>)}
+                      </Box>
+                    ))}
+                  </BlockQuote>
+                </Section>
+              </Box>
+
             </Box>
           </Stack.Item>
         </Stack>

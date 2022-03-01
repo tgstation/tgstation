@@ -22,11 +22,14 @@
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
 	var/mineralAmt = 3
-	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
 	// If true you can mine the mineral turf with your hands
 	var/weak_turf = FALSE
+	///How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
+	var/tool_mine_speed = 4 SECONDS
+	///How long it takes to mine this turf with hands, if it's weak.
+	var/hand_mine_speed = 15 SECONDS
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
@@ -72,16 +75,20 @@
 		if (!isturf(T))
 			return
 
-		if(last_act + (40 * I.toolspeed) > world.time)//prevents message spam
+		if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
 			return
-		last_act = world.time
+
+		TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
+
 		to_chat(user, span_notice("You start picking..."))
 
-		if(I.use_tool(src, user, 40, volume=50))
-			if(ismineralturf(src))
-				to_chat(user, span_notice("You finish cutting into the rock."))
-				gets_drilled(user, TRUE)
-				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+		if(!I.use_tool(src, user, tool_mine_speed, volume=50))
+			TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
+			return
+		if(ismineralturf(src))
+			to_chat(user, span_notice("You finish cutting into the rock."))
+			gets_drilled(user, TRUE)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		return attack_hand(user)
 
@@ -91,11 +98,14 @@
 	var/turf/user_turf = user.loc
 	if (!isturf(user_turf))
 		return
-	if(last_act + MINING_MESSAGE_COOLDOWN > world.time)//prevents message spam
+	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
 		return
-	last_act = world.time
+	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
+	var/skill_modifier = 1
+	skill_modifier = user?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 	to_chat(user, span_notice("You start pulling out pieces of [src] with your hands..."))
-	if(!do_after(user, 15 SECONDS, target = src))
+	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
+		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return
 	if(ismineralturf(src))
 		to_chat(user, span_notice("You finish pulling apart [src]."))

@@ -1,4 +1,0 @@
-author: "Capsandi"
-delete-after: True
-changes: 
-  - bugfix: "Took out an extra apc in deltastation transfer center which screwed with the power"

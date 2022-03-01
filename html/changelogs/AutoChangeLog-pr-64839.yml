@@ -1,0 +1,6 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - imageadd: "New thruster sprites to allow for in-wall designs"
+  - bugfix: "removed cycle helpers from 2 random tram maint airlocks that arent meant to cycle (solo airlocks) and a duplicated APC in tram maint"
+  - expansion: "the tram now has new walls! they are structures that function like walls so as to be built on the tram, create and deconstruct via the new tram girder (screwdriver on the girder to deconstruct, there is no displaced version ie wrench)"

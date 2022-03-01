@@ -193,6 +193,8 @@
 	if(..()) //successful monkey bite.
 		for(var/thing in user.diseases)
 			var/datum/disease/D = thing
+			if(D.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+				continue
 			ForceContractDisease(D)
 		return TRUE
 
