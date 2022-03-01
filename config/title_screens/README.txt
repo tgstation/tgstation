@@ -2,7 +2,7 @@ The enclosed /images folder holds the image files used as the title screen for t
 
 Specification:
 Formats: PNG, JPG, GIF, DMI*
-Dimensions: 480x544
+Dimensions: 544x480
 	*Byond's DMI format is also supported, but if you use a DMI only include one image per file and do not give it an icon_state (the text label below the image).
 
 The game won't scale these images for you, so smaller images will not fill the screen and larger ones will be cut off.
