@@ -93,20 +93,19 @@
 	COOLDOWN_START(src, shuffle_cooldown, shuffle_time)
 	cards = shuffle(cards)
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	user.visible_message(span_notice("[user] shuffles the deck."), span_notice("You shuffle the deck."))
+	user.balloon_alert_to_viewers("shuffles the deck", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers)
 	var/obj/item/toy/singlecard/card = draw(user)
 	card.pickup(user)
 	user.put_in_hands(card)
-	user.visible_message(span_notice("[user] draws a card from [src]."), span_notice("You draw a card from [src]."))
-	//user.visible_message(span_notice("[user] deals a card from [src]."), span_notice("You deal a card from [src]."))
+	user.balloon_alert_to_viewers("draws a card", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/toy/cards/deck/attack_self_secondary(mob/living/user, list/modifiers)
 	var/obj/item/toy/singlecard/card = draw(user)
 	card.pickup(user)
 	user.put_in_hands(card)
-	user.visible_message(span_notice("[user] draws a card from [src]."), span_notice("You draw a card from [src]."))
+	user.balloon_alert_to_viewers("draws a card", vision_distance = COMBAT_MESSAGE_RANGE)
 	card.Flip()
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
@@ -129,9 +128,16 @@
 			icon_state = "deck_[deckstyle]_empty"
 	return ..()
 
+/obj/item/toy/cards/deck/insert(list/cards_to_add)
+	for(var/obj/item/toy/singlecard/card in cards_to_add)
+		card.Flip(CARD_FACEDOWN) // any card inserted into the deck is always facedown
+		// reset rotation angle too
+	. = ..()
+
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
-		//insert(user, item)
+		insert(user, item)
+		user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 	else
 		return ..()
 

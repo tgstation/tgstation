@@ -144,9 +144,12 @@
 		new_cardhand.pixel_x = src.pixel_x
 		new_cardhand.pixel_y = src.pixel_y
 		return
+
 	if(istype(item, /obj/item/toy/cards/cardhand))
-		//do_cardhand(user, list(src), item)
+		var/obj/item/toy/cards/cardhand/new_cardhand = item
+		new_cardhand.insert(list(src))
 		return
+
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(dealer_deck.wielded)
@@ -157,7 +160,7 @@
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
 		else
-			//dealer_deck.insert(user, src)
+			dealer_deck.insert(list(src))
 			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
 
@@ -186,6 +189,7 @@
 		return
 	Flip()
 	user.balloon_alert(user, "flips a card")
+	user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)

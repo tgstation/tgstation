@@ -74,9 +74,15 @@
 		cards_to_add += card
 
 	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/deck = weapon 
-		var/obj/item/toy/singlecard/card = deck.draw(user)
-		cards_to_add += card
+		var/obj/item/toy/cards/deck/dealer_deck = weapon
+		if(dealer_deck.wielded) 
+			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+			cards_to_add += card
+		else // recycle cards back into deck
+			dealer_deck.insert(cards)
+			qdel(src)
+			user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+			return
 
 	if(LAZYLEN(cards_to_add))
 		insert(cards_to_add)
