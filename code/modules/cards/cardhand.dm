@@ -55,16 +55,13 @@
 	var/obj/item/toy/singlecard/selected_card = draw(user, choice)
 	selected_card.pickup(user)
 	user.put_in_hands(selected_card)
-	user.visible_message(span_notice("[user] draws a card from [user.p_their()] hand."), span_notice("You draw a card from your hand."))
 	update_appearance()
 
 	if(length(cards) == 1)
 		var/obj/item/toy/singlecard/last_card = draw(user)
-		qdel(src)
 		last_card.pickup(user)
 		user.put_in_hands(last_card)
-		to_chat(user, span_notice("You also take [last_card.cardname] and hold it."))
-
+		qdel(src)
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params)
 	var/cards_to_add = list()

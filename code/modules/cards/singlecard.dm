@@ -139,27 +139,27 @@
 */
 
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/singlecard))
+	if(istype(item, /obj/item/toy/singlecard)) // combine into cardhand
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, item))
 		new_cardhand.pixel_x = src.pixel_x
 		new_cardhand.pixel_y = src.pixel_y
 		return
 
-	if(istype(item, /obj/item/toy/cards/cardhand))
+	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
 		var/obj/item/toy/cards/cardhand/new_cardhand = item
 		new_cardhand.insert(list(src))
 		return
 
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
-		if(dealer_deck.wielded)
+		if(dealer_deck.wielded) // deal card from deck and combine cards into cardhand (if wielded)
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card))
 			new_cardhand.pixel_x = src.pixel_x
 			new_cardhand.pixel_y = src.pixel_y
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
-		else
+		else // recycle card into deck (if unwielded)
 			dealer_deck.insert(list(src))
 			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
