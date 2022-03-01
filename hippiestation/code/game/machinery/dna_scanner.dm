@@ -144,16 +144,18 @@
 		return
 	close_machine(target)
 
-
-//Just for transferring between genetics machines.
+//The return of data disks?? Just for transferring between genetics machine/cloning machine.
+//TO-DO: Make the genetics machine accept them.
 /obj/item/disk/data
-	name = "DNA data disk"
+	name = "cloning data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	var/list/genetic_makeup_buffer = list()
+	var/list/fields = list()
+	var/list/genetic_makeup_buffer = list()	//for dna scanner
 	var/list/mutations = list()
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
 
+//Disk stuff.
 /obj/item/disk/data/Initialize()
 	. = ..()
 	icon_state = "datadisk[rand(0,6)]"
