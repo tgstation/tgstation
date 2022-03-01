@@ -64,17 +64,13 @@
 
 /obj/item/assembly_holder/update_overlays()
 	. = ..()
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/i in 1 to LAZYLEN(assemblies) step 2)
+		var/obj/item/assembly/assembly = assemblies[i]
 		. += "[assembly.icon_state]_left"
 		for(var/left_overlay in assembly.attached_overlays)
 			. += "[left_overlay]_l"
-
-		if(assembly.is_position_sensitive)
-			. += "[assembly.icon_state]_right"
-			for(var/right_overlay in assembly.attached_overlays)
-				. += "[right_overlay]_r"
-			return
-
+	for(var/i in 2 to LAZYLEN(assemblies) step 2)
+		var/obj/item/assembly/assembly = assemblies[i]
 		var/mutable_appearance/right = mutable_appearance(icon, "[assembly.icon_state]_left")
 		right.transform = matrix(-1, 0, 0, 0, 1, 0)
 		for(var/right_overlay in assembly.attached_overlays)
@@ -105,7 +101,7 @@
 /obj/item/assembly_holder/attackby(obj/item/W, mob/user, params)
 	if(isassembly(W))
 		var/obj/item/assembly/A = W
-		if((!A.secured)
+		if(!A.secured)
 			add_assembly(A,user)
 
 /obj/item/assembly_holder/AltClick(mob/user)
