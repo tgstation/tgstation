@@ -1,3 +1,5 @@
+#define MAX_LIMB_DAMAGE 200
+#define MAX_LIMB_STAMINA_DAMAGE 120
 /obj/item/bodypart
 	name = "limb"
 	desc = "Why is it detached..."
@@ -39,7 +41,7 @@
 	var/can_be_disabled = FALSE
 	///Multiplier of the limb's damage that gets applied to the mob
 	var/body_damage_coeff = 1
-	var/stam_damage_coeff = 0.75
+	var/stam_damage_coeff = 1
 	var/brutestate = 0
 	var/burnstate = 0
 	var/brute_dam = 0
