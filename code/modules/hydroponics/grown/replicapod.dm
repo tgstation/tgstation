@@ -199,8 +199,7 @@
 		new V(podman)
 	podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 	podman.set_cloned_appearance()
-	var/datum/species/species = podman.dna.species
-	species.exotic_blood = max(reagents_add)
+	podman.dna.species.exotic_blood = max(reagents_add) || /datum/reagent/water
 	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 	parent.update_tray(user, 1)
 	return result
