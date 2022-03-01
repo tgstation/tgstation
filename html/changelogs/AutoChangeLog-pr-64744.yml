@@ -1,0 +1,8 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - balance: "Hand mining weak turfs (i.e. snow) is now affected by mining level (so legendary would take 7.5 seconds instead of 15)"
+  - qol: "Multiple people can now attempt to manually mine the same mineral turf"
+  - qol: "If you fail to manually mine a turf you can try again immediately instead of having to wait for the cooldown to end"
+  - bugfix: "You can no longer mine a snow turf by hand if you're already doing it"
+  - code_imp: "Uses variables and time defines for mining speeds instead of deciseconds and magic numbers"
