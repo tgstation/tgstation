@@ -13,4 +13,4 @@
 /obj/item/storage/firstaid/advanced : /obj/item/storage/medkit/advanced
 /obj/item/storage/firstaid/tactical : /obj/item/storage/medkit/tactical
 /obj/effect/spawner/random/medical/firstaid_rare : /obj/effect/spawner/random/medical/medkit_rare
-/obj/effect/spawner/random/medical/medkit : /obj/effect/spawner/random/medical/medkit
+/obj/effect/spawner/random/medical/firstaid  : /obj/effect/spawner/random/medical/medkit
