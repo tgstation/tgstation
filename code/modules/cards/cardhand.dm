@@ -33,12 +33,6 @@
 	QDEL_LIST(cards)
 	return ..()
 
-/**
-/obj/item/toy/cards/cardhand/insert(mob/user, obj/item/toy/cards/card_to_add)
-	. = ..()
-	interact(user)
-	update_appearance()
-**/
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
 		return
