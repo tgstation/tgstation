@@ -87,57 +87,6 @@
 		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]" 
 	return ..()
 
-/**
- * ## do_cardhand
- *
- * Creates, or adds to an existing hand of cards
- *
- * Arguments:
- * * mob/living/user - the user
- * * list/cards - the list of cards being added together (/obj/item/toy/singlecard)
- * * obj/item/toy/cards/cardhand/given_hand (optional) - the cardhand to add said cards into
-/obj/item/toy/singlecard/proc/do_cardhand(mob/living/user, list/cards, obj/item/toy/cards/cardhand/given_hand = null)
-	if (given_hand && (given_hand?.parentdeck != parentdeck))
-		to_chat(user, span_warning("You can't mix cards from other decks!"))
-		return
-	for (var/obj/item/toy/singlecard/card in cards)
-		if (card.parentdeck != parentdeck)
-			to_chat(user, span_warning("You can't mix cards from other decks!"))
-			return
-
-	if(!LAZYLEN(cards))
-		CRASH("[src] is being made into a cardhand without a list of cards to combine")
-
-	var/obj/item/toy/cards/cardhand/new_cardhand = given_hand
-	var/preexisting = TRUE // does the cardhand already exist, or are we making a new one
-	if (!new_cardhand)
-		preexisting = FALSE
-		var/obj/item/toy/singlecard/card = cards[1]
-		new_cardhand = new /obj/item/toy/cards/cardhand(card.loc)
-		new_cardhand.pixel_x = card.pixel_x
-		new_cardhand.pixel_y = card.pixel_y
-
-	for (var/obj/item/toy/singlecard/card in cards)
-		user.dropItemToGround(card) // drop them all so the loc will properly update
-		new_cardhand.cards += card
-
-	if (preexisting)
-		new_cardhand.interact(user)
-		new_cardhand.update_appearance()
-
-		user.visible_message(span_notice("[user] adds a card to [user.p_their()] hand."), span_notice("You add the [cardname] to your hand."))
-	else
-		new_cardhand.parentdeck = parentdeck
-		new_cardhand.apply_card_vars(new_cardhand, src)
-		to_chat(user, span_notice("You combine the cards into a hand."))
-
-		new_cardhand.pickup(user)
-		user.put_in_active_hand(new_cardhand)
-
-	for (var/obj/item/toy/singlecard/card in cards)
-		card.loc = new_cardhand // move the cards into the cardhand
-*/
-
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/singlecard)) // combine into cardhand
 		var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, item))
