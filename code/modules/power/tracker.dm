@@ -1,4 +1,5 @@
 #define TRACKER_Y_OFFSET 13
+#define TRACKER_EDGE_Y_OFFSET (TRACKER_Y_OFFSET - 2)
 
 //Solar tracker
 
@@ -18,19 +19,14 @@
 	var/id = 0
 	var/obj/machinery/power/solar_control/control
 	var/obj/effect/overlay/tracker_dish
-	var/current_azimuth
+	var/obj/effect/overlay/tracker_dish_edge
+	var/azimuth_current
 
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 
-	tracker_dish = new()
-	tracker_dish.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
-	tracker_dish.appearance_flags = TILE_BOUND
-	tracker_dish.icon_state = "tracker"
-	tracker_dish.layer = FLY_LAYER
-	tracker_dish.plane = ABOVE_GAME_PLANE
-	tracker_dish.pixel_y = TRACKER_Y_OFFSET
-	vis_contents += tracker_dish
+	tracker_dish_edge = add_panel_overlay("tracker_edge", TRACKER_EDGE_Y_OFFSET)
+	tracker_dish = add_panel_overlay("tracker", TRACKER_Y_OFFSET)
 
 	Make(S)
 	connect_to_network()
@@ -39,6 +35,17 @@
 /obj/machinery/power/tracker/Destroy()
 	unset_control() //remove from control computer
 	return ..()
+
+/obj/machinery/power/tracker/proc/add_panel_overlay(icon_state, y_offset)
+	var/obj/effect/overlay/overlay = new()
+	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	overlay.appearance_flags = TILE_BOUND
+	overlay.icon_state = icon_state
+	overlay.layer = FLY_LAYER
+	overlay.plane = ABOVE_GAME_PLANE
+	overlay.pixel_y = y_offset
+	vis_contents += overlay
+	return overlay
 
 /obj/machinery/power/tracker/proc/set_control(obj/machinery/power/solar_control/SC)
 	unset_control()
@@ -68,26 +75,30 @@
 
 	return turner
 
-///Tell the controller to turn the solar panels
-/obj/machinery/power/tracker/proc/sun_update(datum/source, azimuth)
-	SIGNAL_HANDLER
+/obj/machinery/power/tracker/proc/visually_turn_part(part, angle)
+	var/mid_azimuth = (azimuth_current + angle) / 2
 
-	var/mid_azimuth = (current_azimuth + azimuth) / 2
 	// actually flip to other direction?
-	if(abs(azimuth - current_azimuth) > 180)
+	if(abs(angle - azimuth_current) > 180)
 		mid_azimuth = (mid_azimuth + 180) % 360
 
 	// Split into 2 parts so it doesn't distort on large changes
-	animate(tracker_dish, \
+	animate(part, \
 		transform = get_tracker_transform(mid_azimuth), \
 		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_IN \
 	)
 	animate( \
-		transform = get_tracker_transform(azimuth), \
+		transform = get_tracker_transform(angle), \
 		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_OUT \
 	)
 
-	current_azimuth = azimuth
+///Tell the controller to turn the solar panels
+/obj/machinery/power/tracker/proc/sun_update(datum/source, azimuth)
+	SIGNAL_HANDLER
+
+	visually_turn_part(tracker_dish, azimuth)
+	visually_turn_part(tracker_dish_edge, azimuth)
+	azimuth_current = azimuth
 
 	if(control && control.track == SOLAR_TRACK_AUTO)
 		control.set_panels(azimuth)
@@ -135,3 +146,4 @@
 	name = "tracker electronics"
 
 #undef TRACKER_Y_OFFSET
+#undef TRACKER_EDGE_Y_OFFSET

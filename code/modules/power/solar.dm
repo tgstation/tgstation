@@ -1,6 +1,7 @@
 #define SOLAR_GEN_RATE 1500
 #define OCCLUSION_DISTANCE 20
 #define PANEL_Y_OFFSET 13
+#define PANEL_EDGE_Y_OFFSET (PANEL_Y_OFFSET - 2)
 
 /obj/machinery/power/solar
 	name = "solar panel"
@@ -27,17 +28,14 @@
 	///do we need to call update_solar_exposure() next tick?
 	var/needs_to_update_solar_exposure = TRUE
 	var/obj/effect/overlay/panel
+	var/obj/effect/overlay/panel_edge
 
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
-	panel = new()
-	panel.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
-	panel.appearance_flags = TILE_BOUND
-	panel.icon_state = "solar_panel"
-	panel.layer = FLY_LAYER
-	panel.plane = ABOVE_GAME_PLANE
-	panel.pixel_y = PANEL_Y_OFFSET
-	vis_contents += panel
+
+	panel_edge = add_panel_overlay("solar_panel_edge", PANEL_EDGE_Y_OFFSET)
+	panel = add_panel_overlay("solar_panel", PANEL_Y_OFFSET)
+
 	Make(S)
 	connect_to_network()
 	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
@@ -45,6 +43,17 @@
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
 	return ..()
+
+/obj/machinery/power/solar/proc/add_panel_overlay(icon_state, y_offset)
+	var/obj/effect/overlay/overlay = new()
+	overlay.vis_flags = VIS_INHERIT_ID | VIS_INHERIT_ICON
+	overlay.appearance_flags = TILE_BOUND
+	overlay.icon_state = icon_state
+	overlay.layer = FLY_LAYER
+	overlay.plane = ABOVE_GAME_PLANE
+	overlay.pixel_y = y_offset
+	vis_contents += overlay
+	return overlay
 
 /obj/machinery/power/solar/should_have_node()
 	return TRUE
@@ -119,6 +128,7 @@
 /obj/machinery/power/solar/update_overlays()
 	. = ..()
 	panel.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : null]"
+	panel_edge.icon_state = "solar_panel[(machine_stat & BROKEN) ? "-b" : "_edge"]"
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -140,13 +150,13 @@
 	// Rotate towards sun
 	turner.Turn(angle)
 	// "Tilt" the panel in 3D towards East and West
-	turner.Shear(0, -1 * sin(angle))
+	turner.Shear(0, -0.6 * sin(angle))
 	// Make it skinny when facing north (away), fat south
-	turner.Scale(1, 0.9 * (cos(angle) * -0.5 + 0.5) + 0.1)
+	turner.Scale(1, 0.85 * (cos(angle) * -0.5 + 0.5) + 0.15)
 
 	return turner
 
-/obj/machinery/power/solar/proc/visually_turn(angle)
+/obj/machinery/power/solar/proc/visually_turn_part(part, angle)
 	var/mid_azimuth = (azimuth_current + angle) / 2
 
 	// actually flip to other direction?
@@ -154,7 +164,7 @@
 		mid_azimuth = (mid_azimuth + 180) % 360
 
 	// Split into 2 parts so it doesn't distort on large changes
-	animate(panel, \
+	animate(part, \
 		transform = get_panel_transform(mid_azimuth), \
 		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_IN \
 	)
@@ -162,6 +172,10 @@
 		transform = get_panel_transform(angle), \
 		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_OUT \
 	)
+
+/obj/machinery/power/solar/proc/visually_turn(angle)
+	visually_turn_part(panel, angle)
+	visually_turn_part(panel_edge, angle)
 
 /obj/machinery/power/solar/proc/update_turn()
 	needs_to_turn = FALSE
@@ -536,3 +550,4 @@
 #undef SOLAR_GEN_RATE
 #undef OCCLUSION_DISTANCE
 #undef PANEL_Y_OFFSET
+#undef PANEL_EDGE_Y_OFFSET
