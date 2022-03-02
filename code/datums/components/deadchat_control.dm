@@ -130,7 +130,7 @@
 	SIGNAL_HANDLER
 
 	RegisterSignal(orbiter, COMSIG_MOB_DEADSAY, .proc/deadchat_react)
-	RegisterSignal(orbiter, COMSIG_CLIENT_AUTOMUTE_CHECK, .proc/waive_automute)
+	RegisterSignal(orbiter, COMSIG_MOB_AUTOMUTE_CHECK, .proc/waive_automute)
 	orbiters |= orbiter
 
 
@@ -140,7 +140,7 @@
 	if(orbiter in orbiters)
 		UnregisterSignal(orbiter, list(
 			COMSIG_MOB_DEADSAY,
-			COMSIG_CLIENT_AUTOMUTE_CHECK,
+			COMSIG_MOB_AUTOMUTE_CHECK,
 		))
 		orbiters -= orbiter
 
