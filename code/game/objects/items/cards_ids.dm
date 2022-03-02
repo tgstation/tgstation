@@ -406,20 +406,22 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
-/obj/item/card/id/afterattack(atom/target, mob/user, proximity, params)
+/obj/item/card/id/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity || !check_allowed_items(target) || !isfloorturf(target))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	try_project_store(user, target)
+	if(!proximity_flag || !check_allowed_items(target) || !isfloorturf(target))
+		return
+	try_project_paystand(user, target)
 
 /obj/item/card/id/attack_self_secondary(mob/user, modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	try_project_store(user, get_turf(loc))
+	try_project_paystand(user, null)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/card/id/proc/try_project_store(mob/user, turf/target)
+/obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
 		return
@@ -433,7 +435,7 @@
 	var/turf/user_loc = user.loc
 	if(can_proj_holopay(target))
 		projection = target
-	if(can_proj_holopay(step_ahead))
+	else if(can_proj_holopay(step_ahead))
 		projection = step_ahead
 	else if(can_proj_holopay(user_loc))
 		projection = user_loc
