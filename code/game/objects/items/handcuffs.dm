@@ -543,18 +543,47 @@
 		QDEL_NULL(effectReference)
 
 /**
- * Illegal handcuff circuit shell
- * Useful for all your jigsaw trap needs
+ * Handcuff circuit/GPS
+ * Great for taking long hikes, making clean arrests, and forcing people into elaborate jigsaw traps.
  */
 /obj/item/restraints/handcuffs/strand
 	name = "\improper Kheiral cuffs"
-	desc = "A prototype wrist communicator, overshadowed by the handcuffs slapped against it. Can read the wearer's data, send circuit signals, and have its tightness adjusted."
+	desc = "A prototype wrist communicator, overshadowed by the handcuffs slapped against it. Can be worn as a GPS on the wrist.\nWhen used as handcuffs, can read the wearer's data, send circuit signals, and have its tightness adjusted."
 	icon_state = "strand"
+	worn_icon_state = "strandcuff"
+	slot_flags = ITEM_SLOT_GLOVES | ITEM_SLOT_BELT
+	/// Check for if the GPS is currently enabled
+	var/gps_enabled = FALSE
 
 /obj/item/restraints/handcuffs/strand/Initialize()
 	. = ..()
 	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/handcuffs), SHELL_CAPACITY_SMALL)
 	update_icon(UPDATE_OVERLAYS)
+
+/obj/item/restraints/handcuffs/strand/item_action_slot_check(slot)
+	return slot == ITEM_SLOT_GLOVES
+
+/obj/item/restraints/handcuffs/strand/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot != ITEM_SLOT_GLOVES || gps_enabled)
+		return
+	AddComponent(/datum/component/gps, "*[user.name]'s Kheiral Cuff")
+	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	balloon_alert(user, "GPS activated")
+	gps_enabled = TRUE
+
+/obj/item/restraints/handcuffs/strand/dropped(mob/user, silent)
+	. = ..()
+	if(gps_enabled)
+		qdel(GetComponent(/datum/component/gps))
+		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		balloon_alert(user, "GPS de-activated")
+		gps_enabled = FALSE
+
+/obj/item/restraints/handcuffs/strand/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "strandcuff-emissive", alpha = src.alpha)
 
 /obj/item/restraints/handcuffs/strand/update_overlays()
 	. = ..()
@@ -619,7 +648,7 @@
 // Circuit conversion frame
 /obj/item/handcuff_circuit_frame
 	name = "\improper Kheiral cuffs frame"
-	desc = "A set of sensors, wires, and a knife-shaped antennae. Hook these up to a pair of handcuffs to let them hold circuits."
+	desc = "A set of sensors, wires, and a knife-shaped antennae. Hook these up to a pair of handcuffs to let them hold circuits and act as a GPS."
 	icon = 'icons/obj/restraints.dmi'
 	icon_state = "strand_frame"
 
@@ -630,7 +659,7 @@
 	if(!do_after(user, 3 SECONDS, src))
 		return
 	user.visible_message(span_notice("[user] finishes modifying [attacking_item]."), span_notice("You finish modifying [attacking_item]."))
-	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
+	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/drop_loc = drop_location()
 
 	qdel(src)
