@@ -55,6 +55,8 @@
 					/obj/item/clothing/under/rank/medical/paramedic/skirt = 4,
 					/obj/item/clothing/head/nursehat = 4,
 					/obj/item/clothing/head/beret/medical = 4,
+					/obj/item/clothing/under/rank/medical/doctor = 4,
+					/obj/item/clothing/under/rank/medical/doctor/skirt = 4,
 					/obj/item/clothing/under/rank/medical/scrubs/blue = 4,
 					/obj/item/clothing/under/rank/medical/scrubs/green = 4,
 					/obj/item/clothing/under/rank/medical/scrubs/purple = 4,
