@@ -166,7 +166,7 @@ require only minor tweaks.
 #define BIOME_HIGH_HUMIDITY "high_humidity"
 
 // Bluespace shelter deploy checks for survival capsules
-/// Shelter spot is allowed 
+/// Shelter spot is allowed
 #define SHELTER_DEPLOY_ALLOWED "allowed"
 /// Shelter spot has turfs that restrict deployment
 #define SHELTER_DEPLOY_BAD_TURFS "bad turfs"
@@ -174,5 +174,5 @@ require only minor tweaks.
 #define SHELTER_DEPLOY_BAD_AREA "bad area"
 /// Shelter spot has anchored objects that restrict deployment
 #define SHELTER_DEPLOY_ANCHORED_OBJECTS "anchored objects"
-/// Shelter spot is out of bounds from the maps x/y coordinates 
+/// Shelter spot is out of bounds from the maps x/y coordinates
 #define SHELTER_DEPLOY_OUTSIDE_MAP "outside map"

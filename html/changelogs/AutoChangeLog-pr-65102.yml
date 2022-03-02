@@ -1,0 +1,5 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Various cooking recipes that simply said they required 'food' now properly use plain bread slices."
+  - bugfix: "Fully eating a can of pine nuts no longer creates an error sprite."

@@ -124,6 +124,17 @@
 		if(isliving(sacrificed))
 			continue
 
+		if(isstack(sacrificed))
+			var/obj/item/stack/sac_stack = sacrificed
+			var/how_much_to_use = 0
+			for(var/requirement in required_atoms)
+				if(istype(sacrificed, requirement))
+					how_much_to_use = required_atoms[requirement]
+					break
+
+			sac_stack.use(how_much_to_use)
+			continue
+
 		selected_atoms -= sacrificed
 		qdel(sacrificed)
 
@@ -205,7 +216,7 @@
 			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(!length(compiled_list))
-		loc.balloon_alert(user, "no fingerprints!")
+		loc.balloon_alert(user, "ritual failed, no fingerprints!")
 		return FALSE
 
 	var/chosen_mob = tgui_input_list(user, "Select the person you wish to curse", "Eldritch Curse", sort_list(compiled_list, /proc/cmp_mob_realname_dsc))
@@ -214,7 +225,7 @@
 
 	var/mob/living/carbon/human/to_curse = compiled_list[chosen_mob]
 	if(QDELETED(to_curse))
-		loc.balloon_alert(user, "invalid choice!")
+		loc.balloon_alert(user, "ritual failed, invalid choice!")
 		return FALSE
 
 	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([name])")
@@ -378,7 +389,7 @@
 		total_points += knowledge.cost
 
 	log_heretic_knowledge("[key_name(user)] gained knowledge of their final ritual at [worldtime2text()]. \
-		They have [length(heretic_datum)] knowledge nodes researched, totalling [total_points] points \
+		They have [length(heretic_datum.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [heretic_datum.total_sacrifices] people ([heretic_datum.high_value_sacrifices] of which were high value)")
 
 /datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
