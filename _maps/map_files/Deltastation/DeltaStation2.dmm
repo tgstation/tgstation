@@ -44774,9 +44774,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white,
 /area/maintenance/fore)
-"hCJ" = (
-/turf/open/space/basic,
-/area/service/abandoned_gambling_den)
 "hCK" = (
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
@@ -45513,10 +45510,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/hallway/secondary/construction)
-"hKR" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/service/abandoned_gambling_den)
 "hLb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -134569,8 +134562,8 @@ hgo
 wFi
 pAO
 nPM
-hKR
-hCJ
+aad
+aaa
 aaa
 qYo
 aaa
