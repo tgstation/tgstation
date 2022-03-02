@@ -38,7 +38,7 @@
 	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
 
 /obj/item/assembly_holder/proc/add_assembly(obj/item/assembly/A, mob/user)
-	attach(A,user)
+	attach(A, user)
 	name = ""
 	for(var/obj/item/assembly/assembly in assemblies)
 		name += "[assembly.name]-"
