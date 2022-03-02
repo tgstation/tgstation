@@ -49,6 +49,7 @@
 /obj/structure/holopay/Destroy()
 	linked_card?.my_store = null
 	linked_card = null
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, params)
@@ -178,7 +179,6 @@
 
 /obj/structure/holopay/process()
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
-		STOP_PROCESSING(SSobj, src)
 		dissapate()
 
 /**
