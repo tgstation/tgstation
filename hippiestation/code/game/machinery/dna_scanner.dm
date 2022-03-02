@@ -1,5 +1,5 @@
 /obj/machinery/dna_scannernew
-	name = "\improper DNA scanner"
+	name = "DNA scanner"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
@@ -145,7 +145,6 @@
 	close_machine(target)
 
 //The return of data disks?? Just for transferring between genetics machine/cloning machine.
-//TO-DO: Make the genetics machine accept them.
 /obj/item/disk/data
 	name = "cloning data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.

@@ -1,4 +1,4 @@
-/obj/item/paper/fluff/ruins/exp_cloning/manual
+/obj/item/paper/fluff/ruins/exp_cloning/manual	//hippie start, re-add cloning
 	name = "paper - 'H-11 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
 	Congratulations, you are testing the H-11 experimental cloning device!<br>
@@ -12,7 +12,7 @@
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
 
-/obj/item/paper/fluff/ruins/exp_cloning/log
+/obj/item/paper/fluff/ruins/exp_cloning/log	//hippie end, re-add cloning
 	name = "experiment log"
 	info = {"<h4>Day 1</h4>
 	We are very excited to be part of the first crew of the SC Irmanda!<br>
