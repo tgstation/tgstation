@@ -19,7 +19,7 @@
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/item/assembly_holder/Destroy()
-	QDEL_NULL(assemblies)
+	QDEL_LAZYLIST(assemblies)
 	return ..()
 
 /obj/item/assembly_holder/Exited(atom/movable/gone, direction)
