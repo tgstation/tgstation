@@ -87,42 +87,36 @@
 		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]" 
 	return ..()
 
-/obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/singlecard)) // combine into cardhand
-		if(isturf(loc)) // this is on the turf already
-			var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, item))
-			new_cardhand.pixel_x = src.pixel_x
-			new_cardhand.pixel_y = src.pixel_y
-		else // make a cardhand in our active hand
-			var/obj/item/toy/cards/cardhand/new_cardhand = new (get_turf(src), list(src, item))
-			user.temporarilyRemoveItemFromInventory(src, TRUE)
-			new_cardhand.pickup(user)
-			user.put_in_active_hand(new_cardhand)
-		return
-
+/obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params, flip_card=FALSE)
+	var/obj/item/toy/singlecard/card
+	
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
-		if(dealer_deck.wielded) // deal card from deck and combine cards into cardhand (if wielded)
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(!card)
-				return
-
-			if(isturf(loc)) // this is on the turf already
-				var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card))
-				new_cardhand.pixel_x = src.pixel_x
-				new_cardhand.pixel_y = src.pixel_y
-			else // make a cardhand in our active hand
-				var/obj/item/toy/cards/cardhand/new_cardhand = new (get_turf(src), list(src, card))
-				user.temporarilyRemoveItemFromInventory(src, TRUE)
-				new_cardhand.pickup(user)
-				user.put_in_active_hand(new_cardhand)
-
-			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
-			return
-		else // recycle card into deck (if unwielded)
+		if(!dealer_deck.wielded) // recycle card into deck (if unwielded)
 			dealer_deck.insert(list(src))
 			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
+		card = dealer_deck.draw(user)
+
+	if(istype(item, /obj/item/toy/singlecard))
+		card = item
+	
+	if(card) // combine into cardhand
+		if(istype(item, /obj/item/toy/cards/deck)) // only decks deals a card
+			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
+
+		var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card))
+		var/obj/item/toy/cards/cardhand/new_cardhand = new (get_turf(src), list(src, card))
+			
+		if(isturf(loc)) // this is on the turf already
+			new_cardhand.pixel_x = src.pixel_x
+			new_cardhand.pixel_y = src.pixel_y
+		else // make a cardhand in our active hand
+			user.temporarilyRemoveItemFromInventory(src, TRUE)
+			new_cardhand.pickup(user)
+			user.put_in_active_hand(new_cardhand)
+
+	////////
 
 	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
 		var/obj/item/toy/cards/cardhand/target_cardhand = item
@@ -145,6 +139,9 @@
 		update_appearance()
 		return 
 	return ..()
+	
+/obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, modifiers)
+	return attackby(item, user, params, flip_card=TRUE)
 
 /obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, params)
 	return attack_self(user)
