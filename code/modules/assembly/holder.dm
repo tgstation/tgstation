@@ -42,7 +42,7 @@
 	name = ""
 	for(var/obj/item/assembly/assembly in assemblies)
 		name += "[assembly.name]-"
-	name = splicetext(name,length(name),length(name)+1, "")
+	name = splicetext(name, length(name), length(name) + 1, "")
 	name += " assembly"
 	update_appearance()
 
