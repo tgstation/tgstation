@@ -1,5 +1,5 @@
 /obj/item/clothing/under/dress
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN
 	icon = 'icons/obj/clothing/under/dress.dmi'

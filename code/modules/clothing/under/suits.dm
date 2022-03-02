@@ -16,7 +16,7 @@
 	inhand_icon_state = "scratch"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/suit/sl
 	desc = "It's a very amish looking suit."
@@ -51,7 +51,7 @@
 	alt_covers_chest = TRUE
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"
@@ -66,7 +66,7 @@
 	inhand_icon_state = "really_black_suit_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/suit/green
 	name = "green suit"

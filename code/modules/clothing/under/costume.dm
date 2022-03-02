@@ -36,7 +36,7 @@
 	icon_state = "schoolgirl"
 	inhand_icon_state = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/schoolgirl/red
@@ -81,7 +81,7 @@
 	icon_state = "kilt"
 	inhand_icon_state = "kilt"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kilt/highlander
@@ -111,7 +111,7 @@
 	icon_state = "maid"
 	inhand_icon_state = "maid"
 	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/maid/Initialize(mapload)
@@ -155,7 +155,7 @@
 	name = "blue performer's outfit"
 	icon_state = "bsing"
 	inhand_icon_state = "bsing"
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/mummy
 	name = "mummy wrapping"
@@ -183,7 +183,7 @@
 	icon_state = "draculass"
 	inhand_icon_state = "draculass"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/drfreeze

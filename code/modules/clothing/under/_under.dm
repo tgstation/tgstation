@@ -308,7 +308,7 @@
 		return
 	adjusted = !adjusted
 	if(adjusted)
-		if(fitted != FEMALE_UNIFORM_TOP)
+		if(fitted != FEMALE_UNIFORM_TOP_ONLY)
 			fitted = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted (and also the arms, realistically)
 			body_parts_covered &= ~CHEST
