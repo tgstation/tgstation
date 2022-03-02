@@ -54,7 +54,7 @@
 			A.forceMove(src)
 	A.holder = src
 	A.toggle_secure()
-	LAZYADD(assemblies,A)
+	LAZYADD(assemblies, A)
 	A.holder_movement()
 	A.on_attach()
 
