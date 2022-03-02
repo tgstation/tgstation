@@ -138,3 +138,6 @@
 
 /obj/item/encryptionkey/secbot
 	channels = list(RADIO_CHANNEL_AI_PRIVATE = 1, RADIO_CHANNEL_SECURITY = 1)
+
+/obj/item/encryptionkey/strandcuffs
+	channels = list(RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_MEDICAL = 1)

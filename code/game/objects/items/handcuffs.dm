@@ -105,8 +105,6 @@
 
 	target.equip_to_slot(cuffs, ITEM_SLOT_HANDCUFFED)
 
-	SEND_SIGNAL(src, COMSIG_HANDCUFFS_APPLIED, target, user)
-
 	if(trashtype && !dispense)
 		qdel(src)
 	return
@@ -543,42 +541,109 @@
 		QDEL_NULL(effectReference)
 
 /**
- * Handcuff circuit/GPS
- * Great for taking long hikes, making clean arrests, and forcing people into elaborate jigsaw traps.
+ * Deathcuffs
+ * Can be worn in glove slot to give an alert to medbay & cargo when you die off-station.
+ * Acts as a GPS when worn as a bracelet.
+ * Can otherwise be used as normal handcuffs
  */
 /obj/item/restraints/handcuffs/strand
 	name = "\improper Kheiral cuffs"
-	desc = "A prototype wrist communicator, overshadowed by the handcuffs slapped against it. Can be worn as a GPS on the wrist.\nWhen used as handcuffs, can read the wearer's data, send circuit signals, and have its tightness adjusted."
+	desc = "A prototype wrist communicator, overshadowed by the handcuffs slapped against it. When clamped to one wrist, can send a distress signal upon your death off-station."
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
 	slot_flags = ITEM_SLOT_GLOVES | ITEM_SLOT_BELT
-	/// Check for if the GPS is currently enabled
+	/// If we're in the glove slot
+	var/on_wrist = FALSE
+	/// If the GPS is already on
 	var/gps_enabled = FALSE
+	/// If we're off the station's Z-level
+	var/far_from_home = FALSE
+	/// Used to broadcast user's death through the radio
+	var/obj/item/radio/internal_radio
 
 /obj/item/restraints/handcuffs/strand/Initialize()
 	. = ..()
-	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/handcuffs), SHELL_CAPACITY_SMALL)
 	update_icon(UPDATE_OVERLAYS)
+	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
+	internal_radio = new/obj/item/radio(src)
+	internal_radio.subspace_transmission = TRUE
+	internal_radio.canhear_range = 0
+	internal_radio.listening = FALSE
+	internal_radio.should_be_listening = FALSE
+	internal_radio.keyslot = new /obj/item/encryptionkey/strandcuffs
+	internal_radio.recalculateChannels()
 
 /obj/item/restraints/handcuffs/strand/item_action_slot_check(slot)
 	return slot == ITEM_SLOT_GLOVES
 
 /obj/item/restraints/handcuffs/strand/equipped(mob/user, slot, initial)
 	. = ..()
-	if(slot != ITEM_SLOT_GLOVES || gps_enabled)
+	if(slot != ITEM_SLOT_GLOVES)
 		return
-	AddComponent(/datum/component/gps, "*[user.name]'s Kheiral Cuff")
+	on_wrist = TRUE
 	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	balloon_alert(user, "GPS activated")
-	gps_enabled = TRUE
+	connect_kheiral_network(user)
 
 /obj/item/restraints/handcuffs/strand/dropped(mob/user, silent)
 	. = ..()
+	on_wrist = FALSE
+	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	remove_kheiral_network(user)
+
+/// Enables the GPS & registers the statchange signal
+/obj/item/restraints/handcuffs/strand/proc/connect_kheiral_network(mob/user)
 	if(gps_enabled)
+		return
+	if(on_wrist && far_from_home)
+		AddComponent(/datum/component/gps, "*[user.name]'s Kheiral Communicator")
+		balloon_alert(user, "GPS activated")
+		RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
+		gps_enabled = TRUE
+
+/// Disables the GPS and unregisters the statchange signal
+/obj/item/restraints/handcuffs/strand/proc/remove_kheiral_network(mob/user)
+	if(!gps_enabled)
+		return
+	if(!on_wrist || !far_from_home)
 		qdel(GetComponent(/datum/component/gps))
-		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert(user, "GPS de-activated")
+		UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 		gps_enabled = FALSE
+
+/obj/item/restraints/handcuffs/strand/Destroy(force)
+	. = ..()
+	UnregisterSignal(src, COMSIG_MOVABLE_Z_CHANGED)
+	if(internal_radio)
+		qdel(internal_radio)
+
+/// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
+/obj/item/restraints/handcuffs/strand/proc/check_z(datum/source, turf/old_turf, turf/new_turf)
+	SIGNAL_HANDLER
+
+	if(!isturf(new_turf))
+		return
+
+	var/mob/living/bridges = loc
+	if(is_station_level(new_turf.z))
+		far_from_home = FALSE
+		if(bridges)
+			remove_kheiral_network(bridges)
+	else
+		far_from_home = TRUE
+		if(bridges)
+			connect_kheiral_network(bridges)
+
+/// If we die, scream over the radio for help.
+/obj/item/restraints/handcuffs/strand/proc/on_user_statchange(mob/living/owner, new_stat)
+	SIGNAL_HANDLER
+
+	if(new_stat != DEAD)
+		return
+	var/death_message = "Warning! [owner] has perished off-station!"
+	if(internal_radio)
+		internal_radio.talk_into(src, death_message, RADIO_CHANNEL_MEDICAL)
+		internal_radio.talk_into(src, death_message, RADIO_CHANNEL_SUPPLY)
+
 
 /obj/item/restraints/handcuffs/strand/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -589,66 +654,10 @@
 	. = ..()
 	. += emissive_appearance(icon, "strand_light", alpha = src.alpha)
 
-/obj/item/circuit_component/handcuffs
-	display_name = "Handcuffs"
-	desc = "Handcuffs that can read the current captive's data, send signals, and have their tightness adjusted."
-
-	/// The user that is currently captive within the device
-	var/datum/port/output/captive
-	/// Trigger signal when applied to someone
-	var/datum/port/output/cuffed
-	/// Trigger signal when removed from someone
-	var/datum/port/output/uncuffed
-	/// Current time to break out.
-	var/datum/port/output/breakout_time_current
-	/// The amount of time that it takes to break out of these cuffs. Maximum 1 minute, like normal cuffs.
-	var/datum/port/input/breakout_time_change
-
-	/// The handcuffs this circut is attached to.
-	var/obj/item/restraints/handcuffs/cuffs
-
-/obj/item/circuit_component/handcuffs/populate_ports()
-	captive = add_output_port("Current Captive", PORT_TYPE_ATOM)
-	breakout_time_current = add_output_port("Current Uncuff Time (Seconds)", PORT_TYPE_NUMBER)
-	cuffed = add_output_port("Cuffed", PORT_TYPE_SIGNAL)
-	uncuffed = add_output_port("Uncuffed", PORT_TYPE_SIGNAL)
-
-
-	breakout_time_change = add_input_port("Uncuff Time (Seconds)", PORT_TYPE_NUMBER, trigger = .proc/sanitize_breakout_time)
-
-/obj/item/circuit_component/handcuffs/register_shell(atom/movable/shell)
-	. = ..()
-	cuffs = shell
-	RegisterSignal(shell, COMSIG_HANDCUFFS_APPLIED, .proc/on_cuffed)
-	RegisterSignal(shell, COMSIG_HANDCUFFS_REMOVED, .proc/on_uncuffed)
-	breakout_time_current.set_output((cuffs.breakouttime / 10))
-
-/obj/item/circuit_component/handcuffs/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, COMSIG_HANDCUFFS_APPLIED)
-	UnregisterSignal(shell, COMSIG_HANDCUFFS_REMOVED)
-	cuffs = null
-	return ..()
-
-/obj/item/circuit_component/handcuffs/proc/sanitize_breakout_time()
-	cuffs.breakouttime = clamp(breakout_time_change.value, 10, 60) SECONDS
-	breakout_time_current.set_output((cuffs.breakouttime / 10))
-
-/obj/item/circuit_component/handcuffs/proc/on_cuffed(obj/item/restraints/handcuffs/source, atom/target, mob/user)
-	SIGNAL_HANDLER
-
-	captive.set_output(target)
-	cuffed.set_output(COMPONENT_SIGNAL)
-
-/obj/item/circuit_component/handcuffs/proc/on_uncuffed(obj/item/restraints/handcuffs/source)
-	SIGNAL_HANDLER
-
-	captive.set_output(null)
-	uncuffed.set_output(COMPONENT_SIGNAL)
-
-// Circuit conversion frame
-/obj/item/handcuff_circuit_frame
+// Strandcuff conversion frame
+/obj/item/strandcuff_frame
 	name = "\improper Kheiral cuffs frame"
-	desc = "A set of sensors, wires, and a knife-shaped antennae. Hook these up to a pair of handcuffs to let them hold circuits and act as a GPS."
+	desc = "A set of sensors, wires, and a knife-shaped antennae. Hook these up to a pair of handcuffs to let them act as a GPS and read your vitals."
 	icon = 'icons/obj/restraints.dmi'
 	icon_state = "strand_frame"
 

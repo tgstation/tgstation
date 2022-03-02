@@ -316,8 +316,6 @@
 		if (W)
 			W.forceMove(drop_location())
 			W.dropped(src)
-			SEND_SIGNAL(W, COMSIG_HANDCUFFS_REMOVED)
-
 			if (W)
 				W.layer = initial(W.layer)
 				W.plane = initial(W.plane)
@@ -342,10 +340,9 @@
 		return FALSE
 	if(I != handcuffed && I != legcuffed)
 		return FALSE
-	SEND_SIGNAL(I, COMSIG_HANDCUFFS_REMOVED)
-
 	visible_message(span_danger("[src] manages to [cuff_break ? "break" : "remove"] [I]!"))
 	to_chat(src, span_notice("You successfully [cuff_break ? "break" : "remove"] [I]."))
+	
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)

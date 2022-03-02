@@ -382,11 +382,3 @@
 #define COMSIG_SPEED_POTION_APPLIED "speed_potion"
 	#define SPEED_POTION_STOP (1<<0)
 
-// /obj/item/restraints/handcuffs signals
-
-///from /obj/item/restraints/handcuffs/proc/apply_cuffs() : (mob/living/carbon/target, mob/user, dispense = FALSE)
-#define COMSIG_HANDCUFFS_APPLIED "handcuffs_applied"
-
-// There are two different ways to remove cuffs, I didn't bother differentiating them
-///from /mob/living/carbon/proc/uncuff() and /mob/living/carbon/proc/clear_cuffs(): (obj/item/I, cuff_break)
-#define COMSIG_HANDCUFFS_REMOVED "handcuffs_removed"

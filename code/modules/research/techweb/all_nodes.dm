@@ -1978,7 +1978,6 @@
 		"decloner",
 		"donksoft_refill",
 		"donksofttoyvendor",
-		"handcuff_shell",
 		"largecrossbow",
 		"rapidsyringe",
 		"suppressor",
