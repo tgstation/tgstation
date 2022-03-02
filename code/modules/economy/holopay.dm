@@ -173,25 +173,12 @@
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))
 	/// Start checking if the source projection is in range
-	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-	if(card.loc)
-		holder = WEAKREF(card.loc)
-		RegisterSignal(card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+	START_PROCESSING(SSobj, src)
 	return TRUE
 
-/**
- * A periodic check to see if the projecting card is nearby.
- * Deletes the holopay if true.
- */
-/obj/structure/holopay/proc/check_operation()
-	SIGNAL_HANDLER
-	var/card_holder = holder?.resolve()
-	if(!card_holder || linked_card.loc != card_holder)
-		if(card_holder)
-			UnregisterSignal(card_holder, COMSIG_MOVABLE_MOVED)
-		holder = WEAKREF(linked_card.loc)
-		RegisterSignal(linked_card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range) || !IN_GIVEN_RANGE(src, linked_card.loc, max_holo_range))
+/obj/structure/holopay/process()
+	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
+		STOP_PROCESSING(SSobj, src)
 		dissapate()
 
 /**
