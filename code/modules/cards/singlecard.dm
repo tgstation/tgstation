@@ -101,22 +101,20 @@
 	if(istype(item, /obj/item/toy/singlecard))
 		card = item
 	
-	if(card) // combine into cardhand
-		if(istype(item, /obj/item/toy/cards/deck)) // only decks deals a card
+	if(card) // card + card = combine into cardhand
+		if(istype(item, /obj/item/toy/cards/deck)) 
+			// only decks cause a balloon alert
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 
-		var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card))
-		var/obj/item/toy/cards/cardhand/new_cardhand = new (get_turf(src), list(src, card))
-			
-		if(isturf(loc)) // this is on the turf already
-			new_cardhand.pixel_x = src.pixel_x
-			new_cardhand.pixel_y = src.pixel_y
-		else // make a cardhand in our active hand
+		var/obj/item/toy/cards/cardhand/new_cardhand = new (drop_location(), list(src, card))
+		new_cardhand.pixel_x = src.pixel_x
+		new_cardhand.pixel_y = src.pixel_y
+
+		if(!isturf(loc)) // make a cardhand in our active hand
 			user.temporarilyRemoveItemFromInventory(src, TRUE)
 			new_cardhand.pickup(user)
 			user.put_in_active_hand(new_cardhand)
-
-	////////
+		return
 
 	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
 		var/obj/item/toy/cards/cardhand/target_cardhand = item
@@ -141,7 +139,7 @@
 	return ..()
 	
 /obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, modifiers)
-	return attackby(item, user, params, flip_card=TRUE)
+	return attackby(item, user, modifiers, flip_card=TRUE)
 
 /obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, params)
 	return attack_self(user)
