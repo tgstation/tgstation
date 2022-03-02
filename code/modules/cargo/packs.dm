@@ -2532,13 +2532,13 @@
 					/obj/item/storage/fish_case/random/saltwater)
 	crate_name = "saltwater fish crate"
 
-/datum/supply_pack/misc/tirizan_fish
+/datum/supply_pack/misc/tiziran_fish
 	name = "Tirizan Fish Case"
-	desc = "Tirizian fish caught by the finest tirizan indentured servant."
+	desc = "Tiziran saltwater fish imported from the Zagos Sea."
 	cost = CARGO_CRATE_VALUE * 2
-	contains = list(/obj/item/storage/fish_case/tirizan,
-					/obj/item/storage/fish_case/tirizan)
-	crate_name = "tirizan fish crate"
+	contains = list(/obj/item/storage/fish_case/tiziran,
+					/obj/item/storage/fish_case/tiziran)
+	crate_name = "tiziran fish crate"
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"

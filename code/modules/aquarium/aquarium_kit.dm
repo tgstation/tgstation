@@ -49,10 +49,10 @@
 	. = ..()
 	generate_fish(src, pick(/datum/aquarium_behaviour/fish/donkfish, /datum/aquarium_behaviour/fish/emulsijack))
 
-/obj/item/storage/fish_case/tirizan
+/obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
 
-/obj/item/storage/fish_case/tirizan/PopulateContents()
+/obj/item/storage/fish_case/tiziran/PopulateContents()
 	. = ..()
 	generate_fish(src, pick(/datum/aquarium_behaviour/fish/dwarf_moonfish, /datum/aquarium_behaviour/fish/gunner_jellyfish, /datum/aquarium_behaviour/fish/needlefish, /datum/aquarium_behaviour/fish/armorfish))
 
