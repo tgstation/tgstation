@@ -246,7 +246,7 @@
 	poison_type = /datum/reagent/toxin/venom
 	speed = -0.5
 	gold_core_spawnable = NO_SPAWN
-	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage. Venom injection of 6u per bite."
+	menu_description = "Assassin spider variant with an unmatched speed and very deadly poison, but has very low amount of health and damage. Venom injection of 5u per bite."
 
 /**
  * # Spider Broodmother
