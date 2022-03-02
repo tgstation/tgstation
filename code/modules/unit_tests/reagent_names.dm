@@ -1,8 +1,6 @@
 /// Test that all reagent names are different in order to prevent #65231
 /datum/unit_test/reagent_names
 
-TEST_FOCUS(/datum/unit_test/reagent_names)
-
 /datum/unit_test/reagent_names/Run()
 	var/used_names = list()
 
