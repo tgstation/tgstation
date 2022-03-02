@@ -225,7 +225,9 @@ const SingleLoadout = (props, context) => {
           fluid
           icon={icon}
           content="Purchase Loadout"
-          onClick={() => act(loadoutId)} />
+          onClick={() => act('purchase_loadout', {
+            id: loadoutId,
+          })} />
         <Divider />
         <Box color={loadoutColor}>
           Added by {author}.

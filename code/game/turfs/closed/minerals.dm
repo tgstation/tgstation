@@ -22,11 +22,14 @@
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
 	var/mineralAmt = 3
-	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
 	// If true you can mine the mineral turf with your hands
 	var/weak_turf = FALSE
+	///How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
+	var/tool_mine_speed = 4 SECONDS
+	///How long it takes to mine this turf with hands, if it's weak.
+	var/hand_mine_speed = 15 SECONDS
 
 /turf/closed/mineral/Initialize(mapload)
 	. = ..()
@@ -72,16 +75,20 @@
 		if (!isturf(T))
 			return
 
-		if(last_act + (40 * I.toolspeed) > world.time)//prevents message spam
+		if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
 			return
-		last_act = world.time
+
+		TIMER_COOLDOWN_START(src, REF(user), tool_mine_speed)
+
 		to_chat(user, span_notice("You start picking..."))
 
-		if(I.use_tool(src, user, 40, volume=50))
-			if(ismineralturf(src))
-				to_chat(user, span_notice("You finish cutting into the rock."))
-				gets_drilled(user, TRUE)
-				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
+		if(!I.use_tool(src, user, tool_mine_speed, volume=50))
+			TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
+			return
+		if(ismineralturf(src))
+			to_chat(user, span_notice("You finish cutting into the rock."))
+			gets_drilled(user, TRUE)
+			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
 	else
 		return attack_hand(user)
 
@@ -91,11 +98,14 @@
 	var/turf/user_turf = user.loc
 	if (!isturf(user_turf))
 		return
-	if(last_act + MINING_MESSAGE_COOLDOWN > world.time)//prevents message spam
+	if(TIMER_COOLDOWN_CHECK(src, REF(user))) //prevents mining turfs in progress
 		return
-	last_act = world.time
+	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
+	var/skill_modifier = 1
+	skill_modifier = user?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 	to_chat(user, span_notice("You start pulling out pieces of [src] with your hands..."))
-	if(!do_after(user, 15 SECONDS, target = src))
+	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
+		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return
 	if(ismineralturf(src))
 		to_chat(user, span_notice("You finish pulling apart [src]."))
@@ -175,6 +185,10 @@
 			if(prob(75))
 				gets_drilled(null, FALSE)
 	return
+
+/turf/closed/mineral/blob_act(obj/structure/blob/B)
+	if(prob(50))
+		gets_drilled(give_exp = FALSE)
 
 /turf/closed/mineral/random
 	var/list/mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,
@@ -592,7 +606,7 @@
 			det_time = 0
 		visible_message(span_notice("The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!"))
 
-/turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = FALSE)
+/turf/closed/mineral/gibtonite/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
 		playsound(src,'sound/effects/hit_on_shattered_glass.ogg',50,TRUE)
 		explosive_reaction(user, triggered_by_explosion)
@@ -664,7 +678,7 @@
 		to_chat(usr, span_warning("The rock seems to be too strong to destroy. Maybe I can break it once I become a master miner."))
 
 
-/turf/closed/mineral/strong/gets_drilled(mob/user)
+/turf/closed/mineral/strong/gets_drilled(mob/user, give_exp = FALSE)
 	if(!ishuman(user))
 		return // see attackby
 	var/mob/living/carbon/human/H = user

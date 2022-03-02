@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On IceBoxStation, the courtroom no longer owns a bit of the hall."

@@ -310,17 +310,136 @@ https://file.house/zy7H.png
 Code used for the test in a readable format:
 https://pastebin.com/w50uERkG
 
-### Dot variable
+### Dot variable (`.`)
 
-Like other languages in the C family, DM has a `.` or "Dot" operator, used for accessing variables/members/functions of an object instance.
-eg:
-```DM
-var/mob/living/carbon/human/H = YOU_THE_READER
-H.gib()
+The `.` variable is present in all procs. It refers to the value returned by a proc.
+
+```dm
+/proc/return_six()
+	. = 3
+	. *= 2
+
+// ...is equivalent to...
+/proc/return_six()
+	var/output = 3
+	output *= 2
+	return output
 ```
-However, DM also has a dot variable, accessed just as `.` on its own, defaulting to a value of null. Now, what's special about the dot operator is that it is automatically returned (as in the `return` statement) at the end of a proc, provided the proc does not already manually return (`return count` for example.) Why is this special?
 
-With `.` being everpresent in every proc, can we use it as a temporary variable? Of course we can! However, the `.` operator cannot replace a typecasted variable - it can hold data any other var in DM can, it just can't be accessed as one, although the `.` operator is compatible with a few operators that look weird but work perfectly fine, such as: `.++` for incrementing `.'s` value, or `.[1]` for accessing the first element of `.`, provided that it's a list.
+At its best, it can make some very common patterns easy to use, and harder to mess up. However, at its worst, it can make it significantly harder to understand what a proc does.
+
+```dm
+/proc/complex_proc()
+	if (do_something())
+		some_code()
+		if (do_something_else())
+			. = TRUE // Uh oh, what's going on!
+	
+	// even
+	// more
+	// code
+	if (bad_condition())
+		return // This actually will return something set from earlier!
+```
+
+This sort of behavior can create some nasty to debug errors with things returning when you don't expect them to. Would you see `return` and it expect it to return a value, without reading all the code before it? Furthermore, a simple `return` statement cannot easily be checked by the LSP, meaning you can't easily check what is actually being returned. Basically, `return output` lets you go to where `output` is defined/set. `return` does not.
+
+Even in simple cases, this can create some just generally hard to read code, seemingly in the pursuit of being clever.
+
+```dm
+/client/p_were(gender)
+	. = "was"
+	if (gender == PLURAL || gender == NEUTER)
+		. = "were"
+```
+
+Because of these problems, it is encouraged to prefer standard, explicit return statements. The above code would be best written as:
+
+```dm
+/client/p_were(gender)
+	if (gender == PLURAL || gender == NEUTER)
+		return "were"
+	else
+		return "was"
+```
+
+#### Exception: `. = ..()`
+
+As hinted at before, `. = ..()` is *extremely* common. This will call the parent function, and preserve its return type. Code like this:
+
+```dm
+/obj/item/spoon/attack()
+	. = ..()
+	visible_message("Whack!")
+```
+
+...is completely accepted, and in fact, usually *prefered* over:
+
+```dm
+/obj/item/spoon/attack()
+	var/output = ..()
+	visible_message("Whack!")
+	return output
+```
+
+#### Exception: Runtime resilience
+
+One unique property of DM is the ability for procs to error, but for code to continue. For instance, the following:
+
+```dm
+/proc/uh_oh()
+	CRASH("oh no!")
+
+/proc/main()
+	to_chat(world, "1")
+	uh_oh()
+	to_chat(world, "2")
+```
+
+...would print both 1 *and* 2, which may be unexpected if you come from other languages.
+
+This is where `.` provides a new useful behavior--**a proc that runtimes will return `.`**.
+
+Meaning:
+
+```dm
+/proc/uh_oh()
+	. = "woah!"
+	CRASH("oh no!")
+
+/proc/main()
+	to_chat(world, uh_oh())
+```
+
+...will print `woah!`. 
+
+For this reason, it is acceptable for `.` to be used in places where consumers can reasonably continue in the event of a runtime.
+
+If you are using `.` in this case (or for another case that might be acceptable, other than most uses of `. = ..()`), it is still prefered that you explicitly `return .` in order to prevent both editor issues and readability/error-prone issues.
+
+```dm
+/proc/uh_oh()
+	. = "woah!"
+
+	if (do_something())
+		call_code()
+		if (!working_fine())
+			return . // Instead of `return`, we explicitly `return .`
+
+	if (some_fail_state())
+		CRASH("youch!")
+
+	return . // `return .` is used at the end, to signify it has been used
+```
+
+```dm
+/obj/item/spoon/super_attack()
+	. = ..()
+	if (. == BIGGER_SUPER_ATTACK)
+		return BIGGER_SUPER_ATTACK // More readable than `.`
+	
+	// Due to how common it is, most uses of `. = ..()` do not need a trailing `return .`
+```
 
 ### The BYOND walk procs
 

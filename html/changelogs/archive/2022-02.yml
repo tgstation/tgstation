@@ -890,3 +890,256 @@
   - bugfix: Void's ritual of knowledge is void path correctly
   Toastgoats:
   - imageadd: New space dragon sprite!
+2022-02-22:
+  PositiveEntropy, Naevii:
+  - imageadd: Resprites the Head of Security Greatcoat!
+  - imageadd: Resprites the object icon of the Head of Security Trenchcoat
+  Thunder12345:
+  - imageadd: Power cells and the cell charger have been resprited, the charger will
+      now look correct with a much wider variety of non-standard power cells
+  - rscdel: Removed the uncraftable 15k charge high-capacity power cell+, all instances
+      have been replaced with the regular 10k charge high-capacity cell
+  - bugfix: Erroneous power cell charge indicators have been removed from many non-standard
+      types of power cells
+  - bugfix: All varieties of marauder mech including the nuke ops mauler come with
+      a bluespace power cell, consistent with other nuke op mechs
+  - bugfix: Power cell charge indicators will now update while in a cell charger
+  - bugfix: Potato and other crop batteries will not have their wires disappear when
+      on cell chargers
+  san7890:
+  - bugfix: On IceBoxStation, the courtroom no longer owns a bit of the hall.
+2022-02-23:
+  ArcaneDefence:
+  - bugfix: An odysseus' sleeper will now realize when a previously contained patient
+      has left the sleeper through unconventional means.
+  GoblinBackwards:
+  - bugfix: Holy water's cult deconvertion timer now resets when transferred to a
+      new mob
+  - bugfix: Fixes beam rifle not causing an explosion on impact mode.
+  - bugfix: Fixes radio gloves being uncraftable
+  GoldenAlpharex:
+  - bugfix: Ghosts are 100% less afraid of bobbing up and down, and will no longer
+      keep their orbit when they shouldn't be keeping it.
+  Greniza:
+  - code_imp: adds p_theirs() proc
+  JohnFulpWillard:
+  - bugfix: 'Non-dense mobs will no longer knock monkeys over (Ex: Revenants, Bots,
+      Lizards, Alien larvas).'
+  Melbert:
+  - bugfix: Eldritch Amulet no longer gives thermal vision when it shouldn't
+  - admin: Fixes some heretic logs. Final knowledge uplink log should be clearer,
+      and ghoul admin message no longer has a typo.
+  SmoSmoSmoSmok:
+  - bugfix: Players are no longer able to create walls using sheets that arent linked
+      to a material
+  TiviPlus:
+  - bugfix: Fixed gygax smash not logging the driver
+  - bugfix: Fixed mechs being punched using power but punching as a mech not using
+      power
+  - bugfix: Fixed mechs not taking damage from mech punches if punched while having
+      no power
+  - bugfix: Fixed weapon damage types only being respected for mech punches sometimes
+  - bugfix: Fixed toxins mech damage mode playing sounds on punches despite doing
+      nothing
+  - refactor: Mech punch code partly redone
+  - admin: mech punches will now ALWAYS be logged, even against objects
+  - code_imp: reshuffled some mech bay code please report issues on the github
+  - bugfix: fixed distortion effects cutting each other
+  Wallem:
+  - rscadd: Some prisoners have been complaining about the cold weather in the permabrig,
+      so we've dug through disposals and found a couple hats for 'em.
+  cacogen:
+  - qol: RPED now swaps in cell with greatest charge (of highest tier) first
+  - balance: Blobs can destroy mineral turfs like they can walls
+  - qol: Adds balloon alerts for blob overmind
+  - qol: Adds contextual screen tips for blob overmind
+  - qol: Off-station blobs are lighter than regular blobs
+  - bugfix: Fixes bug where on-station blobs were not counted towards victory when
+      expanded from off-station blobs
+  - bugfix: Fixes issue with cores and nodes having their color applied twice
+  jlsnow301:
+  - bugfix: Fixes a blue screen in the Pandemic from loading multiple viruses.
+  san7890:
+  - balance: On IceBoxStation, Nanotrasen has finally stopped clearing out excessively
+      large swatches of land for the gulagged prisoners in order to help them work
+      for their points.
+  tralezab:
+  - rscadd: Ratfish can now be found in moisture traps.
+2022-02-24:
+  ErdinyoBarboza:
+  - bugfix: Makes the IceBoxStation Underground (Level 2) wastes immune to radiation
+      and also paints the maintenance as such to let people take shelter.
+  - qol: Makes the IceBoxStation Service Hall Exit into a properly cycled airlock
+      system.
+  - qol: Icebox Locker Room now has real personal lockers once more.
+  - qol: Icebox Service Exit is not properly mapped with external airlocks and cycled
+      doors.
+  san7890:
+  - rscadd: Nanotrasen has now made it so that the room that you launch your home-made
+      bombs from is now known as the "Launch Site" across all five stations.
+  tralezab:
+  - bugfix: Ratfish can now properly show up in moisture traps
+  - code_imp: Moisture traps are coded a little better now
+  - spellcheck: fixed some wording in the moisture trap bite feedback
+2022-02-25:
+  ATHATH:
+  - bugfix: Buckling yourself to and then unbuckling yourself from a stasis bed will
+      no longer permanently halt the effects of any gravitum in your system.
+  - bugfix: Liverless creatures can no longer retain the effects of gravitum indefinitely,
+      as it will now decay in their bodies (just as it does in the bodies of livered
+      creatures).
+  Christmas5:
+  - bugfix: Added the missing variable "plane" to floor lights.
+  JohnFulpWillard:
+  - spellcheck: Removed wrong text in esniffers saying ghosts using them sends the
+      signaller inside of it's, frequency.
+  - bugfix: Building walls with snow now take time to do, like every other type.
+  Melbert:
+  - expansion: Russian Fugitive Hunters are now stronker. Their ship has been remade,
+      they have a little bit more ammo and equipment, and most importantly they now
+      have a pet bear.
+  Mothblocks:
+  - balance: Thieves can no longer scale, and can only run once.
+  - balance: Increased the number of thieves by 2.
+  OneAsianTortoise:
+  - bugfix: fixes Metastation hydroponics shutter access
+  Pickle-Coding:
+  - bugfix: Frostoil reagent will no longer achieve negative temperature when exposed
+      to air. Changes behaviour to make air converge to 2.7 kelvin instead.
+  Putnam3145:
+  - qol: '"Scrubbing" and "siphoning" are now consistently used'
+  Sealed101:
+  - bugfix: disktoaster storages now have their proper lights. all hail the toaster
+  rellyreri:
+  - spellcheck: Claustrophobics will now breathe instead of breath.
+  sergeirocks100:
+  - bugfix: Adjusted cargo tech jumpsuits and jumpskirts now show your arms from all
+      angles, and the adjusted cargo jumpsuit now uses the normal jumpsuit legs instead
+      of the digitigrade ones.
+  timothymtorres:
+  - qol: Chem dispensers have been changed to eject beakers using RMB instead of AltClick.
+  - qol: Hydroponics trays have been changed to empty reagents using RMB instead of
+      AltClick.
+  - code_imp: Any object that inherits the simple_rotation component will always use
+      AltClick.
+2022-02-26:
+  BallastMonster:
+  - spellcheck: fixes false info with vampires becoming bats
+  Capsandi:
+  - bugfix: Took out an extra apc in deltastation transfer center which screwed with
+      the power
+  Cheshify:
+  - bugfix: Monkeys can no longer bite people to give them heart attacks
+  Iamgoofball:
+  - code_imp: Fixes some code style issues for more free GBP
+  - code_imp: Implements some missing SDQL 2 wrappers.
+  JohnFulpWillard:
+  - bugfix: AI's "O" sound on vox now sounds like an O instead of an I.
+  KubeRoot:
+  - qol: 'Chat tab filter behavior has been tweaked: System messages will now be enabled
+      in custom tabs and any new message types will be enabled by default. NOTE: This
+      will mess up your custom chat tab filters after the first time you join. You
+      will need to disable any message types that were automatically enabled with
+      this change.'
+  Melbert:
+  - expansion: Raw Prophets now have a funny little attack animation.
+  - balance: Raw Prophets have been adjusted slightly. They now have more max health,
+      a slightly lower sight range (but the ability to toggle it on or off), drop
+      all their component parts on death, and do more damage for every consecutive
+      attack on a target they do.
+  - bugfix: Fixes a few potential issues with heretic rituals.
+  - code_imp: Adds proper stack support to heretic rituals. Also allows for more specific
+      "ritual failure" feedback.
+  RandomGamer123:
+  - bugfix: Bicycles can now be repaired with a welder and have actually sensible
+      max_integrity and integrity_failure values.
+  Ryll/Shaps:
+  - bugfix: Projectiles now respect armor again
+  Wallem & Imaginos:
+  - balance: Splits biobags into virology & science bags. Virology bags can't hold
+      slime cores or cytology equipment, and science bags can't hold medipens & bloodbags.
+  - imageadd: Changes all storage bag sprites
+  cacogen:
+  - bugfix: Examining cells won't say they have 0% charge when the overlay indicates
+      they don't
+  dragomagol:
+  - qol: pointing is now logged
+  - qol: bodythrow impacts are now logged
+  - qol: individual logs now display in order, even when the server date rolls over!
+  jlsnow301:
+  - spellcheck: Space dragons are now "it" instead of "he".
+  san7890:
+  - rscadd: On Tramstation, Nanotrasen installed new APCs on the lower aspects of
+      the Science Division.
+  tastyfish:
+  - bugfix: Opening an air alarm panel now renders the overlays correctly.
+  - rscadd: Most status displays now have USB support for circuits.
+  unit0016:
+  - imageadd: HONK Co. Pranks have released a new set of stencils for any cardboard
+      cutouts you might find lying around, these ones EXTRA "RR-REAL HELP M-". Whatever
+      that means.
+2022-02-27:
+  Axietheaxolotl, PositiveEntropy:
+  - expansion: Adds a beret for the Chief Medical Officer!
+  - imageadd: Nanotrasen has now tackled overhauling the visual aesthetic of the Chief
+      Medical Officer, changing their jumpsuits and labcoat, and altering their original
+      pastel blue color to turquoise!
+  - imageadd: Nitriles now look much more rubbery than before!
+  ErdinyoBarboza:
+  - bugfix: Fixes DeltaStation Service area AI pathfinding. Bots will no longer get
+      stuck on the railings.
+  Melbert:
+  - bugfix: Fixes summon magic and summon guns
+  - refactor: Refactored wizard rituals (events/ghosts/guns/magic/madness) to reduce
+      code copy+paste.
+  dragomagol:
+  - bugfix: Security can now once again lock down the brig front desk on Icebox
+  jlsnow301:
+  - bugfix: The pAI candidate menu now properly switches between IC and OOC comments.
+  san7890:
+  - bugfix: In MetaStation Atmospherics, the floor light is no longer installed right
+      on top of a canister.
+  - rscadd: Nanotrasen's new set of stations will all have different names for "the
+      rooms in which you did surgery in" (they're now called Operating Rooms" as well
+      as a new name, a Theatre (for surgeries). Isn't it great to have some guy poking
+      around your pizza-filled guts while a gaggle of people watch you through a window
+      of glass?
+  - bugfix: If you've ever walked through the maintenance tunnels near DeltaStation's
+      Atmospherics and spotted a very dark lattice, it has been fixed.
+  - spellcheck: Nanotrasen found out that the factory for glass floors were capitalizing
+      their names, so they promptly shut down the factory to build a new one for the
+      express purpose of not capitalizing their names.
+  - bugfix: On TramStation, the Ordnance Burning Room (for your Tritium) no longer
+      owns that bit of space where noxious gases are meant to vent out into.
+  unit0016:
+  - bugfix: The AI no longer can start a full OSI investigation when the tips of your
+      combat boots hit Kilostation, thanks to the fact the firedoors that formerly
+      automatically triggered the fire alarm whenever you use the external airlocks
+      are gone.
+2022-02-28:
+  Cheshify:
+  - bugfix: You no longer need an entire wheel of cheese to make Moth Foods
+  LemonInTheDark:
+  - admin: Since _pick doesn't accept lists, I've added _pick_list for you to use
+      in sdql. Please table everyone on the station kthnx
+  Melbert:
+  - code_imp: Made some species datums follow style guidelines slightly better (lists,
+      indentation, spacing, etc).
+  - refactor: Refactored how species pages are generated in the preferences menu.
+      Species themselves are untouched completely. Some species pages have been filled
+      our more (or less) as a result.
+  - bugfix: Monkeys how have a preference menu entry, as god intended.
+  Pickle-Coding:
+  - bugfix: Prevents exploit allowing you to monitor Centcom and CTF frequencies.
+  Ryll/Shaps:
+  - admin: You can now create links to a datum's VV window in asay by posting the
+      datum's memory reference. The reference is now printed in the VV menu right
+      below the fancytype, for copying purposes..
+  - admin: Tagged datums will now show their tag index in VV
+  Sylphet:
+  - rscadd: adds helianthus cocktail
+  ViktorKoL:
+  - bugfix: the description of traitor under antagonist preferences is now up to date
+      with their progressive nature
+  cakexensen:
+  - bugfix: Poly's death streak resets upon surviving

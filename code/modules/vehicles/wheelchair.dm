@@ -31,7 +31,6 @@
 	. = ..()
 	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 
-
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
 	update_appearance()
@@ -49,6 +48,9 @@
 		new /obj/item/stack/sheet/iron(drop_location(), 4)
 		qdel(src)
 	return TRUE
+
+/obj/vehicle/ridden/wheelchair/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()

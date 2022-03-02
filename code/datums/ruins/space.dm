@@ -4,6 +4,8 @@
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
 	allow_duplicates = FALSE
+	ruin_type = ZTRAIT_SPACE_RUINS
+	default_area = /area/space
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"

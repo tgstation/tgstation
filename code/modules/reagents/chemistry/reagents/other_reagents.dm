@@ -255,6 +255,11 @@
 	..()
 	ADD_TRAIT(L, TRAIT_HOLY, type)
 
+/datum/reagent/water/holywater/on_mob_add(mob/living/L, amount)
+	. = ..()
+	if(data)
+		data["misc"] = 0
+
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, type)
 	..()
@@ -2629,13 +2634,14 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
 	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	self_consuming = TRUE //this works on objects, so it should work on skeletons and robots too
 
 /datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
 	. = ..()
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
 	addtimer(CALLBACK(exposed_obj, .proc/_RemoveElement, list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
 
-/datum/reagent/gravitum/on_mob_add(mob/living/L)
+/datum/reagent/gravitum/on_mob_metabolize(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
 	return ..()
 
@@ -2750,19 +2756,29 @@
 	var/ant_damage = 0
 	/// Tells the debuff how many ants we are being covered with.
 	var/amount_left = 0
+	/// List of possible common statements to scream when eating ants
+	var/static/list/ant_screams = list(
+		"THEY'RE UNDER MY SKIN!!",
+		"GET THEM OUT OF ME!!",
+		"HOLY HELL THEY BURN!!",
+		"MY GOD THEY'RE INSIDE ME!!",
+		"GET THEM OUT!!"
+		)
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
+	ant_damage++
+	if(ant_damage < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
+		return ..()
 	if(DT_PROB(5, delta_time))
 		if(DT_PROB(5, delta_time)) //Super rare statement
 			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
 		else
-			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!", "HOLY HELL THEY BURN!!", "MY GOD THEY'RE INSIDE ME!!", "GET THEM OUT!!"), forced = /datum/reagent/ants)
+			victim.say(pick(ant_screams), forced = /datum/reagent/ants)
 	if(DT_PROB(15, delta_time))
 		victim.emote("scream")
 	if(DT_PROB(2, delta_time)) // Stuns, but purges ants.
 		victim.vomit(rand(5,10), FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 1)
-	ant_damage++
 	return ..()
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)

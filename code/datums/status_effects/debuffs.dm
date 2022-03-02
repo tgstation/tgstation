@@ -1025,6 +1025,15 @@
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	/// Will act as the main timer as well as changing how much damage the ants do.
 	var/ants_remaining = 0
+	/// Common phrases people covered in ants scream
+	var/static/list/ant_debuff_speech = list(
+		"GET THEM OFF ME!!",
+		"OH GOD THE ANTS!!",
+		"MAKE IT END!!",
+		"THEY'RE EVERYWHERE!!",
+		"GET THEM OFF!!",
+		"SOMEBODY HELP ME!!"
+	)
 
 /datum/status_effect/ants/on_creation(mob/living/new_owner, amount_left)
 	if(isnum(amount_left) && new_owner.stat < HARD_CRIT)
@@ -1063,7 +1072,7 @@
 		if(prob(15))
 			switch(rand(1,2))
 				if(1)
-					victim.say(pick("GET THEM OFF ME!!", "OH GOD THE ANTS!!", "MAKE IT END!!", "THEY'RE EVERYWHERE!!", "GET THEM OFF!!", "SOMEBODY HELP ME!!"), forced = /datum/status_effect/ants)
+					victim.say(pick(ant_debuff_speech), forced = /datum/status_effect/ants)
 				if(2)
 					victim.emote("scream")
 		if(prob(50)) // Most of the damage is done through random chance. When tested yielded an average 100 brute with 200u ants.
@@ -1113,7 +1122,7 @@
 /atom/movable/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"
 	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
-	icon_state = "mind_control"
+	icon_state = ALERT_MIND_CONTROL
 
 
 /datum/status_effect/stagger

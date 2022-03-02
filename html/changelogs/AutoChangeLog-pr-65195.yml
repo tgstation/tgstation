@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - qol: "The deadchat controllable component is no longer automute bait."
