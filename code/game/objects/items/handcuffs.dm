@@ -569,9 +569,9 @@
 	internal_radio = new/obj/item/radio(src)
 	internal_radio.subspace_transmission = TRUE
 	internal_radio.canhear_range = 0
-	internal_radio.listening = FALSE
 	internal_radio.should_be_listening = FALSE
 	internal_radio.keyslot = new /obj/item/encryptionkey/strandcuffs
+	internal_radio.set_listening(FALSE)
 	internal_radio.recalculateChannels()
 
 /obj/item/restraints/handcuffs/strand/examine(mob/user)
