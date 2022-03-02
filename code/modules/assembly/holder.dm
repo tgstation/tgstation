@@ -119,7 +119,7 @@
 
 /obj/item/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
-	if(LAZYLEN(assemblies)==1)
+	if(LAZYLEN(assemblies) == 1)
 		to_chat(user, span_danger("Assembly part missing!"))
 		return
 
