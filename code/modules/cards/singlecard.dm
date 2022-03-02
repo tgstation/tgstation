@@ -100,24 +100,34 @@
 			user.put_in_active_hand(new_cardhand)
 		return
 
-	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
-		var/obj/item/toy/cards/cardhand/target_cardhand = item
-		target_cardhand.insert(list(src))
-		return
-
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(dealer_deck.wielded) // deal card from deck and combine cards into cardhand (if wielded)
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card))
-			new_cardhand.pixel_x = src.pixel_x
-			new_cardhand.pixel_y = src.pixel_y
+			if(!card)
+				return
+
+			if(isturf(loc)) // this is on the turf already
+				var/obj/item/toy/cards/cardhand/new_cardhand = new (loc, list(src, card))
+				new_cardhand.pixel_x = src.pixel_x
+				new_cardhand.pixel_y = src.pixel_y
+			else // make a cardhand in our active hand
+				var/obj/item/toy/cards/cardhand/new_cardhand = new (get_turf(src), list(src, card))
+				user.temporarilyRemoveItemFromInventory(src, TRUE)
+				new_cardhand.pickup(user)
+				user.put_in_active_hand(new_cardhand)
+
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
 		else // recycle card into deck (if unwielded)
 			dealer_deck.insert(list(src))
 			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
+
+	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
+		var/obj/item/toy/cards/cardhand/target_cardhand = item
+		target_cardhand.insert(list(src))
+		return
 
 	if(istype(item, /obj/item/pen))
 		if(!user.is_literate())
@@ -137,23 +147,20 @@
 	return ..()
 
 /obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
-		return
-	Flip()
+	return attack_self(user)
+	// we want the balloon alert here bc you would be flipping the card over on a table publicly
+	// vs flipping the card over while it's in your hand or inventory somewhere
 	user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
-	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
-		return
-	Flip()
+	return attack_self(user)
 
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
-	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
-		return
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+		// yes, I'm aware that we are returning the SECONDARY ATTACK CHAIN here but this proc
+		// gets called by other attack secondary procs so it saves us from c/p'ing code
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	Flip()
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)

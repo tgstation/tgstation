@@ -51,6 +51,9 @@
 		user.put_in_hands(last_card)
 		qdel(src) // cardhand is empty now so delete it
 
+/obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
+	return isliving(user) && !user.incapacitated()
+
 /obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params)
 	var/cards_to_add = list()
 
@@ -60,8 +63,10 @@
 
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(dealer_deck.wielded) 
+		if(dealer_deck.wielded) // deal card
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+			if(!card) 
+				return
 			cards_to_add += card
 		else // recycle cards back into deck
 			dealer_deck.insert(cards)
@@ -75,8 +80,34 @@
 
 	return ..()
 
-/obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
-	return isliving(user) && !user.incapacitated()
+/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, params)
+	var/cards_to_add = list()
+
+	if(istype(weapon, /obj/item/toy/singlecard))
+		var/obj/item/toy/singlecard/card = weapon
+		card.Flip()
+		cards_to_add += card
+
+	if(istype(weapon, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = weapon
+		if(dealer_deck.wielded) // deal card
+			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
+			if(!card) 
+				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			card.Flip()
+			cards_to_add += card
+		else // recycle cards back into deck
+			dealer_deck.insert(cards)
+			qdel(src)
+			user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(LAZYLEN(cards_to_add))
+		insert(cards_to_add)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	..()
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
