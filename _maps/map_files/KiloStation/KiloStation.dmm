@@ -30184,6 +30184,7 @@
 /area/medical/chemistry)
 "eHf" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "eHz" = (
@@ -57505,6 +57506,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "ozA" = (
@@ -83936,6 +83938,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 4
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "yhd" = (
