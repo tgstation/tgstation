@@ -451,7 +451,7 @@
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
 	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
-	wearer.clear_alert("mod_charge")
+	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
 
@@ -619,7 +619,7 @@
 	if(!wearer)
 		return
 	if(!core)
-		wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocore)
+		wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocore)
 		return
 	core.update_charge_alert()
 

@@ -235,3 +235,16 @@
 		adjust_health((health + 3) * delta_time)
 		last_feeding = world.time //emulsijack feeds on the emulsion!
 	..()
+
+/datum/aquarium_behaviour/fish/ratfish
+	name = "ratfish"
+	desc = "A rat exposed to the murky waters of maintenance too long. Any higher power, if it revealed itself, would state that the ratfish's continued existence is extremely unwelcome."
+	icon_state = "ratfish"
+	random_case_rarity = FISH_RARITY_RARE
+	required_fluid_type = AQUARIUM_FLUID_FRESHWATER
+	stable_population = 10 //set by New, but this is the default config value
+	fillet_type = /obj/item/food/meat/slab/human/mutant/zombie //eww...
+
+/datum/aquarium_behaviour/fish/ratfish/New()
+	//stable pop reflects the config for how many mice migrate. powerful...
+	stable_population = CONFIG_GET(number/mice_roundstart)

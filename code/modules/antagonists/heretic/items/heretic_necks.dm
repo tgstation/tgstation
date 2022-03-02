@@ -23,9 +23,9 @@
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()
-	if(!ishuman(user) || !user.mind)
+	if(slot != ITEM_SLOT_NECK)
 		return
-	if(!IS_HERETIC_OR_MONSTER(user))
+	if(!ishuman(user) || !IS_HERETIC_OR_MONSTER(user))
 		return
 
 	ADD_TRAIT(user, heretic_only_trait, "[CLOTHING_TRAIT] [REF(src)]")

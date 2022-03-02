@@ -18,7 +18,7 @@
 	atom/source,
 	list/context,
 	obj/item/held_item,
-	mob/living/user,
+	mob/user,
 )
 	SIGNAL_HANDLER
 
