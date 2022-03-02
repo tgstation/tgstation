@@ -1,6 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "Kilostation will now generate a normal number of space ruin z-levels"
-  - bugfix: "Kilostation will now have the correct linkage between its space z-levels - you can now easily go space exploring again."
-  - bugfix: "Removed duplicate APC from Kilostation security office."
