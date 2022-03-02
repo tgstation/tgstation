@@ -10,7 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 7
-
+	/// used to store the list of assemblies making up our assembly holder
 	var/list/obj/item/assembly/assemblies
 
 /obj/item/assembly_holder/Initialize(mapload)
@@ -36,8 +36,16 @@
 	update_appearance()
 	SSblackbox.record_feedback("tally", "assembly_made", 1, "[initial(A.name)]-[initial(A2.name)]")
 
-/obj/item/assembly_holder/proc/add_assembly(obj/item/assembly/A, mob/user)
-	attach(A, user)
+/**
+ * Adds an assembly to the assembly holder
+ *
+ * This proc is used to add an assembly to the assembly holder, update the appearance, and the name of it.
+ * Arguments:
+ * * attached_assembly - assembly we are adding to the assembly holder
+ * * user - user we pass into attach()
+ */
+/obj/item/assembly_holder/proc/add_assembly(obj/item/assembly/attached_assembly, mob/user)
+	attach(attached_assembly, user)
 	name = ""
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		name += "[assembly.name]-"
@@ -126,13 +134,22 @@
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.attack_self(user)
 
-
-/obj/item/assembly_holder/proc/process_activation(obj/D, normal = 1, special = 1)
-	if(!D)
+/**
+ * this proc is used to process the activation of the assembly holder
+ *
+ * This proc is usually called by signalers, timers, or anything that can trigger and
+ * send a pulse to the assembly holder, which then calls this proc that actually activates the assemblies
+ * Arguments:
+ * * /obj/device - the device we sent the pulse from which called this proc
+ * * normal - 	if this is a normal activation
+ * * special - if this is a special activation
+ */
+/obj/item/assembly_holder/proc/process_activation(obj/device, normal = TRUE, special = TRUE)
+	if(!device)
 		return FALSE
 	if(normal && LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
-			if(LAZYACCESS(assemblies,assembly) != D)
+			if(LAZYACCESS(assemblies,assembly) != device)
 				assembly.pulsed(FALSE)
 	if(master)
 		master.receive_signal()
