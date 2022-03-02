@@ -805,7 +805,7 @@
 /datum/reagent/consumable/cinderella
 	name = "Cinderella"
 	description = "Most definitely a fruity alcohol cocktail to have while partying with your friends."
-	color = "#FF6A50" 
+	color = "#FF6A50"
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tangy fruit"
 	glass_icon_state = "cinderella"
@@ -1171,7 +1171,7 @@
 /datum/reagent/consumable/agua_fresca
 	name = "Agua Fresca"
 	description = "A refreshing watermelon agua fresca. Perfect on a day at the holodeck."
-	color = "#D25B66" 
+	color = "#D25B66"
 	quality = DRINK_VERYGOOD
 	taste_description = "cool refreshing watermelon"
 	glass_icon_state = "aguafresca"
