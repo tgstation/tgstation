@@ -53,7 +53,7 @@
 3355198 = 8 # JohnGinnane
 3384919 = 9 # ORCACommander
 3503632 = 6 # BebeYoshi
-3589655 = 40 # Ryll-Ryll
+3589655 = 50 # Ryll-Ryll
 3625094 = 12 # MTandi
 3681297 = 14 # monster860
 3789327 = 11 # iprice
@@ -622,7 +622,7 @@
 51841793 = 5 # Investigator77
 51863163 = 294 # MrMelbert
 51925758 = 71 # interestingusernam3
-51932756 = 72 # ArcaneDefence
+51932756 = 75 # ArcaneDefence
 52075484 = 5 # Timmeye
 52262416 = 3 # AcapitalA
 52428261 = 2 # Kuro-ai
@@ -637,7 +637,7 @@
 53350053 = 3 # EikoBiko
 53384660 = 23 # Sparkezel
 53582584 = 73 # TemporalOroboros
-53777086 = 293 # JohnFulpWillard
+53777086 = 296 # JohnFulpWillard
 53800426 = 4 # YakiAttaki
 53862927 = 34 # KathrinBailey
 53891876 = 4 # itsadavid
@@ -732,9 +732,9 @@
 65850818 = -10 # KathyRyals
 65879488 = 4 # PrimordialOoze
 65958668 = 4 # europax
-66052067 = 21 # Wallemations
+66052067 = 24 # Wallemations
 66538683 = 7 # TaG2e
-66576896 = 82 # Maurukas
+66576896 = 88 # Maurukas
 66637090 = 5 # LordVollkorn
 66640614 = 120 # dragomagol
 66705879 = -4 # OmegaDarkPotato
