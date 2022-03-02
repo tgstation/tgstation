@@ -548,7 +548,7 @@
  */
 /obj/item/restraints/handcuffs/strand
 	name = "\improper Kheiral cuffs"
-	desc = "A prototype wrist communicator, overshadowed by the handcuffs slapped against it. When clamped to one wrist, can send a distress signal upon your death off-station."
+	desc = "A prototype wrist communicator powered by Kheiral Matter, overshadowed by the handcuffs slapped against it. When clamped to one wrist, can send a distress signal upon your death off-station."
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
 	slot_flags = ITEM_SLOT_GLOVES | ITEM_SLOT_BELT
@@ -572,6 +572,11 @@
 	internal_radio.should_be_listening = FALSE
 	internal_radio.keyslot = new /obj/item/encryptionkey/strandcuffs
 	internal_radio.recalculateChannels()
+
+/obj/item/restraints/handcuffs/strand/examine(mob/user)
+	. = ..()
+	if(gps_enabled)
+		. += span_notice("The cuff's GPS signal is on.")
 
 /obj/item/restraints/handcuffs/strand/item_action_slot_check(slot)
 	return slot == ITEM_SLOT_GLOVES
