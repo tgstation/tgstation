@@ -11,7 +11,7 @@
 	throw_speed = 2
 	throw_range = 7
 
-	var/list/assemblies
+	var/list/obj/item/assembly/assemblies
 
 /obj/item/assembly_holder/Initialize(mapload)
 	. = ..()

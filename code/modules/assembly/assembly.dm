@@ -106,8 +106,8 @@
 		return
 	if(istype(W,/obj/item/assembly_holder))
 		if(!secured)
-			var/obj/item/assembly_holder/w_holder = W
-			w_holder.add_assembly(src,user)
+			var/obj/item/assembly_holder/added_to_holder = W
+			added_to_holder.add_assembly(src,user)
 	..()
 
 /obj/item/assembly/screwdriver_act(mob/living/user, obj/item/I)
