@@ -99,10 +99,10 @@
 
 /obj/item/toy/cards/deck/attack_self_secondary(mob/living/user, list/modifiers)
 	var/obj/item/toy/singlecard/card = draw(user)
+	card.Flip()
 	card.pickup(user)
 	user.put_in_hands(card)
 	user.balloon_alert_to_viewers("draws a card", vision_distance = COMBAT_MESSAGE_RANGE)
-	card.Flip()
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
