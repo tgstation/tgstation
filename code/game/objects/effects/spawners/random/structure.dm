@@ -25,17 +25,19 @@
 /obj/effect/spawner/random/structure/girder
 	name = "girder spawner"
 	icon_state = "girder"
+	spawn_loot_chance = 90                   // 10% chance of nothing
 	loot = list(
-		/obj/structure/girder = 4,
-		/obj/structure/girder/displaced = 1,
+		/obj/structure/girder = 8,           // 80% chance
+		/obj/structure/girder/displaced = 1, // 10% chance
 	)
 
 /obj/effect/spawner/random/structure/grille
 	name = "grille spawner"
 	icon_state = "grille"
+	spawn_loot_chance = 90                   // 10% chance of nothing
 	loot = list(
-		/obj/structure/grille = 4,
-		/obj/structure/grille/broken = 1,
+		/obj/structure/grille = 8,           // 80% chance
+		/obj/structure/grille/broken = 1,    // 10% chance
 	)
 
 /obj/effect/spawner/random/structure/furniture_parts
@@ -173,6 +175,7 @@
 /obj/effect/spawner/random/structure/barricade
 	name = "barricade spawner"
 	icon_state = "barricade"
+	spawn_loot_chance = 80
 	loot = list(
 		/obj/structure/barricade/wooden,
 		/obj/structure/barricade/wooden/crude,
