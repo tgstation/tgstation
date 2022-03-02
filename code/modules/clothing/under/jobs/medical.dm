@@ -112,11 +112,11 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/rank/medical/doctor/skirt
-	name = "medical doctor's jumpskirt"
-	desc = "It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel."
-	icon_state = "medical_skirt"
+/obj/item/clothing/under/rank/medical/doctor/nurse
+	desc = "It's a jumpsuit commonly worn by nursing staff in the medical department."
+	name = "nurse's suit"
+	icon_state = "nursesuit"
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
-	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = NO_FEMALE_UNIFORM
+	can_adjust = FALSE
