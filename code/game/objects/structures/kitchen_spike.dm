@@ -64,7 +64,7 @@
 	return FALSE
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/target, mob/user, check_loc = TRUE)
-	if(!iscarbon(target))
+	if(!iscarbon(target) && !isanimal_or_basicmob(target))
 		return
 	if(!do_mob(user, target, 10 SECONDS))
 		return
