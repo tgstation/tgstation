@@ -790,11 +790,11 @@
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/medicine/sodium_thiopental/on_mob_add(mob/living/L, amount)
+/datum/reagent/toxin/sodium_thiopental/on_mob_add(mob/living/L, amount)
 	. = ..()
 	ADD_TRAIT(L, TRAIT_ANTICONVULSANT, name)
 
-/datum/reagent/medicine/sodium_thiopental/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/sodium_thiopental/on_mob_delete(mob/living/L)
 	. = ..()
 	REMOVE_TRAIT(L, TRAIT_ANTICONVULSANT, name)
 
