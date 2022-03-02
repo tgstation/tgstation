@@ -809,6 +809,31 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		else
 			return "[number]\th"
 
+/proc/numtotext(number)
+	var/static/list/tens_prefix = list("", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety")
+	var/static/list/one_to_nineteen = list("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
+	if(!isnum(number))
+		return
+	number = round(number)
+	var/less_than_zero = FALSE
+	if(number < 0)
+		less_than_zero = TRUE
+		number = abs(number)
+	var/text_number = ""
+	switch(number)
+		if(0)
+			text_number = "zero"
+		if(1 to 19)
+			text_number = one_to_nineteen[number]
+		if(20 to 99)
+			text_number = tens_prefix[round(number/10)]
+			if(number % 10 > 0)
+				text_number += "-" + one_to_nineteen[number%10]
+		else
+			text_number = "[number]"
+	if(less_than_zero)
+		text_number = "negative [text_number]"
+	return text_number
 
 /proc/random_capital_letter()
 	return uppertext(pick(GLOB.alphabet))

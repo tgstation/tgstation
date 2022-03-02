@@ -113,5 +113,6 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				if(initial(stock_part.base_name))
 					component_name = initial(stock_part.base_name)
 
-			nice_list += list("[component_amount] [component_name]\s")
+			var/s = abs(component_amount) > 1 ? "s" : ""
+			nice_list += list("[numtotext(component_amount)] [component_name][s]")
 		. += span_info("It requires [english_list(nice_list, "no more components.")].")

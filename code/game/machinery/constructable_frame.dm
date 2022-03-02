@@ -37,7 +37,9 @@
 				continue
 			if(!req_components[component])
 				continue
-			nice_list += list("[req_components[component]] [req_component_names[component]]\s")
+
+			var/s = abs(req_components[component]) > 1 ? "s" : ""
+			nice_list += list("[numtotext(req_components[component])] [req_component_names[component]][s]")
 		. += span_info("It requires [english_list(nice_list, "no more components.")].")
 
 /obj/structure/frame/machine/proc/update_namelist()
