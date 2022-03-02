@@ -762,7 +762,7 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
-	if(istype(A, /obj/item/storage))
+	if(istype(target, /obj/item/storage))
 		return
 	mode = RCD_DECONSTRUCT
 	rcd_create(target, user)
