@@ -123,6 +123,9 @@
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
 
+/obj/item/assembly/signaler/attack_self(mob/user)
+	activate()
+
 /obj/item/assembly/signaler/proc/signal()
 	if(!radio_connection)
 		return
