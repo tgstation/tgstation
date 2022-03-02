@@ -552,6 +552,7 @@
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
 	slot_flags = ITEM_SLOT_GLOVES | ITEM_SLOT_BELT
+	breakouttime = 45 SECONDS
 	/// If we're in the glove slot
 	var/on_wrist = FALSE
 	/// If the GPS is already on
