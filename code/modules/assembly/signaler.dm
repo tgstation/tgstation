@@ -123,7 +123,7 @@
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
 
-/obj/item/assembly/signaler/attack_self(mob/user)
+/obj/item/assembly/signaler/AltClick(mob/user)
 	activate()
 
 /obj/item/assembly/signaler/proc/signal()

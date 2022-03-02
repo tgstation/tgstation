@@ -116,8 +116,8 @@
 /obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
 	//Check if either part of the assembly has an igniter, but if both parts are igniters, then fuck it
 	var/igniter_count = 0
-	for(var/obj/item/assembly/A in assembly.assemblies)
-		if(isigniter(A))
+	for(var/obj/item/assembly/attached_assembly as anything in assembly.assemblies)
+		if(isigniter(attached_assembly))
 			igniter_count +=1
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return

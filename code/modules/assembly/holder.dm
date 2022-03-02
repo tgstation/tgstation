@@ -15,7 +15,6 @@
 
 /obj/item/assembly_holder/Initialize(mapload)
 	. = ..()
-	LAZYINITLIST(assemblies)
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/item/assembly_holder/Destroy()
@@ -40,7 +39,7 @@
 /obj/item/assembly_holder/proc/add_assembly(obj/item/assembly/A, mob/user)
 	attach(A, user)
 	name = ""
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/obj/item/assembly/assembly as anything in assemblies)
 		name += "[assembly.name]-"
 	name = splicetext(name, length(name), length(name) + 1, "")
 	name += " assembly"
@@ -64,45 +63,46 @@
 
 /obj/item/assembly_holder/update_overlays()
 	. = ..()
-	for(var/i in 1 to LAZYLEN(assemblies) step 2)
-		var/obj/item/assembly/assembly = assemblies[i]
-		. += "[assembly.icon_state]_left"
-		for(var/left_overlay in assembly.attached_overlays)
-			. += "[left_overlay]_l"
-	for(var/i in 2 to LAZYLEN(assemblies) step 2)
-		var/obj/item/assembly/assembly = assemblies[i]
-		var/mutable_appearance/right = mutable_appearance(icon, "[assembly.icon_state]_left")
-		right.transform = matrix(-1, 0, 0, 0, 1, 0)
-		for(var/right_overlay in assembly.attached_overlays)
-			right.add_overlay("[right_overlay]_l")
-		. += right
+	for(var/i in 1 to LAZYLEN(assemblies))
+		if(i % 2 == 1)
+			var/obj/item/assembly/assembly = assemblies[i]
+			. += "[assembly.icon_state]_left"
+			for(var/left_overlay in assembly.attached_overlays)
+				. += "[left_overlay]_l"
+		if(i % 2 == 0)
+			var/obj/item/assembly/assembly = assemblies[i]
+			var/mutable_appearance/right = mutable_appearance(icon, "[assembly.icon_state]_left")
+			right.transform = matrix(-1, 0, 0, 0, 1, 0)
+			for(var/right_overlay in assembly.attached_overlays)
+				right.add_overlay("[right_overlay]_l")
+			. += right
 
 /obj/item/assembly_holder/on_found(mob/finder)
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.on_found(finder)
 
 /obj/item/assembly_holder/setDir()
 	. = ..()
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.holder_movement()
 
 /obj/item/assembly_holder/dropped(mob/user)
 	. = ..()
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.dropped()
 
 /obj/item/assembly_holder/attack_hand(mob/living/user, list/modifiers)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	. = ..()
 	if(.)
 		return
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.attack_hand()
 
-/obj/item/assembly_holder/attackby(obj/item/W, mob/user, params)
-	if(isassembly(W))
-		var/obj/item/assembly/A = W
-		if(!A.secured)
-			add_assembly(A,user)
+/obj/item/assembly_holder/attackby(obj/item/weapon, mob/user, params)
+	if(isassembly(weapon))
+		var/obj/item/assembly/attached_assembly = weapon
+		if(!attached_assembly.secured)
+			add_assembly(attached_assembly,user)
 
 /obj/item/assembly_holder/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
@@ -111,7 +111,7 @@
 	if(..())
 		return TRUE
 	to_chat(user, span_notice("You disassemble [src]!"))
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.on_detach()
 		LAZYREMOVE(assemblies,assembly)
 	qdel(src)
@@ -123,7 +123,7 @@
 		to_chat(user, span_danger("Assembly part missing!"))
 		return
 
-	for(var/obj/item/assembly/assembly in assemblies)
+	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.attack_self(user)
 
 
@@ -131,7 +131,7 @@
 	if(!D)
 		return FALSE
 	if(normal && LAZYLEN(assemblies) >= 2)
-		for(var/obj/item/assembly/assembly in assemblies)
+		for(var/obj/item/assembly/assembly as anything in assemblies)
 			if(LAZYACCESS(assemblies,assembly) != D)
 				assembly.pulsed(FALSE)
 	if(master)
