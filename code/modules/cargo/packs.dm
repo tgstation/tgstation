@@ -2532,7 +2532,7 @@
 					/obj/item/storage/fish_case/random/saltwater)
 	crate_name = "saltwater fish crate"
 
-/datum/supply_pack/misc/aquarium_fish
+/datum/supply_pack/misc/tirizan_fish
 	name = "Tirizan Fish Case"
 	desc = "Tirizian fish caught by the finest tirizan indentured servant."
 	cost = CARGO_CRATE_VALUE * 2
