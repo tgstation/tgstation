@@ -17035,9 +17035,6 @@
 /obj/effect/landmark/start/cargo_technician,
 /turf/open/floor/iron,
 /area/cargo/sorting)
-"fIH" = (
-/turf/open/genturf,
-/area/icemoon/surface/outdoors)
 "fIO" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
@@ -58868,7 +58865,7 @@ gQb
 gQb
 gQb
 gQb
-fIH
+gQb
 gQb
 gQb
 gQb
