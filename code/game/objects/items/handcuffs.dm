@@ -648,7 +648,7 @@
 /obj/item/restraints/handcuffs/strand/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "strandcuff-emissive", alpha = src.alpha)
+		. += emissive_appearance(icon_file, "strandcuff_emissive", alpha = src.alpha)
 
 /obj/item/restraints/handcuffs/strand/update_overlays()
 	. = ..()
