@@ -5,6 +5,8 @@
 	icon_state = "vibebot"
 	density = FALSE
 	anchored = FALSE
+	health = 25
+	maxHealth = 25
 	pass_flags = PASSMOB | PASSFLAPS
 	light_system = MOVABLE_LIGHT
 	light_range = 7
