@@ -130,7 +130,7 @@
 /obj/item/assembly_holder/proc/process_activation(obj/D, normal = 1, special = 1)
 	if(!D)
 		return FALSE
-	if((normal) && LAZYLEN(assemblies) >= 2)
+	if(normal && LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly in assemblies)
 			if(LAZYACCESS(assemblies,assembly) != D)
 				assembly.pulsed(FALSE)
