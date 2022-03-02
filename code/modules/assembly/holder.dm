@@ -24,7 +24,7 @@
 
 /obj/item/assembly_holder/Exited(atom/movable/gone, direction)
 	. = ..()
-	LAZYREMOVE(assemblies,gone)
+	LAZYREMOVE(assemblies, gone)
 
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
