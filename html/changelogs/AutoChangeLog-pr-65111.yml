@@ -1,4 +1,0 @@
-author: "RandomGamer123"
-delete-after: True
-changes: 
-  - refactor: "Converts airlock controllers (ie incinerator access consoles) to use TGUI."
