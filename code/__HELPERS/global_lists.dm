@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/structure/reagent_dispensers/wall,
 	/obj/structure/sign,
 	/obj/structure/sign/picture_frame,
-	/obj/structure/sign/poster/random
+	/obj/structure/sign/poster/random,
 	/obj/structure/sign/poster/contraband/random,
 	/obj/structure/sign/poster/official/random,
 	)))
