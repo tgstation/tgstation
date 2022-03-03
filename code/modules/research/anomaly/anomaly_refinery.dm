@@ -32,8 +32,8 @@
 	/// Determines which tank will be the merge_gases target (destroyed upon testing).
 	var/obj/item/tank/tank_to_target
 	
-	// These vars are used for the explosion testing and doesn't affect the core detonation.
-	/// Combined result of the first two tanks. Exists only in our machine, feel free to qdel.
+	// These vars are used for the explosion simulation and doesn't affect the core detonation.
+	/// Combined result of the first two tanks. Exists only in our machine.
 	var/datum/gas_mixture/combined_gasmix
 	/// Here for the UI, tracks the amounts of reaction that has occured. 1 means valve opened but not reacted.
 	var/reaction_increment = 0
@@ -43,7 +43,6 @@
 	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/check_test)
 
 /obj/machinery/research/anomaly_refinery/assume_air(datum/gas_mixture/giver)
-	qdel(giver)
 	return null // Required to make the TTV not vent directly into the air.
 
 /**
@@ -255,7 +254,13 @@
 /obj/machinery/research/anomaly_refinery/on_deconstruction()
 	eject_bomb()
 	eject_core()
-	. = ..()
+	return ..()
+
+/obj/machinery/research/anomaly_refinery/Destroy()
+	inserted_bomb = null
+	inserted_core = null
+	combined_gasmix = null
+	return ..()
 
 /obj/machinery/research/anomaly_refinery/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

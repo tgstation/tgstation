@@ -267,7 +267,7 @@
 /obj/machinery/atmospherics/components/binary/tank_compressor/Destroy()
 	inserted_tank = null
 	inserted_disk = null
-	QDEL_NULL(leaked_gas_buffer)
+	leaked_gas_buffer = null
 	QDEL_NULL(compressor_record) //We only want the list nuked, not the contents.
 	return ..()
 
