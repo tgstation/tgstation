@@ -98,7 +98,7 @@
 
 		data += paper_to_be.return_gist()
 		data["selectedFile"] = selected_file?.filename
-		// Renamed both of these to be more readable.
+		// Renamed both of these to be more topical.
 		data["selectedExperiment"] = data["experimentName"]
 		data -= "experimentName"
 		data["selectedPartner"] = data["partner"]
@@ -157,9 +157,11 @@
 	switch(action)
 		if("et_alia")
 			paper_to_be.et_alia = !paper_to_be.et_alia
+			return TRUE
 		// Handle the publication
 		if("publish")
 			publish()
+			return TRUE
 		// For every change in the input, we correspond it with the paper_data list and update it.
 		if("rewrite")
 			if(length(params))
@@ -170,8 +172,10 @@
 						paper_to_be.author = sanitize(params[changed_entry])
 					if (changed_entry == "abstract")
 						paper_to_be.abstract = sanitize(params[changed_entry])
+				return TRUE
 		if("change_tab")
 			current_tab = params["new_tab"]
+			return TRUE
 		if("select_file") // Selecting new file will necessitate a change in paper type. This will be done on select_experiment and not here.
 			if(selected_file)
 				UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
@@ -180,7 +184,7 @@
 				if(ordnance_data.uid == params["selected_uid"])
 					selected_file = ordnance_data
 					RegisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED, .proc/recheck_file_presence)
-					return
+					return TRUE
 		if("select_experiment")
 			var/ex_path = text2path(params["selected_expath"])
 			var/variable = selected_file.possible_experiments[text2path(params["selected_expath"])]
@@ -191,10 +195,13 @@
 				paper_to_be = paper_to_be.clone_into(/datum/scientific_paper/gaseous)
 			data = selected_file.return_data()
 			paper_to_be.set_experiment(ex_path, variable, data)
+			return TRUE
 		if("select_tier")
 			paper_to_be.set_tier(params["selected_tier"])
+			return TRUE
 		if("select_partner")
 			paper_to_be.set_partner(text2path(params["selected_partner"]), linked_techweb)
+			return TRUE
 		if("purchase_boost")
 			var/datum/scientific_partner/partner = locate(text2path(params["boost_seller"])) in SSresearch.scientific_partners
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(params["purchased_boost"])
@@ -204,7 +211,7 @@
 					playsound(computer, 'sound/machines/ping.ogg', 25)
 					return TRUE
 			playsound(computer, 'sound/machines/terminal_error.ogg', 25)
-	SStgui.update_uis(src)
+			return FALSE
 
 /// Publication and adding points.
 /datum/computer_file/program/scipaper_program/proc/publish()
