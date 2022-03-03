@@ -34,6 +34,10 @@
 	var/hacked = FALSE
 	var/list/possible_colors = list("red", "blue", "green", "purple")
 	var/wielded = FALSE // track wielded status on item
+	//Whether or not we are poised, AKA whether we can block an attack reliably or not.
+	var/offbalance = FALSE
+	var/poise_recory_time = 30 SECONDS //Our timer for our poise recovery
+	COOLDOWN_DECLARE(poise_recovery_cooldown)
 
 /obj/item/dualsaber/ComponentInitialize()
 	. = ..()
@@ -71,7 +75,7 @@
 	return wielded * sharpness
 
 /obj/item/dualsaber/update_icon_state()
-	icon_state = wielded ? "dualsaber[saber_color][wielded]" : "dualsaber0"
+	icon_state = wielded ? "dualsaber[saber_color][wielded][offbalance ? "_offbalance":""]" : "dualsaber0"
 	return ..()
 
 /obj/item/dualsaber/suicide_act(mob/living/carbon/user)
@@ -144,8 +148,15 @@
 
 /obj/item/dualsaber/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(wielded)
-		return ..()
-	return 0
+		if(attack_type == MELEE_ATTACK || attack_type == UNARMED_ATTACK && COOLDOWN_FINISHED(src, poise_recovery_cooldown)) //Do we have poise and is the attack melee/unarmed? If yes, PARRY!
+			handle_poise(owner)
+			playsound(src, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE)
+			owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+			INVOKE_ASYNC(src, .proc/jedi_spin, owner) //cool flips because you blocked it
+			return TRUE
+		else //No poise? Handle block as normal
+			return ..()
+	return FALSE
 
 /obj/item/dualsaber/process()
 	if(wielded)
@@ -173,6 +184,18 @@
 	add_fingerprint(user)
 	// Light your candles while spinning around the room
 	INVOKE_ASYNC(src, .proc/jedi_spin, user)
+
+/obj/item/dualsaber/proc/handle_poise(mob/user)
+	offbalance = TRUE
+	to_chat(user, span_warning("You're thrown off-balance by the blow!"))
+	update_appearance()
+	if(COOLDOWN_FINISHED(src, poise_recovery_cooldown))
+		COOLDOWN_START(src, poise_recovery_cooldown, poise_recory_time)
+		addtimer(CALLBACK(src, .proc/regain_posie), poise_recory_time)
+
+/obj/item/dualsaber/proc/regain_posie(mob/user)
+	offbalance = FALSE
+	update_appearance()
 
 /obj/item/dualsaber/green
 	possible_colors = list("green")
