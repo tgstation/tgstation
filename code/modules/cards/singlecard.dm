@@ -144,18 +144,21 @@
 	return attackby(item, user, modifiers, flip_card=TRUE)
 
 /obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, modifiers)
-	return attack_self(user)
-
-	user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(is_turf(src)) // only display tihs message when flipping in a visible spot like on a table
+		user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
+	Flip()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
-	return attack_self(user)
+	attack_self(user)
 
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN // return this since we call this proc in secondary attack procs
+		return
 	Flip()
+
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
