@@ -1,0 +1,15 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - rscadd: "Ordnance have been updated to enable the publication of papers"
+  - rscadd: "Several new explosive and gas synthesis experiments have been added to ordnance"
+  - rscadd: "Anomaly compressor has been TGUIzed and now supports simulating the reaction of the gases inside the ttv."
+  - rscadd: "New tank compressor machine for toxins. You can overpressurize tanks with exotic gases and complete experiments."
+  - balance: "Several techweb nodes are locked and require toxin experiments to complete."
+  - balance: "Toxins can purchase boosts for various techweb nodes."
+  - balance: "You no longer need to anchor doppler arrays for it to work."
+  - qol: "Doppler array and implosion compressor now supports deconstruction, implosion compressor construction added."
+  - qol: "Doppler now emits a red light to denote it's direction and it being on. Doppler not malf."
+  - code_imp: "Implosion compressor renamed to anomaly refinery."
+  - code_imp: "Created a new program tab \"Science\" for the downloader app. Removed Robotics."
+  - refactor: "Reworked the code for bombspawner (used in the cuban pete arcade game)"
