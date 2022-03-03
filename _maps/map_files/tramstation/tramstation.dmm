@@ -1224,7 +1224,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/doppler_array/research/science{
+/obj/machinery/doppler_array{
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/north,
@@ -10407,11 +10407,24 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "cmN" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -8;
+	pixel_y = -3
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -17265,6 +17278,14 @@
 "eJf" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Science - Ordnance Launch Room";
+	dir = 9;
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron,
 /area/science/mixing)
 "eJt" = (
@@ -18766,7 +18787,12 @@
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "fjs" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/science/mixing)
 "fjA" = (
@@ -47439,12 +47465,9 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/command)
 "pxh" = (
-/obj/machinery/research/explosive_compressor,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera{
-	c_tag = "Science - Ordnance Launch Room";
-	dir = 9;
-	network = list("ss13","rd")
+/obj/machinery/atmospherics/components/binary/tank_compressor{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -51250,6 +51273,10 @@
 /obj/effect/turf_decal/stripes/asteroid/corner,
 /turf/open/floor/plating/airless,
 /area/mine/explored)
+"qRr" = (
+/obj/machinery/research/anomaly_refinery,
+/turf/open/floor/iron,
+/area/science/mixing)
 "qRy" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -120549,8 +120576,8 @@ fzx
 pPY
 pPY
 lMe
-fYH
-fYH
+qRr
+hWi
 axo
 lkD
 kKS

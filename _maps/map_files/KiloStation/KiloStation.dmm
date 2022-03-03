@@ -3539,6 +3539,22 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -8;
+	pixel_y = -3
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -2
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "aqD" = (
@@ -6123,9 +6139,6 @@
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
 "aEG" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -10822,13 +10835,13 @@
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
 "bbS" = (
-/obj/machinery/atmospherics/components/trinary/mixer/flipped{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "bbU" = (
@@ -10917,6 +10930,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark,
 /area/science/mixing/chamber)
 "bch" = (
@@ -11081,6 +11095,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "bcK" = (
@@ -15447,6 +15462,7 @@
 	dir = 4;
 	pixel_x = 25
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark,
 /area/science/mixing/chamber)
 "bHI" = (
@@ -26868,8 +26884,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/computer/atmos_control/ordnancemix{
-	dir = 8
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
 	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
@@ -32585,13 +32601,13 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
 "fyH" = (
-/obj/machinery/portable_atmospherics/scrubber/huge,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "fyV" = (
@@ -44127,14 +44143,12 @@
 	},
 /area/maintenance/fore)
 "jLK" = (
-/obj/machinery/doppler_array/research/science{
-	dir = 4
-	},
 /obj/item/radio/intercom/directional/east,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/research/anomaly_refinery,
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "jLU" = (
@@ -51322,17 +51336,6 @@
 /turf/open/floor/engine/vacuum,
 /area/engineering/atmos)
 "mjh" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/computer/security/telescreen{
-	desc = "Used for watching the test chamber.";
-	dir = 8;
-	layer = 4;
-	name = "Test Chamber Telescreen";
-	network = list("ordnance");
-	pixel_x = 30
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -51343,6 +51346,10 @@
 /obj/machinery/computer/pod/old/mass_driver_controller/ordnancedriver/longrange{
 	pixel_y = -26
 	},
+/obj/machinery/doppler_array{
+	dir = 4
+	},
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/science/mixing/launch)
 "mjr" = (
@@ -59354,7 +59361,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/research/explosive_compressor,
 /turf/open/floor/iron/showroomfloor,
 /area/science/mixing/launch)
 "pgJ" = (
@@ -67425,9 +67431,6 @@
 /turf/open/floor/iron/dark,
 /area/service/library)
 "rZg" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
@@ -67439,6 +67442,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
+/obj/machinery/atmospherics/components/trinary/filter/flipped,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "rZr" = (
@@ -70713,13 +70717,14 @@
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai)
 "tlV" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/portable_atmospherics/canister,
+/obj/machinery/portable_atmospherics/scrubber{
+	name = "scrubber ducky"
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "tmg" = (
@@ -77171,6 +77176,9 @@
 	dir = 1
 	},
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/computer/atmos_control/ordnancemix{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "vHK" = (
@@ -81746,6 +81754,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/atmospherics/components/binary/tank_compressor,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "xrO" = (
@@ -83601,11 +83610,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/scrubber{
-	name = "scrubber ducky"
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "xZv" = (

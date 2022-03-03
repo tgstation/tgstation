@@ -13680,7 +13680,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -16441,7 +16440,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "cKP" = (
@@ -65648,7 +65646,7 @@
 /turf/open/floor/iron/white/side,
 /area/service/kitchen/abandoned)
 "mHA" = (
-/obj/machinery/research/explosive_compressor,
+/obj/machinery/research/anomaly_refinery,
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -78578,7 +78576,9 @@
 /area/ai_monitored/command/storage/eva)
 "pUU" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/atmospherics/components/binary/tank_compressor{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "pVL" = (
@@ -81687,11 +81687,23 @@
 "qOX" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/gloves/color/latex,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -8;
+	pixel_y = -3
+	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "qPa" = (
@@ -102359,11 +102371,13 @@
 /turf/open/floor/wood,
 /area/commons/dorms)
 "vZS" = (
+/obj/machinery/newscaster/directional/north,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/newscaster/directional/north,
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 26
 	},
@@ -104585,7 +104599,7 @@
 /turf/open/floor/iron,
 /area/science/lobby)
 "wCz" = (
-/obj/machinery/doppler_array/research/science{
+/obj/machinery/doppler_array{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -104650,9 +104664,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/obj/machinery/atmospherics/components/trinary/filter{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
@@ -108567,7 +108578,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "xHF" = (

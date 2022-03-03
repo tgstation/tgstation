@@ -930,7 +930,7 @@
 			continue
 		engines += real_engine
 
-	if(engines[1])
+	if(engines.len > 0)
 		distant_source = engines[1]
 	else
 		for(var/A in areas)
