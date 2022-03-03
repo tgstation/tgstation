@@ -6882,15 +6882,16 @@
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "aZI" = (
-/obj/effect/turf_decal/trimline/neutral/filled/corner,
-/obj/effect/turf_decal/trimline/neutral/filled/corner{
-	dir = 8
+/obj/structure/industrial_lift/tram{
+	icon_state = "plating"
 	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/commons/fitness/recreation)
+/obj/structure/tramwall/titanium,
+/obj/structure/shuttle/engine/propulsion/in_wall{
+	dir = 4;
+	pixel_x = 32
+	},
+/turf/open/openspace,
+/area/hallway/primary/tram/center)
 "aZL" = (
 /obj/structure/closet/lasertag/red,
 /obj/effect/turf_decal/tile/red/full,
@@ -7236,6 +7237,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
+/obj/structure/tramwall,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "bes" = (
@@ -29677,11 +29679,7 @@
 /obj/item/storage/bag/ore,
 /obj/item/shovel,
 /obj/item/clothing/glasses/meson,
-/obj/item/clothing/gloves/color/yellow{
-	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger. Includes extra lead.";
-	name = "heavy-duty insulated gloves";
-	slowdown = 2
-	},
+/obj/item/clothing/gloves/color/yellow/heavy,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "jbm" = (
@@ -37231,9 +37229,7 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/shuttle/engine/propulsion{
-	dir = 4
-	},
+/obj/structure/tramwall/titanium,
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
 "lIz" = (
@@ -38913,8 +38909,10 @@
 /obj/structure/industrial_lift/tram{
 	icon_state = "plating"
 	},
-/obj/structure/shuttle/engine/propulsion{
-	dir = 8
+/obj/structure/tramwall/titanium,
+/obj/structure/shuttle/engine/propulsion/in_wall{
+	dir = 8;
+	pixel_x = -32
 	},
 /turf/open/openspace,
 /area/hallway/primary/tram/center)
@@ -64654,11 +64652,7 @@
 	slowdown = 2
 	},
 /obj/item/stack/marker_beacon/ten,
-/obj/item/clothing/gloves/color/yellow{
-	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger. Includes extra lead.";
-	name = "heavy-duty insulated gloves";
-	slowdown = 2
-	},
+/obj/item/clothing/gloves/color/yellow/heavy,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "vQh" = (
@@ -157570,7 +157564,7 @@ hRt
 hRt
 hRt
 hnk
-aZI
+iBg
 aIg
 avP
 jhc
@@ -168082,11 +168076,11 @@ wJP
 dcq
 avK
 axj
-ayd
+mph
 bWo
 hdO
 cdx
-ayd
+mph
 aBR
 mgZ
 aFe
@@ -168339,11 +168333,11 @@ xwL
 wWx
 avO
 axj
-mph
+lIu
 lHm
 knD
 qkT
-mph
+lIu
 wup
 mhp
 aFf
@@ -170652,11 +170646,11 @@ wJP
 vLd
 avK
 axr
-ayd
+aZI
 bWo
 qLb
 cdx
-ayd
+aZI
 aCl
 yhy
 aFm
