@@ -19,11 +19,11 @@
 
 /obj/item/toy/cards/deck/tarot/draw(mob/user)
 	. = ..()
-	var/obj/item/toy/singlecard/C = .
+	var/obj/item/toy/singlecard/card = .
 	var/matrix/M = matrix()
 	M.Turn(180)
 	if(prob(50))
-		C.transform = M
+		card.transform = M
 	return
 
 /obj/item/toy/cards/deck/tarot/haunted
@@ -31,20 +31,12 @@
 	desc = "A spooky looking tarot deck. You can sense a supernatural presence linked to the cards..."
 	var/mob/living/carbon/psychic // the person holding the cards
 
-/// Triggered on wield of two handed item
-/// Gives the user the SIXTH SENSE trait to communicate with the dead
 /obj/item/toy/cards/deck/tarot/haunted/on_wield(obj/item/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-
-	wielded = TRUE
+	. = ..()
 	ADD_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld is opened. You can sense the dead souls calling out..."))
 
-/// Triggered on unwield of two handed item
-/// Removes the SIXTH SENSE trait from the user
 /obj/item/toy/cards/deck/tarot/haunted/on_unwield(obj/item/source, mob/living/carbon/user)
-	SIGNAL_HANDLER
-
-	wielded = FALSE
+	. = ..()
 	REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
