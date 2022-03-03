@@ -286,9 +286,20 @@
 				to_chat(user, span_notice("You build a windoor."))
 				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir)
 				if(the_rcd.airlock_electronics)
-					new_window.req_access = the_rcd.airlock_electronics.accesses.Copy()
-					new_window.req_one_access = the_rcd.airlock_electronics.one_access
 					new_window.unres_sides = the_rcd.airlock_electronics.unres_sides
+					new_window.name = the_rcd.airlock_electronics.passed_name || initial(new_window.name)
+				if(the_rcd.airlock_electronics.one_access)
+					new_window.req_one_access = the_rcd.airlock_electronics.accesses.Copy()
+				else
+					new_window.req_access = the_rcd.airlock_electronics.accesses.Copy()
+				if(new_window.unres_sides)
+					switch(new_window.dir)
+						if(NORTH,SOUTH)
+							new_window.unres_sides &= ~EAST
+							new_window.unres_sides &= ~WEST
+						if(EAST,WEST)
+							new_window.unres_sides &= ~NORTH
+							new_window.unres_sides &= ~SOUTH
 				new_window.autoclose = TRUE
 				new_window.update_appearance()
 				return TRUE
