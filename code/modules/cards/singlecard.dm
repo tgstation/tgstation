@@ -143,10 +143,9 @@
 /obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, modifiers)
 	return attackby(item, user, modifiers, flip_card=TRUE)
 
-/obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, params)
+/obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, modifiers)
 	return attack_self(user)
-	// we want the balloon alert here bc you would be flipping the card over on a table publicly
-	// vs flipping the card over while it's in your hand or inventory somewhere
+
 	user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -155,9 +154,7 @@
 
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
-		// yes, I'm aware that we are returning the SECONDARY ATTACK CHAIN here but this proc
-		// gets called by other attack secondary procs so it saves us from c/p'ing code
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN // return this since we call this proc in secondary attack procs
 	Flip()
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
