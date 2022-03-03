@@ -1,0 +1,4 @@
+author: "TheBonded"
+delete-after: True
+changes: 
+  - expansion: "podpeople from replica pods now have water blood by default, and inherit their blood chemical from the most abundant chemical trait in their seeds if applicable."
