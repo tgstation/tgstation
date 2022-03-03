@@ -112,6 +112,8 @@
 		update_label()
 		update_icon()
 
+	register_context()
+
 	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
 /obj/item/card/id/Destroy()
@@ -421,6 +423,16 @@
 	try_project_paystand(user, null)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/card/id/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Show ID"
+		context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
 /obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
 		balloon_alert(user, "still recharging")
@@ -445,7 +457,7 @@
 		return
 	/// Success: Valid tile for holopay placement
 	if(my_store)
-		my_store.dissapate()
+		my_store.dissipate()
 	var/obj/structure/holopay/new_store = new(projection)
 	if(new_store?.assign_card(projection, src))
 		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)

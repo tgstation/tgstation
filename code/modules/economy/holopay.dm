@@ -24,6 +24,26 @@
 	if(force_fee)
 		. += span_boldnotice("This holopay forces a payment of <b>[force_fee]</b> credit\s per swipe instead of a variable amount.")
 
+/obj/structure/holopay/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/holopay/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(istype(held_item, /obj/item/card/id))
+		context[SCREENTIP_CONTEXT_LMB] = "Pay"
+		var/obj/item/card/id/held_id = held_item
+		if(held_id.my_store && held_id.my_store == src)
+			context[SCREENTIP_CONTEXT_RMB] = "Dissipate pay stand"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	else if(istype(held_item, /obj/item/holochip))
+		context[SCREENTIP_CONTEXT_LMB] = "Pay"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
 /obj/structure/holopay/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -43,7 +63,7 @@
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/holopay/deconstruct()
-	dissapate()
+	dissipate()
 	return ..()
 
 /obj/structure/holopay/Destroy()
@@ -98,7 +118,7 @@
 	if(istype(weapon, /obj/item/card/id))
 		var/obj/item/card/id/attacking_id = weapon
 		if(attacking_id.my_store && attacking_id.my_store == src)
-			dissapate()
+			dissipate()
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
@@ -188,13 +208,13 @@
 
 /obj/structure/holopay/process()
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
-		dissapate()
+		dissipate()
 
 /**
  * Creates holopay vanishing effects.
  * Deletes the holopay thereafter.
  */
-/obj/structure/holopay/proc/dissapate()
+/obj/structure/holopay/proc/dissipate()
 	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
 	visible_message(span_notice("The pay stand vanishes."))
 	qdel(src)
@@ -216,7 +236,7 @@
 		to_chat(user, span_warning("You don't have a valid account."))
 		return FALSE
 	var/datum/bank_account/payee = id_card.registered_account
-	if(payee == linked_card.registered_account)
+	if(payee == linked_card?.registered_account)
 		balloon_alert(user, "invalid transaction")
 		to_chat(user, span_warning("You can't pay yourself."))
 		return FALSE
