@@ -61,8 +61,6 @@
 	return FALSE
 
 /obj/item/computer_hardware/ai_slot/screwdriver_act(mob/living/user, obj/item/tool)
-	if(..())
-		return
 	to_chat(user, span_notice("You press down on the manual eject button with [tool]."))
 	try_eject(user, TRUE)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS

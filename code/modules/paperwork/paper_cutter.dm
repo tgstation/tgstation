@@ -44,11 +44,12 @@
 		. += "paper"
 
 /obj/item/papercutter/screwdriver_act(mob/living/user, obj/item/tool)
-	if(storedcutter)
-		tool.play_tool_sound(src)
-		to_chat(user, span_notice("[storedcutter] has been [cuttersecured ? "unsecured" : "secured"]."))
-		cuttersecured = !cuttersecured
-		return TRUE
+	if(!storedcutter)
+		return
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("[storedcutter] has been [cuttersecured ? "unsecured" : "secured"]."))
+	cuttersecured = !cuttersecured
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 /obj/item/papercutter/attackby(obj/item/P, mob/user, params)

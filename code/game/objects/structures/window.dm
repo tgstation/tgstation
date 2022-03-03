@@ -187,52 +187,54 @@
 	return ..()
 
 /obj/structure/window/welder_act(mob/living/user, obj/item/tool)
-	if(atom_integrity < max_integrity)
-		if(!tool.tool_start_check(user, amount = 0))
-			return FALSE
-
-		to_chat(user, span_notice("You begin repairing [src]..."))
-		if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
-			atom_integrity = max_integrity
-			update_nearby_icons()
-			to_chat(user, span_notice("You repair [src]."))
-	else
+	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-	return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!tool.tool_start_check(user, amount = 0))
+		return FALSE
+	to_chat(user, span_notice("You begin repairing [src]..."))
+	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		atom_integrity = max_integrity
+		update_nearby_icons()
+		to_chat(user, span_notice("You repair [src]."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!(flags_1 & NODECONSTRUCT_1) && !(reinf && state >= RWINDOW_FRAME_BOLTED))
-		to_chat(user, span_notice("You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor..."))
-		if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-			set_anchored(!anchored)
-			to_chat(user, span_notice("You [anchored ? "fasten the window to":"unfasten the window from"] the floor."))
-		return TRUE
+	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
+		return
+	to_chat(user, span_notice("You begin to [anchored ? "unscrew the window from":"screw the window to"] the floor..."))
+	if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
+		set_anchored(!anchored)
+		to_chat(user, span_notice("You [anchored ? "fasten the window to":"unfasten the window from"] the floor."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
-	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
-		return FALSE
 	if(anchored)
 		return FALSE
-	to_chat(user, span_notice("You begin to disassemble [src]..."))
-	if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
-		var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
-		if (!QDELETED(G))
-			G.add_fingerprint(user)
-		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		to_chat(user, span_notice("You successfully disassemble [src]."))
-		qdel(src)
-	return TRUE
-
-/obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
 	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
 		return FALSE
-	if(!(reinf && (state == WINDOW_OUT_OF_FRAME) && anchored))
+
+	to_chat(user, span_notice("You begin to disassemble [src]..."))
+	if(!tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
+	if (!QDELETED(G))
+		G.add_fingerprint(user)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	to_chat(user, span_notice("You successfully disassemble [src]."))
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
+	if(!anchored || !reinf)
+		return FALSE
+	if((flags_1 & NODECONSTRUCT_1) || (state != WINDOW_OUT_OF_FRAME))
 		return FALSE
 	to_chat(user, span_notice("You begin to lever the window into the frame..."))
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, .proc/check_state_and_anchored, state, anchored)))
 		state = RWINDOW_SECURE
 		to_chat(user, span_notice("You pry the window into the frame."))
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))

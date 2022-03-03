@@ -375,22 +375,26 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			close_machine(target)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
+
 	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool)))
 		update_appearance()
 	else
 		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
 		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
-	if(!on && !occupant && !state_open && (default_pry_open(tool) || default_deconstruction_crowbar(tool)))
-		update_appearance()
-		return TRUE
+	if(on || occupant || state_open)
+		return FALSE
+	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
-	if(!on && !occupant && !state_open && default_change_direction_wrench(user, tool))
+	if(on || occupant || state_open)
+		return FALSE
+	if(default_change_direction_wrench(user, tool))
 		update_appearance()
-		return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))

@@ -236,30 +236,33 @@
 
 /obj/machinery/door/welder_act(mob/living/user, obj/item/tool)
 	try_to_weld(tool, user)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
-		return FALSE
+		return
 
 	var/forced_open = FALSE
 	if(istype(tool, /obj/item/crowbar))
 		var/obj/item/crowbar/crowbar = tool
 		forced_open = crowbar.force_opens
 	try_to_crowbar(tool, user, forced_open)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user, params)
 	if(!user.combat_mode && istype(I, /obj/item/fireaxe))
 		try_to_crowbar(I, user, FALSE)
 		return TRUE
-	else if((!(I.item_flags & NOBLUDGEON) && !user.combat_mode) && try_to_activate_door(user))
+	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
+		return FALSE
+
+	else if(try_to_activate_door(user))
 		return TRUE
 	return ..()
 
 /obj/machinery/door/welder_act_secondary(mob/living/user, obj/item/tool)
 	try_to_weld_secondary(tool, user)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	var/forced_open = FALSE
@@ -267,7 +270,7 @@
 		var/obj/item/crowbar/crowbar = tool
 		forced_open = crowbar.force_opens
 	try_to_crowbar_secondary(tool, user, forced_open)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()

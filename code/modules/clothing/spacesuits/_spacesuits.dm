@@ -137,10 +137,9 @@
 
 /obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
 	toggle_spacesuit_cell(user)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/clothing/suit/space/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	var/range_low = 20 // Default min temp c
 	var/range_high = 45 // default max temp c
 	if(obj_flags & EMAGGED)
@@ -152,18 +151,19 @@
 	if(deg_c && deg_c >= range_low && deg_c <= range_high)
 		temperature_setting = round(T0C + deg_c, 0.1)
 		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(cell_cover_open && istype(I, /obj/item/stock_parts/cell))
-		if(cell)
-			to_chat(user, span_warning("[src] already has a cell installed."))
-			return
-		if(user.transferItemToLoc(I, src))
-			cell = I
-			to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
-			return
-	return ..()
+	if(!cell_cover_open || !istype(I, /obj/items/stock_parts/cell))
+		return ..()
+	if(cell)
+		to_chat(user, span_warning("[src] already has a cell installed."))
+		return
+	if(user.transferItemToLoc(I, src))
+		cell = I
+		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
+		return
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/AltClick(mob/living/user)

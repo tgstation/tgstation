@@ -84,38 +84,38 @@
 	return T
 
 /obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool)
-	if(opening)
-		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
-		return TRUE
-	return ..()
+	if(!opening)
+		return ..()
+	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
-	if(density)
-		var/turf/loc_turf = get_turf(src)
-		if(loc_turf.density)
-			to_chat(user, span_warning("[src] is blocked!"))
-			return
-		if(!isfloorturf(loc_turf))
-			to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
-			return
-		user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
-		ChangeToWall()
-	else
+	if(!density)
 		to_chat(user, span_warning("You can't reach, close it first!"))
+		return
+	var/turf/loc_turf = get_turf(src)
+	if(loc_turf.density)
+		to_chat(user, span_warning("[src] is blocked!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!isfloorturf(loc_turf))
+		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
+	ChangeToWall()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
 		dismantle(user, TRUE)
-		return TRUE
-	return FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
 
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
-	if(opening)
+	if(!opening)
 		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 		return
-	else
-		return ..()
+	return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))

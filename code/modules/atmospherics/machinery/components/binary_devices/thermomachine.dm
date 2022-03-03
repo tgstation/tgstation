@@ -262,13 +262,13 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(on)
 		to_chat("You can't open [src] while it's on!")
-		return FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!anchored)
 		to_chat(user, span_notice("Anchor [src] first!"))
-		return FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", tool))
 		change_pipe_connection(panel_open)
-		return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
@@ -277,10 +277,12 @@
 	return default_deconstruction_crowbar(tool)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
+	if(!panel_open)
+		return
 	piping_layer = (piping_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (piping_layer + 1)
 	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
 	update_appearance()
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
 	if(!..())
@@ -326,18 +328,20 @@
 		nullify_pipenet(parents[2])
 
 /obj/machinery/atmospherics/components/binary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(panel_open && !check_pipe_on_turf() && default_unfasten_wrench(user, tool))
-		return TRUE
-	return FALSE
+	if(!panel_open || check_pipe_on_turf()
+		return
+	if(default_unfasten_wrench(user, tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
 
 /obj/machinery/atmospherics/components/binary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
-	if(panel_open)
-		color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
-		pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
-		visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
-		update_appearance()
-		return TRUE
-	return FALSE
+	if(!panel_open)
+		return
+	color_index = (color_index >= GLOB.pipe_paint_colors.len) ? (color_index = 1) : (color_index = 1 + color_index)
+	pipe_color = GLOB.pipe_paint_colors[GLOB.pipe_paint_colors[color_index]]
+	visible_message("<span class='notice'>You set [src] pipe color to [GLOB.pipe_color_name[pipe_color]].")
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_pipe_on_turf()
 	for(var/obj/machinery/atmospherics/device in get_turf(src))

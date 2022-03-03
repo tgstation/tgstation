@@ -106,14 +106,10 @@
 	if(stored_card)
 		to_chat(user, span_notice("You press down on the manual eject button with [tool]."))
 		try_eject(user)
-		return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	swap_slot()
 	to_chat(user, span_notice("You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"]."))
-	return TRUE
-
-/obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
-	if(..())
-		return
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /**
  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.

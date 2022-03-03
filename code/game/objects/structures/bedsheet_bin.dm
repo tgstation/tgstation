@@ -539,17 +539,16 @@ LINEN BINS
 	..()
 
 /obj/structure/bedsheetbin/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return FALSE
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
-		return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
 		to_chat(user, span_notice("You disassemble the [src]."))
 		new /obj/item/stack/rods(loc, 2)
 		qdel(src)
-		return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
 	return default_unfasten_wrench(user, tool, 5)

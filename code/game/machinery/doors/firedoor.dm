@@ -293,7 +293,7 @@
 	if(operating || !welded)
 		return FALSE
 
-	. = TRUE
+	. = TOOL_ACT_TOOLTYPE_SUCCESS
 	if(boltslocked)
 		to_chat(user, span_notice("There are screws locking the bolts in place!"))
 		return
@@ -314,7 +314,7 @@
 				span_notice("You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts."))
 	tool.play_tool_sound(src)
 	boltslocked = !boltslocked
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return

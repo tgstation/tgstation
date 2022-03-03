@@ -100,7 +100,7 @@
 
 /obj/item/weldingtool/screwdriver_act(mob/living/user, obj/item/tool)
 	flamethrower_screwdriver(tool, user)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/weldingtool/attackby(obj/item/tool, mob/user, params)
 	if(istype(tool, /obj/item/stack/rods))

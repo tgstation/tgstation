@@ -654,7 +654,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 // Stops humans from disassembling abductor headsets.
 /obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
-	return FALSE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"

@@ -84,25 +84,25 @@
 	can_rotate = !can_rotate
 	to_chat(user, span_notice("You [can_rotate ? "unlock" : "lock"] [src]'s rotation."))
 	tool.play_tool_sound(src)
-	return TRUE
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/reflector/wrench_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if(anchored)
 		to_chat(user, span_warning("Unweld [src] from the floor first!"))
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	user.visible_message(span_notice("[user] starts to dismantle [src]."), span_notice("You start to dismantle [src]..."))
-	if(tool.use_tool(src, user, 8 SECONDS, volume=50))
-		to_chat(user, span_notice("You dismantle [src]."))
-		new framebuildstacktype(drop_location(), framebuildstackamount)
-		if(buildstackamount)
-			new buildstacktype(drop_location(), buildstackamount)
-		qdel(src)
+	if(!tool.use_tool(src, user, 8 SECONDS, volume=50))
+		return
+	to_chat(user, span_notice("You dismantle [src]."))
+	new framebuildstacktype(drop_location(), framebuildstackamount)
+	if(buildstackamount)
+		new buildstacktype(drop_location(), buildstackamount)
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/reflector/welder_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if(!tool.tool_start_check(user, amount=0))
-		return FALSE
+		return
 	if(atom_integrity < max_integrity)
 		user.visible_message(span_notice("[user] starts to repair [src]."),
 							span_notice("You begin repairing [src]..."),
@@ -126,43 +126,11 @@
 			set_anchored(FALSE)
 			to_chat(user, span_notice("You cut [src] free from the floor."))
 
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/structure/reflector/attackby(obj/item/W, mob/user, params)
 	if(admin)
 		return
-	else if(W.tool_behaviour == TOOL_WELDER)
-		if(atom_integrity < max_integrity)
-			if(!W.tool_start_check(user, amount=0))
-				return
-
-			user.visible_message(span_notice("[user] starts to repair [src]."),
-								span_notice("You begin repairing [src]..."),
-								span_hear("You hear welding."))
-			if(W.use_tool(src, user, 40, volume=40))
-				atom_integrity = max_integrity
-				user.visible_message(span_notice("[user] repairs [src]."), \
-									span_notice("You finish repairing [src]."))
-
-		else if(!anchored)
-			if(!W.tool_start_check(user, amount=0))
-				return
-
-			user.visible_message(span_notice("[user] starts to weld [src] to the floor."),
-								span_notice("You start to weld [src] to the floor..."),
-								span_hear("You hear welding."))
-			if (W.use_tool(src, user, 20, volume=50))
-				set_anchored(TRUE)
-				to_chat(user, span_notice("You weld [src] to the floor."))
-		else
-			if(!W.tool_start_check(user, amount=0))
-				return
-
-			user.visible_message(span_notice("[user] starts to cut [src] free from the floor."),
-								span_notice("You start to cut [src] free from the floor..."),
-								span_hear("You hear welding."))
-			if (W.use_tool(src, user, 20, volume=50))
-				set_anchored(FALSE)
-				to_chat(user, span_notice("You cut [src] free from the floor."))
-
 	//Finishing the frame
 	else if(istype(W, /obj/item/stack/sheet))
 		if(finished)
