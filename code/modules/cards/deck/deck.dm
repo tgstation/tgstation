@@ -1,5 +1,5 @@
-#define DECK_SHUFFLE_TIME 5 SECONDS
-#define DECK_SYNDIE_SHUFFLE_TIME 3 SECONDS
+#define DECK_SHUFFLE_TIME (5 SECONDS)
+#define DECK_SYNDIE_SHUFFLE_TIME (3 SECONDS)
 
 /obj/item/toy/cards/deck
 	name = "deck of cards"
