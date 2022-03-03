@@ -12,7 +12,7 @@
 	var/et_alia = FALSE
 	/// Abstract.
 	var/abstract
-	/// The funding gains from the paper.
+	/// The coop and funding gains from the paper.
 	var/list/gains
 	/// Experiment typepath.
 	var/datum/experiment/ordnance/experiment_path
@@ -23,7 +23,7 @@
 	  * Only one paper can be published in each tier for each experiment.
 	*/
 	var/tier
-	/// The selected sponsor for our paper. Path
+	/// The selected sponsor for our paper. Pathtype form.
 	var/datum/scientific_partner/partner_path
 
 /datum/scientific_paper/New()
@@ -98,8 +98,8 @@
 
 /** Does the counting for gains. 
  * Call this whenever experiments/tier/partners are changed. 
- * Handle everything automatically, calling this proc externally shouldn't be necessary.
- * Also doubles as an initialization for the gain list.
+ * Handled automatically, calling this proc externally shouldn't be necessary.
+ * Also doubles as an initialization for the gains list.
  */
 /datum/scientific_paper/proc/set_amount()
 	gains = list(SCIPAPER_COOPERATION_INDEX = 0, SCIPAPER_FUNDING_INDEX = 0)
@@ -108,9 +108,10 @@
 	var/gain = calculate_gains(tier)
 	for (var/gain_type in 1 to gains.len)
 		gains[gain_type] = gain
-		if(partner_path)
-			var/datum/scientific_partner/partner = locate(partner_path) in SSresearch.scientific_partners
-			gains[gain_type] *= partner.multipliers[gain_type]
+		if(!partner_path)
+			continue
+		var/datum/scientific_partner/partner = locate(partner_path) in SSresearch.scientific_partners
+		gains[gain_type] *= partner.multipliers[gain_type]
 
 /** Fully check if our paper have all the required variables, and prevent duplicate papers being published in the same tier.
  * Things to check: tier, gain, and partner here. ex_path and record datums in subtypes.
@@ -157,6 +158,7 @@
 	for (var/index in 1 to transcripted_gains.len)
 		if (!gains)
 			transcripted_gains[index] = "None"
+			continue
 		switch (round(gains[index]))
 			if(-INFINITY to 0)
 				transcripted_gains[index] = "None"
