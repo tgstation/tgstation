@@ -26,7 +26,7 @@
 	if(!isliving(user))
 		return
 	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
-		to_chat(user, span_warning("You must be wearing \the [src] to use [src.p_them()]!"))
+		to_chat(user, span_warning("You must be wearing [src] to use [p_them()]!"))
 		return
 	if(!(wheels.is_occupant(user)))
 		wheelToggle = FALSE
