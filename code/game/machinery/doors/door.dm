@@ -316,6 +316,12 @@
 
 /obj/machinery/door/update_icon_state()
 	icon_state = "[base_icon_state][density]"
+
+	if(hasPower() && unres_sides)
+		set_light(2, 1)
+	else
+		set_light(0)
+
 	return ..()
 
 /obj/machinery/door/update_overlays()
