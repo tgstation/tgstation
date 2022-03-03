@@ -2778,10 +2778,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
 /area/service/theater)
-"iT" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/laborcamp/security)
 "iU" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -8617,6 +8613,7 @@
 "BL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "BM" = (
@@ -51199,7 +51196,7 @@ tc
 tc
 tc
 bA
-iT
+FF
 Fp
 Fp
 ak
@@ -51456,7 +51453,7 @@ ni
 bh
 tc
 VB
-iT
+FF
 Fp
 Fp
 ak
