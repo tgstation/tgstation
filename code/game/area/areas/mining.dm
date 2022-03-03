@@ -46,14 +46,14 @@
 	icon_state = "mining_storage"
 
 /area/mine/production
-	name = "Mining Station Production Wing"
+	name = "Mining Station Starboard Wing"
 	icon_state = "mining_production"
 
 /area/mine/abandoned
 	name = "Abandoned Mining Station"
 
 /area/mine/living_quarters
-	name = "Mining Station Living Quarters"
+	name = "Mining Station Port Wing"
 	icon_state = "mining_living"
 
 /area/mine/eva

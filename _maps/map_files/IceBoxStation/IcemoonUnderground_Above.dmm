@@ -10767,7 +10767,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/mine/production)
+/area/mine/living_quarters)
 "Iu" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit";
@@ -14435,6 +14435,12 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
+"TR" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/mine/living_quarters)
 "TS" = (
 /turf/open/floor/iron/dark,
 /area/mine/eva)
@@ -32013,9 +32019,9 @@ mO
 mO
 Rj
 mO
-br
+cR
 It
-br
+cR
 mO
 Rj
 mO
@@ -32270,9 +32276,9 @@ mO
 mO
 Rj
 mO
-br
-NR
-br
+cR
+TR
+cR
 mO
 Rj
 mO
@@ -32527,9 +32533,9 @@ mO
 mO
 Rj
 mO
-br
-NR
-br
+cR
+TR
+cR
 mO
 Rj
 mO
@@ -32784,9 +32790,9 @@ mO
 mO
 Rj
 mO
-br
-NR
-br
+cR
+TR
+cR
 mO
 Rj
 mO
@@ -33041,9 +33047,9 @@ mO
 mO
 Rj
 mO
-br
-NR
-br
+cR
+TR
+cR
 mO
 Rj
 mO
