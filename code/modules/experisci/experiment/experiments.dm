@@ -72,9 +72,18 @@
 	required_light = 6
 
 /datum/experiment/explosion/maxcap/New()
-	required_devastation = GLOB.MAX_EX_DEVESTATION_RANGE
-	required_heavy = GLOB.MAX_EX_HEAVY_RANGE
-	required_light = GLOB.MAX_EX_LIGHT_RANGE
+	var/cap_multiplier
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION)) // if for some reason someone designs a map with multiple station levels with different maxcap limits for each, take the smallest one
+		var/z_cap_multiplier = SSmapping.level_trait(z, ZTRAIT_BOMBCAP_MULTIPLIER)
+		if(cap_multiplier)
+			cap_multiplier = min(cap_multiplier, z_cap_multiplier)
+		else
+			cap_multiplier = z_cap_multiplier
+	if(isnull(cap_multiplier))
+		cap_multiplier = 1
+	required_devastation = GLOB.MAX_EX_DEVESTATION_RANGE * cap_multiplier
+	required_heavy = GLOB.MAX_EX_HEAVY_RANGE * cap_multiplier
+	required_light = GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"
