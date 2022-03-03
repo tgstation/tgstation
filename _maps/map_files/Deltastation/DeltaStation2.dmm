@@ -20703,7 +20703,6 @@
 /area/security/checkpoint/medical)
 "deC" = (
 /obj/structure/closet/secure_closet/chief_medical,
-/obj/item/clothing/under/rank/medical/doctor,
 /obj/item/clothing/head/nursehat,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5

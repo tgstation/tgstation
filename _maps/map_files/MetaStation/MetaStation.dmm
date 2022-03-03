@@ -58683,7 +58683,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Brig - Infirmary"
 	},
-/obj/item/clothing/under/rank/medical/doctor/purple,
+/obj/item/clothing/under/rank/medical/scrubs/purple,
 /obj/item/storage/firstaid/regular,
 /obj/item/healthanalyzer{
 	pixel_y = -2

@@ -8553,7 +8553,6 @@
 /obj/structure/grille/broken,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/clothing/under/rank/medical/doctor,
 /turf/open/floor/plating,
 /area/maintenance/port/greater)
 "aRQ" = (
