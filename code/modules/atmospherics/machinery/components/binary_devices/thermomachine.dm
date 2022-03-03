@@ -328,7 +328,7 @@
 		nullify_pipenet(parents[2])
 
 /obj/machinery/atmospherics/components/binary/thermomachine/wrench_act_secondary(mob/living/user, obj/item/tool)
-	if(!panel_open || check_pipe_on_turf()
+	if(!panel_open || check_pipe_on_turf())
 		return
 	if(default_unfasten_wrench(user, tool))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
