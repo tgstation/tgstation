@@ -62,4 +62,4 @@
 	update_appearance()
 
 /obj/item/petri_dish/cow
-	/datum/micro_organism/cell_line/cow = 1
+	var/datum/micro_organism/cell_line/cow = 1
