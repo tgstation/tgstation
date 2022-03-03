@@ -2859,6 +2859,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"rx" = (
+/obj/machinery/telecomms/relay/preset/mining,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/mine/maintenance)
 "rB" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -3120,6 +3126,17 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"wV" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/mine/laborcamp)
 "xi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
@@ -3250,6 +3267,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"AN" = (
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron,
+/area/mine/living_quarters)
 "AU" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -3431,6 +3452,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"Fb" = (
+/obj/structure/table,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/mine/living_quarters)
 "Fe" = (
 /obj/structure/sink{
 	dir = 4;
@@ -3539,21 +3575,6 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Outpost Infirmary";
 	network = list("mine")
-	},
-/turf/open/floor/iron/white,
-/area/mine/living_quarters)
-"GI" = (
-/obj/structure/table,
-/obj/item/storage/medkit/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
@@ -3835,15 +3856,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/eva)
-"MQ" = (
-/obj/structure/table,
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/mine/living_quarters)
 "Na" = (
 /turf/closed/wall/r_wall,
 /area/lavaland/surface/outdoors/explored)
@@ -3894,6 +3906,15 @@
 /obj/item/dice/d4,
 /turf/open/floor/iron,
 /area/mine/production)
+"OC" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/mine/living_quarters)
 "OI" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck,
@@ -4489,12 +4510,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/production)
-"Xx" = (
-/obj/structure/sign/poster/official/random{
-	pixel_y = 32
-	},
-/turf/open/floor/iron,
-/area/mine/living_quarters)
 "XV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -4527,17 +4542,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
-"Yn" = (
-/obj/structure/table,
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/mine/laborcamp)
 "YG" = (
 /obj/structure/fence{
 	dir = 4
@@ -4605,12 +4609,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"ZP" = (
-/obj/machinery/telecomms/relay/preset/mining,
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/mine/maintenance)
 
 (1,1,1) = {"
 aa
@@ -10748,7 +10746,7 @@ bh
 bw
 TI
 Hd
-Xx
+AN
 rj
 dZ
 cM
@@ -11240,7 +11238,7 @@ aD
 aD
 aD
 ap
-Yn
+wV
 YJ
 aq
 au
@@ -12547,7 +12545,7 @@ aj
 aj
 ab
 cQ
-ZP
+rx
 KY
 dP
 eb
@@ -14346,8 +14344,8 @@ aj
 ai
 ad
 cM
-GI
-MQ
+Fb
+OC
 dQ
 ec
 eq
