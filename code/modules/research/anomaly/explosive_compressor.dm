@@ -93,6 +93,10 @@
  * * anomaly_type - anomaly type define
  */
 /obj/machinery/research/explosive_compressor/proc/get_required_radius(anomaly_type)
+	if(ispath(anomaly_type, /obj/effect/anomaly))
+		var/obj/effect/anomaly/anomaly = anomaly_type
+		anomaly_type = initial(anomaly.aSignal)
+		
 	var/already_made = SSresearch.created_anomaly_types[anomaly_type]
 	var/hard_limit = SSresearch.anomaly_hard_limit_by_type[anomaly_type]
 	if(already_made >= hard_limit)
