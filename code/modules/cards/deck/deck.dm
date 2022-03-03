@@ -41,13 +41,16 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
 
-	if(is_standard_deck) // generate a normal playing card deck
-		for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
-			cards += new /obj/item/toy/singlecard(mapload, "Ace of [suit]", src)
-			for(var/i in 2 to 10)
-				cards += new /obj/item/toy/singlecard(mapload, "[i] of [suit]", src)
-			for(var/person in list("Jack", "Queen", "King"))
-				cards += new /obj/item/toy/singlecard(mapload, "[person] of [suit]", src)
+	if(!is_standard_deck)
+		return
+
+	// generate a normal playing card deck
+	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
+		cards += new /obj/item/toy/singlecard(mapload, "Ace of [suit]", src)
+		for(var/i in 2 to 10)
+			cards += new /obj/item/toy/singlecard(mapload, "[i] of [suit]", src)
+		for(var/person in list("Jack", "Queen", "King"))
+			cards += new /obj/item/toy/singlecard(mapload, "[person] of [suit]", src)
 
 /// triggered on wield of two handed item
 /obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)
