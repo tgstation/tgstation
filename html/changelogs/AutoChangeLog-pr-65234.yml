@@ -1,4 +1,4 @@
 author: "SuperNovaa41"
 delete-after: True
 changes: 
-  - refactor: "Dehardcoded SSmapping ruin types."
+  - code_imp: "Defined turf environment types."
