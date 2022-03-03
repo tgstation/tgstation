@@ -49,17 +49,19 @@
 
 /obj/item/toy/singlecard/examine(mob/living/carbon/human/user)
 	. = ..()
-	if(ishuman(user))
-		if(user.is_holding(src))
-			user.visible_message(span_notice("[user] checks [user.p_their()] card."), span_notice("The card reads: [cardname]."))
-			if(blank)
-				. += span_notice("The card is blank. Write on it with a pen.")
-		else if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
-			. += span_notice("You scan the card with your x-ray vision and it reads: [cardname].")
-		else
-			. += span_warning("You need to have the card in your hand to check it!")
-		. += span_notice("Right-click to flip it.")
-		. += span_notice("Alt-click to rotate it 90 degrees.")
+	if(!ishuman(user))
+		return 
+		
+	if(user.is_holding(src))
+		user.visible_message(span_notice("[user] checks [user.p_their()] card."), span_notice("The card reads: [cardname]."))
+		if(blank)
+			. += span_notice("The card is blank. Write on it with a pen.")
+	else if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
+		. += span_notice("You scan the card with your x-ray vision and it reads: [cardname].")
+	else
+		. += span_warning("You need to have the card in your hand to check it!")
+	. += span_notice("Right-click to flip it.")
+	. += span_notice("Alt-click to rotate it 90 degrees.")
 
 /**
  * Flip
