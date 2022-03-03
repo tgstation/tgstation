@@ -98,17 +98,26 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return destination
 
 /**
- * Returns the atom sitting on the turf.
- * For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
- * Optional arg 'type' to stop once it reaches a specific type instead of a turf.
-**/
-/proc/get_atom_on_turf(atom/movable/atom_on_turf, stop_type)
-	var/atom/turf_to_check = atom_on_turf
-	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
-		turf_to_check = turf_to_check.loc
-		if(stop_type && istype(turf_to_check, stop_type))
+ * Returns the top-most atom sitting on the turf.
+ * For example, using this on a disk, which is in a bag, on a mob,
+ * will return the mob because it's on the turf.
+ *
+ * Arguments
+ * * something_in_turf - a movable within the turf, somewhere.
+ * * stop_type - optional - stops looking if stop_type is found in the turf, returning that type (if found).
+ **/
+/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type)
+	if(!istype(something_in_turf))
+		CRASH("get_atom_on_turf was not passed an /atom/movable! Got [isnull(something_in_turf) ? "null":"type: [something_in_turf.type]"]")
+
+	var/atom/movable/topmost_thing = something_in_turf
+
+	while(topmost_thing?.loc && !isturf(topmost_thing.loc))
+		topmost_thing = topmost_thing.loc
+		if(stop_type && istype(topmost_thing, stop_type))
 			break
-	return turf_to_check
+
+	return topmost_thing
 
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
 /proc/get_edge_target_turf(atom/target_atom, direction)

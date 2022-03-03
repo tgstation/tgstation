@@ -40,7 +40,7 @@
 	melee_damage_lower = 40
 	melee_damage_upper = 40
 	speed = 10
-	move_to_delay = 5
+	move_to_delay = 10
 	ranged = TRUE
 	pixel_x = -32
 	base_pixel_x = -32
@@ -100,7 +100,7 @@
 		ranged_cooldown = world.time + 30
 		telegraph()
 		dir_shots.fire_in_directions(src, target, GLOB.alldirs)
-		move_to_delay = 1.5
+		move_to_delay = 3
 		return
 	else
 		move_to_delay = initial(move_to_delay)
@@ -154,6 +154,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "at_shield2"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	light_system = MOVABLE_LIGHT
 	light_range = 2
 	duration = 8
@@ -599,7 +600,7 @@
 	desc = "Exits the body you are possessing."
 	charge_max = 60
 	clothes_req = 0
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	max_targets = 1
 	range = -1
 	include_user = TRUE

@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Mappers now no longer have to stare a green square and extrapolate the position of an air alarm based on that."

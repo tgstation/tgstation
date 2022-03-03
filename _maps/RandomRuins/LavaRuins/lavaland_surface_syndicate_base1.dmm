@@ -519,7 +519,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Cargo Bay APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/structure/closet/emcloset/anchored,
 /obj/effect/decal/cleanable/dirt,
@@ -892,7 +892,7 @@
 	},
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndicate_lava_base/cargo)
 "ff" = (
@@ -931,7 +931,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Virology APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -2565,7 +2565,7 @@
 	},
 /obj/machinery/power/apc/syndicate{
 	name = "Dormitories APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/cable,
@@ -3047,7 +3047,7 @@
 	amount = 50
 	},
 /obj/item/clothing/head/welding,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -3294,7 +3294,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Engineering APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4{
 	dir = 9
@@ -3978,7 +3978,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/pipe_dispenser{
 	pixel_y = 12
@@ -4072,7 +4072,7 @@
 /obj/machinery/light/small/directional/south,
 /obj/machinery/power/apc/syndicate{
 	name = "Bar APC";
-	pixel_y = -23
+	pixel_y = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -4378,7 +4378,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Arrival Hallway APC";
-	pixel_y = 23
+	pixel_y = 25
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -4680,7 +4680,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Medbay APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,

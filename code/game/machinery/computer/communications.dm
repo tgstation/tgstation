@@ -126,7 +126,7 @@
 			return
 		battlecruiser_called = TRUE
 		caller_card.use_charge(user)
-		addtimer(CALLBACK(GLOBAL_PROC, /proc/summon_battlecruiser), rand(20 SECONDS, 1 MINUTES))
+		addtimer(CALLBACK(GLOBAL_PROC, /proc/summon_battlecruiser, caller_card.team), rand(20 SECONDS, 1 MINUTES))
 		playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
 		return
 
@@ -141,6 +141,7 @@
 /obj/machinery/computer/communications/ui_act(action, list/params)
 	var/static/list/approved_states = list(STATE_BUYING_SHUTTLE, STATE_CHANGING_STATUS, STATE_MAIN, STATE_MESSAGES)
 	var/static/list/approved_status_pictures = list("biohazard", "blank", "default", "lockdown", "redalert", "shuttle")
+	var/static/list/state_status_pictures = list("blank", "shuttle")
 
 	. = ..()
 	if (.)
@@ -366,7 +367,10 @@
 			var/picture = params["picture"]
 			if (!(picture in approved_status_pictures))
 				return
-			post_status("alert", picture)
+			if(picture in state_status_pictures)
+				post_status(picture)
+			else
+				post_status("alert", picture)
 			playsound(src, "terminal_type", 50, FALSE)
 		if ("toggleAuthentication")
 			// Log out if we're logged in
@@ -801,6 +805,7 @@
 
 	var/picked_option = pick(hack_options)
 	message_admins("[ADMIN_LOOKUPFLW(hacker)] hacked a [name] located at [ADMIN_VERBOSEJMP(src)], resulting in: [picked_option]!")
+	hacker.log_message("hacked a communications console, resulting in: [picked_option].", LOG_GAME, log_globally = TRUE)
 	switch(picked_option)
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
 			priority_announce(

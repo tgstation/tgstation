@@ -81,12 +81,6 @@
 #define EXP_TYPE_GHOST "Ghost"
 #define EXP_TYPE_ADMIN "Admin"
 
-///Screentip settings
-#define SCREENTIP_OFF 0
-#define SCREENTIP_SMALL 1
-#define SCREENTIP_MEDIUM 1
-#define SCREENTIP_BIG 1
-
 //Flags in the players table in the db
 #define DB_FLAG_EXEMPT 1
 
@@ -104,7 +98,7 @@
 #define RANDOM_ENABLED 3
 
 //recommened client FPS
-#define RECOMMENDED_FPS 40
+#define RECOMMENDED_FPS 100
 
 // randomise_appearance_prefs() and randomize_human_appearance() proc flags
 #define RANDOMIZE_SPECIES (1<<0)

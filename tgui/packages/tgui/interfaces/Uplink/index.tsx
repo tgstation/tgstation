@@ -19,6 +19,7 @@ type UplinkItem = {
   restricted: BooleanLike,
   limited_stock: number,
   restricted_roles: string,
+  restricted_species: string,
   progression_minimum: number,
   ref?: string,
 }
@@ -31,6 +32,7 @@ type UplinkData = {
   current_progression_scaling: number,
   uplink_flag: number,
   assigned_role: string,
+  assigned_species: string,
   debug: BooleanLike,
   extra_purchasable: UplinkItem[],
   extra_purchasable_stock: {
@@ -89,6 +91,7 @@ export class Uplink extends Component<{}, UplinkState> {
 
     const uplinkFlag = data.uplink_flag;
     const uplinkRole = data.assigned_role;
+    const uplinkSpecies = data.assigned_species;
 
     const uplinkData = await fetchServerData;
     uplinkData.items = uplinkData.items.sort((a, b) => {
@@ -105,6 +108,10 @@ export class Uplink extends Component<{}, UplinkState> {
     uplinkData.items = uplinkData.items.filter(value => {
       if (value.restricted_roles.length > 0
         && !value.restricted_roles.includes(uplinkRole)) {
+        return false;
+      }
+      if (value.restricted_species.length > 0
+        && !value.restricted_species.includes(uplinkSpecies)) {
         return false;
       }
       { if (value.purchasable_from & uplinkFlag) {
@@ -163,9 +170,17 @@ export class Uplink extends Component<{}, UplinkState> {
     }
     for (let i = 0; i < itemsToAdd.length; i++) {
       const item = itemsToAdd[i];
-      const canBuy = telecrystals >= item.cost;
       const hasEnoughProgression
         = progression_points >= item.progression_minimum;
+
+      let stock: number|null = current_stock[item.id];
+      if (item.ref) {
+        stock = extra_purchasable_stock[item.ref];
+      }
+      if (!stock && stock !== 0) {
+        stock = null;
+      }
+      const canBuy = telecrystals >= item.cost && (stock === null || stock > 0);
       items.push({
         id: item.id,
         name: item.name,

@@ -45,6 +45,15 @@
 	icon_state = "boritos"
 	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
 
+/obj/item/trash/boritos/green
+	icon_state = "boritosgreen"
+
+/obj/item/trash/boritos/red
+	icon_state = "boritosred"
+
+/obj/item/trash/boritos/purple
+	icon_state = "boritospurple"
+
 /obj/item/trash/popcorn
 	name = "popcorn"
 	icon_state = "popcorn"
@@ -133,8 +142,8 @@
 
 /obj/item/trash/can/food/pine_nuts
 	name = "canned pine nuts"
-	icon = 'icons/obj/food/food.dmi'
-	icon_state = "pine_nuts_empty"
+	icon = 'icons/obj/food/canned.dmi'
+	icon_state = "pinenutscan_empty"
 
 /obj/item/trash/spacers_sidekick
 	name = "\improper Spacer's Sidekick packet"

@@ -1207,9 +1207,9 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "cK" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	name = "Worn-out APC";
-	pixel_y = -23;
+	pixel_y = -25;
 	req_access_txt = "150";
 	start_charge = 0
 	},
@@ -2967,11 +2967,11 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "gG" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 4;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_x = 24;
+	pixel_x = 25;
 	start_charge = 100
 	},
 /obj/effect/turf_decal/tile/purple,
@@ -4381,11 +4381,11 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jH" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	locked = 0;
 	name = "Worn-out APC";
-	pixel_y = 23;
+	pixel_y = 25;
 	start_charge = 100
 	},
 /obj/structure/cable,

@@ -1,5 +1,5 @@
 //MODsuit signals
-/// Called when a module is selected to be the active one from on_select()
+/// Called when a module is selected to be the active one from on_select(obj/item/mod/module/module)
 #define COMSIG_MOD_MODULE_SELECTED "mod_module_selected"
 /// Called when a MOD activation is called from toggle_activate(mob/user)
 #define COMSIG_MOD_ACTIVATE "mod_activate"
@@ -19,3 +19,7 @@
 #define COMSIG_MODULE_DEACTIVATED "mod_module_deactivated"
 /// Called when a module is used, after all checks have passed and cooldown started.
 #define COMSIG_MODULE_USED "mod_module_used"
+/// Called when the MODsuit wearer is set.
+#define COMSIG_MOD_WEARER_SET "mod_wearer_set"
+/// Called when the MODsuit wearer is unset.
+#define COMSIG_MOD_WEARER_UNSET "mod_wearer_unset"

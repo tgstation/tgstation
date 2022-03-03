@@ -52,6 +52,12 @@
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 	soundloop = new(src, FALSE)
 
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Turn on", \
+		rmb_text = "Turn off", \
+	)
+
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
 		LAZYREMOVE(my_area.firealarms, src)
@@ -358,7 +364,7 @@
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		. += "The local area hazard light is flashing."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
-		. += "<b>Right-Click</b> or <b>Alt-Click</b> to reset firelocks in this area."
+		. += "<b>Right-Click</b> to reset firelocks in this area."
 	else
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."

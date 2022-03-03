@@ -394,3 +394,8 @@
 /datum/config_entry/flag/sdql_spells
 
 /datum/config_entry/flag/native_fov
+
+/datum/config_entry/number/station_goal_budget
+	default = 1
+	min_val = 0
+	integer = FALSE

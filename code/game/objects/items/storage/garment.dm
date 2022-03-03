@@ -48,7 +48,7 @@
 	new /obj/item/clothing/under/rank/captain/parade(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace(src)
 	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
-	new /obj/item/clothing/suit/captunic(src)
+	new /obj/item/clothing/suit/capjacket(src)
 	new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
 	new /obj/item/clothing/gloves/color/captain(src)
 	new /obj/item/clothing/head/caphat(src)
@@ -100,6 +100,7 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)
 
 /obj/item/storage/bag/garment/chief_medical/PopulateContents()
+	new /obj/item/clothing/head/beret/medical/cmo(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer(src)
 	new /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt(src)
 	new /obj/item/clothing/suit/toggle/labcoat/cmo(src)

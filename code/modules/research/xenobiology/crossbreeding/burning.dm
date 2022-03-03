@@ -139,10 +139,11 @@ Burning extracts:
 		turfs += T
 	for(var/i in 1 to amount)
 		var/path = get_random_food()
-		var/obj/item/O = new path(pick(turfs))
-		O.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns
+		var/obj/item/food/food = new path(pick(turfs))
+		food.reagents.add_reagent(/datum/reagent/toxin/slimejelly,5) //Oh god it burns
+		food.food_flags |= FOOD_SILVER_SPAWNED
 		if(prob(50))
-			O.desc += " It smells strange..."
+			food.desc += " It smells strange..."
 	user.visible_message(span_danger("[src] produces a few pieces of food!"))
 	..()
 

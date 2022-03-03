@@ -626,13 +626,6 @@
 	cost = 15
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
-/datum/uplink_item/suits/noslip
-	name = "MODsuit Anti-Slip Module"
-	desc = "A MODsuit module preventing the user from slipping on water."
-	item = /obj/item/mod/module/noslip
-	cost = 4
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
-
 /datum/uplink_item/suits/paint
 	name = "MODsuit Funny Paint Kit"
 	desc = "A highly advanced piece of technology that will change the theme \

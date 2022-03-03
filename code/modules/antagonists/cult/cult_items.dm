@@ -491,7 +491,7 @@ Striking a noncultist, however, will tear their flesh."}
 		user.Paralyze(100)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind
-	desc = "may Nar'Sie guide you through the darkness and shield you from the light."
+	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
 	name = "zealot's blindfold"
 	icon_state = "blindfold"
 	inhand_icon_state = "blindfold"
@@ -870,7 +870,7 @@ Striking a noncultist, however, will tear their flesh."}
 	playsound(T, 'sound/effects/splat.ogg', 50, TRUE)
 	var/mob/mob_target = target
 
-	if(mob_target && IS_CULTIST(mob_target))
+	if(ismob(mob_target) && IS_CULTIST(mob_target))
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stat != DEAD)

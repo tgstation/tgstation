@@ -9,10 +9,7 @@
 # Cobby
 /code/modules/reagents/ @ExcessiveUseOfCobblestone
 /code/modules/research/designs/medical_designs.dm @ExcessiveUseOfCobblestone
-/code/modules/surgery/ @ExcessiveUseOfCobblestone
 /code/game/objects/items/storage/firstaid.dm @ExcessiveUseOfCobblestone
-/code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone
-/code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone
 
 # Cyberboss
 
@@ -45,6 +42,8 @@
 
 # Mothblocks
 
+/code/game/gamemodes/ @Mothblocks
+/code/modules/autowiki/ @Mothblocks
 /code/modules/unit_tests/ @Mothblocks
 /code/modules/client/preferences/ @Mothblocks
 /code/modules/preferences.dm @Mothblocks
@@ -53,6 +52,7 @@
 /tgui/packages/tgui/interfaces/PreferencesMenu/ @Mothblocks
 
 # MrMelbert
+
 /code/modules/hydroponics/ @MrMelbert
 
 # ninjanomnom
@@ -63,6 +63,12 @@
 /code/datums/components/ @ninjanomnom
 /code/datums/elements/ @ninjanomnom
 /code/modules/shuttle/ @ninjanomnom
+
+# Ryll-Ryll/Shaps
+
+/code/datums/wounds/ @Ryll-Ryll
+/code/datums/status_effects/wound_effects.dm @Ryll-Ryll
+/code/__DEFINES/wounds.dm @Ryll-Ryll
 
 # stylemistake
 
@@ -88,6 +94,10 @@
 # Fikou
 
 /code/modules/mod/ @Fikou
+/code/modules/ruins/lavaland_ruin_code.dm @Fikou
+/code/modules/ruins/lavalandruin_code/ @Fikou
+/code/modules/mining/ @Fikou
+/code/modules/awaymissions/ @Fikou
 
 # Ghilker
 
@@ -120,6 +130,10 @@
 
 /icons/ @Twaticus @Krysonism @Imaginos16
 /code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
+/code/modules/jobs/job_types/chief_medical_officer.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+/code/modules/jobs/job_types/medical_doctor.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+/code/modules/jobs/job_types/paramedic.dm @ExcessiveUseOfCobblestone @Ryll-Ryll
+/code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
 /_maps/ @EOBGames @ShizCalev @Maurukas
 /tools/build/ @MrStonedOne @stylemistake
 /tools/LinuxOneShot/ @Cyberboss @MrStonedOne
