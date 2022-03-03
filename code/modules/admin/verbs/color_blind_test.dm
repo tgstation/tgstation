@@ -17,7 +17,7 @@
 	var/list/descriptions = list(
 		"Protanopia" = "No long wavelength cones, ends up not being able to see red light. Troubles with blue/green and red/green",
 		"Deuteranopia" = "No medium wavelength cones. Because the red and green parts of light nearly overlap in this space, trouble is mostly with red/green",
-		"Tritanopia" = "No short wavelength cones, so trouble with blue/green and yellow/violet. Agressively rare, and equally hard to simulate",
+		"Tritanopia" = "No short wavelength cones, so trouble with blue/green and yellow/violet. Aggressively rare, and equally hard to simulate",
 		"Achromatopsia" = "No cones at all, which leads to something close to monochromatic vision"
 	)
 	var/selected_type = ""
