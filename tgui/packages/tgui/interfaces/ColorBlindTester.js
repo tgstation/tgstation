@@ -32,7 +32,7 @@ export const ColorBlindTester = (props, context) => {
             accessability, it is nowhere near gospel.
           </Box>
           <Box>
-            If I find you being a dick to someone over this I will clober you
+            If I find you being a dick to someone over this I will clobber you
             with a crowbar
           </Box>
         </NoticeBox>
