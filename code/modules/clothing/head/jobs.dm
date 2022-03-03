@@ -171,6 +171,14 @@
 	strip_delay = 60
 	dog_fashion = /datum/dog_fashion/head/warden
 
+/obj/item/clothing/head/warden/red
+	name = "warden's hat"
+	desc = "A warden's red hat. Looking at it gives you the feeling of wanting to keep people in cells for as long as possible."
+	icon_state = "wardenhat"
+	armor = list(MELEE = 40, BULLET = 30, LASER = 30, ENERGY = 40, BOMB = 25, BIO = 0, FIRE = 30, ACID = 60, WOUND = 6)
+	strip_delay = 60
+	dog_fashion = /datum/dog_fashion/head/warden_red
+
 /obj/item/clothing/head/warden/drill
 	name = "warden's campaign hat"
 	desc = "A special armored campaign hat with the security insignia emblazoned on it. Uses reinforced fabric to offer sufficient protection."
@@ -292,6 +300,11 @@
 	name = "paramedic beret"
 	desc = "For finding corpses in style!"
 	greyscale_colors = "#16313D"
+
+/obj/item/clothing/head/beret/medical/cmo
+	name = "chief medical officer beret"
+	desc = "A beret in a distinct surgical turquoise!"
+	greyscale_colors = "#5EB8B8"
 
 
 //Engineering

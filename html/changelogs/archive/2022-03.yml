@@ -1,0 +1,111 @@
+2022-03-01:
+  Axietheaxolotl, TetraZeta, PositiveEntropy, FuryMcFlurry:
+  - imageadd: The detective outfits, the blueshift uniform and the constable outfits
+      have been redone!
+  - rscdel: Removes the pantyhose from the HoS Parade Skirt
+  Ebin-Halcyon:
+  - imageadd: New fireaxe inhand, worn, and in cabinet sprites.
+  Fikou:
+  - bugfix: fixes thieves not being able to complete the guns objective
+  Kubisopplay:
+  - expansion: Adds malfunction module that lets you impersonate anyone
+  Mothblocks:
+  - admin: Going stealth mode now drops your orbiters and blocks you from being orbited.
+  OneAsianTortoise:
+  - bugfix: fixes accounting's alert being cut in half
+  TiviPlus:
+  - refactor: redid some savanna-ivanov mech code please report any new issues on
+      the github
+  adamsong:
+  - bugfix: fixed vv checking if the client is a turf, and instead checked the thing
+      that might be a turf, properly updating the vv window
+  carshalash:
+  - expansion: Introduces new non-alcoholic beverages to be made at the bar!
+  - imageadd: Sprites for these new beverages! Not just coloured glass
+  san7890:
+  - rscadd: On Meta, Delta, and Tram Stations, expect to see the word "Funeral" dance
+      across your eyes a few times as you enter the chapel.
+  - rscadd: On IceBoxStation, the Chapel has undergone some new area definitions,
+      and the wiring for the power to these areas have changed a bit from what you
+      were accustomed to previously.
+  tralezab:
+  - bugfix: Fixes a weird bug with spellbooks that may have been locking some spell
+      options when you did some specific actions
+2022-03-02:
+  Fikou:
+  - qol: modsuit radial icons highlight on extended pieces
+  - bugfix: modsuit clamp can carry wrapped crates
+  - bugfix: modsuit activation is no longer affected by do after slowdowns
+  - bugfix: lobstrosities charge now
+  GoblinBackwards:
+  - bugfix: Robotic basic and simple mobs are now damaged by EMPs.
+  JohnFulpWillard:
+  - bugfix: Instant recall spell no longer recalls anchored objects, such as microwaves,
+      if the marked item is placed inside of one.
+  LemonInTheDark:
+  - qol: Pushing off something in space will no longer cause it to be delayed for
+      half a second before drifting properly. Should look nicer now
+  - bugfix: Fixed being able to push "off" something you're moving towards, allowing
+      for infinite movement in one direction in space, at your walk speed
+  Maurukas:
+  - bugfix: Kilostation will now generate a normal number of space ruin z-levels
+  - bugfix: Kilostation will now have the correct linkage between its space z-levels
+      - you can now easily go space exploring again.
+  - bugfix: Removed duplicate APC from Kilostation security office.
+  Nari Harimoto:
+  - imageadd: New thruster sprites to allow for in-wall designs
+  - bugfix: removed cycle helpers from 2 random tram maint airlocks that arent meant
+      to cycle (solo airlocks) and a duplicated APC in tram maint
+  - expansion: the tram now has new walls! they are structures that function like
+      walls so as to be built on the tram, create and deconstruct via the new tram
+      girder (screwdriver on the girder to deconstruct, there is no displaced version
+      ie wrench)
+  Twaticus, PositiveEntropy, Axietheaxolotl:
+  - imageadd: Resprites the Warden's Jackets and Jumpsuit, the HoS Jumpsuit, the Formal
+      Jackets,  the Bulletproof and Regular Security Helmets and the Security Jumpsuit!
+  - expansion: adds a red warden hat to match with the warden's red uniform!
+  - rscdel: Removes unused helmet camera sprites.
+  Wallem:
+  - bugfix: We gave the wisdom cow its tongue back. We're sorry.
+  - qol: Adds a minimum threshold to ingested ant screaming.
+  - qol: Ants are no longer lavaproof.
+  - balance: Adds a minimum threshold to ant piles biting through shoes.
+  - balance: Giant ants are now peaceful hostile mobs. This means they will attack
+      anything that does not have the "neutral" factiontype. To compensate, the price
+      to make one has been raised.
+  - imageadd: It appears the invasive "space ant" has gotten into our formerly secret
+      uranium reserves and as such have mutated slightly, gaining a slight bioluminescence.
+  cacogen:
+  - balance: Hand mining weak turfs (i.e. snow) is now affected by mining level (so
+      legendary would take 7.5 seconds instead of 15)
+  - qol: Multiple people can now attempt to manually mine the same mineral turf
+  - qol: If you fail to manually mine a turf you can try again immediately instead
+      of having to wait for the cooldown to end
+  - bugfix: You can no longer mine a snow turf by hand if you're already doing it
+  - code_imp: Uses variables and time defines for mining speeds instead of deciseconds
+      and magic numbers
+2022-03-03:
+  ArcaneDefence:
+  - bugfix: Various cooking recipes that simply said they required 'food' now properly
+      use plain bread slices.
+  - bugfix: Fully eating a can of pine nuts no longer creates an error sprite.
+  Iamgoofball:
+  - code_imp: Fixes a minor code styling issue with atmos.
+  Maurukas:
+  - bugfix: Genturf error and roundstart active turf fixed on Icebox
+  RandomGamer123:
+  - refactor: Converts airlock controllers (ie incinerator access consoles) to use
+      TGUI.
+  SuperNovaa41:
+  - refactor: Dehardcoded SSmapping ruin types.
+  TemporalOroboros:
+  - qol: The deadchat controllable component is no longer automute bait.
+  san7890:
+  - rscadd: There are now some lattices under some pipes in KiloStation Atmospherics.
+      If you want to see history unravel in front of your eyes, it's south to the
+      "Atmospherics Pump Room" under the orange Atmos-to-SM pipeline, right above
+      the SM cooling loops. How nice.
+  - bugfix: Deltastation's Abandoned Gambling Den no longer owns a bit of space.
+  vincentiusvin:
+  - code_imp: minor change to TGUI button content to use flexboxes. This caused a
+      bug in the past, report if you notice anything weird.

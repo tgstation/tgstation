@@ -50,7 +50,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate))
+	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/structure/big_delivery))
 		var/atom/movable/picked_crate = target
 		if(length(stored_crates) >= max_crates)
 			balloon_alert(mod.wearer, "too many crates!")

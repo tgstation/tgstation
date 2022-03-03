@@ -1,0 +1,4 @@
+author: "tastyfish"
+delete-after: True
+changes: 
+  - bugfix: "Papers and photos pinned to airlocks now actually animate."

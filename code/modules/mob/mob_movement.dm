@@ -289,42 +289,50 @@
 	. = ..()
 	if(. || HAS_TRAIT(src, TRAIT_SPACEWALK))
 		return TRUE
-	var/atom/movable/backup = get_spacemove_backup()
+	var/atom/movable/backup = get_spacemove_backup(movement_dir)
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
-			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
+			if(backup.newtonian_move(turn(movement_dir, 180), instant = TRUE)) //You're pushing off something movable, so it moves
 				to_chat(src, span_info("You push off of [backup] to propel yourself."))
 		return TRUE
 	return FALSE
 
 /**
- * Find movable atoms? near a mob that are viable for pushing off when moving
+ * Finds a target near a mob that is viable for pushing off when moving.
+ * Takes the intended movement direction as input.
  */
-/mob/get_spacemove_backup()
-	for(var/A in orange(1, get_turf(src)))
-		if(isarea(A))
+/mob/get_spacemove_backup(moving_direction)
+	for(var/atom/pushover as anything in range(1, get_turf(src)))
+		if(pushover == src)
 			continue
-		else if(isturf(A))
-			var/turf/turf = A
+		if(isarea(pushover))
+			continue
+		if(isturf(pushover))
+			var/turf/turf = pushover
 			if(isspaceturf(turf))
 				continue
 			if(!turf.density && !mob_negates_gravity())
 				continue
-			return A
-		else
-			var/atom/movable/AM = A
-			if(AM == buckled)
+			return pushover
+
+		var/atom/movable/rebound = pushover
+		if(rebound == buckled)
+			continue
+		if(ismob(rebound))
+			var/mob/lover = rebound
+			if(lover.buckled)
 				continue
-			if(ismob(AM))
-				var/mob/M = AM
-				if(M.buckled)
-					continue
-			if(AM.density || !AM.CanPass(src, get_dir(AM, src)))
-				if(AM.anchored)
-					return AM
-				if(pulling == AM)
-					continue
-				. = AM
+
+		var/pass_allowed = rebound.CanPass(src, get_dir(rebound, src))
+		if(!rebound.density && pass_allowed)
+			continue
+		if(moving_direction == get_dir(src, pushover) && !pass_allowed) // Can't push "off" of something that you're walking into
+			continue
+		if(rebound.anchored)
+			return rebound
+		if(pulling == rebound)
+			continue
+		return rebound
 
 /mob/has_gravity()
 	return mob_negates_gravity() || ..()
@@ -336,7 +344,7 @@
 	var/turf/turf = get_turf(src)
 	return !isgroundlessturf(turf) && HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY)
 
-/mob/newtonian_move(direction)
+/mob/newtonian_move(direction, instant = FALSE)
 	. = ..()
 	if(!.) //Only do this if we're actually going somewhere
 		return
