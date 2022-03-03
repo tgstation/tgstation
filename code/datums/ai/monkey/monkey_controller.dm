@@ -75,7 +75,6 @@ have ways of interacting with a specific mob and control it.
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_MOB_ATTACK_ALIEN,
 	))
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
 
 	return ..() //Run parent at end
 
