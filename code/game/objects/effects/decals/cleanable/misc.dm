@@ -268,8 +268,12 @@
 	beauty = -150
 	plane = GAME_PLANE
 	layer = LOW_OBJ_LAYER
+	/// The damage the ants will do when you step on them
 	var/ant_bite_damage = 0.1
+	/// The amount of ant reagent inside the ant cluster
 	var/ant_volume
+	/// Sound the ants make when biting
+	var/bite_sound = 'sound/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
 	. = ..()
@@ -280,7 +284,11 @@
 /obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
 	ant_volume += spilled_ants
 	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
-	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES), soundfile = 'sound/weapons/bite.ogg')
+
+	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN) /// Small amounts of ants won't be able to bite through shoes.
+	if(ant_bite_damage > 1)
+		ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
+
 	switch(ant_bite_damage)
 		if(0 to 1)
 			icon_state = initial(icon_state)
@@ -290,3 +298,10 @@
 			icon_state = "[initial(icon_state)]_3"
 		if(7.1 to 10)
 			icon_state = "[initial(icon_state)]_4"
+
+	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = ant_flags, soundfile = bite_sound)
+	update_icon(UPDATE_OVERLAYS)
+
+/obj/effect/decal/cleanable/ants/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "[icon_state]_light", alpha = src.alpha)

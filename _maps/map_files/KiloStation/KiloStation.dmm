@@ -17598,7 +17598,7 @@
 	},
 /obj/item/clothing/suit/jacket{
 	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
+	icon_state = "noirdet";
 	name = "trenchcoat";
 	pixel_x = 4;
 	pixel_y = 4
@@ -23430,7 +23430,6 @@
 	},
 /obj/machinery/light/directional/north,
 /obj/structure/cable,
-/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
 "cBf" = (
@@ -30185,6 +30184,7 @@
 /area/medical/chemistry)
 "eHf" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "eHz" = (
@@ -45775,7 +45775,7 @@
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/suit/jacket{
 	desc = "All the class of a trenchcoat without the security fibers.";
-	icon_state = "greydet";
+	icon_state = "noirdet";
 	name = "trenchcoat"
 	},
 /obj/item/clothing/suit/jacket{
@@ -57506,6 +57506,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "ozA" = (
@@ -83937,6 +83938,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 4
 	},
+/obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
 "yhd" = (

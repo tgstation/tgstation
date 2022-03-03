@@ -130,14 +130,35 @@
 	SIGNAL_HANDLER
 
 	RegisterSignal(orbiter, COMSIG_MOB_DEADSAY, .proc/deadchat_react)
+	RegisterSignal(orbiter, COMSIG_MOB_AUTOMUTE_CHECK, .proc/waive_automute)
 	orbiters |= orbiter
+
 
 /datum/component/deadchat_control/proc/orbit_stop(atom/source, atom/orbiter)
 	SIGNAL_HANDLER
 
 	if(orbiter in orbiters)
-		UnregisterSignal(orbiter, COMSIG_MOB_DEADSAY)
+		UnregisterSignal(orbiter, list(
+			COMSIG_MOB_DEADSAY,
+			COMSIG_MOB_AUTOMUTE_CHECK,
+		))
 		orbiters -= orbiter
+
+/**
+ * Prevents messages used to control the parent from counting towards the automute threshold for repeated identical messages.
+ *
+ * Arguments:
+ * - [speaker][/client]: The mob that is trying to speak.
+ * - [client][/client]: The client that is trying to speak.
+ * - message: The message that the speaker is trying to say.
+ * - mute_type: Which type of mute the message counts towards.
+ */
+/datum/component/deadchat_control/proc/waive_automute(mob/speaker, client/client, message, mute_type)
+	SIGNAL_HANDLER
+	if(mute_type == MUTE_DEADCHAT && inputs[lowertext(message)])
+		return WAIVE_AUTOMUTE_CHECK
+	return NONE
+
 
 /// Allows for this component to be removed via a dedicated VV dropdown entry.
 /datum/component/deadchat_control/proc/handle_vv_topic(datum/source, mob/user, list/href_list)
