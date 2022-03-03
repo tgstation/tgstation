@@ -1,0 +1,5 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "Copying reagents will now also copy the temperature of those reagents."
+  - code_imp: "A single letter variable has been expanded."
