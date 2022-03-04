@@ -1875,10 +1875,10 @@
 	access = ACCESS_HYDROPONICS
 	contains = list(/obj/item/plunger,
 					/obj/item/storage/box/petridish,
-					/obj/item/biopsy_tool,
+					/obj/item/petri_dish/bovine,
 					/obj/item/construction/plumbing/research,
 					/obj/structure/microscope,
-					/obj/item/storage/box/swab,
+					/obj/item/petri_dish/chicken,
 					/obj/item/book/manual/wiki/cytology,
 					/obj/item/stack/ducts/fifty)
 	crate_name = "cytology crate"

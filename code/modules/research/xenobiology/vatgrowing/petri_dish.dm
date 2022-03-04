@@ -61,12 +61,22 @@
 	sample.GenerateSample(chosen[1],chosen[2],chosen[3],chosen[4])
 	update_appearance()
 
-/obj/item/petri_dish/corgi
-	name = "petri dish: corgi"
+/obj/item/petri_dish/bovine
+	name = "petri dish: bovine"
 	desc = "This makes you feel well-cultured."
 
-/obj/item/petri_dish/corgi/Initialize(mapload)
+/obj/item/petri_dish/bovine/Initialize(mapload)
 	. = ..()
 	sample = new
-	sample.GenerateSample(CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	sample.GenerateSample(CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	update_appearance()
+
+/obj/item/petri_dish/chicken
+	name = "petri dish: chicken"
+	desc = "This makes you feel well-cultured."
+
+/obj/item/petri_dish/chicken/Initialize(mapload)
+	. = ..()
+	sample = new
+	sample.GenerateSample(CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	update_appearance()
