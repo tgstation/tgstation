@@ -953,7 +953,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage/tech
 	name = "Technical Storage"
-	icon_state = "aux_storage"
+	icon_state = "tech_storage"
 
 /area/engineering/storage/tcomms
 	name = "Telecomms Storage"
