@@ -124,6 +124,10 @@
 /obj/effect/particle_effect/fluid/smoke/proc/remove_smoke_delay(mob/living/carbon/smoker)
 	smoker?.smoke_delay = FALSE
 
+/// A factory which produces clouds of smoke.
+/datum/effect_system/fluid_spread/smoke
+	effect_type = /obj/effect/particle_effect/fluid/smoke
+
 /////////////////////////////////////////////
 // Transparent smoke
 /////////////////////////////////////////////
