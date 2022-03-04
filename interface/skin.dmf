@@ -39,7 +39,7 @@ menu "menu"
 		command = ".quit"
 		category = "&File"
 		saved-params = "is-checked"
-	elem
+	elem "help-menu"
 		name = "&Help"
 		command = ""
 		saved-params = "is-checked"
