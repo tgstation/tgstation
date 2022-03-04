@@ -11,10 +11,7 @@
 				"$dreammaker",
 				"$eslint-stylish"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"label": "Build All"
 		},
 		{
@@ -37,6 +34,18 @@
 			],
 			"group": "build",
 			"label": "tgui: build"
+		},
+		{
+			"type": "dreammaker",
+			"dme": "hippiestation.dme",
+			"problemMatcher": [
+				"$dreammaker"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"label": "dm: build - hippiestation.dme"
 		}
 	]
 }
