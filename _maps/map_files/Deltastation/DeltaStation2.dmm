@@ -40605,10 +40605,6 @@
 /obj/machinery/newscaster/security_unit/directional/east,
 /turf/open/floor/iron,
 /area/security/brig)
-"gCX" = (
-/obj/structure/lattice,
-/turf/open/space/basic,
-/area/space)
 "gDf" = (
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 4
@@ -44774,9 +44770,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/white,
 /area/maintenance/fore)
-"hCJ" = (
-/turf/open/space/basic,
-/area/service/abandoned_gambling_den)
 "hCK" = (
 /obj/item/kirbyplants/random,
 /obj/structure/cable,
@@ -45513,10 +45506,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/hallway/secondary/construction)
-"hKR" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/service/abandoned_gambling_den)
 "hLb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -104533,10 +104522,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/port)
-"wBM" = (
-/obj/structure/grille,
-/turf/open/space/basic,
-/area/space)
 "wBU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -134569,8 +134554,8 @@ hgo
 wFi
 pAO
 nPM
-hKR
-hCJ
+aad
+aaa
 aaa
 qYo
 aaa
@@ -169006,7 +168991,7 @@ qYo
 aaa
 aaa
 aaa
-gCX
+qYo
 xTK
 aaa
 gTB
@@ -169263,7 +169248,7 @@ qYo
 aaa
 aaa
 aaa
-gCX
+qYo
 xTK
 aaa
 aaa
@@ -169519,8 +169504,8 @@ qhQ
 qYo
 aaa
 aaa
-gCX
-gCX
+qYo
+qYo
 xTK
 xTK
 aad
@@ -169775,8 +169760,8 @@ fcP
 fsE
 tKr
 aaa
-gCX
-wBM
+qYo
+efQ
 aaa
 aaa
 aaa
@@ -170032,7 +170017,7 @@ mQX
 hos
 tKr
 tKr
-gCX
+qYo
 aaa
 aaa
 aaa
