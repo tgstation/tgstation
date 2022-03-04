@@ -61,12 +61,3 @@
 	sample.GenerateSample(chosen[1],chosen[2],chosen[3],chosen[4])
 	update_appearance()
 
-/obj/item/petri_dish/corgi
-	name = "petri dish: corgi"
-	desc = "This makes you feel well-cultured."
-	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
-	icon_state = "petri_dish"
-	w_class = WEIGHT_CLASS_TINY
-	///The sample stored on the dish
-	var/datum/biological_sample/sample
-	sample.GenerateSample(CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
