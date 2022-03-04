@@ -164,13 +164,13 @@
 		mid_azimuth = (mid_azimuth + 180) % 360
 
 	// Split into 2 parts so it doesn't distort on large changes
-	animate(part, \
-		transform = get_panel_transform(mid_azimuth), \
-		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_IN \
+	animate(part,
+		transform = get_panel_transform(mid_azimuth),
+		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_IN
 	)
-	animate( \
-		transform = get_panel_transform(angle), \
-		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_OUT \
+	animate(
+		transform = get_panel_transform(angle),
+		time = 2.5 SECONDS, easing = CUBIC_EASING|EASE_OUT
 	)
 
 /obj/machinery/power/solar/proc/visually_turn(angle)
