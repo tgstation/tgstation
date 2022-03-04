@@ -1,0 +1,6 @@
+author: "tastyfish"
+delete-after: True
+changes: 
+  - qol: "The solar array areas are now lit by the sun."
+  - qol: "Solar assemblies now have different sprites for solar panel vs tracker."
+  - imageadd: "Solar panels and trackers have new sprites and a 2.5D effect."
