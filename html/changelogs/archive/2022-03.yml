@@ -109,3 +109,45 @@
   vincentiusvin:
   - code_imp: minor change to TGUI button content to use flexboxes. This caused a
       bug in the past, report if you notice anything weird.
+2022-03-04:
+  JohnFulpWillard:
+  - bugfix: you can knock monkeys over by crossing them again.
+  SuperNovaa41:
+  - spellcheck: Fixes a spelling mistake in thief lore blurbs.
+  - code_imp: Defined turf environment types.
+  TemporalOroboros:
+  - bugfix: Copying reagents will now also copy the temperature of those reagents.
+  - code_imp: A single letter variable has been expanded.
+  TheBonded:
+  - expansion: podpeople from replica pods now have water blood by default, and inherit
+      their blood chemical from the most abundant chemical trait in their seeds if
+      applicable.
+  axietheaxolotl, Imaginos16:
+  - imageadd: New sprites for the CMO's turtleneck/skirtleneck, paramedic jumpsuit/jumpskirt,
+      virologist jumpsuit/jumpskirt, and chemist jumpsuit/jumpskirt
+  san7890:
+  - imageadd: Congratulations, you now have a new Area Turf Sprite for Engineering's
+      Technical Storage.
+  - bugfix: Mappers now no longer have to stare a green square and extrapolate the
+      position of an air alarm based on that.
+  tastyfish:
+  - bugfix: Papers and photos pinned to airlocks now actually animate.
+  vincentiusvin:
+  - rscadd: Ordnance have been updated to enable the publication of papers
+  - rscadd: Several new explosive and gas synthesis experiments have been added to
+      ordnance
+  - rscadd: Anomaly compressor has been TGUIzed and now supports simulating the reaction
+      of the gases inside the ttv.
+  - rscadd: New tank compressor machine for toxins. You can overpressurize tanks with
+      exotic gases and complete experiments.
+  - balance: Several techweb nodes are locked and require toxin experiments to complete.
+  - balance: Toxins can purchase boosts for various techweb nodes.
+  - balance: You no longer need to anchor doppler arrays for it to work.
+  - qol: Doppler array and implosion compressor now supports deconstruction, implosion
+      compressor construction added.
+  - qol: Doppler now emits a red light to denote it's direction and it being on. Doppler
+      not malf.
+  - code_imp: Implosion compressor renamed to anomaly refinery.
+  - code_imp: Created a new program tab "Science" for the downloader app. Removed
+      Robotics.
+  - refactor: Reworked the code for bombspawner (used in the cuban pete arcade game)
