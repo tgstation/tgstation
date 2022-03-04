@@ -365,7 +365,7 @@
 		autoclose = FALSE
 
 /obj/machinery/door/window/unrestricted_side(mob/opener)
-	if(opener.loc == loc)
+	if(get_turf(opener) == loc)
 		return turn(dir,180) & unres_sides
 	return ..()
 
