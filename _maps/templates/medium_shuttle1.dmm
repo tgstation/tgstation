@@ -37,54 +37,12 @@
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
-"l" = (
-/obj/structure/table,
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_1)
-"m" = (
-/obj/machinery/sleeper,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_1)
 "n" = (
 /turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_1)
 "o" = (
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron,
-/area/ruin/powered/shuttle/medium_1)
-"p" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "q" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -146,6 +104,36 @@
 	dir = 8
 	},
 /turf/template_noop,
+/area/ruin/powered/shuttle/medium_1)
+"E" = (
+/obj/machinery/sleeper,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_1)
+"V" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_1)
+"X" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 
 (1,1,1) = {"
@@ -375,8 +363,8 @@ a
 a
 a
 f
-l
-p
+X
+V
 u
 j
 j
@@ -392,8 +380,8 @@ a
 a
 a
 f
-m
-p
+E
+V
 u
 j
 j

@@ -164,6 +164,10 @@
 	heat_capacity = 1e+006
 	},
 /area/shuttle/arrival)
+"p" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
 "q" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -269,11 +273,11 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "C" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/vending/wallmed/directional/north{
-	use_power = 0
+/obj/machinery/computer{
+	dir = 1;
+	name = "Shuttle computer"
 	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "D" = (
@@ -290,6 +294,14 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"F" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
@@ -326,6 +338,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"L" = (
+/obj/structure/closet/wardrobe/grey,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "M" = (
@@ -384,28 +401,6 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"T" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"U" = (
-/obj/machinery/computer{
-	dir = 1;
-	name = "Shuttle computer"
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
 "V" = (
 /obj/machinery/computer{
 	dir = 1;
@@ -418,10 +413,6 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "W" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"X" = (
 /obj/structure/table/reinforced,
 /obj/structure/extinguisher_cabinet{
 	pixel_y = 32
@@ -478,14 +469,14 @@ b
 e
 h
 j
-W
-W
-W
-W
-W
-W
-W
-W
+p
+p
+p
+p
+p
+p
+p
+p
 H
 g
 g
@@ -497,33 +488,33 @@ b
 e
 h
 k
-W
-W
+p
+p
 v
 v
 v
 v
 B
-W
+p
 I
 N
 Q
-U
+C
 h
 "}
 (5,1,1) = {"
 c
 d
 f
-X
 W
+p
 s
 w
 x
 y
 x
 f
-C
+F
 J
 O
 R
@@ -535,18 +526,18 @@ b
 e
 h
 m
-W
-W
+p
+p
 u
 u
 u
 u
 D
-W
+p
 K
 P
 S
-U
+C
 h
 "}
 (7,1,1) = {"
@@ -554,15 +545,15 @@ b
 e
 h
 j
-W
-W
-W
-W
-W
-W
-W
-W
-T
+p
+p
+p
+p
+p
+p
+p
+p
+L
 g
 g
 h

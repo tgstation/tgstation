@@ -112,16 +112,7 @@
 /turf/closed/indestructible/riveted,
 /area/ctf)
 "df" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/white,
 /area/ctf)
 "dn" = (
@@ -666,16 +657,7 @@
 /area/ctf)
 "Bl" = (
 /obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ctf)
 "Bt" = (
@@ -862,16 +844,7 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "Iu" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /obj/structure/trap/ctf/yellow,
 /turf/open/floor/iron/dark,
 /area/ctf)
@@ -1001,19 +974,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ctf)
-"PL" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ctf)
 "PY" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -1117,16 +1077,7 @@
 /turf/open/floor/iron/dark,
 /area/ctf)
 "XF" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ctf)
 "XG" = (
@@ -4479,7 +4430,7 @@ lZ
 ab
 CH
 ac
-PL
+XF
 Yv
 ab
 bI
@@ -4559,7 +4510,7 @@ ab
 CH
 CW
 eH
-PL
+XF
 ab
 bI
 wA

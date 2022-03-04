@@ -66,6 +66,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_3)
+"u" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
 "v" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/yellow{
@@ -109,37 +113,7 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
-"z" = (
-/obj/machinery/sleeper,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_3)
-"A" = (
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_3)
-"C" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_3)
-"D" = (
+"y" = (
 /obj/structure/table,
 /obj/item/storage/medkit,
 /obj/effect/turf_decal/tile/blue{
@@ -152,6 +126,15 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/structure/table,
+/obj/item/storage/firstaid,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
+"A" = (
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "E" = (
@@ -164,6 +147,11 @@
 /area/ruin/powered/shuttle/medium_3)
 "G" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/powered/shuttle/medium_3)
+"O" = (
+/obj/machinery/sleeper,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 
 (1,1,1) = {"
@@ -368,10 +356,10 @@ h
 l
 l
 G
-z
-C
-C
-D
+O
+u
+u
+y
 G
 l
 l
@@ -393,8 +381,8 @@ p
 G
 v
 G
-C
-C
+u
+u
 G
 A
 G
