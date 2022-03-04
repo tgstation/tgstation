@@ -3470,12 +3470,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/locker)
 "aow" = (
-/obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
-	dir = 4
+/obj/machinery/status_display/supply{
+	pixel_y = 32
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/cargo/storage)
 "aox" = (
@@ -3518,6 +3515,9 @@
 	dir = 10
 	},
 /obj/machinery/computer/mech_bay_power_console,
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "aoE" = (
@@ -7905,16 +7905,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/obj/machinery/status_display{
-	density = 0;
-	name = "cargo display";
-	pixel_y = 32;
-	supply_display = 1
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/cargo/storage)
 "aCp" = (
@@ -9520,11 +9517,8 @@
 	dir = 9;
 	network = list("SS13","QM")
 	},
-/obj/machinery/status_display{
-	density = 0;
-	name = "cargo display";
-	pixel_y = 32;
-	supply_display = 1
+/obj/machinery/status_display/supply{
+	pixel_y = 32
 	},
 /turf/open/floor/iron,
 /area/cargo/office)
@@ -47469,16 +47463,18 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cCi" = (
-/obj/docking_port/stationary{
-	dir = 1;
-	dwidth = 4;
-	height = 17;
-	id = "arrivals_stationary";
-	name = "arrivals";
-	width = 9
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2{
+	dir = 4
 	},
-/turf/open/space/basic,
-/area/space)
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/cargo/storage)
 "cCk" = (
 /obj/structure/disposaloutlet{
 	dir = 1
@@ -65354,12 +65350,12 @@
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "pnH" = (
+/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
-	dir = 9
+	dir = 4
 	},
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/turf/open/floor/plating,
-/area/hallway/secondary)
+/turf/open/space,
+/area/space/nearstation)
 "pnV" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -65497,6 +65493,18 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"pEU" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 4;
+	height = 17;
+	id = "arrivals_stationary";
+	name = "arrivals";
+	roundstart_template = /datum/map_template/shuttle/arrival/cere;
+	width = 9
+	},
+/turf/open/space,
+/area/space)
 "pFg" = (
 /obj/effect/turf_decal/tile/green/anticorner{
 	dir = 1
@@ -96022,8 +96030,8 @@ alc
 aaa
 aaa
 aaa
-pUZ
-cJd
+pnH
+cme
 cXp
 cXX
 ayw
@@ -96279,8 +96287,8 @@ aZN
 aiL
 aaa
 aaa
-pUZ
-cJd
+pnH
+cme
 cXp
 cXX
 ayw
@@ -96536,8 +96544,8 @@ aaf
 aiL
 aiL
 aaa
-pUZ
-mgP
+pnH
+cXh
 cWC
 cXX
 ayw
@@ -96793,8 +96801,8 @@ aaf
 aiL
 aiL
 aaa
-pUZ
-cJd
+pnH
+cme
 cXp
 cXX
 ayw
@@ -97050,8 +97058,8 @@ aaf
 aiL
 aiL
 aiL
-pUZ
-cJd
+pnH
+cme
 cXp
 cXX
 ayw
@@ -97308,7 +97316,7 @@ aaf
 aaf
 aiL
 aVr
-pnH
+cme
 cXp
 cXX
 ayw
@@ -112811,6 +112819,7 @@ crL
 csG
 aaa
 aaa
+pEU
 aaa
 aaa
 aaa
@@ -112825,8 +112834,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-cCi
+cFp
 aaa
 aaa
 aaa
@@ -119593,7 +119601,7 @@ ald
 alO
 amL
 ant
-aow
+anu
 anu
 anu
 aqZ
@@ -119850,7 +119858,7 @@ alg
 alP
 ali
 aiR
-auf
+aoE
 auf
 auf
 arj
@@ -120107,7 +120115,7 @@ alh
 aCw
 amN
 aiR
-auf
+aow
 auf
 aqo
 arb
@@ -122947,7 +122955,7 @@ axs
 axs
 axs
 ati
-aCo
+cCi
 aDH
 any
 aGB

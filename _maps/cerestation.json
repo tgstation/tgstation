@@ -4,19 +4,15 @@
 	"map_path": "map_files/Cerestation",
 	"map_file": "cerestation.dmm",
 	"shuttles": {
-		"cargo": "cargo_box",
+		"arrival": "arrival_cere",
+		"emergency": "emergency_cere",
 		"ferry": "ferry_fancy",
-		"whiteship": "whiteship_tram",
-		"emergency": "emergency_cere"
+		"cargo": "cargo_cere",
+		"whiteship": "whiteship_cere"
 	},
 	"traits": [
 		{
-			"Baseturf": "/turf/open/floor/plating/asteroid/airless",
+			"Baseturf": "/turf/open/floor/plating/asteroid/airless"
 		}
-	],
-	"job_changes": {
-		"captain": {
-			"special_charter": "asteroid"
-		}
-	}
+	]
 }

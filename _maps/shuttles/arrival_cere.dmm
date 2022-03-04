@@ -3,17 +3,26 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "b" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Engines"
-	},
-/turf/open/floor/plating,
-/area/shuttle/arrival)
-"e" = (
 /obj/structure/closet/wardrobe/mixed,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"e" = (
+/obj/structure/table,
+/obj/item/storage/firstaid/regular,
+/turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"f" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "g" = (
@@ -31,8 +40,15 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "k" = (
-/obj/structure/frame/computer,
+/obj/machinery/computer/crew,
 /turf/open/floor/iron/checker,
+/area/shuttle/arrival)
+"l" = (
+/obj/machinery/status_display{
+	density = 0;
+	layer = 4
+	},
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "m" = (
 /obj/structure/table,
@@ -69,35 +85,30 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "y" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/iron,
+/obj/structure/closet/emcloset,
+/obj/item/crowbar/red,
+/turf/open/floor/iron/checker,
 /area/shuttle/arrival)
 "z" = (
-/obj/machinery/computer/arcade,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/arrival)
+"B" = (
+/obj/structure/closet/wardrobe/mixed,
+/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "F" = (
 /obj/structure/shuttle/engine/heater,
 /obj/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "G" = (
-/obj/structure/closet/emcloset,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/item/crowbar/red,
-/turf/open/floor/iron,
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/shuttle,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/arrival)
 "H" = (
 /obj/machinery/status_display{
@@ -107,6 +118,8 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "I" = (
+/obj/structure/closet/firecloset,
+/obj/item/crowbar/red,
 /turf/open/floor/iron/checker,
 /area/shuttle/arrival)
 "J" = (
@@ -120,7 +133,7 @@
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/arrival)
 "N" = (
-/turf/open/space,
+/turf/template_noop,
 /area/space)
 "O" = (
 /obj/structure/chair/comfy/shuttle{
@@ -136,13 +149,8 @@
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 "Q" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/structure/closet/firecloset,
-/obj/item/crowbar/red,
-/turf/open/floor/iron,
+/obj/machinery/status_display/ai,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/arrival)
 "U" = (
 /obj/machinery/light/directional/west,
@@ -155,13 +163,19 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/checker,
 /area/shuttle/arrival)
+"Z" = (
+/obj/docking_port/mobile/arrivals{
+	dir = 1
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/arrival)
 
 (1,1,1) = {"
 N
 N
 N
-a
-a
+z
+G
 p
 a
 q
@@ -170,8 +184,8 @@ q
 q
 a
 p
-a
-a
+G
+z
 a
 a
 "}
@@ -180,7 +194,7 @@ a
 a
 a
 a
-z
+P
 P
 U
 J
@@ -189,8 +203,8 @@ J
 J
 U
 P
-e
-K
+P
+Q
 F
 g
 "}
@@ -199,7 +213,7 @@ a
 I
 V
 H
-G
+P
 P
 P
 P
@@ -228,7 +242,7 @@ O
 O
 P
 P
-a
+f
 F
 g
 "}
@@ -247,13 +261,13 @@ q
 H
 P
 P
+f
 a
-a
-a
+Z
 "}
 (6,1,1) = {"
 q
-m
+e
 P
 i
 P
@@ -266,16 +280,15 @@ J
 J
 P
 P
-a
+f
 F
 g
 "}
 (7,1,1) = {"
 a
-I
+y
 r
 K
-Q
 P
 P
 P
@@ -285,7 +298,8 @@ P
 P
 P
 P
-b
+P
+B
 F
 g
 "}
@@ -294,7 +308,7 @@ a
 a
 a
 a
-y
+P
 P
 o
 O
@@ -303,8 +317,8 @@ O
 O
 o
 P
-e
-H
+P
+l
 F
 g
 "}
@@ -312,8 +326,8 @@ g
 N
 N
 N
-a
-a
+z
+G
 p
 a
 q
@@ -322,8 +336,8 @@ q
 q
 a
 p
-a
-a
+G
+z
 a
 a
 "}

@@ -560,9 +560,17 @@
 	suffix = "box"
 	name = "arrival shuttle (Box)"
 
+/datum/map_template/shuttle/arrival/cere
+	suffix = "cere"
+	name = "arrival shuttle (Cere)"
+
 /datum/map_template/shuttle/cargo/box
 	suffix = "box"
 	name = "cargo ferry (Box)"
+
+/datum/map_template/shuttle/cargo/cere
+	suffix = "cere"
+	name = "cargo ferry (Cere)"
 
 /datum/map_template/shuttle/mining/box
 	suffix = "box"
