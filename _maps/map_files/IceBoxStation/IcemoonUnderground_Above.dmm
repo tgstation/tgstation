@@ -498,6 +498,7 @@
 "bA" = (
 /obj/structure/rack,
 /obj/item/wirecutters,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "bC" = (
@@ -4019,6 +4020,7 @@
 	c_tag = "Labor Camp Mud Room";
 	network = list("labor")
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "mX" = (
@@ -6637,6 +6639,7 @@
 "uT" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "uU" = (
@@ -50422,7 +50425,7 @@ oU
 Hd
 iz
 bh
-bh
+vM
 Hd
 Hd
 Hd
@@ -50679,7 +50682,7 @@ Fd
 Hd
 uN
 bh
-bh
+vM
 mu
 bh
 ce
