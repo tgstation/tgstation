@@ -1,7 +1,7 @@
 /obj/structure/punching_bag
 	name = "punching bag"
 	desc = "A punching bag. Can you get to speed level 4???"
-	icon = 'goon/icons/obj/fitness.dmi'
+	icon = 'icons/obj/fitness.dmi'
 	icon_state = "punchingbag"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
