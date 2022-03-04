@@ -68,4 +68,5 @@
 	icon_state = "petri_dish"
 	w_class = WEIGHT_CLASS_TINY
 	///The sample stored on the dish
-	var/datum/biological_sample/sample.GenerateSample(CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	var/datum/biological_sample/sample
+	sample.GenerateSample(CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
