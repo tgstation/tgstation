@@ -46789,7 +46789,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/greater)
+/area/maintenance/department/electrical)
 "hXl" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
