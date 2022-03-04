@@ -4,7 +4,6 @@
 #define DECOMPOSITION_TIME_RAW 5 MINUTES
 #define DECOMPOSITION_TIME_GROSS 7 MINUTES
 
-
 /datum/component/decomposition
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	/// Makes sure maploaded food only starts decomposing if a player's EVER picked it up before
@@ -124,13 +123,13 @@
 		time_d = timeleft(timerid)
 	else
 		time_d = time_remaining
-	switch(time_d)
-		if((original_time * 0.5) to (original_time * 0.75)) // 25% rotten
-			examine_list += "[parent] looks kinda stale."
-		if((original_time * 0.25) to (original_time * 0.5)) // 50% rotten
-			examine_list += "[parent] is starting to look pretty gross."
-		if(1 to (original_time * 0.25)) // 75% rotten
-			examine_list += "[parent] looks barely edible."
+	switch(time_d / original_time)
+		if(0.5 to 0.75) // 25% rotten
+			examine_list += span_notice("[parent] looks kinda stale.")
+		if(0.25 to 0.5) // 50% rotten
+			examine_list += span_notice("[parent] is starting to look pretty gross.")
+		if(0 to 0.25) // 75% rotten
+			examine_list += span_danger("[parent] barely looks edible.")
 
 #undef DECOMPOSITION_TIME
 #undef DECOMPOSITION_TIME_GROSS
