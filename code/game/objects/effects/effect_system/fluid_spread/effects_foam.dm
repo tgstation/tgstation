@@ -331,10 +331,14 @@
 
 	add_hiddenprint(user)
 
-/// A factory which produces iron metal foam.
+/// A metal foam variant which produces slightly sturdier walls.
 /obj/effect/particle_effect/fluid/foam/metal/iron
 	name = "iron foam"
 	result_type = /obj/structure/foamedmetal/iron
+
+/// A factory which produces iron metal foam.
+/datum/effect_system/fluid_spread/foam/metal/iron
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/iron
 
 /// A variant of metal foam walls with higher durability.
 /obj/structure/foamedmetal/iron
