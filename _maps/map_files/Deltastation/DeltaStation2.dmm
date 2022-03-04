@@ -67431,7 +67431,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "ndj" = (
-/obj/structure/lattice,
 /turf/closed/wall,
 /area/service/kitchen/abandoned)
 "ndp" = (
