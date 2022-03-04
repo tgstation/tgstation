@@ -605,7 +605,11 @@ GLOBAL_VAR(station_nuke_source)
 
 /proc/KillEveryoneOnStation()
 	for(var/mob/living/victim as anything in GLOB.mob_living_list)
-		if(victim.stat != DEAD && is_station_level(victim.z))
+		var/turf/M = get_turf(victim)
+		if(prob (10) && istype(victim.loc, /obj/structure/closet/secure_closet/freezer/))
+			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as the nuclear bomb goes off. Luckily as \the [victim.loc] is lead-lined, you survive."))
+			continue
+		if(victim.stat != DEAD && M && is_station_level(M.z))
 			to_chat(victim, span_userdanger("You are shredded to atoms!"))
 			victim.gib()
 
@@ -614,7 +618,11 @@ GLOBAL_VAR(station_nuke_source)
 		return
 	for(var/_victim in GLOB.mob_living_list)
 		var/mob/living/victim = _victim
-		if(victim.stat != DEAD && victim.z == z)
+		var/turf/M = get_turf(victim)
+		if(prob (10) && istype(victim.loc, /obj/structure/closet/secure_closet/freezer/))
+			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as the nuclear bomb goes off. Luckily as \the [victim.loc] is lead-lined, you survive."))
+			continue
+		if(victim.stat != DEAD && M && M.z == z)
 			to_chat(victim, span_userdanger("You are shredded to atoms!"))
 			victim.gib()
 
