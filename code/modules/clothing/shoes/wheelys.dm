@@ -26,7 +26,7 @@
 	if(!isliving(user))
 		return
 	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
-		balloon_alert(user, "You must be wearing [src] to use [p_them()]!")
+		balloon_alert(user, "must be worn!")
 		return
 	if(!(wheels.is_occupant(user)))
 		wheelToggle = FALSE
