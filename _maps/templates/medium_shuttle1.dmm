@@ -37,6 +37,11 @@
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
+"m" = (
+/obj/machinery/sleeper,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_1)
 "n" = (
 /turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_1)
@@ -44,31 +49,8 @@
 /obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron,
 /area/ruin/powered/shuttle/medium_1)
-"q" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_1)
-"r" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
+"p" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 "s" = (
@@ -83,22 +65,6 @@
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle/medium_1)
-"v" = (
-/obj/structure/chair/comfy{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_1)
 "w" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
@@ -106,15 +72,6 @@
 /turf/template_noop,
 /area/ruin/powered/shuttle/medium_1)
 "E" = (
-/obj/machinery/sleeper,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_1)
-"V" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_1)
-"X" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
@@ -133,6 +90,22 @@
 /obj/structure/table,
 /obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_1)
+"R" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_1)
+"S" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_1)
+"W" = (
+/obj/structure/chair/comfy{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_1)
 
@@ -363,8 +336,8 @@ a
 a
 a
 f
-X
-V
+E
+p
 u
 j
 j
@@ -380,8 +353,8 @@ a
 a
 a
 f
-E
-V
+m
+p
 u
 j
 j
@@ -466,9 +439,9 @@ a
 a
 a
 f
-q
-q
-q
+S
+S
+S
 f
 a
 a
@@ -483,9 +456,9 @@ a
 a
 a
 f
-q
-v
-q
+S
+W
+S
 f
 a
 a
@@ -500,9 +473,9 @@ a
 a
 a
 f
-r
-r
-r
+R
+R
+R
 f
 a
 a

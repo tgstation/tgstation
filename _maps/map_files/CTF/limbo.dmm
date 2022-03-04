@@ -62,16 +62,7 @@
 /turf/open/floor/cult,
 /area/ctf)
 "cu" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/cult,
 /area/ctf)
 "cV" = (
@@ -80,19 +71,6 @@
 	id = "blue_team"
 	},
 /turf/open/floor/carpet/blue,
-/area/ctf)
-"dC" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/cult,
 /area/ctf)
 "ef" = (
 /obj/structure/window/reinforced/fulltile{
@@ -214,19 +192,6 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
-	},
-/turf/open/floor/cult,
-/area/ctf)
-"jn" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
 	},
 /turf/open/floor/cult,
 /area/ctf)
@@ -424,19 +389,6 @@
 /obj/effect/turf_decal/siding/red,
 /turf/open/floor/carpet/red,
 /area/ctf)
-"qP" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/cult,
-/area/ctf)
 "rm" = (
 /obj/machinery/capture_the_flag/blue,
 /turf/open/floor/circuit/green/off,
@@ -479,19 +431,6 @@
 	dir = 6
 	},
 /turf/open/floor/carpet/orange,
-/area/ctf)
-"tY" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/cult,
 /area/ctf)
 "uh" = (
 /turf/template_noop,
@@ -717,16 +656,7 @@
 /turf/open/floor/cult,
 /area/ctf)
 "Ez" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/cult,
 /area/ctf)
 "EE" = (
@@ -1191,19 +1121,6 @@
 "ZT" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
-	},
-/turf/open/floor/cult,
-/area/ctf)
-"ZY" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
 	},
 /turf/open/floor/cult,
 /area/ctf)
@@ -2246,7 +2163,7 @@ Xl
 Tw
 Uy
 st
-tY
+cu
 st
 Eq
 Tw
@@ -2366,9 +2283,9 @@ ny
 ny
 ny
 ny
-dC
-dC
-dC
+Ez
+Ez
+Ez
 ZT
 Tw
 Tw
@@ -2510,7 +2427,7 @@ Tw
 mP
 Tw
 Tw
-jn
+cu
 Bl
 wy
 oL
@@ -2660,9 +2577,9 @@ Tw
 Tw
 Tw
 Ch
-qP
-qP
-qP
+sl
+sl
+sl
 sl
 sl
 sl
@@ -2701,9 +2618,9 @@ ny
 ny
 ny
 ny
-dC
-dC
-dC
+Ez
+Ez
+Ez
 ZT
 Tw
 PO
@@ -2782,7 +2699,7 @@ Xl
 Tw
 ce
 Fo
-ZY
+cu
 Fo
 Vz
 Tw

@@ -62,58 +62,7 @@
 	},
 /turf/template_noop,
 /area/ruin/powered/shuttle/medium_3)
-"t" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/ruin/powered/shuttle/medium_3)
-"u" = (
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_3)
-"v" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_3)
-"w" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_3)
-"x" = (
-/obj/structure/chair/comfy{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/powered/shuttle/medium_3)
-"y" = (
+"s" = (
 /obj/structure/table,
 /obj/item/storage/medkit,
 /obj/effect/turf_decal/tile/blue{
@@ -134,7 +83,20 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
+"t" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/powered/shuttle/medium_3)
+"z" = (
+/obj/machinery/sleeper,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
 "A" = (
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
+"C" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 "E" = (
@@ -148,9 +110,20 @@
 "G" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/ruin/powered/shuttle/medium_3)
-"O" = (
-/obj/machinery/sleeper,
-/obj/effect/turf_decal/tile/blue/fourcorners,
+"H" = (
+/obj/structure/chair/comfy{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
+"K" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/powered/shuttle/medium_3)
+"R" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/powered/shuttle/medium_3)
 
@@ -356,10 +329,10 @@ h
 l
 l
 G
-O
-u
-u
-y
+z
+C
+C
+s
 G
 l
 l
@@ -379,10 +352,10 @@ c
 G
 p
 G
-v
+R
 G
-u
-u
+C
+C
 G
 A
 G
@@ -403,8 +376,8 @@ j
 m
 l
 t
-w
-w
+K
+K
 l
 l
 A
@@ -427,8 +400,8 @@ j
 m
 l
 t
-x
-w
+H
+K
 l
 l
 A
@@ -451,7 +424,7 @@ c
 G
 p
 G
-w
+K
 G
 A
 A

@@ -719,20 +719,6 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
-"Hj" = (
-/obj/effect/decal/cleanable/food/pie_smudge,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/yellow,
-/turf/open/indestructible/permalube,
-/area/ruin/powered/clownplanet)
 "KX" = (
 /obj/item/grown/bananapeel{
 	color = "#2F3000";
@@ -1384,7 +1370,7 @@ aA
 aC
 aM
 aG
-Hj
+ba
 aL
 bI
 cc
