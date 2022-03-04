@@ -165,7 +165,7 @@
 	else
 		src.location = get_turf(location)
 
-	amount = amount
+	src.amount = amount
 	carry.copy_to(chemholder, carry.total_volume)
 	if(!isnull(result_type))
 		src.result_type = result_type
