@@ -155,7 +155,7 @@
 			randomchems.my_atom = src
 			randomchems.add_reagent(get_random_reagent_id(), 100)
 			var/datum/effect_system/fluid_spread/foam/foam = new
-			foam.set_up(DIAMOND_AREA(200), loc, randomchems)
+			foam.set_up(200, loc, randomchems)
 			foam.start()
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))

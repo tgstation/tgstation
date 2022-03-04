@@ -73,7 +73,7 @@
 	return (!allow_duplicate_results && (locate(result_type) in location)) || (new result_type(location))
 
 /obj/effect/particle_effect/fluid/foam/process(delta_time)
-	lifetime -= delta_time
+	lifetime -= delta_time SECONDS
 	if(lifetime <= 0)
 		kill_foam()
 		return
@@ -347,7 +347,7 @@
 
 /// A factory which produces smart aluminium metal foam.
 /datum/effect_system/fluid_spread/foam/metal/smart
-	effect_type = /obj/effect/particle_effect/fluid/foam/smart
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/smart
 
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
