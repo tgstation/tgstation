@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "Heretic rituals overhauled slightly. You now pick from a list of all your rituals when invoking a rune to select what ritual you want to do."
+  - bugfix: "Minor fixes for the Heretic's Living Heart ritual. Cybernetic organs are now properly detected."
+  - bugfix: "Similarly, you cannot feed the mawed crucible cybernetic organs."
