@@ -25,7 +25,7 @@
 	var/cable = 1
 	var/list/debris = list()
 
-/obj/machinery/door/window/Initialize(mapload, set_dir, _unres_sides)
+/obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	. = ..()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
@@ -40,17 +40,17 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
-	if(_unres_sides)
-		unres_sides = _unres_sides
+	src.unres_sides = unres_sides
 
+	if(src.unres_sides)
 		//remove unres_sides from directions it can't be bumped from
 		switch(dir)
 			if(NORTH,SOUTH)
-				unres_sides &= ~EAST
-				unres_sides &= ~WEST
+				src.unres_sides &= ~EAST
+				src.unres_sides &= ~WEST
 			if(EAST,WEST)
-				unres_sides &= ~NORTH
-				unres_sides &= ~SOUTH
+				src.unres_sides &= ~NORTH
+				src.unres_sides &= ~SOUTH
 
 		update_appearance(UPDATE_ICON)
 
