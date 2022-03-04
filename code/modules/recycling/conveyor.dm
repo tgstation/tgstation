@@ -204,10 +204,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		for(var/atom/movable/movable in get_turf(src))
 			stop_conveying(movable)
 
-/obj/machinery/conveyor/proc/set_speed(new_value)
-	if(new_value)
-		speed = new_value
-
 /obj/machinery/conveyor/proc/update()
 	. = TRUE
 	if(machine_stat & NOPOWER)
@@ -226,6 +222,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(convayable, SSconveyors)
 	if(moving_loop)
 		moving_loop.direction = movedir
+		moving_loop.delay = 10 * speed
 		return
 	start_conveying(convayable)
 
@@ -363,7 +360,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/belt in GLOB.conveyors_by_id[id])
 		belt.set_operating(position)
-		belt.set_speed(conveyor_speed)
+		belt.speed = conveyor_speed
 		CHECK_TICK
 
 /// Finds any switches with same `id` as this one, and set their position and icon to match us.
@@ -405,11 +402,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	return TRUE
 
 /obj/machinery/conveyor_switch/multitool_act(mob/living/user, obj/item/I)
-	var/speed = tgui_input_number(user, "Set the speed of the conveyor belts", "Speed", id, 20, 0.2)
-	if(!speed || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2)
+	if(!input_speed || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	conveyor_speed = speed
-	to_chat(user, span_notice("You change the time between moves to [speed] seconds."))
+	conveyor_speed = input_speed
+	to_chat(user, span_notice("You change the time between moves to [input_speed] seconds."))
 	update_linked_conveyors()
 	return TRUE
 
