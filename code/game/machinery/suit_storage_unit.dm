@@ -391,7 +391,7 @@
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock_alien_prying.ogg', 50, TRUE)
 			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
-			smoke.set_up(0, src)
+			smoke.set_up(DIAMOND_AREA(0), src)
 			smoke.start()
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)

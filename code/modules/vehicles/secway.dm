@@ -25,7 +25,7 @@
 	if(DT_PROB(10, delta_time))
 		return
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, src)
+	smoke.set_up(DIAMOND_AREA(0), src)
 	smoke.start()
 
 /obj/vehicle/ridden/secway/welder_act(mob/living/user, obj/item/I)

@@ -136,10 +136,10 @@
 /obj/effect/particle_effect/fluid/smoke/transparent
 	opacity = FALSE
 
-/proc/do_smoke(range=0, location=null, smoke_type=/obj/effect/particle_effect/fluid/smoke)
+/proc/do_smoke(amount = DIAMOND_AREA(0), location = null, smoke_type = /obj/effect/particle_effect/fluid/smoke)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.effect_type = smoke_type
-	smoke.set_up(range, location)
+	smoke.set_up(amount, location)
 	smoke.start()
 
 /////////////////////////////////////////////
@@ -288,7 +288,7 @@
 	for(var/obj/item/potential_tinder in chilly)
 		potential_tinder.extinguish()
 
-/datum/effect_system/fluid_spread/smoke/freezing/set_up(radius = 5, loca, blast_radius = 0)
+/datum/effect_system/fluid_spread/smoke/freezing/set_up(radius = DIAMOND_AREA(5), loca, blast_radius = 0)
 	..()
 	blast = blast_radius
 
@@ -381,7 +381,7 @@
 	return ..()
 
 
-/datum/effect_system/fluid_spread/smoke/chem/set_up(datum/reagents/carry = null, amount = 5, loca, silent = FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/set_up(amount = DIAMOND_AREA(1), loca, datum/reagents/carry = null, silent = FALSE)
 	. = ..()
 	carry.copy_to(chemholder, carry.total_volume)
 

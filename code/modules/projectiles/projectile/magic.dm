@@ -76,8 +76,9 @@
 		if(!stuff.anchored && stuff.loc && !isobserver(stuff))
 			if(do_teleport(stuff, stuff, 10, channel = TELEPORT_CHANNEL_MAGIC))
 				teleammount++
+				var/smoke_range = max(round(4 - teleammount), 0)
 				var/datum/effect_system/fluid_spread/smoke/smoke = new
-				smoke.set_up(max(round(4 - teleammount),0), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+				smoke.set_up(DIAMOND_AREA(smoke_range), stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
 				smoke.start()
 
 /obj/projectile/magic/safety
@@ -103,7 +104,7 @@
 	if(do_teleport(target, destination_turf, channel=TELEPORT_CHANNEL_MAGIC))
 		for(var/t in list(origin_turf, destination_turf))
 			var/datum/effect_system/fluid_spread/smoke/smoke = new
-			smoke.set_up(0, t)
+			smoke.set_up(DIAMOND_AREA(0), t)
 			smoke.start()
 
 /obj/projectile/magic/door

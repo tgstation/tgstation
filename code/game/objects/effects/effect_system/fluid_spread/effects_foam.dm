@@ -159,7 +159,7 @@
 	QDEL_NULL(chemholder)
 	return ..()
 
-/datum/effect_system/fluid_spread/foam/set_up(amount = 5, location, datum/reagents/carry = null, result_type = null)
+/datum/effect_system/fluid_spread/foam/set_up(amount = DIAMOND_AREA(5), location, datum/reagents/carry = null, result_type = null)
 	if(isturf(location))
 		src.location = location
 	else

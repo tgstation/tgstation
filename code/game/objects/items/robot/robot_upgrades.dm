@@ -563,7 +563,7 @@
 		R.SetLockdown(TRUE)
 		R.set_anchored(TRUE)
 		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(1, R.loc)
+		smoke.set_up(DIAMOND_AREA(1), R.loc)
 		smoke.start()
 		sleep(2)
 		for(var/i in 1 to 4)

@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 	var/sparks_spread = 0
 	var/sparks_amt = 0 //cropped at 10
-	var/smoke_spread = 0 //1 - harmless, 2 - harmful
+	var/smoke_spread = null //1 - harmless, 2 - harmful
 	var/smoke_amt = 0 //cropped at 10
 
 	var/centcom_cancast = TRUE //Whether or not the spell should be allowed on z2
@@ -349,19 +349,10 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			to_chat(target, text("[message]"))
 		if(sparks_spread)
 			do_sparks(sparks_amt, FALSE, location)
-		if(smoke_spread)
-			if(smoke_spread == 1)
-				var/datum/effect_system/fluid_spread/smoke/smoke = new
-				smoke.set_up(smoke_amt, location)
-				smoke.start()
-			else if(smoke_spread == 2)
-				var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
-				smoke.set_up(smoke_amt, location)
-				smoke.start()
-			else if(smoke_spread == 3)
-				var/datum/effect_system/fluid_spread/smoke/sleeping/smoke = new
-				smoke.set_up(smoke_amt, location)
-				smoke.start()
+		if(ispath(smoke_spread, /datum/effect_system/fluid_spread/smoke)) // Dear god this code is :agony:
+			var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_spread()
+			smoke.set_up(DIAMOND_AREA(smoke_amt), location)
+			smoke.start()
 
 
 /obj/effect/proc_holder/spell/proc/cast(list/targets,mob/user = usr)

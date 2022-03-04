@@ -379,7 +379,7 @@
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(invert_reagents.reagent_list)
-		smoke.set_up(invert_reagents, force_range, holder.my_atom)
+		smoke.set_up(DIAMOND_AREA(force_range), holder.my_atom, invert_reagents)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)
@@ -400,7 +400,7 @@
 	if(!force_range)
 		force_range = (sum_volume/6) + 3
 	if(reagents.reagent_list)
-		smoke.set_up(reagents, force_range, holder.my_atom)
+		smoke.set_up(DIAMOND_AREA(force_range), holder.my_atom, reagents)
 		smoke.start()
 	holder.my_atom.audible_message("The [holder.my_atom] suddenly explodes, launching the aerosolized reagents into the air!")
 	if(clear_reactants)

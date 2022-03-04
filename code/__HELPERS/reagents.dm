@@ -79,11 +79,13 @@
 	GLOB.chemical_reactions_list_reactant_index[primary_reagent] += R
 
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
-/datum/reagents/proc/create_foam(foamtype,foam_volume,metaltype = 0,notification = null)
+/datum/reagents/proc/create_foam(foamtype, foam_volume, result_type = null, notification = null)
 	var/location = get_turf(my_atom)
+
 	var/datum/effect_system/fluid_spread/foam/foam = new foamtype()
-	foam.set_up(foam_volume, location, src, metaltype)
+	foam.set_up(foam_volume, location, src, result_type)
 	foam.start()
+
 	clear_reagents()
 	if(!notification)
 		return
