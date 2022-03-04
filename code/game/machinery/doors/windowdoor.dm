@@ -25,7 +25,7 @@
 	var/cable = 1
 	var/list/debris = list()
 
-/obj/machinery/door/window/Initialize(mapload, set_dir)
+/obj/machinery/door/window/Initialize(mapload, set_dir, _unres_sides)
 	. = ..()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
@@ -39,6 +39,20 @@
 		debris += new /obj/item/stack/rods(src, rods)
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
+
+	if(_unres_sides)
+		unres_sides = _unres_sides
+
+		//remove unres_sides from directions it can't be bumped from
+		switch(dir)
+			if(NORTH,SOUTH)
+				unres_sides &= ~EAST
+				unres_sides &= ~WEST
+			if(EAST,WEST)
+				unres_sides &= ~NORTH
+				unres_sides &= ~SOUTH
+
+		update_appearance(UPDATE_ICON)
 
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
 
@@ -66,6 +80,51 @@
 /obj/machinery/door/window/update_icon_state()
 	. = ..()
 	icon_state = "[base_state][density ? null : "open"]"
+
+	if(hasPower() && unres_sides)
+		set_light(2, 1)
+		return
+
+	set_light(0)
+
+/obj/machinery/door/window/update_overlays()
+	. = ..()
+
+	if(!hasPower() || !unres_sides)
+		return
+
+	if(unres_sides & NORTH)
+		var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+		switch(dir)
+			if(NORTH)
+				side_overlay.pixel_y = 31
+			if(SOUTH)
+				side_overlay.pixel_y = 6
+		. += side_overlay
+	if(unres_sides & SOUTH)
+		var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+		switch(dir)
+			if(NORTH)
+				side_overlay.pixel_y = -6
+			if(SOUTH)
+				side_overlay.pixel_y = -31
+		. += side_overlay
+	if(unres_sides & EAST)
+		var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+		switch(dir)
+			if(EAST)
+				side_overlay.pixel_x = 31
+			if(WEST)
+				side_overlay.pixel_x = 6
+		. += side_overlay
+	if(unres_sides & WEST)
+		var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+		switch(dir)
+			if(EAST)
+				side_overlay.pixel_x = -6
+			if(WEST)
+				side_overlay.pixel_x = -31
+		. += side_overlay
 
 /obj/machinery/door/window/proc/open_and_close()
 	if(!open())
@@ -304,6 +363,11 @@
 /obj/machinery/door/window/try_to_activate_door(mob/user, access_bypass = FALSE)
 	if (..())
 		autoclose = FALSE
+
+/obj/machinery/door/window/unrestricted_side(mob/opener)
+	if(opener.loc == loc)
+		return turn(dir,180) & unres_sides
+	return ..()
 
 /obj/machinery/door/window/try_to_crowbar(obj/item/I, mob/user)
 	if(!hasPower())

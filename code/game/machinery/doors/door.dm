@@ -227,11 +227,8 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
-	if(get_turf(M) != get_turf(src))
-		return get_dir(src, M) & unres_sides
-	else
-		return turn(dir,180) & unres_sides
+/obj/machinery/door/proc/unrestricted_side(mob/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, opener) & unres_sides
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
@@ -316,50 +313,7 @@
 
 /obj/machinery/door/update_icon_state()
 	icon_state = "[base_icon_state][density]"
-
-	if(hasPower() && unres_sides)
-		set_light(2, 1)
-	else
-		set_light(0)
-
 	return ..()
-
-/obj/machinery/door/update_overlays()
-	. = ..()
-
-	if(hasPower() && unres_sides)
-		if(unres_sides & NORTH)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
-			switch(dir)
-				if(NORTH)
-					I.pixel_y = 31
-				if(SOUTH)
-					I.pixel_y = 6
-			. += I
-		if(unres_sides & SOUTH)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
-			switch(dir)
-				if(NORTH)
-					I.pixel_y = -6
-				if(SOUTH)
-					I.pixel_y = -31
-			. += I
-		if(unres_sides & EAST)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
-			switch(dir)
-				if(EAST)
-					I.pixel_x = 31
-				if(WEST)
-					I.pixel_x = 6
-			. += I
-		if(unres_sides & WEST)
-			var/image/I = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
-			switch(dir)
-				if(EAST)
-					I.pixel_x = -6
-				if(WEST)
-					I.pixel_x = -31
-			. += I
 
 /obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
