@@ -10566,8 +10566,8 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "baG" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "baH" = (
@@ -10810,7 +10810,6 @@
 /turf/closed/wall,
 /area/science/mixing)
 "bbP" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -10819,6 +10818,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "bbQ" = (
@@ -10959,7 +10959,6 @@
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "bcl" = (
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -10967,6 +10966,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "bcn" = (
@@ -26886,6 +26886,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "dvN" = (
@@ -52083,7 +52084,6 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/port/greater)
 "mvk" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -52092,6 +52092,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 26
 	},
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "mvP" = (
@@ -63059,8 +63060,7 @@
 /obj/item/storage/crayons,
 /obj/item/storage/crayons,
 /obj/structure/sign/painting/library{
-	pixel_x = 32;
-	pixel_y = 0
+	pixel_x = 32
 	},
 /turf/open/floor/iron/dark,
 /area/service/library)

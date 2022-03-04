@@ -3373,10 +3373,13 @@
 /area/science/storage)
 "aCX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
 /obj/effect/spawner/random/trash/garbage{
 	spawn_scatter_radius = 1
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -4090,13 +4093,6 @@
 /obj/item/canvas/twentythree_twentythree,
 /turf/open/floor/iron,
 /area/commons/storage/art)
-"aKk" = (
-/obj/structure/table,
-/obj/item/clothing/suit/cyborg_suit,
-/obj/item/clothing/mask/gas/cyborg,
-/obj/machinery/light/small/broken/directional/west,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "aKu" = (
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=4";
@@ -6484,8 +6480,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/tier_1,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "bno" = (
@@ -11358,6 +11354,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
+"cAE" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "cAH" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "ordnanceaccess";
@@ -21446,25 +21446,15 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
 "fxQ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/white/line,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Ordnance Gas Storage Maintenance";
+	req_access_txt = "8"
+	},
 /turf/open/floor/iron/dark,
-/area/science/storage)
+/area/maintenance/starboard/aft)
 "fya" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -21819,6 +21809,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
+"fDV" = (
+/obj/effect/landmark/blobstart,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "fEb" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/status_display/evac/directional/north,
@@ -24685,8 +24679,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "gCS" = (
@@ -27277,13 +27271,6 @@
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/rd)
-"hAN" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "hAV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29823,7 +29810,6 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "ivN" = (
-/obj/effect/landmark/blobstart,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
@@ -36527,6 +36513,27 @@
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
+"kQV" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
+/turf/open/floor/iron/dark,
+/area/science/storage)
 "kRc" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -39766,7 +39773,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "mak" = (
-/obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -39779,6 +39785,7 @@
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "mar" = (
@@ -39907,6 +39914,13 @@
 /obj/structure/closet/crate/freezer,
 /turf/open/floor/iron/white,
 /area/medical/abandoned)
+"mbh" = (
+/obj/machinery/light/small/broken/directional/west,
+/obj/structure/table,
+/obj/item/clothing/suit/cyborg_suit,
+/obj/item/clothing/mask/gas/cyborg,
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "mbj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/random/structure/grille,
@@ -42539,11 +42553,6 @@
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
-"mSq" = (
-/obj/structure/cable,
-/obj/effect/spawner/random/structure/crate,
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "mSz" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -48091,9 +48100,8 @@
 	},
 /area/engineering/atmospherics_engine)
 "oIC" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Ordnance Gas Storage Maintenance";
-	req_access_txt = "8"
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -48891,6 +48899,12 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
 /turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
+"oXH" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/maintenance/starboard/aft)
 "oXQ" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -50630,9 +50644,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/north,
+/obj/machinery/portable_atmospherics/canister/tier_1,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "pDc" = (
@@ -51009,8 +51023,8 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark,
 /area/science/storage)
 "pKP" = (
@@ -52303,6 +52317,27 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/science/research)
+"qhD" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/portable_atmospherics/canister/plasma,
+/turf/open/floor/iron/dark,
+/area/science/storage)
 "qhS" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_ordmix{
@@ -57472,15 +57507,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
-"rYQ" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard/aft)
 "rYU" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/effect/turf_decal/tile/neutral{
@@ -57714,21 +57740,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
-"sdJ" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister,
-/turf/open/floor/iron/dark,
-/area/science/storage)
 "sdT" = (
 /obj/structure/table/reinforced,
 /obj/machinery/camera/directional/west{
@@ -59577,26 +59588,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
-"sMW" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/machinery/camera/directional/east{
-	c_tag = "Science Ordnance Gas Storage 2";
-	network = list("ss13","rd")
-	},
-/obj/structure/extinguisher_cabinet/directional/east,
-/turf/open/floor/iron/dark,
-/area/science/storage)
 "sNA" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -63165,21 +63156,6 @@
 	icon_state = "platingdmg3"
 	},
 /area/maintenance/fore/lesser)
-"ubD" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/open/floor/iron/dark,
-/area/science/storage)
 "ubO" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/turf_decal/tile/neutral,
@@ -68561,22 +68537,6 @@
 /obj/structure/noticeboard/directional/east,
 /turf/open/floor/wood,
 /area/service/library)
-"vYK" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister,
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/iron/dark,
-/area/science/storage)
 "vYM" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -70835,6 +70795,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/security/office)
+"wMM" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/dark,
+/area/science/storage)
 "wMR" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -74635,6 +74611,26 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"yhy" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/tier_1,
+/obj/machinery/camera/directional/east{
+	c_tag = "Science Ordnance Gas Storage 2";
+	network = list("ss13","rd")
+	},
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/iron/dark,
+/area/science/storage)
 "yhC" = (
 /obj/machinery/power/port_gen/pacman,
 /obj/effect/turf_decal/bot{
@@ -109369,11 +109365,11 @@ mpI
 nOc
 bBv
 nOc
-pKJ
+kQV
 pKJ
 asT
 nFC
-idk
+qhD
 idk
 crR
 kgf
@@ -109888,7 +109884,7 @@ bng
 aGh
 nNe
 nNe
-nNe
+sdx
 crR
 iNw
 ssy
@@ -110141,11 +110137,11 @@ nOc
 bBv
 nOc
 bng
-bng
+yhy
 hUB
+wMM
 nNe
 nNe
-sdx
 crR
 yhY
 xGk
@@ -110397,13 +110393,13 @@ hdl
 nOc
 bBv
 nOc
-ubD
-sMW
+nOc
+nOc
 fxQ
-vYK
-sdJ
-sdJ
-crR
+nOc
+dvY
+dvY
+nOc
 omN
 vEn
 iDF
@@ -110653,13 +110649,13 @@ mvx
 jZi
 nOc
 bBv
-nOc
-nOc
-nOc
+nxf
+cAE
+fDV
 oIC
-nOc
+dzc
 dvY
-dvY
+mbh
 nOc
 uCp
 jnU
@@ -110910,13 +110906,13 @@ erb
 bZn
 nOc
 bBv
-nxf
-hAN
+oXH
 ivN
-rYQ
+ivN
+fbD
 mAW
 dvY
-aKk
+nxf
 nOc
 nOc
 nOc
@@ -111168,7 +111164,7 @@ kCN
 koo
 luD
 aCX
-fbD
+ciL
 dvY
 dvY
 dvY
@@ -111423,7 +111419,7 @@ okg
 oyK
 dpe
 dvY
-mSq
+mAW
 jIn
 bsN
 goM

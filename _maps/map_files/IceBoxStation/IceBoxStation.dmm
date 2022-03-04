@@ -5495,12 +5495,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"aXj" = (
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/plasma,
-/turf/open/floor/iron/dark/textured_large,
-/area/science/storage)
 "aXp" = (
 /obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/bot,
@@ -11838,6 +11832,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
+"dbo" = (
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark/textured_large,
+/area/science/storage)
 "dby" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/airalarm/directional/north,
@@ -14239,13 +14239,13 @@
 /turf/open/floor/iron,
 /area/science/mixing)
 "eju" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/nosmoking{
 	pixel_y = 32
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "ejA" = (
@@ -14367,6 +14367,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"emy" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/dark/textured_large,
+/area/science/storage)
 "emD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -17660,7 +17666,7 @@
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "fWQ" = (
@@ -23856,10 +23862,10 @@
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "iSF" = (
-/obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "iSQ" = (
@@ -27529,7 +27535,7 @@
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "kIT" = (
@@ -30150,12 +30156,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/service/lawoffice)
-"mfY" = (
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark/textured_large,
-/area/science/storage)
 "mgc" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/chair/comfy/brown{
@@ -45165,10 +45165,10 @@
 /turf/open/floor/iron,
 /area/command/teleporter)
 "tDW" = (
-/obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "tEd" = (
@@ -50860,13 +50860,13 @@
 	},
 /area/service/chapel)
 "woB" = (
-/obj/effect/turf_decal/bot,
 /obj/machinery/camera/autoname/directional/south{
 	c_tag = "Gas Storage";
 	network = list("ss13","rd")
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/plasma,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "woD" = (
@@ -101825,13 +101825,13 @@ bEC
 bEC
 bEC
 cas
-aXj
+wnu
 kIF
 tHc
 gaV
 vnb
 iSF
-wnu
+dbo
 cas
 bXh
 bYj
@@ -102082,12 +102082,12 @@ aVs
 mHw
 rGT
 loi
-aXj
+wnu
 fWL
 vdT
 wQu
 gJg
-wnu
+emy
 woB
 cas
 kbL
@@ -102340,11 +102340,11 @@ iDg
 dEh
 loi
 eju
-mfY
+wnu
 eQR
 gci
 gJg
-wnu
+emy
 tDW
 cas
 duP
