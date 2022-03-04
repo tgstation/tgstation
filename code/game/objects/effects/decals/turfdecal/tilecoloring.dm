@@ -104,9 +104,9 @@
 	name = "contrasted yellow anticorner"
 
 
-/obj/effect/turf_decal/tile/green/fourcorners
+/obj/effect/turf_decal/tile/yellow/fourcorners
 	icon_state = "tile_fourcorners"
-	name = "green fourcorners"
+	name = "yellow fourcorners"
 
 /obj/effect/turf_decal/tile/yellow/full
 	icon_state = "tile_full"
