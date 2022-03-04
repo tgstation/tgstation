@@ -590,7 +590,7 @@ GLOBAL_VAR(station_nuke_source)
 	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
 
 	var/datum/effect_system/fluid_spread/foam/foam = new
-	foam.set_up(200, get_turf(src), R)
+	foam.set_up(DIAMOND_AREA(10), get_turf(src), R)
 	foam.start()
 	disarm()
 
@@ -605,7 +605,7 @@ GLOBAL_VAR(station_nuke_source)
 		var/datum/reagents/beer = new /datum/reagents(1000)
 		beer.my_atom = vent
 		beer.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
-		beer.create_foam(/datum/effect_system/fluid_spread/foam, 200)
+		beer.create_foam(/datum/effect_system/fluid_spread/foam, DIAMOND_AREA(10))
 
 		CHECK_TICK
 
