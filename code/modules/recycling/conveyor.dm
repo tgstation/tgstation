@@ -396,10 +396,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_linked_conveyors()
 	update_linked_switches()
 
-
-/obj/machinery/conveyor_switch/wirecutter_act(mob/living/user, obj/item/I)
-	wires.interact(user)
-	return TRUE
+/obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
+	if(is_wire_tool(attacking_item))
+		wires.interact(user)
+		return TRUE
 
 /obj/machinery/conveyor_switch/multitool_act(mob/living/user, obj/item/I)
 	var/input_speed = tgui_input_number(user, "Set the speed of the conveyor belts in seconds", "Speed", conveyor_speed, 20, 0.2)
