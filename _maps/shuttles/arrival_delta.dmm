@@ -135,19 +135,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
-"l" = (
-/obj/structure/table/reinforced,
-/obj/structure/extinguisher_cabinet{
-	pixel_y = 32
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/shuttle/arrival)
 "m" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
@@ -176,19 +163,6 @@
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
-/area/shuttle/arrival)
-"p" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/shuttle/arrival)
 "q" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -294,6 +268,14 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
+"C" = (
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/vending/wallmed/directional/north{
+	use_power = 0
+	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/folder,
@@ -308,23 +290,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"F" = (
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/vending/wallmed/directional/north{
-	use_power = 0
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
@@ -359,20 +324,6 @@
 "K" = (
 /obj/structure/closet/wardrobe/yellow,
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/shuttle/arrival)
-"L" = (
-/obj/structure/closet/wardrobe/grey,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -433,6 +384,11 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/arrival)
+"T" = (
+/obj/structure/closet/wardrobe/grey,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
 "U" = (
 /obj/machinery/computer{
 	dir = 1;
@@ -459,6 +415,23 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"W" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/arrival)
+"X" = (
+/obj/structure/table/reinforced,
+/obj/structure/extinguisher_cabinet{
+	pixel_y = 32
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/arrival)
 
@@ -505,14 +478,14 @@ b
 e
 h
 j
-p
-p
-p
-p
-p
-p
-p
-p
+W
+W
+W
+W
+W
+W
+W
+W
 H
 g
 g
@@ -524,14 +497,14 @@ b
 e
 h
 k
-p
-p
+W
+W
 v
 v
 v
 v
 B
-p
+W
 I
 N
 Q
@@ -542,15 +515,15 @@ h
 c
 d
 f
-l
-p
+X
+W
 s
 w
 x
 y
 x
 f
-F
+C
 J
 O
 R
@@ -562,14 +535,14 @@ b
 e
 h
 m
-p
-p
+W
+W
 u
 u
 u
 u
 D
-p
+W
 K
 P
 S
@@ -581,15 +554,15 @@ b
 e
 h
 j
-p
-p
-p
-p
-p
-p
-p
-p
-L
+W
+W
+W
+W
+W
+W
+W
+W
+T
 g
 g
 h
