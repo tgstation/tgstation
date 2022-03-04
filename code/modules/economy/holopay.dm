@@ -69,6 +69,7 @@
 /obj/structure/holopay/Destroy()
 	linked_card?.my_store = null
 	linked_card = null
+	LAZYCLEARLIST(tracked_locs)
 	return ..()
 
 /obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, params)
@@ -211,27 +212,31 @@
  * Deletes the holopay if true.
  */
 /obj/structure/holopay/proc/check_operation()
-	message_admins("check_operation() called!")
 	SIGNAL_HANDLER
 
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
-		message_admins("[src] is not in range of [linked_card]!")
 		dissipate()
 		return
+
+	var/atom/location = linked_card.loc
+	var/list/new_locations
+	while(location)
+		if(!istype(location, /atom/movable))
+			break
+		LAZYADD(new_locations, WEAKREF(location))
+		if(LAZYFIND(tracked_locs, WEAKREF(location)))
+			LAZYREMOVE(tracked_locs, WEAKREF(location))
+			location = location.loc
+			continue //don't register signal twice
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+		location = location.loc
 
 	for(var/datum/weakref/location_ref in tracked_locs)
 		LAZYREMOVE(tracked_locs, location_ref)
 		UnregisterSignal(location_ref.resolve(), COMSIG_MOVABLE_MOVED)
-		message_admins("Unregistering signal COMSIG_MOVABLE_MOVED on [location_ref.resolve()]!")
 
-	var/atom/location = linked_card.loc
-	while(location)
-		if(!istype(location, /atom/movable))
-			break
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-		message_admins("Registering signal COMSIG_MOVABLE_MOVED on [location]!")
-		LAZYADD(tracked_locs, WEAKREF(location))
-		location = location.loc
+	if(LAZYLEN(new_locations))
+		LAZYADD(tracked_locs, new_locations)
 
 /**
  * Creates holopay vanishing effects.
