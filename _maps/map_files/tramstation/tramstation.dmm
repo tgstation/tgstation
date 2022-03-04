@@ -9,6 +9,7 @@
 "aae" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "aas" = (
@@ -14367,6 +14368,7 @@
 /area/security/processing)
 "dIi" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "dIv" = (
@@ -21068,8 +21070,8 @@
 /turf/open/floor/iron,
 /area/commons/storage/art)
 "fZU" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/firealarm/directional/west,
+/obj/machinery/research/anomaly_refinery,
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "gal" = (
@@ -23050,12 +23052,9 @@
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "gJk" = (
-/obj/machinery/research/explosive_compressor,
 /obj/effect/turf_decal/bot,
-/obj/machinery/camera{
-	c_tag = "Science - Ordnance Launch Room";
-	dir = 9;
-	network = list("ss13","rd")
+/obj/machinery/atmospherics/components/binary/tank_compressor{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
@@ -34055,6 +34054,14 @@
 "kNV" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "Science - Ordnance Launch Room";
+	dir = 9;
+	network = list("ss13","rd")
+	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "kOa" = (
@@ -43615,11 +43622,24 @@
 /turf/open/floor/iron,
 /area/engineering/main)
 "opt" = (
-/obj/structure/chair{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
+	},
+/obj/structure/table,
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -8;
+	pixel_y = -3
 	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
@@ -50714,6 +50734,9 @@
 /turf/open/floor/catwalk_floor,
 /area/hallway/primary/tram/left)
 "qUg" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -51925,7 +51948,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/doppler_array/research/science{
+/obj/machinery/doppler_array{
 	dir = 4
 	},
 /obj/item/radio/intercom/directional/north,

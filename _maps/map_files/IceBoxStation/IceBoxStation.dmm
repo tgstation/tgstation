@@ -5496,9 +5496,9 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "aXj" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "aXp" = (
@@ -9392,6 +9392,7 @@
 /obj/structure/sign/warning/fire{
 	pixel_x = 32
 	},
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/science/mixing)
 "cjS" = (
@@ -16472,9 +16473,9 @@
 /turf/open/floor/iron,
 /area/cargo/sorting)
 "fvo" = (
-/obj/machinery/portable_atmospherics/canister/tier_1,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "fvu" = (
@@ -17656,10 +17657,10 @@
 /turf/open/floor/iron/freezer,
 /area/commons/toilet/locker)
 "fWL" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "fWQ" = (
@@ -20356,9 +20357,23 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/table,
-/obj/item/clothing/glasses/science,
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/item/computer_hardware/hard_drive/portable{
+	pixel_x = -8;
+	pixel_y = -3
+	},
 /turf/open/floor/iron,
 /area/science/mixing/launch)
 "hgT" = (
@@ -21249,10 +21264,10 @@
 /turf/closed/wall,
 /area/engineering/atmos)
 "hFn" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped{
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/binary/tank_compressor{
 	dir = 4
 	},
-/obj/machinery/light/directional/north,
 /turf/open/floor/iron,
 /area/science/mixing)
 "hFq" = (
@@ -23841,10 +23856,10 @@
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "iSF" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "iSQ" = (
@@ -25615,6 +25630,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron,
 /area/science/mixing)
 "jKR" = (
@@ -27510,10 +27526,10 @@
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "kIF" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/effect/turf_decal/bot,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "kIT" = (
@@ -27631,7 +27647,6 @@
 /turf/open/floor/iron/white,
 /area/science/mixing)
 "kMd" = (
-/obj/machinery/portable_atmospherics/canister/tier_1,
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/science/mixing)
@@ -29173,6 +29188,7 @@
 	dir = 10
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/science/mixing)
 "lFx" = (
@@ -41807,7 +41823,7 @@
 /turf/open/floor/glass/reinforced,
 /area/engineering/atmos)
 "rXL" = (
-/obj/machinery/research/explosive_compressor,
+/obj/machinery/research/anomaly_refinery,
 /obj/effect/turf_decal/bot,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
@@ -45149,10 +45165,10 @@
 /turf/open/floor/iron,
 /area/command/teleporter)
 "tDW" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/turf_decal/bot,
 /obj/machinery/light/directional/south,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "tEd" = (
@@ -45169,8 +45185,8 @@
 "tEi" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/portable_atmospherics/canister/tier_1,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "tEm" = (
@@ -50789,9 +50805,9 @@
 /turf/closed/wall/r_wall,
 /area/command/gateway)
 "wnu" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "wnP" = (
@@ -50844,13 +50860,13 @@
 	},
 /area/service/chapel)
 "woB" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
 /obj/effect/turf_decal/bot,
 /obj/machinery/camera/autoname/directional/south{
 	c_tag = "Gas Storage";
 	network = list("ss13","rd")
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/iron/dark/textured_large,
 /area/science/storage)
 "woD" = (
@@ -50969,7 +50985,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "wrl" = (
-/obj/machinery/doppler_array/research/science{
+/obj/machinery/doppler_array{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
@@ -104372,7 +104388,7 @@ tKu
 kMq
 bEC
 hFn
-mpU
+kMd
 iqv
 jJE
 bEs
