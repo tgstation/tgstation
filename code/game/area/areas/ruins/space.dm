@@ -299,72 +299,95 @@
 	name = "\improper Derelict Station"
 	icon_state = "storage"
 
-/area/ruin/space/derelict/hallway/primary
+//Derelict Halls
+
+/area/ruin/space/derelict/hallway_primary
 	name = "\improper Derelict Primary Hallway"
 	icon_state = "hallP"
-
-/area/ruin/space/derelict/hallway/secondary
-	name = "\improper Derelict Secondary Hallway"
-	icon_state = "hallS"
-
-/area/ruin/space/derelict/hallway/primary/port
-	name = "\improper Derelict Port Hallway"
-	icon_state = "hallFP"
 
 /area/ruin/space/derelict/arrival
 	name = "\improper Derelict Arrival Centre"
 	icon_state = "yellow"
 
-/area/ruin/space/derelict/storage/equipment
-	name = "\improper Derelict Equipment Storage"
+/area/ruin/space/derelict/departures
+	name = "\improper Derelict Departures Wing"
+	icon_state = "escape"
+
+//Derelict Departments
+
+/area/ruin/space/derelict/cargo
+	name = "\improper Derelict Cargo Department"
+	icon_state = "cargo_bay"
 
 /area/ruin/space/derelict/bridge
-	name = "\improper Derelict Control Room"
+	name = "\improper Derelict Bridge"
 	icon_state = "bridge"
 
-/area/ruin/space/derelict/bridge/access
-	name = "\improper Derelict Control Room Access"
-	icon_state = "auxstorage"
-
-/area/ruin/space/derelict/bridge/ai_upload
-	name = "\improper Derelict Computer Core"
-	icon_state = "ai"
-
-/area/ruin/space/derelict/solar_control
-	name = "\improper Derelict Solar Control"
-	icon_state = "engine"
-
-/area/ruin/space/derelict/se_solar
-	name = "\improper South East Solars"
-	icon_state = "engine"
+/area/ruin/space/derelict/EVA
+	name = "\improper Derelict EVA Storage"
+	icon_state = "bridge"
 
 /area/ruin/space/derelict/medical
 	name = "\improper Derelict Medbay"
 	icon_state = "medbay"
 
-/area/ruin/space/derelict/medical/chapel
-	name = "\improper Derelict Chapel"
-	icon_state = "chapel"
+/area/ruin/space/derelict/research
+	name = "\improper Derelict Research Wing"
+	icon_state = "research"
 
-/area/solars/derelict_starboard
-	name = "\improper Derelict Starboard Solar Array"
-	icon_state = "panelsS"
+/area/ruin/space/derelict/research/xenobiology
+	name = "\improper Derelict Xenobiology Wing"
+	icon_state = "xenobio"
 
-/area/solars/derelict_aft
-	name = "\improper Derelict Aft Solar Array"
-	icon_state = "yellow"
-
-/area/ruin/space/derelict/singularity_engine
+/area/ruin/space/derelict/engineering
 	name = "\improper Derelict Singularity Engine"
 	icon_state = "engine"
 
-/area/ruin/space/derelict/gravity_generator
+/area/ruin/space/derelict/engineering/gravity_generator
 	name = "\improper Derelict Gravity Generator Room"
-	icon_state = "red"
 
-/area/ruin/space/derelict/atmospherics
-	name = "Derelict Atmospherics"
-	icon_state = "red"
+/area/ruin/space/derelict/service
+	name = "\improper Derelict Service Wing"
+	icon_state = "bar"
+
+/area/ruin/space/derelict/service/janitor
+	name = "\improper Derelict Janitor's Closet"
+	icon_state = "janitor"
+
+/area/ruin/space/derelict/security
+	name = "\improper Derelict Security Department"
+	icon_state = "security"
+
+/area/ruin/space/derelict/security/detective
+	name = "\improper Derelict Detective's Office"
+	icon_state = "detective"
+
+/area/ruin/space/derelict/crew
+	name = "\improper Derelict Crew Quarters"
+	icon_state = "crew_quarters"
+
+//Derelict Maint
+
+/area/ruin/space/derelict/maintenance/port
+	name = "\improper Derelict Port Maintenance"
+	icon_state = "portmaint"
+
+/area/ruin/space/derelict/maintenance/port/central
+	name = "\improper Derelict Central Port Maintenance"
+
+/area/ruin/space/derelict/maintenance/port/lesser
+	name = "\improper Derelict Lesser Port Maintenance"
+
+/area/ruin/space/derelict/maintenance/starboard
+	name = "\improper Derelict Starboard Maintenance"
+	icon_state = "starboardmaint"
+
+/area/ruin/space/derelict/maintenance/starboard/central
+	name = "\improper Derelict Central Starboard Maintenance"
+
+/area/ruin/space/derelict/maintenance/starboard/lesser
+	name = "\improper Derelict Lesser Starboard Maintenance"
+
 
 //DJSTATION
 
