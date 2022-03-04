@@ -16,8 +16,8 @@
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
-	/// Current holder of the linked card
-	var/datum/weakref/holder
+	/// List of movable atoms our linked ID is inside of so we know how far away it is so we can dissipate if it's out of range.
+	var/list/tracked_locs
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
@@ -69,7 +69,6 @@
 /obj/structure/holopay/Destroy()
 	linked_card?.my_store = null
 	linked_card = null
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/structure/holopay/attackby(obj/item/held_item, mob/item_holder, params)
@@ -78,7 +77,7 @@
 		return ..()
 	/// Users can pay with an ID to skip the UI
 	if(istype(held_item, /obj/item/card/id))
-		if(force_fee && tgui_alert(holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
+		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
 			return TRUE
 		process_payment(user)
 		return TRUE
@@ -203,12 +202,36 @@
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))
 	/// Start checking if the source projection is in range
-	START_PROCESSING(SSobj, src)
+	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+	check_operation()
 	return TRUE
 
-/obj/structure/holopay/process()
+/**
+ * A periodic check to see if the projecting card is nearby.
+ * Deletes the holopay if true.
+ */
+/obj/structure/holopay/proc/check_operation()
+	message_admins("check_operation() called!")
+	SIGNAL_HANDLER
+
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
+		message_admins("[src] is not in range of [linked_card]!")
 		dissipate()
+		return
+
+	for(var/datum/weakref/location_ref in tracked_locs)
+		LAZYREMOVE(tracked_locs, location_ref)
+		UnregisterSignal(location_ref.resolve(), COMSIG_MOVABLE_MOVED)
+		message_admins("Unregistering signal COMSIG_MOVABLE_MOVED on [location_ref.resolve()]!")
+
+	var/atom/location = linked_card.loc
+	while(location)
+		if(!istype(location, /atom/movable))
+			break
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+		message_admins("Registering signal COMSIG_MOVABLE_MOVED on [location]!")
+		LAZYADD(tracked_locs, WEAKREF(location))
+		location = location.loc
 
 /**
  * Creates holopay vanishing effects.
