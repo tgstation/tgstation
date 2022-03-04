@@ -85,7 +85,7 @@
 	else
 		grill_fuel -= GRILL_FUELUSAGE_IDLE * delta_time
 		if(DT_PROB(0.5, delta_time))
-			var/datum/effect_system/smoke_spread/bad/smoke = new
+			var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
 			smoke.set_up(1, loc)
 			smoke.start()
 	if(grilled_item)

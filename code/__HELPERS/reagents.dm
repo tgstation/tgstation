@@ -81,7 +81,7 @@
 //Creates foam from the reagent. Metaltype is for metal foam, notification is what to show people in textbox
 /datum/reagents/proc/create_foam(foamtype,foam_volume,metaltype = 0,notification = null)
 	var/location = get_turf(my_atom)
-	var/datum/effect_system/foam_spread/foam = new foamtype()
+	var/datum/effect_system/fluid_spread/foam/foam = new foamtype()
 	foam.set_up(foam_volume, location, src, metaltype)
 	foam.start()
 	clear_reagents()

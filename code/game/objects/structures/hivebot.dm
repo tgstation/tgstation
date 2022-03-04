@@ -10,7 +10,7 @@
 
 /obj/structure/hivebot_beacon/Initialize(mapload)
 	. = ..()
-	var/datum/effect_system/smoke_spread/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(2, loc)
 	smoke.start()
 	visible_message(span_boldannounce("[src] warps in!"))

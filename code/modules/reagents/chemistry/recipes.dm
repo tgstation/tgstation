@@ -359,7 +359,7 @@
 //Spews out the inverse of the chems in the beaker of the products/reactants only
 /datum/chemical_reaction/proc/explode_invert_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE, accept_impure = TRUE)
 	var/datum/reagents/invert_reagents = new (2100, NO_REACT)//I think the biggest size we can get is 2100?
-	var/datum/effect_system/smoke_spread/chem/smoke = new()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	var/sum_volume = 0
 	invert_reagents.my_atom = holder.my_atom //Give the gas a fingerprint
 	for(var/datum/reagent/reagent as anything in holder.reagent_list) //make gas for reagents, has to be done this way, otherwise it never stops Exploding
@@ -390,7 +390,7 @@
 //Spews out the corrisponding reactions reagents  (products/required) of the beaker in a smokecloud. Doesn't spew catalysts
 /datum/chemical_reaction/proc/explode_smoke(datum/reagents/holder, datum/equilibrium/equilibrium, force_range = 0, clear_products = TRUE, clear_reactants = TRUE)
 	var/datum/reagents/reagents = new/datum/reagents(2100, NO_REACT)//Lets be safe first
-	var/datum/effect_system/smoke_spread/chem/smoke = new()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
 	reagents.my_atom = holder.my_atom //fingerprint
 	var/sum_volume = 0
 	for (var/datum/reagent/reagent as anything in holder.reagent_list)

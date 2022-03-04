@@ -131,4 +131,4 @@
 			extinguishes_left--
 			H.visible_message(span_warning("[H]'s suit spews space lube everywhere!"),span_warning("Your suit spews space lube everywhere!"))
 			H.extinguish_mob()
-			new /obj/effect/particle_effect/foam(loc) //Truely terrifying.
+			new /obj/effect/particle_effect/fluid/foam(loc) //Truely terrifying.

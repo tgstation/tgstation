@@ -351,15 +351,15 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 			do_sparks(sparks_amt, FALSE, location)
 		if(smoke_spread)
 			if(smoke_spread == 1)
-				var/datum/effect_system/smoke_spread/smoke = new
+				var/datum/effect_system/fluid_spread/smoke/smoke = new
 				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 2)
-				var/datum/effect_system/smoke_spread/bad/smoke = new
+				var/datum/effect_system/fluid_spread/smoke/bad/smoke = new
 				smoke.set_up(smoke_amt, location)
 				smoke.start()
 			else if(smoke_spread == 3)
-				var/datum/effect_system/smoke_spread/sleeping/smoke = new
+				var/datum/effect_system/fluid_spread/smoke/sleeping/smoke = new
 				smoke.set_up(smoke_amt, location)
 				smoke.start()
 

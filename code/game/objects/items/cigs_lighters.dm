@@ -1043,7 +1043,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	//Time to start puffing those fat vapes, yo.
 	COOLDOWN_START(src, drag_cooldown, dragtime)
 	if(obj_flags & EMAGGED)
-		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/s = new
 		s.set_up(reagents, 4, 24, loc)
 		s.start()
 		if(prob(5)) //small chance for the vape to break and deal damage if it's emagged
@@ -1057,7 +1057,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			qdel(src)
 			return
 	else if(super)
-		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/s = new
 		s.set_up(reagents, 1, 24, loc)
 		s.start()
 

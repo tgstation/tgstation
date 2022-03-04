@@ -7,7 +7,7 @@
 
 /obj/item/nitrium_crystal/attack_self(mob/user)
 	. = ..()
-	var/datum/effect_system/smoke_spread/chem/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 	var/turf/location = get_turf(src)
 	create_reagents(5)
 	reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, 3)

@@ -129,7 +129,7 @@
 	///Currently ejecting, and unable to do things
 	var/is_currently_ejecting = FALSE
 
-	var/datum/effect_system/smoke_spread/smoke_system = new
+	var/datum/effect_system/fluid_spread/smoke/smoke_system = new
 
 	////Action vars
 	///Ref to any active thrusters we might have

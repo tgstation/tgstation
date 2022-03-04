@@ -48,7 +48,7 @@ Burning extracts:
 	var/datum/reagents/R = new/datum/reagents(100)
 	R.add_reagent(/datum/reagent/consumable/condensedcapsaicin, 100)
 
-	var/datum/effect_system/smoke_spread/chem/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
 	smoke.start()
 	..()
@@ -123,7 +123,7 @@ Burning extracts:
 	var/datum/reagents/R = new/datum/reagents(100)
 	R.add_reagent(/datum/reagent/consumable/frostoil, 40)
 	user.reagents.add_reagent(/datum/reagent/medicine/cryoxadone,10)
-	var/datum/effect_system/smoke_spread/chem/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 	smoke.set_up(R, 7, get_turf(user))
 	smoke.start()
 	..()

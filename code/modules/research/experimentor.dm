@@ -231,7 +231,7 @@
 		loaded_item = null
 
 /obj/machinery/rnd/experimentor/proc/throwSmoke(turf/where)
-	var/datum/effect_system/smoke_spread/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, where)
 	smoke.start()
 
@@ -308,7 +308,7 @@
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
 			investigate_log("Experimentor has released [chosenchem] smoke.", INVESTIGATE_EXPERIMENTOR)
-			var/datum/effect_system/smoke_spread/chem/smoke = new
+			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
@@ -320,7 +320,7 @@
 			var/datum/reagents/R = new/datum/reagents(50)
 			R.my_atom = src
 			R.add_reagent(chosenchem , 50)
-			var/datum/effect_system/smoke_spread/chem/smoke = new
+			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
@@ -404,7 +404,7 @@
 			R.my_atom = src
 			R.add_reagent(/datum/reagent/consumable/frostoil , 50)
 			investigate_log("Experimentor has released frostoil gas.", INVESTIGATE_EXPERIMENTOR)
-			var/datum/effect_system/smoke_spread/chem/smoke = new
+			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 			smoke.set_up(R, 0, src, silent = TRUE)
 			playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 			smoke.start()
@@ -426,7 +426,7 @@
 			ejectItem(TRUE)
 		else if(prob(EFFECT_PROB_MEDIUM-badThingCoeff))
 			visible_message(span_warning("[src] malfunctions, releasing a flurry of chilly air as [exp_on] pops out!"))
-			var/datum/effect_system/smoke_spread/smoke = new
+			var/datum/effect_system/fluid_spread/smoke/smoke = new
 			smoke.set_up(0, loc)
 			smoke.start()
 			ejectItem()
@@ -597,7 +597,7 @@
 //////////////// RELIC PROCS /////////////////////////////
 
 /obj/item/relic/proc/throwSmoke(turf/where)
-	var/datum/effect_system/smoke_spread/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
 	smoke.set_up(0, get_turf(where))
 	smoke.start()
 

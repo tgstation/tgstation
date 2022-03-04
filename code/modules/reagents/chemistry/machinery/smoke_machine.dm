@@ -18,17 +18,19 @@
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
 
-/datum/effect_system/smoke_spread/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc, silent=FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(datum/reagents/carry, setting=1, efficiency=10, loc, silent=FALSE)
 	amount = setting
 	carry.copy_to(chemholder, 20)
 	carry.remove_any(amount * 16 / efficiency)
 	location = loc
 
-/datum/effect_system/smoke_spread/chem/smoke_machine
-	effect_type = /obj/effect/particle_effect/smoke/chem/smoke_machine
+/// A factory which produces clouds of smoke for the smoke machine.
+/datum/effect_system/fluid_spread/smoke/chem/smoke_machine
+	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/smoke_machine
 
-/obj/effect/particle_effect/smoke/chem/smoke_machine
-	opaque = FALSE
+/// Smoke which is produced by the smoke machine. Slightly transparent and does not block line of sight.
+/obj/effect/particle_effect/fluid/smoke/chem/smoke_machine
+	opacity = FALSE
 	alpha = 100
 
 /obj/machinery/smoke_machine/Initialize(mapload)
@@ -81,10 +83,10 @@
 		update_appearance()
 		return
 	var/turf/T = get_turf(src)
-	var/smoke_test = locate(/obj/effect/particle_effect/smoke) in T
+	var/smoke_test = locate(/obj/effect/particle_effect/fluid/smoke) in T
 	if(on && !smoke_test)
 		update_appearance()
-		var/datum/effect_system/smoke_spread/chem/smoke_machine/smoke = new()
+		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
 		smoke.set_up(reagents, setting*3, efficiency, T)
 		smoke.start()
 

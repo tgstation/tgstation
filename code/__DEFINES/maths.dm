@@ -226,3 +226,6 @@
 // )
 
 #define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
+
+/// The number of cells in a taxicab circle (rasterized diamond) of radius X.
+#define DIAMOND_AREA(X) (1 + 2*X*(X+1))

@@ -646,7 +646,7 @@
 	SIGNAL_HANDLER
 
 	our_plant.investigate_log("made smoke at [AREACOORD(target)]. Last touched by: [our_plant.fingerprintslast].", INVESTIGATE_BOTANY)
-	var/datum/effect_system/smoke_spread/chem/smoke = new ()
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new ()
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	var/splat_location = get_turf(target)
 	var/smoke_amount = round(sqrt(our_seed.potency * 0.1), 1)

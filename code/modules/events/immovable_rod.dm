@@ -211,7 +211,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/smoke_spread/smoke = new
+		var/datum/effect_system/fluid_spread/smoke/smoke = new
 		smoke.set_up(2, get_turf(src))
 		smoke.start()
 		var/obj/singularity/bad_luck = new(get_turf(src))

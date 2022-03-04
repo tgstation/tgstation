@@ -562,7 +562,7 @@
 		var/prev_lockcharge = R.lockcharge
 		R.SetLockdown(TRUE)
 		R.set_anchored(TRUE)
-		var/datum/effect_system/smoke_spread/smoke = new
+		var/datum/effect_system/fluid_spread/smoke/smoke = new
 		smoke.set_up(1, R.loc)
 		smoke.start()
 		sleep(2)

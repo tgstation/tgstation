@@ -371,7 +371,7 @@
 		return
 
 	if(reac_volume >= 1)
-		var/obj/effect/particle_effect/foam/firefighting/foam = (locate(/obj/effect/particle_effect/foam) in exposed_turf)
+		var/obj/effect/particle_effect/fluid/foam/firefighting/foam = (locate(/obj/effect/particle_effect/fluid/foam) in exposed_turf)
 		if(!foam)
 			foam = new(exposed_turf)
 		else if(istype(foam))
