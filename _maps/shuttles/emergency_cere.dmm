@@ -12,53 +12,6 @@
 "ad" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"ae" = (
-/obj/structure/table,
-/obj/item/storage/toolbox/emergency,
-/obj/item/crowbar,
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"af" = (
-/obj/machinery/computer/aifixer,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"ag" = (
-/obj/structure/table,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
 /obj/structure/window/reinforced{
@@ -81,6 +34,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"al" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"am" = (
+/obj/machinery/computer/cargo/request,
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "ao" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -88,35 +51,6 @@
 /area/shuttle/escape)
 "ap" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"aq" = (
-/obj/structure/chair/comfy/beige{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"ar" = (
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "as" = (
@@ -143,32 +77,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"ax" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+"av" = (
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"ay" = (
-/obj/structure/table,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/effect/turf_decal/tile/red{
+"aw" = (
+/obj/structure/chair/comfy/beige{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "az" = (
@@ -213,22 +130,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aF" = (
-/obj/machinery/computer/security{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "aG" = (
 /obj/machinery/computer/crew{
 	dir = 4
@@ -258,38 +159,6 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"aK" = (
-/obj/structure/chair/comfy/beige{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"aL" = (
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -324,21 +193,6 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"aQ" = (
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
@@ -509,6 +363,13 @@
 /obj/item/storage/box/zipties,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
+"bA" = (
+/obj/machinery/door/airlock/shuttle{
+	name = "Emergency Shuttle Cargo"
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "bB" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -1012,6 +873,14 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"cP" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engine Room";
+	req_one_access_txt = "10;24"
+	},
+/obj/effect/turf_decal/tile/yellow/fourcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
 "cQ" = (
 /obj/machinery/door/airlock{
 	name = "Bathroom"
@@ -1289,7 +1158,25 @@
 	},
 /turf/open/floor/iron,
 /area/shuttle/escape)
-"eL" = (
+"hS" = (
+/obj/structure/table,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/escape)
+"kk" = (
+/obj/machinery/computer/aifixer,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"ok" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
 	pixel_x = 2;
@@ -1301,35 +1188,37 @@
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"gx" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
+"qy" = (
+/obj/structure/table,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"jl" = (
+"rh" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"tw" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"uR" = (
+"rv" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"uF" = (
 /obj/structure/table,
-/obj/item/storage/medkit/fire,
-/obj/item/crowbar,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"uN" = (
+/obj/structure/chair/comfy/beige{
 	dir = 4
 	},
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"wi" = (
+"zj" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
 	pixel_x = 2;
@@ -1360,44 +1249,56 @@
 /obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"wt" = (
+"Ax" = (
 /obj/structure/table,
-/obj/item/storage/medkit/o2,
-/obj/item/storage/medkit/toxin,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
+/obj/item/storage/toolbox/emergency,
+/obj/item/crowbar,
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"CO" = (
+/obj/machinery/computer/secure_data{
+	dir = 8
 	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"DS" = (
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
+"Ie" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"IR" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/crowbar,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
-"xU" = (
+"PD" = (
 /obj/structure/chair/comfy/beige{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"EZ" = (
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Engine Room";
-	req_one_access_txt = "10;24"
+"Xo" = (
+/obj/machinery/computer/security{
+	dir = 8
 	},
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"KS" = (
-/obj/machinery/door/airlock/shuttle{
-	name = "Emergency Shuttle Cargo"
-	},
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"Ry" = (
-/obj/machinery/computer/cargo/request,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 
@@ -1625,7 +1526,7 @@ dz
 aa
 aa
 ab
-ae
+Ax
 ap
 ap
 aH
@@ -1669,8 +1570,8 @@ dz
 aa
 aa
 ac
-af
-aq
+kk
+PD
 ap
 aI
 aN
@@ -1700,7 +1601,7 @@ bT
 bT
 bT
 bR
-EZ
+cP
 cU
 bc
 bc
@@ -1713,8 +1614,8 @@ dz
 aa
 aa
 ac
-ag
-ar
+rh
+DS
 aA
 aC
 aC
@@ -1933,8 +1834,8 @@ dz
 aa
 aa
 ac
-tw
-gx
+al
+av
 aE
 aC
 aC
@@ -1977,9 +1878,9 @@ dz
 aa
 aa
 ac
-Ry
-xU
-ax
+am
+aw
+rv
 aJ
 aN
 ab
@@ -1987,8 +1888,8 @@ ab
 ab
 ab
 ab
-KS
-KS
+bA
+bA
 ab
 ad
 bT
@@ -2021,10 +1922,10 @@ dz
 aa
 aa
 ab
-wi
-ax
-ax
-aK
+zj
+rv
+rv
+uN
 aP
 ab
 bb
@@ -2066,10 +1967,10 @@ ab
 ab
 ab
 ad
-ay
-aF
-aL
-aQ
+qy
+Xo
+CO
+uF
 ab
 bc
 bc
@@ -2094,7 +1995,7 @@ cr
 cx
 co
 co
-wt
+hS
 ab
 cR
 cR
@@ -2167,7 +2068,7 @@ bc
 bc
 bN
 ab
-jl
+Ie
 bc
 bc
 bc
@@ -2223,9 +2124,9 @@ ab
 ab
 ad
 cu
-eL
+ok
 cD
-uR
+IR
 cN
 ab
 cS

@@ -580,15 +580,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/centcom/holding)
-"cX" = (
-/obj/structure/table,
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/fire{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/evac)
 "da" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -748,19 +739,6 @@
 /obj/machinery/icecream_vat,
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
-"dG" = (
-/obj/item/storage/medkit/regular,
-/obj/structure/table,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/iron,
-/area/centcom/control)
 "dK" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdomegen";
@@ -850,6 +828,27 @@
 /area/centcom/holding)
 "ek" = (
 /obj/structure/closet/crate/bin,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/briefing)
+"em" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
@@ -949,15 +948,6 @@
 "ez" = (
 /turf/open/floor/circuit/green,
 /area/tdome/arena_source)
-"eB" = (
-/obj/structure/table,
-/obj/item/storage/medkit/toxin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/item/storage/medkit/toxin,
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/evac)
 "eD" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Administrative Office";
@@ -1315,15 +1305,6 @@
 /obj/item/storage/dice,
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
-"gn" = (
-/obj/structure/chair/stool/directional/west,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/landmark/start/nukeop,
-/turf/open/floor/iron,
-/area/syndicate_mothership/control)
 "go" = (
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/item/storage/crayons,
@@ -3940,27 +3921,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
-"oB" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular{
-	pixel_x = -7
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/item/bodybag/environmental/nanotrasen{
-	pixel_x = 7;
-	pixel_y = 12
-	},
-/obj/item/bodybag/environmental/nanotrasen{
-	pixel_x = 7;
-	pixel_y = 6
-	},
-/obj/item/bodybag/environmental/nanotrasen{
-	pixel_x = 7
-	},
-/turf/open/floor/iron,
-/area/centcom/briefing/storage)
 "oM" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/stripes/line{
@@ -4078,27 +4038,6 @@
 /obj/item/food/meat/slab/synthmeat,
 /turf/open/floor/catwalk_floor,
 /area/centcom/holding)
-"pc" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/control)
 "pi" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
@@ -4665,6 +4604,18 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/ert)
+"rc" = (
+/obj/item/storage/medkit/regular,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/centcom/control)
 "rd" = (
 /obj/structure/flora/grass/brown,
 /obj/effect/light_emitter{
@@ -4917,6 +4868,15 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"rY" = (
+/obj/structure/table,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/toxin,
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "sa" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
@@ -5365,6 +5325,14 @@
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/wood,
 /area/syndicate_mothership/control)
+"tC" = (
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/tdome/tdomeobserve)
 "tJ" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-22"
@@ -7076,22 +7044,6 @@
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/dark,
 /area/syndicate_mothership/control)
-"yY" = (
-/obj/item/storage/medkit/toxin,
-/obj/item/storage/medkit/o2{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced,
-/obj/machinery/airalarm/directional/east,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/centcom/control)
 "zk" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -7146,17 +7098,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
-"zw" = (
-/obj/structure/table,
-/obj/item/storage/medkit/regular{
-	pixel_x = 2
-	},
-/obj/item/storage/medkit/regular{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/centcom/evac)
 "zx" = (
 /obj/structure/closet/syndicate/personal,
 /obj/effect/turf_decal/stripes/line{
@@ -7659,14 +7600,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
-"Bz" = (
-/obj/structure/chair/comfy/brown{
-	color = "#66b266";
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green/fourcorners,
-/turf/open/floor/iron/dark,
-/area/tdome/tdomeadmin)
 "BE" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "XCCsec3";
@@ -7921,20 +7854,27 @@
 /obj/structure/statue/uranium/nuke,
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
-"Cz" = (
-/obj/structure/closet,
-/obj/item/storage/backpack/duffelbag/med/surgery,
-/obj/machinery/iv_drip,
-/obj/item/roller,
-/obj/item/storage/medkit/regular,
-/obj/item/reagent_containers/medigel/synthflesh,
-/obj/item/reagent_containers/medigel/synthflesh,
-/obj/item/reagent_containers/medigel/synthflesh,
-/obj/item/organ/heart/cybernetic/tier2,
-/obj/item/organ/heart/cybernetic/tier2,
-/obj/item/defibrillator,
-/turf/open/floor/sepia,
-/area/centcom/holding)
+"Cx" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular{
+	pixel_x = -7
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/item/bodybag/environmental/nanotrasen{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/item/bodybag/environmental/nanotrasen{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/bodybag/environmental/nanotrasen{
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/centcom/briefing/storage)
 "CH" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/security_space_law,
@@ -8028,21 +7968,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
-"CW" = (
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular{
-	pixel_x = 2;
-	pixel_y = 3
-	},
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/centcom/control)
 "CX" = (
 /obj/structure/closet/secure_closet/security,
 /obj/item/storage/belt/security/full,
@@ -9624,19 +9549,6 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/tdomeobserve)
-"Hd" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/tdomeobserve)
 "He" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/trophy/gold_cup,
@@ -9697,20 +9609,6 @@
 /obj/machinery/newscaster/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/tdome/tdomeobserve)
-"Hp" = (
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/tdome/tdomeobserve)
 "Hq" = (
 /obj/machinery/firealarm/directional/east,
@@ -9798,23 +9696,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/tdome/tdomeobserve)
-"HC" = (
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/tdome/tdomeobserve)
 "HD" = (
 /obj/structure/sink{
@@ -10651,6 +10532,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tdome/tdomeadmin)
+"JS" = (
+/obj/structure/chair/comfy/brown{
+	color = "#66b266";
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green/fourcorners,
+/turf/open/floor/iron/dark,
+/area/tdome/tdomeadmin)
 "JT" = (
 /obj/machinery/button/flasher/indestructible{
 	id = "tdomeflash"
@@ -11405,6 +11294,22 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/centcom/admin)
+"Mz" = (
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/centcom/control)
 "MA" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -11446,6 +11351,21 @@
 	},
 /turf/open/floor/wood,
 /area/wizard_station)
+"MF" = (
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/centcom/control)
 "MH" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -11701,18 +11621,6 @@
 	dir = 1
 	},
 /area/centcom/holding)
-"Oh" = (
-/obj/item/storage/medkit/regular,
-/obj/structure/table,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/centcom/control)
 "Oi" = (
 /turf/closed/indestructible/opsglass,
 /area/centcom/holding)
@@ -12028,27 +11936,6 @@
 /obj/structure/sign/nanotrasen,
 /turf/closed/indestructible/riveted,
 /area/centcom/admin)
-"PG" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/centcom/briefing)
 "PI" = (
 /obj/structure/sink/kitchen{
 	dir = 8;
@@ -12066,6 +11953,11 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/one)
+"PN" = (
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/tdome/tdomeobserve)
 "PO" = (
 /obj/structure/kitchenspike,
 /obj/item/gun/magic/hook,
@@ -12174,6 +12066,36 @@
 /obj/structure/destructible/cult/item_dispenser/forge/engine,
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"Qi" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj{
+	name = "---Merge conflict marker---"
+	},
+/obj/structure/table/reinforced,
+/obj/item/storage/firstaid/regular,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/control)
+"Qk" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/landmark/start/nukeop,
+/turf/open/floor/iron,
+/area/syndicate_mothership/control)
 "Ql" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/tile,
@@ -12233,6 +12155,15 @@
 /obj/item/clothing/under/costume/roman,
 /turf/open/floor/wood/parquet,
 /area/centcom/holding)
+"QI" = (
+/obj/structure/table,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
 "QJ" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
@@ -12436,6 +12367,10 @@
 	},
 /turf/open/floor/sepia,
 /area/centcom/holding)
+"RH" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/tdome/tdomeobserve)
 "RI" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -12882,15 +12817,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
-"TP" = (
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/chair/stool/directional/east,
-/obj/effect/landmark/start/nukeop,
-/turf/open/floor/iron,
-/area/syndicate_mothership/control)
 "TQ" = (
 /obj/structure/flora/tree/dead,
 /turf/open/floor/plating/asteroid/basalt/wasteland{
@@ -13633,6 +13559,19 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
+"XA" = (
+/obj/item/storage/medkit/regular,
+/obj/structure/table,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/iron,
+/area/centcom/control)
 "XD" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -13765,6 +13704,31 @@
 "Ya" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/briefing/storage)
+"Yc" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evac)
+"Yf" = (
+/obj/structure/closet,
+/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/machinery/iv_drip,
+/obj/item/roller,
+/obj/item/storage/medkit/regular,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/reagent_containers/medigel/synthflesh,
+/obj/item/organ/heart/cybernetic/tier2,
+/obj/item/organ/heart/cybernetic/tier2,
+/obj/item/defibrillator,
+/turf/open/floor/sepia,
+/area/centcom/holding)
 "Yg" = (
 /obj/structure/table/wood,
 /obj/machinery/recharger,
@@ -13934,6 +13898,15 @@
 "YU" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/admin/storage)
+"YW" = (
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/chair/stool/directional/east,
+/obj/effect/landmark/start/nukeop,
+/turf/open/floor/iron,
+/area/syndicate_mothership/control)
 "YZ" = (
 /obj/structure/chair{
 	dir = 8
@@ -31808,8 +31781,8 @@ nz
 si
 pZ
 pZ
-TP
-TP
+YW
+YW
 pZ
 rf
 vv
@@ -32579,8 +32552,8 @@ pF
 qa
 pZ
 pZ
-gn
-gn
+Qk
+Qk
 pZ
 rg
 Qd
@@ -40610,7 +40583,7 @@ aa
 aa
 aa
 KH
-eB
+rY
 Lb
 KV
 Lg
@@ -40867,7 +40840,7 @@ aa
 aa
 aa
 KP
-cX
+QI
 Lb
 KV
 KV
@@ -41124,7 +41097,7 @@ aa
 aa
 aa
 KH
-zw
+Yc
 Lb
 KV
 Lh
@@ -41339,7 +41312,7 @@ Zt
 Zt
 Iy
 fO
-Cz
+Yf
 hb
 Vj
 fO
@@ -41351,7 +41324,7 @@ bu
 fO
 Pf
 Sa
-Cz
+Yf
 fO
 Oe
 yg
@@ -52122,7 +52095,7 @@ xQ
 mD
 hG
 Wy
-PG
+em
 Zs
 XW
 OX
@@ -54435,7 +54408,7 @@ ts
 mD
 gw
 RI
-oB
+Cx
 bj
 Pt
 ZD
@@ -54967,11 +54940,11 @@ FL
 Ep
 GG
 Gc
-Hd
+RH
 Gc
-Hd
+RH
 Gc
-Hd
+RH
 Ij
 Ep
 IB
@@ -55223,11 +55196,11 @@ FH
 Ge
 Ep
 GH
-Hd
+RH
 Gc
-HC
+tC
 Gc
-Hd
+RH
 Gc
 Ik
 Ep
@@ -55481,7 +55454,7 @@ Gg
 Ep
 GI
 Gc
-Hp
+PN
 Gy
 HK
 HV
@@ -55737,7 +55710,7 @@ Fw
 Gh
 Ep
 GJ
-Hd
+RH
 Hq
 Gx
 GM
@@ -57552,7 +57525,7 @@ IH
 IH
 It
 JI
-Bz
+JS
 Kb
 JG
 Kt
@@ -58268,7 +58241,7 @@ aa
 io
 lN
 iu
-Oh
+rc
 nr
 nL
 nX
@@ -59065,7 +59038,7 @@ Ap
 AT
 iu
 io
-pc
+Qi
 Db
 iC
 ns
@@ -61376,7 +61349,7 @@ zk
 zJ
 nq
 Ar
-CW
+MF
 iu
 lL
 iu
@@ -61628,12 +61601,12 @@ vT
 wI
 xq
 wI
-dG
+XA
 iu
 zK
 As
 zJ
-yY
+Mz
 iu
 lN
 iu

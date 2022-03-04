@@ -48,19 +48,6 @@
 	},
 /turf/open/floor/cult,
 /area/ctf)
-"cl" = (
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/turf/open/floor/cult,
-/area/ctf)
 "cu" = (
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/cult,
@@ -2309,9 +2296,9 @@ Tw
 Tw
 Tw
 HU
-cl
-cl
-cl
+sl
+sl
+sl
 sl
 sl
 sl
