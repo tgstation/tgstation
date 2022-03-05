@@ -1,5 +1,5 @@
 /obj/machinery/dna_scannernew
-	name = "DNA scanner"
+	name = "\improper DNA scanner"
 	desc = "It scans DNA structures."
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "scanner"
@@ -144,17 +144,16 @@
 		return
 	close_machine(target)
 
-//The return of data disks?? Just for transferring between genetics machine/cloning machine.
+
+//Just for transferring between genetics machines.
 /obj/item/disk/data
-	name = "cloning data disk"
+	name = "DNA data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	var/list/fields = list()
-	var/list/genetic_makeup_buffer = list()	//for dna scanner
+	var/list/genetic_makeup_buffer = list()
 	var/list/mutations = list()
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
 
-//Disk stuff.
 /obj/item/disk/data/Initialize()
 	. = ..()
 	icon_state = "datadisk[rand(0,6)]"
