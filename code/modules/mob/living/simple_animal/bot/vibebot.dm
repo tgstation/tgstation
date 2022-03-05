@@ -26,20 +26,10 @@
 /mob/living/simple_animal/bot/vibebot/Initialize(mapload)
 	. = ..()
 	update_appearance()
-
-/mob/living/simple_animal/bot/vibebot/Destroy()
-	QDEL_NULL(vibe_ability)
-	return ..()
-
-/mob/living/simple_animal/bot/vibebot/Login()
-	. = ..()
-	if(!. || !client)
-		return FALSE
 	vibe_ability = new()
 	vibe_ability.Grant(src)
-	return TRUE
 
-/mob/living/simple_animal/bot/vibebot/Logout()
+/mob/living/simple_animal/bot/vibebot/Destroy()
 	QDEL_NULL(vibe_ability)
 	return ..()
 
@@ -49,7 +39,7 @@
 		return
 
 	if(bot_mode_flags & BOT_MODE_ON)
-		vibe()
+		vibe_ability.Trigger()
 
 	if(!(bot_mode_flags & BOT_MODE_AUTOPATROL))
 		return
@@ -63,6 +53,10 @@
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	. = ..()
 
+/mob/living/simple_animal/bot/vibebot/proc/remove_colors()
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	set_light_color(null)
+
 /mob/living/simple_animal/bot/vibebot/proc/vibe()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
@@ -75,11 +69,9 @@
  */
 /datum/action/innate/vibebot_vibe
 	name = "Vibe"
-	desc = "Change your vibebot color."
-	icon_icon = 'icons/mob/aibots.dmi'
-	button_icon_state = "vibebot"
-	///The vibebot this action is stored to
-	var/mob/living/simple_animal/bot/vibebot/bot_mob
+	desc = "LMB: Change vibebot color. RMB: Reset vibebot color."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "funk"
 
 /datum/action/innate/vibebot_vibe/Grant(mob/user)
 	. = ..()
@@ -88,21 +80,28 @@
 	var/mob/living/simple_animal/bot/current_bot = user
 	if(current_bot.bot_type != VIBE_BOT)
 		return
-	bot_mob = user
-
-/datum/action/innate/vibebot_vibe/Destroy()
-	bot_mob = null
-	return ..()
+	link_to(current_bot)
 
 /datum/action/innate/vibebot_vibe/IsAvailable()
 	. = ..()
 	if(!.)
 		return FALSE
+	if(!target)
+		return FALSE
+	var/mob/living/simple_animal/bot/vibebot/bot_mob = target
 	if(!bot_mob)
 		return FALSE
 	if(!(bot_mob.bot_mode_flags & BOT_MODE_ON))
 		return FALSE
 	return TRUE
 
-/datum/action/innate/vibebot_vibe/Activate()
-	bot_mob.vibe()
+/datum/action/innate/vibebot_vibe/Trigger(trigger_flags)
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/simple_animal/bot/vibebot/bot_mob = target
+	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
+		bot_mob.remove_colors()
+	else
+		bot_mob.vibe()
+
