@@ -109,3 +109,25 @@
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
 		winset(src, "infowindow.changelog", "font-style=;")
+
+/client/verb/hotkeys_help()
+	set name = "Hotkeys Help"
+	set category = "OOC"
+
+	// List every keybind to chat.
+	var/chat_message = ""
+
+	// Show them in alphabetical order by key
+	var/list/key_bindings_by_key = prefs.key_bindings_by_key.Copy()
+	sortTim(key_bindings_by_key, cmp = /proc/cmp_text_asc)
+
+	for(var/key in key_bindings_by_key)
+		// Get the full names
+		var/list/binding_names = list()
+		for(var/kb_name in key_bindings_by_key[key])
+			var/datum/keybinding/binding = GLOB.keybindings_by_name[kb_name]
+			binding_names += binding.full_name
+
+		chat_message += "<b>[key]:</b> [jointext(binding_names, ", ")]\n"
+
+	to_chat(src, span_purple(chat_message))

@@ -50,7 +50,7 @@ menu "menu"
 		saved-params = "is-checked"
 	elem
 		name = "&Hotkeys"
-		command = "hotkeys-help"
+		command = "Hotkeys-Help"
 		category = "&Help"
 		saved-params = "is-checked"
 
