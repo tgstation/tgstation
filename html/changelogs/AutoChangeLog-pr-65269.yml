@@ -1,0 +1,7 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Windoors created by the RCD are correctly named"
+  - bugfix: "Windoors created by the RCD work properly with require one access"
+  - bugfix: "Windoors with unrestricted directional access open properly when operated from the same tile"
+  - qol: "Windoors have unrestricted directional access overlays like airlocks now"
