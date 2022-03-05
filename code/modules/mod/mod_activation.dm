@@ -245,8 +245,6 @@
 /obj/item/mod/control/proc/quick_deactivation()
 	for(var/obj/item/part as anything in mod_parts)
 		seal_part(part, seal = FALSE)
-
-	for(var/obj/item/part as anything in mod_parts)
 		conceal(null, part)
 	finish_activation(on = FALSE)
 
