@@ -723,7 +723,7 @@
 	)
 	required_candidates = 1
 	weight = 3
-	cost = 6 //very cheap cost for the round
+	cost = 4 //very cheap cost for the round
 	scaling_cost = 0
 	requirements = list(8,8,8,8,8,8,8,8,8,8)
 	antag_cap = list("denominator" = 24, "offset" = 2)

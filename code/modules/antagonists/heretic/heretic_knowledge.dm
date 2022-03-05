@@ -26,6 +26,9 @@
 	var/list/result_atoms = list()
 	/// Cost of knowledge in knowlege points
 	var/cost = 0
+	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
+	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
+	var/priority = 0
 	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
 	var/route
 
@@ -61,6 +64,15 @@
  * * user - the heretic which we're removing things from
  */
 /datum/heretic_knowledge/proc/on_lose(mob/user)
+
+/**
+ * Determines if a heretic can actually attempt to invoke the knowledge as a ritual.
+ * By default, we can only invoke knowledge with rituals associated.
+ *
+ * Return TRUE to have the ritual show up in the rituals list, FALSE otherwise.
+ */
+/datum/heretic_knowledge/proc/can_be_invoked(datum/antagonist/heretic/invoker)
+	return !!LAZYLEN(required_atoms)
 
 /**
  * Special check for rituals.
@@ -181,7 +193,11 @@
 		if(QDELETED(real_thing))
 			LAZYREMOVE(created_items, ref)
 
-	return LAZYLEN(created_items) < limit
+	if(LAZYLEN(created_items) >= limit)
+		loc.balloon_alert(user, "ritual failed, at limit!")
+		return FALSE
+
+	return TRUE
 
 /datum/heretic_knowledge/limited_amount/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	for(var/result in result_atoms)
@@ -204,7 +220,12 @@
 		fingerprints[requirements.return_fingerprints()] = 1
 	list_clear_nulls(fingerprints)
 
-	return length(fingerprints) // No fingerprints? No ritual
+	// No fingerprints? No ritual
+	if(!length(fingerprints))
+		loc.balloon_alert(user, "ritual failed, no fingerprints!")
+		return FALSE
+
+	return TRUE
 
 /datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,  turf/loc)
 
@@ -237,11 +258,15 @@
  * Calls a curse onto [chosen_mob].
  */
 /datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("[type] did not implement curse()!")
 
 /**
  * Removes a curse from [chosen_mob]. Used in timers / callbacks.
  */
 /datum/heretic_knowledge/curse/proc/uncurse(mob/living/carbon/human/chosen_mob)
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("[type] did not implement uncurse()!")
 
 /*
  * A knowledge subtype lets the heretic summon a monster with the ritual.
@@ -295,6 +320,7 @@
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
 	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
 	/// Whether we've done the ritual. Only doable once.
 	var/was_completed = FALSE
 
@@ -351,12 +377,15 @@
 	to_chat(user, span_hierophant("The [name] requires the following:"))
 	for(var/obj/item/path as anything in required_atoms)
 		var/amount_needed = required_atoms[path]
-		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)][amount_needed == 1 ? "":"s"]..."))
-		requirements_string += "[amount_needed == 1 ? "":"[amount_needed] "][initial(path.name)][amount_needed == 1 ? "":"s"]"
+		to_chat(user, span_hypnophrase("[amount_needed] [initial(path.name)]\s..."))
+		requirements_string += "[amount_needed == 1 ? "":"[amount_needed] "][initial(path.name)]\s"
 
 	to_chat(user, span_hierophant("Completing it will reward you [KNOWLEDGE_RITUAL_POINTS] knowledge points. You can check the knowledge in your Researched Knowledge to be reminded."))
 
 	desc = "Allows you to transmute [english_list(requirements_string)] for [KNOWLEDGE_RITUAL_POINTS] bonus knowledge points. This can only be completed once."
+
+/datum/heretic_knowledge/knowledge_ritual/can_be_invoked(datum/antagonist/heretic/invoker)
+	return !was_completed
 
 /datum/heretic_knowledge/knowledge_ritual/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	return !was_completed
@@ -370,6 +399,7 @@
 	to_chat(user, span_boldnotice("[name] completed!"))
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
 	desc += " (Completed!)"
+	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	return TRUE
 
 #undef KNOWLEDGE_RITUAL_POINTS
@@ -379,6 +409,7 @@
  */
 /datum/heretic_knowledge/final
 	cost = 2
+	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
 
 /datum/heretic_knowledge/final/on_research(mob/user)
@@ -392,14 +423,19 @@
 		They have [length(heretic_datum.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [heretic_datum.total_sacrifices] people ([heretic_datum.high_value_sacrifices] of which were high value)")
 
-/datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	if(heretic_datum.ascended)
+/datum/heretic_knowledge/final/can_be_invoked(datum/antagonist/heretic/invoker)
+	if(invoker.ascended)
 		return FALSE
 
-	for(var/datum/objective/must_be_done as anything in heretic_datum.objectives)
-		if(!must_be_done.check_completion())
-			return FALSE
+	if(!invoker.can_ascend())
+		return FALSE
+
+	return TRUE
+
+/datum/heretic_knowledge/final/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	if(!can_be_invoked(heretic_datum))
+		return FALSE
 
 	// Remove all non-dead humans from the atoms list.
 	// (We only want to sacrifice dead folk.)
@@ -426,6 +462,8 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
+
+	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
 	return TRUE
 
 /datum/heretic_knowledge/final/cleanup_atoms(list/selected_atoms)
