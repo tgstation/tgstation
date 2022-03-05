@@ -1,23 +1,29 @@
 /**
  * Tool bump bespoke element
  *
- * Calls attackby on the source with the bumper's held object only if it has a specific tool_behaviour
+ * Calls proc on the attached atom with a held object of the bumper's only if it has a specific tool_behaviour or is a specific type of item (e.g. fireaxe)
  */
 /datum/element/tool_bump
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
-	///Behaviour to look for in bumper's held object before attacking the attached atom with it
-	var/tool_behaviour
+	///Behaviours to look for in bumper's held objects before procing the attached atom with it
+	var/list/tool_behaviours
 	///Can we use this tool to perform this behaviour with our off-hand (e.g. mining)
 	var/require_active_hand = TRUE
+	///Proc to call on bumped atom if carrying correct tool
+	var/proc_to_call
+	///Tool types to look for in bumper's held objects before procing the attached atom with it
+	var/list/tool_items
 
-/datum/element/tool_bump/Attach(datum/target, tool_behaviour = null, require_active_hand = TRUE)
+/datum/element/tool_bump/Attach(datum/target, tool_behaviours = null, require_active_hand = TRUE, proc_to_call = null, tool_items = null)
 	. = ..()
 
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
-	src.tool_behaviour = tool_behaviour
+	LAZYADD(src.tool_behaviours, tool_behaviours)
 	src.require_active_hand = require_active_hand
+	src.proc_to_call = proc_to_call
+	LAZYADD(src.tool_items, tool_items)
 
 	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/check_tool, override = TRUE)
 
@@ -34,28 +40,49 @@
 
 	var/mob/living/bumper = bumpee
 
-	if(TIMER_COOLDOWN_CHECK(source, bumper))
+	if(bumper.next_move > world.time)
 		return
-	if(!ISADVANCEDTOOLUSER(bumper)) // Unadvanced tool users can't tool anyway. This just prevents message spam from attackby()
+	if(!ISADVANCEDTOOLUSER(bumper))
 		return
-	if(bumper.combat_mode) //Not meant to let you bump attack certain atoms with certain tools
+	if(bumper.combat_mode) //Not meant to let you bump attack
+		return
+	if(!bumper.get_num_held_items())
 		return
 
 	if(iscyborg(bumper))
 		var/mob/living/silicon/robot/robot = bumper
-		if(robot.module_active?.tool_behaviour == tool_behaviour)
-			INVOKE_ASYNC(source, /atom.proc/attackby, robot.module_active, robot)
-			TIMER_COOLDOWN_START(source, robot, CLICK_CD_MELEE) //this user can't tool bump this atom more often than this cooldown
+		if(LAZYFIND(tool_behaviours, robot.module_active?.tool_behaviour))
+			INVOKE_ASYNC(robot.module_active, /obj/item.proc/melee_attack_chain, bumper, source)
 		return
 
-	var/obj/item/tool_item
+	var/obj/item/held_tool
 	if(require_active_hand)
-		tool_item =	bumper.get_active_held_item()
-		if(tool_item?.tool_behaviour != tool_behaviour)
+		held_tool = bumper.get_active_held_item()
+		if(!held_tool)
 			return
+		if(LAZYFIND(tool_behaviours, held_tool.tool_behaviour))
+			call_proc(source, held_tool, bumper)
+			return
+		for(var/tool_path in tool_items)
+			message_admins("tool_path is [tool_path]!")
+			if(istype(held_tool, tool_path))
+				call_proc(source, held_tool, bumper)
+				return
+			message_admins("held_tool [held_tool] was not type of tool_path [tool_path]!")
 	else
-		tool_item = bumper.is_holding_tool_quality(tool_behaviour)
+		for(var/tool_behaviour in tool_behaviours)
+			held_tool = bumper.is_holding_tool_quality(tool_behaviour)
+			if(held_tool)
+				call_proc(source, held_tool, bumper)
+				return
+		for(var/tool_path in tool_items)
+			message_admins("tool_path is [tool_path]!")
+			for(var/obj/item/held_item in bumper.held_items)
+				message_admins("held_item is [held_item]!")
+				if(istype(held_item, tool_path))
+					call_proc(source, held_item, bumper)
+					return
+				message_admins("held_item [held_item] was not type of tool_path [tool_path]!")
 
-	if(tool_item)
-		INVOKE_ASYNC(source, /atom.proc/attackby, tool_item, bumper)
-		TIMER_COOLDOWN_START(source, bumper, CLICK_CD_MELEE)
+/datum/element/tool_bump/proc/call_proc(atom/source, obj/item/tool, mob/living/bumper)
+	INVOKE_ASYNC(tool, /obj/item.proc/melee_attack_chain, bumper, source)

@@ -36,7 +36,7 @@
 
 /turf/closed/mineral/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/tool_bump, TOOL_MINING, FALSE)
+	AddElement(/datum/element/tool_bump, list(TOOL_MINING), FALSE, /atom.proc/attackby, list(/obj/item/resonator))
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
@@ -102,7 +102,7 @@
 	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
 	var/skill_modifier = 1
 	skill_modifier = user?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
-	to_chat(user, span_notice("You start pulling out pieces of [src] with your hands..."))
+	to_chat(user, span_notice("You start pulling out pieces of [src]..."))
 	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return

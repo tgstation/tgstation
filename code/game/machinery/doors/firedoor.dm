@@ -69,6 +69,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/tool_bump, list(TOOL_CROWBAR), TRUE, /atom.proc/attackby, list(/obj/item/fireaxe))
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 
@@ -80,9 +81,6 @@
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = merger_typecache)
 
-/obj/machinery/door/firedoor/ComponentInitialize()
-	. = ..()
-	AddElement(/datum/element/tool_bump, TOOL_CROWBAR, TRUE)
 
 /**
  * Sets the offset for the warning lights.
