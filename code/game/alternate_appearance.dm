@@ -101,6 +101,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/remove_atom_from_hud(atom/A)
 	. = ..()
 	A.hud_list -= appearance_key
+	A.set_hud_image_inactive(appearance_key)
 	if(. && !QDELETED(src))
 		qdel(src)
 
