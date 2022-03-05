@@ -13,7 +13,7 @@
 	icon_state = "medical"
 	build_path = /obj/machinery/clonepod/experimental
 
-/obj/item/circuitboard/machine/dna_scannernew		//hippie end, re-add cloning
+/obj/item/circuitboard/machine/clonescanner	//hippie end, re-add cloning
 	name = "Cloning Scanner (Machine Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/dna_scannernew

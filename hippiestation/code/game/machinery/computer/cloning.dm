@@ -1,6 +1,6 @@
 #define AUTOCLONING_MINIMAL_LEVEL 3
 
-/obj/machinery/computer/cloning
+/obj/machinery/computer/cloning		//hippie start, re-add cloning
 	name = "cloning console"
 	desc = "Used to clone people and manage DNA."
 	icon_screen = "dna"
@@ -521,7 +521,7 @@
 	updateUsrDialog()
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 
-/obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)
+/obj/machinery/computer/cloning/proc/scan_occupant(occupant, mob/M, body_only)	//hippie end, re-add cloning
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
 	var/datum/dna/dna
 	var/datum/bank_account/has_bank_account

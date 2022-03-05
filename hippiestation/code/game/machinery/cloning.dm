@@ -8,12 +8,13 @@
 
 #define SPEAK(message) radio.talk_into(src, message, radio_channel)
 
-/obj/machinery/clonepod
+/obj/machinery/clonepod	//hippie start, re-add cloning
 	name = "cloning pod"
 	desc = "An electronically-lockable pod for growing organic tissue."
 	density = TRUE
 	icon = 'icons/obj/machines/cloning.dmi'
 	icon_state = "pod_0"
+	req_access = list(ACCESS_GENETICS) //FOR PREMATURE UNLOCKING.
 	verb_say = "states"
 	circuit = /obj/item/circuitboard/machine/clonepod
 
@@ -323,7 +324,10 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
-	if(W.GetID())	//id access requirement removed
+	if(W.GetID())
+		if(!check_access(W))
+			to_chat(user, "<span class='danger'>Access Denied.</span>")
+			return
 		if(!(mob_occupant || mess))
 			to_chat(user, "<span class='danger'>Error: Pod has no occupant.</span>")
 			return
@@ -498,7 +502,7 @@
  *	Manual -- A big ol' manual.
  */
 
-/obj/item/paper/guides/jobs/medical/cloning
+/obj/item/paper/guides/jobs/medical/cloning	//hippie end, re-add cloning
 	name = "paper - 'H-87 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
 	Congratulations, your station has purchased the H-87 industrial cloning device!<br>
