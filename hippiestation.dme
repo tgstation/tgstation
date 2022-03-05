@@ -3399,7 +3399,6 @@
 #include "hippiestation\code\modules\library\lib_items.dm"
 #include "hippiestation\code\modules\mob\living\brain\brain_item.dm"
 #include "hippiestation\code\modules\research\designs\machine_designs.dm"
-#include "hippiestation\code\modules\research\designs\medical_designs.dm"
 #include "hippiestation\code\modules\research\techweb\all_nodes.dm"
 #include "hippiestation\code\modules\ruins\spaceruin_code\cloning_lab.dm"
 #include "hippiestation\code\modules\vending\megaseed.dm"
