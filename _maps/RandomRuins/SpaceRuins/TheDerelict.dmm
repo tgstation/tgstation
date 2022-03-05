@@ -73,9 +73,9 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/derelict/service)
 "ax" = (
-/obj/machinery/vending/tool,
-/turf/open/floor/plating,
-/area/ruin/space/derelict/maintenance/port/central)
+/obj/item/stack/sheet/iron/fifty,
+/turf/template_noop,
+/area/template_noop)
 "az" = (
 /obj/structure/table/reinforced,
 /obj/item/multitool,
@@ -990,6 +990,11 @@
 "eP" = (
 /turf/open/floor/engine/vacuum,
 /area/ruin/space/derelict/research)
+"eR" = (
+/obj/effect/spawner/random/trash/bin,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "eS" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1796,6 +1801,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/space/derelict/service)
+"io" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "ip" = (
 /obj/effect/turf_decal/tile/red/half{
 	dir = 8
@@ -1994,7 +2003,7 @@
 /area/ruin/space/derelict/maintenance/starboard/lesser)
 "jm" = (
 /obj/machinery/space_heater,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "jo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -2115,7 +2124,7 @@
 	name = "External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "engimaintport"
+	cycle_id = "dereengimaintport"
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/maintenance/port)
@@ -2508,6 +2517,12 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/hallway_primary)
+"lq" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "lr" = (
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Supermatter Engine Room";
@@ -3426,6 +3441,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/hallway_primary)
+"ow" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/ruin/space/derelict/maintenance/port/central)
 "ox" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green/half{
@@ -3511,6 +3530,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/engineering/gravity_generator)
+"oM" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "oO" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/stripes/line{
@@ -3581,6 +3607,14 @@
 /obj/machinery/suit_storage_unit/open,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/EVA)
+"po" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict/maintenance/port/central)
 "pu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -3634,6 +3668,11 @@
 	},
 /turf/open/floor/engine,
 /area/ruin/space/derelict/engineering)
+"pS" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "pZ" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -4088,7 +4127,7 @@
 /area/ruin/space/derelict/maintenance/starboard)
 "tb" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "tc" = (
 /obj/machinery/atmospherics/components/binary/pump{
@@ -4172,7 +4211,7 @@
 	},
 /area/ruin/space/derelict/medical)
 "tH" = (
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/derelict/maintenance/port/central)
 "tI" = (
 /obj/machinery/door/firedoor,
@@ -4180,7 +4219,8 @@
 	name = "Custodial Maintenance";
 	req_access_txt = "26"
 	},
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "tK" = (
 /obj/structure/closet/toolcloset,
@@ -4233,7 +4273,7 @@
 /area/ruin/space/derelict/engineering)
 "uc" = (
 /obj/effect/spawner/random/engineering/tank,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "ud" = (
 /turf/closed/wall/r_wall,
@@ -4465,6 +4505,12 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
+"vX" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "vZ" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict/maintenance/port)
@@ -4954,6 +5000,11 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/departures)
+"zi" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/space/derelict/maintenance/port/central)
 "zo" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -5153,6 +5204,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/obj/effect/spawner/random/trash/mopbucket,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/service/janitor)
 "AG" = (
@@ -5634,6 +5686,9 @@
 /obj/machinery/computer/bookmanagement,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/crew)
+"Ew" = (
+/turf/open/floor/wood,
+/area/ruin/space/derelict/maintenance/port/central)
 "Ey" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -5707,6 +5762,13 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/template_noop)
+"Fe" = (
+/obj/effect/spawner/random/engineering/tank,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/derelict/maintenance/port/central)
 "Ff" = (
 /obj/effect/turf_decal/loading_area/white{
 	dir = 4
@@ -5733,6 +5795,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/service)
+"Fq" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/ruin/space/derelict/maintenance/port/central)
 "Fr" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
@@ -5752,6 +5818,10 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
+"Fz" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "FI" = (
 /obj/structure/bed/roller,
 /obj/machinery/iv_drip,
@@ -6101,6 +6171,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/ruin/space/derelict/medical)
+"HO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/space/derelict/maintenance/port/central)
 "HP" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -6187,6 +6261,12 @@
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/white,
 /area/ruin/space/derelict/research)
+"Il" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "Is" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Gravity Generator Chamber";
@@ -6961,8 +7041,8 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/derelict/medical)
 "My" = (
-/obj/machinery/vending/assist,
-/turf/open/floor/plating,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "MA" = (
 /obj/machinery/atmospherics/components/binary/volume_pump{
@@ -7041,7 +7121,7 @@
 /area/template_noop)
 "MX" = (
 /obj/machinery/airalarm/directional/west,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "MY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -7354,7 +7434,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/derelict/maintenance/port/central)
 "OQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -7365,8 +7445,7 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/research)
 "OT" = (
-/obj/machinery/portable_atmospherics/pump,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "OU" = (
 /obj/effect/turf_decal/tile/bar,
@@ -7575,6 +7654,13 @@
 	},
 /turf/open/floor/wood,
 /area/ruin/space/derelict/service)
+"Qe" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "Ql" = (
 /obj/structure/table,
 /obj/machinery/light/directional/north,
@@ -7707,6 +7793,13 @@
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
 /area/template_noop)
+"Rh" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "Ri" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 10
@@ -7744,6 +7837,17 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/hallway_primary)
+"RA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 12;
+	pixel_y = 9
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict/maintenance/port/central)
 "RB" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "head of personnel's office maintenance";
@@ -7755,6 +7859,9 @@
 /area/ruin/space/derelict/maintenance/port)
 "RC" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet,
+/obj/effect/spawner/random/exotic/tool,
+/obj/item/mop/advanced,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/service/janitor)
 "RF" = (
@@ -7922,6 +8029,11 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/engineering)
+"SE" = (
+/obj/effect/spawner/random/structure/girder,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/space/derelict/maintenance/port/central)
 "SF" = (
 /obj/structure/closet/crate/freezer/blood,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -8622,7 +8734,7 @@
 "WS" = (
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/spawner/random/maintenance/two,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "WT" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -8873,9 +8985,23 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/ruin/space/derelict/medical)
+"YK" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/space/derelict/maintenance/port/central)
 "YO" = (
-/obj/machinery/portable_atmospherics/scrubber,
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/ruin/space/derelict/maintenance/port/central)
 "YQ" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -9711,7 +9837,7 @@ bw
 ef
 bw
 ef
-aa
+ax
 aa
 aa
 he
@@ -10031,7 +10157,7 @@ mk
 jv
 jv
 mk
-ON
+Il
 mk
 mk
 jv
@@ -10137,7 +10263,7 @@ mk
 tb
 tH
 MX
-tH
+OT
 mk
 KQ
 yL
@@ -10234,14 +10360,14 @@ BT
 xU
 nM
 mk
+OT
+OT
+OT
+mk
+OT
 tH
-tH
-tH
-tH
-tH
-tH
-tH
-tH
+OT
+OT
 mk
 Zz
 Au
@@ -10341,11 +10467,11 @@ mk
 tH
 tH
 tH
+vX
 tH
 tH
-tH
-tH
-tH
+OT
+OT
 mk
 nK
 UM
@@ -10443,11 +10569,11 @@ xU
 kK
 mk
 tH
+OT
+OT
+mk
 tH
-tH
-tH
-tH
-tH
+OT
 mk
 mk
 mk
@@ -10551,7 +10677,7 @@ WS
 mk
 mk
 tH
-tH
+OT
 mk
 RC
 PB
@@ -10655,7 +10781,7 @@ WS
 mk
 OT
 tH
-tH
+OT
 mk
 yu
 tX
@@ -10759,7 +10885,7 @@ mk
 mk
 OT
 tH
-tH
+OT
 mk
 rk
 pD
@@ -10863,7 +10989,7 @@ nN
 mk
 mk
 tH
-tH
+OT
 mk
 Tl
 OJ
@@ -10967,7 +11093,7 @@ nO
 mk
 tH
 tH
-tH
+mk
 mk
 mk
 mk
@@ -11070,13 +11196,13 @@ uf
 nQ
 mk
 tH
-tH
-tH
-tH
+pS
+mk
+RA
 YO
 mk
-tH
-tH
+ow
+tb
 mk
 is
 nf
@@ -11174,14 +11300,14 @@ QQ
 Ba
 mk
 tH
-tH
-tH
-tH
-YO
 mk
-tH
-tH
-ON
+mk
+HO
+po
+mk
+ow
+ow
+oM
 is
 xQ
 is
@@ -11278,13 +11404,13 @@ TK
 TK
 mk
 tH
-tH
-tH
-tH
+mk
+Ew
+HO
 mk
 mk
-tH
-tH
+ow
+SE
 mk
 Rs
 Hr
@@ -11382,13 +11508,13 @@ vC
 DE
 mk
 tH
+mk
+YK
+mk
+mk
+ow
 tH
-tH
-tH
-tH
-tH
-tH
-tH
+lq
 mk
 wb
 Zx
@@ -11486,13 +11612,13 @@ TK
 DX
 mk
 tH
-tH
-tH
-tH
-tH
-tH
-tH
-ax
+ow
+ow
+ow
+Qe
+ow
+mk
+mk
 mk
 Ua
 gj
@@ -11589,13 +11715,13 @@ cK
 TK
 El
 mk
-tH
-tH
-tH
-tH
-tH
-tH
-tH
+ow
+mk
+Rh
+Rh
+mk
+Fz
+Qe
 My
 mk
 Ua
@@ -11693,14 +11819,14 @@ cK
 TK
 Ev
 mk
-tH
-tH
-tH
-tH
-tH
-tH
-tH
-tb
+ow
+Fq
+Fe
+zi
+mk
+io
+mk
+eR
 mk
 fD
 DB
@@ -11797,7 +11923,7 @@ oi
 vG
 gJ
 mk
-ON
+oM
 mk
 mk
 mk
