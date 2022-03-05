@@ -395,6 +395,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// If something has been engraved/cannot be engraved
 #define TRAIT_NOT_ENGRAVABLE "not_engravable"
 
+/// Whether or not orbiting is blocked or not
+#define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -597,6 +600,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// trait denoting someone will sometimes recover out of crit
 #define TRAIT_UNBREAKABLE "unbreakable"
+
 
 //Medical Categories for quirks
 #define CAT_QUIRK_ALL 0

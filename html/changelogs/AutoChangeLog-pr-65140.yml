@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - code_imp: "Made some species datums follow style guidelines slightly better (lists, indentation, spacing, etc)."
-  - refactor: "Refactored how species pages are generated in the preferences menu. Species themselves are untouched completely. Some species pages have been filled our more (or less) as a result."
-  - bugfix: "Monkeys how have a preference menu entry, as god intended."

@@ -744,7 +744,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		/mob/living/basic/cockroach,
 		/obj/item/queen_bee,
 		/obj/structure/spider/spiderling,
-		/mob/living/simple_animal/ant,
+		/mob/living/simple_animal/hostile/ant,
 		/obj/effect/decal/cleanable/ants,
 	))
 

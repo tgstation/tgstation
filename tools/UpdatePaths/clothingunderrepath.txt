@@ -183,8 +183,10 @@
 /obj/item/clothing/under/rank/warden/navyblue : /obj/item/clothing/under/rank/security/warden/formal
 /obj/item/clothing/under/rank/det : /obj/item/clothing/under/rank/security/detective
 /obj/item/clothing/under/rank/det/skirt : /obj/item/clothing/under/rank/security/detective/skirt
-/obj/item/clothing/under/rank/det/grey : /obj/item/clothing/under/rank/security/detective/grey
-/obj/item/clothing/under/rank/det/grey/skirt : /obj/item/clothing/under/rank/security/detective/grey/skirt
+/obj/item/clothing/under/rank/det/grey : /obj/item/clothing/under/rank/security/detective/noir
+/obj/item/clothing/under/rank/det/grey/skirt : /obj/item/clothing/under/rank/security/detective/noir/skirt
+/obj/item/clothing/under/rank/security/detective/grey : /obj/item/clothing/under/rank/security/detective/noir
+/obj/item/clothing/under/rank/security/detective/grey/skirt : /obj/item/clothing/under/rank/security/detective/noir/skirt
 /obj/item/clothing/under/rank/head_of_security : /obj/item/clothing/under/rank/security/head_of_security
 /obj/item/clothing/under/rank/head_of_security/skirt : /obj/item/clothing/under/rank/security/head_of_security/skirt
 /obj/item/clothing/under/rank/head_of_security/grey : /obj/item/clothing/under/rank/security/head_of_security/grey

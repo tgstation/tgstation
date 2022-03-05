@@ -452,32 +452,27 @@
  * 4. Turf
  * 5. Nothing
  */
-/obj/projectile/proc/select_target(turf/T, atom/target, atom/bumped)
+/obj/projectile/proc/select_target(turf/our_turf, atom/target, atom/bumped)
 	// 1. original
 	if(can_hit_target(original, TRUE, FALSE, original == bumped))
 		return original
-	var/list/atom/possible = list() // let's define these ONCE
-	var/list/atom/considering = list()
+	var/list/atom/considering = list()  // let's define this ONCE
 	// 2. mobs
-	possible = typecache_filter_list(T, GLOB.typecache_living) // living only
-	for(var/i in possible)
-		if(!can_hit_target(i, i == original, TRUE, i == bumped))
-			continue
-		considering += i
+	for(var/mob/living/iter_possible_target in our_turf)
+		if(can_hit_target(iter_possible_target, iter_possible_target == original, TRUE, iter_possible_target == bumped))
+			considering += iter_possible_target
 	if(considering.len)
-		var/mob/living/M = pick(considering)
-		return M.lowest_buckled_mob()
-	considering.len = 0
+		var/mob/living/hit_living = pick(considering)
+		return hit_living.lowest_buckled_mob()
 	// 3. objs and other dense things
-	for(var/i in T.contents)
-		if(!can_hit_target(i, i == original, TRUE, i == bumped))
-			continue
-		considering += i
+	for(var/i in our_turf)
+		if(can_hit_target(i, i == original, TRUE, i == bumped))
+			considering += i
 	if(considering.len)
 		return pick(considering)
 	// 4. turf
-	if(can_hit_target(T, T == original, TRUE, T == bumped))
-		return T
+	if(can_hit_target(our_turf, our_turf == original, TRUE, our_turf == bumped))
+		return our_turf
 	// 5. nothing
 		// (returns null)
 
