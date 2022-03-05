@@ -40,19 +40,18 @@
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
 
-	src.unres_sides = unres_sides
-
-	if(src.unres_sides)
+	if(unres_sides)
 		//remove unres_sides from directions it can't be bumped from
 		switch(dir)
 			if(NORTH,SOUTH)
-				src.unres_sides &= ~EAST
-				src.unres_sides &= ~WEST
+				unres_sides &= ~EAST
+				unres_sides &= ~WEST
 			if(EAST,WEST)
-				src.unres_sides &= ~NORTH
-				src.unres_sides &= ~SOUTH
+				unres_sides &= ~NORTH
+				unres_sides &= ~SOUTH
 
-		update_appearance(UPDATE_ICON)
+	src.unres_sides = unres_sides
+	update_appearance(UPDATE_ICON)
 
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
 
@@ -82,10 +81,10 @@
 	icon_state = "[base_state][density ? null : "open"]"
 
 	if(hasPower() && unres_sides)
-		set_light(2, 1)
+		set_light(l_range = 2, l_power = 1)
 		return
 
-	set_light(0)
+	set_light(l_range = 0)
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
