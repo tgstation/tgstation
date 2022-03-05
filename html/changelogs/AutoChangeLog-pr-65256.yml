@@ -1,0 +1,5 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - code_imp: "Added a few more options for woman clothing auto-cropping, hopefully to help making certain outfits look less scuffed."
+  - imageadd: "Fixed the side views of the suits for woman, that previously looked -very- scuffed, as a proof of concept for the new female auto-cropping masks."
