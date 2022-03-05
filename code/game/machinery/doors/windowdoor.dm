@@ -92,22 +92,26 @@
 	if(!hasPower() || !unres_sides)
 		return
 
-	if(unres_sides & (NORTH|SOUTH))
-		var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="[(unres_sides & NORTH) ? "unres_n" : "unres_s"]")
-		switch(dir)
-			if(NORTH)
-				side_overlay.pixel_y = (unres_sides & NORTH) ? 31 : -6
-			if(SOUTH)
-				side_overlay.pixel_y = (unres_sides & NORTH) ? 6 : -31
-		. += side_overlay
-	if(unres_sides & (EAST|WEST))
-		var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="[(unres_sides & EAST) ? "unres_e" : "unres_w"]")
-		switch(dir)
-			if(EAST)
-				side_overlay.pixel_x = (unres_sides & EAST) ? 31 : -6
-			if(WEST)
-				side_overlay.pixel_x = (unres_sides & EAST) ? 6 : -31
-		. += side_overlay
+	switch(dir)
+		if(NORTH,SOUTH)
+			if(unres_sides & NORTH)
+				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_n")
+				side_overlay.pixel_y = dir == NORTH ? 31 : 6
+				. += side_overlay
+			if(unres_sides & SOUTH)
+				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
+				side_overlay.pixel_y = dir == NORTH ? -6 : -31
+				. += side_overlay
+
+		if(EAST,WEST)
+			if(unres_sides & EAST)
+				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
+				side_overlay.pixel_x = dir == EAST ? 31 : 6
+				. += side_overlay
+			if(unres_sides & WEST)
+				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_w")
+				side_overlay.pixel_x = dir == EAST ? -6 : -31
+				. += side_overlay
 
 /obj/machinery/door/window/proc/open_and_close()
 	if(!open())
