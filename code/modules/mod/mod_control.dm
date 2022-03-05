@@ -142,6 +142,7 @@
 		install(module)
 	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, .proc/on_potion)
+	RegisterSignal(src, COMSIG_ITEM_SUMMONED, .proc/on_summon)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 /obj/item/mod/control/Destroy()
@@ -461,6 +462,11 @@
 	for(var/obj/item/part as anything in mod_parts)
 		if(part.loc != src)
 			return COMPONENT_ITEM_BLOCK_UNEQUIP
+
+/obj/item/mod/control/proc/on_summon(mob/living/thief)
+	SIGNAL_HANDLER
+
+	quick_deactivation()
 
 /obj/item/mod/control/proc/update_flags()
 	var/list/used_skin = theme.skins[skin]

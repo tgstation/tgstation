@@ -45,6 +45,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	RegisterSignal(src, COMSIG_ITEM_SUMMONED, .proc/on_summon)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
@@ -172,6 +173,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	else
 		STOP_PROCESSING(SSobj, src)
 	return ..()
+
+/obj/item/organ/proc/on_summon(datum/source, mob/living/thief)
+	SIGNAL_HANDLER
+
+	log_combat(thief, owner, "magically removed [name] from", addition="COMBAT MODE: [uppertext(thief.combat_mode)]")
+	Remove(owner)
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	useable = FALSE //You can't use it anymore after eating it you spaztic

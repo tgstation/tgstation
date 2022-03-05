@@ -23,6 +23,7 @@
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 	SSair.start_processing_machine(src)
+	RegisterSignal(src, COMSIG_ITEM_SUMMONED, .proc/on_summon)
 
 /obj/machinery/portable_atmospherics/Destroy()
 	disconnect()
@@ -121,6 +122,12 @@
 	. += span_notice("\The [src] contains [holding]. Alt-click [src] to remove it.")+\
 		span_notice("Click [src] with another gas tank to hot swap [holding].")
 
+/obj/machinery/portable_atmospherics/proc/on_summon(datum/source, mob/living/thief)
+	SIGNAL_HANDLER
+
+	disconnect()
+	update_appearance()
+
 /**
  * Allow the player to place a tank inside the machine.
  * Arguments:
@@ -193,10 +200,10 @@
 	add_fingerprint(user)
 	return ..()
 
-/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change. 
+/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change.
 /// This checks for that case and removes our reference to it.
 /obj/machinery/portable_atmospherics/proc/unregister_holding()
 	SIGNAL_HANDLER
-	
+
 	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
 	holding = null

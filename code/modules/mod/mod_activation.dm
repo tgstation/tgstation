@@ -241,4 +241,13 @@
 		seal_part(part, seal = TRUE)
 	finish_activation(on = TRUE)
 
+/// Quickly undeploys all the suit parts and if successful, unseals them and turns the suit off. Intended mostly for nodrop bypassing.
+/obj/item/mod/control/proc/quick_deactivation()
+	for(var/obj/item/part as anything in mod_parts)
+		seal_part(part, seal = FALSE)
+
+	for(var/obj/item/part as anything in mod_parts)
+		conceal(null, part)
+	finish_activation(on = FALSE)
+
 #undef MOD_ACTIVATION_STEP_FLAGS

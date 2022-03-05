@@ -117,6 +117,8 @@
 ///called before marking an object for retrieval, checked in /obj/effect/proc_holder/spell/targeted/summonitem/cast() : (mob/user)
 #define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
 	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
+///called when the item is summoned, checked in /obj/effect/proc_holder/spell/targeted/summonitem/cast() : (mob/user)
+#define COMSIG_ITEM_SUMMONED "item_summoned"
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
