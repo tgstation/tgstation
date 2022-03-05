@@ -157,7 +157,7 @@
 		var/obj/item/I = AM
 		if(!density || (I.w_class < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
 			return
-		if(check_access(I))
+		if(requiresID() && check_access(I))
 			open()
 		else
 			do_animate("deny")
@@ -334,7 +334,7 @@
 
 /obj/machinery/door/proc/open()
 	if(!density)
-		return 1
+		return TRUE
 	if(operating)
 		return
 	operating = TRUE
@@ -352,7 +352,7 @@
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/close()
 	if(density)
@@ -424,7 +424,7 @@
 	addtimer(CALLBACK(src, .proc/autoclose), wait, TIMER_UNIQUE | TIMER_NO_HASH_WAIT | TIMER_OVERRIDE)
 
 /obj/machinery/door/proc/requiresID()
-	return 1
+	return TRUE
 
 /obj/machinery/door/proc/hasPower()
 	return !(machine_stat & NOPOWER)
