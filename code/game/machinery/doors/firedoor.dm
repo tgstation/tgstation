@@ -81,7 +81,6 @@
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = merger_typecache)
 
-
 /**
  * Sets the offset for the warning lights.
  *

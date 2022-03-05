@@ -64,11 +64,9 @@
 			call_proc(source, held_tool, bumper)
 			return
 		for(var/tool_path in tool_items)
-			message_admins("tool_path is [tool_path]!")
 			if(istype(held_tool, tool_path))
 				call_proc(source, held_tool, bumper)
 				return
-			message_admins("held_tool [held_tool] was not type of tool_path [tool_path]!")
 	else
 		for(var/tool_behaviour in tool_behaviours)
 			held_tool = bumper.is_holding_tool_quality(tool_behaviour)
@@ -76,13 +74,10 @@
 				call_proc(source, held_tool, bumper)
 				return
 		for(var/tool_path in tool_items)
-			message_admins("tool_path is [tool_path]!")
 			for(var/obj/item/held_item in bumper.held_items)
-				message_admins("held_item is [held_item]!")
 				if(istype(held_item, tool_path))
 					call_proc(source, held_item, bumper)
 					return
-				message_admins("held_item [held_item] was not type of tool_path [tool_path]!")
 
 /datum/element/tool_bump/proc/call_proc(atom/source, obj/item/tool, mob/living/bumper)
 	INVOKE_ASYNC(tool, /obj/item.proc/melee_attack_chain, bumper, source)
