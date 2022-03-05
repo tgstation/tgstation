@@ -17,7 +17,7 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer
 	desc = "It's a jumpsuit worn by those with the experience to be \"Chief Medical Officer\". It provides minor biological protection."
@@ -41,7 +41,7 @@
 	inhand_icon_state = "b_suit"
 	can_adjust = TRUE
 	alt_covers_chest = TRUE
-	fitted = FEMALE_UNIFORM_TOP
+	fitted = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt
 	name = "chief medical officer's turtleneck skirt"
