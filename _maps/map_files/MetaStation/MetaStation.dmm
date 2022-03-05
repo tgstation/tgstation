@@ -39488,7 +39488,9 @@
 	dir = 8
 	},
 /obj/machinery/button/door/directional/west{
-	id_tag = "MedbayFoyer";
+	id = "MedbayFoyer";
+	name = "Medbay Doors Control";
+	normaldoorcontrol = 1;
 	pixel_y = -9
 	},
 /turf/open/floor/iron/dark,

@@ -49651,7 +49651,9 @@
 /obj/machinery/holopad,
 /obj/effect/landmark/start/depsec/medical,
 /obj/machinery/button/door/directional/west{
-	id_tag = "MedbayFoyer";
+	id = "MedbayFoyer";
+	name = "Medbay Doors Control";
+	normaldoorcontrol = 1;
 	pixel_x = -35;
 	pixel_y = -56
 	},
