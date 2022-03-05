@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 /// remove this atom from this hud completely
 /datum/atom_hud/proc/remove_atom_from_hud(atom/hud_atom_to_remove)
-	if(!hud_atom_to_remove)
+	if(!hud_atom_to_remove || !hud_atoms_all_z_levels[hud_atom_to_remove])
 		return FALSE
 
 	//make sure we arent unregistering a hud atom thats also a hud user mob
