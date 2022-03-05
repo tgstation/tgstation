@@ -844,6 +844,7 @@
 #include "code\game\machinery\defibrillator_mount.dm"
 #include "code\game\machinery\deployable.dm"
 #include "code\game\machinery\dish_drive.dm"
+#include "code\game\machinery\dna_scanner.dm"
 #include "code\game\machinery\doppler_array.dm"
 #include "code\game\machinery\droneDispenser.dm"
 #include "code\game\machinery\electrolyzer.dm"

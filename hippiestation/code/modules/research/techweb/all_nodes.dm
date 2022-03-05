@@ -1,4 +1,4 @@
-/datum/techweb_node/cloning
+/datum/techweb_node/cloning	//hippie start, re-add cloning
 	id = "cloning"
 	display_name = "Cloning"
 	description = "We have the technology to make him."
