@@ -2,6 +2,6 @@
 	name = "Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/cloning
 
-/obj/item/circuitboard/computer/prototype_cloning	//hippie end, re-add cloning
+/obj/item/circuitboard/computer/prototype_cloning
 	name = "Prototype Cloning (Computer Board)"
 	build_path = /obj/machinery/computer/prototype_cloning

@@ -35,7 +35,7 @@
 	var/show_flavour = TRUE
 	var/banType = ROLE_LAVALAND
 	var/ghost_usable = TRUE
-
+/*	//hippie start, re-add cloning
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/mob_spawn/attack_ghost(mob/user)
 	if(!SSticker.HasRoundStarted() || !loc || !ghost_usable)
@@ -58,6 +58,7 @@
 		return
 	log_game("[key_name(user)] became [mob_name]")
 	create(ckey = user.ckey)
+*/	//hippie end, re-add cloning
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
