@@ -754,17 +754,17 @@ GLOBAL_VAR_INIT(icon_holographic_window, init_holographic_window())
 
 /obj/item/construction/rcd/pre_attack(atom/A, mob/user, params)
 	. = ..()
-	if(istype(A, /obj/item/storage))
-		return
 	mode = construction_mode
+	if(!A.rcd_vals(user, src))
+		return
 	rcd_create(A, user)
 	return TRUE
 
 /obj/item/construction/rcd/pre_attack_secondary(atom/target, mob/living/user, params)
 	. = ..()
-	if(istype(target, /obj/item/storage))
-		return
 	mode = RCD_DECONSTRUCT
+	if(!target.rcd_vals(user, src))
+		return
 	rcd_create(target, user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
