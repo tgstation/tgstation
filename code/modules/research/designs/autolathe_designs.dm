@@ -1238,3 +1238,11 @@
 	build_path = /obj/item/razor
 	category = list("initial","Medical")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/paperroll
+	name = "Hand Labeler Paper Roll"
+	id = "roll"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 25)
+	build_path = /obj/item/hand_labeler_refill
+	category = list("initial", "Misc")

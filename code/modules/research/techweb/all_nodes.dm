@@ -49,6 +49,7 @@
 		"rdservercontrol",
 		"restaurant_portal",
 		"rglass",
+		"roll",
 		"salestagger",
 		"sec_38",
 		"sec_Islug",
