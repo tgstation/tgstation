@@ -1,0 +1,6 @@
+author: "Mothblocks"
+delete-after: True
+changes: 
+  - bugfix: "Fixed vaccines not being able to be moved through chem buffers."
+  - bugfix: "Fixed Roy Rogers and Sodium Thiopental not applying their effects."
+  - balance: "Fake beer has been renamed from \"Beer\" to \"Beer...?\""
