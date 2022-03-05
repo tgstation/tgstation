@@ -33,9 +33,6 @@
 	M.Translate(-4, -4)
 	transform = M
 	icon = smooth_icon
-
-/turf/closed/mineral/ComponentInitialize()
-	. = ..()
 	AddElement(/datum/element/tool_bump, list(TOOL_MINING), FALSE, /atom.proc/attackby, list(/obj/item/resonator))
 
 /turf/closed/mineral/proc/Spread_Vein()
