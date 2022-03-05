@@ -809,7 +809,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tangy fruit"
 	glass_icon_state = "cinderella"
-	glass_name = "Cinderlla"
+	glass_name = "Cinderella"
 	glass_desc = "There is not a single drop of alcohol in this thing."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
