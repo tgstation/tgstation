@@ -102,7 +102,6 @@
 				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_s")
 				side_overlay.pixel_y = dir == NORTH ? -6 : -31
 				. += side_overlay
-
 		if(EAST,WEST)
 			if(unres_sides & EAST)
 				var/image/side_overlay = image(icon='icons/obj/doors/airlocks/station/overlays.dmi', icon_state="unres_e")
