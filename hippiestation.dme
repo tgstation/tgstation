@@ -3388,7 +3388,6 @@
 #include "hippiestation\code\game\objects\items\manuals.dm"
 #include "hippiestation\code\game\objects\items\circuitboards\computer_circuitboards.dm"
 #include "hippiestation\code\game\objects\items\circuitboards\machine_circuitboards.dm"
-#include "hippiestation\code\game\objects\structures\morgue.dm"
 #include "hippiestation\code\game\objects\structures\showcase.dm"
 #include "hippiestation\code\modules\atmospherics\gasmixtures\immutable_mixtures.dm"
 #include "hippiestation\code\modules\clothing\head\misc_special.dm"
