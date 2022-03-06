@@ -23,17 +23,17 @@
 
 /datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, distance, speed, damage, destroy)
 	. = ..()
-	if(delay)
+	if(!isnull(delay))
 		charge_delay = delay
-	if(past)
+	if(!isnull(past))
 		charge_past = past
-	if(distance)
+	if(!isnull(distance))
 		charge_distance = distance
-	if(speed)
+	if(!isnull(speed))
 		charge_speed = speed
-	if(damage)
+	if(!isnull(damage))
 		charge_damage = damage
-	if(destroy)
+	if(!isnull(destroy))
 		destroy_objects = destroy
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
