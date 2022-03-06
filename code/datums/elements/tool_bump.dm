@@ -81,7 +81,7 @@
 			INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
 			return
 		for(var/tool_path in tool_items)
-			for(var/obj/item/held_item in bumper.held_items)
-				if(istype(held_item, tool_path))
-					INVOKE_ASYNC(held_item, /obj/item.proc/melee_attack_chain, bumper, source)
+			for(held_tool in bumper.held_items)
+				if(istype(held_tool, tool_path))
+					INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
 					return
