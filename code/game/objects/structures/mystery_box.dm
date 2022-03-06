@@ -76,7 +76,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	pixel_y = -4
 	anchored = TRUE
 	density = TRUE
-	uses_integrity = FALSE
+	max_integrity = 99999
+	damage_deflection = 100
 
 	var/crate_open_sound = 'sound/machines/crate_open.ogg'
 	var/crate_close_sound = 'sound/machines/crate_close.ogg'

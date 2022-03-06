@@ -46,6 +46,7 @@
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	limit = 2
 	cost = 1
+	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_ASH
 
 /datum/heretic_knowledge/limited_amount/base_ash/on_research(mob/user)

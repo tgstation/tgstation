@@ -52,7 +52,6 @@
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
 	color = "#B5651D"
-	environment_type = "wasteland"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'

@@ -42,9 +42,15 @@
 		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
 	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
 
+	var/ref_line = copytext(refid, 2, -1) // get rid of the brackets
+
 	var/marked_line
 	if(holder && holder.marked_datum && holder.marked_datum == D)
 		marked_line = VV_MSG_MARKED
+	var/tagged_line
+	if(holder && LAZYFIND(holder.tagged_datums, D))
+		var/tag_index = LAZYFIND(holder.tagged_datums, D)
+		tagged_line = VV_MSG_TAGGED(tag_index)
 	var/varedited_line
 	if(!islist && (D.datum_flags & DF_VAR_EDITED))
 		varedited_line = VV_MSG_EDITED
@@ -211,7 +217,9 @@
 						</table>
 						<div align='center'>
 							<b><font size='1'>[formatted_type]</font></b>
+							<br><b><font size='1'>[ref_line]</font></b>
 							<span id='marked'>[marked_line]</span>
+							<span id='tagged'>[tagged_line]</span>
 							<span id='varedited'>[varedited_line]</span>
 							<span id='deleted'>[deleted_line]</span>
 						</div>

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - qol: "Discoordinated tool user trauma now gives a status effect to let you know you have it."

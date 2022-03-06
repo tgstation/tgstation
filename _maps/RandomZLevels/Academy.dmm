@@ -2493,11 +2493,8 @@
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "lp" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	pixel_y = 25
-	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
 "lq" = (

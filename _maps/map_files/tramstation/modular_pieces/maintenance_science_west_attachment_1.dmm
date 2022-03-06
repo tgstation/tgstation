@@ -4,34 +4,25 @@
 /area/maintenance/department/medical)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/cobweb,
-/obj/structure/tank_holder/extinguisher,
 /obj/structure/sign/poster/official/plasma_effects{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "l" = (
+/obj/structure/tank_holder/extinguisher,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/closet/firecloset,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/turf/open/floor/plating,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "m" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Fire Safety Closet";
-	req_one_access_txt = "12"
-	},
+/obj/structure/tank_holder/extinguisher,
 /obj/effect/decal/cleanable/dirt,
-/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "n" = (
+/obj/machinery/vending/wallmed/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "s" = (
@@ -39,63 +30,62 @@
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "y" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/closet/firecloset,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/vending/wallmed/directional/west,
-/turf/open/floor/iron/smooth,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
 /area/maintenance/department/medical)
 "J" = (
-/turf/template_noop,
-/area/template_noop)
-"S" = (
+/obj/structure/reagent_dispensers/watertank,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/window/reinforced/spawner,
-/obj/structure/closet/firecloset,
 /obj/effect/turf_decal/stripes/white/line{
-	dir = 8
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"S" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "U" = (
+/obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 
 (1,1,1) = {"
-J
-a
-a
-a
-a
+l
+n
+s
+y
 "}
 (2,1,1) = {"
-J
 k
-y
-n
-a
+s
+s
+J
 "}
 (3,1,1) = {"
 m
 s
 s
-s
-a
+S
 "}
 (4,1,1) = {"
-J
-S
+a
 U
-l
-a
-"}
-(5,1,1) = {"
-J
-a
-a
 a
 a
 "}
