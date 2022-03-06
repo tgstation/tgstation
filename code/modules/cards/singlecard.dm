@@ -141,14 +141,11 @@
 	return ..()
 	
 /obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, modifiers)
-	return attackby(item, user, modifiers, flip_card=TRUE)
+	attackby(item, user, modifiers, flip_card=TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_hand_secondary(mob/living/carbon/human/user, modifiers)
-	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(isturf(src)) // only display tihs message when flipping in a visible spot like on a table
-		user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
-	Flip()
+	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/singlecard/attack_self_secondary(mob/living/carbon/human/user, modifiers)
@@ -157,12 +154,16 @@
 /obj/item/toy/singlecard/attack_self(mob/living/carbon/human/user)
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		return
+
 	Flip()
+	if(isturf(src)) // only display tihs message when flipping in a visible spot like on a table
+		user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
 
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		src.transform = turn(src.transform, 90)
+		// use the simple_rotation component to make this turn with Alt+RMB & Alt+LMB
 /**		
 		var/matrix/M = matrix()
 		M.Turn(90)
