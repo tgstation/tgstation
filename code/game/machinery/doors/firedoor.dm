@@ -69,7 +69,7 @@
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/tool_bump, list(TOOL_CROWBAR), TRUE, /atom.proc/attackby, list(/obj/item/fireaxe))
+	AddElement(/datum/element/tool_bump, tool_behaviours = list(TOOL_CROWBAR), require_active_hand = TRUE, tool_items = list(/obj/item/fireaxe))
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 

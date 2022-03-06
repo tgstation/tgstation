@@ -27,7 +27,7 @@
 	var/weak_turf = FALSE
 	///How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
 	var/tool_mine_speed = 4 SECONDS
-	///How long it takes to mine this turf with hands, if it's weak.
+	///How long it takes to mine this turf with hands, if it's weak (e.g. snow).
 	var/hand_mine_speed = 15 SECONDS
 
 /turf/closed/mineral/Initialize(mapload)
@@ -36,7 +36,7 @@
 	M.Translate(-4, -4)
 	transform = M
 	icon = smooth_icon
-	AddElement(/datum/element/tool_bump, list(TOOL_MINING), FALSE, /atom.proc/attackby, list(/obj/item/resonator))
+	AddElement(/datum/element/tool_bump, tool_behaviours = list(TOOL_MINING), require_active_hand = FALSE, tool_items = list(/obj/item/resonator))
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
