@@ -1,0 +1,4 @@
+author: "OneAsianTortoise"
+delete-after: True
+changes: 
+  - bugfix: "fixes Icebox and Meta's medbay door controls button not working"

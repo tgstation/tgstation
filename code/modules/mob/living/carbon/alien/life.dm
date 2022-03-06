@@ -25,13 +25,13 @@
 	var/Plasma_pp = (breath_gases[/datum/gas/plasma][MOLES] / total_moles) * breath_pressure
 
 	if(Plasma_pp > plas_detect_threshold) // Detect plasma in air
-		adjustPlasma(breath_gases[/datum/gas/plasma][MOLES] * 250)
-		throw_alert("alien_plas", /atom/movable/screen/alert/alien_plas)
+		adjustPlasma(breath_gases[/datum/gas/plasma][MOLES]*250)
+		throw_alert(ALERT_XENO_PLASMA, /atom/movable/screen/alert/alien_plas)
 
 		plasma_used = breath_gases[/datum/gas/plasma][MOLES]
 
 	else
-		clear_alert("alien_plas")
+		clear_alert(ALERT_XENO_PLASMA)
 
 	//Breathe in plasma and out oxygen
 	breath_gases[/datum/gas/plasma][MOLES] -= plasma_used

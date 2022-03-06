@@ -121,6 +121,7 @@
 	desc = "You breathe a cone of fire directly in front of you."
 	school = SCHOOL_EVOCATION
 	invocation = ""
+	invocation_type = INVOCATION_NONE
 	charge_max = 400
 	clothes_req = FALSE
 	range = 20

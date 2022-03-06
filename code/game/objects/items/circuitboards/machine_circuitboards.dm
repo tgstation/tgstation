@@ -397,12 +397,6 @@
 		/obj/item/stock_parts/manipulator = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
-/obj/item/circuitboard/machine/paystand
-	name = "Pay Stand (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/paystand
-	req_components = list()
-
 /obj/item/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
@@ -736,12 +730,12 @@
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
 	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk", "Pricing", custom_cost, 1000, 10)
-	if(isnull(new_cost))
+	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	if(loc != user)
 		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
 		return
-	custom_cost = round(new_cost)
+	custom_cost = new_cost
 	to_chat(user, span_notice("The cost is now set to [custom_cost]."))
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
@@ -1300,7 +1294,7 @@
 /obj/item/circuitboard/machine/doppler_array
 	name = "Tachyon-Doppler Research Array (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/doppler_array/research
+	build_path = /obj/machinery/doppler_array
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/scanning_module = 4)
@@ -1327,3 +1321,22 @@
 	build_path = /obj/machinery/ecto_sniffer
 	req_components = list(
 		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/anomaly_refinery
+	name = "Anomaly Refinery (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/research/anomaly_refinery
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		)
+
+/obj/item/circuitboard/machine/tank_compressor
+	name = "Tank Compressor (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/atmospherics/components/binary/tank_compressor
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stock_parts/scanning_module = 4,
+		)

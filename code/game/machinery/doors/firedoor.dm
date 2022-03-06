@@ -107,6 +107,49 @@
 	else
 		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
 
+/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!isliving(user))
+		return .
+
+	var/mob/living/living_user = user
+
+	if (isnull(held_item))
+		if (density)
+			// This should be LMB/RMB one day
+			if (living_user.combat_mode)
+				context[SCREENTIP_CONTEXT_LMB] = "Knock"
+			else
+				context[SCREENTIP_CONTEXT_LMB] = "Bash"
+
+			return CONTEXTUAL_SCREENTIP_SET
+		else
+			return .
+
+	switch (held_item.tool_behaviour)
+		if (TOOL_CROWBAR)
+			if (density)
+				context[SCREENTIP_CONTEXT_LMB] = "Close"
+			else if (!welded)
+				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
+				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
+
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WELDER)
+			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WRENCH)
+			if (welded && !boltslocked)
+				context[SCREENTIP_CONTEXT_LMB] = "Unfasten bolts"
+				return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_SCREWDRIVER)
+			if (welded)
+				context[SCREENTIP_CONTEXT_LMB] = "Unlock bolts"
+				return CONTEXTUAL_SCREENTIP_SET
+
+	return .
+
 /**
  * Calculates what areas we should worry about.
  *
@@ -260,10 +303,14 @@
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
 	update_icon()
-	correct_state()
+
 	if(machine_stat & NOPOWER)
 		soundloop.stop()
-	else if(is_playing_alarm)
+		return
+
+	correct_state()
+
+	if(is_playing_alarm)
 		soundloop.start()
 
 
@@ -472,6 +519,7 @@
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
 	density = TRUE
+	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
@@ -482,6 +530,7 @@
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
 	density = TRUE
+	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()

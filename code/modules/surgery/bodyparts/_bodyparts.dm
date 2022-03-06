@@ -107,8 +107,8 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
-	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/self_grasp])
-	var/obj/item/self_grasp/grasped_by
+	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
+	var/obj/item/hand_item/self_grasp/grasped_by
 
 	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
@@ -793,7 +793,7 @@
 		else
 			species_color = ""
 
-		if(!dropping_limb && human_owner.dna.check_mutation(HULK))
+		if(!dropping_limb && human_owner.dna.check_mutation(/datum/mutation/human/hulk))
 			mutation_color = "#00aa00"
 		else
 			mutation_color = ""

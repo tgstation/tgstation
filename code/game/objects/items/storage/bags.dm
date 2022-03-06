@@ -40,6 +40,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	slot_flags = null
+	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
@@ -221,6 +222,21 @@
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
+
+/obj/item/storage/bag/plants/portaseeder/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/storage/bag/plants/portaseeder/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user
+)
+
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Make seeds"
+	return CONTEXTUAL_SCREENTIP_SET
+
 
 /obj/item/storage/bag/plants/portaseeder/examine(mob/user)
 	. = ..()
@@ -424,7 +440,7 @@
 		))
 
 /*
- *  Biowaste bag (mostly for xenobiologists)
+ *  Biowaste bag (mostly for virologists)
  */
 
 /obj/item/storage/bag/bio
@@ -432,10 +448,41 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
 	worn_icon_state = "biobag"
-	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
+	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/bio/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_combined_w_class = 200
+	STR.max_items = 25
+	STR.insert_preposition = "in"
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/blood,
+		/obj/item/reagent_containers/hypospray/medipen,
+		/obj/item/food/monkeycube,
+		/obj/item/organ,
+		/obj/item/bodypart,
+		/obj/item/healthanalyzer
+		))
+
+/*
+ *  Science bag (mostly for xenobiologists)
+ */
+
+/obj/item/storage/bag/xeno
+	name = "science bag"
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "xenobag"
+	worn_icon_state = "xenobag"
+	desc = "A bag for the storage and transport of anomalous materials."
+	resistance_flags = FLAMMABLE
+
+/obj/item/storage/bag/xeno/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 200
@@ -447,8 +494,6 @@
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/bottle,
-		/obj/item/reagent_containers/blood,
-		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/food/deadmouse,
 		/obj/item/food/monkeycube,
 		/obj/item/organ,

@@ -3,7 +3,6 @@
 	name = "Base MOD"
 	desc = "You should not see this, yell at a coder!"
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
-	icon_state = "standard-control"
 	worn_icon = 'icons/mob/clothing/mod.dmi'
 
 /obj/item/mod/control
@@ -30,7 +29,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	permeability_coefficient = 0.01
 	siemens_coefficient = 0.5
-	alternate_worn_layer = BODY_FRONT_LAYER
+	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
 	/// The MOD's theme, decides on some stuff like armor and statistics.
 	var/datum/mod_theme/theme = /datum/mod_theme
 	/// Looks of the MOD.
@@ -114,7 +113,7 @@
 	mod_parts += helmet
 	chestplate = new /obj/item/clothing/suit/mod(src)
 	chestplate.mod = src
-	chestplate.allowed = theme.allowed.Copy()
+	chestplate.allowed = theme.allowed_suit_storage.Copy()
 	mod_parts += chestplate
 	gauntlets = new /obj/item/clothing/gloves/mod(src)
 	gauntlets.mod = src
@@ -234,7 +233,7 @@
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		if(malfunctioning && module.active && DT_PROB(5, delta_time))
-			module.on_deactivation()
+			module.on_deactivation(display_message = TRUE)
 		module.on_process(delta_time)
 
 /obj/item/mod/control/equipped(mob/user, slot)
@@ -410,7 +409,7 @@
 	to_chat(wearer, span_notice("[severity > 1 ? "Light" : "Strong"] electromagnetic pulse detected!"))
 	if(. & EMP_PROTECT_CONTENTS)
 		return
-	selected_module?.on_deactivation()
+	selected_module?.on_deactivation(display_message = TRUE)
 	wearer.apply_damage(10 / severity, BURN, spread_damage=TRUE)
 	to_chat(wearer, span_danger("You feel [src] heat up from the EMP, burning you slightly."))
 	if(wearer.stat < UNCONSCIOUS && prob(10))
@@ -440,8 +439,8 @@
 
 /obj/item/mod/control/proc/set_wearer(mob/user)
 	wearer = user
+	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
 	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-	RegisterSignal(wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
 	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_unequip)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
@@ -452,7 +451,8 @@
 		module.on_unequip()
 	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
 	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
-	wearer.clear_alert("mod_charge")
+	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
+	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null
 
 /obj/item/mod/control/proc/on_unequip()
@@ -566,11 +566,11 @@
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[wearer]
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(wearer)]
 		if(action)
 			action.Grant(wearer)
 	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[ai]
+		var/datum/action/item_action/mod/pinned_module/action = new_module.pinned_to[REF(ai)]
 		if(action)
 			action.Grant(ai)
 	if(user)
@@ -584,17 +584,8 @@
 	if(active)
 		old_module.on_suit_deactivation()
 		if(old_module.active)
-			old_module.on_deactivation()
-	if(wearer)
-		old_module.on_unequip()
-		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[wearer]
-		if(action)
-			action.Remove(wearer)
-	if(ai)
-		var/datum/action/item_action/mod/pinned_module/action = old_module.pinned_to[ai]
-		if(action)
-			action.Remove(ai)
-	old_module.pinned_to.Cut()
+			old_module.on_deactivation(display_message = TRUE)
+	QDEL_LIST(old_module.pinned_to)
 	old_module.on_uninstall()
 	old_module.mod = null
 
@@ -628,7 +619,7 @@
 	if(!wearer)
 		return
 	if(!core)
-		wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocore)
+		wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocore)
 		return
 	core.update_charge_alert()
 
@@ -662,24 +653,15 @@
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
 		return
 
-/obj/item/mod/control/proc/on_borg_charge(datum/source, amount)
-	SIGNAL_HANDLER
-
-	update_charge_alert()
-	var/obj/item/stock_parts/cell/cell = get_charge_source()
-	if(!istype(cell))
-		return
-	cell.give(amount)
-
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
 
 	if(slowdown_inactive <= 0)
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
-		return
+		return SPEED_POTION_STOP
 	if(wearer)
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
-		return
+		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
 	var/list/all_parts = mod_parts.Copy() + src
 	for(var/obj/item/part as anything in all_parts)
@@ -689,4 +671,4 @@
 	slowdown_active = 0
 	update_speed()
 	qdel(speed_potion)
-	return SPEED_POTION_SUCCESSFUL
+	return SPEED_POTION_STOP

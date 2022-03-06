@@ -263,9 +263,9 @@
 /obj/item/storage/bag/mail
 	name = "mail bag"
 	desc = "A bag for letters, envelopes, and other postage."
-	icon = 'icons/obj/library.dmi'
-	icon_state = "bookbag"
-	worn_icon_state = "bookbag"
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "mailbag"
+	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/mail/ComponentInitialize()

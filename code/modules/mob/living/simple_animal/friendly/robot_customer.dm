@@ -34,7 +34,8 @@
 	ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO] = customer_info
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
-	icon_state = customer_info.base_icon
+	icon = customer_info.base_icon
+	icon_state = customer_info.base_icon_state
 	name = "[pick(customer_info.name_prefixes)]-bot"
 	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()

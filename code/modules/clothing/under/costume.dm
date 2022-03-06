@@ -36,7 +36,7 @@
 	icon_state = "schoolgirl"
 	inhand_icon_state = "schoolgirl"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/schoolgirl/red
@@ -81,7 +81,7 @@
 	icon_state = "kilt"
 	inhand_icon_state = "kilt"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/kilt/highlander
@@ -97,7 +97,7 @@
 	icon_state = "gladiator"
 	inhand_icon_state = "gladiator"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -111,7 +111,7 @@
 	icon_state = "maid"
 	inhand_icon_state = "maid"
 	body_parts_covered = CHEST|GROIN
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/maid/Initialize(mapload)
@@ -149,13 +149,13 @@
 	name = "yellow performer's outfit"
 	icon_state = "ysing"
 	inhand_icon_state = "ysing"
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 
 /obj/item/clothing/under/costume/singer/blue
 	name = "blue performer's outfit"
 	icon_state = "bsing"
 	inhand_icon_state = "bsing"
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/costume/mummy
 	name = "mummy wrapping"
@@ -163,7 +163,7 @@
 	icon_state = "mummy"
 	inhand_icon_state = "mummy"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -173,7 +173,7 @@
 	icon_state = "scarecrow"
 	inhand_icon_state = "scarecrow"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -183,7 +183,7 @@
 	icon_state = "draculass"
 	inhand_icon_state = "draculass"
 	body_parts_covered = CHEST|GROIN|ARMS
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/drfreeze
@@ -198,7 +198,7 @@
 	desc = "Who beheaded the college mascot?"
 	icon_state = "lobster"
 	inhand_icon_state = "lobster"
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 
 /obj/item/clothing/under/costume/gondola
@@ -214,7 +214,7 @@
 	icon_state = "skeleton"
 	inhand_icon_state = "skeleton"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	can_adjust = FALSE
 	resistance_flags = NONE
 
@@ -225,7 +225,7 @@
 	inhand_icon_state = "red_mech_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	fitted = NO_FEMALE_UNIFORM
+	female_sprite_flags = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 

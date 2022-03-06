@@ -61,7 +61,10 @@ Key procs
 		var/datum/mind/M = owner
 		if(M.current)
 			update_atom_languages(M.current)
-	get_selected_language()
+
+	// If we have an owner, we'll set a default selected language
+	if(owner)
+		get_selected_language()
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
@@ -389,6 +392,11 @@ Key procs
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/shadowtongue = list(LANGUAGE_ATOM))
 
+/datum/language_holder/clown
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/monkey = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/monkey = list(LANGUAGE_ATOM))
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()

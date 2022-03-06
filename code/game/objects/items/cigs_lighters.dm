@@ -267,10 +267,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	hitsound = null
 	damtype = BRUTE
 	force = 0
-	update_icon()
 	STOP_PROCESSING(SSobj, src)
 	reagents.flags |= NO_REACT
 	lit = FALSE
+	update_icon()
+	
 	if(ismob(loc))
 		var/mob/living/M = loc
 		to_chat(M, span_notice("Your [name] goes out."))
@@ -926,42 +927,39 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is puffin hard on dat vape, [user.p_they()] trying to join the vape life on a whole notha plane!"))//it doesn't give you cancer, it is cancer
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/clothing/mask/vape/attackby(obj/item/O, mob/user, params)
-	if(O.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!screw)
-			screw = TRUE
-			to_chat(user, span_notice("You open the cap on [src]."))
-			reagents.flags |= OPENCONTAINER
-			if(obj_flags & EMAGGED)
-				add_overlay("vapeopen_high")
-			else if(super)
-				add_overlay("vapeopen_med")
-			else
-				add_overlay("vapeopen_low")
+/obj/item/clothing/mask/vape/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!screw)
+		screw = TRUE
+		to_chat(user, span_notice("You open the cap on [src]."))
+		reagents.flags |= OPENCONTAINER
+		if(obj_flags & EMAGGED)
+			add_overlay("vapeopen_high")
+		else if(super)
+			add_overlay("vapeopen_med")
 		else
-			screw = FALSE
-			to_chat(user, span_notice("You close the cap on [src]."))
-			reagents.flags &= ~(OPENCONTAINER)
+			add_overlay("vapeopen_low")
+	else
+		screw = FALSE
+		to_chat(user, span_notice("You close the cap on [src]."))
+		reagents.flags &= ~(OPENCONTAINER)
+		cut_overlays()
+
+/obj/item/clothing/mask/vape/multitool_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(screw && !(obj_flags & EMAGGED))//also kinky
+		if(!super)
 			cut_overlays()
-
-	if(O.tool_behaviour == TOOL_MULTITOOL)
-		if(screw && !(obj_flags & EMAGGED))//also kinky
-			if(!super)
-				cut_overlays()
-				super = TRUE
-				to_chat(user, span_notice("You increase the voltage of [src]."))
-				add_overlay("vapeopen_med")
-			else
-				cut_overlays()
-				super = FALSE
-				to_chat(user, span_notice("You decrease the voltage of [src]."))
-				add_overlay("vapeopen_low")
-
-		if(screw && (obj_flags & EMAGGED))
-			to_chat(user, span_warning("[src] can't be modified!"))
+			super = TRUE
+			to_chat(user, span_notice("You increase the voltage of [src]."))
+			add_overlay("vapeopen_med")
 		else
-			..()
+			cut_overlays()
+			super = FALSE
+			to_chat(user, span_notice("You decrease the voltage of [src]."))
+			add_overlay("vapeopen_low")
 
+	if(screw && (obj_flags & EMAGGED))
+		to_chat(user, span_warning("[src] can't be modified!"))
 
 /obj/item/clothing/mask/vape/emag_act(mob/user)// I WON'T REGRET WRITTING THIS, SURLY.
 	if(screw)

@@ -63,7 +63,7 @@
 
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/private_security
-	assignment = "Private Security Force"
+	assignment = JOB_CENTCOM_PRIVATE_SECURITY
 	access = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
 
 /// Trim for various Centcom corpses.

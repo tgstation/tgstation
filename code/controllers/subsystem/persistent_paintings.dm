@@ -94,6 +94,8 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 	/// A list of painting frames that this controls
 	var/list/obj/structure/sign/painting/painting_frames = list()
+	/// Hashes of paintings deleted this round
+	var/list/deleted_paintings_md5s = list()
 
 	/// A list of /datum/paintings saved or ready to be saved this round.
 	var/list/paintings = list()
@@ -196,10 +198,26 @@ SUBSYSTEM_DEF(persistent_paintings)
 /// Saves all currently tracked painting data to file
 /datum/controller/subsystem/persistent_paintings/proc/save_to_file()
 	var/json_file = file("data/paintings.json")
-	fdel(json_file)
-	var/list/all_data = list("version" = PAINTINGS_DATA_FORMAT_VERSION)
+
+	var/list/collated_data = list()
+	if(fexists(json_file))
+		var/list/old_data = json_decode(file2text(json_file))
+		for(var/list/painting_data as anything in old_data["paintings"])
+			collated_data[painting_data["md5"]] = painting_data
+
 	var/list/painting_data = list()
 	for(var/datum/painting/painting as anything in paintings)
-		painting_data += list(painting.to_json())
+		collated_data[painting.md5] = painting.to_json() //Current data has priority over old data
+
+	// Remove deleted paintings from the list
+	collated_data -= deleted_paintings_md5s
+
+	// Flatten the resulting list
+	for(var/key in collated_data)
+		painting_data += list(collated_data[key])
+
+	var/list/all_data = list("version" = PAINTINGS_DATA_FORMAT_VERSION)
 	all_data["paintings"] = painting_data
-	WRITE_FILE(json_file, json_encode(all_data))
+	var/payload = json_encode(all_data)
+	fdel(json_file)
+	WRITE_FILE(json_file, payload)

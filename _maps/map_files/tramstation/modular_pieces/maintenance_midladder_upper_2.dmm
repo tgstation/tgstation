@@ -1,0 +1,313 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/maintenance/department/cargo)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/turf_decal/bot,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"i" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/pen/fourcolor,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"j" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"l" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/structure/window/reinforced/spawner,
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/maintenance/six,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/paicard{
+	pixel_y = 2
+	},
+/obj/item/clothing/suit/nerdshirt,
+/obj/item/clothing/head/cowboy_hat_grey{
+	pixel_y = 13
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"p" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance/glass{
+	req_access_txt = "12"
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/grille_or_waste,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"u" = (
+/obj/modular_map_root/tramstation{
+	key = "maintenance_midladder_upper_attachment"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"v" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"w" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/space_heater,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"x" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"y" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/girder,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/cargo)
+"D" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"N" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/table,
+/obj/item/flashlight/lamp,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"P" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"Q" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/falsewall,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate,
+/obj/structure/window/reinforced/spawner/north,
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"X" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/chair/stool,
+/turf/open/floor/plating,
+/area/maintenance/department/cargo)
+"Y" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+Y
+Y
+Y
+Y
+a
+a
+y
+a
+"}
+(2,1,1) = {"
+Y
+a
+a
+a
+a
+h
+y
+a
+"}
+(3,1,1) = {"
+Y
+a
+I
+o
+a
+e
+y
+a
+"}
+(4,1,1) = {"
+a
+a
+Q
+a
+a
+z
+y
+a
+"}
+(5,1,1) = {"
+a
+n
+x
+R
+a
+w
+p
+a
+"}
+(6,1,1) = {"
+a
+I
+v
+I
+a
+C
+y
+a
+"}
+(7,1,1) = {"
+a
+a
+l
+a
+a
+D
+q
+a
+"}
+(8,1,1) = {"
+a
+y
+y
+y
+y
+y
+y
+u
+"}
+(9,1,1) = {"
+a
+a
+l
+a
+a
+a
+s
+a
+"}
+(10,1,1) = {"
+a
+I
+I
+I
+i
+a
+y
+a
+"}
+(11,1,1) = {"
+a
+P
+I
+X
+N
+a
+y
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+y
+a
+"}
+(13,1,1) = {"
+Y
+Y
+Y
+Y
+Y
+D
+p
+D
+"}
+(14,1,1) = {"
+Y
+Y
+Y
+Y
+Y
+D
+y
+D
+"}
+(15,1,1) = {"
+Y
+Y
+Y
+Y
+Y
+D
+y
+D
+"}
+(16,1,1) = {"
+Y
+Y
+Y
+Y
+Y
+Y
+j
+Y
+"}
