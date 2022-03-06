@@ -1056,7 +1056,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			var/turf/T = newpath[i]
 			if(T == loc) //don't bother putting an image if it's where we already exist.
 				continue
-			var/direction = NORTH
+			var/direction = get_dir(src, T)
 			if(i > 1)
 				var/turf/prevT = path[i - 1]
 				var/image/prevI = path[prevT]
@@ -1079,7 +1079,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 			MA.icon = path_image_icon
 			MA.icon_state = path_image_icon_state
 			MA.layer = ABOVE_OPEN_TURF_LAYER
-			MA.plane = 0
+			MA.plane = GAME_PLANE
 			MA.appearance_flags = RESET_COLOR|RESET_TRANSFORM
 			MA.color = path_image_color
 			MA.dir = direction
@@ -1092,17 +1092,16 @@ Pass a positive integer as an argument to override a bot's default speed.
 		var/datum/atom_hud/H = V
 		H.add_to_hud(src)
 
-
 /mob/living/simple_animal/bot/proc/increment_path()
 	if(!length(path))
 		return
 	var/image/I = path[path[1]]
 	if(I)
-		I.icon_state = null
+		animate(I, alpha = 0, time = 3)
 	path.Cut(1, 2)
 
 	if(!length(path))
-		set_path(null)
+		addtimer(CALLBACK(src, .proc/set_path, null), 0.6 SECONDS) // Enough time for the animate to finish
 
 /mob/living/simple_animal/bot/rust_heretic_act()
 	adjustBruteLoss(400)
