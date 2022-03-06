@@ -94,7 +94,7 @@ GLOBAL_VAR(command_name)
 		if(4)
 			new_station_name += pick(GLOB.phonetic_alphabet)
 		if(5)
-			new_station_name += capitalize(numtotext(rand(0,99))) //e.g. Sixty-Nine
+			new_station_name += pick(GLOB.numbers_as_words)
 		if(13)
 			new_station_name += pick("13","XIII","Thirteen")
 	return new_station_name

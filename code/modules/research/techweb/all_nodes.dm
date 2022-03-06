@@ -11,7 +11,6 @@
 	design_ids = list(
 		"basic_capacitor",
 		"basic_cell",
-		"basic_manipulator",
 		"basic_matter_bin",
 		"basic_micro_laser",
 		"basic_scanning",
@@ -33,6 +32,7 @@
 		"gas_filter",
 		"handlabel",
 		"mechfab",
+		"micro_mani",
 		"oven_tray",
 		"packagewrap",
 		"plasmaglass",
