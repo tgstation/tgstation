@@ -38,8 +38,8 @@
 /obj/item/organ/brain/on_life()
 	var/mob/living/carbon/C = owner
 	..()
-	var/brainHealFactor = ((maxHealth + damage) / ((maxHealth + 1) - damage))  1.5	//higher healing rate the more damage the brain has, so to fully heal you really should get mannitol. simulates brain
-							((200 + 150) / (200 / (150 / 10)))	//26.25
-							((200 + 100) / (200 / (100 / 10)))	//15
-							((200 + 50) / (200 / (50 / 10)))	//6.25
-							((200 + 10) / (200 / (10 / 10)))	//1.05
+	var/brainHealFactor = ((maxHealth + damage) / (maxHealth / (damage / 10))) / 10	//higher healing rate the more damage the brain has, so to fully heal you really should get mannitol. simulates brain plasticity? idk
+							((200 + 150) / (200 / (150 / 10))) / 10	//2.625
+							((200 + 100) / (200 / (100 / 10))) / 10	//1.5
+							((200 + 50) / (200 / (50 / 10))) / 10	//0.625
+							((200 + 10) / (200 / (10 / 10))) / 10	//0.105
