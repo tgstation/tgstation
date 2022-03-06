@@ -18,7 +18,7 @@
 	if(..() || !istype(target)) // was it caught or is the target not a living mob
 		return
 
-	var/has_no_cards = !LAZYLEN(src)
+	var/has_no_cards = !LAZYLEN(cards)
 	if(has_no_cards)
 		return
 
