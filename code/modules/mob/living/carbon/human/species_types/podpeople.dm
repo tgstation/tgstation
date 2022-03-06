@@ -11,7 +11,6 @@
 		TRAIT_PLANT_SAFE,
 	)
 	external_organs = list(
-		/obj/item/organ/external/snout = "Round",
 		/obj/item/organ/external/pod_hair = "None",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
@@ -60,3 +59,8 @@
 	human_mob.dna.features["pod_hair"] = hairstyle
 	mutant_bodyparts["pod_hair"] = hairstyle
 	human_mob.update_body()
+
+/datum/species/pod/proc/change_hairstyle(mob/living/carbon/human/human_mob, new_style)
+	var/obj/item/organ/external/organ = human_mob.getorganslot(ORGAN_SLOT_EXTERNAL_POD_HAIR )
+	organ.set_sprite(new_style)
+	human_mob.update_body_parts()
