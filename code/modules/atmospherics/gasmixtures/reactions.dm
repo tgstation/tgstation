@@ -1121,17 +1121,17 @@
 
 	SET_REACTION_RESULTS(consumed_amount)
 	var/turf/open/location
+	var/energy_released = consumed_amount * PN_BZASE_ENERGY
 	if(istype(holder,/datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
 		var/datum/pipeline/pipenet = holder
 		location = pick(pipenet.members)
 	else if(isatom(holder))
 		location = holder
-	if (location && consumed_amount > PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
+	if (location && energy_released > PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
 		radiation_pulse(location, max_range = min(sqrt(consumed_amount) / PN_BZASE_RAD_RANGE_DIVISOR, 20), threshold = PN_BZASE_RAD_THRESHOLD_BASE * INVERSE(PN_BZASE_RAD_THRESHOLD_BASE + consumed_amount), chance = 50)
 		for(var/mob/living/carbon/L in location)
 			L.hallucination += consumed_amount
 
-	var/energy_released = consumed_amount * PN_BZASE_ENERGY
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
