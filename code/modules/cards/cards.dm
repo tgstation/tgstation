@@ -4,7 +4,7 @@
 /obj/item/toy/cards
 	resistance_flags = FLAMMABLE
 	max_integrity = 50
-	/// Do all the cards drop out of the deck when thrown
+	/// Do all the cards drop to the floor when thrown at a person
 	var/can_play_52_card_pickup = TRUE
 	/// List of cards for a hand or deck
 	var/list/cards = list()
@@ -15,7 +15,30 @@
 	return ..()
 
 /obj/item/toy/cards/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
-	return
+	if(..() || !istype(target)) // was it caught or is the target not a living mob
+		return
+
+	var/has_no_cards = !LAZYLEN(src)
+	if(has_no_cards)
+		return
+
+	for(var/obj/item/toy/singlecard/card in cards)
+		cards -= card
+		card.forceMove(drop_location())
+		if(prob(50))
+			card.Flip()
+		card.pixel_x = rand(-16, 16)
+		card.pixel_y = rand(-16, 16)
+		var/matrix/M = matrix()
+		var/dir = pick(0, 90, 180, 270) // only North, East, West, or South
+		M.Turn(dir)
+		card.transform = M
+		card.update_appearance()
+	update_appearance()
+	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
+	
+	if(istype(src, /obj/item/toy/cards/cardhand))
+		qdel(src)
 
 /**
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
