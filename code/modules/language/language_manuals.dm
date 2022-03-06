@@ -43,11 +43,10 @@
 	charges--
 	if(!charges)
 		var/turf/T = get_turf(src)
-		T.visible_message(span_warning("The cover and contents of [src] start shifting and changing!"))
+		T.visible_message(span_warning("The cover and contents of [src] start shifting and changing! It slips out of your hands!"))
 
+		new /obj/item/book/manual/random(T)
 		qdel(src)
-		var/obj/item/book/manual/random/book = new(T)
-		user.put_in_active_hand(book)
 
 /obj/item/language_manual/codespeak_manual
 	name = "codespeak manual"
@@ -100,6 +99,13 @@
 	// If they are not drone or silicon, we don't want them to learn this language.
 	if(!(isdrone(M) || issilicon(M)))
 		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), span_userdanger("[user] beats you over the head with [src]!"), span_hear("You hear smacking."))
+		return
+
+	return ..()
+
+/obj/item/language_manual/dronespeak_manual/attack_self(mob/living/user)
+	if(!(isdrone(user) || issilicon(user)))
+		to_chat(user, span_danger("You beat yourself over the head with [src]!"))
 		return
 
 	return ..()

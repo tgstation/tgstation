@@ -1,6 +1,8 @@
 /datum/job/lawyer
-	title = "Lawyer"
-	department_head = list("Head of Personnel")
+	title = JOB_LAWYER
+	description = "Advocate for prisoners, create law-binding contracts, \
+		ensure Security is following protocol and Space Law."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
@@ -24,7 +26,7 @@
 	rpg_title = "Magistrate"
 	family_heirlooms = list(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/lawyer
@@ -54,3 +56,8 @@
 	else
 		use_purple_suit = TRUE
 	..()
+
+/datum/outfit/job/lawyer/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/under/rank/civilian/lawyer/purpsuit
+	. += /obj/item/clothing/suit/toggle/lawyer/purple

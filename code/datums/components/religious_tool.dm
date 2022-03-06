@@ -144,8 +144,11 @@
 	if(!ispath(text2path(path), /datum/religion_rites))
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has tried to spawn an item when performing a rite.")
 		return
-	if(user.mind.holy_role == HOLY_ROLE_DEACON)
-		to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+	if(user.mind.holy_role < HOLY_ROLE_PRIEST)
+		if(user.mind.holy_role == HOLY_ROLE_DEACON)
+			to_chat(user, "<span class='warning'>You are merely a deacon of [GLOB.deity], and therefore cannot perform rites.")
+		else
+			to_chat(user, "<span class='warning'>You are not holy, and therefore cannot perform rites.")
 		return
 	if(performing_rite)
 		to_chat(user, "<span class='notice'>There is a rite currently being performed here already.")

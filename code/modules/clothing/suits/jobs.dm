@@ -22,13 +22,12 @@
 	permeability_coefficient = 0.5
 
 //Captain
-/obj/item/clothing/suit/captunic
-	name = "captain's parade tunic"
+/obj/item/clothing/suit/capjacket
+	name = "captain's parade jacket"
 	desc = "Worn by a Captain to show their class."
-	icon_state = "captunic"
+	icon_state = "capjacket"
 	inhand_icon_state = "bio_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
+	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Chef
@@ -39,7 +38,7 @@
 	inhand_icon_state = "chef"
 	permeability_coefficient = 0.5
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
 
@@ -51,7 +50,7 @@
 	inhand_icon_state = "apronchef"
 	blood_overlay_type = "armor"
 	body_parts_covered = CHEST|GROIN
-	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen)
+	allowed = list(/obj/item/kitchen, /obj/item/knife/kitchen, /obj/item/storage/bag/tray)
 
 //Detective
 /obj/item/clothing/suit/det_suit
@@ -69,15 +68,15 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
-/obj/item/clothing/suit/det_suit/grey
+/obj/item/clothing/suit/det_suit/dark
 	name = "noir trenchcoat"
-	desc = "A hard-boiled private investigator's grey trenchcoat."
-	icon_state = "greydet"
+	desc = "A hard-boiled private investigator's dark trenchcoat."
+	icon_state = "noirdet"
 	inhand_icon_state = "greydet"
 
 /obj/item/clothing/suit/det_suit/noir
 	name = "noir suit coat"
-	desc = "A dapper private investigator's grey suit coat."
+	desc = "A dapper private investigator's dark suit coat."
 	icon_state = "detsuit"
 	inhand_icon_state = "detsuit"
 
@@ -88,7 +87,7 @@
 	icon_state = "hazard"
 	inhand_icon_state = "hazard"
 	blood_overlay_type = "armor"
-	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio)
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/t_scanner, /obj/item/radio, /obj/item/storage/bag/construction)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
@@ -200,7 +199,7 @@
 	inhand_icon_state = "curator"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|ARMS
-	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip)
+	allowed = list(/obj/item/tank/internals, /obj/item/melee/curator_whip, /obj/item/storage/bag/books)
 	armor = list(MELEE = 25, BULLET = 10, LASER = 25, ENERGY = 35, BOMB = 0, BIO = 0, FIRE = 0, ACID = 45)
 	cold_protection = CHEST|ARMS
 	heat_protection = CHEST|ARMS

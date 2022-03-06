@@ -14,10 +14,21 @@
 	var/obj/item/assembly/a_left = null
 	var/obj/item/assembly/a_right = null
 
-/obj/item/assembly_holder/ComponentInitialize()
+/obj/item/assembly_holder/Initialize(mapload)
 	. = ..()
-	var/static/rotation_flags = ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_FLIP | ROTATION_VERBS
-	AddComponent(/datum/component/simple_rotation, rotation_flags)
+	AddComponent(/datum/component/simple_rotation)
+
+/obj/item/assembly_holder/Destroy()
+	QDEL_NULL(a_left)
+	QDEL_NULL(a_right)
+	return ..()
+
+/obj/item/assembly_holder/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == a_left)
+		a_left = null
+	else if(gone == a_right)
+		a_right = null
 
 /obj/item/assembly_holder/IsAssemblyHolder()
 	return TRUE
@@ -99,6 +110,9 @@
 		a_left.attack_hand()
 	if(a_right)
 		a_right.attack_hand()
+
+/obj/item/assembly_holder/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())

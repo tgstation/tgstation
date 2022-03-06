@@ -353,7 +353,7 @@
 
 		trophy_message = W.desc //default value
 
-		var/chosen_plaque = stripped_input(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque")
+		var/chosen_plaque = tgui_input_text(user, "What would you like the plaque to say? Default value is item's description.", "Trophy Plaque", trophy_message)
 		if(chosen_plaque)
 			if(user.Adjacent(src))
 				trophy_message = chosen_plaque
@@ -508,14 +508,15 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = input(usr,"Set the sale price for this vend-a-tray.","new price",0) as num|null
-			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
+			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)
+			if(!new_price_input || QDELETED(usr) || QDELETED(src))
+				return
+			if(payments_acc != potential_acc.registered_account)
 				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
-			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
+			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				to_chat(usr, span_warning("You need to get closer!"))
 				return
-			new_price_input = clamp(round(new_price_input, 1), 10, 1000)
 			sale_price = new_price_input
 			to_chat(usr, span_notice("The cost is now set to [sale_price]."))
 			SStgui.update_uis(src)

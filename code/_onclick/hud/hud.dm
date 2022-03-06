@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// This is updated by the preference for cheaper reads than would be
 	/// had with a proc call, especially on one of the hottest procs in the
 	/// game (MouseEntered).
-	var/screentips_enabled = TRUE
+	var/screentips_enabled = SCREENTIP_PREFERENCE_ENABLED
 
 	/// The color to use for the screentips.
 	/// This is updated by the preference for cheaper reads than would be
@@ -74,6 +74,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/action_buttons_hidden = FALSE
 
 	var/atom/movable/screen/healths
+	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll
 	var/atom/movable/screen/internals
 	var/atom/movable/screen/wanted/wanted_lvl
@@ -95,14 +96,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	hand_slots = list()
 
-	for(var/mytype in subtypesof(/atom/movable/screen/plane_master))
+	for(var/mytype in subtypesof(/atom/movable/screen/plane_master)- /atom/movable/screen/plane_master/rendering_plate)
 		var/atom/movable/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
 	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
-	screentips_enabled = preferences?.read_preference(/datum/preference/toggle/enable_screentips)
+	screentips_enabled = preferences?.read_preference(/datum/preference/choiced/enable_screentips)
 	screentip_text = new(null, src)
 	static_inventory += screentip_text
 
@@ -131,6 +132,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(infodisplay)
 
 	healths = null
+	stamina = null
 	healthdoll = null
 	wanted_lvl = null
 	internals = null

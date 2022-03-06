@@ -149,7 +149,7 @@
 		/obj/projectile/beam,
 		/obj/projectile/bullet,
 		/obj/projectile/magic,
-		))
+	))
 	if(!is_type_in_typecache(proj, guilty_projectiles))
 		return
 	if((proj.damage_type == STAMINA))
@@ -193,7 +193,7 @@
 			to_chat(user, span_userdanger("[GLOB.deity] is enraged by your use of forbidden magic!"))
 			lightningbolt(user)
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/banished)
-			user.dna.remove_mutation(HONORBOUND)
+			user.dna.remove_mutation(/datum/mutation/human/honorbound)
 			user.mind.holy_role = NONE
 			to_chat(user, span_userdanger("You have been excommunicated! You are no longer holy!"))
 		else
@@ -217,7 +217,7 @@
 /obj/effect/proc_holder/spell/pointed/declare_evil/cast(list/targets, mob/living/carbon/human/user, silent = FALSE)
 	if(!ishuman(user))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	var/datum/religion_sect/honorbound/honorsect = GLOB.religious_sect
 	if(honorsect.favor < 150)
 		to_chat(user, span_warning("You need at least 150 favor to declare someone evil!"))

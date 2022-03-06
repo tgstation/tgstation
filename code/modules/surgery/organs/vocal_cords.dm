@@ -1,6 +1,7 @@
 /obj/item/organ/vocal_cords //organs that are activated through speech with the :x/MODE_KEY_VOCALCORDS channel
 	name = "vocal cords"
 	icon_state = "appendix"
+	visual = FALSE
 	zone = BODY_ZONE_PRECISE_MOUTH
 	slot = ORGAN_SLOT_VOICE
 	gender = PLURAL
@@ -18,6 +19,7 @@
 	owner.say(message, spans = spans, sanitize = FALSE)
 
 /obj/item/organ/adamantine_resonator
+	visual = FALSE
 	name = "adamantine resonator"
 	desc = "Fragments of adamantine exist in all golems, stemming from their origins as purely magical constructs. These are used to \"hear\" messages from their leaders."
 	zone = BODY_ZONE_HEAD
@@ -30,11 +32,13 @@
 	actions_types = list(/datum/action/item_action/organ_action/use/adamantine_vocal_cords)
 	icon_state = "adamantine_cords"
 
-/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger()
+/datum/action/item_action/organ_action/use/adamantine_vocal_cords/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return
-	var/message = input(owner, "Resonate a message to all nearby golems.", "Resonate")
-	if(QDELETED(src) || QDELETED(owner) || !message)
+	var/message = tgui_input_text(owner, "Resonate a message to all nearby golems", "Resonate")
+	if(!message)
+		return
+	if(QDELETED(src) || QDELETED(owner))
 		return
 	owner.say(".x[message]")
 
@@ -82,16 +86,16 @@
 			return FALSE
 	return TRUE
 
-/datum/action/item_action/organ_action/colossus/Trigger()
+/datum/action/item_action/organ_action/colossus/Trigger(trigger_flags)
 	. = ..()
 	if(!IsAvailable())
 		if(world.time < cords.next_command)
 			to_chat(owner, span_notice("You must wait [DisplayTimeText(cords.next_command - world.time)] before Speaking again."))
 		return
-	var/command = input(owner, "Speak with the Voice of God", "Command")
-	if(QDELETED(src) || QDELETED(owner))
-		return
+	var/command = tgui_input_text(owner, "Speak with the Voice of God", "Command")
 	if(!command)
+		return
+	if(QDELETED(src) || QDELETED(owner))
 		return
 	owner.say(".x[command]")
 

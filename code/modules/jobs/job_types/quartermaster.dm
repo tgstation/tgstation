@@ -1,6 +1,8 @@
 /datum/job/quartermaster
-	title = "Quartermaster"
-	department_head = list("Head of Personnel")
+	title = JOB_QUARTERMASTER
+	description = "Coordinate cargo technicians and shaft miners, assist with \
+		economical purchasing."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -27,7 +29,7 @@
 		/obj/item/circuitboard/machine/emitter = 3
 	)
 	rpg_title = "Steward"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/quartermaster

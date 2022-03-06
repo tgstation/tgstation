@@ -236,6 +236,12 @@
 	var/mob/living/carbon/M = patient
 	if(!M)
 		return
+	if(M.loc != src)
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[patient] no longer detected. Life support functions diabled.")]")
+		log_message("[patient] no longer detected - Life support functions disabled.", LOG_MECHA)
+		STOP_PROCESSING(SSobj, src)
+		patient = null
+		update_equip_info()
 	if(M.health > 0)
 		M.adjustOxyLoss(-0.5 * delta_time)
 	M.AdjustStun(-40 * delta_time)
@@ -326,13 +332,13 @@
 		return analyze_reagents(target, source)
 	//we're in syringe mode so lets do syringe stuff
 	if(!LAZYLEN(syringes))
-		to_chat(source, "[icon2html(src, source)]<span class=\"alert\">No syringes loaded.</span>")
+		to_chat(source, "[icon2html(src, source)]<span class='alert'>No syringes loaded.</span>")
 		return
 	if(reagents.total_volume<=0)
-		to_chat(source, "[icon2html(src, source)]<span class=\"alert\">No available reagents to load syringe with.</span>")
+		to_chat(source, "[icon2html(src, source)]<span class='alert'>No available reagents to load syringe with.</span>")
 		return
 	if(HAS_TRAIT(source, TRAIT_PACIFISM))
-		to_chat(source, "<span class=\"alert\">The [src] might be lethally chambered! You don't want to risk harming anyone...</span>")
+		to_chat(source, span_alert("The [src] might be lethally chambered! You don't want to risk harming anyone..."))
 		return
 	var/obj/item/ammo_casing/syringegun/chambered = new /obj/item/ammo_casing/syringegun(src)
 	log_message("Fired [chambered] from [src] by [source], targeting [target].", LOG_MECHA)

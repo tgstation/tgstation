@@ -1,6 +1,8 @@
 /datum/job/station_engineer
-	title = "Station Engineer"
-	department_head = list("Chief Engineer")
+	title = JOB_STATION_ENGINEER
+	description = "Start the Supermatter, wire the solars, repair station hull \
+		and wiring damage."
+	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 5
@@ -33,7 +35,7 @@
 		/obj/item/clothing/head/hardhat/red/upgraded = 1
 	)
 	rpg_title = "Crystallomancer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/engineer
@@ -65,17 +67,11 @@
 
 	gloves = /obj/item/clothing/gloves/color/yellow
 
-/datum/outfit/job/engineer/gloved/rig
-	name = "Station Engineer (Hardsuit)"
+/datum/outfit/job/engineer/mod
+	name = "Station Engineer (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/engine
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/engineering
 	head = null
 	mask = /obj/item/clothing/mask/breath
 	internals_slot = ITEM_SLOT_SUITSTORE
-
-/datum/outfit/job/engineer/gloved/gunner
-	id_trim = /datum/id_trim/job/station_engineer/gunner
-
-/datum/outfit/job/engineer/gloved/rig/gunner
-	id_trim = /datum/id_trim/job/station_engineer/gunner

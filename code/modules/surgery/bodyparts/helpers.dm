@@ -3,6 +3,8 @@
 	return
 
 /mob/living/carbon/get_bodypart(zone)
+	RETURN_TYPE(/obj/item/bodypart)
+
 	if(!zone)
 		zone = BODY_ZONE_CHEST
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
@@ -247,5 +249,5 @@
 				else
 					uniform.adjusted = DIGITIGRADE_STYLE
 				leg_owner.update_inv_w_uniform()
-		if(leg_owner.shoes && !swap_back)
+		if(leg_owner.shoes && !(leg_owner.shoes.item_flags & IGNORE_DIGITIGRADE) && !swap_back)
 			leg_owner.dropItemToGround(leg_owner.shoes)

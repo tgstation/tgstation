@@ -340,10 +340,10 @@ All the important duct code:
 	. += span_notice("It's current color and layer are [duct_color] and [duct_layer]. Use in-hand to change.")
 
 /obj/item/stack/ducts/attack_self(mob/user)
-	var/new_layer = input("Select a layer", "Layer") as null|anything in layers
+	var/new_layer = tgui_input_list(user, "Select a layer", "Layer", layers)
 	if(new_layer)
 		duct_layer = new_layer
-	var/new_color = input("Select a color", "Color") as null|anything in GLOB.pipe_paint_colors
+	var/new_color = tgui_input_list(user, "Select a color", "Color", GLOB.pipe_paint_colors)
 	if(new_color)
 		duct_color = new_color
 		add_atom_colour(GLOB.pipe_paint_colors[new_color], FIXED_COLOUR_PRIORITY)

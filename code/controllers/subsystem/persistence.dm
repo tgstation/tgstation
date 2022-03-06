@@ -142,7 +142,7 @@ SUBSYSTEM_DEF(persistence)
 	if(json["version"] < TATTOO_PERSISTENCE_VERSION)
 		update_prisoner_tattoos(json)
 
-	var/datum/job/prisoner_datum = SSjob.name_occupations["Prisoner"]
+	var/datum/job/prisoner_datum = SSjob.name_occupations[JOB_PRISONER]
 	if(!prisoner_datum)
 		return
 	var/iterations_allowed = prisoner_datum.spawn_positions

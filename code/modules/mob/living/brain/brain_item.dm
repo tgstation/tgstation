@@ -2,9 +2,11 @@
 	name = "brain"
 	desc = "A piece of juicy meat found in a person's head."
 	icon_state = "brain"
+	visual = TRUE
 	throw_speed = 3
 	throw_range = 5
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_BRAIN
 	organ_flags = ORGAN_VITAL
@@ -20,8 +22,9 @@
 
 	var/suicided = FALSE
 	var/mob/living/brain/brainmob = null
-	var/decoy_override = FALSE //if it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
-	//two variables necessary for calculating whether we get a brain trauma or not
+	/// If it's a fake brain with no brainmob assigned. Feedback messages will be faked as if it does have a brainmob. See changelings & dullahans.
+	var/decoy_override = FALSE
+	/// Two variables necessary for calculating whether we get a brain trauma or not
 	var/damage_delta = 0
 
 
@@ -41,7 +44,7 @@
 
 	if(C.mind && C.mind.has_antag_datum(/datum/antagonist/changeling) && !no_id_transfer) //congrats, you're trapped in a body you don't control
 		if(brainmob && !(C.stat == DEAD || (HAS_TRAIT(C, TRAIT_DEATHCOMA))))
-			to_chat(brainmob, "<span class= danger>You can't feel your body! You're still just a brain!</span>")
+			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(C)
 		C.update_hair()
 		return
@@ -55,7 +58,12 @@
 		else
 			C.key = brainmob.key
 
+		C.set_suicide(brainmob.suiciding)
+
 		QDEL_NULL(brainmob)
+
+	else
+		C.set_suicide(suicided)
 
 	for(var/X in traumas)
 		var/datum/brain_trauma/BT = X

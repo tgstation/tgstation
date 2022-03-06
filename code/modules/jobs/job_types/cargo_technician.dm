@@ -1,6 +1,9 @@
 /datum/job/cargo_technician
-	title = "Cargo Technician"
-	department_head = list("Head of Personnel")
+	title = JOB_CARGO_TECHNICIAN
+	description = "Distribute supplies to the departments that ordered them, \
+		collect empty crates, load and unload the supply shuttle, \
+		ship bounty cubes."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
@@ -29,7 +32,7 @@
 		/obj/item/gun/ballistic/rifle/boltaction = 1
 	)
 	rpg_title = "Merchantman"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/cargo_tech
@@ -44,3 +47,8 @@
 	belt = /obj/item/pda/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	l_hand = /obj/item/export_scanner
+
+/datum/outfit/job/cargo_tech/mod
+	name = "Cargo Technician (MODsuit)"
+
+	back = /obj/item/mod/control/pre_equipped/loader

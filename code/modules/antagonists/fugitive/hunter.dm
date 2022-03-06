@@ -5,19 +5,10 @@
 	silent = TRUE //greet called by the spawn
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE
-	antag_hud_type = ANTAG_HUD_FUGITIVE
 	antag_hud_name = "fugitive_hunter"
 	suicide_cry = "FOR GLORY!!"
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
-
-/datum/antagonist/fugitive_hunter/apply_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	add_antag_hud(antag_hud_type, antag_hud_name, M)
-
-/datum/antagonist/fugitive_hunter/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/M = mob_override || owner.current
-	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/fugitive_hunter/on_gain()
 	forge_objectives()

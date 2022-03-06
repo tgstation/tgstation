@@ -176,14 +176,14 @@
 
 /obj/effect/proc_holder/spell/aimed/finger_guns
 	name = "Finger Guns"
-	desc = "Shoot a mimed bullet from your fingers that stuns and does some damage."
+	desc = "Shoot up to three mimed bullets from your fingers that damage and mute their targets. Can't be used if you have something in your hands."
 	school = SCHOOL_MIME
 	panel = "Mime"
 	charge_max = 300
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = "<span class='dangers'>You fire your finger gun!</span>"
+	invocation_emote_self = span_danger("You fire your finger gun!")
 	range = 20
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3
@@ -203,6 +203,9 @@
 	if(owner.incapacitated())
 		to_chat(owner, span_warning("You can't properly point your fingers while incapacitated."))
 		return
+	if(owner.get_active_held_item())
+		to_chat(owner, span_warning("You can't properly fire your finger guns with something in your hand."))
+		return
 	if(usr?.mind)
 		if(!usr.mind.miming)
 			to_chat(usr, span_warning("You must dedicate yourself to silence first!"))
@@ -213,6 +216,9 @@
 	..()
 
 /obj/effect/proc_holder/spell/aimed/finger_guns/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(caller.get_active_held_item())
+		to_chat(caller, span_warning("You can't properly fire your finger guns with something in your hand."))
+		return
 	if(caller.incapacitated())
 		to_chat(caller, span_warning("You can't properly point your fingers while incapacitated."))
 		if(charge_type == "recharge")

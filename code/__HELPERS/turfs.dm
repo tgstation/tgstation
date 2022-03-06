@@ -98,29 +98,26 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return destination
 
 /**
- * Returns the atom sitting on the turf.
- * For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
- * Optional arg 'type' to stop once it reaches a specific type instead of a turf.
-**/
-/proc/get_atom_on_turf(atom/movable/atom_on_turf, stop_type)
-	var/atom/turf_to_check = atom_on_turf
-	while(turf_to_check?.loc && !isturf(turf_to_check.loc))
-		turf_to_check = turf_to_check.loc
-		if(stop_type && istype(turf_to_check, stop_type))
+ * Returns the top-most atom sitting on the turf.
+ * For example, using this on a disk, which is in a bag, on a mob,
+ * will return the mob because it's on the turf.
+ *
+ * Arguments
+ * * something_in_turf - a movable within the turf, somewhere.
+ * * stop_type - optional - stops looking if stop_type is found in the turf, returning that type (if found).
+ **/
+/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type)
+	if(!istype(something_in_turf))
+		CRASH("get_atom_on_turf was not passed an /atom/movable! Got [isnull(something_in_turf) ? "null":"type: [something_in_turf.type]"]")
+
+	var/atom/movable/topmost_thing = something_in_turf
+
+	while(topmost_thing?.loc && !isturf(topmost_thing.loc))
+		topmost_thing = topmost_thing.loc
+		if(stop_type && istype(topmost_thing, stop_type))
 			break
-	return turf_to_check
 
-///Returns a list of all locations (except the area) the movable is within.
-/proc/get_nested_locs(atom/movable/atom_on_location, include_turf = FALSE)
-	. = list()
-	var/atom/location = atom_on_location.loc
-	var/turf/turf = get_turf(atom_on_location)
-	while(location && location != turf)
-		. += location
-		location = location.loc
-	if(location && include_turf) //At this point, only the turf is left, provided it exists.
-		. += location
-
+	return topmost_thing
 
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
 /proc/get_edge_target_turf(atom/target_atom, direction)
@@ -239,19 +236,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 		return locate(final_x, final_y, atom_turf.z)
 
 ///Returns a turf based on text inputs, original turf and viewing client
-/proc/params_to_turf(scr_loc, turf/origin, client/viewing_client)
-	if(!scr_loc)
+/proc/parse_caught_click_modifiers(list/modifiers, turf/origin, client/viewing_client)
+	if(!modifiers)
 		return null
-	var/tX = splittext(scr_loc, ",")
-	var/tY = splittext(tX[2], ":")
-	var/tZ = origin.z
-	tY = tY[1]
-	tX = splittext(tX[1], ":")
-	tX = tX[1]
+
+	var/screen_loc = splittext(LAZYACCESS(modifiers, SCREEN_LOC), ",")
 	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
-	tX = clamp(origin.x + text2num(tX) - round(actual_view[1] / 2) - 1, 1, world.maxx)
-	tY = clamp(origin.y + text2num(tY) - round(actual_view[2] / 2) - 1, 1, world.maxy)
-	return locate(tX, tY, tZ)
+	var/click_turf_x = splittext(screen_loc[1], ":")
+	var/click_turf_y = splittext(screen_loc[2], ":")
+	var/click_turf_z = origin.z
+
+	var/click_turf_px = text2num(click_turf_x[2])
+	var/click_turf_py = text2num(click_turf_y[2])
+	click_turf_x = origin.x + text2num(click_turf_x[1]) - round(actual_view[1] / 2) - 1
+	click_turf_y = origin.y + text2num(click_turf_y[1]) - round(actual_view[2] / 2) - 1
+
+	var/turf/click_turf = locate(clamp(click_turf_x, 1, world.maxx), clamp(click_turf_y, 1, world.maxy), click_turf_z)
+	LAZYSET(modifiers, ICON_X, "[(click_turf_px - click_turf.pixel_x) + ((click_turf_x - click_turf.x) * world.icon_size)]")
+	LAZYSET(modifiers, ICON_Y, "[(click_turf_py - click_turf.pixel_y) + ((click_turf_y - click_turf.y) * world.icon_size)]")
+	return click_turf
 
 ///Almost identical to the params_to_turf(), but unused (remove?)
 /proc/screen_loc_to_turf(text, turf/origin, client/C)
@@ -337,7 +340,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			var/I = rand(1, turf_list.len)
 			var/turf/checked_turf = turf_list[I]
 			var/area/turf_area = get_area(checked_turf)
-			if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY))
+			if(!checked_turf.density && (turf_area.area_flags & VALID_TERRITORY) && !isgroundlessturf(checked_turf))
 				var/clear = TRUE
 				for(var/obj/checked_object in checked_turf)
 					if(checked_object.density)

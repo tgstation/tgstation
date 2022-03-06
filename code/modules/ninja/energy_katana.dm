@@ -45,7 +45,7 @@
 	var/list/modifiers = params2list(click_parameters)
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && !target.density)
-		jaunt.Teleport(user, target)
+		jaunt.teleport(user, target)
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()

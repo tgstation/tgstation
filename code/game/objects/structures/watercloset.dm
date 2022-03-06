@@ -159,21 +159,7 @@
 	var/exposed = 0 // can you currently put an item inside
 	var/obj/item/hiddenitem = null // what's in the urinal
 
-/obj/structure/urinal/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/structure/urinal/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/structure/urinal/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/structure/urinal/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
@@ -470,14 +456,9 @@
 	anchored = FALSE
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-/obj/structure/sinkframe/ComponentInitialize()
+/obj/structure/sinkframe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-
-/obj/structure/sinkframe/proc/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-	return !anchored
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
@@ -674,10 +655,12 @@
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
+		plane = GAME_PLANE
 		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
+		plane = GAME_PLANE_UPPER
 		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
@@ -774,6 +757,7 @@
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
 	layer = SIGN_LAYER
+	plane = GAME_PLANE
 	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
@@ -781,6 +765,7 @@
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)
@@ -788,3 +773,10 @@
 
 /obj/structure/curtain/cloth/fancy/mechanical/attack_hand(mob/user, list/modifiers)
 		return
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed
+	icon_state = "cur_fancy-closed"
+
+/obj/structure/curtain/cloth/fancy/mechanical/start_closed/Initialize(mapload)
+	. = ..()
+	close()

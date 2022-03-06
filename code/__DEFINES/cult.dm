@@ -31,3 +31,7 @@
 #define THEME_CULT "cult"
 #define THEME_WIZARD "wizard"
 #define THEME_HOLY "holy"
+
+/// Defines for cult item_dispensers.
+#define PREVIEW_IMAGE "preview"
+#define OUTPUT_ITEMS "output"

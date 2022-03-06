@@ -859,7 +859,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "cj" = (
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood,
 /obj/structure/stone_tile/cracked{
 	dir = 1
@@ -1312,7 +1312,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/mob_spawn/corpse/human/damaged,
 /obj/effect/decal/cleanable/blood,
 /obj/structure/stone_tile/cracked{
 	dir = 1

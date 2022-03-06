@@ -1,3 +1,4 @@
+#define FROST_MINER_SHOULD_ENRAGE (health <= maxHealth*0.25 && !enraged)
 GLOBAL_LIST_EMPTY(frost_miner_prisms)
 
 /*
@@ -42,58 +43,40 @@ Difficulty: Extremely Hard
 	deathmessage = "falls to the ground, decaying into plasma particles."
 	deathsound = "bodyfall"
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	attack_action_types = list(/datum/action/innate/megafauna_attack/frost_orbs,
-							   /datum/action/innate/megafauna_attack/snowball_machine_gun,
-							   /datum/action/innate/megafauna_attack/ice_shotgun)
-	/// Modifies the speed of the projectiles the demonic frost miner shoots out
-	var/projectile_speed_multiplier = 1
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
 	/// If the demonic frost miner is currently transforming to its enraged state
 	var/enraging = FALSE
+	/// Frost orbs ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/frost_orbs
+	/// Snowball Machine gun Ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/snowball_machine_gun
+	/// Ice Shotgun Ability
+	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/ice_shotgun
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize(mapload)
 	. = ..()
+	frost_orbs = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel()
+	snowball_machine_gun = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire()
+	ice_shotgun = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern()
+	frost_orbs.Grant(src)
+	snowball_machine_gun.Grant(src)
+	ice_shotgun.Grant(src)
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
+	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 
-/datum/action/innate/megafauna_attack/frost_orbs
-	name = "Fire Frost Orbs"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "sniper_zoom"
-	chosen_message = "<span class='colossus'>You are now sending out frost orbs to track in on a target.</span>"
-	chosen_attack_num = 1
-
-/datum/action/innate/megafauna_attack/snowball_machine_gun
-	name = "Fire Snowball Machine Gun"
-	icon_icon = 'icons/obj/guns/energy.dmi'
-	button_icon_state = "kineticgun"
-	chosen_message = "<span class='colossus'>You are now firing a snowball machine gun at a target.</span>"
-	chosen_attack_num = 2
-
-/datum/action/innate/megafauna_attack/ice_shotgun
-	name = "Fire Ice Shotgun"
-	icon_icon = 'icons/obj/guns/ballistic.dmi'
-	button_icon_state = "shotgun"
-	chosen_message = "<span class='colossus'>You are now firing shotgun ice blasts.</span>"
-	chosen_attack_num = 3
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Destroy()
+	QDEL_NULL(frost_orbs)
+	QDEL_NULL(snowball_machine_gun)
+	QDEL_NULL(ice_shotgun)
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
-	check_enraged()
-	projectile_speed_multiplier = 1 - enraged * 0.5
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 10 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 10 SECONDS))
-
 	if(client)
-		switch(chosen_attack)
-			if(1)
-				frost_orbs()
-			if(2)
-				snowball_machine_gun()
-			if(3)
-				ice_shotgun()
 		return
 
 	var/easy_attack = prob(80 - enraged * 40)
@@ -101,20 +84,107 @@ Difficulty: Extremely Hard
 	switch(chosen_attack)
 		if(1)
 			if(easy_attack)
-				frost_orbs(10, 8)
+				frost_orbs.shot_count = 8
+				frost_orbs.shot_delay = 10
+				frost_orbs.Trigger(target = target)
 			else
-				frost_orbs(5, 16)
+				frost_orbs.shot_count = 16
+				frost_orbs.shot_delay = 5
+				frost_orbs.Trigger(target = target)
 		if(2)
 			if(easy_attack)
-				snowball_machine_gun()
-			else
-				INVOKE_ASYNC(src, .proc/ice_shotgun, 5, list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160)))
-				snowball_machine_gun(5 * 8, 5)
+				snowball_machine_gun.shot_count = 60
+				snowball_machine_gun.default_projectile_spread = 45
+				snowball_machine_gun.Trigger(target = target)
+			else if(ice_shotgun.IsAvailable())
+				ice_shotgun.shot_angles = list(list(-180, -140, -100, -60, -20, 20, 60, 100, 140), list(-160, -120, -80, -40, 0, 40, 80, 120, 160))
+				INVOKE_ASYNC(ice_shotgun, /datum/action/proc/Trigger, target)
+				snowball_machine_gun.shot_count = 5 * 8
+				snowball_machine_gun.default_projectile_spread = 5
+				snowball_machine_gun.StartCooldown(0)
+				snowball_machine_gun.Trigger(target = target)
 		if(3)
 			if(easy_attack)
-				ice_shotgun()
+				// static lists? remind me later
+				ice_shotgun.shot_angles = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30))
+				ice_shotgun.Trigger(target = target)
 			else
-				ice_shotgun(5, list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30)))
+				ice_shotgun.shot_angles = list(list(0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330), list(-30, -15, 0, 15, 30))
+				ice_shotgun.Trigger(target = target)
+
+/// Pre-ability usage stuff
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
+	SIGNAL_HANDLER
+	if(enraging)
+		return COMPONENT_BLOCK_ABILITY_START
+	if(FROST_MINER_SHOULD_ENRAGE)
+		INVOKE_ASYNC(src, .proc/check_enraged)
+		return COMPONENT_BLOCK_ABILITY_START
+	var/projectile_speed_multiplier = 1 - enraged * 0.5
+	frost_orbs.projectile_speed_multiplier = projectile_speed_multiplier
+	snowball_machine_gun.projectile_speed_multiplier = projectile_speed_multiplier
+	ice_shotgun.projectile_speed_multiplier = projectile_speed_multiplier
+
+/// Checks if the demonic frost miner is ready to be enraged
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
+	if(!FROST_MINER_SHOULD_ENRAGE)
+		return
+	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 8 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 8 SECONDS))
+	frost_orbs.StartCooldown(8 SECONDS)
+	adjustHealth(-maxHealth)
+	enraged = TRUE
+	enraging = TRUE
+	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
+	spin(100, 10)
+	SLEEP_CHECK_DEATH(60, src)
+	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
+	icon_state = "demonic_miner_phase2"
+	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
+	spin(8, 2)
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(LIGHT_COLOR_PURPLE, 5)
+	SLEEP_CHECK_DEATH(8, src)
+	for(var/mob/living/L in viewers(src))
+		shake_camera(L, 3, 2)
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
+	enraging = FALSE
+	adjustHealth(-maxHealth)
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
+	adjustBruteLoss(-30 * severity)
+	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
+	if(enraging)
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/MoveToTarget(list/possible_targets)
+	if(enraging)
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Move()
+	if(enraging)
+		return
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/death(gibbed, list/force_grant)
+	if(health > 0)
+		return
+	var/turf/T = get_turf(src)
+	var/loot = rand(1, 3)
+	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
+		prism_to_set.set_prism_light(COLOR_GRAY, 1)
+	switch(loot)
+		if(1)
+			new /obj/item/resurrection_crystal(T)
+		if(2)
+			new /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail(T)
+		if(3)
+			new /obj/item/pickaxe/drill/jackhammer/demonic(T)
+	return ..()
 
 /obj/projectile/colossus/frost_orb
 	name = "frost orb"
@@ -128,7 +198,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /obj/projectile/colossus/snowball
 	name = "machine-gun snowball"
@@ -150,140 +220,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
-
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
-	adjustBruteLoss(-30 * severity)
-	visible_message(span_danger("[src] absorbs the explosion!"), span_userdanger("You absorb the explosion!"))
-
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
-	if(enraging)
-		return
-	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/MoveToTarget(list/possible_targets)
-	if(enraging)
-		return
-	return ..()
-
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Move()
-	if(enraging)
-		return
-	return ..()
-
-/// Shoots out homing frost orbs that explode into ice blast projectiles after a couple seconds
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 10, shoot_times = 8)
-	for(var/i in 1 to shoot_times)
-		var/turf/startloc = get_turf(src)
-		var/turf/endloc = get_turf(target)
-		if(!endloc)
-			break
-		var/obj/projectile/colossus/frost_orb/P = new(startloc)
-		P.preparePixelProjectile(endloc, startloc)
-		P.firer = src
-		if(target)
-			P.original = target
-		P.set_homing_target(target)
-		P.fire(rand(0, 360))
-		addtimer(CALLBACK(P, /obj/projectile/colossus/frost_orb/proc/orb_explosion, projectile_speed_multiplier), 20) // make the orbs home in after a second
-		SLEEP_CHECK_DEATH(added_delay)
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 4 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 6 SECONDS))
-
-/// Called when the orb is exploding, shoots out projectiles
-/obj/projectile/colossus/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
-	for(var/i in 0 to 5)
-		var/angle = i * 60
-		var/turf/startloc = get_turf(src)
-		var/turf/endloc = get_turf(original)
-		if(!startloc || !endloc)
-			break
-		var/obj/projectile/colossus/ice_blast/P = new(startloc)
-		P.speed *= projectile_speed_multiplier
-		P.preparePixelProjectile(endloc, startloc, null, angle + rand(-10, 10))
-		P.firer = firer
-		if(original)
-			P.original = original
-		P.fire()
-	qdel(src)
-
-/// Shoots out snowballs with a random spread
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/snowball_machine_gun(shots = 60, spread = 45)
-	for(var/i in 1 to shots)
-		var/turf/startloc = get_turf(src)
-		var/turf/endloc = get_turf(target)
-		if(!endloc)
-			break
-		var/obj/projectile/P = new /obj/projectile/colossus/snowball(startloc)
-		P.speed *= projectile_speed_multiplier
-		P.preparePixelProjectile(endloc, startloc, null, rand(-spread, spread))
-		P.firer = src
-		if(target)
-			P.original = target
-		P.fire()
-		SLEEP_CHECK_DEATH(1)
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 1.5 SECONDS))
-
-/// Shoots out ice blasts in a shotgun like pattern
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/ice_shotgun(shots = 5, list/patterns = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30)))
-	for(var/i in 1 to shots)
-		var/list/pattern = patterns[i % length(patterns) + 1] // alternating patterns
-		for(var/spread in pattern)
-			var/turf/startloc = get_turf(src)
-			var/turf/endloc = get_turf(target)
-			if(!endloc)
-				break
-			var/obj/projectile/P = new /obj/projectile/colossus/ice_blast(startloc)
-			P.speed *= projectile_speed_multiplier
-			P.preparePixelProjectile(endloc, startloc, null, spread)
-			P.firer = src
-			if(target)
-				P.original = target
-			P.fire()
-		SLEEP_CHECK_DEATH(8)
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 1.5 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 2 SECONDS))
-
-/// Checks if the demonic frost miner is ready to be enraged
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
-	if(enraged)
-		return
-	if(health > maxHealth*0.25)
-		return
-	update_cooldowns(list(COOLDOWN_UPDATE_SET_MELEE = 8 SECONDS, COOLDOWN_UPDATE_SET_RANGED = 8 SECONDS))
-	adjustHealth(-maxHealth)
-	enraged = TRUE
-	enraging = TRUE
-	animate(src, pixel_y = pixel_y + 96, time = 100, easing = ELASTIC_EASING)
-	spin(100, 10)
-	SLEEP_CHECK_DEATH(60)
-	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
-	icon_state = "demonic_miner_phase2"
-	animate(src, pixel_y = pixel_y - 96, time = 8, flags = ANIMATION_END_NOW)
-	spin(8, 2)
-	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
-		prism_to_set.set_prism_light(LIGHT_COLOR_PURPLE, 5)
-	SLEEP_CHECK_DEATH(8)
-	for(var/mob/living/L in viewers(src))
-		shake_camera(L, 3, 2)
-	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-	ADD_TRAIT(src, TRAIT_MOVE_FLYING, FROSTMINER_ENRAGE_TRAIT)
-	enraging = FALSE
-	adjustHealth(-maxHealth)
-
-/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/death(gibbed, list/force_grant)
-	if(health > 0)
-		return
-	var/turf/T = get_turf(src)
-	var/loot = rand(1, 3)
-	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
-		prism_to_set.set_prism_light(COLOR_GRAY, 1)
-	switch(loot)
-		if(1)
-			new /obj/item/resurrection_crystal(T)
-		if(2)
-			new /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail(T)
-		if(3)
-			new /obj/item/pickaxe/drill/jackhammer/demonic(T)
-	return ..()
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"

@@ -28,6 +28,9 @@ GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circ
 	/// Whether this datatype should be loaded into the global circuit_datatypes list.
 	var/abstract = FALSE
 
+	/// Whether we should extensively convert this datatype, important for composite lists who may not have datatypes that need implicit conversions
+	var/is_extensive = FALSE
+
 /**
  * Returns the value to be set for the port
  *
@@ -36,6 +39,12 @@ GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circ
  */
 /datum/circuit_datatype/proc/convert_value(datum/port/port, value_to_convert, force = FALSE)
 	return value_to_convert
+
+/**
+ * Similar to convert value, however it doesn't get called by a port when a value is set. Useful for extensive conversions that may only need to be done for player inputs (e.g. lists)
+ */
+/datum/circuit_datatype/proc/convert_value_extensive(datum/port/port, value_to_convert, force = FALSE)
+	return convert_value(port, value_to_convert, force)
 
 /**
  * Determines if a datatype is compatible with another port of a different type.
@@ -101,3 +110,9 @@ GLOBAL_LIST_INIT_TYPED(circuit_datatypes, /datum/circuit_datatype, generate_circ
  */
 /datum/circuit_datatype/proc/get_datatypes()
 	return list()
+
+/**
+ * Used by composite datatypes. Returns a single datatype from the list if it exists by index.
+ */
+/datum/circuit_datatype/proc/get_datatype(index)
+	return

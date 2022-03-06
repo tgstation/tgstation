@@ -4,6 +4,8 @@
 		return TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(user.move_force < move_resist)
+			return
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		var/shove_dir = get_dir(user, src)
@@ -184,3 +186,15 @@
 		else
 			set_stat(CONSCIOUS)
 	med_hud_set_status()
+
+/mob/living/basic/emp_act(severity)
+	. = ..()
+	if(mob_biotypes & MOB_ROBOTIC)
+		switch (severity)
+			if (EMP_LIGHT)
+				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
+				apply_damage(maxHealth * 0.6)
+				Shake(5, 5, 1 SECONDS)
+			if (EMP_HEAVY)
+				visible_message(span_danger("[src] suddenly bursts apart!"))
+				apply_damage(maxHealth)

@@ -370,6 +370,18 @@
 	results = list(/datum/reagent/consumable/bluecherryshake = 3)
 	required_reagents = list(/datum/reagent/consumable/bluecherryjelly = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
 
+/datum/chemical_reaction/drink/vanillashake
+	results = list(/datum/reagent/consumable/vanillashake = 3)
+	required_reagents = list(/datum/reagent/consumable/vanilla = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+
+/datum/chemical_reaction/drink/caramelshake
+	results = list(/datum/reagent/consumable/caramelshake = 3)
+	required_reagents = list(/datum/reagent/consumable/caramel = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+
+/datum/chemical_reaction/drink/choccyshake
+	results = list(/datum/reagent/consumable/choccyshake = 3)
+	required_reagents = list(/datum/reagent/consumable/coco = 1, /datum/reagent/consumable/ice = 1, /datum/reagent/consumable/cream = 1)
+
 /datum/chemical_reaction/drink/drunkenblumpkin
 	results = list(/datum/reagent/consumable/ethanol/drunkenblumpkin = 4)
 	required_reagents = list(/datum/reagent/consumable/blumpkinjuice = 1, /datum/reagent/consumable/ethanol/irish_cream = 2, /datum/reagent/consumable/ice = 1)
@@ -469,7 +481,7 @@
 
 /datum/chemical_reaction/drink/quadruplesec
 	results = list(/datum/reagent/consumable/ethanol/quadruple_sec = 15)
-	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 5, /datum/reagent/consumable/triple_citrus = 5, /datum/reagent/consumable/ethanol/creme_de_menthe = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 5, /datum/reagent/consumable/triple_citrus = 5, /datum/reagent/consumable/grenadine = 5)
 	mix_message = "The snap of a taser emanates clearly from the mixture as it settles."
 	mix_sound = 'sound/weapons/taser.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
@@ -690,3 +702,65 @@
 	results = list(/datum/reagent/consumable/ethanol/the_juice = 5)
 	required_reagents = list(/datum/reagent/consumable/mushroom_tea = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mindbreaker = 1, /datum/reagent/consumable/ethanol/neurotoxin = 1, /datum/reagent/medicine/morphine = 1)
 	mix_message = "The liquids all swirl together into a deep purple."
+
+/datum/chemical_reaction/drink/admiralty
+	results = list(/datum/reagent/consumable/ethanol/admiralty = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 3, /datum/reagent/consumable/ethanol/vermouth = 1, /datum/reagent/consumable/ethanol/fernet = 1)
+
+/datum/chemical_reaction/drink/long_haul
+	results = list(/datum/reagent/consumable/ethanol/long_haul = 25)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/ethanol/curacao = 3, /datum/reagent/consumable/sugar= 2, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/sodawater = 15)
+
+/datum/chemical_reaction/drink/long_john_silver
+	results = list(/datum/reagent/consumable/ethanol/long_john_silver = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/lemonade = 5)
+
+/datum/chemical_reaction/drink/tropical_storm
+	results = list(/datum/reagent/consumable/ethanol/tropical_storm = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/curacao = 2, /datum/reagent/consumable/triple_citrus = 4, /datum/reagent/consumable/pineapplejuice = 2)
+
+/datum/chemical_reaction/drink/dark_n_stormy
+	results = list(/datum/reagent/consumable/ethanol/dark_and_stormy = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 3, /datum/reagent/consumable/sol_dry = 7)
+
+/datum/chemical_reaction/drink/salt_and_swell
+	results = list(/datum/reagent/consumable/ethanol/salt_and_swell = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/toechtauese_syrup = 3, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/medicine/salglu_solution = 1)
+
+/datum/chemical_reaction/drink/tiltaellen
+	results = list(/datum/reagent/consumable/ethanol/tiltaellen = 10)
+	required_reagents = list(/datum/reagent/consumable/yoghurt = 8, /datum/reagent/consumable/vinegar = 1, /datum/reagent/consumable/salt = 1)
+	mix_message = "The mixture curdles and thickens."
+
+/datum/chemical_reaction/drink/tich_toch
+	results = list(/datum/reagent/consumable/ethanol/tich_toch = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/tiltaellen = 6, /datum/reagent/consumable/toechtauese_syrup = 2, /datum/reagent/consumable/ethanol/vodka = 2)
+
+/datum/chemical_reaction/drink/toechtauese_syrup
+	results = list(/datum/reagent/consumable/toechtauese_syrup = 10)
+	required_reagents = list(/datum/reagent/consumable/toechtauese_juice = 6, /datum/reagent/consumable/sugar = 4)
+
+/datum/chemical_reaction/drink/roy_rogers
+	results = list(/datum/reagent/consumable/roy_rogers = 3)
+	required_reagents = list(/datum/reagent/consumable/space_cola = 2, /datum/reagent/consumable/grenadine = 1)
+
+/datum/chemical_reaction/drink/shirley_temple
+	results = list(/datum/reagent/consumable/shirley_temple = 3)
+	required_reagents = list(/datum/reagent/consumable/sol_dry = 2, /datum/reagent/consumable/grenadine = 1)
+
+/datum/chemical_reaction/drink/agua_fresca
+	results = list(/datum/reagent/consumable/agua_fresca = 3)
+	required_reagents = list(/datum/reagent/consumable/watermelonjuice = 4, /datum/reagent/consumable/ice = 1, /datum/reagent/water = 2, /datum/reagent/consumable/limejuice = 2, /datum/reagent/consumable/menthol = 1)
+
+/datum/chemical_reaction/drink/cinderella
+	results = list(/datum/reagent/consumable/cinderella = 50)
+	required_reagents = list(/datum/reagent/consumable/pineapplejuice = 10, /datum/reagent/consumable/orangejuice = 10, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/ice = 5, /datum/reagent/consumable/sol_dry = 20, /datum/reagent/consumable/ethanol/bitters = 2)
+
+/datum/chemical_reaction/drink/italian_coco
+	results = list(/datum/reagent/consumable/italian_coco = 10)
+	required_reagents = list(/datum/reagent/consumable/hot_coco  = 5, /datum/reagent/consumable/corn_starch = 1, /datum/reagent/consumable/whipped_cream = 4)
+
+/datum/chemical_reaction/drink/helianthus
+	results = list(/datum/reagent/consumable/ethanol/helianthus = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/toxin/mindbreaker = 1)
+	mix_message = "The drink lets out a soft enlightening laughter..."

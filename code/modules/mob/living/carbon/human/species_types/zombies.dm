@@ -36,10 +36,36 @@
 	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_EXIST // Take damage at fire temp
 	bodytemp_cold_damage_limit = MINIMUM_TEMPERATURE_TO_MOVE // take damage below minimum movement temp
 
+/// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
+/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
+	return
+
 /datum/species/zombie/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
 		return TRUE
 	return ..()
+
+/datum/species/zombie/get_species_description()
+	return "A rotting zombie! They descend upon Space Station Thirteen Every year to spook the crew! \"Sincerely, the Zombies!\""
+
+/datum/species/zombie/get_species_lore()
+	return list("Zombies have long lasting beef with Botanists. Their last incident involving a lawn with defensive plants has left them very unhinged.")
+
+// Override for the default temperature perks, so we can establish that they don't care about temperature very much
+/datum/species/zombie/create_pref_temperature_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+		SPECIES_PERK_ICON = "thermometer-half",
+		SPECIES_PERK_NAME = "No Body Temperature",
+		SPECIES_PERK_DESC = "Having long since departed, Zombies do not have anything \
+			regulating their body temperature anymore. This means that \
+			the environment decides their body temperature - which they don't mind at \
+			all, until it gets a bit too hot.",
+	))
+
+	return to_add
 
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
@@ -55,17 +81,13 @@
 	/// The cooldown before the zombie can start regenerating
 	COOLDOWN_DECLARE(regen_cooldown)
 
-/// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
-/datum/species/zombie/body_temperature_core(mob/living/carbon/human/humi, delta_time, times_fired)
-	return
-
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
 
 /datum/species/zombie/infectious/spec_stun(mob/living/carbon/human/H,amount)
 	. = min(20, amount)
 
-/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, spread_damage = FALSE, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE)
+/datum/species/zombie/infectious/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, spread_damage = FALSE, forced = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
 	. = ..()
 	if(.)
 		COOLDOWN_START(src, regen_cooldown, REGENERATION_DELAY)

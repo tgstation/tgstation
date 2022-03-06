@@ -163,9 +163,9 @@
 					new /obj/structure/spider/stickyweb(T)
 
 			if(ANTIDOTE_NEEDED)
-				var/obj/effect/mob_spawn/human/corpse/assistant/infected_assistant = pick(/obj/effect/mob_spawn/human/corpse/assistant/beesease_infection, /obj/effect/mob_spawn/human/corpse/assistant/brainrot_infection, /obj/effect/mob_spawn/human/corpse/assistant/spanishflu_infection)
+				var/obj/effect/mob_spawn/corpse/human/assistant/infected_assistant = pick(/obj/effect/mob_spawn/corpse/human/assistant/beesease_infection, /obj/effect/mob_spawn/corpse/human/assistant/brainrot_infection, /obj/effect/mob_spawn/corpse/human/assistant/spanishflu_infection)
 				var/turf/T
-				for(var/i=0, i<10, i++)
+				for(var/i in 1 to 10)
 					if(prob(15))
 						shuttle_spawns.Add(/obj/item/reagent_containers/glass/bottle)
 					else if(prob(15))
@@ -206,10 +206,10 @@
 				var/datum/supply_pack/pack = SSshuttle.supply_packs[/datum/supply_pack/organic/hydroponics/beekeeping_fullkit]
 				pack.generate(pick_n_take(empty_shuttle_turfs))
 
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/bee_terrorist)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/cargo_tech)
-				shuttle_spawns.Add(/obj/effect/mob_spawn/human/corpse/nanotrasensoldier)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/bee_terrorist)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/cargo_tech)
+				shuttle_spawns.Add(/obj/effect/mob_spawn/corpse/human/nanotrasensoldier)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/no_mag)
 				shuttle_spawns.Add(/obj/item/gun/ballistic/automatic/pistol/m1911/no_mag)
 				shuttle_spawns.Add(/obj/item/honey_frame)

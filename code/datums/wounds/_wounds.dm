@@ -107,8 +107,9 @@
  * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
+ * * attack_direction: For bloodsplatters, if relevant
  */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !L.is_organic_limb() || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
 		qdel(src)
 		return
@@ -135,8 +136,8 @@
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
-	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
-		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
+	if(!victim.alerts[ALERT_WOUNDED]) // only one alert is shared between all of the wounds
+		victim.throw_alert(ALERT_WOUNDED, /atom/movable/screen/alert/status_effect/wound)
 
 	var/demoted
 	if(old_wound)
@@ -158,7 +159,7 @@
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
 	if(!demoted)
-		wound_injury(old_wound)
+		wound_injury(old_wound, attack_direction = attack_direction)
 		second_wind()
 
 /datum/wound/proc/null_victim()
@@ -195,7 +196,7 @@
 		return
 	LAZYREMOVE(victim.all_wounds, src)
 	if(!victim.all_wounds)
-		victim.clear_alert("wound")
+		victim.clear_alert(ALERT_WOUNDED)
 	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**
@@ -207,16 +208,16 @@
  * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  */
-/datum/wound/proc/replace_wound(new_type, smited = FALSE)
+/datum/wound/proc/replace_wound(new_type, smited = FALSE, attack_direction = attack_direction)
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(limb, old_wound = src, smited = smited)
+	new_wound.apply_wound(limb, old_wound = src, smited = smited, attack_direction = attack_direction)
 	. = new_wound
 	qdel(src)
 
 /// The immediate negative effects faced as a result of the wound
-/datum/wound/proc/wound_injury(datum/wound/old_wound = null)
+/datum/wound/proc/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	return
 
 
@@ -346,7 +347,7 @@
 	return (!QDELETED(src) && limb)
 
 /// When our parent bodypart is hurt
-/datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+/datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction)
 	return
 
 /// Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh

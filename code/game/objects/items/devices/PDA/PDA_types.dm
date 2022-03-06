@@ -2,7 +2,7 @@
 /obj/item/pda/clown
 	name = "clown PDA"
 	default_cartridge = /obj/item/cartridge/virus/clown
-	inserted_item = /obj/item/toy/crayon/rainbow
+	insert_type = /obj/item/toy/crayon/rainbow
 	icon_state = "pda-clown"
 	greyscale_config = null
 	greyscale_config = null
@@ -28,7 +28,7 @@
 /obj/item/pda/mime
 	name = "mime PDA"
 	default_cartridge = /obj/item/cartridge/virus/mime
-	inserted_item = /obj/item/toy/crayon/mime
+	insert_type = /obj/item/toy/crayon/mime
 	greyscale_config = /datum/greyscale_config/pda/mime
 	greyscale_colors = "#e2e2e2#cc4242"
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. The hardware has been modified for compliance with the vows of silence."
@@ -36,7 +36,9 @@
 	silent = TRUE
 	ttone = "silence"
 
-/obj/item/pda/mime/msg_input(mob/living/U = usr)
+/obj/item/pda/mime/msg_input(mob/living/U = usr, rigged = FALSE)
+	if(rigged)
+		return ..()
 	if(emped || toff)
 		return
 	var/emojis = emoji_sanitize(stripped_input(U, "Please enter emojis", name))
@@ -145,14 +147,14 @@
 /obj/item/pda/heads/rd
 	name = "research director PDA"
 	default_cartridge = /obj/item/cartridge/rd
-	inserted_item = /obj/item/pen/fountain
+	insert_type = /obj/item/pen/fountain
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick/head
 	greyscale_colors = "#e2e2e2#000099#9F5CA5"
 
 /obj/item/pda/captain
 	name = "captain PDA"
 	default_cartridge = /obj/item/cartridge/captain
-	inserted_item = /obj/item/pen/fountain/captain
+	insert_type = /obj/item/pen/fountain/captain
 	greyscale_config = /datum/greyscale_config/pda/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#F5D67B"
 
@@ -168,7 +170,7 @@
 /obj/item/pda/quartermaster
 	name = "quartermaster PDA"
 	default_cartridge = /obj/item/cartridge/quartermaster
-	inserted_item = /obj/item/pen/survival
+	insert_type = /obj/item/pen/survival
 	greyscale_config = /datum/greyscale_config/pda/stripe_thick
 	greyscale_colors = "#D6B328#6506ca#927444"
 
@@ -193,7 +195,7 @@
 /obj/item/pda/lawyer
 	name = "lawyer PDA"
 	default_cartridge = /obj/item/cartridge/lawyer
-	inserted_item = /obj/item/pen/fountain
+	insert_type = /obj/item/pen/fountain
 	greyscale_colors = "#5B74A5#f7e062"
 	ttone = "objection"
 
@@ -217,7 +219,7 @@
 	icon_pai = "pai_overlay_library"
 	icon_inactive_pai = "pai_off_overlay_library"
 	default_cartridge = /obj/item/cartridge/curator
-	inserted_item = /obj/item/pen/fountain
+	insert_type = /obj/item/pen/fountain
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. This model is a WGW-11 series e-reader."
 	note = "Congratulations, your station has chosen the Thinktronic 5290 WGW-11 Series E-reader and Personal Data Assistant!"
 	silent = TRUE //Quiet in the library!
@@ -237,7 +239,7 @@
 /obj/item/pda/bar
 	name = "bartender PDA"
 	greyscale_colors = "#333333#c7c7c7"
-	inserted_item = /obj/item/pen/fountain
+	insert_type = /obj/item/pen/fountain
 
 /obj/item/pda/atmos
 	name = "atmospherics PDA"

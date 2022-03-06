@@ -24,7 +24,7 @@
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
-	RegisterSignal(parent, COMSIG_VOID_MASK_ACT, .proc/direct_sanity_drain)
+	RegisterSignal(parent, COMSIG_HERETIC_MASK_ACT, .proc/direct_sanity_drain)
 	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, .proc/on_slip)
 
 	var/mob/living/owner = parent
@@ -36,14 +36,15 @@
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
-	REMOVE_TRAIT(parent, TRAIT_AREA_SENSITIVE, MOOD_COMPONENT_TRAIT)
+	var/atom/movable/movable_parent = parent
+	movable_parent.lose_area_sensitivity(MOOD_COMPONENT_TRAIT)
 	unmodify_hud()
 	return ..()
 
 /datum/component/mood/proc/register_job_signals(datum/source, job)
 	SIGNAL_HANDLER
 
-	if(job in list("Research Director", "Scientist", "Roboticist"))
+	if(job in list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST))
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
@@ -430,4 +431,3 @@
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
-

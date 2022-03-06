@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 				if(!user.is_literate())
 					to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 					return
-				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
+				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if(!newname)
@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 				else
 					name = "bookcase ([sanitize(newname)])"
 			else if(I.tool_behaviour == TOOL_CROWBAR)
-				if(contents.len)
+				if(length(contents))
 					to_chat(user, span_warning("You need to remove the books first!"))
 				else
 					I.play_tool_sound(src, 100)
@@ -161,17 +161,19 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 		return
 	if(!istype(user))
 		return
-	if(contents.len)
-		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sort_names(contents.Copy())
-		if(choice)
-			if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
-				return
-			if(ishuman(user))
-				if(!user.get_active_held_item())
-					user.put_in_hands(choice)
-			else
-				choice.forceMove(drop_location())
-			update_appearance()
+	if(!length(contents))
+		return
+	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
+	if(isnull(choice))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
+		return
+	if(ishuman(user))
+		if(!user.get_active_held_item())
+			user.put_in_hands(choice)
+	else
+		choice.forceMove(drop_location())
+	update_appearance()
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
@@ -186,7 +188,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
 		return ..()
-	var/amount = contents.len
+	var/amount = length(contents)
 	icon_state = "book-[clamp(amount, 0, 5)]"
 	return ..()
 
@@ -341,12 +343,14 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 		if(!literate)
 			to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
 			return
-		var/choice = tgui_input_list(usr, "What would you like to change?",,list("Title", "Contents", "Author", "Cancel"))
+		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
+		if(isnull(choice))
+			return
 		if(!user.canUseTopic(src, BE_CLOSE, literate))
 			return
 		switch(choice)
 			if("Title")
-				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
+				var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if (length_char(newtitle) > 30)
@@ -358,7 +362,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 				name = newtitle
 				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
 			if("Contents")
-				var/content = stripped_input(user, "Write your book's contents:", max_length= MAX_PAPER_LENGTH)
+				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = MAX_PAPER_LENGTH, multiline = TRUE)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
@@ -366,7 +370,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 					return
 				book_data.set_content(html_decode(content))
 			if("Author")
-				var/author = stripped_input(user, "Write the author's name:")
+				var/newauthor = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!author)

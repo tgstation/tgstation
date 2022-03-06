@@ -93,7 +93,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /obj/machinery/airalarm/all_access{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /obj/effect/turf_decal/tile/red{
@@ -190,6 +190,7 @@
 "jo" = (
 /obj/structure/table,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/item/ammo_box/a40mm,
@@ -695,22 +696,19 @@
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "Cb" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "Pirate Cutter APC";
-	pixel_x = -25
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/airalarm/all_access{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/plating,
 /area/shuttle/caravan/pirate)
 "DY" = (
 /obj/structure/closet/crate/secure/loot,
 /obj/machinery/airalarm/all_access{
+	dir = 1;
 	pixel_y = 24
 	},
 /turf/open/floor/iron/dark,
@@ -847,7 +845,6 @@
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/airalarm/all_access{
-	dir = 1;
 	pixel_y = -24
 	},
 /turf/open/floor/iron/white,

@@ -40,7 +40,7 @@
       NTSS Boxstation, the first stage of changes were aimed at altering the Brig
       design, with minor improvements and alterations.
   coiax:
-  - rscadd: Uplink pens now require two seperate rotations to unlock. This also applies
+  - rscadd: Uplink pens now require two separate rotations to unlock. This also applies
       to failsafe codes.
   - bugfix: Heroine bugs no longer make people appear partially bald when wearing
       them.

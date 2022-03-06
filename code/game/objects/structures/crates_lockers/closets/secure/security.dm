@@ -180,6 +180,51 @@
 	anchored = TRUE
 	var/id = null
 
+/obj/structure/closet/secure_closet/brig/genpop
+	name = "genpop storage locker"
+	desc = "Used for storing the belongings of genpop's tourists visiting the locals."
+
+	///Reference to the ID linked to the locker, done by swiping a prisoner ID on it
+	var/datum/weakref/assigned_id_ref = null
+
+/obj/structure/closet/secure_closet/brig/genpop/Destroy()
+	assigned_id_ref = null
+	return ..()
+
+/obj/structure/closet/secure_closet/brig/genpop/examine(mob/user)
+	. = ..()
+	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/used_id, mob/user, params)
+	. = ..()
+	if(!istype(used_id, /obj/item/card/id/advanced/prisoner))
+		return
+
+	if(!assigned_id_ref)
+		say("Prisoner ID linked to locker.")
+		assigned_id_ref = WEAKREF(used_id)
+		name = "genpop storage locker - [used_id.registered_name]"
+		return
+	var/obj/item/card/id/advanced/prisoner/registered_id = assigned_id_ref.resolve()
+	if(used_id == registered_id)
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+
+/obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, params)
+	. = ..()
+
+	var/list/id_access = used_id.GetAccess()
+	if(assigned_id_ref && (ACCESS_BRIG in id_access))
+		say("Authorized ID detected. Unlocking locker and resetting ID.")
+		locked = FALSE
+		assigned_id_ref = null
+		name = initial(name)
+		update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE
 	name = "Secure Evidence Closet"
@@ -257,6 +302,8 @@
 		new /obj/item/gun/energy/e_gun(src)
 	for(var/i in 1 to 3)
 		new /obj/item/gun/energy/laser(src)
+	for(var/i in 1 to 3)
+		new /obj/item/gun/energy/laser/thermal(src)
 
 /obj/structure/closet/secure_closet/tac
 	name = "armory tac locker"

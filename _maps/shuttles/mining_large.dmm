@@ -407,7 +407,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "E" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/stripes/white/line{
 	dir = 1
 	},

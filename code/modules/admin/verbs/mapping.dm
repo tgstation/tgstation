@@ -51,7 +51,9 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/show_line_profiling,
 	/client/proc/create_mapping_job_icons,
 	/client/proc/debug_z_levels,
-	/client/proc/place_ruin
+	/client/proc/place_ruin,
+	/client/proc/station_food_debug,
+	/client/proc/station_stack_debug,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -117,7 +119,7 @@ GLOBAL_LIST_EMPTY(dirty_vars)
 					output += "<li><font color='red'>FULLY overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</font></li>"
 				if(C1.loc == C2.loc)
 					output += "<li>Overlapping cameras at [ADMIN_VERBOSEJMP(C1)] Networks: [json_encode(C1.network)] and [json_encode(C2.network)]</li>"
-		var/turf/T = get_step(C1,turn(C1.dir,180))
+		var/turf/T = get_step(C1,C1.dir)
 		if(!T || !isturf(T) || !T.density )
 			if(!(locate(/obj/structure/grille) in T))
 				var/window_check = 0
@@ -296,9 +298,9 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	for(var/job in subtypesof(/datum/job))
 		var/datum/job/JB = new job
 		switch(JB.title)
-			if("AI")
+			if(JOB_AI)
 				final.Insert(icon('icons/mob/ai.dmi', "ai", SOUTH, 1), "AI")
-			if("Cyborg")
+			if(JOB_CYBORG)
 				final.Insert(icon('icons/mob/robots.dmi', "robot", SOUTH, 1), "Cyborg")
 			else
 				for(var/obj/item/I in D)
@@ -373,3 +375,50 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	messages += "</table>"
 
 	to_chat(src, messages.Join(""), confidential = TRUE)
+
+/client/proc/station_food_debug()
+	set name = "Count Station Food"
+	set category = "Mapping"
+	var/list/foodcount = list()
+	for(var/obj/item/food/fuck_me in world)
+		var/turf/location = get_turf(fuck_me)
+		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+			continue
+		LAZYADDASSOC(foodcount, fuck_me.type, 1)
+
+	var/table_header = "<tr><th>Name</th> <th>Type</th> <th>Amount</th>"
+	var/table_contents = list()
+	for(var/atom/type as anything in foodcount)
+		var/foodname = initial(type.name)
+		var/count = foodcount[type]
+		table_contents += "<tr><td>[foodname]</td> <td>[type]</td> <td>[count]</td></tr>"
+
+	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
+	var/page_contents = "[page_style]<table style=\"width:100%\">[table_header][jointext(table_contents, "")]</table>"
+	var/datum/browser/popup = new(mob, "fooddebug", "Station Food Count", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()
+
+/client/proc/station_stack_debug()
+	set name = "Count Station Stacks"
+	set category = "Mapping"
+	var/list/stackcount = list()
+	for(var/obj/item/stack/fuck_me in world)
+		var/turf/location = get_turf(fuck_me)
+		if(!location || SSmapping.level_trait(location.z, ZTRAIT_STATION))
+			continue
+		LAZYADDASSOC(stackcount, fuck_me.type, fuck_me.amount)
+
+	var/table_header = "<tr><th>Name</th> <th>Type</th> <th>Amount</th>"
+	var/table_contents = list()
+	for(var/atom/type as anything in stackcount)
+		var/stackname = initial(type.name)
+		var/count = stackcount[type]
+		table_contents += "<tr><td>[stackname]</td> <td>[type]</td> <td>[count]</td></tr>"
+
+	var/page_style = "<style>table, th, td {border: 1px solid black;border-collapse: collapse;}</style>"
+	var/page_contents = "[page_style]<table style=\"width:100%\">[table_header][jointext(table_contents, "")]</table>"
+	var/datum/browser/popup = new(mob, "stackdebug", "Station Stack Count", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()
+

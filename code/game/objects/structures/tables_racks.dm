@@ -41,7 +41,25 @@
 	if(_buildstack)
 		buildstack = _buildstack
 	AddElement(/datum/element/climbable)
-	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/table_carbon)
+
+	var/static/list/loc_connections = list(
+		COMSIG_CARBON_DISARM_COLLIDE = .proc/table_carbon,
+	)
+
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	if (!(flags_1 & NODECONSTRUCT_1))
+		var/static/list/tool_behaviors = list(
+			TOOL_SCREWDRIVER = list(
+				SCREENTIP_CONTEXT_RMB = "Disassemble",
+			),
+
+			TOOL_WRENCH = list(
+				SCREENTIP_CONTEXT_RMB = "Deconstruct",
+			),
+		)
+
+		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -130,6 +148,9 @@
 	if(!(pushed_mob.pass_flags & PASSTABLE))
 		added_passtable = TRUE
 		pushed_mob.pass_flags |= PASSTABLE
+	for (var/obj/obj in user.loc.contents)
+		if(!obj.CanAllowThrough(pushed_mob))
+			return
 	pushed_mob.Move(src.loc)
 	if(added_passtable)
 		pushed_mob.pass_flags &= ~PASSTABLE
@@ -259,14 +280,16 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/table/proc/table_carbon(obj/structure/table/the_table, mob/living/carbon/shover, mob/living/carbon/target)
+/obj/structure/table/proc/table_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
+	if(!shove_blocked)
+		return
 	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [the_table]!"),
-		span_userdanger("You're shoved onto \the [the_table] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(shover, span_danger("You shove [target.name] onto \the [the_table]!"))
+	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
+		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
 	target.throw_at(src, 1, 1, null, FALSE) //1 speed throws with no spin are basically just forcemoves with a hard collision check
-	log_combat(src, target, "shoved", "onto [the_table] (table)")
+	log_combat(src, target, "shoved", "onto [src] (table)")
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /obj/structure/table/greyscale

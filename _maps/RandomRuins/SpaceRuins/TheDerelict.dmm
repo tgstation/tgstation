@@ -531,7 +531,7 @@
 	},
 /area/ruin/space/derelict/gravity_generator)
 "cQ" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/access)
@@ -1137,7 +1137,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "fw" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fx" = (
@@ -1762,7 +1762,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "in" = (
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/singularity_engine)
 "ip" = (
@@ -2051,12 +2051,12 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jy" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jz" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
@@ -2249,7 +2249,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kr" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
@@ -2364,7 +2364,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "la" = (
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
@@ -2387,10 +2387,6 @@
 "lf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/primary)
-"lg" = (
-/obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "lh" = (
@@ -2815,11 +2811,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/secondary)
-"mX" = (
-/obj/machinery/power/apc/auto_name/west,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway/secondary)
 "mY" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
@@ -2834,7 +2825,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
 "nc" = (
-/obj/machinery/power/apc/auto_name/north,
+/obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/secondary)
@@ -3041,7 +3032,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/effect/mob_spawn/drone/derelict,
+/obj/effect/mob_spawn/ghost_role/drone/derelict,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/se_solar)
 "nV" = (
@@ -3307,7 +3298,7 @@
 /area/ruin/space/derelict/singularity_engine)
 "zB" = (
 /obj/structure/table,
-/obj/machinery/power/apc/auto_name/south,
+/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/spawner/random/maintenance,
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -3384,7 +3375,7 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
 "El" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "Ev" = (
@@ -3552,7 +3543,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "Ni" = (
-/obj/machinery/power/apc/auto_name/west,
+/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/ai_upload)
@@ -7124,7 +7115,7 @@ go
 gc
 kP
 go
-lg
+sd
 lr
 lr
 lr
@@ -10303,7 +10294,7 @@ mI
 mI
 mI
 mI
-mX
+mI
 mI
 mU
 mZ

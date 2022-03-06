@@ -3,6 +3,7 @@
 	desc = "An implant that can be placed in a user's head to control circuits using their brain."
 	icon = 'icons/obj/wiremod.dmi'
 	icon_state = "bci"
+	visual = FALSE
 	zone = BODY_ZONE_HEAD
 	w_class = WEIGHT_CLASS_TINY
 
@@ -10,7 +11,7 @@
 	. = ..()
 
 	var/obj/item/integrated_circuit/circuit = new(src)
-	circuit.add_component(new /obj/item/circuit_component/bci_action(null, "One"))
+	circuit.add_component(new /obj/item/circuit_component/equipment_action/bci(null, "One"))
 
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
@@ -33,96 +34,39 @@
 	else
 		return ..()
 
-/obj/item/circuit_component/bci_action
+/obj/item/circuit_component/equipment_action/bci
 	display_name = "BCI Action"
 	desc = "Represents an action the user can take when implanted with the brain-computer interface."
 	required_shells = list(/obj/item/organ/cyberimp/bci)
 
-	/// The icon of the button
-	var/datum/port/input/option/icon_options
-
-	/// The name to use for the button
-	var/datum/port/input/button_name
-
-	/// Called when the user presses the button
-	var/datum/port/output/signal
-
 	/// A reference to the action button itself
 	var/datum/action/innate/bci_action/bci_action
 
-/obj/item/circuit_component/bci_action/Initialize(mapload, default_icon)
-	. = ..()
-
-	if (!isnull(default_icon))
-		icon_options.set_input(default_icon)
-
-	button_name = add_input_port("Name", PORT_TYPE_STRING)
-
-	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
-
-/obj/item/circuit_component/bci_action/Destroy()
+/obj/item/circuit_component/equipment_action/bci/Destroy()
 	QDEL_NULL(bci_action)
 	return ..()
 
-/obj/item/circuit_component/bci_action/populate_options()
-	var/static/action_options = list(
-		"Blank",
-
-		"One",
-		"Two",
-		"Three",
-		"Four",
-		"Five",
-
-		"Blood",
-		"Bomb",
-		"Brain",
-		"Brain Damage",
-		"Cross",
-		"Electricity",
-		"Exclamation",
-		"Heart",
-		"Id",
-		"Info",
-		"Injection",
-		"Magnetism",
-		"Minus",
-		"Network",
-		"Plus",
-		"Power",
-		"Question",
-		"Radioactive",
-		"Reaction",
-		"Repair",
-		"Say",
-		"Scan",
-		"Shield",
-		"Skull",
-		"Sleep",
-		"Wireless",
-	)
-
-	icon_options = add_option_port("Icon", action_options)
-
-/obj/item/circuit_component/bci_action/register_shell(atom/movable/shell)
+/obj/item/circuit_component/equipment_action/bci/register_shell(atom/movable/shell)
+	. = ..()
 	var/obj/item/organ/cyberimp/bci/bci = shell
+	if(istype(bci))
+		bci_action = new(src)
+		update_action()
 
-	bci_action = new(src)
-	update_action()
+		bci.actions += list(bci_action)
 
-	bci.actions += list(bci_action)
-
-/obj/item/circuit_component/bci_action/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/equipment_action/bci/unregister_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
+	if(istype(bci))
+		bci.actions -= bci_action
+		QDEL_NULL(bci_action)
+	return ..()
 
-	bci.actions -= bci_action
-	QDEL_NULL(bci_action)
-
-/obj/item/circuit_component/bci_action/input_received(datum/port/input/port)
+/obj/item/circuit_component/equipment_action/bci/input_received(datum/port/input/port)
 	if (!isnull(bci_action))
 		update_action()
 
-/obj/item/circuit_component/bci_action/proc/update_action()
+/obj/item/circuit_component/equipment_action/bci/update_action()
 	bci_action.name = button_name.value
 	bci_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"
 
@@ -132,9 +76,9 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "bci_power"
 
-	var/obj/item/circuit_component/bci_action/circuit_component
+	var/obj/item/circuit_component/equipment_action/bci/circuit_component
 
-/datum/action/innate/bci_action/New(obj/item/circuit_component/bci_action/circuit_component)
+/datum/action/innate/bci_action/New(obj/item/circuit_component/equipment_action/bci/circuit_component)
 	..()
 
 	src.circuit_component = circuit_component
@@ -296,7 +240,7 @@
 
 	return ..()
 
-/datum/action/innate/bci_charge_action/Trigger()
+/datum/action/innate/bci_charge_action/Trigger(trigger_flags)
 	var/obj/item/stock_parts/cell/cell = circuit_component.parent.cell
 
 	if (isnull(cell))
@@ -338,6 +282,11 @@
 /obj/machinery/bci_implanter/Initialize(mapload)
 	. = ..()
 	occupant_typecache = typecacheof(/mob/living/carbon)
+
+/obj/machinery/bci_implanter/on_deconstruction()
+	var/obj/item/organ/cyberimp/bci/bci_to_implant_resolved = bci_to_implant?.resolve()
+	bci_to_implant_resolved?.forceMove(drop_location())
+	bci_to_implant = null
 
 /obj/machinery/bci_implanter/Destroy()
 	QDEL_NULL(bci_to_implant)
@@ -416,7 +365,7 @@
 		var/obj/item/organ/cyberimp/bci/previous_bci_to_implant = bci_to_implant?.resolve()
 
 		bci_to_implant = WEAKREF(weapon)
-		weapon.forceMove(src)
+		weapon.moveToNullspace()
 
 		if (isnull(previous_bci_to_implant))
 			balloon_alert(user, "inserted bci")
@@ -475,7 +424,7 @@
 
 		if (isnull(bci_to_implant_resolved))
 			say("Occupant's previous brain-computer interface has been transferred to internal storage unit.")
-			bci_organ.forceMove(src)
+			bci_organ.moveToNullspace()
 			bci_to_implant = WEAKREF(bci_organ)
 		else
 			say("Occupant's previous brain-computer interface has been ejected.")

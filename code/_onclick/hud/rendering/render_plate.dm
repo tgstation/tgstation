@@ -80,5 +80,5 @@
 	relay.mouse_opacity = mouse_opacity
 	relay.name = render_target
 	mymob.client.screen += relay
-	if(plane != BLACKNESS_PLANE) //internal snowflake do not touch
+	if(blend_mode != BLEND_MULTIPLY)
 		blend_mode = BLEND_DEFAULT

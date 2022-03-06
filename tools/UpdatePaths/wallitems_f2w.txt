@@ -1,0 +1,94 @@
+/obj/machinery/camera {dir=@UNSET} : /obj/machinery/camera/directional/north {@OLD}
+/obj/machinery/camera {dir=1} : /obj/machinery/camera/directional/south {@OLD;dir=@SKIP}
+/obj/machinery/camera {dir=2} : /obj/machinery/camera/directional/north {@OLD;dir=@SKIP}
+/obj/machinery/camera {dir=4} : /obj/machinery/camera/directional/west {@OLD;dir=@SKIP}
+/obj/machinery/camera {dir=8} : /obj/machinery/camera/directional/east {@OLD;dir=@SKIP}
+/obj/machinery/camera/autoname {dir=@UNSET} : /obj/machinery/camera/directional/north {@OLD}
+/obj/machinery/camera/autoname {dir=1} : /obj/machinery/camera/autoname/directional/south {@OLD;dir=@SKIP}
+/obj/machinery/camera/autoname {dir=2} : /obj/machinery/camera/autoname/directional/north {@OLD;dir=@SKIP}
+/obj/machinery/camera/autoname {dir=4} : /obj/machinery/camera/autoname/directional/west {@OLD;dir=@SKIP}
+/obj/machinery/camera/autoname {dir=8} : /obj/machinery/camera/autoname/directional/east {@OLD;dir=@SKIP}
+/obj/machinery/camera/emp_proof {dir=@UNSET} : /obj/machinery/camera/directional/north {@OLD}
+/obj/machinery/camera/emp_proof {dir=1} : /obj/machinery/camera/emp_proof/directional/south {@OLD;dir=@SKIP}
+/obj/machinery/camera/emp_proof {dir=2} : /obj/machinery/camera/directional/emp_proof/north {@OLD;dir=@SKIP}
+/obj/machinery/camera/emp_proof {dir=4} : /obj/machinery/camera/directional/emp_proof/west {@OLD;dir=@SKIP}
+/obj/machinery/camera/emp_proof {dir=8} : /obj/machinery/camera/directional/emp_proof/east {@OLD;dir=@SKIP}
+/obj/machinery/camera/motion {dir=@UNSET} : /obj/machinery/camera/directional/north {@OLD}
+/obj/machinery/camera/motion {dir=1} : /obj/machinery/camera/motion/directional/south {@OLD;dir=@SKIP}
+/obj/machinery/camera/motion {dir=2} : /obj/machinery/camera/motion/directional/north {@OLD;dir=@SKIP}
+/obj/machinery/camera/motion {dir=4} : /obj/machinery/camera/motion/directional/west {@OLD;dir=@SKIP}
+/obj/machinery/camera/motion {dir=8} : /obj/machinery/camera/motion/directional/east {@OLD;dir=@SKIP}
+/obj/machinery/camera/xray {dir=@UNSET} : /obj/machinery/camera/directional/north {@OLD}
+/obj/machinery/camera/xray {dir=1} : /obj/machinery/camera/xray/directional/south {@OLD;dir=@SKIP}
+/obj/machinery/camera/xray {dir=2} : /obj/machinery/camera/xray/directional/north {@OLD;dir=@SKIP}
+/obj/machinery/camera/xray {dir=4} : /obj/machinery/camera/xray/directional/west {@OLD;dir=@SKIP}
+/obj/machinery/camera/xray {dir=8} : /obj/machinery/camera/xray/directional/east {@OLD;dir=@SKIP}
+/obj/machinery/airalarm {dir=@UNSET} : /obj/machinery/airalarm/directional/north {@OLD;dir=@SKIP}
+/obj/machinery/airalarm {dir=1} : /obj/machinery/airalarm/directional/south {@OLD;dir=@SKIP}
+/obj/machinery/airalarm {dir=2} : /obj/machinery/airalarm/directional/north {@OLD;dir=@SKIP}
+/obj/machinery/airalarm {dir=4} : /obj/machinery/airalarm/directional/west {@OLD;dir=@SKIP}
+/obj/machinery/airalarm {dir=8} : /obj/machinery/airalarm/directional/east {@OLD;dir=@SKIP}
+/obj/machinery/airalarm/syndicate {dir=@UNSET} : /obj/machinery/airalarm/syndicate {@OLD;dir=1}
+/obj/machinery/airalarm/syndicate {dir=1} : /obj/machinery/airalarm/syndicate {@OLD;dir=2}
+/obj/machinery/airalarm/syndicate {dir=2} : /obj/machinery/airalarm/syndicate {@OLD;dir=1}
+/obj/machinery/airalarm/syndicate {dir=4} : /obj/machinery/airalarm/syndicate {@OLD;dir=8}
+/obj/machinery/airalarm/syndicate {dir=8} : /obj/machinery/airalarm/syndicate {@OLD;dir=4}
+/obj/machinery/airalarm/all_access {dir=@UNSET} : /obj/machinery/airalarm/all_access {@OLD;dir=1}
+/obj/machinery/airalarm/all_access {dir=1} : /obj/machinery/airalarm/all_access {@OLD;dir=2}
+/obj/machinery/airalarm/all_access {dir=2} : /obj/machinery/airalarm/all_access {@OLD;dir=1}
+/obj/machinery/airalarm/all_access {dir=4} : /obj/machinery/airalarm/all_access {@OLD;dir=8}
+/obj/machinery/airalarm/all_access {dir=8} : /obj/machinery/airalarm/all_access {@OLD;dir=4}
+/obj/machinery/airalarm/away {dir=@UNSET} : /obj/machinery/airalarm/away {@OLD;dir=1}
+/obj/machinery/airalarm/away {dir=1} : /obj/machinery/airalarm/away {@OLD;dir=2}
+/obj/machinery/airalarm/away {dir=2} : /obj/machinery/airalarm/away {@OLD;dir=1}
+/obj/machinery/airalarm/away {dir=4} : /obj/machinery/airalarm/away {@OLD;dir=8}
+/obj/machinery/airalarm/away {dir=8} : /obj/machinery/airalarm/away {@OLD;dir=4}
+/obj/machinery/airalarm/engine {dir=@UNSET} : /obj/machinery/airalarm/engine {@OLD;dir=1}
+/obj/machinery/airalarm/engine {dir=1} : /obj/machinery/airalarm/engine {@OLD;dir=2}
+/obj/machinery/airalarm/engine {dir=2} : /obj/machinery/airalarm/engine {@OLD;dir=1}
+/obj/machinery/airalarm/engine {dir=4} : /obj/machinery/airalarm/engine {@OLD;dir=8}
+/obj/machinery/airalarm/engine {dir=8} : /obj/machinery/airalarm/engine {@OLD;dir=4}
+/obj/machinery/airalarm/unlocked {dir=@UNSET} : /obj/machinery/airalarm/unlocked {@OLD;dir=1}
+/obj/machinery/airalarm/unlocked {dir=1} : /obj/machinery/airalarm/unlocked {@OLD;dir=2}
+/obj/machinery/airalarm/unlocked {dir=2} : /obj/machinery/airalarm/unlocked {@OLD;dir=1}
+/obj/machinery/airalarm/unlocked {dir=4} : /obj/machinery/airalarm/unlocked {@OLD;dir=8}
+/obj/machinery/airalarm/unlocked {dir=8} : /obj/machinery/airalarm/unlocked {@OLD;dir=4}
+/obj/machinery/airalarm/server {dir=@UNSET} : /obj/machinery/airalarm/server {@OLD;dir=1}
+/obj/machinery/airalarm/server {dir=1} : /obj/machinery/airalarm/server {@OLD;dir=2}
+/obj/machinery/airalarm/server {dir=2} : /obj/machinery/airalarm/server {@OLD;dir=1}
+/obj/machinery/airalarm/server {dir=4} : /obj/machinery/airalarm/server {@OLD;dir=8}
+/obj/machinery/airalarm/server {dir=8} : /obj/machinery/airalarm/server {@OLD;dir=4}
+/obj/machinery/airalarm/mixingchamber {dir=@UNSET} : /obj/machinery/airalarm/mixingchamber {@OLD;dir=1}
+/obj/machinery/airalarm/mixingchamber {dir=1} : /obj/machinery/airalarm/mixingchamber {@OLD;dir=2}
+/obj/machinery/airalarm/mixingchamber {dir=2} : /obj/machinery/airalarm/mixingchamber {@OLD;dir=1}
+/obj/machinery/airalarm/mixingchamber {dir=4} : /obj/machinery/airalarm/mixingchamber {@OLD;dir=8}
+/obj/machinery/airalarm/mixingchamber {dir=8} : /obj/machinery/airalarm/mixingchamber {@OLD;dir=4}
+/obj/machinery/airalarm/kitchen_cold_room {dir=@UNSET} : /obj/machinery/airalarm/kitchen_cold_room {@OLD;dir=1}
+/obj/machinery/airalarm/kitchen_cold_room {dir=1} : /obj/machinery/airalarm/kitchen_cold_room {@OLD;dir=2}
+/obj/machinery/airalarm/kitchen_cold_room {dir=2} : /obj/machinery/airalarm/kitchen_cold_room {@OLD;dir=1}
+/obj/machinery/airalarm/kitchen_cold_room {dir=4} : /obj/machinery/airalarm/kitchen_cold_room {@OLD;dir=8}
+/obj/machinery/airalarm/kitchen_cold_room {dir=8} : /obj/machinery/airalarm/kitchen_cold_room {@OLD;dir=4}
+/obj/structure/chair/stool {dir=1} : /obj/structure/chair/stool/directional/north {@OLD;dir=@SKIP}
+/obj/structure/chair/stool {dir=2} : /obj/structure/chair/stool/directional/south {@OLD;dir=@SKIP}
+/obj/structure/chair/stool {dir=4} : /obj/structure/chair/stool/directional/east {@OLD;dir=@SKIP}
+/obj/structure/chair/stool {dir=8} : /obj/structure/chair/stool/directional/west {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/directional/south : /obj/structure/chair/stool/directional/north {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/directional/north : /obj/structure/chair/stool/directional/south {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/directional/west : /obj/structure/chair/stool/directional/east {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/directional/east : /obj/structure/chair/stool/directional/west {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar {dir=1} : /obj/structure/chair/stool/bar/directional/north {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar {dir=2} : /obj/structure/chair/stool/bar/directional/south {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar {dir=4} : /obj/structure/chair/stool/bar/directional/east {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar {dir=8} : /obj/structure/chair/stool/bar/directional/west {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar/directional/south : /obj/structure/chair/stool/bar/directional/north {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar/directional/north : /obj/structure/chair/stool/bar/directional/south {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar/directional/west : /obj/structure/chair/stool/bar/directional/east {@OLD;dir=@SKIP}
+/obj/structure/chair/stool/bar/directional/east : /obj/structure/chair/stool/bar/directional/west {@OLD;dir=@SKIP}
+/obj/machinery/power/apc/auto_name/north : /obj/machinery/power/apc/auto_name/directional/north {@OLD;dir=@SKIP;pixel_y=@SKIP}
+/obj/machinery/power/apc/auto_name/south : /obj/machinery/power/apc/auto_name/directional/south {@OLD;dir=@SKIP;pixel_y=@SKIP}
+/obj/machinery/power/apc/auto_name/east : /obj/machinery/power/apc/auto_name/directional/east {@OLD;dir=@SKIP;pixel_x=@SKIP}
+/obj/machinery/power/apc/auto_name/west : /obj/machinery/power/apc/auto_name/directional/west {@OLD;dir=@SKIP;pixel_y=@SKIP}
+/obj/machinery/bluespace_vendor/north : /obj/machinery/bluespace_vendor/directional/north {@OLD}
+/obj/machinery/bluespace_vendor/south : /obj/machinery/bluespace_vendor/directional/south {@OLD}
+/obj/machinery/bluespace_vendor/east : /obj/machinery/bluespace_vendor/directional/east {@OLD}
+/obj/machinery/bluespace_vendor/west : /obj/machinery/bluespace_vendor/directional/west {@OLD}

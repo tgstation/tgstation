@@ -8,7 +8,7 @@
 /datum/round_event/heart_attack/start()
 	var/list/heart_attack_contestants = list()
 	for(var/mob/living/carbon/human/victim in shuffle(GLOB.player_list))
-		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !victim.can_heartattack() || victim.has_status_effect(STATUS_EFFECT_EXERCISED) || (/datum/disease/heart_failure in victim.diseases) || victim.undergoing_cardiac_arrest())
+		if(victim.stat == DEAD || HAS_TRAIT(victim, TRAIT_CRITICAL_CONDITION) || !victim.can_heartattack() || victim.has_status_effect(/datum/status_effect/exercised) || (/datum/disease/heart_failure in victim.diseases) || victim.undergoing_cardiac_arrest())
 			continue
 		if(!(victim.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
 			continue

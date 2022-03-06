@@ -11,21 +11,7 @@
 	/// Current number of a pinned notices
 	var/notices = 0
 
-/obj/structure/noticeboard/directional/north
-	dir = SOUTH
-	pixel_y = 32
-
-/obj/structure/noticeboard/directional/south
-	dir = NORTH
-	pixel_y = -32
-
-/obj/structure/noticeboard/directional/east
-	dir = WEST
-	pixel_x = 32
-
-/obj/structure/noticeboard/directional/west
-	dir = EAST
-	pixel_x = -32
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/noticeboard, 32)
 
 /obj/structure/noticeboard/Initialize(mapload)
 	. = ..()

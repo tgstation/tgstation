@@ -4,6 +4,8 @@
 	prefix = "_maps/RandomRuins/IceRuins/"
 	allow_duplicates = FALSE
 	cost = 5
+	ruin_type = ZTRAIT_ICE_RUINS
+	default_area = /area/icemoon/surface/outdoors/unexplored
 
 // above ground only
 
@@ -18,12 +20,6 @@
 	id = "asteroidsite"
 	description = "Surprised to see us here?"
 	suffix = "icemoon_surface_asteroid.dmm"
-
-/datum/map_template/ruin/icemoon/hotsprings
-	name = "Hot Springs"
-	id = "hotsprings"
-	description = "Just relax and take a dip, nothing will go wrong, I swear!"
-	suffix = "icemoon_surface_hotsprings.dmm"
 
 /datum/map_template/ruin/icemoon/engioutpost
 	name = "Engineer Outpost"
@@ -50,6 +46,12 @@
 	description = "An independently funded research outpost, long abandoned. Their mission, to boldly go where no insect life would ever live, ever, and look for bugs."
 	suffix = "icemoon_surface_bughabitat.dmm"
 
+/datum/map_template/ruin/icemoon/pizza
+	name = "Moffuchi's Pizzeria"
+	id = "pizzeria"
+	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
+	suffix = "icemoon_surface_pizza.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
@@ -71,6 +73,8 @@
 
 /datum/map_template/ruin/icemoon/underground
 	name = "underground ruin"
+	ruin_type = ZTRAIT_ICE_RUINS_UNDERGROUND
+	default_area = /area/icemoon/underground/unexplored
 
 /datum/map_template/ruin/icemoon/underground/abandonedvillage
 	name = "Abandoned Village"
@@ -147,3 +151,9 @@
 	description = "Rumors have developed over the many years of Freyja plasma mining. These rumors suggest that the ghosts of dead mistreated excavation staff have returned to \
 	exact revenge on their (now former) employers. Coorperate reminds all staff that rumors are just that: Old Housewife tales meant to scare misbehaving kids to bed."
 	suffix = "icemoon_underground_abandoned_plasma_facility.dmm"
+
+/datum/map_template/ruin/icemoon/underground/hotsprings
+	name = "Hot Springs"
+	id = "hotsprings"
+	description = "Just relax and take a dip, nothing will go wrong, I swear!"
+	suffix = "icemoon_underground_hotsprings.dmm"

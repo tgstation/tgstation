@@ -11,9 +11,11 @@ type CellularEmporiumContext = {
 type Ability = {
   name: string;
   desc: string;
+  path: string;
   dna_cost: number;
   helptext: string;
   owned: boolean;
+  can_purchase: boolean;
 }
 
 export const CellularEmporium = (props, context) => {
@@ -70,10 +72,11 @@ const AbilityList = (props, context) => {
                 <Stack.Item>
                   <Button
                     content={'Evolve'}
-                    disabled={ability.owned || ability.dna_cost
-                    > genetic_points_remaining}
+                    disabled={ability.owned
+                      || ability.dna_cost > genetic_points_remaining
+                      || !ability.can_purchase}
                     onClick={() => act('evolve', {
-                      name: ability.name,
+                      path: ability.path,
                     })} />
                 </Stack.Item>
               </Stack>

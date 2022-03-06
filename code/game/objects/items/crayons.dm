@@ -21,6 +21,7 @@
 	desc = "A colourful crayon. Looks tasty. Mmmm..."
 	icon = 'icons/obj/crayons.dmi'
 	icon_state = "crayonred"
+	worn_icon_state = "crayon"
 
 	var/icon_capped
 	var/icon_uncapped
@@ -75,6 +76,7 @@
 
 /obj/item/toy/crayon/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is jamming [src] up [user.p_their()] nose and into [user.p_their()] brain. It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.add_atom_colour(paint_color)
 	return (BRUTELOSS|OXYLOSS)
 
 /obj/item/toy/crayon/Initialize(mapload)
@@ -248,7 +250,7 @@
 		if("select_colour")
 			. = can_change_colour && select_colour(usr)
 		if("enter_text")
-			var/txt = input(usr, "Choose what to write.", "Scribbles", text_buffer) as text|null
+			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
 			if(isnull(txt))
 				return
 			txt = crayon_text_strip(txt)
@@ -658,6 +660,7 @@
 /obj/item/toy/crayon/spraycan
 	name = "spray can"
 	icon_state = "spraycan"
+	worn_icon_state = "spraycan"
 
 	icon_capped = "spraycan_cap"
 	icon_uncapped = "spraycan"
@@ -767,6 +770,12 @@
 				return FALSE
 
 			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			if(isliving(target.loc))
+				var/mob/living/holder = target.loc
+				if(holder.is_holding(target))
+					holder.update_inv_hands()
+				else
+					holder.regenerate_icons()
 			SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, color_is_dark)
 		. = use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transfered_by = user, methods = VAPOR)
@@ -809,6 +818,9 @@
 		to_chat(user, span_warning("[target] is not colorful enough, you can't match that color!"))
 
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+/obj/item/toy/crayon/spraycan/attackby_storage_insert(datum/component/storage, atom/storage_holder, mob/user)
+	return is_capped
 
 /obj/item/toy/crayon/spraycan/update_icon_state()
 	icon_state = is_capped ? icon_capped : icon_uncapped

@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
-	flag = MAGIC
+	flag = NONE
 
 /obj/projectile/magic/death
 	name = "bolt of death"
@@ -165,7 +165,7 @@
 	..()
 
 /atom/proc/animate_atom_living(mob/living/owner = null)
-	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.protected_objects))
+	if((isitem(src) || isstructure(src)) && !is_type_in_list(src, GLOB.mimic_blacklist))
 		if(istype(src, /obj/structure/statue/petrified))
 			var/obj/structure/statue/petrified/P = src
 			if(P.petrified_mob)
@@ -203,7 +203,6 @@
 	icon_state = "lavastaff"
 	damage = 15
 	damage_type = BURN
-	flag = MAGIC
 	dismemberment = 50
 	nodamage = FALSE
 
@@ -222,8 +221,6 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = FALSE
-	armour_penetration = 0
-	flag = MAGIC
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
 /obj/projectile/magic/arcane_barrage/on_hit(target)
@@ -240,7 +237,6 @@
 	name = "locker bolt"
 	icon_state = "locker"
 	nodamage = TRUE
-	flag = MAGIC
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
@@ -301,11 +297,6 @@
 	if(weld_state)
 		unmagify()
 
-///Fade away into nothing
-/obj/structure/closet/decay/proc/decay()
-	animate(src, alpha = 0, time = 30)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
-
 /obj/structure/closet/decay/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(.)
@@ -317,6 +308,15 @@
 	update_appearance()
 
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+
+///Fade away into nothing
+/obj/structure/closet/decay/proc/decay()
+	animate(src, alpha = 0, time = 3 SECONDS)
+	addtimer(CALLBACK(src, .proc/decay_finished), 3 SECONDS)
+
+/obj/structure/closet/decay/proc/decay_finished()
+	dump_contents()
+	qdel(src)
 
 /obj/projectile/magic/flying
 	name = "bolt of flying"
@@ -343,7 +343,7 @@
 		if(L.anti_magic_check() || !firer)
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
-		L.apply_status_effect(STATUS_EFFECT_BOUNTY, firer)
+		L.apply_status_effect(/datum/status_effect/bounty, firer)
 
 /obj/projectile/magic/antimagic
 	name = "bolt of antimagic"
@@ -356,7 +356,7 @@
 		if(L.anti_magic_check())
 			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
-		L.apply_status_effect(STATUS_EFFECT_ANTIMAGIC)
+		L.apply_status_effect(/datum/status_effect/antimagic )
 
 /obj/projectile/magic/fetch
 	name = "bolt of fetching"
@@ -475,7 +475,6 @@
 	damage_type = BURN
 	nodamage = FALSE
 	speed = 0.3
-	flag = MAGIC
 
 	var/zap_power = 20000
 	var/zap_range = 15
@@ -543,7 +542,6 @@
 	nodamage = FALSE
 	armour_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
-	flag = MAGIC
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"

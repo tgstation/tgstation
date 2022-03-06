@@ -41,8 +41,10 @@
 	//gas.volume = 1.05 * CELLSTANDARD
 	update_appearance()
 	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_rummage)
-	RegisterSignal(src, COMSIG_CARBON_DISARM_COLLIDE, .proc/trash_carbon)
-
+	var/static/list/loc_connections = list(
+		COMSIG_CARBON_DISARM_COLLIDE = .proc/trash_carbon,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /obj/machinery/disposal/proc/trunk_check()
@@ -119,7 +121,7 @@
 				for(var/i = 1 to rand(1,3))
 					new pickedcoin(get_turf(king))
 			if(6 to 33)
-				say(pick("Treasure!","Our precious!","Cheese!"))
+				king.say(pick("Treasure!","Our precious!","Cheese!"))
 				to_chat(king, span_notice("Score! You find some cheese!"))
 				new /obj/item/food/cheese(get_turf(king))
 			else
@@ -253,7 +255,7 @@
 		AM.forceMove(T)
 	..()
 
-/obj/machinery/disposal/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/machinery/disposal/get_dumping_location()
 	return src
 
 //How disposal handles getting a storage dump from a storage object
@@ -527,12 +529,14 @@
 
 	INVOKE_ASYNC(src, /obj/machinery/disposal/.proc/rat_rummage, king)
 
-/obj/machinery/disposal/proc/trash_carbon(obj/machinery/disposal/binny, mob/living/carbon/shover, mob/living/carbon/target)
+/obj/machinery/disposal/proc/trash_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
 	SIGNAL_HANDLER
+	if(!shove_blocked)
+		return
 	target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	target.forceMove(binny)
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [binny]!"),
-		span_userdanger("You're shoved into \the [binny] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, binny)
-	to_chat(binny, span_danger("You shove [target.name] into \the [binny]!"))
-	log_combat(binny, target, "shoved", "into [binny] (disposal bin)")
+	target.forceMove(src)
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into \the [src]!"),
+		span_userdanger("You're shoved into \the [src] by [target.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
+	to_chat(src, span_danger("You shove [target.name] into \the [src]!"))
+	log_combat(src, target, "shoved", "into [src] (disposal bin)")
 	return COMSIG_CARBON_SHOVE_HANDLED

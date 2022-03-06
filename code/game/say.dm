@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
 	))
 
-/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null)
+/atom/movable/proc/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null, filterproof = null, range = 7)
 	if(!can_speak())
 		return
 	if(sanitize)
@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	spans |= speech_span
 	if(!language)
 		language = get_selected_language()
-	send_speech(message, 7, src, , spans, message_language=language)
+	send_speech(message, range, src, , spans, message_language=language)
 
 /atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
@@ -39,10 +39,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	//SHOULD_BE_PURE(TRUE)
 	return TRUE
 
-/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list())
+/atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list())
 	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
-	for(var/atom/movable/AM as anything in get_hearers_in_view(range, source))
-		AM.Hear(rendered, src, message_language, message, , spans, message_mods)
+	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
+		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
+			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
+			continue
+		hearing_movable.Hear(rendered, src, message_language, message, , spans, message_mods)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
@@ -170,7 +173,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
 
 /atom/movable/proc/IsVocal()
-	return 1
+	return TRUE
 
 /atom/movable/proc/get_alt_name()
 
@@ -218,7 +221,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		var/mob/living/silicon/robot/B = M
 		job = "[B.designation] Cyborg"
 	else if(istype(M, /mob/living/silicon/pai))  // Personal AI (pAI)
-		job = "Personal AI"
+		job = JOB_PERSONAL_AI
 	else if(isobj(M))  // Cold, emotionless machines
 		job = "Machine"
 	else  // Unidentifiable mob

@@ -150,10 +150,10 @@
 /obj/item/clothing/suit/hooded/cloak/godslayer/proc/resurrect(mob/living/carbon/user, new_stat)
 	SIGNAL_HANDLER
 	if(new_stat > CONSCIOUS && new_stat < DEAD && COOLDOWN_FINISHED(src, effect_cooldown))
+		COOLDOWN_START(src, effect_cooldown, effect_cooldown_time) //This needs to happen first, otherwise there's an infinite loop
 		user.heal_ordered_damage(heal_amount, damage_heal_order)
 		user.visible_message(span_notice("[user] suddenly revives, as their armor swirls with demonic energy!"), span_notice("You suddenly feel invigorated!"))
 		playsound(user.loc, 'sound/magic/clockwork/ratvar_attack.ogg', 50)
-		COOLDOWN_START(src, effect_cooldown, effect_cooldown_time)
 
 /obj/item/clothing/neck/cloak/skill_reward
 	var/associated_skill_path = /datum/skill
@@ -167,7 +167,7 @@
 	return user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY
 
 /obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
-	to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src].</span>")
+	to_chat(user, span_warning("You feel completely and utterly unworthy to even touch \the [src]."))
 	var/hand_index = user.get_held_index_of_item(src)
 	if (hand_index)
 		user.dropItemToGround(src, TRUE)

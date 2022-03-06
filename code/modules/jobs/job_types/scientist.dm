@@ -1,6 +1,7 @@
 /datum/job/scientist
-	title = "Scientist"
-	department_head = list("Research Director")
+	title = JOB_SCIENTIST
+	description = "Do experiments, perform research, feed the slimes, make bombs."
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
@@ -30,7 +31,7 @@
 		/obj/item/camera_bug = 1
 	)
 	rpg_title = "Thaumaturgist"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/scientist
@@ -55,3 +56,7 @@
 	..()
 	if(prob(0.4))
 		neck = /obj/item/clothing/neck/tie/horrible
+
+/datum/outfit/job/scientist/get_types_to_preload()
+	. = ..()
+	. += /obj/item/clothing/neck/tie/horrible

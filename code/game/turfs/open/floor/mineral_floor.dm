@@ -38,26 +38,6 @@
 	icons = list("plasma","plasma_dam")
 	custom_materials = list(/datum/material/plasma = 500)
 
-/turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
-/turf/open/floor/mineral/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
-		message_admins("Plasma flooring was ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(src)]")
-		log_game("Plasma flooring was ignited by [key_name(user)] in [AREACOORD(src)]")
-		ignite(W.get_temperature())
-		return
-	..()
-
-/turf/open/floor/mineral/plasma/proc/PlasmaBurn(temperature)
-	make_plating()
-	atmos_spawn_air("plasma=20;TEMP=[temperature]")
-
-/turf/open/floor/mineral/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
-
 //Plasma floor that can't be removed, for disco inferno
 
 /turf/open/floor/mineral/plasma/disco/crowbar_act(mob/living/user, obj/item/I)

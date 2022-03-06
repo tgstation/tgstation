@@ -287,7 +287,7 @@
 /turf/open/floor/plating,
 /area/shuttle/mining/large)
 "J" = (
-/obj/machinery/power/apc/auto_name/east,
+/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,

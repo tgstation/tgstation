@@ -6,6 +6,7 @@
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
+	plane = ABOVE_GAME_PLANE
 	density = FALSE
 	var/transform_dead = 0
 	var/transform_standing = 0
@@ -108,4 +109,4 @@
 	sleep(30)
 	if(R)
 		R.SetLockdown(FALSE)
-		R.notify_ai(NEW_BORG)
+		R.notify_ai(AI_NOTIFICATION_NEW_BORG)

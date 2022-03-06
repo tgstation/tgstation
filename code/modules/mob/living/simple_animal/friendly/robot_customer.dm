@@ -34,7 +34,8 @@
 	ai_controller.blackboard[BB_CUSTOMER_CUSTOMERINFO] = customer_info
 	ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE] = attending_venue
 	ai_controller.blackboard[BB_CUSTOMER_PATIENCE] = customer_info.total_patience
-	icon_state = customer_info.base_icon
+	icon = customer_info.base_icon
+	icon_state = customer_info.base_icon_state
 	name = "[pick(customer_info.name_prefixes)]-bot"
 	color = rgb(rand(80,255), rand(80,255), rand(80,255))
 	update_icon()
@@ -43,7 +44,10 @@
 /mob/living/simple_animal/robot_customer/Destroy()
 	var/datum/venue/attending_venue = ai_controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	attending_venue.current_visitors -= src
-	attending_venue.linked_seats[ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]] = null
+	var/datum/weakref/seat_ref = ai_controller.blackboard[BB_CUSTOMER_MY_SEAT]
+	var/obj/structure/holosign/robot_seat/our_seat = seat_ref?.resolve()
+	if(attending_venue.linked_seats[our_seat])
+		attending_venue.linked_seats[our_seat] = null
 	QDEL_NULL(hud_to_show_on_hover)
 	return ..()
 

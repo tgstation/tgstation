@@ -1,0 +1,81 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"q" = (
+/obj/effect/turf_decal/sand,
+/obj/item/stack/ore/iron{
+	pixel_x = 11;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
+"w" = (
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"x" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
+"G" = (
+/obj/item/stack/ore/glass,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"I" = (
+/obj/item/stack/ore/iron{
+	pixel_x = -9;
+	pixel_y = 11
+	},
+/obj/effect/decal/remains/human,
+/obj/item/clothing/accessory/clown_enjoyer_pin,
+/turf/open/floor/plating/asteroid,
+/area/maintenance/port/aft)
+"V" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
+"W" = (
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/smooth,
+/area/maintenance/port/aft)
+
+(1,1,1) = {"
+a
+a
+x
+a
+a
+"}
+(2,1,1) = {"
+V
+W
+W
+V
+w
+"}
+(3,1,1) = {"
+w
+V
+q
+G
+a
+"}
+(4,1,1) = {"
+a
+I
+w
+w
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}

@@ -151,6 +151,7 @@
 
 /obj/item/broken_bottle/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/caltrop, min_damage = force)
 	AddComponent(/datum/component/butchering, 200, 55)
 
 /obj/item/reagent_containers/food/drinks/bottle/beer
@@ -169,6 +170,15 @@
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
+
+/obj/item/reagent_containers/food/drinks/bottle/rootbeer
+	name = "Two-Time root beer"
+	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
+	foodtype = SUGAR | JUNKFOOD
+	custom_price = PAYCHECK_HARD * 1.5
+	custom_premium_price = PAYCHECK_HARD * 2
 
 /obj/item/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
@@ -411,6 +421,25 @@
 	desc = "A bottle of pure Fernet Bronca, produced in Cordoba Space Station"
 	icon_state = "fernetbottle"
 	list_reagents = list(/datum/reagent/consumable/ethanol/fernet = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/bitters
+	name = "Andromeda Bitters"
+	desc = "An aromatic addition to any drink. Made in New Trinidad, now and forever."
+	icon_state = "bitters_bottle"
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/ethanol/bitters = 30)
+
+/obj/item/reagent_containers/food/drinks/bottle/curacao
+	name = "Beekhof Blauw Curaçao"
+	desc = "Still produced on the island of Curaçao, after all these years."
+	icon_state = "curacao_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/curacao = 100)
+
+/obj/item/reagent_containers/food/drinks/bottle/navy_rum
+	name = "Pride of the Union Navy-Strength Rum"
+	desc = "Ironically named, given it's made in Bermuda."
+	icon_state = "navy_rum_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -707,6 +736,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/do_fermentation()
 	fermentation_time_remaining = null
 	fermentation_timer = null
+	reagents.remove_reagent(/datum/reagent/consumable/prunomix, 50)
 	if(prob(10))
 		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15) // closest thing we have to botulism
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 35)

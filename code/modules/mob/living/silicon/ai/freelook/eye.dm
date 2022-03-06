@@ -101,24 +101,10 @@
 		if(ai.master_multicam)
 			ai.master_multicam.refresh_view()
 
-//it uses setLoc not forceMove, talks to the sillycone and not the camera mob
-/mob/camera/ai_eye/zMove(dir, feedback = FALSE)
-	if(dir != UP && dir != DOWN)
-		return FALSE
-	var/turf/target = get_step_multiz(src, dir)
-	if(!target)
-		if(feedback)
-			to_chat(ai, span_warning("There's nowhere to go in that direction!"))
-		return FALSE
-	if(!canZMove(dir, target))
-		if(feedback)
-			to_chat(ai, span_warning("You couldn't move there!"))
-		return FALSE
-	setLoc(target, TRUE)
-	return TRUE
-
-/mob/camera/ai_eye/canZMove(direction, turf/target) //cameras do not respect these FLOORS you speak so much of
-	return TRUE
+/mob/camera/ai_eye/zMove(dir, turf/target, z_move_flags = NONE, recursions_left = 1, list/falling_movs)
+	. = ..()
+	if(.)
+		setLoc(loc, force_update = TRUE)
 
 /mob/camera/ai_eye/Move()
 	return
@@ -188,6 +174,8 @@
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
+		stack_trace("AI eye object wasn't found! Location: [loc] / Eyeobj: [eyeobj] / QDELETED: [QDELETED(eyeobj)] / Eye loc: [eyeobj?.loc]")
+		QDEL_NULL(eyeobj)
 		create_eye()
 
 	eyeobj?.setLoc(loc)
@@ -230,4 +218,4 @@
 	icon_state = ""
 	alpha = 100
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE
+	plane = ABOVE_GAME_PLANE

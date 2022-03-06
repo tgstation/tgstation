@@ -4,6 +4,7 @@
 /obj/item/organ/liver
 	name = "liver"
 	icon_state = "liver"
+	visual = FALSE
 	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LIVER
@@ -57,8 +58,6 @@
 			. += "A smell of bananas, a slippery sheen and [span_clown("honking")] when depressed, implies that this is the liver of a <em>clown</em>."
 		if(HAS_TRAIT(src, TRAIT_MEDICAL_METABOLISM))
 			. += "Marks of stress and a faint whiff of medicinal alcohol, imply that this is the liver of a <em>medical worker</em>."
-		if(HAS_TRAIT(src, TRAIT_GREYTIDE_METABOLISM))
-			. += "Greyer than most with electrical burn marks, this is the liver of an <em>assistant</em>."
 		if(HAS_TRAIT(src, TRAIT_ENGINEER_METABOLISM))
 			. += "Signs of radiation exposure and space adaption, implies that this is the liver of an <em>engineer</em>."
 
@@ -114,20 +113,20 @@
 
 	switch(failure_time/LIVER_FAILURE_STAGE_SECONDS)
 		if(1)
-			to_chat(owner,"<span class='danger'>You feel stabbing pain in your abdomen!</danger>")
+			to_chat(owner, span_userdanger("You feel stabbing pain in your abdomen!"))
 		if(2)
-			to_chat(owner,"<span class='danger'>You feel a burning sensation in your gut!</danger>")
+			to_chat(owner, span_userdanger("You feel a burning sensation in your gut!"))
 			owner.vomit()
 		if(3)
-			to_chat(owner,"<span class='danger'>You feel painful acid in your throat!</danger>")
+			to_chat(owner, span_userdanger("You feel painful acid in your throat!"))
 			owner.vomit(blood = TRUE)
 		if(4)
-			to_chat(owner,"<span class='danger'>Overwhelming pain knocks you out!</danger>")
+			to_chat(owner, span_userdanger("Overwhelming pain knocks you out!"))
 			owner.vomit(blood = TRUE, distance = rand(1,2))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(2.5 SECONDS)
 		if(5)
-			to_chat(owner,"<span class='danger'>You feel as if your guts are about to melt!</danger>")
+			to_chat(owner, span_userdanger("You feel as if your guts are about to melt!"))
 			owner.vomit(blood = TRUE,distance = rand(1,3))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(5 SECONDS)

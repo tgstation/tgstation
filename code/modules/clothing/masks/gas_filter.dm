@@ -35,8 +35,7 @@
 		)
 	///List of gases with medium filter priority
 	var/list/mid_filtering_gases = list(
-		/datum/gas/nitryl,
-		/datum/gas/stimulum,
+		/datum/gas/nitrium,
 		/datum/gas/freon,
 		/datum/gas/hypernoblium,
 		/datum/gas/bz

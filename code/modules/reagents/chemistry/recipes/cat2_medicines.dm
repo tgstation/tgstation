@@ -276,16 +276,15 @@
 	required_temp = 380
 	optimal_temp = 400
 	overheat_temp = 410
-	optimal_ph_min = 2.5
-	optimal_ph_max = 7
+	optimal_ph_min = 5
+	optimal_ph_max = 9.5
 	determin_ph_range = 4
-	temp_exponent_factor = 0.5
+	temp_exponent_factor = 0.1
 	ph_exponent_factor = 1
 	thermic_constant = 0
-	H_ion_release = 0
-	rate_up_lim = 25
+	H_ion_release = 0.015
+	rate_up_lim = 10
 	purity_min = 0.1 //Fire is our worry for now
-	reaction_flags = REACTION_REAL_TIME_SPLIT | REACTION_PH_VOL_CONSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_PLANT | REACTION_TAG_TOXIN
 
 //You get nothing! I'm serious about staying under the heating requirements!

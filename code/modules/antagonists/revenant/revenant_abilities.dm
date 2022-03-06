@@ -12,7 +12,8 @@
 		return
 
 	if(ishuman(A))
-		if(A in drained_mobs)
+		//Humans are tagged, so this is fine
+		if(REF(A) in drained_mobs)
 			to_chat(src, span_revenwarning("[A]'s soul is dead and empty.") )
 		else if(in_range(src, A))
 			Harvest(A)
@@ -97,7 +98,7 @@
 					to_chat(src, span_revennotice("[target]'s soul has been considerably weakened and will yield no more essence for the time being."))
 					target.visible_message(span_warning("[target] slumps onto the ground."), \
 										   span_revenwarning("Violets lights, dancing in your vision, getting clo--"))
-					drained_mobs.Add(target)
+					drained_mobs += REF(target)
 					target.death(0)
 				else
 					to_chat(src, span_revenwarning("[target ? "[target] has":"[target.p_theyve(TRUE)]"] been drawn out of your grasp. The link has been broken."))
@@ -303,10 +304,10 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/proc/malfunction(turf/T, mob/user)
 	for(var/mob/living/simple_animal/bot/bot in T)
-		if(!bot.emagged)
+		if(!(bot.bot_cover_flags & BOT_COVER_EMAGGED))
 			new /obj/effect/temp_visual/revenant(bot.loc)
-			bot.locked = FALSE
-			bot.open = TRUE
+			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
+			bot.bot_cover_flags |= BOT_COVER_OPEN
 			bot.emag_act(user)
 	for(var/mob/living/carbon/human/human in T)
 		if(human == user)
@@ -379,6 +380,6 @@
 		QDEL_IN(shroom, 10)
 	for(var/obj/machinery/hydroponics/tray in T)
 		new /obj/effect/temp_visual/revenant(tray.loc)
-		tray.pestlevel = rand(8, 10)
-		tray.weedlevel = rand(8, 10)
-		tray.toxic = rand(45, 55)
+		tray.set_pestlevel(rand(8, 10))
+		tray.set_weedlevel(rand(8, 10))
+		tray.set_toxic(rand(45, 55))

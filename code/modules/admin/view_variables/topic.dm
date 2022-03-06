@@ -60,22 +60,6 @@
 			vv_update_display(A, "dir", dir2text(A.dir))
 
 
-		else if(href_list["makehuman"])
-			if(!check_rights(R_SPAWN))
-				return
-
-			var/mob/living/carbon/human/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
-			if(!ismonkey(Mo))
-				to_chat(usr, "This can only be done to monkeys", confidential = TRUE)
-				return
-
-			if(tgui_alert(usr,"Confirm mob type change?",,list("Transform","Cancel")) != "Transform")
-				return
-			if(!Mo)
-				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
-				return
-			holder.Topic(href, list("humanone"=href_list["makehuman"]))
-
 		else if(href_list["adjustDamage"] && href_list["mobToDamage"])
 			if(!check_rights(NONE))
 				return

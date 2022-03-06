@@ -15,7 +15,7 @@
 	max_equip = 7
 	wreckage = /obj/structure/mecha_wreckage/clarke
 	enter_delay = 40
-	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ADDING_ACCESS_POSSIBLE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | OMNIDIRECTIONAL_ATTACKS
 	internals_req_access = list(ACCESS_MECH_ENGINE, ACCESS_MECH_SCIENCE, ACCESS_MECH_MINING)
 
 /obj/vehicle/sealed/mecha/working/clarke/Initialize(mapload)
@@ -28,26 +28,9 @@
 	INVOKE_ASYNC(box, /obj/structure/ore_box/proc/dump_box_contents)
 	return ..()
 
-/obj/vehicle/sealed/mecha/working/clarke/moved_inside(mob/living/carbon/human/H)
+/obj/vehicle/sealed/mecha/working/clarke/generate_actions()
 	. = ..()
-	if(. && !HAS_TRAIT(H, TRAIT_DIAGNOSTIC_HUD))
-		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
-		hud.add_hud_to(H)
-		ADD_TRAIT(H, TRAIT_DIAGNOSTIC_HUD, VEHICLE_TRAIT)
-
-/obj/vehicle/sealed/mecha/working/clarke/remove_occupant(mob/living/carbon/H)
-	if(isliving(H) && HAS_TRAIT_FROM(H, TRAIT_DIAGNOSTIC_HUD, VEHICLE_TRAIT))
-		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
-		hud.remove_hud_from(H)
-		REMOVE_TRAIT(H, TRAIT_DIAGNOSTIC_HUD, VEHICLE_TRAIT)
-	return ..()
-
-/obj/vehicle/sealed/mecha/working/clarke/mmi_moved_inside(obj/item/mmi/M, mob/user)
-	. = ..()
-	if(.)
-		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
-		var/mob/living/brain/B = M.brainmob
-		hud.add_hud_to(B)
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_search_ruins)
 
 //Ore Box Controls
 
@@ -80,3 +63,60 @@
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_equip_info()
 	return "[..()] [hostmech?.box ? "<a href='?src=[REF(src)];mode=0'>Unload Cargo</a>" : "Error"]"
+
+#define SEARCH_COOLDOWN 1 MINUTES
+
+/datum/action/vehicle/sealed/mecha/mech_search_ruins
+	name = "Search for Ruins"
+	button_icon_state = "mech_search_ruins"
+	COOLDOWN_DECLARE(search_cooldown)
+
+/datum/action/vehicle/sealed/mecha/mech_search_ruins/Trigger(trigger_flags)
+	if(!owner || !chassis || !(owner in chassis.occupants))
+		return
+	if(!COOLDOWN_FINISHED(src, search_cooldown))
+		chassis.balloon_alert(owner, "on cooldown!")
+		return
+	if(!isliving(owner))
+		return
+	var/mob/living/living_owner = owner
+	button_icon_state = "mech_search_ruins_cooldown"
+	UpdateButtonIcon()
+	COOLDOWN_START(src, search_cooldown, SEARCH_COOLDOWN)
+	addtimer(VARSET_CALLBACK(src, button_icon_state, "mech_search_ruins"), SEARCH_COOLDOWN)
+	addtimer(CALLBACK(src, .proc/UpdateButtonIcon), SEARCH_COOLDOWN)
+	var/obj/pinpointed_ruin
+	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
+		if(ruin_landmark.z != chassis.z)
+			continue
+		if(!pinpointed_ruin || get_dist(ruin_landmark, chassis) < get_dist(pinpointed_ruin, chassis))
+			pinpointed_ruin = ruin_landmark
+	if(!pinpointed_ruin)
+		chassis.balloon_alert(living_owner, "no ruins!")
+		return
+	var/datum/status_effect/agent_pinpointer/ruin_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/ruin)
+	ruin_pinpointer.RegisterSignal(living_owner, COMSIG_MOVABLE_MOVED, /datum/status_effect/agent_pinpointer/ruin.proc/cancel_self)
+	ruin_pinpointer.scan_target = pinpointed_ruin
+	chassis.balloon_alert(living_owner, "pinpointing nearest ruin")
+
+/datum/status_effect/agent_pinpointer/ruin
+	duration = SEARCH_COOLDOWN * 0.5
+	alert_type = /atom/movable/screen/alert/status_effect/agent_pinpointer/ruin
+	tick_interval = 3 SECONDS
+	range_fuzz_factor = 0
+	minimum_range = 5
+	range_mid = 20
+	range_far = 50
+
+/datum/status_effect/agent_pinpointer/ruin/scan_for_target()
+	return
+
+/datum/status_effect/agent_pinpointer/ruin/proc/cancel_self(datum/source, atom/old_loc)
+	SIGNAL_HANDLER
+	qdel(src)
+
+/atom/movable/screen/alert/status_effect/agent_pinpointer/ruin
+	name = "Ruin Target"
+	desc = "Searching for valuables..."
+
+#undef SEARCH_COOLDOWN

@@ -130,7 +130,7 @@
 	return
 
 /turf/open/floor/plating/beach/ex_act(severity, target)
-	contents_explosion(severity, target)
+	return
 
 /turf/open/floor/plating/beach/sand
 	gender = PLURAL

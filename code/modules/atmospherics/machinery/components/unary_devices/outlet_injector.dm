@@ -263,18 +263,15 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/miasma_input
 	name = "miasma tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_MIASMA
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitryl_input
-	name = "nitryl tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_NO2
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/nitrium_input
+	name = "nitrium tank input injector"
+	id = ATMOS_GAS_MONITOR_INPUT_NITRIUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/pluoxium_input
 	name = "pluoxium tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_PLUOXIUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/proto_nitrate_input
 	name = "proto-nitrate tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_PROTO_NITRATE
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/stimulum_input
-	name = "stimulum tank input injector"
-	id = ATMOS_GAS_MONITOR_INPUT_STIMULUM
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/tritium_input
 	name = "tritium tank input injector"
 	id = ATMOS_GAS_MONITOR_INPUT_TRITIUM

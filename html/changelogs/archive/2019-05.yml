@@ -287,7 +287,7 @@
   - rscadd: pAI's have a bunch of HUD stuff now
   - rscadd: pAI's now have an AI style PDA
   - rscadd: pAI cameras can now download a zoom feature! Bigger and smaller pictures!
-  - tweak: Split the pAI medhud module into seperate medhud and health analyzer modules
+  - tweak: Split the pAI medhud module into separate medhud and health analyzer modules
   - tweak: Journalism modules now have RAM costs
   - balance: RAM prices have changed on a number of modules
   - imageadd: added more pAI HUD icons

@@ -54,7 +54,6 @@
 	return ..()
 
 /turf/open/floor/engine/ex_act(severity, target)
-	contents_explosion(severity, target)
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
@@ -149,10 +148,9 @@
 	name = "\improper Miasma floor"
 	initial_gas_mix = ATMOS_TANK_MIASMA
 
-/turf/open/floor/engine/no2
-	article = "an"
-	name = "\improper NO2 floor"
-	initial_gas_mix = ATMOS_TANK_NO2
+/turf/open/floor/engine/nitrium
+	name = "\improper nitrium floor"
+	initial_gas_mix = ATMOS_TANK_NITRIUM
 
 /turf/open/floor/engine/pluoxium
 	name = "\improper Pluoxium floor"
@@ -161,10 +159,6 @@
 /turf/open/floor/engine/proto_nitrate
 	name = "\improper Proto-Nitrate floor"
 	initial_gas_mix = ATMOS_TANK_PROTO_NITRATE
-
-/turf/open/floor/engine/stimulum
-	name = "\improper Stimulum floor"
-	initial_gas_mix = ATMOS_TANK_STIMULUM
 
 /turf/open/floor/engine/tritium
 	name = "\improper Tritium floor"
@@ -196,13 +190,14 @@
 /turf/open/floor/engine/cult
 	name = "engraved floor"
 	desc = "The air smells strange over this sinister flooring."
-	icon_state = "plating"
+	icon_state = "cult"
 	floor_tile = null
 	var/obj/effect/cult_turf/overlay/floor/bloodcult/realappearance
 
 
 /turf/open/floor/engine/cult/Initialize(mapload)
 	. = ..()
+	icon_state = "plating" //we're redefining the base icon_state here so that the Conceal/Reveal Presence spell works for cultists
 	new /obj/effect/temp_visual/cult/turf/floor(src)
 	realappearance = new /obj/effect/cult_turf/overlay/floor/bloodcult(src)
 	realappearance.linked = src

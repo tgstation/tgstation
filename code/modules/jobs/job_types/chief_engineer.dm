@@ -1,7 +1,9 @@
 /datum/job/chief_engineer
-	title = "Chief Engineer"
+	title = JOB_CHIEF_ENGINEER
+	description = "Coordinate engineering, ensure equipment doesn't get stolen, \
+		make sure the Supermatter doesn't blow up, maintain telecommunications."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	department_head = list("Captain")
+	department_head = list(JOB_CAPTAIN)
 	head_announce = list("Engineering")
 	faction = FACTION_STATION
 	total_positions = 1
@@ -41,7 +43,7 @@
 		/obj/effect/spawner/random/engineering/tool_advanced = 3
 	)
 	rpg_title = "Head Crystallomancer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -77,15 +79,14 @@
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	pda_slot = ITEM_SLOT_LPOCKET
 
-/datum/outfit/job/ce/rig
-	name = "Chief Engineer (Hardsuit)"
+/datum/outfit/job/ce/mod
+	name = "Chief Engineer (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/engine/elite
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/advanced
 	glasses = /obj/item/clothing/glasses/meson/engine
 	gloves = /obj/item/clothing/gloves/color/yellow
 	head = null
 	mask = /obj/item/clothing/mask/breath
 	shoes = /obj/item/clothing/shoes/magboots/advance
-
 	internals_slot = ITEM_SLOT_SUITSTORE

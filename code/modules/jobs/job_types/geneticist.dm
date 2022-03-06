@@ -1,6 +1,7 @@
 /datum/job/geneticist
-	title = "Geneticist"
-	department_head = list("Research Director")
+	title = JOB_GENETICIST
+	description = "Alter genomes, turn monkeys into humans (and vice-versa), and make DNA backups."
+	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
@@ -28,7 +29,7 @@
 
 	family_heirlooms = list(/obj/item/clothing/under/shorts/purple)
 	rpg_title = "Genemancer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/geneticist

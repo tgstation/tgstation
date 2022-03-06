@@ -15,6 +15,8 @@
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	pass_flags_self = PASSGLASS
 	set_dir_on_move = FALSE
+	flags_ricochet = RICOCHET_HARD
+	receive_ricochet_chance_mod = 0.5
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
@@ -25,12 +27,12 @@
 	var/glass_amount = 1
 	var/mutable_appearance/crack_overlay
 	var/real_explosion_block //ignore this, just use explosion_block
-	var/breaksound = "shatter"
-	var/knocksound = 'sound/effects/Glassknock.ogg'
-	var/bashsound = 'sound/effects/Glassbash.ogg'
-	var/hitsound = 'sound/effects/Glasshit.ogg'
-	flags_ricochet = RICOCHET_HARD
-	receive_ricochet_chance_mod = 0.5
+	var/break_sound = "shatter"
+	var/knock_sound = 'sound/effects/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glassbash.ogg'
+	var/hit_sound = 'sound/effects/glasshit.ogg'
+	/// If some inconsiderate jerk has had their blood spilled on this window, thus making it cleanable
+	var/bloodied = FALSE
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
@@ -68,6 +70,7 @@
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = .proc/on_exit,
@@ -75,10 +78,6 @@
 
 	if (flags_1 & ON_BORDER_1)
 		AddElement(/datum/element/connect_loc, loc_connections)
-
-/obj/structure/window/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -147,7 +146,7 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_notice("Something knocks on [src]."))
 	add_fingerprint(user)
-	playsound(src, knocksound, 50, TRUE)
+	playsound(src, knock_sound, 50, TRUE)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 
@@ -167,11 +166,11 @@
 	if(!user.combat_mode)
 		user.visible_message(span_notice("[user] knocks on [src]."), \
 			span_notice("You knock on [src]."))
-		playsound(src, knocksound, 50, TRUE)
+		playsound(src, knock_sound, 50, TRUE)
 	else
 		user.visible_message(span_warning("[user] bashes [src]!"), \
 			span_warning("You bash [src]!"))
-		playsound(src, bashsound, 100, TRUE)
+		playsound(src, bash_sound, 100, TRUE)
 
 /obj/structure/window/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -214,7 +213,7 @@
 				var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 				if (!QDELETED(G))
 					G.add_fingerprint(user)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 				to_chat(user, span_notice("You successfully disassemble [src]."))
 				qdel(src)
 			return
@@ -226,6 +225,9 @@
 			return
 
 	return ..()
+
+/obj/structure/window/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/window/set_anchored(anchorvalue)
 	..()
@@ -266,18 +268,18 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, hitsound, 75, TRUE)
+				playsound(src, hit_sound, 75, TRUE)
 			else
 				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/Welder.ogg', 100, TRUE)
+			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 
 /obj/structure/window/deconstruct(disassembled = TRUE)
 	if(QDELETED(src))
 		return
 	if(!disassembled)
-		playsound(src, breaksound, 70, TRUE)
+		playsound(src, break_sound, 70, TRUE)
 		if(!(flags_1 & NODECONSTRUCT_1))
 			for(var/obj/item/shard/debris in spawnDebris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
@@ -293,21 +295,8 @@
 	if (fulltile)
 		. += new /obj/item/shard(location)
 
-/obj/structure/window/proc/can_be_rotated(mob/user,rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("[src] cannot be rotated while it is fastened to the floor!"))
-		return FALSE
-
-	var/target_dir = turn(dir, rotation_type == ROTATION_CLOCKWISE ? -90 : 90)
-
-	if(!valid_window_location(loc, target_dir, is_fulltile = fulltile))
-		to_chat(user, span_warning("[src] cannot be rotated in that direction!"))
-		return FALSE
-	return TRUE
-
-/obj/structure/window/proc/after_rotation(mob/user,rotation_type)
+/obj/structure/window/proc/AfterRotation(mob/user, degrees)
 	air_update_turf(TRUE, FALSE)
-	add_fingerprint(user)
 
 /obj/structure/window/proc/on_painted(obj/structure/window/source, is_dark_color)
 	SIGNAL_HANDLER
@@ -328,7 +317,7 @@
 	if(anchored)
 		move_update_air(T)
 
-/obj/structure/window/can_atmos_pass(turf/T)
+/obj/structure/window/can_atmos_pass(turf/T, vertical = FALSE)
 	if(!anchored || !density)
 		return TRUE
 	return !(fulltile || dir == get_dir(loc, T))
@@ -362,7 +351,7 @@
 /obj/structure/window/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	take_damage(round(air.return_volume() / 100), BURN, 0, 0)
 
-/obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/window/get_dumping_location()
 	return null
 
 /obj/structure/window/CanAStarPass(obj/item/card/id/ID, to_dir, atom/movable/caller)
@@ -734,10 +723,10 @@
 	can_atmos_pass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 0, ACID = 0)
-	knocksound = "pageturn"
-	bashsound = 'sound/weapons/slashmiss.ogg'
-	breaksound = 'sound/items/poster_ripped.ogg'
-	hitsound = 'sound/weapons/slashmiss.ogg'
+	knock_sound = "pageturn"
+	bash_sound = 'sound/weapons/slashmiss.ogg'
+	break_sound = 'sound/items/poster_ripped.ogg'
+	hit_sound = 'sound/weapons/slashmiss.ogg'
 	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
 	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
 

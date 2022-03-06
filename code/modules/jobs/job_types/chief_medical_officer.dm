@@ -1,6 +1,8 @@
 /datum/job/chief_medical_officer
-	title = "Chief Medical Officer"
-	department_head = list("Captain")
+	title = JOB_CHIEF_MEDICAL_OFFICER
+	description = "Coordinate doctors and other medbay employees, ensure they \
+		know how to save lives, check for injuries on the crew monitor."
+	department_head = list(JOB_CAPTAIN)
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = list(RADIO_CHANNEL_MEDICAL)
 	faction = FACTION_STATION
@@ -38,7 +40,7 @@
 	)
 	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
 	rpg_title = "High Cleric"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -77,10 +79,12 @@
 		)
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-/datum/outfit/job/cmo/hardsuit
-	name = "Chief Medical Officer (Hardsuit)"
+/datum/outfit/job/cmo/mod
+	name = "Chief Medical Officer (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/medical
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/rescue
+	suit = null
 	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen/paramedic
+	internals_slot = ITEM_SLOT_SUITSTORE

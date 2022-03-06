@@ -1,7 +1,7 @@
 /// This component behaves similar to connect_loc, hooking into a signal on a tracked object's turf
-/// It has the ability to react to that signal on behalf of a seperate listener however
+/// It has the ability to react to that signal on behalf of a separate listener however
 /// This has great use, primarily for components, but it carries with it some overhead
-/// So we do it seperately as it needs to hold state which is very likely to lead to bugs if it remains as an element.
+/// So we do it separately as it needs to hold state which is very likely to lead to bugs if it remains as an element.
 /datum/component/connect_loc_behalf
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -18,17 +18,6 @@
 		return COMPONENT_INCOMPATIBLE
 	src.connections = connections
 	src.tracked = tracked
-
-/datum/component/connect_loc_behalf/CheckDupeComponent(datum/component/component, atom/movable/tracked, list/connections)
-	if(src.tracked != tracked)
-		return FALSE
-
-	// Not equivalent. Checks if they are not the same list via shallow comparison.
-	if(!compare_list(src.connections, connections))
-		return FALSE
-
-	return TRUE
-
 
 /datum/component/connect_loc_behalf/RegisterWithParent()
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
@@ -70,8 +59,7 @@
 	if(isnull(tracked_loc))
 		return
 
-	for (var/signal in connections)
-		parent.UnregisterSignal(tracked_loc, signal)
+	parent.UnregisterSignal(tracked_loc, connections)
 
 	tracked_loc = null
 

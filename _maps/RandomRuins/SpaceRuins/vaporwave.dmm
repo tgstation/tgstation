@@ -35,7 +35,7 @@
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)
 "j" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/vaporwave,
 /area/ruin/space/has_grav/powered/aesthetic)

@@ -53,7 +53,7 @@
 
 /datum/chemical_reaction/plasma_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/plasma(location)
 
 /datum/chemical_reaction/gold_solidification
@@ -64,7 +64,7 @@
 
 /datum/chemical_reaction/gold_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/gold(location)
 
 /datum/chemical_reaction/uranium_solidification
@@ -75,7 +75,7 @@
 
 /datum/chemical_reaction/uranium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/mineral/uranium(location)
 
 /datum/chemical_reaction/capsaicincondensation
@@ -92,7 +92,7 @@
 
 /datum/chemical_reaction/soapification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/soap/homemade(location)
 
 /datum/chemical_reaction/omegasoapification
@@ -106,7 +106,7 @@
 
 /datum/chemical_reaction/omegasoapification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/soap/omega(location)
 
 /datum/chemical_reaction/candlefication
@@ -118,7 +118,7 @@
 
 /datum/chemical_reaction/candlefication/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/candle(location)
 
 /datum/chemical_reaction/meatification
@@ -129,7 +129,7 @@
 
 /datum/chemical_reaction/meatification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = 1, i <= created_volume, i++)
+	for(var/i in 1 to created_volume)
 		new /obj/item/food/meat/slab/meatproduct(location)
 	return
 
@@ -187,10 +187,12 @@
 /datum/chemical_reaction/virus_food_plasma
 	results = list(/datum/reagent/toxin/plasma/plasmavirusfood = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/consumable/virus_food = 1)
+	thermic_constant = 20 // To avoid the plasma boiling
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	results = list(/datum/reagent/toxin/plasma/plasmavirusfood/weak = 2)
 	required_reagents = list(/datum/reagent/medicine/synaptizine = 1, /datum/reagent/toxin/plasma/plasmavirusfood = 1)
+	thermic_constant = 20 // To avoid the plasma boiling
 
 /datum/chemical_reaction/virus_food_mutagen_sugar
 	results = list(/datum/reagent/toxin/mutagen/mutagenvirusfood/sugar = 2)
@@ -559,7 +561,7 @@
 
 /datum/chemical_reaction/corgium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = rand(1, created_volume), i <= created_volume, i++) // More lulz.
+	for(var/i in rand(1, created_volume) to created_volume) // More lulz.
 		new /mob/living/simple_animal/pet/dog/corgi(location)
 	..()
 
@@ -598,7 +600,7 @@
 
 /datum/chemical_reaction/butterflium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
-	for(var/i = rand(1, created_volume), i <= created_volume, i++)
+	for(var/i in rand(1, created_volume) to created_volume)
 		new /mob/living/simple_animal/butterfly(location)
 	..()
 //scream powder
@@ -920,7 +922,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/ant_slurry // We're basically gluing ants together with synthflesh & maint sludge to make a bigger ant.
-	required_reagents = list(/datum/reagent/ants = 40, /datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/drug/maint/sludge = 5)
+	required_reagents = list(/datum/reagent/ants = 50, /datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/drug/maint/sludge = 5)
 	required_temp = 480
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
@@ -928,5 +930,5 @@
 /datum/chemical_reaction/ant_slurry/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in rand(1, created_volume) to created_volume)
-		new /mob/living/simple_animal/ant(location)
+		new /mob/living/simple_animal/hostile/ant(location)
 	..()

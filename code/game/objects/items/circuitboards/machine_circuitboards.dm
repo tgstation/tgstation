@@ -271,11 +271,10 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 1)
 
-/obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/I)
+/obj/item/circuitboard/machine/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	. = ..()
-	if (istype(I))
-		pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
-		to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
+	pipe_layer = (pipe_layer >= PIPING_LAYER_MAX) ? PIPING_LAYER_MIN : (pipe_layer + 1)
+	to_chat(user, span_notice("You change the circuitboard to layer [pipe_layer]."))
 
 /obj/item/circuitboard/machine/thermomachine/examine()
 	. = ..()
@@ -373,16 +372,15 @@
 	needs_anchored = FALSE //wew lad
 	var/secure = FALSE
 
-/obj/item/circuitboard/machine/holopad/attackby(obj/item/P, mob/user, params)
-	if(P.tool_behaviour == TOOL_MULTITOOL)
-		if(secure)
-			build_path = /obj/machinery/holopad
-			secure = FALSE
-		else
-			build_path = /obj/machinery/holopad/secure
-			secure = TRUE
-		to_chat(user, span_notice("You [secure? "en" : "dis"]able the security on the [src]"))
-	. = ..()
+/obj/item/circuitboard/machine/holopad/multitool_act(mob/living/user, obj/item/tool)
+	if(secure)
+		build_path = /obj/machinery/holopad
+		secure = FALSE
+	else
+		build_path = /obj/machinery/holopad/secure
+		secure = TRUE
+	to_chat(user, span_notice("You [secure? "en" : "dis"]able the security on [src]"))
+	return TRUE
 
 /obj/item/circuitboard/machine/holopad/examine(mob/user)
 	. = ..()
@@ -398,12 +396,6 @@
 		/obj/item/stack/ore/bluespace_crystal = 1,
 		/obj/item/stock_parts/manipulator = 1)
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
-
-/obj/item/circuitboard/machine/paystand
-	name = "Pay Stand (Machine Board)"
-	greyscale_colors = CIRCUIT_COLOR_GENERIC
-	build_path = /obj/machinery/paystand
-	req_components = list()
 
 /obj/item/circuitboard/machine/protolathe
 	name = "Protolathe (Machine Board)"
@@ -446,21 +438,21 @@
 	needs_anchored = FALSE
 	var/is_special_type = FALSE
 
-/obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/M)
-	build_path = M.base_build_path
+/obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
+	build_path = smartfridge.base_build_path
 	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
-		name = "[initial(M.name)] (Machine Board)" //if it's a unique type, give it a unique name.
+		name = "[initial(smartfridge.name)] (Machine Board)" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
 
-/obj/item/circuitboard/machine/smartfridge/attackby(obj/item/I, mob/user, params)
-	if(!is_special_type && I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
-		position = (position == fridges_name_paths.len) ? 1 : (position + 1)
-		build_path = fridges_name_paths[position]
-		to_chat(user, span_notice("You set the board to [fridges_name_paths[build_path]]."))
-	else
-		return ..()
+/obj/item/circuitboard/machine/smartfridge/screwdriver_act(mob/living/user, obj/item/tool)
+	if (is_special_type)
+		return FALSE
+	var/position = fridges_name_paths.Find(build_path, fridges_name_paths)
+	position = (position == length(fridges_name_paths)) ? 1 : (position + 1)
+	build_path = fridges_name_paths[position]
+	to_chat(user, span_notice("You set the board to [fridges_name_paths[build_path]]."))
+	return TRUE
 
 /obj/item/circuitboard/machine/smartfridge/examine(mob/user)
 	. = ..()
@@ -557,26 +549,28 @@
 		/obj/machinery/vending/tool = "YouTool",
 		/obj/machinery/vending/custom = "Custom Vendor")
 
-/obj/item/circuitboard/machine/vendor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/static/list/display_vending_names_paths
-		if(!display_vending_names_paths)
-			display_vending_names_paths = list()
-			for(var/path in vending_names_paths)
-				display_vending_names_paths[vending_names_paths[path]] = path
-		var/choice = input(user,"Choose a new brand","Select an Item") as null|anything in sort_list(display_vending_names_paths)
-		set_type(display_vending_names_paths[choice])
-	else
-		return ..()
+/obj/item/circuitboard/machine/vendor/screwdriver_act(mob/living/user, obj/item/tool)
+	var/static/list/display_vending_names_paths
+	if(!display_vending_names_paths)
+		display_vending_names_paths = list()
+		for(var/path in vending_names_paths)
+			display_vending_names_paths[vending_names_paths[path]] = path
+	var/choice = tgui_input_list(user, "Choose a new brand", "Select an Item", sort_list(display_vending_names_paths))
+	if(isnull(choice))
+		return
+	if(isnull(display_vending_names_paths[choice]))
+		return
+	set_type(display_vending_names_paths[choice])
+	return TRUE
 
 /obj/item/circuitboard/machine/vendor/proc/set_type(obj/machinery/vending/typepath)
 	build_path = typepath
 	name = "[vending_names_paths[build_path]] Vendor (Machine Board)"
 	req_components = list(initial(typepath.refill_canister) = 1)
 
-/obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/M)
+/obj/item/circuitboard/machine/vendor/apply_default_parts(obj/machinery/machine)
 	for(var/typepath in vending_names_paths)
-		if(istype(M, typepath))
+		if(istype(machine, typepath))
 			set_type(typepath)
 			break
 	return ..()
@@ -689,20 +683,18 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/chem_master/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		var/new_name = "ChemMaster"
-		var/new_path = /obj/machinery/chem_master
+/obj/item/circuitboard/machine/chem_master/screwdriver_act(mob/living/user, obj/item/tool)
+	var/new_name = "ChemMaster"
+	var/new_path = /obj/machinery/chem_master
 
-		if(build_path == /obj/machinery/chem_master)
-			new_name = "CondiMaster"
-			new_path = /obj/machinery/chem_master/condimaster
+	if(build_path == /obj/machinery/chem_master)
+		new_name = "CondiMaster"
+		new_path = /obj/machinery/chem_master/condimaster
 
-		build_path = new_path
-		name = "[new_name] 3000 (Machine Board)"
-		to_chat(user, span_notice("You change the circuit board setting to \"[new_name]\"."))
-	else
-		return ..()
+	build_path = new_path
+	name = "[new_name] 3000 (Machine Board)"
+	to_chat(user, span_notice("You change the circuit board setting to \"[new_name]\"."))
+	return TRUE
 
 /obj/item/circuitboard/machine/cryo_tube
 	name = "Cryotube (Machine Board)"
@@ -737,11 +729,13 @@
 
 /obj/item/circuitboard/machine/medical_kiosk/multitool_act(mob/living/user)
 	. = ..()
-	var/new_cost = input("Set a new cost for using this medical kiosk.","New cost", custom_cost) as num|null
-	if(!new_cost || (loc != user))
+	var/new_cost = tgui_input_number(user, "New cost for using this medical kiosk", "Pricing", custom_cost, 1000, 10)
+	if(!new_cost || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return
+	if(loc != user)
 		to_chat(user, span_warning("You must hold the circuitboard to change its cost!"))
 		return
-	custom_cost = clamp(round(new_cost, 1), 10, 1000)
+	custom_cost = new_cost
 	to_chat(user, span_notice("The cost is now set to [custom_cost]."))
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
@@ -755,6 +749,15 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/reagent_containers/glass/beaker = 2,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/limbgrower/fullupgrade
+	name = "Limb Grower (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/limbgrower
+	req_components = list(
+		/obj/item/stock_parts/manipulator/femto  = 1,
+		/obj/item/reagent_containers/glass/beaker/bluespace = 2,
 		/obj/item/stack/sheet/glass = 1)
 
 /obj/item/circuitboard/machine/protolathe/department/medical
@@ -1104,18 +1107,16 @@
 		/obj/item/stock_parts/manipulator = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/processor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/processor)
-			name = "Slime Processor (Machine Board)"
-			build_path = /obj/machinery/processor/slime
-			to_chat(user, span_notice("Name protocols successfully updated."))
-		else
-			name = "Food Processor (Machine Board)"
-			build_path = /obj/machinery/processor
-			to_chat(user, span_notice("Defaulting name protocols."))
+/obj/item/circuitboard/machine/processor/screwdriver_act(mob/living/user, obj/item/tool)
+	if(build_path == /obj/machinery/processor)
+		name = "Slime Processor (Machine Board)"
+		build_path = /obj/machinery/processor/slime
+		to_chat(user, span_notice("Name protocols successfully updated."))
 	else
-		return ..()
+		name = "Food Processor (Machine Board)"
+		build_path = /obj/machinery/processor
+		to_chat(user, span_notice("Defaulting name protocols."))
+	return TRUE
 
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service (Machine Board)"
@@ -1293,7 +1294,7 @@
 /obj/item/circuitboard/machine/doppler_array
 	name = "Tachyon-Doppler Research Array (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/doppler_array/research
+	build_path = /obj/machinery/doppler_array
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/scanning_module = 4)
@@ -1320,3 +1321,22 @@
 	build_path = /obj/machinery/ecto_sniffer
 	req_components = list(
 		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/anomaly_refinery
+	name = "Anomaly Refinery (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/research/anomaly_refinery
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		)
+
+/obj/item/circuitboard/machine/tank_compressor
+	name = "Tank Compressor (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/atmospherics/components/binary/tank_compressor
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stock_parts/scanning_module = 4,
+		)

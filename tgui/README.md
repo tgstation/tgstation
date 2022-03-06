@@ -29,7 +29,8 @@ If you are using the tooling provided in this repo, everything is included! Feel
 
 However, if you want finer control over the installation or build process, you will need these:
 
-- [Node v12.20+](https://nodejs.org/en/download/)
+- [Node v16.13+](https://nodejs.org/en/download/)
+  - **LTS** release is recommended instead of latest
   - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v1.22.4+](https://yarnpkg.com/getting-started/install)
   - You only need to run `npm install -g yarn`.
@@ -112,15 +113,41 @@ Webpack stores its cache on disk since tgui 4.3, and it is very sensitive to bui
 
 To fix this kind of problem, run `bin/tgui --clean` and try again.
 
-## Developer Tools
+## Dev Server Tools
 
-When developing with `tgui-dev-server`, you will have access to certain development only features.
+When developing with `tgui-dev-server`, you will have access to certain
+development only features.
 
-**Debug Logs**. When running server via `bin/tgui --dev --debug`, server will print debug logs and time spent on rendering. Use this information to optimize your code, and try to keep re-renders below 16ms.
+**Debug Logs.**
+When running server via `bin/tgui --dev --debug`, server will print debug
+logs and time spent on rendering. Use this information to optimize your
+code, and try to keep re-renders below 16ms.
 
-**Kitchen Sink**. Press `F12` to open the KitchenSink interface. This interface is a playground to test various tgui components.
+**Kitchen Sink.**
+Press `F12` or click the green bug to open the KitchenSink interface. This interface is a
+playground to test various tgui components.
 
-**Layout Debugger**. Press `F11` to toggle the *layout debugger*. It will show outlines of all tgui elements, which makes it easy to understand how everything comes together, and can reveal certain layout bugs which are not normally visible.
+**Layout Debugger.**
+Press `F11` to toggle the *layout debugger*. It will show outlines of
+all tgui elements, which makes it easy to understand how everything comes
+together, and can reveal certain layout bugs which are not normally visible.
+
+## Browser Developer Tools
+
+To debug TGUI interfaces with browser-style developer tools, there exists a utility
+that Microsoft bundles with Windows to debug any Internet Explorer/Trident-using interface,
+which BYOND uses.
+
+This provides invaluable tools such as a local console, a DOM viewer, an interactive debugger, and more.
+
+The 64-bit version that we use is located at `%windir%\SysWOW64\F12\IEChooser.exe`.
+There's also a 32-bit one in `system32\`.
+
+Simply launch the application after you've opened a TGUI window, and choose the .html name.
+This is likely to be something like `tgui-window-1`. There's a refresh button in the top right.
+
+Unfortunately, it seems this program doesn't have a new target chooser if your window is fully closed
+so you'll need to restart it if it disconnects from the window.
 
 ## Project Structure
 

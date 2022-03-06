@@ -206,8 +206,8 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sort_list(list_to_show, /proc/cmp_typepaths_asc)
-					if(!used_material)
+					used_material = tgui_input_list(usr, "Choose [used_material]", "Custom Material", sort_list(list_to_show, /proc/cmp_typepaths_asc))
+					if(isnull(used_material))
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed
 
@@ -230,15 +230,15 @@
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
 
-/obj/machinery/autolathe/attackby(obj/item/O, mob/living/user, params)
+/obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(busy)
 		balloon_alert(user, "it's busy!")
 		return TRUE
 
-	if(default_deconstruction_crowbar(O))
+	if(default_deconstruction_crowbar(attacking_item))
 		return TRUE
 
-	if(panel_open && is_wire_tool(O))
+	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE
 
@@ -248,13 +248,13 @@
 	if(machine_stat)
 		return TRUE
 
-	if(istype(O, /obj/item/disk/design_disk))
-		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."),
+	if(istype(attacking_item, /obj/item/disk/design_disk))
+		user.visible_message(span_notice("[user] begins to load \the [attacking_item] in \the [src]..."),
 			balloon_alert(user, "uploading design..."),
 			span_hear("You hear the chatter of a floppy drive."))
 		busy = TRUE
 		if(do_after(user, 14.4, target = src))
-			var/obj/item/disk/design_disk/disky = O
+			var/obj/item/disk/design_disk/disky = attacking_item
 			var/list/not_imported
 			for(var/datum/design/blueprint as anything in disky.blueprints)
 				if(!blueprint)
@@ -264,13 +264,20 @@
 				else
 					LAZYADD(not_imported, blueprint.name)
 			if(not_imported)
-				to_chat(user, span_warning("The following design[not_imported.len > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
+				to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
 		busy = FALSE
 		return TRUE
 
 	if(panel_open)
 		balloon_alert(user, "close the panel first!")
 		return FALSE
+
+	if(istype(attacking_item, /obj/item/storage/bag/trash))
+		for(var/obj/item/content_item in attacking_item.contents)
+			if(!do_after(user, 0.5 SECONDS, src))
+				return FALSE
+			attackby(content_item, user)
+		return TRUE
 
 	return ..()
 
@@ -314,7 +321,7 @@
 		N.update_appearance()
 		N.autolathe_crafted(src)
 	else
-		for(var/i=1, i<=multiplier, i++)
+		for(var/i in 1 to multiplier)
 			var/obj/item/new_item = new being_built.build_path(A)
 			new_item.autolathe_crafted(src)
 
@@ -348,7 +355,7 @@
 		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
 
 /obj/machinery/autolathe/proc/can_build(datum/design/D, amount = 1)
-	if(D.make_reagents.len)
+	if(length(D.make_reagents))
 		return FALSE
 
 	var/coeff = (ispath(D.build_path, /obj/item/stack) ? 1 : creation_efficiency)

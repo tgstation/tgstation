@@ -120,7 +120,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			var/dat = "<B>Showing Crew Manifest.</B><HR>"
 			dat += "<table cellspacing=5><tr><th>Name</th><th>Position</th></tr>"
 			for(var/datum/data/record/t in GLOB.data_core.general)
-				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]]</td></tr>"
+				dat += "<tr><td>[t.fields["name"]]</td><td>[t.fields["rank"]][t.fields["rank"] != t.fields["trim"] ? " ([t.fields["trim"]])" : ""]</td></tr>"
 			dat += "</table>"
 			holder << browse(dat, "window=manifest;size=440x410")
 		if("dna")
@@ -156,7 +156,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				for(var/mob/living/mob in thunderdome)
 					qdel(mob) //Clear mobs
 			for(var/obj/obj in thunderdome)
-				if(!istype(obj, /obj/machinery/camera) && !istype(obj, /obj/effect/abstract/proximity_checker))
+				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
 			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
@@ -170,6 +170,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins(span_adminnotice("[key_name_admin(holder)] renamed the station to: [new_name]."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
 		if("reset_name")
+			var/confirmed = tgui_alert(usr,"Are you sure you want to reset the station name?", "Confirm", list("Yes", "No", "Cancel"))
+			if(confirmed != "Yes")
+				return
 			var/new_name = new_station_name()
 			set_station_name(new_name)
 			log_admin("[key_name(holder)] reset the station name.")
@@ -290,7 +293,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(SUMMON_GUNS, holder, survivor_probability)
+			summon_guns(holder, survivor_probability)
+
 		if("magic")
 			if(!is_funmin)
 				return
@@ -302,24 +306,25 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("All Antags!")
 					survivor_probability = 100
 
-			rightandwrong(SUMMON_MAGIC, holder, survivor_probability)
+			summon_magic(holder, survivor_probability)
+
 		if("events")
 			if(!is_funmin)
 				return
-			if(!SSevents.wizardmode)
-				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
-					summonevents()
-					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
-
-			else
+			if(SSevents.wizardmode)
 				switch(tgui_alert(usr,"What would you like to do?",,list("Intensify Summon Events","Turn Off Summon Events","Nothing")))
 					if("Intensify Summon Events")
-						summonevents()
+						summon_events(holder)
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Intensify"))
 					if("Turn Off Summon Events")
 						SSevents.toggleWizardmode()
 						SSevents.resetFrequency()
 						SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Disable"))
+			else
+				if(tgui_alert(usr,"Do you want to toggle summon events on?",,list("Yes","No")) == "Yes")
+					summon_events(holder)
+					SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Summon Events", "Activate"))
+
 		if("eagles")
 			if(!is_funmin)
 				return
@@ -346,6 +351,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] broke all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.break_light_tube()
+				stoplag()
 		if("whiteout")
 			if(!is_funmin)
 				return
@@ -353,6 +359,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			message_admins("[key_name_admin(holder)] fixed all lights")
 			for(var/obj/machinery/light/L in GLOB.machines)
 				L.fix()
+				stoplag()
 		if("customportal")
 			if(!is_funmin)
 				return
@@ -406,6 +413,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
 
 				var/mutable_appearance/storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+				storm.plane =  ABOVE_GAME_PLANE
 				storm.color = prefs["color"]["value"]
 
 				message_admins("[key_name_admin(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
@@ -453,7 +461,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(GLOB.everyone_a_traitor)
 				tgui_alert(usr, "The everyone is a traitor secret has already been triggered")
 				return
-			var/objective = stripped_input(holder, "Enter an objective")
+			var/objective = tgui_input_text(holder, "Enter an objective", "Objective")
 			if(!objective)
 				return
 			GLOB.everyone_a_traitor = new /datum/everyone_is_a_traitor_controller(objective)
@@ -623,14 +631,19 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	SIGNAL_HANDLER
 	if(player.stat == DEAD || !player.mind)
 		return
-	if(!(ishuman(player) || issilicon(player)) || ispAI(player))
-		return
 	if(is_special_character(player))
 		return
-	var/datum/antagonist/traitor/traitor_datum = new()
-	traitor_datum.give_objectives = FALSE
-	var/datum/objective/new_objective = new
-	new_objective.owner = player
-	new_objective.explanation_text = objective
-	traitor_datum.objectives += new_objective
-	player.mind.add_antag_datum(traitor_datum)
+	if(ishuman(player))
+		var/datum/antagonist/traitor/traitor_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		traitor_datum.objectives += new_objective
+		player.mind.add_antag_datum(traitor_datum)
+	else if(isAI(player))
+		var/datum/antagonist/malf_ai/malfunction_datum = new(give_objectives = FALSE)
+		var/datum/objective/new_objective = new
+		new_objective.owner = player
+		new_objective.explanation_text = objective
+		malfunction_datum.objectives += new_objective
+		player.mind.add_antag_datum(malfunction_datum)

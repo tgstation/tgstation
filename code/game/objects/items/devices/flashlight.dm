@@ -90,7 +90,7 @@
 						span_danger("You direct [src] to [M]'s eyes."))
 					if(M.stat == DEAD || (M.is_blind()) || !M.flash_act(visual = 1)) //mob is dead or fully blind
 						to_chat(user, span_warning("[M]'s pupils don't react to the light!"))
-					else if(M.dna && M.dna.check_mutation(XRAY)) //mob has X-ray vision
+					else if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray)) //mob has X-ray vision
 						to_chat(user, span_danger("[M]'s pupils give an eerie glow!"))
 					else //they're okay!
 						to_chat(user, span_notice("[M]'s pupils narrow."))
@@ -216,6 +216,7 @@
 	desc = "A robust flashlight used by security."
 	icon_state = "seclite"
 	inhand_icon_state = "seclite"
+	worn_icon_state = "seclite"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	force = 9 // Not as good as a stun baton.
@@ -566,7 +567,7 @@
 	light_range = 4
 	light_power = 10
 	alpha = 0
-	layer = 0
+	plane = FLOOR_PLANE
 	on = TRUE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

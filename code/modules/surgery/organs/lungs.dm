@@ -3,6 +3,7 @@
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
 	name = "lungs"
 	icon_state = "lungs"
+	visual = FALSE
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_LUNGS
 	gender = PLURAL
@@ -36,7 +37,7 @@
 	var/SA_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
 	var/BZ_brain_damage_min = 10 //Give people some room to play around without killing the station
-	var/gas_stimulation_min = 0.002 //Nitryl, Stimulum and Freon
+	var/gas_stimulation_min = 0.002 //nitrium and Freon
 	///Minimum amount of healium to make you unconscious for 4 seconds
 	var/healium_para_min = 3
 	///Minimum amount of healium to knock you down for good
@@ -85,7 +86,7 @@
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather)
 	if(breather.status_flags & GODMODE)
 		breather.failed_last_breath = FALSE //clear oxy issues
-		breather.clear_alert("not_enough_oxy")
+		breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return
 	if(HAS_TRAIT(breather, TRAIT_NOBREATH))
 		return
@@ -100,13 +101,13 @@
 
 		breather.failed_last_breath = TRUE
 		if(safe_oxygen_min)
-			breather.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+			breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		else if(safe_plasma_min)
-			breather.throw_alert("not_enough_plas", /atom/movable/screen/alert/not_enough_plas)
+			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 		else if(safe_co2_min)
-			breather.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
+			breather.throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		else if(safe_nitro_min)
-			breather.throw_alert("not_enough_nitro", /atom/movable/screen/alert/not_enough_nitro)
+			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 		return FALSE
 
 	for(var/gas_id in GLOB.meta_gas_info)
@@ -138,21 +139,21 @@
 		if(O2_pp > safe_oxygen_max)
 			var/ratio = (breath_gases[/datum/gas/oxygen][MOLES]/safe_oxygen_max) * 10
 			breather.apply_damage_type(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type)
-			breather.throw_alert("too_much_oxy", /atom/movable/screen/alert/too_much_oxy)
+			breather.throw_alert(ALERT_TOO_MUCH_OXYGEN, /atom/movable/screen/alert/too_much_oxy)
 		else
-			breather.clear_alert("too_much_oxy")
+			breather.clear_alert(ALERT_TOO_MUCH_OXYGEN)
 
 	//Too little oxygen!
 	if(safe_oxygen_min)
 		if(O2_pp < safe_oxygen_min)
 			gas_breathed = handle_too_little_breath(breather, O2_pp, safe_oxygen_min, breath_gases[/datum/gas/oxygen][MOLES])
-			breather.throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+			breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/oxygen][MOLES]
-			breather.clear_alert("not_enough_oxy")
+			breather.clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
 	//Exhale
 	breath_gases[/datum/gas/oxygen][MOLES] -= gas_breathed
@@ -166,21 +167,21 @@
 		if(N2_pp > safe_nitro_max)
 			var/ratio = (breath_gases[/datum/gas/nitrogen][MOLES]/safe_nitro_max) * 10
 			breather.apply_damage_type(clamp(ratio, nitro_breath_dam_min, nitro_breath_dam_max), nitro_damage_type)
-			breather.throw_alert("too_much_nitro", /atom/movable/screen/alert/too_much_nitro)
+			breather.throw_alert(ALERT_TOO_MUCH_NITRO, /atom/movable/screen/alert/too_much_nitro)
 		else
-			breather.clear_alert("too_much_nitro")
+			breather.clear_alert(ALERT_TOO_MUCH_NITRO)
 
 	//Too little nitrogen!
 	if(safe_nitro_min)
 		if(N2_pp < safe_nitro_min)
 			gas_breathed = handle_too_little_breath(breather, N2_pp, safe_nitro_min, breath_gases[/datum/gas/nitrogen][MOLES])
-			breather.throw_alert("nitro", /atom/movable/screen/alert/not_enough_nitro)
+			breather.throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/nitrogen][MOLES]
-			breather.clear_alert("nitro")
+			breather.clear_alert(ALERT_NOT_ENOUGH_NITRO)
 
 	//Exhale
 	breath_gases[/datum/gas/nitrogen][MOLES] -= gas_breathed
@@ -199,25 +200,25 @@
 				breather.apply_damage_type(3, co2_damage_type) // Lets hurt em a little, let them know we mean business
 				if(world.time - breather.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					breather.apply_damage_type(8, co2_damage_type)
-				breather.throw_alert("too_much_co2", /atom/movable/screen/alert/too_much_co2)
+				breather.throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
 				breather.emote("cough")
 
 		else
 			breather.co2overloadtime = 0
-			breather.clear_alert("too_much_co2")
+			breather.clear_alert(ALERT_TOO_MUCH_CO2)
 
 	//Too little CO2!
 	if(safe_co2_min)
 		if(CO2_pp < safe_co2_min)
 			gas_breathed = handle_too_little_breath(breather, CO2_pp, safe_co2_min, breath_gases[/datum/gas/carbon_dioxide][MOLES])
-			breather.throw_alert("not_enough_co2", /atom/movable/screen/alert/not_enough_co2)
+			breather.throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/carbon_dioxide][MOLES]
-			breather.clear_alert("not_enough_co2")
+			breather.clear_alert(ALERT_NOT_ENOUGH_CO2)
 
 	//Exhale
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] -= gas_breathed
@@ -232,22 +233,22 @@
 		if(Plasma_pp > safe_plasma_max)
 			var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plasma_max) * 10
 			breather.apply_damage_type(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type)
-			breather.throw_alert("too_much_plas", /atom/movable/screen/alert/too_much_plas)
+			breather.throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 		else
-			breather.clear_alert("too_much_plas")
+			breather.clear_alert(ALERT_TOO_MUCH_PLASMA)
 
 
 	//Too little plasma!
 	if(safe_plasma_min)
 		if(Plasma_pp < safe_plasma_min)
 			gas_breathed = handle_too_little_breath(breather, Plasma_pp, safe_plasma_min, breath_gases[/datum/gas/plasma][MOLES])
-			breather.throw_alert("not_enough_plas", /atom/movable/screen/alert/not_enough_plas)
+			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
 		else
 			breather.failed_last_breath = FALSE
 			if(breather.health >= breather.crit_threshold)
 				breather.adjustOxyLoss(-5)
 			gas_breathed = breath_gases[/datum/gas/plasma][MOLES]
-			breather.clear_alert("not_enough_plas")
+			breather.clear_alert(ALERT_NOT_ENOUGH_PLASMA)
 
 	//Exhale
 	breath_gases[/datum/gas/plasma][MOLES] -= gas_breathed
@@ -263,18 +264,18 @@
 
 		var/SA_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrous_oxide][MOLES])
 		if(SA_pp > SA_para_min) // Enough to make us stunned for a bit
-			breather.throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
+			breather.throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 			breather.Unconscious(60) // 60 gives them one second to wake up and run away a bit!
 			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
 				breather.Sleeping(min(breather.AmountSleeping() + 100, 200))
 		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-			breather.clear_alert("too_much_n2o")
+			breather.clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				n2o_euphoria = EUPHORIA_ACTIVE
 				breather.emote(pick("giggle", "laugh"))
 		else
 			n2o_euphoria = EUPHORIA_INACTIVE
-			breather.clear_alert("too_much_n2o")
+			breather.clear_alert(ALERT_TOO_MUCH_N2O)
 
 
 	// BZ
@@ -303,18 +304,20 @@
 
 		breath_gases[/datum/gas/tritium][MOLES] -= gas_breathed
 
-	// Nitryl
-		var/nitryl_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitryl][MOLES])
-		if (prob(nitryl_pp))
-			breather.emote("burp")
-		if (prob(nitryl_pp) && nitryl_pp>10)
-			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitryl_pp/2)
-			to_chat(breather, span_notice("You feel a burning sensation in your chest"))
-		gas_breathed = breath_gases[/datum/gas/nitryl][MOLES]
-		if (gas_breathed > gas_stimulation_min)
-			breather.reagents.add_reagent(/datum/reagent/nitryl,1)
+	// Nitrium
+		var/nitrium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/nitrium][MOLES])
+		if (prob(nitrium_pp) && nitrium_pp > 15)
+			breather.adjustOrganLoss(ORGAN_SLOT_LUNGS, nitrium_pp * 0.1)
+			to_chat(breather, "<span class='notice'>You feel a burning sensation in your chest</span>")
+		gas_breathed = breath_gases[/datum/gas/nitrium][MOLES]
+		if (nitrium_pp > 5)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
+			breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
+		if (nitrium_pp > 10)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
+			breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
 
-		breath_gases[/datum/gas/nitryl][MOLES]-=gas_breathed
+		breath_gases[/datum/gas/nitrium][MOLES] -= gas_breathed
 
 	// Freon
 		var/freon_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/freon][MOLES])
@@ -372,13 +375,6 @@
 			breather.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
 		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
 		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
-
-	// Stimulum
-		gas_breathed = breath_gases[/datum/gas/stimulum][MOLES]
-		if (gas_breathed > gas_stimulation_min)
-			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/stimulum)
-			breather.reagents.add_reagent(/datum/reagent/stimulum,max(0, 1 - existing))
-		breath_gases[/datum/gas/stimulum][MOLES]-=gas_breathed
 
 	// Hyper-Nob
 		gas_breathed = breath_gases[/datum/gas/hypernoblium][MOLES]
@@ -589,6 +585,10 @@
 	. = ..()
 
 	var/datum/gas_mixture/immutable/planetary/mix = SSair.planetary[LAVALAND_DEFAULT_ATMOS]
+
+	if(!mix?.total_moles()) // this typically means we didn't load lavaland, like if we're using #define LOWMEMORYMODE
+		return
+
 	// Take a "breath" of the air
 	var/datum/gas_mixture/breath = mix.remove(mix.total_moles() * BREATH_PERCENTAGE)
 

@@ -63,7 +63,7 @@
 		reason_failed.set_output("Object marked is not an ID! Using no ID instead.")
 
 	// Get both the current turf and the destination's turf
-	var/turf/current_turf = get_turf(src)
+	var/turf/current_turf = get_location()
 	var/turf/destination = locate(target_X, target_Y, current_turf?.z)
 
 	// We're already here! No need to do anything.

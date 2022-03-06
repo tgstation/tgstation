@@ -355,7 +355,7 @@
   - bugfix: Fixes bug where bolt of change transforming someone into a drone would
       not give them hacked laws and vision.
   - bugfix: Blobbernauts created by a staff of change are now "independent" and will
-      not decay if seperated from a blob or missing a factory.
+      not decay if separated from a blob or missing a factory.
   - rscadd: Independent blobbernauts added to gold slime core spawn pool.
   - rscadd: Medical scanners now inform the user if the dead subject is within the
       (currently) 120 second defib window.

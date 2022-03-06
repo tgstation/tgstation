@@ -186,7 +186,11 @@
 	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
 		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
 		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
-			return FALSE
+			return TRUE
+			/* We return true here because of #63301
+			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
+			In the first two cases, we would want to return TRUE so trans_to and other similar methods actually delete the corresponding chemical from the original reagent holder.
+			*/
 		amount = adjusted_vol
 		has_split = TRUE
 
@@ -238,9 +242,7 @@
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
 	new_reagent.ph = added_ph
-	if(data)
-		new_reagent.data = data
-		new_reagent.on_new(data)
+	new_reagent.on_new(data)
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete
@@ -422,6 +424,21 @@
 					return holder_reagent
 	return FALSE
 
+/**
+ * Check if this holder contains a reagent with a chemical_flags containing this flag
+ * Reagent takes the bitflag to search for
+ * Amount checks for having a specific amount of reagents matching that chemical
+ */
+/datum/reagents/proc/has_chemical_flag(chemical_flag, amount = 0)
+	var/found_amount = 0
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
+		if (holder_reagent.chemical_flags & chemical_flag)
+			found_amount += holder_reagent.volume
+			if(found_amount >= amount)
+				return TRUE
+	return FALSE
+
 
 /**
  * Transfer some stuff from this holder to a target object
@@ -573,38 +590,40 @@
 	return amount
 
 /// Copies the reagents to the target object
-/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
+/datum/reagents/proc/copy_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
 
-	var/datum/reagents/R
+	var/datum/reagents/target_holder
 	if(istype(target, /datum/reagents))
-		R = target
+		target_holder = target
 	else
 		if(!target.reagents)
 			return
-		R = target.reagents
+		target_holder = target.reagents
 
 	if(amount < 0)
 		return
 
-	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
+	amount = min(min(amount, total_volume), target_holder.maximum_volume - target_holder.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		var/copy_amount = reagent.volume * part
 		if(preserve_data)
 			trans_data = reagent.data
-		R.add_reagent(reagent.type, copy_amount * multiplier, trans_data, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+		target_holder.add_reagent(reagent.type, copy_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 
-	//pass over previous ongoing reactions before handle_reactions is called
-	transfer_reactions(R)
+	if(!no_react)
+		// pass over previous ongoing reactions before handle_reactions is called
+		transfer_reactions(target_holder)
 
-	src.update_total()
-	R.update_total()
-	R.handle_reactions()
-	src.handle_reactions()
+		src.update_total()
+		target_holder.update_total()
+		target_holder.handle_reactions()
+		src.handle_reactions()
+
 	return amount
 
 ///Multiplies the reagents inside this holder by a specific amount
@@ -743,7 +762,7 @@
 * * reagent - the added reagent datum/object
 * * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
 * * added_purity - the purity of the added volume
-* returns the volume of the current reagent to keep
+* returns the volume of the original, pure, reagent to add / keep
 */
 /datum/reagents/proc/process_mob_reagent_purity(datum/reagent/reagent, added_volume, added_purity)
 	if(!reagent)
@@ -1945,6 +1964,10 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
+
+/atom/movable/chem_holder
+	name = "This atom exists to hold chems. If you can see this, make an issue report"
+	desc = "God this is stupid"
 
 #undef REAGENT_TRANSFER_AMOUNT
 #undef REAGENT_PURITY

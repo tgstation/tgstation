@@ -47,23 +47,27 @@
 	user.regenerate_organs()
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)
-	if(user?.mind)
-		var/datum/antagonist/changeling/C = user.mind.has_antag_datum(/datum/antagonist/changeling)
-		if(C?.purchasedpowers)
-			to_chat(user, span_notice("We are ready to revive."))
-			name = "Revive"
-			desc = "We arise once more."
-			button_icon_state = "revive"
-			UpdateButtonIcon()
-			chemical_cost = 0
-			revive_ready = TRUE
+	if(!user?.mind)
+		return
+
+	var/datum/antagonist/changeling/ling = user.mind.has_antag_datum(/datum/antagonist/changeling)
+	if(!ling || !(src in ling.innate_powers))
+		return
+
+	to_chat(user, span_notice("We are ready to revive."))
+	name = "Revive"
+	desc = "We arise once more."
+	button_icon_state = "revive"
+	UpdateButtonIcon()
+	chemical_cost = 0
+	revive_ready = TRUE
 
 /datum/action/changeling/fakedeath/can_sting(mob/living/user)
 	if(HAS_TRAIT_FROM(user, TRAIT_DEATHCOMA, "changeling") && !revive_ready)
 		to_chat(user, span_warning("We are already reviving."))
 		return
 	if(!user.stat && !revive_ready) //Confirmation for living changelings if they want to fake their death
-		switch(tgui_alert(usr,"Are we sure we wish to fake our own death?",,list("Yes", "No")))
+		switch(tgui_alert(usr,"Are we sure we wish to fake our own death?", "Feign Death", list("Yes", "No")))
 			if("No")
 				return
 	return ..()

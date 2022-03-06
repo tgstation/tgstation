@@ -3,7 +3,9 @@ SUBSYSTEM_DEF(economy)
 	wait = 5 MINUTES
 	init_order = INIT_ORDER_ECONOMY
 	runlevels = RUNLEVEL_GAME
+	///How many paychecks should players start out the round with?
 	var/roundstart_paychecks = 5
+	///How many credits does the in-game economy have in circulation at round start? Divided up by 6 of the 7 department budgets evenly, where cargo starts with nothing.
 	var/budget_pool = 35000
 	var/list/department_accounts = list(ACCOUNT_CIV = ACCOUNT_CIV_NAME,
 										ACCOUNT_ENG = ACCOUNT_ENG_NAME,
@@ -13,8 +15,12 @@ SUBSYSTEM_DEF(economy)
 										ACCOUNT_CAR = ACCOUNT_CAR_NAME,
 										ACCOUNT_SEC = ACCOUNT_SEC_NAME)
 	var/list/generated_accounts = list()
-	var/full_ancap = FALSE // Enables extra money charges for things that normally would be free, such as sleepers/cryo/cloning.
-							//Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
+	/**
+	 * Enables extra money charges for things that normally would be free, such as sleepers/cryo/beepsky.
+	 * Take care when enabling, as players will NOT respond well if the economy is set up for low cash flows.
+	 */
+	var/full_ancap = FALSE
+
 	/// Departmental cash provided to science when a node is researched in specific configs.
 	var/techweb_bounty = 250
 	/**
@@ -22,6 +28,7 @@ SUBSYSTEM_DEF(economy)
 	  * A list of sole account datums can be obtained with flatten_list(), another variable would be redundant rn.
 	  */
 	var/list/bank_accounts_by_id = list()
+	///List of the departmental budget cards in existance.
 	var/list/dep_cards = list()
 	/// A var that collects the total amount of credits owned in player accounts on station, reset and recounted on fire()
 	var/station_total = 0
@@ -39,7 +46,6 @@ SUBSYSTEM_DEF(economy)
 	var/bounty_modifier = 1
 	///The modifier multiplied to the value of cargo pack prices.
 	var/pack_price_modifier = 1
-	var/market_crashing = FALSE
 
 	/// Total value of exported materials.
 	var/export_total = 0
@@ -51,11 +57,15 @@ SUBSYSTEM_DEF(economy)
 	var/mail_blocked = FALSE
 
 /datum/controller/subsystem/economy/Initialize(timeofday)
-	var/budget_to_hand_out = round(budget_pool / department_accounts.len)
+	//removes cargo from the split
+	var/budget_to_hand_out = round(budget_pool / department_accounts.len -1)
 	if(time2text(world.timeofday, "DDD") == SUNDAY)
 		mail_blocked = TRUE
-	for(var/A in department_accounts)
-		new /datum/bank_account/department(A, budget_to_hand_out)
+	for(var/dep_id in department_accounts)
+		if(dep_id == ACCOUNT_CAR) //cargo starts with NOTHING
+			new /datum/bank_account/department(dep_id, 0)
+			continue
+		new /datum/bank_account/department(dep_id, budget_to_hand_out)
 	return ..()
 
 /datum/controller/subsystem/economy/Recover()
@@ -75,7 +85,7 @@ SUBSYSTEM_DEF(economy)
 			temporary_total += (bank_account.account_job.paycheck * STARTING_PAYCHECKS)
 		station_total += bank_account.account_balance
 	station_target = max(round(temporary_total / max(bank_accounts_by_id.len * 2, 1)) + station_target_buffer, 1)
-	if(!market_crashing)
+	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		price_update()
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
 	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)

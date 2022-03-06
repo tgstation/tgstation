@@ -162,7 +162,6 @@ GLOBAL_LIST_INIT(cursed_animal_masks, list(
 	icon_state = "rat"
 	inhand_icon_state = "rat"
 	flags_inv = HIDEFACE|HIDESNOUT
-	modifies_speech = FALSE
 	animal_sounds = list("Skree!","SKREEE!","Squeak!")
 
 /obj/item/clothing/mask/animal/rat/make_cursed()

@@ -19,8 +19,8 @@
 	if(user)
 		to_chat(user, span_danger("The crate's anti-tamper system activates!"))
 		log_bomber(user, "has detonated a", src)
-	for(var/atom/movable/AM in src)
-		qdel(AM)
+	for(var/obj/loot in src)
+		SSexplosions.high_mov_atom += loot
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flash_range = 5)
 	qdel(src)
 
@@ -108,11 +108,11 @@
 						privacy_lock = FALSE
 						update_appearance()
 					else if(!silent)
-						to_chat(user, span_notice("Bank account does not match with buyer!"))
+						to_chat(user, span_warning("Bank account does not match with buyer!"))
 				else if(!silent)
-					to_chat(user, span_notice("No linked bank account detected!"))
+					to_chat(user, span_warning("No linked bank account detected!"))
 			else if(!silent)
-				to_chat(user, span_notice("No ID detected!"))
+				to_chat(user, span_warning("No ID detected!"))
 		else if(!silent)
 			to_chat(user, span_warning("[src] is broken!"))
 	else ..()

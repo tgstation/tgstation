@@ -193,13 +193,14 @@ GLOBAL_LIST_EMPTY(allCasters)
 	icon_state = "newscaster"
 	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
 	result_path = /obj/machinery/newscaster
+	pixel_shift = 30
 
 
 /obj/machinery/newscaster
 	name = "newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "newscaster_normal"
+	icon_state = "newscaster_off"
 	base_icon_state = "newscaster"
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -221,40 +222,16 @@ GLOBAL_LIST_EMPTY(allCasters)
 	var/datum/newscaster/feed_channel/viewing_channel = null
 	var/allow_comments = 1
 
-/obj/machinery/newscaster/directional/north
-	pixel_y = 32
-
-/obj/machinery/newscaster/directional/south
-	pixel_y = -28
-
-/obj/machinery/newscaster/directional/east
-	pixel_x = 28
-
-/obj/machinery/newscaster/directional/west
-	pixel_x = -28
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/security_unit
 	name = "security newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/security_unit/directional/north
-	pixel_y = 32
-
-/obj/machinery/newscaster/security_unit/directional/south
-	pixel_y = -28
-
-/obj/machinery/newscaster/security_unit/directional/east
-	pixel_x = 28
-
-/obj/machinery/newscaster/security_unit/directional/west
-	pixel_x = -28
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 
 /obj/machinery/newscaster/Initialize(mapload, ndir, building)
 	. = ..()
-	if(building)
-		setDir(ndir)
-		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
-		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
 	GLOB.allCasters += src
 	unit_no = GLOB.allCasters.len
@@ -266,18 +243,24 @@ GLOBAL_LIST_EMPTY(allCasters)
 	picture = null
 	return ..()
 
-/obj/machinery/newscaster/update_icon_state()
+/obj/machinery/newscaster/update_appearance(updates=ALL)
+	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "[base_icon_state]_off"
-		return ..()
-	icon_state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
-	return ..()
+		set_light(0)
+		return
+	set_light(1.4,0.7,"#34D352") // green light
 
 /obj/machinery/newscaster/update_overlays()
 	. = ..()
 
-	if(!(machine_stat & (NOPOWER|BROKEN)) && !GLOB.news_network.wanted_issue.active && alert)
-		. += "newscaster_alert"
+	if(!(machine_stat & (NOPOWER|BROKEN)))
+		var/state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
+		. += mutable_appearance(icon, state)
+		. += emissive_appearance(icon, state, alpha = src.alpha)
+
+		if(!GLOB.news_network.wanted_issue.active && alert)
+			. += mutable_appearance(icon, "[base_icon_state]_alert")
+			. += emissive_appearance(icon, "[base_icon_state]_alert", alpha = src.alpha)
 
 	var/hp_percent = atom_integrity * 100 /max_integrity
 	switch(hp_percent)
@@ -285,10 +268,13 @@ GLOBAL_LIST_EMPTY(allCasters)
 			return
 		if(50 to 75)
 			. += "crack1"
+			. += emissive_blocker(icon, "crack1", alpha = src.alpha)
 		if(25 to 50)
 			. += "crack2"
+			. += emissive_blocker(icon, "crack2", alpha = src.alpha)
 		else
 			. += "crack3"
+			. += emissive_blocker(icon, "crack3", alpha = src.alpha)
 
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -544,7 +530,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		usr.set_machine(src)
 		scan_user(usr)
 		if(href_list["set_channel_name"])
-			channel_name = stripped_input(usr, "Provide a Feed Channel Name", "Network Channel Handler", "", MAX_NAME_LEN)
+			channel_name = tgui_input_text(usr, "Provide a Feed Channel Name", "Network Channel Handler", max_length = MAX_NAME_LEN)
 			updateUsrDialog()
 		else if(href_list["set_channel_lock"])
 			c_locked = !c_locked
@@ -576,10 +562,13 @@ GLOBAL_LIST_EMPTY(allCasters)
 			for(var/datum/newscaster/feed_channel/F in GLOB.news_network.network_channels)
 				if( (!F.locked || F.author == scanned_user) && !F.censored)
 					available_channels += F.channel_name
-			channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in sort_list(available_channels)
+			var/channel_choice = tgui_input_list(usr, "Choose receiving Feed Channel", "Network Channel Handler", sort_list(available_channels))
+			if(isnull(channel_choice))
+				return
+			channel_name = channel_choice
 			updateUsrDialog()
 		else if(href_list["set_new_message"])
-			var/temp_message = trim(stripped_multiline_input(usr, "Write your Feed story", "Network Channel Handler", msg))
+			var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", msg, multiline = TRUE)
 			if(temp_message)
 				msg = temp_message
 				updateUsrDialog()
@@ -624,10 +613,10 @@ GLOBAL_LIST_EMPTY(allCasters)
 			screen = 14
 			updateUsrDialog()
 		else if(href_list["set_wanted_name"])
-			channel_name = stripped_input(usr, "Provide the name of the Wanted person", "Network Security Handler")
+			channel_name = tgui_input_text(usr, "Provide the name of the wanted person", "Network Security Handler", max_length = MAX_NAME_LEN)
 			updateUsrDialog()
 		else if(href_list["set_wanted_desc"])
-			msg = stripped_input(usr, "Provide a description of the Wanted person and any other details you deem important", "Network Security Handler")
+			msg = tgui_input_text(usr, "Provide a description of the wanted person and any other details you deem important", "Network Security Handler", multiline = TRUE)
 			updateUsrDialog()
 		else if(href_list["submit_wanted"])
 			var/input_param = text2num(href_list["submit_wanted"])
@@ -716,7 +705,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 			updateUsrDialog()
 		else if(href_list["new_comment"])
 			var/datum/newscaster/feed_message/FM = locate(href_list["new_comment"]) in viewing_channel.messages
-			var/cominput = stripped_input(usr, "Write your message:", "New comment", null, 140)
+			var/cominput = tgui_input_text(usr, "Write your message", "New comment", max_length = 140, multiline = TRUE)
 			if(cominput)
 				scan_user(usr)
 				var/datum/newscaster/feed_comment/FC = new/datum/newscaster/feed_comment
@@ -1050,7 +1039,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		if(scribble_page == curr_page)
 			to_chat(user, span_warning("There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?"))
 		else
-			var/s = stripped_input(user, "Write something", "Newspaper")
+			var/s = tgui_input_text(user, "Write something", "Newspaper")
 			if (!s)
 				return
 			if(!user.canUseTopic(src, BE_CLOSE))

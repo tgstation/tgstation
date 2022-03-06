@@ -1,5 +1,6 @@
 /datum/job/prisoner
-	title = "Prisoner"
+	title = JOB_PRISONER
+	description = "Keep yourself occupied in permabrig."
 	department_head = list("The Security Team")
 	faction = FACTION_STATION
 	total_positions = 0
@@ -13,6 +14,7 @@
 	plasmaman_outfit = /datum/outfit/plasmaman/prisoner
 
 	display_order = JOB_DISPLAY_ORDER_PRISONER
+	department_for_prefs = /datum/job_department/security
 
 	exclusive_mail_goodies = TRUE
 	mail_goodies = list (
@@ -21,7 +23,7 @@
 
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/prisoner
@@ -34,6 +36,11 @@
 	belt = null
 	ears = null
 	shoes = /obj/item/clothing/shoes/sneakers/orange
+
+/datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
+	..()
+	if(prob(1)) // D BOYYYYSSSSS
+		head = /obj/item/clothing/head/beanie/black/dboy
 
 /datum/outfit/job/prisoner/post_equip(mob/living/carbon/human/new_prisoner, visualsOnly)
 	. = ..()

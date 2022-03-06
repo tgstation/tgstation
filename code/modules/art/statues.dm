@@ -21,15 +21,7 @@
 	. = ..()
 	AddElement(art_type, impressiveness)
 	AddElement(/datum/element/beauty, impressiveness * 75)
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE, CALLBACK(src, .proc/can_user_rotate), CALLBACK(src, .proc/can_be_rotated), null)
-
-/obj/structure/statue/proc/can_be_rotated(mob/user)
-	if(!anchored)
-		return TRUE
-	to_chat(user, span_warning("It's bolted to the floor, you'll need to unwrench it first."))
-
-/obj/structure/statue/proc/can_user_rotate(mob/user)
-	return user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user))
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
@@ -48,6 +40,9 @@
 				deconstruct(TRUE)
 			return
 	return ..()
+
+/obj/structure/statue/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -95,52 +90,6 @@
 /obj/structure/statue/plasma/xeno
 	name = "statue of a xenomorph"
 	icon_state = "xeno"
-
-/obj/structure/statue/plasma/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-
-/obj/structure/statue/plasma/bullet_act(obj/projectile/Proj)
-	var/burn = FALSE
-	if(!(Proj.nodamage) && Proj.damage_type == BURN && !QDELETED(src))
-		burn = TRUE
-	if(burn)
-		var/turf/T = get_turf(src)
-		if(Proj.firer)
-			message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(Proj.firer)] in [ADMIN_VERBOSEJMP(T)]")
-			log_game("Plasma statue ignited by [key_name(Proj.firer)] in [AREACOORD(T)]")
-		else
-			message_admins("Plasma statue ignited by [Proj]. No known firer, in [ADMIN_VERBOSEJMP(T)]")
-			log_game("Plasma statue ignited by [Proj] in [AREACOORD(T)]. No known firer.")
-		PlasmaBurn(2500)
-	. = ..()
-
-/obj/structure/statue/plasma/attackby(obj/item/W, mob/user, params)
-	if(W.get_temperature() > 300 && !QDELETED(src))//If the temperature of the object is over 300, then ignite
-		var/turf/T = get_turf(src)
-		message_admins("Plasma statue ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")
-		log_game("Plasma statue ignited by [key_name(user)] in [AREACOORD(T)]")
-		ignite(W.get_temperature())
-	else
-		return ..()
-
-/obj/structure/statue/plasma/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
-	return exposed_temperature > 300
-
-/obj/structure/statue/plasma/atmos_expose(datum/gas_mixture/air, exposed_temperature)
-	PlasmaBurn(exposed_temperature)
-
-/obj/structure/statue/plasma/proc/PlasmaBurn(temperature)
-	if(QDELETED(src))
-		return
-	if(custom_materials[/datum/material/plasma])
-		var/plasma_amount = round(custom_materials[/datum/material/plasma]/MINERAL_MATERIAL_AMOUNT)
-		atmos_spawn_air("plasma=[plasma_amount*10];TEMP=[temperature]")
-	deconstruct(FALSE)
-
-/obj/structure/statue/plasma/proc/ignite(exposed_temperature)
-	if(exposed_temperature > 300)
-		PlasmaBurn(exposed_temperature)
 
 //////////////////////gold///////////////////////////////////////
 
@@ -331,6 +280,8 @@
 	. = ..()
 	AddElement(/datum/element/eyestab)
 	AddElement(/datum/element/wall_engraver)
+	//deals 200 damage to statues, meaning you can actually kill one in ~250 hits
+	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/statue, damage_multiplier = 40)
 
 /obj/item/chisel/Destroy()
 	prepared_block = null

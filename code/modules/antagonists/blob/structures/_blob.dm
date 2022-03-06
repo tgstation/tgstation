@@ -34,12 +34,10 @@
 
 /obj/structure/blob/Initialize(mapload, owner_overmind)
 	. = ..()
+	register_context()
 	if(owner_overmind)
 		overmind = owner_overmind
 		overmind.all_blobs += src
-		var/area/Ablob = get_area(src)
-		if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
-			overmind.blobs_legit += src
 	GLOB.blobs += src //Keep track of the blob in the normal list either way
 	setDir(pick(GLOB.cardinals))
 	update_appearance()
@@ -48,6 +46,22 @@
 	ConsumeTile()
 	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
 		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
+
+/obj/structure/blob/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if (!isovermind(user))
+		return .
+
+	if(istype(src, /obj/structure/blob/normal))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create strong blob"
+	if(istype(src, /obj/structure/blob/shield) && !istype(src, /obj/structure/blob/shield/reflective))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Create reflective blob"
+
+	if(point_return >= 0)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove blob"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/blob/proc/creation_action() //When it's created by the overmind, do this.
 	return
@@ -84,13 +98,16 @@
 /obj/structure/blob/block_superconductivity()
 	return atmosblock
 
-/obj/structure/blob/can_atmos_pass(turf/T)
+/obj/structure/blob/can_atmos_pass(turf/T, vertical = FALSE)
 	return !atmosblock
 
 /obj/structure/blob/update_icon() //Updates color based on overmind color if we have an overmind.
 	. = ..()
 	if(overmind)
 		add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
+		var/area/A = get_area(src)
+		if(!(A.area_flags & BLOBS_ALLOWED))
+			add_atom_colour(BlendRGB(overmind.blobstrain.color, COLOR_WHITE, 0.5), FIXED_COLOUR_PRIORITY) //lighten it to indicate an off-station blob
 	else
 		remove_atom_colour(FIXED_COLOUR_PRIORITY)
 
@@ -117,12 +134,17 @@
 /obj/structure/blob/proc/blob_attack_animation(atom/A = null, controller) //visually attacks an atom
 	var/obj/effect/temp_visual/blob/O = new /obj/effect/temp_visual/blob(src.loc)
 	O.setDir(dir)
+	var/area/my_area = get_area(src)
 	if(controller)
 		var/mob/camera/blob/BO = controller
 		O.color = BO.blobstrain.color
+		if(!(my_area.area_flags & BLOBS_ALLOWED))
+			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 		O.alpha = 200
 	else if(overmind)
 		O.color = overmind.blobstrain.color
+		if(!(my_area.area_flags & BLOBS_ALLOWED))
+			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
 	if(A)
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
@@ -164,6 +186,11 @@
 		if(T.Enter(B)) //NOW we can attempt to move into the tile
 			B.set_density(initial(B.density))
 			B.forceMove(T)
+			var/area/Ablob = get_area(B)
+			if(Ablob.area_flags & BLOBS_ALLOWED) //Is this area allowed for winning as blob?
+				overmind.blobs_legit += B
+			else if(controller)
+				B.balloon_alert(overmind, "off-station, won't count!")
 			B.update_appearance()
 			if(B.overmind && expand_reaction)
 				B.overmind.blobstrain.expand_reaction(src, B, T, controller)

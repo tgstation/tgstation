@@ -1,6 +1,7 @@
 /datum/job/botanist
-	title = "Botanist"
-	department_head = list("Head of Personnel")
+	title = JOB_BOTANIST
+	description = "Grow plants for the cook, for medicine, and for recreation."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
@@ -30,7 +31,7 @@
 		/obj/item/food/monkeycube/bee = 2
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 	rpg_title = "Gardener"
 
 /datum/outfit/job/botanist

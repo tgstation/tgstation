@@ -200,10 +200,10 @@
 	if(!user.CanReach(src))
 		return
 	if(!user?.mind?.get_hijack_speed())
-		to_chat(user, "<span class='warning'>You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone.</span.")
+		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
 		return
 	if(!EMERGENCY_AT_LEAST_DOCKED) // prevent advancing hijack stages on BYOS shuttles until the shuttle has "docked"
-		to_chat(user, "<span class='warning'>The flight plans for the shuttle haven't been loaded yet, you can't hack this right now.</span.")
+		to_chat(user, span_warning("The flight plans for the shuttle haven't been loaded yet, you can't hack this right now."))
 		return
 	if(hijack_hacking == TRUE)
 		return
@@ -326,7 +326,7 @@
 				set_coefficient = 1
 			else
 				set_coefficient = 0.5
-	var/call_time = SSshuttle.emergencyCallTime * set_coefficient * engine_coeff
+	var/call_time = SSshuttle.emergency_call_time * set_coefficient * engine_coeff
 	switch(mode)
 		// The shuttle can not normally be called while "recalling", so
 		// if this proc is called, it's via admin fiat
@@ -339,26 +339,26 @@
 	SSshuttle.emergencyCallAmount++
 
 	if(prob(70))
-		SSshuttle.emergencyLastCallLoc = signalOrigin
+		SSshuttle.emergency_last_call_loc = signalOrigin
 	else
-		SSshuttle.emergencyLastCallLoc = null
+		SSshuttle.emergency_last_call_loc = null
 
-	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergencyLastCallLoc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.adminEmergencyNoRecall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, ANNOUNCER_SHUTTLECALLED, "Priority")
+	priority_announce("The emergency shuttle has been called. [redAlert ? "Red Alert state confirmed: Dispatching priority shuttle. " : "" ]It will arrive in [timeLeft(600)] minutes.[reason][SSshuttle.emergency_last_call_loc ? "\n\nCall signal traced. Results can be viewed on any communications console." : "" ][SSshuttle.admin_emergency_no_recall ? "\n\nWarning: Shuttle recall subroutines disabled; Recall not possible." : ""]", null, ANNOUNCER_SHUTTLECALLED, "Priority")
 
 /obj/docking_port/mobile/emergency/cancel(area/signalOrigin)
 	if(mode != SHUTTLE_CALL)
 		return
-	if(SSshuttle.emergencyNoRecall)
+	if(SSshuttle.emergency_no_recall)
 		return
 
 	invertTimer()
 	mode = SHUTTLE_RECALL
 
 	if(prob(70))
-		SSshuttle.emergencyLastCallLoc = signalOrigin
+		SSshuttle.emergency_last_call_loc = signalOrigin
 	else
-		SSshuttle.emergencyLastCallLoc = null
-	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergencyLastCallLoc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, ANNOUNCER_SHUTTLERECALLED, "Priority")
+		SSshuttle.emergency_last_call_loc = null
+	priority_announce("The emergency shuttle has been recalled.[SSshuttle.emergency_last_call_loc ? " Recall signal traced. Results can be viewed on any communications console." : "" ]", null, ANNOUNCER_SHUTTLERECALLED, "Priority")
 
 	SSticker.emergency_reason = null
 
@@ -445,7 +445,7 @@
 					setTimer(20)
 					return
 				mode = SHUTTLE_DOCKED
-				setTimer(SSshuttle.emergencyDockTime)
+				setTimer(SSshuttle.emergency_dock_time)
 				send2adminchat("Server", "The Emergency Shuttle has docked with the station.")
 				priority_announce("[SSshuttle.emergency] has docked with the station. You have [timeLeft(600)] minutes to board the Emergency Shuttle.", null, ANNOUNCER_SHUTTLEDOCK, "Priority")
 				ShuttleDBStuff()
@@ -457,7 +457,7 @@
 				SSshuttle.checkHostileEnvironment()
 				if(mode == SHUTTLE_STRANDED)
 					return
-				for(var/A in SSshuttle.mobile)
+				for(var/A in SSshuttle.mobile_docking_ports)
 					var/obj/docking_port/mobile/M = A
 					if(M.launch_status == UNLAUNCHED) //Pods will not launch from the mine/planet, and other ships won't launch unless we tell them to.
 						M.check_transit_zone()
@@ -469,7 +469,7 @@
 				return
 
 			success &= (check_transit_zone() == TRANSIT_READY)
-			for(var/A in SSshuttle.mobile)
+			for(var/A in SSshuttle.mobile_docking_ports)
 				var/obj/docking_port/mobile/M = A
 				if(M.launch_status == UNLAUNCHED)
 					success &= (M.check_transit_zone() == TRANSIT_READY)
@@ -483,9 +483,9 @@
 					areas += E
 				hyperspace_sound(HYPERSPACE_WARMUP, areas)
 
-			if(time_left <= 0 && !SSshuttle.emergencyNoEscape)
+			if(time_left <= 0 && !SSshuttle.emergency_no_escape)
 				//move each escape pod (or applicable spaceship) to its corresponding transit dock
-				for(var/A in SSshuttle.mobile)
+				for(var/A in SSshuttle.mobile_docking_ports)
 					var/obj/docking_port/mobile/M = A
 					M.on_emergency_launch()
 
@@ -497,7 +497,7 @@
 				enterTransit()
 				mode = SHUTTLE_ESCAPE
 				launch_status = ENDGAME_LAUNCHED
-				setTimer(SSshuttle.emergencyEscapeTime * engine_coeff)
+				setTimer(SSshuttle.emergency_escape_time * engine_coeff)
 				priority_announce("The Emergency Shuttle has left the station. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 				INVOKE_ASYNC(SSticker, /datum/controller/subsystem/ticker.proc/poll_hearts)
 				SSmapping.mapvote() //If no map vote has been run yet, start one.
@@ -521,7 +521,7 @@
 						break
 				if(area_parallax)
 					parallax_slowdown()
-					for(var/A in SSshuttle.mobile)
+					for(var/A in SSshuttle.mobile_docking_ports)
 						var/obj/docking_port/mobile/M = A
 						if(M.launch_status == ENDGAME_LAUNCHED)
 							if(istype(M, /obj/docking_port/mobile/pod))
@@ -529,7 +529,7 @@
 
 			if(time_left <= 0)
 				//move each escape pod to its corresponding escape dock
-				for(var/A in SSshuttle.mobile)
+				for(var/A in SSshuttle.mobile_docking_ports)
 					var/obj/docking_port/mobile/M = A
 					M.on_emergency_dock()
 
@@ -552,7 +552,7 @@
 
 	mode = SHUTTLE_ESCAPE
 	launch_status = ENDGAME_LAUNCHED
-	setTimer(SSshuttle.emergencyEscapeTime)
+	setTimer(SSshuttle.emergency_escape_time)
 	priority_announce("The Emergency Shuttle is preparing for direct jump. Estimate [timeLeft(600)] minutes until the shuttle docks at Central Command.", null, null, "Priority")
 
 
@@ -701,6 +701,11 @@
 /obj/item/storage/pod/attackby(obj/item/W, mob/user, params)
 	if (can_interact(user))
 		return ..()
+
+/obj/item/storage/pod/attackby_secondary(obj/item/weapon, mob/user, params)
+	if (!can_interact(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /obj/item/storage/pod/attack_hand(mob/user, list/modifiers)
 	if (can_interact(user))

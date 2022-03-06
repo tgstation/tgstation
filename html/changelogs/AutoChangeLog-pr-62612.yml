@@ -1,4 +1,0 @@
-author: "Archanial"
-delete-after: True
-changes: 
-  - bugfix: "mapload works"

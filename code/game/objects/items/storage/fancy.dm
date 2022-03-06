@@ -79,7 +79,7 @@
 	icon = 'icons/obj/food/donuts.dmi'
 	icon_state = "donutbox_inner"
 	base_icon_state = "donutbox"
-	spawn_type = /obj/item/food/donut
+	spawn_type = /obj/item/food/donut/plain
 	is_open = TRUE
 	appearance_flags = KEEP_TOGETHER
 	custom_premium_price = PAYCHECK_HARD * 1.75

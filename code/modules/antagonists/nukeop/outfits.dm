@@ -54,12 +54,11 @@
 
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
-	suit = /obj/item/clothing/suit/space/hardsuit/syndi
+	back = /obj/item/mod/control/pre_equipped/nuclear
 	r_pocket = /obj/item/tank/internals/emergency_oxygen/engi
 	internals_slot = ITEM_SLOT_RPOCKET
 	belt = /obj/item/storage/belt/military
 	r_hand = /obj/item/gun/ballistic/shotgun/bulldog
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
-		/obj/item/tank/jetpack/oxygen/harness=1,\
 		/obj/item/gun/ballistic/automatic/pistol=1,\
 		/obj/item/knife/combat/survival)

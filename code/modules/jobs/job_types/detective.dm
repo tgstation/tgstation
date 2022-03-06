@@ -1,7 +1,9 @@
 /datum/job/detective
-	title = "Detective"
+	title = JOB_DETECTIVE
+	description = "Investigate crimes, gather evidence, perform interrogations, \
+		look badass, smoke cigarettes."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
-	department_head = list("Head of Security")
+	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -39,7 +41,7 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/bottle/whiskey)
 	rpg_title = "Thiefcatcher"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/detective

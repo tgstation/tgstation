@@ -3,7 +3,7 @@
 This component makes it possible to make things edible. What this means is that you can take a bite or force someone to take a bite (in the case of items).
 These items take a specific time to eat, and can do most of the things our original food items could.
 
-Behavior that's still missing from this component that original food items had that should either be put into seperate components or somewhere else:
+Behavior that's still missing from this component that original food items had that should either be put into separate components or somewhere else:
 	Components:
 	Drying component (jerky etc)
 	Processable component (Slicing and cooking behavior essentialy, making it go from item A to B when conditions are met.)
@@ -72,10 +72,13 @@ Behavior that's still missing from this component that original food items had t
 	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
 	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, .proc/on_ooze_eat)
 
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
-	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+	if(!isturf(parent))
+		var/static/list/loc_connections = list(
+			COMSIG_ATOM_ENTERED = .proc/on_entered,
+		)
+		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+	else
+		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
@@ -173,9 +176,10 @@ Behavior that's still missing from this component that original food items had t
 
 	return TryToEat(user, user)
 
-/datum/component/edible/proc/OnFried(fry_object)
+/datum/component/edible/proc/OnFried(datum/source, atom/fry_object)
 	SIGNAL_HANDLER
 	var/atom/our_atom = parent
+	fry_object.reagents.maximum_volume = our_atom.reagents.maximum_volume
 	our_atom.reagents.trans_to(fry_object, our_atom.reagents.total_volume)
 	qdel(our_atom)
 	return COMSIG_FRYING_HANDLED
@@ -188,11 +192,12 @@ Behavior that's still missing from this component that original food items had t
 		return
 
 	var/atom/this_food = parent
-	var/reagents_for_slice = chosen_processing_option[TOOL_PROCESSING_AMOUNT]
 
-	this_food.create_reagents(volume) //Make sure we have a reagent container
+	//Make sure we have a reagent container large enough to fit the original atom's reagents.
+	volume = max(volume, ROUND_UP(original_atom.reagents.maximum_volume / chosen_processing_option[TOOL_PROCESSING_AMOUNT]))
 
-	original_atom.reagents.trans_to(this_food, reagents_for_slice)
+	this_food.create_reagents(volume)
+	original_atom.reagents.copy_to(this_food, original_atom.reagents.total_volume, 1 / chosen_processing_option[TOOL_PROCESSING_AMOUNT])
 
 	if(original_atom.name != initial(original_atom.name))
 		this_food.name = "slice of [original_atom.name]"
@@ -206,9 +211,16 @@ Behavior that's still missing from this component that original food items had t
 	var/atom/this_food = parent
 
 	this_food.reagents.multiply_reagents(CRAFTED_FOOD_BASE_REAGENT_MODIFIER)
+	this_food.reagents.maximum_volume *= CRAFTED_FOOD_BASE_REAGENT_MODIFIER
 
 	for(var/obj/item/food/crafted_part in parts_list)
-		crafted_part.reagents?.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
+		if(!crafted_part.reagents)
+			continue
+
+		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume * CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER
+		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
+
+	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
 
 	SSblackbox.record_feedback("tally", "food_made", 1, type)
 

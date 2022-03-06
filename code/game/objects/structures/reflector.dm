@@ -32,6 +32,10 @@
 
 	if(admin)
 		can_rotate = FALSE
+	
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/reflector,
+	))
 
 /obj/structure/reflector/examine(mob/user)
 	. = ..()
@@ -156,11 +160,10 @@
 	if (!can_rotate || admin)
 		to_chat(user, span_warning("The rotation is locked!"))
 		return FALSE
-	var/new_angle = input(user, "Input a new angle for primary reflection face.", "Reflector Angle", rotation_angle) as null|num
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
-		return
-	if(!isnull(new_angle))
-		set_angle(SIMPLIFY_DEGREES(new_angle))
+	var/new_angle = tgui_input_number(user, "New angle for primary reflection face", "Reflector Angle", rotation_angle, 360)
+	if(isnull(new_angle) || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		return FALSE
+	set_angle(SIMPLIFY_DEGREES(new_angle))
 	return TRUE
 
 /obj/structure/reflector/AltClick(mob/user)
@@ -254,3 +257,30 @@
 		return
 	else
 		return ..()
+
+//	USB
+
+/obj/item/circuit_component/reflector
+	display_name = "Reflector"
+	desc = "Allows you to adjust the angle of a reflector."
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+	
+	///angle the reflector will be set to at trigger unless locked
+	var/datum/port/input/angle
+	
+	var/obj/structure/reflector/attached_reflector
+
+/obj/item/circuit_component/reflector/populate_ports()
+	angle = add_input_port("Angle", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/reflector/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/structure/reflector))
+		attached_reflector = parent
+
+/obj/item/circuit_component/reflector/unregister_usb_parent(atom/movable/parent)
+	attached_reflector = null
+	return ..()
+
+/obj/item/circuit_component/reflector/input_received(datum/port/input/port)
+	attached_reflector?.set_angle(angle.value)

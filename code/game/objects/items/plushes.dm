@@ -600,10 +600,22 @@
 	squeak_override = list('sound/weapons/punch1.ogg'=1)
 	/// Whether or not this goat is currently taking in a monsterous doink
 	var/going_hard = FALSE
+	/// Whether or not this goat has been flattened like a funny pancake
+	var/splat = FALSE
+
+/obj/item/toy/plush/goatplushie/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/splat,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/item/toy/plush/goatplushie/attackby(obj/item/clothing/mask/cigarette/rollie/fat_dart, mob/user, params)
 	if(!istype(fat_dart))
 		return ..()
+	if(splat)
+		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
+		return	
 	if(going_hard)
 		to_chat(user, span_notice("[src] is already going too hard!"))
 		return
@@ -615,8 +627,22 @@
 	going_hard = TRUE
 	update_icon(UPDATE_OVERLAYS)
 
+/obj/item/toy/plush/goatplushie/proc/splat(datum/source)
+	SIGNAL_HANDLER
+	if(splat)
+		return
+	if(going_hard)
+		going_hard = FALSE
+		update_icon(UPDATE_OVERLAYS)
+	icon_state = "goat_splat"
+	playsound(src, "desecration", 50, TRUE)
+	visible_message(span_danger("[src] gets absolutely flattened!"))
+	splat = TRUE
+
 /obj/item/toy/plush/goatplushie/examine()
 	. = ..()
+	if(splat)
+		. += span_notice("[src] might need medical attention.")
 	if(going_hard)
 		. += span_notice("[src] is going so hard, feel free to take a picture.")
 

@@ -8,7 +8,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
-	eatverbs = list("devour","nibble","gnaw","gobble","chomp") //who the fuck gnaws and devours on a salad
+	eatverbs = list("devour", "nibble", "gnaw", "gobble", "chomp") //who the fuck gnaws and devours on a salad
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/salad/aesirsalad
@@ -57,7 +57,7 @@
 	icon_state = "citrusdelight"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11, /datum/reagent/consumable/nutriment/vitamin = 7)
 	tastes = list("sourness" = 1, "leaves" = 1)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | ORANGES
 
 /obj/item/food/salad/ricebowl
 	name = "ricebowl"

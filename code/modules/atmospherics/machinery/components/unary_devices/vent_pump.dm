@@ -181,7 +181,9 @@
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_name()
-	..()
+	. = ..()
+	if(override_naming)
+		return
 	var/area/vent_area = get_area(src)
 	name = "\proper [vent_area.name] [name] [id_tag]"
 
@@ -411,18 +413,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/miasma_output
 	name = "miasma tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_MIASMA
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitryl_output
-	name = "nitryl tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NO2
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/nitrium_output
+	name = "nitrium tank output inlet"
+	id_tag = ATMOS_GAS_MONITOR_OUTPUT_NITRIUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/pluoxium_output
 	name = "pluoxium tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PLUOXIUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/proto_nitrate_output
 	name = "proto-nitrate tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_PROTO_NITRATE
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/stimulum_output
-	name = "stimulum tank output inlet"
-	id_tag = ATMOS_GAS_MONITOR_OUTPUT_STIMULUM
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/tritium_output
 	name = "tritium tank output inlet"
 	id_tag = ATMOS_GAS_MONITOR_OUTPUT_TRITIUM

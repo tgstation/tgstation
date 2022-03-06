@@ -4,6 +4,8 @@
 		return TRUE
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		if(user.move_force < move_resist)
+			return
 		user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		playsound(src, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		var/shove_dir = get_dir(user, src)
@@ -129,11 +131,6 @@
 			apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 		return TRUE
 
-/mob/living/simple_animal/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
-	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0, piercing_hit)
-	return BULLET_ACT_HIT
-
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return FALSE
@@ -186,3 +183,15 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
+
+/mob/living/simple_animal/emp_act(severity)
+	. = ..()
+	if(mob_biotypes & MOB_ROBOTIC)
+		switch (severity)
+			if (EMP_LIGHT)
+				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
+				apply_damage(maxHealth * 0.6)
+				Shake(5, 5, 1 SECONDS)
+			if (EMP_HEAVY)
+				visible_message(span_danger("[src] suddenly bursts apart!"))
+				apply_damage(maxHealth)

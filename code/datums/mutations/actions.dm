@@ -61,9 +61,9 @@
 		if(!length(possible))
 			to_chat(user,span_warning("Despite your best efforts, there are no scents to be found on [sniffed]..."))
 			return
-		tracking_target = input(user, "Choose a scent to remember.", "Scent Tracking") as null|anything in sort_names(possible)
-		if(!tracking_target)
-			if(!old_target)
+		tracking_target = tgui_input_list(user, "Scent to remember", "Scent Tracking", sort_names(possible))
+		if(isnull(tracking_target))
+			if(isnull(old_target))
 				to_chat(user,span_warning("You decide against remembering any scents. Instead, you notice your own nose in your peripheral vision. This goes on to remind you of that one time you started breathing manually and couldn't stop. What an awful day that was."))
 				return
 			tracking_target = old_target
@@ -121,6 +121,7 @@
 	desc = "You breathe a cone of fire directly in front of you."
 	school = SCHOOL_EVOCATION
 	invocation = ""
+	invocation_type = INVOCATION_NONE
 	charge_max = 400
 	clothes_req = FALSE
 	range = 20
@@ -242,7 +243,7 @@
 		if(BP.body_part != HEAD && BP.body_part != CHEST)
 			if(BP.dismemberable)
 				parts += BP
-	if(!parts.len)
+	if(!length(parts))
 		to_chat(usr, span_notice("You can't shed any more limbs!"))
 		return
 

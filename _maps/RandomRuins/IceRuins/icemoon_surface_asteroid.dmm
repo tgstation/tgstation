@@ -7,7 +7,7 @@
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "h" = (
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /obj/item/clothing/suit/bronze,
 /obj/item/clothing/shoes/bronze,
 /obj/item/clothing/head/bronze,
@@ -56,7 +56,7 @@
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "J" = (
-/obj/effect/mob_spawn/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton,
 /turf/open/floor/bronze,
 /area/icemoon/surface)
 "K" = (
@@ -75,7 +75,7 @@
 /area/icemoon/surface)
 "N" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "O" = (
 /obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/floor/bronze,

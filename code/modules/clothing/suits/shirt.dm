@@ -4,6 +4,18 @@
 	icon_state = "ianshirt"
 	inhand_icon_state = "ianshirt"
 	species_exception = list(/datum/species/golem)
+	///How many times has this shirt been washed? (In an ideal world this is just the determinant of the transform matrix.)
+	var/wash_count = 0
+
+/obj/item/clothing/suit/ianshirt/machine_wash(obj/machinery/washing_machine/washer)
+	. = ..()
+	if(wash_count <= 5)
+		transform *= TRANSFORM_USING_VARIABLE(0.8, 1)
+		washer.balloon_alert_to_viewers("\the [src] appears to have shrunken after being washed.")
+		wash_count += 1
+	else
+		washer.balloon_alert_to_viewers("\the [src] implodes due to repeated washing.")
+		qdel(src)
 
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
@@ -12,8 +24,3 @@
 	inhand_icon_state = "nerdshirt"
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/vapeshirt //wearing this is asking to get beat.
-	name = "Vape Naysh shirt"
-	desc = "A cheap white T-shirt with a big tacky \"VN\" on the front, Why would you wear this unironically?"
-	icon_state = "vapeshirt"
-	inhand_icon_state = "vapeshirt"

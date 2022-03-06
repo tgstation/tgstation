@@ -64,7 +64,10 @@
 	if(usr.next_click > world.time)
 		return
 	usr.next_click = world.time + 1
-	linked_action.Trigger()
+	var/trigger_flags
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		trigger_flags |= TRIGGER_SECONDARY_ACTION
+	linked_action.Trigger(trigger_flags = trigger_flags)
 	return TRUE
 
 //Hide/Show Action Buttons ... Button

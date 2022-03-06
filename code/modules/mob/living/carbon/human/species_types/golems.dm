@@ -59,6 +59,21 @@
 	var/golem_name = "[prefix] [golem_surname]"
 	return golem_name
 
+/datum/species/golem/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "gem",
+		SPECIES_PERK_NAME = "Lithoid",
+		SPECIES_PERK_DESC = "Lithoids are creatures made out of elements instead of \
+			blood and flesh. Because of this, they're generally stronger, slower, \
+			and mostly immune to environmental dangers and dangers to their health, \
+			such as viruses and dismemberment.",
+	))
+
+	return to_add
+
 /datum/species/golem/random
 	name = "Random Golem"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN
@@ -414,7 +429,7 @@
 	H.visible_message(span_danger("[H] turns into a pile of sand!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/stack/ore/glass(get_turf(H))
 	qdel(H)
 
@@ -446,7 +461,7 @@
 	H.visible_message(span_danger("[H] shatters!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/shard(get_turf(H))
 	qdel(H)
 
@@ -802,6 +817,48 @@
 	new /obj/structure/cloth_pile(get_turf(H), H)
 	..()
 
+/datum/species/golem/cloth/get_species_description()
+	return "A wrapped up Mummy! They descend upon Space Station Thirteen every year to spook the crew! \"Return the slab!\""
+
+/datum/species/golem/cloth/get_species_lore()
+	return list(
+		"Mummies are very self conscious. They're shaped weird, they walk slow, and worst of all, \
+		they're considered the laziest halloween costume. But that's not even true, they say.",
+
+		"Making a mummy costume may be easy, but making a CONVINCING mummy costume requires \
+		things like proper fabric and purposeful staining to achieve the look. Which is FAR from easy. Gosh.",
+	)
+
+// Calls parent, as Golems have a species-wide perk we care about.
+/datum/species/golem/cloth/create_pref_unique_perks()
+	var/list/to_add = ..()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "recycle",
+		SPECIES_PERK_NAME = "Reformation",
+		SPECIES_PERK_DESC = "A boon quite similar to Ethereals, Mummies collapse into \
+			a pile of bandages after they die. If left alone, they will reform back \
+			into themselves. The bandages themselves are very vulnerable to fire.",
+	))
+
+	return to_add
+
+// Override to add a perk elaborating on just how dangerous fire is.
+/datum/species/golem/cloth/create_pref_temperature_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "fire-alt",
+		SPECIES_PERK_NAME = "Incredibly Flammable",
+		SPECIES_PERK_DESC = "Mummies are made entirely of cloth, which makes them \
+			very vulnerable to fire. They will not reform if they die while on \
+			fire, and they will easily catch alight. If your bandages burn to ash, you're toast!",
+	))
+
+	return to_add
+
 /obj/structure/cloth_pile
 	name = "pile of bandages"
 	desc = "It emits a strange aura, as if there was still life within it..."
@@ -1013,7 +1070,7 @@
 			create_brother(H.loc)
 
 /datum/species/golem/cardboard/proc/create_brother(location)
-	new /obj/effect/mob_spawn/human/golem/servant(location, /datum/species/golem/cardboard, owner)
+	new /obj/effect/mob_spawn/ghost_role/human/golem/servant(location, /datum/species/golem/cardboard, owner)
 	last_creation = world.time
 
 /datum/species/golem/leather
@@ -1066,7 +1123,7 @@
 
 /datum/species/golem/durathread/spec_unarmedattacked(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
-	target.apply_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+	target.apply_status_effect(/datum/status_effect/strandling)
 
 /datum/species/golem/bone
 	name = "Bone Golem"
@@ -1210,7 +1267,7 @@
 	H.visible_message(span_danger("[H] turns into a pile of snow!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
-	for(var/i=1, i <= rand(3,5), i++)
+	for(var/i in 1 to rand(3,5))
 		new /obj/item/stack/sheet/mineral/snow(get_turf(H))
 	new /obj/item/food/grown/carrot(get_turf(H))
 	qdel(H)

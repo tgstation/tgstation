@@ -47,11 +47,6 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
-	///These are armor values that protect the wearer, taken from the clothing's armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
-	var/list/armor_list = list()
-	///These are armor values that protect the clothing, taken from its armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
-	var/list/durability_list = list()
-
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
 	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
@@ -243,13 +238,14 @@
 	QDEL_NULL(moth_snack)
 	return ..()
 
-/obj/item/clothing/dropped(mob/user)
+/obj/item/clothing/dropped(mob/living/user)
 	..()
 	if(!istype(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	for(var/trait in clothing_traits)
 		REMOVE_TRAIT(user, trait, "[CLOTHING_TRAIT] [REF(src)]")
+
 
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
@@ -258,7 +254,7 @@
 					user.vars[variable] = user_vars_remembered[variable]
 		user_vars_remembered = initial(user_vars_remembered) // Effectively this sets it to null.
 
-/obj/item/clothing/equipped(mob/user, slot)
+/obj/item/clothing/equipped(mob/living/user, slot)
 	. = ..()
 	if (!istype(user))
 		return
@@ -316,31 +312,7 @@
 		how_cool_are_your_threads += "</span>"
 		. += how_cool_are_your_threads.Join()
 
-	if(LAZYLEN(armor_list))
-		armor_list.Cut()
-	if(armor.bio)
-		armor_list += list("TOXIN" = armor.bio)
-	if(armor.bomb)
-		armor_list += list("EXPLOSIVE" = armor.bomb)
-	if(armor.bullet)
-		armor_list += list("BULLET" = armor.bullet)
-	if(armor.energy)
-		armor_list += list("ENERGY" = armor.energy)
-	if(armor.laser)
-		armor_list += list("LASER" = armor.laser)
-	if(armor.magic)
-		armor_list += list("MAGIC" = armor.magic)
-	if(armor.melee)
-		armor_list += list("MELEE" = armor.melee)
-
-	if(LAZYLEN(durability_list))
-		durability_list.Cut()
-	if(armor.fire)
-		durability_list += list("FIRE" = armor.fire)
-	if(armor.acid)
-		durability_list += list("ACID" = armor.acid)
-
-	if(LAZYLEN(armor_list) || LAZYLEN(durability_list))
+	if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee || armor.fire || armor.acid)
 		. += span_notice("It has a <a href='?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
 /obj/item/clothing/Topic(href, href_list)
@@ -348,51 +320,40 @@
 
 	if(href_list["list_armor"])
 		var/list/readout = list("<span class='notice'><u><b>PROTECTION CLASSES (I-X)</u></b>")
-		if(LAZYLEN(armor_list))
+		if(armor.bio || armor.bomb || armor.bullet || armor.energy || armor.laser || armor.melee)
 			readout += "\n<b>ARMOR</b>"
-			for(var/dam_type in armor_list)
-				var/armor_amount = armor_list[dam_type]
-				readout += "\n[dam_type] [armor_to_protection_class(armor_amount)]" //e.g. BOMB IV
-		if(LAZYLEN(durability_list))
+			if(armor.bio)
+				readout += "\nTOXIN [armor_to_protection_class(armor.bio)]"
+			if(armor.bomb)
+				readout += "\nEXPLOSIVE [armor_to_protection_class(armor.bomb)]"
+			if(armor.bullet)
+				readout += "\nBULLET [armor_to_protection_class(armor.bullet)]"
+			if(armor.energy)
+				readout += "\nENERGY [armor_to_protection_class(armor.energy)]"
+			if(armor.laser)
+				readout += "\nLASER [armor_to_protection_class(armor.laser)]"
+			if(armor.melee)
+				readout += "\nMELEE [armor_to_protection_class(armor.melee)]"
+		if(armor.fire || armor.acid)
 			readout += "\n<b>DURABILITY</b>"
-			for(var/dam_type in durability_list)
-				var/durability_amount = durability_list[dam_type]
-				readout += "\n[dam_type] [armor_to_protection_class(durability_amount)]" //e.g. FIRE II
+			if(armor.fire)
+				readout += "\nFIRE [armor_to_protection_class(armor.fire)]"
+			if(armor.acid)
+				readout += "\nACID [armor_to_protection_class(armor.acid)]"
 		readout += "</span>"
 
 		to_chat(usr, "[readout.Join()]")
 
 /**
- * Rounds armor_value to nearest 10, divides it by 10 and then expresses it in roman numerals up to 10
+ * Rounds armor_value down to the nearest 10, divides it by 10 and then converts it to Roman numerals.
  *
- * Rounds armor_value to nearest 10, divides it by 10
- * and then expresses it in roman numerals up to 10
  * Arguments:
  * * armor_value - Number we're converting
  */
 /obj/item/clothing/proc/armor_to_protection_class(armor_value)
-	armor_value = round(armor_value,10) / 10
-	switch (armor_value)
-		if (1)
-			. = "I"
-		if (2)
-			. = "II"
-		if (3)
-			. = "III"
-		if (4)
-			. = "IV"
-		if (5)
-			. = "V"
-		if (6)
-			. = "VI"
-		if (7)
-			. = "VII"
-		if (8)
-			. = "VIII"
-		if (9)
-			. = "IX"
-		if (10 to INFINITY)
-			. = "X"
+	if (armor_value < 0)
+		. = "-"
+	. += "\Roman[round(abs(armor_value), 10) / 10]"
 	return .
 
 /obj/item/clothing/atom_break(damage_flag)
@@ -438,8 +399,9 @@ BLIND     // can't see anything
 
 /proc/generate_female_clothing(index, t_color, icon, type)
 	var/icon/female_clothing_icon = icon("icon"=icon, "icon_state"=t_color)
-	var/icon/female_s = icon("icon"='icons/mob/clothing/under/masking_helpers.dmi', "icon_state"="[(type == FEMALE_UNIFORM_FULL) ? "female_full" : "female_top"]")
-	female_clothing_icon.Blend(female_s, ICON_MULTIPLY)
+	var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
+	var/icon/female_cropping_mask = icon("icon" = 'icons/mob/clothing/under/masking_helpers.dmi', "icon_state" = female_icon_state)
+	female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
 	female_clothing_icon = fcopy_rsc(female_clothing_icon)
 	GLOB.female_clothing_icons[index] = female_clothing_icon
 
@@ -459,6 +421,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= initial(flags_cover)
@@ -470,6 +433,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/head/helmet/space/plasmaman/visor_toggling() //handles all the actual toggling of flags
 	up = !up
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	icon_state = "[initial(icon_state)]"

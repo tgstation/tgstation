@@ -1,6 +1,8 @@
 /datum/job/shaft_miner
-	title = "Shaft Miner"
-	department_head = list("Head of Personnel")
+	title = JOB_SHAFT_MINER
+	description = "Travel to strange lands. Mine ores. \
+		Meet strange creatures. Kill them for their gold."
+	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3
@@ -22,7 +24,7 @@
 
 	family_heirlooms = list(/obj/item/pickaxe/mini, /obj/item/shovel)
 	rpg_title = "Adventurer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/miner
@@ -76,7 +78,8 @@
 		var/obj/item/clothing/suit/hooded/S = H.wear_suit
 		S.ToggleHood()
 
-/datum/outfit/job/miner/equipped/hardsuit
-	name = "Shaft Miner (Equipment + Hardsuit)"
-	suit = /obj/item/clothing/suit/space/hardsuit/mining
-	mask = /obj/item/clothing/mask/breath
+/datum/outfit/job/miner/equipped/mod
+	name = "Shaft Miner (Equipment + MODsuit)"
+	back = /obj/item/mod/control/pre_equipped/mining
+	suit = null
+	mask = /obj/item/clothing/mask/gas/explorer

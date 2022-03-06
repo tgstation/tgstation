@@ -65,19 +65,18 @@
 
 /obj/item/circuit_component/filter_list/input_received(datum/port/input/port)
 	var/index = 1
-	var/start_tick_usage = TICK_USAGE
 	var/list/filtered_list = list()
 	for(var/element_in_list in list_to_filter.value)
 		if(index > limit && !parent.admin_only)
 			break
-		SScircuit_component.queue_instant_run(start_tick_usage)
+		SScircuit_component.queue_instant_run()
 		element.set_output(element_in_list)
 		current_index.set_output(index)
 		on_next_index.set_output(COMPONENT_SIGNAL)
 		index += 1
 		var/list/result = SScircuit_component.execute_instant_run()
 		if(!result)
-			visible_message("[src] starts to overheat!")
+			balloon_alert_to_viewers("[src] starts to overheat!")
 			on_failed.set_output(COMPONENT_SIGNAL)
 			return
 		if(result["accept_entry"])

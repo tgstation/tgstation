@@ -12,11 +12,17 @@
  */
 /obj/item/clothing/suit/space/space_ninja/proc/ninjanet()
 	var/mob/living/carbon/human/ninja = affecting
-	var/mob/living/net_target = input("Select who to capture:","Capture who?",null) as null|mob in sort_names(oview(ninja))
-
-	if(QDELETED(net_target)||!(net_target in oview(ninja)))
+	var/list/nearby_targets = list()
+	for(var/mob/living/target in oview(ninja))
+		nearby_targets.Add(target)
+	if(!length(nearby_targets))
+		to_chat(ninja, span_warning("You see no one nearby to ensnare."))
 		return
-
+	var/mob/living/net_target = tgui_input_list(ninja, "Select who to capture", "Capture Target", sort_names(nearby_targets))
+	if(isnull(net_target))
+		return
+	if(QDELETED(net_target) || !(net_target in oview(ninja)) || !isliving(net_target) || ninja.incapacitated())
+		return
 	if(locate(/obj/structure/energy_net) in get_turf(net_target))//Check if they are already being affected by an energy net.
 		to_chat(ninja, span_warning("[net_target.p_they(TRUE)] are already trapped inside an energy net!"))
 		return

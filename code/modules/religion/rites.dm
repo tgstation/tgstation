@@ -44,12 +44,12 @@
 			user.say(i)
 			first_invoke = FALSE
 			continue
-		if(!ritual_invocations.len) //we divide so we gotta protect
+		if(!length(ritual_invocations)) //we divide so we gotta protect
 			return FALSE
-		if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len))
+		if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations)))
 			return FALSE
 		user.say(i)
-	if(!do_after(user, target = user, delay = ritual_length/ritual_invocations.len)) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
+	if(!do_after(user, target = user, delay = ritual_length/length(ritual_invocations))) //because we start at 0 and not the first fraction in invocations, we still have another fraction of ritual_length to complete
 		return FALSE
 	if(invoke_msg)
 		user.say(invoke_msg)
@@ -67,7 +67,7 @@
 
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
-	desc = "Convert a human-esque individual into a (superior) Android."
+	desc = "Convert a human-esque individual into a (superior) Android. Buckle a human to convert them, otherwise it will convert you."
 	ritual_length = 30 SECONDS
 	ritual_invocations = list("By the inner workings of our god ...",
 						"... We call upon you, in the face of adversity ...",
@@ -82,13 +82,16 @@
 	var/atom/movable/movable_reltool = religious_tool
 	if(!movable_reltool)
 		return FALSE
-	if(!LAZYLEN(movable_reltool.buckled_mobs))
-		. = FALSE
+	if(LAZYLEN(movable_reltool.buckled_mobs))
+		to_chat(user, span_warning("You're going to convert the one buckled on [movable_reltool]."))
+	else
 		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
 			to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
-			return
-		to_chat(user, span_warning("This rite requires an individual to be buckled to [movable_reltool]."))
-		return
+			return FALSE
+		if(isandroid(user))
+			to_chat(user, span_warning("You've already converted yourself. To convert others, they must be buckled to [movable_reltool]."))
+			return FALSE
+		to_chat(user, span_warning("You're going to convert yourself with this ritual."))
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
@@ -96,17 +99,18 @@
 	if(!ismovable(religious_tool))
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
 	var/atom/movable/movable_reltool = religious_tool
+	var/mob/living/carbon/human/rite_target
 	if(!movable_reltool?.buckled_mobs?.len)
+		rite_target = user
+	else
+		for(var/buckled in movable_reltool.buckled_mobs)
+			if(ishuman(buckled))
+				rite_target = buckled
+				break
+	if(!rite_target)
 		return FALSE
-	var/mob/living/carbon/human/human2borg
-	for(var/i in movable_reltool.buckled_mobs)
-		if(istype(i,/mob/living/carbon/human))
-			human2borg = i
-			break
-	if(!human2borg)
-		return FALSE
-	human2borg.set_species(/datum/species/android)
-	human2borg.visible_message(span_notice("[human2borg] has been converted by the rite of [name]!"))
+	rite_target.set_species(/datum/species/android)
+	rite_target.visible_message(span_notice("[rite_target] has been converted by the rite of [name]!"))
 	return TRUE
 
 
@@ -163,7 +167,7 @@
 /datum/religion_rites/fireproof/invoke_effect(mob/living/user, atom/religious_tool)
 	..()
 	if(!QDELETED(chosen_clothing) && get_turf(religious_tool) == chosen_clothing.loc) //check if the same clothing is still there
-		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded) || istype(chosen_clothing,/obj/item/clothing/suit/space/hardsuit ))
+		if(istype(chosen_clothing,/obj/item/clothing/suit/hooded))
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)
@@ -365,7 +369,7 @@
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 		joining_now.gib(TRUE)
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(joining_now in honormut.guilty)
 		honormut.guilty -= joining_now
 	GLOB.religious_sect.adjust_favor(200, user)
@@ -385,14 +389,14 @@
 /datum/religion_rites/forgive/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
 	if(!ishuman(user))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(!honormut)
 		return FALSE
-	if(!honormut.guilty.len)
+	if(!length(honormut.guilty))
 		to_chat(user, span_warning("[GLOB.deity] is holding no grudges to forgive."))
 		return FALSE
-	var/forgiven_choice = input(user, "Choose one of [GLOB.deity]'s guilty to forgive.", "Forgive") as null|anything in honormut.guilty
-	if(!forgiven_choice)
+	var/forgiven_choice = tgui_input_list(user, "Choose one of [GLOB.deity]'s guilty to forgive", "Forgive", honormut.guilty)
+	if(isnull(forgiven_choice))
 		return FALSE
 	who = forgiven_choice
 	return ..()
@@ -401,7 +405,7 @@
 	..()
 	if(in_range(user, religious_tool))
 		return FALSE
-	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(HONORBOUND)
+	var/datum/mutation/human/honorbound/honormut = user.dna.check_mutation(/datum/mutation/human/honorbound)
 	if(!honormut) //edge case
 		return FALSE
 	honormut.guilty -= who
@@ -435,7 +439,7 @@
 	if(QDELETED(autograph) || !(tool_turf == autograph.loc)) //check if the same food is still there
 		to_chat(user, span_warning("Your target left the altar!"))
 		return FALSE
-	autograph.visible_message(span_notice("words magically form on [autograph]!"))
+	autograph.visible_message(span_notice("Words magically form on [autograph]!"))
 	playsound(tool_turf, 'sound/effects/pray.ogg', 50, TRUE)
 	new /obj/item/paper/holy_writ(tool_turf)
 	qdel(autograph)
@@ -656,7 +660,7 @@
 		if(!(unfiltered_area.area_flags & HIDDEN_AREA))
 			filtered += unfiltered_area
 	area_instance = tgui_input_list(user, "Choose an area to mark as an arena!", "Arena Declaration", filtered)
-	if(!area_instance)
+	if(isnull(area_instance))
 		return FALSE
 	. = ..()
 

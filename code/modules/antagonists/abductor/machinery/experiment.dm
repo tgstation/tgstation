@@ -15,6 +15,12 @@
 	var/message_cooldown = 0
 	var/breakout_time = 450
 
+/obj/machinery/abductor/experiment/Destroy()
+	if(console)
+		console.experiment = null
+		console = null
+	return ..()
+
 /obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
 	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
 		return

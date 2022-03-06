@@ -17,7 +17,7 @@
 	has_sensor = NO_SENSORS
 	armor = list(MELEE = 10, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 40)
 	alt_covers_chest = TRUE
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 
 /obj/item/clothing/under/syndicate/bloodred
@@ -49,16 +49,14 @@
 	icon_state = "tactifool_skirt"
 	inhand_icon_state = "bl_suit"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 40)
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 
 /obj/item/clothing/under/syndicate/sniper
-	name = "Tactical turtleneck suit"
+	name = "tactical turtleneck suit"
 	desc = "A double seamed tactical turtleneck disguised as a civilian grade silk suit. Intended for the most formal operator. The collar is really sharp."
-	icon = 'icons/obj/clothing/under/suits.dmi'
-	icon_state = "really_black_suit"
+	icon_state = "tactical_suit"
 	inhand_icon_state = "bl_suit"
-	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/syndicate/camo
