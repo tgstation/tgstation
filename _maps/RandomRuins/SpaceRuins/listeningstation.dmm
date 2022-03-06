@@ -11,6 +11,7 @@
 "ad" = (
 /obj/machinery/computer/message_monitor,
 /obj/machinery/airalarm/syndicate{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -201,7 +202,7 @@
 "aw" = (
 /obj/structure/table,
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/item/stack/cable_coil{
 	pixel_x = 3;
 	pixel_y = -7
@@ -209,7 +210,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/syndicate{
-	dir = 4;
+	dir = 8;
 	pixel_x = -24
 	},
 /turf/open/floor/iron/dark,
@@ -496,7 +497,7 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 30
 	},
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
@@ -568,6 +569,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "aU" = (
 /obj/machinery/airalarm/syndicate{
+	dir = 1;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -682,7 +684,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "ba" = (
-/obj/structure/chair/stool/directional/east,
+/obj/structure/chair/stool/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4;
 	piping_layer = 4;
@@ -695,7 +697,7 @@
 /obj/effect/turf_decal/stripes/red/corner,
 /obj/machinery/light/small/directional/east,
 /obj/machinery/airalarm/syndicate{
-	dir = 8;
+	dir = 4;
 	pixel_x = 24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -858,7 +860,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 4;
 	name = "Syndicate Listening Post APC";
-	pixel_x = 24
+	pixel_x = 25
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -943,7 +945,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/listeningstation)
 "bx" = (
-/obj/effect/mob_spawn/human/lavaland_syndicate/comms/space{
+/obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/space{
 	dir = 8
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -987,7 +989,6 @@
 	},
 /obj/machinery/iv_drip,
 /obj/machinery/airalarm/syndicate{
-	dir = 1;
 	pixel_y = -24
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -1085,7 +1086,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/listeningstation)
 "pH" = (
