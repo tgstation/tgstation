@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Flex, NoticeBox, Section } from '../components';
+import { Button, Stack, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const LibraryScanner = (props, context) => {
@@ -28,22 +28,22 @@ export const BookScanning = (props, context) => {
     );
   }
   return (
-    <Flex
+    <Stack
       direction="column"
       height="100%"
       justify="flex-end">
-      <Flex.Item grow>
+      <Stack.Item grow>
         <Section
           textAlign="center"
           height="100%"
           title={book.author}>
           {book.title}
         </Section>
-      </Flex.Item>
-      <Flex.Item>
-        <Flex
+      </Stack.Item>
+      <Stack.Item>
+        <Stack
           width="100%">
-          <Flex.Item grow>
+          <Stack.Item grow>
             <Button fluid
               textAlign="center"
               icon="eject"
@@ -51,8 +51,8 @@ export const BookScanning = (props, context) => {
               disabled={!has_book}>
               Eject Book
             </Button>
-          </Flex.Item>
-          <Flex.Item grow>
+          </Stack.Item>
+          <Stack.Item grow>
             <Button fluid
               textAlign="center"
               onClick={() => act('scan')}
@@ -61,8 +61,8 @@ export const BookScanning = (props, context) => {
               disabled={!has_book}>
               Scan Book
             </Button>
-          </Flex.Item>
-          <Flex.Item grow>
+          </Stack.Item>
+          <Stack.Item grow>
             <Button fluid
               textAlign="center"
               icon="fire"
@@ -71,9 +71,9 @@ export const BookScanning = (props, context) => {
               disabled={!has_cache}>
               Clear Cache
             </Button>
-          </Flex.Item>
-        </Flex>
-      </Flex.Item>
-    </Flex>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
   );
 };
