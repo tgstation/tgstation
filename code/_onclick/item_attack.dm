@@ -235,8 +235,8 @@
 
 	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1)
 	//only witnesses close by and the victim see a hit message.
-	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? ", without leaving a mark!" : "."]"), \
-		span_danger("You hit [src] with [attacking_item][damage ? ", without leaving a mark!" : "."]"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)

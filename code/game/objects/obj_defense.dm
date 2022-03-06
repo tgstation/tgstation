@@ -24,11 +24,10 @@
 /obj/bullet_act(obj/projectile/P)
 	. = ..()
 	playsound(src, P.hitsound, 50, TRUE)
-	var/no_damage = FALSE
-	if(!QDELETED(src) && !take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)) //Bullet on_hit effect might have already destroyed this object
-		no_damage = TRUE
+	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
+		var/damage = take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration)
 	if(P.suppressed != SUPPRESSED_VERY)
-		visible_message(span_danger("[src] is hit by \a [P][no_damage ? ", which doesn't leave a mark" : ""]!"), null, null, COMBAT_MESSAGE_RANGE)
+		visible_message(span_danger("[src] is hit by \a [P][damage ? "." : ", without leaving a mark!"]"), null, null, COMBAT_MESSAGE_RANGE)
 
 /obj/attack_hulk(mob/living/carbon/human/user)
 	..()
