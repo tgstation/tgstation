@@ -421,7 +421,6 @@
 	icon = 'icons/mob/animal.dmi'
 	icon_state = "heart"
 	inhand_icon_state = "nothing"
-	w_class = WEIGHT_CLASS_HUGE
 	/// The kind of projectile this version of the kiss blower fires
 	var/kiss_type = /obj/projectile/kiss
 	/// TRUE if the user was aiming anywhere but the mouth when they offer the kiss, if it's offered
