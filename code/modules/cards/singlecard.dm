@@ -104,6 +104,10 @@
 		card = item
 	
 	if(card) // card + card = combine into cardhand
+		if(flip_card)
+			card.Flip()
+			card.update_appearance()
+			
 		if(istype(item, /obj/item/toy/cards/deck)) 
 			// only decks cause a balloon alert
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
