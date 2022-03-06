@@ -21,12 +21,12 @@
 	path_image_color = "#2cac12"
 
 	///The vibe ability given to vibebots, so sentient ones can still change their color.
-	var/datum/action/innate/vibebot_vibe/vibe_ability
+	var/datum/action/innate/vibe/vibe_ability
 
 /mob/living/simple_animal/bot/vibebot/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	vibe_ability = new()
+	vibe_ability = new(src)
 	vibe_ability.Grant(src)
 
 /mob/living/simple_animal/bot/vibebot/Destroy()
@@ -56,37 +56,25 @@
 /**
  * Vibebot's vibe ability
  *
- * Given to sentient vibebots so they can also vibe.
+ * Given to vibebots so sentient ones can change/reset thier colors at will.
  */
-/datum/action/innate/vibebot_vibe
+/datum/action/innate/vibe
 	name = "Vibe"
-	desc = "LMB: Change vibebot color. RMB: Reset vibebot color."
+	desc = "LMB: Change vibe color. RMB: Reset vibe color."
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "funk"
 
-/datum/action/innate/vibebot_vibe/Grant(mob/user)
-	. = ..()
-	if(!isbot(user))
-		return
-	var/mob/living/simple_animal/bot/current_bot = user
-	if(current_bot.bot_type != VIBE_BOT)
-		return
-	link_to(current_bot)
-
-/datum/action/innate/vibebot_vibe/IsAvailable()
+/datum/action/innate/vibe/IsAvailable()
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!target)
-		return FALSE
-	var/mob/living/simple_animal/bot/vibebot/bot_mob = target
-	if(!bot_mob)
-		return FALSE
-	if(!(bot_mob.bot_mode_flags & BOT_MODE_ON))
-		return FALSE
+	if(isbot(owner))
+		var/mob/living/simple_animal/bot/bot_mob = owner
+		if(!(bot_mob.bot_mode_flags & BOT_MODE_ON))
+			return FALSE
 	return TRUE
 
-/datum/action/innate/vibebot_vibe/Trigger(trigger_flags)
+/datum/action/innate/vibe/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return
@@ -96,12 +84,12 @@
 		vibe()
 
 ///Gives a random color
-/datum/action/innate/vibebot_vibe/proc/vibe()
+/datum/action/innate/vibe/proc/vibe()
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	owner.add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
 	owner.set_light_color(owner.color)
 
 ///Removes all colors
-/datum/action/innate/vibebot_vibe/proc/remove_colors()
+/datum/action/innate/vibe/proc/remove_colors()
 	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 	owner.set_light_color(null)
