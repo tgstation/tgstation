@@ -1246,3 +1246,21 @@
 	materials = list(/datum/material/iron = 50, /datum/material/glass = 25)
 	build_path = /obj/item/hand_labeler_refill
 	category = list("initial", "Misc")
+
+/datum/design/toner
+	name = "Toner Cartridge"
+	id = "toner"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 10, /datum/material/glass = 10)
+	build_path = /obj/item/toner
+	category = list("initial", "Misc")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/toner/large
+	name = "Large Toner Cartridge"
+	id = "toner_large"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 35, /datum/material/glass = 35)
+	build_path = /obj/item/toner/large
+	category = list("initial", "Misc")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE

@@ -59,6 +59,8 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
+		"toner",
+		"toner_large",
 	)
 
 /datum/techweb_node/mmi
