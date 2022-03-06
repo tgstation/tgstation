@@ -170,6 +170,9 @@
 /obj/item/canvas/proc/patron(mob/user)
 	if(!finalized || !isliving(user))
 		return
+	if(!painting_metadata.loaded_from_json)
+		if(tgui_alert(user, "The painting hasn't been archived yet and will be lost at the end of the shift if not placed in an elegible frame. Continue?","Unarchived Painting",list("Yes","No")) != "Yes")
+			return
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(!id_card)
@@ -199,7 +202,7 @@
 	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
 	if(possible_frames.len <= 1) // Not much room for choices here.
 		return
-	if(tgui_alert(user,"Want to change the frame appearance now? You can do so later this shift with Alt-Click as long as you're the patron.","Patronage Frame",list("Yes","No")) != "Yes")
+	if(tgui_alert(user, "Do you want to change the frame appearance now? You can do so later this shift with Alt-Click as long as you're a patron.","Patronage Frame",list("Yes","No")) != "Yes")
 		return
 	if(!can_select_frame(user))
 		return
