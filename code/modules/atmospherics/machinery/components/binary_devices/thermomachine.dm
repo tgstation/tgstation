@@ -161,6 +161,11 @@
 	var/datum/gas_mixture/main_port = airs[2]
 	var/datum/gas_mixture/exchange_target = airs[1]
 
+	// Total moles of main port.
+	var/main_port_total_moles = main_port.total_moles()
+	// Total moles of exchange target. Not defined until exchange target is determined.
+	var/exchange_target_total_moles
+
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - main_port.temperature
 
@@ -179,7 +184,7 @@
 
 	skipping_work = FALSE
 
-	if (main_port.total_moles() < 0.01)
+	if (main_port_total_moles < 0.01)
 		skipping_work = TRUE
 		return
 
@@ -197,20 +202,22 @@
 		else
 			exchange_target = airs[1]
 
-		if(exchange_target.total_moles() < 5)
+		exchange_target_total_moles = exchange_target.total_moles()
+
+		if(exchange_target_total_moles < 5)
 			mole_eff_thermal_port = 0.1
 		else
-			mole_eff_thermal_port = max(1 - (1 / (exchange_target.total_moles() + 1)) * 5, 0.1)
+			mole_eff_thermal_port = max(1 - (1 / (exchange_target_total_moles + 1)) * 5, 0.1)
 
-	if(main_port.total_moles() < 5)
+	if(main_port_total_moles < 5)
 		mole_eff_main_port = 0.1
 	else
-		mole_eff_main_port = max(1 - (1 / (main_port.total_moles() + 1)) * 5, 0.1)
+		mole_eff_main_port = max(1 - (1 / (main_port_total_moles + 1)) * 5, 0.1)
 
 	mole_efficiency = min(mole_eff_main_port, mole_eff_thermal_port)
 
 	if(cooling)
-		if (exchange_target.total_moles() < 0.01)
+		if (exchange_target_total_moles < 0.01)
 			skipping_work = TRUE
 			return
 
@@ -221,7 +228,7 @@
 		// We take an extra efficiency malus for enviroments where the mol is too low.
 		// Cases of log(0) will be caught by the early return above.
 		if (use_enviroment_heat)
-			efficiency *= clamp(log(1.55, exchange_target.total_moles()) * 0.15, 0.65, 1)
+			efficiency *= clamp(log(1.55, exchange_target_total_moles) * 0.15, 0.65, 1)
 
 		efficiency *= mole_efficiency
 		efficiency = max(efficiency, parts_efficiency)

@@ -263,7 +263,8 @@
 		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
-	if(internal.total_moles())
+	var/total_moles = internal.total_moles()
+	if(total_moles)
 		for(var/gasid in internal.gases)
 			internal_gas_data.Add(list(list(
 			"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
@@ -291,7 +292,7 @@
 	data["requirements"] = requirements.Join("\n")
 
 	var/temperature
-	if(internal.total_moles())
+	if(total_moles)
 		temperature = internal.temperature
 	else
 		temperature = 0

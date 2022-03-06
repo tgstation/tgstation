@@ -406,29 +406,33 @@
 	emit_rads()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(delta_time)
+	//Moderator total moles
+	var/moderator_internal_total_moles = moderator_internal.total_moles()
 	// Don't evaporate if the reaction is dead
 	if (!power_level)
 		return
 	// All gases in the moderator slowly burn away over time, whether used for production or not
-	if(moderator_internal.total_moles() > 0)
-		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
+	if(moderator_internal_total_moles > 0)
+		moderator_internal.remove(moderator_internal_total_moles * (1 - (1 - 0.0005 * power_level) ** delta_time))
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal(delta_time)
 	// Archive current health for damage cap purposes
 	critical_threshold_proximity_archived = critical_threshold_proximity
+	//Internal fusion total moles
+	var/internal_fusion_total_moles = internal_fusion.total_moles()
 
 	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
 	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
-		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
+		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion_total_moles + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
 		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
 
 	// If we're running on a thin fusion mix, heal up
-	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES && power_level <= 5)
-		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
+	if(internal_fusion_total_moles < HYPERTORUS_SUBCRITICAL_MOLES && power_level <= 5)
+		var/subcritical_heal_restore = (internal_fusion_total_moles - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
 		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * delta_time, 0), 0)
 
 	// If coolant is sufficiently cold, heal up
-	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) && power_level <= 4)
+	if(internal_fusion_total_moles > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) && power_level <= 4)
 		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * delta_time, 0), 0)
 
@@ -438,8 +442,8 @@
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (delta_time * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
 	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
-	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
-		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
+	if(internal_fusion_total_moles >= HYPERTORUS_HYPERCRITICAL_MOLES)
+		var/hypercritical_damage_taken = max((internal_fusion_total_moles - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE), 0) * delta_time
 
 	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
@@ -505,39 +509,52 @@
 			linked_output.airs[1].merge(removed)
 
 	if (selected_fuel)
-		var/datum/gas_mixture/internal_remove
+		var/datum/gas_mixture/internal_removed
 		for(var/gas_id in selected_fuel.primary_products)
 			if(internal_fusion.gases[gas_id][MOLES] > 0)
-				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
-				linked_output.airs[1].merge(internal_remove)
+				internal_removed = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
+				linked_output.airs[1].merge(internal_removed)
 	internal_fusion.garbage_collect()
 	moderator_internal.garbage_collect()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_internal_cooling(delta_time)
-	if(moderator_internal.total_moles() > 0 && internal_fusion.total_moles() > 0)
+	//Internal fusion total moles.
+	var/internal_fusion_total_moles = internal_fusion.total_moles()
+	//Moderator internal total moles.
+	var/moderator_internal_total_moles = moderator_internal.total_moles()
+	//Cooling port total moles.
+	var/cooling_port_total_moles = airs[1].total_moles()
+	//Internal fusion heat capacity.
+	var/internal_fusion_heat_capacity = internal_fusion.heat_capacity()
+	//Moderator internal heat capacity.
+	var/moderator_internal_heat_capacity = moderator_internal.heat_capacity()
+	//Removed cooling heat capacity.
+	var/cooling_removed_heat_capacity
+	if(moderator_internal_total_moles > 0 && internal_fusion_total_moles > 0)
 		//Modifies the moderator_internal temperature based on energy conduction and also the fusion by the same amount
 		var/fusion_temperature_delta = internal_fusion.temperature - moderator_internal.temperature
-		var/fusion_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * fusion_temperature_delta * (internal_fusion.heat_capacity() * moderator_internal.heat_capacity() / (internal_fusion.heat_capacity() + moderator_internal.heat_capacity()))
-		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion.heat_capacity(), TCMB)
-		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal.heat_capacity(), TCMB)
+		var/fusion_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * fusion_temperature_delta * (internal_fusion_heat_capacity * moderator_internal_heat_capacity / (internal_fusion_heat_capacity + moderator_internal_heat_capacity))
+		internal_fusion.temperature = max(internal_fusion.temperature - fusion_heat_amount / internal_fusion_heat_capacity, TCMB)
+		moderator_internal.temperature = max(moderator_internal.temperature + fusion_heat_amount / moderator_internal_heat_capacity, TCMB)
 
-	if(airs[1].total_moles() * 0.05 <= MINIMUM_MOLE_COUNT)
+	if(cooling_port_total_moles * 0.05 <= MINIMUM_MOLE_COUNT)
 		return
 	var/datum/gas_mixture/cooling_port = airs[1]
-	var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
+	var/datum/gas_mixture/cooling_removed = cooling_port.remove(0.05 * cooling_port_total_moles)
+	cooling_removed_heat_capacity = cooling_removed.heat_capacity()
 	//Cooling of the moderator gases with the cooling loop in and out the core
-	if(moderator_internal.total_moles() > 0)
-		var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
-		var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * moderator_internal.heat_capacity() / (cooling_remove.heat_capacity() + moderator_internal.heat_capacity()))
-		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-		moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal.heat_capacity(), TCMB)
+	if(moderator_internal_total_moles > 0)
+		var/coolant_temperature_delta = cooling_removed.temperature - moderator_internal.temperature
+		var/cooling_heat_amount = (1 - (1 - HIGH_EFFICIENCY_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_removed_heat_capacity * moderator_internal_heat_capacity / (cooling_removed_heat_capacity + moderator_internal_heat_capacity))
+		cooling_removed.temperature = max(cooling_removed.temperature - cooling_heat_amount / cooling_removed_heat_capacity, TCMB)
+		moderator_internal.temperature = max(moderator_internal.temperature + cooling_heat_amount / moderator_internal_heat_capacity, TCMB)
 
-	else if(internal_fusion.total_moles() > 0)
-		var/coolant_temperature_delta = cooling_remove.temperature - internal_fusion.temperature
-		var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_remove.heat_capacity() * internal_fusion.heat_capacity() / (cooling_remove.heat_capacity() + internal_fusion.heat_capacity()))
-		cooling_remove.temperature = max(cooling_remove.temperature - cooling_heat_amount / cooling_remove.heat_capacity(), TCMB)
-		internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion.heat_capacity(), TCMB)
-	cooling_port.merge(cooling_remove)
+	else if(internal_fusion_total_moles > 0)
+		var/coolant_temperature_delta = cooling_removed.temperature - internal_fusion.temperature
+		var/cooling_heat_amount = (1 - (1 - METALLIC_VOID_CONDUCTIVITY) ** delta_time) * coolant_temperature_delta * (cooling_removed_heat_capacity * internal_fusion_heat_capacity / (cooling_removed_heat_capacity + internal_fusion_heat_capacity))
+		cooling_removed.temperature = max(cooling_removed.temperature - cooling_heat_amount / cooling_removed_heat_capacity, TCMB)
+		internal_fusion.temperature = max(internal_fusion.temperature + cooling_heat_amount / internal_fusion_heat_capacity, TCMB)
+	cooling_port.merge(cooling_removed)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/inject_from_side_components(delta_time)
 	update_pipenets()

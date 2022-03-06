@@ -6,7 +6,8 @@
 	if(status_flags & GODMODE)
 		return
 
-	if(!breath || (breath.total_moles() == 0))
+	var/total_moles = breath.total_moles()
+	if(!breath || (total_moles == 0))
 		//Aliens breathe in vaccuum
 		return 0
 
@@ -15,16 +16,16 @@
 
 	var/plasma_used = 0
 	var/plas_detect_threshold = 0.02
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
 	var/list/breath_gases = breath.gases
 
 	breath.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
 
 	//Partial pressure of the plasma in our breath
-	var/Plasma_pp = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
+	var/Plasma_pp = (breath_gases[/datum/gas/plasma][MOLES] / total_moles) * breath_pressure
 
 	if(Plasma_pp > plas_detect_threshold) // Detect plasma in air
-		adjustPlasma(breath_gases[/datum/gas/plasma][MOLES]*250)
+		adjustPlasma(breath_gases[/datum/gas/plasma][MOLES] * 250)
 		throw_alert("alien_plas", /atom/movable/screen/alert/alien_plas)
 
 		plasma_used = breath_gases[/datum/gas/plasma][MOLES]

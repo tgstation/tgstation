@@ -320,6 +320,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/datum/gas_mixture/air = local_turf.return_air()
 
+	var/total_moles = air.total_moles()
+
 	// singlecrystal set to true eliminates the back sign on the gases breakdown.
 	data["singlecrystal"] = TRUE
 	data["active"] = TRUE
@@ -335,12 +337,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/list/gasdata = list()
 
-	if(air.total_moles())
-		data["SM_moles"] = air.total_moles()
+	if(total_moles)
+		data["SM_moles"] = total_moles
 		for(var/gasid in air.gases)
 			gasdata.Add(list(list(
 			"name"= air.gases[gasid][GAS_META][META_GAS_NAME],
-			"amount" = round(100*air.gases[gasid][MOLES]/air.total_moles(),0.01))))
+			"amount" = round(100 * air.gases[gasid][MOLES] / total_moles, 0.01))))
 
 	else
 		for(var/gasid in air.gases)

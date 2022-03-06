@@ -138,12 +138,14 @@
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
 
+	//Total moles of breath.
+	var/breath_total_moles = breath.total_moles()
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		adjustOxyLoss(2)
 
 	//CRIT
-	if(!breath || (breath.total_moles() == 0) || !lungs)
+	if(!breath || (breath_total_moles == 0) || !lungs)
 		if(reagents.has_reagent(/datum/reagent/medicine/epinephrine, needs_metabolizing = TRUE) && lungs)
 			return FALSE
 		adjustOxyLoss(1)
@@ -158,13 +160,13 @@
 	var/SA_para_min = 1
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath_total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
 	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
-	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
-	var/Plasma_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
-	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
+	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES] / breath_total_moles) * breath_pressure
+	var/Plasma_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath_total_moles) * breath_pressure
+	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide][MOLES] / breath_total_moles) * breath_pressure
 
 
 	//OXYGEN
@@ -173,9 +175,9 @@
 			emote("gasp")
 		if(O2_partialpressure > 0)
 			var/ratio = 1 - O2_partialpressure/safe_oxy_min
-			adjustOxyLoss(min(5*ratio, 3))
+			adjustOxyLoss(min(5 * ratio, 3))
 			failed_last_breath = TRUE
-			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]*ratio
+			oxygen_used = breath_gases[/datum/gas/oxygen][MOLES] * ratio
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = TRUE
@@ -208,7 +210,7 @@
 
 	//PLASMA
 	if(Plasma_partialpressure > safe_plas_max)
-		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plas_max) * 10
+		var/ratio = (breath_gases[/datum/gas/plasma][MOLES] / safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
 		throw_alert("too_much_plas", /atom/movable/screen/alert/too_much_plas)
 	else
@@ -216,7 +218,7 @@
 
 	//NITROUS OXIDE
 	if(breath_gases[/datum/gas/nitrous_oxide])
-		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
+		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES] / breath_total_moles) * breath_pressure
 		if(SA_partialpressure > SA_para_min)
 			throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
@@ -237,7 +239,7 @@
 
 	//BZ (Facepunch port of their Agent B)
 	if(breath_gases[/datum/gas/bz])
-		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES]/breath.total_moles())*breath_pressure
+		var/bz_partialpressure = (breath_gases[/datum/gas/bz][MOLES] / breath_total_moles) * breath_pressure
 		if(bz_partialpressure > 1)
 			hallucination += 10
 		else if(bz_partialpressure > 0.01)
@@ -245,7 +247,7 @@
 
 	//NITRIUM
 	if(breath_gases[/datum/gas/nitrium])
-		var/nitrium_partialpressure = (breath_gases[/datum/gas/nitrium][MOLES]/breath.total_moles())*breath_pressure
+		var/nitrium_partialpressure = (breath_gases[/datum/gas/nitrium][MOLES] / breath_total_moles) * breath_pressure
 		if(nitrium_partialpressure > 0.5)
 			adjustFireLoss(nitrium_partialpressure * 0.15)
 		if(nitrium_partialpressure > 5)
@@ -253,12 +255,12 @@
 
 	//FREON
 	if(breath_gases[/datum/gas/freon])
-		var/freon_partialpressure = (breath_gases[/datum/gas/freon][MOLES]/breath.total_moles())*breath_pressure
+		var/freon_partialpressure = (breath_gases[/datum/gas/freon][MOLES] / breath_total_moles) * breath_pressure
 		adjustFireLoss(freon_partialpressure * 0.25)
 
 	//MIASMA
 	if(breath_gases[/datum/gas/miasma])
-		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES]/breath.total_moles())*breath_pressure
+		var/miasma_partialpressure = (breath_gases[/datum/gas/miasma][MOLES] / breath_total_moles) * breath_pressure
 
 		if(prob(1 * miasma_partialpressure))
 			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(2,3)
