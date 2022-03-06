@@ -127,7 +127,7 @@
 		if(WRENCHED_ASSEMBLY_STEP)
 			display_text = "The assembly seems <b>loose</b>..."
 		if(SCREWED_ASSEMBLY_STEP)
-			display_text = "All it's missing is <b>external armor</b>..."
+			display_text = "All it's missing is <b>external plating</b>..."
 	. += span_notice(display_text)
 
 /obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, params)
@@ -233,12 +233,12 @@
 					step = BOOTS_STEP
 		if(SCREWED_ASSEMBLY_STEP)
 			if(istype(part, /obj/item/mod/construction/plating)) //Construct
-				var/obj/item/mod/construction/plating/external_armor = part
+				var/obj/item/mod/construction/plating/external_plating = part
 				if(!user.transferItemToLoc(part, src))
 					return
 				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 				balloon_alert(user, "suit finished")
-				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_armor.theme, null, core)
+				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
 				core = null
 				qdel(src)
 				user.put_in_hands(mod)
