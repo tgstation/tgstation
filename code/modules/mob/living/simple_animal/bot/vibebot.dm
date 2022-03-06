@@ -50,17 +50,8 @@
 		bot_patrol()
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	vibe_ability.remove_colors()
 	return ..()
-
-/mob/living/simple_animal/bot/vibebot/proc/remove_colors()
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	set_light_color(null)
-
-/mob/living/simple_animal/bot/vibebot/proc/vibe()
-	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
-	set_light_color(color)
 
 /**
  * Vibebot's vibe ability
@@ -99,9 +90,18 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/simple_animal/bot/vibebot/bot_mob = target
 	if(trigger_flags & TRIGGER_SECONDARY_ACTION)
-		bot_mob.remove_colors()
+		remove_colors()
 	else
-		bot_mob.vibe()
+		vibe()
 
+///Gives a random color
+/datum/action/innate/vibebot_vibe/proc/vibe()
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	owner.add_atom_colour("#[random_color()]", TEMPORARY_COLOUR_PRIORITY)
+	owner.set_light_color(owner.color)
+
+///Removes all colors
+/datum/action/innate/vibebot_vibe/proc/remove_colors()
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	owner.set_light_color(null)
