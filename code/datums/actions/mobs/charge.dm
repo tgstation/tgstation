@@ -61,6 +61,7 @@
 		SSmove_manager.stop_looping(charger)
 
 	charging += charger
+	actively_moving = FALSE
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
 	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
 	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
@@ -101,6 +102,7 @@
 	var/atom/movable/charger = source.moving
 	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_STATCHANGE))
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
+	actively_moving = FALSE
 	charging -= charger
 
 /datum/action/cooldown/mob_cooldown/charge/proc/stat_changed(mob/source, new_stat, old_stat)
