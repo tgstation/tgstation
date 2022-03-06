@@ -654,6 +654,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Recreation Area"
 	icon_state = "rec"
 
+/area/commons/fitness/recreation/entertainment
+	name = "\improper Entertainment Center"
+	icon_state = "entertainment"
+
 // Commons - Vacant Rooms
 /area/commons/vacant_room
 	name = "\improper Vacant Room"

@@ -1,0 +1,6 @@
+author: "MMMiracles"
+delete-after: True
+changes: 
+  - expansion: "The tramstation dorms area has been completely revamped to more freely flow and encourage interactions between the library and chapel."
+  - bugfix: "The chapel now has a mass driver for proper burial disposal."
+  - bugfix: "The overhang in the dorm area no longer shows the walls below on the edges."

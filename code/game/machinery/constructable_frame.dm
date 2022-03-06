@@ -259,7 +259,7 @@
 					if(!QDELETED(part)) //If we're a stack and we merged we might not exist anymore
 						components += part
 						part.forceMove(src)
-					to_chat(user, span_notice("[part.name] applied."))
+					to_chat(user, span_notice("You add [part] to [src]."))
 				if(added_components.len)
 					replacer.play_rped_sound()
 				return

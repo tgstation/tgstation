@@ -599,6 +599,8 @@
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()
+	if (!cell)
+		return
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
 	if (cell.charge >= cell_hit_cost)
@@ -609,6 +611,8 @@
 			addtimer(CALLBACK(src, .proc/scramble_mode), scramble_time*loops * (1 SECONDS))
 
 /obj/item/melee/baton/security/proc/scramble_mode()
+	if (!cell || cell.charge < cell_hit_cost)
+		return
 	active = !active
 	playsound(src, "sparks", 75, TRUE, -1)
 	update_appearance()
