@@ -54,59 +54,33 @@
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	return isliving(user) && !user.incapacitated()
 
-/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params)
+/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params, flip_card = FALSE)
 	var/cards_to_add = list()
-
+	var/obj/item/toy/singlecard/card
+	
 	if(istype(weapon, /obj/item/toy/singlecard))
-		var/obj/item/toy/singlecard/card = weapon
-		cards_to_add += card
+		card = weapon
 
 	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(dealer_deck.wielded) // deal card
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(!card) 
-				return
-			cards_to_add += card
-		else // recycle cards back into deck
+		var/obj/item/toy/cards/deck/dealer_deck = weapon			
+		if(!dealer_deck.wielded) // recycle cardhand into deck (if unwielded)
 			dealer_deck.insert(cards)
 			qdel(src)
-			user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
+		card = dealer_deck.draw(user)
 
-	if(LAZYLEN(cards_to_add))
-		insert(cards_to_add)
+	if(card) 
+		if(flip_card)
+			card.Flip()
+			card.update_appearance()
+		insert(list(card))
 		return
 
 	return ..()
 
 /obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, params)
-	var/cards_to_add = list()
-
-	if(istype(weapon, /obj/item/toy/singlecard))
-		var/obj/item/toy/singlecard/card = weapon
-		card.Flip()
-		cards_to_add += card
-
-	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon
-		if(dealer_deck.wielded) // deal card
-			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
-			if(!card) 
-				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-			card.Flip()
-			cards_to_add += card
-		else // recycle cards back into deck
-			dealer_deck.insert(cards)
-			qdel(src)
-			user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	if(LAZYLEN(cards_to_add))
-		insert(cards_to_add)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	..()
+	attackby(weapon, user, params, flip_card = TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/item/toy/cards/cardhand/update_overlays()
