@@ -131,7 +131,8 @@
 		/obj/item/clothing/suit/changshan_blue = 1,
 		/obj/item/clothing/suit/cheongsam_red = 1,
 		/obj/item/clothing/suit/cheongsam_blue = 1,
-		/obj/item/gohei = 1
+		/obj/item/gohei = 1,
+		/obj/item/clothing/under/rank/medical/doctor/nurse = 1,
 	)
 	contraband = list(
 		/obj/item/clothing/suit/judgerobe = 1,

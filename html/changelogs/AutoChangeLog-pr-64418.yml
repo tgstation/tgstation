@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Optimized automated movement. Should feel a mite smoother now"
-  - bugfix: "Changed how the singulo eats turfs to hopefully be less of a load on the server. Behavior's changed a bit tho, lemme know if anything looks too off"

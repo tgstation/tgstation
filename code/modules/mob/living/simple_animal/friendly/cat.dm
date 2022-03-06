@@ -113,7 +113,7 @@
 	unique_pet = TRUE
 	var/list/family = list()//var restored from savefile, has count of each child type
 	var/list/children = list()//Actual mob instances of children
-	var/cats_deployed = 0
+	var/static/cats_deployed = 0
 	var/memory_saved = FALSE
 	held_state = "cat"
 
@@ -158,7 +158,10 @@
 	if(isnull(family))
 		family = list()
 
-/mob/living/simple_animal/pet/cat/runtime/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/cat/runtime/Write_Memory(dead, gibbed)
+	. = ..()
+	if(!.)
+		return
 	var/json_file = file("data/npc_saves/Runtime.json")
 	var/list/file_data = list()
 	family = list()

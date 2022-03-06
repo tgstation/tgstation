@@ -2,10 +2,9 @@
 /datum/computer_file/program/robocontrol
 	filename = "botkeeper"
 	filedesc = "BotKeeper"
-	category = PROGRAM_CATEGORY_ROBO
+	category = PROGRAM_CATEGORY_SCI
 	program_icon_state = "robot"
 	extended_desc = "A remote controller used for giving basic commands to non-sentient robots."
-	transfer_access = null
 	requires_ntnet = TRUE
 	size = 12
 	tgui_id = "NtosRoboControl"

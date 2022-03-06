@@ -487,7 +487,7 @@
 	if(nodamage)
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
-	if(!piercing_hit)
+	if(!do_pierce)
 		AOE(get_turf(target) || get_turf(src))
 	if(!QDELETED(target))
 		handle_impact(target)

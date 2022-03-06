@@ -10,6 +10,17 @@
 	density = TRUE
 	anchored = TRUE
 
+/obj/structure/loom/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/stack/sheet/cotton = list(
+			SCREENTIP_CONTEXT_LMB = "Weave",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /obj/structure/loom/attackby(obj/item/I, mob/user)
 	if(weave(I, user))
 		return

@@ -19,6 +19,8 @@
 	death_limit = 4
 	smoothing_iterations = 10
 
+/datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
+
 /datum/map_generator/cave_generator/icemoon/deep
 	closed_turf_types = list(/turf/closed/mineral/random/snow/underground = 1)
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/ice_demon = 50, /obj/structure/spawner/ice_moon/demonic_portal = 3, \

@@ -34,6 +34,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	layer = RIPPLE_LAYER
+	plane = ABOVE_GAME_PLANE
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 
@@ -43,7 +44,7 @@
 			return FALSE
 	return ..()
 
-/obj/effect/portal/newtonian_move() // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
+/obj/effect/portal/newtonian_move(direction, instant = FALSE) // Prevents portals spawned by jaunter/handtele from floating into space when relocated to an adjacent tile.
 	return TRUE
 
 /obj/effect/portal/attackby(obj/item/W, mob/user, params)
