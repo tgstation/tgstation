@@ -51,7 +51,7 @@
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/bot/vibebot/proc/remove_colors()
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
