@@ -1,4 +1,5 @@
 #define DOOR_CLOSE_WAIT 60 ///Default wait until doors autoclose
+#define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
 /obj/machinery/door
 	name = "door"
 	desc = "It opens and closes."
@@ -38,15 +39,22 @@
 	var/assemblytype //the type of door frame to drop during deconstruction
 	var/datum/effect_system/spark_spread/spark_system
 	var/real_explosion_block //ignore this, just use explosion_block
-	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
-	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
+	/// If TRUE, this door will always open on red alert.
+	var/red_alert_access = FALSE
+	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access.
+	var/unres_sides = 0
 	/// Whether or not the door can crush mobs.
 	var/can_crush = TRUE
 	/// Cyclelinking for airlocks that aren't on the same X or Y coord as the target and constructed airlocks and windoors.
 	var/closeOtherId
-	var/list/close_others //Doors to close when this one opens.
-	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
+	/// Doors to close when this one opens.
+	var/list/close_others
+	/// TRUE means the door will automatically close the next time it's opened.
+	var/delayed_close_requested = FALSE
 	var/obj/item/electronics/airlock/electronics = null
+	var/cyclelinkeddir = 0
+	var/obj/machinery/door/cyclelinkeddoor
+	var/shuttledocked = 0
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -97,6 +105,8 @@
 	. = ..()
 	if(closeOtherId)
 		update_other_id()
+	if(cyclelinkeddir)
+		setup_cycle_link()
 
 /obj/machinery/door/proc/set_up_access(obj/item/electronics/airlock/passed_electronics, move_to_door = FALSE)
 	if(!passed_electronics)
@@ -399,6 +409,7 @@
 	if(operating)
 		return
 	try_close_others()
+	try_close_linked_airlock()
 	operating = TRUE
 	do_animate("opening")
 	set_opacity(0)
@@ -464,6 +475,38 @@
 				other_door.delayed_close_requested = TRUE
 			else
 				addtimer(CALLBACK(other_door, .proc/close), 2)
+
+/obj/machinery/door/proc/try_close_linked_airlock()
+	if(cyclelinkeddoor)
+		if(!shuttledocked && !emergency && !cyclelinkeddoor.shuttledocked && !cyclelinkeddoor.emergency)
+			if(cyclelinkeddoor.operating)
+				cyclelinkeddoor.delayed_close_requested = TRUE
+			else
+				addtimer(CALLBACK(cyclelinkeddoor, .proc/close), 2)
+
+/obj/machinery/door/proc/setup_cycle_link()
+	if (cyclelinkeddoor)
+		cyclelinkeddoor.cyclelinkeddoor = null
+		cyclelinkeddoor = null
+	if (!cyclelinkeddir)
+		return
+	var/limit = DOOR_VISION_DISTANCE
+	var/turf/T = get_turf(src)
+	var/obj/machinery/door/FoundDoor
+	do
+		T = get_step(T, cyclelinkeddir)
+		FoundDoor = locate(/obj/machinery/door/airlock) in T
+		if(!FoundDoor)
+			FoundDoor = locate(/obj/machinery/door/window) in T
+		if (FoundDoor && FoundDoor.cyclelinkeddir != get_dir(FoundDoor, src))
+			FoundDoor = null
+		limit--
+	while(!FoundDoor && limit)
+	if (!FoundDoor)
+		log_mapping("[src] at [AREACOORD(src)] failed to find a valid door to cyclelink with!")
+		return
+	FoundDoor.cyclelinkeddoor = src
+	cyclelinkeddoor = FoundDoor
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
@@ -551,3 +594,4 @@
 
 
 #undef DOOR_CLOSE_WAIT
+#undef DOOR_VISION_DISTANCE

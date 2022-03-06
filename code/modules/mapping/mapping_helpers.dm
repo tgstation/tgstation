@@ -107,35 +107,37 @@
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return
-	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
-	if(!airlock)
-		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
-	else
-		payload(airlock)
+	var/obj/machinery/door/door = locate(/obj/machinery/door/airlock) in loc
+	if(!door)
+		door = locate(/obj/machinery/door/window) in loc
+	if(!door)
+		log_mapping("[src] failed to find an airlock or windoor at [AREACOORD(src)].")
+		return
+	payload(door)
 
-/obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
+/obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/payload)
 	return
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper
-	name = "airlock cyclelink helper"
+	name = "airlock/windoor cyclelink helper"
 	icon_state = "airlock_cyclelink_helper"
 
-/obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.cyclelinkeddir)
-		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] cyclelinkeddir, but it's already set!")
+/obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/door)
+	if(door.cyclelinkeddir)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [door] cyclelinkeddir, but it's already set!")
 	else
-		airlock.cyclelinkeddir = dir
+		door.cyclelinkeddir = dir
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi
-	name = "airlock multi-cyclelink helper"
+	name = "airlock/windoor multi-cyclelink helper"
 	icon_state = "airlock_multicyclelink_helper"
 	var/cycle_id
 
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.closeOtherId)
-		log_mapping("[src] at [AREACOORD(src)] tried to set [airlock] closeOtherId, but it's already set!")
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/door)
+	if(door.closeOtherId)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [door] closeOtherId, but it's already set!")
 	else
-		airlock.closeOtherId = cycle_id
+		door.closeOtherId = cycle_id
 
 /obj/effect/mapping_helpers/airlock/locked
 	name = "airlock lock helper"
@@ -149,11 +151,11 @@
 
 
 /obj/effect/mapping_helpers/airlock/unres
-	name = "airlock unresctricted side helper"
+	name = "airlock/windoor unrestricted side helper"
 	icon_state = "airlock_unres_helper"
 
-/obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
-	airlock.unres_sides ^= dir
+/obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/door)
+	door.unres_sides ^= dir
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"

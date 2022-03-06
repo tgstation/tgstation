@@ -208,6 +208,7 @@
 		if(obj_flags & EMAGGED)
 			return 0
 	try_close_others()
+	try_close_linked_airlock()
 	if(!operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")

@@ -80,7 +80,6 @@
 
 #define DOOR_CLOSE_WAIT 60 /// Time before a door closes, if not overridden
 
-#define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
 
 /obj/machinery/door/airlock
 	name = "airlock"
@@ -129,9 +128,6 @@
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
 
-	var/cyclelinkeddir = 0
-	var/obj/machinery/door/airlock/cyclelinkedairlock
-	var/shuttledocked = 0
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
 
@@ -173,8 +169,6 @@
 
 /obj/machinery/door/airlock/LateInitialize()
 	. = ..()
-	if (cyclelinkeddir)
-		cyclelinkairlock()
 	if(abandoned)
 		var/outcome = rand(1,100)
 		switch(outcome)
@@ -205,33 +199,11 @@
 	if(id_tag)
 		id_tag = "[port.id]_[id_tag]"
 
-/obj/machinery/door/airlock/proc/cyclelinkairlock()
-	if (cyclelinkedairlock)
-		cyclelinkedairlock.cyclelinkedairlock = null
-		cyclelinkedairlock = null
-	if (!cyclelinkeddir)
-		return
-	var/limit = DOOR_VISION_DISTANCE
-	var/turf/T = get_turf(src)
-	var/obj/machinery/door/airlock/FoundDoor
-	do
-		T = get_step(T, cyclelinkeddir)
-		FoundDoor = locate() in T
-		if (FoundDoor && FoundDoor.cyclelinkeddir != get_dir(FoundDoor, src))
-			FoundDoor = null
-		limit--
-	while(!FoundDoor && limit)
-	if (!FoundDoor)
-		log_mapping("[src] at [AREACOORD(src)] failed to find a valid airlock to cyclelink with!")
-		return
-	FoundDoor.cyclelinkedairlock = src
-	cyclelinkedairlock = FoundDoor
-
 /obj/machinery/door/airlock/vv_edit_var(var_name)
 	. = ..()
 	switch (var_name)
 		if (NAMEOF(src, cyclelinkeddir))
-			cyclelinkairlock()
+			setup_cycle_link()
 
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
@@ -334,10 +306,10 @@
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
-	if (cyclelinkedairlock)
-		if (cyclelinkedairlock.cyclelinkedairlock == src)
-			cyclelinkedairlock.cyclelinkedairlock = null
-		cyclelinkedairlock = null
+	if (cyclelinkeddoor)
+		if (cyclelinkeddoor.cyclelinkeddoor == src)
+			cyclelinkeddoor.cyclelinkeddoor = null
+		cyclelinkeddoor = null
 	if(id_tag)
 		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
@@ -1155,13 +1127,7 @@
 		addtimer(CALLBACK(closeOther, .proc/close), 2)
 
 	try_close_others()
-
-	if(cyclelinkedairlock)
-		if(!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency)
-			if(cyclelinkedairlock.operating)
-				cyclelinkedairlock.delayed_close_requested = TRUE
-			else
-				addtimer(CALLBACK(cyclelinkedairlock, .proc/close), 2)
+	try_close_linked_airlock()
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
@@ -1643,5 +1609,3 @@
 #undef AIRLOCK_DENY_ANIMATION_TIME
 
 #undef DOOR_CLOSE_WAIT
-
-#undef DOOR_VISION_DISTANCE
