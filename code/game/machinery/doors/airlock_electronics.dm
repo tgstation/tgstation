@@ -99,3 +99,12 @@
 	if(holder)
 		return holder
 	return src
+
+/obj/item/electronics/airlock/proc/Clone()
+	var/obj/item/electronics/airlock/new_electronics = new()
+	new_electronics.accesses = accesses.Copy()
+	new_electronics.one_access = one_access
+	new_electronics.unres_sides = unres_sides
+	new_electronics.passed_name = passed_name
+	new_electronics.passed_cycle_id = passed_cycle_id
+	return new_electronics

@@ -18,18 +18,18 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	network_id = NETWORK_DOOR_AIRLOCKS
 	set_dir_on_move = FALSE
-	var/obj/item/electronics/airlock/electronics = null
 	var/reinf = 0
 	var/shards = 2
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
 
-/obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
+/obj/machinery/door/window/Initialize(mapload, set_dir)
 	. = ..()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
 		setDir(set_dir)
+	update_unres_sides()
 	if(LAZYLEN(req_access))
 		icon_state = "[icon_state]"
 		base_state = icon_state
@@ -39,19 +39,6 @@
 		debris += new /obj/item/stack/rods(src, rods)
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
-
-	if(unres_sides)
-		//remove unres_sides from directions it can't be bumped from
-		switch(dir)
-			if(NORTH,SOUTH)
-				unres_sides &= ~EAST
-				unres_sides &= ~WEST
-			if(EAST,WEST)
-				unres_sides &= ~NORTH
-				unres_sides &= ~SOUTH
-
-	src.unres_sides = unres_sides
-	update_appearance(UPDATE_ICON)
 
 	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
 
@@ -85,6 +72,19 @@
 		return
 
 	set_light(l_range = 0)
+
+/obj/machinery/door/window/update_unres_sides()
+	if(!unres_sides)
+		return
+	//remove unres_sides from directions it can't be bumped from
+	switch(dir)
+		if(NORTH,SOUTH)
+			unres_sides &= ~EAST
+			unres_sides &= ~WEST
+		if(EAST,WEST)
+			unres_sides &= ~NORTH
+			unres_sides &= ~SOUTH
+	return ..()
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
@@ -207,6 +207,7 @@
 	if(forced < 2)
 		if(obj_flags & EMAGGED)
 			return 0
+	try_close_others()
 	if(!operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
@@ -216,12 +217,16 @@
 	set_density(FALSE)
 	air_update_turf(TRUE, FALSE)
 	update_freelook_sight()
-
 	if(operating == 1) //emag again
 		operating = FALSE
+	if(delayed_close_requested)
+		delayed_close_requested = FALSE
+		addtimer(CALLBACK(src, .proc/close), 1)
 	return 1
 
 /obj/machinery/door/window/close(forced=FALSE)
+	if(density)
+		return TRUE
 	if (operating)
 		return 0
 	if(!forced)
@@ -241,6 +246,7 @@
 	sleep(10)
 
 	operating = FALSE
+	delayed_close_requested = FALSE
 	return 1
 
 /obj/machinery/door/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -414,7 +420,6 @@
 			qdel(src)
 			return TRUE
 	return FALSE
-
 
 /obj/machinery/door/window/brigdoor
 	name = "secure door"

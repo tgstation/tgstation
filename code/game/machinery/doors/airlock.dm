@@ -110,10 +110,7 @@
 	var/lights = TRUE // bolt lights show by default
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
-	var/closeOtherId //Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/obj/machinery/door/airlock/closeOther
-	var/list/obj/machinery/door/airlock/close_others = list()
-	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
 	var/obj/item/note //Any papers pinned to the airlock
 	/// The seal on the airlock
@@ -135,7 +132,6 @@
 	var/cyclelinkeddir = 0
 	var/obj/machinery/door/airlock/cyclelinkedairlock
 	var/shuttledocked = 0
-	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
 
@@ -179,8 +175,6 @@
 	. = ..()
 	if (cyclelinkeddir)
 		cyclelinkairlock()
-	if(closeOtherId)
-		update_other_id()
 	if(abandoned)
 		var/outcome = rand(1,100)
 		switch(outcome)
@@ -210,14 +204,6 @@
 /obj/machinery/door/airlock/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	if(id_tag)
 		id_tag = "[port.id]_[id_tag]"
-
-/obj/machinery/door/airlock/proc/update_other_id()
-	for(var/obj/machinery/door/airlock/Airlock in GLOB.airlocks)
-		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
-			if(!(Airlock in close_others))
-				close_others += Airlock
-			if(!(src in Airlock.close_others))
-				Airlock.close_others += src
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
@@ -352,11 +338,6 @@
 		if (cyclelinkedairlock.cyclelinkedairlock == src)
 			cyclelinkedairlock.cyclelinkedairlock = null
 		cyclelinkedairlock = null
-	if(close_others) //remove this airlock from the list of every linked airlock
-		closeOtherId = null
-		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
-			otherlock.close_others -= src
-		close_others.Cut()
 	if(id_tag)
 		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
@@ -585,10 +566,6 @@
 
 /obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
-	if(closeOtherId)
-		. += span_warning("This airlock cycles on ID: [sanitize(closeOtherId)].")
-	else if(!closeOtherId)
-		. += span_warning("This airlock does not cycle.")
 	if(obj_flags & EMAGGED)
 		. += span_warning("Its access panel is smoking slightly.")
 	if(note)
@@ -1177,13 +1154,7 @@
 	if(closeOther != null && istype(closeOther, /obj/machinery/door/airlock))
 		addtimer(CALLBACK(closeOther, .proc/close), 2)
 
-	if(close_others)
-		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
-			if(!shuttledocked && !emergency && !otherlock.shuttledocked && !otherlock.emergency)
-				if(otherlock.operating)
-					otherlock.delayed_close_requested = TRUE
-				else
-					addtimer(CALLBACK(otherlock, .proc/close), 2)
+	try_close_others()
 
 	if(cyclelinkedairlock)
 		if(!shuttledocked && !emergency && !cyclelinkedairlock.shuttledocked && !cyclelinkedairlock.emergency)

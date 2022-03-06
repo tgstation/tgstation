@@ -40,11 +40,18 @@
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
-	var/can_crush = TRUE /// Whether or not the door can crush mobs.
-
+	/// Whether or not the door can crush mobs.
+	var/can_crush = TRUE
+	/// Cyclelinking for airlocks that aren't on the same X or Y coord as the target and constructed airlocks and windoors.
+	var/closeOtherId
+	var/list/close_others //Doors to close when this one opens.
+	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
+	var/obj/item/electronics/airlock/electronics = null
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
+	if(closeOtherId)
+		. += span_warning("This door cycles on ID: [sanitize(closeOtherId)].")
 	if(red_alert_access)
 		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
@@ -86,6 +93,56 @@
 	explosion_block = EXPLOSION_BLOCK_PROC
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 
+/obj/machinery/door/LateInitialize()
+	. = ..()
+	if(closeOtherId)
+		update_other_id()
+
+/obj/machinery/door/proc/set_up_access(obj/item/electronics/airlock/passed_electronics, move_to_door = FALSE)
+	if(!passed_electronics)
+		return
+	if(!istype(passed_electronics))
+		return
+
+	if(move_to_door)
+		electronics = passed_electronics
+	else
+		electronics = passed_electronics.Clone()
+	electronics.forceMove(src)
+
+	if(electronics.one_access)
+		req_one_access = electronics.accesses
+	else
+		req_access = electronics.accesses
+
+	if(electronics.passed_name)
+		name = electronics.passed_name
+
+	if(electronics.unres_sides)
+		unres_sides = electronics.unres_sides
+		update_unres_sides()
+
+	if(electronics.passed_cycle_id)
+		closeOtherId = electronics.passed_cycle_id
+		update_other_id()
+
+/obj/machinery/door/proc/update_other_id()
+	message_admins("update_other_id() called!")
+	for(var/obj/machinery/door/door in GLOB.airlocks)
+		if(door == src)
+			continue
+		LAZYINITLIST(close_others)
+		if(LAZYFIND(close_others, door))
+			continue
+		if(door.closeOtherId == closeOtherId)
+			LAZYADD(close_others, door)
+			LAZYADD(door.close_others, src)
+
+/obj/machinery/door/proc/update_unres_sides()
+	if(!unres_sides)
+		return
+	update_appearance(UPDATE_ICON)
+
 /obj/machinery/door/proc/set_init_door_layer()
 	if(density)
 		layer = closingLayer
@@ -99,6 +156,11 @@
 		qdel(spark_system)
 		spark_system = null
 	air_update_turf(TRUE, FALSE)
+	if(LAZYLEN(close_others)) //remove this door from the list of every linked door
+		closeOtherId = null
+		for(var/obj/machinery/door/other_door as anything in close_others)
+			LAZYREMOVE(other_door.close_others, src)
+		LAZYNULL(close_others)
 	return ..()
 
 /**
@@ -334,9 +396,10 @@
 
 /obj/machinery/door/proc/open()
 	if(!density)
-		return 1
+		return TRUE
 	if(operating)
 		return
+	try_close_others()
 	operating = TRUE
 	do_animate("opening")
 	set_opacity(0)
@@ -352,6 +415,9 @@
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
+	if(delayed_close_requested)
+		delayed_close_requested = FALSE
+		addtimer(CALLBACK(src, .proc/close), 1)
 	return 1
 
 /obj/machinery/door/proc/close()
@@ -383,12 +449,22 @@
 
 	if(!can_crush)
 		return TRUE
-
+	delayed_close_requested = FALSE
 	if(safe)
 		CheckForMobs()
 	else
 		crush()
 	return TRUE
+
+/obj/machinery/door/proc/try_close_others()
+	if(!emergency && LAZYLEN(close_others))
+		for(var/obj/machinery/door/other_door as anything in close_others)
+			if(other_door.emergency)
+				continue
+			if(other_door.operating)
+				other_door.delayed_close_requested = TRUE
+			else
+				addtimer(CALLBACK(other_door, .proc/close), 2)
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))

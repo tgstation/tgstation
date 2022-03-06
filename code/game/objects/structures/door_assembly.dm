@@ -244,30 +244,18 @@
 				to_chat(user, span_notice("You finish the airlock."))
 				var/obj/machinery/door/airlock/door
 				if(glass)
-					door = new glass_type( loc )
+					door = new glass_type(loc)
 				else
-					door = new airlock_type( loc )
+					door = new airlock_type(loc)
 				door.setDir(dir)
-				door.unres_sides = electronics.unres_sides
-				//door.req_access = req_access
-				door.electronics = electronics
+				door.set_up_access(electronics, move_to_door = TRUE)
 				door.heat_proof = heat_proof_finished
 				door.security_level = 0
-				if(electronics.one_access)
-					door.req_one_access = electronics.accesses
-				else
-					door.req_access = electronics.accesses
 				if(created_name)
 					door.name = created_name
-				else if(electronics.passed_name)
-					door.name = sanitize(electronics.passed_name)
-				else
+				else if(!electronics.passed_name)
 					door.name = base_name
-				if(electronics.passed_cycle_id)
-					door.closeOtherId = electronics.passed_cycle_id
-					door.update_other_id()
 				door.previous_airlock = previous_assembly
-				electronics.forceMove(door)
 				door.update_appearance()
 				qdel(src)
 	else
