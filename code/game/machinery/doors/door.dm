@@ -127,7 +127,6 @@
 		update_other_id()
 
 /obj/machinery/door/proc/update_other_id()
-	message_admins("update_other_id() called!")
 	for(var/obj/machinery/door/door in GLOB.airlocks)
 		if(door == src)
 			continue
