@@ -243,7 +243,7 @@
 	build_path = /obj/machinery/computer/libraryconsole/bookmanagement
 
 /obj/item/circuitboard/computer/libraryconsole/screwdriver_act(mob/living/user, obj/item/tool)
-	if(build_path == /obj/machinery/computer/bookmanagement)
+	if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
 		name = "Library Visitor Console (Computer Board)"
 		build_path = /obj/machinery/computer/libraryconsole
 		to_chat(user, span_notice("Defaulting access protocols."))

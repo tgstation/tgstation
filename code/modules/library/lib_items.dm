@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 				name = newtitle
 				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
 			if("Contents")
-				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = MAX_PAPER_LENGTH, multiline = TRUE)
+				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", multiline = TRUE)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
@@ -370,7 +370,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 					return
 				book_data.set_content(html_decode(content))
 			if("Author")
-				var/newauthor = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
+				var/author = tgui_input_text(user, "Write the author's name", "Author Name")
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!author)

@@ -10471,7 +10471,7 @@
 /area/maintenance/starboard/lesser)
 "ciS" = (
 /obj/structure/table,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/structure/sign/poster/official/here_for_your_safety{
 	pixel_y = -32
@@ -51308,7 +51308,7 @@
 /area/commons/storage/primary)
 "rlb" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/structure/window/reinforced{
 	dir = 1
 	},

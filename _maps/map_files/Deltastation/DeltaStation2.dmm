@@ -57284,7 +57284,7 @@
 /area/hallway/secondary/exit/departure_lounge)
 "kii" = (
 /obj/structure/table,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
 /area/security/prison)
@@ -72287,7 +72287,7 @@
 /area/engineering/atmos/project)
 "nSP" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/grimy,
 /area/service/library)
