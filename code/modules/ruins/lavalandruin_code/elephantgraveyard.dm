@@ -52,7 +52,6 @@
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
 	color = "#B5651D"
-	environment_type = "wasteland"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
@@ -157,6 +156,9 @@
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
+		else
+			//empty grave
+			return
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
 	if(!opened)

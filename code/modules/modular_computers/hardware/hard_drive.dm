@@ -48,9 +48,13 @@
 	if(F in stored_files)
 		return FALSE
 
+	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDING)
+
 	F.holder = src
 	stored_files.Add(F)
 	recalculate_size()
+
+	SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_ADDED)
 	return TRUE
 
 // Use this proc to remove file from the drive. Returns 1 on success and 0 on failure. Contains necessary sanity checks.
@@ -65,8 +69,10 @@
 		return FALSE
 
 	if(F in stored_files)
+		SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_DELETING)
 		stored_files -= F
 		recalculate_size()
+		SEND_SIGNAL(F, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 		return TRUE
 	else
 		return FALSE

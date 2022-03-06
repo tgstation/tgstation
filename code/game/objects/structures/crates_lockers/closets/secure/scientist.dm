@@ -32,7 +32,7 @@
 	. = ..()
 	new /obj/item/pushbroom(src)
 	new /obj/item/plunger(src)
-	new /obj/item/storage/bag/bio(src)
+	new /obj/item/storage/bag/xeno(src)
 	new /obj/item/storage/box/petridish(src)
 	new /obj/item/stack/ducts/fifty(src)
 	for(var/i in 1 to 2)

@@ -1603,6 +1603,20 @@
 	new /obj/item/knife/hunting(src)
 	new /obj/item/storage/box/papersack/meat(src)
 
+/obj/item/storage/box/hero/mothpioneer
+	name = "Mothic Fleet Pioneer - 2100's."
+	desc = "Some claim that the fleet engineers are directly responsible for most modern advancement in spacefaring design. Although the exact details of their past contributions are somewhat fuzzy, their ingenuity remains unmatched and unquestioned to this day."
+
+/obj/item/storage/box/hero/mothpioneer/PopulateContents()
+	new /obj/item/clothing/suit/mothcoat/original(src)
+	new /obj/item/clothing/head/mothcap(src)
+	new /obj/item/flashlight/lantern(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/stack/sheet/iron/fifty(src)
+	new /obj/item/stack/sheet/glass/fifty(src)
+
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"
 

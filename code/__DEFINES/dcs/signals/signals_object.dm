@@ -70,6 +70,10 @@
 /// from /obj/machinery/light_switch/set_lights(), sent to every switch in the area: (status)
 #define COMSIG_LIGHT_SWITCH_SET "light_switch_set"
 
+/// from /obj/machinery/fire_alarm/reset(), /obj/machinery/fire_alarm/alarm(): (status)
+#define COMSIG_FIREALARM_ON_TRIGGER "firealarm_trigger"
+#define COMSIG_FIREALARM_ON_RESET "firealarm_reset"
+
 // /obj access signals
 
 #define COMSIG_OBJ_ALLOWED "door_try_to_activate"
@@ -289,6 +293,10 @@
 
 // /obj/effect/proc_holder/spell signals
 
+///called from /obj/effect/proc_holder/spell/cast_check (src)
+#define COMSIG_MOB_PRE_CAST_SPELL "mob_cast_spell"
+	/// Return to cancel the cast from beginning.
+	#define COMPONENT_CANCEL_SPELL (1<<0)
 ///called from /obj/effect/proc_holder/spell/perform (src)
 #define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
 

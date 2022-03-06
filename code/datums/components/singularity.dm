@@ -294,10 +294,10 @@
 	var/dir2
 	var/dir3
 	switch (direction)
-		if (NORTH || SOUTH)
+		if (NORTH, SOUTH)
 			dir2 = EAST
 			dir3 = WEST
-		if (EAST || WEST)
+		if (EAST, WEST)
 			dir2 = NORTH
 			dir3 = SOUTH
 	var/turf/farthest_perpendicular_turf = farthest_turf

@@ -263,6 +263,15 @@
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/food/spidereggs/processed
+	name = "spider eggs"
+	desc = "A cluster of juicy spider eggs. Pops in your mouth without making you sick."
+	icon_state = "spidereggs"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("cobwebs" = 1)
+	foodtypes = MEAT 
+	w_class = WEIGHT_CLASS_TINY
+
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
@@ -314,7 +323,7 @@
 	icon_state = "chocoorange"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 1)
 	tastes = list("chocolate" = 3, "oranges" = 1)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtypes = JUNKFOOD | SUGAR | ORANGES
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -338,6 +347,7 @@
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
 
 /obj/item/food/roastparsnip
 	name = "roast parsnip"

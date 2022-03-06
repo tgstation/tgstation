@@ -52,6 +52,16 @@
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
 	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
+/obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(isaicamera(user) || issilicon(user))
+		return .
+
+	if (isnull(held_item) && Adjacent(user))
+		context[SCREENTIP_CONTEXT_LMB] = "Open"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/door/check_access_list(list/access_list)
 	if(red_alert_access && SSsecurity_level.current_level >= SEC_LEVEL_RED)
 		return TRUE
@@ -62,6 +72,7 @@
 	set_init_door_layer()
 	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
+	register_context()
 	GLOB.airlocks += src
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -216,8 +227,8 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/door/proc/unrestricted_side(mob/M) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
-	return get_dir(src, M) & unres_sides
+/obj/machinery/door/proc/unrestricted_side(mob/opener) //Allows for specific side of airlocks to be unrestrected (IE, can exit maint freely, but need access to enter)
+	return get_dir(src, opener) & unres_sides
 
 /obj/machinery/door/proc/try_to_weld(obj/item/weldingtool/W, mob/user)
 	return
