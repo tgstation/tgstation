@@ -119,25 +119,20 @@
 		if(density)
 			if(isalienadult(living_user) || issilicon(living_user))
 				context[SCREENTIP_CONTEXT_LMB] = "Open"
-				context[SCREENTIP_CONTEXT_RMB] = "Open"
 				return CONTEXTUAL_SCREENTIP_SET
 			if(!living_user.combat_mode)
 				if(ishuman(living_user))
 					context[SCREENTIP_CONTEXT_LMB] = "Knock"
-					context[SCREENTIP_CONTEXT_RMB] = "Knock"
 					return CONTEXTUAL_SCREENTIP_SET
 			else
 				if(ismonkey(living_user))
 					context[SCREENTIP_CONTEXT_LMB] = "Attack"
-					context[SCREENTIP_CONTEXT_RMB] = "Attack"
 					return CONTEXTUAL_SCREENTIP_SET
 				if(ishuman(living_user))
 					context[SCREENTIP_CONTEXT_LMB] = "Bash"
-					context[SCREENTIP_CONTEXT_RMB] = "Bash"
 					return CONTEXTUAL_SCREENTIP_SET
 		else if(issilicon(living_user))
 			context[SCREENTIP_CONTEXT_LMB] = "Close"
-			context[SCREENTIP_CONTEXT_RMB] = "Close"
 			return CONTEXTUAL_SCREENTIP_SET
 		return .
 
