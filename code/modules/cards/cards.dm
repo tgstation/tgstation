@@ -36,7 +36,11 @@
 		card.update_appearance()
 	update_appearance()
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	
+
+	// TODO
+	// we probably should add a message to viewers to indicate that someone just got smacked in the face with a deck of cards or cardhand 
+	//user.visible_message(span_notice("[user] checks [user.p_their()] card."), span_notice("The card reads: [cardname]."))
+
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
 
