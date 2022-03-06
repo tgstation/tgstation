@@ -1,7 +1,17 @@
-#define PAINTINGS_DATA_FORMAT_VERSION 1
+#define PAINTINGS_DATA_FORMAT_VERSION 2
+
+// Patronage thresholds for paintings. Different cosmetic frames become available as more credits are spent on the patronage.
+#define PATRONAGE_OK_FRAME PAYCHECK_ASSISTANT * 3 // 150 credits, as of early 2022
+#define PATRONAGE_NICE_FRAME PATRONAGE_OK_FRAME * 2.5
+#define PATRONAGE_GREAT_FRAME PATRONAGE_NICE_FRAME * 2
+#define PATRONAGE_EXCELLENT_FRAME PATRONAGE_GREAT_FRAME * 2
+#define PATRONAGE_AMAZING_FRAME PATRONAGE_EXCELLENT_FRAME * 2
+#define PATRONAGE_SUPERB_FRAME PATRONAGE_AMAZING_FRAME * 2
+#define PATRONAGE_LEGENDARY_FRAME PATRONAGE_SUPERB_FRAME * 2
+
 /*
 {
-	"version":1
+	"version":2
 	"paintings":[
 		{
 			"md5":"2e117d9d372fb6823bd81d3542a419d6", //unique identifier
@@ -16,7 +26,8 @@
 			"credit_value" : 999,
 			"width" : 24,
 			"height" : 24,
-			"medium" : "Oil on canvas"
+			"medium" : "Oil on canvas",
+			"frame_type" : "bones"
 		},
 	]
 }
@@ -41,8 +52,8 @@
 	var/patron_ckey
 	/// Patron name
 	var/patron_name
-	/// The aspect the frame will assume when the canvas put in it.
-	var/frame_type
+	/// The appearance of the frame overlay that appears when the painting if framed.
+	var/frame_type = "simple"
 	/// Amount paid by last patron for this painting
 	var/credit_value = 0
 	/// painting width
@@ -67,6 +78,7 @@
 	width = json_data["width"]
 	height = json_data["height"]
 	medium = json_data["medium"]
+	frame_type = json_data["frame_type"]
 	loaded_from_json = TRUE
 
 /datum/painting/proc/to_json()
@@ -84,6 +96,7 @@
 	new_data["width"] = width
 	new_data["height"] = height
 	new_data["medium"] = medium
+	new_data["frame_type"] = frame_type
 	return new_data
 
 /// Only returns paintings with 23x23 or 24x24 sizes fitting AI display icon.
@@ -99,6 +112,23 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 	/// A list of /datum/paintings saved or ready to be saved this round.
 	var/list/paintings = list()
+
+	///The list of available frame reskins (they are purely cosmetic) and the associated patronage amount required for them.
+	var/list/frame_types_by_patronage_tier = list(
+		"simple" = 0,
+		"iron" = PATRONAGE_OK_FRAME,
+		"bamboo" = PATRONAGE_OK_FRAME,
+		"bones" = PATRONAGE_OK_FRAME,
+		"bronze" = PATRONAGE_NICE_FRAME,
+		"clown" = PATRONAGE_NICE_FRAME,
+		"frog" = PATRONAGE_NICE_FRAME,
+		"silver" = PATRONAGE_GREAT_FRAME,
+		"necropolis" = PATRONAGE_GREAT_FRAME,
+		"gold" = PATRONAGE_EXCELLENT_FRAME,
+		"diamond" = PATRONAGE_AMAZING_FRAME,
+		"rainbow" = PATRONAGE_SUPERB_FRAME,
+		"supermatter" = PATRONAGE_LEGENDARY_FRAME
+		)
 
 /datum/controller/subsystem/persistent_paintings/Initialize(start_timeofday)
 	var/json_file = file("data/paintings.json")
@@ -186,6 +216,31 @@ SUBSYSTEM_DEF(persistent_paintings)
 			fdel(json_file)
 			WRITE_FILE(json_file, json_encode(result))
 			return update_format(result)
+		if(1) //Makes sure old paintings get a cosmetic frame type from their patronage tiers.
+			fcopy("data/paintings.json","data/paintings_migration_backup_1.json") //Better safe than sorry
+			current_data["version"] = 2
+			for(var/painting_data in current_data["paintings"])
+				painting_data["tags"] |= "Migrated from version 1"
+				var/credit_value = painting_data["credit_value"]
+				var/list/possible_frame_types = get_available_frames(credit_value, TRUE)
+				painting_data["frame_type"] = pick(possible_frame_types) || "simple"
+			return update_format(current_data)
+
+/**
+ * returns a list of cosmetic frames which patronage tier values are are within credit_value.
+ * If only_current_tier is TRUE, the list will be populated only by the ones from the highest tier.
+ */
+/datum/controller/subsystem/persistent_paintings/proc/get_available_frames(credit_value, only_current_tier = FALSE)
+	var/list/frame_candidates = list()
+	var/current_tier_patronage = 0
+	for(var/frametype in frame_types_by_patronage_tier)
+		var/required_patronage = frame_types_by_patronage_tier[frametype]
+		if(credit_value >= required_patronage)
+			if(only_current_tier && current_tier_patronage < required_patronage)
+				current_tier_patronage = required_patronage
+				frame_candidates.Cut()
+			frame_candidates += frametype
+	return frame_candidates
 
 /// Saves all persistent paintings
 /datum/controller/subsystem/persistent_paintings/proc/save_paintings()
@@ -205,3 +260,11 @@ SUBSYSTEM_DEF(persistent_paintings)
 		painting_data += list(painting.to_json())
 	all_data["paintings"] = painting_data
 	WRITE_FILE(json_file, json_encode(all_data))
+
+#undef PATRONAGE_OK_FRAME
+#undef PATRONAGE_NICE_FRAME
+#undef PATRONAGE_GREAT_FRAME
+#undef PATRONAGE_EXCELLENT_FRAME
+#undef PATRONAGE_AMAZING_FRAME
+#undef PATRONAGE_SUPERB_FRAME
+#undef PATRONAGE_LEGENDARY_FRAME
