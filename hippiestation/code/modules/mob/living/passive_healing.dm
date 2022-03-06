@@ -1,45 +1,54 @@
-/mob/living/carbon/human/proc/passive_healing(/mob/living/carbon/human/H)
-	//ADD CALLBACK WITH RANDOM TIMER TO SIMULATE EVERYONE'S DIFFERENT RATE OF HEALING, OR TO DESYNC THE LOAD TO DIVERT LAG SPIKES
-		/var/healDesyncTimer = rand(1,5)
-		//clone loss will be healed at a factor of 0.1 compared to everything else, you should really get into cryo
-		//link the relevant damages into their organs or just put it here? hmm
+/mob/living/carbon/human/Life()	//healing brute & burn damage
+	. = ..()
+	var/list/parts = get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)
+	var/nutrition_ratio = 0
+	var/sendhealmessage = TRUE	//don't want to send the message twice or more times in one go
+	if(!parts.len)	//don't bother wasting cycles on this if there's nothing to even heal
+		return
 
+	switch(nutrition)	//stolen from blood.dm shamelessly, no need to adjust nutrition as blood regeneration already handles it
+		if(0 to NUTRITION_LEVEL_STARVING)
+			nutrition_ratio = 0.1	//lowest number that is accepted
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+			nutrition_ratio = 0.11
+		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+			nutrition_ratio = 0.13
+		if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+			nutrition_ratio = 0.16
+		else
+			nutrition_ratio = 0.2
+	if(satiety > 80)
+		nutrition_ratio *= 0.25
 
+	for(var/obj/item/bodypart/L in parts)	//stolen from heal.dm with extra tweaks
+		if(L.brute_dam > 0)
+			if(L.burn_dam > 0)	//both brute and burn damage detected
+				if(L.heal_damage(nutrition_ratio, nutrition_ratio, null, BODYPART_ORGANIC))	//heal both damages
+					update_damage_overlays()
+				if(prob(1) && sendhealmessage)
+					sendhealmessage = FALSE
+					to_chat(src, "<span class='notice'>You feel your [L.name]'s bruising and burns recovering slowly.</span>")
+			else	//just brute damage detected
+				if(L.heal_damage(nutrition_ratio, null, null, BODYPART_ORGANIC))	//heal brute only
+					update_damage_overlays()
+				if(prob(1) && sendhealmessage)
+					sendhealmessage = FALSE
+					to_chat(src, "<span class='notice'>You feel your [L.name]'s bruises slowly healing.</span>")
+		else if (L.burn_dam > 0)	//just burn damage
+			if(L.heal_damage(null, nutrition_ratio, null, BODYPART_ORGANIC))	//heal burn only
+				update_damage_overlays()
+			if(prob(1) && sendhealmessage)
+				sendhealmessage = FALSE
+				to_chat(src, "<span class='notice'>You feel your [L.name]'s burns improving slowly.</span>")
 
-
-		if(blood_volume < BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))
-			var/nutrition_ratio = 0
-			switch(nutrition)
-				if(0 to NUTRITION_LEVEL_STARVING)
-					nutrition_ratio = 0.2
-				if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
-					nutrition_ratio = 0.4
-				if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
-					nutrition_ratio = 0.6
-				if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
-					nutrition_ratio = 0.8
-				else
-					nutrition_ratio = 1
-			if(satiety > 80)
-				nutrition_ratio *= 1.25
-			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR)
-			blood_volume = min(BLOOD_VOLUME_NORMAL, blood_volume + 0.5 * nutrition_ratio)
-
-
-
-/obj/item/organ/liver/on_life()	//so this won't work if the liver is failing
+/obj/item/organ/liver/on_life()	//healing toxin damage
+	. = ..()
 	var/mob/living/carbon/C = owner
-	..()
-	var/toxinHealFactor = ((maxHealth - damage) / maxHealth) / 2	//0.5 tox damage heal when at 100 liver health, current % of damage to heal, based on liver damage. in theory at some point liver damage will cascade into failure, despite the heal rate
+	var/toxinHealFactor = ((maxHealth - damage) / maxHealth) / 4	//0.25 tox damage heal when at 100 liver health, current % of damage to heal, based on liver damage
 	C.adjustToxLoss(-toxinHealFactor, 0)
 
-							((100 - 10) / 100) / 2
-
-/obj/item/organ/brain/on_life()
+/obj/item/organ/brain/on_life()	//healing brain damage, inverse curve so higher damage = faster healing rate
+	. = ..()
 	var/mob/living/carbon/C = owner
-	..()
-	var/brainHealFactor = ((maxHealth + damage) / ((maxHealth + 1) - damage))  1.5	//higher healing rate the more damage the brain has, so to fully heal you really should get mannitol. simulates brain
-							((200 + 150) / (200 / (150 / 10)))	//26.25
-							((200 + 100) / (200 / (100 / 10)))	//15
-							((200 + 50) / (200 / (50 / 10)))	//6.25
-							((200 + 10) / (200 / (10 / 10)))	//1.05
+	var/brainHealFactor = (1 + (damage * (damage / (maxHealth / 2)))) / maxHealth	//higher healing rate the more damage the brain has, so to fully heal you really should get mannitol. 190 damage = 1.81 healed, 150 damage = 1.13 healed, 100 damage = 0.505 healed, 50 damage = 0.13 healed, 10 damage = 0.01 healed
+	C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -brainHealFactor)
