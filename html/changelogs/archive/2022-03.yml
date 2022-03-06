@@ -187,3 +187,28 @@
   - qol: The solar array areas are now lit by the sun.
   - qol: Solar assemblies now have different sprites for solar panel vs tracker.
   - imageadd: Solar panels and trackers have new sprites and a 2.5D effect.
+2022-03-06:
+  GoldenAlpharex:
+  - code_imp: Added a few more options for woman clothing auto-cropping, hopefully
+      to help making certain outfits look less scuffed.
+  - imageadd: Fixed the side views of the suits for woman, that previously looked
+      -very- scuffed, as a proof of concept for the new female auto-cropping masks.
+  Mothblocks:
+  - bugfix: Fixed vaccines not being able to be moved through chem buffers.
+  - bugfix: Fixed Roy Rogers and Sodium Thiopental not applying their effects.
+  - balance: Fake beer has been renamed from "Beer" to "Beer...?"
+  Oricana-16:
+  - rscadd: Added a usb port to fire alarms
+  axietheaxolotl:
+  - expansion: Brand-new Lesbian and Intersex pins!
+  - imageadd: New sprites for Lesbian and Intersex pins, and also re-does the already
+      existing pins.
+  cacogen:
+  - bugfix: Windoors created by the RCD are correctly named
+  - bugfix: Windoors created by the RCD work properly with require one access
+  - bugfix: Windoors with unrestricted directional access open properly when operated
+      from the same tile
+  - qol: Windoors have unrestricted directional access overlays like airlocks now
+  san7890:
+  - bugfix: The darkenening and lack-of-gravity on some lattices near the Space Hut
+      on DeltaStation have been resolved.
