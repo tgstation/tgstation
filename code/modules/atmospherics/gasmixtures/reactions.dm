@@ -1126,7 +1126,7 @@
 		location = pick(pipenet.members)
 	else if(isatom(holder))
 		location = holder
-	if (location && energy_released > PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
+	if (location && consumed_amount > PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP)
 		radiation_pulse(location, max_range = min(sqrt(consumed_amount) / PN_BZASE_RAD_RANGE_DIVISOR, 20), threshold = PN_BZASE_RAD_THRESHOLD_BASE * INVERSE(PN_BZASE_RAD_THRESHOLD_BASE + consumed_amount), chance = 50)
 		for(var/mob/living/carbon/L in location)
 			L.hallucination += consumed_amount
