@@ -527,38 +527,15 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 			say("Upload complete. Your uploaded title is now available on station newscasters.")
 			return TRUE
 		if("print_book")
-			if(!COOLDOWN_FINISHED(src, printer_cooldown))
-				say("Printer currently unavailable, please wait a moment.")
-				return
-			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
 			var/id = params["book_id"]
-			print_book(id)
+			attempt_print(CALLBACK(src, .proc/print_book, id))
 			return TRUE
 		if("print_bible")
-			if(!COOLDOWN_FINISHED(src, printer_cooldown))
-				say("Printer currently unavailable, please wait a moment.")
-				return
-			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
-			var/obj/item/storage/book/bible/holy_book = new(loc)
-			if(GLOB.bible_icon_state && GLOB.bible_inhand_icon_state)
-				holy_book.icon_state = GLOB.bible_icon_state
-				holy_book.inhand_icon_state = GLOB.bible_inhand_icon_state
-				holy_book.name = GLOB.bible_name
-				holy_book.deity_name = GLOB.deity
+			attempt_print(CALLBACK(src, .proc/print_bible))
 			return TRUE
 		if("print_poster")
-			if(!COOLDOWN_FINISHED(src, printer_cooldown))
-				say("Printer currently unavailable, please wait a moment.")
-				return
-			COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
-
 			var/poster_name = params["poster_name"]
-			var/poster_type = GLOB.printable_posters[poster_name]
-			if(!poster_type)
-				return
-
-			var/obj/item/poster/random_official/poster = new(loc, new poster_type)
-			poster.name = poster_name
+			attempt_print(CALLBACK(src, .proc/print_poster, poster_name))
 			return TRUE
 		if("lore_spawn")
 			if(obj_flags & EMAGGED && can_spawn_lore)
@@ -652,11 +629,40 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 	ignore_hash = TRUE
 	update_db_info()
 
+/// Call this proc to attempt a print. It will return false if the print failed, true otherwise, longside some ux
+/// Accepts a callback to call when the print "finishes"
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/attempt_print(datum/callback/call_after)
+	if(!COOLDOWN_FINISHED(src, printer_cooldown))
+		say("Printer currently unavailable, please wait a moment.")
+		return FALSE
+	COOLDOWN_START(src, printer_cooldown, PRINTER_COOLDOWN)
+	playsound(src, 'sound/machines/printer.ogg', 50)
+	addtimer(call_after, 4.1 SECONDS)
+	return TRUE
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_bible()
+	var/obj/item/storage/book/bible/holy_book = new(loc)
+	if(!GLOB.bible_icon_state || !GLOB.bible_inhand_icon_state)
+		return
+	holy_book.icon_state = GLOB.bible_icon_state
+	holy_book.inhand_icon_state = GLOB.bible_inhand_icon_state
+	holy_book.name = GLOB.bible_name
+	holy_book.deity_name = GLOB.deity
+
+/obj/machinery/computer/libraryconsole/bookmanagement/proc/print_poster(poster_name)
+	var/poster_type = GLOB.printable_posters[poster_name]
+	if(!poster_type)
+		return
+
+	var/obj/item/poster/random_official/poster = new(loc, new poster_type)
+	poster.name = poster_name
+
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_book(id)
 	if (!SSdbcore.Connect())
 		say("Connection to Archive has been severed. Aborting.")
 		can_connect = FALSE
 		return
+
 	var/datum/db_query/query_library_print = SSdbcore.NewQuery(
 		"SELECT * FROM [format_table_name("library")] WHERE id=:id AND isnull(deleted)",
 		list("id" = id)
@@ -665,7 +671,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 		qdel(query_library_print)
 		say("PRINTER ERROR! Failed to print document (0x0000000F)")
 		return
-	printer_cooldown = world.time + PRINTER_COOLDOWN
+
 	while(query_library_print.NextRow())
 		var/author = query_library_print.item[2]
 		var/title = query_library_print.item[3]
@@ -702,19 +708,19 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 	return ..()
 
 /obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, params)
-	if(istype(hitby, /obj/item/book) && !held_book)
+	if(istype(hitby, /obj/item/book))
 		user.transferItemToLoc(hitby, src)
+		if(held_book)
+			user.put_in_hands(held_book)
 		held_book = hitby
-		RegisterSignal(held_book, COMSIG_MOVABLE_MOVED, .proc/handle_book_move)
+		playsound(src, 'sound/machines/eject.ogg', 70)
 		return TRUE
 	return ..()
 
-/obj/machinery/libraryscanner/proc/handle_book_move(datum/parent)
-	SIGNAL_HANDLER
-	if(held_book?.loc == src)
-		return
-	UnregisterSignal(held_book, COMSIG_MOVABLE_MOVED)
-	held_book = null
+/obj/machinery/libraryscanner/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == held_book)
+		held_book = null
 
 /obj/machinery/libraryscanner/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -734,14 +740,14 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 
 	return data
 
-/obj/machinery/libraryscanner/ui_act(action, params)
+/obj/machinery/libraryscanner/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("scan")
 			if(cache?.compare(held_book.book_data))
-				say(span_robot("This book is already in my internal cache"))
+				say("This book is already in my internal cache")
 				return
 			cache = held_book.book_data.return_copy()
 			return TRUE
@@ -749,7 +755,8 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 			cache = null
 			return TRUE
 		if("eject")
-			held_book.forceMove(drop_location())
+			ui.user.put_in_hands(held_book)
+			playsound(src, 'sound/machines/eject.ogg', 70)
 			return TRUE
 
 /*
