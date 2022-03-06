@@ -1,6 +1,7 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
+import { marked } from 'marked';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Dropdown, Input, Modal, NoticeBox, NumberInput, LabeledList, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
@@ -560,7 +561,7 @@ export const Upload = (props, context) => {
     );
   }
   const contentHtml = {
-    __html: sanitizeText(cache_content),
+    __html: run_marked_default(sanitizeText(cache_content)),
   };
   return (
     <Box height="100%">
@@ -852,6 +853,33 @@ export const Forbidden = (props, context) => {
       <ForbiddenModal />
     </Box>
   );
+};
+
+const run_marked_default = value => {
+  // Override function, any links and images should
+  // kill any other marked tokens we don't want here
+  const walkTokens = token => {
+    switch (token.type) {
+      case 'url':
+      case 'autolink':
+      case 'reflink':
+      case 'link':
+      case 'image':
+        token.type = 'text';
+        // Once asset system is up change to some default image
+        // or rewrite for icon images
+        token.href = "";
+        break;
+    }
+  };
+  return marked(value, {
+    breaks: true,
+    smartypants: true,
+    smartLists: true,
+    walkTokens,
+    // Once assets are fixed might need to change this for them
+    baseUrl: 'thisshouldbreakhttp',
+  });
 };
 
 export const ScrollableSection = (props, context) => {
