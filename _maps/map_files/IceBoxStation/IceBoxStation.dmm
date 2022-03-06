@@ -9239,6 +9239,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"cfl" = (
+/obj/structure/cable,
+/turf/open/floor/wood/parquet,
+/area/service/bar/atrium)
 "cfr" = (
 /obj/machinery/vending/wardrobe/chef_wardrobe,
 /obj/structure/sign/poster/random{
@@ -23374,6 +23378,8 @@
 /obj/structure/sign/poster/random{
 	pixel_x = -32
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron/grimy,
 /area/service/bar/atrium)
 "iGC" = (
@@ -90225,7 +90231,7 @@ ckX
 mRX
 xZS
 gKr
-hdW
+cfl
 giZ
 hdW
 xCF
