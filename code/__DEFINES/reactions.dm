@@ -10,6 +10,8 @@
 /// The priority used to indicate that a reactions should run after all other types of reactions. Exclusively used for combustion reactions that produce fire or are freon.
 #define PRIORITY_FIRE 4
 
+/// An exponent used to make large volume gas mixtures significantly less likely to release rads. Used to prevent tritfires in distro from irradiating literally the entire station with no warning.
+#define ATMOS_RADIATION_VOLUME_EXP 3
 
 // Water Vapor:
 /// The temperature required for water vapor to condense.
@@ -231,6 +233,8 @@
 #define PN_TRITIUM_CONVERSION_MAX_TEMP 340
 /// The amount of energy proto-nitrate converting a mole of tritium into hydrogen releases.
 #define PN_TRITIUM_CONVERSION_ENERGY 10000
+/// The minimum released energy necessary for proto-nitrate to release radiation when converting tritium. (With a reaction vessel volume of [CELL_VOLUME])
+#define PN_TRITIUM_CONVERSION_RAD_RELEASE_THRESHOLD 10000
 /// A scaling factor for the range of the radiation pulses generated when proto-nitrate converts tritium to hydrogen.
 #define PN_TRITIUM_RAD_RANGE_DIVISOR 1.5
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate converts tritium to hydrogen.
@@ -242,6 +246,8 @@
 #define PN_BZASE_MAX_TEMP 280
 /// The amount of energy proto-nitrate breaking down a mole of BZ releases.
 #define PN_BZASE_ENERGY 60000
+/// The minimum released energy necessary for proto-nitrate to release rads when breaking down BZ (at a mix volume of [CELL_VOLUME]).
+#define PN_BZASE_RAD_RELEASE_THRESHOLD 60000
 /// A scaling factor for the range of the radiation pulses generated when proto-nitrate breaks down BZ.
 #define PN_BZASE_RAD_RANGE_DIVISOR 1.5
 /// A scaling factor for the threshold of the radiation pulses generated when proto-nitrate breaks down BZ.
