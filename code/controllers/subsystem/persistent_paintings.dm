@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 		"diamond" = PATRONAGE_AMAZING_FRAME,
 		"rainbow" = PATRONAGE_SUPERB_FRAME,
 		"supermatter" = PATRONAGE_LEGENDARY_FRAME
-		)
+			)
 
 /datum/controller/subsystem/persistent_paintings/Initialize(start_timeofday)
 	var/json_file = file("data/paintings.json")
@@ -172,61 +172,68 @@ SUBSYSTEM_DEF(persistent_paintings)
 	if(current_data["version"] && current_data["version"] == PAINTINGS_DATA_FORMAT_VERSION)
 		return current_data
 
-	var/current_format = current_data["version"] || 0
-	switch(current_format)
-		if(0)
-			fcopy("data/paintings.json","data/paintings_migration_backup_0.json") //Better safe than losing all metadata
-			var/list/result = list()
-			result["version"] = 1
-			var/list/data = list()
-			// Squash categories into tags
-			for(var/category in current_data)
-				for(var/old_data in current_data[category])
-					var/duplicate_found = FALSE
-					for(var/list/entry in data)
-						if(entry["md5"] == old_data["md5"])
-							entry["tags"] |= category
-							duplicate_found = TRUE
-							break
-					if(duplicate_found)
-						continue
-					var/old_png_path = "data/paintings/[category]/[old_data["md5"]].png"
-					var/new_png_path = "data/paintings/images/[old_data["md5"]].png"
-					fcopy(old_png_path,new_png_path)
-					fdel(old_png_path)
-					var/icon/painting_icon = new(new_png_path)
-					var/width = painting_icon.Width()
-					var/height = painting_icon.Height()
-					var/list/new_data = list()
-					new_data["md5"] = old_data["md5"]
-					new_data["title"] = old_data["title"] || "Untitled Artwork"
-					new_data["creator_ckey"] = old_data["ckey"] || ""
-					new_data["creator_name"] = "Anonymous"
-					new_data["creation_date"] = time2text(world.realtime) // Could use creation/modified file helpers in rustg
-					new_data["creation_round_id"] = GLOB.round_id
-					new_data["tags"] = list(category,"Migrated from version 0")
-					new_data["patron_ckey"] = ""
-					new_data["patron_name"] = ""
-					new_data["credit_value"] = 0
-					new_data["width"] = width
-					new_data["height"] = height
-					new_data["medium"] = "Spraypaint on canvas" //Let's go with most common tool.
-					data += list(new_data)
-			result["paintings"] = data
-			//We're going to save this immidiately this is non-recoverable operation
-			var/json_file = file("data/paintings.json")
-			fdel(json_file)
-			WRITE_FILE(json_file, json_encode(result))
-			return update_format(result)
-		if(1) //Makes sure old paintings get a cosmetic frame type from their patronage tiers.
-			fcopy("data/paintings.json","data/paintings_migration_backup_1.json") //Better safe than sorry
-			current_data["version"] = 2
-			for(var/painting_data in current_data["paintings"])
-				painting_data["tags"] |= "Migrated from version 1"
-				var/credit_value = painting_data["credit_value"]
-				var/list/possible_frame_types = get_available_frames(credit_value, TRUE)
-				painting_data["frame_type"] = pick(possible_frame_types) || "simple"
-			return update_format(current_data)
+	var/version = current_data["version"]
+	if(version < 1)
+		current_data =  migrate_to_version_1(current_data)
+	if(version < 2) //Makes sure old paintings get a cosmetic frame type from their patronage tiers.
+		current_data =  migrate_to_version_2(current_data)
+
+	return current_data
+
+/datum/controller/subsystem/persistent_paintings/proc/migrate_to_version_1(list/current_data)
+	fcopy("data/paintings.json","data/paintings_migration_backup_0.json") //Better safe than losing all metadata
+	var/list/result = list()
+	result["version"] = 1
+	var/list/data = list()
+	// Squash categories into tags
+	for(var/category in current_data)
+		for(var/old_data in current_data[category])
+			var/duplicate_found = FALSE
+			for(var/list/entry in data)
+				if(entry["md5"] == old_data["md5"])
+					entry["tags"] |= category
+					duplicate_found = TRUE
+					break
+			if(duplicate_found)
+				continue
+			var/old_png_path = "data/paintings/[category]/[old_data["md5"]].png"
+			var/new_png_path = "data/paintings/images/[old_data["md5"]].png"
+			fcopy(old_png_path,new_png_path)
+			fdel(old_png_path)
+			var/icon/painting_icon = new(new_png_path)
+			var/width = painting_icon.Width()
+			var/height = painting_icon.Height()
+			var/list/new_data = list()
+			new_data["md5"] = old_data["md5"]
+			new_data["title"] = old_data["title"] || "Untitled Artwork"
+			new_data["creator_ckey"] = old_data["ckey"] || ""
+			new_data["creator_name"] = "Anonymous"
+			new_data["creation_date"] = time2text(world.realtime) // Could use creation/modified file helpers in rustg
+			new_data["creation_round_id"] = GLOB.round_id
+			new_data["tags"] = list(category,"Migrated from version 0")
+			new_data["patron_ckey"] = ""
+			new_data["patron_name"] = ""
+			new_data["credit_value"] = 0
+			new_data["width"] = width
+			new_data["height"] = height
+			new_data["medium"] = "Spraypaint on canvas" //Let's go with most common tool.
+			data += list(new_data)
+	result["paintings"] = data
+	//We're going to save this immidiately this is non-recoverable operation
+	var/json_file = file("data/paintings.json")
+	fdel(json_file)
+	WRITE_FILE(json_file, json_encode(result))
+	return result
+
+/datum/controller/subsystem/persistent_paintings/proc/migrate_to_version_2(list/current_data)
+	fcopy("data/paintings.json","data/paintings_migration_backup_1.json") //Better safe than sorry
+	current_data["version"] = 2
+	for(var/painting_data in current_data["paintings"])
+		painting_data["tags"] |= "Migrated from version 1"
+		var/credit_value = painting_data["credit_value"]
+		var/list/possible_frame_types = get_available_frames(credit_value, only_current_tier = TRUE)
+		painting_data["frame_type"] = pick(possible_frame_types) || "simple"
+	return current_data
 
 /**
  * returns a list of cosmetic frames which patronage tier values are are within credit_value.

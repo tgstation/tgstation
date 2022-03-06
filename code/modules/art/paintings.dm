@@ -221,8 +221,12 @@
 
 /obj/item/canvas/proc/can_select_frame(mob/user)
 	if(!istype(loc, /obj/structure/sign/painting))
-		return
-	return (user?.CanReach(loc) && !IS_DEAD_OR_INCAP(user) && last_patron && user?.mind == last_patron.resolve())
+		return FALSE
+	if(!user?.CanReach(loc) || IS_DEAD_OR_INCAP(user))
+		return FALSE
+	if(!last_patron || !IS_WEAKREF_OF(user?.mind, last_patron))
+		return FALSE
+	return TRUE
 
 /obj/item/canvas/update_overlays()
 	. = ..()
@@ -402,7 +406,7 @@
 	if(current_canvas)
 		current_canvas.ui_interact(user)
 		. += span_notice("Use wirecutters to remove the painting.")
-		if(current_canvas.last_patron && user?.mind == current_canvas.last_patron.resolve())
+		if(IS_WEAKREF_OF(user?.mind, current_canvas.last_patron))
 			. += span_notice("<b>Alt-Click</b> to change select a new appearance for the frame of this painting.")
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
