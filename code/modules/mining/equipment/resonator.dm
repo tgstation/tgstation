@@ -24,6 +24,7 @@
 	var/fieldlimit = 4
 	/// the list of currently active fields from this resonator
 	var/list/fields = list()
+	/// the number that is added to the failure_prob, which is the probability of whether it will spread or not
 	var/adding_failure = 50
 
 /obj/item/resonator/attack_self(mob/user)
