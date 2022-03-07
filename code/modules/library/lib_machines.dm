@@ -789,7 +789,8 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 	user.visible_message(span_notice("[user] loads some paper into [src]."), span_notice("You load some paper into [src]."))
 	audible_message(span_hear("[src] begins to hum as it warms up its printing drums."))
 	busy = TRUE
-	addtimer(CALLBACK(src, .proc/bind_book, draw_from), rand(200, 400))
+	playsound(src, 'sound/machines/printer.ogg', 50)
+	addtimer(CALLBACK(src, .proc/bind_book, draw_from), 4.1 SECONDS)
 
 /obj/machinery/bookbinder/proc/bind_book(obj/item/paper/draw_from)
 	busy = FALSE
