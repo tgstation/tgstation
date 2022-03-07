@@ -212,3 +212,45 @@
   san7890:
   - bugfix: The darkenening and lack-of-gravity on some lattices near the Space Hut
       on DeltaStation have been resolved.
+2022-03-07:
+  Ghommie:
+  - bugfix: Fixed the inputs for the linear and exponential sustain settings of the
+      song editor (instruments UI).
+  JohnFulpWillard:
+  - qol: Discoordinated tool user trauma now gives a status effect to let you know
+      you have it.
+  - bugfix: Slappers and circlehands don't fit in storage bags anymore.
+  LemonInTheDark:
+  - bugfix: Fit viewport will properly well, fit your viewport now. Broke when we
+      removed the status bar. It'll also attempt to autofit if you change your pixel
+      scaling. Godspeed
+  MMMiracles:
+  - expansion: The tramstation dorms area has been completely revamped to more freely
+      flow and encourage interactions between the library and chapel.
+  - bugfix: The chapel now has a mass driver for proper burial disposal.
+  - bugfix: The overhang in the dorm area no longer shows the walls below on the edges.
+  Melbert:
+  - bugfix: Heretic Smugglers (latejoin heretics) actually spawn influences
+  OneAsianTortoise:
+  - bugfix: fixes Icebox and Meta's medbay door controls button not working
+  Pepsilawn:
+  - spellcheck: you will no longer be asked to be wearing Wheelys when trying to activate
+      ski shoes and rollerskates
+  Pickle-Coding:
+  - balance: It's harder to make large pipenets release radiation.
+  Thunder12345:
+  - imageadd: The poll button in the lobby has been changed to better represent its
+      functionality.
+  Zonespace27:
+  - bugfix: Blowguns no longer have a trigger guard
+  cacogen:
+  - qol: Can use BSRPED to add components to machine frames at a distance
+  san7890:
+  - bugfix: You probably didn't notice, but the Bar's Atrium on IceBoxStation has
+      been depowered (due to lack of an APC) for the last few weeks now. After a strong
+      reprimand to its Engineering staff, Nanotrasen will now ensure APCs are installed
+      in that area.
+  - imageadd: On the mapping-end, the engraved cult floors will no longer show up
+      as base plating, but instead what they actually look like in game.
+  zxaber:
+  - balance: The Science Hub app can now be downloaded and launched by science employees.

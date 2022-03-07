@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - qol: "Can use BSRPED to add components to machine frames at a distance"
