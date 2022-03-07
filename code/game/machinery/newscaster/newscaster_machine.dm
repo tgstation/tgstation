@@ -19,6 +19,8 @@
 
 	///What newscaster channel is currently being viewed by the player?
 	var/datum/newscaster/feed_channel/current_channel
+	///What newscaster feed_message is currently having a comment written for it?
+	var/datum/newscaster/feed_message/current_message
 	///The message that's currently being written for a feed story.
 	var/feed_channel_message
 	///The current image that will be submitted with the newscaster story.
@@ -33,6 +35,8 @@
 	var/channel_name
 	///What is the current, in-creation channel's description going to be?
 	var/channel_desc
+	///What is the current, in-creation comment's body going to be?
+	var/comment_text
 
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
@@ -347,6 +351,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("createComment")
 			creating_comment = TRUE
+			return TRUE
+
+		if("commentBody")
+			var/pre_comment_text = params["commenttext"]
+			if(!pre_comment_text)
+				return
+			comment_text = pre_comment_text
+			return TRUE
+
+		if("submitComment")
+			if(!comment_text)
+				creating_comment = FALSE
+
 			return TRUE
 
 		if("printNewspaper")
