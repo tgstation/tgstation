@@ -8,7 +8,7 @@
 		returned their generosity in kind."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_regen,
-		/datum/heretic_knowledge/cold_snap,
+		/datum/heretic_knowledge/blade_dance,
 	)
 	required_atoms = list(
 		/obj/structure/table = 1,
@@ -25,7 +25,7 @@
 	gain_text = "This is pure agony. I wasn't able to summon the figure of the Aristocrat, \
 		but with the Priest's attention I stumbled upon a different recipe..."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/void_phase,
+		/datum/heretic_knowledge/duel_stance,
 		/datum/heretic_knowledge/spell/area_conversion,
 	)
 	required_atoms = list(
@@ -42,7 +42,7 @@
 		Rust Walkers excel at spreading rust and are moderately strong in combat."
 	gain_text = "I combined my principle of hunger with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/voidpull,
+		/datum/heretic_knowledge/spell/summon_blade,
 		/datum/heretic_knowledge/spell/entropic_plume,
 	)
 	required_atoms = list(

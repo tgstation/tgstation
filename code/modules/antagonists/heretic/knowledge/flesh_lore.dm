@@ -16,6 +16,7 @@
  *   Ashen Eyes
  *
  * Mark of Flesh
+ * Ritual of Knowledge
  * Raw Ritual
  * > Sidepaths:
  *   Carving Knife
@@ -29,21 +30,13 @@
  *
  * Priest's Final Hymn
  */
-/datum/heretic_knowledge/limited_amount/base_flesh
+/datum/heretic_knowledge/limited_amount/starting/base_flesh
 	name = "Principle of Hunger"
 	desc = "Opens up the Path of Flesh to you. \
 		Allows you to transmute a knife and a pool of blood into a Bloody Blade. \
 		You can only create three at a time."
 	gain_text = "Hundreds of us starved, but not me... I found strength in my greed."
 	next_knowledge = list(/datum/heretic_knowledge/limited_amount/flesh_grasp)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/base_ash,
-		/datum/heretic_knowledge/limited_amount/base_rust,
-		/datum/heretic_knowledge/limited_amount/base_void,
-		/datum/heretic_knowledge/final/ash_final,
-		/datum/heretic_knowledge/final/rust_final,
-		/datum/heretic_knowledge/final/void_final,
-	)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/effect/decal/cleanable/blood = 1,
@@ -54,7 +47,7 @@
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/limited_amount/base_flesh/on_research(mob/user)
+/datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user)
 	. = ..()
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	our_heretic.heretic_path = route
@@ -213,48 +206,18 @@
 
 	UnregisterSignal(source, COMSIG_LIVING_DEATH)
 
-/datum/heretic_knowledge/flesh_mark
+/datum/heretic_knowledge/mark/flesh_mark
 	name = "Mark of Flesh"
 	desc = "Your Mansus Grasp now applies the Mark of Flesh. The mark is triggered from an attack with your Bloody Blade. \
 		When triggered, the victim begins to bleed significantly."
 	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/flesh)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/rust_mark,
-		/datum/heretic_knowledge/ash_mark,
-		/datum/heretic_knowledge/void_mark,
-	)
 	cost = 2
 	route = PATH_FLESH
-
-/datum/heretic_knowledge/flesh_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/flesh_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
-
-/datum/heretic_knowledge/flesh_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
-
-	target.apply_status_effect(/datum/status_effect/eldritch/flesh)
-
-/datum/heretic_knowledge/flesh_mark/proc/on_eldritch_blade(mob/living/user, mob/living/target)
-	SIGNAL_HANDLER
-
-	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
-	if(!istype(mark))
-		return
-
-	mark.on_effect()
+	mark_type = /datum/status_effect/eldritch/flesh
 
 /datum/heretic_knowledge/knowledge_ritual/flesh
 	next_knowledge = list(/datum/heretic_knowledge/summon/raw_prophet)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/knowledge_ritual/ash,
-		/datum/heretic_knowledge/knowledge_ritual/void,
-		/datum/heretic_knowledge/knowledge_ritual/rust,
-	)
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/summon/raw_prophet
@@ -265,7 +228,7 @@
 	gain_text = "I could not continue alone. I was able to summon The Uncanny Man to help me see more. \
 		The screams... once constant, now silenced by their wretched appearance. Nothing was out of reach."
 	next_knowledge = list(
-		/datum/heretic_knowledge/flesh_blade_upgrade,
+		/datum/heretic_knowledge/blade_upgrade/flesh,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/curse/paralysis,
@@ -279,36 +242,31 @@
 	cost = 1
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/flesh_blade_upgrade
+/datum/heretic_knowledge/blade_upgrade/flesh
 	name = "Bleeding Steel"
 	desc = "Your Bloody Blade now causes enemies to bleed heavily on attack."
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
-	banned_knowledge = list(
-		/datum/heretic_knowledge/ash_blade_upgrade,
-		/datum/heretic_knowledge/rust_blade_upgrade,
-		/datum/heretic_knowledge/void_blade_upgrade,
-	)
 	cost = 2
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/flesh_blade_upgrade/on_gain(mob/user)
+/datum/heretic_knowledge/blade_upgrade/flesh/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
-/datum/heretic_knowledge/flesh_blade_upgrade/on_lose(mob/user)
+/datum/heretic_knowledge/blade_upgrade/flesh/on_lose(mob/user)
 	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
 
-/datum/heretic_knowledge/flesh_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
+/datum/heretic_knowledge/blade_upgrade/flesh/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
-	if(!iscarbon(target) || user == target)
+	if(!iscarbon(target) || source == target)
 		return
 
 	var/mob/living/carbon/carbon_target = target
 	var/obj/item/bodypart/bodypart = pick(carbon_target.bodyparts)
 	var/datum/wound/slash/severe/crit_wound = new()
-	crit_wound.apply_wound(bodypart, attack_direction = get_dir(user, target))
+	crit_wound.apply_wound(bodypart, attack_direction = get_dir(source, target))
 
 /datum/heretic_knowledge/summon/stalker
 	name = "Lonely Ritual"
@@ -359,7 +317,7 @@
 	grasp_ghoul.limit *= 3
 	var/datum/heretic_knowledge/limited_amount/flesh_ghoul/ritual_ghoul = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
 	ritual_ghoul.limit *= 3
-	var/datum/heretic_knowledge/limited_amount/base_flesh/blade_ritual = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/base_flesh)
+	var/datum/heretic_knowledge/limited_amount/starting/base_flesh/blade_ritual = heretic_datum.get_knowledge(/datum/heretic_knowledge/limited_amount/starting/base_flesh)
 	blade_ritual.limit = 999
 
 #undef GHOUL_MAX_HEALTH

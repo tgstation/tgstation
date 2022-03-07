@@ -509,6 +509,54 @@
 
 	return ..()
 
+/datum/status_effect/eldritch/blade
+	effect_sprite = "emark2"
+	var/area/locked_to
+
+/datum/status_effect/eldritch/blade/Destroy()
+	locked_to = null
+	return ..()
+
+/datum/status_effect/eldritch/blade/on_creation(mob/living/new_owner, area/locked_to)
+	if(!isarea(locked_to))
+		stack_trace("[type] was instantiated without an area to lock on to.")
+		qdel(src)
+		return
+
+	src.locked_to = locked_to
+	return ..()
+
+/datum/status_effect/eldritch/blade/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+
+/datum/status_effect/eldritch/blade/on_remove()
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_TELEPORTED, COMSIG_MOVABLE_MOVED))
+	return ..()
+
+/datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
+	SIGNAL_HANDLER
+
+	if(get_area(destination) == locked_to)
+		return
+
+	to_chat(source, span_userdanger("An otherworldly force prevents your escape from [get_area_name(locked_to, TRUE)]!"))
+
+	source.Stun(1 SECONDS)
+	return COMPONENT_BLOCK_TELEPORT
+
+/datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
+	SIGNAL_HANDLER
+
+	if(get_area(source) == locked_to)
+		return
+
+	to_chat(source, span_userdanger("An otherworldly force prevents your escape from [get_area_name(locked_to, TRUE)]!"))
+
+	source.Stun(1 SECONDS)
+	source.throw_at(old_loc, 5, 1)
+
 /// A status effect used for specifying confusion on a living mob.
 /// Created automatically with /mob/living/set_confusion.
 /datum/status_effect/confusion

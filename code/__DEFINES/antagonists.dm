@@ -69,6 +69,7 @@
 #define PATH_RUST "Rust Path"
 #define PATH_FLESH "Flesh Path"
 #define PATH_VOID "Void Path"
+#define PATH_BLADE "Blade Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1

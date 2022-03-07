@@ -46,9 +46,9 @@
 		return
 
 	if(proximity_flag)
-		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target)
+		SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 	else
-		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, target)
+		SEND_SIGNAL(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()
@@ -88,3 +88,9 @@
 	icon_state = "void_blade"
 	inhand_icon_state = "void_blade"
 	after_use_message = "The Aristocrat hears your call..."
+
+// opting for /dark (darkened blade) instead of /blade (blade path) to avoid "sickly_blade/blade"
+/obj/item/melee/sickly_blade/dark
+	name = "\improper darkened blade"
+	desc = "A blade made of brilliant silver that shines gloriously. Unknown rage is bottled within."
+	after_use_message = "The Colonel hears your call..."

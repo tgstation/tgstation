@@ -206,6 +206,68 @@
 	return TRUE
 
 /*
+ * A knowledge subtype for limited_amount knowledge
+ * used for base knowledge (the ones that make blades)
+ */
+/datum/heretic_knowledge/limited_amount/starting
+
+/datum/heretic_knowledge/limited_amount/starting/New()
+	. = ..()
+	for(var/datum/heretic_knowledge/knowledge_type as anything in subtypesof(/datum/heretic_knowledge/limited_amount/starting))
+		if(initial(knowledge_type.route) == route)
+			continue
+		banned_knowledge += knowledge_type
+
+	for(var/datum/heretic_knowledge/final_knowledge_type as anything in subtypesof(/datum/heretic_knowledge/final))
+		if(initial(final_knowledge_type.route) == route)
+			continue
+		banned_knowledge += final_knowledge_type
+
+/datum/heretic_knowledge/mark
+	var/datum/status_effect/eldritch/mark_type
+
+/datum/heretic_knowledge/mark/New()
+	. = ..()
+	for(var/datum/heretic_knowledge/knowledge_type as anything in subtypesof(/datum/heretic_knowledge/mark))
+		if(initial(knowledge_type.route) == route)
+			continue
+		banned_knowledge += knowledge_type
+
+/datum/heretic_knowledge/mark/on_gain(mob/user)
+	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+
+/datum/heretic_knowledge/mark/on_lose(mob/user)
+	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+
+/datum/heretic_knowledge/mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
+	SIGNAL_HANDLER
+
+	target.apply_status_effect(mark_type)
+
+/datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	SIGNAL_HANDLER
+
+	trigger_mark(source, target)
+
+/datum/heretic_knowledge/mark/proc/trigger_mark(mob/living/source, mob/living/target)
+	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
+	if(!istype(mark))
+		return FALSE
+
+	mark.on_effect()
+	return TRUE
+
+/datum/heretic_knowledge/blade_upgrade
+
+/datum/heretic_knowledge/blade_upgrade/New()
+	. = ..()
+	for(var/datum/heretic_knowledge/knowledge_type as anything in subtypesof(/datum/heretic_knowledge/blade_upgrade))
+		if(initial(knowledge_type.route) == route)
+			continue
+		banned_knowledge += knowledge_type
+
+/*
  * A knowledge subtype lets the heretic curse someone with a ritual.
  */
 /datum/heretic_knowledge/curse
@@ -326,6 +388,11 @@
 
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
+	for(var/datum/heretic_knowledge/knowledge_type as anything in subtypesof(/datum/heretic_knowledge/knowledge_ritual))
+		if(initial(knowledge_type.route) == route)
+			continue
+		banned_knowledge += knowledge_type
+
 	var/static/list/potential_organs = list(
 		/obj/item/organ/appendix,
 		/obj/item/organ/tail,

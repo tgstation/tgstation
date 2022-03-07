@@ -441,7 +441,7 @@ GENE SCANNER
 	// we handled the last <br> so we don't need handholding
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
-/proc/chemscan(mob/living/user, mob/living/target)
+/proc/chemscan(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(user.incapacitated())
 		return
 
