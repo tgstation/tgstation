@@ -386,8 +386,9 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/lesser)
 "bz" = (
-/obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/radiation,
+/obj/item/stack/sheet/mineral/uranium/five,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/starboard)
 "bB" = (
@@ -678,6 +679,7 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stock_parts/cell/hyper,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/cargo)
 "cE" = (
@@ -1525,6 +1527,11 @@
 /obj/structure/frame/machine,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/research)
+"gA" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/port_gen/pacman/super,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/starboard)
 "gC" = (
 /obj/structure/table/wood,
 /obj/item/camera,
@@ -4784,6 +4791,7 @@
 "yq" = (
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/cargo)
 "yv" = (
@@ -12245,7 +12253,7 @@ ON
 aP
 hU
 bz
-cd
+gA
 hU
 cd
 lj
