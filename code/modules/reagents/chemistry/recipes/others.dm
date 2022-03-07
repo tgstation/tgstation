@@ -812,8 +812,10 @@
 	H_ion_release = 0
 	rate_up_lim = 50
 	purity_min = 0
-	mix_message = "The ice melts back into water!"
+	mix_message = null
+	mix_sound = null //Anyone eating ice will have it transferred into their stomach and blood stream, sometimes playing this sound twice at once, constantly
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_DRINK
+
 
 ////////////////////////////////////
 

@@ -248,11 +248,13 @@
 	list_reagents = list(/datum/reagent/consumable/ice = 30)
 	spillable = TRUE
 	isGlass = FALSE
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/reagent_containers/food/drinks/ice/prison
 	name = "dirty ice cup"
 	desc = "Either Nanotrasen's water supply is contaminated, or this machine actually vends lemon, chocolate, and cherry snow cones."
 	list_reagents = list(/datum/reagent/consumable/ice = 25, /datum/reagent/liquidgibs = 5)
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/reagent_containers/food/drinks/mug // parent type is literally just so empty mug sprites are a thing
 	name = "mug"

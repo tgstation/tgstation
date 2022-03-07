@@ -16,6 +16,8 @@
 	var/spillable = FALSE
 	var/list/fill_icon_thresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
+	///The temperature the reagents in list_reagents should be when created
+	var/starting_temperature = null
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -53,7 +55,7 @@
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
-		reagents.add_reagent_list(list_reagents)
+		reagents.add_reagent_list(list_reagents, reagtemp = starting_temperature)
 
 /obj/item/reagent_containers/attack_self(mob/user)
 	change_transfer_amount(user, FORWARD)

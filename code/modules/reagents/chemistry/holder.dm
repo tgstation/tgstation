@@ -264,10 +264,10 @@
 	return TRUE
 
 /// Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null, reagtemp)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
-		add_reagent(r_id, amt, data)
+		add_reagent(r_id, amt, data, reagtemp)
 
 
 /// Remove a specific reagent
@@ -978,7 +978,7 @@
 		//if it's been flagged to delete
 		if(equilibrium.to_delete)
 			var/temp_mix_message = end_reaction(equilibrium)
-			if(!text_in_list(temp_mix_message, mix_message))
+			if(!isnull(temp_mix_message) && !text_in_list(temp_mix_message, mix_message))
 				mix_message += temp_mix_message
 			continue
 		SSblackbox.record_feedback("tally", "chemical_reaction", 1, "[equilibrium.reaction.type] total reaction steps")
