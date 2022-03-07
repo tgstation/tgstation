@@ -27183,17 +27183,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
-"iCA" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/turf/closed/wall,
-/area/maintenance/department/crew_quarters/dorms)
 "iCC" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /turf/open/floor/iron/white,
@@ -54448,7 +54437,7 @@
 /area/science/research)
 "sld" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+/obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -87957,7 +87946,7 @@ yee
 yee
 yee
 yee
-iCA
+yee
 sVv
 yee
 dhe
