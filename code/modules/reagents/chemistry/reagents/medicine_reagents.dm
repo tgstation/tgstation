@@ -155,6 +155,7 @@
 	ph = 11
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/*	//hippie start cryo tweaks, fix trailing cold damage on exit
 /datum/reagent/medicine/cryoxadone/on_mob_life(mob/living/carbon/M)
 	var/power = -0.00003 * (M.bodytemperature ** 2) + 3
 	if(M.bodytemperature < T0C)
@@ -170,6 +171,7 @@
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
+*/	//hippie end cryo tweaks, fix trailing cold damage on exit
 
 // Healing
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
