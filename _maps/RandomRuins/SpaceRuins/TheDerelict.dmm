@@ -471,7 +471,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/airless,
 /area/ruin/space/derelict/security)
 "bU" = (
 /turf/open/floor/plating/airless{
@@ -872,7 +872,7 @@
 /area/ruin/space/derelict/security)
 "dp" = (
 /obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway_primary)
 "dq" = (
 /obj/structure/table,
@@ -2821,7 +2821,7 @@
 /area/ruin/space/derelict/syndipod)
 "nj" = (
 /obj/structure/grille/broken,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/ruin/space/derelict/departures)
 "nk" = (
 /obj/effect/turf_decal/tile/red{
