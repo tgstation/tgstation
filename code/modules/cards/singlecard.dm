@@ -42,7 +42,6 @@
 		throw_range = parent_deck.throw_range
 		attack_verb_continuous = parent_deck.attack_verb_continuous
 		attack_verb_simple = parent_deck.attack_verb_simple
-
 	// we need to figure out how to do holodeck cards
 	//if(holo)
 	//	holo.spawned += card_to_add
@@ -64,8 +63,6 @@
 	. += span_notice("Alt-click to rotate it 90 degrees.")
 
 /**
- * Flip
- *
  * Flips the card over
  * 
  * * Arguments:
@@ -167,14 +164,5 @@
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		src.transform = turn(src.transform, 90)
-		// use the simple_rotation component to make this turn with Alt+RMB & Alt+LMB
-/**		
-		var/matrix/M = matrix()
-		M.Turn(90)
-		transform = M
-		// OR
-		var/matrix/M = matrix()
-		M.Turn(45)
-		src.transform = M
-**/
+		// use the simple_rotation component to make this turn with Alt+RMB & Alt+LMB at some point in the future - TimT
 	return ..()
