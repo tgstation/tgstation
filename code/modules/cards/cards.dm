@@ -51,6 +51,13 @@
 /obj/item/toy/cards/proc/insert(list/cards_to_add)
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
 		card.forceMove(src)
+		// reset the position and angle
+		card.pixel_x = 0
+		card.pixel_y = 0
+		var/matrix/M = matrix()
+		M.Turn(0) // I think this resets the angle to 0 but needs to be tested
+		card.transform = M
+		card.update_appearance()
 		cards += card
 	update_appearance()
 
