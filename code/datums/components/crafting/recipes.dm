@@ -1221,6 +1221,24 @@
 				)
 	category = CAT_MISC
 
+/datum/crafting_recipe/CE_envirosuit
+	name = "Chief Engineer Plasmaman Envirosuit"
+	result = /obj/item/clothing/under/plasmaman/chief_engineer
+	time = 5 SECONDS
+	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 10,
+				/obj/item/clothing/under/plasmaman = 1,
+				)
+	category = CAT_MISC
+
+/datum/crafting_recipe/CE_envirosuit_helmet
+	name = "Chief Engineer Plasmaman Envirosuit Helmet"
+	result = /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
+	time = 5 SECONDS
+	reqs = list(/obj/item/stack/sheet/mineral/metal_hydrogen = 5,
+				/obj/item/clothing/head/helmet/space/plasmaman = 1,
+				)
+	category = CAT_MISC
+
 /datum/crafting_recipe/bluespace_vendor_mount
 	name = "Bluespace Vendor Wall Mount"
 	result = /obj/item/wallframe/bluespace_vendor_mount
