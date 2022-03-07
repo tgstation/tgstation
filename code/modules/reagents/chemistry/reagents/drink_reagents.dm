@@ -809,7 +809,7 @@
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tangy fruit"
 	glass_icon_state = "cinderella"
-	glass_name = "Cinderlla"
+	glass_name = "Cinderella"
 	glass_desc = "There is not a single drop of alcohol in this thing."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -857,7 +857,7 @@
 
 /datum/reagent/consumable/caramelshake
 	name = "Caramel Shake"
-	description = "A aramel flavored milkshake. Your teeth hurt looking at it."
+	description = "A caramel flavored milkshake. Your teeth hurt looking at it."
 	color = "#E17C00"
 	quality = DRINK_GOOD
 	nutriment_factor = 10 * REAGENTS_METABOLISM
