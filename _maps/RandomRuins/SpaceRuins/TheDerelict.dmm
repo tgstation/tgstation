@@ -1781,16 +1781,22 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway_primary)
 "id" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/layer4,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway_primary)
-"ie" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /turf/open/floor/plating/airless{
 	icon_state = "platingdmg1"
 	},
+/area/ruin/space/derelict/hallway_primary)
+"ie" = (
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway_primary)
 "if" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1857,12 +1863,8 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "iz" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway_primary)
@@ -1875,9 +1877,7 @@
 	},
 /area/ruin/space/derelict/security)
 "iB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
-/obj/structure/cable,
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway_primary)
 "iC" = (
@@ -1902,8 +1902,8 @@
 /turf/open/floor/iron/white/side,
 /area/ruin/space/derelict/bridge)
 "iG" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/airless,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/turf/template_noop,
 /area/ruin/space/derelict/hallway_primary)
 "iH" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -2051,7 +2051,9 @@
 /area/ruin/space/derelict/service)
 "ji" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
-/turf/template_noop,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway_primary)
 "jj" = (
 /obj/structure/table/wood,
@@ -2102,11 +2104,10 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/derelict/research)
 "jz" = (
-/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/hallway_primary)
+/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/decal/cleanable/blood/splatter/over_window,
+/turf/open/floor/plating,
+/area/ruin/space/derelict/arrival)
 "jB" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	req_access_txt = "12"
@@ -2141,10 +2142,10 @@
 	},
 /area/ruin/space/derelict/research)
 "jJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/open/floor/plating,
-/area/ruin/space/derelict/arrival)
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/tank/internals/oxygen/empty,
+/turf/open/floor/iron,
+/area/ruin/space/derelict/hallway_primary)
 "jK" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -2255,10 +2256,9 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "kk" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/tank/internals/oxygen/empty,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/hallway_primary)
+/obj/structure/window/spawner/east,
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/maintenance/port)
 "km" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -2300,10 +2300,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/crew)
-"kt" = (
-/obj/structure/window/spawner/east,
-/turf/open/floor/plating/airless,
-/area/ruin/space/derelict/maintenance/port)
 "kA" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
@@ -6879,7 +6875,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/engineering)
 "QK" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/layer4,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway_primary)
 "QL" = (
@@ -9568,8 +9564,8 @@ Is
 Ul
 UQ
 Yd
-kt
-kt
+kk
+kk
 UQ
 Yd
 UQ
@@ -9816,7 +9812,7 @@ Pv
 VV
 oo
 Ka
-jJ
+jz
 RJ
 qr
 VS
@@ -10324,7 +10320,7 @@ Zx
 Zx
 gW
 YW
-iG
+iB
 BU
 BU
 BU
@@ -10749,7 +10745,7 @@ hK
 hV
 Oi
 Oi
-ji
+iG
 Qf
 XV
 WF
@@ -10839,7 +10835,7 @@ FE
 kD
 Ua
 xY
-kk
+jJ
 kD
 kD
 kD
@@ -10918,7 +10914,7 @@ Yl
 Yl
 zX
 gW
-ie
+id
 hT
 Ya
 Ya
@@ -11513,7 +11509,7 @@ Cv
 Ak
 Kl
 Mq
-iz
+ie
 gW
 NB
 PH
@@ -11598,7 +11594,7 @@ Zt
 Zt
 Zt
 QQ
-iz
+ie
 gW
 Ya
 UN
@@ -11683,7 +11679,7 @@ Cy
 Xz
 qW
 hz
-iB
+iz
 RZ
 Ya
 Ya
@@ -11768,7 +11764,7 @@ Cz
 RQ
 Sq
 gW
-iz
+ie
 KI
 Ya
 SA
@@ -11853,7 +11849,7 @@ Yl
 Yl
 Yl
 gW
-iz
+ie
 gW
 Ya
 Qu
@@ -11938,7 +11934,7 @@ sN
 sN
 me
 ic
-iz
+ie
 gW
 Ya
 Ya
@@ -12024,8 +12020,8 @@ Yl
 Yl
 Lo
 XR
-jz
-jz
+ji
+ji
 oR
 PI
 Kg
@@ -12362,7 +12358,7 @@ Zg
 Ht
 mJ
 Md
-id
+QK
 Xw
 gW
 gW
