@@ -657,6 +657,7 @@ SUBSYSTEM_DEF(ticker)
 
 	world.Reboot()
 
+/*	//hippie start roundend sounds
 /datum/controller/subsystem/ticker/Shutdown()
 	gather_newscaster() //called here so we ensure the log is created even upon admin reboot
 	save_admin_data()
@@ -681,3 +682,4 @@ SUBSYSTEM_DEF(ticker)
 			SEND_SOUND(M.client, end_of_round_sound_ref)
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
+*/ //hippie end roundend sounds
