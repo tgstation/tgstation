@@ -62,6 +62,11 @@
 	. += span_notice("Right-click to flip it.")
 	. += span_notice("Alt-click to rotate it 90 degrees.")
 
+/obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] an unlucky card!"))
+	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
+	return BRUTELOSS
+
 /**
  * Flips the card over
  * 
