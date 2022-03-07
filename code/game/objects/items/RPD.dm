@@ -474,7 +474,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/turf/our_turf = get_turf(src)
 	var/turf/target_turf = get_turf(attack_target)
 	var/distance = round(get_dist_euclidian(our_turf, target_turf), 1)
-	message_admins("Distance: [distance]")
 	if(distance > pressure_strenght)
 		return
 
@@ -716,8 +715,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	var/turf/our_turf = get_turf(src)
 	our_turf.assume_air(internal_tank.air_contents.remove(moles_to_consume))
-	message_admins("Consumed amount: [moles_to_consume]")
-	message_admins("Internal pressure: [internal_tank.air_contents.return_pressure()]")
 	return TRUE
 
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
