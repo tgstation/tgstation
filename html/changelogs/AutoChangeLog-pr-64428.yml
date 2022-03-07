@@ -1,0 +1,4 @@
+author: "lewcc"
+delete-after: True
+changes: 
+  - refactor: "Moves more tool behavior out of attackby()."
