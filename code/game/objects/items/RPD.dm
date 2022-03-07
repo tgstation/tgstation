@@ -237,9 +237,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/constructed = FALSE
 	///Stores the internal tank reference
 	var/obj/item/tank/internal_tank
+	///Differentiate the normal RPD from the borg ones since they don't use pressure
+	var/use_pressure = TRUE
 
 /obj/item/pipe_dispenser/constructed
 	constructed = TRUE
+
+/obj/item/pipe_dispenser/cyborg
+	use_pressure = FALSE
 
 /obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
@@ -255,7 +260,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	recipe = first_atmos
 
-	if(!constructed)
+	if(!constructed && use_pressure)
 		internal_tank = new /obj/item/tank(src)
 		internal_tank.air_contents.assert_gas(/datum/gas/oxygen)
 		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = (10 * ONE_ATMOSPHERE) * internal_tank.volume / (R_IDEAL_GAS_EQUATION * T20C)
@@ -263,6 +268,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/Destroy()
 	qdel(spark_system)
 	spark_system = null
+	if(internal_tank)
+		qdel(internal_tank)
 	return ..()
 
 /obj/item/pipe_dispenser/examine(mob/user)
@@ -704,6 +711,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 ///Consumes gases based on the distance from the target
 /obj/item/pipe_dispenser/proc/consume_pressure(distance_from_target, full_consumption = TRUE)
+
+	if(!use_pressure)
+		return TRUE
 
 	var/minimum_pressure = full_consumption ? FULL_MOLES_CONSUMED : HALF_MOLES_CONSUMED
 
