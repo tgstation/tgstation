@@ -813,6 +813,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///From the market_crash event
 #define MARKET_CRASH_EVENT_TRAIT "crashed_market_event"
 
+/// Denotes that this id card was given via the job outfit, aka the first ID this player got.
+#define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// Traits granted to items due to their chameleon properties.

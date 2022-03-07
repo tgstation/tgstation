@@ -33,18 +33,20 @@
 	//this list has a maximum pickweight of 100.
 	//if you're adding a new type of thief, DON'T just add TOTAL pickweight. adjusting the others, numb nuts.
 	var/static/list/weighted_flavors = list(
-		"Thief" = 30,
-		"Hoarder" = 30,
+		"Thief" = 50,
 		"Black Market Outfitter" = 20,
 		"Organ Market Collector" = 13,
+		"All Access Fan" = 10,
 		"Chronicler" = 5,
 		"Deranged" = 2,
+		"Hoarder" = 0,
 	)
 	var/chosen_flavor = admin_choice_flavor || pick_weight(weighted_flavors)
 	//objective given by flavor
 	var/chosen_objective
 	//whether objective should call find_target()
 	var/objective_needs_target
+	//If you add to this switch case, please follow the order of the weighted static list
 	switch(chosen_flavor)
 		if("Thief")
 			chosen_objective = /datum/objective/steal
@@ -58,6 +60,9 @@
 		if("Organ Market Collector")
 			chosen_objective = /datum/objective/steal_n_of_type/organs
 			objective_needs_target = FALSE
+		if("All Access Fan")
+			chosen_objective = /datum/objective/all_access
+			objective_needs_target = TRUE
 		if("Chronicler")
 			chosen_objective = /datum/objective/chronicle
 			objective_needs_target = FALSE
