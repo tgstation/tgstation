@@ -32,6 +32,14 @@
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	return BRUTELOSS
 
+/obj/item/toy/cards/cardhand/examine(mob/user)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
+		if(cards.len == 0)
+			CRASH("The [src] should have been deleted since it has no cards inside it!")
+		for(var/obj/item/toy/singlecard/card in cards)
+			. += span_notice("You scan the cardhand with your x-ray vision and there is a: [card.cardname]")
+
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
 		return
