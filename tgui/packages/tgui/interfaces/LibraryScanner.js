@@ -41,8 +41,7 @@ const BookScanning = (props, context) => {
         </Section>
       </Stack.Item>
       <Stack.Item>
-        <Stack
-          width="100%">
+        <Stack>
           <Stack.Item grow>
             <Button fluid
               textAlign="center"

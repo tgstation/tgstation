@@ -87,36 +87,15 @@ export const PageDisplay = (props, context) => {
     screen_state,
   } = data;
 
-  if (screen_state === 1) {
-    return (
-      <Inventory />
-    );
-  }
-  if (screen_state === 2) {
-    return (
-      <Checkout />
-    );
-  }
-  if (screen_state === 3) {
-    return (
-      <Archive />
-    );
-  }
-  if (screen_state === 4) {
-    return (
-      <Upload />
-    );
-  }
-  if (screen_state === 5) {
-    return (
-      <Print />
-    );
-  }
-  if (screen_state === 6) {
-    return (
-      <Forbidden />
-    );
-  }
+  return (
+    screen_state === 1 ? <Inventory /> :
+    screen_state === 2 ? <Checkout /> :
+    screen_state === 3 ? <Archive /> :
+    screen_state === 4 ? <Upload /> :
+    screen_state === 5 ? <Print /> :
+    screen_state === 6 ? <Forbidden /> :
+    null
+  );
 };
 
 export const Inventory = (props, context) => {
@@ -259,7 +238,7 @@ export const CheckoutEntries = (props, context) => {
   } = data;
 
   if (!has_checkout) {
-    return;
+    return null;
   }
   return (
     <Table>
@@ -571,7 +550,7 @@ export const Upload = (props, context) => {
             Current Scan Cache
           </Box>
         </Stack.Item>
-        <Stack.Item height="100%">
+        <Stack.Item grow>
           <Stack vertical height="100%">
             <Stack.Item>
               <Stack>
