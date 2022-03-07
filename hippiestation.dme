@@ -3373,6 +3373,8 @@
 #include "code\modules\zombie\organs.dm"
 #include "hippiestation\code\controllers\subsystem\ticker.dm"
 #include "hippiestation\code\game\sound.dm"
+#include "hippiestation\code\modules\atmospherics\machinery\components\unary_devices\cryo.dm"
+#include "hippiestation\code\modules\reagents\chemistry\reagents\medicine_reagents.dm"
 #include "interface\interface.dm"
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
