@@ -1,0 +1,5 @@
+author: "Aerden"
+delete-after: True
+changes: 
+  - expansion: "Volume pumps and meters are now compatible with circuits."
+  - bugfix: "Fix the gas pump's icon not updating when turned on/off with circuits."
