@@ -31,15 +31,11 @@
 		You can only create two at a time."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
 	next_knowledge = list(/datum/heretic_knowledge/ashen_grasp)
-
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	limit = 2
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_ASH
 
 /datum/heretic_knowledge/limited_amount/starting/base_ash/on_research(mob/user)
@@ -98,7 +94,6 @@
 		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
 		He shone brightly in the darkness, until the blaze begin to die."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
-	cost = 2
 	route = PATH_ASH
 	mark_type = /datum/status_effect/eldritch/ash
 
@@ -143,20 +138,9 @@
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
 	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
-	cost = 2
 	route = PATH_ASH
 
-/datum/heretic_knowledge/blade_upgrade/ash/on_gain(mob/user)
-	. = ..()
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/blade_upgrade/ash/on_lose(mob/user)
-	. = ..()
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
-
-/datum/heretic_knowledge/blade_upgrade/ash/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	SIGNAL_HANDLER
-
+/datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target)
 		return
 

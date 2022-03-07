@@ -43,8 +43,6 @@
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/flesh)
 	limit = 3 // Bumped up so they can arm up their ghouls too.
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/on_research(mob/user)
@@ -61,8 +59,9 @@
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp
 	name = "Grasp of Flesh"
-	desc = "Your Mansus Grasp gains the ability to create a single ghoul out of corpse with a soul. \
-		Ghouls have only 25 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively."
+	desc = "Your Mansus Grasp gains the ability to create a ghoul out of corpse with a soul. \
+		Ghouls have only 25 health and look like husks to the heathens' eyes, but can use Bloody Blades effectively. \
+		You can only create one at a time by this method."
 	gain_text = "My new found desires drove me to greater and greater heights."
 	next_knowledge = list(/datum/heretic_knowledge/limited_amount/flesh_ghoul)
 	limit = 1
@@ -81,57 +80,45 @@
 	if(target.stat != DEAD)
 		return
 
-	// Skeletons can't become husks, and monkeys are monkeys.
-	if(!ishuman(target) || isskeleton(target) || ismonkey(target))
-		target.balloon_alert(source, "invalid body!")
-		return COMPONENT_BLOCK_CHARGE_USE
-
-	var/mob/living/carbon/human/human_target = target
-	human_target.grab_ghost()
-	if(!human_target.mind || !human_target.client)
-		target.balloon_alert(source, "no soul!")
-		return COMPONENT_BLOCK_CHARGE_USE
-	if(HAS_TRAIT(human_target, TRAIT_HUSK))
-		target.balloon_alert(source, "husked!")
-		return COMPONENT_BLOCK_CHARGE_USE
 	if(LAZYLEN(created_items) >= limit)
 		target.balloon_alert(source, "at ghoul limit!")
 		return COMPONENT_BLOCK_CHARGE_USE
 
-	LAZYADD(created_items, WEAKREF(human_target))
-	log_game("[key_name(source)] created a ghoul, controlled by [key_name(human_target)].")
-	message_admins("[ADMIN_LOOKUPFLW(source)] created a ghoul, [ADMIN_LOOKUPFLW(human_target)].")
+	if(!IS_VALID_GHOUL_MOB(target))
+		target.balloon_alert(source, "invalid body!")
+		return COMPONENT_BLOCK_CHARGE_USE
 
-	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
-	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
-	human_target.setMaxHealth(GHOUL_MAX_HEALTH)
-	human_target.health = GHOUL_MAX_HEALTH
-	human_target.become_husk(MAGIC_TRAIT)
-	human_target.apply_status_effect(/datum/status_effect/ghoul)
-	human_target.faction |= FACTION_HERETIC
+	target.grab_ghost()
+	if(!target.mind || !target.client)
+		target.balloon_alert(source, "no soul!")
+		return COMPONENT_BLOCK_CHARGE_USE
+	if(HAS_TRAIT(target, TRAIT_HUSK))
+		target.balloon_alert(source, "husked!")
+		return COMPONENT_BLOCK_CHARGE_USE
 
-	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-	heretic_monster.set_owner(source.mind)
+	LAZYADD(created_items, WEAKREF(target))
+	log_game("[key_name(source)] created a ghoul, controlled by [key_name(target)].")
+	message_admins("[ADMIN_LOOKUPFLW(source)] created a ghoul, [ADMIN_LOOKUPFLW(target)].")
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/remove_ghoul(mob/living/carbon/human/source)
+	target.apply_status_effect(/datum/status_effect/ghoul, GHOUL_MAX_HEALTH, source.mind)
+	RegisterSignal(target, COMSIG_ANTAGONIST_REMOVED, .proc/free_ghoul_slot)
+
+/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/free_ghoul_slot(mob/living/carbon/human/source, datum/antagonist/removed)
 	SIGNAL_HANDLER
 
-	LAZYREMOVE(created_items, WEAKREF(source))
-	source.setMaxHealth(initial(source.maxHealth))
-	source.cure_husk(MAGIC_TRAIT)
-	source.remove_status_effect(/datum/status_effect/ghoul)
-	source.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
+	if(!istype(removed, /datum/antagonist/heretic_monster))
+		return
 
-	UnregisterSignal(source, COMSIG_LIVING_DEATH)
+	LAZYREMOVE(created_items, WEAKREF(source))
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
 	desc = "Allows you to transmute a corpse and a poppy to create a Voiceless Dead. \
 		Voiceless Dead are mute ghouls and only have 50 health, but can use Bloody Blades effectively. \
-		You can only create two at a time. "
+		You can only create two at a time."
 	gain_text = "I found notes of a dark ritual, unfinished... yet still, I pushed forward."
 	next_knowledge = list(
-		/datum/heretic_knowledge/flesh_mark,
+		/datum/heretic_knowledge/mark/flesh_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/void_cloak,
 		/datum/heretic_knowledge/medallion,
@@ -145,16 +132,19 @@
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	for(var/mob/living/carbon/human/body in atoms)
-		// Skeletons can't become husks, and monkeys because they're monkeys.
-		if(body.stat != DEAD || isskeleton(body) || ismonkey(body) || HAS_TRAIT(body, TRAIT_HUSK))
+		if(body.stat != DEAD || !IS_VALID_GHOUL_MOB(body) || HAS_TRAIT(body, TRAIT_HUSK))
 			atoms -= body
 
 	if(!(locate(/mob/living/carbon/human) in atoms))
 		loc.balloon_alert(user, "ritual failed, no valid body!")
 		return FALSE
 
-	return ..()
+	return TRUE
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/mob/living/carbon/human/soon_to_be_ghoul = locate() in selected_atoms
@@ -177,34 +167,24 @@
 		soon_to_be_ghoul.ghostize(FALSE)
 		soon_to_be_ghoul.key = chosen_candidate.key
 
-	ADD_TRAIT(soon_to_be_ghoul, TRAIT_MUTE, MAGIC_TRAIT)
+	LAZYADD(created_items, WEAKREF(soon_to_be_ghoul))
+	selected_atoms -= soon_to_be_ghoul
+
 	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(soon_to_be_ghoul)].")
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(soon_to_be_ghoul)].")
-	soon_to_be_ghoul.revive(full_heal = TRUE, admin_revive = TRUE)
-	soon_to_be_ghoul.setMaxHealth(MUTE_MAX_HEALTH)
-	soon_to_be_ghoul.health = MUTE_MAX_HEALTH // Voiceless dead are much tougher than ghouls
-	soon_to_be_ghoul.become_husk()
-	soon_to_be_ghoul.faction |= FACTION_HERETIC
-	soon_to_be_ghoul.apply_status_effect(/datum/status_effect/ghoul)
 
-	var/datum/antagonist/heretic_monster/heretic_monster = soon_to_be_ghoul.mind.add_antag_datum(/datum/antagonist/heretic_monster)
-	heretic_monster.set_owner(user.mind)
+	ADD_TRAIT(soon_to_be_ghoul, TRAIT_MUTE, MAGIC_TRAIT)
+	soon_to_be_ghoul.apply_status_effect(/datum/status_effect/ghoul, MUTE_MAX_HEALTH, user.mind)
+	RegisterSignal(soon_to_be_ghoul, COMSIG_ANTAGONIST_REMOVED, .proc/free_ghoul_slot)
 
-	selected_atoms -= soon_to_be_ghoul
-	LAZYADD(created_items, WEAKREF(soon_to_be_ghoul))
-
-	RegisterSignal(soon_to_be_ghoul, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
-	return TRUE
-
-/datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_ghoul(mob/living/carbon/human/source)
+/datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/free_ghoul_slot(mob/living/carbon/human/source, datum/antagonist/removed)
 	SIGNAL_HANDLER
 
-	LAZYREMOVE(created_items, WEAKREF(source))
-	source.setMaxHealth(initial(source.maxHealth))
-	source.remove_status_effect(/datum/status_effect/ghoul)
-	source.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
+	if(!istype(removed, /datum/antagonist/heretic_monster))
+		return
 
-	UnregisterSignal(source, COMSIG_LIVING_DEATH)
+	LAZYREMOVE(created_items, WEAKREF(source))
+	REMOVE_TRAIT(source, TRAIT_MUTE, MAGIC_TRAIT)
 
 /datum/heretic_knowledge/mark/flesh_mark
 	name = "Mark of Flesh"
@@ -212,7 +192,6 @@
 		When triggered, the victim begins to bleed significantly."
 	gain_text = "That's when I saw them, the marked ones. They were out of reach. They screamed, and screamed."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/flesh)
-	cost = 2
 	route = PATH_FLESH
 	mark_type = /datum/status_effect/eldritch/flesh
 
@@ -248,18 +227,9 @@
 	gain_text = "The Uncanny Man was not alone. They led me to the Marshal. \
 		I finally began to understand. And then, blood rained from the heavens."
 	next_knowledge = list(/datum/heretic_knowledge/summon/stalker)
-	cost = 2
 	route = PATH_FLESH
 
-/datum/heretic_knowledge/blade_upgrade/flesh/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/blade_upgrade/flesh/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
-
-/datum/heretic_knowledge/blade_upgrade/flesh/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	SIGNAL_HANDLER
-
+/datum/heretic_knowledge/blade_upgrade/flesh/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!iscarbon(target) || source == target)
 		return
 

@@ -37,9 +37,6 @@
 		/obj/item/trash = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/rust)
-	limit = 2
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_RUST
 
 /datum/heretic_knowledge/limited_amount/starting/base_rust/on_research(mob/user)
@@ -82,7 +79,7 @@
 	desc = "Grants you passive healing and stun resistance while standing over rust."
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
-		/datum/heretic_knowledge/rust_mark,
+		/datum/heretic_knowledge/mark/rust_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
@@ -138,7 +135,6 @@
 		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
-	cost = 2
 	route = PATH_RUST
 	mark_type = /datum/status_effect/eldritch/rust
 
@@ -167,18 +163,9 @@
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
-	cost = 2
 	route = PATH_RUST
 
-/datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/blade_upgrade/rust/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
-
-/datum/heretic_knowledge/blade_upgrade/rust/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	SIGNAL_HANDLER
-
+/datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	// No user == target check here, cause it's technically good for the heretic?
 	target.reagents?.add_reagent(/datum/reagent/eldritch, 5)
 

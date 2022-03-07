@@ -517,15 +517,6 @@
 	locked_to = null
 	return ..()
 
-/datum/status_effect/eldritch/blade/on_creation(mob/living/new_owner, area/locked_to)
-	if(!isarea(locked_to))
-		stack_trace("[type] was instantiated without an area to lock on to.")
-		qdel(src)
-		return
-
-	src.locked_to = locked_to
-	return ..()
-
 /datum/status_effect/eldritch/blade/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_TELEPORTED, .proc/on_teleport)
@@ -541,7 +532,7 @@
 	if(get_area(destination) == locked_to)
 		return
 
-	to_chat(source, span_userdanger("An otherworldly force prevents your escape from [get_area_name(locked_to, TRUE)]!"))
+	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
 
 	source.Stun(1 SECONDS)
 	return COMPONENT_BLOCK_TELEPORT
@@ -552,7 +543,7 @@
 	if(get_area(source) == locked_to)
 		return
 
-	to_chat(source, span_userdanger("An otherworldly force prevents your escape from [get_area_name(locked_to, TRUE)]!"))
+	to_chat(source, span_hypnophrase("An otherworldly force prevents your escape from [get_area_name(locked_to)]!"))
 
 	source.Stun(1 SECONDS)
 	source.throw_at(old_loc, 5, 1)
@@ -1166,10 +1157,72 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	duration = -1
 	alert_type = /atom/movable/screen/alert/status_effect/ghoul
+	/// The new max health value set for the ghoul, if supplied
+	var/new_max_health
+	/// Reference to the master of the ghoul's mind
+	var/datum/mind/master_mind
+
+/datum/status_effect/ghoul/Destroy()
+	master_mind = null
+	return ..()
+
+/datum/status_effect/ghoul/on_creation(mob/living/new_owner, new_max_health, datum/mind/master_mind)
+	. = ..()
+	src.new_max_health = new_max_health
+	src.master_mind = master_mind
+
+	if(master_mind)
+		linked_alert.desc += " You are an eldritch monster reanimated to serve its master, [master_mind]."
+	if(isnum(new_max_health))
+		if(new_max_health > new_owner.maxHealth)
+			linked_alert.desc += " You are stronger in this form."
+		else
+			linked_alert.desc += " You are more fragile in this form."
+
+/datum/status_effect/ghoul/on_apply()
+	if(!ishuman(owner))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = owner
+
+	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul_status)
+	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
+
+	if(new_max_health)
+		human_target.setMaxHealth(new_max_health)
+		human_target.health = new_max_health
+
+	human_target.become_husk(MAGIC_TRAIT)
+	human_target.faction |= FACTION_HERETIC
+
+	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind?.add_antag_datum(/datum/antagonist/heretic_monster)
+	heretic_monster.set_owner(master_mind)
+
+	return TRUE
+
+/datum/status_effect/ghoul/on_remove()
+	remove_ghoul_status()
+	return ..()
+
+/datum/status_effect/ghoul/proc/remove_ghoul_status(datum/source)
+	SIGNAL_HANDLER
+
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/human_target = owner
+
+	if(new_max_health)
+		human_target.setMaxHealth(initial(human_target.maxHealth))
+
+	human_target.cure_husk(MAGIC_TRAIT)
+	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
+
+	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)
+	qdel(src)
 
 /atom/movable/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"
-	desc = "You are a Ghoul! A eldritch monster reanimated to serve its master."
+	desc = "You are a Ghoul!"
 	icon_state = ALERT_MIND_CONTROL
 
 

@@ -35,9 +35,6 @@
 	next_knowledge = list(/datum/heretic_knowledge/void_grasp)
 	required_atoms = list(/obj/item/knife = 1)
 	result_atoms = list(/obj/item/melee/sickly_blade/void)
-	limit = 2
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
 	route = PATH_VOID
 
 /datum/heretic_knowledge/limited_amount/starting/base_void/on_research(mob/user)
@@ -91,10 +88,10 @@
 	gain_text = "I found a thread of cold breath. It lead me to a strange shrine, all made of crystals. \
 		Translucent and white, a depiction of a nobleman stood before me."
 	next_knowledge = list(
-		/datum/heretic_knowledge/void_mark,
+		/datum/heretic_knowledge/mark/void_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/void_cloak,
-		// void - blade
+		/datum/heretic_knowledge/limited_amount/risen_corpse,
 	)
 	cost = 1
 	route = PATH_VOID
@@ -114,7 +111,6 @@
 	gain_text = "A gust of wind? A shimmer in the air? The presence is overwhelming, \
 		my senses began to betray me. My mind is my own enemy."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/void)
-	cost = 2
 	route = PATH_VOID
 	mark_type = /datum/status_effect/eldritch/void
 
@@ -143,19 +139,9 @@
 	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
 	next_knowledge = list(/datum/heretic_knowledge/spell/voidpull)
-	cost = 2
 	route = PATH_VOID
 
-
-/datum/heretic_knowledge/blade_upgrade/void/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, .proc/on_ranged_eldritch_blade)
-
-/datum/heretic_knowledge/blade_upgrade/void/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK)
-
-/datum/heretic_knowledge/blade_upgrade/void/proc/on_ranged_eldritch_blade(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
-	SIGNAL_HANDLER
-
+/datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!target.has_status_effect(/datum/status_effect/eldritch))
 		return
 

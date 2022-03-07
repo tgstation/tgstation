@@ -38,14 +38,12 @@
 		/obj/item/stack/sheet/mineral/silver = 2,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/dark)
-	limit = 5
-	cost = 1
-	priority = MAX_KNOWLEDGE_PRIORITY - 5
+	limit = 5 // It's the blade path, it's a given
 	route = PATH_BLADE
 
 /datum/heretic_knowledge/blade_grasp
 	name = "Grasp of the Blade"
-	desc = "Your Masus Grasp will cause a short stun when used on someone facing away from you."
+	desc = "Your Masus Grasp will cause a short stun when used on someone lying down or facing away from you."
 	gain_text = ""
 	next_knowledge = list(/datum/heretic_knowledge/blade_dance)
 	cost = 1
@@ -80,26 +78,25 @@
 		are_we_behind = TRUE
 
 	// Exceptions aside, let's actually check if they're, yknow, behind
-	if(!(target.dir & get_dir(target, source)))
+	var/dir_target_to_source = get_dir(target, source)
+	if(target.dir & REVERSE_DIR(dir_target_to_source))
 		are_we_behind = TRUE
 
 	if(!are_we_behind)
 		return
 
 	// We're officially behind them, apply effects
-	target.AdjustParalyzed(1 SECONDS)
+	target.AdjustParalyzed(1.5 SECONDS)
 	target.balloon_alert(source, "backstab!")
 	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
 
 /datum/heretic_knowledge/blade_dance
 	name = "Blade Dance"
-	desc = "Allows you flawlessly block strikes against you while wielding a Darkened Blade. \
-		This effect can only trigger once every few seconds, \
-		and requires a Darkened Blade in either of your hands."
+	// desc is set in New()
 	gain_text = ""
 	next_knowledge = list(
-		// void - blade
-		/datum/heretic_knowledge/blade_mark,
+		/datum/heretic_knowledge/limited_amount/risen_corpse,
+		/datum/heretic_knowledge/mark/blade_mark,
 		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 	)
@@ -113,8 +110,7 @@
 /datum/heretic_knowledge/blade_dance/New()
 	. = ..()
 	desc = "Allows you flawlessly block strikes against you while wielding a Darkened Blade. \
-		This effect can only trigger once every [cooldown / 10] seconds, \
-		and requires a Darkened Blade in either of your hands."
+		This effect can only trigger once every [cooldown / 10] seconds, and requires a Darkened Blade in either of your hands."
 
 /datum/heretic_knowledge/blade_dance/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
@@ -182,16 +178,21 @@
 		however while applied on your target, they will be unable to leave the current room."
 	gain_text = ""
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/blade)
-	cost = 2
 	route = PATH_BLADE
 	mark_type = /datum/status_effect/eldritch/blade
 
-/datum/heretic_knowledge/mark/blade_mark/trigger_mark(mob/living/source, mob/living/target)
-	// Blade markis a lingering status effect - isn't triggered on blade attack
-	return
+/datum/heretic_knowledge/mark/blade_mark/create_mark(mob/living/source, mob/living/target)
+	var/datum/status_effect/eldritch/blade/blade_mark = ..()
+	if(!istype(blade_mark))
+		return
 
-/datum/heretic_knowledge/mark/blade_mark/on_mansus_grasp(mob/living/source, mob/living/target)
-	target.apply_status_effect(mark_type, get_area(source))
+	var/area/to_lock_to = get_area(source)
+	blade_mark.locked_to = to_lock_to
+	to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
+
+/datum/heretic_knowledge/mark/blade_mark/trigger_mark(mob/living/source, mob/living/target)
+	// Blade's mark is a lingering status effect - isn't triggered on blade attack
+	return
 
 /datum/heretic_knowledge/knowledge_ritual/blade
 	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
@@ -275,24 +276,17 @@
 		will now deliver a blow with both at once, dealing two attacks in rapid succession."
 	gain_text = ""
 	next_knowledge = list(/datum/heretic_knowledge/spell/summon_blade)
-	cost = 2
 	route = PATH_BLADE
 
-/datum/heretic_knowledge/blade_upgrade/blade/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
-
-/datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
-
-/datum/heretic_knowledge/blade_upgrade/blade/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	SIGNAL_HANDLER
-
+/datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(!target.has_status_effect(/datum/status_effect/eldritch))
 		return
 
 	var/obj/item/off_hand = source.get_inactive_held_item()
 	if(QDELETED(off_hand) || !istype(off_hand, /obj/item/melee/sickly_blade))
 		return
+	// If our off-hand is the blade that's attacking,
+	// quit out now to avoid an infinite stab combo
 	if(off_hand == blade)
 		return
 
