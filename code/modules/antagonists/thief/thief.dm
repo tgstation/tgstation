@@ -39,7 +39,7 @@
 		"All Access Fan" = 10,
 		"Chronicler" = 5,
 		"Deranged" = 2,
-		"Hoarder" = 0,
+		"Hoarder" = 0, //disabled until we have more reasonable nonreplenishable items to hoard- still admin selectable though
 	)
 	var/chosen_flavor = admin_choice_flavor || pick_weight(weighted_flavors)
 	//objective given by flavor
