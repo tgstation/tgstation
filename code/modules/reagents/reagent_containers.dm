@@ -17,7 +17,7 @@
 	var/list/fill_icon_thresholds = null
 	var/fill_icon_state = null // Optional custom name for reagent fill icon_state prefix
 	///The temperature the reagents in list_reagents should be when created
-	var/starting_temperature = null
+	var/starting_temperature = DEFAULT_REAGENT_TEMPERATURE
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
