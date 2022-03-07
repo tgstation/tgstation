@@ -47,7 +47,6 @@
 /area/ruin/space/derelict/service)
 "as" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/fancy/donut_box,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "at" = (
@@ -170,6 +169,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/bridge)
 "aS" = (
@@ -180,6 +180,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -274,6 +275,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/bridge)
 "bk" = (
@@ -300,6 +302,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron/edge,
 /area/ruin/space/derelict/bridge)
 "bp" = (
@@ -322,6 +325,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/edge{
 	dir = 1
 	},
@@ -532,6 +536,12 @@
 /obj/structure/cable,
 /turf/open/floor/engine/airless,
 /area/ruin/space/derelict/engineering)
+"cg" = (
+/obj/effect/turf_decal/tile/blue/half,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/iron/edge,
+/area/ruin/space/derelict/bridge)
 "ch" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -2968,7 +2978,6 @@
 "nt" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/secure/briefcase,
-/obj/item/assembly/flash/handheld,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -3197,6 +3206,7 @@
 /obj/effect/turf_decal/tile/blue/half,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/edge,
 /area/ruin/space/derelict/bridge)
 "on" = (
@@ -3512,6 +3522,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/derelict/service)
+"qh" = (
+/obj/effect/turf_decal/tile/blue/half,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/power/apc/auto_name/directional/south{
+	start_charge = 0
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/edge,
+/area/ruin/space/derelict/bridge)
 "qi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -4207,7 +4226,6 @@
 /area/ruin/space/derelict/research/xenobiology)
 "uY" = (
 /obj/machinery/door/airlock/vault/derelict,
-/obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/syndipod)
@@ -6765,6 +6783,14 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/white,
 /area/ruin/space/derelict/research)
+"KI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south{
+	start_charge = 0
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/hallway_primary)
 "KJ" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict/maintenance/port)
@@ -12001,7 +12027,7 @@ Rw
 az
 aA
 aV
-bl
+cg
 aQ
 ll
 aZ
@@ -12086,7 +12112,7 @@ lA
 ON
 be
 aV
-bl
+qh
 hU
 hU
 hU
@@ -12970,7 +12996,7 @@ RQ
 Sq
 kD
 mY
-kD
+KI
 Ya
 SA
 Vb
