@@ -79,8 +79,6 @@
 	. += span_notice("Click and drag the deck to yourself to pickup.")
 
 /**
- * ## shuffle_cards
- *
  * Shuffles the cards in the deck
  * 
  * Arguments:
