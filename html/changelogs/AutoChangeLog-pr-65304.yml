@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixed bot trails and launchpad targeting being invisible. Made bot trails look a bit nicer."
+  - bugfix: "Bots will no longer attempt to infinitely move into railings"
