@@ -1,0 +1,14 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - rscadd: "Right-clicking to splash reagents requires combat mode"
+  - rscadd: "Remember the above"
+  - qol: "You now right-click the janitorial cart to wet mops and left-click to put them away"
+  - qol: "You can right-click the janitorial cart with an empty hand to quickly remove your mop"
+  - qol: "You now right-click to put things in the trash bag"
+  - qol: "Left-clicking the cart with an empty hand will skip the radial menu if there's only one item in the cart"
+  - rscadd: "Adds examine hints for these changes"
+  - bugfix: "Fixes overlays not immediately updating when filling janitorial cart"
+  - bugfix: "Fixes bludgeoning janitorial cart when filling it"
+  - rscadd: "You can right-click with \"glass\" reagent containers (e.g. buckets) to fill from drainable containers like janitorial carts"
+  - code_imp: "Improvements to janitorial cart code"
