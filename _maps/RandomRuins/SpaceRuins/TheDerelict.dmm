@@ -62,6 +62,10 @@
 /obj/item/assembly/signaler,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
+"av" = (
+/obj/effect/spawner/random/structure/crate,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "aw" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
@@ -3535,6 +3539,9 @@
 	req_access_txt = "12"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "oO" = (
@@ -3558,6 +3565,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/engineering)
+"oU" = (
+/obj/structure/window/fulltile,
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/ruin/space/derelict/maintenance/port/central)
 "oV" = (
 /obj/item/storage/firstaid/brute{
 	pixel_x = 3;
@@ -3598,6 +3609,15 @@
 	},
 /turf/open/floor/carpet,
 /area/ruin/space/derelict/service)
+"pg" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port)
 "pk" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/light/directional/north,
@@ -3672,6 +3692,9 @@
 /obj/effect/spawner/random/structure/table_or_rack,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
+"pV" = (
+/turf/template_noop,
 /area/ruin/space/derelict/maintenance/port/central)
 "pZ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -3753,11 +3776,19 @@
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/white,
 /area/ruin/space/derelict/medical)
+"qI" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/space/derelict/maintenance/port/central)
 "qN" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
-/turf/open/floor/plating,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port)
 "qO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -4220,6 +4251,9 @@
 	req_access_txt = "26"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "tK" = (
@@ -4488,6 +4522,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/research)
+"vU" = (
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/siding/thinplating_new,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "vV" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -5537,6 +5579,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
+"Dh" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/derelict/maintenance/port/central)
 "Dj" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/machinery/meter,
@@ -5752,6 +5799,10 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/service)
+"EX" = (
+/obj/effect/spawner/random/structure/chair_maintenance,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/central)
 "EZ" = (
 /turf/open/floor/plating,
 /area/ruin/space/derelict/maintenance/port/lesser)
@@ -6265,6 +6316,9 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 8
+	},
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "Is" = (
@@ -6518,6 +6572,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/arrival)
+"JP" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/derelict/maintenance/port/central)
 "JS" = (
 /obj/machinery/light/small/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -6545,6 +6604,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/departures)
+"Ke" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/ruin/space/derelict/maintenance/port/central)
 "Kh" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
@@ -6978,7 +7041,7 @@
 /area/ruin/space/derelict/arrival)
 "Mb" = (
 /obj/effect/spawner/random/engineering/tank,
-/turf/open/floor/plating,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port)
 "Md" = (
 /obj/structure/table,
@@ -7121,7 +7184,7 @@
 /area/template_noop)
 "MX" = (
 /obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/smooth_large,
+/turf/closed/wall,
 /area/ruin/space/derelict/maintenance/port/central)
 "MY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -7379,6 +7442,9 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/service)
+"Ov" = (
+/turf/open/floor/catwalk_floor/iron_smooth,
+/area/ruin/space/derelict/maintenance/port)
 "Oy" = (
 /obj/machinery/rnd/production/circuit_imprinter,
 /turf/open/floor/iron,
@@ -7434,7 +7500,8 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
-/turf/open/floor/catwalk_floor/iron_smooth,
+/obj/effect/turf_decal/siding/thinplating_new,
+/turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
 "OQ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -7750,6 +7817,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/engine,
 /area/ruin/space/derelict/engineering)
+"QV" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/space/derelict/maintenance/port/central)
 "QW" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 8
@@ -10159,8 +10230,8 @@ jv
 mk
 Il
 mk
-mk
-jv
+KA
+cZ
 qx
 qx
 KA
@@ -10263,8 +10334,8 @@ mk
 tb
 tH
 MX
-OT
-mk
+aa
+HJ
 KQ
 yL
 oK
@@ -10366,9 +10437,9 @@ OT
 mk
 OT
 tH
-OT
-OT
-mk
+qI
+aa
+hk
 Zz
 Au
 YZ
@@ -10470,9 +10541,9 @@ tH
 vX
 tH
 tH
-OT
-OT
 mk
+aa
+HJ
 nK
 UM
 YZ
@@ -10575,8 +10646,8 @@ mk
 tH
 OT
 mk
-mk
-mk
+Nh
+Nh
 Nh
 Nh
 Nh
@@ -10677,7 +10748,7 @@ WS
 mk
 mk
 tH
-OT
+QV
 mk
 RC
 PB
@@ -10771,15 +10842,15 @@ xU
 xU
 gC
 mk
-tH
-tH
-tH
-tH
-tH
+pV
+Ke
+Ke
+pV
+mk
 tH
 WS
 mk
-OT
+EX
 tH
 OT
 mk
@@ -10875,7 +10946,7 @@ xU
 xU
 gC
 mk
-tH
+Ke
 mk
 mk
 mk
@@ -10883,7 +10954,7 @@ mk
 mk
 mk
 mk
-OT
+av
 tH
 OT
 mk
@@ -10979,7 +11050,7 @@ SV
 xU
 gC
 mk
-tH
+JP
 mk
 no
 nN
@@ -11083,7 +11154,7 @@ iD
 jj
 jU
 mk
-tH
+Ke
 mk
 np
 nO
@@ -11187,7 +11258,7 @@ Ux
 xU
 gC
 mk
-tH
+Ke
 mk
 uf
 nQ
@@ -11291,7 +11362,7 @@ xU
 jo
 kb
 mk
-tH
+Dh
 mk
 nq
 nR
@@ -11307,7 +11378,7 @@ po
 mk
 ow
 ow
-oM
+vU
 is
 xQ
 is
@@ -11395,7 +11466,7 @@ lv
 lv
 yy
 mk
-tH
+Ke
 mk
 nr
 TK
@@ -11499,7 +11570,7 @@ Ft
 BT
 gC
 mk
-tH
+oU
 mk
 ns
 TK
@@ -11728,11 +11799,11 @@ Ua
 Cr
 Ua
 qN
-vZ
-vZ
-vZ
-vZ
-vZ
+Ov
+Ov
+Ov
+Ov
+pg
 vZ
 hX
 jf
