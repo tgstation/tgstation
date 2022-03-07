@@ -139,4 +139,4 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 	return stolen_amount >= amount
 
 /datum/objective/all_access/update_explanation_text()
-	explanation_text = "Steal at least [amount] unique ids as you can. They need a registered name, assignment, and bank account!"
+	explanation_text = "Steal at least [amount] unique ids as you can. They need to be the centcom-granted IDs they were given when they arrived, not ones created on station."
