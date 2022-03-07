@@ -101,18 +101,25 @@
 	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
 	uses_electronics = TRUE
 
-	var/security_level = 0 //How much are wires secured
-	var/aiControlDisabled = AI_WIRE_NORMAL //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
-	var/hackProof = FALSE // if true, this door can't be hacked by the AI
-	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
-	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
+	///How much are wires secured
+	var/security_level = 0
+	///If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+	var/aiControlDisabled = AI_WIRE_NORMAL
+	/// if true, this door can't be hacked by the AI
+	var/hackProof = FALSE
+	///The number of seconds until power is restored.
+	var/secondsMainPowerLost = 0
+	///The number of seconds until power is restored.
+	var/secondsBackupPowerLost = 0
 	var/spawnPowerRestoreRunning = FALSE
-	var/lights = TRUE // bolt lights show by default
+	/// bolt lights show by default
+	var/lights = TRUE
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = FALSE
 	var/obj/machinery/door/airlock/closeOther
 	COOLDOWN_DECLARE(shockCooldown)
-	var/obj/item/note //Any papers pinned to the airlock
+	///Any papers pinned to the airlock
+	var/obj/item/note
 	/// The seal on the airlock
 	var/obj/item/seal
 	var/detonated = FALSE
@@ -124,12 +131,16 @@
 	var/boltUp = 'sound/machines/boltsup.ogg'
 	var/boltDown = 'sound/machines/boltsdown.ogg'
 	var/noPower = 'sound/machines/doorclick.ogg'
-	var/previous_airlock = /obj/structure/door_assembly //what airlock assembly mineral plating was applied to
-	var/airlock_material //material of inner filling; if its an airlock with glass, this should be set to "glass"
+	///what airlock assembly mineral plating was applied to
+	var/previous_airlock = /obj/structure/door_assembly
+	///material of inner filling; if its an airlock with glass, this should be set to "glass"
+	var/airlock_material
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
-	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi' //Used for papers and photos pinned to the airlock
+	///Used for papers and photos pinned to the airlock
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
-	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
+	/// TRUE means density will be set as soon as the door begins to close.
+	var/air_tight = FALSE
 	var/prying_so_hard = FALSE
 
 	flags_1 = HTML_USE_INITAL_ICON_1
