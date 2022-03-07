@@ -16,6 +16,15 @@
 /obj/machinery/computer/terminal/derelict/security
 	info = "INTER-MAIL - #790 - Cargo Technician J. Holmes -> I. Miller -- HOT SINGLE SILICONS IN YOUR AREA, CLICK ->HERE<- FOR MORE INFORMATION!"
 
+/obj/machinery/computer/terminal/derelict/syndicatecargopod
+	icon_screen = "tcboss"
+	icon_keyboard = "syndie_key"
+	upperinfo = "RUNNING SYNDIX ON FORK 48756A - REMEMBER TO OPEN AN ISSUE REPORT FOR ANY BUGS YOU ENCOUNTER"
+	info = "Logged In As Operative S. Martins -- Incident Report -- So, there was a minor hitch with the whole giant cargopod idea we were prepping for greenlight. As it turns out, the pressure we used was too \
+	low for our use case - pod ran off course at 0300 hours, but thankfully the tracking system's functioning just fine. Less fortunately, the pod's seem to have hit something, so I'm going to have to go EVA \
+	for pickup... High Command assures me that everything's fine, but something about the way we stopped's got me on edge. Jules, when you inevitably review this, tell /her/ that she'd be better off in service than RND."
+	tguitheme = "syndicate"
+
 /// Vault controller for use on the derelict/KS13.
 /obj/machinery/computer/vaultcontroller
 	name = "vault controller"

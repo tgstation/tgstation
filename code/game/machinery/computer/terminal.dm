@@ -8,6 +8,8 @@
 ///Text this terminal contains, not dissimilar to paper. Unlike paper, players cannot add or edit existing info.
 	var/info = "Congratulations on your purchase of a NanoSoft-TM terminal! Further instructions on setup available in \
 	user manual. For license and registration, please contact your licensed NanoSoft vendor and repair service representative."
+///The TGUI theme this console uses. Defaults to hackerman, a retro greeny pallete which should fit most terminals.
+	var/tguitheme = "hackerman"
 
 /obj/machinery/computer/terminal/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -19,3 +21,4 @@
 	. = list()
 	.["text"] = info
 	.["uppertext"] = upperinfo
+	.["tguitheme"] = tguitheme

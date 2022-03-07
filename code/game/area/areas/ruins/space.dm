@@ -388,6 +388,11 @@
 /area/ruin/space/derelict/maintenance/starboard/lesser
 	name = "\improper Derelict Lesser Starboard Maintenance"
 
+//Derelict Syndicate Pod
+/area/ruin/space/derelict/syndipod
+	name = "\improper Crashed Syndicate Cargo Pod"
+	icon_state = "syndie-ship"
+
 
 //DJSTATION
 

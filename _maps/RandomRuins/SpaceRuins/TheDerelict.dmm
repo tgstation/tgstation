@@ -1357,6 +1357,12 @@
 	},
 /turf/template_noop,
 /area/template_noop)
+"fD" = (
+/obj/machinery/computer/terminal/derelict/syndicatecargopod{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red/airless,
+/area/ruin/space/derelict/syndipod)
 "fE" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -1477,6 +1483,13 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
+"gx" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/syndipod)
 "gz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -2663,7 +2676,7 @@
 	amount = 50
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "mg" = (
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -2672,7 +2685,7 @@
 /obj/structure/rack,
 /obj/item/clothing/head/helmet/swat,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "mm" = (
 /obj/structure/rack,
 /obj/structure/sign/poster/contraband/gorlex_recruitment{
@@ -2680,7 +2693,7 @@
 	},
 /obj/item/stack/sheet/mineral/wood/fifty,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "mn" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "innerbrig";
@@ -2736,7 +2749,7 @@
 	},
 /obj/structure/closet/crate/engineering,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "mw" = (
 /obj/machinery/chem_master/condimaster{
 	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
@@ -2900,7 +2913,7 @@
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /obj/item/stack/sheet/mineral/plasma/thirty,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "nj" = (
 /obj/structure/grille/broken,
 /turf/open/floor/plating,
@@ -3042,27 +3055,34 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "nH" = (
 /obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "nI" = (
 /obj/structure/railing{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
 /obj/machinery/computer/vaultcontroller,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "nJ" = (
 /obj/structure/railing{
 	dir = 5
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "nM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -3113,7 +3133,7 @@
 	amount = 50
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "oa" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -3399,7 +3419,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "pF" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -3657,7 +3677,7 @@
 /area/ruin/space/derelict/maintenance/starboard/lesser)
 "rL" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "rM" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
@@ -3879,7 +3899,7 @@
 /obj/structure/rack,
 /obj/item/inducer/syndicate,
 /turf/open/floor/mineral/plastitanium/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "tg" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -4039,7 +4059,7 @@
 "ud" = (
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "ue" = (
 /obj/machinery/airalarm/directional/west,
 /obj/structure/reagent_dispensers/beerkeg,
@@ -4190,7 +4210,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "vb" = (
 /obj/machinery/computer/pandemic,
 /obj/structure/disposalpipe/segment{
@@ -4485,7 +4505,7 @@
 "wZ" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "xa" = (
 /obj/structure/table,
 /obj/machinery/light/directional/north,
@@ -4749,7 +4769,7 @@
 	},
 /obj/item/stack/sheet/titaniumglass/fifty,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "yy" = (
 /turf/closed/wall,
 /area/ruin/space/derelict/arrival)
@@ -5278,7 +5298,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/mineral/plastitanium/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "Bz" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -5421,8 +5441,9 @@
 /area/ruin/space/derelict/EVA)
 "Co" = (
 /obj/structure/railing,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "Cu" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access"
@@ -5793,8 +5814,11 @@
 /obj/structure/railing{
 	dir = 6
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/plating/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "EZ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -6254,7 +6278,7 @@
 /obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "HL" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -7628,7 +7652,7 @@
 "Qe" = (
 /obj/structure/tank_dispenser/oxygen,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "Qf" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Central Access"
@@ -7737,7 +7761,7 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "QP" = (
 /obj/machinery/vending/autodrobe/all_access,
 /turf/open/floor/iron,
@@ -7756,7 +7780,7 @@
 /area/ruin/space/derelict/maintenance/port)
 "QV" = (
 /turf/closed/wall/r_wall/syndicate,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "QW" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/blue{
@@ -7825,7 +7849,7 @@
 /obj/item/stack/sheet/mineral/uranium/five,
 /obj/structure/closet/crate/radiation,
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "Ru" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -8102,7 +8126,7 @@
 /area/ruin/space/derelict/arrival)
 "SX" = (
 /turf/open/floor/mineral/plastitanium/red/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "SY" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/arrival)
@@ -8439,7 +8463,7 @@
 "UM" = (
 /obj/structure/fluff/oldturret,
 /turf/closed/wall/r_wall/syndicate,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "UN" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/mineral/plastitanium,
@@ -8647,7 +8671,7 @@
 /area/ruin/space/derelict/engineering)
 "VC" = (
 /turf/open/floor/mineral/plastitanium/airless,
-/area/template_noop)
+/area/ruin/space/derelict/syndipod)
 "VF" = (
 /obj/structure/table,
 /obj/item/clothing/suit/straight_jacket,
@@ -10291,7 +10315,7 @@ VC
 tb
 VC
 SX
-SX
+fD
 QV
 aa
 aa
@@ -10713,7 +10737,7 @@ ZB
 ZB
 aa
 nJ
-wZ
+gx
 EX
 ZB
 aa
