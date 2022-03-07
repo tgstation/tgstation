@@ -43,13 +43,6 @@
 		qdel(src)
 
 /**
-/obj/item/toy/cards/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!"))
-	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	return BRUTELOSS
-**/
-
-/**
  * This is used to insert a list of cards into a deck or cardhand
  *
  * All cards that are inserted have their angle and pixel offsets reset to zero however their
