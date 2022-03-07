@@ -94,22 +94,21 @@
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	user.balloon_alert_to_viewers("shuffles the deck", vision_distance = COMBAT_MESSAGE_RANGE)
 
-/obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers)
+/obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
+	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
+		return
+		
 	var/obj/item/toy/singlecard/card = draw(user)
 	if(!card)
 		return
+	if(flip_card)
+		card.Flip()
 	card.pickup(user)
 	user.put_in_hands(card)
 	user.balloon_alert_to_viewers("draws a card", vision_distance = COMBAT_MESSAGE_RANGE)
 
 /obj/item/toy/cards/deck/attack_hand_secondary(mob/living/user, list/modifiers)
-	var/obj/item/toy/singlecard/card = draw(user)
-	if(!card)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN	
-	card.Flip()
-	card.pickup(user)
-	user.put_in_hands(card)
-	user.balloon_alert_to_viewers("draws a card", vision_distance = COMBAT_MESSAGE_RANGE)
+	attack_hand(user, modifiers, flip_card = TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/toy/cards/deck/AltClick(mob/living/user)
@@ -135,7 +134,6 @@
 /obj/item/toy/cards/deck/insert(list/cards_to_add)
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
 		card.Flip(CARD_FACEDOWN) // any card inserted into the deck is always facedown
-		// reset rotation angle too
 	. = ..()
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
