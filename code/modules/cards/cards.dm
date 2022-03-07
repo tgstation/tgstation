@@ -30,16 +30,13 @@
 		card.pixel_x = rand(-16, 16)
 		card.pixel_y = rand(-16, 16)
 		var/matrix/M = matrix()
-		var/dir = pick(0, 90, 180, 270) // only North, East, West, or South
-		M.Turn(dir)
+		var/angle = pick(0, 90, 180, 270)
+		M.Turn(angle)
 		card.transform = M
 		card.update_appearance()
 	update_appearance()
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-
-	// TODO
-	// we probably should add a message to viewers to indicate that someone just got smacked in the face with a deck of cards or cardhand 
-	//user.visible_message(span_notice("[user] checks [user.p_their()] card."), span_notice("The card reads: [cardname]."))
+	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
 
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
