@@ -16,7 +16,7 @@ export const LibraryVisitor = (props, context) => {
   );
 };
 
-export const BookListing = (props, context) => {
+const BookListing = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     can_connect,
@@ -59,7 +59,7 @@ export const BookListing = (props, context) => {
   );
 };
 
-export const SearchAndDisplay = (props, context) => {
+const SearchAndDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     can_db_request,

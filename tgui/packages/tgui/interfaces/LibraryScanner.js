@@ -13,7 +13,7 @@ export const LibraryScanner = (props, context) => {
   );
 };
 
-export const BookScanning = (props, context) => {
+const BookScanning = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     has_book,
