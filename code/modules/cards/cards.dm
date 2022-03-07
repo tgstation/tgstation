@@ -1,5 +1,5 @@
 /*
-** A Deck of Cards for playing various games of chance
+** The base card class that is used by decks and cardhands
 */
 /obj/item/toy/cards
 	resistance_flags = FLAMMABLE
@@ -14,6 +14,7 @@
 		QDEL_LIST(cards)
 	return ..()
 
+/// This is how we play 52 card pickup
 /obj/item/toy/cards/throw_impact(mob/living/target, datum/thrownthing/throwingdatum)
 	if(..() || !istype(target)) // was it caught or is the target not a living mob
 		return
@@ -48,6 +49,16 @@
 	return BRUTELOSS
 **/
 
+/**
+ * This is used to insert a list of cards into a deck or cardhand
+ *
+ * All cards that are inserted have their angle and pixel offsets reset to zero however their
+ * flip state does not change unless it's being inserted into a deck which is always facedown
+ * (see the deck/insert proc)
+ *
+ * Arguments:
+ * * list/cards_to_add - List of card objects to be inserted
+ */
 /obj/item/toy/cards/proc/insert(list/cards_to_add)
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
 		card.forceMove(src)
@@ -62,13 +73,14 @@
 	update_appearance()
 
 /**
- * draw
- *
  * Draws a card from the deck or hand of cards.
  *
+ * Draws the top card unless a card arg is supplied then it picks that specific card
+ * and returns it (the card arg is used by the radial menu for cardhands to select 
+ * specific cards out of the cardhand)
  * Arguments:
  * * mob/living/user - The user drawing the card.
- * * obj/item/toy/singlecard/card - The card drawn from the hand
+ * * obj/item/toy/singlecard/card (optional) - The card drawn from the hand
 **/ 
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
