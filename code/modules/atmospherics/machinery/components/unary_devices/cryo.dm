@@ -8,7 +8,7 @@
 #define CRYO_TX_QTY 0.5
 // The minimum O2 moles in the cryotube before it switches off.
 #define CRYO_MIN_GAS_MOLES 5
-#define CRYO_BREAKOUT_TIME 30 SECONDS
+#define CRYO_BREAKOUT_TIME 5 SECONDS	//hippie start cryo tweaks, manual resist changed from 30 seconds to 5 seconds to allow quicker exiting when power is off
 
 /// This is a visual helper that shows the occupant inside the cryo cell.
 /atom/movable/visual/cryo_occupant
@@ -221,7 +221,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	else //Turned on
 		begin_processing()
 
-
+/* //hippie start cryo tweaks, stop occupant falling asleep if they are a player
 /obj/machinery/atmospherics/components/unary/cryo_cell/process(delta_time)
 	..()
 
@@ -269,7 +269,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			beaker.reagents.trans_to(occupant, (CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * delta_time, efficiency * CRYO_MULTIPLY_FACTOR, methods = VAPOR) // Transfer reagents.
 			consume_gas = TRUE
 	return TRUE
-
+*/ 	//hippie end cryo tweaks, stop occupant falling asleep if they are a player
 /obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos(delta_time)
 	..()
 
@@ -315,13 +315,15 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
-		
+
 		update_parents()
 
+/*	//hippie start cryo tweaks, allows self cryo
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, "<span class='warning'>[src]'s door won't budge!</span>")
+*/	//hippie end cryo tweaks, allows self cryo
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine(drop = FALSE)
 	if(!state_open && !panel_open)
@@ -352,6 +354,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			"<span class='notice'>You successfully break out of [src]!</span>")
 		open_machine()
 
+/* hippie start cryo tweaks, allow seeing the name of the occupant on examine, if cryo is switched on
 /obj/machinery/atmospherics/components/unary/cryo_cell/examine(mob/user)
 	. = ..()
 	if(occupant)
@@ -361,6 +364,7 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 			. += "You can barely make out a form floating in [src]."
 	else
 		. += "[src] seems empty."
+*/ // hippie start cryo tweaks, allow seeing the name of the occupant on examine, if cryo is switched on
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.incapacitated() || !Adjacent(user) || !user.Adjacent(target) || !iscarbon(target) || !ISADVANCEDTOOLUSER(user))
