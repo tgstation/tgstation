@@ -1221,7 +1221,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/CE_envirosuit
+/datum/crafting_recipe/ce_envirosuit
 	name = "Chief Engineer Plasmaman Envirosuit"
 	result = /obj/item/clothing/under/plasmaman/chief_engineer
 	time = 5 SECONDS
@@ -1230,7 +1230,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/CE_envirosuit_helmet
+/datum/crafting_recipe/ce_envirosuit_helmet
 	name = "Chief Engineer Plasmaman Envirosuit Helmet"
 	result = /obj/item/clothing/head/helmet/space/plasmaman/chief_engineer
 	time = 5 SECONDS
