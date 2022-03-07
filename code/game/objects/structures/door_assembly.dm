@@ -244,11 +244,11 @@
 				to_chat(user, span_notice("You finish the airlock."))
 				var/obj/machinery/door/airlock/door
 				if(glass)
-					door = new glass_type(loc)
+					door = new glass_type(loc,/* constructed =*/ TRUE)
 				else
-					door = new airlock_type(loc)
+					door = new airlock_type(loc,/* constructed =*/ TRUE)
 				door.setDir(dir)
-				door.set_up_access(electronics, move_to_door = TRUE)
+				door.set_access_from_electronics(electronics, move_to_door = TRUE)
 				door.heat_proof = heat_proof_finished
 				door.security_level = 0
 				if(created_name)

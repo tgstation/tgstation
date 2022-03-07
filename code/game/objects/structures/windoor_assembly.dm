@@ -272,7 +272,7 @@
 
 					var/obj/machinery/door/window/windoor
 					if(secure)
-						windoor = new /obj/machinery/door/window/brigdoor(loc, dir)
+						windoor = new /obj/machinery/door/window/brigdoor(loc,/* constructed =*/ TRUE, dir)
 						if(facing == "l")
 							windoor.icon_state = "leftsecureopen"
 							windoor.base_state = "leftsecure"
@@ -280,7 +280,7 @@
 							windoor.icon_state = "rightsecureopen"
 							windoor.base_state = "rightsecure"
 					else
-						windoor = new /obj/machinery/door/window(loc, dir)
+						windoor = new /obj/machinery/door/window(loc,/* constructed =*/ TRUE, dir)
 						if(facing == "l")
 							windoor.icon_state = "leftopen"
 							windoor.base_state = "left"
@@ -288,7 +288,7 @@
 							windoor.icon_state = "rightopen"
 							windoor.base_state = "right"
 
-					windoor.set_up_access(electronics, TRUE)
+					windoor.set_access_from_electronics(electronics, move_to_door = TRUE)
 					windoor.set_density(FALSE)
 					qdel(src)
 					windoor.close()

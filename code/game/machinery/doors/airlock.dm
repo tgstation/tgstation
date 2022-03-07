@@ -99,6 +99,7 @@
 
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	blocks_emissive = NONE // Custom emissive blocker. We don't want the normal behavior.
+	uses_electronics = TRUE
 
 	var/security_level = 0 //How much are wires secured
 	var/aiControlDisabled = AI_WIRE_NORMAL //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
@@ -136,7 +137,7 @@
 
 	network_id = NETWORK_DOOR_AIRLOCKS
 
-/obj/machinery/door/airlock/Initialize(mapload)
+/obj/machinery/door/airlock/Initialize(mapload, constructed = FALSE)
 	. = ..()
 	wires = set_wires()
 	if(frequency)
@@ -202,8 +203,8 @@
 /obj/machinery/door/airlock/vv_edit_var(var_name)
 	. = ..()
 	switch (var_name)
-		if (NAMEOF(src, cyclelinkeddir))
-			setup_cycle_link()
+		if (NAMEOF(src, close_other_dir))
+			find_close_other()
 
 /obj/machinery/door/airlock/check_access_ntnet(datum/netdata/data)
 	return !requiresID() || ..()
@@ -306,10 +307,10 @@
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
 	QDEL_NULL(electronics)
-	if (cyclelinkeddoor)
-		if (cyclelinkeddoor.cyclelinkeddoor == src)
-			cyclelinkeddoor.cyclelinkeddoor = null
-		cyclelinkeddoor = null
+	if (close_other)
+		if (close_other.close_other == src)
+			close_other.close_other = null
+		close_other = null
 	if(id_tag)
 		for(var/obj/machinery/door_buttons/D in GLOB.machines)
 			D.removeMe(src)
@@ -1127,7 +1128,6 @@
 		addtimer(CALLBACK(closeOther, .proc/close), 2)
 
 	try_close_others()
-	try_close_linked_airlock()
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE

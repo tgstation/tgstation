@@ -356,9 +356,9 @@
 	if(space_dir)
 		. += span_notice("It has labels indicating that it has an emergency mechanism to open from the [dir2text(space_dir)] side with <b>just your hands</b> even if there's no power.")
 
-/obj/machinery/door/airlock/external/setup_cycle_link()
+/obj/machinery/door/airlock/external/find_close_other()
 	. = ..()
-	var/obj/machinery/door/airlock/external/cycle_linked_external_airlock = cyclelinkeddoor
+	var/obj/machinery/door/airlock/external/cycle_linked_external_airlock = close_other
 	if(istype(cycle_linked_external_airlock))
 		cycle_linked_external_airlock.space_dir |= space_dir
 		space_dir |= cycle_linked_external_airlock.space_dir
@@ -373,7 +373,7 @@
 		else
 			// always open from the space side
 			// get_dir(src, user) & space_dir, checked in unresricted_sides
-			var/should_safety_open = shuttledocked || cyclelinkeddoor?.shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
+			var/should_safety_open = shuttledocked || close_other?.shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
 			return try_to_activate_door(user, should_safety_open)
 
 	return ..()

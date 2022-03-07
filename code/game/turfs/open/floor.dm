@@ -284,14 +284,14 @@
 				return FALSE
 			if(ispath(the_rcd.airlock_type, /obj/machinery/door/window))
 				to_chat(user, span_notice("You build a windoor."))
-				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src, user.dir)
-				new_window.set_up_access(the_rcd.airlock_electronics, FALSE)
+				var/obj/machinery/door/window/new_window = new the_rcd.airlock_type(src,/* constructed =*/ TRUE, user.dir)
+				new_window.set_access_from_electronics(the_rcd.airlock_electronics, FALSE)
 				new_window.autoclose = TRUE
 				new_window.update_appearance()
 				return TRUE
 			to_chat(user, span_notice("You build an airlock."))
-			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src)
-			new_airlock.set_up_access(the_rcd.airlock_electronics, FALSE)
+			var/obj/machinery/door/airlock/new_airlock = new the_rcd.airlock_type(src,/* constructed =*/ TRUE)
+			new_airlock.set_access_from_electronics(the_rcd.airlock_electronics, FALSE)
 			new_airlock.autoclose = TRUE
 			new_airlock.update_appearance()
 			return TRUE

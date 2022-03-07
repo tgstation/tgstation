@@ -119,25 +119,27 @@
 	return
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper
-	name = "airlock/windoor cyclelink helper"
+	name = "airlock/windoor close other helper"
+	desc = "Uses facing directions to find another airlock or windoor to close when this one opens. Needs the same X or Y coordinate and to be within range."
 	icon_state = "airlock_cyclelink_helper"
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper/payload(obj/machinery/door/door)
-	if(door.cyclelinkeddir)
-		log_mapping("[src] at [AREACOORD(src)] tried to set [door] cyclelinkeddir, but it's already set!")
+	if(door.close_other_dir)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [door] close_other_dir, but it's already set!")
 	else
-		door.cyclelinkeddir = dir
+		door.close_other_dir = dir
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi
-	name = "airlock/windoor multi-cyclelink helper"
+	name = "airlock/windoor multi-close others helper"
+	desc = "Uses an ID string to find multiple airlocks or windoors to close when this one opens. Doesn't need the same X or Y coordinate or to be within range."
 	icon_state = "airlock_multicyclelink_helper"
 	var/cycle_id
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi/payload(obj/machinery/door/door)
-	if(door.closeOtherId)
-		log_mapping("[src] at [AREACOORD(src)] tried to set [door] closeOtherId, but it's already set!")
+	if(door.close_others_ID)
+		log_mapping("[src] at [AREACOORD(src)] tried to set [door] close_others_ID, but it's already set!")
 	else
-		door.closeOtherId = cycle_id
+		door.close_others_ID = cycle_id
 
 /obj/effect/mapping_helpers/airlock/locked
 	name = "airlock lock helper"

@@ -18,13 +18,14 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_REQUIRES_SILICON | INTERACT_MACHINE_OPEN
 	network_id = NETWORK_DOOR_AIRLOCKS
 	set_dir_on_move = FALSE
+	uses_electronics = TRUE
 	var/reinf = 0
 	var/shards = 2
 	var/rods = 2
 	var/cable = 1
 	var/list/debris = list()
 
-/obj/machinery/door/window/Initialize(mapload, set_dir)
+/obj/machinery/door/window/Initialize(mapload, constructed = FALSE, set_dir)
 	. = ..()
 	flags_1 &= ~PREVENT_CLICK_UNDER_1
 	if(set_dir)
@@ -58,7 +59,7 @@
 	QDEL_LIST(debris)
 	if(atom_integrity == 0)
 		playsound(src, "shatter", 70, TRUE)
-	electronics = null
+	QDEL_NULL(electronics)
 	var/turf/floor = get_turf(src)
 	floor.air_update_turf(TRUE, FALSE)
 	return ..()
@@ -208,7 +209,6 @@
 		if(obj_flags & EMAGGED)
 			return 0
 	try_close_others()
-	try_close_linked_airlock()
 	if(!operating) //in case of emag
 		operating = TRUE
 	do_animate("opening")
@@ -223,7 +223,7 @@
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
 		addtimer(CALLBACK(src, .proc/close), 1)
-	return 1
+	return TRUE
 
 /obj/machinery/door/window/close(forced=FALSE)
 	if(density)

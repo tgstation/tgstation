@@ -29,37 +29,51 @@
 	var/glass = FALSE
 	var/welded = FALSE
 	var/normalspeed = 1
-	var/heat_proof = FALSE // For rglass-windowed airlocks and firedoors
-	var/emergency = FALSE // Emergency access override
-	var/sub_door = FALSE // true if it's meant to go under another door.
+	/// For reinforced glass-windowed airlocks and firedoors.
+	var/heat_proof = FALSE
+	/// If TRUE, the door can be opened without access.
+	var/emergency = FALSE
+	/// TRUE if it's meant to go under another door, e.g. firelocks.
+	var/sub_door = FALSE
 	var/closingLayer = CLOSED_DOOR_LAYER
-	var/autoclose = FALSE //does it automatically close after some time
-	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
-	var/locked = FALSE //whether the door is bolted or not.
-	var/assemblytype //the type of door frame to drop during deconstruction
+	/// Does it automatically close after some time?
+	var/autoclose = FALSE
+	/// Whether the door detects things and mobs in its way. If TRUE, reopens when it does. If FALSE, closes and crushes them.
+	var/safe = TRUE
+	/// Whether the door is bolted or not.
+	var/locked = FALSE
+	/// The type of door frame to drop during deconstruction.
+	var/assemblytype
 	var/datum/effect_system/spark_spread/spark_system
-	var/real_explosion_block //ignore this, just use explosion_block
+	/// Ignore this, just use explosion_block.
+	var/real_explosion_block
 	/// If TRUE, this door will always open on red alert.
 	var/red_alert_access = FALSE
-	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access.
+	/// Unrestricted sides. A bitflag for which direction(s) (if any) can open the door with no access.
 	var/unres_sides = 0
 	/// Whether or not the door can crush mobs.
 	var/can_crush = TRUE
-	/// Cyclelinking for airlocks that aren't on the same X or Y coord as the target and constructed airlocks and windoors.
-	var/closeOtherId
+	/// This ID is set by the cyclelink_helper_multi mapping helper or players using airlock electronics. Used to maintain a list of airlocks with the same ID to close when this one opens.
+	var/close_others_ID
 	/// Doors to close when this one opens.
 	var/list/close_others
+	/// Direction it looks for another door with the opposite close_other_dir to pair with. Set by cyclelink_helper mapping helper at mapload.
+	var/close_other_dir = 0
+	/// Door it cycles with, only set if it finds one to pair with.
+	var/obj/machinery/door/close_other
+	/// Used by shuttle airlocks with external station airlocks near them to bypass the airlocks' access requirements and override cycling when the shuttle is docked.
+	var/shuttledocked = FALSE
 	/// TRUE means the door will automatically close the next time it's opened.
 	var/delayed_close_requested = FALSE
+	/// Does this door use airlock electronics? If so, give it a set based on its access settings in Initialize() if it wasn't built by a player.
+	var/uses_electronics = FALSE
+	/// Airlock electronics it drops when deconstructed (if it uses them). Added by create_electronics_from_door() if spawned or set_access_from_electronics() if built.
 	var/obj/item/electronics/airlock/electronics = null
-	var/cyclelinkeddir = 0
-	var/obj/machinery/door/cyclelinkeddoor
-	var/shuttledocked = 0
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
-	if(closeOtherId)
-		. += span_warning("This door cycles on ID: [sanitize(closeOtherId)].")
+	if(close_others_ID)
+		. += span_warning("This door cycles on ID: [sanitize(close_others_ID)].")
 	if(red_alert_access)
 		if(SSsecurity_level.current_level >= SEC_LEVEL_RED)
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
@@ -82,12 +96,14 @@
 		return TRUE
 	return ..()
 
-/obj/machinery/door/Initialize(mapload)
+/obj/machinery/door/Initialize(mapload, constructed = FALSE)
 	. = ..()
 	set_init_door_layer()
 	update_freelook_sight()
 	air_update_turf(TRUE, TRUE)
 	register_context()
+	if(!constructed)
+		create_electronics_from_door()
 	GLOB.airlocks += src
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
@@ -103,16 +119,18 @@
 
 /obj/machinery/door/LateInitialize()
 	. = ..()
-	if(closeOtherId)
-		update_other_id()
-	if(cyclelinkeddir)
-		setup_cycle_link()
+	if(close_others_ID)
+		create_close_others_list()
+	if(close_other_dir)
+		find_close_other()
 
-/obj/machinery/door/proc/set_up_access(obj/item/electronics/airlock/passed_electronics, move_to_door = FALSE)
+/obj/machinery/door/proc/set_access_from_electronics(obj/item/electronics/airlock/passed_electronics, move_to_door = FALSE)
 	if(!passed_electronics)
 		return
 	if(!istype(passed_electronics))
 		return
+	if(electronics)
+		qdel(electronics) //this shouldn't be happening, but just in case
 
 	if(move_to_door)
 		electronics = passed_electronics
@@ -133,17 +151,40 @@
 		update_unres_sides()
 
 	if(electronics.passed_cycle_id)
-		closeOtherId = electronics.passed_cycle_id
-		update_other_id()
+		close_others_ID = electronics.passed_cycle_id
+		create_close_others_list()
 
-/obj/machinery/door/proc/update_other_id()
+/obj/machinery/door/proc/create_electronics_from_door()
+	if(!uses_electronics)
+		return
+
+	electronics = new(src)
+
+	if(length(req_access))
+		electronics.one_access = FALSE
+		electronics.accesses += req_access.Copy()
+
+	else if(length(req_one_access))
+		electronics.one_access = TRUE
+		electronics.accesses += req_one_access.Copy()
+
+	if(name)
+		electronics.passed_name = name
+
+	if(unres_sides)
+		electronics.unres_sides = unres_sides
+
+	if(close_others_ID)
+		electronics.passed_cycle_id = close_others_ID
+
+/obj/machinery/door/proc/create_close_others_list()
 	for(var/obj/machinery/door/door in GLOB.airlocks)
 		if(door == src)
 			continue
 		LAZYINITLIST(close_others)
 		if(LAZYFIND(close_others, door))
 			continue
-		if(door.closeOtherId == closeOtherId)
+		if(door.close_others_ID == close_others_ID)
 			LAZYADD(close_others, door)
 			LAZYADD(door.close_others, src)
 
@@ -166,7 +207,7 @@
 		spark_system = null
 	air_update_turf(TRUE, FALSE)
 	if(LAZYLEN(close_others)) //remove this door from the list of every linked door
-		closeOtherId = null
+		close_others_ID = null
 		for(var/obj/machinery/door/other_door as anything in close_others)
 			LAZYREMOVE(other_door.close_others, src)
 		LAZYNULL(close_others)
@@ -408,8 +449,6 @@
 		return TRUE
 	if(operating)
 		return
-	try_close_others()
-	try_close_linked_airlock()
 	operating = TRUE
 	do_animate("opening")
 	set_opacity(0)
@@ -425,9 +464,6 @@
 	update_freelook_sight()
 	if(autoclose)
 		autoclose_in(DOOR_CLOSE_WAIT)
-	if(delayed_close_requested)
-		delayed_close_requested = FALSE
-		addtimer(CALLBACK(src, .proc/close), 1)
 	return 1
 
 /obj/machinery/door/proc/close()
@@ -459,7 +495,6 @@
 
 	if(!can_crush)
 		return TRUE
-	delayed_close_requested = FALSE
 	if(safe)
 		CheckForMobs()
 	else
@@ -467,46 +502,52 @@
 	return TRUE
 
 /obj/machinery/door/proc/try_close_others()
-	if(!emergency && LAZYLEN(close_others))
-		for(var/obj/machinery/door/other_door as anything in close_others)
-			if(other_door.emergency)
-				continue
-			if(other_door.operating)
-				other_door.delayed_close_requested = TRUE
-			else
-				addtimer(CALLBACK(other_door, .proc/close), 2)
+	if(emergency)
+		return
 
-/obj/machinery/door/proc/try_close_linked_airlock()
-	if(cyclelinkeddoor)
-		if(!shuttledocked && !emergency && !cyclelinkeddoor.shuttledocked && !cyclelinkeddoor.emergency)
-			if(cyclelinkeddoor.operating)
-				cyclelinkeddoor.delayed_close_requested = TRUE
-			else
-				addtimer(CALLBACK(cyclelinkeddoor, .proc/close), 2)
+	for(var/obj/machinery/door/other_door as anything in close_others)
+		if(other_door.emergency)
+			continue
+		if(other_door.operating)
+			other_door.delayed_close_requested = TRUE
+		else
+			addtimer(CALLBACK(other_door, .proc/close), 2)
 
-/obj/machinery/door/proc/setup_cycle_link()
-	if (cyclelinkeddoor)
-		cyclelinkeddoor.cyclelinkeddoor = null
-		cyclelinkeddoor = null
-	if (!cyclelinkeddir)
+	if(!close_other || shuttledocked)
+		return
+
+	if(close_other.shuttledocked || close_other.emergency)
+		return
+
+	if(close_other.operating)
+		close_other.delayed_close_requested = TRUE
+	else
+		addtimer(CALLBACK(close_other, .proc/close), 2)
+
+/obj/machinery/door/proc/find_close_other()
+	if (close_other)
+		close_other.close_other = null
+		close_other = null
+	if (!close_other_dir)
 		return
 	var/limit = DOOR_VISION_DISTANCE
 	var/turf/T = get_turf(src)
-	var/obj/machinery/door/FoundDoor
+	var/obj/machinery/door/FoundDoor = locate(/obj/machinery/door/window) in T //first look for a windoor on our turf, e.g. opposite desk windoor
 	do
-		T = get_step(T, cyclelinkeddir)
-		FoundDoor = locate(/obj/machinery/door/airlock) in T
 		if(!FoundDoor)
-			FoundDoor = locate(/obj/machinery/door/window) in T
-		if (FoundDoor && FoundDoor.cyclelinkeddir != get_dir(FoundDoor, src))
+			T = get_step(T, close_other_dir)
+			FoundDoor = locate(/obj/machinery/door/airlock) in T
+			if(!FoundDoor)
+				FoundDoor = locate(/obj/machinery/door/window) in T
+		if (FoundDoor && FoundDoor.close_other_dir != get_dir(FoundDoor, src))
 			FoundDoor = null
 		limit--
 	while(!FoundDoor && limit)
 	if (!FoundDoor)
 		log_mapping("[src] at [AREACOORD(src)] failed to find a valid door to cyclelink with!")
 		return
-	FoundDoor.cyclelinkeddoor = src
-	cyclelinkeddoor = FoundDoor
+	FoundDoor.close_other = src
+	close_other = FoundDoor
 
 /obj/machinery/door/proc/CheckForMobs()
 	if(locate(/mob/living) in get_turf(src))
