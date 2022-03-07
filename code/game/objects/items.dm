@@ -210,6 +210,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
+	/// Used to bypass the check in click.dm for adjacency in the preattack chain
+	var/can_preattack_on_distance = FALSE
 
 /obj/item/Initialize(mapload)
 

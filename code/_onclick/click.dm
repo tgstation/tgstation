@@ -155,7 +155,7 @@
 		return
 
 	//Standard reach turf to turf or reaching inside storage
-	if(CanReach(A,W))
+	if(CanReach(A,W) || W.can_preattack_on_distance)
 		if(W)
 			W.melee_attack_chain(src, A, params)
 		else

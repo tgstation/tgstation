@@ -12,6 +12,10 @@ RPD
 #define DESTROY_MODE (1<<2)
 #define REPROGRAM_MODE (1<<3)
 
+#define MAX_DISTANCE 4
+#define FULL_MOLES_CONSUMED 4
+#define HALF_MOLES_CONSUMED 2
+
 GLOBAL_LIST_INIT(atmos_pipe_recipes, list(
 	"Pipes" = list(
 		new /datum/pipe_info/pipe("Pipe", /obj/machinery/atmospherics/pipe/smart, TRUE),
@@ -187,6 +191,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	custom_materials = list(/datum/material/iron=75000, /datum/material/glass=37500)
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 100, ACID = 50)
 	resistance_flags = FIRE_PROOF
+	can_preattack_on_distance = TRUE
+
 	///Sparks system used when changing device in the UI
 	var/datum/effect_system/spark_spread/spark_system
 	///Direction of the device we are going to spawn, set up in the UI
@@ -225,6 +231,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE | REPROGRAM_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
+	///Distance that the RPD can reach by consuming more gas
+	var/pressure_strenght = 1
+	///Only maploaded RPDs will come with pre-installed tank
+	var/constructed = FALSE
+	///Stores the internal tank reference
+	var/obj/item/tank/internal_tank
+
+/obj/item/pipe_dispenser/constructed
+	constructed = TRUE
 
 /obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
@@ -240,6 +255,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	recipe = first_atmos
 
+	if(!constructed)
+		internal_tank = new /obj/item/tank(src)
+		internal_tank.air_contents.assert_gas(/datum/gas/oxygen)
+		internal_tank.air_contents.gases[/datum/gas/oxygen][MOLES] = (10 * ONE_ATMOSPHERE) * internal_tank.volume / (R_IDEAL_GAS_EQUATION * T20C)
+
 /obj/item/pipe_dispenser/Destroy()
 	qdel(spark_system)
 	spark_system = null
@@ -249,6 +269,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	. = ..()
 	. += "You can scroll your mouse wheel to change the piping layer."
 	. += "You can right click a pipe to set the RPD to its color and layer."
+	. += "You can set the pressure strenght with Ctrl click, current strenght at [pressure_strenght]."
+	if(internal_tank)
+		. += "You can remove the internal tank with Alt click, current pressure at [internal_tank.air_contents.return_pressure()]"
+	else
+		. += "It's missing an air tank, please insert one to allow the device to work."
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
@@ -287,7 +312,28 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(istype(W, /obj/item/rpd_upgrade))
 		install_upgrade(W, user)
 		return TRUE
+	if(istype(W, /obj/item/tank))
+		if(internal_tank != null)
+			to_chat(user, span_notice("A tank is already inserted."))
+			return
+		if(!user.transferItemToLoc(W, src))
+			return
+		var/obj/item/tank/new_tank = W
+		internal_tank = new_tank
+		to_chat(user, span_notice("You put [W] in [src]."))
+		return
 	return ..()
+
+/obj/item/pipe_dispenser/AltClick(mob/user)
+	. = ..()
+	if(internal_tank != null)
+		user.put_in_hands(internal_tank)
+		internal_tank = null
+
+/obj/item/pipe_dispenser/CtrlClick(mob/user)
+	. = ..()
+	pressure_strenght = (pressure_strenght + 1 > MAX_DISTANCE) ? 1 : pressure_strenght + 1
+	to_chat(user, span_notice("Pressure strenght set to [pressure_strenght]."))
 
 /**
  * Installs an upgrade into the RPD
@@ -420,7 +466,17 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(!ISADVANCEDTOOLUSER(user) || istype(A, /turf/open/space/transit))
 		return ..()
 
+	if(!internal_tank)
+		balloon_alert(user, "Missing air tank")
+		return
+
 	var/atom/attack_target = A
+	var/turf/our_turf = get_turf(src)
+	var/turf/target_turf = get_turf(attack_target)
+	var/distance = round(get_dist_euclidian(our_turf, target_turf), 1)
+	message_admins("Distance: [distance]")
+	if(distance > pressure_strenght)
+		return
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
@@ -429,6 +485,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	//Unwrench pipe before we build one over/paint it, but only if we're not already running a do_after on it already to prevent a potential runtime.
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
+		if(!consume_pressure(distance, full_consumption = FALSE))
+			balloon_alert(user, "not enough pressure")
+			activate()
+			return
+
 		attack_target = attack_target.wrench_act(user, src)
 		if(!isatom(attack_target))
 			CRASH("When attempting to call [A.type].wrench_act(), received the following non-atom return value: [attack_target]")
@@ -444,6 +505,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	. = TRUE
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
+		if(!consume_pressure(distance, full_consumption = FALSE))
+			balloon_alert(user, "not enough pressure")
+			activate()
+			return
+
 		to_chat(user, span_notice("You start destroying a pipe..."))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 		if(do_after(user, destroy_speed, target = attack_target))
@@ -523,6 +589,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			I.update()
 
 	if(mode & BUILD_MODE)
+		if(!consume_pressure(distance, full_consumption = TRUE))
+			balloon_alert(user, "not enough pressure")
+			activate()
+			return
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
@@ -601,7 +671,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
 
-				var/turf/target_turf = get_turf(attack_target)
 				if(target_turf.is_blocked_turf(exclude_mobs = TRUE))
 					to_chat(user, span_warning("[src]'s error light flickers; there's something in the way!"))
 					return
@@ -633,6 +702,23 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/activate()
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
+
+///Consumes gases based on the distance from the target
+/obj/item/pipe_dispenser/proc/consume_pressure(distance_from_target, full_consumption = TRUE)
+
+	var/minimum_pressure = full_consumption ? FULL_MOLES_CONSUMED : HALF_MOLES_CONSUMED
+
+	if(internal_tank?.air_contents.return_pressure() < minimum_pressure * distance_from_target)
+		return FALSE
+
+	var/pressure_to_consume = minimum_pressure * distance_from_target
+	var/moles_to_consume = pressure_to_consume * internal_tank.volume / (R_IDEAL_GAS_EQUATION * internal_tank.air_contents.temperature)
+
+	var/turf/our_turf = get_turf(src)
+	our_turf.assume_air(internal_tank.air_contents.remove(moles_to_consume))
+	message_admins("Consumed amount: [moles_to_consume]")
+	message_admins("Internal pressure: [internal_tank.air_contents.return_pressure()]")
+	return TRUE
 
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
