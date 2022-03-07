@@ -7749,10 +7749,8 @@
 "QE" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
-/obj/machinery/gravity_generator/main/station{
-	on = 0
-	},
 /obj/structure/cable,
+/obj/machinery/gravity_generator/main/station/admin,
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/engineering/gravity_generator)
 "QF" = (
