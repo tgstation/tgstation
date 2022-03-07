@@ -13870,7 +13870,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "cmg" = (
 /turf/closed/wall,
 /area/service/kitchen/coldroom)
@@ -15736,7 +15736,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "cAa" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -27067,7 +27067,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dMc" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave{
@@ -27086,7 +27086,7 @@
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dMd" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/donkpockets,
@@ -27100,7 +27100,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dMe" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -27110,7 +27110,7 @@
 	},
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dMg" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral{
@@ -27121,8 +27121,10 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dMh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/landmark/event_spawn,
@@ -27380,7 +27382,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dOs" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/neutral{
@@ -27392,7 +27394,7 @@
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
-/area/science/research)
+/area/science/breakroom)
 "dOu" = (
 /obj/effect/landmark/start/scientist,
 /obj/effect/turf_decal/tile/red{
@@ -27406,7 +27408,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dOw" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/soda_cans/dr_gibb,
@@ -27420,7 +27422,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dOx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/reinforced,
@@ -27487,7 +27489,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dOV" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/tile/neutral{
@@ -27499,7 +27501,7 @@
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
-/area/science/research)
+/area/science/breakroom)
 "dOX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red{
@@ -27516,7 +27518,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dOZ" = (
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -27527,7 +27529,7 @@
 	},
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dPh" = (
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -27633,7 +27635,7 @@
 	},
 /obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dPO" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -27641,7 +27643,7 @@
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dPR" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/neutral,
@@ -27649,7 +27651,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dPS" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -27662,7 +27664,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "dPT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -38929,7 +38931,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "ghA" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -51076,6 +51078,9 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)
+"jiB" = (
+/turf/closed/wall/r_wall,
+/area/science/breakroom)
 "jiK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -52200,7 +52205,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "jyi" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/bot,
@@ -54742,7 +54747,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "kfs" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/rank/civilian/curator,
@@ -56641,7 +56646,7 @@
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
-/area/science/research)
+/area/science/breakroom)
 "kCu" = (
 /obj/structure/railing{
 	dir = 10
@@ -69891,6 +69896,9 @@
 	},
 /turf/open/floor/iron,
 /area/medical/medbay/lobby)
+"nMn" = (
+/turf/closed/wall,
+/area/science/breakroom)
 "nMq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -71767,7 +71775,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "okD" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -73466,7 +73474,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "oGJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -76549,7 +76557,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "pya" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -78620,7 +78628,7 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "pWh" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/decal/cleanable/dirt,
@@ -81338,7 +81346,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "qKE" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -105067,7 +105075,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "wIn" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -107509,7 +107517,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "xrI" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -107802,7 +107810,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/science/research)
+/area/science/breakroom)
 "xuI" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -145107,10 +145115,10 @@ dEA
 dEA
 dEA
 dEA
-cOR
-cOR
-cOR
-cOR
+jiB
+jiB
+jiB
+jiB
 dLY
 dOM
 dOM
@@ -145364,7 +145372,7 @@ dFR
 dHq
 dIF
 flV
-cOR
+jiB
 dMb
 czP
 dOq
@@ -145621,12 +145629,12 @@ skc
 lOg
 clR
 pOm
-cOR
-dfm
+jiB
+nMn
 xuG
-dfm
-dfm
-dfm
+nMn
+nMn
+nMn
 dOM
 iQX
 dSF
@@ -145878,7 +145886,7 @@ nop
 iFw
 dIH
 vHk
-cOR
+jiB
 dMc
 kCt
 dOs
@@ -146135,7 +146143,7 @@ uRb
 dEA
 dEA
 dEA
-cOR
+jiB
 dMd
 jyh
 oGB
@@ -146392,7 +146400,7 @@ qzZ
 cUe
 dII
 dKh
-cOR
+jiB
 dMe
 kff
 dOu
@@ -146906,7 +146914,7 @@ oIJ
 lNG
 sTs
 oIJ
-cOR
+jiB
 dMg
 pVZ
 dOw
