@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the inputs for the linear and exponential sustain settings of the song editor (instruments UI)."
