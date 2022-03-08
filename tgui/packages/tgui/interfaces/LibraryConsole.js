@@ -649,7 +649,7 @@ const UploadModal = (props, context) => {
 
   const display_category = uploadCategory || default_category;
   return (
-    <Modal width="400px">
+    <Modal width="650px">
       <Box fontSize="20px" pb={2}>
         Are you sure you want to upload this book to the database?
       </Box>
