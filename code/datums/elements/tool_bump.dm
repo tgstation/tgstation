@@ -8,19 +8,19 @@
 	id_arg_index = 2
 	///Behaviours to look for in bumper's held objects before attacking the attached atom with one.
 	var/list/tool_behaviours
-	///Can we use this tool to perform this behaviour with our off-hand (e.g. mining)?
-	var/require_active_hand = TRUE
 	///Tool types to look for in bumper's held objects before attacking the attached atom with one.
 	var/list/tool_items
+	///Can we use this tool to perform this behaviour with our off-hand (e.g. mining)?
+	var/require_active_hand = TRUE
 
-/datum/element/tool_bump/Attach(datum/target, tool_behaviours = null, require_active_hand = TRUE, tool_items = null)
+/datum/element/tool_bump/Attach(datum/target, tool_behaviours, tool_items, require_active_hand = TRUE)
 	. = ..()
 
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
-	LAZYADD(src.tool_behaviours, tool_behaviours)
+	src.tool_behaviours = tool_behaviours
+	src.tool_items = typecacheof(tool_items)
 	src.require_active_hand = require_active_hand
-	LAZYADD(src.tool_items, tool_items)
 
 	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/check_tool, override = TRUE)
 
@@ -47,41 +47,24 @@
 		return
 
 	var/obj/item/held_tool
-	if(iscyborg(bumper))
-		var/mob/living/silicon/robot/cyborg = bumper
-
-		held_tool = cyborg.module_active
-		if(!held_tool)
-			return
-
-		if(LAZYFIND(tool_behaviours, held_tool.tool_behaviour))
-			INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
-			return
-		for(var/tool_path in tool_items)
-			if(istype(held_tool, tool_path))
-				INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
-		return
-
 	if(require_active_hand)
 		held_tool = bumper.get_active_held_item()
-		if(!held_tool)
+		if(!held_tool) //no active module or empty active hand
 			return
-		if(LAZYFIND(tool_behaviours, held_tool.tool_behaviour))
+
+		if(held_tool.type in tool_items)
 			INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
 			return
-		for(var/tool_path in tool_items)
-			if(istype(held_tool, tool_path))
-				INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
-				return
-	else
-		for(var/tool_behaviour in tool_behaviours)
+
+	for(var/obj/item/held_item in bumper.held_items)
+		if(!(held_item.type in tool_items))
+			continue
+		INVOKE_ASYNC(held_item, /obj/item.proc/melee_attack_chain, bumper, source)
+		return
+
+	for(var/tool_behaviour in tool_behaviours)
+		if(!require_active_hand)
 			held_tool = bumper.is_holding_tool_quality(tool_behaviour)
-			if(!held_tool)
-				continue
-			INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
-			return
-		for(var/tool_path in tool_items)
-			for(held_tool in bumper.held_items)
-				if(istype(held_tool, tool_path))
-					INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)
-					return
+		if(held_tool.tool_behaviour != tool_behaviour)
+			continue
+		INVOKE_ASYNC(held_tool, /obj/item.proc/melee_attack_chain, bumper, source)

@@ -36,7 +36,8 @@
 	M.Translate(-4, -4)
 	transform = M
 	icon = smooth_icon
-	AddElement(/datum/element/tool_bump, tool_behaviours = list(TOOL_MINING), require_active_hand = FALSE)
+	var/list/behaviors = list(TOOL_MINING)
+	AddElement(/datum/element/tool_bump, tool_behaviours = behaviors, require_active_hand = FALSE)
 
 /turf/closed/mineral/proc/Spread_Vein()
 	var/spreadChance = initial(mineralType.spreadChance)
