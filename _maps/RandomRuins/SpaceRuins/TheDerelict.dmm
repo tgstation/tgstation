@@ -145,6 +145,8 @@
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /obj/item/stack/cable_coil,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "aO" = (
@@ -4386,6 +4388,8 @@
 /obj/machinery/light/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/solarpanel_small,
+/obj/item/stack/rods/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/cargo)
 "yv" = (
