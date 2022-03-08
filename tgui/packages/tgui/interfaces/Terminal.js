@@ -9,7 +9,7 @@ export const Terminal = (props, context) => {
     <Window theme={data.tguitheme} title="Terminal" width={600} height={600}>
       <Window.Content scrollable>
         <NoticeBox textAlign="left">
-          {data.uppertext}
+          {sanitizeText(data.uppertext)}
         </NoticeBox>
         {sanitizeText(data.text)}
       </Window.Content>
