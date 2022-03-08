@@ -81707,6 +81707,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark/corner,
 /area/engineering/atmos/pumproom)
 "qPj" = (
