@@ -34,11 +34,15 @@
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
-		if(cards.len == 0)
-			CRASH("The [src] should have been deleted since it has no cards inside it!")
-		for(var/obj/item/toy/singlecard/card in cards)
+	if(cards.len == 0)
+		CRASH("The [src] should have been deleted since it has no cards inside it!")
+
+	for(var/obj/item/toy/singlecard/card in cards)
+		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
 			. += span_notice("You scan the cardhand with your x-ray vision and there is a: [card.cardname]")
+		var/marked_color = card.getMarkedColor(user)
+		if(marked_color)
+			. += span_notice("There is a [marked_color] mark on the corner of a card in the cardhand!")
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
