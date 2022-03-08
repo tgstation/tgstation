@@ -110,6 +110,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/list/data = list()
 	var/list/channel_list = list()
 	var/list/message_list = list()
+	var/list/comment_list = list()
 
 	//Code displaying name and Job Information, taken from the player mob's ID card if one exists.
 	var/obj/item/card/id/card
@@ -147,21 +148,31 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"locked" = channel.locked,
 			"ID" = channel.channel_ID,
 			))
-		for(var/datum/newscaster/feed_message/comment_message as anything in channel.messages)
+	if(current_channel)
+		for(var/datum/newscaster/feed_message/feed_message as anything in current_channel.messages)
 			var/photo_ID = null
-			if(comment_message.img)
-				user << browse_rsc(comment_message.img, "tmp_photo[comment_message.message_ID].png")
-				photo_ID = "tmp_photo[comment_message.message_ID].png"
+			if(feed_message.img)
+				user << browse_rsc(feed_message.img, "tmp_photo[feed_message.message_ID].png")
+				photo_ID = "tmp_photo[feed_message.message_ID].png"
+			for(var/datum/newscaster/feed_comment/comment_message as anything in feed_message.comments)
+				comment_list += list(list(
+					"auth" = comment_message.author,
+					"body" = comment_message.body,
+					"time" = comment_message.time_stamp,
+				))
 			message_list += list(list(
-				"auth" = comment_message.author,
-				"body" = comment_message.body,
-				"time" = comment_message.time_stamp,
-				"channel_num" = comment_message.parent_ID,
-				"censored_message" = comment_message.bodyCensor,
-				"censored_author" = comment_message.authorCensor,
-				"ID" = comment_message.message_ID,
-				"Photo" = photo_ID,
+				"auth" = feed_message.author,
+				"body" = feed_message.body,
+				"time" = feed_message.time_stamp,
+				"channel_num" = feed_message.parent_ID,
+				"censored_message" = feed_message.bodyCensor,
+				"censored_author" = feed_message.authorCensor,
+				"ID" = feed_message.message_ID,
+				"photo" = photo_ID,
+				"comments" = comment_list
 			))
+
+
 	data["viewing_channel"] = current_channel?.channel_ID
 	data["paper"] = paper_remaining
 	//Here we display all the information about the current channel.
@@ -349,21 +360,40 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					break
 			current_channel.toggleCensorDclass()
 
-		if("createComment")
+		if("startComment")
+			if(!current_user)
+				creating_comment = FALSE
+				return TRUE
 			creating_comment = TRUE
+			var/commentable_message = params["messageID"]
+			if(!commentable_message)
+				return TRUE
+			for(var/datum/newscaster/feed_message/iterated_feed_message as anything in current_channel.messages)
+				if(iterated_feed_message.message_ID == commentable_message)
+					current_message = iterated_feed_message
 			return TRUE
 
 		if("commentBody")
 			var/pre_comment_text = params["commenttext"]
 			if(!pre_comment_text)
-				return
+				return TRUE
 			comment_text = pre_comment_text
 			return TRUE
 
-		if("submitComment")
+		if("createComment")
 			if(!comment_text)
 				creating_comment = FALSE
-
+				return TRUE
+			if(!current_user)
+				creating_comment = FALSE
+				return TRUE
+			var/datum/newscaster/feed_comment/new_feed_comment = new/datum/newscaster/feed_comment
+			new_feed_comment.author = current_user.account_holder
+			new_feed_comment.body = comment_text
+			new_feed_comment.time_stamp = station_time_timestamp()
+			current_message.comments += new_feed_comment
+			usr.log_message("(as [current_user.account_holder]) commented on message [current_message.returnBody(-1)] -- [current_message.body]", LOG_COMMENT)
+			creating_comment = FALSE
 			return TRUE
 
 		if("printNewspaper")

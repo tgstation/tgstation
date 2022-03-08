@@ -145,13 +145,13 @@ const NewscasterChannelCreation = (props, context) => {
   );
 };
 
-/** The modal menu that contains the prompts to making new channels. */
+/** The modal menu that contains the prompts to making new comments. */
 const NewscasterCommentCreation = (props, context) => {
   const { act, data } = useBackend(context);
   const [publicmode, setPublicmode] = useLocalState(context, 'publicmode', 1);
   const {
     creating_comment,
-    viewing_channel,
+    viewing_message,
   } = data;
   if (!creating_comment) {
     return null;
@@ -183,11 +183,11 @@ const NewscasterCommentCreation = (props, context) => {
             <Button
               content={"Submit Comment"}
               onClick={() => act('createComment', {
-                viewing_channel: viewing_channel,
+                messageID: viewing_message,
               })} />
             <Button
               content={"Cancel"}
-              color={"red"}
+              color="red"
               onClick={() => act('cancelCreation')} />
           </Box>
         </Stack.Item>
@@ -337,7 +337,7 @@ const NewscasterChannelSelector = (props, context) => {
           pb={0.75}
           mr={1}
           textColor="white"
-          color={"Green"}
+          color="Green"
           onClick={() => act('startCreateChannel')}>
           Create Channel [+]
         </Tabs.Tab>
@@ -386,6 +386,7 @@ const NewscasterChannelMessages = (_, context) => {
         return (
           <Section
             key={message.body}
+            textColor="white"
             title={(
               <i>
                 {!!message.censored_author && (
@@ -430,14 +431,13 @@ const NewscasterChannelMessages = (_, context) => {
                     || message.censored_message
                     || user.name === "Unknown"
                   }
-                  onClick={() => act('createComment', {
+                  onClick={() => act('startComment', {
                     messageID: message.ID,
                   })}
                 />
               </>
             )} >
-            <BlockQuote
-              textColor="white">
+            <BlockQuote>
               {!!message.censored_message &&(
                 <Section textColor="Red">
                   This message was deemed dangerous to the general welfare
@@ -446,15 +446,27 @@ const NewscasterChannelMessages = (_, context) => {
               )}
               {!message.censored_message &&(
                 <Section
-                  color="label"
                   dangerouslySetInnerHTML={processedText(message.body)}
                   pl={1} />
               )}
               {message.photo !== null && !message.censored_message &&(
                 <Box
                   as="img"
-                  src={message.Photo} />
+                  src={message.photo} />
               )}
+              <BlockQuote>
+                {message.comments.map(comment => (
+                  <>
+                    <Section
+                      key={comment.body}
+                      dangerouslySetInnerHTML={processedText(comment.body)}
+                      pl={2.5} />
+                    <Box italic>
+                      By {comment.auth} at {comment.time}.
+                    </Box>
+                  </>
+                ))}
+              </BlockQuote>
             </BlockQuote>
             <Divider />
           </Section>
