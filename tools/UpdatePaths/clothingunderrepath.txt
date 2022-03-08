@@ -144,12 +144,9 @@
 
 /obj/item/clothing/under/rank/chief_medical_officer : /obj/item/clothing/under/rank/medical/chief_medical_officer
 /obj/item/clothing/under/rank/chief_medical_officer/skirt : /obj/item/clothing/under/rank/medical/chief_medical_officer/skirt
-/obj/item/clothing/under/rank/medical : /obj/item/clothing/under/rank/medical/doctor
-/obj/item/clothing/under/rank/medical/blue : /obj/item/clothing/under/rank/medical/doctor/blue
-/obj/item/clothing/under/rank/medical/green : /obj/item/clothing/under/rank/medical/doctor/green
-/obj/item/clothing/under/rank/medical/purple : /obj/item/clothing/under/rank/medical/doctor/purple
-/obj/item/clothing/under/rank/medical/skirt : /obj/item/clothing/under/rank/medical/doctor/skirt
-/obj/item/clothing/under/rank/nursesuit : /obj/item/clothing/under/rank/medical/doctor/nurse
+/obj/item/clothing/under/rank/medical/doctor/blue : /obj/item/clothing/under/rank/medical/scrubs/blue
+/obj/item/clothing/under/rank/medical/doctor/blue : /obj/item/clothing/under/rank/medical/scrubs/green
+/obj/item/clothing/under/rank/medical/doctor/blue : /obj/item/clothing/under/rank/medical/scrubs/purple
 /obj/item/clothing/under/rank/geneticist : /obj/item/clothing/under/rank/rnd/geneticist
 /obj/item/clothing/under/rank/geneticist/skirt : /obj/item/clothing/under/rank/rnd/geneticist/skirt
 /obj/item/clothing/under/rank/virologist : /obj/item/clothing/under/rank/medical/virologist
@@ -183,8 +180,10 @@
 /obj/item/clothing/under/rank/warden/navyblue : /obj/item/clothing/under/rank/security/warden/formal
 /obj/item/clothing/under/rank/det : /obj/item/clothing/under/rank/security/detective
 /obj/item/clothing/under/rank/det/skirt : /obj/item/clothing/under/rank/security/detective/skirt
-/obj/item/clothing/under/rank/det/grey : /obj/item/clothing/under/rank/security/detective/grey
-/obj/item/clothing/under/rank/det/grey/skirt : /obj/item/clothing/under/rank/security/detective/grey/skirt
+/obj/item/clothing/under/rank/det/grey : /obj/item/clothing/under/rank/security/detective/noir
+/obj/item/clothing/under/rank/det/grey/skirt : /obj/item/clothing/under/rank/security/detective/noir/skirt
+/obj/item/clothing/under/rank/security/detective/grey : /obj/item/clothing/under/rank/security/detective/noir
+/obj/item/clothing/under/rank/security/detective/grey/skirt : /obj/item/clothing/under/rank/security/detective/noir/skirt
 /obj/item/clothing/under/rank/head_of_security : /obj/item/clothing/under/rank/security/head_of_security
 /obj/item/clothing/under/rank/head_of_security/skirt : /obj/item/clothing/under/rank/security/head_of_security/skirt
 /obj/item/clothing/under/rank/head_of_security/grey : /obj/item/clothing/under/rank/security/head_of_security/grey

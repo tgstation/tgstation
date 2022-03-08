@@ -55,6 +55,9 @@
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
 
+/// If this is uncommented, will profile mapload atom initializations
+// #define PROFILE_MAPLOAD_INIT_ATOM
+
 #ifndef PRELOAD_RSC //set to:
 #define PRELOAD_RSC 2 // 0 to allow using external resources or on-demand behaviour;
 #endif // 1 to use the default behaviour;

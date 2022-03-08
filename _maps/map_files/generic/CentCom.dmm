@@ -7627,7 +7627,14 @@
 /area/wizard_station)
 "wQ" = (
 /obj/structure/table/wood/poker,
-/obj/item/toy/cards/deck,
+/obj/item/toy/cards/deck/wizoff{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/toy/cards/deck/tarot{
+	pixel_x = 6;
+	pixel_y = 4
+	},
 /turf/open/floor/carpet,
 /area/wizard_station)
 "wT" = (

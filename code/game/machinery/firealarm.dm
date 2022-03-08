@@ -52,6 +52,16 @@
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 	soundloop = new(src, FALSE)
 
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/firealarm,
+	))
+
+	AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		lmb_text = "Turn on", \
+		rmb_text = "Turn off", \
+	)
+
 /obj/machinery/firealarm/Destroy()
 	if(my_area)
 		LAZYREMOVE(my_area.firealarms, src)
@@ -170,6 +180,7 @@
 	if(user)
 		log_game("[user] triggered a fire alarm at [COORD(src)]")
 	soundloop.start() //Manually pulled fire alarms will make the sound, rather than the doors.
+	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_TRIGGER)
 
 /**
  * Resets all firelocks in the area. Also tells the area to disable alarm lighting, if it was enabled.
@@ -187,6 +198,7 @@
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 	soundloop.stop()
+	SEND_SIGNAL(src, COMSIG_FIREALARM_ON_RESET)
 
 /obj/machinery/firealarm/attack_hand(mob/user, list/modifiers)
 	if(buildstage != 2)
@@ -358,7 +370,7 @@
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		. += "The local area hazard light is flashing."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
-		. += "<b>Right-Click</b> or <b>Alt-Click</b> to reset firelocks in this area."
+		. += "<b>Right-Click</b> to reset firelocks in this area."
 	else
 		. += "The local area thermal detection light is [my_area.fire_detect ? "lit" : "unlit"]."
 		. += "<b>Left-Click</b> to activate all firelocks in this area."
@@ -413,3 +425,58 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	if (!party_overlay)
 		party_overlay = iconstate2appearance('icons/turf/areas.dmi', "party")
 	area.add_overlay(party_overlay)
+
+/obj/item/circuit_component/firealarm
+	display_name = "Fire Alarm"
+	desc = "Allows you to interface with the Fire Alarm."
+
+	var/datum/port/input/alarm_trigger
+	var/datum/port/input/reset_trigger
+
+	/// Returns a boolean value of 0 or 1 if the fire alarm is on or not.
+	var/datum/port/output/is_on
+	/// Returns when the alarm is turned on
+	var/datum/port/output/triggered
+	/// Returns when the alarm is turned off
+	var/datum/port/output/reset
+
+	var/obj/machinery/firealarm/attached_alarm
+
+/obj/item/circuit_component/firealarm/populate_ports()
+	alarm_trigger = add_input_port("Set", PORT_TYPE_SIGNAL)
+	reset_trigger = add_input_port("Reset", PORT_TYPE_SIGNAL)
+
+	is_on = add_output_port("Is On", PORT_TYPE_NUMBER)
+	triggered = add_output_port("Triggered", PORT_TYPE_SIGNAL)
+	reset = add_output_port("Reset", PORT_TYPE_SIGNAL)
+
+/obj/item/circuit_component/firealarm/register_usb_parent(atom/movable/parent)
+	. = ..()
+	if(istype(parent, /obj/machinery/firealarm))
+		attached_alarm = parent
+		RegisterSignal(parent, COMSIG_FIREALARM_ON_TRIGGER, .proc/on_firealarm_triggered)
+		RegisterSignal(parent, COMSIG_FIREALARM_ON_RESET, .proc/on_firealarm_reset)
+
+/obj/item/circuit_component/firealarm/unregister_usb_parent(atom/movable/parent)
+	attached_alarm = null
+	UnregisterSignal(parent, COMSIG_FIREALARM_ON_TRIGGER)
+	UnregisterSignal(parent, COMSIG_FIREALARM_ON_RESET)
+	return ..()
+
+/obj/item/circuit_component/firealarm/proc/on_firealarm_triggered(datum/source)
+	SIGNAL_HANDLER
+	is_on.set_output(1)
+	triggered.set_output(COMPONENT_SIGNAL)
+
+/obj/item/circuit_component/firealarm/proc/on_firealarm_reset(datum/source)
+	SIGNAL_HANDLER
+	is_on.set_output(0)
+	reset.set_output(COMPONENT_SIGNAL)
+
+
+/obj/item/circuit_component/firealarm/input_received(datum/port/input/port)
+	if(COMPONENT_TRIGGERED_BY(alarm_trigger, port))
+		attached_alarm?.alarm()
+
+	if(COMPONENT_TRIGGERED_BY(reset_trigger, port))
+		attached_alarm?.reset()

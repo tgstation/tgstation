@@ -12,7 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = ABOVE_GAME_PLANE
+	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = NO_STEPS
@@ -20,9 +20,10 @@
 	var/lifetime = 40
 	var/reagent_divisor = 7
 	var/static/list/blacklisted_turfs = typecacheof(list(
-	/turf/open/space/transit,
-	/turf/open/chasm,
-	/turf/open/lava))
+		/turf/open/space/transit,
+		/turf/open/chasm,
+		/turf/open/lava,
+	))
 	var/slippery_foam = TRUE
 
 /obj/effect/particle_effect/foam/firefighting
@@ -270,6 +271,7 @@
 	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
+	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
@@ -323,7 +325,7 @@
 	var/obj/item/stack/sheet/sheet_for_plating = W
 	if(istype(sheet_for_plating, /obj/item/stack/sheet/iron))
 		if(sheet_for_plating.get_amount() < 2)
-			to_chat(user, span_warning("You need four sheets of iron to finish a wall on [src]!"))
+			to_chat(user, span_warning("You need two sheets of iron to finish a wall on [src]!"))
 			return
 		to_chat(user, span_notice("You start adding plating to the foam structure..."))
 		if (do_after(user, 40*platingmodifier, target = src))

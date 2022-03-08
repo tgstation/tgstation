@@ -5,6 +5,7 @@
 	max_integrity = 120
 	impressiveness = 18 // Carved from the bones of a massive creature, it's going to be a specticle to say the least
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	custom_materials = list(/datum/material/bone=MINERAL_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bone
 
@@ -51,7 +52,6 @@
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
 	color = "#B5651D"
-	environment_type = "wasteland"
 	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
@@ -156,6 +156,9 @@
 		if(7)
 			new /obj/item/clothing/glasses/sunglasses(src)
 			new /obj/item/clothing/mask/cigarette/rollie(src)
+		else
+			//empty grave
+			return
 
 /obj/structure/closet/crate/grave/open(mob/living/user, obj/item/S, force = FALSE)
 	if(!opened)

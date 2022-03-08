@@ -208,7 +208,7 @@
 	r_hand = /obj/item/shield/energy
 
 /datum/outfit/nuclear_operative_elite/post_equip(mob/living/carbon/human/H, visualsOnly)
-	var/obj/item/mod/module/armor_booster/elite/booster = locate() in H.back
+	var/obj/item/mod/module/armor_booster/booster = locate() in H.back
 	booster.active = TRUE
 	H.update_inv_back()
 	var/obj/item/shield/energy/shield = locate() in H.held_items

@@ -327,7 +327,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Syndicate Cargo Pod APC";
-	pixel_y = 32;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,
@@ -444,7 +444,7 @@
 /obj/machinery/power/apc/syndicate{
 	dir = 1;
 	name = "Syndicate Forgotten Ship APC";
-	pixel_y = 32;
+	pixel_y = 25;
 	start_charge = 0
 	},
 /obj/structure/cable,

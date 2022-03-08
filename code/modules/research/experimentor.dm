@@ -197,7 +197,7 @@
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
 				var/picked = pick_weight(nodes) //This should work.
-				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
+				stored_research.boost_with_item(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
@@ -611,7 +611,7 @@
 	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	CL.detonate()
-	warn_admins(user, "Smoke", 0)
+	warn_admins(user, "Foam", 0)
 
 /obj/item/relic/proc/flash(mob/user)
 	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
