@@ -71,12 +71,14 @@
 
 /obj/item/toy/cards/deck/examine(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
-		if(cards.len == 0)
-			. += span_warning("You scan the deck with your x-ray vision but there are no cards left!")
-		else
-			var/obj/item/toy/singlecard/card = cards[1]
+	
+	if(cards.len > 0)
+		var/obj/item/toy/singlecard/card = cards[1]
+		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
 			. += span_notice("You scan the deck with your x-ray vision and the top card reads: [card.cardname].")
+		var/marked_color = card.getMarkedColor(user)
+		if(marked_color)
+			. += span_notice("The top card of the deck has a [marked_color] mark on the corner!")
 
 	. += span_notice("Left-click to draw a card face down.")
 	. += span_notice("Right-click to draw a card face up.")
