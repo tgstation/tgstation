@@ -242,9 +242,6 @@
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 	custom_materials = list(/datum/material/titanium = 4000)
 
-/turf/closed/wall/mineral/titanium/rust_heretic_act()
-	return // titanium does not rust
-
 /turf/closed/wall/mineral/titanium/nodiagonal
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle_nd"
@@ -302,9 +299,6 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 	custom_materials = list(/datum/material/alloy/plastitanium = 4000)
-
-/turf/closed/wall/mineral/plastitanium/rust_heretic_act()
-	return // plastitanium does not rust
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
