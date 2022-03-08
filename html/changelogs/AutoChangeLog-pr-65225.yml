@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fit viewport will properly well, fit your viewport now. Broke when we removed the status bar.
-It'll also attempt to autofit if you change your pixel scaling. Godspeed"

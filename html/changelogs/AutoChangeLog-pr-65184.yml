@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Heretic Smugglers (latejoin heretics) actually spawn influences"
