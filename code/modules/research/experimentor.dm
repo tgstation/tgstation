@@ -197,7 +197,7 @@
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
 				var/picked = pick_weight(nodes) //This should work.
-				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
+				stored_research.boost_with_item(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)

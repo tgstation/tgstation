@@ -1707,18 +1707,6 @@
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"iO" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/mine/living_quarters)
 "iX" = (
 /obj/structure/stone_tile,
 /obj/structure/stone_tile{
@@ -2852,16 +2840,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/mine/laborcamp)
-"pH" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/machinery/newscaster/directional/west,
-/turf/open/floor/iron,
-/area/mine/production)
 "pR" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -3153,6 +3131,16 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/mechbay)
+"wq" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
+/area/mine/production)
 "wE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
@@ -3227,6 +3215,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
+"zy" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/mine/production)
 "zA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/mineral/labor_points_checker{
@@ -17192,9 +17185,9 @@ ab
 ab
 aj
 ab
-cR
-iO
-cR
+br
+oK
+br
 ab
 ab
 aj
@@ -17449,9 +17442,9 @@ ab
 aj
 aj
 aj
-cR
-eq
-cR
+br
+eC
+br
 ab
 aj
 aj
@@ -17706,9 +17699,9 @@ ab
 aj
 aj
 aj
-cR
-eq
-cR
+br
+eC
+br
 aj
 aj
 aj
@@ -17963,9 +17956,9 @@ ab
 ab
 aj
 aj
-cR
-eq
-cR
+br
+eC
+br
 aj
 aj
 aj
@@ -18220,7 +18213,7 @@ ab
 ab
 aj
 aj
-br
+zy
 eC
 br
 aj
@@ -19759,7 +19752,7 @@ cl
 cH
 cO
 Qj
-pH
+wq
 dJ
 ia
 cn

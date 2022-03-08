@@ -29,7 +29,6 @@
 	var/id = "generic"
 	/// IC logs
 	var/list/research_logs = list()
-	var/largest_bomb_value = 0
 	/// Organization name, used for display
 	var/organization = "Third-Party"
 	/// Current per-second production, used for display only.
@@ -42,6 +41,18 @@
 	var/list/available_experiments = list()
 	/// Completed experiments
 	var/list/completed_experiments = list()
+	
+	/**
+	 * Assoc list of relationships with various partners
+	 * scientific_cooperation[partner_typepath] = relationship
+	 */
+	var/list/scientific_cooperation
+	/**
+	  * Assoc list of papers already published by the crew. 
+	  * published_papers[experiment_typepath][tier] = paper
+	  * Filled with nulls on init, populated only on publication.
+	*/
+	var/list/published_papers
 
 /datum/techweb/New()
 	SSresearch.techwebs += src
@@ -49,8 +60,8 @@
 		var/datum/techweb_node/DN = SSresearch.techweb_node_by_id(i)
 		research_node(DN, TRUE, FALSE, FALSE)
 	hidden_nodes = SSresearch.techweb_nodes_hidden.Copy()
+	initialize_published_papers()
 	return ..()
-
 /datum/techweb/admin
 	id = "ADMIN"
 	organization = "CentCom"
@@ -337,15 +348,24 @@
 	researched_nodes -= node.id
 	recalculate_nodes(TRUE) //Fully rebuild the tree.
 
-/datum/techweb/proc/boost_with_path(datum/techweb_node/N, itempath)
-	if(!istype(N) || !ispath(itempath))
+/// Boosts a techweb node.
+/datum/techweb/proc/boost_techweb_node(datum/techweb_node/node, list/pointlist)
+	if(!istype(node))
 		return FALSE
-	LAZYINITLIST(boosted_nodes[N.id])
-	for(var/i in N.boost_item_paths[itempath])
-		boosted_nodes[N.id][i] = max(boosted_nodes[N.id][i], N.boost_item_paths[itempath][i])
-	if(N.autounlock_by_boost)
-		hidden_nodes -= N.id
-	update_node_status(N)
+	LAZYINITLIST(boosted_nodes[node.id])
+	for(var/point_type in pointlist)
+		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
+	if(node.autounlock_by_boost)
+		hidden_nodes -= node.id
+	update_node_status(node)
+	return TRUE
+
+/// Boosts a techweb node by using items.
+/datum/techweb/proc/boost_with_item(datum/techweb_node/node, itempath)
+	if(!istype(node) || !ispath(itempath))
+		return FALSE
+	var/list/boost_amount = node.boost_item_paths[itempath]
+	boost_techweb_node(node, boost_amount)
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)
@@ -478,3 +498,41 @@
 
 /datum/techweb/specialized/autounlocking/exofab
 	allowed_buildtypes = MECHFAB
+
+/// Fill published_papers with nulls.
+/datum/techweb/proc/initialize_published_papers()
+	published_papers = list()
+	scientific_cooperation = list()
+	for (var/datum/experiment/ordnance/ordnance_experiment as anything in SSresearch.ordnance_experiments)
+		var/max_tier = min(length(ordnance_experiment.gain), length(ordnance_experiment.target_amount))
+		var/list/tier_list[max_tier]
+		published_papers[ordnance_experiment.type] = tier_list
+	for (var/datum/scientific_partner/partner as anything in SSresearch.scientific_partners)
+		scientific_cooperation[partner.type] = 0
+
+/// Publish the paper into our techweb. Cancel if we are not allowed to.
+/datum/techweb/proc/add_scientific_paper(datum/scientific_paper/paper_to_add)
+	if(!paper_to_add.allowed_to_publish(src))
+		return FALSE
+	paper_to_add.publish_paper(src)
+
+	// If we haven't published a paper in the same topic ...
+	if(locate(paper_to_add.experiment_path) in published_papers[paper_to_add.experiment_path])
+		return TRUE	
+	// Quickly add and complete it.
+	// PS: It's also possible to use add_experiment() together with a list/available_experiments check
+	// to determine if we need to run all this, but this pretty much does the same while only needing one evaluation.
+
+	add_experiment(paper_to_add.experiment_path)
+
+	for (var/datum/experiment/experiment as anything in available_experiments)
+		if(experiment.type != paper_to_add.experiment_path)
+			continue
+
+		experiment.completed = TRUE
+		complete_experiment(experiment)
+		if(length(GLOB.experiment_handlers))
+			var/datum/component/experiment_handler/handler = GLOB.experiment_handlers[1]
+			handler.announce_message_to_all("The [experiment.name] has been completed!")	
+	
+	return TRUE

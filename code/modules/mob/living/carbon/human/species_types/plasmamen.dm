@@ -1,5 +1,6 @@
 /datum/species/plasmaman
 	name = "Plasmaman"
+	plural_form = "Plasmamen"
 	id = SPECIES_PLASMAMAN
 	say_mod = "rattles"
 	sexes = 0
@@ -27,7 +28,6 @@
 	payday_modifier = 0.75
 	breathid = "plas"
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
-	var/internal_fire = FALSE //If the bones themselves are burning clothes won't help you much
 	disliked_food = FRUIT | CLOTH
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
@@ -44,6 +44,9 @@
 	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 	ass_image = 'icons/ass/assplasma.png'
+
+	/// If the bones themselves are burning clothes won't help you much
+	var/internal_fire = FALSE
 
 /datum/species/plasmaman/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
@@ -137,3 +140,79 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
 		return TRUE
+
+/datum/species/plasmaman/get_species_description()
+	return "Found on the Icemoon of Freyja, plasmamen consist of colonial \
+		fungal organisms which together form a sentient being. In human space, \
+		they're usually attached to skeletons to afford a human touch."
+
+/datum/species/plasmaman/get_species_lore()
+	return list(
+		"A confusing species, plasmamen are truly \"a fungus among us\". \
+		What appears to be a singular being is actually a colony of millions of organisms \
+		surrounding a found (or provided) skeletal structure.",
+
+		"Originally discovered by NT when a researcher \
+		fell into an open tank of liquid plasma, the previously unnoticed fungal colony overtook the body creating \
+		the first \"true\" plasmaman. The process has since been streamlined via generous donations of convict corpses and plasmamen \
+		have been deployed en masse throughout NT to bolster the workforce.",
+
+		"New to the galactic stage, plasmamen are a blank slate. \
+		Their appearance, generally regarded as \"ghoulish\", inspires a lot of apprehension in their crewmates. \
+		It might be the whole \"flammable purple skeleton\" thing.",
+
+		"The colonids that make up plasmamen require the plasma-rich atmosphere they evolved in. \
+		Their psuedo-nervous system runs with externalized electrical impulses that immediately ignite their plasma-based bodies when oxygen is present.",
+	)
+
+/datum/species/plasmaman/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "user-shield",
+			SPECIES_PERK_NAME = "Protected",
+			SPECIES_PERK_DESC = "Plasmamen are immune to radiation, poisons, and most diseases.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "bone",
+			SPECIES_PERK_NAME = "Wound Resistance",
+			SPECIES_PERK_DESC = "Plasmamen have higher tolerance for damage that would wound others.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Plasma Healing",
+			SPECIES_PERK_DESC = "Plasmamen can heal wounds by consuming plasma.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "hard-hat",
+			SPECIES_PERK_NAME = "Protective Helmet",
+			SPECIES_PERK_DESC = "Plasmamen's helmets provide them shielding from the flashes of welding, as well as an inbuilt flashlight.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "fire",
+			SPECIES_PERK_NAME = "Living Torch",
+			SPECIES_PERK_DESC = "Plasmamen instantly ignite when their body makes contact with oxygen.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "wind",
+			SPECIES_PERK_NAME = "Plasma Breathing",
+			SPECIES_PERK_DESC = "Plasmamen must breathe plasma to survive. You receive a tank when you arrive.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "briefcase-medical",
+			SPECIES_PERK_NAME = "Complex Biology",
+			SPECIES_PERK_DESC = "Plasmamen take specialized medical knowledge to be \
+				treated. Do not expect speedy revival, if you are lucky enough to get \
+				one at all.",
+		),
+	)
+
+	return to_add

@@ -38,7 +38,7 @@
 /datum/outfit/mafia/md
 	name = "Mafia Medical Doctor"
 
-	uniform = /obj/item/clothing/under/rank/medical/doctor
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	suit = /obj/item/clothing/suit/toggle/labcoat
 

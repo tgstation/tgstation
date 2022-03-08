@@ -47,6 +47,9 @@
 	SSair.start_processing_machine(src)
 	if(!target)
 		reattach_to_layer()
+	AddComponent(/datum/component/usb_port, list(
+		/obj/item/circuit_component/atmos_meter,
+	))
 	return ..()
 
 /obj/machinery/meter/proc/reattach_to_layer()
@@ -168,6 +171,44 @@
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
+
+/obj/item/circuit_component/atmos_meter
+	display_name = "Atmospheric Meter"
+	desc = "Allows to read the pressure and temperature of the pipenet."
+
+	///Signals the circuit to retrieve the pipenet's current pressure and temperature
+	var/datum/port/input/request_data
+
+	///Pressure of the pipenet
+	var/datum/port/output/pressure
+	///Temperature of the pipenet
+	var/datum/port/output/temperature
+
+	///The component parent object
+	var/obj/machinery/meter/connected_meter
+
+/obj/item/circuit_component/atmos_meter/populate_ports()
+	request_data = add_input_port("Request Meter Data", PORT_TYPE_SIGNAL, trigger = .proc/request_meter_data)
+
+	pressure = add_output_port("Pressure", PORT_TYPE_NUMBER)
+	temperature = add_output_port("Temperature", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/atmos_meter/register_usb_parent(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/meter))
+		connected_meter = shell
+
+/obj/item/circuit_component/atmos_meter/unregister_usb_parent(atom/movable/shell)
+	connected_meter = null
+	return ..()
+
+/obj/item/circuit_component/atmos_meter/proc/request_meter_data()
+	CIRCUIT_TRIGGER
+	if(!connected_meter)
+		return
+	var/datum/gas_mixture/environment = connected_meter.target.return_air()
+	pressure.set_output(environment.return_pressure())
+	temperature.set_output(environment.temperature)
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 // why are you yelling?

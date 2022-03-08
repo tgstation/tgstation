@@ -39,7 +39,7 @@
 	icon_state = "bogdanoff"
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
-	armor = list(MELEE = 80, BULLET = 30, LASER = 30, ENERGY = 60, BOMB = 90, BIO = 0, FIRE = 100, ACID = 80)
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
 	pixel_z = -8
 	max_integrity = 5000
@@ -49,7 +49,7 @@
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
-	. += span_info("It's integrated integrity meter reads: <b>HEALTH: [atom_integrity]</b>.")
+	. += span_info("It has a flashing <b>ID card reader</b> for convenient cashing out.")
 
 /obj/structure/checkoutmachine/proc/check_if_finished()
 	for(var/i in accounts_to_rob)
@@ -58,28 +58,35 @@
 			return FALSE
 	return TRUE
 
-/obj/structure/checkoutmachine/attackby(obj/item/W, mob/user, params)
+/obj/structure/checkoutmachine/attackby(obj/item/attacking_item, mob/user, params)
 	if(check_if_finished())
 		qdel(src)
 		return
-	if(istype(W, /obj/item/card/id))
-		var/obj/item/card/id/card = W
-		if(!card.registered_account)
-			to_chat(user, span_warning("This card does not have a registered account!"))
-			return
-		if(!card.registered_account.being_dumped)
-			to_chat(user, span_warning("It appears that your funds are safe from draining!"))
-			return
-		if(do_after(user, 40, target = src))
-			if(!card.registered_account.being_dumped)
-				return
-			to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
-			card.registered_account.being_dumped = FALSE
-			if(check_if_finished())
-				qdel(src)
-				return
-	else
-		return ..()
+
+	var/obj/item/card/id/card = attacking_item.GetID()
+	if(!card)
+		balloon_alert(user, "your [attacking_item.name] gets repelled by the id card reader")
+
+		var/throwtarget = get_step(user, get_dir(src, user))
+		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
+		playsound(get_turf(src),'sound/magic/repulse.ogg', 100, TRUE)
+
+		return
+
+	if(!card.registered_account)
+		to_chat(user, span_warning("This card does not have a registered account!"))
+		return
+
+	if(!card.registered_account.being_dumped)
+		to_chat(user, span_warning("It appears that your funds are safe from draining!"))
+		return
+
+	to_chat(user, span_warning("You quickly cash out your funds to a more secure banking location. Funds are safu.")) // This is a reference and not a typo
+	card.registered_account.being_dumped = FALSE
+
+	if(check_if_finished())
+		qdel(src)
+		return
 
 /obj/structure/checkoutmachine/Initialize(mapload, mob/living/user)
 	. = ..()

@@ -548,7 +548,7 @@
 				. += get_airlock_overlay("sparks_open", overlays_file, em_block = FALSE)
 
 	if(note)
-		. += get_airlock_overlay(note_type(), note_overlay_file, em_block = TRUE)
+		. += get_airlock_overlay(get_note_state(frame_state), note_overlay_file, em_block = TRUE)
 
 	if(frame_state == AIRLOCK_FRAME_CLOSED && seal)
 		. += get_airlock_overlay("sealed", overlays_file, em_block = TRUE)
@@ -627,10 +627,30 @@
 		. += span_notice("Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.")
 		. += span_notice("Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.")
 
-/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
+	if(isAI(user) || iscyborg(user))
+		if(!(machine_stat & BROKEN))
+			var/ui = SStgui.try_update_ui(user, src)
+			if(!ui && !held_item)
+				context[SCREENTIP_CONTEXT_LMB] = "Open UI"
+			context[SCREENTIP_CONTEXT_SHIFT_LMB] = density ? "Open" : "Close"
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = locked ? "Unbolt" : "Bolt"
+			context[SCREENTIP_CONTEXT_ALT_LMB] = isElectrified() ? "Unelectrify" : "Electrify"
+			context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = emergency ? "Unset emergency access" : "Set emergency access"
+			. = CONTEXTUAL_SCREENTIP_SET
+
+	if(!isliving(user))
+		return .
+
+	if(!Adjacent(user))
+		return .
+
 	switch (held_item?.tool_behaviour)
+		if (TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_CROWBAR)
 			if (panel_open)
 				if (security_level == AIRLOCK_SECURITY_PLASTEEL_O_S || security_level == AIRLOCK_SECURITY_PLASTEEL_I_S)
@@ -1442,18 +1462,23 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/door/airlock/proc/note_type() //Returns a string representing the type of note pinned to this airlock
+/**
+ * Returns a string representing the type of note pinned to this airlock
+ * Arguments:
+ * * frame_state - The AIRLOCK_FRAME_ value, as used in update_overlays()
+ **/
+/obj/machinery/door/airlock/proc/get_note_state(frame_state)
 	if(!note)
 		return
 	else if(istype(note, /obj/item/paper))
 		var/obj/item/paper/pinned_paper = note
 		if(pinned_paper.info && pinned_paper.show_written_words)
-			return "note_words"
+			return "note_words_[frame_state]"
 		else
-			return "note"
+			return "note_[frame_state]"
 
 	else if(istype(note, /obj/item/photo))
-		return "photo"
+		return "photo_[frame_state]"
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

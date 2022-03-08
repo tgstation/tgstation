@@ -1206,24 +1206,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"cK" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
-	name = "Worn-out APC";
-	pixel_y = -25;
-	req_access_txt = "150";
-	start_charge = 0
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
-	temperature = 251
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "cL" = (
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/tile/red,
@@ -2903,23 +2885,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
-"gB" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/newscaster{
-	pixel_x = -30
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
 "gC" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/iron{
@@ -2962,20 +2927,6 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/research)
-"gG" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
-	dir = 4;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_x = 25;
-	start_charge = 100
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
 /turf/open/floor/iron/white{
 	heat_capacity = 1e+006
 	},
@@ -4376,19 +4327,6 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jG" = (
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/arrivals)
-"jH" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
-	dir = 1;
-	locked = 0;
-	name = "Worn-out APC";
-	pixel_y = 25;
-	start_charge = 100
-	},
-/obj/structure/cable,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -6425,6 +6363,19 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"Go" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	dir = 1;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_y = 25;
+	start_charge = 100
+	},
+/obj/structure/cable,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/arrivals)
 "Hw" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -6480,6 +6431,23 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"Nu" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/newscaster{
+	pixel_x = -30
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
 "Rm" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
@@ -6501,6 +6469,38 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/main)
+"UY" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	name = "Worn-out APC";
+	pixel_y = -25;
+	req_access_txt = "150";
+	start_charge = 0
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
+	temperature = 251
+	},
+/area/awaymission/moonoutpost19/syndicate)
+"Vq" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	dir = 4;
+	locked = 0;
+	name = "Worn-out APC";
+	pixel_x = 25;
+	start_charge = 100
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/turf/open/floor/iron/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/moonoutpost19/research)
 "VE" = (
 /obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/sand/plating,
@@ -34948,7 +34948,7 @@ eZ
 ea
 fS
 gi
-gB
+Nu
 gO
 hg
 fV
@@ -36233,7 +36233,7 @@ fe
 fw
 fX
 gm
-gG
+Vq
 gS
 hj
 hj
@@ -40870,7 +40870,7 @@ hI
 ix
 hJ
 hI
-jH
+Go
 jV
 kI
 kV
@@ -41599,7 +41599,7 @@ bC
 bQ
 cf
 ct
-cK
+UY
 aU
 aU
 aU

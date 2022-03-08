@@ -242,3 +242,19 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_GOLEM_BONE "bone_golem"
 #define SPECIES_GOLEM_SNOW "snow_golem"
 #define SPECIES_GOLEM_HYDROGEN "metallic_hydrogen_golem"
+
+// Defines for used in creating "perks" for the species preference pages.
+/// A key that designates UI icon displayed on the perk.
+#define SPECIES_PERK_ICON "ui_icon"
+/// A key that designates the name of the perk.
+#define SPECIES_PERK_NAME "name"
+/// A key that designates the description of the perk.
+#define SPECIES_PERK_DESC "description"
+/// A key that designates what type of perk it is (see below).
+#define SPECIES_PERK_TYPE "perk_type"
+
+// The possible types each perk can be.
+// Positive perks are shown in green, negative in red, and neutral in grey.
+#define SPECIES_POSITIVE_PERK "positive"
+#define SPECIES_NEGATIVE_PERK "negative"
+#define SPECIES_NEUTRAL_PERK "neutral"
