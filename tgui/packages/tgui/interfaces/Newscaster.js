@@ -454,19 +454,20 @@ const NewscasterChannelMessages = (_, context) => {
                   as="img"
                   src={message.photo} />
               )}
-              <BlockQuote>
+              <Box>
                 {message.comments.map(comment => (
-                  <>
+                  <BlockQuote
+                    key={comment.body}>
                     <Section
-                      key={comment.body}
                       dangerouslySetInnerHTML={processedText(comment.body)}
-                      pl={2.5} />
+                      ml={2.5}
+                      mt={1} />
                     <Box italic>
                       By {comment.auth} at {comment.time}.
                     </Box>
-                  </>
+                  </BlockQuote>
                 ))}
-              </BlockQuote>
+              </Box>
             </BlockQuote>
             <Divider />
           </Section>
