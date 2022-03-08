@@ -2,14 +2,13 @@ import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dropdown, Input, Modal, NoticeBox, NumberInput, LabeledList, Section, Stack, Table } from '../components';
+import { Box, Button, Dropdown, Input, Modal, NoticeBox, NumberInput, LabeledList, Section, Stack, Flex, Table } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from "../sanitize";
 
 export const LibraryConsole = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    show_dropdown,
     display_lore,
   } = data;
   return (
@@ -18,12 +17,16 @@ export const LibraryConsole = (props, context) => {
       title="Library Terminal"
       width={880}
       height={520}>
-      <PopoutMenu />
-      <Box fillPositionedParent left={show_dropdown ? "164px" : "50px"}>
-        <Window.Content>
-          <PageDisplay pb="10px" />
-        </Window.Content>
-      </Box>
+      <Window.Content m="0">
+        <Flex height="100%">
+          <Flex.Item>
+            <PopoutMenu />
+          </Flex.Item>
+          <Flex.Item grow position="relative" pl={1}>
+            <PageDisplay />
+          </Flex.Item>
+        </Flex>
+      </Window.Content>
     </Window>
   );
 };
@@ -151,17 +154,14 @@ export const InventoryDetails = (props, context) => {
   return (
     <Section>
       <Table>
-        <Table.Row>
-          <Table.Cell
-            fontSize={1.5}>
+        <Table.Row header>
+          <Table.Cell>
             Remove
           </Table.Cell>
-          <Table.Cell
-            fontSize={1.5}>
+          <Table.Cell>
             Title
           </Table.Cell>
-          <Table.Cell
-            fontSize={1.5}>
+          <Table.Cell>
             Author
           </Table.Cell>
         </Table.Row>
@@ -303,18 +303,20 @@ const CheckoutModal = (props, context) => {
     context, 'CheckoutPeriod', 5);
 
   return (
-    <Modal>
+    <Modal width="500px">
       <Box fontSize="20px" pb={1}>
         Are you sure you want to loan out this book?
       </Box>
       <LabeledList>
         <LabeledList.Item label="Book Name">
           <Input
+            width="250px"
             value={bookName}
             onChange={(e, value) => setBookName(value)} />
         </LabeledList.Item>
         <LabeledList.Item label="Loan To">
           <Input
+            width="160px"
             value={checkoutee}
             onChange={(e, value) => setCheckoutee(value)} />
         </LabeledList.Item>
@@ -548,14 +550,14 @@ export const Upload = (props, context) => {
     <>
       <Stack vertical height="100%">
         <Stack.Item>
-          <Box fontSize="20px" textAlign="center">
+          <Box fontSize="20px" textAlign="center" pt="6px">
             Current Scan Cache
           </Box>
         </Stack.Item>
         <Stack.Item grow>
           <Stack vertical height="100%">
             <Stack.Item>
-              <Stack>
+              <Stack justify="center">
                 <Stack.Item>
                   <Box pt={1} fontSize={"20px"}>
                     Title:
@@ -603,16 +605,17 @@ export const Upload = (props, context) => {
         </Stack.Item>
         <Stack.Item>
           <Stack>
-            <Stack.Item>
+            <Stack.Item grow>
               <Button
                 fluid
                 icon="newspaper"
                 content="Newscaster"
                 fontSize="30px"
                 lineHeight={2}
+                textAlign="center"
                 onClick={() => act('news_post')} />
             </Stack.Item>
-            <Stack.Item>
+            <Stack.Item grow>
               <Button
                 disabled={!can_db_request}
                 fluid
@@ -620,6 +623,7 @@ export const Upload = (props, context) => {
                 content="Archive"
                 fontSize="30px"
                 lineHeight={2}
+                textAlign="center"
                 onClick={() => setUploadToDB(true)} />
             </Stack.Item>
           </Stack>
@@ -645,8 +649,8 @@ const UploadModal = (props, context) => {
 
   const display_category = uploadCategory || default_category;
   return (
-    <Modal>
-      <Box fontSize="20px" pb={1}>
+    <Modal width="400px">
+      <Box fontSize="20px" pb={2}>
         Are you sure you want to upload this book to the database?
       </Box>
       <LabeledList>
@@ -700,10 +704,10 @@ export const Print = (props, context) => {
     context, 'selected_poster', posters[0]);
 
   return (
-    <Stack height="100%">
+    <Stack vertical fill>
       <Stack.Item grow>
-        <Stack vertical height="100%">
-          <Stack.Item height="100%">
+        <Stack fill>
+          <Stack.Item width="50%">
             <Section fill scrollable>
               {posters.map(poster => (
                 <div
@@ -725,21 +729,6 @@ export const Print = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Button
-              fluid
-              icon="scroll"
-              content="Poster"
-              fontSize="30px"
-              lineHeight={2}
-              onClick={() => act('print_poster', {
-                poster_name: selectedPoster,
-              })} />
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Stack vertical height="100%">
-          <Stack.Item grow>
             <Stack vertical height="100%">
               <Stack.Item
                 textAlign="center"
@@ -770,13 +759,30 @@ export const Print = (props, context) => {
               </Stack.Item>
             </Stack>
           </Stack.Item>
-          <Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>
+        <Stack justify="space-between">
+          <Stack.Item grow>
+            <Button
+              fluid
+              icon="scroll"
+              content="Poster"
+              fontSize="30px"
+              lineHeight={2}
+              textAlign="center"
+              onClick={() => act('print_poster', {
+                poster_name: selectedPoster,
+              })} />
+          </Stack.Item>
+          <Stack.Item grow>
             <Button
               fluid
               icon="cross"
               content="Bible"
               fontSize="30px"
               lineHeight={2}
+              textAlign="center"
               onClick={() => act('print_bible')} />
           </Stack.Item>
         </Stack>
