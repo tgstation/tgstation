@@ -17,16 +17,18 @@
 	throw_range = 7
 	attack_verb_continuous = list("attacks")
 	attack_verb_simple = list("attack")
-	///Artistic style of the deck
+	/// Artistic style of the deck
 	var/deckstyle = "nanotrasen"
-	///If the cards in the deck have different card faces icons (blank and CAS decks do not)
+	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
 	var/has_unique_card_icons = TRUE
-	///The name of the card
+	/// The name of the card
 	var/cardname = "Ace of Spades"
-	///is the card flipped facedown (FALSE) or flipped faceup (TRUE)
+	/// Is the card flipped facedown (FALSE) or flipped faceup (TRUE)
 	var/flipped = FALSE
 	/// The card is blank and can be written on with a pen.
 	var/blank = FALSE
+	/// The color used to mark a card for cheating (by pens or crayons)
+	var/color
 
 /obj/item/toy/singlecard/Initialize(mapload, cardname, obj/item/toy/cards/deck/parent_deck)
 	. = ..()
@@ -59,6 +61,11 @@
 		. += span_notice("You scan the card with your x-ray vision and it reads: [cardname].")
 	else
 		. += span_warning("You need to have the card in your hand to check it!")
+	
+	var/is_marked_with_visible_color = (color && color != "invisible")
+	// if you mark a card with invisible ink and wear science goggles you can see the color
+	if(is_marked_with_visible_color || (color == "invisible" && istype(user.glasses, /obj/item/clothing/glasses/science)))
+		. += span_notice("The card has a [color] mark on the corner!")
 	. += span_notice("Right-click to flip it.")
 	. += span_notice("Alt-click to rotate it 90 degrees.")
 
@@ -129,13 +136,29 @@
 		target_cardhand.insert(list(src))
 		return
 
+	var/can_item_write
+	var/marked_cheating_color
+	
 	if(istype(item, /obj/item/pen))
+		var/obj/item/pen/pen = item
+		can_item_write = TRUE
+		marked_cheating_color = (pen.colour == "white" && "invisible") || pen.colour
+	
+	if(istype(item, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/crayon = item
+		can_item_write = TRUE
+		marked_cheating_color = (crayon.crayon_color == "mime" && "invisible") || crayon.crayon_color
+	
+	if(can_item_write && !blank)
+		color = marked_cheating_color
+		to_chat(user, span_notice("You mark the corner of [src] with the [item]. Cheat to win!"))
+		return
+
+	if(can_item_write)
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on [src]!"))
 			return
-		if(!blank)
-			to_chat(user, span_warning("You cannot write on that card!"))
-			return
+			
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
 			return
