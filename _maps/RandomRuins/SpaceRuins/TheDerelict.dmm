@@ -144,6 +144,7 @@
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
 /obj/item/stock_parts/cell/high,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "aO" = (
@@ -1713,7 +1714,6 @@
 /area/ruin/space/derelict/crew)
 "hQ" = (
 /obj/structure/table/wood,
-/obj/item/stack/cable_coil,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
 /obj/structure/bedsheetbin/empty,
@@ -3839,6 +3839,12 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
+"uj" = (
+/obj/effect/spawner/random/structure/closet_maintenance,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/stack/cable_coil,
+/turf/open/floor/iron/smooth_large,
+/area/ruin/space/derelict/maintenance/port/lesser)
 "uo" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -3892,6 +3898,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/EVA)
 "uE" = (
@@ -10336,7 +10343,7 @@ TK
 ON
 cK
 YO
-bp
+uj
 bB
 FM
 FM
