@@ -344,7 +344,6 @@
 	var/list/rusted_turfs = list()
 	/// Static blacklist of turfs we can't spread to.
 	var/static/list/blacklisted_turfs = typecacheof(list(
-		/turf/open/indestructible,
 		/turf/closed/indestructible,
 		/turf/open/space,
 		/turf/open/lava,
