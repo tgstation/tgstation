@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes: 
+  - balance: "Nations can't roll other antags when it runs."
