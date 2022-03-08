@@ -484,6 +484,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(distance > pressure_strenght)
 		return
 
+	if(distance > 1 && check_obstacles(our_turf, target_turf))
+		return
+
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_p_type = recipe.id
 	var/queued_p_dir = p_dir
@@ -602,6 +605,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
 				if(!can_make_pipe)
+					if(distance > 1)
+						return
 					return ..()
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if (recipe.type == /datum/pipe_info/meter)
@@ -615,11 +620,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				else
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))
 						to_chat(user, span_notice("You can't build this object on the layer..."))
+						if(distance > 1)
+							return
 						return ..()
 					to_chat(user, span_notice("You start building a pipe..."))
 					if(do_after(user, atmos_build_speed, target = attack_target))
 						if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
 							to_chat(user, span_notice("You can't build this object on the layer..."))
+							if(distance > 1)
+								return
 							return ..()
 						activate()
 						var/obj/machinery/atmospherics/path = queued_p_type
@@ -646,6 +655,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
+					if(distance > 1)
+						return
 					return ..()
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
@@ -671,6 +682,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 			if(TRANSIT_CATEGORY) //Making transit tubes
 				if(!can_make_pipe)
+					if(distance > 1)
+						return
 					return ..()
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
@@ -704,6 +717,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							tube.wrench_act(user, src)
 					return
 			else
+				if(distance > 1)
+					return
 				return ..()
 
 /obj/item/pipe_dispenser/proc/activate()
@@ -726,6 +741,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/turf/our_turf = get_turf(src)
 	our_turf.assume_air(internal_tank.air_contents.remove(moles_to_consume))
 	return TRUE
+
+/obj/item/pipe_dispenser/proc/check_obstacles(turf/our_turf, turf/target_turf)
+	for(var/turf/checked_turf as anything in get_line(our_turf, target_turf))
+		if(checked_turf == our_turf || checked_turf == target_turf)
+			continue
+		if(isclosedturf(checked_turf) || checked_turf.is_blocked_turf(exclude_mobs = TRUE))
+			return TRUE
+	return FALSE
 
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
