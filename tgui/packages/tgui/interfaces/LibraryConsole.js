@@ -86,7 +86,8 @@ export const PageDisplay = (props, context) => {
   const {
     screen_state,
   } = data;
-
+  /* eslint-disable indent */
+  /* eslint-disable operator-linebreak */
   return (
     screen_state === 1 ? <Inventory /> :
     screen_state === 2 ? <Checkout /> :
@@ -96,6 +97,8 @@ export const PageDisplay = (props, context) => {
     screen_state === 6 ? <Forbidden /> :
     null
   );
+  /* eslint-enable indent */
+  /* eslint-enable operator-linebreak */
 };
 
 export const Inventory = (props, context) => {
@@ -543,7 +546,7 @@ export const Upload = (props, context) => {
     __html: run_marked_default(sanitizeText(cache_content)),
   };
   return (
-    <Box height="100%">
+    <>
       <Stack vertical height="100%">
         <Stack.Item>
           <Box fontSize="20px" textAlign="center">
@@ -624,7 +627,7 @@ export const Upload = (props, context) => {
         </Stack.Item>
       </Stack>
       {!!uploadToDB && <UploadModal />}
-    </Box>
+    </>
   );
 };
 
