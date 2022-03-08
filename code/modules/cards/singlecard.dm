@@ -62,10 +62,9 @@
 	else
 		. += span_warning("You need to have the card in your hand to check it!")
 	
-	var/is_marked_with_visible_color = (color && color != "invisible")
-	// if you mark a card with invisible ink and wear science goggles you can see the color
-	if(is_marked_with_visible_color || (color == "invisible" && istype(user.glasses, /obj/item/clothing/glasses/science)))
-		. += span_notice("The card has a [color] mark on the corner!")
+	var/marked_color = getMarkedColor(user)
+	if(marked_color)
+		. += span_notice("The card has a [marked_color] mark on the corner!")
 	. += span_notice("Right-click to flip it.")
 	. += span_notice("Alt-click to rotate it 90 degrees.")
 
@@ -88,6 +87,19 @@
 
 	name = flipped ? cardname : "card"
 	update_appearance()
+
+/**
+ * Returns a color if a card is marked and the user can see it
+ * 
+ * * Arguments:
+ * * user - We need to check if the user see the marked card
+ */
+/obj/item/toy/singlecard/getMarkedColor(mob/living/carbon/user)
+	if(!istype(user))
+		return
+	var/is_marked_with_visible_color = (color && color != "invisible")
+	if(is_marked_with_visible_color || (color == "invisible" && istype(user.glasses, /obj/item/clothing/glasses/science)))
+		return color
 
 /obj/item/toy/singlecard/update_icon_state()
 	if(!flipped) 
@@ -149,7 +161,7 @@
 		can_item_write = TRUE
 		marked_cheating_color = (crayon.crayon_color == "mime" && "invisible") || crayon.crayon_color
 	
-	if(can_item_write && !blank)
+	if(can_item_write && !blank) // You cheated not only the game, but yourself
 		color = marked_cheating_color
 		to_chat(user, span_notice("You mark the corner of [src] with the [item]. Cheat to win!"))
 		return
@@ -187,7 +199,6 @@
 	Flip()
 	if(isturf(src)) // only display tihs message when flipping in a visible spot like on a table
 		user.balloon_alert_to_viewers("flips a card", vision_distance = COMBAT_MESSAGE_RANGE)
-
 
 /obj/item/toy/singlecard/AltClick(mob/living/carbon/human/user)
 	if(user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
