@@ -31,7 +31,7 @@
 	desc = "Opens up the path of blades to you. \
 		Allows you to transmute a knife with two bars of silver to create a Darkened Blade. \
 		You can create up to five at a time."
-	gain_text = ""
+	gain_text = "Our great ancestors forged swords and practiced sparring on the even of great battles."
 	next_knowledge = list(/datum/heretic_knowledge/blade_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
@@ -44,7 +44,8 @@
 /datum/heretic_knowledge/blade_grasp
 	name = "Grasp of the Blade"
 	desc = "Your Masus Grasp will cause a short stun when used on someone lying down or facing away from you."
-	gain_text = ""
+	gain_text = "The story of the footsoldier has been told since antiquity. It is one of blood and valor, \
+		and is championed by sword, steel and silver."
 	next_knowledge = list(/datum/heretic_knowledge/blade_dance)
 	cost = 1
 	route = PATH_BLADE
@@ -91,9 +92,9 @@
 	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
 
 /datum/heretic_knowledge/blade_dance
-	name = "Blade Dance"
+	name = "Dance of the Blades"
 	// desc is set in New()
-	gain_text = ""
+	gain_text = "Having the prowess to wield such a thing requires great dedication and terror."
 	next_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
 		/datum/heretic_knowledge/mark/blade_mark,
@@ -176,7 +177,8 @@
 	name = "Mark of the Blade"
 	desc = "Your Mansus Grasp now applies the Mark of the Blade. Triggering the mark does nothing, \
 		however while applied on your target, they will be unable to leave the current room."
-	gain_text = ""
+	gain_text = "There was no room for cowardace here. Those who ran were scolded. \
+		That is how I met them. Their name was The Colonel."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/blade)
 	route = PATH_BLADE
 	mark_type = /datum/status_effect/eldritch/blade
@@ -206,7 +208,8 @@
 	desc = "Grants you resilience to recieving wounds and prevents your limbs from being dismembered. \
 		Additionally, bleeding wounds applied against you are heavily reduced based on their severity. \
 		When damaged below 50% of your maximum health, you gain full immunity to wounds and stun resistance."
-	gain_text = ""
+	gain_text = "The Colonel was many things though out the age. But now, he is blind; he is deaf; \
+		he cannot be wounded; and he cannot be denied. His methods ensure that."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/blade,
 		/datum/heretic_knowledge/reroll_targets,
@@ -274,8 +277,8 @@
 	name = "Swift Blades"
 	desc = "Attacking someone who is currently marked with a Darkened Blade in both hands \
 		will now deliver a blow with both at once, dealing two attacks in rapid succession."
-	gain_text = ""
-	next_knowledge = list(/datum/heretic_knowledge/spell/summon_blade)
+	gain_text = "From here, I began to learn the Colonel's arts. The prowess was finally mine to have."
+	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
 
 /datum/heretic_knowledge/blade_upgrade/blade/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
@@ -300,20 +303,26 @@
 		return
 	blade.melee_attack_chain(source, target)
 
-/datum/heretic_knowledge/spell/summon_blade
-	name = "Furious Silver"
-	desc = ""
-	gain_text = ""
+/datum/heretic_knowledge/spell/furious_steel
+	name = "Furious Steel"
+	desc = "Grants you Furious Steel, a targeted spell. Using it will summon three \
+		orbiting blades around you. These blades will protect you from all attacks, \
+		but are consumed on use. Additionally, you can click to fire the blades \
+		at a target, dealing damage and causing bleeding."
+	gain_text = "His arts were those that ensured an ending."
 	next_knowledge = list(
 		// void-blade
 		/datum/heretic_knowledge/final/blade_final,
 		/datum/heretic_knowledge/summon/rusty,
 	)
+	spell_to_add = /obj/effect/proc_holder/spell/aimed/furious_steel
 	cost = 1
 	route = PATH_BLADE
 
 /datum/heretic_knowledge/final/blade_final
 	name = "Maelstrom of Steel"
 	desc = "The ascension ritual of the Path of Blades."
-	gain_text = "WITNESS MY ASCENSION!"
+	gain_text = "The Colonel, in all of his expertise, revealed to me the three roots of victory. \
+		Cunning. Strength. And agony! This was their secret doctrine! With this knowledge in my potention, \
+		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE

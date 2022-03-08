@@ -56,22 +56,72 @@
 		loc.balloon_alert(user, "ritual failed, no valid body!")
 		return FALSE
 
-	LAZYADD(created_items, WEAKREF(soon_to_be_ghoul))
 	selected_atoms -= soon_to_be_ghoul
 
 	log_game("[key_name(user)] created a shattered risen out of [key_name(soon_to_be_ghoul)].")
 	message_admins("[ADMIN_LOOKUPFLW(user)] shattered risen out of [ADMIN_LOOKUPFLW(soon_to_be_ghoul)].")
 
-	soon_to_be_ghoul.apply_status_effect(/datum/status_effect/ghoul, RISEN_MAX_HEALTH, user.mind)
-	RegisterSignal(soon_to_be_ghoul, COMSIG_ANTAGONIST_REMOVED, .proc/free_ghoul_slot)
+	soon_to_be_ghoul.apply_status_effect(
+		/datum/status_effect/ghoul,
+		RISEN_MAX_HEALTH,
+		user.mind,
+		CALLBACK(src, .proc/apply_to_risen),
+		CALLBACK(src, .proc/remove_from_risen),
+	)
 
+/datum/heretic_knowledge/limited_amount/risen_corpse/proc/apply_to_risen(mob/living/risen)
+	LAZYADD(created_items, WEAKREF(risen))
 
-/datum/heretic_knowledge/limited_amount/risen_corpse/proc/free_ghoul_slot(mob/living/carbon/human/source, datum/antagonist/removed)
-	SIGNAL_HANDLER
+	for(var/obj/item/held as anything in risen.held_items)
+		if(istype(held))
+			risen.dropItemToGround(held)
 
-	if(!istype(removed, /datum/antagonist/heretic_monster))
-		return
+		risen.put_in_hands(new /obj/item/risen_hand(), del_on_fail = TRUE)
 
-	LAZYREMOVE(created_items, WEAKREF(source))
+/datum/heretic_knowledge/limited_amount/risen_corpse/proc/remove_from_risen(mob/living/risen)
+	LAZYREMOVE(created_items, WEAKREF(risen))
+
+	for(var/obj/item/risen_hand/hand in risen.held_items)
+		qdel(hand)
 
 #undef RISEN_MAX_HEALTH
+
+/// The "hand" "weapon" used by shattered risen
+/obj/item/risen_hand
+	name = "bone-shards"
+	desc = "What once appeared to be a normal human fist, now holds a maulled nest of sharp bone-shards."
+	icon = 'icons/effects/blood.dmi'
+	base_icon_state = "bloodhand"
+	color = "#001aff"
+	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	hitsound = "shatter"
+	force = 16
+	sharpness = SHARP_EDGED
+	wound_bonus = -30
+	bare_wound_bonus = 15
+
+/obj/item/risen_hand/visual_equipped(mob/user, slot)
+	. = ..()
+
+	// Even hand indexes are right hands,
+	// Odd hand indexes are left hand
+	// ...But also, we swap it intentionally here,
+	// so right icon is shown on the left (Because hands)
+	if(user.get_held_index_of_item(src) % 2 == 1)
+		icon_state = "[base_icon_state]_right"
+	else
+		icon_state = "[base_icon_state]_left"
+
+/obj/item/risen_hand/pre_attack(atom/hit, mob/living/user, params)
+	. = ..()
+	if(.)
+		return
+
+	// If it's a structure or machine, we get a damage bonus (allowing us to break down doors)
+	if(isstructure(hit) || ismachinery(hit))
+		force *= 1.5
+
+	// If it's another other item make sure we're at normal force
+	else
+		force = initial(force)

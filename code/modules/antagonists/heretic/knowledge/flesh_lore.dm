@@ -88,28 +88,33 @@
 		target.balloon_alert(source, "invalid body!")
 		return COMPONENT_BLOCK_CHARGE_USE
 
+	// Get their ghost in here so we can raise them
 	target.grab_ghost()
+
 	if(!target.mind || !target.client)
 		target.balloon_alert(source, "no soul!")
 		return COMPONENT_BLOCK_CHARGE_USE
+
 	if(HAS_TRAIT(target, TRAIT_HUSK))
 		target.balloon_alert(source, "husked!")
 		return COMPONENT_BLOCK_CHARGE_USE
 
-	LAZYADD(created_items, WEAKREF(target))
 	log_game("[key_name(source)] created a ghoul, controlled by [key_name(target)].")
 	message_admins("[ADMIN_LOOKUPFLW(source)] created a ghoul, [ADMIN_LOOKUPFLW(target)].")
 
-	target.apply_status_effect(/datum/status_effect/ghoul, GHOUL_MAX_HEALTH, source.mind)
-	RegisterSignal(target, COMSIG_ANTAGONIST_REMOVED, .proc/free_ghoul_slot)
+	target.apply_status_effect(
+		/datum/status_effect/ghoul,
+		GHOUL_MAX_HEALTH,
+		source.mind,
+		CALLBACK(src, .proc/apply_to_ghoul),
+		CALLBACK(src, .proc/remove_from_ghoul),
+	)
 
-/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/free_ghoul_slot(mob/living/carbon/human/source, datum/antagonist/removed)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/apply_to_ghoul(mob/living/ghoul)
+	LAZYADD(created_items, WEAKREF(ghoul))
 
-	if(!istype(removed, /datum/antagonist/heretic_monster))
-		return
-
-	LAZYREMOVE(created_items, WEAKREF(source))
+/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/remove_from_ghoul(mob/living/ghoul)
+	LAZYREMOVE(created_items, WEAKREF(ghoul))
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
@@ -167,24 +172,26 @@
 		soon_to_be_ghoul.ghostize(FALSE)
 		soon_to_be_ghoul.key = chosen_candidate.key
 
-	LAZYADD(created_items, WEAKREF(soon_to_be_ghoul))
 	selected_atoms -= soon_to_be_ghoul
 
 	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(soon_to_be_ghoul)].")
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(soon_to_be_ghoul)].")
 
-	ADD_TRAIT(soon_to_be_ghoul, TRAIT_MUTE, MAGIC_TRAIT)
-	soon_to_be_ghoul.apply_status_effect(/datum/status_effect/ghoul, MUTE_MAX_HEALTH, user.mind)
-	RegisterSignal(soon_to_be_ghoul, COMSIG_ANTAGONIST_REMOVED, .proc/free_ghoul_slot)
+	soon_to_be_ghoul.apply_status_effect(
+		/datum/status_effect/ghoul,
+		MUTE_MAX_HEALTH,
+		user.mind,
+		CALLBACK(src, .proc/apply_to_ghoul),
+		CALLBACK(src, .proc/remove_from_ghoul),
+	)
 
-/datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/free_ghoul_slot(mob/living/carbon/human/source, datum/antagonist/removed)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/apply_to_ghoul(mob/living/ghoul)
+	LAZYADD(created_items, WEAKREF(ghoul))
+	ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
 
-	if(!istype(removed, /datum/antagonist/heretic_monster))
-		return
-
-	LAZYREMOVE(created_items, WEAKREF(source))
-	REMOVE_TRAIT(source, TRAIT_MUTE, MAGIC_TRAIT)
+/datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
+	LAZYREMOVE(created_items, WEAKREF(ghoul))
+	REMOVE_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
 
 /datum/heretic_knowledge/mark/flesh_mark
 	name = "Mark of Flesh"
