@@ -698,3 +698,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/TakeTemperature(temp)
 	temperature += temp
+
+/turf/proc/HasDenseAnchoredAtoms()
+	for(var/atom/movable/checked_movable in src)
+		if(checked_movable.density && checked_movable.anchored)
+			return TRUE
+	return FALSE

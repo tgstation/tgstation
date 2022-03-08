@@ -161,7 +161,7 @@
 	var/id
 	var/height = 0  // higher numbers are considered physically higher
 
-/obj/structure/ladder/unbreakable/Initialize(mapload)
+/obj/structure/ladder/unbreakable/Initialize(mapload, obj/structure/ladder/up, obj/structure/ladder/down)
 	GLOB.ladders += src
 	return ..()
 

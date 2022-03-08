@@ -146,6 +146,25 @@
 /turf/open/floor/proc/make_plating(force = FALSE)
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
+/turf/open/floor/proc/TryPopAndGetTile()
+	if(has_tile())
+		var/tile = spawn_tile()
+		make_plating(TRUE)
+		return tile
+	return null
+
+/turf/open/floor/proc/TryPopAndThrowTile(distance = 1, speed = 1)
+	var/tile = TryPopAndGetTile()
+	if(!tile)
+		return FALSE
+	if(ismovable(tile))
+		var/atom/movable/my_tile = tile
+		var/throw_dir = pick(GLOB.alldirs)
+		var/atom/throw_target = get_edge_target_turf(src, throw_dir)
+		my_tile.throw_at(throw_target, distance, speed)
+		return TRUE
+	return FALSE
+
 ///For when the floor is placed under heavy load. Calls break_tile(), but exists to be overridden by floor types that should resist crushing force.
 /turf/open/floor/proc/crush()
 	break_tile()

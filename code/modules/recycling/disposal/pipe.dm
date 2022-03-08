@@ -92,11 +92,7 @@
 	var/eject_range = 5
 	var/turf/open/floor/floorturf
 
-	if(isfloorturf(T) && T.overfloor_placed) // pop the tile if present
-		floorturf = T
-		if(floorturf.floor_tile)
-			new floorturf.floor_tile(T)
-		floorturf.make_plating(TRUE)
+	floorturf.TryPopAndGetTile()
 
 	if(direction) // direction is specified
 		if(isspaceturf(T)) // if ended in space, then range is unlimited

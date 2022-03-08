@@ -14,6 +14,7 @@
 	var/teleporting = FALSE //if it's in the process of teleporting
 	var/power_efficiency = 1
 	var/obj/machinery/quantumpad/linked_pad
+	var/sound_volume = 25
 
 	//mapping
 	var/static/list/mapped_quantum_pads = list()
@@ -50,9 +51,9 @@
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		E += M.rating
 	teleport_speed = initial(teleport_speed)
-	teleport_speed -= (E*10)
+	teleport_speed -= clamp((E*10), 0, initial(teleport_speed))
 	teleport_cooldown = initial(teleport_cooldown)
-	teleport_cooldown -= (E * 100)
+	teleport_cooldown -= clamp((E * 100), 0, initial(teleport_cooldown))
 
 /obj/machinery/quantumpad/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", I))
@@ -139,10 +140,14 @@
 /obj/machinery/quantumpad/proc/doteleport(mob/user = null, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(!target_pad)
 		return
-	playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/weapons/flash.ogg', sound_volume, TRUE)
 	teleporting = TRUE
 
 	addtimer(CALLBACK(src, .proc/teleport_contents, user, target_pad), teleport_speed)
+
+
+/obj/machinery/quantumpad/proc/after_teleport(mob/user, obj/machinery/quantumpad/target_pad)
+	return
 
 /obj/machinery/quantumpad/proc/teleport_contents(mob/user, obj/machinery/quantumpad/target_pad)
 	teleporting = FALSE
@@ -163,9 +168,9 @@
 	target_pad.sparks()
 
 	flick("qpad-beam", src)
-	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/weapons/emitter2.ogg', sound_volume, TRUE)
 	flick("qpad-beam", target_pad)
-	playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', sound_volume, TRUE)
 	for(var/atom/movable/ROI in get_turf(src))
 		if(QDELETED(ROI))
 			continue //sleeps in CHECK_TICK
@@ -182,6 +187,7 @@
 
 		do_teleport(ROI, get_turf(target_pad), no_effects = TRUE, channel = TELEPORT_CHANNEL_QUANTUM)
 		CHECK_TICK
+	after_teleport(user, target_pad)
 
 /obj/machinery/quantumpad/proc/initMappedLink()
 	. = FALSE
@@ -189,6 +195,63 @@
 	if(link)
 		linked_pad = link
 		. = TRUE
+
+/obj/machinery/quantumpad/maintenance
+	name = "old quantum pad"
+	desc = "A mysterious old quantum pad that fits underneath the floor. Where does it lead?"
+	sound_volume = 0
+	teleport_cooldown = 5 SECONDS //gives you a head start on the HoS
+	teleport_speed = 0.5 SECONDS //lets you put the tile back down if you're quick
+	use_power = NO_POWER_USE //would make more sense if it had a replaceable battery but it doesn't
+	flags_1 = NODECONSTRUCT_1 //prevent breaking it out of curiousity
+
+/obj/machinery/quantumpad/maintenance/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/undertile)
+
+	var/turf/my_turf = get_turf(src)
+
+	if(isfloorturf(my_turf))
+		var/turf/open/floor/floorturf = my_turf
+
+		var/tile = floorturf.TryPopAndGetTile()
+		if(tile)
+			if(istype(tile, /obj/item/stack/tile))
+				var/obj/item/stack/tile/my_tile = tile
+				my_tile.place_tile(floorturf) //breaks decals as a subtle tell, fits the letter below
+
+		if(!floorturf.has_tile())
+			var/obj/item/stack/tile/iron/iron_tile = new(floorturf)
+			iron_tile.place_tile(floorturf) //grey tile where one wouldn't normally be
+
+	my_turf.wash(CLEAN_SCRUB) //way less clean tiles in maint than dirty ones
+
+	SEND_SIGNAL(src, COMSIG_OBJ_HIDE, my_turf.underfloor_accessibility < UNDERFLOOR_VISIBLE)
+
+	log_game("A maintenance quantum pad was created in [get_area_name(my_turf, TRUE)] ([my_turf.x],[my_turf.y],[my_turf.z]).")
+
+/obj/machinery/quantumpad/maintenance/RefreshParts()
+	return
+
+/obj/machinery/quantumpad/maintenance/after_teleport(mob/user, obj/machinery/quantumpad/target_pad)
+	var/turf/target_turf = get_turf(target_pad)
+	if(isfloorturf(target_turf))
+		var/turf/open/floor/floorturf = target_turf
+		floorturf.TryPopAndThrowTile(1,1)
+
+/obj/machinery/quantumpad/maintenance/proc/CreateAndLinkSecondPad(turf/spawn_turf)
+	var/obj/machinery/quantumpad/maintenance/second_pad = new(spawn_turf)
+	linked_pad = second_pad
+	second_pad.linked_pad = src
+
+/obj/item/paper/crumpled/fluff/stations/maintenancepad
+	name = "old letter"
+	info = "Director Rigel,<br>	\
+			<br>	\
+			Just finished setting up the new prototypes in maintenance. Faster, and easily concealable! But we'll have to test them another shift.	\
+			In the meantime, I've covered them with floor tiles. Luckily, I still had some iron in my bag for where I'd	built them on plating.	\
+			I just hope I can remember where I hid them. They don't show up on t-rays (like we discussed), so the idiot ERTs should miss them entirely.	\
+			And yes, I cleaned the floors after placing the tiles. You won't get dirty prying them up. Anyway, shuttle is almost here."
 
 /obj/item/paper/guides/quantumpad
 	name = "Quantum Pad For Dummies"
