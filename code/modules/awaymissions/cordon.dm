@@ -12,6 +12,8 @@
 	always_lit = TRUE
 	bullet_bounce_sound = null
 	rust_resistance = 5
+	turf_flags = NOJAUNT
+	baseturfs = /turf/cordon
 
 /turf/cordon/AfterChange()
 	. = ..()

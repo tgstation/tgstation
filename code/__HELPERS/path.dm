@@ -348,6 +348,10 @@
 		if(!iter_windoor.CanAStarPass(ID, actual_dir))
 			return TRUE
 
+	for(var/obj/structure/railing/iter_rail in src)
+		if(!iter_rail.CanAStarPass(ID, actual_dir))
+			return TRUE
+
 	var/reverse_dir = get_dir(destination_turf, src)
 	for(var/obj/iter_object in destination_turf)
 		if(!iter_object.CanAStarPass(ID, reverse_dir, caller))

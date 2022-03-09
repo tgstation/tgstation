@@ -54,27 +54,86 @@
 	/obj/effect/decal/cleanable/blood)
 	total_requirement = 3
 
-/datum/experiment/explosion/calibration
-	name = "Is This Thing On?"
-	description = "The engineers from last shift left a notice for us that the doppler array seemed to be malfunctioning. \
-		Could you check that it is still working? Any explosion will do!"
-	required_light = 1
+/datum/experiment/ordnance/explosive/lowyieldbomb
+	name = "Low-Yield Explosives"
+	description = "Low-yield explosives may prove useful for our asset protection teams. Perform research and publish papers on this field. Explosion from any source is allowed."
+	gain = list(10,15,20)
+	target_amount = list(5,10,20)
+	experiment_proper = TRUE
+	sanitized_misc = FALSE
+	sanitized_reactions = FALSE
+	allow_any_source = TRUE
 
-/datum/experiment/explosion/maxcap
-	name = "Mother of God"
-	description = "A recent outbreak of a blood-cult in a nearby sector necessitates the development of a large explosive. \
-		Create a large enough explosion to prove your bomb, we'll be watching."
+/datum/experiment/ordnance/explosive/highyieldbomb
+	name = "High-Yield Explosives"
+	description =  "Several reactions react very energetically and can be utilized for bigger explosives. Perform research and publish papers on this field. Any gas reaction is allowed."
+	gain = list(10,50,100)
+	target_amount = list(50,100,300)
+	experiment_proper = TRUE
+	sanitized_misc = FALSE
+	sanitized_reactions = FALSE
 
-/datum/experiment/explosion/medium
-	name = "Explosive Ordinance Experiment"
-	description = "Alright, can we really call ourselves professionals if we can't make shit blow up?"
-	required_heavy = 2
-	required_light = 6
+/datum/experiment/ordnance/explosive/hydrogenbomb
+	name = "Hydrogen Explosives"
+	description = "Combustion of Hydrogen and it's derivatives can be very powerful. Perform research and publish papers on this field. Only the specified gas reactions are allowed."
+	gain = list(15,40,60)
+	target_amount = list(50,75,150)
+	experiment_proper = TRUE
+	sanitized_misc = TRUE
+	sanitized_reactions = TRUE
+	require_all = FALSE
+	required_reactions = list(/datum/gas_reaction/h2fire, /datum/gas_reaction/tritfire)
 
-/datum/experiment/explosion/maxcap/New()
-	required_devastation = GLOB.MAX_EX_DEVESTATION_RANGE
-	required_heavy = GLOB.MAX_EX_HEAVY_RANGE
-	required_light = GLOB.MAX_EX_LIGHT_RANGE
+/datum/experiment/ordnance/explosive/nobliumbomb
+	name = "Noblium Explosives"
+	description = "The formation of Hyper-Noblium is very energetic and can be harnessed for explosives. Perform research and publish papers on this field. Only the specified gas reaction is allowed."
+	gain = list(15,60,120)
+	target_amount = list(50,100,300)
+	experiment_proper = TRUE
+	sanitized_misc = TRUE
+	sanitized_reactions = TRUE
+	required_reactions = list(/datum/gas_reaction/nobliumformation)
+
+/datum/experiment/ordnance/explosive/pressurebomb
+	name = "Reactionless Explosives"
+	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure. Perform research and publish papers on this field. No gas reactions are allowed."
+	gain = list(10,50,100)
+	target_amount = list(20,75,200)
+	experiment_proper = TRUE
+	sanitized_misc = FALSE
+	sanitized_reactions = TRUE
+
+/datum/experiment/ordnance/gaseous/nitrium
+	name = "Nitrium Gas Shells"
+	description = "The delivery of Nitrium gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	gain = list(20,60,120)
+	target_amount = list(20,120,500)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/nitrium
+
+/datum/experiment/ordnance/gaseous/bz
+	name = "BZ Gas Shells"
+	description = "The delivery of BZ gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	gain = list(25,50)
+	target_amount = list(200,600)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/bz
+
+/datum/experiment/ordnance/gaseous/noblium
+	name = "Noblium Gas Shells"
+	description = "The delivery of Noblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	gain = list(10,40,80)
+	target_amount = list(15,55,250)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/hypernoblium
+
+/datum/experiment/ordnance/gaseous/halon
+	name = "Halon Gas Shells"
+	description = "The delivery of Halon gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	gain = list(10,30,60)
+	target_amount = list(15,55,250)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/halon
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"

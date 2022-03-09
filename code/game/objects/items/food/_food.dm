@@ -46,6 +46,8 @@
 	var/decomp_type = /obj/item/food/badrecipe/moldy
 	///Food that needs to be picked up in order to decompose.
 	var/decomp_req_handle = FALSE
+	///Used to set custom decomposition times for food. Set to 0 to have it automatically set via the food's flags.
+	var/decomposition_time = 0
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -106,4 +108,4 @@
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting)
+		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
