@@ -564,6 +564,10 @@
 /datum/antagonist/heretic/proc/get_knowledge(wanted)
 	return researched_knowledge[wanted]
 
+/datum/antagonist/heretic/proc/increase_rust_strength(strength)
+	if(rust_strength < strength)
+		rust_strength = strength
+
 /// Heretic's minor sacrifice objective. "Minor sacrifices" includes anyone.
 /datum/objective/minor_sacrifice
 	name = "minor sacrifice"

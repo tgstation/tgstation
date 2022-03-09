@@ -65,6 +65,8 @@
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic?.increase_rust_strength(1)
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
@@ -155,6 +157,8 @@
 /datum/heretic_knowledge/rust_mark/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic?.increase_rust_strength(2)
 
 /datum/heretic_knowledge/rust_mark/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
@@ -197,6 +201,11 @@
 	cost = 1
 	route = PATH_RUST
 
+/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user)
+	. = ..()
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic?.increase_rust_strength(2)
+
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
 	desc = "Your Rusty Blade now poisons enemies on attack."
@@ -213,6 +222,8 @@
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic?.increase_rust_strength(3)
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_lose(mob/user)
 	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
@@ -238,6 +249,11 @@
 	spell_to_add = /obj/effect/proc_holder/spell/cone/staggered/entropic_plume
 	cost = 1
 	route = PATH_RUST
+
+/datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
+	. = ..()
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic?.increase_rust_strength(3)
 
 /datum/heretic_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
@@ -284,6 +300,8 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
 	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
+	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
+	our_heretic?.increase_rust_strength(4)
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].
