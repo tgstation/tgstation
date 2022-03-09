@@ -20,6 +20,7 @@
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	isGlass = TRUE
 	foodtype = ALCOHOL
+	resistance_flags = ACID_PROOF
 	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
 	///Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	var/bottle_knockdown_duration = 1.3 SECONDS
@@ -140,6 +141,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/glass=350)
 	inhand_icon_state = "broken_beer"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
