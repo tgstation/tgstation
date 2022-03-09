@@ -377,7 +377,7 @@
 
 /datum/rust_spread/New(loc)
 	centre = get_turf(loc)
-	centre.rust_heretic_act()
+	centre.rust_heretic_act(null)
 	rusted_turfs += centre
 	START_PROCESSING(SSprocessing, src)
 
@@ -398,7 +398,7 @@
 		if(!length(edge_turfs))
 			break
 		var/turf/afflicted_turf = pick_n_take(edge_turfs)
-		afflicted_turf.rust_heretic_act()
+		afflicted_turf.rust_heretic_act(null)
 		rusted_turfs |= afflicted_turf
 
 /**
