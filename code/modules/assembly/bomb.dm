@@ -118,7 +118,7 @@
 	var/igniter_count = 0
 	for(var/obj/item/assembly/attached_assembly as anything in assembly.assemblies)
 		if(isigniter(attached_assembly))
-			igniter_count +=1
+			igniter_count += 1
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
 
