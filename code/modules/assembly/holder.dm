@@ -149,7 +149,7 @@
 		return FALSE
 	if(normal && LAZYLEN(assemblies) >= 2)
 		for(var/obj/item/assembly/assembly as anything in assemblies)
-			if(LAZYACCESS(assemblies,assembly) != device)
+			if(LAZYACCESS(assemblies, assembly) != device)
 				assembly.pulsed(FALSE)
 	if(master)
 		master.receive_signal()
