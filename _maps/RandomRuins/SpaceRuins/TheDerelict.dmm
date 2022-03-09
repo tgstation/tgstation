@@ -804,6 +804,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/cargo)
+"da" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/derelict/hallway_primary)
 "db" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1186,6 +1189,7 @@
 "eO" = (
 /obj/machinery/computer/security/wooden_tv,
 /obj/machinery/airalarm/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/derelict/security/detective)
 "eP" = (
@@ -1196,6 +1200,8 @@
 "eS" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict/security/detective)
 "eT" = (
@@ -1250,6 +1256,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 6
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict/security/detective)
 "fg" = (
@@ -1482,6 +1489,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict/security/detective)
 "gv" = (
@@ -1517,6 +1525,7 @@
 "gC" = (
 /obj/structure/table/wood,
 /obj/item/camera,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet,
 /area/ruin/space/derelict/security/detective)
 "gE" = (
@@ -1652,6 +1661,7 @@
 /obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/derelict/security/detective)
 "hr" = (
@@ -2766,6 +2776,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/derelict/maintenance/port/central)
+"mE" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/security/detective)
 "mF" = (
 /obj/machinery/gibber,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3294,6 +3307,9 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/derelict/maintenance/starboard/lesser)
+"po" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/security)
 "pq" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -3312,6 +3328,9 @@
 /obj/machinery/photocopier,
 /turf/open/floor/wood/airless,
 /area/ruin/space/derelict/arrival)
+"pB" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/research)
 "pD" = (
 /obj/structure/rack,
 /obj/item/stack/sheet/glass/fifty,
@@ -3478,6 +3497,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/engineering)
+"qT" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/derelict/security/detective)
 "qW" = (
 /obj/machinery/door/airlock{
 	name = "Unisex Restrooms"
@@ -3488,6 +3510,9 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/derelict/hallway_primary)
+"ra" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/bridge)
 "re" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -3507,6 +3532,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/derelict/service)
+"rm" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/medical)
 "rs" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3615,6 +3643,9 @@
 	dir = 4
 	},
 /area/ruin/space/derelict/engineering)
+"st" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/service/janitor)
 "sv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table/wood,
@@ -3760,6 +3791,7 @@
 /area/ruin/space/derelict/hallway_primary)
 "tm" = (
 /obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/derelict/security/detective)
 "tn" = (
@@ -3875,6 +3907,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
+"tU" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/derelict/maintenance/starboard)
 "tZ" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
@@ -4130,6 +4165,9 @@
 	icon_state = "panelscorched"
 	},
 /area/template_noop)
+"vL" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/derelict/security)
 "vN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 5
@@ -4210,6 +4248,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
+"wQ" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/maintenance/starboard)
 "wS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2{
 	dir = 8
@@ -4364,6 +4405,9 @@
 /obj/structure/barricade/wooden,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/departures)
+"xV" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/research/xenobiology)
 "xW" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -4676,7 +4720,7 @@
 	pixel_x = 8;
 	pixel_y = -1
 	},
-/turf/closed/wall,
+/turf/closed/wall/rust,
 /area/ruin/space/derelict/maintenance/starboard/central)
 "zY" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -4881,7 +4925,7 @@
 	pixel_x = 4;
 	pixel_y = -3
 	},
-/turf/closed/wall,
+/turf/closed/wall/rust,
 /area/ruin/space/derelict/maintenance/starboard/central)
 "Bf" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -5237,14 +5281,17 @@
 	icon_state = "platingdmg2"
 	},
 /area/template_noop)
+"Du" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/space/derelict/research)
 "Dz" = (
 /obj/item/stack/cable_coil,
 /obj/structure/closet/crate,
 /obj/item/circuitboard/machine/protolathe/offstation,
 /obj/item/circuitboard/machine/circuit_imprinter/offstation,
-/obj/item/circuitboard/computer/research,
 /obj/item/circuitboard/machine/destructive_analyzer,
 /obj/item/storage/part_replacer/cargo,
+/obj/item/circuitboard/computer/rdconsole,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -5714,6 +5761,7 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 8
 	},
@@ -5943,6 +5991,9 @@
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/hallway_primary)
+"Js" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/cargo)
 "Jt" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -6477,6 +6528,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/derelict/security/detective)
 "Nw" = (
@@ -6815,6 +6867,9 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
+"PO" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/maintenance/starboard/central)
 "PP" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -6967,6 +7022,9 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway_primary)
+"QR" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/crew)
 "QU" = (
 /turf/open/floor/catwalk_floor/iron_smooth,
 /area/ruin/space/derelict/maintenance/port)
@@ -8253,6 +8311,9 @@
 "Zg" = (
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
+"Zi" = (
+/turf/closed/wall/rust,
+/area/ruin/space/derelict/maintenance/port/lesser)
 "Zj" = (
 /turf/closed/wall,
 /area/template_noop)
@@ -9524,15 +9585,15 @@ Zx
 Fk
 jd
 dA
-Zx
+kM
 Fk
 jd
 Zx
 GU
+st
 GU
 GU
-GU
-GU
+st
 Bs
 Vv
 QL
@@ -9612,7 +9673,7 @@ Zx
 Zx
 NM
 np
-Zx
+kM
 se
 yI
 Bg
@@ -9697,7 +9758,7 @@ Zx
 lZ
 Fk
 nq
-Zx
+kM
 ht
 yK
 BB
@@ -9774,15 +9835,15 @@ ZB
 ZB
 Mb
 Mb
-Mb
+QR
+kM
 Zx
 Zx
-Zx
-Zx
+kM
 mb
 mL
 jd
-Zx
+kM
 Oo
 yT
 BR
@@ -10019,15 +10080,15 @@ ZB
 YO
 FM
 SH
-YO
+Zi
 cA
 cY
 yq
 ZU
 OJ
-Tl
+Js
 ZB
-Mb
+QR
 Mb
 pF
 Mb
@@ -10110,9 +10171,9 @@ nM
 nM
 vU
 eE
-Tl
+Js
 fk
-Mb
+QR
 HW
 Gb
 wS
@@ -10121,7 +10182,7 @@ kq
 Zx
 Fk
 Zx
-Zx
+kM
 on
 sD
 Zx
@@ -10197,7 +10258,7 @@ IB
 eF
 Tl
 ZB
-Mb
+QR
 QP
 xE
 Tz
@@ -10262,13 +10323,13 @@ aa
 aa
 aa
 NO
-NO
-NO
-NO
-NO
+ra
+ra
+ra
+ra
 NO
 ZB
-YO
+Zi
 YK
 YO
 bp
@@ -10288,9 +10349,9 @@ xE
 iH
 qa
 kr
-Zx
+kM
 Fk
-Zx
+kM
 Oa
 Zx
 Zx
@@ -10346,7 +10407,7 @@ aa
 (24,1,1) = {"
 aa
 NO
-NO
+ra
 tH
 au
 bX
@@ -10358,8 +10419,8 @@ aX
 YO
 FM
 kZ
-YO
-YO
+Zi
+Zi
 Yv
 Yv
 dz
@@ -10382,7 +10443,7 @@ Ga
 Fk
 Zx
 Zx
-Zx
+kM
 hG
 YW
 ji
@@ -10437,7 +10498,7 @@ aV
 TK
 ON
 cK
-YO
+Zi
 uj
 bB
 FM
@@ -10467,7 +10528,7 @@ Zx
 jd
 jB
 Gz
-Zx
+kM
 hG
 YW
 hG
@@ -10525,7 +10586,7 @@ aO
 YO
 by
 FM
-YO
+Zi
 FM
 SH
 YO
@@ -10552,7 +10613,7 @@ Zx
 zc
 Zx
 Hi
-Zx
+kM
 Pi
 WU
 RZ
@@ -10607,10 +10668,10 @@ aV
 uf
 aV
 oi
+Zi
 YO
-YO
-YO
-YO
+Zi
+Zi
 YO
 bC
 YO
@@ -10631,12 +10692,12 @@ iu
 Zx
 mc
 Zx
+kM
 Zx
+kM
 Zx
-Zx
-Zx
-Zx
-Zx
+kM
+kM
 Zx
 ic
 ZD
@@ -10949,7 +11010,7 @@ aV
 qh
 hU
 hU
-hU
+wQ
 hU
 hU
 bD
@@ -10958,8 +11019,8 @@ cp
 cQ
 nR
 ER
-ER
-ER
+vL
+vL
 ER
 fr
 na
@@ -10976,7 +11037,7 @@ Yl
 Yl
 Yl
 Yl
-Yl
+PO
 zX
 Yq
 iz
@@ -11046,9 +11107,9 @@ Ot
 er
 ib
 ER
+vL
 ER
-ER
-ER
+vL
 kD
 fv
 eB
@@ -11117,13 +11178,13 @@ ON
 aC
 aV
 cK
-hU
+wQ
 aT
 cd
 cd
 cd
 lj
-Qb
+tU
 iA
 cS
 nT
@@ -11196,7 +11257,7 @@ aa
 (34,1,1) = {"
 aa
 NO
-NO
+ra
 lB
 aV
 aF
@@ -11208,7 +11269,7 @@ ba
 hU
 hU
 lj
-Qb
+tU
 mn
 cQ
 fl
@@ -11222,7 +11283,7 @@ ER
 eB
 fz
 kD
-Yl
+PO
 sN
 YD
 tz
@@ -11285,15 +11346,15 @@ NO
 NO
 bf
 NO
-NO
-NO
+ra
+ra
 ZB
 hU
 Xq
-hU
+wQ
 hJ
 lr
-Qb
+tU
 Mj
 cU
 dk
@@ -11558,7 +11619,7 @@ QA
 QA
 QA
 hh
-ER
+vL
 BG
 fY
 Ua
@@ -11643,7 +11704,7 @@ UV
 UV
 fI
 hi
-ER
+vL
 Ua
 mY
 Ua
@@ -11728,7 +11789,7 @@ PQ
 Ot
 IJ
 Ot
-ER
+vL
 XF
 mY
 kD
@@ -11805,7 +11866,7 @@ PQ
 bI
 ck
 ct
-PQ
+po
 Bv
 lD
 LD
@@ -11813,7 +11874,7 @@ PQ
 WT
 vj
 LD
-ER
+vL
 Ua
 Ui
 Wm
@@ -11890,7 +11951,7 @@ aa
 ZB
 aa
 Iy
-PQ
+po
 nV
 dR
 et
@@ -11977,17 +12038,17 @@ aa
 ZB
 PQ
 PQ
-PQ
+po
 eu
 eu
-eu
-eu
-eu
+qT
+qT
+qT
 eu
 BG
 Ui
 kD
-Yl
+PO
 sN
 Yh
 sN
@@ -12242,7 +12303,7 @@ Ol
 iv
 mY
 Ua
-uu
+da
 ZB
 ZB
 ZB
@@ -12251,7 +12312,7 @@ Yl
 Yl
 zh
 Yl
-Yl
+PO
 LT
 du
 YW
@@ -12318,7 +12379,7 @@ aa
 aa
 ZB
 aa
-fQ
+mE
 fQ
 fQ
 fQ
@@ -12327,7 +12388,7 @@ fQ
 kD
 mY
 Ua
-uu
+da
 aa
 ZB
 aa
@@ -12336,7 +12397,7 @@ oy
 Xy
 BX
 Ji
-mJ
+rm
 LT
 hG
 YW
@@ -12412,7 +12473,7 @@ Ua
 kD
 Ui
 BG
-uu
+da
 aa
 ZB
 aa
@@ -12582,7 +12643,7 @@ Sr
 gk
 iI
 gk
-uu
+da
 aa
 ZB
 aa
@@ -12653,18 +12714,18 @@ bJ
 Zm
 Zm
 Zm
+xV
+xV
+xV
 Zm
 Zm
-Zm
-Zm
-Zm
-PD
-PD
+Du
+Du
 dx
 As
 As
 PD
-PD
+Du
 iJ
 PD
 PD
@@ -12819,11 +12880,11 @@ aa
 aa
 aa
 aa
-Zm
+xV
 Xs
 Zu
 hd
-Zm
+xV
 ms
 hd
 hd
@@ -12904,7 +12965,7 @@ aa
 aa
 aa
 aa
-Zm
+xV
 Xs
 hd
 hd
@@ -12922,7 +12983,7 @@ WC
 Gh
 KY
 ju
-WC
+pB
 aa
 ZB
 ZB
@@ -12989,7 +13050,7 @@ aa
 aa
 aa
 aa
-Zm
+xV
 NJ
 bv
 Yf
@@ -13007,7 +13068,7 @@ WC
 WC
 Gv
 WC
-WC
+pB
 aa
 ZB
 aa
@@ -13414,7 +13475,7 @@ aa
 aa
 aa
 aa
-Zm
+xV
 Yf
 bx
 NJ
@@ -13517,7 +13578,7 @@ WC
 fd
 GT
 gT
-WC
+pB
 ZB
 ZB
 ZB
@@ -13588,7 +13649,7 @@ aa
 aa
 ZB
 vI
-Zm
+xV
 uW
 Ty
 gV
@@ -13602,7 +13663,7 @@ WC
 Kv
 xW
 YV
-WC
+pB
 aa
 aa
 ZB
@@ -13673,15 +13734,15 @@ aa
 ZB
 ZB
 ZB
-Zm
+xV
 TV
 cW
 dv
 Zm
 Zm
-WC
-WC
-WC
+pB
+pB
+pB
 WC
 WC
 Kv
