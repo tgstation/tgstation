@@ -1,9 +1,9 @@
 GLOBAL_LIST_INIT(ghost_lighting_options, list(
-		"Fullbright" = LIGHTING_PLANE_ALPHA_INVISIBLE,
-		"Night Vision" = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE,
-		"Darker" = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE,
-		"Normal" = LIGHTING_PLANE_ALPHA_VISIBLE
-	))
+	"Fullbright" = LIGHTING_PLANE_ALPHA_INVISIBLE,
+	"Night Vision" = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE,
+	"Darker" = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE,
+	"Normal" = LIGHTING_PLANE_ALPHA_VISIBLE,
+))
 
 /// How bright a ghost's lighting plane is
 /datum/preference/choiced/ghost_lighting
