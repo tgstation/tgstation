@@ -498,6 +498,7 @@
 "bA" = (
 /obj/structure/rack,
 /obj/item/wirecutters,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "bC" = (
@@ -2778,10 +2779,6 @@
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron,
 /area/service/theater)
-"iT" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/mine/laborcamp/security)
 "iU" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -3624,7 +3621,7 @@
 	},
 /area/maintenance/aft/lesser)
 "lG" = (
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -4023,6 +4020,7 @@
 	c_tag = "Labor Camp Mud Room";
 	network = list("labor")
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "mX" = (
@@ -6641,6 +6639,7 @@
 "uT" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "uU" = (
@@ -8617,6 +8616,7 @@
 "BL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
 "BM" = (
@@ -10767,7 +10767,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/mine/living_quarters)
+/area/mine/production)
 "Iu" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit";
@@ -14435,12 +14435,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
-"TR" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
-/area/mine/living_quarters)
 "TS" = (
 /turf/open/floor/iron/dark,
 /area/mine/eva)
@@ -15507,7 +15501,7 @@
 	dir = 8
 	},
 /obj/machinery/washing_machine,
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/cafeteria,
@@ -32019,9 +32013,9 @@ mO
 mO
 Rj
 mO
-cR
+br
 It
-cR
+br
 mO
 Rj
 mO
@@ -32276,9 +32270,9 @@ mO
 mO
 Rj
 mO
-cR
-TR
-cR
+br
+NR
+br
 mO
 Rj
 mO
@@ -32533,9 +32527,9 @@ mO
 mO
 Rj
 mO
-cR
-TR
-cR
+br
+NR
+br
 mO
 Rj
 mO
@@ -32790,9 +32784,9 @@ mO
 mO
 Rj
 mO
-cR
-TR
-cR
+br
+NR
+br
 mO
 Rj
 mO
@@ -33047,9 +33041,9 @@ mO
 mO
 Rj
 mO
-cR
-TR
-cR
+br
+NR
+br
 mO
 Rj
 mO
@@ -50425,7 +50419,7 @@ oU
 Hd
 iz
 bh
-bh
+vM
 Hd
 Hd
 Hd
@@ -50682,7 +50676,7 @@ Fd
 Hd
 uN
 bh
-bh
+vM
 mu
 bh
 ce
@@ -51199,7 +51193,7 @@ tc
 tc
 tc
 bA
-iT
+FF
 Fp
 Fp
 ak
@@ -51456,7 +51450,7 @@ ni
 bh
 tc
 VB
-iT
+FF
 Fp
 Fp
 ak
