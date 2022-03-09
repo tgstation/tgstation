@@ -43,8 +43,12 @@
 					if(sanitised[i] == sanitised[j])
 						sanitycheck = FALSE //if a digit is repeated, reject the input
 			if(input == code)
+				to_chat(user, span_notice("A green light flashes."))
 				if(!spawned_loot)
 					spawn_loot()
+				if(qdel_on_open)
+					qdel(src)
+					return
 				tamperproof = 0 // set explosion chance to zero, so we dont accidently hit it with a multitool and instantly die
 				togglelock(user)
 			else if(!input || !sanitycheck || length(sanitised) != codelen)
@@ -55,8 +59,9 @@
 				attempts--
 				if(attempts == 0)
 					boom(user)
-	else
-		return ..()
+		return
+
+	. = ..()
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -96,36 +101,32 @@
 
 				to_chat(user, span_notice("Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions."))
 			return
-	return ..()
+	. = ..()
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		boom(user)
 		return
-	return ..()
+	. = ..()
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
-	if(!locked)
-		. = ..()
-		if(locked)
+	if(!locked) //We're currently unlocked.
+		. = ..() //Run the normal code.
+		if(locked) //Double check if the crate actually locked itself when the normal code ran.
 			//reset the anti-tampering, number of attempts and last attempt when the lock is re-enabled.
 			tamperproof = initial(tamperproof)
 			attempts = initial(attempts)
 			lastattempt = null
 		return
-	if(tamperproof)
-		boom(user)
+	if(tamperproof) //Can't force an unlock through other means.
 		return
-	if (qdel_on_open)
-		qdel(src)
-		return
-	return ..()
+	. = ..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	if(locked)
-		boom()
+		boom() //Bad idea to hit it with a welder.
 		return
-	return ..()
+	. = ..()
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
