@@ -460,13 +460,13 @@ const NewscasterChannelMessages = (_, context) => {
                   {message.comments.map(comment => (
                     <BlockQuote
                       key={comment.body}>
+                      <Box italic>
+                        By: {comment.auth} at {comment.time}
+                      </Box>
                       <Section
                         dangerouslySetInnerHTML={processedText(comment.body)}
                         ml={2.5}
                         mt={1} />
-                      <Box italic>
-                        By {comment.auth} at {comment.time}.
-                      </Box>
                     </BlockQuote>
                   ))}
                 </Box>
