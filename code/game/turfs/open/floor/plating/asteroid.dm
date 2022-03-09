@@ -21,7 +21,7 @@
 	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
 	/// Whether the turf has been dug or not
 	var/dug = FALSE
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/asteroid/setup_broken_states()
 	return list("asteroid_dug")

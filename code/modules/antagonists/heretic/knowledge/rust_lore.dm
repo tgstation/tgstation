@@ -67,7 +67,7 @@
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic?.increase_rust_strength(1)
+	our_heretic.set_rust_strength(1)
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
@@ -160,7 +160,7 @@
 	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic?.increase_rust_strength(2)
+	our_heretic.set_rust_strength(2)
 
 /datum/heretic_knowledge/rust_mark/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
@@ -207,7 +207,7 @@
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user)
 	. = ..()
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic?.increase_rust_strength(2)
+	our_heretic.set_rust_strength(2)
 
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
@@ -227,7 +227,7 @@
 /datum/heretic_knowledge/rust_blade_upgrade/on_gain(mob/user)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic?.increase_rust_strength(3)
+	our_heretic.set_rust_strength(3)
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_lose(mob/user)
 	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
@@ -258,7 +258,7 @@
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
 	. = ..()
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic?.increase_rust_strength(3)
+	our_heretic.set_rust_strength(3)
 
 /datum/heretic_knowledge/final/rust_final
 	name = "Rustbringer's Oath"
@@ -307,7 +307,7 @@
 	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic?.increase_rust_strength(4)
+	our_heretic.set_rust_strength(4)
 
 /**
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -377,7 +377,7 @@
 
 /datum/rust_spread/New(loc)
 	centre = get_turf(loc)
-	centre.rust_heretic_act(null)
+	centre.rust_heretic_act()
 	rusted_turfs += centre
 	START_PROCESSING(SSprocessing, src)
 
@@ -398,7 +398,7 @@
 		if(!length(edge_turfs))
 			break
 		var/turf/afflicted_turf = pick_n_take(edge_turfs)
-		afflicted_turf.rust_heretic_act(null)
+		afflicted_turf.rust_heretic_act()
 		rusted_turfs |= afflicted_turf
 
 /**

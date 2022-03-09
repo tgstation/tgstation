@@ -11,7 +11,7 @@
 	blocks_air = TRUE
 	always_lit = TRUE
 	bullet_bounce_sound = null
-	rust_resistance = 5
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 /turf/cordon/AfterChange()
 	. = ..()

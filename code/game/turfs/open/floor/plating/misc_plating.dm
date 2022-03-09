@@ -15,7 +15,7 @@
 	icon_state = "alienpod1"
 	base_icon_state = "alienpod1"
 	tiled_dirt = FALSE
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/abductor/setup_broken_states()
 	return list("alienpod1")
@@ -30,7 +30,7 @@
 	icon_state = "alienplating"
 	base_icon_state = "alienplating"
 	tiled_dirt = FALSE
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/abductor2/break_tile()
 	return //unbreakable
@@ -59,7 +59,7 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
 	var/smooth_icon = 'icons/turf/floors/ash.dmi'
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/ashplanet/Initialize(mapload)
 	. = ..()
@@ -127,7 +127,7 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
@@ -232,7 +232,7 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/ice/Initialize(mapload)
 	. = ..()
@@ -313,7 +313,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_FLOOR_GRASS)
 	layer = HIGH_TURF_LAYER
 	var/smooth_icon = 'icons/turf/floors/grass.dmi'
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/grass/setup_broken_states()
 	return list("damaged")
@@ -341,7 +341,7 @@
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
-	rust_resistance = 4
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/plating/sandy_dirt/setup_broken_states()
 	return list("sand_damaged")

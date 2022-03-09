@@ -6,7 +6,7 @@
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
 	slowdown = 2
-	rust_resistance = 5
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 
 	light_range = 2
 	light_power = 0.75

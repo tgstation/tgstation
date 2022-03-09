@@ -73,13 +73,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
 	var/rcd_memory
 
-	/// Minimum level of rust_strength needed to rust this tile
-	/// 1: Basic iron
-	/// 2: Reinforced floors/walls, unlocked early
-	/// 3: Titanium/Plastitanium, unlocked late
-	/// 4: Most other materials, unlocked at ascention
-	/// 5: Completely immune to being rusted
-	var/rust_resistance = 4
+	var/rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -589,26 +583,22 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Check if the heretic is strong enough to rust this turf
 /turf/rust_heretic_act(mob/living/source)
-	var/heretic_rust_strength
-	if(IS_HERETIC(source))
-		var/datum/antagonist/heretic/heretic_data = source.mind.has_antag_datum(/datum/antagonist/heretic)
-		heretic_rust_strength = heretic_data.rust_strength
-	else if(IS_HERETIC_MONSTER(source))
-		var/datum/antagonist/heretic_monster/heretic_monster_data = source.mind.has_antag_datum(/datum/antagonist/heretic_monster)
-		var/datum/antagonist/heretic/master_heretic_data = heretic_monster_data.master.has_antag_datum(/datum/antagonist/heretic)
-		heretic_rust_strength = master_heretic_data.rust_strength
-	else if(source == null) // This should only apply to rust being spread by an ascended rust heretic's rune
-		heretic_rust_strength = 4
+	// Rust walkers and the spreading from an ascended rust heretic rune use this value
+	var/heretic_rust_strength = 4
+	if(!isnull(source))
+		var/datum/antagonist/heretic/heretic_data = IS_HERETIC(source)
+		if(heretic_data)
+			heretic_rust_strength = heretic_data.rust_strength
 
 	if(heretic_rust_strength >= rust_resistance)
 		rust_turf()
+		if(prob(70))
+			new /obj/effect/temp_visual/glowing_rune(src)
 
 /// Override this to change behaviour when being rusted by a heretic
 /turf/proc/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
 
 	AddElement(/datum/element/rust)
 

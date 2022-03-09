@@ -47,7 +47,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 	///What type of shard the material will shatter to
 	var/obj/item/shard_type
 	///How resistant the material is to rusting when applied to a turf
-	var/mat_rust_resistance = 4
+	var/mat_rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /** Handles initializing the material.
  *

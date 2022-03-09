@@ -19,7 +19,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	overfloor_placed = FALSE
 	underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	rust_resistance = 5
+	rust_resistance = RUST_RESISTANCE_ABSOLUTE
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
