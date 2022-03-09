@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - refactor: "De-Hardcodes decomposition timers. The decomposition time can now either be custom or use the existing automatic food flag system."
