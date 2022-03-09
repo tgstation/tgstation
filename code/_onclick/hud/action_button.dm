@@ -121,6 +121,8 @@
 	save_position()
 
 /atom/movable/screen/movable/action_button/proc/save_position()
+	return // TEMPORARY, TESTMERGE ONLY
+	/*
 	var/mob/user = our_hud.mymob
 	if(!user?.client)
 		return
@@ -134,6 +136,7 @@
 			position_info = SCRN_OBJ_IN_PALETTE
 
 	user.client.prefs.action_buttons_screen_locs["[name]_[id]"] = position_info
+	*/
 
 /atom/movable/screen/movable/action_button/proc/load_position()
 	var/mob/user = our_hud.mymob
