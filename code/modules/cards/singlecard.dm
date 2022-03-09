@@ -28,7 +28,7 @@
 	/// The card is blank and can be written on with a pen.
 	var/blank = FALSE
 	/// The color used to mark a card for cheating (by pens or crayons)
-	var/color
+	var/marked_color
 
 /obj/item/toy/singlecard/Initialize(mapload, cardname, obj/item/toy/cards/deck/parent_deck)
 	. = ..()
@@ -94,12 +94,12 @@
  * * Arguments:
  * * user - We need to check if the user see the marked card
  */
-/obj/item/toy/singlecard/getMarkedColor(mob/living/carbon/user)
+/obj/item/toy/singlecard/proc/getMarkedColor(mob/living/carbon/user)
 	if(!istype(user))
 		return
-	var/is_marked_with_visible_color = (color && color != "invisible")
-	if(is_marked_with_visible_color || (color == "invisible" && istype(user.glasses, /obj/item/clothing/glasses/science)))
-		return color
+	var/is_marked_with_visible_color = (marked_color && marked_color != "invisible")
+	if(is_marked_with_visible_color || (marked_color == "invisible" && istype(user.glasses, /obj/item/clothing/glasses/science)))
+		return marked_color
 
 /obj/item/toy/singlecard/update_icon_state()
 	if(!flipped) 
@@ -162,8 +162,8 @@
 		marked_cheating_color = (crayon.crayon_color == "mime" && "invisible") || crayon.crayon_color
 	
 	if(can_item_write && !blank) // You cheated not only the game, but yourself
-		color = marked_cheating_color
-		to_chat(user, span_notice("You mark the corner of [src] with the [item]. Cheat to win!"))
+		marked_color = marked_cheating_color
+		to_chat(user, span_notice("You put a [marked_color] mark in the corner of [src] with the [item]. Cheat to win!"))
 		return
 
 	if(can_item_write)
