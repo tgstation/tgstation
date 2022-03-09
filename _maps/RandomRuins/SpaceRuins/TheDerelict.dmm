@@ -4960,6 +4960,7 @@
 	pixel_x = 1;
 	pixel_y = -2
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space/derelict/syndipod)
 "Bz" = (
