@@ -587,6 +587,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/acid_melt()
 	return
 
+/// Check if the heretic is strong enough to rust this turf
 /turf/rust_heretic_act(mob/living/source)
 	var/heretic_rust_strength
 	if(IS_HERETIC(source))
@@ -598,11 +599,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		heretic_rust_strength = master_heretic_data.rust_strength
 	else if(source == null) // This should only apply to rust being spread by an ascended rust heretic's rune
 		heretic_rust_strength = 4
-	if(heretic_rust_strength < rust_resistance)
-		return
 
+	if(heretic_rust_strength >= rust_resistance)
+		rust_turf()
+
+/// Override this to change behaviour when being rusted by a heretic
+/turf/proc/rust_turf()
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
 
 	AddElement(/datum/element/rust)
 

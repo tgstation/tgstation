@@ -8,6 +8,7 @@
 	material_flags = MATERIAL_EFFECTS
 	var/last_event = 0
 	var/active = null
+	rust_resistance = 4
 
 /turf/closed/wall/mineral/gold
 	name = "gold wall"
@@ -241,9 +242,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_TITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_TITANIUM_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 	custom_materials = list(/datum/material/titanium = 4000)
-
-/turf/closed/wall/mineral/titanium/rust_heretic_act()
-	return // titanium does not rust
+	rust_resistance = 3
 
 /turf/closed/wall/mineral/titanium/nodiagonal
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
@@ -302,9 +301,7 @@
 	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_PLASTITANIUM_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_PLASTITANIUM_WALLS, SMOOTH_GROUP_SYNDICATE_WALLS, SMOOTH_GROUP_AIRLOCK, SMOOTH_GROUP_SHUTTLE_PARTS)
 	custom_materials = list(/datum/material/alloy/plastitanium = 4000)
-
-/turf/closed/wall/mineral/plastitanium/rust_heretic_act()
-	return // plastitanium does not rust
+	rust_resistance = 3
 
 /turf/closed/wall/mineral/plastitanium/nodiagonal
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'

@@ -17,6 +17,7 @@
 	base_icon_state = "block"
 	smoothing_flags = NONE
 	canSmoothWith = null
+	rust_resistance = 4
 
 /area/ruin/powered/mailroom
 	name = "\improper Abandoned Post Office"

@@ -11,15 +11,13 @@
 	blocks_air = TRUE
 	always_lit = TRUE
 	bullet_bounce_sound = null
+	rust_resistance = 5
 
 /turf/cordon/AfterChange()
 	. = ..()
 	SSair.high_pressure_delta -= src
 
 /turf/cordon/attack_ghost(mob/dead/observer/user)
-	return FALSE
-
-/turf/cordon/rust_heretic_act()
 	return FALSE
 
 /turf/cordon/acid_act(acidpwr, acid_volume, acid_id)
