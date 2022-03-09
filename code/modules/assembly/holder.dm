@@ -121,7 +121,7 @@
 	to_chat(user, span_notice("You disassemble [src]!"))
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.on_detach()
-		LAZYREMOVE(assemblies,assembly)
+		LAZYREMOVE(assemblies, assembly)
 	qdel(src)
 	return TRUE
 
