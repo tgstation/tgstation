@@ -322,6 +322,8 @@
 			vehicle.grinding = TRUE
 			vehicle.icon_state = "[initial(vehicle.icon_state)]-grind"
 			addtimer(CALLBACK(vehicle, /obj/vehicle/ridden/scooter/skateboard/.proc/grind), 2)
+		else
+			vehicle.obj_flags &= ~BLOCK_Z_OUT_DOWN
 
 //VIM ACTION DATUMS
 
