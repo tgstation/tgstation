@@ -297,3 +297,22 @@
       Break Room" will now get it's own power supply and formal definition.
   - rscadd: Nanotrasen has decided to re-name the areas found on the mining station
       bases of Lavaland and IceBox Station.
+2022-03-09:
+  Fikou:
+  - bugfix: abstract movement now checks for cordon turfs
+  - bugfix: debug modsuits now are insulated
+  JohnFulpWillard:
+  - qol: Sentient vibebots can now change their colors.
+  Wallem:
+  - refactor: De-Hardcodes decomposition timers. The decomposition time can now either
+      be custom or use the existing automatic food flag system.
+  san7890:
+  - imageadd: Hey there, if you like mapping, just know that we added some more area
+      turf sprites to help clarity and contrast between different area for Atmospherics.
+      That should help someone, I know it.
+  - rscadd: The area where Atmospherics sends and receives gas from the entire station
+      is now referred to as the "Pump Room". You can get some weights in there to
+      train your trapezoids and deltoids (and a bit of bicep/tricep action), but that's
+      up to you.
+  tralezab:
+  - balance: Nations can't roll other antags when it runs.
