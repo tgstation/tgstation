@@ -5208,7 +5208,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "Do" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/air_input,
+/obj/machinery/atmospherics/components/unary/outlet_injector/on,
 /turf/open/floor/engine/air,
 /area/ruin/space/derelict/engineering)
 "Dq" = (
@@ -5258,9 +5258,6 @@
 /area/ruin/space/derelict/hallway_primary)
 "DU" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/machinery/power/terminal{
-	dir = 1
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/derelict/engineering)
@@ -5345,6 +5342,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "EF" = (
@@ -6587,7 +6585,7 @@
 /turf/template_noop,
 /area/ruin/space/derelict/hallway_primary)
 "Ok" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/atmos/air_output,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/siphon/on,
 /turf/open/floor/engine/air,
 /area/ruin/space/derelict/engineering)
 "Ol" = (
@@ -7725,10 +7723,6 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/hallway_primary)
 "VO" = (
-/obj/machinery/power/smes{
-	input_attempt = 0;
-	inputting = 0
-	},
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -11159,7 +11153,7 @@ CT
 tg
 CT
 pq
-ZF
+DU
 YM
 oS
 ZF
@@ -11244,7 +11238,7 @@ wF
 PK
 gd
 LB
-ZF
+DU
 yF
 oS
 ZF
@@ -11414,7 +11408,7 @@ tQ
 EF
 Ec
 LB
-ZF
+DU
 yF
 oS
 ZF
