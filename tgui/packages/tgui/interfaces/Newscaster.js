@@ -430,6 +430,7 @@ const NewscasterChannelMessages = (_, context) => {
                     message.censored_author
                     || message.censored_message
                     || user.name === "Unknown"
+                    || !!channelBlocked
                   }
                   onClick={() => act('startComment', {
                     messageID: message.ID,

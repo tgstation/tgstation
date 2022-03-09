@@ -106,7 +106,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 
 /obj/machinery/newscaster/ui_data(mob/user)
-	. = ..()
 	var/list/data = list()
 	var/list/channel_list = list()
 	var/list/message_list = list()
@@ -146,7 +145,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"censored" = channel.censored,
 			"locked" = channel.locked,
 			"ID" = channel.channel_ID,
-			))
+		))
 	if(current_channel)
 		for(var/datum/newscaster/feed_message/feed_message as anything in current_channel.messages)
 			var/photo_ID = null
@@ -250,7 +249,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 			if(temp_message)
 				feed_channel_message = temp_message
-			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data() , 0, FALSE)
+			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data(), 0, FALSE)
 			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 			feed_channel_message = ""
 			current_image = null
