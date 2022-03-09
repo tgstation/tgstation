@@ -117,13 +117,13 @@
 			attempts = initial(attempts)
 			lastattempt = null
 		return
-	if(tamperproof) //Can't force an unlock through other means.
+	if(tamperproof)
 		return
 	return ..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	if(locked)
-		boom() //Bad idea to hit it with a welder.
+		boom()
 		return
 	return ..()
 
