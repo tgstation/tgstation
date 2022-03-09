@@ -1161,8 +1161,8 @@
 		if(!ismob(cached_my_atom)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
-
-			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
+			if(selected_reaction.mix_message)
+				my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
 
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
