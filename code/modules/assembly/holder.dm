@@ -111,14 +111,16 @@
 		var/obj/item/assembly/attached_assembly = weapon
 		if(!attached_assembly.secured)
 			add_assembly(attached_assembly, user)
-
+			balloon_alert(user, span_notice("You add the part to the assembly."))
+		return
+	return ..()
 /obj/item/assembly_holder/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())
 		return TRUE
-	to_chat(user, span_notice("You disassemble [src]!"))
+	balloon_alert(user, span_notice("You disassemble [src]!"))
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.on_detach()
 		LAZYREMOVE(assemblies, assembly)
@@ -128,7 +130,7 @@
 /obj/item/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(LAZYLEN(assemblies) == 1)
-		to_chat(user, span_danger("Assembly part missing!"))
+		balloon_alert(user, span_danger("Assembly part missing!"))
 		return
 
 	for(var/obj/item/assembly/assembly as anything in assemblies)
