@@ -56,7 +56,8 @@
 /datum/heretic_knowledge/rust_fist
 	name = "Grasp of Rust"
 	desc = "Your Mansus Grasp will deal 500 damage to non-living matter and rust any surface it touches. \
-		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click."
+		Already rusted surfaces are destroyed. Surfaces and structures can only be rusted by using Right-Click. \
+		Allows you to rust basic iron walls and floors."
 	gain_text = "On the ceiling of the Mansus, rust grows as moss does on a stone."
 	next_knowledge = list(/datum/heretic_knowledge/rust_regen)
 	cost = 1
@@ -143,7 +144,8 @@
 /datum/heretic_knowledge/rust_mark
 	name = "Mark of Rust"
 	desc = "Your Mansus Grasp now applies the Mark of Rust. The mark is triggered from an attack with your Rusty Blade. \
-		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed."
+		When triggered, the victim's organs and equipment will have a 75% chance to sustain damage and may be destroyed. \
+		Allows you to rust reinforced walls and floors as well as plasteel."
 	gain_text = "The Blacksmith looks away. To a place lost long ago. \"Rusted Hills help those in dire need... at a cost.\""
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/rust)
 	banned_knowledge = list(
@@ -189,7 +191,8 @@
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
-		Already rusted surfaces are destroyed."
+		Already rusted surfaces are destroyed. \
+		Allows you to rust reinforced walls and floors as well as plasteel if you cannot already."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_blade_upgrade,
@@ -208,7 +211,8 @@
 
 /datum/heretic_knowledge/rust_blade_upgrade
 	name = "Toxic Blade"
-	desc = "Your Rusty Blade now poisons enemies on attack."
+	desc = "Your Rusty Blade now poisons enemies on attack. \
+		Allows you to rust titanium and plastitanium."
 	gain_text = "The Blacksmith hands you their blade. \"The Blade will guide you through the flesh, should you let it.\" \
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	next_knowledge = list(/datum/heretic_knowledge/spell/entropic_plume)
@@ -238,7 +242,8 @@
 	name = "Entropic Plume"
 	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
 		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
-		at friend or foe wildly. Also rusts and destroys and surfaces it hits."
+		at friend or foe wildly. Also rusts and destroys and surfaces it hits. \
+		Allows you to rust titanium and plastitanium if you cannot already."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
@@ -261,7 +266,8 @@
 		Bring 3 corpses to a transumation rune on the bridge of the station to complete the ritual. \
 		When completed, the ritual site will endlessly spread rust onto any surface, stopping for nothing. \
 		Additionally, you will become extremely resilient on rust, healing at triple the rate \
-		and becoming immune to many effects and dangers."
+		and becoming immune to many effects and dangers. \
+		You will become able to spread rust to almost anything upon ascending."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark, for the RUSTBRINGER has come! \
 		The Blacksmith forges ahead! Rusted Hills, CALL MY NAME! WITNESS MY ASCENSION!"
 	route = PATH_RUST
