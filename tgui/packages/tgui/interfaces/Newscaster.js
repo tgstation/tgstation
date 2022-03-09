@@ -196,7 +196,7 @@ const NewscasterCommentCreation = (props, context) => {
   );
 };
 
-export const NewscasterContent = (props, context) => {
+const NewscasterContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     current_channel = [],
@@ -454,20 +454,22 @@ const NewscasterChannelMessages = (_, context) => {
                   as="img"
                   src={message.photo} />
               )}
-              <Box>
-                {message.comments.map(comment => (
-                  <BlockQuote
-                    key={comment.body}>
-                    <Section
-                      dangerouslySetInnerHTML={processedText(comment.body)}
-                      ml={2.5}
-                      mt={1} />
-                    <Box italic>
-                      By {comment.auth} at {comment.time}.
-                    </Box>
-                  </BlockQuote>
-                ))}
-              </Box>
+              {!!message.comments &&(
+                <Box>
+                  {message.comments.map(comment => (
+                    <BlockQuote
+                      key={comment.body}>
+                      <Section
+                        dangerouslySetInnerHTML={processedText(comment.body)}
+                        ml={2.5}
+                        mt={1} />
+                      <Box italic>
+                        By {comment.auth} at {comment.time}.
+                      </Box>
+                    </BlockQuote>
+                  ))}
+                </Box>
+              )}
             </BlockQuote>
             <Divider />
           </Section>

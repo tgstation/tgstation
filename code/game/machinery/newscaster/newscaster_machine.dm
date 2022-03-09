@@ -110,7 +110,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/list/data = list()
 	var/list/channel_list = list()
 	var/list/message_list = list()
-	var/list/comment_list = list()
 
 	//Code displaying name and Job Information, taken from the player mob's ID card if one exists.
 	var/obj/item/card/id/card
@@ -151,6 +150,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(current_channel)
 		for(var/datum/newscaster/feed_message/feed_message as anything in current_channel.messages)
 			var/photo_ID = null
+			var/list/comment_list
 			if(feed_message.img)
 				user << browse_rsc(feed_message.img, "tmp_photo[feed_message.message_ID].png")
 				photo_ID = "tmp_photo[feed_message.message_ID].png"
