@@ -80,6 +80,30 @@
 		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
+	target.update_appearance()
+
+/obj/item/reagent_containers/glass/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	if((!proximity_flag) || !check_allowed_items(target,target_self=1))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(!spillable)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
+		if(!target.reagents.total_volume)
+			to_chat(user, span_warning("[target] is empty!"))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		if(reagents.holder_full())
+			to_chat(user, span_warning("[src] is full."))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+
+	target.update_appearance()
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
+
 /obj/item/reagent_containers/glass/attackby(obj/item/I, mob/user, params)
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)

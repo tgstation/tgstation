@@ -7,7 +7,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	category = PROGRAM_CATEGORY_CREW
 	program_icon_state = "id"
 	extended_desc = "Program for viewing and changing job slot availability."
-	transfer_access = ACCESS_HEADS
+	transfer_access = list(ACCESS_HEADS)
 	requires_ntnet = TRUE
 	size = 4
 	tgui_id = "NtosJobManager"

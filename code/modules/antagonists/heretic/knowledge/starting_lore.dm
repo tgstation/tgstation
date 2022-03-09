@@ -48,6 +48,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		/obj/item/food/grown/poppy = 1,
 	)
 	cost = 0
+	priority = MAX_KNOWLEDGE_PRIORITY - 1 // Knowing how to remake your heart is important
 	route = PATH_START
 	/// The typepath of the organ type required for our heart.
 	var/required_organ_type = /obj/item/organ/heart
@@ -93,45 +94,75 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(our_living_heart)
 		qdel(our_living_heart.GetComponent(/datum/component/living_heart))
 
+// Don't bother letting them invoke this ritual if they have a Living Heart already in their chest
+/datum/heretic_knowledge/living_heart/can_be_invoked(datum/antagonist/heretic/invoker)
+	if(invoker.has_living_heart() == HERETIC_HAS_LIVING_HEART)
+		return FALSE
+	return TRUE
+
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
-	if(!our_living_heart || HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+	// Obviously you need a heart in your chest to do a ritual on your... heart
+	if(!our_living_heart)
+		loc.balloon_alert(user, "ritual failed, you have no [our_heretic.living_heart_organ_slot]!") // "you have no heart!"
+		return FALSE
+	// For sanity's sake, check if they've got a heart -
+	// even though it's not invokable if you already have one,
+	// they may have gained one unexpectantly in between now and then
+	if(HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+		loc.balloon_alert(user, "ritual failed, already have a living heart!")
 		return FALSE
 
-	if(our_living_heart.status == ORGAN_ORGANIC)
+	// By this point they are making a new heart
+	// If their current heart is organic / not synthetic, we can continue the ritual as normal
+	if(our_living_heart.status == ORGAN_ORGANIC && !(our_living_heart.organ_flags & ORGAN_SYNTHETIC))
 		return TRUE
 
-	else
-		for(var/obj/item/organ/nearby_organ in atoms)
-			if(!istype(nearby_organ, required_organ_type))
-				continue
-
-			if(nearby_organ.status == ORGAN_ORGANIC && nearby_organ.useable)
-				selected_atoms += nearby_organ
-				return TRUE
-
+	// If their current heart is not organic / is synthetic, they need an organic replacement
+	// ...But if our organ-to-be-replaced is unremovable, we're screwed
+	if(our_living_heart.organ_flags & ORGAN_UNREMOVABLE)
+		loc.balloon_alert(user, "ritual failed, [our_heretic.living_heart_organ_slot] unremovable!") // "heart unremovable!"
 		return FALSE
 
+	// Otherwise, seek out a replacement in our atoms
+	for(var/obj/item/organ/nearby_organ in atoms)
+		if(!istype(nearby_organ, required_organ_type))
+			continue
+		if(!nearby_organ.useable)
+			continue
+		if(nearby_organ.status != ORGAN_ORGANIC || (nearby_organ.organ_flags & (ORGAN_SYNTHETIC|ORGAN_FAILING)))
+			continue
+
+		selected_atoms += nearby_organ
+		return TRUE
+
+	loc.balloon_alert(user, "ritual failed, need a replacement [our_heretic.living_heart_organ_slot]!") // "need a replacement heart!"
+	return FALSE
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/obj/item/organ/our_new_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 
-	if(our_new_heart.status != ORGAN_ORGANIC)
+	// Our heart is robotic or synthetic - we need to replace it, and we fortunately should have one by here
+	if(our_new_heart.status != ORGAN_ORGANIC || (our_new_heart.organ_flags & ORGAN_SYNTHETIC))
 		var/obj/item/organ/our_replacement_heart = locate(required_organ_type) in selected_atoms
 		if(our_replacement_heart)
-			user.visible_message("[user]'s [our_replacement_heart.name] bursts suddenly out of [user.p_their()] chest!")
+			// Throw our current heart out of our chest, violently
+			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [user.p_their()] chest!"))
 			INVOKE_ASYNC(user, /mob/proc/emote, "scream")
 			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
-
+			// And put our organic heart in its place
 			our_replacement_heart.Insert(user, TRUE, TRUE)
 			our_new_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
 			our_new_heart = our_replacement_heart
+		else
+			CRASH("[type] required a replacement organic heart in on_finished_recipe, but did not find one.")
 
 	if(!our_new_heart)
 		CRASH("[type] somehow made it to on_finished_recipe without a heart. What?")
 
+	// Don't delete our shiny new heart
 	if(our_new_heart in selected_atoms)
 		selected_atoms -= our_new_heart
 
@@ -154,4 +185,5 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus)
 	cost = 0
+	priority = MAX_KNOWLEDGE_PRIORITY - 2 // Not as important as making a heart or sacrificing, but important enough.
 	route = PATH_START

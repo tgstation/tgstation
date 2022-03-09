@@ -252,3 +252,6 @@
 
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
+
+	/// If this client has been fully initialized or not
+	var/fully_created = FALSE
