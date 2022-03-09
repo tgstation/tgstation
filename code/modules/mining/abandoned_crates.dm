@@ -43,7 +43,6 @@
 					if(sanitised[i] == sanitised[j])
 						sanitycheck = FALSE //if a digit is repeated, reject the input
 			if(input == code)
-				to_chat(user, span_notice("A green light flashes."))
 				if(!spawned_loot)
 					spawn_loot()
 				if(qdel_on_open)
@@ -61,7 +60,7 @@
 					boom(user)
 		return
 
-	. = ..()
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/AltClick(mob/living/user)
 	if(!user.canUseTopic(src, BE_CLOSE))
@@ -101,16 +100,16 @@
 
 				to_chat(user, span_notice("Last code attempt, [lastattempt], had [bulls] correct digits at correct positions and [cows] correct digits at incorrect positions."))
 			return
-	. = ..()
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/emag_act(mob/user)
 	if(locked)
 		boom(user)
 		return
-	. = ..()
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/togglelock(mob/user, silent = FALSE)
-	if(!locked) //We're currently unlocked.
+	if(!locked)
 		. = ..() //Run the normal code.
 		if(locked) //Double check if the crate actually locked itself when the normal code ran.
 			//reset the anti-tampering, number of attempts and last attempt when the lock is re-enabled.
@@ -120,13 +119,13 @@
 		return
 	if(tamperproof) //Can't force an unlock through other means.
 		return
-	. = ..()
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/deconstruct(disassembled = TRUE)
 	if(locked)
 		boom() //Bad idea to hit it with a welder.
 		return
-	. = ..()
+	return ..()
 
 /obj/structure/closet/crate/secure/loot/proc/spawn_loot()
 	var/loot = rand(1,100) //100 different crates with varying chances of spawning
