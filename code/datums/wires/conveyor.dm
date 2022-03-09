@@ -2,7 +2,7 @@
 	holder_type = /obj/machinery/conveyor_switch
 	proper_name = "Conveyor"
 	/// var holder that logs who put the assembly inside and gets transfered to the switch on pulse
-	var/mob/fingerman
+	var/datum/weakref/fingerman
 
 /datum/wires/conveyor/New(atom/holder)
 	add_duds(1)
@@ -15,5 +15,5 @@
 /datum/wires/conveyor/interactable(mob/user)
 	if(!..())
 		return FALSE
-	fingerman = user
+	fingerman = WEAKREF(user)
 	return TRUE
