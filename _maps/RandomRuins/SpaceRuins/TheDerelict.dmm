@@ -111,7 +111,9 @@
 /area/ruin/space/derelict/bridge)
 "aG" = (
 /obj/structure/rack,
-/obj/item/inducer,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "aK" = (
@@ -1842,11 +1844,8 @@
 	},
 /area/ruin/space/derelict/research)
 "iy" = (
-/obj/machinery/power/smes{
-	input_attempt = 0;
-	inputting = 0
-	},
 /obj/structure/cable,
+/obj/machinery/power/smes,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "iz" = (
@@ -3242,11 +3241,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "oW" = (
-/obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/vending/engivend,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "oX" = (
@@ -3602,11 +3601,13 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/derelict/engineering)
 "sr" = (
-/obj/structure/closet/secure_closet/engineering_personal,
 /obj/effect/turf_decal/tile/yellow/anticorner{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/frame/machine,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron/corner{
 	dir = 4
 	},
@@ -4233,13 +4234,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/hallway_primary)
 "xh" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/power/smes{
+	input_attempt = 0;
+	inputting = 0
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/derelict/engineering)
 "xi" = (
@@ -5690,12 +5692,9 @@
 /turf/closed/wall,
 /area/ruin/space/derelict/service/janitor)
 "GW" = (
-/obj/machinery/power/smes{
-	input_attempt = 0;
-	inputting = 0
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable,
+/obj/machinery/power/smes,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "GX" = (
@@ -6253,7 +6252,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/item/stack/sheet/iron/fifty,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
@@ -6984,10 +6982,9 @@
 /turf/open/floor/carpet,
 /area/ruin/space/derelict/crew)
 "Rg" = (
-/obj/structure/frame/machine,
-/obj/item/stack/cable_coil,
-/obj/effect/spawner/random/engineering/vending_restock,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/rack,
+/obj/item/inducer,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "Rk" = (
@@ -7056,7 +7053,10 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/space/derelict/hallway_primary)
 "RS" = (
-/obj/machinery/vending/engivend,
+/obj/structure/rack,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/engineering)
 "RT" = (
