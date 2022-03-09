@@ -14,10 +14,6 @@
 	var/random_category = null
 	/// If this book has already been 'generated' yet.
 	var/random_loaded = FALSE
-	/// Minimum icon state number
-	var/minimum_book_state = 1
-	/// Maximum icon state number
-	var/maximum_book_state = 8
 
 /obj/item/book/random/Initialize(mapload)
 	. = ..()
@@ -68,7 +64,7 @@
 			B.dat = query_get_random_books.item[3]
 			B.name = "Book: [B.title]"
 			if(!existing_book)
-				B.icon_state= "book[rand(minimum_book_state,maximum_book_state)]"
+				B.icon_state= "book[rand(B.minimum_book_state,B.maximum_book_state)]"
 	qdel(query_get_random_books)
 
 /obj/structure/bookcase/random/fiction

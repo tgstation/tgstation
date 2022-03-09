@@ -222,6 +222,10 @@
 	var/unique = FALSE //false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title //The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
+	/// Minimum icon state number
+	var/minimum_book_state = 1
+	/// Maximum icon state number
+	var/maximum_book_state = 8
 
 
 /obj/item/book/attack_self(mob/user)
