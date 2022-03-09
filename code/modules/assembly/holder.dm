@@ -110,7 +110,7 @@
 	if(isassembly(weapon))
 		var/obj/item/assembly/attached_assembly = weapon
 		if(!attached_assembly.secured)
-			add_assembly(attached_assembly,user)
+			add_assembly(attached_assembly, user)
 
 /obj/item/assembly_holder/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
