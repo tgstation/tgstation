@@ -278,9 +278,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	. += "You can right click a pipe to set the RPD to its color and layer."
 	. += "You can set the pressure strenght with Ctrl click, current strenght at [pressure_strenght]."
 	if(internal_tank)
-		. += "You can remove the internal tank with Alt click, current pressure at [internal_tank.air_contents.return_pressure()]"
+		. += "You can remove the internal tank with Alt click, current pressure at [internal_tank.air_contents.return_pressure()]."
 	else
-		. += "It's missing an air tank, please insert one to allow the device to work."
+		. += "It's missing an air tank. Insert one to allow the device to work."
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
@@ -321,13 +321,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return TRUE
 	if(istype(W, /obj/item/tank))
 		if(internal_tank != null)
-			to_chat(user, span_notice("A tank is already inserted."))
+			balloon_alert(user, "a tank is already inserted.")
 			return
 		if(!user.transferItemToLoc(W, src))
 			return
 		var/obj/item/tank/new_tank = W
 		internal_tank = new_tank
-		to_chat(user, span_notice("You put [W] in [src]."))
+		balloon_alert(user, "you put [W] in [src].")
 		return
 	return ..()
 
@@ -474,7 +474,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return ..()
 
 	if(!internal_tank)
-		balloon_alert(user, "Missing air tank")
+		balloon_alert(user, "missing air tank!")
 		return
 
 	var/atom/attack_target = A
@@ -495,7 +495,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	//Unwrench pipe before we build one over/paint it, but only if we're not already running a do_after on it already to prevent a potential runtime.
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
 		if(!consume_pressure(distance, full_consumption = FALSE))
-			balloon_alert(user, "not enough pressure")
+			balloon_alert(user, "not enough pressure!")
 			activate()
 			return
 
@@ -515,7 +515,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
 		if(!consume_pressure(distance, full_consumption = FALSE))
-			balloon_alert(user, "not enough pressure")
+			balloon_alert(user, "not enough pressure!")
 			activate()
 			return
 
@@ -599,7 +599,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	if(mode & BUILD_MODE)
 		if(!consume_pressure(distance, full_consumption = TRUE))
-			balloon_alert(user, "not enough pressure")
+			balloon_alert(user, "not enough pressure!")
 			activate()
 			return
 		switch(category) //if we've gotten this var, the target is valid
