@@ -49,6 +49,8 @@
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+	/// Controls what types of turf we can spread rust to, increases as we unlock more powerful rust abilites
+	var/rust_strength = 0
 
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()

@@ -75,12 +75,12 @@
 	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
 
-	target.rust_heretic_act()
+	target.rust_heretic_act(source)
 
 /datum/heretic_knowledge/rust_fist/proc/on_secondary_mansus_grasp(mob/living/source, atom/target)
 	SIGNAL_HANDLER
 
-	target.rust_heretic_act()
+	target.rust_heretic_act(source)
 	return COMPONENT_USE_CHARGE
 
 /datum/heretic_knowledge/rust_regen
