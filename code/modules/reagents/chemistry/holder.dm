@@ -455,8 +455,9 @@
  * * show_message - passed through to [/datum/reagents/proc/expose_single]
  * * round_robin - if round_robin=TRUE, so transfer 5 from 15 water, 15 sugar and 15 plasma becomes 10, 15, 15 instead of 13.3333, 13.3333 13.3333. Good if you hate floating point errors
  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
+ * * transfer_temperature - the temperature that the reagents being transferred should be when transferred to a different holder
  */
-/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE)
+/datum/reagents/proc/trans_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE, mob/transfered_by, remove_blacklisted = FALSE, methods = NONE, show_message = TRUE, round_robin = FALSE, ignore_stomach = FALSE, transfer_temperature = chem_temp)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
@@ -501,7 +502,7 @@
 				trans_data = copy_data(reagent)
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, transfer_temperature, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				continue
 			if(methods)
 				if(istype(target_atom, /obj/item/organ))
@@ -527,7 +528,7 @@
 				transfer_amount = reagent.volume
 			if(reagent.intercept_reagents_transfer(R, cached_amount))//Use input amount instead.
 				continue
-			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
+			if(!R.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, transfer_temperature, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)) //we only handle reaction after every reagent has been transfered.
 				continue
 			to_transfer = max(to_transfer - transfer_amount , 0)
 			if(methods)

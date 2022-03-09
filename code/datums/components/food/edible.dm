@@ -44,6 +44,8 @@ Behavior that's still missing from this component that original food items had t
 	var/list/tastes
 	///The type of atom this creates when the object is microwaved.
 	var/atom/microwaved_type
+	///The temperature the reagents in the food item should be when created
+	var/starting_temperature = DEFAULT_REAGENT_TEMPERATURE
 
 
 /datum/component/edible/Initialize(
@@ -57,6 +59,7 @@ Behavior that's still missing from this component that original food items had t
 	bite_consumption = 2,
 	microwaved_type,
 	junkiness,
+	starting_temperature,
 	datum/callback/after_eat,
 	datum/callback/on_consume,
 	datum/callback/check_liked,
@@ -105,6 +108,7 @@ Behavior that's still missing from this component that original food items had t
 	src.tastes = string_assoc_list(tastes)
 	src.microwaved_type = microwaved_type
 	src.check_liked = check_liked
+	src.starting_temperature = starting_temperature
 
 	var/atom/owner = parent
 
@@ -113,9 +117,9 @@ Behavior that's still missing from this component that original food items had t
 	for(var/rid in initial_reagents)
 		var/amount = initial_reagents[rid]
 		if(length(tastes) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-			owner.reagents.add_reagent(rid, amount, tastes.Copy())
+			owner.reagents.add_reagent(rid, amount, tastes.Copy(), reagtemp = starting_temperature)
 		else
-			owner.reagents.add_reagent(rid, amount)
+			owner.reagents.add_reagent(rid, amount, reagtemp = starting_temperature)
 
 /datum/component/edible/InheritComponent(
 	datum/component/C,
@@ -216,9 +220,8 @@ Behavior that's still missing from this component that original food items had t
 	for(var/obj/item/food/crafted_part in parts_list)
 		if(!crafted_part.reagents)
 			continue
-
 		this_food.reagents.maximum_volume += crafted_part.reagents.maximum_volume * CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER
-		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER)
+		crafted_part.reagents.trans_to(this_food.reagents, crafted_part.reagents.maximum_volume, CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER, transfer_temperature = starting_temperature)
 
 	this_food.reagents.maximum_volume = ROUND_UP(this_food.reagents.maximum_volume) // Just because I like whole numbers for this.
 

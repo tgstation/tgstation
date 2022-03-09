@@ -8,6 +8,7 @@
 	tastes = list("ice cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/food/strawberryicecreamsandwich
 	name = "strawberry ice cream sandwich"
@@ -19,7 +20,7 @@
 	tastes = list("ice cream" = 2, "berry" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
-
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/food/spacefreezy
 	name = "space freezy"
@@ -30,6 +31,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/bluecherryjelly = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("blue cherries" = 2, "ice cream" = 2)
 	foodtypes = FRUIT | DAIRY | SUGAR
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/food/spacefreezy/MakeEdible()
 	. = ..()
@@ -44,6 +46,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("ice cream" = 1, "banana" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/food/sundae/MakeEdible()
 	. = ..()
@@ -58,6 +61,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/banana = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("ice cream" = 1, "banana" = 1, "a bad joke" = 1)
 	foodtypes = FRUIT | DAIRY | SUGAR
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/food/honkdae/MakeEdible()
 	. = ..()
@@ -78,6 +82,7 @@
 	tastes = list("ice" = 1, "water" = 1)
 	foodtypes = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit
 	food_flags = FOOD_FINGER_FOOD
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 /obj/item/food/snowcones/lime
 	name = "lime snowcone"
@@ -227,6 +232,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = DAIRY | SUGAR
 	food_flags = FOOD_FINGER_FOOD
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP
 
 	var/overlay_state = "creamsicle_o" //This is the edible part of the popsicle.
 	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
@@ -250,6 +256,7 @@
 				bite_consumption = bite_consumption,\
 				microwaved_type = microwaved_type,\
 				junkiness = junkiness,\
+				starting_temperature = starting_temperature,\
 				after_eat = CALLBACK(src, .proc/after_bite))
 
 
@@ -309,3 +316,4 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/hot_coco = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 4, /datum/reagent/consumable/sugar = 2)
 	foodtypes = DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
+	starting_temperature = WATER_MATTERSTATE_CHANGE_TEMP

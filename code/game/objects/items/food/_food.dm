@@ -46,6 +46,8 @@
 	var/decomp_type = /obj/item/food/badrecipe/moldy
 	///Food that needs to be picked up in order to decompose.
 	var/decomp_req_handle = FALSE
+	///The temperature the reagents in the food item should be when created
+	var/starting_temperature = DEFAULT_REAGENT_TEMPERATURE
 
 /obj/item/food/Initialize(mapload)
 	. = ..()
@@ -76,7 +78,8 @@
 				eatverbs = eatverbs,\
 				bite_consumption = bite_consumption,\
 				microwaved_type = microwaved_type,\
-				junkiness = junkiness)
+				junkiness = junkiness,\
+				starting_temperature = starting_temperature)
 
 
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
