@@ -11,6 +11,8 @@
 	blocks_air = TRUE
 	always_lit = TRUE
 	bullet_bounce_sound = null
+	turf_flags = NOJAUNT
+	baseturfs = /turf/cordon
 
 /turf/cordon/AfterChange()
 	. = ..()

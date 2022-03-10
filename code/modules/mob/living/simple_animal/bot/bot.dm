@@ -194,7 +194,7 @@
 	access_card = new /obj/item/card/id/advanced/simple_bot(src)
 	// This access is so bots can be immediately set to patrol and leave Robotics, instead of having to be let out first.
 	access_card.set_access(list(ACCESS_ROBOTICS))
-	internal_radio = new/obj/item/radio(src)
+	internal_radio = new /obj/item/radio(src)
 	if(radio_key)
 		internal_radio.keyslot = new radio_key
 	internal_radio.subspace_transmission = TRUE
