@@ -20,11 +20,14 @@
 	var/far_from_home = FALSE
 	/// Used to broadcast user's death through the radio
 	var/obj/item/radio/internal_radio
+	/// The GPS component used by the cuffs. Extremely unoptimal.
+	var/datum/component/gps/gps
 
 /obj/item/kheiral_cuffs/Initialize()
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
+
 	internal_radio = new/obj/item/radio(src)
 	internal_radio.subspace_transmission = TRUE
 	internal_radio.canhear_range = 0
@@ -32,6 +35,9 @@
 	internal_radio.keyslot = new /obj/item/encryptionkey/strandcuffs
 	internal_radio.set_listening(FALSE)
 	internal_radio.recalculateChannels()
+
+	AddComponent(/datum/component/gps, "Kheiral Link", FALSE)
+	gps = GetComponent(/datum/component/gps)
 
 /obj/item/kheiral_cuffs/examine(mob/user)
 	. = ..()
@@ -51,8 +57,9 @@
 
 /obj/item/kheiral_cuffs/dropped(mob/user, silent)
 	. = ..()
+	if(on_wrist)
+		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	on_wrist = FALSE
-	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	remove_kheiral_network(user)
 
 /// Enables the GPS & registers the statchange signal
@@ -60,7 +67,8 @@
 	if(gps_enabled)
 		return
 	if(on_wrist && far_from_home)
-		AddComponent(/datum/component/gps, "*[user.name]'s Kheiral Link")
+		gps.gpstag = "*[user.name]'s Kheiral Link"
+		gps.tracking = TRUE
 		balloon_alert(user, "GPS activated")
 		RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
 		gps_enabled = TRUE
@@ -70,7 +78,7 @@
 	if(!gps_enabled)
 		return
 	if(!on_wrist || !far_from_home)
-		qdel(GetComponent(/datum/component/gps))
+		gps.tracking = FALSE
 		balloon_alert(user, "GPS de-activated")
 		UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
 		gps_enabled = FALSE
@@ -78,8 +86,9 @@
 /obj/item/kheiral_cuffs/Destroy(force)
 	. = ..()
 	UnregisterSignal(src, COMSIG_MOVABLE_Z_CHANGED)
+	gps = null
 	if(internal_radio)
-		qdel(internal_radio)
+		QDEL_NULL(internal_radio)
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
 /obj/item/kheiral_cuffs/proc/check_z(datum/source, turf/old_turf, turf/new_turf)
