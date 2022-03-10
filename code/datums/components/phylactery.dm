@@ -208,7 +208,7 @@
 		var/turf/body_turf = get_turf(corpse)
 		var/wheres_wizdo = dir2text(get_dir(body_turf, parent_turf))
 		if(wheres_wizdo)
-			parent_turf.visible_message(span_warning("Suddenly, [corpse.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!"))
+			corpse.visible_message(span_warning("Suddenly, [corpse.name]'s corpse falls to pieces! You see a strange energy rise from the remains, and speed off towards the [wheres_wizdo]!"))
 			body_turf.Beam(parent_turf, icon_state = "lichbeam", time = 1 SECONDS * (num_resurrections + 1))
 
 		corpse.dust(drop_items = TRUE)
