@@ -967,8 +967,15 @@
 
 	wound_damage_multiplier = dam_mul
 
-
-/obj/item/bodypart/proc/get_part_bleed_rate()
+/**
+ * Calculates how much blood this limb is losing per life tick
+ *
+ * Note that laying down or holding your bleeding limb both reduce
+ *
+ * Arguments:
+ * * ignore_modifiers - If TRUE, ignore the bleed reduction for laying down and grabbing your limb
+ */
+/obj/item/bodypart/proc/get_part_bleed_rate(ignore_modifiers = FALSE)
 	if(HAS_TRAIT(owner, TRAIT_NOBLEED))
 		return
 	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
@@ -984,47 +991,59 @@
 		if(!embeddies.isEmbedHarmless())
 			bleed_rate += 0.25
 
-	for(var/datum/wound/wound as anything in wounds)
-		bleed_rate += wound.blood_flow
+	for(var/datum/wound/iter_wound as anything in wounds)
+		bleed_rate += iter_wound.blood_flow
 
-	if(owner.body_position == LYING_DOWN)
-		bleed_rate *= 0.75
-
-	if(grasped_by)
-		bleed_rate *= 0.7
+	if(!ignore_modifiers)
+		if(owner.body_position == LYING_DOWN)
+			bleed_rate *= 0.75
+		if(grasped_by)
+			bleed_rate *= 0.7
 
 	if(!bleed_rate)
 		QDEL_NULL(grasped_by)
 
 	return bleed_rate
 
-/obj/item/bodypart/proc/get_part_wound_overlay()
-	if(!owner || HAS_TRAIT(owner, TRAIT_NOBLEED) || status != BODYPART_ORGANIC)
-		new_bleed_icon = null
+#define BLEED_OVERLAY_LOW 0.5
+#define BLEED_OVERLAY_MED 1.5
+#define BLEED_OVERLAY_GUSH 3.25
+
+/obj/item/bodypart/proc/update_part_wound_overlay()
+	if(!owner)
 		return
-	if(owner.has_status_effect(/datum/status_effect/grouped/stasis))
+	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || status != BODYPART_ORGANIC)
+		if(bleed_icon_severity)
+			bleed_icon_severity = null
+			owner.update_wound_overlays()
+		return
 
-	var/bleed_rate = iter_part.get_part_bleed_rate()
-
+	var/bleed_rate = get_part_bleed_rate(ignore_modifiers = TRUE)
 	var/new_bleed_icon
-	if(owner.has_status_effect(/datum/status_effect/grouped/stasis))
 
-	switch(iter_bleed_rate)
-		if(-INFINITY to 0.5)
+	switch(bleed_rate)
+		if(-INFINITY to BLEED_OVERLAY_LOW)
 			new_bleed_icon = null
-		if(0.5 to 1.5)
-			new_bleed_icon = "[iter_part.body_zone]_1"
-		if(1.5 to 3.25)
-			new_bleed_icon = "[iter_part.body_zone]_2"
-			if(body_position == LYING_DOWN)
-				new_bleed_icon += "s"
-		if(3.25 to INFINITY)
-			new_bleed_icon = "[iter_part.body_zone]_3"
+		if(BLEED_OVERLAY_LOW to BLEED_OVERLAY_MED)
+			new_bleed_icon = "[body_zone]_1"
+		if(BLEED_OVERLAY_MED to BLEED_OVERLAY_GUSH)
+			if(owner.body_position == LYING_DOWN || IS_IN_STASIS(owner) || owner.stat == DEAD)
+				new_bleed_icon = "[body_zone]_2s"
+			else
+				new_bleed_icon = "[body_zone]_2"
+		if(BLEED_OVERLAY_GUSH to INFINITY)
+			if(IS_IN_STASIS(owner) || owner.stat == DEAD)
+				new_bleed_icon = "[body_zone]_2s"
+			else
+				new_bleed_icon = "[body_zone]_3"
 
-	if(new_bleed_icon != iter_part.bleed_icon_severity)
-		update_bleed_icons = TRUE
-		iter_part.bleed_icon_severity = new_bleed_icon
+	if(new_bleed_icon != bleed_icon_severity)
+		bleed_icon_severity = new_bleed_icon
+		return TRUE
 
+#undef BLEED_OVERLAY_LOW
+#undef BLEED_OVERLAY_MED
+#undef BLEED_OVERLAY_GUSH
 
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart

@@ -1,9 +1,5 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
 
-#define BLEED_OVERLAY_NONE 1
-#define BLEED_OVERLAY_MED
-#define BLEED_OVERLAY_GUSH
-
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
@@ -71,23 +67,8 @@
 		var/iter_bleed_rate = iter_part.get_part_bleed_rate()
 		temp_bleed += iter_bleed_rate * delta_time
 		iter_part.generic_bleedstacks = max(0, iter_part.generic_bleedstacks - 1)
-
-		var/new_bleed_icon
-		switch(iter_bleed_rate)
-			if(-INFINITY to 0.5)
-				new_bleed_icon = null
-			if(0.5 to 1.5)
-				new_bleed_icon = "[iter_part.body_zone]_1"
-			if(1.5 to 3.25)
-				new_bleed_icon = "[iter_part.body_zone]_2"
-				if(body_position == LYING_DOWN)
-					new_bleed_icon += "s"
-			if(3.25 to INFINITY)
-				new_bleed_icon = "[iter_part.body_zone]_3"
-
-		if(new_bleed_icon != iter_part.bleed_icon_severity)
+		if(iter_part.update_part_wound_overlay())
 			update_bleed_icons = TRUE
-			iter_part.bleed_icon_severity = new_bleed_icon
 
 	if(update_bleed_icons)
 		update_wound_overlays()
@@ -95,6 +76,17 @@
 	if(temp_bleed)
 		bleed(temp_bleed)
 		bleed_warn(temp_bleed)
+
+/// Has each bodypart update its bleed/wound overlay icon states. If any have changed, it has the owner update wound overlays and returns TRUE
+/mob/living/carbon/proc/update_bodypart_bleed_overlays()
+	var/update_bleed_icons
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		if(iter_part.update_part_wound_overlay())
+			update_bleed_icons = TRUE
+
+	if(update_bleed_icons)
+		update_wound_overlays()
+	return update_bleed_icons
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
