@@ -12,15 +12,14 @@
 /obj/effect/proc_holder/spell/self/tap
 	name = "Soul Tap"
 	desc = "Fuel your spells using your own soul!"
-	school = SCHOOL_NECROMANCY //i could see why this wouldn't be necromancy but messing with souls or whatever. ectomancy?
-	charge_max = 10
-	invocation = "AT ANY COST!"
-	invocation_type = INVOCATION_SHOUT
-	level_max = 0
-	cooldown_min = 10
-
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "soultap"
+	invocation = "AT ANY COST!"
+	invocation_type = INVOCATION_SHOUT
+	school = SCHOOL_NECROMANCY //i could see why this wouldn't be necromancy but messing with souls or whatever. ectomancy?
+	cooldown_min = 1 SECONDS
+	charge_max = 1 SECONDS
+	level_max = 0
 
 /obj/effect/proc_holder/spell/self/tap/cast(list/targets, mob/living/user = usr)
 	if(HAS_TRAIT(user, TRAIT_NO_SOUL))
