@@ -287,7 +287,10 @@
 /area/shuttle/caravan/pirate)
 "mI" = (
 /obj/structure/table,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/fire,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white,

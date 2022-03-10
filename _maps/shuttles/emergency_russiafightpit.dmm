@@ -29,7 +29,10 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /obj/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -454,7 +457,10 @@
 "bF" = (
 /obj/structure/table,
 /obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,

@@ -535,8 +535,14 @@
 "aY" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/o2,
-/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/toxin{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /obj/item/healthanalyzer{
 	pixel_x = 3;
 	pixel_y = 3
@@ -646,7 +652,10 @@
 /area/shuttle/escape)
 "bi" = (
 /obj/item/storage/medkit/toxin,
-/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/light/directional/east,
@@ -753,7 +762,10 @@
 /area/shuttle/escape)
 "bq" = (
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{

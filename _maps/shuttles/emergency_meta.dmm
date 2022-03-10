@@ -548,13 +548,19 @@
 "bJ" = (
 /obj/structure/table,
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bK" = (
 /obj/structure/table,
 /obj/item/storage/medkit/toxin,
-/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bM" = (
@@ -597,8 +603,14 @@
 "bP" = (
 /obj/structure/closet/crate/medical,
 /obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/o2,
-/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/toxin{
+	pixel_x = -4;
+	pixel_y = 3
+	},
 /obj/item/healthanalyzer{
 	pixel_x = 3;
 	pixel_y = 3

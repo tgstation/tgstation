@@ -17,7 +17,9 @@
 /area/shuttle/arrival)
 "e" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_y = 4
+	},
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)

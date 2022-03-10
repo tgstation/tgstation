@@ -7658,10 +7658,19 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/port/fore)
 "aPR" = (
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/o2,
-/obj/item/storage/medkit/o2,
-/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -36415,10 +36424,19 @@
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "hwo" = (
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/storage/medkit/toxin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/toxin,
-/obj/item/storage/medkit/toxin,
-/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -46165,9 +46183,18 @@
 /obj/item/storage/box/bodybags{
 	pixel_y = 5
 	},
-/obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
 /obj/item/stack/package_wrap,
 /obj/item/healthanalyzer,
 /obj/item/healthanalyzer,
@@ -63275,7 +63302,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2
+	},
 /obj/item/healthanalyzer,
 /obj/machinery/requests_console/directional/north{
 	announcementConsole = 1;
@@ -75683,7 +75712,10 @@
 /area/service/hydroponics)
 "uQY" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
 /obj/item/healthanalyzer,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -77157,10 +77189,19 @@
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "vte" = (
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/storage/medkit/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -81064,10 +81105,19 @@
 /turf/open/floor/iron/showroomfloor,
 /area/science/mixing)
 "wMM" = (
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/storage/medkit/fire{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/window/reinforced{

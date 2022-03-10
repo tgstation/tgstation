@@ -3379,7 +3379,10 @@
 "hz" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/decal/cleanable/oil,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
 /obj/item/healthanalyzer{
 	pixel_x = 6;
 	pixel_y = -5

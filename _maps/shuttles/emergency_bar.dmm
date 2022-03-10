@@ -532,7 +532,10 @@
 "bS" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bT" = (
@@ -548,7 +551,10 @@
 "bU" = (
 /obj/structure/table,
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "bV" = (

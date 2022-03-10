@@ -443,7 +443,10 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "bu" = (
@@ -14525,8 +14528,14 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/fire{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "Uj" = (

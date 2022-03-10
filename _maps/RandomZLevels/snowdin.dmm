@@ -1917,7 +1917,9 @@
 /turf/open/floor/iron/white,
 /area/awaymission/snowdin/post)
 "fB" = (
-/obj/item/storage/medkit,
+/obj/item/storage/medkit{
+	empty = 1
+	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1929,7 +1931,9 @@
 /area/awaymission/snowdin/post)
 "fC" = (
 /obj/structure/table,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
+	empty = 1
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -2207,7 +2211,9 @@
 /area/awaymission/snowdin/post)
 "gs" = (
 /obj/structure/table,
-/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
+	empty = 1
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -2464,7 +2470,9 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/dorm)
 "hf" = (
-/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
+	empty = 1
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -2490,7 +2498,10 @@
 	pixel_y = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -2501,7 +2512,10 @@
 /area/awaymission/snowdin/post)
 "hi" = (
 /obj/structure/table,
-/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},

@@ -86,7 +86,10 @@
 /area/shuttle/sbc_starfury)
 "am" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "an" = (
@@ -1356,9 +1359,15 @@
 /area/shuttle/sbc_starfury)
 "dm" = (
 /obj/structure/table,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/sbc_starfury)
 "do" = (
@@ -1427,9 +1436,15 @@
 /area/shuttle/sbc_starfury)
 "dy" = (
 /obj/structure/table,
-/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/toxin,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/smooth_large,
 /area/shuttle/sbc_starfury)
@@ -3336,7 +3351,10 @@
 /area/shuttle/sbc_starfury)
 "iH" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/brute,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8

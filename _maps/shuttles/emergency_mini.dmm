@@ -19,8 +19,14 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "e" = (
-/obj/item/storage/medkit/regular,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -2;
+	pixel_y = 4
+	},
 /obj/structure/table,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
@@ -141,7 +147,10 @@
 "D" = (
 /obj/structure/table,
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /obj/item/crowbar,
 /obj/item/extinguisher,
 /turf/open/floor/mineral/titanium/blue,
@@ -219,7 +228,10 @@
 /area/shuttle/escape)
 "T" = (
 /obj/structure/table,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /obj/item/crowbar,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)

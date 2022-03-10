@@ -946,8 +946,13 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/storage/medkit/regular{
+	pixel_x = -3
+	},
 /turf/open/floor/iron{
 	dir = 1
 	},

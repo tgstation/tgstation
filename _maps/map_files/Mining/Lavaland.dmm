@@ -804,7 +804,10 @@
 /area/mine/living_quarters)
 "dn" = (
 /obj/structure/table,
-/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

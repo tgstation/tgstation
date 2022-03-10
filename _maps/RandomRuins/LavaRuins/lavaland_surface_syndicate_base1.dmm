@@ -472,9 +472,15 @@
 "ec" = (
 /obj/effect/turf_decal/box/white/corners,
 /obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/cargo)
 "ed" = (

@@ -851,9 +851,15 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -862,9 +868,15 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/medical)
 "cc" = (
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{

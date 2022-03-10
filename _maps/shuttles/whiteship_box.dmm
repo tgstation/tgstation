@@ -1505,9 +1505,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
-/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
+	pixel_x = 3;
+	pixel_y = 3
+	},
 /obj/item/storage/medkit/fire,
-/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3;
+	pixel_y = -3
+	},
 /obj/machinery/door/window/eastleft{
 	name = "First-Aid Supplies"
 	},
