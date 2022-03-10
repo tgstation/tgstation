@@ -230,7 +230,8 @@
 		Bring 3 corpses to a transumation rune in sub-zero temperatures to complete the ritual. \
 		When completed, causes a violent storm of void snow \
 		to assault the station, freezing and damaging heathens. Those nearby will be silenced and frozen even quicker. \
-		Additionally, you will become immune to the effects of space."
+		Additionally, you will become immune to the effects of space. \
+		Also improves your ability to spread rust."
 	gain_text = "The world falls into darkness. I stand in an empty plane, small flakes of ice fall from the sky. \
 		The Aristocrat stands before me, beckoning. We will play a waltz to the whispers of dying reality, \
 		as the world is destroyed before our eyes. The void will return all to nothing, WITNESS MY ASCENSION!"
