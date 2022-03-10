@@ -238,10 +238,10 @@
 /datum/spellbook_entry/lichdom
 	name = "Bind Soul"
 	desc = "A dark necromantic pact that can forever bind your soul to an \
-		item of your choosing. So long as your mind and the item remain \
-		intact and on the same plane you can revive from death, though the time \
-		between reincarnations grows steadily with use, along with the weakness \
-		that the new skeleton body will experience upon 'birth'."
+		item of your choosing. So long as the item remains \
+		intact, you can revive from death - even if your body is completely destroyed. \
+		With every revival, the time between reincarnations grows steadily with use, \
+		along with the weakness that the new skeleton body will experience upon 'birth'."
 	spell_type = /obj/effect/proc_holder/spell/targeted/lichdom
 	category = "Defensive"
 
