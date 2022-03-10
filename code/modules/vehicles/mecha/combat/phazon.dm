@@ -7,13 +7,15 @@
 	dir_in = 2 //Facing South.
 	step_energy_drain = 3
 	max_integrity = 200
-	deflect_chance = 30
 	armor = list(MELEE = 30, BULLET = 30, LASER = 30, ENERGY = 30, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 25000
 	wreckage = /obj/structure/mecha_wreckage/phazon
-	internal_damage_threshold = 25
 	force = 15
-	max_equip = 3
+	max_equip_by_category = list(
+		MECHA_UTILITY = 1,
+		MECHA_POWER = 1,
+		MECHA_ARMOR = 2,
+	)
 	phase_state = "phazon-phase"
 
 /obj/vehicle/sealed/mecha/combat/phazon/generate_actions()

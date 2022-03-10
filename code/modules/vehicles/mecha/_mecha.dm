@@ -1,5 +1,58 @@
 /***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
+//tivi todo remove before pr
+//further changes
+// make helper for fetching from mech hands
+//change all istype combat to a flag
+//the concealed bay should come back as alllowing standard mechs to equip all weapons? + even more max upgrades?
+//by-weapon slowdowns
+// honker menu and sound playing
+// make ody sleeper and syringe gun html tgui
+//weapon/ballistic/action should be in /weapon/action for a per-shot basis
+//retypecasting in can_attach args for honker
+//try_attach_part
+//mecha_parts abuse by equipment, construction parts, tracker
+//mining scanner proceses way too fast and has cooldown
+//convert "abilities" to utility modules
+//mechs can be piloted when pilot is crit
+//mech medical equipment processes randomly in places it shouldnt
+//use a proper initial projectiles var instead of inital()
+//mecha armor is a fucking mess, and goofs armor rework could break even more
+//armor slowdowns have less slowdown the less armor you have, can not be implemented rn because gygax uses initial()?
+//change the exosuit printer to have sections for the different equipment types(?)
+//obj/sealed/mecha/attackby/() is mess
+// max_ammo() on combat mechs is shitcode
+//medical sleepers dont use the mech do after and copypaste instead
+//use pretty defines for mecha ballistic ammo types
+//mecha ui act maint mode puts the thing in your hands
+// more damagable parts in try damage component
+// explosions do full damage to equipment
+//weapons become disabled at 1 health
+//mining scanner make disableable
+// not all ui_act have the proper args
+// add the bitfield editor for the int_damage_possible bitfield
+// ore storage module can just use chassis instead of host
+// air managment for open top ripleys is fucking ugly
+// injecting someone in sleeper with syringe gun makes runtime
+// /obj/effect/temp_visual/mining_overlay is so fucking bad lmao
+// int damage
+// plasma generator examine() should show how much plasma
+// "Set cabin pressure" uses tgui textbox
+//gravsling push mode is broken, sho0uld use throw instead
+//mecha_do_after should use extra_checks, args?
+//view_dna make it a library style pr popup in middle
+//examine does not show what part things are mounted on
+//collect_ore is horrid
+//durand shield to utility and deshitcode
+//rcd can start removal when not facing the proper direction
+//the gas and ion thruster effects are just scattered everywhere
+//using honker creates a runtime
+//getting into savanna after using honker caused a runtime
+//process() using mecha equip should have turn on() and turn off() procs instead
+//syringe gun generator processes
+//use modal for UI popups
+//desnowflake the Ui elements
+
 /**
  * Mechs are now (finally) vehicles, this means you can make them multicrew
  * They can also grant select ability buttons based on occupant bitflags
@@ -33,6 +86,7 @@
 	light_on = FALSE
 	light_range = 8
 	generic_canpass = FALSE
+	hud_possible = list(DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
 	///What direction will the mech face when entered/powered on? Defaults to South.
 	var/dir_in = SOUTH
 	///How much energy the mech will consume each time it moves. This variable is a backup for when leg actuators affect the energy drain.
@@ -43,10 +97,8 @@
 	var/melee_energy_drain = 15
 	///The minimum amount of energy charge consumed by leg overload
 	var/overload_step_energy_drain_min = 100
-	///chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
-	var/deflect_chance = 10
-	///Modifiers for directional armor
-	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
+	///Modifiers for directional damage reduction
+	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 0.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 1.5)
 	///if we cant use our equipment(such as due to EMP)
 	var/equipment_disabled = FALSE
 	/// Keeps track of the mech's cell
@@ -89,10 +141,17 @@
 	var/list/trackers = list()
 
 	var/max_temperature = 25000
-	///health percentage below which internal damage is possible
-	var/internal_damage_threshold = 50
+
 	///Bitflags for internal damage
 	var/internal_damage = NONE
+	/// damage amount above which we can take internal damages
+	var/internal_damage_threshold = 15
+	/// % chance for internal damage to occur
+	var/internal_damage_probability = 20
+	/// list of possibly dealt internal damage for this mech type
+	var/possible_int_damage = MECHA_INT_FIRE|MECHA_INT_TEMP_CONTROL|MECHA_INT_TANK_BREACH|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
+	/// damage threshold above which we take component damage
+	var/component_damage_threshold = 10
 
 	///required access level for mecha operation
 	var/list/operation_req_access = list()
@@ -102,11 +161,22 @@
 	///Typepath for the wreckage it spawns when destroyed
 	var/wreckage
 
-	var/list/equipment = list()
-	///Current active equipment
-	var/obj/item/mecha_parts/mecha_equipment/selected
-	///Maximum amount of equipment we can have
-	var/max_equip = 3
+	///assoc list: key-typepathlist before init, key-equipmentlist after
+	var/list/equip_by_category = list(
+		MECHA_L_ARM = null,
+		MECHA_R_ARM = null,
+		MECHA_UTILITY = list(),
+		MECHA_POWER = list(),
+		MECHA_ARMOR = list(),
+	)
+	///assoc list: max equips for non-arm modules key-count
+	var/list/max_equip_by_category = list(
+		MECHA_UTILITY = 0,
+		MECHA_POWER = 1,
+		MECHA_ARMOR = 0,
+	)
+	///flat equipment for iteration
+	var/list/flat_equipment
 
 	///Whether our steps are silent due to no gravity
 	var/step_silent = FALSE
@@ -167,14 +237,19 @@
 	///Bool for whether this mech can only be used on lavaland
 	var/lavaland_only = FALSE
 
-
-	hud_possible = list (DIAG_STAT_HUD, DIAG_BATT_HUD, DIAG_MECH_HUD, DIAG_TRACK_HUD)
+	/// Ui size, so you can make the UI bigger if you let it load a lot of stuff
+	var/ui_x = 1100
+	/// Ui size, so you can make the UI bigger if you let it load a lot of stuff
+	var/ui_y = 600
+	/// ref to screen object that displays in the middle of the UI
+	var/atom/movable/screen/mech_view/ui_view
 
 /obj/item/radio/mech //this has to go somewhere
 	subspace_transmission = TRUE
 
 /obj/vehicle/sealed/mecha/Initialize(mapload)
 	. = ..()
+	ui_view = new(null, src)
 	if(enclosed)
 		internal_tank = new (src)
 		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)
@@ -215,19 +290,31 @@
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
+	for(var/key in equip_by_category)
+		if(key == MECHA_L_ARM || key == MECHA_R_ARM)
+			var/path = equip_by_category[key]
+			if(!path)
+				continue
+			var/obj/item/mecha_parts/mecha_equipment/thing = new path
+			thing.attach(src, key == MECHA_R_ARM)
+			continue
+		for(var/path in equip_by_category[key])
+			var/obj/item/mecha_parts/mecha_equipment/thing = new path
+			thing.attach(src, FALSE)
+			equip_by_category[key] -= path
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
 		mob_exit(ejectee, TRUE, TRUE)
 
-	if(LAZYLEN(equipment))
-		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in equipment)
+	if(LAZYLEN(flat_equipment))
+		for(var/obj/item/mecha_parts/mecha_equipment/equip as anything in flat_equipment)
 			equip.detach(loc)
 			qdel(equip)
 	radio = null
 
 	STOP_PROCESSING(SSobj, src)
-	LAZYCLEARLIST(equipment)
+	LAZYCLEARLIST(flat_equipment)
 
 	QDEL_NULL(cell)
 	QDEL_NULL(scanmod)
@@ -236,6 +323,7 @@
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
+	QDEL_NULL(ui_view)
 
 	GLOB.mechas_list -= src //global mech list
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
@@ -361,12 +449,9 @@
 			. += "It's heavily damaged."
 		else
 			. += "It's falling apart."
-	var/hide_weapon = locate(/obj/item/mecha_parts/concealed_weapon_bay) in contents
-	var/hidden_weapon = hide_weapon ? (locate(/obj/item/mecha_parts/mecha_equipment/weapon) in equipment) : null
-	var/list/visible_equipment = equipment - hidden_weapon
-	if(length(visible_equipment))
+	if(LAZYLEN(flat_equipment))
 		. += "It's equipped with:"
-		for(var/obj/item/mecha_parts/mecha_equipment/ME in visible_equipment)
+		for(var/obj/item/mecha_parts/mecha_equipment/ME in flat_equipment)
 			. += "[icon2html(ME, user)] \A [ME]."
 	if(enclosed)
 		return
@@ -548,26 +633,32 @@
 	if(internal_damage & MECHA_INT_CONTROL_LOST)
 		target = pick(view(3,target))
 	var/mob/living/livinguser = user
-	if(selected)
-		if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
-			balloon_alert(user, "wrong seat for equipment!")
+	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_EQUIPMENT)))
+		balloon_alert(user, "wrong seat for equipment!")
+		return
+	var/obj/item/mecha_parts/mecha_equipment/selected
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		selected = equip_by_category[MECHA_R_ARM]
+	else
+		selected = equip_by_category[MECHA_L_ARM]
+	if(!selected)
+		return
+	if(!Adjacent(target) && (selected.range & MECHA_RANGED))
+		if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
+			to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
 			return
-		if(!Adjacent(target) && (selected.range & MECHA_RANGED))
-			if(HAS_TRAIT(livinguser, TRAIT_PACIFISM) && selected.harmful)
-				to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
-				return
-			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
-				return
-			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
+		if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
 			return
-		if((selected.range & MECHA_MELEE) && Adjacent(target))
-			if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
-				to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
-				return
-			if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
-				return
-			INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
+		INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
+		return
+	if((selected.range & MECHA_MELEE) && Adjacent(target))
+		if(isliving(target) && selected.harmful && HAS_TRAIT(livinguser, TRAIT_PACIFISM))
+			to_chat(livinguser, span_warning("You don't want to harm other living beings!"))
 			return
+		if(SEND_SIGNAL(src, COMSIG_MECHA_EQUIPMENT_CLICK, livinguser, target) & COMPONENT_CANCEL_EQUIPMENT_CLICK)
+			return
+		INVOKE_ASYNC(selected, /obj/item/mecha_parts/mecha_equipment.proc/action, user, target, modifiers)
+		return
 	if(!(livinguser in return_controllers_with_flag(VEHICLE_CONTROL_MELEE)))
 		to_chat(livinguser, span_warning("You're in the wrong seat to interact with your hands."))
 		return
@@ -749,24 +840,6 @@
 ///////////////////////////////////
 ////////  Internal damage  ////////
 ///////////////////////////////////
-
-/obj/vehicle/sealed/mecha/proc/check_for_internal_damage(list/possible_int_damage,ignore_threshold=null)
-	if(!islist(possible_int_damage) || !length(possible_int_damage))
-		return
-	if(prob(20))
-		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
-			for(var/T in possible_int_damage)
-				if(internal_damage & T)
-					possible_int_damage -= T
-			if (length(possible_int_damage))
-				var/int_dam_flag = pick(possible_int_damage)
-				if(int_dam_flag)
-					set_internal_damage(int_dam_flag)
-	if(prob(5))
-		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
-			if(LAZYLEN(equipment))
-				var/obj/item/mecha_parts/mecha_equipment/ME = pick(equipment)
-				qdel(ME)
 
 /obj/vehicle/sealed/mecha/proc/set_internal_damage(int_dam_flag)
 	internal_damage |= int_dam_flag
@@ -966,7 +1039,6 @@
 /obj/vehicle/sealed/mecha/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_SETTINGS)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_cycle_equip, VEHICLE_CONTROL_EQUIPMENT)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/strafe, VEHICLE_CONTROL_DRIVE)
@@ -1085,8 +1157,7 @@
 	mecha_flags  &= ~SILICON_PILOT
 	mob_container.forceMove(newloc)//ejecting mob container
 	log_message("[mob_container] moved out.", LOG_MECHA)
-	ejector << browse(null, "window=exosuit")
-
+	SStgui.close_user_uis(M, src)
 	if(istype(mob_container, /obj/item/mmi))
 		var/obj/item/mmi/mmi = mob_container
 		if(mmi.brainmob)
@@ -1144,17 +1215,10 @@
 	return (get_charge()>=amount)
 
 /obj/vehicle/sealed/mecha/proc/get_charge()
-	for(var/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/R in equipment)
-		var/relay_charge = R.get_charge()
-		if(relay_charge)
-			return relay_charge
-	if(cell)
-		return max(0, cell.charge)
+	return cell?.charge
 
 /obj/vehicle/sealed/mecha/proc/use_power(amount)
-	if(get_charge() && cell.use(amount))
-		return TRUE
-	return FALSE
+	return (get_charge() && cell.use(amount))
 
 /obj/vehicle/sealed/mecha/proc/give_power(amount)
 	if(!isnull(get_charge()))
@@ -1204,7 +1268,7 @@
 		return FALSE
 	var/ammo_needed
 	var/found_gun
-	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in equipment)
+	for(var/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/gun in flat_equipment)
 		ammo_needed = 0
 
 		if(!istype(gun, /obj/item/mecha_parts/mecha_equipment/weapon/ballistic) && gun.ammo_type == A.ammo_type)
