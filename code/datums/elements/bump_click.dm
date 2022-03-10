@@ -49,8 +49,6 @@
 /datum/element/bump_click/proc/use_tool(atom/source, mob/bumper)
 	SIGNAL_HANDLER
 
-	if(!ISADVANCEDTOOLUSER(bumper)) //probably can't perform this interaction anyway
-		return
 	if(isliving(bumper))
 		var/mob/living/bumping = bumper
 		if(bumping.combat_mode && !allow_combat)
@@ -63,7 +61,5 @@
 	if(allow_any)
 		INVOKE_ASYNC(bumper, /mob.proc/ClickOn, source) //Click with whatever we're holding
 		return
-
 	if(check_tool(held_item))
 		INVOKE_ASYNC(bumper, /mob.proc/ClickOn, source) //Click with approved item
-
