@@ -970,8 +970,6 @@
 /**
  * Calculates how much blood this limb is losing per life tick
  *
- * Note that laying down or holding your bleeding limb both reduce
- *
  * Arguments:
  * * ignore_modifiers - If TRUE, ignore the bleed reduction for laying down and grabbing your limb
  */
