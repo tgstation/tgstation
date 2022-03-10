@@ -78,7 +78,7 @@
 		if(user.mind == lich_mind)
 			var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
 			examine_list += span_green("Your phylactery. The next time you meet an untimely demise, \
-				you will revive at this object in <b>[time_to_revive / 10 / 60] minutes</b>.")
+				you will revive at this object in <b>[time_to_revive / 10 / 60] minute\s</b>.")
 		else
 			examine_list += span_green("A lich's phylactery. This one belongs to [lich_mind].")
 
@@ -130,7 +130,7 @@
 	var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
 	revive_timer = addtimer(CALLBACK(src, .proc/revive_lich, died), time_to_revive, TIMER_UNIQUE|TIMER_STOPPABLE)
 	to_chat(died, span_green("You feel your soul being dragged back to this world... \
-		<b>you will revive at your phylactery in [time_to_revive / 10 / 60] minutes.</b>"))
+		<b>you will revive at your phylactery in [time_to_revive / 10 / 60] minute\s.</b>"))
 
 /**
  * Signal proc for [COMSIG_LIVING_REVIVE].
