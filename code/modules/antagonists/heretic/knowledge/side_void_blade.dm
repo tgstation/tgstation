@@ -125,3 +125,39 @@
 	// If it's another other item make sure we're at normal force
 	else
 		force = initial(force)
+
+/datum/heretic_knowledge/rune_carver
+	name = "Carving Knife"
+	desc = "Allows you to transmute a knife, a shard of glass, and a piece of paper to create a Carving Knife. \
+		The Carving Knife allows you to etch difficult to see traps that trigger on heathens who walk overhead. \
+		Also makes for a handy throwing weapon."
+	gain_text = "Etched, carved... eternal. There is power hidden in everything. I can unveil it! \
+		I can carve the monolith to reveal the chains!"
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/void_phase,
+		/datum/heretic_knowledge/duel_stance,
+	)
+	required_atoms = list(
+		/obj/item/knife = 1,
+		/obj/item/shard = 1,
+		/obj/item/paper = 1,
+	)
+	result_atoms = list(/obj/item/melee/rune_carver)
+	cost = 1
+	route = PATH_SIDE
+
+/datum/heretic_knowledge/summon/maid_in_mirror
+	name = "Maid in the Mirror"
+	desc = ""
+	gain_text = ""
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/void_pull,
+		/datum/heretic_knowledge/spell/furious_steel,
+	)
+	required_atoms = list(
+		/obj/item/knife = 1,
+		/obj/item/shard = 1,
+		/obj/item/paper = 1,
+	)
+	cost = 1
+	route = PATH_SIDE

@@ -32,6 +32,7 @@
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/ready_projectile(obj/projectile/to_launch, atom/target, mob/user, iteration)
 	. = ..()
+	to_launch.def_zone = check_zone(user.zone_selected)
 	if(!istype(to_launch, /obj/projectile/floating_blade))
 		return
 	var/obj/projectile/floating_blade/launched_blade = to_launch
@@ -47,6 +48,11 @@
 	qdel(to_remove)
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/on_activation(mob/user)
+	// Aimed spells snowflake and activate without checking cast_check, very cool
+	if(IS_HERETIC(user) && !HAS_TRAIT(user, TRAIT_ALLOW_HERETIC_CASTING))
+		user.balloon_alert(user, "you need a focus!")
+		return
+
 	. = ..()
 	for(var/blade_num in 1 to current_amount)
 		addtimer(CALLBACK(src, .proc/create_blade, user), (blade_num - 1) * 0.66 SECONDS)

@@ -216,7 +216,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/flesh,
 		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/rune_carver,
+		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
@@ -254,7 +254,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/final/flesh_final,
 		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/spell/blood_siphon,
+		/datum/heretic_knowledge/spell/cleave,
 	)
 	required_atoms = list(
 		/obj/item/organ/tail = 1,

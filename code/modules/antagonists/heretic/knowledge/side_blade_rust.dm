@@ -35,30 +35,3 @@
 	result_atoms = list(/obj/structure/destructible/eldritch_crucible)
 	cost = 1
 	route = PATH_SIDE
-
-/datum/heretic_knowledge/summon/rusty
-	name = "Rusted Ritual"
-	desc = "Allows you to transmute a pool of vomit, a book, and a head into a Rust Walker. \
-		Rust Walkers excel at spreading rust and are moderately strong in combat."
-	gain_text = "I combined my principle of hunger with my desire for corruption. The Marshal knew my name, and the Rusted Hills echoed out."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/summon_blade,
-		/datum/heretic_knowledge/spell/entropic_plume,
-	)
-	required_atoms = list(
-		/obj/effect/decal/cleanable/vomit = 1,
-		/obj/item/book = 1,
-		/obj/item/bodypart/head = 1,
-	)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
-	cost = 1
-	route = PATH_SIDE
-
-/datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
-	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms
-	if(!ritual_head)
-		CRASH("[type] required a head bodypart, yet did not have one in selected_atoms when it reached cleanup_atoms.")
-
-	// Spill out any brains or stuff before we delete it.
-	ritual_head.drop_organs()
-	return ..()

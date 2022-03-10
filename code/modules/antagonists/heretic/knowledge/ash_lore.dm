@@ -157,7 +157,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/final/ash_final,
 		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/summon/rusty,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/fiery_rebirth
 	cost = 1

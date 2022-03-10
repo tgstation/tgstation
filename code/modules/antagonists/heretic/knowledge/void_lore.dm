@@ -127,8 +127,8 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/void,
 		/datum/heretic_knowledge/reroll_targets,
+		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/rune_carver,
-		// void-blade
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_phase
 	cost = 1
@@ -138,7 +138,7 @@
 	name = "Seeking blade"
 	desc = "You can now attack distant marked targets with your Void Blade, teleporting directly next to them."
 	gain_text = "Fleeting memories, fleeting feet. I mark my way with frozen blood upon the snow. Covered and forgotten."
-	next_knowledge = list(/datum/heretic_knowledge/spell/voidpull)
+	next_knowledge = list(/datum/heretic_knowledge/spell/void_pull)
 	route = PATH_VOID
 
 /datum/heretic_knowledge/blade_upgrade/void/do_ranged_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
@@ -153,15 +153,15 @@
 /datum/heretic_knowledge/blade_upgrade/void/proc/follow_up_attack(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	blade.melee_attack_chain(user, target)
 
-/datum/heretic_knowledge/spell/voidpull
+/datum/heretic_knowledge/spell/void_pull
 	name = "Void Pull"
 	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
 	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
 		The Aristocrat reveals themself to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/final/void_final,
-		/datum/heretic_knowledge/spell/blood_siphon,
-		// void-blade
+		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/summon/maid_in_mirror,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
 	cost = 1

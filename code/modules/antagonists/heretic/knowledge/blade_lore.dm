@@ -92,7 +92,7 @@
 	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
 
 /datum/heretic_knowledge/blade_dance
-	name = "Dance of the Blades"
+	name = "Dance of the Brand"
 	// desc is set in New()
 	gain_text = "Having the prowess to wield such a thing requires great dedication and terror."
 	next_knowledge = list(
@@ -213,7 +213,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/blade,
 		/datum/heretic_knowledge/reroll_targets,
-		// void-blade
+		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
 	)
 	cost = 1
@@ -311,16 +311,16 @@
 		at a target, dealing damage and causing bleeding."
 	gain_text = "His arts were those that ensured an ending."
 	next_knowledge = list(
-		// void-blade
+		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/final/blade_final,
-		/datum/heretic_knowledge/summon/rusty,
+		// melbert todo rust-blade
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/aimed/furious_steel
 	cost = 1
 	route = PATH_BLADE
 
 /datum/heretic_knowledge/final/blade_final
-	name = "Maelstrom of Steel"
+	name = "Maelstrom of Silver"
 	desc = "The ascension ritual of the Path of Blades."
 	gain_text = "The Colonel, in all of his expertise, revealed to me the three roots of victory. \
 		Cunning. Strength. And agony! This was their secret doctrine! With this knowledge in my potention, \
