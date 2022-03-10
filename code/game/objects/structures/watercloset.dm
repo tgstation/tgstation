@@ -456,14 +456,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	anchored = FALSE
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-/obj/structure/sinkframe/ComponentInitialize()
+/obj/structure/sinkframe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
-
-/obj/structure/sinkframe/proc/can_be_rotated(mob/user, rotation_type)
-	if(anchored)
-		to_chat(user, span_warning("It is fastened to the floor!"))
-	return !anchored
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/sinkframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
@@ -660,10 +655,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 	open = !open
 	if(open)
 		layer = SIGN_LAYER
+		plane = GAME_PLANE
 		set_density(FALSE)
 		set_opacity(FALSE)
 	else
 		layer = WALL_OBJ_LAYER
+		plane = GAME_PLANE_UPPER
 		set_density(TRUE)
 		if(opaque_closed)
 			set_opacity(TRUE)
@@ -760,6 +757,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/curtain/cloth/fancy/mechanical/proc/open()
 	icon_state = "[icon_type]-open"
 	layer = SIGN_LAYER
+	plane = GAME_PLANE
 	set_density(FALSE)
 	open = TRUE
 	set_opacity(FALSE)
@@ -767,6 +765,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 /obj/structure/curtain/cloth/fancy/mechanical/proc/close()
 	icon_state = "[icon_type]-closed"
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	set_density(TRUE)
 	open = FALSE
 	if(opaque_closed)

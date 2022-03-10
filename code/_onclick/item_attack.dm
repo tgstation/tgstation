@@ -233,13 +233,11 @@
 	if(!attacking_item.force)
 		return
 
-	var/no_damage = TRUE
-	if(take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1))
-		no_damage = FALSE
+	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1)
 	//only witnesses close by and the victim see a hit message.
+	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
+		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
-	user.visible_message(span_danger("[user] hits [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), \
-		span_danger("You hit [src] with [attacking_item][no_damage ? ", which doesn't leave a mark" : ""]!"), null, COMBAT_MESSAGE_RANGE)
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
@@ -280,7 +278,7 @@
  */
 /obj/item/proc/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, src, proximity_flag, click_parameters)
 
 /**
  * Called at the end of the attack chain if the user right-clicked.
@@ -293,7 +291,7 @@
  */
 /obj/item/proc/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
 	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK_SECONDARY, target, user, proximity_flag, click_parameters)
-	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
+	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY, target, src, proximity_flag, click_parameters)
 
 	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

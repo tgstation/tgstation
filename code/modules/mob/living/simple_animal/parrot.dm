@@ -952,7 +952,10 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(!islist(speech_buffer))
 		speech_buffer = list()
 
-/mob/living/simple_animal/parrot/poly/proc/Write_Memory(dead)
+/mob/living/simple_animal/parrot/poly/Write_Memory(dead, gibbed)
+	. = ..()
+	if(!.)
+		return
 	var/json_file = file("data/npc_saves/Poly.json")
 	var/list/file_data = list()
 	if(islist(speech_buffer))
@@ -965,7 +968,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 		else
 			file_data["longestdeathstreak"] = longest_deathstreak
 	else
-		file_data["roundssurvived"] = rounds_survived + 1
+		file_data["roundssurvived"] = max(rounds_survived, 0) + 1
 		if(rounds_survived + 1 > longest_survival)
 			file_data["longestsurvival"] = rounds_survived + 1
 		else

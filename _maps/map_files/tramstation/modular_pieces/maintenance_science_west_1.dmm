@@ -3,130 +3,86 @@
 /turf/template_noop,
 /area/template_noop)
 "c" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/maintenance/department/science)
-"e" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating,
-/area/maintenance/department/science)
-"f" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
-/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/modular_map_connector,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/science)
+/turf/open/floor/catwalk_floor,
+/area/maintenance/department/medical)
+"e" = (
+/obj/modular_map_root/tramstation{
+	key = "maintenance_science_west_attachment"
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"f" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/department/medical)
 "h" = (
-/obj/item/clothing/head/cone{
-	pixel_x = -9;
-	pixel_y = -10
-	},
-/obj/item/clothing/head/cone{
-	pixel_x = -9;
-	pixel_y = 8
-	},
-/turf/template_noop,
-/area/template_noop)
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/space_heater,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
 "i" = (
-/obj/effect/turf_decal/sand/plating,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/grille,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "j" = (
-/turf/open/floor/plating/asteroid,
-/area/mine/explored)
-"k" = (
-/obj/item/stack/ore/iron,
-/obj/item/pickaxe/rusted,
-/turf/open/floor/plating/asteroid,
-/area/mine/explored)
-"n" = (
-/turf/closed/wall/rock/porous,
-/area/mine/explored)
-"p" = (
-/turf/closed/wall,
-/area/maintenance/department/science)
-"r" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/maintenance/department/medical)
-"s" = (
-/turf/closed/wall/rust,
-/area/maintenance/department/science)
-"v" = (
-/obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid,
-/area/mine/explored)
-"w" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/mine/explored)
-"x" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/item/stack/ore/glass,
-/turf/open/floor/plating,
-/area/mine/explored)
-"A" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/three,
+/obj/effect/spawner/random/engineering/tool,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plating/asteroid,
-/area/mine/explored)
-"C" = (
-/obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid,
+/obj/effect/spawner/random/engineering/flashlight,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/effect/spawner/random/maintenance/two,
+/obj/effect/spawner/random/medical/firstaid,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "I" = (
-/obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
-/area/mine/explored)
-"J" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	req_one_access_txt = "12"
-	},
-/obj/effect/mapping_helpers/airlock/abandoned,
 /obj/effect/decal/cleanable/dirt,
-/obj/modular_map_connector,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
-"K" = (
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/mine/explored)
-"N" = (
-/obj/item/clothing/head/cone{
-	pixel_x = 11;
-	pixel_y = -10
-	},
-/obj/item/clothing/head/cone{
-	pixel_x = 11;
-	pixel_y = 13
-	},
-/turf/template_noop,
-/area/template_noop)
-"O" = (
+"J" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor,
+/area/maintenance/department/medical)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/iron/smooth,
-/area/maintenance/department/science)
+/area/maintenance/department/medical)
 "Q" = (
 /turf/closed/wall,
 /area/maintenance/department/medical)
-"S" = (
-/obj/structure/ladder,
-/obj/effect/turf_decal/sand/plating,
-/turf/open/floor/plating,
-/area/mine/explored)
-"U" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/smooth,
-/area/maintenance/department/medical)
-"X" = (
-/turf/closed/mineral/random/stationside/asteroid/porus,
-/area/space)
 
 (1,1,1) = {"
 a
+e
 a
-N
+a
+a
+a
+a
 a
 a
 a
@@ -136,11 +92,15 @@ a
 a
 "}
 (2,1,1) = {"
-a
-a
 J
-a
-a
+J
+J
+f
+J
+J
+J
+J
+Q
 a
 a
 a
@@ -148,11 +108,15 @@ a
 a
 "}
 (3,1,1) = {"
-a
+c
 Q
-U
-a
-a
+Q
+Q
+Q
+Q
+Q
+J
+Q
 a
 a
 a
@@ -161,190 +125,254 @@ a
 "}
 (4,1,1) = {"
 a
+a
+a
+a
+a
+a
 Q
-i
-a
-a
-a
-a
-a
-a
-a
+J
+Q
+Q
+Q
+Q
+Q
+Q
 "}
 (5,1,1) = {"
 a
+a
+a
+a
+a
+a
 Q
-C
-r
+J
 K
-w
-a
-a
-a
-a
+I
+I
+I
+I
+Q
 "}
 (6,1,1) = {"
 a
-w
-w
-w
-j
-w
 a
 a
 a
 a
+a
+a
+a
+a
+a
+Q
+Q
+I
+Q
 "}
 (7,1,1) = {"
 a
-w
-w
-j
-K
-w
 a
 a
 a
 a
+a
+a
+a
+a
+a
+a
+Q
+I
+Q
 "}
 (8,1,1) = {"
 a
-w
-w
-w
-j
-n
 a
 a
 a
 a
+a
+a
+a
+a
+a
+a
+Q
+I
+Q
 "}
 (9,1,1) = {"
 a
-k
-v
-S
-j
-j
-X
 a
 a
 a
+a
+a
+a
+a
+a
+a
+Q
+Q
+I
+Q
 "}
 (10,1,1) = {"
 a
-w
-w
-n
-x
-w
 a
 a
 a
 a
+a
+a
+a
+a
+a
+Q
+h
+I
+Q
 "}
 (11,1,1) = {"
 a
 a
-w
-j
-K
-w
 a
 a
 a
 a
+a
+a
+a
+a
+Q
+i
+I
+Q
 "}
 (12,1,1) = {"
 a
 a
-w
-A
-j
-w
-w
-w
-w
 a
+a
+a
+a
+a
+a
+a
+a
+Q
+k
+n
+Q
 "}
 (13,1,1) = {"
 a
 a
 a
 a
-j
-n
-j
+a
+a
+a
+a
+a
+a
+Q
 j
 I
-w
+Q
 "}
 (14,1,1) = {"
 a
 a
 a
 a
-j
-j
-j
-w
-w
 a
+a
+a
+a
+a
+a
+Q
+Q
+I
+Q
 "}
 (15,1,1) = {"
 a
 a
 a
 a
-c
-c
-j
-w
 a
 a
+a
+a
+a
+a
+a
+Q
+I
+Q
 "}
 (16,1,1) = {"
 a
 a
 a
 a
-e
-s
 a
 a
 a
 a
+a
+a
+a
+Q
+I
+Q
 "}
 (17,1,1) = {"
 a
 a
 a
 a
-O
-p
 a
 a
 a
 a
+a
+Q
+Q
+Q
+I
+Q
 "}
 (18,1,1) = {"
 a
 a
 a
 a
-f
 a
 a
 a
 a
 a
+I
+I
+I
+I
+Q
 "}
 (19,1,1) = {"
 a
 a
 a
 a
-h
+a
+a
+a
+a
+a
 a
 a
 a

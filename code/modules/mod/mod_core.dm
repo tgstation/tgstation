@@ -39,7 +39,28 @@
 	return FALSE
 
 /obj/item/mod/core/proc/update_charge_alert()
-	mod.wearer.clear_alert("mod_charge")
+	mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
+
+/obj/item/mod/core/infinite
+	name = "MOD infinite core"
+	icon_state = "mod-core-infinite"
+	desc = "A fusion core using the rare Fixium to sustain enough energy for the lifetime of the MOD's user. \
+		This might be because of the slowly killing poison inside, but those are just rumors."
+
+/obj/item/mod/core/infinite/charge_source()
+	return src
+
+/obj/item/mod/core/infinite/charge_amount()
+	return INFINITY
+
+/obj/item/mod/core/infinite/max_charge_amount()
+	return INFINITY
+
+/obj/item/mod/core/infinite/add_charge(amount)
+	return TRUE
+
+/obj/item/mod/core/infinite/subtract_charge(amount)
+	return TRUE
 
 /obj/item/mod/core/standard
 	name = "MOD standard core"
@@ -64,12 +85,16 @@
 	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, .proc/on_wearer_set)
+	if(mod.wearer)
+		on_wearer_set(mod, mod.wearer)
 
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	uninstall_cell()
-	UnregisterSignal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY))
+	UnregisterSignal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY, COMSIG_MOD_WEARER_SET))
+	if(mod.wearer)
+		on_wearer_unset(mod, mod.wearer)
 	return ..()
 
 /obj/item/mod/core/standard/charge_source()
@@ -98,20 +123,20 @@
 /obj/item/mod/core/standard/update_charge_alert()
 	var/obj/item/stock_parts/cell/charge_source = charge_source()
 	if(!charge_source)
-		mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
+		mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 		return
 	var/remaining_cell = charge_amount() / max_charge_amount()
 	switch(remaining_cell)
 		if(0.75 to INFINITY)
-			mod.wearer.clear_alert("mod_charge")
+			mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 		if(0.5 to 0.75)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 1)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell, 1)
 		if(0.25 to 0.5)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 2)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell, 2)
 		if(0.01 to 0.25)
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/lowcell, 3)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell, 3)
 		else
-			mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/emptycell)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/emptycell)
 
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
@@ -182,6 +207,24 @@
 		return COMPONENT_NO_AFTERATTACK
 	return NONE
 
+/obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, .proc/on_wearer_unset)
+
+/obj/item/mod/core/standard/proc/on_wearer_unset(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	UnregisterSignal(mod, COMSIG_MOD_WEARER_UNSET)
+
+/obj/item/mod/core/standard/proc/on_borg_charge(datum/source, amount)
+	SIGNAL_HANDLER
+
+	add_charge(amount)
+	mod.update_charge_alert()
+
 /obj/item/mod/core/ethereal
 	name = "MOD ethereal core"
 	icon_state = "mod-core-ethereal"
@@ -220,27 +263,78 @@
 /obj/item/mod/core/ethereal/update_charge_alert()
 	var/obj/item/organ/stomach/ethereal/charge_source = charge_source()
 	if(charge_source)
-		mod.wearer.clear_alert("mod_charge")
+		mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 		return
-	mod.wearer.throw_alert("mod_charge", /atom/movable/screen/alert/nocell)
+	mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/nocell)
 
-/obj/item/mod/core/infinite
-	name = "MOD infinite core"
-	icon_state = "mod-core-infinite"
-	desc = "A fusion core using the rare palladium to sustain enough energy for the lifetime of the MOD's user. \
-		This might be because of the slowly killing poison inside, but those are just rumors."
+/obj/item/mod/core/plasma
+	name = "MOD plasma core"
+	icon_state = "mod-core-plasma"
+	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
+		through plasma ore, allowing for easy continued use by their mining squads."
+	/// How much charge we can store.
+	var/maxcharge = 10000
+	/// How much charge we are currently storing.
+	var/charge = 10000
+	/// Charge per plasma ore.
+	var/charge_given = 1500
 
-/obj/item/mod/core/infinite/charge_source()
+/obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
+	. = ..()
+	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+
+/obj/item/mod/core/plasma/uninstall()
+	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)
+	return ..()
+
+/obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)
+	if(charge_plasma(attacking_item, user))
+		return TRUE
+	return ..()
+
+/obj/item/mod/core/plasma/charge_source()
 	return src
 
-/obj/item/mod/core/infinite/charge_amount()
-	return INFINITY
+/obj/item/mod/core/plasma/charge_amount()
+	return charge
 
-/obj/item/mod/core/infinite/max_charge_amount()
-	return INFINITY
+/obj/item/mod/core/plasma/max_charge_amount()
+	return maxcharge
 
-/obj/item/mod/core/infinite/add_charge(amount)
+/obj/item/mod/core/plasma/add_charge(amount)
+	charge = min(maxcharge, charge + amount)
 	return TRUE
 
-/obj/item/mod/core/infinite/subtract_charge(amount)
+/obj/item/mod/core/plasma/subtract_charge(amount)
+	charge = max(0, charge - amount)
+	return TRUE
+
+/obj/item/mod/core/plasma/update_charge_alert()
+	var/remaining_plasma = charge_amount() / max_charge_amount()
+	switch(remaining_plasma)
+		if(0.75 to INFINITY)
+			mod.wearer.clear_alert(ALERT_MODSUIT_CHARGE)
+		if(0.5 to 0.75)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell/plasma, 1)
+		if(0.25 to 0.5)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell/plasma, 2)
+		if(0.01 to 0.25)
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/lowcell/plasma, 3)
+		else
+			mod.wearer.throw_alert(ALERT_MODSUIT_CHARGE, /atom/movable/screen/alert/emptycell/plasma)
+
+/obj/item/mod/core/plasma/proc/on_attackby(datum/source, obj/item/attacking_item, mob/user)
+	SIGNAL_HANDLER
+
+	if(charge_plasma(attacking_item, user))
+		return COMPONENT_NO_AFTERATTACK
+	return NONE
+
+/obj/item/mod/core/plasma/proc/charge_plasma(obj/item/attacking_item, mob/user)
+	if(!istype(attacking_item, /obj/item/stack/ore/plasma))
+		return FALSE
+	if(!attacking_item.use(1))
+		return FALSE
+	add_charge(charge_given)
+	balloon_alert(user, "core refueled")
 	return TRUE

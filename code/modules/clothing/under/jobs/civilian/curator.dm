@@ -17,7 +17,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 	name = "treasure hunter uniform"

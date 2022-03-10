@@ -68,13 +68,16 @@
 			return
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		if(max_length)
+		if(encode)
 			if(multiline)
 				return stripped_multiline_input(user, message, title, default, max_length)
 			else
 				return stripped_input(user, message, title, default, max_length)
 		else
-			return input(user, message, title, default) as text|null
+			if(multiline)
+				return input(user, message, title, default) as message|null
+			else
+				return input(user, message, title, default) as text|null
 	var/datum/tgui_input_text/async/text_input = new(user, message, title, default, max_length, multiline, encode, callback, timeout)
 	text_input.ui_interact(user)
 
@@ -135,7 +138,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TextInputModal")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_input_text/ui_close(mob/user)
@@ -146,16 +148,14 @@
 	return GLOB.always_state
 
 /datum/tgui_input_text/ui_static_data(mob/user)
-	. = list(
-		"max_length" = max_length,
-		"message" = message,
-		"multiline" = multiline,
-		"placeholder" = default, // You cannot use default as a const
-		"preferences" = list(),
-		"title" = title
-	)
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	. = list()
+	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["max_length"] = max_length
+	.["message"] = message
+	.["multiline"] = multiline
+	.["placeholder"] = default // Default is a reserved keyword
+	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["title"] = title
 
 /datum/tgui_input_text/ui_data(mob/user)
 	. = list()
@@ -170,23 +170,20 @@
 		if("submit")
 			if(max_length)
 				if(length(params["entry"]) > max_length)
-					return FALSE
+					CRASH("[usr] typed a text string longer than the max length")
 				if(encode && (length(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Input uses special characters, thus reducing the maximum length."))
-			if(!length(params["entry"]))
-				set_entry(null)
-				SStgui.close_uis(src)
-				return TRUE
 			set_entry(params["entry"])
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			set_entry(null)
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	if(entry)
+	if(!isnull(entry))
 		var/converted_entry = encode ? html_encode(entry) : entry
 		src.entry = trim(converted_entry, max_length)
 

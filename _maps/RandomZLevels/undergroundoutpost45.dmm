@@ -2457,7 +2457,7 @@
 	c_tag = "Hydroponics";
 	network = list("uo45")
 	},
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	locked = 0;
 	name = "Hydroponics APC";
 	pixel_y = -25;
@@ -4672,7 +4672,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jV" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 1;
 	locked = 0;
 	name = "UO45 Bar APC";
@@ -5684,7 +5684,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "lH" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	locked = 0;
 	name = "UO45 Research Division APC";
 	pixel_y = -25;
@@ -6201,7 +6201,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "mE" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	locked = 0;
 	name = "UO45 Gateway APC";
 	pixel_y = -25;
@@ -8804,7 +8804,7 @@
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
 "rp" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	dir = 8;
 	name = "UO45 Engineering APC";
 	pixel_x = -25;
@@ -9369,7 +9369,7 @@
 	},
 /area/awaymission/undergroundoutpost45/mining)
 "sj" = (
-/obj/machinery/power/apc/highcap/fifteen_k{
+/obj/machinery/power/apc/highcap/ten_k{
 	locked = 0;
 	name = "UO45 Mining APC";
 	pixel_y = -25;
