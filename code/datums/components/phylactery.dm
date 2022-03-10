@@ -11,7 +11,7 @@
 	/// The respawn timer of the phylactery.
 	var/base_respawn_time = 3 MINUTES
 	/// How much time is added on to the respawn time per revival.
-	var/time_per_ressurection = 1 MINUTES
+	var/time_per_resurrection = 1 MINUTES
 	/// The color of the phylactery itself. Applied on creation.
 	var/phylactery_color = "#003300"
 
@@ -24,7 +24,7 @@
 /datum/component/phylactery/Initialize(
 	datum/mind/lich_mind,
 	base_respawn_time = 3 MINUTES,
-	time_per_ressurection = 1 MINUTES,
+	time_per_resurrection = 1 MINUTES,
 	phylactery_color = "#003300",
 )
 	if(!isobj(parent))
@@ -36,7 +36,7 @@
 
 	src.lich_mind = lich_mind
 	src.base_respawn_time = base_respawn_time
-	src.time_per_ressurection = time_per_ressurection
+	src.time_per_resurrection = time_per_resurrection
 	src.phylactery_color = phylactery_color
 
 	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, .proc/on_lich_mind_lost)
@@ -76,7 +76,7 @@
 
 	if(IS_WIZARD(user) || isobserver(user))
 		if(user.mind == lich_mind)
-			var/time_to_revive = base_respawn_time + (num_resurrections * time_per_ressurection)
+			var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
 			examine_list += span_green("Your phylactery. The next time you meet an untimely demise, \
 				you will revive at this object in <b>[time_to_revive / 10 / 60] minutes</b>.")
 		else
@@ -127,7 +127,7 @@
 		RegisterSignal(died, COMSIG_LIVING_REVIVE, .proc/stop_timer)
 
 	// Start revival
-	var/time_to_revive = base_respawn_time + (num_resurrections * time_per_ressurection)
+	var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
 	revive_timer = addtimer(CALLBACK(src, .proc/revive_lich, died), time_to_revive, TIMER_UNIQUE|TIMER_STOPPABLE)
 	to_chat(died, span_green("You feel your soul being dragged back to this world... \
 		<b>you will revive at your phylactery in [time_to_revive / 10 / 60] minutes.</b>"))
