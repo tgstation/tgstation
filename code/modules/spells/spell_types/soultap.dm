@@ -32,6 +32,7 @@
 	user.health = min(user.health, user.maxHealth)
 	if(user.maxHealth <= 0)
 		to_chat(user, span_userdanger("Your weakened soul is completely consumed by the tap!"))
+		ADD_TRAIT(user, TRAIT_NO_SOUL, MAGIC_TRAIT)
 		return
 
 	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)
