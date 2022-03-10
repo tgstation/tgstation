@@ -5,7 +5,7 @@
 	name = "light emitter"
 	icon_state = "lighting_marker"
 	anchored = TRUE
-	invisibility = 101
+	invisibility = INVISIBILITY_ABSTRACT
 	var/set_luminosity = 8
 	var/set_cap = 0
 
