@@ -115,11 +115,6 @@
 		new result(loc)
 	return TRUE
 
-/datum/heretic_knowledge/final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
-	our_heretic.increase_rust_strength()
-
 /**
  * Called after on_finished_recipe returns TRUE
  * and a ritual was successfully completed.
@@ -469,6 +464,7 @@
 
 
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
+	heretic_datum.increase_rust_strength()
 	return TRUE
 
 /datum/heretic_knowledge/final/cleanup_atoms(list/selected_atoms)
