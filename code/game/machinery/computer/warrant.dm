@@ -23,6 +23,8 @@
 					notice = "<br>**REPORT TO THE BRIG**"
 				if("Incarcerated")
 					background = "background-color:#CD6500;"
+				if("Suspected")
+					background = "background-color:#CD6500;"
 				if("Paroled")
 					background = "background-color:#CD6500;"
 				if("Discharged")

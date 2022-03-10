@@ -9,7 +9,6 @@
 		/obj/item/food/grown/harebell = 1,
 		/obj/item/book = 1,
 		/obj/item/clothing/under = 1,
-		/mob/living/carbon/human = 1,
 	)
 	cost = 1
 	route = PATH_SIDE
@@ -17,15 +16,14 @@
 /datum/heretic_knowledge/reroll_targets/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	var/obj/item/organ/our_living_heart = user.getorganslot(heretic_datum.living_heart_organ_slot)
-	if(!our_living_heart || !HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+	// Check first if they have a Living Heart. If it's missing, we should
+	// throw a fail to show the heretic that there's no point in rerolling
+	// if you don't have a heart to track the targets in the first place.
+	if(heretic_datum.has_living_heart() != HERETIC_HAS_LIVING_HEART)
+		loc.balloon_alert(user, "ritual failed, no living heart!")
 		return FALSE
 
-	if(!LAZYLEN(heretic_datum.sac_targets))
-		return FALSE
-
-	atoms += user
-	return (user in range(1, loc))
+	return TRUE
 
 /datum/heretic_knowledge/reroll_targets/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
@@ -36,7 +34,7 @@
 		CRASH("Heretic datum didn't have a hunt_and_sacrifice knowledge learned, what?")
 
 	if(!target_finder.obtain_targets(user))
-		loc.balloon_alert(user, "ritual failed, no targets!")
+		loc.balloon_alert(user, "ritual failed, no targets found!")
 		return FALSE
 
 	return TRUE

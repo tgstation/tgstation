@@ -68,17 +68,9 @@
 			icon_state = "[initial(icon_state)]"
 	return ..()
 
-/obj/item/storage/bag/trash/cyborg
-	insertable = FALSE
-
-/obj/item/storage/bag/trash/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	if(insertable)
-		J.put_in_cart(src, user)
-		J.mybag=src
-		J.update_appearance()
-	else
-		to_chat(user, span_warning("You are unable to fit your [name] into the [J.name]."))
-		return
+/obj/item/storage/bag/trash/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/storage/bag/trash/filled
 

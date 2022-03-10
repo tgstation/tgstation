@@ -154,6 +154,7 @@
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, .proc/on_cult_rune_removed), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune))
 
@@ -478,7 +479,7 @@
 /obj/item/nullrod/clown
 	name = "clown dagger"
 	desc = "Used for absolutely hilarious sacrifices."
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/wizard.dmi'
 	icon_state = "clownrender"
 	inhand_icon_state = "render"
 	worn_icon_state = "render"

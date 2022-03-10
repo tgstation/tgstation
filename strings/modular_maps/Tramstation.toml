@@ -44,13 +44,6 @@ modules = ["maintenance_storagebig_1.dmm", "maintenance_storagebig_2.dmm", "main
 [rooms.maintenance_storagemid]
 modules = ["maintenance_storagemid_1.dmm", "maintenance_storagemid_2.dmm"]
 
-# Maintenance hall below the dorms.
-[rooms.maintenance_dorms]
-modules = ["maintenance_dorms_1.dmm", "maintenance_dorms_2.dmm"]
-
-[rooms.maintenance_dorms_attachment]
-modules = ["maintenance_dorms_attachment_1.dmm", "maintenance_dorms_attachment_2.dmm", "maintenance_dorms_attachment_3.dmm"]
-
 # Maintenance hall between medical and science.
 [rooms.maintenance_science_west]
 modules = ["maintenance_science_west_1.dmm", "maintenance_science_west_2.dmm"]

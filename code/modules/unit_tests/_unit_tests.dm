@@ -97,6 +97,7 @@
 #include "reagent_id_typos.dm"
 #include "reagent_mod_expose.dm"
 #include "reagent_mod_procs.dm"
+#include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"
 #include "resist.dm"
 #include "say.dm"
