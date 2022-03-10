@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Button, LabeledList } from '../../components';
-import { OperatorData } from './data';
+import { OperatorData, MechaUtility } from './data';
 
 export const UtilityModulesPane = (props, context) => {
   const { act, data } = useBackend<OperatorData>(context);
@@ -34,12 +34,6 @@ export const UtilityModulesPane = (props, context) => {
     </LabeledList>
   );
 };
-
-export type MechaUtility = {
-  name: string;
-  ref: string;
-  snowflake: any;
-}
 
 const MECHA_SNOWFLAKE_ID_EJECTOR = "ejector_snowflake";
 

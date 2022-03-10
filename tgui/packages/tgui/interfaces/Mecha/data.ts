@@ -98,3 +98,9 @@ export type OperatorData = {
   mech_view: string;
   mineral_material_amount: number;
 };
+
+export type MechaUtility = {
+  name: string;
+  ref: string;
+  snowflake: any;
+}
