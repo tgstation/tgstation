@@ -161,7 +161,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/inherent_factions
 
 	///Punch-specific attack verb.
-	var/attack_verb = "punch"
+	var/attack_verb = SFX_PUNCH
 	/// The visual effect of the attack.
 	var/attack_effect = ATTACK_EFFECT_PUNCH
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'

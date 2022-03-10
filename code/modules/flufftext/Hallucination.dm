@@ -440,12 +440,12 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if("stunprod") //Stunprod + cablecuff
 			process = FALSE
 			target.playsound_local(source, 'sound/weapons/egloves.ogg', 40, 1)
-			target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
+			target.playsound_local(source, get_sfx(SFX_BODYFALL), 25, 1)
 			addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, 'sound/weapons/cablecuff.ogg', 15, 1), 20)
 		if("harmbaton") //zap n slap
 			iterations_left = rand(5, 12)
 			target.playsound_local(source, 'sound/weapons/egloves.ogg', 40, 1)
-			target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
+			target.playsound_local(source, get_sfx(SFX_BODYFALL), 25, 1)
 			next_action = 2 SECONDS
 		if("bomb") // Tick Tock
 			iterations_left = rand(3, 11)
@@ -485,7 +485,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 				if ("gun")
 					fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 					hit_person_sound = 'sound/weapons/pierce.ogg'
-					hit_wall_sound = "ricochet"
+					hit_wall_sound = SFX_RICOCHET
 					number_of_hits = 2
 					chance_to_fall = 80
 
@@ -500,14 +500,14 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			next_action = rand(CLICK_CD_RANGE, CLICK_CD_RANGE + 6)
 
 			if(hits >= number_of_hits && prob(chance_to_fall))
-				addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, get_sfx("bodyfall"), 25, 1), next_action)
+				addtimer(CALLBACK(target, /mob/.proc/playsound_local, source, get_sfx(SFX_BODYFALL), 25, 1), next_action)
 				qdel(src)
 				return
 		if ("esword")
 			target.playsound_local(source, 'sound/weapons/blade1.ogg', 50, 1)
 
 			if (hits == 4)
-				target.playsound_local(source, get_sfx("bodyfall"), 25, 1)
+				target.playsound_local(source, get_sfx(SFX_BODYFALL), 25, 1)
 
 			next_action = rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6)
 			hits += 1
@@ -515,7 +515,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			if (iterations_left == 1)
 				target.playsound_local(source, 'sound/weapons/saberoff.ogg', 15, 1)
 		if ("harmbaton")
-			target.playsound_local(source, "swing_hit", 50, 1)
+			target.playsound_local(source, SFX_SWING_HIT, 50, 1)
 			next_action = rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 4)
 		if ("bomb")
 			target.playsound_local(source, 'sound/items/timer.ogg', 25, 0)
@@ -596,7 +596,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 					image_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 				else
 					image_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
-				target.playsound_local(H, "sparks",75,1,-1)
+				target.playsound_local(H, SFX_SPARKS,75,1,-1)
 				A = image(image_file,H,"baton", layer=ABOVE_MOB_LAYER)
 			if("ttv")
 				if(side == "right")
@@ -1565,7 +1565,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.client.images |= shock_image
 		target.client.images |= electrocution_skeleton_anim
 	addtimer(CALLBACK(src, .proc/reset_shock_animation), 40)
-	target.playsound_local(get_turf(src), "sparks", 100, 1)
+	target.playsound_local(get_turf(src), SFX_SPARKS, 100, 1)
 	target.staminaloss += 50
 	target.Stun(40)
 	target.jitteriness += 1000
