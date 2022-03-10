@@ -17,8 +17,8 @@
 	invocation = "AT ANY COST!"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_NECROMANCY //i could see why this wouldn't be necromancy but messing with souls or whatever. ectomancy?
-	cooldown_min = 1 SECONDS
 	charge_max = 1 SECONDS
+	cooldown_min = 1 SECONDS
 	level_max = 0
 
 /obj/effect/proc_holder/spell/self/tap/cast(list/targets, mob/living/user = usr)
