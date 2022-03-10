@@ -998,6 +998,34 @@
 
 	return bleed_rate
 
+/obj/item/bodypart/proc/get_part_wound_overlay()
+	if(!owner || HAS_TRAIT(owner, TRAIT_NOBLEED) || status != BODYPART_ORGANIC)
+		new_bleed_icon = null
+		return
+	if(owner.has_status_effect(/datum/status_effect/grouped/stasis))
+
+	var/bleed_rate = iter_part.get_part_bleed_rate()
+
+	var/new_bleed_icon
+	if(owner.has_status_effect(/datum/status_effect/grouped/stasis))
+
+	switch(iter_bleed_rate)
+		if(-INFINITY to 0.5)
+			new_bleed_icon = null
+		if(0.5 to 1.5)
+			new_bleed_icon = "[iter_part.body_zone]_1"
+		if(1.5 to 3.25)
+			new_bleed_icon = "[iter_part.body_zone]_2"
+			if(body_position == LYING_DOWN)
+				new_bleed_icon += "s"
+		if(3.25 to INFINITY)
+			new_bleed_icon = "[iter_part.body_zone]_3"
+
+	if(new_bleed_icon != iter_part.bleed_icon_severity)
+		update_bleed_icons = TRUE
+		iter_part.bleed_icon_severity = new_bleed_icon
+
+
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart
  *

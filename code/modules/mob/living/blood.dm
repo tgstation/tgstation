@@ -1,5 +1,9 @@
 #define BLOOD_DRIP_RATE_MOD 90 //Greater number means creating blood drips more often while bleeding
 
+#define BLEED_OVERLAY_NONE 1
+#define BLEED_OVERLAY_MED
+#define BLEED_OVERLAY_GUSH
+
 /****************************************************
 				BLOOD SYSTEM
 ****************************************************/
@@ -70,15 +74,15 @@
 
 		var/new_bleed_icon
 		switch(iter_bleed_rate)
-			if(-INFINITY to 1)
+			if(-INFINITY to 0.5)
 				new_bleed_icon = null
-			if(1 to 2)
+			if(0.5 to 1.5)
 				new_bleed_icon = "[iter_part.body_zone]_1"
-			if(2 to 3.25)
+			if(1.5 to 3.25)
 				new_bleed_icon = "[iter_part.body_zone]_2"
 				if(body_position == LYING_DOWN)
 					new_bleed_icon += "s"
-			if(4 to INFINITY)
+			if(3.25 to INFINITY)
 				new_bleed_icon = "[iter_part.body_zone]_3"
 
 		if(new_bleed_icon != iter_part.bleed_icon_severity)
