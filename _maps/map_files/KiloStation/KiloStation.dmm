@@ -40479,7 +40479,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
 	name = "Apiary";
-	req_one_access_txt = 0
+	req_one_access_txt = "22;35"
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel)
