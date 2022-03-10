@@ -19,7 +19,7 @@
 		var/chance = 100 - (max(get_dist(T,user),1)-1)*100/(range+1)
 		if(!prob(chance))
 			continue
-		T.rust_heretic_act(usr)
+		T.rust_heretic_act(user)
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small
 	name = "Rust Conversion"
