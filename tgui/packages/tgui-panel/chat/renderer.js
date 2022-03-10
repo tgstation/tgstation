@@ -328,10 +328,10 @@ class ChatRenderer {
             let working_value = attribute.nodeValue;
             // We can't do the "if it has no value it's truthy" trick
             // Because getAttribute returns "", not null. Hate IE
-            if (working_value === "true") {
+            if (working_value === "$true") {
               working_value = true;
             }
-            else if (working_value === "false") {
+            else if (working_value === "$false") {
               working_value = false;
             }
             else if (!isNaN(working_value)) {
