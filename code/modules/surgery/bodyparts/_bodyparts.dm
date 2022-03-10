@@ -1003,6 +1003,7 @@
 
 	return bleed_rate
 
+// how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
 #define BLEED_OVERLAY_LOW 0.5
 #define BLEED_OVERLAY_MED 1.5
 #define BLEED_OVERLAY_GUSH 3.25
