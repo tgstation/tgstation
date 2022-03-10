@@ -25,26 +25,22 @@
 			to_chat(caster, span_warning("You don't have a soul to bind!"))
 			return
 
-		var/obj/item/marked_item
-		for(var/obj/item/item in caster.held_items)
-			// I ensouled the nuke disk once. But it's probably a really mean tactic, so probably should discourage it.
-			if((item.item_flags & ABSTRACT))
-				continue
-			if(HAS_TRAIT(item, TRAIT_NODROP))
-				continue
-			if(SEND_SIGNAL(item, COMSIG_ITEM_IMBUE_SOUL, user) & COMPONENT_BLOCK_IMBUE)
-				continue
-
-			marked_item = item
-			to_chat(caster, span_green("You begin to focus your very being into [item]..."))
-			break
-
-		if(!marked_item)
-			to_chat(caster, span_warning("None of the items you hold are suitable for emplacement of your fragile soul."))
+		var/obj/item/marked_item = caster.get_active_held_item()
+		if(marked_item.item_flags & ABSTRACT)
+			return
+		if(HAS_TRAIT(marked_item, TRAIT_NODROP))
+			to_chat(caster, span_warning("[marked_item] is stuck to your hand - it wouldn't be a wise idea to place your soul into it."))
+			return
+		// I ensouled the nuke disk once.
+		// But it's probably a really mean tactic,
+		// so probably should discourage it.
+		if(SEND_SIGNAL(marked_item, COMSIG_ITEM_IMBUE_SOUL, user) & COMPONENT_BLOCK_IMBUE)
+			to_chat(caster, span_warning("[marked_item] is not suitable for emplacement of your fragile soul."))
 			return
 
 		playsound(user, 'sound/effects/pope_entry.ogg', 100)
 
+		to_chat(caster, span_green("You begin to focus your very being into [marked_item]..."))
 		if(!do_after(caster, 5 SECONDS, target = marked_item, timed_action_flags = IGNORE_HELD_ITEM))
 			to_chat(caster, span_warning("Your soul snaps back to your body as you stop ensouling [marked_item]!"))
 			return
