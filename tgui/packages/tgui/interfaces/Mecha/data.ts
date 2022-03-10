@@ -1,18 +1,5 @@
 export const KelvinZeroCelcius = 273.15;
 
-export enum MaintPanels {
-  Main = 0,
-  StockParts = 1,
-  Access = 2,
-}
-
-export const AlertFlagsShown = [
-  "ADDING_ACCESS_POSSIBLE",
-  "ADDING_MAINT_ACCESS_POSSIBLE",
-  "LIGHTS_ON",
-  "HAS_LIGHTS",
-];
-
 export const InternalDamageToDamagedDesc = {
   "MECHA_INT_FIRE": "Internal fire detected",
   "MECHA_INT_TEMP_CONTROL": "Temperature control inactive",
