@@ -1,20 +1,19 @@
 /obj/effect/proc_holder/spell/targeted/lichdom
 	name = "Bind Soul"
-	desc = "A dark necromantic pact that can forever bind your soul to an \
-		item of your choosing. So long as the item remains \
-		intact, you can revive from death - even if your body is completely destroyed. \
-		With every revival, the time between reincarnations grows steadily with use, \
-		along with the weakness that the new skeleton body will experience upon 'birth'."
+	desc = "A spell that binds your soul to an item in your hands. \
+		Binding your soul to an item will turn you into an immortal Lich. \
+		So long as the item remains intact, you will revive from death, \
+		no matter the circumstances."
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "skeleton"
 	centcom_cancast = FALSE
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_NECROMANCY
-	level_max = 0 //cannot be improved
+	level_max = 0 // Cannot be improved (yet)
 	range = -1
-	charge_max = 10
-	cooldown_min = 10
+	charge_max = 1 SECONDS
+	cooldown_min = 1 SECONDS
 	clothes_req = FALSE
 	include_user = TRUE
 
@@ -32,8 +31,8 @@
 			to_chat(caster, span_warning("[marked_item] is stuck to your hand - it wouldn't be a wise idea to place your soul into it."))
 			return
 		// I ensouled the nuke disk once.
-		// But it's probably a really mean tactic,
-		// so probably should discourage it.
+		// But it's a really mean tactic,
+		// so we probably should disallow it.
 		if(SEND_SIGNAL(marked_item, COMSIG_ITEM_IMBUE_SOUL, user) & COMPONENT_BLOCK_IMBUE)
 			to_chat(caster, span_warning("[marked_item] is not suitable for emplacement of your fragile soul."))
 			return

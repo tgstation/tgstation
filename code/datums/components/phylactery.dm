@@ -11,9 +11,11 @@
 	/// The respawn timer of the phylactery.
 	var/base_respawn_time = 3 MINUTES
 	/// How much time is added on to the respawn time per revival.
-	var/time_per_resurrection = 1 MINUTES
+	var/time_per_resurrection = 0
+	/// How much stun (paralyze) is caused on respawn per revival.
+	var/stun_per_resurrection = 20 SECONDS
 	/// The color of the phylactery itself. Applied on creation.
-	var/phylactery_color = "#003300"
+	var/phylactery_color = COLOR_VERY_DARK_LIME_GREEN
 
 	// Internal vars.
 	/// The number of ressurections that have occured from this phylactery.
@@ -24,8 +26,9 @@
 /datum/component/phylactery/Initialize(
 	datum/mind/lich_mind,
 	base_respawn_time = 3 MINUTES,
-	time_per_resurrection = 1 MINUTES,
-	phylactery_color = "#003300",
+	time_per_resurrection = 0 SECONDS,
+	stun_per_resurrection = 20 SECONDS,
+	phylactery_color = COLOR_VERY_DARK_LIME_GREEN,
 )
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -37,6 +40,7 @@
 	src.lich_mind = lich_mind
 	src.base_respawn_time = base_respawn_time
 	src.time_per_resurrection = time_per_resurrection
+	src.stun_per_resurrection = stun_per_resurrection
 	src.phylactery_color = phylactery_color
 
 	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, .proc/on_lich_mind_lost)
@@ -69,7 +73,7 @@
 /**
  * Signal proc for [COMSIG_PARENT_EXAMINE].
  *
- * Gives some flavor fort he phylactery on examine.
+ * Gives some flavor for the phylactery on examine.
  */
 /datum/component/phylactery/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -146,8 +150,7 @@
 	UnregisterSignal(source, COMSIG_LIVING_REVIVE)
 
 /**
- * Actuall undergo the process of reviving the lynch
- * at the site of the phylacery.
+ * Actually undergo the process of reviving the lich at the site of the phylacery.
  *
  * Arguments
  * * corpse - optional, the old body of the lich. Can be QDELETED or null.
@@ -189,7 +192,7 @@
 
 	to_chat(lich, span_green("Your bones clatter and shudder as you are pulled back into this world!"))
 	num_resurrections++
-	lich.Paralyze(20 SECONDS * num_resurrections)
+	lich.Paralyze(stun_per_resurrection * num_resurrections)
 
 	if(!QDELETED(corpse))
 		UnregisterSignal(corpse, COMSIG_LIVING_REVIVE)
