@@ -105,6 +105,12 @@
  *
  * If the mob containing our lich's mind is killed,
  * we can initiate the revival process.
+ *
+ * We use the global mob death signal here,
+ * instead of registering the normal death signal,
+ * as it's entirely possible the wizard mindswaps
+ * or is gibbed or something wacky happens, and
+ * we need to make sure WHOEVER has our mind is dead
  */
 /datum/component/phylactery/proc/check_if_lich_died(datum/source, mob/living/died, gibbed)
 	SIGNAL_HANDLER
