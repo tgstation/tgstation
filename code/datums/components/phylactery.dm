@@ -162,6 +162,7 @@
 	if(!istype(parent_turf))
 		CRASH("[type] - revive_lich was called when the phylactery was in an invalid location (nullspace?) (was in: [parent_turf]).")
 
+	revive_timer = null
 	var/mob/living/carbon/human/lich = new(parent_turf)
 
 	var/obj/item/organ/brain/new_lich_brain = lich.getorganslot(ORGAN_SLOT_BRAIN)
