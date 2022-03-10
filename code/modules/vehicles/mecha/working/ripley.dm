@@ -155,7 +155,6 @@
 	name = "\improper APLU \"Big Bess\""
 	icon_state = "hauler"
 	base_icon_state = "hauler"
-	max_equip = 2
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
 
 /obj/vehicle/sealed/mecha/working/ripley/cargo/Initialize(mapload)
