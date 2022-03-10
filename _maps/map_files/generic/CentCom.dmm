@@ -2875,12 +2875,12 @@
 	area_type = /area/syndicate_mothership;
 	dheight = 1;
 	dir = 8;
-	dwidth = 12;
-	height = 17;
+	dwidth = 10;
+	height = 18;
 	id = "syndicate_away";
 	name = "syndicate recon outpost";
 	roundstart_template = /datum/map_template/shuttle/infiltrator/basic;
-	width = 23
+	width = 21
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
@@ -5528,12 +5528,11 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/ert)
 "rd" = (
-/obj/structure/flora/grass/brown,
-/obj/effect/light_emitter{
-	set_cap = 1;
-	set_luminosity = 4
+/obj/structure/sign/warning/securearea{
+	desc = "A warning sign which reads 'FOURTH WALL'.";
+	name = "\improper FOURTH WALL"
 	},
-/turf/open/floor/plating/asteroid/snow/airless,
+/turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership)
 "re" = (
 /obj/item/paper/fluff/stations/centcom/disk_memo,
@@ -13768,18 +13767,6 @@
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
-"MD" = (
-/obj/effect/light_emitter{
-	set_cap = 1;
-	set_luminosity = 4
-	},
-/obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'FOURTH WALL'.";
-	name = "\improper FOURTH WALL";
-	pixel_x = -32
-	},
-/turf/open/floor/plating/asteroid/snow/airless,
-/area/syndicate_mothership)
 "ME" = (
 /obj/machinery/computer/camera_advanced{
 	dir = 4
@@ -28165,38 +28152,38 @@ hl
 hl
 hl
 hh
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+rd
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
+hh
 aa
 aa
 aa
@@ -28421,39 +28408,39 @@ hl
 hl
 hl
 hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
 hh
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
 aa
 aa
 aa
@@ -28678,38 +28665,38 @@ hl
 hl
 hl
 hl
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
-hh
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+hl
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+kt
+hl
+hl
+hl
+hl
 hh
 aa
 aa
@@ -28950,22 +28937,22 @@ hl
 hl
 hl
 hl
+kt
+kt
+kt
+kt
+kt
 hl
 hl
 hl
 hl
-kt
-MD
-kt
-kt
-kt
+hl
+hl
+hl
 kt
 kt
-kt
-kt
-kt
-kt
-kt
+hl
+hl
 hl
 hh
 aa
@@ -29204,14 +29191,12 @@ hl
 hl
 hl
 hl
+kt
+kt
+kt
+kt
 hl
-kt
-kt
-kt
-kt
-kt
-kt
-kt
+hl
 hl
 hl
 hl
@@ -29223,6 +29208,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -29460,8 +29447,7 @@ hl
 hl
 hl
 hl
-hl
-hl
+kt
 kt
 hl
 hl
@@ -29478,8 +29464,9 @@ hl
 hl
 hl
 hl
-hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -29717,8 +29704,6 @@ hl
 hl
 hl
 hl
-hl
-hl
 kt
 hl
 hl
@@ -29737,6 +29722,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -29970,12 +29957,10 @@ hl
 hl
 hl
 hl
-kt
-kt
-kt
-kt
-kt
-kt
+hl
+hl
+hl
+hl
 kt
 hl
 hl
@@ -29994,6 +29979,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -30227,13 +30214,11 @@ hl
 hl
 my
 hl
-hl
-hl
-hl
-hl
-hl
-hl
-hl
+kt
+kt
+kt
+kt
+kt
 hl
 hl
 hl
@@ -30251,6 +30236,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -30483,11 +30470,8 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
-hl
-hl
+kt
+kt
 hl
 hl
 hl
@@ -30508,6 +30492,9 @@ hl
 hl
 kt
 kt
+kt
+hl
+hl
 hl
 hh
 aa
@@ -30740,9 +30727,7 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
+kt
 hl
 hl
 hl
@@ -30764,6 +30749,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hl
 hh
@@ -30997,9 +30984,7 @@ hl
 hl
 hl
 hl
-nx
-hl
-hl
+kt
 hl
 hl
 hl
@@ -31021,6 +31006,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hl
 hh
@@ -31254,9 +31241,7 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
+kt
 hl
 hl
 hl
@@ -31278,6 +31263,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hl
 hh
@@ -31511,9 +31498,7 @@ hl
 hl
 my
 hl
-hl
-hl
-hl
+kt
 hl
 hl
 hl
@@ -31535,6 +31520,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hl
 hh
@@ -31768,11 +31755,8 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
-hl
-hl
+kt
+kt
 hl
 hl
 hl
@@ -31792,6 +31776,9 @@ hl
 hl
 hl
 kt
+kt
+kt
+hl
 hl
 hl
 hh
@@ -32026,12 +32013,11 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
-hl
-hl
-hl
+kt
+kt
+kt
+kt
+kt
 hl
 hl
 hl
@@ -32049,7 +32035,8 @@ hl
 hl
 hl
 kt
-kt
+hl
+hl
 hl
 hh
 aa
@@ -32287,9 +32274,7 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
+kt
 hl
 hl
 hl
@@ -32307,6 +32292,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -32539,13 +32526,11 @@ hl
 hl
 mz
 hl
-my
-kt
-kt
-kt
-kt
-kt
-kt
+hl
+hl
+hl
+hl
+hl
 kt
 hl
 hl
@@ -32564,6 +32549,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -32798,13 +32785,11 @@ mA
 hl
 hl
 hl
-hl
-hl
 nx
 hl
 hl
 kt
-hl
+kt
 hl
 hl
 hl
@@ -32821,6 +32806,8 @@ hl
 hl
 hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -33059,10 +33046,10 @@ hl
 hl
 hl
 hl
-hl
 kt
-hl
-hl
+kt
+kt
+kt
 hl
 ku
 hl
@@ -33075,9 +33062,9 @@ hl
 hl
 hl
 hl
-hl
-hl
 kt
+hl
+hl
 hl
 hh
 aa
@@ -33310,15 +33297,15 @@ kt
 kt
 hl
 mz
-mA
 hl
 hl
 hl
 hl
 hl
 hl
-kt
-kt
+hl
+hl
+hl
 kt
 nz
 uJ
@@ -33331,10 +33318,10 @@ hl
 hl
 hl
 hl
-hl
-hl
-hl
 kt
+kt
+hl
+hl
 hl
 hh
 aa
@@ -33569,7 +33556,7 @@ hl
 hl
 hl
 hl
-hl
+nx
 hl
 hl
 hl
@@ -33589,9 +33576,9 @@ kt
 kt
 kt
 kt
-kt
-kt
-kt
+hl
+hl
+hl
 hl
 hh
 aa
@@ -33827,7 +33814,7 @@ hl
 hl
 hl
 hl
-mA
+hl
 hl
 kt
 kt
@@ -33838,7 +33825,7 @@ nz
 uJ
 nz
 kt
-rd
+kt
 kt
 kt
 hl
