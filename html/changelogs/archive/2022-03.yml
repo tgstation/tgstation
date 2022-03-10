@@ -316,3 +316,18 @@
       up to you.
   tralezab:
   - balance: Nations can't roll other antags when it runs.
+2022-03-10:
+  Ebb-Real:
+  - bugfix: Ollieing onto empty space makes you fall like it should.
+  Fikou:
+  - bugfix: fixes mod plating being called armor in some places
+  LemonInTheDark:
+  - bugfix: Fixed two broken posters in the icebox underground
+  cacogen:
+  - qol: Attacking a machine as a monkey will now say if it did damage or not
+  san7890:
+  - bugfix: After a string of Nar'sie followers reportedly continuously "getting away
+      with it", Nanotrasen has decided to re-install the Chaplain's Altar back on
+      Tramstation.
+  - imageadd: You may now use the pensive emote in OOC chat, just like you would in
+      your favorite messaging app.
