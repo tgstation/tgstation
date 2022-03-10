@@ -114,7 +114,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	var/obj/item/card/id/card
 	if(isliving(user))
 		var/mob/living/living_user = user
-		card = living_user.get_idcard(TRUE)
+		card = living_user.get_idcard(hand_first = TRUE)
 	if(card?.registered_account)
 		current_user = card.registered_account
 		data["user"] = list()
@@ -240,19 +240,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				balloon_alert(usr, "select a channel first!")
 				return TRUE
 			var/prototype_channel = params["current"]
-			for(var/datum/newscaster/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
-				if(prototype_channel == potential_channel.channel_ID)
-					current_channel = potential_channel
-					break
-			var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, multiline = TRUE)
-			if(length(temp_message) <= 1)
-				return TRUE
-			if(temp_message)
-				feed_channel_message = temp_message
-			GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data(), 0, FALSE)
-			SSblackbox.record_feedback("amount", "newscaster_stories", 1)
-			feed_channel_message = ""
-			current_image = null
+			create_story(channel_name = prototype_channel)
 
 		if("togglePhoto")
 			if(current_image)
@@ -279,35 +267,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 			creating_channel = TRUE
 
-		if("channelName")
+		if("setChannelName")
 			var/pre_channel_name = params["channeltext"]
 			if(!pre_channel_name)
-				return
+				return TRUE
 			channel_name = pre_channel_name
 
-		if("channelDesc")
+		if("setChannelDesc")
 			var/pre_channel_desc = params["channeldesc"]
 			if(!pre_channel_desc)
-				return
+				return TRUE
 			channel_desc = pre_channel_desc
 
 		if("createChannel")
-			if(!channel_name)
-				return
-			for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
-				if(iterated_feed_channel.channel_name == channel_name)
-					tgui_alert(usr, "ERROR: Feed Channel with that name already exists on the Network.", list("Okay"))
-					return TRUE
-			if(!channel_desc)
-				return TRUE
-			var/locked = params["publicmode"]
-			if(isnull(locked))
-				return TRUE
-			var/choice = tgui_alert(usr, "Please confirm Feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
-			if(choice == "Confirm")
-				GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc, locked)
-				SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
-			creating_channel = FALSE
+			var/locked = params["lockedmode"]
+			create_channel(locked)
+			return TRUE
 
 		if("cancelCreation")
 			creating_channel = FALSE
@@ -315,13 +290,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("storyCensor")
-			if (!params["secure"])
-				say("Clearance not found.")
-				return TRUE
 			var/obj/item/card/id/id_card
 			if(isliving(usr))
 				var/mob/living/living_user = usr
-				id_card = living_user.get_idcard(TRUE)
+				id_card = living_user.get_idcard(hand_first = TRUE)
 			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
@@ -372,7 +344,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					current_message = iterated_feed_message
 			return TRUE
 
-		if("commentBody")
+		if("setCommentBody")
 			var/pre_comment_text = params["commenttext"]
 			if(!pre_comment_text)
 				return TRUE
@@ -380,19 +352,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("createComment")
-			if(!comment_text)
-				creating_comment = FALSE
-				return TRUE
-			if(!current_user)
-				creating_comment = FALSE
-				return TRUE
-			var/datum/newscaster/feed_comment/new_feed_comment = new/datum/newscaster/feed_comment
-			new_feed_comment.author = current_user.account_holder
-			new_feed_comment.body = comment_text
-			new_feed_comment.time_stamp = station_time_timestamp()
-			current_message.comments += new_feed_comment
-			usr.log_message("(as [current_user.account_holder]) commented on message [current_message.returnBody(-1)] -- [current_message.body]", LOG_COMMENT)
-			creating_comment = FALSE
+			create_comment()
 			return TRUE
 
 		if("printNewspaper")
@@ -437,11 +397,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			GLOB.request_list.Remove(active_request)
 			qdel(active_request)
 			return TRUE
+
 		if("clear")
 			if(current_user)
 				current_user = null
 				say("Account Reset.")
 				return TRUE
+
 		if("deleteRequest")
 			if(!active_request || !current_user)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
@@ -452,10 +414,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)
 			return TRUE
+
 		if("bountyVal")
 			bounty_value = text2num(params["bountyval"])
 			if(!bounty_value)
 				bounty_value = 1
+
 		if("bountyText")
 			var/pre_bounty_text = params["bountytext"]
 			if(!pre_bounty_text)
@@ -607,6 +571,52 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		say("Attention! Wanted issue distributed!")
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
+/obj/machinery/newscaster/proc/create_channel(channel_locked)
+	if(!channel_name)
+		return
+	for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
+		if(iterated_feed_channel.channel_name == channel_name)
+			tgui_alert(usr, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
+			return TRUE
+	if(!channel_desc)
+		return TRUE
+	if(isnull(channel_locked))
+		return TRUE
+	var/choice = tgui_alert(usr, "Please confirm feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
+	if(choice == "Confirm")
+		GLOB.news_network.CreateFeedChannel(channel_name, current_user.account_holder, channel_desc, locked = channel_locked)
+		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
+	creating_channel = FALSE
+
+/obj/machinery/newscaster/proc/create_comment()
+	if(!comment_text)
+		creating_comment = FALSE
+		return TRUE
+	if(!current_user)
+		creating_comment = FALSE
+		return TRUE
+	var/datum/newscaster/feed_comment/new_feed_comment = new/datum/newscaster/feed_comment
+	new_feed_comment.author = current_user.account_holder
+	new_feed_comment.body = comment_text
+	new_feed_comment.time_stamp = station_time_timestamp()
+	current_message.comments += new_feed_comment
+	usr.log_message("(as [current_user.account_holder]) commented on message [current_message.returnBody(-1)] -- [current_message.body]", LOG_COMMENT)
+	creating_comment = FALSE
+
+/obj/machinery/newscaster/proc/create_story(channel_name)
+	for(var/datum/newscaster/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
+		if(channel_name == potential_channel.channel_ID)
+			current_channel = potential_channel
+			break
+	var/temp_message = tgui_input_text(usr, "Write your Feed story", "Network Channel Handler", feed_channel_message, multiline = TRUE)
+	if(length(temp_message) <= 1)
+		return TRUE
+	if(temp_message)
+		feed_channel_message = temp_message
+	GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", current_user?.account_holder, current_channel.channel_name, send_photo_data(), adminMessage = FALSE, allow_comments = TRUE)
+	SSblackbox.record_feedback("amount", "newscaster_stories", 1)
+	feed_channel_message = ""
+	current_image = null
 
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"

@@ -183,7 +183,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/message_count = 0
 
 /datum/newscaster/feed_network/New()
-	CreateFeedChannel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!" , 1, hardset_channel = 1000)
+	CreateFeedChannel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
 	wanted_issue = new /datum/newscaster/wanted_message
 
 /datum/newscaster/feed_network/proc/CreateFeedChannel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel)
