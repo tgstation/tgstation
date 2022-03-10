@@ -1742,6 +1742,7 @@
 #include "code\game\objects\structures\signs\_signs.dm"
 #include "code\game\objects\structures\signs\signs_departments.dm"
 #include "code\game\objects\structures\signs\signs_maps.dm"
+#include "code\game\objects\structures\signs\signs_misc.dm"
 #include "code\game\objects\structures\signs\signs_warning.dm"
 #include "code\game\objects\structures\transit_tubes\station.dm"
 #include "code\game\objects\structures\transit_tubes\transit_tube.dm"

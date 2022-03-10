@@ -1,0 +1,4 @@
+author: "AtoriBirb"
+delete-after: True
+changes: 
+  - rscadd: "A new intermediate tag for sec huds called \"Suspected\" that allows officers to identify peoples of interest without raising their threat to where beepsky will chase and attempt to apprehend them. Shows up as an orange '!'."

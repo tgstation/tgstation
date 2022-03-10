@@ -8,8 +8,8 @@
 	size = 16
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	required_access = ACCESS_HEADS
-	transfer_access = ACCESS_RD
+	required_access = list(ACCESS_HEADS, ACCESS_RND)
+	transfer_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
 	/// Access needed to lock/unlock the console
