@@ -108,8 +108,8 @@
 	overlays_standing[WOUND_LAYER] = wound_overlay
 
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
-		if(iter_part.bleed_icon_severity)
-			wound_overlay.add_overlay(iter_part.bleed_icon_severity)
+		if(iter_part.bleed_overlay_icon)
+			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 
 	apply_overlay(WOUND_LAYER)
 

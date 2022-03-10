@@ -76,8 +76,8 @@
 	var/species_flags_list = list()
 	///the type of damage overlay (if any) to use when this bodypart is bruised/burned.
 	var/dmg_overlay_type
-
-	var/bleed_icon_severity
+	/// If we're bleeding, which icon are we displaying on this part
+	var/bleed_overlay_icon
 
 	//Damage messages used by help_shake_act()
 	var/light_brute_msg = "bruised"
@@ -1012,8 +1012,8 @@
 	if(!owner)
 		return
 	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || status != BODYPART_ORGANIC)
-		if(bleed_icon_severity)
-			bleed_icon_severity = null
+		if(bleed_overlay_icon)
+			bleed_overlay_icon = null
 			owner.update_wound_overlays()
 		return
 
@@ -1036,8 +1036,8 @@
 			else
 				new_bleed_icon = "[body_zone]_3"
 
-	if(new_bleed_icon != bleed_icon_severity)
-		bleed_icon_severity = new_bleed_icon
+	if(new_bleed_icon != bleed_overlay_icon)
+		bleed_overlay_icon = new_bleed_icon
 		return TRUE
 
 #undef BLEED_OVERLAY_LOW
