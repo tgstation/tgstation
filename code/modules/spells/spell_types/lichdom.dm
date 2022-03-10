@@ -47,8 +47,19 @@
 
 		marked_item.AddComponent(/datum/component/phylactery, caster.mind)
 
-		to_chat(caster, span_userdanger("With a hideous feeling of emptiness you watch in horrified fascination as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! As your organs crumble to dust in your fleshless chest you come to terms with your choice. You're a lich!"))
 		caster.set_species(/datum/species/skeleton)
+		to_chat(caster, span_userdanger("With a hideous feeling of emptiness you watch in horrified fascination \
+			as skin sloughs off bone! Blood boils, nerves disintegrate, eyes boil in their sockets! \
+			As your organs crumble to dust in your fleshless chest you come to terms with your choice. \
+			You're a lich!"))
+
+		if(iscarbon(caster))
+			var/mob/living/carbon/carbon_mob = lich_mind.current
+			var/obj/item/organ/brain/lich_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
+			if(lich_brain) // This prevents MMIs being used to stop lich revives
+				lich_brain.organ_flags &= ~ORGAN_VITAL
+				lich_brain.decoy_override = TRUE
+
 		if(ishuman(caster))
 			var/mob/living/carbon/human/human_caster = caster
 			human_caster.dropItemToGround(human_caster.w_uniform)
@@ -58,6 +69,7 @@
 			human_caster.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/black(human_caster), ITEM_SLOT_HEAD)
 			human_caster.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(human_caster), ITEM_SLOT_ICLOTHING)
 
-		// you only get one phylactery.
+		// You only get one phylactery.
 		caster.mind.RemoveSpell(src)
+		// And no soul. You just sold it
 		ADD_TRAIT(caster, TRAIT_NO_SOUL, LICH_TRAIT)

@@ -39,13 +39,6 @@
 	src.time_per_ressurection = time_per_ressurection
 	src.phylactery_color = phylactery_color
 
-	if(iscarbon(lich_mind.current))
-		var/mob/living/carbon/immortal_mob = lich_mind.current
-		var/obj/item/organ/brain/lich_brain = immortal_mob.getorganslot(ORGAN_SLOT_BRAIN)
-		if(lich_brain) // This prevents MMIs being used to stop lich revives
-			lich_brain.organ_flags &= ~ORGAN_VITAL
-			lich_brain.decoy_override = TRUE
-
 	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, .proc/on_lich_mind_lost)
 	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, .proc/check_if_lich_died)
 
@@ -154,7 +147,9 @@
  * * corpse - optional, the old body of the lich. Can be QDELETED or null.
  */
 /datum/component/phylactery/proc/revive_lich(mob/living/corpse)
-	if(lich_mind.current?.stat != DEAD)
+	// If we have a current, and it's not dead, don't yoink their mind
+	// But if we don't have a current (body destroyed) move on like normal
+	if(lich_mind.current && lich_mind.current.stat != DEAD)
 		CRASH("[type] - revive_lich was called when the lich's mind had a current mob that wasn't dead.")
 
 	var/turf/parent_turf = get_turf(parent)
