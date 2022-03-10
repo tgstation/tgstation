@@ -1,58 +1,5 @@
 /***************** WELCOME TO MECHA.DM, ENJOY YOUR STAY *****************/
 
-//tivi todo remove before pr
-//further changes
-// make helper for fetching from mech hands
-//change all istype combat to a flag
-//the concealed bay should come back as alllowing standard mechs to equip all weapons? + even more max upgrades?
-//by-weapon slowdowns
-// honker menu and sound playing
-// make ody sleeper and syringe gun html tgui
-//weapon/ballistic/action should be in /weapon/action for a per-shot basis
-//retypecasting in can_attach args for honker
-//try_attach_part
-//mecha_parts abuse by equipment, construction parts, tracker
-//mining scanner proceses way too fast and has cooldown
-//convert "abilities" to utility modules
-//mechs can be piloted when pilot is crit
-//mech medical equipment processes randomly in places it shouldnt
-//use a proper initial projectiles var instead of inital()
-//mecha armor is a fucking mess, and goofs armor rework could break even more
-//armor slowdowns have less slowdown the less armor you have, can not be implemented rn because gygax uses initial()?
-//change the exosuit printer to have sections for the different equipment types(?)
-//obj/sealed/mecha/attackby/() is mess
-// max_ammo() on combat mechs is shitcode
-//medical sleepers dont use the mech do after and copypaste instead
-//use pretty defines for mecha ballistic ammo types
-//mecha ui act maint mode puts the thing in your hands
-// more damagable parts in try damage component
-// explosions do full damage to equipment
-//weapons become disabled at 1 health
-//mining scanner make disableable
-// not all ui_act have the proper args
-// add the bitfield editor for the int_damage_possible bitfield
-// ore storage module can just use chassis instead of host
-// air managment for open top ripleys is fucking ugly
-// injecting someone in sleeper with syringe gun makes runtime
-// /obj/effect/temp_visual/mining_overlay is so fucking bad lmao
-// int damage
-// plasma generator examine() should show how much plasma
-// "Set cabin pressure" uses tgui textbox
-//gravsling push mode is broken, sho0uld use throw instead
-//mecha_do_after should use extra_checks, args?
-//view_dna make it a library style pr popup in middle
-//examine does not show what part things are mounted on
-//collect_ore is horrid
-//durand shield to utility and deshitcode
-//rcd can start removal when not facing the proper direction
-//the gas and ion thruster effects are just scattered everywhere
-//using honker creates a runtime
-//getting into savanna after using honker caused a runtime
-//process() using mecha equip should have turn on() and turn off() procs instead
-//syringe gun generator processes
-//use modal for UI popups
-//desnowflake the Ui elements
-
 /**
  * Mechs are now (finally) vehicles, this means you can make them multicrew
  * They can also grant select ability buttons based on occupant bitflags
@@ -840,6 +787,54 @@
 ///////////////////////////////////
 ////////  Internal damage  ////////
 ///////////////////////////////////
+
+/// tries to repair any internal damage and plays fluff for it
+/obj/vehicle/sealed/mecha/proc/try_repair_int_damage(mob/user, flag_to_heal)
+	balloon_alert(user, get_int_repair_fluff_start(flag_to_heal))
+	log_message("[key_name(user)] starting internal damage repair for flag [flag_to_heal]", LOG_MECHA)
+	if(!do_after(user, 10 SECONDS, src))
+		balloon_alert(user, get_int_repair_fluff_fail(flag_to_heal))
+		log_message("Internal damage repair for flag [flag_to_heal] failed.", LOG_MECHA, color="red")
+		return
+	clear_internal_damage(flag_to_heal)
+	balloon_alert(user, get_int_repair_fluff_end(flag_to_heal))
+	log_message("Finished internal damage repair for flag [flag_to_heal]", LOG_MECHA)
+
+///gets the starting balloon alert flufftext
+/obj/vehicle/sealed/mecha/proc/get_int_repair_fluff_start(flag)
+	switch(flag)
+		if(MECHA_INT_FIRE)
+			return "Activating internal fire supression..."
+		if(MECHA_INT_TEMP_CONTROL)
+			return "Resetting temperature module..."
+		if(MECHA_INT_TANK_BREACH)
+			return "Activating tank sealant..."
+		if(MECHA_INT_CONTROL_LOST)
+			return "Recalibrating coordination system..."
+
+///gets the on-fail balloon alert flufftext
+/obj/vehicle/sealed/mecha/proc/get_int_repair_fluff_end(flag)
+	switch(flag)
+		if(MECHA_INT_FIRE)
+			return "Internal fire supressed"
+		if(MECHA_INT_TEMP_CONTROL)
+			return "Temperature chip reactivated"
+		if(MECHA_INT_TANK_BREACH)
+			return "Air tank sealed"
+		if(MECHA_INT_CONTROL_LOST)
+			return "Coordination re-established"
+
+///gets the successful finish balloon alert flufftext
+/obj/vehicle/sealed/mecha/proc/get_int_repair_fluff_fail(flag)
+	switch(flag)
+		if(MECHA_INT_FIRE)
+			return "Fire supression canceled"
+		if(MECHA_INT_TEMP_CONTROL)
+			return "Reset aborted"
+		if(MECHA_INT_TANK_BREACH)
+			return "Sealant deactivated"
+		if(MECHA_INT_CONTROL_LOST)
+			return "Recalibration failed"
 
 /obj/vehicle/sealed/mecha/proc/set_internal_damage(int_dam_flag)
 	internal_damage |= int_dam_flag

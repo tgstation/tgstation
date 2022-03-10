@@ -22,7 +22,7 @@
 			return facing_modifiers[MECHA_FRONT_ARMOUR]
 	return facing_modifiers[MECHA_SIDE_ARMOUR] //if its not a front hit or back hit then assume its from the side
 
-
+///tries to deal internal damaget depending on the damage amount
 /obj/vehicle/sealed/mecha/proc/try_deal_internal_damage(damage)
 	if(damage < internal_damage_threshold)
 		return
@@ -33,6 +33,7 @@
 	if(internal_damage_to_deal)
 		set_internal_damage(pick(bitfield_to_list(internal_damage_to_deal)))
 
+/// tries to damage mech equipment depending on damage and where is being targetted
 /obj/vehicle/sealed/mecha/proc/try_damage_component(damage, def_zone)
 	if(damage < component_damage_threshold)
 		return

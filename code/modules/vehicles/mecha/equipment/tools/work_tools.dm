@@ -257,6 +257,7 @@
 		"mode" = get_mode_name(),
 	)
 
+/// fetches the mode name to display in the UI
 /obj/item/mecha_parts/mecha_equipment/rcd/proc/get_mode_name()
 	switch(mode)
 		if(MODE_DECONSTRUCT)
