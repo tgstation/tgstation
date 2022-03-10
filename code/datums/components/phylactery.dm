@@ -58,12 +58,12 @@
 	// Stationloving items should really never be made a phylactery so I feel safe in doing this
 	qdel(obj_parent.GetComponent(/datum/component/stationloving))
 
-	UnregisterSignal(lich_mind.current, COMSIG_LIVING_REVIVE)
-	lich_mind = null
-
-	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
 	UnregisterSignal(obj_parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
+	// Sweep up any revive signals left on the mind's current
+	UnregisterSignal(lich_mind.current, COMSIG_LIVING_REVIVE)
 
+	lich_mind = null
 	return ..()
 
 /**
