@@ -1263,6 +1263,7 @@
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = 50
+	siemens_coefficient = 0
 	slowdown_inactive = 0.5
 	slowdown_active = 0
 	allowed_suit_storage = list(
@@ -1311,6 +1312,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = 1000
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0
+	siemens_coefficient = 0
 	slowdown_inactive = 0
 	slowdown_active = 0
 	allowed_suit_storage = list(
