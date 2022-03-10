@@ -36,6 +36,7 @@ SUBSYSTEM_DEF(trading_card_game)
 /datum/controller/subsystem/trading_card_game/proc/clearCards()
 	loaded = FALSE
 	cached_cards = list()
+	keywords = list()
 
 ///Reloads all card files
 /datum/controller/subsystem/trading_card_game/proc/reloadAllCardFiles()
@@ -45,17 +46,21 @@ SUBSYSTEM_DEF(trading_card_game)
 
 ///Loads the contents of a json file into our global card list
 /datum/controller/subsystem/trading_card_game/proc/loadKeywordFile(filename, directory = "strings/tcg")
-	var/list/keyword = json_decode(file2text("[directory]/[filename]"))
-	keywords += keyword
+	var/list/keyword_data = json_decode(file2text("[directory]/[filename]"))
+	for(var/keyword in keyword_data)
+		if(keywords[keyword])
+			stack_trace("Dupe detected, [keyword] was defined by [directory]/[filename] after it already had a value!")
+			continue
+		keywords[keyword] = keyword_data[keyword]
 
 ///Styles our keywords, converting them from just the raw text to the output we want
 /datum/controller/subsystem/trading_card_game/proc/styleKeywords()
-	// Add hover logic to the text
+	// Add the tooltip component to our text, make it pretty
 	for(var/keyword in keywords)
 		var/tooltip_text = keywords[keyword]
-		keywords[keyword] = "<div class=\"tooltip\">[keyword]<span class=\"tooltiptext\">[tooltip_text]</span></div>"
+		keywords[keyword] = "<span data-component=\"Tooltip\" data-content=\"[tooltip_text]\"><span class=\"tooltip\">[keyword]</span></span>"
 
-///Takes a string as input. Searches it for
+///Takes a string as input. Searches it for keywords in the pattern {$keyword}, and replaces them with their expanded form, generated above
 /datum/controller/subsystem/trading_card_game/proc/resolve_keywords(search_through)
 	var/starting_text = search_through
 	while(TRUE)
