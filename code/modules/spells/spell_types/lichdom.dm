@@ -21,6 +21,10 @@
 /obj/effect/proc_holder/spell/targeted/lichdom/cast(list/targets, mob/user = usr)
 	for(var/mob/living/caster in targets)
 
+		if(HAS_TRAIT(caster, TRAIT_NO_SOUL))
+			to_chat(caster, span_warning("You don't have a soul to bind!"))
+			return
+
 		var/obj/item/marked_item
 		for(var/obj/item/item in caster.held_items)
 			// I ensouled the nuke disk once. But it's probably a really mean tactic, so probably should discourage it.
