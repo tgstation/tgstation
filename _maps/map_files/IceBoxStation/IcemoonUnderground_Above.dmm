@@ -3621,7 +3621,7 @@
 	},
 /area/maintenance/aft/lesser)
 "lG" = (
-/obj/structure/sign/poster/contraband{
+/obj/structure/sign/poster/contraband/random{
 	pixel_y = 32
 	},
 /obj/structure/cable,
@@ -15501,7 +15501,7 @@
 	dir = 8
 	},
 /obj/machinery/washing_machine,
-/obj/structure/sign/poster/official{
+/obj/structure/sign/poster/official/random{
 	pixel_y = 32
 	},
 /turf/open/floor/iron/cafeteria,

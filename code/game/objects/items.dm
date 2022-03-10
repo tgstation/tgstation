@@ -239,7 +239,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
-	if(mapload)
+	if(mapload && !GLOB.steal_item_handler.generated_items)
 		add_stealing_item_objective()
 
 /obj/item/Destroy(force)
