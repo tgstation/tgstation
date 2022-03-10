@@ -51,6 +51,13 @@
 #define TANK_FRAGMENT_PRESSURE (40.*ONE_ATMOSPHERE)
 /// Range scaling constant for tank explosions. Calibrated so that a TTV assembled using two 70L tanks will hit the maxcap at at least 160atm.
 #define TANK_FRAGMENT_SCALE (84.*ONE_ATMOSPHERE)
+/// Denotes that our tank is overpressurized simply from gas merging.
+#define TANK_MERGE_OVERPRESSURE "tank_overpressure"
+// Indices for the reaction_results returned by explosion_information()
+/// Reactions that have happened in the tank.
+#define TANK_RESULTS_REACTION 1
+/// Additional information of the tank.
+#define TANK_RESULTS_MISC 2
 
 //MULTIPIPES
 //IF YOU EVER CHANGE THESE CHANGE SPRITES TO MATCH.
