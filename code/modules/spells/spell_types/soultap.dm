@@ -24,7 +24,7 @@
 
 /obj/effect/proc_holder/spell/self/tap/cast(list/targets, mob/living/user = usr)
 	if(HAS_TRAIT(user, TRAIT_NO_SOUL))
-		to_chat(user, span_danger("You have no soul to tap into!"))
+		to_chat(user, span_warning("You have no soul to tap into!"))
 		return
 
 	to_chat(user, span_danger("Your body feels drained and there is a burning pain in your chest."))
