@@ -1,21 +1,20 @@
 /**
  * Bump click bespoke element
  *
- * Simulates a click on the attached atom when it's bumped, only if an item in the bumper's hand slots has a specific tool_behaviour, or
- * is a specific item or its subtypes or if the active hand slot is empty and empty-handedness is allowed.
+ * Simulates a click on the attached atom when it's bumped, if the bumper and their active object meet certain criteria.
  */
 /datum/element/bump_click
 	element_flags = ELEMENT_BESPOKE | ELEMENT_DETACH
 	id_arg_index = 2
-	///Behaviours to look for in bumper's in-hand objects before attacking the attached atom with one.
+	///Tool behaviours to check for on the bumper's active held item before clicking the attached atom with it.
 	var/list/tool_behaviours
-	///Tool types to look for in bumper's in-hand objects before attacking the attached atom with one.
+	///Types (and their subtypes) of item to look for in the bumper's active hand before clicking the attached atom.
 	var/list/tool_types
-	///Do clicks with an empty active hand go through?
+	///Click with an empty active hand?
 	var/allow_unarmed = FALSE
-	///Do clicks on combat mode go through?
+	///Click with combat mode on?
 	var/allow_combat = FALSE
-	///We no longer give a shit about tool_types or tool_behaviours and will click with any held item.
+	///Click with any item?
 	var/allow_any = TRUE
 
 /datum/element/bump_click/Attach(datum/target, list/tool_behaviours, list/tool_items, allow_unarmed = FALSE, allow_combat = FALSE, allow_any = FALSE)
