@@ -46,20 +46,21 @@
 
 	return FALSE
 
-/datum/element/bump_click/proc/use_tool(atom/source, mob/bumper)
+/datum/element/bump_click/proc/use_tool(atom/source, mob/living/bumper)
 	SIGNAL_HANDLER
 
-	if(isliving(bumper))
-		var/mob/living/bumping = bumper
-		if(bumping.combat_mode && !allow_combat)
-			return
-	var/obj/item/held_item = bumper.get_active_held_item()
+	if(!isliving(bumper))
+		return
+	var/mob/living/bumping = bumper
+	if(bumping.combat_mode && !allow_combat)
+		return
+	var/obj/item/held_item = bumping.get_active_held_item()
 	if(!held_item) //Not holding anything in active hand, so no tool to check
 		if(allow_unarmed)
-			INVOKE_ASYNC(bumper, /mob.proc/ClickOn, source) //Click with empty active hand
+			INVOKE_ASYNC(bumping, /mob.proc/ClickOn, source) //Click with empty active hand
 		return
 	if(allow_any)
-		INVOKE_ASYNC(bumper, /mob.proc/ClickOn, source) //Click with whatever we're holding
+		INVOKE_ASYNC(bumping, /mob.proc/ClickOn, source) //Click with whatever we're holding
 		return
 	if(check_tool(held_item))
-		INVOKE_ASYNC(bumper, /mob.proc/ClickOn, source) //Click with approved item
+		INVOKE_ASYNC(bumping, /mob.proc/ClickOn, source) //Click with approved item
