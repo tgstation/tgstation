@@ -269,7 +269,7 @@
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
 	tastes = list("cobwebs" = 1)
-	foodtypes = MEAT 
+	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spiderling
@@ -949,3 +949,11 @@
 	icon_state = "ready_donk_warm_mex"
 	tastes = list("enchiladas" = 2, "laziness" = 1)
 	foodtypes = GRAIN | DAIRY | MEAT | VEGETABLES | JUNKFOOD
+
+/obj/item/food/pierogis
+	name = "pierogis"
+	desc = "Potato and cheese dumplings, straight from Space Kiev. Served with caramelized onions and a healthy dallop of sour cream."
+	icon_state = "pierogis"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/protein = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("onions" = 3, "cream cheese" = 2, "sour cream" = 2, "potatoes" = 1)
+	foodtypes = GRAIN | DAIRY | VEGETABLES

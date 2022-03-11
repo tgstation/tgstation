@@ -237,3 +237,16 @@
 	)
 	result = /obj/item/food/bechamel_sauce
 	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/piesrogis
+	name = "Pierogis"
+	time = 40
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/datum/reagent/consumable/cream = 10,
+		/obj/item/food/cheese = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	result = /obj/item/food/pierogis
+	subcategory = CAT_MISCFOOD
