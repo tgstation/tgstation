@@ -571,7 +571,7 @@
 /// Initially "AUGMENTS", this was repurposed to be a catch-all bodyparts flag - 30
 #define BODYPARTS_LAYER BODY_ADJ_LAYER + 1
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER BODYPARDS_LAYER + 1
+#define BODY_BEHIND_LAYER BODYPARTS_LAYER + 1
 /// Mutations layer - Tk headglows, cold resistance glow, etc - 32
 #define MUTATIONS_LAYER BODY_BEHIND_LAYER + 1
 /// Total number of layers for mob overlays
