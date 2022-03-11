@@ -3826,7 +3826,6 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/supply)
 "aOX" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/tcommsat/computer)
@@ -9172,7 +9171,8 @@
 /area/tcommsat/computer)
 "bMD" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/tcommsat/computer)
 "bME" = (
@@ -9198,6 +9198,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/tcommsat/computer)
 "bMI" = (
@@ -9612,7 +9613,6 @@
 /turf/open/floor/iron/grimy,
 /area/tcommsat/computer)
 "bOI" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -69914,6 +69914,10 @@
 	},
 /turf/open/floor/iron,
 /area/medical/medbay/lobby)
+"nLU" = (
+/obj/structure/cable,
+/turf/open/floor/iron/grimy,
+/area/tcommsat/computer)
 "nMq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -72389,7 +72393,6 @@
 /turf/open/floor/iron,
 /area/engineering/supermatter/room)
 "orj" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/holopad,
@@ -73225,12 +73228,6 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/warehouse)
-"oDb" = (
-/obj/structure/cable,
-/obj/item/kirbyplants/random,
-/obj/machinery/power/apc/auto_name/directional/north,
-/turf/open/floor/iron/grimy,
-/area/tcommsat/computer)
 "oDe" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -149464,7 +149461,7 @@ uZM
 qtW
 lBH
 bKH
-oDb
+bSH
 bOI
 bQJ
 bSF
@@ -150235,7 +150232,7 @@ neW
 kxN
 osF
 bKH
-bQJ
+nLU
 uah
 bQM
 bSH
