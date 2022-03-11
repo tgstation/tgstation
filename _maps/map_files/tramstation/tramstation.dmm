@@ -51347,6 +51347,14 @@
 /obj/structure/railing,
 /turf/open/openspace,
 /area/science/xenobiology)
+"qRP" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "qRS" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing{
@@ -56934,6 +56942,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/crew_quarters/dorms)
+"sVE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "sVM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -154293,8 +154308,8 @@ awF
 anG
 anG
 anG
-ybS
-dXJ
+qRP
+sVE
 gGY
 aEM
 aGa
@@ -154551,7 +154566,7 @@ pst
 smW
 anG
 ngF
-dXJ
+sVE
 dSI
 aCa
 aCa
