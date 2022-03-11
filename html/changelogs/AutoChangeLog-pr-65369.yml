@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "On DeltaStation, certain wall appliances in the Telecommunications Office no longer appear to be overlapping to those who are able to look at its walls from both ends."
