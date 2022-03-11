@@ -801,7 +801,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's valued weeaboos."
 	force = 5
 	throwforce = 5
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
 	icon = 'icons/obj/items_and_weapons.dmi'
