@@ -135,9 +135,13 @@
 /datum/emote/living/flap/can_run_emote(mob/user, status_check = TRUE , intentional)
 	if(!..())
 		return FALSE
+	if (istype(user, /mob/living/simple_animal/chicken))
+		return TRUE
+	if(!istype(user, /mob/living/carbon/human))
+		return FALSE
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-	return !isnull(wings)
+	return !isnull(wings) || istype(user, /mob/living/simple_animal/chicken)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
