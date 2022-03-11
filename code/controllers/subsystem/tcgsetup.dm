@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(trading_card_game)
 	// Add the tooltip component to our text, make it pretty
 	for(var/keyword in keywords)
 		var/tooltip_text = keywords[keyword]
-		keywords[keyword] = "<span data-component=\"Tooltip\" data-content=\"[tooltip_text]\"><span class=\"tooltip\">[keyword]</span></span>"
+		keywords[keyword] = span_tooltip(tooltip_text, keyword)
 
 ///Takes a string as input. Searches it for keywords in the pattern {$keyword}, and replaces them with their expanded form, generated above
 /datum/controller/subsystem/trading_card_game/proc/resolve_keywords(search_through)
