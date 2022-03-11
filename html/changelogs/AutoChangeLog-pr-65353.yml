@@ -1,0 +1,4 @@
+author: "BurgerBB"
+delete-after: True
+changes: 
+  - bugfix: "Fixes abandoned crates exploding on empty-hand right click regardless of intent."
