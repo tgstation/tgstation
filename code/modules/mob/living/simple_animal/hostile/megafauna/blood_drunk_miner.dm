@@ -49,7 +49,7 @@ Difficulty: Medium
 	var/obj/item/melee/cleaving_saw/miner/miner_saw
 	var/guidance = FALSE
 	deathmessage = "falls to the ground, decaying into glowing particles."
-	deathsound = "bodyfall"
+	deathsound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 	/// Dash ability

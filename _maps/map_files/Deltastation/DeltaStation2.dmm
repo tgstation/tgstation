@@ -25277,7 +25277,7 @@
 	name = "Ordnance Lab Shutters"
 	},
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "dDw" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/tile/purple{
@@ -33726,7 +33726,7 @@
 	name = "Ordnance Lab Shutters"
 	},
 /turf/open/floor/iron,
-/area/science/mixing)
+/area/science/storage)
 "eTp" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/disposalpipe/segment,

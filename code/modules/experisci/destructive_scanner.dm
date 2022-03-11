@@ -87,7 +87,7 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
-	playsound(src, "sparks", 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(user, span_notice("You disable the safety sensor BIOS on [src]."))
 
 /obj/machinery/destructive_scanner/update_icon_state()

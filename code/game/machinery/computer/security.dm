@@ -539,7 +539,7 @@ What a mess.*/
 									to_chat(usr, span_notice("The fine has been paid in full."))
 								SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
 								qdel(C)
-								playsound(src, "terminal_type", 25, FALSE)
+								playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 						else
 							to_chat(usr, span_warning("Fines can only be paid with holochips!"))
 

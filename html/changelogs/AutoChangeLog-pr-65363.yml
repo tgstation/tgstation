@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "high frequency blade now works on mechs, metal gears and other vehicles"
+  - admin: "you can now varedit high frequency blade slash color"

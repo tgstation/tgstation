@@ -71,7 +71,7 @@
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(20)
-	playsound(src, "rustle", 50, TRUE, -5)
+	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
 	qdel(user)
 
 /obj/item/storage/backpack/santabag

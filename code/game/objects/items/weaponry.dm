@@ -801,7 +801,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A wooden stick with white streamers at the end. Originally used by shrine maidens to purify things. Now used by the station's valued weeaboos."
 	force = 5
 	throwforce = 5
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
 	icon = 'icons/obj/items_and_weapons.dmi'
@@ -850,6 +850,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	slot_flags = ITEM_SLOT_BACK
 	/// Wielding status.
 	var/wielded = FALSE
+	/// The color of the slash we create
+	var/slash_color = COLOR_BLUE
 	/// Previous x position of where we clicked on the target's icon
 	var/previous_x
 	/// Previous y position of where we clicked on the target's icon
@@ -895,7 +897,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/highfrequencyblade/afterattack(atom/target, mob/user, proximity_flag, params)
 	if(!wielded)
 		return ..()
-	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target)))
+	if(!proximity_flag || !(isclosedturf(target) || isitem(target) || ismachinery(target) || isstructure(target) || isvehicle(target)))
 		return
 	slash(target, user, params)
 
@@ -920,7 +922,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/damage_mod = 1
 	var/x_slashed = text2num(modifiers[ICON_X]) || world.icon_size/2 //in case we arent called by a client
 	var/y_slashed = text2num(modifiers[ICON_Y]) || world.icon_size/2 //in case we arent called by a client
-	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed)
+	new /obj/effect/temp_visual/slash(get_turf(target), target, x_slashed, y_slashed, slash_color)
 	if(target == previous_target?.resolve()) //if the same target, we calculate a damage multiplier if you swing your mouse around
 		var/x_mod = previous_x - x_slashed
 		var/y_mod = previous_y - y_slashed
@@ -954,7 +956,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 
-/obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed)
+/obj/effect/temp_visual/slash/Initialize(mapload, atom/target, x_slashed, y_slashed, slash_color)
 	. = ..()
 	if(!target)
 		return
@@ -969,7 +971,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	transform = new_transform
 	//Double the scale of the matrix by doubling the 2x2 part without touching the translation part
 	var/matrix/scaled_transform = new_transform + matrix(new_transform.a, new_transform.b, 0, new_transform.d, new_transform.e, 0)
-	animate(src, duration*0.5, color = COLOR_BLUE, transform = scaled_transform, alpha = 255)
+	animate(src, duration*0.5, color = slash_color, transform = scaled_transform, alpha = 255)
 
 /obj/item/highfrequencyblade/wizard
 	desc = "A blade that was mastercrafted by a legendary blacksmith. Its' enchantments let it slash through anything."
