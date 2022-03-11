@@ -606,6 +606,10 @@
 "adg" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/turret_protected/aisat_interior)
+"adk" = (
+/obj/structure/sign/warning/pods,
+/turf/closed/wall,
+/area/commons/locker)
 "adq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/corner{
@@ -14395,21 +14399,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/service/hydroponics/garden)
-"bMZ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/structure/noticeboard/directional/north{
-	name = "Chapel Notice Board"
-	},
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/dark/corner{
-	dir = 4
-	},
-/area/service/chapel/dock)
 "bNd" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -29382,6 +29371,12 @@
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/science/research)
+"eRZ" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Escape Pod Access"
+	},
+/turf/open/floor/iron/dark,
+/area/maintenance/port/greater)
 "eSm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -36013,10 +36008,6 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/iron/dark,
 /area/engineering/supermatter/room)
-"heO" = (
-/obj/structure/sign/warning/pods,
-/turf/closed/wall,
-/area/commons/locker)
 "heS" = (
 /obj/structure/chair{
 	dir = 1
@@ -43059,6 +43050,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/cargo/warehouse)
+"jsy" = (
+/obj/structure/sign/warning/pods,
+/turf/closed/wall,
+/area/commons/fitness/recreation)
 "jsz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -50591,6 +50586,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/ce)
+"lPf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "12;5"
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/greater)
 "lPu" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -55121,21 +55131,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating/asteroid,
 /area/maintenance/fore)
-"nnV" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;5"
-	},
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/port/greater)
 "nnZ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -59538,6 +59533,22 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/prison)
+"oPZ" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/noticeboard/directional/north{
+	name = "Chapel Notice Board";
+	dir = 2
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark/corner{
+	dir = 4
+	},
+/area/service/chapel/dock)
 "oQw" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -60600,12 +60611,6 @@
 	icon_state = "panelscorched"
 	},
 /area/ai_monitored/command/storage/satellite)
-"pik" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Escape Pod Access"
-	},
-/turf/open/floor/iron/dark,
-/area/maintenance/port/greater)
 "pir" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood/end,
@@ -61700,10 +61705,6 @@
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/iron/dark,
 /area/command/bridge)
-"pAx" = (
-/obj/structure/sign/warning/pods,
-/turf/closed/wall,
-/area/commons/fitness/recreation)
 "pAH" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -100321,7 +100322,7 @@ bmt
 cGH
 amA
 amR
-nnV
+lPf
 amA
 bzX
 ryM
@@ -101351,7 +101352,7 @@ amA
 amA
 mtp
 crP
-pik
+eRZ
 iNS
 aqu
 fUM
@@ -106497,7 +106498,7 @@ hBN
 qcg
 tfC
 kdG
-pAx
+jsy
 hBN
 gcs
 csS
@@ -110568,7 +110569,7 @@ aeu
 adH
 qin
 adH
-bMZ
+oPZ
 eOb
 rts
 pEH
@@ -110865,7 +110866,7 @@ tNZ
 ePs
 xXg
 dJU
-heO
+adk
 tNZ
 cKI
 gYB
