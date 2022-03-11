@@ -307,7 +307,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	READ_FILE(S["randomise"],  randomise)
-	READ_FILE(S["persistent_scars"] , persistent_scars)
 
 	//Load prefs
 	READ_FILE(S["job_preferences"], job_preferences)
@@ -323,7 +322,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
 
-	persistent_scars = sanitize_integer(persistent_scars)
 
 	//Validate job prefs
 	for(var/j in job_preferences)
@@ -367,7 +365,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Character
 	WRITE_FILE(S["randomise"] , randomise)
-	WRITE_FILE(S["persistent_scars"] , persistent_scars)
 
 	//Write prefs
 	WRITE_FILE(S["job_preferences"] , job_preferences)
