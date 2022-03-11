@@ -141,7 +141,7 @@
 		return FALSE
 	var/mob/living/carbon/human/H = user
 	var/obj/item/organ/external/wings/functional/wings = H.getorganslot(ORGAN_SLOT_EXTERNAL_WINGS)
-	return !isnull(wings) || istype(user, /mob/living/simple_animal/chicken)
+	return !isnull(wings)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
