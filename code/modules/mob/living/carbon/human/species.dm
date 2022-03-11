@@ -1332,7 +1332,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/damage = rand(user.dna.species.punchdamagelow, user.dna.species.punchdamagehigh)
 
-		var/obj/item/bodypart/affecting = target.get_bodypart(ran_zone(user.zone_selected))
+		var/targeted_zone = ran_zone(user.zone_selected, precise = TRUE)
+		var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(targeted_zone))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
 		if(user.dna.species.punchdamagelow)
@@ -1365,11 +1366,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.dismembering_strike(user, affecting.body_zone)
 
 		var/attack_direction = get_dir(user, target)
+		if(targeted_zone == BODY_ZONE_PRECISE_GROIN) //Ball punching gives target bad mood, but deal 0.75x damage.
+			target.visible_message(span_danger("[user] [atk_verb] [target]'s balls!"), \
+							span_userdanger("Your balls got [atk_verb]ed by [user]!"), span_hear("You hear [target]'s balls pop!"), COMBAT_MESSAGE_RANGE, user)
+			to_chat(user, span_danger("You [atk_verb] [target]'s balls!"))
+			if(target.stat != DEAD)
+				SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "pain", /datum/mood_event/groin_pain)
+			damage *= 0.75
 		if(atk_effect == ATTACK_EFFECT_KICK)//kicks deal 1.5x raw damage
-			target.apply_damage(damage*1.5, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
+			target.apply_damage(damage*1.5, user.dna.species.attack_type, targeted_zone, armor_block, attack_direction = attack_direction)
 			log_combat(user, target, "kicked")
 		else//other attacks deal full raw damage + 1.5x in stamina damage
-			target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block, attack_direction = attack_direction)
+			target.apply_damage(damage, user.dna.species.attack_type, targeted_zone, armor_block, attack_direction = attack_direction)
 			target.apply_damage(damage*1.5, STAMINA, affecting, armor_block)
 			log_combat(user, target, "punched")
 
