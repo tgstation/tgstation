@@ -892,6 +892,7 @@
 #include "code\datums\elements\bed_tucking.dm"
 #include "code\datums\elements\blood_walk.dm"
 #include "code\datums\elements\bsa_blocker.dm"
+#include "code\datums\elements\bump_click.dm"
 #include "code\datums\elements\chemical_transfer.dm"
 #include "code\datums\elements\chewable.dm"
 #include "code\datums\elements\cleaning.dm"
