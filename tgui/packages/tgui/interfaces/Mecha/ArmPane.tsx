@@ -214,7 +214,7 @@ const SnowflakeSyringe = (props: {weapon: MechWeapon}, context) => {
             content={"View"}
             onClick={() => act('equip_act', {
               ref: props.weapon.ref,
-              gear_action: "show_reagemts",
+              gear_action: "show_reagents",
             })} />
         </LabeledList.Item>
       </LabeledList>

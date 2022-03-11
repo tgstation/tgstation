@@ -13,7 +13,7 @@
 	var/kickback = TRUE //Will using this weapon in no grav push mecha back.
 	mech_flags = EXOSUIT_MODULE_COMBAT
 
-/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(!..())
 		return FALSE
 	if(istype(M, /obj/vehicle/sealed/mecha/combat))
@@ -127,10 +127,10 @@
 	fire_sound = 'sound/weapons/plasma_cutter.ogg'
 	harmful = TRUE
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(..()) //combat mech
 		return TRUE
-	else if(default_can_attach(M, rightclickattach))
+	else if(default_can_attach(M, attach_right))
 		return TRUE
 	return FALSE
 
@@ -146,11 +146,11 @@
 	harmful = TRUE
 
 //attachable to all mechas, like the plasma cutter
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun/can_attach(obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	. = ..()
 	if(.) //combat mech
 		return
-	if(default_can_attach(M, rightclickattach))
+	if(default_can_attach(M, attach_right))
 		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
@@ -173,7 +173,7 @@
 	kickback = FALSE
 	mech_flags = EXOSUIT_MODULE_HONK
 
-/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/vehicle/sealed/mecha/mecha, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/honker/can_attach(obj/vehicle/sealed/mecha/mecha, attach_right = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -405,7 +405,7 @@
 	equip_cooldown = 20
 	mech_flags = EXOSUIT_MODULE_HONK
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, attach_right = FALSE)
 	if(..())
 		if(istype(M))
 			return 1
@@ -423,7 +423,7 @@
 	equip_cooldown = 10
 	mech_flags = EXOSUIT_MODULE_HONK
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, attach_right = FALSE)
 	if(..())
 		if(istype(M))
 			return 1
@@ -452,7 +452,7 @@
 	var/punch_damage = 35
 	mech_flags = EXOSUIT_MODULE_HONK
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, attach_right = FALSE)
 	if(..())
 		if(istype(M))
 			return 1
@@ -513,7 +513,7 @@
 	projectiles = 8
 	projectiles_cache = 999
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar/bombanana/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, attach_right = FALSE)
 	if(..())
 		if(istype(M))
 			return TRUE
@@ -531,7 +531,7 @@
 	equip_cooldown = 60
 	det_time = 20
 
-/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/tearstache/can_attach(obj/vehicle/sealed/mecha/combat/honker/M, attach_right = FALSE)
 	if(..())
 		if(istype(M))
 			return TRUE

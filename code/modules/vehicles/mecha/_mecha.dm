@@ -812,7 +812,7 @@
 		if(MECHA_INT_CONTROL_LOST)
 			return "Recalibrating coordination system..."
 
-///gets the on-fail balloon alert flufftext
+///gets the successful finish balloon alert flufftext
 /obj/vehicle/sealed/mecha/proc/get_int_repair_fluff_end(flag)
 	switch(flag)
 		if(MECHA_INT_FIRE)
@@ -824,7 +824,7 @@
 		if(MECHA_INT_CONTROL_LOST)
 			return "Coordination re-established"
 
-///gets the successful finish balloon alert flufftext
+///gets the on-fail balloon alert flufftext
 /obj/vehicle/sealed/mecha/proc/get_int_repair_fluff_fail(flag)
 	switch(flag)
 		if(MECHA_INT_FIRE)

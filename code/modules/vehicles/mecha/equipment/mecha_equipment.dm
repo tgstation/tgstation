@@ -7,6 +7,7 @@
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300
+	/// Determines what "slot" this attachment will try to attach to on a mech
 	var/equipment_slot = MECHA_WEAPON
 	var/equip_cooldown = 0
 	var/equip_ready = TRUE //whether the equipment is ready for use. (or deactivated/activated for static stuff)
@@ -32,11 +33,11 @@
 		chassis = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
-	if(can_attach(M, rightclickattach))
+/obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+	if(can_attach(M, attach_right))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return FALSE
-		attach(M, rightclickattach)
+		attach(M, attach_right)
 		user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
 		return TRUE
 	to_chat(user, span_warning("You are unable to attach [src] to [M]!"))
@@ -98,12 +99,12 @@
 	if(!chassis || chassis.loc != C || !(get_dir(chassis, target)&chassis.dir))
 		return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
-	return default_can_attach(M, rightclickattach)
+/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+	return default_can_attach(M, attach_right)
 
-/obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE)
 	if(equipment_slot == MECHA_WEAPON)
-		if(rightclickattach)
+		if(attach_right)
 			if(mech.equip_by_category[MECHA_R_ARM])
 				return FALSE
 		else
@@ -112,11 +113,11 @@
 		return TRUE
 	return length(mech.equip_by_category[equipment_slot]) < mech.max_equip_by_category[equipment_slot]
 
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	LAZYADD(M.flat_equipment, src)
 	var/to_equip_slot = equipment_slot
 	if(equipment_slot == MECHA_WEAPON)
-		if(rightclickattach)
+		if(attach_right)
 			to_equip_slot = MECHA_R_ARM
 		else
 			to_equip_slot = MECHA_L_ARM

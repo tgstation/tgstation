@@ -55,7 +55,7 @@
 	/// Var to avoid istype checking every time the topic button is pressed. This will only work inside Clarke mechs.
 	var/obj/vehicle/sealed/mecha/working/clarke/hostmech
 
-/obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	. = ..()
 	if(istype(M, /obj/vehicle/sealed/mecha/working/clarke))
 		hostmech = M

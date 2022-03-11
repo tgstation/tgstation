@@ -11,7 +11,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/vehicle/sealed/mecha/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/medical/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	. = ..()
 	if(!ismedicalmecha(M))
 		return FALSE
@@ -307,7 +307,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/vehicle/sealed/mecha/medical/M, rightclickattach = FALSE)
+/obj/item/mecha_parts/mecha_equipment/medical/syringe_gun/can_attach(obj/vehicle/sealed/mecha/medical/M, attach_right = FALSE)
 	. = ..()
 	if(!istype(M))
 		return FALSE
@@ -329,7 +329,7 @@
 	if(action == "change_mode")
 		mode = !mode
 		return TRUE
-	else if(action == "show_reagemts")
+	else if(action == "show_reagents")
 		usr << browse(get_reagents_page(),"window=msyringegun")
 		return FALSE
 
