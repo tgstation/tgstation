@@ -12547,6 +12547,10 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
+"bvy" = (
+/obj/structure/sign/warning/pods,
+/turf/closed/wall,
+/area/commons/fitness/recreation)
 "bvB" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/caution/stand_clear,
@@ -19290,8 +19294,8 @@
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
 "cnJ" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+/obj/machinery/door/airlock/grunge{
+	name = "Escape Pod Access"
 	},
 /turf/open/floor/iron/dark,
 /area/maintenance/port/greater)
@@ -44386,6 +44390,21 @@
 /obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/dark,
 /area/cargo/warehouse)
+"kfz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "12;5"
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/maintenance/port/greater)
 "kfE" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -84866,6 +84885,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/maintenance/starboard)
+"yef" = (
+/obj/structure/sign/warning/pods,
+/turf/closed/wall,
+/area/commons/locker)
 "yeh" = (
 /obj/structure/closet/firecloset,
 /obj/effect/decal/cleanable/dirt,
@@ -97764,7 +97787,7 @@ bmt
 cGH
 amA
 amR
-jBp
+kfz
 amA
 bzX
 ryM
@@ -103940,7 +103963,7 @@ hBN
 qcg
 tfC
 kdG
-hBN
+bvy
 hBN
 gcs
 csS
@@ -108308,7 +108331,7 @@ tNZ
 ePs
 xXg
 dJU
-tNZ
+yef
 tNZ
 cKI
 gYB
