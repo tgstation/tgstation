@@ -23,11 +23,11 @@
 	var/mineralAmt = 3
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
-	// If true you can mine the mineral turf with your hands
+	// If true you can mine the mineral turf without tools.
 	var/weak_turf = FALSE
 	///How long it takes to mine this turf with tools, before the tool's speed and the user's skill modifier are factored in.
 	var/tool_mine_speed = 4 SECONDS
-	///How long it takes to mine this turf with hands, if it's weak.
+	///How long it takes to mine this turf without tools, if it's weak.
 	var/hand_mine_speed = 15 SECONDS
 
 /turf/closed/mineral/Initialize(mapload)
@@ -89,8 +89,6 @@
 			to_chat(user, span_notice("You finish cutting into the rock."))
 			gets_drilled(user, TRUE)
 			SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
-	else
-		return attack_hand(user)
 
 /turf/closed/mineral/attack_hand(mob/user)
 	if(!weak_turf)
@@ -103,13 +101,17 @@
 	TIMER_COOLDOWN_START(src, REF(user), hand_mine_speed)
 	var/skill_modifier = 1
 	skill_modifier = user?.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
-	to_chat(user, span_notice("You start pulling out pieces of [src] with your hands..."))
+	to_chat(user, span_notice("You start pulling out pieces of [src]..."))
 	if(!do_after(user, hand_mine_speed * skill_modifier, target = src))
 		TIMER_COOLDOWN_END(src, REF(user)) //if we fail we can start again immediately
 		return
 	if(ismineralturf(src))
 		to_chat(user, span_notice("You finish pulling apart [src]."))
 		gets_drilled(user)
+
+/turf/closed/mineral/attack_robot(mob/living/silicon/robot/user)
+	if(user.Adjacent(src))
+		attack_hand(user)
 
 /turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
 	if (mineralType && (mineralAmt > 0))
