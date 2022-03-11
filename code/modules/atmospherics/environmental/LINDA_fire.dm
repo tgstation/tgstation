@@ -36,6 +36,8 @@
 	var/trit = . ? .[MOLES] : 0
 	. = air_gases[/datum/gas/hydrogen]
 	var/h2 = . ? .[MOLES] : 0
+	. = air_gases[/datum/gas/freon]
+	var/freon = . ? .[MOLES] : 0
 	if(active_hotspot)
 		if(soh)
 			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
@@ -43,16 +45,21 @@
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
+			else if(freon > 0.5)
+				if(active_hotspot.temperature > exposed_temperature)
+					active_hotspot.temperature = exposed_temperature
+				if(active_hotspot.volume < exposed_volume)
+					active_hotspot.volume = exposed_volume
 		return
 
-	if((exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST) && (plas > 0.5 || trit > 0.5 || h2 > 0.5))
+	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
+		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
 
 		active_hotspot = new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature)
 
 		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
 			//remove just_spawned protection if no longer processing this cell
 		SSair.add_to_active(src)
-
 
 /**
  * Hotspot objects interfaces with the temperature of turf gasmixtures while also providing visual effects.
@@ -125,7 +132,7 @@
 	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
 	//Passive mode
-	if(bypassing)
+	if(bypassing || temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
 		reference = location.air // Our color and volume will depend on the turf's gasmix
 	//Active mode
 	else
@@ -144,6 +151,8 @@
 		temperature = reference.temperature
 
 	// Handles the burning of atoms.
+	if(temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		return
 	for(var/A in location)
 		var/atom/AT = A
 		if(!QDELETED(AT) && AT != src)
@@ -165,7 +174,12 @@
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
 
-	if(temperature < 5000) //This is where fire is very orange, we turn it into the normal fire texture here.
+	if(temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+		heat_r = 0
+		heat_g = LERP(255, temperature, 1.2)
+		heat_b = LERP(255, temperature, 0.9)
+		heat_a = 100
+	if(temperature < 5000 && temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST) //This is where fire is very orange, we turn it into the normal fire texture here.
 		var/normal_amt = gauss_lerp(temperature, 1000, 3000)
 		heat_r = LERP(heat_r,255,normal_amt)
 		heat_g = LERP(heat_g,255,normal_amt)
@@ -231,12 +245,12 @@
 	if(location.excited_group)
 		location.excited_group.reset_cooldowns()
 
-	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST) || (volume <= 1))
+	if((temperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST && temperature > FREON_MAXIMUM_BURN_TEMPERATURE) || (volume <= 1))
 		qdel(src)
 		return
 
 	//Not enough / nothing to burn
-	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium) && INSUFFICIENT(/datum/gas/hydrogen)) || INSUFFICIENT(/datum/gas/oxygen))
+	if(!location.air || (INSUFFICIENT(/datum/gas/plasma) && INSUFFICIENT(/datum/gas/tritium) && INSUFFICIENT(/datum/gas/hydrogen) && INSUFFICIENT(/datum/gas/freon)) || INSUFFICIENT(/datum/gas/oxygen))
 		qdel(src)
 		return
 
@@ -244,11 +258,14 @@
 
 	if(bypassing)
 		icon_state = "3"
-		location.burn_tile()
+		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			location.burn_tile()
 
 		//Possible spread due to radiated heat.
-		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD || location.air.temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
+			if(location.air.temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+				radiated_temperature = location.air.temperature * COLD_FIRE_SPREAD_RADIOSITY_SCALE
 			for(var/t in location.atmos_adjacent_turfs)
 				var/turf/open/T = t
 				if(!T.active_hotspot)
@@ -274,7 +291,7 @@
 
 /obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
-	if(isliving(arrived))
+	if(isliving(arrived) && temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		var/mob/living/immolated = arrived
 		immolated.fire_act(temperature, volume)
 

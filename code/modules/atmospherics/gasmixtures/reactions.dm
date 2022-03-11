@@ -357,12 +357,13 @@
 	priority_group = PRIORITY_FIRE
 	name = "Freon combustion"
 	id = "freonfire"
+	expands_hotspot = TRUE
 
 /datum/gas_reaction/freonfire/init_reqs()
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT,
-		"MIN_TEMP" = FREON_LOWER_TEMPERATURE,
+		"MIN_TEMP" = FREON_TERMINAL_TEMPERATURE,
 		"MAX_TEMP" = FREON_MAXIMUM_BURN_TEMPERATURE,
 	)
 
@@ -372,10 +373,12 @@
 
 	var/temperature = air.temperature
 	var/temperature_scale
-	if(temperature < FREON_LOWER_TEMPERATURE) //stop the reaction when too cold
+	if(temperature < FREON_TERMINAL_TEMPERATURE) //stop the reaction when too cold
 		temperature_scale = 0
+	else if(temperature < FREON_LOWER_TEMPERATURE)
+		temperature_scale = 0.5
 	else
-		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature) / (FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE) //calculate the scale based on the temperature
+		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature) / (FREON_MAXIMUM_BURN_TEMPERATURE - FREON_TERMINAL_TEMPERATURE) //calculate the scale based on the temperature
 	if (temperature_scale <= 0)
 		return NO_REACTION
 
@@ -401,10 +404,17 @@
 		new /obj/item/stack/sheet/hot_ice(holder)
 
 	SET_REACTION_RESULTS(freon_burn_rate * (1 + oxygen_burn_ratio))
+	air.reaction_results["fire"] += freon_burn_rate * (1 + oxygen_burn_ratio)
 	var/energy_consumed = FIRE_FREON_ENERGY_CONSUMED * freon_burn_rate
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = (temperature * old_heat_capacity - energy_consumed) / new_heat_capacity
+		air.temperature = max((temperature * old_heat_capacity - energy_consumed) / new_heat_capacity, TCMB)
+
+	var/turf/open/location = holder
+	if(istype(location))
+		temperature = air.temperature
+		if(temperature < FREON_MAXIMUM_BURN_TEMPERATURE)
+			location.hotspot_expose(temperature, CELL_VOLUME)
 
 	return REACTING
 
