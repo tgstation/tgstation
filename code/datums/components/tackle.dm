@@ -478,7 +478,7 @@
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/W)
 	if(W)
 		W.atom_destruction()
-		playsound(W, "shatter", 70, TRUE)
+		playsound(W, SFX_SHATTER, 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)

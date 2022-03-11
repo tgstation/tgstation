@@ -131,11 +131,7 @@
 	pixel_y = -7
 	},
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid{
-	base_icon_state = "asteroid_dug";
-	dug = 1;
-	icon_state = "asteroid_dug"
-	},
+/turf/open/floor/plating/asteroid/dug,
 /area/mine/explored)
 "Z" = (
 /obj/item/stack/ore/iron{

@@ -70,7 +70,7 @@
 	set_density(FALSE)
 	QDEL_LIST(debris)
 	if(atom_integrity == 0)
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 	electronics = null
 	var/turf/floor = get_turf(src)
 	floor.air_update_turf(TRUE, FALSE)
@@ -274,7 +274,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		sleep(6)
 		operating = FALSE
 		desc += "<BR>[span_warning("Its access panel is smoking slightly.")]"

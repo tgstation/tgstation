@@ -1,0 +1,4 @@
+author: "QuacksQ"
+delete-after: True
+changes: 
+  - bugfix: "fixes Chili sin carne being uncraftable"

@@ -1,0 +1,4 @@
+author: "GoldenAlpharex"
+delete-after: True
+changes: 
+  - refactor: "A minor refactor was done to the persistent scars preference, allowing it to finally be available in the preferences menu once again."
