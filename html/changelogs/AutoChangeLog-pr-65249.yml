@@ -1,0 +1,4 @@
+author: "Ebb-Real"
+delete-after: True
+changes: 
+  - bugfix: "fixes RCD not being able to be put in bags and belts by clicking."
