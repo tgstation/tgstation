@@ -14460,8 +14460,8 @@
 	dir = 1
 	},
 /obj/structure/noticeboard/directional/north{
-	name = "Chapel Notice Board";
-	dir = 2
+	dir = 2;
+	name = "Chapel Notice Board"
 	},
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark/corner{
@@ -25229,8 +25229,8 @@
 "dtH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /mob/living/simple_animal/bot/cleanbot/medbay{
-	name = "Deacon Scrubsy";
-	maints_access_required = list(22)
+	maints_access_required = list(22);
+	name = "Deacon Scrubsy"
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
@@ -62561,6 +62561,9 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden,
+/obj/machinery/door/airlock/grunge{
+	name = "Monastery Atmos"
+	},
 /turf/open/floor/plating,
 /area/maintenance/department/chapel/monastery)
 "pOi" = (
@@ -79782,9 +79785,6 @@
 /area/engineering/lobby)
 "vzg" = (
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/door/airlock/grunge{
-	name = "Monastery Atmos"
-	},
 /turf/open/floor/iron/dark,
 /area/service/chapel/monastery)
 "vzk" = (
