@@ -183,7 +183,6 @@
 	hud_used.palette_actions.refresh_actions()
 
 /atom/movable/screen/button_palette
-	name = "Show Palette"
 	desc = "<b>Drag</b> buttons to move them<br><b>Shift-click</b> any button to reset it<br><b>Alt-click</b> this to reset all buttons"
 	icon = 'icons/hud/64x16_actions.dmi'
 	icon_state = "screen_gen_palette"
@@ -200,9 +199,20 @@
 		our_hud = null
 	return ..()
 
+/atom/movable/screen/button_palette/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
 /atom/movable/screen/button_palette/proc/set_hud(datum/hud/our_hud)
 	src.our_hud = our_hud
 	refresh_owner()
+
+/atom/movable/screen/button_palette/update_name(updates)
+	. = ..()
+	if(expanded)
+		name = "Hide Buttons"
+	else
+		name = "Show Buttons"
 
 /atom/movable/screen/button_palette/proc/refresh_owner()
 	var/mob/viewer = our_hud.mymob
@@ -216,13 +226,6 @@
 	var/ui_name = ui_paths[length(ui_paths)]
 
 	icon_state = "[ui_name]_palette"
-
-/atom/movable/screen/button_palette/update_name(updates)
-	. = ..()
-	if(expanded)
-		name = "Hide Palette"
-	else
-		name = "Show Palette"
 
 /atom/movable/screen/button_palette/MouseEntered(location, control, params)
 	. = ..()
