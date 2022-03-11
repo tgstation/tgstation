@@ -61,7 +61,7 @@
 		return FALSE
 	if(status)
 		if(alarm_manager.send_alarm(ALARM_MOTION, src, src))
-			visible_message(span_warning("A red light flashes on the [src]!"))
+			visible_message(span_warning("A red light flashes on [src]!"))
 	detectTime = -1
 	return TRUE
 
