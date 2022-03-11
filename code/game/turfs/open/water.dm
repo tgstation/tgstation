@@ -10,6 +10,7 @@
 	slowdown = 1
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null //needs a splashing sound one day.
+	turf_flags = NO_RUST
 
 	footstep = FOOTSTEP_WATER
 	barefootstep = FOOTSTEP_WATER
