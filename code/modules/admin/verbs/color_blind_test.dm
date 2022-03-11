@@ -49,10 +49,10 @@
 	switch(action)
 		if("set_matrix")
 			set_selected_type(params["name"], our_hud)
-			. = TRUE
+			return TRUE
 		if("clear_matrix")
 			set_selected_type("", our_hud)
-			. = TRUE
+			return TRUE
 
 /datum/colorblind_tester/proc/set_selected_type(selected, datum/hud/remove_from)
 	var/atom/movable/plane_master_controller/colorblind_plane = remove_from.plane_master_controllers[PLANE_MASTERS_COLORBLIND]
