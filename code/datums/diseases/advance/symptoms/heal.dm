@@ -490,7 +490,7 @@
 		gases = environment.gases
 		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] > gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's enough plasma in the air to see
 			. += power * 0.5
-		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] < gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's *not* enough plasma in the air to see
+		if(gases[/datum/gas/plasma] && gases[/datum/gas/plasma][MOLES] <= gases[/datum/gas/plasma][GAS_META][META_GAS_MOLES_VISIBLE]) //if there's *not* enough plasma in the air to see
 			. += power * 0.1
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. += power * 0.75
