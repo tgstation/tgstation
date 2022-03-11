@@ -50,7 +50,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate))
+	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/structure/big_delivery))
 		var/atom/movable/picked_crate = target
 		if(length(stored_crates) >= max_crates)
 			balloon_alert(mod.wearer, "too many crates!")
@@ -171,7 +171,7 @@
 
 	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
 		INVOKE_ASYNC(src, .proc/move_ore, ore)
-		playsound(src, "rustle", 50, TRUE)
+		playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/stored_ore as anything in ores)

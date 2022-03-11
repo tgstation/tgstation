@@ -967,7 +967,8 @@
 
 
 /// Only moves the object if it's under no gravity
-/atom/movable/proc/newtonian_move(direction)
+/// Accepts the direction to move, and if the push should be instant
+/atom/movable/proc/newtonian_move(direction, instant = FALSE)
 	if(!isturf(loc) || Process_Spacemove(0))
 		return FALSE
 
@@ -975,7 +976,7 @@
 		return TRUE
 
 	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
-	AddComponent(/datum/component/drift, direction)
+	AddComponent(/datum/component/drift, direction, instant)
 
 	return TRUE
 

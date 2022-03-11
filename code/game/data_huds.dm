@@ -301,6 +301,10 @@ Security HUDs! Basic mode shows only the job.
 					holder.icon_state = "hudwanted"
 				if("Incarcerated")
 					holder.icon_state = "hudincarcerated"
+					return
+				if("Suspected")
+					holder.icon_state = "hudsuspected"
+					return
 				if("Paroled")
 					holder.icon_state = "hudparolled"
 				if("Discharged")

@@ -36,7 +36,7 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	wander = FALSE
 	del_on_death = TRUE
 	deathmessage = "falls, quickly decaying into centuries old dust."
-	deathsound = "bodyfall"
+	deathsound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list()
 

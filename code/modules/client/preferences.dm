@@ -57,8 +57,6 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hearted
 	///If we have a hearted commendations, we honor it every time the player loads preferences until this time has been passed
 	var/hearted_until
-	/// If we have persistent scars enabled
-	var/persistent_scars = TRUE
 	///What outfit typepaths we've favorited in the SelectEquipment menu
 	var/list/favorite_outfits = list()
 

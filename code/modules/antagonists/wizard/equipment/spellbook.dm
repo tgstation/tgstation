@@ -775,7 +775,7 @@
 					if(entry.limit)
 						entry.limit--
 					uses -= entry.cost
-			update_static_data(wizard) //update statics!
+			return TRUE
 		if("refund")
 			var/datum/spellbook_entry/entry = locate(params["spellref"]) in entries
 			if(entry?.refundable)
@@ -784,7 +784,7 @@
 					if(!isnull(entry.limit))
 						entry.limit += result
 					uses += result
-			update_static_data(wizard) //update statics!
+			return TRUE
 	//actions that are only available if you have full spell points
 	if(uses < initial(uses))
 		to_chat(wizard, span_warning("You need to have all your spell points to do this!"))
@@ -796,8 +796,8 @@
 		if("randomize")
 			randomize(wizard, full_random_bonus)
 			update_static_data(wizard) //update statics!
-		else //some loadout
-			wizard_loadout(wizard, action)
+		if("purchase_loadout")
+			wizard_loadout(wizard, locate(params["id"]))
 
 /obj/item/spellbook/proc/wizard_loadout(mob/living/carbon/human/wizard, loadout)
 	var/list/wanted_spell_names

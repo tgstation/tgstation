@@ -1,0 +1,4 @@
+author: "tohg7"
+delete-after: True
+changes: 
+  - bugfix: "fixed an inconsistency where booze bottles and molotovs wouldn't splash their contents when thrown at things while drinking and shot glasses do."
