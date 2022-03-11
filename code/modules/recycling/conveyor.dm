@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/datum/move_loop/move/moving_loop = SSmove_manager.processing_on(convayable, SSconveyors)
 	if(moving_loop)
 		moving_loop.direction = movedir
-		moving_loop.delay = 10 * speed
+		moving_loop.delay = speed SECONDS
 		return
 	start_conveying(convayable)
 
