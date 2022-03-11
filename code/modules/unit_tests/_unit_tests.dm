@@ -87,6 +87,7 @@
 #include "ntnetwork_tests.dm"
 #include "objectives.dm"
 #include "outfit_sanity.dm"
+#include "paintings.dm"
 #include "pills.dm"
 #include "plantgrowth_tests.dm"
 #include "preference_species.dm"
