@@ -238,7 +238,7 @@
 	result = /obj/item/food/bechamel_sauce
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/piesrogis
+/datum/crafting_recipe/food/pierogis
 	name = "Pierogis"
 	time = 40
 	reqs = list(
