@@ -404,7 +404,6 @@
 		new /obj/item/stack/sheet/hot_ice(holder)
 
 	SET_REACTION_RESULTS(freon_burn_rate * (1 + oxygen_burn_ratio))
-	air.reaction_results["fire"] += freon_burn_rate * (1 + oxygen_burn_ratio)
 	var/energy_consumed = FIRE_FREON_ENERGY_CONSUMED * freon_burn_rate
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
