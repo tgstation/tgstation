@@ -331,3 +331,19 @@
       Tramstation.
   - imageadd: You may now use the pensive emote in OOC chat, just like you would in
       your favorite messaging app.
+2022-03-11:
+  AtoriBirb:
+  - rscadd: A new intermediate tag for sec huds called "Suspected" that allows officers
+      to identify peoples of interest without raising their threat to where beepsky
+      will chase and attempt to apprehend them. Shows up as an orange '!'.
+  DTraitor:
+  - bugfix: Fixes mobs able to move during charge delay after first charge
+  Melbert:
+  - qol: Screen tips for the Null Rod, Anomaly Neutralizer, Codex Cicatrix, and Mansus
+      Grasp for removing runes / anomalies / drained heretic influences
+  Tastyfish:
+  - bugfix: The 2 types of weight machines now have unique in-game names.
+  - imageadd: New sprites for the weight machines.
+  san7890:
+  - bugfix: The reality-correctioneers have removed the purple and black square that
+      shows up like 33% of the time in TramStation's Maintenance Tunnels.

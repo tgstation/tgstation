@@ -1,4 +1,0 @@
-author: "DTraitor"
-delete-after: True
-changes: 
-  - bugfix: "Fixes mobs able to move during charge delay after first charge"
