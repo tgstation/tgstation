@@ -38,6 +38,7 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	icon_state = "crowbar"
+	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
 
