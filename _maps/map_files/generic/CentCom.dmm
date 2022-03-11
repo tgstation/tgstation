@@ -5220,6 +5220,15 @@
 	},
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
+"qi" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/landmark/start/nukeop,
+/turf/open/floor/iron,
+/area/syndicate_mothership/control)
 "qm" = (
 /obj/structure/filingcabinet/filingcabinet,
 /obj/effect/turf_decal/tile/neutral{
@@ -5948,12 +5957,12 @@
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "sh" = (
-/obj/structure/chair/stool/directional/west,
-/obj/effect/landmark/start/nukeop,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/structure/chair/stool/directional/east,
+/obj/effect/landmark/start/nukeop,
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
 "si" = (
@@ -35375,8 +35384,8 @@ pF
 qa
 pZ
 pZ
-sh
-sh
+qi
+qi
 pZ
 rg
 Qd
