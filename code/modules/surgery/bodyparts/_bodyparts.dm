@@ -1010,12 +1010,12 @@
 
 /obj/item/bodypart/proc/update_part_wound_overlay()
 	if(!owner)
-		return
+		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || status != BODYPART_ORGANIC)
 		if(bleed_overlay_icon)
 			bleed_overlay_icon = null
 			owner.update_wound_overlays()
-		return
+		return FALSE
 
 	var/bleed_rate = get_part_bleed_rate(ignore_modifiers = TRUE)
 	var/new_bleed_icon

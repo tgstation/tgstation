@@ -859,6 +859,7 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
+/// Proc that only really gets called for humans, to handle bleeding overlays.
 /mob/living/proc/update_wound_overlays()
 	return
 
