@@ -60,13 +60,15 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "screwdriver_a"
 	inhand_icon_state = "screwdriver_nuke"
-	belt_icon_state = "screwdriver_alien"
 	custom_materials = list(/datum/material/iron=5000, /datum/material/silver=2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	usesound = 'sound/items/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+
+/obj/item/screwdriver/abductor/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_alien")
 
 /obj/item/screwdriver/power
 	name = "hand drill"
