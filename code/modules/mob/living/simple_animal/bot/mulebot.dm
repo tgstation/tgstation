@@ -742,7 +742,6 @@
 
 
 /mob/living/simple_animal/bot/mulebot/explode()
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -754,10 +753,8 @@
 		cell.update_appearance()
 		cell = null
 
-	do_sparks(3, TRUE, src)
-
 	new /obj/effect/decal/cleanable/oil(loc)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/mulebot/remove_air(amount) //To prevent riders suffocating
 	return loc ? loc.remove_air(amount) : null
