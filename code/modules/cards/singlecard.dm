@@ -68,6 +68,28 @@
 	. += span_notice("Right-click to flip it.")
 	. += span_notice("Alt-click to rotate it 90 degrees.")
 
+/obj/item/toy/singlecard/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(istype(held_item, /obj/item/toy/cards/deck))
+		var/obj/item/toy/cards/deck/dealer_deck = held_item
+		if(dealer_deck.wielded)
+			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
+			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
+			return CONTEXTUAL_SCREENTIP_SET
+		context[SCREENTIP_CONTEXT_LMB] = "Recycle card"
+		return CONTEXTUAL_SCREENTIP_SET
+		
+	if(istype(held_item, /obj/item/toy/singlecard))
+		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
+		context[SCREENTIP_CONTEXT_RMB] = "Combine cards faceup"
+		return CONTEXTUAL_SCREENTIP_SET
+		
+	if(istype(held_item, /obj/item/toy/cards/cardhand))
+		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
+
 /obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] an unlucky card!"))
 	playsound(src, 'sound/weapons/bladeslice.ogg', 50, TRUE)
