@@ -888,12 +888,9 @@
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/airlock/welder_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(.)
-		return
 
 	if(!panel_open || security_level == AIRLOCK_SECURITY_NONE)
-		return
+		return ..()
 
 	var/layer_flavor
 	var/next_level
