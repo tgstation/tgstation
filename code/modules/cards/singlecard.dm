@@ -71,6 +71,12 @@
 /obj/item/toy/singlecard/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate counter-clockwise"
+		// add a ALT_RMB screentip to rotate clockwise
+		context[SCREENTIP_CONTEXT_RMB] = "Flip card"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	if(istype(held_item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
 		if(dealer_deck.wielded)
