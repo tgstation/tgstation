@@ -1076,13 +1076,6 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"dO" = (
-/obj/structure/table,
-/obj/machinery/light/directional/south,
-/obj/item/storage/firstaid/regular,
-/obj/item/healthanalyzer/advanced,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
 "dP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2009,6 +2002,10 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/atmos)
+"jG" = (
+/obj/machinery/newscaster,
+/turf/closed/wall/r_wall,
+/area/engineering/main)
 "jU" = (
 /obj/structure/table,
 /obj/item/melee/energy/axe,
@@ -2335,10 +2332,6 @@
 	},
 /turf/open/floor/iron/white/corner,
 /area/medical/medbay)
-"Eu" = (
-/obj/machinery/newscaster,
-/turf/closed/wall/r_wall,
-/area/engineering/main)
 "EA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -2488,6 +2481,13 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/science)
+"Ps" = (
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/obj/item/storage/medkit/regular,
+/obj/item/healthanalyzer/advanced,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -7207,7 +7207,7 @@ aa
 aj
 al
 aA
-Eu
+jG
 WT
 aj
 aj
@@ -7600,7 +7600,7 @@ dJ
 dJ
 dJ
 dJ
-dO
+Ps
 cS
 gz
 fO

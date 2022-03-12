@@ -674,7 +674,7 @@
 	desc = "This first aid kit is a suspicious brown and red. Included is a combat stimulant injector \
 			for rapid healing, a medical night vision HUD for quick identification of injured personnel, \
 			and other supplies helpful for a field medic."
-	item = /obj/item/storage/firstaid/tactical
+	item = /obj/item/storage/medkit/tactical
 	cost = 4
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 

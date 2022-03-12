@@ -3388,9 +3388,9 @@
 "js" = (
 /obj/machinery/light/directional/east,
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/iron/white,
 /area/awaymission/cabin)
 "jt" = (
@@ -3611,7 +3611,7 @@
 /area/awaymission/cabin/lumbermill)
 "jS" = (
 /obj/structure/table/wood,
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "jT" = (

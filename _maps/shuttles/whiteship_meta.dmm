@@ -2440,7 +2440,7 @@
 "dZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /obj/item/reagent_containers/glass/bottle/morphine,
 /obj/item/reagent_containers/syringe,
 /turf/open/floor/iron/dark,

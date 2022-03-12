@@ -54,7 +54,7 @@
 	if(!proximity_flag)
 		return
 	source.balloon_alert(user, "scanned object")
-	playsound(source, get_sfx("terminal_type"), 25, FALSE)
+	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	attacker.set_output(user)
 	attacking.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)

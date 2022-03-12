@@ -802,21 +802,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
-"dn" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/mine/living_quarters)
 "do" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -865,15 +850,6 @@
 "dD" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/mine/living_quarters)
-"dE" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
 "dF" = (
@@ -2911,6 +2887,16 @@
 /obj/machinery/recharge_station,
 /turf/open/floor/iron,
 /area/mine/mechbay)
+"rZ" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
+/area/mine/production)
 "sa" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2945,6 +2931,17 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security)
+"sN" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/mine/laborcamp)
 "tI" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -3131,16 +3128,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/mechbay)
-"wq" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/machinery/newscaster/directional/west,
-/turf/open/floor/iron,
-/area/mine/production)
 "wE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/glass/bucket,
@@ -3215,11 +3202,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"zy" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/closet/crate,
-/turf/open/floor/plating,
-/area/mine/production)
 "zA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/mineral/labor_points_checker{
@@ -3463,6 +3445,15 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
+"Ev" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/mine/living_quarters)
 "EK" = (
 /obj/machinery/conveyor{
 	id = "gulag"
@@ -3649,6 +3640,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit,
 /area/mine/maintenance)
+"HL" = (
+/obj/structure/table,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/mine/living_quarters)
 "HO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -4357,17 +4363,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
-"Vb" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/turf/open/floor/iron/white,
-/area/mine/laborcamp)
 "Ve" = (
 /obj/structure/chair{
 	dir = 8
@@ -4538,6 +4533,11 @@
 	},
 /turf/open/floor/carpet,
 /area/mine/living_quarters)
+"Yc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/closet/crate,
+/turf/open/floor/plating,
+/area/mine/production)
 "Yd" = (
 /obj/machinery/door/airlock{
 	id_tag = "miningbathroom";
@@ -11249,7 +11249,7 @@ aD
 aD
 aD
 ap
-Vb
+sN
 YJ
 aq
 au
@@ -14355,8 +14355,8 @@ aj
 ai
 ad
 cM
-dn
-dE
+HL
+Ev
 dQ
 ec
 eq
@@ -18213,7 +18213,7 @@ ab
 ab
 aj
 aj
-zy
+Yc
 eC
 br
 aj
@@ -19752,7 +19752,7 @@ cl
 cH
 cO
 Qj
-wq
+rZ
 dJ
 ia
 cn

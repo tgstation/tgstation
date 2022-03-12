@@ -198,7 +198,7 @@
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
-	attack_verb_simple = list("punch", "cross counter", "pummel")
+	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
 	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/godhand/Initialize(mapload)
@@ -608,7 +608,7 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	sharpness = NONE
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/items_and_weapons.dmi'

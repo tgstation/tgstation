@@ -37,7 +37,7 @@
 	/// drop determining variable
 	var/healthanalyzer = /obj/item/healthanalyzer
 	/// drop determining variable
-	var/firstaid = /obj/item/storage/firstaid
+	var/medkit_type = /obj/item/storage/medkit
 	///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
 	var/skin
 	var/mob/living/carbon/patient
@@ -228,7 +228,7 @@
 		to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick("medibot_spark", src)
-	playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(user)
 		oldpatient = user
 
@@ -540,8 +540,8 @@
 			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
 				if((get_dist(src, patient) <= 1) && (bot_mode_flags & BOT_MODE_ON) && assess_patient(patient))
 					var/healies = heal_amount
-					var/obj/item/storage/firstaid/FA = firstaid
-					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
+					var/obj/item/storage/medkit/medkit = medkit_type
+					if(treatment_method == BRUTE && initial(medkit.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
 						healies *= 1.1
 					if(bot_cover_flags & BOT_COVER_EMAGGED)
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
@@ -571,7 +571,7 @@
 	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
-	drop_part(firstaid, Tsec)
+	drop_part(medkit_type, Tsec)
 	new /obj/item/assembly/prox_sensor(Tsec)
 	drop_part(healthanalyzer, Tsec)
 

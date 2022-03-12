@@ -2432,6 +2432,26 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
+"fg" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Hydroponics";
+	network = list("uo45")
+	},
+/obj/machinery/power/apc/highcap/ten_k{
+	locked = 0;
+	name = "Hydroponics APC";
+	pixel_y = -25;
+	start_charge = 100
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "fh" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /obj/effect/turf_decal/tile/green,
@@ -4064,17 +4084,6 @@
 	icon_state = "panelscorched"
 	},
 /area/awaymission/undergroundoutpost45/central)
-"iN" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/structure/sign/warning/biohazard{
-	pixel_x = -32
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
 "iO" = (
 /obj/structure/table,
 /obj/item/radio/off,
@@ -4627,6 +4636,23 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/crew_quarters)
+"jV" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	dir = 1;
+	locked = 0;
+	name = "UO45 Bar APC";
+	pixel_y = 25;
+	start_charge = 100
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/structure/cable,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -5626,6 +5652,25 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/research)
+"lH" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	locked = 0;
+	name = "UO45 Research Division APC";
+	pixel_y = -25;
+	start_charge = 100
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/structure/cable,
+/turf/open/floor/iron/white{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/research)
 "lI" = (
 /obj/machinery/door/firedoor,
 /obj/structure/disposalpipe/segment{
@@ -6120,6 +6165,24 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/gateway)
+"mE" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	locked = 0;
+	name = "UO45 Gateway APC";
+	pixel_y = -25;
+	start_charge = 100
+	},
+/obj/structure/rack,
+/obj/item/clothing/shoes/magboots,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
@@ -8709,6 +8772,22 @@
 	},
 /turf/closed/wall/r_wall,
 /area/awaymission/undergroundoutpost45/engineering)
+"rp" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	dir = 8;
+	name = "UO45 Engineering APC";
+	pixel_x = -25;
+	req_access_txt = "201";
+	start_charge = 100
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "rq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /obj/machinery/meter/atmos{
@@ -9258,6 +9337,32 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
+"sj" = (
+/obj/machinery/power/apc/highcap/ten_k{
+	locked = 0;
+	name = "UO45 Mining APC";
+	pixel_y = -25;
+	start_charge = 100
+	},
+/obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/engineering_personal{
+	icon_state = "mining";
+	locked = 0;
+	name = "miner's equipment";
+	req_access = null;
+	req_access_txt = "201"
+	},
+/obj/item/storage/backpack/satchel/eng,
+/obj/item/clothing/gloves/fingerless,
+/obj/effect/turf_decal/tile/brown,
+/obj/structure/cable,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/mining)
 "sk" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -9379,33 +9484,6 @@
 /obj/structure/closet/l3closet,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/side{
-	dir = 1;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/research)
-"sy" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -2;
-	pixel_y = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/white/side{
-	dir = 1;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/research)
-"sz" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 2;
-	pixel_y = 6
-	},
-/turf/open/floor/iron/white/corner{
 	dir = 1;
 	heat_capacity = 1e+006
 	},
@@ -11704,23 +11782,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/mining)
-"wQ" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 1;
-	locked = 0;
-	name = "UO45 Bar APC";
-	pixel_y = 25;
-	start_charge = 100
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/structure/cable,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
 "wR" = (
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
@@ -12665,6 +12726,33 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"Ac" = (
+/obj/structure/table,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/storage/medkit/toxin{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/side{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/research)
+"AM" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/research)
 "DJ" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -12676,48 +12764,12 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"ET" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Hydroponics";
-	network = list("uo45")
-	},
-/obj/machinery/power/apc/highcap/ten_k{
-	locked = 0;
-	name = "Hydroponics APC";
-	pixel_y = -25;
-	start_charge = 100
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
 "KE" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
 /turf/open/floor/circuit/telecomms/server,
 /area/awaymission/undergroundoutpost45/research)
-"LF" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	dir = 8;
-	name = "UO45 Engineering APC";
-	pixel_x = -25;
-	req_access_txt = "201";
-	start_charge = 100
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "OF" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/turf_decal/stripes/asteroid/line,
@@ -12727,81 +12779,7 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"OY" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	locked = 0;
-	name = "UO45 Research Division APC";
-	pixel_y = -25;
-	start_charge = 100
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/purple,
-/obj/structure/cable,
-/turf/open/floor/iron/white{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/research)
-"PI" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	locked = 0;
-	name = "UO45 Mining APC";
-	pixel_y = -25;
-	start_charge = 100
-	},
-/obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/engineering_personal{
-	icon_state = "mining";
-	locked = 0;
-	name = "miner's equipment";
-	req_access = null;
-	req_access_txt = "201"
-	},
-/obj/item/storage/backpack/satchel/eng,
-/obj/item/clothing/gloves/fingerless,
-/obj/effect/turf_decal/tile/brown,
-/obj/structure/cable,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/mining)
-"UM" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 10
-	},
-/turf/open/floor/plating{
-	heat_capacity = 1e+006;
-	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
-	temperature = 363.9
-	},
-/area/awaymission/undergroundoutpost45/caves)
-"WW" = (
-/obj/machinery/power/apc/highcap/ten_k{
-	locked = 0;
-	name = "UO45 Gateway APC";
-	pixel_y = -25;
-	start_charge = 100
-	},
-/obj/structure/rack,
-/obj/item/clothing/shoes/magboots,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
-"XO" = (
+"OV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -12821,6 +12799,28 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
+"Tl" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/obj/structure/sign/warning/biohazard{
+	pixel_x = -32
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/gateway)
+"UM" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 10
+	},
+/turf/open/floor/plating{
+	heat_capacity = 1e+006;
+	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
+	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/caves)
 "YK" = (
 /obj/structure/chair/stool/directional/west,
 /obj/effect/turf_decal/tile/bar,
@@ -31972,7 +31972,7 @@ gI
 gJ
 gJ
 is
-iN
+Tl
 jg
 jF
 gv
@@ -33007,7 +33007,7 @@ gv
 gK
 lr
 iP
-WW
+mE
 gK
 ad
 ad
@@ -38402,7 +38402,7 @@ gX
 jO
 kk
 kP
-OY
+lH
 gy
 kd
 nk
@@ -41240,7 +41240,7 @@ pM
 ha
 ha
 rI
-sy
+Ac
 tn
 tS
 hc
@@ -41497,7 +41497,7 @@ jO
 qr
 qW
 rJ
-sz
+AM
 tp
 tT
 gy
@@ -41724,7 +41724,7 @@ ae
 bf
 eg
 cz
-XO
+OV
 eW
 fo
 fA
@@ -47122,7 +47122,7 @@ aS
 aS
 aS
 aS
-ET
+fg
 an
 fJ
 eJ
@@ -47651,7 +47651,7 @@ fN
 iI
 fO
 fO
-wQ
+jV
 ks
 lk
 fO
@@ -47676,7 +47676,7 @@ wg
 wu
 wD
 wP
-PI
+sj
 vL
 xn
 xs
@@ -53317,7 +53317,7 @@ oU
 pz
 qb
 qE
-LF
+rp
 sh
 sU
 tC

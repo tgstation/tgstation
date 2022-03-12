@@ -253,7 +253,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/reagent_containers/syringe,
 		/obj/item/retractor,
 		/obj/item/scalpel,
-		/obj/item/storage/firstaid,
+		/obj/item/storage/medkit,
 		/obj/item/storage/pill_bottle,
 		/obj/item/surgical_drapes,
 		/obj/item/surgicaldrill,

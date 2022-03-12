@@ -1206,8 +1206,8 @@
 	},
 /obj/item/bikehorn/airhorn,
 /obj/structure/table/wood,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "NJ" = (

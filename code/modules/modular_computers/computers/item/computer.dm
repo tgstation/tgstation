@@ -554,6 +554,7 @@
 		if(W.use_tool(src, user, 20, volume=50, amount=1))
 			atom_integrity = max_integrity
 			to_chat(user, span_notice("You repair \the [src]."))
+			update_appearance()
 		return
 
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]

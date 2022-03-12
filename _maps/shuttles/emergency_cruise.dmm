@@ -331,7 +331,7 @@
 	pixel_x = 8;
 	pixel_y = -1
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = -9;
 	pixel_y = 3
 	},
