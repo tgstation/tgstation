@@ -181,10 +181,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!current_channel)
 		data["channelAuthor"] = "Nanotrasen Inc"
 		data["channelDesc"] = "Welcome to Newscaster Net. Interface & News networks Operational."
-		data["channelBlocked"] = TRUE
+		data["channelLocked"] = TRUE
 	else
 		data["channelDesc"] = current_channel.channel_desc
-		data["channelBlocked"] = (current_channel.locked || current_channel.censored)
+		data["channelLocked"] = current_channel.locked
 		data["channelCensored"] = current_channel.censored
 
 	//We send all the information about all channels and all messages in existance.
@@ -310,7 +310,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			var/obj/item/card/id/id_card
 			if(isliving(usr))
 				var/mob/living/living_user = usr
-				id_card = living_user.get_idcard(TRUE)
+				id_card = living_user.get_idcard(hand_first = TRUE)
 			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
@@ -356,10 +356,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("printNewspaper")
-			if(paper_remaining <= 0)
-				balloon_alert_to_viewers("out of paper!")
-				return TRUE
 			print_paper()
+			return TRUE
 
 		if("createBounty")
 			if(!current_user || !bounty_text)
@@ -405,14 +403,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 
 		if("deleteRequest")
-			if(!active_request || !current_user)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-				return TRUE
-			if(active_request?.owner != current_user?.account_holder)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-				return TRUE
-			say("Deleted current request.")
-			GLOB.request_list.Remove(active_request)
+			delete_bounty_request()
 			return TRUE
 
 		if("bountyVal")
@@ -539,6 +530,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			current_image = selection
 
 /obj/machinery/newscaster/proc/print_paper()
+	if(paper_remaining <= 0)
+		balloon_alert_to_viewers("out of paper!")
+		return TRUE
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/NEWSPAPER = new /obj/item/newspaper
 	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
@@ -617,6 +611,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 	feed_channel_message = ""
 	current_image = null
+
+/obj/machinery/newscaster/proc/delete_bounty_request()
+	if(!active_request || !current_user)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		return TRUE
+	if(active_request?.owner != current_user?.account_holder)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		return TRUE
+	say("Deleted current request.")
+	GLOB.request_list.Remove(active_request)
 
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"

@@ -18,7 +18,7 @@ const CENSOR_MESSAGE = "This channel has been deemed as threatening to \
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
-  const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', 1);
+  const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', NEWSCASTER_SCREEN);
   const NEWSCASTER_SCREEN = 1;
   const BOUNTYBOARD_SCREEN = 2;
   return (
@@ -117,11 +117,11 @@ const NewscasterChannelCreation = (props, context) => {
             Set Channel as Public or Private
             <Box pt={1}>
               <Button
-                selected={!!lockedmode}
+                selected={!lockedmode}
                 content="Public"
                 onClick={() => act(setLockedmode(false))} />
               <Button
-                selected={!lockedmode}
+                selected={!!lockedmode}
                 content="Private"
                 onClick={() => act(setLockedmode(true))} />
             </Box>
@@ -236,7 +236,7 @@ const NewscasterChannelBox = (_, context) => {
   const {
     channelName,
     channelDesc,
-    channelBlocked,
+    channelLocked,
     channelAuthor,
     channelCensored,
     viewing_channel,
@@ -268,7 +268,7 @@ const NewscasterChannelBox = (_, context) => {
             <Button
               icon="print"
               content="Submit Story"
-              disabled={(channelBlocked && (channelAuthor !== user.name))
+              disabled={(channelLocked && (channelAuthor !== user.name))
             || channelCensored}
               onClick={() => act('createStory', { current: viewing_channel })}
               mt={1} />
@@ -276,7 +276,7 @@ const NewscasterChannelBox = (_, context) => {
               icon="camera"
               selected={photo_data}
               content="Select Photo"
-              disabled={(channelBlocked && (channelAuthor !== user.name))
+              disabled={(channelLocked && (channelAuthor !== user.name))
             || channelCensored}
               onClick={() => act('togglePhoto')} />
             {!!security_mode && (
@@ -367,7 +367,8 @@ const NewscasterChannelMessages = (_, context) => {
     viewing_channel,
     security_mode,
     channelCensored,
-    channelBlocked,
+    channelLocked,
+    channelAuthor,
     user,
   } = data;
   if (channelCensored) {
@@ -390,12 +391,11 @@ const NewscasterChannelMessages = (_, context) => {
             textColor="white"
             title={(
               <i>
-                {!!message.censored_author && (
+                {message.censored_author ? (
                   <Box textColor="Red">
                     By: [REDACTED]. <b>D-Notice Notice</b> .
                   </Box>
-                )}
-                {!message.censored_author && (
+                ):(
                   <>
                     By: {message.auth} at {message.time}
                   </>
@@ -431,7 +431,7 @@ const NewscasterChannelMessages = (_, context) => {
                     message.censored_author
                     || message.censored_message
                     || user.name === "Unknown"
-                    || !channelBlocked
+                    || !!channelLocked && (channelAuthor !== user.name)
                   }
                   onClick={() => act('startComment', {
                     messageID: message.ID,
