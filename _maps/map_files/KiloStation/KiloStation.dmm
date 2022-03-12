@@ -26158,7 +26158,7 @@
 /area/medical/psychology)
 "dOD" = (
 /obj/structure/flora/ausbushes/palebush,
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /obj/machinery/light/small/directional/north,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
@@ -36861,16 +36861,16 @@
 /turf/open/floor/iron/dark,
 /area/engineering/gravity_generator)
 "hxt" = (
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -36905,7 +36905,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/bounty_board/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/dark,
 /area/medical/storage)
 "hxv" = (
@@ -44463,7 +44463,7 @@
 /area/service/bar)
 "jVc" = (
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/bounty_board/directional/east,
+/obj/machinery/newscaster/directional/east,
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/siding/wood/corner,
