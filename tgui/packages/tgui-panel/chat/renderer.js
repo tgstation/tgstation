@@ -21,7 +21,7 @@ const SCROLL_TRACKING_TOLERANCE = 24;
 
 // List of injectable component names to the actual type
 export const TGUI_CHAT_COMPONENTS = {
-  "Tooltip": Tooltip,
+  Tooltip,
 };
 
 // List of injectable attibute names mapped to their proper prop
