@@ -1186,7 +1186,7 @@
 	req_access_txt = "10;24"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "cargo-warehouse-external"
+	cycle_id = "Engineering-External"
 	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/engineering/lobby)
@@ -1771,7 +1771,7 @@
 "fU" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating,
-/area/medical/chemistry)
+/area/medical/morgue)
 "fV" = (
 /obj/structure/chair/comfy/brown{
 	dir = 1
@@ -5524,8 +5524,8 @@
 /obj/structure/sign/warning/coldtemp{
 	pixel_y = 32
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "chem-morgue-airlock"
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -6476,9 +6476,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/storage)
-"tW" = (
-/turf/open/floor/plating,
-/area/medical/chemistry)
 "tX" = (
 /obj/machinery/light/dim/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -6820,10 +6817,6 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/grimy,
 /area/commons/lounge)
-"vg" = (
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/medical/chemistry)
 "vi" = (
 /obj/structure/rack,
 /obj/item/pickaxe,
@@ -7037,6 +7030,15 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
+"vW" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/north,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/medical/morgue)
 "vX" = (
 /obj/structure/sink{
 	dir = 8;
@@ -9443,24 +9445,6 @@
 /obj/item/lighter/greyscale,
 /turf/open/floor/iron/showroomfloor,
 /area/maintenance/department/medical/morgue)
-"DQ" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Chemistry Lab External Airlock";
-	opacity = 0
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "chem-airlock"
-	},
-/obj/structure/sign/warning/coldtemp{
-	pixel_y = 32
-	},
-/obj/structure/sign/warning/gasmask{
-	desc = "A sign that warns of dangerous gasses in the air, instructing you to wear internals.";
-	pixel_y = -32
-	},
-/turf/open/floor/plating,
-/area/medical/chemistry)
 "DS" = (
 /obj/structure/bodycontainer/morgue{
 	dir = 8
@@ -9977,8 +9961,8 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "chem-morgue-airlock"
 	},
 /turf/open/floor/plating,
 /area/medical/morgue)
@@ -11848,6 +11832,9 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "cargo-warehouse-external"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "Engineering-External"
 	},
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
@@ -51623,7 +51610,7 @@ Fp
 Fp
 Fp
 PG
-vg
+Fp
 PG
 oo
 Pz
@@ -51880,8 +51867,8 @@ vO
 dF
 OD
 FA
-OV
-DQ
+vW
+dF
 OV
 iV
 rL
@@ -52137,8 +52124,8 @@ BO
 lF
 Sf
 ax
-OV
-tW
+ax
+Sf
 OV
 cd
 fa
@@ -52394,7 +52381,7 @@ BO
 Fh
 Sf
 Sf
-OV
+ax
 fU
 rk
 vy
