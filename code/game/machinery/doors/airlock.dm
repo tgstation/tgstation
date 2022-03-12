@@ -940,7 +940,7 @@
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/door/airlock/proc/try_reinforce(mob/user, var/obj/item/stack/sheet/material, var/amt_required, var/new_security_level)
+/obj/machinery/door/airlock/proc/try_reinforce(mob/user, obj/item/stack/sheet/material, amt_required, new_security_level)
 	if(material.get_amount() < amt_required)
 		to_chat(user, span_warning("You need at least [amt_required] sheets of [material] to reinforce [src]."))
 		return FALSE
