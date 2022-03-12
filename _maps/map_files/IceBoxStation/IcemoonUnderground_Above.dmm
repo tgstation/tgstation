@@ -1185,6 +1185,9 @@
 	opacity = 0;
 	req_access_txt = "10;24"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cargo-warehouse-external"
+	},
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/engineering/lobby)
 "ea" = (
@@ -2016,6 +2019,9 @@
 /area/service/bar)
 "gD" = (
 /obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "gE" = (
@@ -3855,6 +3861,9 @@
 /area/medical/virology)
 "mp" = (
 /obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/maintenance/starboard/fore)
 "mq" = (
@@ -5514,6 +5523,9 @@
 	},
 /obj/structure/sign/warning/coldtemp{
 	pixel_y = 32
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
@@ -9965,6 +9977,9 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "FD" = (
@@ -11830,6 +11845,9 @@
 	name = "engineering external airlock";
 	opacity = 0;
 	req_access_txt = "10;24"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "cargo-warehouse-external"
 	},
 /turf/open/floor/iron/smooth,
 /area/engineering/lobby)
@@ -57744,8 +57762,8 @@ ak
 ak
 Et
 gD
-mv
-mv
+vw
+vw
 gD
 Et
 fK
@@ -57761,7 +57779,7 @@ fK
 fK
 Et
 mp
-mv
+vw
 mp
 ak
 ak
