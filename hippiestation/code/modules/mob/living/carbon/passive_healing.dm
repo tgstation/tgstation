@@ -1,14 +1,22 @@
+/mob/living/carbon
+	var/passiveHeal = TRUE	//change this to false when you want to disable or override passive healing on a mob
+
 /mob/living/carbon/Life()
 	. = ..()
-	passiveFleshHeal()
+	if(passiveHeal)
+		passiveFleshHeal()
 
 /obj/item/organ/liver/on_life()
 	. = ..()
-	passiveLiverHeal()
+	var/mob/living/carbon/C = owner
+	if(C.passiveHeal)
+		passiveLiverHeal()
 
 /obj/item/organ/brain/on_life()
 	. = ..()
-	passiveBrainHeal()
+	var/mob/living/carbon/C = owner
+	if(C.passiveHeal)
+		passiveBrainHeal()
 
 /obj/item/organ/brain	//can move this and the applyOrganDamage proc to general organs if we want to set delays for other organs
 	var/timeSinceDamaged = 0
