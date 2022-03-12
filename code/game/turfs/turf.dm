@@ -583,7 +583,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Check if the heretic is strong enough to rust this turf
 /turf/rust_heretic_act(mob/living/source)
-  if(turf_flags & NO_RUST)
+	if(turf_flags & NO_RUST)
 		return
 	// Rust walkers and the spreading from an ascended rust heretic rune use this value
 	var/heretic_rust_strength = 4
