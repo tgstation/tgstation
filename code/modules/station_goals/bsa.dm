@@ -34,10 +34,10 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	density = TRUE
 	anchored = TRUE
 
-/obj/machinery/bsa/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/bsa/wrench_act(mob/living/user, obj/item/tool)
 	..()
-	default_unfasten_wrench(user, I, 10)
-	return TRUE
+	default_unfasten_wrench(user, tool, time = 10)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/bsa/back
 	name = "Bluespace Artillery Generator"

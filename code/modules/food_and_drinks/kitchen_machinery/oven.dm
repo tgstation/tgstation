@@ -172,11 +172,10 @@
 	if(default_deconstruction_crowbar(I, ignore_panel = TRUE))
 		return
 
-/obj/machinery/oven/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/oven/wrench_act(mob/living/user, obj/item/tool)
 	..()
-	default_unfasten_wrench(user, I, 2 SECONDS)
-	return TRUE
-
+	default_unfasten_wrench(user, tool, time = 2 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/plate/oven_tray
 	name = "oven tray"

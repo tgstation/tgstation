@@ -576,11 +576,14 @@
 	density = TRUE
 	var/busy = FALSE
 
+/obj/machinery/bookbinder/wrench_act(mob/living/user, obj/item/tool)
+	..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/bookbinder/attackby(obj/O, mob/user, params)
 	if(istype(O, /obj/item/paper))
 		bind_book(user, O)
-	else if(default_unfasten_wrench(user, O))
-		return 1
 	else
 		return ..()
 

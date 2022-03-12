@@ -61,7 +61,7 @@
 	var/list/data = list()
 	data["has_item"] = !copier_empty()
 	data["num_copies"] = num_copies
-	
+
 	try
 		var/list/blanks = json_decode(file2text("config/blanks.json"))
 		if (blanks != null)
@@ -72,7 +72,7 @@
 			data["forms_exist"] = FALSE
 	catch()
 		data["forms_exist"] = FALSE
-	
+
 	if(photo_copy)
 		data["is_photo"] = TRUE
 		data["color_mode"] = color_mode
@@ -372,11 +372,13 @@
 		object.forceMove(drop_location())
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
-/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
-	if(default_unfasten_wrench(user, O))
-		return
+/obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
+	..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-	else if(istype(O, /obj/item/paper))
+/obj/machinery/photocopier/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/paper))
 		if(copier_empty())
 			if(!user.temporarilyRemoveItemFromInventory(O))
 				return

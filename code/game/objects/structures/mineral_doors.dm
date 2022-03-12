@@ -146,10 +146,10 @@
 	set_opacity(anchored ? !door_opened : FALSE)
 	air_update_turf(TRUE, anchorvalue)
 
-/obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/I)
+/obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/tool)
 	..()
-	default_unfasten_wrench(user, I, 40)
-	return TRUE
+	default_unfasten_wrench(user, tool, time = 40)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 
 /////////////////////// TOOL OVERRIDES ///////////////////////

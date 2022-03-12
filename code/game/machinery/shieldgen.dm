@@ -393,9 +393,9 @@
 	return ..()
 
 
-/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	. |= default_unfasten_wrench(user, I, 0)
+	. |= default_unfasten_wrench(user, tool, time = 0)
 	var/turf/T = get_turf(src)
 	update_cable_icons_on_turf(T)
 	if(. == SUCCESSFUL_UNFASTEN && anchored)

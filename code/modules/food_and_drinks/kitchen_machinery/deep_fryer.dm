@@ -60,6 +60,11 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use]</b> units of oil per second.")
 
+/obj/machinery/deepfryer/wrench_act(mob/living/user, obj/item/tool)
+	..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/pill))
 		if(!reagents.total_volume)
@@ -78,9 +83,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(istype(I, /obj/item/food/deepfryholder))
 		to_chat(user, span_userdanger("Your cooking skills are not up to the legendary Doublefry technique."))
 		return
-	if(default_unfasten_wrench(user, I))
-		return
-	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //where's the open maint panel icon?!
+	if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //where's the open maint panel icon?!
 		return
 	else
 		if(is_type_in_typecache(I, deepfry_blacklisted_items) || is_type_in_typecache(I, GLOB.oilfry_blacklisted_items) || SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))

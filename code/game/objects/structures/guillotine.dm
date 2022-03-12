@@ -248,20 +248,12 @@
 
 	return ..()
 
-/obj/structure/guillotine/wrench_act(mob/living/user, obj/item/I)
-	. = ..()
-	if (current_action)
-		return
-
-	current_action = GUILLOTINE_ACTION_WRENCH
-
-	if (do_after(user, GUILLOTINE_WRENCH_DELAY, target = src))
-		current_action = 0
-		default_unfasten_wrench(user, I, 0)
+/obj/structure/guillotine/wrench_act(mob/living/user, obj/item/tool)
+	..()
+	if(default_unfasten_wrench(user, tool, time = GUILLOTINE_WRENCH_DELAY))
 		setDir(SOUTH)
-		return TRUE
-	else
-		current_action = 0
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
 
 #undef GUILLOTINE_BLADE_MAX_SHARP
 #undef GUILLOTINE_DECAP_MIN_SHARP
