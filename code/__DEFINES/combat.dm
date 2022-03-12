@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BODY_ZONE_PRECISE_R_FOOT "r_foot"
 
 //We will round to this value in damage calculations.
-#define DAMAGE_PRECISION 0.1
+#define DAMAGE_PRECISION 0.01	//hippie start - passive healing, precision down from 0.1 to 0.01 to allow smaller floats for slower passive healing
 
 //bullet_act() return values
 #define BULLET_ACT_HIT "HIT" //It's a successful hit, whatever that means in the context of the thing it's hitting.
