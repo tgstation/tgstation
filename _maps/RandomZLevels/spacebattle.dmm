@@ -1909,7 +1909,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hp" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "hq" = (
@@ -1959,7 +1959,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hz" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "hA" = (
@@ -1981,7 +1981,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hD" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "hE" = (
@@ -2084,7 +2084,7 @@
 /area/awaymission/spacebattle/cruiser)
 "hZ" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "ib" = (
@@ -2092,12 +2092,12 @@
 /turf/open/floor/iron/freezer,
 /area/awaymission/spacebattle/cruiser)
 "id" = (
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "ie" = (
 /obj/structure/table/reinforced,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "if" = (
@@ -2518,7 +2518,7 @@
 /area/awaymission/spacebattle/cruiser)
 "jP" = (
 /obj/structure/closet/crate/internals,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
 "jQ" = (

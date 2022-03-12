@@ -488,7 +488,7 @@
 	dir = 1
 	},
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -3379,7 +3379,7 @@
 "hz" = (
 /obj/effect/decal/cleanable/robot_debris,
 /obj/effect/decal/cleanable/oil,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
@@ -3398,7 +3398,7 @@
 /area/awaymission/moonoutpost19/research)
 "hA" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/white/side{
 	dir = 8;
@@ -3463,7 +3463,7 @@
 /area/awaymission/moonoutpost19/research)
 "hH" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/unlocked{
 	dir = 4;

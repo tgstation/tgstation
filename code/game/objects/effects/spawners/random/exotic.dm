@@ -44,10 +44,10 @@
 	name = "antag gear weak"
 	icon_state = "syndi_toolbox"
 	loot = list(
-		/obj/item/storage/firstaid/regular = 45,
-		/obj/item/storage/firstaid/toxin = 35,
-		/obj/item/storage/firstaid/brute = 27,
-		/obj/item/storage/firstaid/fire = 27,
+		/obj/item/storage/medkit/regular = 45,
+		/obj/item/storage/medkit/toxin = 35,
+		/obj/item/storage/medkit/brute = 27,
+		/obj/item/storage/medkit/fire = 27,
 		/obj/item/grenade/clusterbuster/smoke = 15,
 		/obj/item/clothing/under/chameleon = 13,
 		/obj/item/storage/toolbox/syndicate = 12,
@@ -65,7 +65,7 @@
 	name = "antag gear"
 	icon_state = "esword"
 	loot = list(
-		/obj/item/storage/firstaid/tactical = 35,
+		/obj/item/storage/medkit/tactical = 35,
 		/obj/item/book/granter/spell/summonitem = 20,
 		/obj/item/book/granter/spell/forcewall = 17,
 		/obj/item/pneumatic_cannon = 15,

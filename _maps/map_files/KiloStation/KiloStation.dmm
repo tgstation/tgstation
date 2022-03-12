@@ -1809,7 +1809,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/showroomfloor,
 /area/security/office)
 "aiQ" = (
@@ -7551,16 +7551,16 @@
 /turf/open/floor/iron/dark,
 /area/maintenance/port/fore)
 "aPR" = (
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/o2{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -11811,7 +11811,7 @@
 "bop" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/rack,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -32269,7 +32269,7 @@
 /area/hallway/primary/fore)
 "fNO" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/syringe,
 /obj/effect/turf_decal/tile/red,
@@ -36172,7 +36172,7 @@
 /obj/item/folder/white{
 	pixel_x = 6
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/machinery/door/window/northleft{
 	name = "Emergency Storage";
 	req_access_txt = "19"
@@ -36923,16 +36923,16 @@
 /turf/open/floor/wood,
 /area/service/library)
 "hwo" = (
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -39177,7 +39177,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/commons/locker)
 "ilb" = (
@@ -45308,7 +45308,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/item/clipboard,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
@@ -47101,15 +47101,15 @@
 /obj/item/storage/box/bodybags{
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
@@ -58027,7 +58027,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/item/tank/internals/emergency_oxygen,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/dark,
@@ -64968,7 +64968,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2
 	},
 /obj/item/healthanalyzer,
@@ -77722,7 +77722,7 @@
 /area/maintenance/department/crew_quarters/bar)
 "uQY" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
@@ -79371,16 +79371,16 @@
 /turf/open/floor/iron,
 /area/service/chapel/dock)
 "vte" = (
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/brute{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -83408,16 +83408,16 @@
 /turf/open/floor/iron/showroomfloor,
 /area/science/mixing)
 "wMM" = (
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -86379,7 +86379,7 @@
 /area/service/janitor)
 "xKT" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},

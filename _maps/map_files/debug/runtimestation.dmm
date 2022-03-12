@@ -1083,7 +1083,7 @@
 "dO" = (
 /obj/structure/table,
 /obj/machinery/light/directional/south,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/commons/storage/primary)

@@ -111,11 +111,11 @@
 /area/shuttle/escape)
 "an" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -850,7 +850,7 @@
 /area/shuttle/escape)
 "bV" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -1118,7 +1118,7 @@
 /area/shuttle/escape)
 "cy" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -1263,7 +1263,7 @@
 /area/shuttle/escape)
 "cG" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /obj/item/crowbar,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -1325,8 +1325,8 @@
 /area/shuttle/escape)
 "cK" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/o2,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

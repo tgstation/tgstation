@@ -17,7 +17,7 @@
 /area/shuttle/arrival)
 "e" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "f" = (
