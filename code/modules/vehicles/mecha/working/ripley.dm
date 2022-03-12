@@ -200,7 +200,7 @@
 /obj/item/mecha_parts/mecha_equipment/ejector/ui_act(action, list/params)
 	. = ..()
 	if(action == "eject")
-		var/obj/vehicle/sealed/mecha/working/ripley/miner
+		var/obj/vehicle/sealed/mecha/working/ripley/miner = chassis
 		var/obj/crate = locate(params["cargoref"]) in miner.cargo
 		if(!crate)
 			return FALSE
