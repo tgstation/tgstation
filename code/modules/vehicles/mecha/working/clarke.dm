@@ -67,7 +67,7 @@
 	. = ..()
 	if(action == "toggle")
 		hostmech.box?.dump_box_contents()
-		equip_ready = TRUE
+		activated = TRUE
 
 #define SEARCH_COOLDOWN 1 MINUTES
 

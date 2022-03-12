@@ -8,12 +8,9 @@
 	icon_state = "mecha_equip"
 	force = 5
 	max_integrity = 300
-<<<<<<< HEAD
 	/// Determines what "slot" this attachment will try to attach to on a mech
 	var/equipment_slot = MECHA_WEAPON
-=======
 	///Cooldown in ticks required between activations of the equipment
->>>>>>> master
 	var/equip_cooldown = 0
 	///used for equipment that can be turned on/off, boolean
 	var/activated = TRUE
@@ -34,23 +31,6 @@
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
 
-<<<<<<< HEAD
-=======
-///Updates chassis equipment list html menu
-/obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
-	SHOULD_CALL_PARENT(TRUE)
-	send_byjax(chassis.occupants,"exosuit.browser","eq_list", chassis.get_equipment_list())
-	send_byjax(chassis.occupants,"exosuit.browser","equipment_menu", chassis.get_equipment_menu(),"dropdowns")
-	return TRUE
-
-///Updates chassis equipment list html menu with custom data
-/obj/item/mecha_parts/mecha_equipment/proc/update_equip_info()
-	if(!chassis)
-		return
-	send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",get_equip_info())
-	return TRUE
-
->>>>>>> master
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
 		detach(get_turf(src))
@@ -61,7 +41,6 @@
 		chassis = null
 	return ..()
 
-<<<<<<< HEAD
 /obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(can_attach(M, attach_right))
 		if(!user.temporarilyRemoveItemFromInventory(src))
@@ -79,7 +58,7 @@
 			detach(get_turf(src))
 			return TRUE
 		if("toggle")
-			equip_ready = !equip_ready
+			activated = !activated
 			return TRUE
 		if("repair")
 			ui.close() // allow watching for baddies and the ingame effects
@@ -89,31 +68,6 @@
 			if(get_integrity() == max_integrity)
 				balloon_alert(usr, "Repair complete")
 			return FALSE
-=======
-/obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech)
-	if(!can_attach(mech))
-		to_chat(user, span_warning("You are unable to attach [src] to [mech]!"))
-		return FALSE
-	if(!user.temporarilyRemoveItemFromInventory(src))
-		return FALSE
-	attach(mech)
-	user.visible_message(span_notice("[user] attaches [src] to [mech]."), span_notice("You attach [src] to [mech]."))
-	return TRUE
-
-///fetches and returns a html formatted string with equippability status
-/obj/item/mecha_parts/mecha_equipment/proc/get_equip_info()
-	if(!chassis)
-		return
-	var/txt = "<span style=\"color:[activated?"#0f0":"#f00"];\">*</span>&nbsp;"
-	if(chassis.selected == src)
-		txt += "<b>[src]</b>"
-	else if(selectable)
-		txt += "<a href='?src=[REF(chassis)];select_equip=[REF(src)]'>[src]</a>"
-	else
-		txt += "[src]"
-
-	return txt
->>>>>>> master
 
 /**
  * Checks whether this mecha equipment can be activated
@@ -124,13 +78,9 @@
 /obj/item/mecha_parts/mecha_equipment/proc/action_checks(atom/target)
 	if(!target)
 		return FALSE
-<<<<<<< HEAD
-	if(!equip_ready)
-=======
 	if(!chassis)
 		return FALSE
 	if(!activated)
->>>>>>> master
 		return FALSE
 	if(energy_drain && !chassis?.has_charge(energy_drain))
 		return FALSE
@@ -144,12 +94,7 @@
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/proc/action(mob/source, atom/target, list/modifiers)
-<<<<<<< HEAD
 	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
-=======
-	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT, equip_cooldown)//Cooldown is on the MECH so people dont bypass it by switching equipment
-	send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]", get_equip_info())
->>>>>>> master
 	chassis.use_power(energy_drain)
 	return TRUE
 
@@ -166,11 +111,7 @@
 		return
 	chassis.use_power(energy_drain)
 	. = do_after(user, equip_cooldown, target=target, interaction_key = interaction_key)
-<<<<<<< HEAD
-	if(!chassis || chassis.loc != C || !(get_dir(chassis, target)&chassis.dir))
-=======
-	if(!chassis || src != chassis.selected || !(get_dir(chassis, target) & chassis.dir))
->>>>>>> master
+	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
 		return FALSE
 
 ///Do after wrapper for mecha equipment
@@ -178,8 +119,7 @@
 	if(!chassis)
 		return
 	. = do_after(user, delay, target=target)
-<<<<<<< HEAD
-	if(!chassis || chassis.loc != C || !(get_dir(chassis, target)&chassis.dir))
+	if(!chassis || !(get_dir(chassis, target)&chassis.dir))
 		return FALSE
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
@@ -229,41 +169,6 @@
 		log_message("[src] removed from equipment.", LOG_MECHA)
 		chassis = null
 	return
-=======
-	if(!chassis || src != chassis.selected || !(get_dir(chassis, target) & chassis.dir))
-		return FALSE
-
-///Returns TRUE if equipment should be allowed to attach to the targetted necha
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M)
-	return LAZYLEN(M.equipment) < M.max_equip
-
-///Attaches equipment and updates relevant equipment trackers
-/obj/item/mecha_parts/mecha_equipment/proc/attach(obj/vehicle/sealed/mecha/M)
-	LAZYADD(M.equipment, src)
-	chassis = M
-	forceMove(M)
-	log_message("[src] attached.", LOG_MECHA)
-	update_chassis_page()
-
-///Detaches equipment and updates relevant equipment trackers. Optional argument of atom to forcemove to once detached
-/obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
-	SHOULD_CALL_PARENT(TRUE)
-	moveto = moveto || get_turf(chassis)
-	forceMove(moveto)
-	LAZYREMOVE(chassis.equipment, src)
-	if(chassis.selected == src)
-		chassis.selected = null
-	update_chassis_page()
-	log_message("[src] removed from equipment.", LOG_MECHA)
-	chassis = null
-
-/obj/item/mecha_parts/mecha_equipment/Topic(href,href_list)
-	. = ..()
-	if(.)
-		return
-	if(href_list["detach"])
-		detach()
->>>>>>> master
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)

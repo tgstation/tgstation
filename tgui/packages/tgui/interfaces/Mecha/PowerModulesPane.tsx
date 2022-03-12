@@ -14,8 +14,8 @@ export const PowerModulesPane = (props, context) => {
       {mech_equipment["power"].map((module, i) => (
         <LabeledList.Item key={i} label={module.name + (module.snowflake.fuel === null ? "" : ": "+toFixed(module.snowflake.fuel*mineral_material_amount, 0.1)+" cm³")}>
           <Button
-            content={(module.equip_ready ? "En" : "Dis") + "abled"}
-            selected={module.equip_ready}
+            content={(module.activated ? "En" : "Dis") + "abled"}
+            selected={module.activated}
             onClick={() => act('equip_act', {
               ref: module.ref,
               gear_action: "toggle",

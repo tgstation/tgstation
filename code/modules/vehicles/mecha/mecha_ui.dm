@@ -177,14 +177,14 @@
 	for(var/obj/item/mecha_parts/mecha_equipment/utility as anything in equip_by_category[MECHA_UTILITY])
 		data["mech_equipment"]["utility"] += list(list(
 			"name" = utility.name,
-			"equip_ready" = utility.equip_ready,
+			"activated" = utility.activated,
 			"snowflake" = utility.get_snowflake_data(),
 			"ref" = REF(utility),
 		))
 	for(var/obj/item/mecha_parts/mecha_equipment/power as anything in equip_by_category[MECHA_POWER])
 		data["mech_equipment"]["power"] += list(list(
 			"name" = power.name,
-			"equip_ready" = power.equip_ready,
+			"activated" = power.activated,
 			"snowflake" = power.get_snowflake_data(),
 			"ref" = REF(power),
 		))

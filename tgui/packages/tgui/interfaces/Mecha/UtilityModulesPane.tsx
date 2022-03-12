@@ -15,12 +15,12 @@ export const UtilityModulesPane = (props, context) => {
           ) : (
             <>
               <Button
-                content={(module.equip_ready ? "En" : "Dis") + "abled"}
+                content={(module.activated ? "En" : "Dis") + "abled"}
                 onClick={() => act('equip_act', {
                   ref: module.ref,
                   gear_action: "toggle",
                 })}
-                selected={module.equip_ready} />
+                selected={module.activated} />
               <Button
                 content={"Detach"}
                 onClick={() => act('equip_act', {

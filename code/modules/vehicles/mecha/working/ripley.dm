@@ -184,7 +184,6 @@
 /obj/item/mecha_parts/mecha_equipment/ejector
 	name = "Cargo compartment"
 	equipment_slot = MECHA_UTILITY
-	salvageable = FALSE
 	detachable = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/ejector/get_snowflake_data()
