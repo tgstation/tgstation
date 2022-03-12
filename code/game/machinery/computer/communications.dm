@@ -843,6 +843,7 @@
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
 			dynamic.create_threat(HACK_THREAT_INJECTION_AMOUNT)
 			dynamic.threat_log += "[worldtime2text()]: Communications console hack by [hacker]. Added [HACK_THREAT_INJECTION_AMOUNT] threat."
+			dynamic.roundend_threat_log += "Threat +[HACK_THREAT_INJECTION_AMOUNT] - Communications console hacked (by [hacker])"
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/autotraitor
