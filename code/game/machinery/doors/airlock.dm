@@ -830,7 +830,7 @@
 		if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
 			return
 		to_chat(user, span_notice("You start cutting through the outer grille."))
-		if(!C.use_tool(src, user, 10, volume=100))
+		if(!tool.use_tool(src, user, 10, volume=100))
 			return
 		if(!panel_open)  // double check it wasn't closed while we were trying to snip
 			return
@@ -913,7 +913,7 @@
 			next_level = AIRLOCK_SECURITY_PLASTEEL_O_S
 		if(AIRLOCK_SECURITY_PLASTEEL_I)
 			layer_flavor = "inner layer of shielding"
-			next_level = AIRLOCK_SECURITY_I_S
+			next_level = AIRLOCK_SECURITY_PLASTEEL_I_S
 		else
 			return
 
@@ -945,7 +945,7 @@
 
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/door/airlock/proc/try_reinforce(var/obj/item/stack/sheet/material, var/amt_required, var/new_security_level)
+/obj/machinery/door/airlock/proc/try_reinforce(mob/user, var/obj/item/stack/sheet/material, var/amt_required, var/new_security_level)
 	if(material.get_amount() < amt_required)
 		to_chat(user, span_warning("You need at least [amt_required] sheets of [material] to reinforce [src]."))
 		return FALSE
@@ -971,10 +971,10 @@
 		return
 	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
 		if(istype(C, /obj/item/stack/sheet/iron))
-			return try_reinforce(C, 2, AIRLOCK_SECURITY_IRON)
+			return try_reinforce(user, C, 2, AIRLOCK_SECURITY_IRON)
 
 		else if(istype(C, /obj/item/stack/sheet/plasteel))
-			if(!try_reinforce(C, 2, AIRLOCK_SECURITY_PLASTEEL))
+			if(!try_reinforce(user, C, 2, AIRLOCK_SECURITY_PLASTEEL))
 				return FALSE
 			modify_max_integrity(max_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
 			damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
