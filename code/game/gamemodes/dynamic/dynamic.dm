@@ -33,7 +33,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list()
-	/// Threat log shown on the roundend report. Should only list player-facing edits.
+	/// Threat log shown on the roundend report. Should only list player-made edits.
 	var/list/roundend_threat_log = list()
 	/// List of latejoin rules used for selecting the rules.
 	var/list/latejoin_rules
