@@ -1,0 +1,5 @@
+author: "OneAsianTortoise"
+delete-after: True
+changes: 
+  - bugfix: "being inside locker no longer protects you from a nuke"
+  - balance: "being inside the fridge guarantees you to survive nuclear bomb"
