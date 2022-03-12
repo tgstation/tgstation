@@ -1329,6 +1329,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/construction)
+"wm" = (
+/obj/item/stock_parts/cell/bluespace,
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "xr" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1509,6 +1513,10 @@
 	},
 /turf/open/floor/plating,
 /area/construction)
+"FQ" = (
+/obj/machinery/electrolyzer,
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "FY" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -1630,6 +1638,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating,
 /area/engineering/storage)
+"Qn" = (
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/turf/open/floor/iron,
+/area/hallway/secondary/entry)
 "Qo" = (
 /obj/structure/disposalpipe/trunk/multiz/down{
 	dir = 1
@@ -3719,7 +3731,7 @@ eo
 eo
 eo
 eo
-eo
+Qn
 cK
 by
 Zk
@@ -3773,7 +3785,7 @@ eo
 eo
 eo
 eo
-eo
+FQ
 cL
 by
 aW
@@ -3826,7 +3838,7 @@ bX
 eo
 eo
 cy
-eo
+wm
 eo
 cM
 by
