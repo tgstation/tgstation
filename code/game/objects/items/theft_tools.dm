@@ -89,7 +89,6 @@
 	icon = 'icons/obj/nuke_tools.dmi'
 	icon_state = "screwdriver_nuke"
 	inhand_icon_state = "screwdriver_nuke"
-	belt_icon_state = "screwdriver_nuke"
 	toolspeed = 0.5
 	random_color = FALSE
 	greyscale_config_inhand_left = null
