@@ -29,16 +29,17 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/datum/gas_mixture/air_mixture = location.return_air()
 
 	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
-	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES], (1.5 * delta_time * working_power))//Works to max 12 moles at a time.
-	air_mixture.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * working_power
-	air_mixture.gases[/datum/gas/oxygen][MOLES] += proportion * working_power
-	air_mixture.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * working_power
+	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES], (5 * delta_time * (working_power ** 2)))
+	air_mixture.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2
+	air_mixture.gases[/datum/gas/oxygen][MOLES] += proportion
+	air_mixture.gases[/datum/gas/hydrogen][MOLES] += proportion * 2
 
 /datum/electrolyzer_reaction/nob_conversion
 	name = "Hypernob conversion"
 	id = "nob_conversion"
 	requirements = list(
-		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT
+		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT,
+		"MAX_TEMP" = 150
 	)
 
 /datum/electrolyzer_reaction/nob_conversion/react(turf/location, working_power, delta_time)
@@ -46,6 +47,6 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/datum/gas_mixture/air_mixture = location.return_air()
 
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
-	var/proportion = min(air_mixture.gases[/datum/gas/hypernoblium][MOLES], (1.5 * delta_time * working_power))//Works to max 12 moles at a time.
-	air_mixture.gases[/datum/gas/hypernoblium][MOLES] -= proportion * working_power
-	air_mixture.gases[/datum/gas/antinoblium][MOLES] += proportion * working_power
+	var/proportion = min(air_mixture.gases[/datum/gas/hypernoblium][MOLES], (3 * delta_time * (working_power ** 2)))
+	air_mixture.gases[/datum/gas/hypernoblium][MOLES] -= proportion
+	air_mixture.gases[/datum/gas/antinoblium][MOLES] += proportion * 0.5
