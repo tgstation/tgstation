@@ -189,7 +189,7 @@
 	dir = 8
 	},
 /obj/structure/rack,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 3;
 	pixel_y = 3
 	},

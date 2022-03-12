@@ -625,8 +625,8 @@
 /area/hallway/secondary/entry)
 "cM" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/healthanalyzer,
 /turf/open/floor/iron,
 /area/hallway/secondary/entry)

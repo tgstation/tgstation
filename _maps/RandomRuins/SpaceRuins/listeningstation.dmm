@@ -972,7 +972,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "bA" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/clothing/neck/stethoscope,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/south,

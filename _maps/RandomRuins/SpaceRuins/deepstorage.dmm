@@ -1188,20 +1188,20 @@
 /area/ruin/space/has_grav/deepstorage/armory)
 "dc" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
 "dd" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1803,11 +1803,11 @@
 /area/ruin/space/has_grav/deepstorage/airlock)
 "eN" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
 /obj/item/storage/pill_bottle/multiver,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,

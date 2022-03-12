@@ -78,7 +78,7 @@
 /area/ruin/powered/shuttle/medium_2)
 "s" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
