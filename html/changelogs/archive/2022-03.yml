@@ -347,3 +347,99 @@
   san7890:
   - bugfix: The reality-correctioneers have removed the purple and black square that
       shows up like 33% of the time in TramStation's Maintenance Tunnels.
+2022-03-12:
+  BurgerBB:
+  - bugfix: Fixes abandoned crates exploding on empty-hand right click regardless
+      of intent.
+  Ebb-Real:
+  - bugfix: fixes RCD not being able to be put in bags and belts by clicking.
+  Ebin-Halcyon:
+  - bugfix: Female lizard's chests no longer poke out of their shirts.
+  Fikou:
+  - bugfix: high frequency blade now works on mechs, metal gears and other vehicles
+  - admin: you can now varedit high frequency blade slash color
+  Ghilker:
+  - balance: SM pluoxium production reduced by 500%, co2 consumed by the process decreased
+      by half
+  Ghommie:
+  - rscadd: 'Becoming the patron of a painting now lets you select a different appearance
+      for the frame it''s in. This appearance will persist between rounds (the ability
+      to modify the frame won''t, though). The more credits have been spent on the
+      patronage, the better the options: from 150 for the iron frame up to 12000 for
+      the supermatter one (doesn''t dust nor irradiate).'
+  - bugfix: You can now sponsor a painting that hasn't been archived yet. Just make
+      sure it's inserted in a frame with persistence on.
+  - bugfix: fixed some mismatches between sprites and sizes for a few canvases.
+  GoldenAlpharex:
+  - refactor: A minor refactor was done to the persistent scars preference, allowing
+      it to finally be available in the preferences menu once again.
+  Inari-Whitebear:
+  - bugfix: Fixed Delta station bridge engineering console having non-working AmpCheck
+      due to not being hooked up to the powergrid.
+  JohnFulpWillard:
+  - bugfix: pAIs can be inserted into Vibebots again.
+  - bugfix: Electric shocks now help against heart attacks.
+  LemonInTheDark:
+  - bugfix: HUD objects will no longer be hidden by things like blindness
+  - rscadd: Ghost darkness is now a game preference, and will persist between rounds
+  - balance: Ghost darkness defaults to a bit darker then currently. I think it looks
+      better
+  LemonInTheDark, MrStonedOne:
+  - code_imp: Adds a color blindness accessibility testing tool. Use it for testing
+      out your ui changes
+  MMMiracles:
+  - bugfix: Adds an APC to the upper dorm area on Tramstation
+  MacBlaze1:
+  - expansion: Allows multitools to change the speed of linked conveyor belts by clicking
+      on a placed conveyor switch.
+  - code_imp: Because of the above, multitools can no longer be used to interact with
+      switches. Not like they did much, but well, so you know
+  MeyHaZah:
+  - imageadd: Resprites for every book
+  OneAsianTortoise:
+  - bugfix: fixes tablet not updating appearance immediately after it is repaired
+  QuacksQ:
+  - bugfix: fixes Chili sin carne being uncraftable
+  Shelteredfreak, MrMelbert, and San7890:
+  - rscdel: Removed Kilo's chapel in favor of a monastery off of the main station.
+  - rscadd: Added a new monastery on Kilo's Northwestern asteroid.
+  - rscadd: Added a security cremator to sec in place of the hardsuits, hardsuits
+      moved to armory.
+  - rscadd: Added a public garden in the Chapel's place, complete with cow and chicken
+      (Done by MrMelbert).
+  Son-of-Space:
+  - bugfix: Enabled general access to escape pod on KiloStation
+  SuperNovaa41:
+  - bugfix: Fixes non-rustable turfs from becoming rusty.
+  Thunder12345:
+  - qol: Pride pins now appear on top of suit slot clothing
+  Wallem:
+  - code_imp: De-hardcodes random book icon state generation
+  cacogen:
+  - balance: Bump mining requires activehandedness
+  - code_imp: Bump click element for when bumping something should click it, like
+      mineral turfs
+  - bugfix: Fixes hitting snow turfs with a non-mining item to trigger hand mining
+      (which was something all cyborgs could do to mine)
+  - rscadd: Cyborgs can left-click with no active module to manually mine snow turfs
+      instead (takes 15 seconds per turf, good luck)
+  nevimer:
+  - bugfix: succumb prompt can be cancelled again
+  san7890:
+  - rscadd: On DeltaStation, the Ordnance storage room now owns it's own doors.
+  - bugfix: The barstools in the Nuclear Operative's Base now point the correct direction.
+  - rscadd: On DeltaStation, Nanotrasen realized that the "Pumping Room" they elaborately
+      crafted for Atmospherics wasn't actually the part of that division that actually
+      moves gas to the rest of the station. They once again elaborately crafted a
+      new room (called the "Mixing Room") and shifted everything around. It probably
+      doesn't matter to YOU, though.
+  - imageadd: For mappers, there is now a new icon that shows up when you place light
+      emitters down. It's a little bit more descript.
+  - bugfix: On DeltaStation, certain wall appliances in the Telecommunications Office
+      no longer appear to be overlapping to those who are able to look at its walls
+      from both ends.
+  tastyfish:
+  - bugfix: Fixes clusterbuster segments working correctly/at all.
+  tohg7:
+  - bugfix: fixed an inconsistency where booze bottles and molotovs wouldn't splash
+      their contents when thrown at things while drinking and shot glasses do.

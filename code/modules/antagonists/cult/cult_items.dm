@@ -1,6 +1,7 @@
 /obj/item/tome
 	name = "arcane tome"
 	desc = "An old, dusty tome with frayed edges and a sinister-looking cover."
+	icon = 'icons/obj/cult/items_and_weapons.dmi'
 	icon_state ="tome"
 	throw_speed = 2
 	throw_range = 5
