@@ -567,6 +567,8 @@
 			tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
+	bot_mode_flags &= ~BOT_MODE_ON
+	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	drop_part(medkit_type, Tsec)
@@ -575,7 +577,9 @@
 
 	if(bot_cover_flags & BOT_COVER_EMAGGED && prob(25))
 		playsound(src, 'sound/voice/medbot/insult.ogg', 50)
-	return ..()
+
+	do_sparks(3, TRUE, src)
+	..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)
 	if(!COOLDOWN_FINISHED(src, last_patient_message))
