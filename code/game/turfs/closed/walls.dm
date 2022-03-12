@@ -319,11 +319,11 @@
 	add_overlay(dent_decals)
 
 /turf/closed/wall/rust_turf()
+	if(turf_flags & NO_RUST)
+		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		ScrapeAway()
 		return
-	if(prob(70))
-		new /obj/effect/temp_visual/glowing_rune(src)
 	return ..()
 
 /turf/closed/wall/metal_foam_base

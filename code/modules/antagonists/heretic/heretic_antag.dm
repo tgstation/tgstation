@@ -567,6 +567,11 @@
 
 	rust_strength++
 
+/datum/antagonist/heretic/proc/set_rust_strength(strength)
+	if(ISNAN(strength))
+		return
+	rust_strength = strength
+
 /*
  * Get a list of all rituals this heretic can invoke on a rune.
  * Iterates over all of our knowledge and, if we can invoke it, adds it to our list.

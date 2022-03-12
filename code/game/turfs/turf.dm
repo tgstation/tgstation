@@ -599,6 +599,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Override this to change behaviour when being rusted by a heretic
 /turf/proc/rust_turf()
+	if(turf_flags & NO_RUST)
+		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
 

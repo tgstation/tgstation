@@ -193,7 +193,7 @@
 	name = "Aggressive Spread"
 	desc = "Grants you Aggressive Spread, a spell that spreads rust to nearby surfaces. \
 		Already rusted surfaces are destroyed. \
-		Improves your rusting abilities if learned as a side path."
+		Also improves the rusting abilities of non-rust heretics."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
 	next_knowledge = list(
 		/datum/heretic_knowledge/rust_blade_upgrade,
@@ -244,7 +244,7 @@
 	desc = "Grants you Entropic Plume, a spell that releases a vexing wave of Rust. \
 		Blinds, poisons, and inflicts Amok on any heathen it hits, causing them to strike \
 		at friend or foe wildly. Also rusts and destroys and surfaces it hits. \
-		Improves your rusting abilities if learned as a side path."
+		Also improves the rusting abilities of non-rust heretics."
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(

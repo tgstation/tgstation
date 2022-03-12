@@ -223,8 +223,7 @@
 		When completed, you become a harbinger of flames, gaining two abilites. \
 		Cascade, which causes a massive, growing ring of fire around you, \
 		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		You will also become immune to flames, space, and similar environmental hazards. \
-		Also improves your ability to spread rust."
+		You will also become immune to flames, space, and similar environmental hazards."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwater brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
