@@ -828,16 +828,16 @@
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
 		. = TOOL_ACT_TOOLTYPE_SUCCESS  // everything after this shouldn't result in attackby
 		if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
-			return
+			return .
 		to_chat(user, span_notice("You start cutting through the outer grille."))
 		if(!tool.use_tool(src, user, 10, volume=100))
-			return
+			return .
 		if(!panel_open)  // double check it wasn't closed while we were trying to snip
-			return
+			return .
 		user.visible_message(span_notice("[user] cut through [src]'s outer grille."),
 							span_notice("You cut through [src]'s outer grille."))
 		security_level = AIRLOCK_SECURITY_PLASTEEL_O
-		return
+		return .
 	if(note)
 		if(user.CanReach(src))
 			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
@@ -850,12 +850,9 @@
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/airlock/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(.)
-		return
 
 	if(!panel_open || security_level == AIRLOCK_SECURITY_NONE)
-		return
+		return ..()
 
 	var/layer_flavor
 	var/next_level
@@ -870,13 +867,14 @@
 			layer_flavor = "inner layer of shielding"
 			next_level = AIRLOCK_SECURITY_NONE
 		else
-			return
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 
+	user.visible_message(span_notice("You start prying away [src]'s [layer_flavor]."))
 	if(!tool.use_tool(src, user, 40, volume=100))
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!panel_open || security_level != starting_level)
 		// if the plating's already been broken, don't break it again
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	user.visible_message(span_notice("[user] removes [src]'s shielding."),
 							span_notice("You remove [src]'s [layer_flavor]."))
 	security_level = next_level
@@ -912,10 +910,10 @@
 			layer_flavor = "inner layer of shielding"
 			next_level = AIRLOCK_SECURITY_PLASTEEL_I_S
 		else
-			return
+			return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	if(!tool.tool_start_check(user, amount=2))
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	to_chat(user, span_notice("You begin cutting the [layer_flavor]..."))
 
@@ -924,7 +922,7 @@
 
 	if(!panel_open || security_level != starting_level)
 		// see if anyone's screwing with us
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	user.visible_message(
 		span_notice("[user] cuts through [src]'s shielding."),  // passers-by don't get the full picture
