@@ -346,7 +346,7 @@
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
 		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
-		if(!isnull(roundend_threat_log))
+		if(!isnull(mode.roundend_threat_log))
 			parts += "[FOURSPACES]Threat edits:"
 			for(var/entry as anything in mode.roundend_threat_log)
 				parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
