@@ -2,6 +2,21 @@
 	. = ..()
 	fleshheal()
 
+/obj/item/organ/liver/on_life()
+	. = ..()
+	liver_healing()
+
+/obj/item/organ/brain/on_life()
+	. = ..()
+	brain_healing()
+
+/obj/item/organ/brain	//can move this and the applyOrganDamage proc to general organs if we want to set delays for other organs
+	var/timeSinceDamaged = 0
+
+/obj/item/organ/brain/applyOrganDamage(d, maximum = maxHealth)	//note the time the brain has been damaged
+	. = ..()
+	timeSinceDamaged = world.time
+
 /mob/living/carbon/proc/fleshheal(var/bruteHealFactor, var/burnHealFactor, var/calculateMissing = TRUE)	//healing brute & burn damage, parse in bruteHealFactor or burnHealFactor if you want to override the default formula. set calculateMissing to false if you don't want the other type of damage to get healed, e.g. you get super fast brute damage healing but cant heal burn as a resul
 	. = ..()
 	var/list/parts = get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)
@@ -22,8 +37,6 @@
 				generalHealFactor = 0.12
 			else
 				generalHealFactor = 0.16
-		if(satiety > 80)
-			generalHealFactor *= 0.2
 
 		if(blood_volume > BLOOD_VOLUME_NORMAL && !HAS_TRAIT(src, TRAIT_NOHUNGER))	//call adjusting nutrition for default healing formula, if blood.dm doesn't call it when creating new blood
 			adjust_nutrition(-generalHealFactor * HUNGER_FACTOR)	//if you override but still want to adjust nutrition, you can copy something similar to this over to your proc where you'll call the manual formulas
@@ -52,36 +65,22 @@
 				sendhealmessage = FALSE
 				to_chat(src, "<span class='notice'>You feel your [L.name]'s burns improving slowly.</span>")
 
-/obj/item/organ/liver/proc/liver_healing(var/toxinHealFactor)	//healing toxin damage and managing liver damage. parse a number or formula for toxinHealFactor if you want to override the default
-	. = ..()
-	var/mob/living/carbon/C = owner
-	if((maxHealth - damage) > (maxHealth / 5))	//don't trade toxloss for organ damage if the poor liver is already hopelessly damaged
-		if(!toxinHealFactor)	//allow override if toxinHealFactor is manually defined
-			toxinHealFactor = ((maxHealth - damage) / maxHealth) / 4	//0.25 tox damage heal when at 100 liver health, current % of damage to heal, based on liver damage
-			C.adjustToxLoss(-toxinHealFactor, FALSE, FALSE)
-			C.adjustOrganLoss(ORGAN_SLOT_LIVER, toxinHealFactor)
-	else
-		C.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.1)	//organs only normally heal at 0.001 per tick??? wtf? now adjusted to 0.01 but still too little for the liver
-
-/obj/item/organ/liver/on_life()
-	. = ..()
-	liver_healing()
-
-/obj/item/organ/brain	//can move this and the applyOrganDamage proc to general organs if we want to set delays for other organs
-	var/timeSinceDamaged = 0
-
-/obj/item/organ/brain/on_life()
-	. = ..()
-	brain_healing()
-
 /obj/item/organ/brain/proc/brain_healing(var/brainHealFactor, var/extraDelay = 0)	//healing brain damage, inverse curve so higher damage = faster healing rate. can override heal factor to give a different / faster formula. extraDelay to specify extra or less time before being healed if you were damaged recently. -50 = 0 second delay for healing if you got brain damaged
 	. = ..()
 	var/mob/living/carbon/C = owner
-	if(world.time > timeSinceDamaged + 50 + extraDelay)	//start brain healing *only* if it has been more than 5 seconds since last damaged
+	if(world.time > timeSinceDamaged + 50 + extraDelay)	//start brain healing *only* if it has been more than 5 seconds since last damaged, plus extraDelay
 		if(!brainHealFactor)	//allow override if brainHealFactor is manually defined
 			brainHealFactor = (1 + (damage * (damage / (maxHealth / 2)))) / maxHealth	//higher healing rate the more damage the brain has, so to fully heal you really should get mannitol. 190 damage = 1.81 healed, 150 damage = 1.13 healed, 100 damage = 0.505 healed, 50 damage = 0.13 healed, 10 damage = 0.01 healed
 		C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -brainHealFactor)
 
-/obj/item/organ/brain/applyOrganDamage(d, maximum = maxHealth)
+/obj/item/organ/liver/proc/liver_healing(var/toxinHealFactor)	//healing toxin damage and managing liver damage. parse a number or formula for toxinHealFactor if you want to override the default
 	. = ..()
-	timeSinceDamaged = world.time
+	var/mob/living/carbon/C = owner
+	if(C.getToxLoss())	//don't bother if there isn't any toxin damage?
+		if((maxHealth - damage) > (maxHealth / 5))	//don't trade toxloss for organ damage if the poor liver is already hopelessly damaged
+			if(!toxinHealFactor)	//allow override if toxinHealFactor is manually defined
+				toxinHealFactor = ((maxHealth - damage) / maxHealth) / 4	//0.25 tox damage heal when at 100 liver health, current % of damage to heal, based on liver damage
+			C.adjustToxLoss(-toxinHealFactor, FALSE, FALSE)
+			C.adjustOrganLoss(ORGAN_SLOT_LIVER, toxinHealFactor)
+	else
+		C.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.1)	//organs only normally heal at 0.001 per tick??? wtf? now adjusted to 0.01 but still too little for the liver
