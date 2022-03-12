@@ -162,7 +162,7 @@
 
 //organ defines
 #define STANDARD_ORGAN_THRESHOLD 100
-#define STANDARD_ORGAN_HEALING 0.001	//hippie start - passive healing, standard organ healing increased from 0.001 to 0.05
+#define STANDARD_ORGAN_HEALING 0.001
 /// designed to fail organs when left to decay for ~15 minutes
 #define STANDARD_ORGAN_DECAY 0.00222
 

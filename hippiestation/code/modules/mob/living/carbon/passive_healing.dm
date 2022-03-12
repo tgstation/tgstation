@@ -83,4 +83,4 @@
 			C.adjustToxLoss(-toxinHealFactor, FALSE, FALSE)
 			C.adjustOrganLoss(ORGAN_SLOT_LIVER, toxinHealFactor)
 	else
-		C.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.1)	//organs only normally heal at 0.001 per tick??? wtf? now adjusted to 0.01 but still too little for the liver, so this extra amount added
+		C.adjustOrganLoss(ORGAN_SLOT_LIVER, -0.1)	//organs only normally heal at 0.001 per tick??? wtf? too little for the liver, so this extra amount to heal added
