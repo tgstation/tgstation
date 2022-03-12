@@ -1,4 +1,0 @@
-author: "OneAsianTortoise"
-delete-after: True
-changes: 
-  - bugfix: "fixes tablet not updating appearance immediately after it is repaired"

@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Fixes hitting snow turfs with a non-mining item to trigger hand mining (which was something all cyborgs could do to mine)"
-  - rscadd: "Cyborgs can left-click with no active module to manually mine snow turfs instead (takes 15 seconds per turf, good luck)"

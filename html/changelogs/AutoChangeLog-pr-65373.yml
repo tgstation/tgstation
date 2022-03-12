@@ -1,4 +1,0 @@
-author: "Inari-Whitebear"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Delta station bridge engineering console having non-working AmpCheck due to not being hooked up to the powergrid."

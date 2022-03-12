@@ -1,4 +1,0 @@
-author: "Wallem"
-delete-after: True
-changes: 
-  - code_imp: "De-hardcodes random book icon state generation"

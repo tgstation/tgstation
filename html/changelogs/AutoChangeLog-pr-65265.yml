@@ -1,7 +1,0 @@
-author: "Shelteredfreak, MrMelbert, and San7890"
-delete-after: True
-changes: 
-  - rscdel: "Removed Kilo's chapel in favor of a monastery off of the main station."
-  - rscadd: "Added a new monastery on Kilo's Northwestern asteroid."
-  - rscadd: "Added a security cremator to sec in place of the hardsuits, hardsuits moved to armory."
-  - rscadd: "Added a public garden in the Chapel's place, complete with cow and chicken (Done by MrMelbert)."

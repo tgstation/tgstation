@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - balance: "Bump mining requires activehandedness"
-  - code_imp: "Bump click element for when bumping something should click it, like mineral turfs"
