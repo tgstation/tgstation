@@ -99,9 +99,9 @@ const TankCompressorControls = (props, context) => {
     active,
     transferRate,
     ejectPressure,
-    inputData = [],
-    outputData = [],
-    bufferData = [],
+    inputData,
+    outputData,
+    bufferData,
   } = data;
   const pressure = tankPresent ? tankPressure : lastPressure;
   const usingLastData = !!(lastPressure && !tankPresent);
