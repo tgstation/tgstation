@@ -7208,22 +7208,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
-"bdl" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/science/storage)
 "bdL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /mob/living/carbon/human/species/monkey,
@@ -19348,6 +19332,10 @@
 /turf/open/floor/iron,
 /area/security/checkpoint/engineering)
 "ftE" = (
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron,
 /area/science/storage)
 "ftL" = (
@@ -27765,6 +27753,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/catwalk_floor,
 /area/maintenance/tram/mid)
+"iqu" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/iron/dark,
+/area/science/storage)
 "iqv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -44662,22 +44665,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
-"ovo" = (
-/obj/effect/landmark/event_spawn,
-/obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/science/storage)
 "ovq" = (
 /obj/structure/chair/comfy/black{
 	dir = 1
@@ -65354,6 +65341,21 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/security/checkpoint/science)
+"vXe" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/science/storage)
 "vXj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -70703,6 +70705,17 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningdock)
+"xNg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/science/storage)
 "xNs" = (
 /obj/structure/window/reinforced/spawner/west,
 /obj/machinery/chem_dispenser,
@@ -119881,7 +119894,7 @@ adS
 dhe
 lMe
 hnj
-ovo
+gHS
 emk
 wET
 pkG
@@ -120138,7 +120151,7 @@ adS
 dhe
 lMe
 pzt
-jEE
+xNg
 jEE
 jEE
 tKS
@@ -120394,8 +120407,8 @@ dhe
 dhe
 dhe
 lMe
-bdl
-eaI
+clN
+iqu
 uEw
 tnu
 lOY
@@ -120912,7 +120925,7 @@ clN
 eaI
 nCc
 tnu
-ftE
+vXe
 lMe
 qRr
 hWi

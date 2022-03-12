@@ -24729,6 +24729,7 @@
 /area/science/research/abandoned)
 "dAw" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/open/floor/iron,
 /area/science/mixing)
 "dAx" = (
