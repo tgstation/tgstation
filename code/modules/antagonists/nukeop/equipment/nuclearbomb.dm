@@ -607,9 +607,9 @@ GLOBAL_VAR(station_nuke_source)
 	for(var/mob/living/victim as anything in GLOB.mob_living_list)
 		var/turf/target_turf = get_turf(victim)
 		if(istype(victim.loc, /obj/structure/closet/secure_closet/freezer))
-			to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as the nuclear bomb goes off. Luckily as \the [victim.loc] is lead-lined, you survive."))
 			var/obj/structure/closet/secure_closet/freezer/freezer = victim.loc
 			if(!freezer.jones)
+				to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as the nuclear bomb goes off. Luckily as \the [victim.loc] is lead-lined, you survive."))
 				freezer.jones = TRUE
 				continue
 		if(victim.stat != DEAD && target_turf && is_station_level(target_turf.z))
