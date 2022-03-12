@@ -1,15 +1,15 @@
 /**
- * # String Format Component
+ * # Format List Component
  *
- * Formats strings by replacing %n with nth parameter.
+ * Formats lists by replacing %n in format string with nth parameter.
  * Alternative to the Concatenate component.
  */
 /obj/item/circuit_component/format
-	display_name = "Format"
-	desc = "A component that formats strings, replacing %n in the format string with corresponding nth list item."
+	display_name = "Format List"
+	desc = "A component that formats lists, replacing %n in the format string with corresponding nth list item."
 	category = "List"
 
-	var/static/regex/param_regex = new(@"%([0-9]+)", "g")
+	var/regex/param_regex = new(@"%([0-9]+)", "g")
 	// Used to provide what src should be in the regex replace proc. Necessary due to terrible byond API.
 	var/static/obj/item/circuit_component/format/regex_context
 
@@ -23,11 +23,28 @@
 	var/datum/port/output/output
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
-/obj/item/circuit_component/format/populate_ports()
-	format_port = add_input_port("Format", PORT_TYPE_STRING)
+/obj/item/circuit_component/format/proc/make_params_port()
 	param_list_port = add_input_port("Params", PORT_TYPE_LIST(PORT_TYPE_ANY))
 
+/obj/item/circuit_component/format/populate_ports()
+	format_port = add_input_port("Format", PORT_TYPE_STRING)
+	make_params_port()
+
 	output = add_output_port("Output", PORT_TYPE_STRING)
+
+/**
+ * Get an item from the list.
+ * Return null to indicate invalid index.
+ * Arguments:
+ * * param_list - The resolved list.
+ * * index_string - The raw list index, as a string.
+ */
+/obj/item/circuit_component/format/proc/get_list_item(list/param_list, index_string)
+	var/index = text2num(index_string)
+	if(index < 1 || index > length(param_list))
+		return null
+
+	return param_list[index]
 
 /**
  * Replace %n with the actual param, as a string.
@@ -36,15 +53,14 @@
  * * index_string - Just the "1" of the %1 format, actually used.
  */
 /obj/item/circuit_component/format/proc/process_param(match, index_string)
-	var/param_list = regex_context.param_list_port.value
-	var/index = text2num(index_string)
-
+	// The static regex_context var is what you'd expect src to be, but src is actually the regex instance.
+	var/list/param_list = regex_context.param_list_port.value
 	if(!islist(param_list))
 		return @"[NO LIST]"
-	if(index < 1 || index > length(param_list))
-		return @"[BAD INDEX]"
 
-	var/value = param_list[index]
+	var/value = regex_context.get_list_item(param_list, index_string)
+	if(value == null)
+		return @"[BAD INDEX]"
 
 	// If this is a datum or atom, it's likely wrapped in a weakref.
 	if(isweakref(value))
@@ -66,3 +82,20 @@
 	// Inject the parameters.
 	regex_context = src
 	output.set_output(param_regex.Replace(format_port.value, .proc/process_param))
+
+/**
+ * # Format Associative List Component
+ *
+ * Formats lists by replacing %n in format string with nth parameter.
+ * Alternative to the Concatenate component.
+ */
+/obj/item/circuit_component/format/assoc
+	display_name = "Format Associative List"
+	desc = "A component that formats associative lists, replacing %key in the format string with corresponding list\[key] item."
+	param_regex = new(@"%([a-zA-Z0-9_]+)", "g")
+
+/obj/item/circuit_component/format/assoc/get_list_item(list/param_list, index_string)
+	return param_list[index_string]
+
+/obj/item/circuit_component/format/assoc/make_params_port()
+	param_list_port = add_input_port("Params", PORT_TYPE_ASSOC_LIST(PORT_TYPE_STRING, PORT_TYPE_ANY))

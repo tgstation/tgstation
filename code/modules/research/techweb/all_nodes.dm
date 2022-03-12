@@ -236,6 +236,7 @@
 		"comp_filter_list",
 		"comp_foreach",
 		"comp_format",
+		"comp_format_assoc",
 		"comp_get_column",
 		"comp_gps",
 		"comp_health",
