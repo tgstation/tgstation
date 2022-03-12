@@ -874,7 +874,7 @@
 /area/awaymission/research/interior/engineering)
 "ct" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
@@ -3971,7 +3971,7 @@
 /area/awaymission/research/interior/medbay)
 "jd" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -4767,8 +4767,8 @@
 /area/awaymission/research/interior/medbay)
 "le" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -4909,8 +4909,8 @@
 /area/awaymission/research/interior/medbay)
 "ls" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/toxin,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -5024,8 +5024,8 @@
 /area/awaymission/research/interior/medbay)
 "lE" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

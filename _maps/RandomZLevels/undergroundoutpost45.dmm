@@ -4106,7 +4106,7 @@
 /area/awaymission/undergroundoutpost45/central)
 "iN" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/sign/warning/biohazard{
 	pixel_x = -32
 	},
@@ -9521,11 +9521,11 @@
 /area/awaymission/undergroundoutpost45/research)
 "sy" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -9537,7 +9537,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "sz" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 6
 	},

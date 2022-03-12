@@ -2145,7 +2145,7 @@
 /area/shuttle/escape)
 "yS" = (
 /obj/machinery/airalarm/directional/north,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "yZ" = (

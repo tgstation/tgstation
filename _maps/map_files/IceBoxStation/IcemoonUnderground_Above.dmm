@@ -443,7 +443,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -1882,7 +1882,7 @@
 /area/maintenance/department/medical/morgue)
 "gp" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -14528,11 +14528,11 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},

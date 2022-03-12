@@ -862,7 +862,7 @@
 /obj/structure/window/reinforced/survival_pod,
 /obj/structure/rack,
 /obj/item/crowbar,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/item/paper/fluff/ruins/spacehotel/notice,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
@@ -4204,7 +4204,7 @@
 /area/ruin/space/has_grav/hotel)
 "TM" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 4
 	},

@@ -326,7 +326,7 @@ GLOBAL_VAR(station_nuke_source)
 	. = ..()
 	if(.)
 		return
-	playsound(src, "terminal_type", 20, FALSE)
+	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)

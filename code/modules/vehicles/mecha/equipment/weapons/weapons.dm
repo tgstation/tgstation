@@ -229,11 +229,17 @@
 		return FALSE
 	return TRUE
 
+<<<<<<< HEAD
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(action == "reload")
 		rearm()
 		return TRUE
+=======
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/get_equip_info()
+	return "[..()] \[[projectiles][projectiles_cache_max &&!projectile_energy_cost?"/[projectiles_cache]":""]\][!disabledreload &&(src.projectiles < initial(src.projectiles))?" - <a href='?src=[REF(src)];rearm=1'>Rearm</a>":null]"
+
+>>>>>>> master
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/rearm()
 	if(projectiles < initial(projectiles))
@@ -244,15 +250,37 @@
 			projectiles = projectiles + projectiles_to_add
 			projectiles_cache = projectiles_cache - projectiles_to_add
 		else
+<<<<<<< HEAD
 			projectiles = projectiles + projectiles_cache
 			projectiles_cache = 0
+=======
+			if(!projectiles_cache)
+				return FALSE
+			if(projectiles_to_add <= projectiles_cache)
+				projectiles = projectiles + projectiles_to_add
+				projectiles_cache = projectiles_cache - projectiles_to_add
+			else
+				projectiles = projectiles + projectiles_cache
+				projectiles_cache = 0
+
+		send_byjax(chassis.occupants,"exosuit.browser","[REF(src)]",src.get_equip_info())
+>>>>>>> master
 		log_message("Rearmed [src].", LOG_MECHA)
 		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/needs_rearm()
-	. = !(projectiles > 0)
+	return projectiles <= 0
 
 
+<<<<<<< HEAD
+=======
+
+/obj/item/mecha_parts/mecha_equipment/weapon/ballistic/Topic(href, href_list)
+	..()
+	if (href_list["rearm"])
+		rearm()
+
+>>>>>>> master
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/action(mob/source, atom/target, list/modifiers)
 	. = ..()
 	if(!.)

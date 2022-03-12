@@ -38,7 +38,7 @@
 		/obj/effect/spawner/random/medical/surgery_tool_advanced = 4,
 		/obj/effect/spawner/random/medical/surgery_tool_alien = 1
 	)
-	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom)
 	rpg_title = "High Cleric"
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
@@ -66,7 +66,7 @@
 	ears = /obj/item/radio/headset/heads/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/blue
 	l_pocket = /obj/item/pinpointer/crew
-	l_hand = /obj/item/storage/firstaid/medical
+	l_hand = /obj/item/storage/medkit/surgery
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

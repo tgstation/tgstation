@@ -397,7 +397,7 @@
 	visible_message(span_warning("[src] breaks!"),
 		span_danger("You hear breaking glass."))
 	var/turf/T = get_turf(src)
-	playsound(T, "shatter", 50, TRUE)
+	playsound(T, SFX_SHATTER, 50, TRUE)
 	for(var/I in debris)
 		var/atom/movable/AM = I
 		AM.forceMove(T)
@@ -414,7 +414,7 @@
 			return
 		else
 			var/turf/T = get_turf(src)
-			playsound(T, "shatter", 50, TRUE)
+			playsound(T, SFX_SHATTER, 50, TRUE)
 			for(var/X in debris)
 				var/atom/movable/AM = X
 				AM.forceMove(T)
