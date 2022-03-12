@@ -9,10 +9,8 @@
 /obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine)
 	. = ..()
  
-	if(!LAZYLEN(cards_to_combine))
+	if(!LAZYLEN(cards_to_combine) || (mapload && !LAZYLEN(cards))
 		CRASH("[src] is being made into a cardhand without a list of cards to combine")
-
-/** I haven't decided if I want to make it possible to mapload cardhands (meh)
 
 	if(mapload && LAZYLEN(cards)) // these cards have not been initialized 
 		for(var/card_name in cards)
@@ -20,7 +18,7 @@
 			new_card.update_appearance()
 			cards_to_combine += new_card		
 		cards = list() // reset our cards to an empty list
-**/
+
 	if(LAZYLEN(cards_to_combine)) // these cards are already initialized
 		for(var/obj/item/toy/singlecard/new_card in cards_to_combine)
 			new_card.forceMove(src)
