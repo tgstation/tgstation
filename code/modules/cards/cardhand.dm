@@ -48,15 +48,17 @@
 	if(istype(held_item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
 		if(dealer_deck.wielded)
-			context[SCREENTIP_CONTEXT_LMB] = "Add card"
-			context[SCREENTIP_CONTEXT_RMB] = "Add card faceup"
+			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
+			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			return CONTEXTUAL_SCREENTIP_SET
 		context[SCREENTIP_CONTEXT_LMB] = "Recycle cards"
+		return CONTEXTUAL_SCREENTIP_SET
 	
 	if(istype(held_item, /obj/item/toy/singlecard))
-		context[SCREENTIP_CONTEXT_LMB] = "Add card"
-		context[SCREENTIP_CONTEXT_RMB] = "Add card faceup"
-
+		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
+		context[SCREENTIP_CONTEXT_RMB] = "Combine cards faceup"
+		return CONTEXTUAL_SCREENTIP_SET
+		
 	return .
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
