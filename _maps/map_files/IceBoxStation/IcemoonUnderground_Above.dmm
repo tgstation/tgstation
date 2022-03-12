@@ -1807,12 +1807,6 @@
 /obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/mine/storage)
-"ga" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/north,
-/obj/structure/window/reinforced/spawner/east,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
 "gb" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -2177,6 +2171,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/commons/lounge)
+"ha" = (
+/obj/structure/grille,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/mine/living_quarters)
 "hb" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -10013,12 +10012,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/production)
-"FM" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/west,
-/obj/structure/window/reinforced/spawner,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
 "FN" = (
 /obj/effect/turf_decal/tile/dark{
 	dir = 8
@@ -13932,12 +13925,6 @@
 	},
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
-"Rz" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/spawner/east,
-/obj/structure/window/reinforced/spawner/north,
-/turf/open/floor/plating,
-/area/mine/living_quarters)
 "RA" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -29781,7 +29768,7 @@ mO
 mO
 mO
 rz
-CS
+ha
 oN
 nf
 DT
@@ -30038,8 +30025,8 @@ mO
 mO
 mO
 mO
-ga
-FM
+ha
+ha
 HL
 CL
 at
@@ -30296,8 +30283,8 @@ mO
 mO
 mO
 mO
-Rz
-kQ
+ha
+ha
 cM
 Ic
 Cu
@@ -53683,8 +53670,8 @@ Qn
 Su
 Su
 Su
-tD
-tD
+yi
+yi
 Su
 PG
 DJ
