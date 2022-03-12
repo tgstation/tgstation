@@ -54,7 +54,7 @@
 	time = 40
 	reqs = list(
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/cheese/wedge/wedge = 1
+		/obj/item/food/cheese/wedge= 1
 	)
 	result = /obj/item/food/loadedbakedpotato
 	subcategory = CAT_MISCFOOD

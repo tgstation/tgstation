@@ -77,7 +77,7 @@
 	reqs = list(
 		/obj/item/food/fishmeat = 1,
 		/obj/item/food/bun = 1,
-		/obj/item/food/cheese/wedge/wedge = 1
+		/obj/item/food/cheese/wedge= 1
 	)
 	result = /obj/item/food/burger/fish
 	subcategory = CAT_BURGER
