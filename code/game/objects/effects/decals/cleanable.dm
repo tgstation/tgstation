@@ -18,6 +18,8 @@
 		for(var/obj/effect/decal/cleanable/C in loc)
 			if(C != src && C.type == type && !QDELETED(C))
 				if (replace_decal(C))
+					if(C.reagents && reagents)
+						reagents.trans_to(C, reagents.total_volume)
 					return INITIALIZE_HINT_QDEL
 
 	if(LAZYLEN(diseases))
