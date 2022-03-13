@@ -105,25 +105,25 @@
 		/obj/item/cautery/alien,
 	)
 
-/obj/effect/spawner/random/medical/firstaid_rare
-	name = "rare firstaid kit spawner"
-	icon_state = "firstaid"
+/obj/effect/spawner/random/medical/medkit_rare
+	name = "rare medkit spawner"
+	icon_state = "medkit"
 	loot = list(
-		/obj/item/storage/firstaid/emergency,
-		/obj/item/storage/firstaid/medical,
-		/obj/item/storage/firstaid/advanced,
+		/obj/item/storage/medkit/emergency,
+		/obj/item/storage/medkit/surgery,
+		/obj/item/storage/medkit/advanced,
 	)
 
-/obj/effect/spawner/random/medical/firstaid
-	name = "firstaid kit spawner"
-	icon_state = "firstaid"
+/obj/effect/spawner/random/medical/medkit
+	name = "medkit spawner"
+	icon_state = "medkit"
 	loot = list(
-		/obj/item/storage/firstaid/regular = 10,
-		/obj/item/storage/firstaid/o2 = 10,
-		/obj/item/storage/firstaid/fire = 10,
-		/obj/item/storage/firstaid/brute = 10,
-		/obj/item/storage/firstaid/toxin = 10,
-		/obj/effect/spawner/random/medical/firstaid_rare = 1,
+		/obj/item/storage/medkit/regular = 10,
+		/obj/item/storage/medkit/o2 = 10,
+		/obj/item/storage/medkit/fire = 10,
+		/obj/item/storage/medkit/brute = 10,
+		/obj/item/storage/medkit/toxin = 10,
+		/obj/effect/spawner/random/medical/medkit_rare = 1,
 	)
 
 /obj/effect/spawner/random/medical/patient_stretcher

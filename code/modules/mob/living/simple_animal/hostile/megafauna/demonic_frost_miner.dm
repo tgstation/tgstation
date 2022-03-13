@@ -41,7 +41,7 @@ Difficulty: Extremely Hard
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
 	deathmessage = "falls to the ground, decaying into plasma particles."
-	deathsound = "bodyfall"
+	deathsound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE

@@ -484,3 +484,15 @@
 	)
 	result = /obj/item/food/soup/red_porridge
 	subcategory = CAT_MOTH
+
+/datum/crafting_recipe/food/chili_sin_carne
+	name = "Chili sin carne (vegetarian chili)"
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	result = /obj/item/food/soup/vegetarian_chili
+	subcategory = CAT_MOTH

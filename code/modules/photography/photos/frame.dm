@@ -116,31 +116,46 @@
 	if(in_range(src, user))
 		framed?.show(user)
 
+/// Internal proc
+/obj/structure/sign/picture_frame/proc/try_deconstruct(mob/living/user, obj/item/tool)
+	if(!can_decon)
+		return FALSE
+	to_chat(user, span_notice("You start unsecuring [name]..."))
+	if(tool.use_tool(src, user, 3 SECONDS, volume=50))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		to_chat(user, span_notice("You unsecure [name]."))
+		deconstruct()
+	return TRUE
+
+/obj/structure/sign/picture_frame/screwdriver_act(mob/living/user, obj/item/tool)
+	return try_deconstruct(user, tool)
+
+/obj/structure/sign/picture_frame/wrench_act(mob/living/user, obj/item/tool)
+	return try_deconstruct(user, tool)
+
+/obj/structure/sign/picture_frame/wirecutter_act(mob/living/user, obj/item/tool)
+	if (!framed)
+		return FALSE
+	tool.play_tool_sound(src)
+	framed.forceMove(drop_location())
+	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
+	framed = null
+	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
-	if(can_decon && (I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH))
-		to_chat(user, span_notice("You start unsecuring [name]..."))
-		if(I.use_tool(src, user, 30, volume=50))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			to_chat(user, span_notice("You unsecure [name]."))
-			deconstruct()
 
-	else if(I.tool_behaviour == TOOL_WIRECUTTER && framed)
-		framed.forceMove(drop_location())
-		user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
-		framed = null
-		update_appearance()
-		return
-
-	else if(istype(I, /obj/item/photo))
-		if(!framed)
-			var/obj/item/photo/P = I
-			if(!user.transferItemToLoc(P, src))
-				return
-			framed = P
-			update_appearance()
-		else
+	if(istype(I, /obj/item/photo))
+		if(framed)
 			to_chat(user, span_warning("\The [src] already contains a photo."))
-
+			return TRUE
+		var/obj/item/photo/P = I
+		if(!user.transferItemToLoc(P, src))
+			return
+		framed = P
+		update_appearance()
+		return TRUE
 	..()
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user, list/modifiers)

@@ -197,7 +197,7 @@
 			if(dotype != FAIL)
 				var/list/nodes = techweb_item_boost_check(process)
 				var/picked = pick_weight(nodes) //This should work.
-				stored_research.boost_with_path(SSresearch.techweb_node_by_id(picked), process.type)
+				stored_research.boost_with_item(SSresearch.techweb_node_by_id(picked), process.type)
 	updateUsrDialog()
 
 /obj/machinery/rnd/experimentor/proc/matchReaction(matching,reaction)
@@ -602,19 +602,19 @@
 	smoke.start()
 
 /obj/item/relic/proc/corgicannon(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/mob/living/simple_animal/pet/dog/corgi/C = new/mob/living/simple_animal/pet/dog/corgi(get_turf(user))
 	C.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, .proc/throwSmoke, C))
 	warn_admins(user, "Corgi Cannon", 0)
 
 /obj/item/relic/proc/clean(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/cleaner/CL = new/obj/item/grenade/chem_grenade/cleaner(get_turf(user))
 	CL.detonate()
 	warn_admins(user, "Foam", 0)
 
 /obj/item/relic/proc/flash(mob/user)
-	playsound(src, "sparks", rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/flashbang/CB = new/obj/item/grenade/flashbang(user.loc)
 	CB.detonate()
 	warn_admins(user, "Flash")

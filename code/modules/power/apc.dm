@@ -892,7 +892,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 			to_chat(user, span_warning("Nothing happens!"))
 		else
 			flick("apc-spark", src)
-			playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			to_chat(user, span_notice("You emag the APC interface."))

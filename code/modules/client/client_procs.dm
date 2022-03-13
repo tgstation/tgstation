@@ -166,6 +166,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 
 	if(CONFIG_GET(flag/automute_on) && !holder && last_message == message)
+		if(SEND_SIGNAL(mob, COMSIG_MOB_AUTOMUTE_CHECK, src, last_message, mute_type) & WAIVE_AUTOMUTE_CHECK)
+			return FALSE
+
 		src.last_message_count++
 		if(src.last_message_count >= SPAM_TRIGGER_AUTOMUTE)
 			to_chat(src, span_danger("You have exceeded the spam filter limit for identical messages. A mute was automatically applied for the current round. Contact admins to request its removal."))
@@ -485,6 +488,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	view_size.setZoomMode()
 	Master.UpdateTickRate()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_CLIENT_CONNECT, src)
+	fully_created = TRUE
 
 //////////////
 //DISCONNECT//
@@ -1036,8 +1040,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
-	if (prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
-		addtimer(CALLBACK(src,.verb/fit_viewport,10)) //Delayed to avoid wingets from Login calls.
+	attempt_auto_fit_viewport()
 
 /client/proc/generate_clickcatcher()
 	if(!void)

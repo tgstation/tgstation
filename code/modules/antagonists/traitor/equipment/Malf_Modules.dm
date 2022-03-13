@@ -537,7 +537,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(is_type_in_typecache(target, GLOB.blacklisted_malf_machines))
 		to_chat(ranged_ability_user, span_warning("You cannot overload that device!"))
 		return
-	ranged_ability_user.playsound_local(ranged_ability_user, "sparks", 50, 0)
+	ranged_ability_user.playsound_local(ranged_ability_user, SFX_SPARKS, 50, 0)
 	attached_action.adjust_uses(-1)
 	if(attached_action?.uses)
 		attached_action.desc = "[initial(attached_action.desc)] It has [attached_action.uses] use\s remaining."
@@ -554,7 +554,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	cost = 15
 	power_type = /datum/action/innate/ai/blackout
 	unlock_text = "<span class='notice'>You hook into the powernet and route bonus power towards the station's lighting.</span>"
-	unlock_sound = "sparks"
+	unlock_sound = SFX_SPARKS
 
 /datum/action/innate/ai/blackout
 	name = "Blackout"
@@ -575,7 +575,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 		else
 			apc.overload++
 	to_chat(owner, span_notice("Overcurrent applied to the powernet."))
-	owner.playsound_local(owner, "sparks", 50, 0)
+	owner.playsound_local(owner, SFX_SPARKS, 50, 0)
 	adjust_uses(-1)
 	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		desc = "[initial(desc)] It has [uses] use\s remaining."
@@ -747,7 +747,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/emergency_lights
 	unlock_text = "<span class='notice'>You hook into the powernet and locate the connections between light fixtures and their fallbacks.</span>"
-	unlock_sound = "sparks"
+	unlock_sound = SFX_SPARKS
 
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"

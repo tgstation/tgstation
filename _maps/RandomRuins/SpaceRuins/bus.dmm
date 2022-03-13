@@ -132,7 +132,7 @@
 /area/ruin/unpowered/no_grav)
 "ay" = (
 /obj/structure/fluff/bus/passable,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark/airless{
 	icon_state = "bus"
 	},

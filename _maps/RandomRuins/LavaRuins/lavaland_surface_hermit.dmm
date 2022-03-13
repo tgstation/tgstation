@@ -70,7 +70,7 @@
 /obj/structure/rack,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/ore,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/plating/asteroid/basalt,
 /area/ruin/powered)
 "q" = (

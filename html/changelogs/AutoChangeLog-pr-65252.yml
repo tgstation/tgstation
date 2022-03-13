@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - qol: "Change barricade, grille, and girder mapping spawners to have a ~20% not to spawn."
+  - qol: "Change ornament mapping spawner to only spawn lamps and red phones."

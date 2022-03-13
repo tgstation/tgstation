@@ -8,10 +8,10 @@
 /*
  * First Aid Kits
  */
-/obj/item/storage/firstaid
-	name = "first-aid kit"
+/obj/item/storage/medkit
+	name = "medkit"
 	desc = "It's an emergency medical kit for those serious boo-boos."
-	icon_state = "firstaid"
+	icon_state = "medkit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
@@ -19,15 +19,15 @@
 	var/empty = FALSE
 	var/damagetype_healed //defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
 
-/obj/item/storage/firstaid/regular
-	icon_state = "firstaid"
+/obj/item/storage/medkit/regular
+	icon_state = "medkit"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
-/obj/item/storage/firstaid/regular/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/regular/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/storage/firstaid/regular/PopulateContents()
+/obj/item/storage/medkit/regular/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -37,12 +37,12 @@
 		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/emergency
+/obj/item/storage/medkit/emergency
 	icon_state = "medbriefcase"
-	name = "emergency first-aid kit"
+	name = "emergency medkit"
 	desc = "A very simple first aid kit meant to secure and stabilize serious wounds for later treatment."
 
-/obj/item/storage/firstaid/emergency/PopulateContents()
+/obj/item/storage/medkit/emergency/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -54,13 +54,13 @@
 		/obj/item/storage/pill_bottle/iron = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/medical
-	name = "medical aid kit"
-	icon_state = "firstaid_surgery"
-	inhand_icon_state = "firstaid"
+/obj/item/storage/medkit/surgery
+	name = "surgical medkit"
+	icon_state = "medkit_surgery"
+	inhand_icon_state = "medkit"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
 
-/obj/item/storage/firstaid/medical/ComponentInitialize()
+/obj/item/storage/medkit/surgery/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
@@ -118,7 +118,7 @@
 		/obj/item/stack/sticky_tape //surgical tape
 		))
 
-/obj/item/storage/firstaid/medical/PopulateContents()
+/obj/item/storage/medkit/surgery/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -133,11 +133,11 @@
 		/obj/item/cautery = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/ancient
+/obj/item/storage/medkit/ancient
 	icon_state = "oldfirstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
-/obj/item/storage/firstaid/ancient/PopulateContents()
+/obj/item/storage/medkit/ancient/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -146,26 +146,22 @@
 		/obj/item/stack/medical/ointment= 3)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/ancient/heirloom
+/obj/item/storage/medkit/ancient/heirloom
 	desc = "A first aid kit with the ability to heal common types of injuries. You start thinking of the good old days just by looking at it."
 	empty = TRUE // long since been ransacked by hungry powergaming assistants breaking into med storage
 
-/obj/item/storage/firstaid/fire
+/obj/item/storage/medkit/fire
 	name = "burn treatment kit"
 	desc = "A specialized medical kit for when the ordnance lab <i>-spontaneously-</i> burns down."
-	icon_state = "ointment"
-	inhand_icon_state = "firstaid-ointment"
+	icon_state = "medkit_burn"
+	inhand_icon_state = "medkit-ointment"
 	damagetype_healed = BURN
 
-/obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/fire/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!"))
 	return FIRELOSS
 
-/obj/item/storage/firstaid/fire/Initialize(mapload)
-	. = ..()
-	icon_state = pick("ointment","firefirstaid")
-
-/obj/item/storage/firstaid/fire/PopulateContents()
+/obj/item/storage/medkit/fire/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -175,22 +171,19 @@
 		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/toxin
+/obj/item/storage/medkit/toxin
 	name = "toxin treatment kit"
 	desc = "Used to treat toxic blood content and radiation poisoning."
-	icon_state = "antitoxin"
-	inhand_icon_state = "firstaid-toxin"
+	icon_state = "medkit_toxin"
+	inhand_icon_state = "medkit-toxin"
 	damagetype_healed = TOX
 
-/obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/toxin/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
-/obj/item/storage/firstaid/toxin/Initialize(mapload)
-	. = ..()
-	icon_state = pick("antitoxin","antitoxfirstaid","antitoxfirstaid2")
 
-/obj/item/storage/firstaid/toxin/PopulateContents()
+/obj/item/storage/medkit/toxin/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -200,22 +193,18 @@
 		/obj/item/reagent_containers/hypospray/medipen/penacid = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/o2
+/obj/item/storage/medkit/o2
 	name = "oxygen deprivation treatment kit"
 	desc = "A box full of oxygen goodies."
-	icon_state = "o2"
-	inhand_icon_state = "firstaid-o2"
+	icon_state = "medkit_o2"
+	inhand_icon_state = "medkit-o2"
 	damagetype_healed = OXY
 
-/obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/o2/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/storage/firstaid/o2/Initialize(mapload)
-	. = ..()
-	icon_state = pick("o2","o2second")
-
-/obj/item/storage/firstaid/o2/PopulateContents()
+/obj/item/storage/medkit/o2/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -225,22 +214,18 @@
 		/obj/item/storage/pill_bottle/iron = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/brute
+/obj/item/storage/medkit/brute
 	name = "brute trauma treatment kit"
 	desc = "A first aid kit for when you get toolboxed."
-	icon_state = "brute"
-	inhand_icon_state = "firstaid-brute"
+	icon_state = "medkit_brute"
+	inhand_icon_state = "medkit-brute"
 	damagetype_healed = BRUTE
 
-/obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/brute/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/storage/firstaid/brute/Initialize(mapload)
-	. = ..()
-	icon_state = pick("brute","brute2")
-
-/obj/item/storage/firstaid/brute/PopulateContents()
+/obj/item/storage/medkit/brute/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -250,15 +235,15 @@
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/advanced
+/obj/item/storage/medkit/advanced
 	name = "advanced first aid kit"
 	desc = "An advanced kit to help deal with advanced wounds."
-	icon_state = "radfirstaid"
-	inhand_icon_state = "firstaid-rad"
+	icon_state = "medkit_advanced"
+	inhand_icon_state = "medkit-rad"
 	custom_premium_price = PAYCHECK_HARD * 6
 	damagetype_healed = "all"
 
-/obj/item/storage/firstaid/advanced/PopulateContents()
+/obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
 		return
 	var/static/items_inside = list(
@@ -268,18 +253,18 @@
 		/obj/item/storage/pill_bottle/penacid = 1)
 	generate_items_inside(items_inside,src)
 
-/obj/item/storage/firstaid/tactical
+/obj/item/storage/medkit/tactical
 	name = "combat medical kit"
 	desc = "I hope you've got insurance."
-	icon_state = "bezerk"
+	icon_state = "medkit_tactical"
 	damagetype_healed = "all"
 
-/obj/item/storage/firstaid/tactical/ComponentInitialize()
+/obj/item/storage/medkit/tactical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/storage/firstaid/tactical/PopulateContents()
+/obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
 		return
 	new /obj/item/stack/medical/gauze(src)
@@ -292,8 +277,8 @@
 	new /obj/item/clothing/glasses/hud/health/night(src)
 
 //medibot assembly
-/obj/item/storage/firstaid/attackby(obj/item/bodypart/S, mob/user, params)
-	if((!istype(S, /obj/item/bodypart/l_arm/robot)) && (!istype(S, /obj/item/bodypart/r_arm/robot)))
+/obj/item/storage/medkit/attackby(obj/item/bodypart/bodypart, mob/user, params)
+	if((!istype(bodypart, /obj/item/bodypart/l_arm/robot)) && (!istype(bodypart, /obj/item/bodypart/r_arm/robot)))
 		return ..()
 
 	//Making a medibot!
@@ -301,22 +286,22 @@
 		to_chat(user, span_warning("You need to empty [src] out first!"))
 		return
 
-	var/obj/item/bot_assembly/medbot/A = new
-	if (istype(src, /obj/item/storage/firstaid/fire))
-		A.set_skin("ointment")
-	else if (istype(src, /obj/item/storage/firstaid/toxin))
-		A.set_skin("tox")
-	else if (istype(src, /obj/item/storage/firstaid/o2))
-		A.set_skin("o2")
-	else if (istype(src, /obj/item/storage/firstaid/brute))
-		A.set_skin("brute")
-	else if (istype(src, /obj/item/storage/firstaid/advanced))
-		A.set_skin("advanced")
-	user.put_in_hands(A)
-	to_chat(user, span_notice("You add [S] to [src]."))
-	A.robot_arm = S.type
-	A.firstaid = type
-	qdel(S)
+	var/obj/item/bot_assembly/medbot/medbot_assembly = new
+	if (istype(src, /obj/item/storage/medkit/fire))
+		medbot_assembly.set_skin("ointment")
+	else if (istype(src, /obj/item/storage/medkit/toxin))
+		medbot_assembly.set_skin("tox")
+	else if (istype(src, /obj/item/storage/medkit/o2))
+		medbot_assembly.set_skin("o2")
+	else if (istype(src, /obj/item/storage/medkit/brute))
+		medbot_assembly.set_skin("brute")
+	else if (istype(src, /obj/item/storage/medkit/advanced))
+		medbot_assembly.set_skin("advanced")
+	user.put_in_hands(medbot_assembly)
+	to_chat(user, span_notice("You add [bodypart] to [src]."))
+	medbot_assembly.robot_arm = bodypart.type
+	medbot_assembly.medkit_type = type
+	qdel(bodypart)
 	qdel(src)
 
 /*
