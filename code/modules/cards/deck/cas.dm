@@ -6,7 +6,6 @@
 /obj/item/toy/cards/deck/cas
 	name = "\improper CAS deck (white)"
 	desc = "A deck for the game Cards Against Spess, still popular after all these centuries. Warning: may include traces of broken fourth wall. This is the white deck."
-	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_white_full"
 	deckstyle = "white"
 	has_unique_card_icons = FALSE

@@ -2,7 +2,6 @@
 /obj/item/toy/cards/deck/tarot
 	name = "tarot game deck"
 	desc = "A full 78 card game deck of tarot cards. Complete with 4 suites of 14 cards, and a full suite of trump cards."
-	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_tarot_full"
 	deckstyle = "tarot"
 	is_standard_deck = FALSE

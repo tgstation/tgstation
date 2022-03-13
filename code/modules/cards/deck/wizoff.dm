@@ -2,7 +2,6 @@
 /obj/item/toy/cards/deck/wizoff
 	name = "\improper Wiz-Off deck"
 	desc = "A Wiz-Off deck. Fight an arcane battle for the fate of the universe: Draw 5! Play 5! Best of 5! A rules card is attached."
-	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_wizoff_full"
 	deckstyle = "wizoff"
 	is_standard_deck = FALSE
@@ -22,7 +21,7 @@
 	icon_state = "singlecard_down_black"
 
 /obj/item/toy/singlecard/wizoff_ruleset/examine(mob/living/carbon/human/user)
-	. = ..()	
+	. = ..()
 	. += span_notice("Remember the rules of Wiz-Off!")
 	. += span_info("Each player draws 5 cards.")
 	. += span_info("There are five rounds. Each round, a player selects a card to play, and the winner is selected based on the following rules:")

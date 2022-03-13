@@ -1,7 +1,6 @@
 /obj/item/toy/cards/deck/kotahi
 	name = "\improper KOTAHI deck"
 	desc = "A deck of kotahi cards. House rules to argue over not included."
-	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_kotahi_full"
 	deckstyle = "kotahi"
 	is_standard_deck = FALSE

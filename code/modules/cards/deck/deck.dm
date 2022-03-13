@@ -78,7 +78,7 @@
 
 /obj/item/toy/cards/deck/examine(mob/user)
 	. = ..()
-	
+
 	if(cards.len > 0)
 		var/obj/item/toy/singlecard/card = cards[1]
 		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
@@ -94,11 +94,11 @@
 
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
-		
+
 	if(istype(held_item, /obj/item/toy/singlecard))
 		context[SCREENTIP_CONTEXT_LMB] = "Recycle card"
 		return CONTEXTUAL_SCREENTIP_SET
-		
+
 	if(istype(held_item, /obj/item/toy/cards/cardhand))
 		context[SCREENTIP_CONTEXT_LMB] = "Recycle cards"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -106,7 +106,7 @@
 
 /**
  * Shuffles the cards in the deck
- * 
+ *
  * Arguments:
  * * user - The person shuffling the cards.
  */
@@ -121,7 +121,7 @@
 /obj/item/toy/cards/deck/attack_hand(mob/living/user, list/modifiers, flip_card = FALSE)
 	if(!ishuman(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK, !iscyborg(user)))
 		return
-		
+
 	var/obj/item/toy/singlecard/card = draw(user)
 	if(!card)
 		return
@@ -166,7 +166,7 @@
 		user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 	if(istype(item, /obj/item/toy/cards/cardhand))
-		var/obj/item/toy/cards/cardhand/recycled_cardhand = item		
+		var/obj/item/toy/cards/cardhand/recycled_cardhand = item
 		insert(recycled_cardhand.cards)
 		qdel(recycled_cardhand)
 		user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
