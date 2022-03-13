@@ -757,7 +757,13 @@
 	random_sprite = FALSE
 
 /obj/item/reagent_containers/food/drinks/colocup/lean/suicide_act(mob/living/carbon/user)
-	user.say("I LOVE LEAN!!")
-	user.visible_message(span_suicide("[user] begins to chug the cup of lean and is starting to turn purple! It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.add_atom_colour(rgb(132, 22, 165), ADMIN_COLOUR_PRIORITY)
-	return TOXLOSS
+	if(!reagents.total_volume)
+		user.visible_message(span_warning("[user] tries to chug the cup of lean... There is no lean left!"))
+		return SHAME
+	else
+		user.say("I LOVE LEAN!!")
+		playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+		reagents.trans_to(user, src.reagents.total_volume, transfered_by = user)
+		user.visible_message(span_suicide("[user] begins to chug the cup of lean and is starting to turn purple! It looks like [user.p_theyre()] trying to commit suicide!"))
+		user.add_atom_colour(rgb(132, 22, 165), ADMIN_COLOUR_PRIORITY)
+		return TOXLOSS
