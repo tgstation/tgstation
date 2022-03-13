@@ -363,10 +363,10 @@
 				AI = crew
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-			if(E.salvageable && prob(30))
+			if(E.detachable && prob(30))
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
-				E.equip_ready = 1
+				E.activated = TRUE
 			else
 				E.detach(loc)
 				qdel(E)

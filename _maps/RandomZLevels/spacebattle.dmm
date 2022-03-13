@@ -285,6 +285,11 @@
 /obj/item/restraints/handcuffs,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/syndicate1)
+"bq" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/iron/white,
+/area/awaymission/spacebattle/cruiser)
 "br" = (
 /mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1044,20 +1049,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
-"eE" = (
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
 "eG" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1093,22 +1084,6 @@
 "eO" = (
 /obj/structure/chair{
 	dir = 4
-	},
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
-"eP" = (
-/obj/machinery/computer/med_data{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
@@ -1157,22 +1132,6 @@
 "eY" = (
 /obj/item/ammo_casing/shotgun,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
-"eZ" = (
-/obj/machinery/computer/crew{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "fa" = (
@@ -1321,22 +1280,6 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
-"fv" = (
-/obj/machinery/computer/shuttle{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
 "fw" = (
 /obj/structure/artilleryplaceholder{
 	icon_state = "1"
@@ -1457,22 +1400,6 @@
 /area/awaymission/spacebattle/cruiser)
 "fO" = (
 /obj/item/ammo_casing/c10mm,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
-"fP" = (
-/obj/machinery/computer/communications{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1719,22 +1646,6 @@
 /mob/living/simple_animal/hostile/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
-"gK" = (
-/obj/machinery/computer/security{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
 "gL" = (
 /obj/structure/table/wood,
 /obj/item/flashlight/lamp/green,
@@ -1743,22 +1654,6 @@
 "gM" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
-/area/awaymission/spacebattle/cruiser)
-"gN" = (
-/obj/machinery/computer/secure_data{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
 "gO" = (
 /obj/effect/mob_spawn/corpse/human/engineer/mod{
@@ -1907,11 +1802,6 @@
 /obj/structure/closet/crate/secure/plasma,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"hp" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/fire,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "hq" = (
 /obj/structure/rack,
 /obj/item/mod/control/pre_equipped/standard,
@@ -1957,11 +1847,6 @@
 /obj/machinery/computer/mech_bay_power_console,
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/spacebattle/cruiser)
-"hz" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "hA" = (
 /obj/structure/closet/crate/medical,
 /turf/open/floor/plating,
@@ -1978,11 +1863,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/awaymission/spacebattle/cruiser)
-"hD" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/regular,
-/turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "hE" = (
 /obj/structure/table/wood,
@@ -2082,23 +1962,9 @@
 /obj/structure/toilet,
 /turf/open/floor/iron/freezer,
 /area/awaymission/spacebattle/cruiser)
-"hZ" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/fire,
-/turf/open/floor/iron/white,
-/area/awaymission/spacebattle/cruiser)
 "ib" = (
 /obj/machinery/door/unpowered/shuttle,
 /turf/open/floor/iron/freezer,
-/area/awaymission/spacebattle/cruiser)
-"id" = (
-/obj/item/storage/medkit/regular,
-/turf/open/floor/iron/white,
-/area/awaymission/spacebattle/cruiser)
-"ie" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/medkit/o2,
-/turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "if" = (
 /obj/machinery/shower{
@@ -2516,11 +2382,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/spacebattle/cruiser)
-"jP" = (
-/obj/structure/closet/crate/internals,
-/obj/item/storage/medkit/o2,
-/turf/open/floor/engine,
-/area/awaymission/spacebattle/cruiser)
 "jQ" = (
 /obj/machinery/door/poddoor{
 	id = "spacebattlearmory2";
@@ -2761,6 +2622,27 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
+"la" = (
+/obj/machinery/computer/secure_data{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
+"mM" = (
+/obj/machinery/computer/med_data{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
+"py" = (
+/obj/machinery/computer/communications{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
 "pF" = (
 /obj/structure/table/reinforced,
 /obj/item/melee/energy/sword/saber/red,
@@ -2773,6 +2655,11 @@
 "vw" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate5)
+"wB" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/plating,
+/area/awaymission/spacebattle/cruiser)
 "zS" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate6)
@@ -2780,6 +2667,10 @@
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/plating,
+/area/awaymission/spacebattle/cruiser)
+"AS" = (
+/obj/item/storage/medkit/regular,
+/turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "BO" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -2789,19 +2680,65 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
+"Ds" = (
+/obj/machinery/computer/security{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
 "Dv" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/awaymission/spacebattle/syndicate3)
+"Gd" = (
+/obj/machinery/computer/shuttle{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
+"Gp" = (
+/obj/machinery/computer/crew{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
+"KI" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
+"Nt" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/o2,
+/turf/open/floor/iron/white,
+/area/awaymission/spacebattle/cruiser)
 "Ny" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"PZ" = (
+/obj/structure/closet/crate/internals,
+/obj/item/storage/medkit/o2,
+/turf/open/floor/engine,
+/area/awaymission/spacebattle/cruiser)
+"QJ" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/fire,
+/turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "Sj" = (
 /obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 /obj/item/melee/energy/sword/saber/red,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron,
+/area/awaymission/spacebattle/cruiser)
+"TH" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/iron/white,
 /area/awaymission/spacebattle/cruiser)
 "UZ" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -26587,7 +26524,7 @@ Cx
 Ny
 el
 el
-jP
+PZ
 gp
 gC
 gC
@@ -29164,7 +29101,7 @@ cK
 cK
 cK
 eT
-hz
+wB
 bT
 hY
 ib
@@ -29420,8 +29357,8 @@ cK
 cK
 cK
 cK
-hp
-hz
+QJ
+wB
 bT
 bT
 bT
@@ -29677,7 +29614,7 @@ kj
 kH
 kn
 cK
-hp
+QJ
 hA
 bT
 hY
@@ -32508,7 +32445,7 @@ gH
 gH
 gH
 gH
-id
+AS
 gW
 il
 gH
@@ -32762,10 +32699,10 @@ gH
 gU
 gG
 gH
-hD
+TH
 hI
-hZ
-ie
+bq
+Nt
 gH
 im
 gH
@@ -37631,18 +37568,18 @@ dC
 dW
 ej
 bT
-eE
-eP
-eZ
-eE
+KI
+mM
+Gp
+KI
 fj
-fv
-fP
+Gd
+py
 fj
-eE
-gK
-gN
-eE
+KI
+Ds
+la
+KI
 bT
 hr
 dW
