@@ -1441,19 +1441,19 @@
 /area/awaymission/caves/bmp_asteroid)
 "fs" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "ft" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/fire,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "fu" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
@@ -1566,8 +1566,8 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fS" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/toxin,
 /obj/item/reagent_containers/blood/o_plus,
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)

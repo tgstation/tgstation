@@ -499,7 +499,7 @@
 "pe" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/shreds,
-/obj/item/storage/firstaid/ancient,
+/obj/item/storage/medkit/ancient,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "tT" = (

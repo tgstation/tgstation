@@ -89,6 +89,11 @@
 /turf/open/floor/plating/lavaland_baseturf
 	baseturfs = /turf/open/floor/plating/asteroid/basalt/lava_land_surface
 
+/turf/open/floor/plating/asteroid/dug //When you want one of these to be already dug.
+	dug = TRUE
+	base_icon_state = "asteroid_dug"
+	icon_state = "asteroid_dug"
+
 /// Used by ashstorms to replenish basalt tiles that have been dug up without going through all of them.
 GLOBAL_LIST_EMPTY(dug_up_basalt)
 

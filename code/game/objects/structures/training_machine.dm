@@ -117,7 +117,7 @@
 		return
 	attach_item(target)
 	to_chat(user, span_notice("You attach \the [attached_item] to the training device."))
-	playsound(src, "rustle", 50, TRUE)
+	playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /**
  * Attach an item to the machine
@@ -187,7 +187,7 @@
 		return
 	to_chat(user, span_notice("You remove \the [attached_item] from the training device."))
 	remove_attached_item(user)
-	playsound(src, "rustle", 50, TRUE)
+	playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /**
  * Toggle the machine's movement
