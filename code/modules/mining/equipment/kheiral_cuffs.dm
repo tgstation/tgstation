@@ -107,6 +107,8 @@
 		return ..()
 	user.visible_message(span_suicide("[user] locks [src] around their neck, and is starting to age rapidly! It looks like [user.p_theyre()] trying to commit suicide!"))
 	for(var/mult in 1 to 5) // Rapidly age
+		if(!do_after(hum, 0.5 SECONDS)) // just to space out the aging, either way you still dust.
+			break
 		hum.age = round((hum.age * 1.5),1)
 
 	hum.dust(TRUE, TRUE, TRUE)
