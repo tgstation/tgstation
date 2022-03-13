@@ -30,10 +30,11 @@
 	))
 	/// The typepath for what this foam leaves behind when it dissipates.
 	var/atom/movable/result_type = null
-	///
+	/// Whether or not this foam can produce a remnant movable if something of the same type is already on its turf.
 	var/allow_duplicate_results = TRUE
+	/// The amount of time this foam stick around for before it dissipates.
 	var/lifetime = 8 SECONDS
-	var/reagent_divisor = 7 / 6
+	/// Whether or not this foam should be slippery.
 	var/slippery_foam = TRUE
 
 
@@ -63,7 +64,7 @@
 	QDEL_IN(src, 0.5 SECONDS)
 
 /**
- *
+ * Makes the foam leave behind something when it dissipates.
  */
 /obj/effect/particle_effect/fluid/foam/proc/make_result()
 	if(isnull(result_type))
@@ -91,7 +92,7 @@
 	for(var/mob/living/L in location)
 		hit += foam_mob(L, delta_time)
 	if(hit)
-		lifetime += delta_time //this is so the decrease from mobs hit and the natural decrease don't cumulate.
+		lifetime += delta_time SECONDS //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
 	reagents.expose(location, VAPOR, fraction)
 
@@ -99,7 +100,11 @@
 		spread()
 
 /**
- *
+ * Applies the effect of this foam to a mob.
+ * 
+ * Arguments:
+ * - [foaming][/mob/living]: The mob that this foam is acting on.
+ * - delta_time: The amount of time that this foam is acting on them over.
  */
 /obj/effect/particle_effect/fluid/foam/proc/foam_mob(mob/living/foaming, delta_time)
 	if(lifetime <= 0)
@@ -107,7 +112,7 @@
 	if(!istype(foaming))
 		return FALSE
 
-	delta_time = min(delta_time, lifetime)
+	delta_time = min(delta_time SECONDS, lifetime)
 	var/fraction = (delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 	reagents.expose(foaming, VAPOR, fraction)
 	lifetime -= delta_time
@@ -118,6 +123,7 @@
 	if(!istype(location))
 		return FALSE
 
+	var/effective_dt = SSfastprocess.wait / (1 SECONDS) // The amount of time this spread is happening over, basically.
 	for(var/turf/spread_turf as anything in location.reachableAdjacentTurfs())
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
 		if(foundfoam)
@@ -126,7 +132,7 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
-			foam_mob(foaming, 0.2 SECONDS)
+			foam_mob(foaming, effective_dt)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
 		reagents.copy_to(spread_foam, (reagents.total_volume))
@@ -235,7 +241,7 @@
 		absorbed_plasma = 0
 	return deposit
 
-/obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, fraction)
+/obj/effect/particle_effect/fluid/foam/firefighting/foam_mob(mob/living/foaming, delta_time)
 	if(!istype(foaming))
 		return
 	foaming.adjust_fire_stacks(-2)
