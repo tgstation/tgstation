@@ -8,15 +8,15 @@
 
 /obj/item/toy/cards/cardhand/Initialize(mapload, list/cards_to_combine)
 	. = ..()
- 
-	if(!LAZYLEN(cards_to_combine) || (mapload && !LAZYLEN(cards))
+
+	if(!LAZYLEN(cards_to_combine) && (mapload && !LAZYLEN(cards))
 		CRASH("[src] is being made into a cardhand without a list of cards to combine")
 
-	if(mapload && LAZYLEN(cards)) // these cards have not been initialized 
+	if(mapload && LAZYLEN(cards)) // these cards have not been initialized
 		for(var/card_name in cards)
 			var/obj/item/toy/singlecard/new_card = new (loc, card_name)
 			new_card.update_appearance()
-			cards_to_combine += new_card		
+			cards_to_combine += new_card
 		cards = list() // reset our cards to an empty list
 
 	if(LAZYLEN(cards_to_combine)) // these cards are already initialized
@@ -53,12 +53,12 @@
 			return CONTEXTUAL_SCREENTIP_SET
 		context[SCREENTIP_CONTEXT_LMB] = "Recycle cards"
 		return CONTEXTUAL_SCREENTIP_SET
-	
+
 	if(istype(held_item, /obj/item/toy/singlecard))
 		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
 		context[SCREENTIP_CONTEXT_RMB] = "Combine cards faceup"
 		return CONTEXTUAL_SCREENTIP_SET
-		
+
 	return .
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
@@ -91,12 +91,12 @@
 /obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params, flip_card = FALSE)
 	var/cards_to_add = list()
 	var/obj/item/toy/singlecard/card
-	
+
 	if(istype(weapon, /obj/item/toy/singlecard))
 		card = weapon
 
 	if(istype(weapon, /obj/item/toy/cards/deck))
-		var/obj/item/toy/cards/deck/dealer_deck = weapon			
+		var/obj/item/toy/cards/deck/dealer_deck = weapon
 		if(!dealer_deck.wielded) // recycle cardhand into deck (if unwielded)
 			dealer_deck.insert(cards)
 			qdel(src)
@@ -104,7 +104,7 @@
 			return
 		card = dealer_deck.draw(user)
 
-	if(card) 
+	if(card)
 		if(flip_card)
 			card.Flip()
 			card.update_appearance()
