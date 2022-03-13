@@ -2,7 +2,8 @@
 	. = ..()
 
 	if (!isnull(held_item))
-		return .
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Offer item"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if (!ishuman(user))
 		return .
@@ -19,9 +20,6 @@
 
 	if (human_user != src)
 		context[SCREENTIP_CONTEXT_RMB] = "Shove"
-
-		if(human_user.get_active_held_item())
-			context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Offer item"
 
 		if (body_position == STANDING_UP)
 			context[SCREENTIP_CONTEXT_LMB] = "Comfort"
