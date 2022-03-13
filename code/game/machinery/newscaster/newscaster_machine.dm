@@ -243,29 +243,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			create_story(channel_name = prototype_channel)
 
 		if("togglePhoto")
-			if(current_image)
-				balloon_alert(usr, "current photo cleared.")
-				current_image = null
-				return TRUE
-			else
-				attach_photo(usr)
-				if(current_image)
-					balloon_alert(usr, "photo selected.")
-				else
-					balloon_alert(usr, "no photo identified.")
+			toggle_photo()
+			return TRUE
 
 		if("startCreateChannel")
-			//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
-			var/list/existing_authors = list()
-			for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
-				if(iterated_feed_channel.authorCensor)
-					existing_authors += GLOB.news_network.redactedText
-				else
-					existing_authors += iterated_feed_channel.author
-			if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
-				tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
-				return TRUE
-			creating_channel = TRUE
+			start_creating_channel()
+			return TRUE
 
 		if("setChannelName")
 			var/pre_channel_name = params["channeltext"]
@@ -324,6 +307,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			if (!params["secure"])
 				say("Clearance not found.")
 				return TRUE
+			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+				say("Clearance not found.")
+				return TRUE
 			var/prototype_channel = (params["channel"])
 			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
 				if(prototype_channel == potential_channel.channel_ID)
@@ -360,40 +346,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("createBounty")
-			if(!current_user || !bounty_text)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-				return TRUE
-			for(var/datum/station_request/iterated_station_request as anything in GLOB.request_list)
-				if(iterated_station_request.req_number == current_user.account_id)
-					say("Account already has active bounty.")
-					return TRUE
-			var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
-			GLOB.request_list += list(curr_request)
-			for(var/obj/iterated_bounty_board as anything in GLOB.allbountyboards)
-				iterated_bounty_board.say("New bounty added!")
-				playsound(iterated_bounty_board.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
+			create_bounty()
+			return TRUE
+
 		if("apply")
-			if(!current_user)
-				say("Please equip a valid ID first.")
-				return TRUE
-			if(current_user.account_holder == active_request.owner)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-				return TRUE
-			for(var/new_apply in active_request?.applicants)
-				if(current_user.account_holder == active_request?.applicants[new_apply])
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-					return TRUE
-			active_request.applicants += list(current_user)
+			apply_to_bounty()
+			return TRUE
+
 		if("payApplicant")
-			if(!current_user)
-				return TRUE
-			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-				return TRUE
-			request_target.transfer_money(current_user, active_request.value)
-			say("Paid out [active_request.value] credits.")
-			GLOB.request_list.Remove(active_request)
-			qdel(active_request)
+			pay_applicant()
 			return TRUE
 
 		if("clear")
@@ -495,13 +456,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	update_appearance()
 
 /**
- *	Sends photo data to build the newscaster article.
+ * Sends photo data to build the newscaster article.
  */
 /obj/machinery/newscaster/proc/send_photo_data()
 	if(!current_image)
 		return null
 	return current_image
 
+/**
+ * This takes a held photograph, and updates the current_image variable with that of the held photograph's image.
+ * *user: The mob who is being checked for a held photo object.
+ */
 /obj/machinery/newscaster/proc/attach_photo(mob/user)
 	var/obj/item/photo/photo = user.is_holding_item_of_type(/obj/item/photo)
 	if(photo)
@@ -529,6 +494,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if(selection)
 			current_image = selection
 
+/**
+ * This takes all current feed stories and messages, and prints them onto a newspaper, after checking that the newscaster has been loaded with paper.
+ * The newscaster then prints the paper to the floor.
+ */
 /obj/machinery/newscaster/proc/print_paper()
 	if(paper_remaining <= 0)
 		balloon_alert_to_viewers("out of paper!")
@@ -547,11 +516,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	NEWSPAPER.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 
-
+/**
+ * This clears alerts on the newscaster from a new message being published and updates the newscaster's appearance.
+ */
 /obj/machinery/newscaster/proc/remove_alert()
 	alert = FALSE
 	update_appearance()
 
+/**
+ * When a new feed message is made that will alert all newscasters, this causes the newscasters to sent out a spoken message as well as create a sound.
+ */
 /obj/machinery/newscaster/proc/news_alert(channel, update_alert = TRUE)
 	if(channel)
 		if(update_alert)
@@ -565,6 +539,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		say("Attention! Wanted issue distributed!")
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
+/**
+ * Performs a series of sanity checks before giving the user confirmation to create a new feed_channel using channel_name, and channel_desc.
+ * *channel_locked: This variable determines if other users than the author can make comments and new feed_stories on this channel.
+ */
 /obj/machinery/newscaster/proc/create_channel(channel_locked)
 	if(!channel_name)
 		return
@@ -582,6 +560,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 	creating_channel = FALSE
 
+/**
+ * Constructs a comment to attach to the currently selected feed_message of choice, assuming that a user can be found and that a message body has been written.
+ */
 /obj/machinery/newscaster/proc/create_comment()
 	if(!comment_text)
 		creating_comment = FALSE
@@ -597,6 +578,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	usr.log_message("(as [current_user.account_holder]) commented on message [current_message.returnBody(-1)] -- [current_message.body]", LOG_COMMENT)
 	creating_comment = FALSE
 
+/**
+ * This proc performs checks before enabling the creating_channel var on the newscaster, such as preventing a user from having multiple channels,
+ * preventing an un-ID'd user from making a channel, and preventing censored authors from making a channel.
+ * Otherwise, sets creating_channel to TRUE.
+ */
+/obj/machinery/newscaster/proc/start_creating_channel()
+	//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
+	var/list/existing_authors = list()
+	for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
+		if(iterated_feed_channel.authorCensor)
+			existing_authors += GLOB.news_network.redactedText
+		else
+			existing_authors += iterated_feed_channel.author
+	if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
+		tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
+		return TRUE
+	creating_channel = TRUE
+
+/**
+ * Creates a new feed story to the global newscaster network.
+ * Verifies that the message is being written to a real feed_channel, then provides a text input for the feed story to be written into.
+ * Finally, it submits the message to the network, is logged globally, and clears all message-specific variables from the machine.
+ */
 /obj/machinery/newscaster/proc/create_story(channel_name)
 	for(var/datum/newscaster/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
 		if(channel_name == potential_channel.channel_ID)
@@ -612,6 +616,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	feed_channel_message = ""
 	current_image = null
 
+/**
+ * Selects a currently held photo from the user's hand and makes it the current_image held by the newscaster.
+ * If a photo is still held in the newscaster, it will otherwise clear it from the machine.
+ */
+/obj/machinery/newscaster/proc/toggle_photo()
+	if(current_image)
+		balloon_alert(usr, "current photo cleared.")
+		current_image = null
+		return TRUE
+	else
+		attach_photo(usr)
+		if(current_image)
+			balloon_alert(usr, "photo selected.")
+		else
+			balloon_alert(usr, "no photo identified.")
+
+/**
+ * This proc removes a station_request from the global list of requests, after checking that the owner of that request is the one who is trying to remove it.
+ */
 /obj/machinery/newscaster/proc/delete_bounty_request()
 	if(!active_request || !current_user)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
@@ -621,6 +644,54 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return TRUE
 	say("Deleted current request.")
 	GLOB.request_list.Remove(active_request)
+
+/**
+ * This creates a new bounty to the global list of bounty requests, alongisde the provided value of the request, and the owner of the request.
+ * For more info, see datum/station_request.
+ */
+/obj/machinery/newscaster/proc/create_bounty()
+	if(!current_user || !bounty_text)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		return TRUE
+	for(var/datum/station_request/iterated_station_request as anything in GLOB.request_list)
+		if(iterated_station_request.req_number == current_user.account_id)
+			say("Account already has active bounty.")
+			return TRUE
+	var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
+	GLOB.request_list += list(curr_request)
+	for(var/obj/iterated_bounty_board as anything in GLOB.allbountyboards)
+		iterated_bounty_board.say("New bounty added!")
+		playsound(iterated_bounty_board.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
+/**
+ * This sorts through the current list of bounties, and confirms that the intended request found is correct.
+ * Then, adds the current user to the list of applicants to that bounty.
+ */
+/obj/machinery/newscaster/proc/apply_to_bounty()
+	if(!current_user)
+		say("Please equip a valid ID first.")
+		return TRUE
+	if(current_user.account_holder == active_request.owner)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+		return TRUE
+	for(var/new_apply in active_request?.applicants)
+		if(current_user.account_holder == active_request?.applicants[new_apply])
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+			return TRUE
+	active_request.applicants += list(current_user)
+
+/**
+ * This pays out the current request_target the amount held by the active request's assigned value, and then clears the active request from the global list.
+ */
+/obj/machinery/newscaster/proc/pay_applicant()
+	if(!current_user)
+		return TRUE
+	if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		return TRUE
+	request_target.transfer_money(current_user, active_request.value)
+	say("Paid out [active_request.value] credits.")
+	GLOB.request_list.Remove(active_request)
+	qdel(active_request)
 
 /obj/item/wallframe/newscaster
 	name = "newscaster frame"
