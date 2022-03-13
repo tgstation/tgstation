@@ -164,7 +164,7 @@
 	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
 	var/give_alert_type = /atom/movable/screen/alert/give
 
-/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override)
+/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
 	. = ..()
 	if(!.)
 		return
@@ -172,10 +172,13 @@
 	if(give_alert_override)
 		give_alert_type = give_alert_override
 
-	for(var/mob/living/carbon/possible_taker in orange(1, owner))
-		if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
-			continue
-		register_candidate(possible_taker)
+	if(offered && owner.CanReach(offered) && !IS_DEAD_OR_INCAP(offered) && offered.can_hold_items())
+		register_candidate(offered)
+	else
+		for(var/mob/living/carbon/possible_taker in orange(1, owner))
+			if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
+				continue
+			register_candidate(possible_taker)
 
 	if(!possible_takers) // no one around
 		qdel(src)
@@ -215,6 +218,7 @@
 	if(owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker))
 		return
 
+	to_chat(taker, span_warning("You moved out of range of [owner]!"))
 	remove_candidate(taker)
 
 /// The offerer moved, see if anyone is out of range now

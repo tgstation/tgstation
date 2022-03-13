@@ -162,7 +162,7 @@
  *
  * This handles creating an alert and adding an overlay to it
  */
-/mob/living/carbon/proc/give()
+/mob/living/carbon/proc/give(mob/living/carbon/offered)
 	var/obj/item/offered_item = get_active_held_item()
 	if(!offered_item)
 		to_chat(src, span_warning("You're not holding anything to give!"))
@@ -179,10 +179,10 @@
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
-	visible_message(span_notice("[src] is offering [offered_item]."), \
-					span_notice("You offer [offered_item]."), null, 2)
+	visible_message(span_notice("[src] is offering [offered ? "[offered] " : ""][offered_item]."), \
+					span_notice("You offer [offered ? "[offered] " : ""][offered_item]."), null, 2)
 
-	apply_status_effect(/datum/status_effect/offering, offered_item)
+	apply_status_effect(/datum/status_effect/offering, offered_item, null, offered)
 
 /**
  * Proc called when the player clicks the give alert
