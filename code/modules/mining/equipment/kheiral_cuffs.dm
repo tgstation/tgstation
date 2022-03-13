@@ -1,8 +1,8 @@
 /**********************Kheiral Cuffs**********************/
-/// Acts as a GPS beacon & distress signaller when clamped to one's wrist off-station.
+/// Acts as a GPS beacon & connects to station crew monitors from lavaland
 /obj/item/kheiral_cuffs
 	name = "\improper Kheiral cuffs"
-	desc = "A prototype wrist communicator powered by Kheiral Matter. When both ends are clamped to one wrist, can send a distress signal upon your death off-station.\nA small engraving on the inside reads, \"NOT HANDCUFFS\""
+	desc = "A prototype wrist communicator powered by Kheiral Matter. When both ends are clamped to one wrist, acts as a signal range booster for your suit sensors.\n<i>A small engraving on the inside reads, \"NOT HANDCUFFS\"</i>"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
@@ -18,8 +18,6 @@
 	var/gps_enabled = FALSE
 	/// If we're off the station's Z-level
 	var/far_from_home = FALSE
-	/// Used to broadcast user's death through the radio
-	var/obj/item/radio/internal_radio
 	/// The GPS component used by the cuffs. Extremely unoptimal.
 	var/datum/component/gps/gps
 
@@ -27,14 +25,6 @@
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
-
-	internal_radio = new/obj/item/radio(src)
-	internal_radio.subspace_transmission = TRUE
-	internal_radio.canhear_range = 0
-	internal_radio.should_be_listening = FALSE
-	internal_radio.keyslot = new /obj/item/encryptionkey/strandcuffs
-	internal_radio.set_listening(FALSE)
-	internal_radio.recalculateChannels()
 
 	AddComponent(/datum/component/gps, "Kheiral Link", FALSE)
 	gps = GetComponent(/datum/component/gps)
@@ -62,7 +52,7 @@
 	on_wrist = FALSE
 	remove_kheiral_network(user)
 
-/// Enables the GPS & registers the statchange signal
+/// Enables the GPS and adds the multiz trait
 /obj/item/kheiral_cuffs/proc/connect_kheiral_network(mob/user)
 	if(gps_enabled)
 		return
@@ -71,10 +61,10 @@
 	gps.gpstag = "*[user.name]'s Kheiral Link"
 	gps.tracking = TRUE
 	balloon_alert(user, "GPS activated")
-	RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
+	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
 	gps_enabled = TRUE
 
-/// Disables the GPS and unregisters the statchange signal
+/// Disables the GPS and removes the multiz trait
 /obj/item/kheiral_cuffs/proc/remove_kheiral_network(mob/user)
 	if(!gps_enabled)
 		return
@@ -82,13 +72,11 @@
 		return
 	gps.tracking = FALSE
 	balloon_alert(user, "GPS de-activated")
-	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
+	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
 	gps_enabled = FALSE
 
 /obj/item/kheiral_cuffs/Destroy(force)
 	gps = null
-	if(internal_radio)
-		QDEL_NULL(internal_radio)
 	. = ..()
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
@@ -107,18 +95,6 @@
 		far_from_home = TRUE
 		if(bridges)
 			connect_kheiral_network(bridges)
-
-/// If we die, scream over the radio for help.
-/obj/item/kheiral_cuffs/proc/on_user_statchange(mob/living/owner, new_stat)
-	SIGNAL_HANDLER
-
-	if(new_stat != DEAD)
-		return
-	var/death_message = "Warning! [owner] has perished off-station!"
-	if(internal_radio)
-		internal_radio.talk_into(src, death_message, RADIO_CHANNEL_MEDICAL)
-		internal_radio.talk_into(src, death_message, RADIO_CHANNEL_SUPPLY)
-
 
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
