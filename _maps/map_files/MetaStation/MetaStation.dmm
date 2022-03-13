@@ -14869,7 +14869,7 @@
 	pixel_y = 2
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/newscaster/security_unit/directional/east{
+/obj/machinery/newscaster/directional/east{
 	pixel_y = 12
 	},
 /turf/open/floor/iron/dark,
