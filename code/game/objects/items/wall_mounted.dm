@@ -62,7 +62,7 @@
 	// For camera-building borgs
 	var/turf/T = get_step(get_turf(user), user.dir)
 	if(iswallturf(T))
-		T.attackby(user, tool)
+		T.attackby(src, user)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)

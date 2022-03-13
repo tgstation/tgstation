@@ -443,3 +443,14 @@
   tohg7:
   - bugfix: fixed an inconsistency where booze bottles and molotovs wouldn't splash
       their contents when thrown at things while drinking and shot glasses do.
+2022-03-13:
+  Gandalf2k15:
+  - imageadd: Medkit sprites have now been updated to proper 3/4th perpsective.
+  - spellcheck: All instances of "firstaid" have been replaced with "medkit".
+  Melbert:
+  - bugfix: Casters who sold their soul can no longer use Soul Tap
+  OneAsianTortoise:
+  - bugfix: being inside locker no longer protects you from a nuke
+  - balance: being inside the fridge guarantees you to survive nuclear bomb
+  TiviPlus:
+  - bugfix: potentially fixed some admin features for mech equipment
