@@ -53,30 +53,30 @@
 ///this memory can be memorized by unconscious people.
 #define MEMORY_SKIP_UNCONSCIOUS (1<<8)
 
-//These defines are for what notable event happened. they correspond to the json lists related to the memory
-///a memory of completing a surgery.
+// These defines are for what notable event happened. they correspond to the json lists related to the memory
+/// A memory of completing a surgery.
 #define MEMORY_SUCCESSFUL_SURGERY "surgery"
-///a memory of priming a bomb
+/// A memory of priming a bomb
 #define MEMORY_BOMB_PRIMED "bomb"
-///a memory of pulling off either a high five or a high ten
+/// A memory of pulling off either a high five or a high ten
 #define MEMORY_HIGH_FIVE "highfive"
-///a memory of getting borged
+/// A memory of getting borged
 #define MEMORY_BORGED "borged"
-///a memory of dying! includes time of death
+/// A memory of dying! includes time of death
 #define MEMORY_DEATH "death"
-///a memory of being creampied! Mentions where
+/// A memory of being creampied! Mentions where
 #define MEMORY_CREAMPIED "creampied"
-///a memory of being slipped! Mentions on what
+/// A memory of being slipped! Mentions on what
 #define MEMORY_SLIPPED "slipped"
-///A memory of letting my spaghetti spill, how embarrasing!
+/// A memory of letting my spaghetti spill, how embarrasing!
 #define MEMORY_SPAGHETTI_SPILL "spaghetti_spilled"
-///A memory of getting a kiss blown. Provides the kisser and kissee.
+/// A memory of getting a kiss blown. Provides the kisser and kissee.
 #define MEMORY_KISS "kiss"
-///A memory of a really good meal
+/// A memory of a really good meal
 #define MEMORY_MEAL "meal"
-///A memory of a really good drink
+/// A memory of a really good drink
 #define MEMORY_DRINK "drink"
-///A memory of being lit
+/// A memory of being lit
 #define MEMORY_FIRE "fire"
 /// A memory of limb loss
 #define MEMORY_DISMEMBERED "dismembered"
