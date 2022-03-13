@@ -163,22 +163,31 @@
  * This handles creating an alert and adding an overlay to it
  */
 /mob/living/carbon/proc/give(mob/living/carbon/offered)
-	var/obj/item/offered_item = get_active_held_item()
-	if(!offered_item)
-		to_chat(src, span_warning("You're not holding anything to give!"))
+	if(has_status_effect(/datum/status_effect/offering))
+		to_chat(src, span_warning("You're already offering up something!"))
 		return
 
 	if(IS_DEAD_OR_INCAP(src))
 		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
-	if(offered && IS_DEAD_OR_INCAP(offered))
-		to_chat(src, span_warning("They're unable to take anything in their current state!"))
+	var/obj/item/offered_item = get_active_held_item()
+	if(!offered_item)
+		to_chat(src, span_warning("You're not holding anything to give!"))
 		return
 
-	if(has_status_effect(/datum/status_effect/offering))
-		to_chat(src, span_warning("You're already offering up something!"))
-		return
+	if(offered)
+		if(IS_DEAD_OR_INCAP(offered))
+			to_chat(src, span_warning("They're unable to take anything in their current state!"))
+			return
+
+		if(!CanReach(offered))
+			to_chat(src, span_warning("You have to be adjacent to offer things!"))
+			return
+	else
+		if(!(locate(/mob/living/carbon) in orange(1, src)))
+			to_chat(src, span_warning("There's nobody adjacent to offer it to!"))
+			return
 
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
