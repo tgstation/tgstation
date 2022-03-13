@@ -89,7 +89,7 @@
 		smoke.start()
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(default_unfasten_wrench(user, tool, time = 40))
 		on = FALSE
 		return TOOL_ACT_TOOLTYPE_SUCCESS

@@ -127,7 +127,7 @@
 	to_chat(user,span_notice("You shred the current votes."))
 
 /obj/structure/votebox/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool, time = 40)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

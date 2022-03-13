@@ -27,7 +27,7 @@
 	return ..()
 
 /obj/structure/loom/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool, time = 5)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

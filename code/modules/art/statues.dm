@@ -24,7 +24,7 @@
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/cannon/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(flags_1 & NODECONSTRUCT_1)
 		return FALSE
 	default_unfasten_wrench(user, tool)

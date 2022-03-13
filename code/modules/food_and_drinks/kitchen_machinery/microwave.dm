@@ -108,7 +108,7 @@
 	return ..()
 
 /obj/machinery/microwave/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(dirty >= 100)
 		return FALSE
 	default_unfasten_wrench(user, tool)

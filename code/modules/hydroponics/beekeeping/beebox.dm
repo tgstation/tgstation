@@ -144,7 +144,7 @@
 		. += span_warning("There's no room for more honeycomb!")
 
 /obj/structure/beebox/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

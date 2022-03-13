@@ -48,7 +48,7 @@
 	flick("synthesizer_beam", src)
 
 /obj/machinery/dish_drive/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

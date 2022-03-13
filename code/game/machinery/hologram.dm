@@ -209,7 +209,7 @@ Possible to do for anyone motivated enough:
 		. += span_notice("The status display reads: Current projection range: <b>[holo_range]</b> units.")
 
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

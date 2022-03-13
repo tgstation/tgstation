@@ -108,7 +108,7 @@
 		to_chat(user, span_notice("You set [src] to [setting_text]."))
 
 /obj/machinery/power/floodlight/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool)
 	change_setting(1)
 	if(anchored)

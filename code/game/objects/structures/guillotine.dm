@@ -249,7 +249,7 @@
 	return ..()
 
 /obj/structure/guillotine/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(default_unfasten_wrench(user, tool, time = GUILLOTINE_WRENCH_DELAY))
 		setDir(SOUTH)
 		return TOOL_ACT_TOOLTYPE_SUCCESS

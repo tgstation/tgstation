@@ -35,7 +35,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	anchored = TRUE
 
 /obj/machinery/bsa/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool, time = 10)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

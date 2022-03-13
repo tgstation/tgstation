@@ -67,7 +67,7 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 		. += mutable_appearance(icon, "[base_icon_state]_panel-o")
 
 /obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

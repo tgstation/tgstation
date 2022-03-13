@@ -47,7 +47,7 @@
 	charge_ignited = FALSE
 
 /obj/structure/cannon/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(!anchorable_cannon)
 		return FALSE
 	default_unfasten_wrench(user, tool, time = 20)

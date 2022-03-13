@@ -71,7 +71,7 @@
 		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", alpha = src.alpha)
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool)
 	power_change()
 	return TOOL_ACT_TOOLTYPE_SUCCESS

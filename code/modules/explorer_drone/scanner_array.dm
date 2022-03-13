@@ -236,7 +236,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 		icon_state = "scanner_off"
 
 /obj/machinery/exoscanner/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool, time = 10)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 

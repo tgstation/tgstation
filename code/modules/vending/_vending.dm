@@ -431,7 +431,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return TRUE
 
 /obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(!panel_open)
 		return FALSE
 	if(default_unfasten_wrench(user, tool, time = 60))

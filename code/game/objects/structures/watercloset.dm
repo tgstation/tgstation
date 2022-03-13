@@ -678,7 +678,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/urinal, 32)
 		return ..()
 
 /obj/structure/curtain/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool, time = 50)
 	return TRUE
 

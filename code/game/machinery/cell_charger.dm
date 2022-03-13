@@ -37,7 +37,7 @@
 		. += span_notice("The status display reads: Charging power: <b>[charge_rate]W</b>.")
 
 /obj/machinery/cell_charger/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(charging)
 		return FALSE
 	default_unfasten_wrench(user, tool)

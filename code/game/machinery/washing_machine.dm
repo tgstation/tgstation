@@ -318,7 +318,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		. += "wm_panel"
 
 /obj/machinery/washing_machine/improvised_chem_heater/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	if(!panel_open || busy)
 		return FALSE
 	default_unfasten_wrench(user, tool)

@@ -161,7 +161,7 @@
 		unregister_input_turf() // someone just un-wrenched us, unregister the turf
 
 /obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
