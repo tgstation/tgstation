@@ -16,7 +16,8 @@
 	// Must be tall, otherwise the filter will consider this as a 32x32 tile
 	// and will crop the head off.
 	icon_state = "mask_bg"
-	layer = MOB_LAYER + 0.01
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	appearance_flags = KEEP_TOGETHER
@@ -206,12 +207,12 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 	open_machine()
 
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/set_on(new_value)
-	if(on == new_value)
+/obj/machinery/atmospherics/components/unary/cryo_cell/set_on(active)
+	if(on == active)
 		return
-	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, new_value)
+	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
-	on = new_value
+	on = active
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/on_set_is_operational(old_value)
@@ -374,6 +375,28 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 		if (do_after(user, 2.5 SECONDS, target=target))
 			close_machine(target)
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/screwdriver_act(mob/living/user, obj/item/tool)
+
+	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", tool)))
+		update_appearance()
+	else
+		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
+		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
+	if(on || occupant || state_open)
+		return FALSE
+	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
+	if(on || occupant || state_open)
+		return FALSE
+	if(default_change_direction_wrench(user, tool))
+		update_appearance()
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass))
 		. = 1 //no afterattack
@@ -387,16 +410,6 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 							span_notice("You place [I] in [src]."))
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
-		return
-	if(!on && !occupant && !state_open && (default_deconstruction_screwdriver(user, "pod-off", "pod-off", I)) \
-		|| default_change_direction_wrench(user, I) \
-		|| default_pry_open(I) \
-		|| default_deconstruction_crowbar(I))
-		update_appearance()
-		return
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
-		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
 		return
 	return ..()
 

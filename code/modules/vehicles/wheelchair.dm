@@ -18,7 +18,7 @@
 /obj/vehicle/ridden/wheelchair/Initialize(mapload)
 	. = ..()
 	make_ridable()
-	wheels_overlay = image(icon, overlay_icon, FLY_LAYER)
+	wheels_overlay = image(icon, overlay_icon, ABOVE_MOB_LAYER)
 	ADD_TRAIT(src, TRAIT_NO_IMMOBILIZE, INNATE_TRAIT)
 	AddComponent(/datum/component/simple_rotation) //Since it's technically a chair I want it to have chair properties
 
@@ -30,7 +30,6 @@
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
-
 
 /obj/vehicle/ridden/wheelchair/post_buckle_mob(mob/living/user)
 	. = ..()
@@ -49,6 +48,9 @@
 		new /obj/item/stack/sheet/iron(drop_location(), 4)
 		qdel(src)
 	return TRUE
+
+/obj/vehicle/ridden/wheelchair/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/vehicle/ridden/wheelchair/update_overlays()
 	. = ..()

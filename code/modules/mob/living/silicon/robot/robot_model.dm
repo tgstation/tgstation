@@ -283,7 +283,7 @@
 		/obj/item/bikehorn,
 		/obj/item/bikehorn/airhorn,
 		/obj/item/paint/anycolor,
-		/obj/item/soap/nanotrasen,
+		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
 		/obj/item/razor, //killbait material
 		/obj/item/lipstick/purple,
@@ -299,6 +299,13 @@
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
+
+/obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
+	if(!soap)
+		return
+	if(soap.uses < initial(soap.uses))
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
 /obj/item/robot_model/engineering
 	name = "Engineering"
@@ -339,7 +346,7 @@
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
-		/obj/item/soap/nanotrasen,
+		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
@@ -577,6 +584,12 @@
 	var/obj/item/reagent_containers/spray/cyborg_lube/lube = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(lube)
 		lube.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
+
+	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
+	if(!soap)
+		return
+	if(soap.uses < initial(soap.uses))
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
 /obj/item/robot_model/medical
 	name = "Medical"

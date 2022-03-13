@@ -281,6 +281,7 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/titanium
 	material_type = /datum/material/titanium
 	walltype = /turf/closed/wall/mineral/titanium
+	tram_wall_type = /obj/structure/tramwall/titanium
 
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20), \
@@ -314,6 +315,7 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/mineral/plastitanium
 	material_flags = NONE
 	walltype = /turf/closed/wall/mineral/plastitanium
+	tram_wall_type = /obj/structure/tramwall/plastitanium
 
 GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	new/datum/stack_recipe("plastitanium tile", /obj/item/stack/tile/mineral/plastitanium, 1, 4, 20), \
@@ -342,11 +344,11 @@ GLOBAL_LIST_INIT(plastitanium_recipes, list ( \
 	material_type = /datum/material/snow
 
 GLOBAL_LIST_INIT(snow_recipes, list ( \
-	new/datum/stack_recipe("Snow wall", /turf/closed/wall/mineral/snow, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = 1, on_floor = 1), \
-	new/datum/stack_recipe("Snowball", /obj/item/toy/snowball, 1), \
-	new/datum/stack_recipe("Snow tile", /obj/item/stack/tile/mineral/snow, 1, 4, 20), \
-	))
+	new/datum/stack_recipe("snow wall", /turf/closed/wall/mineral/snow, 5, time = 4 SECONDS, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("snowman", /obj/structure/statue/snow/snowman, 5, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("snowball", /obj/item/toy/snowball, 1), \
+	new/datum/stack_recipe("snow tile", /obj/item/stack/tile/mineral/snow, 1, 4, 20), \
+))
 
 /obj/item/stack/sheet/mineral/snow/get_main_recipes()
 	. = ..()

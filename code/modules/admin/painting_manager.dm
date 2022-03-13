@@ -47,6 +47,7 @@
 			fdel(png)
 			//Remove entry from paintings list
 			SSpersistent_paintings.paintings -= chosen_painting
+			SSpersistent_paintings.deleted_paintings_md5s |= chosen_painting.md5
 			SSpersistent_paintings.save_to_file() // Save now so we don't have broken variations if this round crashes
 			//Delete any painting instances in the current round
 			for(var/obj/structure/sign/painting/painting as anything in SSpersistent_paintings.painting_frames)

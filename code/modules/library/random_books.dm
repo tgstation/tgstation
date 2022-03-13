@@ -17,7 +17,7 @@
 
 /obj/item/book/random/Initialize(mapload)
 	. = ..()
-	icon_state = "book[rand(1,8)]"
+	icon_state = "book[rand(1,maximum_book_state)]"
 
 /obj/item/book/random/attack_self()
 	if(!random_loaded)
@@ -64,7 +64,7 @@
 			B.dat = query_get_random_books.item[3]
 			B.name = "Book: [B.title]"
 			if(!existing_book)
-				B.icon_state= "book[rand(1,8)]"
+				B.icon_state= "book[rand(1,B.maximum_book_state)]"
 	qdel(query_get_random_books)
 
 /obj/structure/bookcase/random/fiction

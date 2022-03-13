@@ -1230,11 +1230,11 @@
 					/obj/item/storage/box/medigels,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/bodybags,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/fire,
+					/obj/item/storage/medkit/regular,
+					/obj/item/storage/medkit/o2,
+					/obj/item/storage/medkit/toxin,
+					/obj/item/storage/medkit/brute,
+					/obj/item/storage/medkit/fire,
 					/obj/item/defibrillator/loaded,
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
@@ -1346,7 +1346,7 @@
 	access = ACCESS_ORDNANCE
 	access_view = ACCESS_ORDNANCE
 	contains = list(/obj/item/raw_anomaly_core/grav)
-	crate_name = "raw pyro anomaly"
+	crate_name = "raw gravitational anomaly"
 	crate_type = /obj/structure/closet/crate/secure/science
 
 /datum/supply_pack/science/raw_vortex_anomaly
@@ -1389,8 +1389,8 @@
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
-					/obj/item/storage/firstaid,
-					/obj/item/storage/firstaid,
+					/obj/item/storage/medkit,
+					/obj/item/storage/medkit,
 					/obj/item/healthanalyzer,
 					/obj/item/healthanalyzer,
 					/obj/item/clothing/head/hardhat/red,

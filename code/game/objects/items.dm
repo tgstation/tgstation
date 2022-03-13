@@ -232,17 +232,17 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(damtype == BURN)
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == BRUTE)
-			hitsound = "swing_hit"
+			hitsound = SFX_SWING_HIT
 
 	add_weapon_description()
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 	if(LAZYLEN(embedding))
 		updateEmbedding()
-	if(mapload)
+	if(mapload && !GLOB.steal_item_handler.generated_items)
 		add_stealing_item_objective()
 
-/obj/item/Destroy()
+/obj/item/Destroy(force)
 	// This var exists as a weird proxy "owner" ref
 	// It's used in a few places. Stop using it, and optimially replace all uses please
 	master = null
@@ -799,7 +799,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(damtype == BURN)
 		. = 'sound/weapons/sear.ogg'
 	else
-		. = "desecration"
+		. = SFX_DESECRATION
 
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc
@@ -1183,12 +1183,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
-				playsound(victim, "shatter", 25, TRUE)
+				playsound(victim, SFX_SHATTER, 25, TRUE)
 				qdel(src)
 				if(QDELETED(source_item))
 					broken_glass.on_accidental_consumption(victim, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
-				playsound(victim, "shatter", 15, TRUE)
+				playsound(victim, SFX_SHATTER, 15, TRUE)
 			discover_after = FALSE
 
 		victim.adjust_disgust(33)

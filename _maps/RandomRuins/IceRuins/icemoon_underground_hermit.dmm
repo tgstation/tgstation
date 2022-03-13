@@ -73,7 +73,7 @@
 /area/ruin/powered/shuttle)
 "EV" = (
 /obj/item/storage/bag/plants/portaseeder,
-/obj/item/storage/firstaid/medical,
+/obj/item/storage/medkit/surgery,
 /obj/item/storage/bag/ore,
 /obj/structure/table/wood,
 /turf/open/floor/grass/fairy,

@@ -39,7 +39,7 @@
 /area/ruin/powered/shuttle/medium_1)
 "l" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},

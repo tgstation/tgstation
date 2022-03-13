@@ -66,7 +66,7 @@
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
-					playsound(H, get_sfx("desecration"), 50, TRUE, -1) //You just want to socialize
+					playsound(H, get_sfx(SFX_DESECRATION), 50, TRUE, -1) //You just want to socialize
 					H.visible_message(span_warning("[H] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
 					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
 					bp.receive_damage(200, 0, 0) //But I don't think we should
@@ -75,3 +75,15 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate * delta_time)
 		return TRUE
+
+/datum/species/skeleton/get_species_description()
+	return "A rattling skeleton! They descend upon Space Station 13 \
+		Every year to spook the crew! \"I've got a BONE to pick with you!\""
+
+/datum/species/skeleton/get_species_lore()
+	return list(
+		"Skeletons want to be feared again! Their presence in media has been destroyed, \
+		or at least that's what they firmly believe. They're always the first thing fought in an RPG, \
+		they're Flanderized into pun rolling JOKES, and it's really starting to get to them. \
+		You could say they're deeply RATTLED. Hah."
+	)

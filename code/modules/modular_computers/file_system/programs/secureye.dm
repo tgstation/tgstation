@@ -8,7 +8,7 @@
 	program_icon_state = "generic"
 	extended_desc = "This program allows access to standard security camera networks."
 	requires_ntnet = TRUE
-	transfer_access = ACCESS_SECURITY
+	transfer_access = list(ACCESS_SECURITY)
 	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	size = 5
 	tgui_id = "NtosSecurEye"
@@ -124,7 +124,7 @@
 		var/list/cameras = get_available_cameras()
 		var/obj/machinery/camera/selected_camera = cameras[c_tag]
 		camera_ref = WEAKREF(selected_camera)
-		playsound(src, get_sfx("terminal_type"), 25, FALSE)
+		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 
 		if(!selected_camera)
 			return TRUE

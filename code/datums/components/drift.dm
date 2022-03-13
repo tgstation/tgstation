@@ -7,13 +7,16 @@
 	var/datum/move_loop/move/drifting_loop
 	var/block_inputs_until
 
-/datum/component/drift/Initialize(direction)
+/datum/component/drift/Initialize(direction, instant = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	. = ..()
 
+	var/flags = NONE
+	if(instant)
+		flags |= MOVEMENT_LOOP_START_FAST
 	var/atom/movable/movable_parent = parent
-	drifting_loop = SSmove_manager.move(moving = parent, direction = direction, delay = movable_parent.inertia_move_delay, subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY)
+	drifting_loop = SSmove_manager.move(moving = parent, direction = direction, delay = movable_parent.inertia_move_delay, subsystem = SSspacedrift, priority = MOVEMENT_SPACE_PRIORITY, flags = flags)
 
 	if(!drifting_loop) //Really want to qdel here but can't
 		return COMPONENT_INCOMPATIBLE

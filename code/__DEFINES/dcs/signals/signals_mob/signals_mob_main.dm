@@ -112,15 +112,15 @@
 #define COMSIG_MOB_CREAMED "mob_creamed"
 ///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
-///from /obj/item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)
+///from /obj/item/hand_item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)
 #define COMSIG_TABLE_SLAMMED "table_slammed"
 ///from base of atom/attack_hand(): (mob/user, modifiers)
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
 ///from base of /obj/item/attack(): (mob/M, mob/user)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
-///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
+///from base of obj/item/afterattack(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK "mob_item_afterattack"
-///from base of obj/item/afterattack_secondary(): (atom/target, mob/user, proximity_flag, click_parameters)
+///from base of obj/item/afterattack_secondary(): (atom/target, obj/item/weapon, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_AFTERATTACK_SECONDARY "mob_item_afterattack_secondary"
 ///from base of obj/item/attack_qdeleted(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_MOB_ITEM_ATTACK_QDELETED "mob_item_attack_qdeleted"
@@ -135,3 +135,7 @@
 /// From /atom/movable/screen/zone_sel/proc/set_selected_zone.
 /// Fires when the user has changed their selected body target.
 #define COMSIG_MOB_SELECTED_ZONE_SET "mob_set_selected_zone"
+/// from base of [/client/proc/handle_spam_prevention] (message, mute_type)
+#define COMSIG_MOB_AUTOMUTE_CHECK "client_automute_check" // The check is performed by the client.
+	/// Prevents the automute system checking this client for repeated messages.
+	#define WAIVE_AUTOMUTE_CHECK (1<<0)

@@ -531,8 +531,8 @@
 /area/shuttle/escape)
 "bS" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/toxin{
 	pixel_x = 4;
 	pixel_y = 4
 	},
@@ -550,8 +550,8 @@
 /area/shuttle/escape)
 "bU" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/brute{
 	pixel_x = 4;
 	pixel_y = 4
 	},

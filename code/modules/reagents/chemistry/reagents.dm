@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /// A single reagent
 /datum/reagent
 	/// datums don't have names by default
-	var/name = "Reagent"
+	var/name = ""
 	/// nor do they have descriptions
 	var/description = ""
 	///J/(K*mol)

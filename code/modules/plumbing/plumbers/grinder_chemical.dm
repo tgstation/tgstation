@@ -3,6 +3,7 @@
 	desc = "chemical grinder."
 	icon_state = "grinder_chemical"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 
 	reagent_flags = TRANSPARENT | DRAINABLE
 	buffer = 400

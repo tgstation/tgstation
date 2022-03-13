@@ -1547,8 +1547,8 @@
 "zb" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced/spawner/north,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},

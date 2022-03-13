@@ -1,4 +1,0 @@
-author: "Jackraxxus"
-delete-after: True
-changes: 
-  - bugfix: "The Tramstation aux base console now uses the correct type, and is no longer a ghetto advanced camera console."

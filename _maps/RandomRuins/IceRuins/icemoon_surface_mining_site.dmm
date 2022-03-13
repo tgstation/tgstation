@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "b" = (
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/unpowered)
@@ -17,7 +17,7 @@
 /area/ruin/unpowered)
 "d" = (
 /turf/open/openspace/icemoon,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "e" = (
 /obj/item/clothing/suit/hooded/explorer,
 /obj/item/clothing/mask/gas/explorer,
@@ -39,7 +39,7 @@
 "h" = (
 /obj/structure/flora/rock/icy,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 "j" = (
 /obj/structure/sink/kitchen,
 /turf/open/floor/wood,
@@ -99,7 +99,7 @@
 /area/template_noop)
 "Y" = (
 /turf/open/openspace/icemoon/ruins,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface/outdoors/nospawn)
 
 (1,1,1) = {"
 t

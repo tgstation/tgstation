@@ -184,9 +184,6 @@
 /obj/machinery/power/apc/highcap/ten_k
 	cell_type = /obj/item/stock_parts/cell/high
 
-/obj/machinery/power/apc/highcap/fifteen_k
-	cell_type = /obj/item/stock_parts/cell/high/plus
-
 /obj/machinery/power/apc/auto_name
 	auto_name = TRUE
 
@@ -895,7 +892,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 			to_chat(user, span_warning("Nothing happens!"))
 		else
 			flick("apc-spark", src)
-			playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			to_chat(user, span_notice("You emag the APC interface."))
@@ -1127,7 +1124,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 	malf.malfhacking = addtimer(CALLBACK(malf, /mob/living/silicon/ai/.proc/malfhacked, src), 600, TIMER_STOPPABLE)
 
 	var/atom/movable/screen/alert/hackingapc/A
-	A = malf.throw_alert("hackingapc", /atom/movable/screen/alert/hackingapc)
+	A = malf.throw_alert(ALERT_HACKING_APC, /atom/movable/screen/alert/hackingapc)
 	A.target = src
 
 /obj/machinery/power/apc/proc/malfoccupy(mob/living/silicon/ai/malf)

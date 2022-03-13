@@ -510,7 +510,7 @@
 /area/lavaland/surface)
 "ca" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /turf/open/floor/plating/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "cb" = (

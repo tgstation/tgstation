@@ -387,8 +387,8 @@
 /turf/open/floor/plating/sandy_dirt,
 /area/shuttle/escape/simulation)
 "rE" = (
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
@@ -445,8 +445,8 @@
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
 "sy" = (
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -664,12 +664,12 @@
 /area/shuttle/escape/simulation)
 "DO" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
 /obj/item/crowbar,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
@@ -1118,12 +1118,12 @@
 /area/shuttle/escape/simulation)
 "To" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/toxin{
 	pixel_x = -4;
 	pixel_y = 3
 	},

@@ -123,8 +123,8 @@
 /area/shuttle/escape)
 "ar" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -256,7 +256,7 @@
 "aN" = (
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = -1;
 	pixel_y = 1
 	},

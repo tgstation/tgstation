@@ -62,13 +62,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ao" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Cargo Bay APC";
-	pixel_x = 25;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "ap" = (
@@ -152,17 +149,17 @@
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aE" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aF" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aG" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aH" = (
@@ -655,13 +652,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "ca" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Power Storage APC";
-	pixel_x = 25;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "cb" = (
@@ -738,12 +732,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "ck" = (
-/obj/machinery/power/apc{
-	name = "Tradepost APC";
-	pixel_y = -25;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cl" = (
@@ -1385,7 +1377,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ec" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
@@ -1394,11 +1386,11 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ed" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/storage/firstaid/o2,
+/obj/item/storage/medkit/o2,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1452,13 +1444,10 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "el" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "Cargo Storage APC";
-	pixel_x = 25;
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east{
 	start_charge = 0
 	},
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eo" = (
@@ -1484,7 +1473,7 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "er" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1495,8 +1484,8 @@
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "et" = (
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
@@ -1574,7 +1563,7 @@
 /obj/structure/closet/crate/internals,
 /obj/item/tank/internals/emergency_oxygen/engi,
 /obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)

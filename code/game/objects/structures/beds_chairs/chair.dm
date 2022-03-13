@@ -68,6 +68,9 @@
 		return
 	. = ..()
 
+/obj/structure/chair/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 ///allows each chair to request the electrified_buckle component with overlays that dont look ridiculous
 /obj/structure/chair/proc/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	SHOULD_CALL_PARENT(TRUE)
@@ -111,8 +114,10 @@
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
+		plane = GAME_PLANE_UPPER
 	else
 		layer = OBJ_LAYER
+		plane = GAME_PLANE
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -167,7 +172,7 @@
 /obj/structure/chair/comfy/Initialize(mapload)
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	armrest.plane = ABOVE_GAME_PLANE
+	armrest.plane = GAME_PLANE_UPPER
 	return ..()
 
 /obj/structure/chair/comfy/proc/GetArmrest()

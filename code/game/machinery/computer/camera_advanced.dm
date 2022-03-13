@@ -223,7 +223,8 @@
 		if(visible_icon)
 			if(eye_user.client)
 				eye_user.client.images -= user_image
-				user_image = image(icon,loc,icon_state,FLY_LAYER)
+				user_image = image(icon,loc,icon_state, FLY_LAYER)
+				user_image.plane = ABOVE_GAME_PLANE
 				eye_user.client.images += user_image
 
 /mob/camera/ai_eye/remote/relaymove(mob/living/user, direction)
@@ -292,7 +293,7 @@
 	if(isnull(T[camera]))
 		return
 	var/obj/machinery/camera/final = T[camera]
-	playsound(src, "terminal_type", 25, FALSE)
+	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 	if(final)
 		playsound(origin, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 		remote_eye.setLoc(get_turf(final))

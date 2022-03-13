@@ -381,6 +381,11 @@
 	id = "comp_id_access_reader"
 	build_path = /obj/item/circuit_component/id_access_reader
 
+/datum/design/component/setter_trigger
+	name = "Set Variable Trigger"
+	id = "comp_set_variable_trigger"
+	build_path = /obj/item/circuit_component/variable/setter/trigger
+
 /datum/design/component/access_checker
 	name = "Access Checker Component"
 	id = "comp_access_checker"

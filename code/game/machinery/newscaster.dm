@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	name = "newscaster"
 	desc = "A standard Nanotrasen-licensed newsfeed handler for use in commercial space stations. All the news you absolutely have no use for, in one place!"
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "newscaster_normal"
+	icon_state = "newscaster_off"
 	base_icon_state = "newscaster"
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -243,18 +243,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 	picture = null
 	return ..()
 
-/obj/machinery/newscaster/update_icon_state()
+/obj/machinery/newscaster/update_appearance(updates=ALL)
+	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
-		icon_state = "[base_icon_state]_off"
-		return ..()
-	icon_state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
-	return ..()
+		set_light(0)
+		return
+	set_light(1.4,0.7,"#34D352") // green light
 
 /obj/machinery/newscaster/update_overlays()
 	. = ..()
 
-	if(!(machine_stat & (NOPOWER|BROKEN)) && !GLOB.news_network.wanted_issue.active && alert)
-		. += "newscaster_alert"
+	if(!(machine_stat & (NOPOWER|BROKEN)))
+		var/state = "[base_icon_state]_[GLOB.news_network.wanted_issue.active ? "wanted" : "normal"]"
+		. += mutable_appearance(icon, state)
+		. += emissive_appearance(icon, state, alpha = src.alpha)
+
+		if(!GLOB.news_network.wanted_issue.active && alert)
+			. += mutable_appearance(icon, "[base_icon_state]_alert")
+			. += emissive_appearance(icon, "[base_icon_state]_alert", alpha = src.alpha)
 
 	var/hp_percent = atom_integrity * 100 /max_integrity
 	switch(hp_percent)
@@ -262,10 +268,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 			return
 		if(50 to 75)
 			. += "crack1"
+			. += emissive_blocker(icon, "crack1", alpha = src.alpha)
 		if(25 to 50)
 			. += "crack2"
+			. += emissive_blocker(icon, "crack2", alpha = src.alpha)
 		else
 			. += "crack3"
+			. += emissive_blocker(icon, "crack3", alpha = src.alpha)
 
 /obj/machinery/newscaster/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -1005,7 +1014,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 				if(curr_page == 0) //We're at the start, get to the middle
 					screen=1
 			curr_page++
-			playsound(loc, "pageturn", 50, TRUE)
+			playsound(loc, SFX_PAGE_TURN, 50, TRUE)
 		else if(href_list["prev_page"])
 			if(curr_page == 0)
 				return
@@ -1015,7 +1024,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster/security_unit, 30)
 				if(curr_page == pages+1) //we're at the end, let's go back to the middle.
 					screen = 1
 			curr_page--
-			playsound(loc, "pageturn", 50, TRUE)
+			playsound(loc, SFX_PAGE_TURN, 50, TRUE)
 		if(ismob(loc))
 			attack_self(loc)
 

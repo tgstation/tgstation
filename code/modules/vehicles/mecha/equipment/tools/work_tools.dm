@@ -121,7 +121,7 @@
 				return
 			playsound(src, get_dismember_sound(), 80, TRUE)
 			target.visible_message(span_danger("[chassis] rips [target]'s arms off!"), \
-						   span_userdanger("[chassis] rips your arms off!"))
+						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
 
@@ -202,7 +202,7 @@
 	reagents.trans_to(water, 1)
 
 	var/delay = 2
-	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(water, pick(targets), delay, timeout = delay * 4, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/our_loop = water.move_at(pick(targets), delay, 4)
 	RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/water_finished_moving)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/proc/water_finished_moving(datum/move_loop/has_target/source)
