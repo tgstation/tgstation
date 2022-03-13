@@ -149,7 +149,7 @@
 /datum/crafting_recipe/food/clownstears
 	name = "Clowns tears"
 	reqs = list(
-		/datum/reagent/water = 10,
+		/datum/reagent/lube = 10,
 		/obj/item/reagent_containers/glass/bowl = 1,
 		/obj/item/food/grown/banana = 1,
 		/obj/item/stack/sheet/mineral/bananium = 1
