@@ -426,12 +426,12 @@
 /obj/item/card/id/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(held_item == src)
-		context[SCREENTIP_CONTEXT_LMB] = "Show ID"
-		context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
-		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item != src)
+		return
 
-	return .
+	context[SCREENTIP_CONTEXT_LMB] = "Show ID"
+	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
 	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
