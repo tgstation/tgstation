@@ -98,6 +98,11 @@
 #define MEMORY_SUPERMATTER_DUSTED "supermatter_dusted"
 /// Nuke ops nuke code memory
 #define MEMORY_NUKECODE "nuke_code"
+/// A memory of having to play 52 card pickup
+#define MEMORY_52_CARD_PICKUP "52_card_pickup"
+/// A memory of playing cards with others
+#define MEMORY_PLAYING_CARDS "playing_cards"
+
 
 /**
  * These are also memories, but they're examples of what I kinda don't want to be memories. They're stuff that I had to port
