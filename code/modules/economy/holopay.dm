@@ -203,40 +203,34 @@
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))
 	/// Start checking if the source projection is in range
-	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-	check_operation()
+	RegisterSignal(linked_card, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 	return TRUE
+
+/obj/structure/holopay/proc/track(atom/movable/thing)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
+	for(var/atom/movable/location in locations)
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+
+/obj/structure/holopay/proc/untrack(atom/movable/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
+	for(var/atom/movable/location in locations)
+		UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
 
 /**
  * A periodic check to see if the projecting card is nearby.
- * Deletes the holopay if true.
+ * Deletes the holopay if not.
  */
-/obj/structure/holopay/proc/check_operation()
-	SIGNAL_HANDLER
-
+/obj/structure/holopay/proc/handle_move(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
+	if(ismovable(old_loc))
+		untrack(old_loc)
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
+		UnregisterSignal(linked_card, COMSIG_MOVABLE_MOVED)
 		dissipate()
 		return
-
-	var/atom/location = linked_card.loc
-	var/list/new_locations
-	while(location)
-		if(!istype(location, /atom/movable))
-			break
-		LAZYADD(new_locations, WEAKREF(location))
-		if(LAZYFIND(tracked_locs, WEAKREF(location)))
-			LAZYREMOVE(tracked_locs, WEAKREF(location))
-			location = location.loc
-			continue //don't register signal twice
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-		location = location.loc
-
-	for(var/datum/weakref/location_ref in tracked_locs)
-		LAZYREMOVE(tracked_locs, location_ref)
-		UnregisterSignal(location_ref.resolve(), COMSIG_MOVABLE_MOVED)
-
-	if(LAZYLEN(new_locations))
-		LAZYADD(tracked_locs, new_locations)
+	if(ismovable(source.loc))
+		track(source.loc)
 
 /**
  * Creates holopay vanishing effects.
