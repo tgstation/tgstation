@@ -19,6 +19,11 @@
 	if(..() || !istype(target)) // was it caught or is the target not a living mob
 		return
 
+	if(!throwingdatum?.thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+		return
+
+	var/mob/living/user = throwingdatum.thrower
+
 	var/has_no_cards = !LAZYLEN(cards)
 	if(has_no_cards)
 		return
@@ -38,6 +43,8 @@
 	update_appearance()
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
+	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
+	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
 
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
@@ -69,12 +76,12 @@
  * Draws a card from the deck or hand of cards.
  *
  * Draws the top card unless a card arg is supplied then it picks that specific card
- * and returns it (the card arg is used by the radial menu for cardhands to select 
+ * and returns it (the card arg is used by the radial menu for cardhands to select
  * specific cards out of the cardhand)
  * Arguments:
  * * mob/living/user - The user drawing the card.
  * * obj/item/toy/singlecard/card (optional) - The card drawn from the hand
-**/ 
+**/
 /obj/item/toy/cards/proc/draw(mob/living/user, obj/item/toy/singlecard/card)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))
 		return
@@ -88,4 +95,4 @@
 	cards -= card
 	update_appearance()
 	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
-	return card	
+	return card

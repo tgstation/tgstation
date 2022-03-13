@@ -280,3 +280,24 @@
 	mood_change = 10
 	timeout = 5 MINUTES
 
+/datum/mood_event/won_52_card_pickup
+	description = span_nicegreen("HA! That loser will be picking cards up for a long time!\n")
+	mood_change = 3
+	timeout = 3 MINUTES
+
+/datum/mood_event/playing_cards
+	description = span_nicegreen("I'm enjoying playing cards with other people!\n")
+	mood_change = 2
+	timeout = 3 MINUTES
+
+/datum/mood_event/playing_cards/add_effects(param)
+	var/card_players = 1 // start with 1 in case they're on the same tile or something
+	for(var/mob/living/carbon/player in oview(owner, COMBAT_MESSAGE_RANGE))
+		var/player_has_cards = player.is_holding(/obj/item/toy/singlecard) || player.is_holding(/obj/item/toy/cards/deck) || player.is_holding(/obj/item/toy/cards/cardhand)
+		if(player_has_cards)
+			card_players++
+			if(card_players > 5)
+				break
+
+	mood_change *= card_players
+	return ..()

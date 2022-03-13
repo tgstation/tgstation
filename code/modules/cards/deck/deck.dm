@@ -41,13 +41,6 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
 
-	// not sure if we can have both this and the add_context proc together (so TEST and if it works delete this comment)
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Draw card", \
-		rmb_text = "Draw card faceup", \
-	)
-
 	if(!is_standard_deck)
 		return
 
@@ -94,6 +87,11 @@
 
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
+
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Draw card"
+		context[SCREENTIP_CONTEXT_RMB] = "Draw card faceup"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/toy/singlecard))
 		context[SCREENTIP_CONTEXT_LMB] = "Recycle card"

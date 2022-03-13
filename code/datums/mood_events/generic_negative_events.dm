@@ -127,7 +127,7 @@
 /datum/mood_event/nyctophobia
 	description = "<span class='warning'>It sure is dark around here...</span>\n"
 	mood_change = -3
-	
+
 /datum/mood_event/claustrophobia
 	description = "<span class='warning'>Why do I feel trapped?!  Let me out!!!</span>\n"
 	mood_change = -7
@@ -370,3 +370,8 @@
 	description = span_boldwarning("If I'm not good at video games, can I truly call myself a gamer?\n")
 	mood_change = -10
 	timeout = 10 MINUTES
+
+/datum/mood_event/lost_52_card_pickup
+	description = span_warning("This is really embarrassing! I'm ashamed to pick up all these cards off the floor...\n")
+	mood_change = -3
+	timeout = 3 MINUTES
