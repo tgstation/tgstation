@@ -51,8 +51,8 @@
 /obj/item/toy/singlecard/examine(mob/living/carbon/human/user)
 	. = ..()
 	if(!ishuman(user))
-		return 
-		
+		return
+
 	if(user.is_holding(src))
 		user.visible_message(span_notice("[user] checks [user.p_their()] card."), span_notice("The card reads: [cardname]."))
 		if(blank)
@@ -61,7 +61,7 @@
 		. += span_notice("You scan the card with your x-ray vision and it reads: [cardname].")
 	else
 		. += span_warning("You need to have the card in your hand to check it!")
-	
+
 	var/marked_color = getMarkedColor(user)
 	if(marked_color)
 		. += span_notice("The card has a [marked_color] mark on the corner!")
@@ -85,15 +85,20 @@
 			return CONTEXTUAL_SCREENTIP_SET
 		context[SCREENTIP_CONTEXT_LMB] = "Recycle card"
 		return CONTEXTUAL_SCREENTIP_SET
-		
+
 	if(istype(held_item, /obj/item/toy/singlecard))
 		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
 		context[SCREENTIP_CONTEXT_RMB] = "Combine cards faceup"
 		return CONTEXTUAL_SCREENTIP_SET
-		
+
 	if(istype(held_item, /obj/item/toy/cards/cardhand))
 		context[SCREENTIP_CONTEXT_LMB] = "Combine cards"
 		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/toy/crayon) || istype(held_item, /obj/item/pen))
+		context[SCREENTIP_CONTEXT_LMB] = blank ? "Write on card" : "Mark card"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	return .
 
 /obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
@@ -103,7 +108,7 @@
 
 /**
  * Flips the card over
- * 
+ *
  * * Arguments:
  * * orientation (optional) - Sets flipped state to CARD_FACEDOWN or CARD_FACEUP if given orientation (otherwise just invert the flipped state)
  */
@@ -118,7 +123,7 @@
 
 /**
  * Returns a color if a card is marked and the user can see it
- * 
+ *
  * * Arguments:
  * * user - We need to check if the user see the marked card
  */
@@ -130,17 +135,17 @@
 		return marked_color
 
 /obj/item/toy/singlecard/update_icon_state()
-	if(!flipped) 
+	if(!flipped)
 		icon_state = "singlecard_down_[deckstyle]"
 	else if(has_unique_card_icons) // each card in a deck has a different icon
 		icon_state = "sc_[cardname]_[deckstyle]"
 	else // all cards are the same icon state (blank or scribble)
-		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]" 
+		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]"
 	return ..()
 
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params, flip_card=FALSE)
 	var/obj/item/toy/singlecard/card
-	
+
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(!dealer_deck.wielded) // recycle card into deck (if unwielded)
@@ -151,13 +156,13 @@
 
 	if(istype(item, /obj/item/toy/singlecard))
 		card = item
-	
+
 	if(card) // card + card = combine into cardhand
 		if(flip_card)
 			card.Flip()
 			card.update_appearance()
-			
-		if(istype(item, /obj/item/toy/cards/deck)) 
+
+		if(istype(item, /obj/item/toy/cards/deck))
 			// only decks cause a balloon alert
 			user.balloon_alert_to_viewers("deals a card", vision_distance = COMBAT_MESSAGE_RANGE)
 
@@ -178,17 +183,17 @@
 
 	var/can_item_write
 	var/marked_cheating_color
-	
+
 	if(istype(item, /obj/item/pen))
 		var/obj/item/pen/pen = item
 		can_item_write = TRUE
 		marked_cheating_color = (pen.colour == "white" && "invisible") || pen.colour
-	
+
 	if(istype(item, /obj/item/toy/crayon))
 		var/obj/item/toy/crayon/crayon = item
 		can_item_write = TRUE
 		marked_cheating_color = (crayon.crayon_color == "mime" && "invisible") || crayon.crayon_color
-	
+
 	if(can_item_write && !blank) // You cheated not only the game, but yourself
 		marked_color = marked_cheating_color
 		to_chat(user, span_notice("You put a [marked_color] mark in the corner of [src] with the [item]. Cheat to win!"))
@@ -198,7 +203,7 @@
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on [src]!"))
 			return
-			
+
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
 			return
@@ -206,9 +211,9 @@
 		cardname = cardtext
 		blank = FALSE
 		update_appearance()
-		return 
+		return
 	return ..()
-	
+
 /obj/item/toy/singlecard/attackby_secondary(obj/item/item, mob/living/user, modifiers)
 	attackby(item, user, modifiers, flip_card=TRUE)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
