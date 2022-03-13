@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "modsuit nominal sound no longer plays when youre deaf"

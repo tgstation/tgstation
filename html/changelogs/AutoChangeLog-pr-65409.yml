@@ -1,0 +1,6 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - qol: "Most foods decompose into JUST moldy food, which then gets eaten by ants, leaving only the anthills and ultimately making them more visible."
+  - bugfix: "Cleanable decals will try to merge their reagents before they delete if they have mergeable_decal = TRUE, meaning ants will now properly stack their reagents when they spawn on the same tile."
+  - qol: "Ants no longer spawn on lavaland's basalt."
