@@ -440,13 +440,12 @@ const NewscasterChannelMessages = (_, context) => {
               </>
             )} >
             <BlockQuote>
-              {!!message.censored_message &&(
+              {message.censored_message ? (
                 <Section textColor="Red">
                   This message was deemed dangerous to the general welfare
                   of the station and therefore marked with a <b>D-Notice</b>.
                 </Section>
-              )}
-              {!message.censored_message &&(
+              ):(
                 <Section
                   dangerouslySetInnerHTML={processedText(message.body)}
                   pl={1} />
