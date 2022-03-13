@@ -86,6 +86,12 @@
 	icon_state = "fuel"
 	reagent_id = /datum/reagent/fuel
 
+/obj/structure/reagent_dispensers/fueltank/Initialize(mapload)
+	. = ..()
+
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		icon_state = "fuel_fools"
+
 /obj/structure/reagent_dispensers/fueltank/boom()
 	explosion(src, heavy_impact_range = 1, light_impact_range = 5, flame_range = 5)
 	qdel(src)
