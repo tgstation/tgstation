@@ -420,7 +420,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	try_project_paystand(user, null)
+	try_project_paystand(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/card/id/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -445,7 +445,7 @@
 	var/turf/projection
 	var/turf/step_ahead = get_step(user, user.dir)
 	var/turf/user_loc = user.loc
-	if(can_proj_holopay(target))
+	if(target && can_proj_holopay(target))
 		projection = target
 	else if(can_proj_holopay(step_ahead))
 		projection = step_ahead
@@ -475,8 +475,6 @@
  * * TRUE if the target is a valid holopay location, FALSE otherwise.
  */
 /obj/item/card/id/proc/can_proj_holopay(turf/target)
-	if(isnull(target))
-		return FALSE
 	if(!isfloorturf(target))
 		return FALSE
 	if(target.density)

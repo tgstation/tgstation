@@ -203,7 +203,7 @@
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))
 	/// Start checking if the source projection is in range
-	RegisterSignal(linked_card, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	track(linked_card)
 	return TRUE
 
 /obj/structure/holopay/proc/track(atom/movable/thing)
