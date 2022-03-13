@@ -195,6 +195,8 @@
  */
 /mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
 	clear_alert("[offerer]")
+	if(IS_DEAD_OR_INCAP(src))
+		return
 	if(get_dist(src, offerer) > 1)
 		to_chat(src, span_warning("[offerer] is out of range!"))
 		return
