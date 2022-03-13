@@ -7059,30 +7059,12 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "wB" = (
-/obj/structure/closet/emcloset,
-/obj/effect/turf_decal/tile/purple,
-/obj/effect/turf_decal/tile/purple{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/purple{
-	dir = 4
-	},
 /obj/item/storage/medkit/toxin{
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/purple/fourcorners,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "wC" = (
@@ -10756,9 +10738,6 @@
 	dir = 1
 	},
 /area/hallway/secondary/service)
-"Iv" = (
-/turf/closed/wall/r_wall,
-/area/icemoon/underground/explored)
 "Iw" = (
 /turf/open/floor/grass,
 /area/service/hydroponics)
@@ -31688,7 +31667,7 @@ cR
 pE
 cR
 cR
-Iv
+rz
 mO
 mO
 mO

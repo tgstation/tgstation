@@ -411,26 +411,6 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "tJ" = (
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/britcup{
 	pixel_x = 8;
@@ -440,20 +420,7 @@
 	pixel_x = -9;
 	pixel_y = 3
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table/reinforced,
-/obj/item/reagent_containers/food/drinks/britcup{
-	pixel_x = 8;
-	pixel_y = -1
-	},
-/obj/item/storage/firstaid/regular{
-	pixel_x = -9;
-	pixel_y = 3
-	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "uV" = (

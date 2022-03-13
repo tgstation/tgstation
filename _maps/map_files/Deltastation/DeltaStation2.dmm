@@ -35994,26 +35994,11 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "hDn" = (
-/obj/structure/table/wood,
 /obj/machinery/light/directional/north,
 /obj/item/flashlight/lamp,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /obj/machinery/airalarm/directional/east,
-/obj{
-	name = "---Merge conflict marker---"
-	},
 /obj/structure/table/wood,
 /obj/machinery/light/directional/north,
-/obj/item/flashlight/lamp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tcommsat/computer)
@@ -66303,21 +66288,6 @@
 "pZq" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)

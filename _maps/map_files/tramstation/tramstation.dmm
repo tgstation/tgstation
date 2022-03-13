@@ -889,37 +889,11 @@
 /area/cargo/miningdock)
 "ahu" = (
 /obj/structure/table/glass,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
 /obj/item/storage/medkit/regular{
 	pixel_x = -3;
 	pixel_y = -3
 	},
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/neck/stethoscope,
-/obj/machinery/requests_console/directional/south{
-	announcementConsole = 1;
-	department = "Chief Medical Officer's Console";
-	departmentType = 5;
-	name = "Chief Medical Officer's Request Console"
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/item/storage/firstaid/regular{
-	pixel_x = -3;
-	pixel_y = -3
-	},
 /obj/item/clothing/glasses/hud/health,
 /obj/item/clothing/neck/stethoscope,
 /obj/machinery/requests_console/directional/south{
