@@ -12,22 +12,21 @@
 	gender = PLURAL
 	throw_speed = 3
 	throw_range = 5
+	attack_verb_continuous = list("connects")
+	attack_verb_simple = list("connect")
 	/// If we're in the glove slot
 	var/on_wrist = FALSE
 	/// If the GPS is already on
 	var/gps_enabled = FALSE
 	/// If we're off the station's Z-level
 	var/far_from_home = FALSE
-	/// The GPS component used by the cuffs. Extremely unoptimal.
-	var/datum/component/gps/gps
 
 /obj/item/kheiral_cuffs/Initialize()
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
 
-	AddComponent(/datum/component/gps, "Kheiral Link", FALSE)
-	gps = GetComponent(/datum/component/gps)
+	check_z(new_turf = loc)
 
 /obj/item/kheiral_cuffs/examine(mob/user)
 	. = ..()
@@ -58,8 +57,7 @@
 		return
 	if(!on_wrist || !far_from_home)
 		return
-	gps.gpstag = "*[user.name]'s Kheiral Link"
-	gps.tracking = TRUE
+	AddComponent(/datum/component/gps, "*[user.name]'s Kheiral Link")
 	balloon_alert(user, "GPS activated")
 	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
 	gps_enabled = TRUE
@@ -70,14 +68,10 @@
 		return
 	if(on_wrist && far_from_home)
 		return
-	gps.tracking = FALSE
 	balloon_alert(user, "GPS de-activated")
+	qdel(GetComponent(/datum/component/gps))
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
 	gps_enabled = FALSE
-
-/obj/item/kheiral_cuffs/Destroy(force)
-	gps = null
-	. = ..()
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
 /obj/item/kheiral_cuffs/proc/check_z(datum/source, turf/old_turf, turf/new_turf)
@@ -104,3 +98,16 @@
 /obj/item/kheiral_cuffs/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "strand_light", alpha = src.alpha)
+
+/obj/item/kheiral_cuffs/suicide_act(mob/living/carbon/user)
+	var/mob/living/carbon/human/hum
+	if(ishuman(user))
+		hum = user
+	else
+		return ..()
+	user.visible_message(span_suicide("[user] locks [src] around their neck, and is starting to age rapidly! It looks like [user.p_theyre()] trying to commit suicide!"))
+	for(var/mult in 1 to 5) // Rapidly age
+		hum.age = round((hum.age * 1.5),1)
+
+	hum.dust(TRUE, TRUE, TRUE)
+	return MANUAL_SUICIDE
