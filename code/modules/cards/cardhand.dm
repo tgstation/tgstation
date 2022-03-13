@@ -89,7 +89,6 @@
 	return isliving(user) && !user.incapacitated()
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params, flip_card = FALSE)
-	var/cards_to_add = list()
 	var/obj/item/toy/singlecard/card
 
 	if(istype(weapon, /obj/item/toy/singlecard))
