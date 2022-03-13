@@ -43924,12 +43924,6 @@
 	},
 /turf/open/floor/bronze/filled,
 /area/maintenance/department/chapel)
-"jQQ" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/closed/wall,
-/area/maintenance/starboard)
 "jQW" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -130690,7 +130684,7 @@ fcR
 rPY
 bkd
 ahO
-jQQ
+bkd
 aaa
 aaa
 aaa
