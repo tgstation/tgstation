@@ -804,10 +804,6 @@
 "cM" = (
 /turf/closed/wall,
 /area/mine/living_quarters)
-"cN" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/aft/lesser)
 "cP" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -9234,10 +9230,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
-"Dr" = (
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating,
-/area/medical/morgue)
 "Dt" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -10966,9 +10958,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
-"IH" = (
-/turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/aft/lesser)
 "II" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -12981,10 +12970,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
-"Pe" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "Pf" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -48962,7 +48947,7 @@ Fp
 iE
 Fp
 Fp
-Pe
+iE
 Fo
 Fo
 Wc
@@ -49219,7 +49204,7 @@ Fp
 Fp
 Fp
 Fp
-PG
+Fp
 Gb
 MR
 vJ
@@ -49476,7 +49461,7 @@ Fp
 VW
 Fp
 Fp
-Pe
+iE
 Fo
 lb
 lb
@@ -52276,7 +52261,7 @@ nl
 Oa
 Oa
 Op
-Dr
+Oa
 rk
 vy
 Rk
@@ -62561,9 +62546,9 @@ Et
 Et
 Fp
 Fp
-PG
-PG
-cN
+Fp
+Fp
+iE
 hM
 hM
 hM
@@ -62820,7 +62805,7 @@ Et
 Et
 Fp
 PG
-IH
+Fp
 YQ
 xx
 dF
@@ -63076,8 +63061,8 @@ Et
 Et
 Fp
 Fp
-PG
-cN
+Fp
+iE
 hM
 hM
 hM
