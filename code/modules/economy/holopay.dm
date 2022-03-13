@@ -16,8 +16,6 @@
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
-	/// List of movable atoms our linked ID is inside of so we know how far away it is so we can dissipate if it's out of range.
-	var/list/tracked_locs
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
@@ -226,7 +224,6 @@
 	if(ismovable(old_loc))
 		untrack(old_loc)
 	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
-		UnregisterSignal(linked_card, COMSIG_MOVABLE_MOVED)
 		dissipate()
 		return
 	if(ismovable(source.loc))
