@@ -841,8 +841,7 @@
 				shake_camera(crew_member, 15, 1)
 
 			var/datum/game_mode/dynamic/dynamic = SSticker.mode
-			dynamic.create_threat(HACK_THREAT_INJECTION_AMOUNT, dynamic.threat_log, "[worldtime2text()]: Communications console hack by [hacker]")
-			dynamic.log_threat(HACK_THREAT_INJECTION_AMOUNT, dynamic.roundend_threat_log, "Communications console hack by [hacker]")
+			dynamic.create_threat(HACK_THREAT_INJECTION_AMOUNT, list(dynamic.threat_log, dynamic.roundend_threat_log), "[worldtime2text()]: Communications console hack by [hacker]")
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			var/datum/dynamic_ruleset/midround/sleeper_agent_type = /datum/dynamic_ruleset/midround/autotraitor
