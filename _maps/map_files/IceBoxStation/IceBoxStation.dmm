@@ -22177,7 +22177,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/computer/med_data/laptop,
+/obj/machinery/computer/med_data/laptop{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/medical/psychology)
 "ity" = (
