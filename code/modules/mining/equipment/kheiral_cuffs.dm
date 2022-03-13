@@ -66,29 +66,30 @@
 /obj/item/kheiral_cuffs/proc/connect_kheiral_network(mob/user)
 	if(gps_enabled)
 		return
-	if(on_wrist && far_from_home)
-		gps.gpstag = "*[user.name]'s Kheiral Link"
-		gps.tracking = TRUE
-		balloon_alert(user, "GPS activated")
-		RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
-		gps_enabled = TRUE
+	if(!on_wrist || !far_from_home)
+		return
+	gps.gpstag = "*[user.name]'s Kheiral Link"
+	gps.tracking = TRUE
+	balloon_alert(user, "GPS activated")
+	RegisterSignal(user, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
+	gps_enabled = TRUE
 
 /// Disables the GPS and unregisters the statchange signal
 /obj/item/kheiral_cuffs/proc/remove_kheiral_network(mob/user)
 	if(!gps_enabled)
 		return
-	if(!on_wrist || !far_from_home)
-		gps.tracking = FALSE
-		balloon_alert(user, "GPS de-activated")
-		UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
-		gps_enabled = FALSE
+	if(on_wrist && far_from_home)
+		return
+	gps.tracking = FALSE
+	balloon_alert(user, "GPS de-activated")
+	UnregisterSignal(user, COMSIG_MOB_STATCHANGE)
+	gps_enabled = FALSE
 
 /obj/item/kheiral_cuffs/Destroy(force)
-	. = ..()
-	UnregisterSignal(src, COMSIG_MOVABLE_Z_CHANGED)
 	gps = null
 	if(internal_radio)
 		QDEL_NULL(internal_radio)
+	. = ..()
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
 /obj/item/kheiral_cuffs/proc/check_z(datum/source, turf/old_turf, turf/new_turf)
