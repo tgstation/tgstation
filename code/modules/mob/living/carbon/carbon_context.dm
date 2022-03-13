@@ -20,6 +20,9 @@
 	if (human_user != src)
 		context[SCREENTIP_CONTEXT_RMB] = "Shove"
 
+		if(human_user.get_active_held_item())
+			context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Offer item"
+
 		if (body_position == STANDING_UP)
 			context[SCREENTIP_CONTEXT_LMB] = "Comfort"
 		else if (health >= 0 && !HAS_TRAIT(src, TRAIT_FAKEDEATH))
