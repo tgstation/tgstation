@@ -147,21 +147,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
-"aE" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/o2,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/space/has_grav/derelictoutpost/dockedship)
-"aF" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/space/has_grav/derelictoutpost/dockedship)
-"aG" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/brute,
-/turf/open/floor/mineral/titanium/yellow,
-/area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aH" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
@@ -404,67 +389,6 @@
 /obj/structure/alien/weeds/creature,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
-"by" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "innerbrig";
-	name = "Security Checkpoint";
-	req_access_txt = "63"
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
-"bz" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
-"bA" = (
-/obj/structure/alien/weeds/creature,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
-"bB" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/table,
-/obj/machinery/recharger,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
 "bC" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -546,70 +470,6 @@
 /obj/structure/alien/weeds/creature,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
-"bQ" = (
-/obj/structure/filingcabinet,
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
-"bR" = (
-/obj/item/shard,
-/obj/structure/alien/weeds/creature,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
-"bS" = (
-/obj/item/chair,
-/obj/structure/alien/weeds/creature,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
-"bT" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/structure/alien/weeds/creature,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/button/door/directional/south{
-	id = "bigderelictcheckpoint";
-	name = "security checkpoint control"
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
 "bU" = (
 /obj/effect/decal/cleanable/blood/old{
 	dir = 4;
@@ -680,44 +540,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
-"cf" = (
-/obj/structure/table/reinforced,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
-"cg" = (
-/obj/item/shard,
-/obj/item/stack/cable_coil{
-	amount = 2
-	},
-/obj/structure/alien/weeds/creature,
-/obj/structure/table_frame,
-/obj/item/stack/sheet/iron,
-/obj/item/stack/sheet/plasteel,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/derelictoutpost)
 "ch" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
@@ -1291,6 +1113,11 @@
 	name = "melted wall"
 	},
 /area/ruin/space/has_grav/derelictoutpost)
+"dO" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/o2,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/space/has_grav/derelictoutpost/dockedship)
 "dP" = (
 /obj/structure/alien/weeds/creature,
 /obj/structure/glowshroom/single,
@@ -1375,25 +1202,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"ec" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular{
-	empty = 1;
-	name = "First-Aid (empty)"
-	},
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"ed" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular{
-	empty = 1;
-	name = "First-Aid (empty)"
-	},
-/obj/item/storage/medkit/o2,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "ee" = (
 /obj/effect/decal/cleanable/blood/old{
 	icon_state = "trails_1";
@@ -1471,22 +1279,9 @@
 /obj/effect/spawner/random/exotic/tool,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"er" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/regular,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "es" = (
 /obj/structure/closet/crate/engineering,
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"et" = (
-/obj/structure/closet/crate/medical,
-/obj/item/storage/medkit/brute,
-/obj/item/storage/medkit/fire,
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eu" = (
@@ -1559,14 +1354,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargostorage)
-"eE" = (
-/obj/structure/closet/crate/internals,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/tank/internals/emergency_oxygen/engi,
-/obj/item/storage/medkit/toxin,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "eF" = (
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/delivery,
@@ -1618,6 +1405,24 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
+"gC" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/brute,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/space/has_grav/derelictoutpost/dockedship)
+"gD" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/fire,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"kp" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
 "lk" = (
 /obj/item/crowbar{
 	pixel_x = -16;
@@ -1632,12 +1437,117 @@
 	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
+"vg" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"wz" = (
+/obj/item/chair,
+/obj/structure/alien/weeds/creature,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"xP" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
+/obj/item/storage/medkit/o2,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"yq" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"DE" = (
+/obj/machinery/door/airlock/security/glass{
+	id_tag = "innerbrig";
+	name = "Security Checkpoint";
+	req_access_txt = "63"
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"DK" = (
+/obj/structure/filingcabinet,
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"Er" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/alien/weeds/creature,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/machinery/button/door/directional/south{
+	id = "bigderelictcheckpoint";
+	name = "security checkpoint control"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"GB" = (
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"IB" = (
+/obj/item/shard,
+/obj/structure/alien/weeds/creature,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"JD" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"KB" = (
+/obj/structure/closet/crate/medical,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/space/has_grav/derelictoutpost/dockedship)
 "LB" = (
 /obj/machinery/door/airlock/external/ruin,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/derelictoutpost)
+"NO" = (
+/obj/item/shard,
+/obj/item/stack/cable_coil{
+	amount = 2
+	},
+/obj/structure/alien/weeds/creature,
+/obj/structure/table_frame,
+/obj/item/stack/sheet/iron,
+/obj/item/stack/sheet/plasteel,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/derelictoutpost)
+"Oa" = (
+/obj/structure/closet/crate/internals,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/tank/internals/emergency_oxygen/engi,
+/obj/item/storage/medkit/toxin,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/derelictoutpost/cargostorage)
+"ZS" = (
+/obj/structure/alien/weeds/creature,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/derelictoutpost)
 
 (1,1,1) = {"
@@ -2044,7 +1954,7 @@ ae
 am
 ar
 ax
-aE
+dO
 aO
 aO
 be
@@ -2080,7 +1990,7 @@ ae
 am
 as
 ay
-aF
+KB
 aP
 aP
 bf
@@ -2099,7 +2009,7 @@ dX
 dW
 ep
 ey
-eE
+Oa
 dL
 aR
 aZ
@@ -2116,7 +2026,7 @@ ae
 am
 at
 at
-aG
+gC
 aQ
 aU
 be
@@ -2205,7 +2115,7 @@ ds
 dL
 ea
 ek
-er
+kp
 ex
 dX
 dL
@@ -2311,9 +2221,9 @@ ab
 dA
 cR
 dL
-ec
+yq
 dW
-et
+gD
 ey
 eH
 dL
@@ -2347,7 +2257,7 @@ ab
 dx
 cR
 dL
-ed
+xP
 el
 eu
 ez
@@ -2408,7 +2318,7 @@ ad
 ad
 ad
 aZ
-by
+DE
 bC
 bC
 cy
@@ -2444,8 +2354,8 @@ ad
 aa
 aY
 aK
-bz
-bQ
+vg
+DK
 bC
 cj
 cO
@@ -2480,9 +2390,9 @@ aa
 aa
 aY
 aK
-bz
-bR
-cf
+vg
+IB
+GB
 cj
 cP
 aK
@@ -2516,9 +2426,9 @@ aa
 aa
 aY
 aK
-bA
-bS
-cg
+ZS
+wz
+NO
 cA
 bl
 cY
@@ -2552,8 +2462,8 @@ aa
 aa
 aY
 aK
-bB
-bT
+JD
+Er
 bC
 cj
 cQ
