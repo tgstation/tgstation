@@ -41,7 +41,7 @@
 	///Food that's immune to decomposition.
 	var/preserved_food = FALSE
 	///Does our food normally attract ants?
-	var/ant_attracting = TRUE
+	var/ant_attracting = FALSE
 	///What our food decomposes into.
 	var/decomp_type = /obj/item/food/badrecipe/moldy
 	///Food that needs to be picked up in order to decompose.
