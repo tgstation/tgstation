@@ -33,7 +33,7 @@
 
 /obj/effect/particle_effect/smoke/Initialize(mapload)
 	. = ..()
-	create_reagents(INFINITY)
+	create_reagents(1000)
 	START_PROCESSING(SSobj, src)
 
 
@@ -272,7 +272,7 @@
 /datum/effect_system/smoke_spread/chem/New()
 	..()
 	chemholder = new()
-	chemholder.create_reagents(INFINITY)
+	chemholder.create_reagents(1000, NO_REACT)
 
 /datum/effect_system/smoke_spread/chem/Destroy()
 	QDEL_NULL(chemholder)
