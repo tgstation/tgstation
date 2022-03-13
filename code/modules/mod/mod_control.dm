@@ -616,12 +616,12 @@
 	wearer?.regenerate_icons()
 
 /obj/item/mod/control/proc/set_mod_skin(new_skin)
-	mod.skin = pick
-	var/list/skin_updating = mod.mod_parts.Copy() + src
+	skin = new_skin
+	var/list/skin_updating = mod_parts.Copy() + src
 	for(var/obj/item/piece as anything in skin_updating)
-		piece.icon_state = "[mod.skin]-[initial(piece.icon_state)]"
-	mod.update_flags()
-	mod.wearer?.regenerate_icons()
+		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+	update_flags()
+	wearer?.regenerate_icons()
 
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER
@@ -634,10 +634,10 @@
 		return
 	if(part.loc == wearer)
 		return
-	if(modules.Find(part))
+	if(part in modules)
 		uninstall(part)
 		return
-	if(mod_parts.Find(part))
+	if(part in mod_parts)
 		conceal(wearer, part)
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
