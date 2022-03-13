@@ -74,6 +74,7 @@
 	creation_round_id = json_data["creation_round_id"]
 	tags = json_data["tags"]
 	patron_ckey = json_data["patron_ckey"]
+	patron_name = json_data["patron_name"]
 	credit_value = json_data["credit_value"]
 	width = json_data["width"]
 	height = json_data["height"]
