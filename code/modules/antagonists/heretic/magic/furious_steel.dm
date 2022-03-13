@@ -18,15 +18,31 @@
 	sound = 'sound/weapons/guillotine.ogg'
 	active_msg = "You summon forth three blades of furious silver."
 	deactive_msg = "You conceal the blades of furious silver."
-	/// A list of weakrefs to the blade EFFECTS we have orbiting our caster.
-	var/list/datum/weakref/blades = list()
+
+	var/datum/status_effect/protective_blades/blade_effect
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/Destroy()
-	QDEL_LIST(blades)
-	return ..()
+	. = ..()
+	QDEL_NULL(blade_effect)
+
+/obj/effect/proc_holder/spell/aimed/furious_steel/on_activation(mob/user)
+	if(!isliving(user))
+		return
+	var/mob/living/living_user = user
+	// Aimed spells snowflake and activate without checking cast_check, very cool
+	if(IS_HERETIC(living_user) && !HAS_TRAIT(living_user, TRAIT_ALLOW_HERETIC_CASTING))
+		user.balloon_alert(living_user, "you need a focus!")
+		return
+
+	. = ..()
+	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, 3, 25, 0.66 SECONDS)
+
+/obj/effect/proc_holder/spell/aimed/furious_steel/on_deactivation(mob/user)
+	. = ..()
+	QDEL_NULL(blade_effect)
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/cast(list/targets, mob/living/user)
-	if(!length(blades))
+	if(isnull(blade_effect) || !length(blade_effect.blades))
 		return FALSE
 	return ..()
 
@@ -35,72 +51,16 @@
 	to_launch.def_zone = check_zone(user.zone_selected)
 	if(!istype(to_launch, /obj/projectile/floating_blade))
 		return
+
 	var/obj/projectile/floating_blade/launched_blade = to_launch
 	launched_blade.caster_weakref = WEAKREF(user)
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/fire_projectile(mob/living/user, atom/target)
 	. = ..()
-	var/datum/weakref/to_remove = blades[1]
-	var/obj/effect/real_blade = to_remove.resolve()
-	real_blade.stop_orbit(user.orbiters)
+	blade_effect.remove_blade(blade_effect.blades[1])
 
-	blades -= to_remove
-	qdel(to_remove)
-
-/obj/effect/proc_holder/spell/aimed/furious_steel/on_activation(mob/user)
-	// Aimed spells snowflake and activate without checking cast_check, very cool
-	if(IS_HERETIC(user) && !HAS_TRAIT(user, TRAIT_ALLOW_HERETIC_CASTING))
-		user.balloon_alert(user, "you need a focus!")
-		return
-
-	. = ..()
-	for(var/blade_num in 1 to current_amount)
-		addtimer(CALLBACK(src, .proc/create_blade, user), (blade_num - 1) * 0.66 SECONDS)
-	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
-
-/obj/effect/proc_holder/spell/aimed/furious_steel/on_deactivation(mob/user)
-	. = ..()
-	QDEL_LIST(blades)
-	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
-
-/obj/effect/proc_holder/spell/aimed/furious_steel/proc/create_blade(mob/user)
-	var/obj/effect/floating_blade/blade = new(get_turf(user))
-	blade.orbit(user, 25)
-	blades += WEAKREF(blade)
-
-/obj/effect/proc_holder/spell/aimed/furious_steel/proc/on_shield_reaction(
-	mob/living/carbon/human/source,
-	atom/movable/hitby,
-	damage = 0,
-	attack_text = "the attack",
-	attack_type = MELEE_ATTACK,
-	armour_penetration = 0,
-)
-
-	SIGNAL_HANDLER
-
-	if(current_amount <= 0 || !length(blades))
-		return
-
-	var/datum/weakref/to_remove = blades[1]
-	var/obj/effect/real_blade = to_remove.resolve()
-	real_blade.stop_orbit(source.orbiters)
-
-	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
-	source.visible_message(
-		span_warning("\The [real_blade] orbiting [source] snaps in front of [attack_text], blocking it before vanishing!"),
-		span_warning("\The [real_blade] orbiting you snaps in front of [attack_text], blocking it before vanishing!"),
-		span_hear("You hear a clink."),
-	)
-
-	current_amount--
-	blades -= to_remove
-	qdel(to_remove)
-
-	if(current_amount <= 0)
-		on_deactivation(source)
-
-	return SHIELD_BLOCK
+	if(QDELETED(blade_effect))
+		on_deactivation()
 
 /obj/projectile/floating_blade
 	name = "blade"

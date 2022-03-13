@@ -454,6 +454,123 @@
 		is the ultimate redemption, and wounds let you bask in eternal glory."
 	icon_state = "wounded_soldier"
 
+/// Summons multiple foating knives around the owner.
+/// Each knife will block an attack straight up.
+/datum/status_effect/protective_blades
+	id = "Silver Knives"
+	status_type = STATUS_EFFECT_MULTIPLE
+	tick_interval = -1
+	// Set in on_creation()
+	/// The number of blades we summon up to.
+	var/max_num_blades = 4
+	/// The radius of the blade's orbit.
+	var/blade_orbit_radius = 20
+	/// The time between spawning blades.
+	var/time_between_initial_blades = 0.25 SECONDS
+
+	// Internal vars
+	/// If TRUE, we self-delete our status effect after all the blades are deleted.
+	var/delete_on_blades_gone = TRUE
+	/// A list of blade effects
+	var/list/obj/effect/floating_blade/blades = list()
+
+/datum/status_effect/protective_blades/Destroy()
+	QDEL_LIST(blades)
+	return ..()
+
+/datum/status_effect/protective_blades/on_creation(
+	mob/living/new_owner,
+	new_duration = -1,
+	max_num_blades = 4,
+	blade_orbit_radius = 20,
+	time_between_initial_blades = 0.25 SECONDS,
+)
+	. = ..()
+
+	src.duration = new_duration
+	src.max_num_blades = max_num_blades
+	src.blade_orbit_radius = blade_orbit_radius
+	src.time_between_initial_blades = time_between_initial_blades
+
+/datum/status_effect/protective_blades/on_apply()
+	RegisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
+	for(var/blade_num in 1 to max_num_blades)
+		addtimer(CALLBACK(src, .proc/create_blade), (blade_num - 1) * time_between_initial_blades)
+
+	return TRUE
+
+/datum/status_effect/protective_blades/on_remove()
+	UnregisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS)
+	QDEL_LIST(blades)
+
+	return ..()
+
+/datum/status_effect/protective_blades/proc/create_blade()
+	var/obj/effect/floating_blade/blade = new(get_turf(owner))
+	blades += blade
+	blade.orbit(owner, blade_orbit_radius)
+
+/datum/status_effect/protective_blades/proc/on_shield_reaction(
+	mob/living/carbon/human/source,
+	atom/movable/hitby,
+	damage = 0,
+	attack_text = "the attack",
+	attack_type = MELEE_ATTACK,
+	armour_penetration = 0,
+)
+	SIGNAL_HANDLER
+
+	if(!length(blades))
+		return
+
+	var/obj/effect/floating_blade/to_remove = blades[1]
+
+	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
+	source.visible_message(
+		span_warning("[to_remove] orbiting [source] snaps in front of [attack_text], blocking it before vanishing!"),
+		span_warning("[to_remove] orbiting you snaps in front of [attack_text], blocking it before vanishing!"),
+		span_hear("You hear a clink."),
+	)
+
+	remove_blade(to_remove)
+
+	return SHIELD_BLOCK
+
+/datum/status_effect/protective_blades/proc/remove_blade(obj/effect/floating_blade/to_remove)
+	if(QDELETED(to_remove))
+		CRASH("[type] called remove_blade() with a blade that was QDELETED or null.")
+	if(!(to_remove in blades))
+		CRASH("[type] called remove_blade() with a blade that was not in its blades list.")
+
+	to_remove.stop_orbit(owner.orbiters)
+	blades -= to_remove
+	qdel(to_remove)
+
+	if(delete_on_blades_gone && !length(blades))
+		qdel(src)
+
+/// A special subtype that doesn't disappear when all blades are gone
+/// It instead regenerates over time back to the max after blades are consumed
+/datum/status_effect/protective_blades/recharge
+	delete_on_blades_gone = FALSE
+	/// The amount of time it takes for a blade to recharge
+	var/blade_recharge_time = 1 MINUTES
+
+/datum/status_effect/protective_blades/recharge/on_creation(
+	mob/living/new_owner,
+	new_duration = -1,
+	max_num_blades = 4,
+	blade_orbit_radius = 20,
+	time_between_initial_blades = 0.25 SECONDS,
+	blade_recharge_time = 1 MINUTES,
+)
+
+	. = ..()
+	src.blade_recharge_time = blade_recharge_time
+
+/datum/status_effect/protective_blades/recharge/remove_blade(obj/effect/floating_blade/to_remove)
+	addtimer(CALLBACK(src, .proc/create_blade), blade_recharge_time)
+
 /datum/status_effect/lightningorb
 	id = "Lightning Orb"
 	duration = 30 SECONDS

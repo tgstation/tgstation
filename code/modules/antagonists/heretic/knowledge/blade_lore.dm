@@ -93,7 +93,9 @@
 
 /datum/heretic_knowledge/blade_dance
 	name = "Dance of the Brand"
-	// desc is set in New()
+	desc = "Attacking someone with a Darkened Blade will summon a knife that will orbit you for a short time. \
+		The knife will block any attack directed towards you, but is consumed on use. This can only trigger \
+		once every 20 seconds, and the blade will expire after 1 minute."
 	gain_text = "Having the prowess to wield such a thing requires great dedication and terror."
 	next_knowledge = list(
 		/datum/heretic_knowledge/limited_amount/risen_corpse,
@@ -103,80 +105,23 @@
 	)
 	cost = 1
 	route = PATH_BLADE
-	/// The cooldown between blocks
-	var/cooldown = 20 SECONDS
-	/// Whether the block is ready or not. Used instead of cooldowns, so we can give feedback when it's ready again
-	var/block_ready = TRUE
-
-/datum/heretic_knowledge/blade_dance/New()
-	. = ..()
-	desc = "Allows you flawlessly block strikes against you while wielding a Darkened Blade. \
-		This effect can only trigger once every [cooldown / 10] seconds, and requires a Darkened Blade in either of your hands."
+	COOLDOWN_DECLARE(blade_creation_cooldown)
 
 /datum/heretic_knowledge/blade_dance/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/blade_dance/on_lose(mob/user)
 	UnregisterSignal(user, COMSIG_HUMAN_CHECK_SHIELDS)
 
-/datum/heretic_knowledge/blade_dance/proc/on_shield_reaction(
-	mob/living/carbon/human/source,
-	atom/movable/hitby,
-	damage = 0,
-	attack_text = "the attack",
-	attack_type = MELEE_ATTACK,
-	armour_penetration = 0,
-)
-
+/datum/heretic_knowledge/blade_dance/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
-	if(!block_ready)
-		return
-
-	if(source.incapacitated(IGNORE_GRAB))
-		return
-
-	// Let's check their held items to see if we can do a block
-	var/obj/item/main_hand = source.get_active_held_item()
-	var/obj/item/off_hand = source.get_inactive_held_item()
-	// This is the item that ends up doing the "blocking" (flavor)
-	var/obj/item/blocking_with
-
-	// First we'll check if the offhand is valid
-	if(!QDELETED(off_hand) && istype(off_hand, /obj/item/melee/sickly_blade))
-		blocking_with = off_hand
-
-	// Then we'll check the mainhand
-	// We do mainhand second, because we want to prioritize it over the offhand
-	if(!QDELETED(main_hand) && istype(main_hand, /obj/item/melee/sickly_blade))
-		blocking_with = main_hand
-
-	// No valid item in either slot? No block
-	if(!blocking_with)
-		return
-
-	// If we made it here, the block is successful!
-	playsound(get_turf(source), 'sound/weapons/parry.ogg', 100, TRUE)
-	source.balloon_alert(source, "blade barrier used")
-	source.visible_message(
-		span_warning("[source] effortlessly swats away [attack_text] with [source.p_their()] [blocking_with.name][blocking_with == off_hand ? " in [source.p_their()] offhand":""]!"),
-		span_warning("You effortlessly swat away [attack_text] with your [blocking_with.name][blocking_with == off_hand ? " in your offhand":""]!"),
-		span_hear("You hear a clink."),
-	)
-
-	block_ready = FALSE
-	addtimer(CALLBACK(src, .proc/reset_block, source), cooldown)
-
-	return SHIELD_BLOCK
-
-/datum/heretic_knowledge/blade_dance/proc/reset_block(mob/living/carbon/human/source)
-	block_ready = TRUE
-	source.balloon_alert(source, "blade barrier ready")
+	source.apply_status_effect(/datum/status_effect/protective_blades, 60 SECONDS, 1, 20, 0 SECONDS)
 
 /datum/heretic_knowledge/mark/blade_mark
 	name = "Mark of the Blade"
 	desc = "Your Mansus Grasp now applies the Mark of the Blade. Triggering the mark does nothing, \
-		however while applied on your target, they will be unable to leave the current room."
+		however while applied on your target, they will be unable to leave their current room."
 	gain_text = "There was no room for cowardace here. Those who ran were scolded. \
 		That is how I met them. Their name was The Colonel."
 	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/blade)
@@ -188,7 +133,7 @@
 	if(!istype(blade_mark))
 		return
 
-	var/area/to_lock_to = get_area(source)
+	var/area/to_lock_to = get_area(target)
 	blade_mark.locked_to = to_lock_to
 	to_chat(target, span_hypnophrase("An otherworldly force is compelling you to stay in [get_area_name(to_lock_to)]!"))
 
@@ -321,8 +266,31 @@
 
 /datum/heretic_knowledge/final/blade_final
 	name = "Maelstrom of Silver"
-	desc = "The ascension ritual of the Path of Blades."
+	desc = "The ascension ritual of the Path of Blades. \
+		After ascending you will be surrounded in a constant orbit of blades. \
+		These blades will protect you from all attacks, but are consumed on use and regenerate over time. \
+		Additionally, you become a master of combat, gaining full stun immunity and dealing bonus damage \
+		with your darkened blades."
 	gain_text = "The Colonel, in all of his expertise, revealed to me the three roots of victory. \
 		Cunning. Strength. And agony! This was their secret doctrine! With this knowledge in my potention, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE
+
+/datum/heretic_knowledge/final/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	priority_announce("[generate_heretic_text()] Master of blades, the Colonel's disciple, [user.real_name] has ascended! Their steel is that which will cut reality in a maelstom of silver! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	user.client?.give_award(/datum/award/achievement/misc/void_ascension, user)
+	ADD_TRAIT(user, TRAIT_STUNIMMUNE, name)
+	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	user.apply_status_effect(/datum/status_effect/protective_blades/recharge, null, 6, 30, 0.5 SECONDS, 1 MINUTES)
+
+/datum/heretic_knowledge/final/blade_final/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	SIGNAL_HANDLER
+
+	target.apply_damage(
+		damage = 10,
+		spread_damage = TRUE,
+		wound_bonus = 5,
+		sharpness = SHARP_EDGED,
+		attack_direction = get_dir(source, target),
+	)
