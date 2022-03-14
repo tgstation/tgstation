@@ -1,7 +1,7 @@
 #define MODPAINT_MAX_COLOR_VALUE 1.5
 #define MODPAINT_MIN_COLOR_VALUE 0
-#define MODPAINT_MAX_OVERALL_COLORS 5
-#define MODPAINT_MIN_OVERALL_COLORS 1
+#define MODPAINT_MAX_OVERALL_COLORS 3
+#define MODPAINT_MIN_OVERALL_COLORS 1.5
 
 /obj/item/mod/paint
 	name = "MOD paint kit"
@@ -29,7 +29,7 @@
 		balloon_alert(user, "suit is active!")
 		return TRUE
 	var/secondary_attack = LAZYACCESS(params2list(params), RIGHT_CLICK)
-	if(secondary_attack)
+	if(secondary_attack && !editing_mod)
 		editing_mod = mod
 		proxy_view = new()
 		proxy_view.appearance = editing_mod.appearance
@@ -81,8 +81,10 @@
 			current_color = params["color"]
 			animate(proxy_view, time = 0.5 SECONDS, color = current_color)
 		if("confirm")
-			var/total_color_value
-			for(var/color_value in current_color)
+			var/total_color_value = 0
+			var/list/formatted_color = current_color.Copy()
+			formatted_color.Cut(13, length(formatted_color))
+			for(var/color_value in formatted_color)
 				total_color_value += color_value
 				if(color_value > MODPAINT_MAX_COLOR_VALUE)
 					balloon_alert(usr, "one of colors too high! ([color_value*100]%/[MODPAINT_MAX_COLOR_VALUE*100]%")
