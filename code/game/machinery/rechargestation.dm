@@ -33,7 +33,7 @@
 		var/area_name = get_area_name(charge_station, format_text = TRUE)
 		if(!(area_name in GLOB.station_recharging_station_area_names))
 			GLOB.station_recharging_station_area_names += area_name
-	sort_list(GLOB.station_recharging_station_area_names)
+	GLOB.station_recharging_station_area_names = sort_list(GLOB.station_recharging_station_area_names)
 
 /obj/machinery/recharge_station/Destroy()
 	GLOB.station_recharging_stations -= src
