@@ -3402,6 +3402,8 @@
 #include "hippiestation\code\modules\research\techweb\all_nodes.dm"
 #include "hippiestation\code\modules\ruins\spaceruin_code\cloning_lab.dm"
 #include "hippiestation\code\modules\vending\megaseed.dm"
+#include "hippiestation\code\controllers\subsystem\ticker.dm"
+#include "hippiestation\code\game\sound.dm"
 #include "hippiestation\code\modules\atmospherics\machinery\components\unary_devices\cryo.dm"
 #include "hippiestation\code\modules\reagents\chemistry\reagents\medicine_reagents.dm"
 #include "interface\interface.dm"
