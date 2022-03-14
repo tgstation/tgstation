@@ -29,7 +29,7 @@
 
 /obj/effect/turf_decal/tile/blue/opposingcorners //Two corners on opposite ends of each other (i.e. Top Right to Bottom Left). Allows for faster mapping and less complicated turf decal storage.
 	icon_state = "tile_opposing_corners"
-	name "opposing blue corners"
+	name = "opposing blue corners"
 
 /obj/effect/turf_decal/tile/blue/half
 	icon_state = "tile_half"
@@ -63,7 +63,7 @@
 
 /obj/effect/turf_decal/tile/green/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing green corners"
+	name = "opposing green corners"
 
 /obj/effect/turf_decal/tile/green/half
 	icon_state = "tile_half"
@@ -97,7 +97,7 @@
 
 /obj/effect/turf_decal/tile/yellow/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing yellow corners"
+	name = "opposing yellow corners"
 
 /obj/effect/turf_decal/tile/yellow/half
 	icon_state = "tile_half"
@@ -132,7 +132,7 @@
 
 /obj/effect/turf_decal/tile/red/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing red corners"
+	name = "opposing red corners"
 
 /obj/effect/turf_decal/tile/red/half
 	icon_state = "tile_half"
@@ -167,7 +167,7 @@
 
 /obj/effect/turf_decal/tile/bar/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing bar corners"
+	name = "opposing bar corners"
 
 /obj/effect/turf_decal/tile/bar/half
 	icon_state = "tile_half"
@@ -201,7 +201,7 @@
 
 /obj/effect/turf_decal/tile/purple/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing purple corners"
+	name = "opposing purple corners"
 
 /obj/effect/turf_decal/tile/purple/half
 	icon_state = "tile_half"
@@ -235,7 +235,7 @@
 
 /obj/effect/turf_decal/tile/brown/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing brown corners"
+	name = "opposing brown corners"
 
 /obj/effect/turf_decal/tile/brown/half
 	icon_state = "tile_half"
@@ -269,7 +269,7 @@
 
 /obj/effect/turf_decal/tile/neutral/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing neutral corners"
+	name = "opposing neutral corners"
 
 /obj/effect/turf_decal/tile/neutral/half
 	icon_state = "tile_half"
@@ -303,7 +303,7 @@
 
 /obj/effect/turf_decal/tile/dark/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing dark corners"
+	name = "opposing dark corners"
 
 /obj/effect/turf_decal/tile/dark/half
 	icon_state = "tile_half"
@@ -337,7 +337,7 @@
 
 /obj/effect/turf_decal/tile/random/opposingcorners
 	icon_state = "tile_opposing_corners"
-	name "opposing colorful corners"
+	name = "opposing colorful corners"
 
 /obj/effect/turf_decal/tile/random/half
 	icon_state = "tile_half"
