@@ -196,8 +196,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	for (var/datum/station_request/request as anything in GLOB.request_list)
 		formatted_requests += list(list("owner" = request.owner, "value" = request.value, "description" = request.description, "acc_number" = request.req_number))
 		if(request.applicants)
-			for(var/datum/bank_account/bank_account_b as anything in request.applicants)
-				formatted_applicants += list(list("name" = bank_account_b.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = bank_account_b.account_id))
+			for(var/datum/bank_account/applicant_bank_account as anything in request.applicants)
+				formatted_applicants += list(list("name" = applicant_bank_account.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = applicant_bank_account.account_id))
 	data["requests"] = formatted_requests
 	data["applicants"] = formatted_applicants
 	data["bountyValue"] = bounty_value
@@ -287,9 +287,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					break
 
 		if("authorCensor")
-			if (!params["secure"])
-				say("Clearance not found.")
-				return TRUE
 			var/obj/item/card/id/id_card
 			if(isliving(usr))
 				var/mob/living/living_user = usr
@@ -304,9 +301,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					break
 
 		if("channelDNotice")
-			if (!params["secure"])
-				say("Clearance not found.")
-				return TRUE
+			var/obj/item/card/id/id_card
+			if(isliving(usr))
+				var/mob/living/living_user = usr
+				id_card = living_user.get_idcard(hand_first = TRUE)
 			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
 				say("Clearance not found.")
 				return TRUE
@@ -354,7 +352,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("payApplicant")
-			pay_applicant()
+			pay_applicant(payment_target = request_target)
 			return TRUE
 
 		if("clear")
@@ -682,13 +680,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /**
  * This pays out the current request_target the amount held by the active request's assigned value, and then clears the active request from the global list.
  */
-/obj/machinery/newscaster/proc/pay_applicant()
+/obj/machinery/newscaster/proc/pay_applicant(datum/bank_account/payment_target)
 	if(!current_user)
 		return TRUE
 	if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 		return TRUE
-	request_target.transfer_money(current_user, active_request.value)
+	payment_target.transfer_money(current_user, active_request.value)
 	say("Paid out [active_request.value] credits.")
 	GLOB.request_list.Remove(active_request)
 	qdel(active_request)
