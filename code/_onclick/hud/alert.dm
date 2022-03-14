@@ -615,8 +615,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/emptycell/update_desc()
 	. = ..()
 	desc = initial(desc)
-	if(length(GLOB.recharging_station_area_names))
-		desc += " Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
+	if(length(GLOB.station_recharging_station_area_names))
+		desc += " Recharging stations are available in [english_list(GLOB.station_recharging_station_area_names)]."
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
@@ -630,8 +630,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 /atom/movable/screen/alert/lowcell/update_desc()
 	. = ..()
 	desc = initial(desc)
-	if(length(GLOB.recharging_station_area_names))
-		desc += " Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
+	if(length(GLOB.station_recharging_station_area_names))
+		desc += " Recharging stations are available in [english_list(GLOB.station_recharging_station_area_names)]."
 
 //Ethereal
 

@@ -24,19 +24,19 @@
 
 	var/area/my_area = get_area(src)
 	if(my_area.type in GLOB.the_station_areas)
-		GLOB.recharging_stations += src
+		GLOB.station_recharging_stations += src
 		update_area_names()
 
 /obj/machinery/recharge_station/proc/update_area_names()
-	GLOB.recharging_station_area_names.Cut()
-	sort_list(GLOB.recharging_stations) //makes it harder to infer built chargers because they no longer appear at the end of the list
-	for(var/atom/charge_station in GLOB.recharging_stations)
+	GLOB.station_recharging_station_area_names.Cut()
+	for(var/atom/charge_station in GLOB.station_recharging_stations)
 		var/area_name = get_area_name(charge_station, format_text = TRUE)
-		if(!(area_name in GLOB.recharging_station_area_names))
-			GLOB.recharging_station_area_names += area_name
+		if(!(area_name in GLOB.station_recharging_station_area_names))
+			GLOB.station_recharging_station_area_names += area_name
+	sort_list(GLOB.station_recharging_station_area_names)
 
 /obj/machinery/recharge_station/Destroy()
-	GLOB.recharging_stations -= src
+	GLOB.station_recharging_stations -= src
 	update_area_names()
 	return ..()
 
