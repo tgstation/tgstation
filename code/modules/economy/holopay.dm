@@ -40,8 +40,6 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Pay"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return .
-
 /obj/structure/holopay/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
@@ -112,11 +110,12 @@
 
 /obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, params)
 	/// Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least
-	if(istype(weapon, /obj/item/card/id))
-		var/obj/item/card/id/attacking_id = weapon
-		if(attacking_id.my_store && attacking_id.my_store == src)
-			dissipate()
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!istype(weapon, /obj/item/card/id))
+		return ..()
+	var/obj/item/card/id/attacking_id = weapon
+	if(attacking_id.my_store && attacking_id.my_store == src)
+		dissipate()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
 /obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
