@@ -1,5 +1,5 @@
 /obj/item/melee/baton
-	name = "police baton"
+	name = "wooden police baton"
 	desc = "A wooden truncheon for beating criminal scum. Left click to stun, right click to harm."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "classic_baton"
@@ -54,6 +54,25 @@
 
 	/// The RMB context to show when the baton is inactive and targetting a living thing
 	var/context_living_rmb_inactive = "Attack"
+
+	/// For sprite selecting option, between classical wooden baton and black nightstick
+	/var/spriteSelected = FALSE
+
+	/obj/item/melee/baton/attackself(user)
+  		if(spriteSelected)
+		return //We already selected the sprite for the baton
+		var/spriteSelection = input(user, "Select preffered look for your baton", "Baton Look") in list("classic_baton", "classic_baton_black")
+		icon_state = spriteSelection
+		updateIcon()
+
+	// Create radial menu for choosing borg model
+	var/list/spriteSelection = list()
+	for(var/option in model_list)
+		var/obj/item/melee/baton/model = var/spriteSelection
+		var/spriteSelection = initial("classic_baton", "classic_baton_black")
+		spriteSelection[option] = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = model_icon)
+
+	var/input_model = show_radial_menu(src, src, spriteSelection, radius = 42)
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
@@ -273,6 +292,8 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "uk"
 	custom_price = PAYCHECK_HARD * 4.5
+
+/obj/item/melee/baton/black
 
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
