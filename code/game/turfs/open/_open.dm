@@ -56,6 +56,9 @@
 /turf/open/indestructible/white
 	icon_state = "white"
 
+/turf/open/indestructible/dark
+	icon_state = "darkfull"
+
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
 
