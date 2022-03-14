@@ -1180,16 +1180,17 @@
 	datum/callback/on_lost_callback,
 )
 
-	. = ..()
 	src.new_max_health = new_max_health
 	src.master_mind = master_mind
 	src.on_made_callback = on_made_callback
 	src.on_lost_callback = on_lost_callback
 
+	. = ..()
+
 	if(master_mind)
 		linked_alert.desc += " You are an eldritch monster reanimated to serve its master, [master_mind]."
 	if(isnum(new_max_health))
-		if(new_max_health > new_owner.maxHealth)
+		if(new_max_health > initial(new_owner.maxHealth))
 			linked_alert.desc += " You are stronger in this form."
 		else
 			linked_alert.desc += " You are more fragile in this form."
@@ -1211,8 +1212,9 @@
 	human_target.become_husk(MAGIC_TRAIT)
 	human_target.faction |= FACTION_HERETIC
 
-	var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind?.add_antag_datum(/datum/antagonist/heretic_monster)
-	heretic_monster.set_owner(master_mind)
+	if(human_target.mind)
+		var/datum/antagonist/heretic_monster/heretic_monster = human_target.mind.add_antag_datum(/datum/antagonist/heretic_monster)
+		heretic_monster.set_owner(master_mind)
 
 	return TRUE
 
@@ -1232,10 +1234,12 @@
 
 	on_lost_callback?.Invoke(human_target)
 	human_target.cure_husk(MAGIC_TRAIT)
+	human_target.faction -= FACTION_HERETIC
 	human_target.mind?.remove_antag_datum(/datum/antagonist/heretic_monster)
 
 	UnregisterSignal(human_target, COMSIG_LIVING_DEATH)
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /atom/movable/screen/alert/status_effect/ghoul
 	name = "Flesh Servant"

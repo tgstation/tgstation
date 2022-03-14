@@ -103,6 +103,10 @@
 	wound_bonus = -30
 	bare_wound_bonus = 15
 
+/obj/item/risen_hand/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
+
 /obj/item/risen_hand/visual_equipped(mob/user, slot)
 	. = ..()
 
@@ -122,7 +126,7 @@
 
 	// If it's a structure or machine, we get a damage bonus (allowing us to break down doors)
 	if(isstructure(hit) || ismachinery(hit))
-		force *= 1.5
+		force = initial(force) * 1.5
 
 	// If it's another other item make sure we're at normal force
 	else
