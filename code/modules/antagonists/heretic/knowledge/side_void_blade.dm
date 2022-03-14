@@ -57,11 +57,13 @@
 		return FALSE
 
 	selected_atoms -= soon_to_be_ghoul
+	make_risen(user, soon_to_be_ghoul)
 
-	log_game("[key_name(user)] created a shattered risen out of [key_name(soon_to_be_ghoul)].")
-	message_admins("[ADMIN_LOOKUPFLW(user)] shattered risen out of [ADMIN_LOOKUPFLW(soon_to_be_ghoul)].")
+/datum/heretic_knowledge/limited_amount/risen_corpse/proc/make_risen(mob/living/user, mob/living/carbon/human/victim)
+	log_game("[key_name(user)] created a shattered risen out of [key_name(victim)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] shattered risen out of [ADMIN_LOOKUPFLW(victim)].")
 
-	soon_to_be_ghoul.apply_status_effect(
+	victim.apply_status_effect(
 		/datum/status_effect/ghoul,
 		RISEN_MAX_HEALTH,
 		user.mind,
@@ -95,7 +97,7 @@
 	color = "#001aff"
 	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	hitsound = "shatter"
+	hitsound = SFX_SHATTER
 	force = 16
 	sharpness = SHARP_EDGED
 	wound_bonus = -30

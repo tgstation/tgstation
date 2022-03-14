@@ -8,12 +8,13 @@
 	icon_living = "stalker"
 	speak_emote = list("whispers")
 	movement_type = FLOATING
-	status_flags = CANSTUN|CANKNOCKDOWN
+	status_flags = CANSTUN | CANPUSH
+	attack_sound = SFX_SHATTER
 	maxHealth = 80
 	health = 80
 	melee_damage_lower = 12
 	melee_damage_upper = 16
-	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	sight = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	deathmessage = "shatters and vanishes, releasing a gust of cold air."
 	loot = list(/obj/item/shard, /obj/effect/decal/cleanable/ash)
 	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/mirror_walk)

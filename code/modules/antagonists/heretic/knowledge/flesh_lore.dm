@@ -99,13 +99,16 @@
 		target.balloon_alert(source, "husked!")
 		return COMPONENT_BLOCK_CHARGE_USE
 
-	log_game("[key_name(source)] created a ghoul, controlled by [key_name(target)].")
-	message_admins("[ADMIN_LOOKUPFLW(source)] created a ghoul, [ADMIN_LOOKUPFLW(target)].")
+	make_ghoul(source, target)
 
-	target.apply_status_effect(
+/datum/heretic_knowledge/limited_amount/flesh_grasp/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
+	log_game("[key_name(user)] created a ghoul, controlled by [key_name(victim)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a ghoul, [ADMIN_LOOKUPFLW(victim)].")
+
+	victim.apply_status_effect(
 		/datum/status_effect/ghoul,
 		GHOUL_MAX_HEALTH,
-		source.mind,
+		user.mind,
 		CALLBACK(src, .proc/apply_to_ghoul),
 		CALLBACK(src, .proc/remove_from_ghoul),
 	)
@@ -173,11 +176,13 @@
 		soon_to_be_ghoul.key = chosen_candidate.key
 
 	selected_atoms -= soon_to_be_ghoul
+	make_ghoul(user, soon_to_be_ghoul)
 
-	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(soon_to_be_ghoul)].")
-	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(soon_to_be_ghoul)].")
+/datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/make_ghoul(mob/living/user, mob/living/carbon/human/victim)
+	log_game("[key_name(user)] created a voiceless dead, controlled by [key_name(victim)].")
+	message_admins("[ADMIN_LOOKUPFLW(user)] created a voiceless dead, [ADMIN_LOOKUPFLW(victim)].")
 
-	soon_to_be_ghoul.apply_status_effect(
+	victim.apply_status_effect(
 		/datum/status_effect/ghoul,
 		MUTE_MAX_HEALTH,
 		user.mind,
