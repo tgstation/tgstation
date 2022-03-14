@@ -61,17 +61,17 @@ const typevars = (type) => {
       options: null,
       default_value: '',
     },
-    { name: 'clothes_req', type: 'bool', options: null, default_value: false },
-    { name: 'human_req', type: 'bool', options: null, default_value: false },
+    { name: 'requires_wizard_garb', type: 'bool', options: null, default_value: false },
+    { name: 'requires_human', type: 'bool', options: null, default_value: false },
     {
-      name: 'nonabstract_req',
+      name: 'requires_non_abstract',
       type: 'bool',
       options: null,
       default_value: false,
     },
-    { name: 'stat_allowed', type: 'bool', options: null, default_value: false },
+    { name: 'requires_conscious', type: 'bool', options: null, default_value: false },
     {
-      name: 'phase_allowed',
+      name: 'requires_unphased',
       type: 'bool',
       options: null,
       default_value: false,
@@ -90,7 +90,7 @@ const typevars = (type) => {
     },
     { name: 'invocation', type: 'string', options: null, default_value: '' },
     {
-      name: 'invocation_emote_self',
+      name: 'invocation_self_message',
       type: 'string',
       options: null,
       default_value: '',
@@ -103,13 +103,6 @@ const typevars = (type) => {
     },
     { name: 'range', type: 'int', options: null, default_value: 7 },
     { name: 'message', type: 'string', options: null, default_value: '' },
-    { name: 'player_lock', type: 'bool', options: null, default_value: true },
-    {
-      name: 'sparks_spread',
-      type: 'bool',
-      options: null,
-      default_value: false,
-    },
     { name: 'sparks_amt', type: 'int', options: null, default_value: 0 },
     {
       name: 'smoke_spread',
@@ -119,7 +112,7 @@ const typevars = (type) => {
     },
     { name: 'smoke_amt', type: 'int', options: null, default_value: 0 },
     {
-      name: 'centcom_cancast',
+      name: 'can_cast_on_centcom',
       type: 'bool',
       options: null,
       default_value: false,
@@ -180,8 +173,8 @@ const typevars = (type) => {
       );
       break;
     case 'aoe_turf':
-      ret = ret.filter((variable) => variable.name !== 'selection_type');
       ret.push(
+        { name: 'outer_radius', type: 'int', options: null, default_value: -1 },
         { name: 'inner_radius', type: 'int', options: null, default_value: -1 },
         { name: 'overlay', type: 'bool', options: null, default_value: false },
         {
@@ -205,10 +198,6 @@ const typevars = (type) => {
       );
       break;
     case 'self':
-      ret = ret.filter(
-        (variable) =>
-          variable.name !== 'range' && variable.name !== 'selection_type'
-      );
       break;
     case 'aimed':
       ret.push(
@@ -264,10 +253,6 @@ const typevars = (type) => {
       break;
     case 'cone':
     case 'cone/staggered':
-      ret = ret.filter(
-        (variable) =>
-          variable.name !== 'range' && variable.name !== 'selection_type'
-      );
       ret.push(
         { name: 'cone_level', type: 'int', options: null, default_value: 3 },
         {
@@ -329,9 +314,7 @@ const typevars = (type) => {
     case 'targeted/touch':
       ret = ret.filter(
         (variable) =>
-          variable.name !== 'range'
-          && variable.name !== 'invocation_type'
-          && variable.name !== 'selection_type'
+          variable.name !== 'invocation_type'
       );
       ret.push(
         {
@@ -447,11 +430,11 @@ const varCondition = (entry, saved_vars) => {
     case 'holder_var_type':
     case 'holder_var_amount':
       return saved_vars['charge_type'] === 'holder_var';
-    case 'human_req':
-      return !saved_vars['clothes_req'];
+    case 'requires_human':
+      return !saved_vars['requires_wizard_garb'];
     case 'invocation':
       return saved_vars['invocation_type'] !== 'none';
-    case 'invocation_emote_self':
+    case 'invocation_self_message':
       return saved_vars['invocation_type'] === 'emote';
     case 'overlay_icon':
     case 'overlay_icon_state':

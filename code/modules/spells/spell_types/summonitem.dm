@@ -3,7 +3,7 @@
 	desc = "This spell can be used to recall a previously marked item to your hand from anywhere in the universe."
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "GAR YOK"
 	invocation_type = INVOCATION_WHISPER
 	range = -1

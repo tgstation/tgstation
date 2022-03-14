@@ -5,7 +5,7 @@
 	invocation = "E'P"
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = -1
 	include_user = TRUE
 	charge_max = 300

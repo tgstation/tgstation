@@ -8,7 +8,7 @@
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
 	charge_max = 350
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = 9
 
 /obj/effect/proc_holder/spell/pointed/cleave/cast(list/targets, mob/user)

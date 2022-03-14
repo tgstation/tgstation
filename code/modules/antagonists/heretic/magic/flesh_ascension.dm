@@ -6,7 +6,7 @@
 	invocation = "REALITY UNCOIL!"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
 	include_user = TRUE
@@ -48,7 +48,7 @@
 	desc = "Forces your body to contract onto a single tile."
 	invocation_type = INVOCATION_NONE
 	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
 	include_user = TRUE

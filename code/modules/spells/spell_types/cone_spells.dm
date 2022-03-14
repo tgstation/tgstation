@@ -3,7 +3,7 @@
 	desc = "Does nothing in a cone! Wow!"
 	school = SCHOOL_EVOCATION
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "FUKAN NOTHAN"
 	invocation_type = INVOCATION_SHOUT
 	sound = 'sound/magic/forcewall.ogg'

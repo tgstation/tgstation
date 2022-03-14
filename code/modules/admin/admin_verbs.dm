@@ -675,7 +675,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/obj/effect/proc_holder/spell/new_spell = new spell_path()
 
 	if(robeless)
-		new_spell.clothes_req = FALSE
+		new_spell.requires_wizard_garb = FALSE
 
 	if(spell_recipient.mind)
 		spell_recipient.mind.AddSpell(new_spell)

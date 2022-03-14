@@ -3,7 +3,7 @@
 	desc = "Charge up a tesla arc and release it at a random nearby target! You can move freely while it charges. The arc jumps between targets and can knock them down."
 	charge_type = "recharge"
 	charge_max = 300
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "UN'LTD P'WAH!"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_EVOCATION

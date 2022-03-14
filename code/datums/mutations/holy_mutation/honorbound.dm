@@ -206,7 +206,7 @@
 	desc = "If someone is so obviously an evil of this world you can spend a huge amount of favor to declare them guilty."
 	school = SCHOOL_HOLY
 	charge_max = 0
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = 7
 	cooldown_min = 0
 	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'

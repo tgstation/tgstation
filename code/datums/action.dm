@@ -682,15 +682,17 @@
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
-	// The default cooldown applied when StartCooldown() is called
+	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
-	// The actual next time this ability can be used
+	/// The actual next time this ability can be used
 	var/next_use_time = 0
-	// Whether or not you want the cooldown for the ability to display in text form
+	/// Whether or not you want the cooldown for the ability to display in text form
 	var/text_cooldown = TRUE
-	// Setting for intercepting clicks before activating the ability
+	/// Setting for intercepting clicks before activating the ability
 	var/click_to_activate = FALSE
-	// Shares cooldowns with other cooldown abilities of the same value, not active if null
+	/// If TRUE, we will unset after using our click intercept. Requires click_to_activate
+	var/unset_after_click = TRUE
+	/// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
 
 /datum/action/cooldown/New(Target)
@@ -703,6 +705,11 @@
 
 /datum/action/cooldown/IsAvailable()
 	return ..() && (next_use_time <= world.time)
+
+/datum/action/cooldown/Remove(mob/living/user)
+	if(click_to_activate && user.click_intercept)
+		unset_ranged_ability()
+	return ..()
 
 /// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
@@ -735,22 +742,23 @@
 			// For automatic / mob handling
 			return InterceptClickOn(owner, null, target)
 		if(owner.click_intercept == src)
-			owner.click_intercept = null
+			. = unset_ranged_ability()
 		else
-			owner.click_intercept = src
+			. = set_ranged_ability()
 		for(var/datum/action/cooldown/ability in owner.actions)
 			ability.UpdateButtonIcon()
-		return TRUE
+		return .
 	return PreActivate(owner)
 
 /// Intercepts client owner clicks to activate the ability
 /datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(!IsAvailable())
 		return FALSE
-	if(!target)
+	if(!target || !is_valid_target(target))
 		return FALSE
 	PreActivate(target)
-	caller.click_intercept = null
+	if(unset_after_click)
+		unset_ranged_ability()
 	return TRUE
 
 /// For signal calling
@@ -763,6 +771,17 @@
 /// To be implemented by subtypes
 /datum/action/cooldown/proc/Activate(atom/target)
 	return
+
+/datum/action/cooldown/proc/set_ranged_ability()
+	owner.click_intercept = src
+	return TRUE
+
+/datum/action/cooldown/proc/unset_ranged_ability()
+	owner.click_intercept = null
+	return TRUE
+
+/datum/action/cooldown/proc/is_valid_target(atom/cast_on)
+	return TRUE
 
 /datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	. = ..()

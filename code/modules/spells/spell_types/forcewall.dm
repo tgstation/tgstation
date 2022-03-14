@@ -3,7 +3,7 @@
 	desc = "Create a magical barrier that only you can pass through."
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = INVOCATION_SHOUT
 	sound = 'sound/magic/forcewall.ogg'

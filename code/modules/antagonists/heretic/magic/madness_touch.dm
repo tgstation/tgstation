@@ -7,7 +7,7 @@
 	action_background_icon_state = "bg_ecult"
 	school = SCHOOL_FORBIDDEN
 	charge_max = 150
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation_type = INVOCATION_NONE
 	range = 2
 

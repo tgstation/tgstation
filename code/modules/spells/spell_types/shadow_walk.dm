@@ -4,9 +4,9 @@
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	charge_max = 0
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
-	phase_allowed = TRUE
+	requires_unphased = TRUE
 	selection_type = "range"
 	range = -1
 	include_user = TRUE

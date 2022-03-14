@@ -4,13 +4,13 @@
 
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 30 SECONDS
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = -1
 	cooldown_min = 10 SECONDS
 	include_user = TRUE
-	nonabstract_req = TRUE
+	requires_non_abstract = TRUE
 	action_icon_state = "jaunt"
 	/// For how long are we jaunting?
 	var/jaunt_duration = 5 SECONDS

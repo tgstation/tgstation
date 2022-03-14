@@ -3,7 +3,7 @@
 	action_background_icon_state = "bg_ecult"
 	invocation = "SH'PE"
 	invocation_type = INVOCATION_WHISPER
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	possible_shapes = list(
 		/mob/living/simple_animal/mouse,
 		/mob/living/simple_animal/pet/dog/corgi,

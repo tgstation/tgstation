@@ -599,7 +599,7 @@
 	name = "Exit Possession"
 	desc = "Exits the body you are possessing."
 	charge_max = 60
-	clothes_req = 0
+	requires_wizard_garb = 0
 	invocation_type = INVOCATION_NONE
 	max_targets = 1
 	range = -1

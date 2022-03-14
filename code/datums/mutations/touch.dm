@@ -16,7 +16,7 @@
 	dropmessage = "You let the electricity from your hand dissipate."
 	hand_path = /obj/item/melee/touch_attack/shock
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_icon_state = "zap"
 
 /obj/item/melee/touch_attack/shock

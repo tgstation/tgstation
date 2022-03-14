@@ -4,7 +4,7 @@
 	desc = "This spell lets you reach into S-space and retrieve presents! Yay!"
 	school = SCHOOL_CONJURATION
 	charge_max = 600
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
 	invocation = "HO HO HO"
 	invocation_type = INVOCATION_SHOUT

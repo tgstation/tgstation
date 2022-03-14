@@ -8,7 +8,7 @@
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_EVOCATION
 	charge_max = 150
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = 9
 
 /obj/effect/proc_holder/spell/pointed/blood_siphon/cast(list/targets, mob/user)

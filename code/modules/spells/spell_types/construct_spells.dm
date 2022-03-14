@@ -5,7 +5,7 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	charge_max = 250 SECONDS
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion
@@ -14,7 +14,7 @@
 
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 5 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = 2
@@ -34,7 +34,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 2 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = 0
@@ -50,7 +50,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 10 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = 0
@@ -67,7 +67,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 30 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = 0
@@ -80,7 +80,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 4 MINUTES
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = 0
@@ -91,7 +91,7 @@
 	summon_type = list(/obj/item/soulstone)
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/cult
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	charge_max = 6 MINUTES
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult
@@ -108,7 +108,7 @@
 	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 40 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	wall_type = /obj/effect/forcefield/cult
@@ -124,7 +124,7 @@
 
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 25 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	jaunt_duration = 5 SECONDS
@@ -153,7 +153,7 @@
 
 	school = SCHOOL_EVOCATION
 	charge_max = 40 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	max_targets = 6
@@ -171,7 +171,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 20 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = -1
@@ -188,9 +188,9 @@
 	desc = "This spell instills a deep terror in your target, temporarily chilling and blinding it."
 	charge_max = 75 SECONDS
 	range = 5
-	stat_allowed = FALSE
+	requires_conscious = FALSE
 	school = SCHOOL_EVOCATION
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
@@ -248,9 +248,9 @@
 	desc = "This spell dominates the mind of a lesser creature to the will of Nar'Sie, allying it only to her direct followers."
 	charge_max = 1 MINUTES
 	range = 7
-	stat_allowed = FALSE
+	requires_conscious = FALSE
 	school = SCHOOL_EVOCATION
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
@@ -310,7 +310,7 @@
 	desc = "Channels energy into your gauntlet - firing its essence forward in a slow moving, yet devastating, attack."
 	proj_type = /obj/projectile/magic/spell/juggernaut
 	charge_max = 35 SECONDS
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "cultfist"
 	action_background_icon_state = "bg_demon"

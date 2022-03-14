@@ -56,7 +56,7 @@
 	desc = "Read the target's mind."
 	charge_max = 50
 	range = 7
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_icon_state = "mindread"
 
 /obj/effect/proc_holder/spell/targeted/mindread/cast(list/targets, mob/living/carbon/human/user = usr)

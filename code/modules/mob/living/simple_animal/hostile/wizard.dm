@@ -41,21 +41,21 @@
 /mob/living/simple_animal/hostile/wizard/Initialize(mapload)
 	. = ..()
 	fireball = new /obj/effect/proc_holder/spell/aimed/fireball
-	fireball.clothes_req = 0
-	fireball.human_req = 0
+	fireball.requires_wizard_garb = 0
+	fireball.requires_human = 0
 	fireball.player_lock = 0
 	AddSpell(fireball)
 	implants += new /obj/item/implant/exile(src)
 
 	mm = new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
-	mm.clothes_req = 0
-	mm.human_req = 0
+	mm.requires_wizard_garb = 0
+	mm.requires_human = 0
 	mm.player_lock = 0
 	AddSpell(mm)
 
 	blink = new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
-	blink.clothes_req = 0
-	blink.human_req = 0
+	blink.requires_wizard_garb = 0
+	blink.requires_human = 0
 	blink.player_lock = 0
 	blink.outer_tele_radius = 3
 	AddSpell(blink)

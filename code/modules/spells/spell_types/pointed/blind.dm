@@ -1,35 +1,38 @@
-/obj/effect/proc_holder/spell/pointed/trigger/blind
+/datum/action/cooldown/spell/pointed/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
+	action_icon_state = "blind"
 	school = SCHOOL_TRANSMUTATION
-	charge_max = 300
-	clothes_req = FALSE
+	sound = 'sound/magic/blind.ogg'
+	cooldown_time = 30 SECONDS
+	cooldown_min = 5 SECONDS //12 deciseconds reduction per rank
+	requires_wizard_garb = FALSE
 	invocation = "STI KALY"
 	invocation_type = INVOCATION_WHISPER
-	message = "<span class='notice'>Your eyes cry out in pain!</span>"
-	cooldown_min = 50 //12 deciseconds reduction per rank
-	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind", "/obj/effect/proc_holder/spell/targeted/genetic/blind")
-	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
-	action_icon_state = "blind"
+	on_afflicted_message = span_notice("Your eyes cry out in pain!")
+	// ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 	active_msg = "You prepare to blind a target..."
 
-/obj/effect/proc_holder/spell/targeted/inflict_handler/blind
-	amt_eye_blind = 10
-	amt_eye_blurry = 20
-	sound = 'sound/magic/blind.ogg'
+	var/eye_blind_amount = 10
+	var/eye_blurry_amount = 20
+	var/blind_mutation_duration = 30 SECONDS
 
-/obj/effect/proc_holder/spell/targeted/genetic/blind
-	mutations = list(/datum/mutation/human/blind)
-	duration = 300
-	charge_max = 400 // needs to be higher than the duration or it'll be permanent
-	sound = 'sound/magic/blind.ogg'
-
-/obj/effect/proc_holder/spell/pointed/trigger/blind/can_target(atom/target, mob/user, silent)
+/datum/action/cooldown/spell/pointed/blind/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!isliving(target))
-		if(!silent)
-			to_chat(user, span_warning("You can only blind living beings!"))
+	if(!ishuman(cast_on))
 		return FALSE
+
+	var/mob/living/carbon/human/human_target = cast_on
+	return !human_target.is_blind()
+
+/datum/action/cooldown/spell/pointed/blind/cast(mob/living/carbon/human/cast_on)
+	cast_on.blind_eyes(eye_blind_amount)
+	cast_on.blur_eyes(eye_blurry_amount)
+	cast_on.dna?.add_mutation(/datum/mutation/human/blind)
+	addtimer(CALLBACK(src, .proc/fix_eyes, cast_on), blind_mutation_duration)
 	return TRUE
+
+/datum/action/cooldown/spell/pointed/blind/proc/fix_eyes(mob/living/carbon/human/cast_on)
+	cast_on.dna?.remove_mutation(/datum/mutation/human/blind)

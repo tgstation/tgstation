@@ -64,7 +64,7 @@
 	charge_max = 25 SECONDS
 	var/eye_damage = 10
 	var/thermal_duration = 10
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_icon = 'icons/mob/actions/actions_changeling.dmi'
 	action_icon_state = "augmented_eyesight"
 

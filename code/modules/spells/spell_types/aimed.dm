@@ -96,7 +96,7 @@
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
 	school = SCHOOL_EVOCATION
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "P'WAH, UNLIM'TED P'WAH"
 	invocation_type = INVOCATION_SHOUT
 	cooldown_min = 20
@@ -114,7 +114,7 @@
 	desc = "This spell fires an explosive fireball at a target."
 	school = SCHOOL_EVOCATION
 	charge_max = 60
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "ONI SOMA"
 	invocation_type = INVOCATION_SHOUT
 	range = 20
@@ -137,7 +137,7 @@
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
 	school = SCHOOL_EVOCATION
 	charge_max = 50
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "Sigi'lu M'Fan 'Tasia"
 	invocation_type = INVOCATION_SHOUT
 	range = 40

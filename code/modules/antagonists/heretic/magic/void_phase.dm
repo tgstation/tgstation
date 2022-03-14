@@ -8,7 +8,7 @@
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
 	selection_type = "range"
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = 9
 	charge_max = 300
 

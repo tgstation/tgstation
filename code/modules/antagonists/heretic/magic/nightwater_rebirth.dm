@@ -5,7 +5,7 @@
 	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
 	include_user = TRUE

@@ -10,7 +10,7 @@
 	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
 	var/buy_word = "Learn"
 	var/cooldown
-	var/clothes_req = FALSE
+	var/requires_wizard_garb = FALSE
 	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
 	var/list/no_coexistance_typecache //Used so you can't have specific spells together
 
@@ -113,8 +113,8 @@
 		S = new spell_type()
 	if(S.charge_type == "recharge")
 		cooldown = S.charge_max/10
-	if(S.clothes_req)
-		clothes_req = TRUE
+	if(S.requires_wizard_garb)
+		requires_wizard_garb = TRUE
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
@@ -747,7 +747,7 @@
 		individual_entry_data["name"] = entry.name
 		individual_entry_data["desc"] = entry.desc
 		individual_entry_data["ref"] = REF(entry)
-		individual_entry_data["clothes_req"] = entry.clothes_req
+		individual_entry_data["requires_wizard_garb"] = entry.requires_wizard_garb
 		individual_entry_data["cost"] = entry.cost
 		individual_entry_data["times"] = entry.times
 		individual_entry_data["cooldown"] = entry.cooldown

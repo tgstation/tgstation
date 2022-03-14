@@ -8,8 +8,8 @@
 	becoming a lich destroys all internal organs except the brain."
 	school = SCHOOL_NECROMANCY
 	charge_max = 10
-	clothes_req = FALSE
-	centcom_cancast = FALSE
+	requires_wizard_garb = FALSE
+	can_cast_on_centcom = FALSE
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = INVOCATION_SHOUT
 	range = -1
@@ -95,7 +95,7 @@
 		return INITIALIZE_HINT_QDEL
 	mind = newmind
 	name = "phylactery of [mind.name]"
-	
+
 	if(iscarbon(mind.current))
 		var/mob/living/carbon/immortal_mob = mind.current
 		var/obj/item/organ/brain/B = immortal_mob.getorganslot(ORGAN_SLOT_BRAIN)
@@ -130,7 +130,7 @@
 
 	var/mob/living/old_body = mind.current
 	var/mob/living/carbon/human/lich = new(item_turf)
-	
+
 	var/obj/item/organ/brain/B = lich.getorganslot(ORGAN_SLOT_BRAIN)
 	if(B) // this prevents MMIs being used
 		B.organ_flags &= ~ORGAN_VITAL

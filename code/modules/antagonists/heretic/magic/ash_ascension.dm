@@ -7,7 +7,7 @@
 	invocation = "FL'MS"
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = -1
 	include_user = TRUE
 	charge_max = 700
@@ -49,7 +49,7 @@
 	desc = "Heats the air around you."
 	school = SCHOOL_FORBIDDEN
 	charge_max = 300 //twice as long as mansus grasp
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "C'SC'DE"
 	invocation_type = INVOCATION_WHISPER
 	range = 4
@@ -88,7 +88,7 @@
 	school = SCHOOL_FORBIDDEN
 	charge_max = 300
 	range = 15
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 
 /obj/effect/proc_holder/spell/pointed/ash_final/cast(list/targets, mob/user)
 	for(var/X in targets)

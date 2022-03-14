@@ -4,7 +4,7 @@
 
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "AULIE OXIN FIERA"
 	invocation_type = INVOCATION_WHISPER
 	range = 3

@@ -483,6 +483,7 @@
 		part.visor_flags_inv = category[SEALED_INVISIBILITY] || NONE
 		part.flags_cover = category[UNSEALED_COVER] || NONE
 		part.visor_flags_cover = category[SEALED_COVER] || NONE
+		part.clothing_traits = category[PIECE_TRAITS]
 
 /obj/item/mod/control/proc/quick_module(mob/user)
 	if(!length(modules))

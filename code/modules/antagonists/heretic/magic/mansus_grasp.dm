@@ -4,7 +4,7 @@
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 	school = SCHOOL_EVOCATION
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_grasp"
 	action_background_icon_state = "bg_ecult"

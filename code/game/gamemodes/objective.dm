@@ -163,9 +163,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	action_icon = 'icons/obj/device.dmi'
 	action_icon_state = "beacon"
 	charge_max = 0
-	clothes_req = FALSE
-	nonabstract_req = TRUE
-	phase_allowed = TRUE
+	requires_wizard_garb = FALSE
+	requires_non_abstract = TRUE
+	requires_unphased = TRUE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_NONE
 

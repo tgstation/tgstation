@@ -5,14 +5,14 @@
 	panel = "Mime"
 	summon_type = list(/obj/effect/forcefield/mime)
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = "<span class='notice'>You form a wall in front of yourself.</span>"
+	invocation_self_message = "<span class='notice'>You form a wall in front of yourself.</span>"
 	summon_lifespan = 300
 	charge_max = 300
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
 	range = 0
 	cast_sound = null
-	human_req = TRUE
+	requires_human = TRUE
 
 	action_icon = 'icons/mob/actions/actions_mime.dmi'
 	action_icon_state = "invisible_wall"
@@ -35,14 +35,14 @@
 	panel = "Mime"
 	summon_type = list(/obj/structure/chair/mime)
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = "<span class='notice'>You conjure an invisible chair and sit down.</span>"
+	invocation_self_message = "<span class='notice'>You conjure an invisible chair and sit down.</span>"
 	summon_lifespan = 250
 	charge_max = 300
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
 	range = 0
 	cast_sound = null
-	human_req = TRUE
+	requires_human = TRUE
 
 	action_icon = 'icons/mob/actions/actions_mime.dmi'
 	action_icon_state = "invisible_chair"
@@ -73,14 +73,14 @@
 	panel = "Mime"
 	summon_type = list(/obj/item/storage/box/mime)
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = "<span class='notice'>You conjure up an invisible box, large enough to store a few things.</span>"
+	invocation_self_message = "<span class='notice'>You conjure up an invisible box, large enough to store a few things.</span>"
 	summon_lifespan = 500
 	charge_max = 300
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
 	range = 0
 	cast_sound = null
-	human_req = TRUE
+	requires_human = TRUE
 
 	action_icon = 'icons/mob/actions/actions_mime.dmi'
 	action_icon_state = "invisible_box"
@@ -110,8 +110,8 @@
 	desc = "Make or break a vow of silence."
 	school = SCHOOL_MIME
 	panel = "Mime"
-	clothes_req = FALSE
-	human_req = TRUE
+	requires_wizard_garb = FALSE
+	requires_human = TRUE
 	antimagic_allowed = TRUE
 	charge_max = 3000
 	range = -1
@@ -152,10 +152,10 @@
 	panel = "Mime"
 	wall_type = /obj/effect/forcefield/mime/advanced
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = "<span class='notice'>You form a blockade in front of yourself.</span>"
+	invocation_self_message = "<span class='notice'>You form a blockade in front of yourself.</span>"
 	charge_max = 600
 	sound = null
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
 	range = -1
 	include_user = TRUE
@@ -180,10 +180,10 @@
 	school = SCHOOL_MIME
 	panel = "Mime"
 	charge_max = 300
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
 	invocation_type = INVOCATION_EMOTE
-	invocation_emote_self = span_danger("You fire your finger gun!")
+	invocation_self_message = span_danger("You fire your finger gun!")
 	range = 20
 	projectile_type = /obj/projectile/bullet/mime
 	projectile_amount = 3

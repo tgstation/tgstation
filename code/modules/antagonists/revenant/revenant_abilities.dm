@@ -115,7 +115,7 @@
 /obj/effect/proc_holder/spell/targeted/night_vision/revenant
 	charge_max = 0
 	panel = "Revenant Abilities"
-	message = "<span class='revennotice'>You toggle your night vision.</span>"
+	target_message = "<span class='revennotice'>You toggle your night vision.</span>"
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_icon_state = "r_nightvision"
 	action_background_icon_state = "bg_revenant"
@@ -133,7 +133,7 @@
 	tinfoil_check = FALSE
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
-	clothes_req = 0
+	requires_wizard_garb = 0
 	action_icon = 'icons/mob/actions/actions_revenant.dmi'
 	action_background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"

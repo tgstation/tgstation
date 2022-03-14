@@ -66,7 +66,7 @@
 
 	school = SCHOOL_EVOCATION
 	charge_max = 600
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "gib"
@@ -78,7 +78,7 @@
 
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 600
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	cooldown_min = 200 //100 deciseconds reduction per rank
 
 	action_icon_state = "statue"
@@ -92,5 +92,5 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 60
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	cooldown_min = 20

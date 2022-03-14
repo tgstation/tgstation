@@ -5,7 +5,7 @@
 	charge_max = 250
 	cooldown_min = 50
 
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "CAVERE INSIDIAS"
 	invocation_type = INVOCATION_SHOUT
 	range = 3

@@ -2,8 +2,8 @@
 	name = "Shapechange"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
 	school = SCHOOL_TRANSMUTATION
-	clothes_req = FALSE
-	human_req = FALSE
+	requires_wizard_garb = FALSE
+	requires_human = FALSE
 	charge_max = 200
 	cooldown_min = 50
 	range = -1
@@ -11,7 +11,7 @@
 	invocation = "RAC'WA NO!"
 	invocation_type = INVOCATION_SHOUT
 	action_icon_state = "shapeshift"
-	nonabstract_req = TRUE
+	requires_non_abstract = TRUE
 
 	var/revert_on_death = TRUE
 	var/die_with_shapeshifted_form = TRUE
@@ -115,8 +115,8 @@
 	var/mob/living/shape = new shapeshift_type(caster.loc)
 	shapeshift_ability = new(shape, src, caster)
 
-	clothes_req = FALSE
-	human_req = FALSE
+	requires_wizard_garb = FALSE
+	requires_human = FALSE
 	return shape
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/proc/restore_form(mob/living/caster)
@@ -128,8 +128,8 @@
 
 	shapeshift_ability.restore()
 
-	clothes_req = initial(clothes_req)
-	human_req = initial(human_req)
+	requires_wizard_garb = initial(requires_wizard_garb)
+	requires_human = initial(requires_human)
 	return restored_player
 
 /obj/effect/proc_holder/spell/targeted/shapeshift/dragon

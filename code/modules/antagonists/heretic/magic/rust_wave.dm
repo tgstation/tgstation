@@ -8,7 +8,7 @@
 	invocation = "'NTR'P'C PL'M'"
 	invocation_type = INVOCATION_WHISPER
 	school = SCHOOL_FORBIDDEN
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	charge_max = 300
 	cone_levels = 5
 	respect_density = TRUE
@@ -65,7 +65,7 @@
 	proj_type = /obj/projectile/magic/spell/rust_wave
 	school = SCHOOL_FORBIDDEN
 	charge_max = 350
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "rust_wave"
 	action_background_icon_state = "bg_ecult"

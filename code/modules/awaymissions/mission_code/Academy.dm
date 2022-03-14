@@ -368,7 +368,7 @@
 	name = "Summon Servant"
 	desc = "This spell can be used to call your servant, whenever you need it."
 	charge_max = 100
-	clothes_req = 0
+	requires_wizard_garb = 0
 	invocation = "JE VES"
 	school = SCHOOL_CONJURATION
 	invocation_type = INVOCATION_WHISPER

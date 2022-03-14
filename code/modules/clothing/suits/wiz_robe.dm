@@ -9,6 +9,7 @@
 	clothing_flags = SNUG_FIT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	dog_fashion = /datum/dog_fashion/head/blue_wizard
+	clothing_traits = list(TRAIT_WIZARD_HAT)
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -70,6 +71,7 @@
 	strip_delay = 50
 	equip_delay_other = 50
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	clothing_traits = list(TRAIT_WIZARD_ROBES)
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"

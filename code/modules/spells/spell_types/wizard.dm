@@ -4,7 +4,7 @@
 
 	school = SCHOOL_EVOCATION
 	charge_max = 200
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "FORTI GY AMA"
 	invocation_type = INVOCATION_SHOUT
 	range = 7
@@ -43,7 +43,7 @@
 
 	school = SCHOOL_TRANSMUTATION
 	charge_max = 400
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "BIRUZ BENNAR"
 	invocation_type = INVOCATION_SHOUT
 	range = -1
@@ -63,7 +63,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 120
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = -1
@@ -82,7 +82,7 @@
 
 	school = SCHOOL_HOLY
 	charge_max = 360
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = -1
@@ -97,7 +97,7 @@
 	name = "Disable Tech"
 	desc = "This spell disables all weapons, cameras and most other technology in range."
 	charge_max = 400
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "NEC CANTIO"
 	invocation_type = INVOCATION_SHOUT
 	range = -1
@@ -114,7 +114,7 @@
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 20
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = -1
@@ -136,7 +136,7 @@
 	name = "quickstep"
 
 	charge_max = 100
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
 	name = "Teleport"
@@ -144,7 +144,7 @@
 
 	school = SCHOOL_FORBIDDEN
 	charge_max = 600
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "SCYAR NILA"
 	invocation_type = INVOCATION_SHOUT
 	range = -1
@@ -161,14 +161,14 @@
 	name = "Santa Teleport"
 
 	invocation = "HO HO HO"
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	say_destination = FALSE // Santa moves in mysterious ways
 
 /obj/effect/proc_holder/spell/aoe_turf/timestop
 	name = "Stop Time"
 	desc = "This spell stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
 	charge_max = 500
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "TOKI YO TOMARE"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_FORBIDDEN //fucking with time is not appreciated by anyone
@@ -187,7 +187,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 1200
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = INVOCATION_SHOUT
 	range = 1
@@ -200,7 +200,7 @@
 	desc = "This spell conjures a construct which may be controlled by Shades."
 	school = SCHOOL_CONJURATION
 	charge_max = 600
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "none"
 	invocation_type = INVOCATION_NONE
 	range = 0
@@ -215,7 +215,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 1200
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "IA IA"
 	invocation_type = INVOCATION_SHOUT
 	summon_amt = 10
@@ -226,7 +226,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/cult
 	name = "Summon Creatures (DANGEROUS)"
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	charge_max = 5000
 	summon_amt = 2
 
@@ -234,7 +234,7 @@
 	name = "Lesser summon bees"
 	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
 	charge_max = 600
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "NOT THE BEES"
 	summon_amt = 9
 	action_icon_state = "bee"
@@ -247,7 +247,7 @@
 	name = "Repulse"
 	desc = "This spell throws everything around the user away."
 	charge_max = 400
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	invocation = "GITTAH WEIGH"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_EVOCATION
@@ -302,7 +302,7 @@
 	desc = "Throw back attackers with a sweep of your tail."
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	antimagic_allowed = TRUE
 	range = 2
 	cooldown_min = 150
@@ -324,7 +324,7 @@
 	name = "Sacred Flame"
 	desc = "Makes everyone around you more flammable, and lights yourself on fire."
 	charge_max = 60
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	invocation = "FI'RAN DADISKO"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_EVOCATION
@@ -348,7 +348,7 @@
 /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	name = "Thrown Lightning"
 	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	item_type = /obj/item/spellpacket/lightningbolt
 	charge_max = 10
 	action_icon_state = "thrownlightning"

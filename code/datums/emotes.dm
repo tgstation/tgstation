@@ -48,7 +48,7 @@
 	/// Types that can use this emote regardless of their state.
 	var/list/mob_type_ignore_stat_typecache
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
-	var/stat_allowed = CONSCIOUS
+	var/requires_conscious = CONSCIOUS
 	/// Sound to play when emote is called.
 	var/sound
 	/// Used for the honk borg emote.
@@ -233,7 +233,7 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
-		if(user.stat > stat_allowed)
+		if(user.stat > requires_conscious)
 			if(!intentional)
 				return FALSE
 			switch(user.stat)

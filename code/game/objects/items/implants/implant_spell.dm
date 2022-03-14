@@ -20,8 +20,8 @@
 	if (.)
 		if (!spell)
 			return FALSE
-		if (autorobeless && spell.clothes_req)
-			spell.clothes_req = FALSE
+		if (autorobeless && spell.requires_wizard_garb)
+			spell.requires_wizard_garb = FALSE
 		target.AddSpell(spell)
 		return TRUE
 

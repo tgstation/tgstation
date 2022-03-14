@@ -520,6 +520,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Designates a heart as a living heart for a heretic.
 #define TRAIT_LIVING_HEART "living_heart"
 
+#define TRAIT_WIZARD_HAT "wizard_hat"
+#define TRAIT_WIZARD_ROBES "wizard_robes"
+
 //quirk traits
 #define TRAIT_ALCOHOL_TOLERANCE "alcohol_tolerance"
 #define TRAIT_AGEUSIA "ageusia"

@@ -7,7 +7,7 @@
 
 	school = SCHOOL_CONJURATION
 	charge_max = 750
-	clothes_req = TRUE
+	requires_wizard_garb = TRUE
 	cooldown_min = 10 //Gun wizard
 	action_icon_state = "bolt_action"
 	var/summon_path = /obj/item/gun/ballistic/rifle/enchanted

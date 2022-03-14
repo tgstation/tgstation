@@ -30,5 +30,7 @@
 #define UNSEALED_COVER "unsealed_cover"
 #define SEALED_COVER "sealed_cover"
 
+#define PIECE_TRAITS "traits"
+
 /// Global list of all /datum/mod_theme
 GLOBAL_LIST_INIT(mod_themes, setup_mod_themes())

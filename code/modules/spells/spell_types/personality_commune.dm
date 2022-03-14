@@ -2,7 +2,7 @@
 	name = "Personality Commune"
 	desc = "Sends thoughts to your alternate consciousness."
 	charge_max = 0
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = -1
 	include_user = TRUE
 	action_icon_state = "telepathy"

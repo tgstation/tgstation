@@ -31,7 +31,7 @@
 	name = "Remember the Scent"
 	desc = "Get a scent off of the item you're currently holding to track it. With an empty hand, you'll track the scent you've remembered."
 	charge_max = 100
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = -1
 	include_user = TRUE
 	action_icon_state = "nose"
@@ -123,7 +123,7 @@
 	invocation = ""
 	invocation_type = INVOCATION_NONE
 	charge_max = 400
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	range = 20
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
@@ -195,7 +195,7 @@
 	name = "Convoke Void" //magic the gathering joke here
 	desc = "A rare genome that attracts odd forces not usually observed. May sometimes pull you in randomly."
 	school = SCHOOL_EVOCATION
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	charge_max = 600
 	invocation = "DOOOOOOOOOOOOOOOOOOOOM!!!"
 	invocation_type = INVOCATION_SHOUT
@@ -224,8 +224,8 @@
 /obj/effect/proc_holder/spell/self/self_amputation
 	name = "Drop a limb"
 	desc = "Concentrate to make a random limb pop right off your body."
-	clothes_req = FALSE
-	human_req = FALSE
+	requires_wizard_garb = FALSE
+	requires_human = FALSE
 	charge_max = 100
 	action_icon_state = "autotomy"
 
@@ -264,8 +264,8 @@
 /obj/effect/proc_holder/spell/self/tongue_spike
 	name = "Launch spike"
 	desc = "Shoot your tongue out in the direction you're facing, embedding it and dealing damage until they remove it."
-	clothes_req = FALSE
-	human_req = TRUE
+	requires_wizard_garb = FALSE
+	requires_human = TRUE
 	charge_max = 100
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "spike"
@@ -416,8 +416,8 @@
 /obj/effect/proc_holder/spell/self/lay_genetic_web
 	name = "Lay Web"
 	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."
-	clothes_req = FALSE
-	human_req = FALSE
+	requires_wizard_garb = FALSE
+	requires_human = FALSE
 	charge_max = 4 SECONDS //the same time to lay a web
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"

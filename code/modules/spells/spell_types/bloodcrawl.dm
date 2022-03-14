@@ -2,9 +2,9 @@
 	name = "Blood Crawl"
 	desc = "Use pools of blood to phase out of existence."
 	charge_max = 0
-	clothes_req = FALSE
+	requires_wizard_garb = FALSE
 	//If you couldn't cast this while phased, you'd have a problem
-	phase_allowed = TRUE
+	requires_unphased = TRUE
 	selection_type = "range"
 	range = 1
 	cooldown_min = 0

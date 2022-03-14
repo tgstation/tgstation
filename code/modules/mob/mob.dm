@@ -785,17 +785,31 @@
  * Shows charge and other important info
  */
 /mob/proc/get_spells_for_statpanel(list/spells)
-	var/list/L = list()
-	for(var/obj/effect/proc_holder/spell/S in spells)
-		if(S.can_be_cast_by(src))
-			switch(S.charge_type)
-				if("recharge")
-					L[++L.len] = list("[S.panel]", "[S.charge_counter/10.0]/[S.charge_max/10]", S.name, REF(S))
-				if("charges")
-					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, REF(S))
-				if("holdervar")
-					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
-	return L
+	var/list/data = list()
+	for(var/datum/action/cooldown/spell in actions)
+		switch(spell.charge_type)
+			if("recharge")
+				data[++data.len] = list(
+					"[spell.panel]",
+					"[spell.charge_counter/10.0]/[spell.charge_max/10]",
+					spell.name,
+					REF(spell),
+				)
+			if("charges")
+				data[++data.len] = list(
+					"[spell.panel]",
+					"[spell.charge_counter]/[spell.charge_max]",
+					spell.name,
+					REF(spell),
+				)
+			if("holdervar")
+				data[++data.len] = list(
+					"[spell.panel]",
+					"[spell.holder_var_type] [spell.holder_var_amount]",
+					spell.name,
+					REF(spell),
+				)
+	return data
 
 #define MOB_FACE_DIRECTION_DELAY 1
 
