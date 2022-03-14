@@ -63,6 +63,11 @@
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop = new(src, FALSE)
 	CalculateAffectingAreas()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_EXPOSE = .proc/check_atmos,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	my_area = get_area(src)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
@@ -184,17 +189,11 @@
 			fire_panel.set_status()
 
 /obj/machinery/door/firedoor/proc/CalculateWatchedTurfs()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_EXPOSE = .proc/check_atmos,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	watched_turfs = list()
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(src),dir)
 		watched_turfs |= checked_turf
-		checked_turf.AddElement(/datum/element/atmos_sensitive, mapload)
-		checked_turf.AddElement(/datum/element/connect_loc, loc_connections)
+		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/check_atmos)
 	watched_turfs |= get_turf(src)
 
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
@@ -220,12 +219,12 @@
 			result = FIRELOCK_ALARM_TYPE_HOT
 		if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
 			result = FIRELOCK_ALARM_TYPE_COLD
-		if(!result)
+		if(!result && alarm_type)
 			start_deactivation_process()
 			return
-		start_activation_process(result)
-		return
-
+		else if(result && !alarm_type)
+			start_activation_process(result)
+			return
 /**
  * Begins activation process of us and our neighbors.
  *
@@ -251,8 +250,6 @@
  * in the merge group datum. sets our alarm type to null, signifying no alarm.
  */
 /obj/machinery/door/firedoor/proc/start_deactivation_process()
-	if(!alarm_type)
-		return //We're already inactive
 	alarm_type = null
 	soundloop.stop()
 	is_playing_alarm = FALSE
