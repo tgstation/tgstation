@@ -62,14 +62,8 @@
 	. = ..()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop = new(src, FALSE)
-	AddElement(/datum/element/atmos_sensitive, mapload)
 	CalculateAffectingAreas()
 	my_area = get_area(src)
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_EXPOSE = .proc/check_atmos,
-	)
-
-	AddElement(/datum/element/connect_loc, loc_connections)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 	CalculateWatchedTurfs()
@@ -190,10 +184,17 @@
 			fire_panel.set_status()
 
 /obj/machinery/door/firedoor/proc/CalculateWatchedTurfs()
+	AddElement(/datum/element/atmos_sensitive, mapload)
+	var/static/list/loc_connections = list(
+		COMSIG_TURF_EXPOSE = .proc/check_atmos,
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	watched_turfs = list()
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(src),dir)
 		watched_turfs |= checked_turf
+		checked_turf.AddElement(/datum/element/atmos_sensitive, mapload)
+		checked_turf.AddElement(/datum/element/connect_loc, loc_connections)
 	watched_turfs |= get_turf(src)
 
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
@@ -223,6 +224,7 @@
 			start_deactivation_process()
 			return
 		start_activation_process(result)
+		return
 
 /**
  * Begins activation process of us and our neighbors.
