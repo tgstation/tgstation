@@ -605,8 +605,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
-	icon_state = "empty_cell"
 	desc = "Unit's power cell has no charge remaining."
+	icon_state = "empty_cell"
 
 /atom/movable/screen/alert/emptycell/MouseEntered(location,control,params)
 	update_appearance(updates=UPDATE_DESC)
@@ -620,8 +620,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
-	icon_state = "low_cell"
 	desc = "Unit's power cell is running low."
+	icon_state = "low_cell"
 
 /atom/movable/screen/alert/lowcell/MouseEntered(location,control,params)
 	update_appearance(updates=UPDATE_DESC)
