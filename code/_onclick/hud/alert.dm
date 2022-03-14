@@ -605,28 +605,33 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/emptycell
 	name = "Out of Power"
-	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged. \
-		Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "empty_cell"
+	desc = "Unit's power cell has no charge remaining."
 
-/atom/movable/screen/alert/emptycell/Initialize()
+/atom/movable/screen/alert/emptycell/MouseEntered(location,control,params)
+	update_appearance(updates=UPDATE_DESC)
+	return ..()
+
+/atom/movable/screen/alert/emptycell/update_desc()
 	. = ..()
+	desc = initial(desc)
 	if(length(GLOB.recharging_station_area_names))
-		desc = "Unit's power cell is running low. Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
-	else
-		desc = "Unit's power cell is running low. Recharging stations are not available. Better beg someone to build one!"
+		desc += " Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
-	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "low_cell"
+	desc = "Unit's power cell is running low."
 
-/atom/movable/screen/alert/lowcell/Initialize()
+/atom/movable/screen/alert/lowcell/MouseEntered(location,control,params)
+	update_appearance(updates=UPDATE_DESC)
+	return ..()
+
+/atom/movable/screen/alert/lowcell/update_desc()
 	. = ..()
+	desc = initial(desc)
 	if(length(GLOB.recharging_station_area_names))
-		desc = "Unit's power cell is running low. Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
-	else
-		desc = "Unit's power cell is running low. Recharging stations are not available. Better beg someone to build one!"
+		desc += " Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
 
 //Ethereal
 

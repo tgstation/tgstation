@@ -22,16 +22,22 @@
 	if(is_operational)
 		begin_processing()
 
-	if(SSmapping.level_trait(z, ZTRAIT_STATION))
-		var/area_name = get_area_name(src, format_text = TRUE)
+	var/area/my_area = get_area(src)
+	if(my_area.type in GLOB.the_station_areas)
+		GLOB.recharging_stations += src
+		update_area_names()
+
+/obj/machinery/recharge_station/proc/update_area_names()
+	GLOB.recharging_station_area_names.Cut()
+	sort_list(GLOB.recharging_stations) //makes it harder to infer built chargers because they no longer appear at the end of the list
+	for(var/atom/charge_station in GLOB.recharging_stations)
+		var/area_name = get_area_name(charge_station, format_text = TRUE)
 		if(!(area_name in GLOB.recharging_station_area_names))
 			GLOB.recharging_station_area_names += area_name
 
 /obj/machinery/recharge_station/Destroy()
-	if(SSmapping.level_trait(z, ZTRAIT_STATION))
-		var/area_name = get_area_name(src, format_text = TRUE)
-		if(area_name in GLOB.recharging_station_area_names)
-			GLOB.recharging_station_area_names -= area_name
+	GLOB.recharging_stations -= src
+	update_area_names()
 	return ..()
 
 /obj/machinery/recharge_station/RefreshParts()

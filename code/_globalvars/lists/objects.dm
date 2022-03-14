@@ -52,4 +52,5 @@ GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/comp
 GLOBAL_LIST_EMPTY(air_scrub_names) // Name list of all air scrubbers
 GLOBAL_LIST_EMPTY(air_vent_names) // Name list of all air vents
 
-GLOBAL_LIST_EMPTY(recharging_station_area_names) // List of all recharging station areas, for the low charge/no charge screen alert tooltips.
+GLOBAL_LIST_EMPTY(recharging_stations) // List of all recharging stations.
+GLOBAL_LIST_EMPTY(recharging_station_area_names) // List of all recharging station area names, for the low charge/no charge screen alert tooltips.
