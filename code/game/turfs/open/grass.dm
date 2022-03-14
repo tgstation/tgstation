@@ -4,7 +4,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "grass0"
 	base_icon_state = "grass"
-	baseturfs = /turf/open/floor/plating/sandy_dirt
+	baseturfs = /turf/open/misc/sandy_dirt
 	bullet_bounce_sound = null
 	footstep = FOOTSTEP_GRASS
 	barefootstep = FOOTSTEP_GRASS
@@ -30,3 +30,21 @@
 
 /turf/open/misc/grass/lavaland
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+
+/turf/open/misc/sandy_dirt
+	gender = PLURAL
+	name = "dirt"
+	desc = "Upon closer examination, it's still dirt."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "sand"
+	base_icon_state = "sand"
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = FALSE
+
+/turf/open/misc/sandy_dirt/break_tile()
+	. = ..()
+	icon_state = "sand_damaged"

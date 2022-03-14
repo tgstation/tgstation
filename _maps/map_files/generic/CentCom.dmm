@@ -934,7 +934,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "dT" = (
 /obj/structure/table/wood/fancy/royalblue,
@@ -1063,7 +1063,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "ev" = (
 /obj/machinery/photocopier,
@@ -1683,7 +1683,7 @@
 /turf/open/floor/plating/asteroid/snow/airless,
 /area/syndicate_mothership)
 "hr" = (
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "hw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -13932,7 +13932,7 @@
 /area/centcom/supply)
 "Nj" = (
 /obj/effect/turf_decal/siding/wood,
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "Nk" = (
 /obj/machinery/door/airlock/centcom{
@@ -14582,7 +14582,7 @@
 /area/wizard_station)
 "Qt" = (
 /obj/item/flashlight/lantern,
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "Qu" = (
 /obj/structure/window/paperframe{
@@ -16905,7 +16905,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/turf/open/floor/plating/sandy_dirt,
+/turf/open/misc/sandy_dirt,
 /area/centcom/holding)
 "ZQ" = (
 /obj/effect/turf_decal/tile/brown,

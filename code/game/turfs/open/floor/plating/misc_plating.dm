@@ -195,22 +195,6 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-/turf/open/floor/plating/sandy_dirt
-	gender = PLURAL
-	name = "dirt"
-	desc = "Upon closer examination, it's still dirt."
-	icon_state = "sand"
-	base_icon_state = "sand"
-	bullet_bounce_sound = null
-	footstep = FOOTSTEP_SAND
-	barefootstep = FOOTSTEP_SAND
-	clawfootstep = FOOTSTEP_SAND
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
-
-/turf/open/floor/plating/sandy_dirt/setup_broken_states()
-	return list("sand_damaged")
-
 /turf/open/floor/plating/lavaland_atmos
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
