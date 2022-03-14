@@ -3,7 +3,7 @@
 
 /obj/item/organ/brain/on_life()
 	. = ..()
-  var/mob/living/carbon/C = owner
+	var/mob/living/carbon/C = owner
 	if(C.passiveHeal)
 		passiveBrainHeal()
 
