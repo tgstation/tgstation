@@ -22,6 +22,17 @@
 	if(is_operational)
 		begin_processing()
 
+	if(SSmapping.level_trait(z, ZTRAIT_STATION))
+		var/area_name = get_area_name(src, format_text = TRUE)
+		if(!(area_name in GLOB.recharging_station_area_names))
+			GLOB.recharging_station_area_names += area_name
+
+/obj/machinery/recharge_station/Destroy()
+	if(SSmapping.level_trait(z, ZTRAIT_STATION))
+		var/area_name = get_area_name(src, format_text = TRUE)
+		if(area_name in GLOB.recharging_station_area_names)
+			GLOB.recharging_station_area_names -= area_name
+	return ..()
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0

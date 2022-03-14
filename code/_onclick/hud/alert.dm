@@ -609,10 +609,24 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "empty_cell"
 
+/atom/movable/screen/alert/emptycell/Initialize()
+	. = ..()
+	if(length(GLOB.recharging_station_area_names))
+		desc = "Unit's power cell is running low. Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
+	else
+		desc = "Unit's power cell is running low. Recharging stations are not available. Better beg someone to build one!"
+
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low. Recharging stations are available in robotics, the dormitory bathrooms, and the AI satellite."
 	icon_state = "low_cell"
+
+/atom/movable/screen/alert/lowcell/Initialize()
+	. = ..()
+	if(length(GLOB.recharging_station_area_names))
+		desc = "Unit's power cell is running low. Recharging stations are available in [english_list(GLOB.recharging_station_area_names)]."
+	else
+		desc = "Unit's power cell is running low. Recharging stations are not available. Better beg someone to build one!"
 
 //Ethereal
 
