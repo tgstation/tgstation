@@ -1597,7 +1597,7 @@
 /area/centcom/holding)
 "gW" = (
 /obj/item/flashlight/lantern,
-/turf/open/floor/plating/ironsand{
+/turf/open/misc/ironsand{
 	color = "#525252";
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -13964,7 +13964,7 @@
 /turf/open/floor/wood,
 /area/centcom/admin)
 "NB" = (
-/turf/open/floor/plating/ironsand{
+/turf/open/misc/ironsand{
 	color = "#525252";
 	initial_gas_mix = "TEMP=2.7"
 	},
@@ -16374,7 +16374,7 @@
 /area/centcom/supplypod)
 "XU" = (
 /obj/structure/flora/rock/pile,
-/turf/open/floor/plating/ironsand{
+/turf/open/misc/ironsand{
 	color = "#525252";
 	initial_gas_mix = "TEMP=2.7"
 	},

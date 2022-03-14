@@ -90,30 +90,6 @@
 /turf/open/floor/plating/beach/sand/coastline_b/setup_broken_states()
 	return list("sandwater_b")
 
-/turf/open/floor/plating/ironsand
-	gender = PLURAL
-	name = "iron sand"
-	desc = "Like sand, but more <i>iron</i>."
-	icon_state = "ironsand1"
-	base_icon_state = "ironsand1"
-	footstep = FOOTSTEP_SAND
-	barefootstep = FOOTSTEP_SAND
-	clawfootstep = FOOTSTEP_SAND
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
-/turf/open/floor/plating/ironsand/setup_broken_states()
-	return list("ironsand1")
-
-/turf/open/floor/plating/ironsand/Initialize(mapload)
-	. = ..()
-	icon_state = "ironsand[rand(1,15)]"
-
-/turf/open/floor/plating/ironsand/burn_tile()
-	return
-
-/turf/open/floor/plating/ironsand/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	return
-
 /turf/open/floor/plating/ice
 	name = "ice sheet"
 	desc = "A sheet of solid ice. Looks slippery."

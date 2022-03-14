@@ -34,7 +34,7 @@
 /obj/effect/decal/fakelattice{
 	density = 0
 	},
-/turf/open/floor/plating/ironsand,
+/turf/open/misc/ironsand,
 /area/heretic_sacrifice/rust)
 "fh" = (
 /obj/structure/cable,
@@ -71,7 +71,7 @@
 "mb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/ironsand,
+/turf/open/misc/ironsand,
 /area/heretic_sacrifice/rust)
 "mG" = (
 /obj/effect/turf_decal/weather,
@@ -133,7 +133,7 @@
 /obj/effect/decal/fakelattice{
 	density = 0
 	},
-/turf/open/floor/plating/ironsand,
+/turf/open/misc/ironsand,
 /area/heretic_sacrifice/rust)
 "pN" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -282,7 +282,7 @@
 /obj/effect/decal/fakelattice{
 	density = 0
 	},
-/turf/open/floor/plating/ironsand,
+/turf/open/misc/ironsand,
 /area/heretic_sacrifice/rust)
 "AO" = (
 /turf/open/floor/fakespace,
@@ -341,7 +341,7 @@
 	},
 /area/heretic_sacrifice/ash)
 "ER" = (
-/turf/open/floor/plating/ironsand,
+/turf/open/misc/ironsand,
 /area/heretic_sacrifice/rust)
 "Fd" = (
 /turf/closed/indestructible/riveted,
@@ -395,7 +395,7 @@
 /area/heretic_sacrifice/ash)
 "Je" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/ironsand,
+/turf/open/misc/ironsand,
 /area/heretic_sacrifice/rust)
 "Jy" = (
 /obj/structure/stone_tile/cracked{
