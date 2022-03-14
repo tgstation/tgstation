@@ -4507,13 +4507,6 @@
 	},
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
-"qM" = (
-/obj/effect/light_emitter{
-	set_cap = 1;
-	set_luminosity = 4
-	},
-/turf/open/floor/plating/asteroid/snow/airless,
-/area/syndicate_mothership/control)
 "qN" = (
 /obj/structure/urinal/directional/north,
 /turf/open/floor/iron/freezer,
@@ -5200,9 +5193,6 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/syndicate_mothership/control)
-"tg" = (
-/turf/closed/indestructible/rock/snow,
 /area/syndicate_mothership/control)
 "th" = (
 /obj/structure/closet/cardboard,
@@ -33803,7 +33793,7 @@ mA
 hl
 hl
 pG
-qM
+kt
 ng
 qO
 OA
@@ -34060,7 +34050,7 @@ mz
 hl
 hl
 pG
-qM
+kt
 nz
 pY
 qP
@@ -34317,7 +34307,7 @@ hl
 hl
 mA
 kt
-qM
+kt
 ng
 ng
 ng
@@ -34574,8 +34564,8 @@ mA
 mz
 hl
 hl
-qM
-tg
+kt
+hh
 aa
 ng
 ng
