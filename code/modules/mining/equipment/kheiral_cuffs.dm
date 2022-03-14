@@ -52,12 +52,16 @@
 	remove_kheiral_network(user)
 
 /// Enables the GPS and adds the multiz trait
-/obj/item/kheiral_cuffs/proc/connect_kheiral_network(mob/user)
+/obj/item/kheiral_cuffs/proc/connect_kheiral_network(mob/living/user)
 	if(gps_enabled)
 		return
 	if(!on_wrist || !far_from_home)
 		return
-	AddComponent(/datum/component/gps, "*[user.name]'s Kheiral Link")
+	var/gps_name = "Unknown"
+	var/obj/item/card/id/id_card = user.get_idcard(hand_first = FALSE)
+	if(id_card)
+		gps_name = id_card.registered_name
+	AddComponent(/datum/component/gps, "*[gps_name]'s Kheiral Link")
 	balloon_alert(user, "GPS activated")
 	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
 	gps_enabled = TRUE
