@@ -3,7 +3,7 @@
 
 /obj/item/organ/brain/on_life()
 	. = ..()
-	var/mob/living/carbon/C = owner
+  var/mob/living/carbon/C = owner
 	if(C.passiveHeal)
 		passiveBrainHeal()
 
@@ -18,3 +18,11 @@
 		if(!brainHealFactor)	//allow override if brainHealFactor is manually defined
 			brainHealFactor = (1 + (damage * (damage / (maxHealth / 2)))) / maxHealth	//higher healing rate the more damage the brain has, so to fully heal you really should get mannitol. 190 damage = 1.81 healed, 150 damage = 1.13 healed, 100 damage = 0.505 healed, 50 damage = 0.13 healed, 10 damage = 0.01 healed
 		C.adjustOrganLoss(ORGAN_SLOT_BRAIN, -brainHealFactor)   //hippie end, passive healing
+
+/obj/item/organ/brain/transfer_identity(mob/living/L)	//hippie start, re-add cloning
+	..()
+	if(HAS_TRAIT(L, TRAIT_BADDNA))
+		brainmob.status_traits[TRAIT_BADDNA] = L.status_traits[TRAIT_BADDNA]
+		var/obj/item/organ/zombie_infection/ZI = L.getorganslot(ORGAN_SLOT_ZOMBIE)
+		if(ZI)
+			brainmob.set_species(ZI.old_species)	//For if the brain is cloned
