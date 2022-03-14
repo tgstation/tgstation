@@ -61934,7 +61934,6 @@
 /turf/open/floor/iron/dark,
 /area/security/range)
 "uBE" = (
-/obj/machinery/keycard_auth/directional/west,
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/machinery/computer/apc_control,
