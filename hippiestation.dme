@@ -3406,7 +3406,6 @@
 #include "hippiestation\code\controllers\subsystem\ticker.dm"
 #include "hippiestation\code\game\sound.dm"
 #include "hippiestation\code\modules\atmospherics\machinery\components\unary_devices\cryo.dm"
-#include "hippiestation\code\modules\mob\living\brain\brain_item.dm"
 #include "hippiestation\code\modules\mob\living\carbon\carbon.dm"
 #include "hippiestation\code\modules\mob\living\carbon\carbon_defines.dm"
 #include "hippiestation\code\modules\mob\living\carbon\life.dm"
