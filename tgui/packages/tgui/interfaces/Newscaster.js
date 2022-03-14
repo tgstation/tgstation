@@ -27,6 +27,7 @@ export const Newscaster = (props, context) => {
       height={560}>
       <NewscasterChannelCreation />
       <NewscasterCommentCreation />
+      <NewscasterWantedScreen />
       <Window.Content scrollable>
         <Stack fill vertical>
           <Stack.Item>
@@ -196,6 +197,79 @@ const NewscasterCommentCreation = (props, context) => {
   );
 };
 
+const NewscasterWantedScreen = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    viewing_wanted,
+    photo_data,
+    security_mode,
+    wanted,
+    criminal_name,
+    crime_description,
+  } = data;
+  if (!viewing_wanted) {
+    return null;
+  }
+  return (
+    <Modal
+      textAlign="center"
+      mr={1.5}
+      width={25}>
+      <Stack vertical>
+        <Stack.Item>
+          <Box bold color="red">
+            Active Wanted Issue:
+          </Box>
+          <Box italic>
+            {wanted.author ? "Posted by {wanted.author}." : "N/A"}
+          </Box>
+          <Section>
+            <Button
+              content={"Criminal Name:"}
+              disabled={!security_mode}
+              onClick={() => act('setCriminalName')} />
+            {criminal_name ? criminal_name : " N/A"}
+          </Section>
+        </Stack.Item>
+        <Stack.Item>
+          <Section>
+            <Button
+              content={"Criminal Activity:"}
+              disabled={!security_mode}
+              onClick={() => act('setCrimeData')} />
+            {crime_description ? crime_description : " N/A"}
+          </Section>
+        </Stack.Item>
+        <Stack.Item>
+          <Box
+            as="img"
+            src={wanted.image} />
+          <Section>
+            <Button
+              icon="camera"
+              selected={photo_data}
+              disabled={!security_mode}
+              content={photo_data ? "Remove photo" : "Attach photo"}
+              onClick={() => act('togglePhoto')} />
+          </Section>
+        </Stack.Item>
+        <Stack.Item>
+          <Section>
+            <Button
+              content={"Set Wanted Issue"}
+              disabled={!security_mode}
+              onClick={() => act('submitWantedIssue')} />
+            <Button
+              content={"Close"}
+              color="red"
+              onClick={() => act('cancelCreation')} />
+          </Section>
+        </Stack.Item>
+      </Stack>
+    </Modal>
+  );
+};
+
 const NewscasterContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
@@ -311,12 +385,22 @@ const NewscasterChannelSelector = (props, context) => {
   const {
     channels = [],
     viewing_channel,
+    security_mode,
+    active_wanted_issue,
   } = data;
   return (
     <Section
       minHeight="100%"
       width={(window.innerWidth - 410) + "px"}>
       <Tabs vertical>
+        <Tabs.Tab
+          pt={0.75}
+          pb={0.75}
+          mr={1}
+          textColor="white"
+          onClick={() => act('toggleWanted')}>
+          Wanted Issue
+        </Tabs.Tab>
         {channels.map(channel => (
           <Tabs.Tab
             key={channel.index}

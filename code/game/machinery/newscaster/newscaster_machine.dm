@@ -31,6 +31,12 @@
 	var/creating_channel = FALSE
 	///Is the current user creating a new comment at the moment?
 	var/creating_comment = FALSE
+	///Is the current user editing or viewing a new wanted issue at the moment?
+	var/viewing_wanted  = FALSE
+	///What is the user submitted, criminal name for the new wanted issue?
+	var/criminal_name
+	///What is the user submitted, crime description for the new wanted issue?
+	var/crime_description
 	///What is the current, in-creation channel's name going to be?
 	var/channel_name
 	///What is the current, in-creation channel's description going to be?
@@ -81,7 +87,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			. += mutable_appearance(icon, "[base_icon_state]_alert")
 			. += emissive_appearance(icon, "[base_icon_state]_alert", alpha = src.alpha)
 
-	var/hp_percent = atom_integrity * 100 /max_integrity
+	var/hp_percent = atom_integrity * 100 / max_integrity
 	switch(hp_percent)
 		if(75 to 100)
 			return
@@ -135,6 +141,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["photo_data"] = !isnull(current_image)
 	data["creating_channel"] = creating_channel
 	data["creating_comment"] = creating_comment
+
+	//Here is all the UI_data sent about the current wanted issue, as well as making a new one in the UI.
+	data["viewing_wanted"] = viewing_wanted
+	data["active_wanted_issue"] = !isnull(GLOB.news_network.wanted_issue?.active)
+	data["criminal_name"] = criminal_name
+	data["crime_description"] = crime_description
+	var/list/wanted_info = list()
+	if(GLOB.news_network.wanted_issue)
+		wanted_info = list(list(
+			"active" = GLOB.news_network.wanted_issue.active,
+			"criminal" = GLOB.news_network.wanted_issue.criminal,
+			"crime" = GLOB.news_network.wanted_issue.body,
+			"image" = GLOB.news_network.wanted_issue.img,
+			"author" = GLOB.news_network.wanted_issue.scannedUser,
+		))
 
 	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
@@ -190,6 +211,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	//We send all the information about all channels and all messages in existance.
 	data["channels"] = channel_list
 	data["messages"] = message_list
+	data["wanted"] = wanted_info
 
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
@@ -267,6 +289,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if("cancelCreation")
 			creating_channel = FALSE
 			creating_comment = FALSE
+			viewing_wanted = FALSE
 			return TRUE
 
 		if("storyCensor")
@@ -334,6 +357,33 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("createComment")
 			create_comment()
+			return TRUE
+
+		if("toggleWanted")
+			viewing_wanted = TRUE
+			alert = FALSE
+			update_appearance()
+			return TRUE
+
+		if("setCriminalName")
+			var/temp_name = tgui_input_text(usr, "Write the Criminal's Name", "Warrent Alert Handler", "John Doe", MAX_NAME_LEN, multiline = FALSE)
+			if(!temp_name)
+				return TRUE
+			criminal_name = temp_name
+			return TRUE
+
+		if("setCrimeData")
+			var/temp_desc = tgui_input_text(usr, "Write the Criminal's Crimes", "Warrent Alert Handler", "Unknown", MAX_BROADCAST_LEN, multiline = TRUE)
+			if(!temp_desc)
+				return TRUE
+			crime_description = temp_desc
+			return TRUE
+
+		if("submitWantedIssue")
+			if(!crime_description || !criminal_name)
+				return TRUE
+			GLOB.news_network.submitWanted(criminal_name, crime_description, current_user?.account_holder, current_image, adminMsg = FALSE, newMessage = TRUE)
+			current_image = null
 			return TRUE
 
 		if("printNewspaper")
@@ -414,7 +464,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			paper_remaining ++
 			to_chat(user, span_notice("You insert the [I] into \the [src]! It now holds [paper_remaining] sheets of paper."))
 			qdel(I)
-		return ..()
+			return
+	return ..()
 
 /obj/machinery/newscaster/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
