@@ -1148,7 +1148,7 @@
 	. = TRUE
 
 /datum/reagent/consumable/lean
-	name = "Lean"
+	name = "Funky Cold Purple Drank"
 	description = "The drank that makes you go wheezy."
 	color = "#DE55ED"
 	quality = DRINK_NICE
