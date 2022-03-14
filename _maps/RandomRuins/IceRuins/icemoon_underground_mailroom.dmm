@@ -412,7 +412,7 @@
 /area/ruin/powered/mailroom)
 "PQ" = (
 /obj/machinery/door/keycard/icebox/processing,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/ruin/powered/mailroom)
 "Qb" = (
 /obj/structure/closet/crate/mail{

@@ -45,7 +45,7 @@
 	. = ..()
 	icon_state = "[initial(icon_state)]0"
 
-/turf/open/floor/plating/grass/jungle
+/turf/open/misc/grass/jungle
 	name = "jungle grass"
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	planetary_atmos = TRUE

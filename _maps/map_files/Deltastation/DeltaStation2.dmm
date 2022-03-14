@@ -16451,7 +16451,7 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/flora/rock/pile,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "cJP" = (
 /obj/structure/cable,
@@ -31363,7 +31363,7 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/grassybush,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "emw" = (
 /obj/structure/filingcabinet/security,
@@ -33541,7 +33541,7 @@
 "eQg" = (
 /obj/structure/flora/ausbushes/reedbush,
 /obj/structure/flora/ausbushes/leafybush,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "eQk" = (
 /obj/structure/table/wood,
@@ -37744,7 +37744,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/junglebush/large,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "fUJ" = (
 /obj/machinery/shieldgen,
@@ -39034,7 +39034,7 @@
 /obj/structure/flora/ausbushes/grassybush,
 /obj/structure/flora/rock/jungle,
 /obj/machinery/light/floor,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "gjY" = (
 /obj/machinery/door/firedoor,
@@ -46944,7 +46944,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/rock,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "ifw" = (
 /obj/effect/turf_decal/tile/neutral,
@@ -47131,7 +47131,7 @@
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hop)
 "ihO" = (
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "ihQ" = (
 /obj/structure/table/reinforced,
@@ -49005,7 +49005,7 @@
 "iFf" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/flora/junglebush/c,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "iFm" = (
 /obj/effect/decal/cleanable/dirt,
@@ -49117,7 +49117,7 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/rock/jungle,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "iGq" = (
 /obj/machinery/holopad,
@@ -49449,7 +49449,7 @@
 "iMi" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/flora/ausbushes/leafybush,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "iMo" = (
 /obj/machinery/door/airlock/maintenance_hatch{
@@ -55074,7 +55074,7 @@
 "kjb" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "kjm" = (
 /obj/machinery/airalarm/directional/east,
@@ -56765,7 +56765,7 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/rock/pile,
 /obj/machinery/light/floor,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "kFg" = (
 /obj/structure/table/reinforced,
@@ -64887,7 +64887,7 @@
 "mxH" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "mxI" = (
 /obj/structure/table/wood/fancy,
@@ -75781,7 +75781,7 @@
 /obj/structure/flora/ausbushes/genericbush,
 /obj/structure/flora/ausbushes/pointybush,
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "pnb" = (
 /obj/effect/turf_decal/tile/purple,
@@ -91209,7 +91209,7 @@
 /area/maintenance/space_hut/observatory)
 "tgz" = (
 /obj/structure/flora/junglebush/c,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "tgL" = (
 /obj/machinery/light_switch/directional/east{
@@ -91546,7 +91546,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/grassybush,
 /obj/machinery/light/floor,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "tkH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -92631,7 +92631,7 @@
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/flora/ausbushes,
 /obj/structure/flora/junglebush,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "tAv" = (
 /obj/machinery/light_switch/directional/north,
@@ -98856,7 +98856,7 @@
 "veM" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/flora/ausbushes/lavendergrass,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "veP" = (
 /obj/structure/cable,
@@ -108318,7 +108318,7 @@
 "xBx" = (
 /obj/structure/flora/tree/jungle,
 /obj/structure/flora/ausbushes/fullgrass,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "xBy" = (
 /obj/structure/cable,
@@ -108380,7 +108380,7 @@
 "xCw" = (
 /obj/structure/flora/ausbushes/fernybush,
 /obj/structure/flora/ausbushes/leafybush,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "xCH" = (
 /obj/effect/decal/cleanable/dirt,
@@ -110183,7 +110183,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/machinery/light/floor,
-/turf/open/floor/plating/grass,
+/turf/open/misc/grass,
 /area/hallway/primary/fore)
 "ybi" = (
 /turf/open/floor/iron/grimy,
