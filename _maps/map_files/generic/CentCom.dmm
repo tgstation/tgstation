@@ -1328,7 +1328,7 @@
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
@@ -8475,7 +8475,7 @@
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/two)
 "zv" = (
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
@@ -11063,7 +11063,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
@@ -13564,20 +13564,20 @@
 /area/awaymission/errorroom)
 "LY" = (
 /obj/item/rupee,
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
 /area/awaymission/errorroom)
 "LZ" = (
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
 /area/awaymission/errorroom)
 "Ma" = (
 /obj/effect/landmark/error,
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
@@ -13588,7 +13588,7 @@
 	icon_state = "ladder10";
 	invisibility = 100
 	},
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0
 	},
@@ -13764,7 +13764,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
@@ -14140,7 +14140,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
@@ -15759,7 +15759,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
@@ -16419,7 +16419,7 @@
 /obj/structure/flora/rock/pile/largejungle{
 	pixel_y = -3
 	},
-/turf/open/floor/plating/ashplanet/wateryrock{
+/turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15"
 	},
 /area/centcom/holding)
