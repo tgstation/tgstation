@@ -20,6 +20,6 @@
 
 /mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror/death(gibbed)
 	var/turf/death_turf = get_turf(src)
-	death_turf.TakeTemperature(-20)
+	death_turf.TakeTemperature(-40)
 
 	return ..()
