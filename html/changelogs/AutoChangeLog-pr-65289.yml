@@ -1,0 +1,4 @@
+author: "Nari Harimoto"
+delete-after: True
+changes: 
+  - qol: "Each Map now comes with a standard amount of gas cans in Ordanance Storage (except kilo which gets slightly less, because Kilo is too small) so you do not need to have to learn vastly different mixing methods per map, removed stored co2 as it is not used"
