@@ -12,7 +12,6 @@
 	timeSinceDamaged = world.time
 
 /obj/item/organ/brain/proc/passiveBrainHeal(var/brainHealFactor, var/extraDelay = 0)	//healing brain damage, inverse curve so higher damage = faster healing rate. can override heal factor to give a different / faster formula. extraDelay to specify extra or less time before being healed if you were damaged recently. -50 = 0 second delay for healing if you got brain damaged
-	. = ..()
 	var/mob/living/carbon/C = owner
 	if(world.time > timeSinceDamaged + 50 + extraDelay)	//start brain healing *only* if it has been more than 5 seconds since last damaged, plus extraDelay
 		if(!brainHealFactor)	//allow override if brainHealFactor is manually defined

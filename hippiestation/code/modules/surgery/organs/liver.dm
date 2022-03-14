@@ -5,8 +5,7 @@
 		passiveLiverHeal()
 
 /obj/item/organ/liver/proc/passiveLiverHeal(var/toxinHealFactor)	//healing toxin damage and managing liver damage. parse a number or formula for toxinHealFactor if you want to override the default
-	. = ..()    //hippie end, passive healing
-	var/mob/living/carbon/C = owner
+	var/mob/living/carbon/C = owner	//hippie end, passive healing
 	if(C.getToxLoss())	//don't bother if there isn't any toxin damage?
 		if((maxHealth - damage) > (maxHealth / 5))	//don't trade toxloss for organ damage if the poor liver is already hopelessly damaged
 			if(!toxinHealFactor)	//allow override if toxinHealFactor is manually defined

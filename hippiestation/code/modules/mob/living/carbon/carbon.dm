@@ -1,6 +1,5 @@
 /mob/living/carbon/proc/passiveFleshHeal(var/bruteHealFactor, var/burnHealFactor, var/calculateMissing = TRUE)  //healing brute & burn damage, parse in bruteHealFactor or burnHealFactor if you want to override the default formula. set calculateMissing to false if you don't want the other type of damage to get healed, e.g. you get super fast brute damage healing but cant heal burn as a resul
-	. = ..()    //hippie start, passive healing
-	var/list/parts = get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)
+	var/list/parts = get_damaged_bodyparts(1,1, null, BODYPART_ORGANIC)	//hippie start, passive healing
 	var/generalHealFactor = 0
 	var/sendHealMessage = TRUE	//don't want to send the message more than once in one go
 	if(!parts.len)	//don't bother wasting cycles on this if there's nothing to even heal
