@@ -210,21 +210,20 @@
 	if(!watched_turfs)
 		watched_turfs = CalculateWatchedTurfs()
 	for (var/turf/checked_turf in watched_turfs)
-		if(checked_turf.density)
-			continue
-		var/datum/gas_mixture/environment = checked_turf.return_air()
-		var/result
+		if(!checked_turf.density)
+			var/datum/gas_mixture/environment = checked_turf.return_air()
+			var/result
 
-		if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			result = FIRELOCK_ALARM_TYPE_HOT
-		if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
-			result = FIRELOCK_ALARM_TYPE_COLD
-		if(!result && alarm_type)
-			start_deactivation_process()
-			return
-		else if(result && !alarm_type)
-			start_activation_process(result)
-			return
+			if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+				result = FIRELOCK_ALARM_TYPE_HOT
+			if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+				result = FIRELOCK_ALARM_TYPE_COLD
+			if(!result && alarm_type)
+				start_deactivation_process()
+				return
+			else if(result && !alarm_type)
+				start_activation_process(result)
+				return
 /**
  * Begins activation process of us and our neighbors.
  *
