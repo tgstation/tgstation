@@ -94,6 +94,9 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
+/obj/item/screwdriver/nuke/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
+
 /obj/item/paper/guides/antag/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
 	<ul>\
