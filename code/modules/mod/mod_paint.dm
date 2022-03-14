@@ -85,10 +85,10 @@
 			for(var/color_value in current_color)
 				total_color_value += color_value
 				if(color_value > MODPAINT_MAX_COLOR_VALUE)
-					balloon_alert(usr, "one of colors too high! ([color_value*100]%/[MODPAINT_MAX_COLOR_VALUE]%")
+					balloon_alert(usr, "one of colors too high! ([color_value*100]%/[MODPAINT_MAX_COLOR_VALUE*100]%")
 					return
 				if(color_value < MODPAINT_MIN_COLOR_VALUE)
-					balloon_alert(usr, "one of colors too low! ([color_value*100]%/[MODPAINT_MIN_COLOR_VALUE]%")
+					balloon_alert(usr, "one of colors too low! ([color_value*100]%/[MODPAINT_MIN_COLOR_VALUE*100]%")
 					return
 			if(total_color_value > MODPAINT_MAX_OVERALL_COLORS)
 				balloon_alert(usr, "total colors too high! ([total_color_value*100]%/[MODPAINT_MAX_OVERALL_COLORS*100]%)")
