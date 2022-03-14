@@ -128,7 +128,7 @@
 		return
 	T.break_tile()
 
-/turf/open/floor/proc/break_tile()
+/turf/open/floor/break_tile()
 	if(broken)
 		return
 	icon_state = pick(broken_states)
