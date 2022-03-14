@@ -505,7 +505,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -1330,7 +1330,7 @@
 /area/service/chapel)
 "et" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -3428,7 +3428,7 @@
 /obj/structure/sign/plaques/kiddie/badger{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -6175,7 +6175,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -6851,7 +6851,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/plating/dirt/dark{
+/turf/open/misc/dirt/dark{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -7585,7 +7585,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -9297,7 +9297,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "DX" = (
-/turf/open/floor/plating/dirt/dark{
+/turf/open/misc/dirt/dark{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -10377,7 +10377,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -10543,7 +10543,7 @@
 /area/mine/living_quarters)
 "HO" = (
 /obj/structure/closet/crate/grave,
-/turf/open/floor/plating/dirt/dark{
+/turf/open/misc/dirt/dark{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -11610,7 +11610,7 @@
 /area/service/chapel)
 "Lc" = (
 /obj/structure/closet/crate/grave,
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -14589,7 +14589,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
@@ -16274,7 +16274,7 @@
 /turf/open/floor/grass,
 /area/medical/virology)
 "ZG" = (
-/turf/open/floor/plating/dirt{
+/turf/open/misc/dirt{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
