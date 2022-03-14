@@ -761,7 +761,7 @@
 		user.visible_message(span_warning("[user] tries to chug the cup of lean... There is no lean left!"))
 		return SHAME
 	else
-		user.say("I LOVE LEAN!!")
+		user.say("I LOVE LEAN!!", forced = "lean suicide"))
 		playsound(user.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 		reagents.trans_to(user, src.reagents.total_volume, transfered_by = user)
 		user.visible_message(span_suicide("[user] begins to chug the cup of lean and is starting to turn purple! It looks like [user.p_theyre()] trying to commit suicide!"))
