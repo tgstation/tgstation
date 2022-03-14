@@ -101,7 +101,7 @@
 			SStgui.close_uis(src)
 
 /obj/item/mod/paint/proc/paint_skin(obj/item/mod/control/mod, mob/user)
-	if(length(mod.theme.skins) <= 1)]
+	if(length(mod.theme.skins) <= 1)
 		balloon_alert(user, "no alternate skins!")
 		return
 	var/list/skins = list()
