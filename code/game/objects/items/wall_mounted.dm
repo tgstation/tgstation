@@ -58,24 +58,26 @@
 /obj/item/wallframe/proc/after_attach(obj/O)
 	transfer_fingerprints_to(O)
 
-/obj/item/wallframe/attackby(obj/item/W, mob/user, params)
-	..()
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		// For camera-building borgs
-		var/turf/T = get_step(get_turf(user), user.dir)
-		if(iswallturf(T))
-			T.attackby(src, user, params)
+/obj/item/wallframe/screwdriver_act(mob/living/user, obj/item/tool)
+	// For camera-building borgs
+	var/turf/T = get_step(get_turf(user), user.dir)
+	if(iswallturf(T))
+		T.attackby(src, user)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
 	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
 	var/glass_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/glass)]/MINERAL_MATERIAL_AMOUNT) //Replace this shit later
 
-	if(W.tool_behaviour == TOOL_WRENCH && (metal_amt || glass_amt))
-		to_chat(user, span_notice("You dismantle [src]."))
-		if(metal_amt)
-			new /obj/item/stack/sheet/iron(get_turf(src), metal_amt)
-		if(glass_amt)
-			new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
-		qdel(src)
+	if(!metal_amt && !glass_amt)
+		return FALSE
+	to_chat(user, span_notice("You dismantle [src]."))
+	if(metal_amt)
+		new /obj/item/stack/sheet/iron(get_turf(src), metal_amt)
+	if(glass_amt)
+		new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
+	qdel(src)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/item/electronics
 	desc = "Looks like a circuit. Probably is."

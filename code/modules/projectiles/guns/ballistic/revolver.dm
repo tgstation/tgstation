@@ -53,7 +53,7 @@
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(usr, "revolver_spin", 30, FALSE)
+		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
 		usr.visible_message(span_notice("[usr] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
 	else
 		verbs -= /obj/item/gun/ballistic/revolver/verb/spin

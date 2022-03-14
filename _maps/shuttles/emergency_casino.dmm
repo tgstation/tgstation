@@ -855,15 +855,15 @@
 "xh" = (
 /obj/structure/table,
 /obj/item/radio/intercom/directional/south,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/toxin{
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
 	pixel_x = -3
 	},
-/obj/item/storage/firstaid/o2{
+/obj/item/storage/medkit/o2{
 	pixel_x = 3;
 	pixel_y = -3
 	},

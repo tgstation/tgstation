@@ -448,10 +448,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/awaymission/challenge/main)
-"bE" = (
-/obj/item/storage/firstaid/fire,
-/turf/open/floor/iron/airless,
-/area/awaymission/challenge/main)
 "bF" = (
 /turf/open/floor/iron/white/corner{
 	initial_gas_mix = "TEMP=2.7"
@@ -673,19 +669,6 @@
 "cn" = (
 /turf/open/floor/circuit,
 /area/awaymission/challenge/end)
-"co" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/challenge/end)
 "cp" = (
 /obj/structure/window/reinforced{
 	dir = 8
@@ -856,20 +839,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
-"cZ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/awaymission/challenge/end)
 "db" = (
 /obj/structure/window/reinforced,
 /turf/open/floor/circuit,
@@ -892,11 +861,6 @@
 "df" = (
 /obj/structure/table,
 /obj/item/paper/pamphlet/gateway,
-/turf/open/floor/iron/dark,
-/area/awaymission/challenge/end)
-"dg" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 "dh" = (
@@ -981,6 +945,24 @@
 /obj/item/radio/intercom{
 	name = "Station Intercom (General)"
 	},
+/turf/open/floor/iron/dark,
+/area/awaymission/challenge/end)
+"zK" = (
+/obj/item/storage/medkit/fire,
+/turf/open/floor/iron/airless,
+/area/awaymission/challenge/main)
+"GX" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/challenge/end)
+"Io" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/iron/dark,
+/area/awaymission/challenge/end)
+"Kv" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/awaymission/challenge/end)
 
@@ -27098,7 +27080,7 @@ cd
 cd
 cd
 cx
-co
+GX
 cd
 cd
 cn
@@ -27355,7 +27337,7 @@ ce
 cd
 cd
 cx
-co
+GX
 cd
 cd
 cd
@@ -27601,7 +27583,7 @@ aH
 aH
 aH
 aH
-bE
+zK
 aH
 bI
 bM
@@ -28137,7 +28119,7 @@ cp
 cp
 cp
 dd
-co
+GX
 cJ
 cp
 bP
@@ -28894,7 +28876,7 @@ bG
 bQ
 bU
 cf
-co
+GX
 cd
 cd
 cd
@@ -28903,11 +28885,11 @@ cd
 cn
 cH
 cN
-co
-co
-co
+GX
+GX
+GX
 db
-dg
+Io
 cd
 cd
 cn
@@ -29151,7 +29133,7 @@ bG
 bG
 bU
 cf
-co
+GX
 cd
 cd
 cd
@@ -29160,9 +29142,9 @@ cd
 cn
 cH
 cN
-co
+GX
 cW
-cZ
+Kv
 dc
 dc
 dc
@@ -29417,9 +29399,9 @@ cd
 cn
 cH
 cN
-co
-co
-co
+GX
+GX
+GX
 db
 dh
 cd
@@ -30193,7 +30175,7 @@ cm
 cm
 cm
 dj
-co
+GX
 cK
 cm
 bP
@@ -30953,7 +30935,7 @@ bY
 bY
 cj
 cB
-co
+GX
 cd
 cd
 cd

@@ -66,17 +66,9 @@
 			to_chat(user, span_notice("You finish mopping."))
 			clean(T, user)
 
-/obj/item/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	if(insertable)
-		J.put_in_cart(src, user)
-		J.mymop=src
-		J.update_appearance()
-	else
-		to_chat(user, span_warning("You are unable to fit your [name] into the [J.name]."))
-		return
-
-/obj/item/mop/cyborg
-	insertable = FALSE
+/obj/item/mop/cyborg/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
 /obj/item/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal, complete with a condenser for self-wetting! Just think of all the viscera you will clean up with this!"
