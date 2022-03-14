@@ -8,6 +8,7 @@
 	desc = "This kit will repaint your MODsuit to something unique."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
+	interaction_flags_item = NONE
 	var/obj/item/mod/control/editing_mod
 	var/atom/movable/screen/color_matrix_proxy_view/proxy_view
 	var/list/current_color
@@ -41,6 +42,8 @@
 	return TRUE
 
 /obj/item/mod/paint/ui_interact(mob/user, datum/tgui/ui)
+	if(!editing_mod)
+		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "MODpaint", name)
@@ -98,13 +101,15 @@
 			SStgui.close_uis(src)
 
 /obj/item/mod/paint/proc/paint_skin(obj/item/mod/control/mod, mob/user)
-	if(length(mod.theme.skins) <= 1)
+	if(length(mod.theme.skins) <= 1)]
+		balloon_alert(user, "no alternate skins!")
 		return
 	var/list/skins = list()
 	for(var/mod_skin in mod.theme.skins)
 		skins[mod_skin] = image(icon = mod.icon, icon_state = "[mod_skin]-control")
 	var/pick = show_radial_menu(user, mod, skins, custom_check = CALLBACK(src, .proc/check_menu, mod, user), require_near = TRUE)
 	if(!pick)
+		balloon_alert(user, "no skin picked!")
 		return
 	mod.set_mod_skin(pick)
 
