@@ -75,8 +75,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/stability = 100
 	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
 	var/scrambled = FALSE
-	///Was the species forcefully changed from its original type?
-	var/forced_change = FALSE
 
 
 /datum/dna/New(mob/living/new_holder)
@@ -478,7 +476,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		var/datum/species/old_species = dna.species
 		dna.species = new_race
 		dna.species.on_species_gain(src, old_species, pref_load)
-		dna.sepcies.forced_change = TRUE
 		if(ishuman(src))
 			qdel(language_holder)
 			var/species_holder = initial(mrace.species_language_holder)
