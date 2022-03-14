@@ -113,10 +113,10 @@
 	if(!istype(weapon, /obj/item/card/id))
 		return ..()
 	var/obj/item/card/id/attacking_id = weapon
-	if(attacking_id.my_store && attacking_id.my_store == src)
-		dissipate()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	return ..()
+	if(!attacking_id.my_store || attacking_id.my_store != src)
+		return ..()
+	dissipate()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
