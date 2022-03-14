@@ -750,7 +750,7 @@
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
 
 /obj/item/reagent_containers/food/drinks/colocup/lean
-	name = "lean"
+	name = "Funky Cold Purple Drank"
 	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
 	icon_state = "lean"
 	list_reagents = list(/datum/reagent/consumable/lean = 20)
