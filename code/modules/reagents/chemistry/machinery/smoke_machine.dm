@@ -90,7 +90,7 @@
 
 /obj/machinery/smoke_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(default_unfasten_wrench(user, tool, time = 40))
+	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
 		on = FALSE
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return FALSE

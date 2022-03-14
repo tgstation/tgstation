@@ -148,7 +148,7 @@
 
 /obj/structure/mineral_door/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool, time = 40)
+	default_unfasten_wrench(user, tool, time = 4 SECONDS)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 

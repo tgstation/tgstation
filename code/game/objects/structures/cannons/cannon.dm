@@ -50,7 +50,7 @@
 	. = ..()
 	if(!anchorable_cannon)
 		return FALSE
-	default_unfasten_wrench(user, tool, time = 20)
+	default_unfasten_wrench(user, tool)
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/cannon/attackby(obj/item/used_item, mob/user, params)

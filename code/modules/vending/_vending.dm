@@ -434,7 +434,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	. = ..()
 	if(!panel_open)
 		return FALSE
-	if(default_unfasten_wrench(user, tool, time = 60))
+	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
 		unbuckle_all_mobs(TRUE)
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return FALSE

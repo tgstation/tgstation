@@ -8,7 +8,7 @@
 #define GUILLOTINE_HEAD_OFFSET      16 // How much we need to move the player to center their head
 #define GUILLOTINE_LAYER_DIFF       1.2 // How much to increase/decrease a head when it's buckled/unbuckled
 #define GUILLOTINE_ACTIVATE_DELAY   30 // Delay for executing someone
-#define GUILLOTINE_WRENCH_DELAY     10
+#define GUILLOTINE_WRENCH_DELAY (1 SECONDS)
 #define GUILLOTINE_ACTION_INUSE      5
 #define GUILLOTINE_ACTION_WRENCH     6
 
