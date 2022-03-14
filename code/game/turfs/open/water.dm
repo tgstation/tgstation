@@ -26,6 +26,4 @@
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
 
-/turf/open/water/beach/coastline_t/sandwater_inner
-	icon_state = "sandwater_inner"
 

@@ -1798,7 +1798,7 @@
 /area/centcom/holding)
 "hR" = (
 /obj/structure/chair/stool/directional/west,
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/centcom/holding)
 "hT" = (
 /obj/machinery/status_display/evac/directional/east,
@@ -7910,7 +7910,7 @@
 /turf/open/floor/carpet,
 /area/wizard_station)
 "xA" = (
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/centcom/holding)
 "xC" = (
 /obj/structure/chair/stool/bar/directional/west,
@@ -10690,7 +10690,7 @@
 /area/centcom/briefing/storage)
 "FC" = (
 /obj/structure/flora/rock/pile/largejungle,
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/centcom/holding)
 "FD" = (
 /obj/machinery/shower{
@@ -15946,7 +15946,7 @@
 /area/centcom/holding)
 "VU" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/centcom/holding)
 "VZ" = (
 /obj/structure/closet/secure_closet/ert_med,
@@ -16864,7 +16864,7 @@
 /obj/structure/musician/piano{
 	icon_state = "piano"
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/centcom/holding)
 "ZI" = (
 /obj/structure/chair/bronze{

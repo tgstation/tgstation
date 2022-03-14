@@ -23,7 +23,6 @@
 	. = ..()
 	icon_state = "alienpod[rand(1,9)]"
 
-
 /turf/open/floor/plating/abductor2
 	name = "alien plating"
 	icon_state = "alienplating"
@@ -38,59 +37,6 @@
 
 /turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	return
-
-/turf/open/floor/plating/beach
-	name = "beach"
-	icon = 'icons/misc/beach.dmi'
-	flags_1 = NONE
-	attachment_holes = FALSE
-	bullet_bounce_sound = null
-	footstep = FOOTSTEP_SAND
-	barefootstep = FOOTSTEP_SAND
-	clawfootstep = FOOTSTEP_SAND
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-
-/turf/open/floor/plating/beach/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	return
-
-/turf/open/floor/plating/beach/ex_act(severity, target)
-	return
-
-/turf/open/floor/plating/beach/sand
-	gender = PLURAL
-	name = "sand"
-	desc = "Surf's up."
-	icon_state = "sand"
-	base_icon_state = "sand"
-	baseturfs = /turf/open/floor/plating/beach/sand
-
-/turf/open/floor/plating/beach/sand/setup_broken_states()
-	return list("sand")
-
-/turf/open/floor/plating/beach/coastline_t
-	name = "coastline"
-	desc = "Tide's high tonight. Charge your batons."
-	icon_state = "sandwater_t"
-	base_icon_state = "sandwater_t"
-	baseturfs = /turf/open/floor/plating/beach/coastline_t
-
-/turf/open/floor/plating/beach/sand/coastline_t/setup_broken_states()
-	return list("sandwater_t")
-
-/turf/open/floor/plating/beach/coastline_b //need to make this water subtype.
-	name = "coastline"
-	icon_state = "sandwater_b"
-	base_icon_state = "sandwater_b"
-	baseturfs = /turf/open/floor/plating/beach/coastline_b
-	footstep = FOOTSTEP_LAVA
-	barefootstep = FOOTSTEP_LAVA
-	clawfootstep = FOOTSTEP_LAVA
-	heavyfootstep = FOOTSTEP_LAVA
-
-/turf/open/floor/plating/beach/sand/coastline_b/setup_broken_states()
-	return list("sandwater_b")
-
-
 
 /turf/open/floor/plating/snowed
 	name = "snowed-over plating"

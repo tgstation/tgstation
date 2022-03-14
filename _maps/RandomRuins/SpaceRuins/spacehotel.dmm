@@ -1473,7 +1473,7 @@
 /obj/structure/chair/plastic{
 	dir = 8
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/ruin/space/has_grav/hotel/pool)
 "mD" = (
 /obj/structure/table/wood/fancy/cyan,
@@ -1487,7 +1487,7 @@
 /turf/open/water/beach/coastline_t,
 /area/ruin/space/has_grav/hotel/pool)
 "mK" = (
-/turf/open/floor/plating/beach/coastline_b{
+/turf/open/misc/beach/coastline_b{
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/pool)
@@ -1502,7 +1502,7 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "mN" = (
-/turf/open/floor/plating/beach/coastline_t{
+/turf/open/misc/beach/coastline_t{
 	dir = 8
 	},
 /area/ruin/space/has_grav/hotel/pool)
@@ -2370,7 +2370,7 @@
 /area/ruin/space/has_grav/hotel)
 "wJ" = (
 /obj/structure/fluff/beach_umbrella/syndi,
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/ruin/space/has_grav/hotel/pool)
 "wK" = (
 /obj/effect/spawner/random/vending/snackvend,
@@ -2693,7 +2693,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "AJ" = (
 /obj/item/toy/beach_ball,
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/ruin/space/has_grav/hotel/pool)
 "AO" = (
 /obj/structure/chair/sofa/corp/left,
@@ -3930,7 +3930,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hotel/dock)
 "QG" = (
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/ruin/space/has_grav/hotel/pool)
 "QH" = (
 /obj/effect/turf_decal/siding/wood{
