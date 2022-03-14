@@ -8,7 +8,6 @@
 	desc = "This kit will repaint your MODsuit to something unique."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "paintkit"
-	interaction_flags_item = NONE
 	var/obj/item/mod/control/editing_mod
 	var/atom/movable/screen/color_matrix_proxy_view/proxy_view
 	var/list/current_color
@@ -86,16 +85,16 @@
 			for(var/color_value in current_color)
 				total_color_value += color_value
 				if(color_value > MODPAINT_MAX_COLOR_VALUE)
-					balloon_alert(usr, "one of colors too high!")
+					balloon_alert(usr, "one of colors too high! ([color_value*100]%/[MODPAINT_MAX_COLOR_VALUE]%")
 					return
 				if(color_value < MODPAINT_MIN_COLOR_VALUE)
-					balloon_alert(usr, "one of colors too low!")
+					balloon_alert(usr, "one of colors too low! ([color_value*100]%/[MODPAINT_MIN_COLOR_VALUE]%")
 					return
 			if(total_color_value > MODPAINT_MAX_OVERALL_COLORS)
-				balloon_alert(usr, "total colors too high!")
+				balloon_alert(usr, "total colors too high! ([total_color_value*100]%/[MODPAINT_MAX_OVERALL_COLORS*100]%)")
 				return
 			if(total_color_value < MODPAINT_MIN_OVERALL_COLORS)
-				balloon_alert(usr, "total colors too low!")
+				balloon_alert(usr, "total colors too low! ([total_color_value*100]%/[MODPAINT_MIN_OVERALL_COLORS*100]%)")
 				return
 			editing_mod.set_mod_color(current_color)
 			SStgui.close_uis(src)
