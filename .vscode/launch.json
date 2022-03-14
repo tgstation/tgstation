@@ -1,11 +1,17 @@
 {
   "version": "0.2.0",
   "configurations": [
+	  {
+		  "type": "byond",
+		  "request": "attach",
+		  "name": "Attach to Debugger",
+		  "port": 2448
+	  },
     {
       "type": "byond",
       "request": "launch",
       "name": "Launch DreamSeeker",
-      "preLaunchTask": "Build All",
+      "preLaunchTask": "dm: build - hippiestation.dme",
       "dmb": "${workspaceFolder}/${command:CurrentDMB}"
     }
   ]
