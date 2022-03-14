@@ -37,9 +37,10 @@
 	var/list/affecting_areas
 	///For the few times we affect only the area we're actually in. Set during Init. If we get moved, we don't update, but this is consistant with fire alarms and also kinda funny so call it intentional.
 	var/area/my_area
+	///List of watched turfs in 4 cardinal directions to monitor for atmos changes to auto open firelocks
+	var/list/turf/watched_turfs
 	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
 	var/being_held_open = FALSE
-
 	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
 	var/alarm_type = null
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
@@ -71,7 +72,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
-
+	CalculateWatchedTurfs()
 	check_atmos()
 
 	return INITIALIZE_HINT_LATELOAD
@@ -188,30 +189,40 @@
 		for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 			fire_panel.set_status()
 
+/obj/machinery/door/firedoor/proc/CalculateWatchedTurfs()
+	watched_turfs = list()
+	for(var/dir in GLOB.cardinals)
+		var/turf/checked_turf = get_step(get_turf(src),dir)
+		watched_turfs |= checked_turf
+	watched_turfs |= get_turf(src)
+
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
+	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
 		return
-	if(alarm_type)
+	if(alarm_type == FIRELOCK_ALARM_TYPE_GENERIC)
 		return
+	
 	for(var/area/place in affecting_areas)
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
 
-	var/turf/my_turf = source
-	if(!my_turf)
-		my_turf = get_turf(src)
+	if(!watched_turfs)
+		watched_turfs = CalculateWatchedTurfs()
+	for (var/turf/checked_turf in watched_turfs)
+		if(checked_turf.density)
+			continue
+		var/datum/gas_mixture/environment = checked_turf.return_air()
+		var/result
 
-	var/datum/gas_mixture/environment = my_turf.return_air()
-	var/result
-
-	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		result = FIRELOCK_ALARM_TYPE_HOT
-	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
-		result = FIRELOCK_ALARM_TYPE_COLD
-	if(!result)
-		return
-
-	start_activation_process(result)
+		if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			result = FIRELOCK_ALARM_TYPE_HOT
+		if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+			result = FIRELOCK_ALARM_TYPE_COLD
+		if(!result)
+			start_deactivation_process()
+			return
+		start_activation_process(result)
 
 /**
  * Begins activation process of us and our neighbors.
@@ -231,7 +242,21 @@
 	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
-
+/**
+ * Begins deactivation process of us and our neighbors.
+ *
+ * This proc will call reset() on every fire lock (including us) listed
+ * in the merge group datum. sets our alarm type to null, signifying no alarm.
+ */
+/obj/machinery/door/firedoor/proc/start_deactivation_process()
+	if(!alarm_type)
+		return //We're already inactive
+	alarm_type = null
+	soundloop.stop()
+	is_playing_alarm = FALSE
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
+		buddylock.reset()
 
 /**
  * Proc that handles activation of the firelock and all this details
@@ -560,6 +585,7 @@
 /obj/machinery/door/firedoor/border_only/Moved()
 	. = ..()
 	adjust_lights_starting_offset()
+	watched_turfs = list()
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
