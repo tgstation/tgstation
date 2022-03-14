@@ -70,7 +70,7 @@
 	dir = 4
 	},
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/grass/snow/actually_safe,
+/turf/open/misc/snow/actually_safe,
 /area/ruin/planetengi)
 "ay" = (
 /obj/effect/turf_decal/stripes/line{
@@ -113,7 +113,7 @@
 	dir = 4
 	},
 /obj/item/toy/snowball,
-/turf/open/floor/grass/snow/actually_safe,
+/turf/open/misc/snow/actually_safe,
 /area/ruin/planetengi)
 "aF" = (
 /obj/structure/cable,
@@ -167,7 +167,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 4
 	},
-/turf/open/floor/grass/snow/actually_safe,
+/turf/open/misc/snow/actually_safe,
 /area/ruin/planetengi)
 "aV" = (
 /obj/machinery/autolathe,
