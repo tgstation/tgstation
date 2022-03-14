@@ -367,6 +367,9 @@ GLOBAL_DATUM_INIT(data_core, /datum/datacore, new)
 		C = H.client
 	if(C)
 		P = C.prefs
-	return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
+	if (!H.dna.species.forced_change)
+		return get_flat_human_icon(null, J, P, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
+	else
+		return get_flat_human_icon(null, J, null, DUMMY_HUMAN_SLOT_MANIFEST, show_directions)
 
 #undef DUMMY_HUMAN_SLOT_MANIFEST
