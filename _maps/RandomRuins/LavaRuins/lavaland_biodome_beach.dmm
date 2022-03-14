@@ -192,11 +192,11 @@
 /turf/open/floor/plating/beach/coastline_b,
 /area/ruin/powered/beach)
 "bU" = (
-/turf/open/floor/plating/beach/water,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "bV" = (
 /obj/structure/flora/ausbushes/stalkybush,
-/turf/open/floor/plating/beach/water,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "bW" = (
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
@@ -230,7 +230,7 @@
 /area/ruin/powered/beach)
 "cz" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/beach/water,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "cE" = (
 /obj/effect/turf_decal/sand,
@@ -574,10 +574,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
-"rn" = (
-/obj/structure/chair/stool/bar/directional/north,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "rU" = (
@@ -940,7 +936,7 @@
 "EB" = (
 /obj/structure/flora/ausbushes/stalkybush,
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/beach/water,
+/turf/open/water/beach,
 /area/ruin/powered/beach)
 "EE" = (
 /obj/structure/dresser,

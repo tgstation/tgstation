@@ -77,7 +77,7 @@
 
 /obj/effect/baseturf_helper/beach/water
 	name = "water baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/water
+	baseturf = /turf/open/water/beach
 
 /obj/effect/baseturf_helper/lava
 	name = "lava baseturf editor"

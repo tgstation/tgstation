@@ -166,28 +166,6 @@
 /turf/open/floor/plating/beach/sand/coastline_b/setup_broken_states()
 	return list("sandwater_b")
 
-/turf/open/floor/plating/beach/water
-	gender = PLURAL
-	name = "water"
-	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
-	icon_state = "water"
-	base_icon_state = "water"
-	baseturfs = /turf/open/floor/plating/beach/water
-	footstep = FOOTSTEP_LAVA //placeholder, kinda.
-	barefootstep = FOOTSTEP_LAVA
-	clawfootstep = FOOTSTEP_LAVA
-	heavyfootstep = FOOTSTEP_LAVA
-
-/turf/open/floor/plating/beach/water/setup_broken_states()
-	return list("water")
-
-/turf/open/floor/plating/beach/coastline_t/sandwater_inner
-	icon_state = "sandwater_inner"
-	baseturfs = /turf/open/floor/plating/beach/coastline_t/sandwater_inner
-
-/turf/open/floor/plating/beach/water/coastline_t/sandwater_inner/setup_broken_states()
-	return list("sandwater_inner")
-
 /turf/open/floor/plating/ironsand
 	gender = PLURAL
 	name = "iron sand"
