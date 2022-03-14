@@ -209,9 +209,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	. = ..()
 	if(.)
 		return
-	//**************************
-	//	  Bounty Board Data
-	//**************************
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
@@ -501,17 +498,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		balloon_alert_to_viewers("out of paper!")
 		return TRUE
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
-	var/obj/item/newspaper/NEWSPAPER = new /obj/item/newspaper
-	for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
-		NEWSPAPER.news_content += FC
+	var/obj/item/newspaper/new_newspaper = new /obj/item/newspaper
+	for(var/datum/newscaster/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
+		new_newspaper.news_content += iterated_feed_channel
 	if(GLOB.news_network.wanted_issue.active)
-		NEWSPAPER.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
-		NEWSPAPER.wantedCriminal = GLOB.news_network.wanted_issue.criminal
-		NEWSPAPER.wantedBody = GLOB.news_network.wanted_issue.body
+		new_newspaper.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
+		new_newspaper.wantedCriminal = GLOB.news_network.wanted_issue.criminal
+		new_newspaper.wantedBody = GLOB.news_network.wanted_issue.body
 		if(GLOB.news_network.wanted_issue.img)
-			NEWSPAPER.wantedPhoto = GLOB.news_network.wanted_issue.img
-	NEWSPAPER.forceMove(drop_location())
-	NEWSPAPER.creationTime = GLOB.news_network.lastAction
+			new_newspaper.wantedPhoto = GLOB.news_network.wanted_issue.img
+	new_newspaper.forceMove(drop_location())
+	new_newspaper.creationTime = GLOB.news_network.lastAction
 	paper_remaining--
 
 /**
