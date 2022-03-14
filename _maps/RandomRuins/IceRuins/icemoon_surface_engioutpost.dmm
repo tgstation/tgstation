@@ -859,7 +859,7 @@
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 1
 	},
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/ruin/planetengi)
 "Nd" = (
 /obj/structure/girder/displaced,

@@ -99,7 +99,7 @@
 /turf/closed/mineral/random/snow,
 /area/ruin/unpowered/buried_library)
 "aw" = (
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/ruin/unpowered/buried_library)
 "ay" = (
 /obj/machinery/door/keycard/library,
@@ -113,7 +113,7 @@
 /area/ruin/unpowered/buried_library)
 "aA" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/ruin/unpowered/buried_library)
 "aB" = (
 /turf/open/floor/wood{
@@ -240,11 +240,11 @@
 "aX" = (
 /obj/structure/table/bronze,
 /obj/item/statuebust,
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/ruin/unpowered/buried_library)
 "aY" = (
 /obj/structure/table_frame/wood,
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/ruin/unpowered/buried_library)
 "aZ" = (
 /obj/structure/fluff/paper/stack,
@@ -394,11 +394,11 @@
 /obj/item/flashlight/lantern/jade{
 	on = 1
 	},
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/ruin/unpowered/buried_library)
 "bA" = (
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/ruin/unpowered/buried_library)
 "bB" = (
 /obj/structure/fluff/paper/stack,

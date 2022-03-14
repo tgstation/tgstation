@@ -90,50 +90,7 @@
 /turf/open/floor/plating/beach/sand/coastline_b/setup_broken_states()
 	return list("sandwater_b")
 
-/turf/open/floor/plating/ice
-	name = "ice sheet"
-	desc = "A sheet of solid ice. Looks slippery."
-	icon = 'icons/turf/floors/ice_turf.dmi'
-	icon_state = "ice_turf-0"
-	base_icon_state = "ice_turf-0"
-	initial_gas_mix = FROZEN_ATMOS
-	temperature = 180
-	planetary_atmos = TRUE
-	baseturfs = /turf/open/floor/plating/ice
-	slowdown = 1
-	attachment_holes = FALSE
-	bullet_sizzle = TRUE
-	footstep = FOOTSTEP_FLOOR
-	barefootstep = FOOTSTEP_HARD_BAREFOOT
-	clawfootstep = FOOTSTEP_HARD_CLAW
-	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
-/turf/open/floor/plating/ice/Initialize(mapload)
-	. = ..()
-	MakeSlippery(TURF_WET_PERMAFROST, INFINITY, 0, INFINITY, TRUE)
-
-/turf/open/floor/plating/ice/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	return
-
-/turf/open/floor/plating/ice/smooth
-	icon_state = "ice_turf-255"
-	base_icon_state = "ice_turf"
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
-	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_ICE)
-	canSmoothWith = list(SMOOTH_GROUP_FLOOR_ICE)
-
-/turf/open/floor/plating/ice/break_tile()
-	return
-
-/turf/open/floor/plating/ice/burn_tile()
-	return
-
-/turf/open/floor/plating/ice/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	slowdown = 0
-
-/turf/open/floor/plating/ice/icemoon/no_planet_atmos
-	planetary_atmos = FALSE
 
 /turf/open/floor/plating/snowed
 	name = "snowed-over plating"

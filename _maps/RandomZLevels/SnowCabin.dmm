@@ -975,7 +975,7 @@
 /turf/open/floor/plating/snowed/temperatre,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dj" = (
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "dk" = (
 /obj/structure/chair,
@@ -1205,11 +1205,11 @@
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dX" = (
 /mob/living/simple_animal/pet/penguin/emperor,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "dY" = (
 /mob/living/simple_animal/pet/penguin/baby,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "dZ" = (
 /obj/structure/chair{
@@ -1231,7 +1231,7 @@
 "ea" = (
 /obj/item/food/fishmeat/carp,
 /obj/item/food/fishmeat/carp,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/snowforest)
 "eb" = (
 /obj/structure/closet,
@@ -2863,7 +2863,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/cabin/snowforest)
 "hO" = (
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "hP" = (
 /obj/item/candle/infinite,
@@ -2899,7 +2899,7 @@
 	desc = "Shut up, we don't talk about him.";
 	name = "exploration squad Clown"
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "hV" = (
 /obj/structure/statue/snow/snowman{
@@ -2934,7 +2934,7 @@
 	pixel_x = 8;
 	toysay = "I. AM. ALIVE."
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "hX" = (
 /obj/item/clothing/suit/armor/vest/russian_coat{
@@ -2999,7 +2999,7 @@
 	name = "exploration squad Officer";
 	toysay = "We're top secret until we're not!"
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "ih" = (
 /obj/item/toy/figure/md{
@@ -3008,7 +3008,7 @@
 	pixel_x = -8;
 	toysay = "Guess I'll be useless until stuns are involved!"
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "ii" = (
 /turf/closed/indestructible/syndicate,
@@ -3035,7 +3035,7 @@
 	name = "exploraton squad Ripley";
 	pixel_y = 15
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "im" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3103,11 +3103,11 @@
 /area/awaymission/cabin/caves)
 "ix" = (
 /obj/effect/decal/cleanable/shreds,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "iy" = (
 /obj/item/paper/pamphlet/gateway,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "iz" = (
 /turf/closed/wall/ice,
@@ -3806,7 +3806,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "kx" = (
 /obj/effect/light_emitter{
@@ -4823,7 +4823,7 @@
 	name = "wooden box"
 	},
 /obj/item/fakeartefact,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "mR" = (
 /obj/effect/decal/cleanable/vomit/old,
@@ -4853,7 +4853,7 @@
 	speed = 7;
 	wander = 0
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "mU" = (
 /obj/effect/turf_decal/weather/snow,
@@ -4875,14 +4875,14 @@
 /area/awaymission/cabin/caves)
 "mY" = (
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "mZ" = (
 /obj/item/key/atv,
 /obj/effect/decal/remains/human{
 	color = "#72e4fa"
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "na" = (
 /obj/vehicle/ridden/atv{

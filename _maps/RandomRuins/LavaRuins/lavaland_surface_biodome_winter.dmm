@@ -62,7 +62,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/powered/snow_biodome)
 "ao" = (
-/turf/open/floor/plating/ice,
+/turf/open/misc/ice,
 /area/ruin/powered/snow_biodome)
 "ap" = (
 /obj/structure/flora/rock/icy,
@@ -210,7 +210,7 @@
 /area/ruin/powered/snow_biodome)
 "bv" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/plating/ice,
+/turf/open/misc/ice,
 /area/ruin/powered/snow_biodome)
 "bw" = (
 /obj/machinery/light/small/directional/west,
@@ -242,7 +242,7 @@
 /area/ruin/powered/snow_biodome)
 "bN" = (
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating/ice,
+/turf/open/misc/ice,
 /area/ruin/powered/snow_biodome)
 "dS" = (
 /obj/machinery/light/small/directional/south,

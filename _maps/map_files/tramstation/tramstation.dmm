@@ -41780,7 +41780,7 @@
 /area/security/prison)
 "ntZ" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/plating/icemoon,
+/turf/open/misc/icemoon,
 /area/engineering/atmos)
 "nuM" = (
 /obj/machinery/telecomms/receiver/preset_left,

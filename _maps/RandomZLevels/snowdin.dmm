@@ -7222,14 +7222,14 @@
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
 "tx" = (
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "ty" = (
 /mob/living/simple_animal/hostile/netherworld/blankbody{
 	desc = "It's Caleb Reed, but their flesh has an ashy texture, and their face is featureless save an eerie smile.";
 	name = "Caleb Reed"
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "tz" = (
 /mob/living/simple_animal/hostile/skeleton/ice,
@@ -7276,7 +7276,7 @@
 /turf/open/floor/plating/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tN" = (
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/outside)
 "tP" = (
 /obj/structure/barricade/wooden/snowed,
@@ -7296,31 +7296,31 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "tT" = (
 /obj/structure/fence{
 	pixel_x = 16
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/outside)
 "tU" = (
 /obj/structure/fence{
 	pixel_x = -16
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/outside)
 "tW" = (
 /obj/structure/fence{
 	pixel_x = 16
 	},
-/turf/open/floor/plating/ice,
+/turf/open/misc/ice,
 /area/awaymission/snowdin/outside)
 "tX" = (
 /obj/structure/fence{
 	pixel_x = -16
 	},
-/turf/open/floor/plating/ice,
+/turf/open/misc/ice,
 /area/awaymission/snowdin/outside)
 "tY" = (
 /turf/closed/wall,
@@ -7329,7 +7329,7 @@
 /turf/closed/wall/rust,
 /area/awaymission/snowdin/post/cavern1)
 "ua" = (
-/turf/open/floor/plating/ice,
+/turf/open/misc/ice,
 /area/awaymission/snowdin/outside)
 "ub" = (
 /obj/structure/bed,
@@ -7390,7 +7390,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/outside)
 "ur" = (
 /obj/machinery/door/airlock{
@@ -8006,14 +8006,6 @@
 	slowdown = 1
 	},
 /area/awaymission/snowdin/cave)
-"ww" = (
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/plating/asteroid/snow{
-	floor_variance = 0;
-	icon_state = "snow_dug";
-	slowdown = 1
-	},
-/area/awaymission/snowdin/cave)
 "wx" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
@@ -8497,7 +8489,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "xS" = (
 /obj/machinery/power/port_gen/pacman,
@@ -9942,11 +9934,11 @@
 /area/awaymission/snowdin/post/dorm)
 "Cz" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "CB" = (
 /obj/item/shard,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "CC" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -11775,7 +11767,7 @@
 "HN" = (
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "HO" = (
 /obj/effect/turf_decal/stripes/line,
@@ -13007,7 +12999,7 @@
 /area/awaymission/snowdin/post/minipost)
 "LE" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "LF" = (
 /mob/living/simple_animal/hostile/giant_spider/nurse/ice,
@@ -14019,14 +14011,6 @@
 	},
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
-"VS" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/plating/asteroid/snow{
-	floor_variance = 0;
-	icon_state = "snow_dug";
-	slowdown = 1
-	},
-/area/awaymission/snowdin/cave)
 "VU" = (
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
@@ -14040,7 +14024,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "VZ" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/ice/smooth,
+/turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/cave)
 "Wa" = (
 /obj/structure/cable,

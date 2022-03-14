@@ -267,7 +267,7 @@
 /turf/closed/wall,
 /area/ruin/powered)
 "xc" = (
-/turf/open/floor/plating/ice/icemoon,
+/turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "xN" = (
 /obj/structure/bed/dogbed{
@@ -536,13 +536,13 @@
 /area/icemoon/underground/explored)
 "Zw" = (
 /obj/item/reagent_containers/food/drinks/bottle/beer,
-/turf/open/floor/plating/ice/icemoon,
+/turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "Zx" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/plating/ice/icemoon,
+/turf/open/misc/ice/icemoon,
 /area/icemoon/underground/explored)
 "ZG" = (
 /obj/effect/decal/cleanable/dirt,
