@@ -1,7 +1,7 @@
 #define RISEN_MAX_HEALTH 125
 
 /datum/heretic_knowledge/limited_amount/risen_corpse
-	name = "Shattered Risen"
+	name = "Shattered Ritual"
 	desc = "Allows you to transmute a corpse with a soul, a pair of latex or nitrile gloves, and \
 		and any exosuit clothing (such as armor) to create a Shattered Risen. \
 		Shattered Risen are strong ghouls that have 125 health, but cannot hold items, \
@@ -148,16 +148,21 @@
 
 /datum/heretic_knowledge/summon/maid_in_mirror
 	name = "Maid in the Mirror"
-	desc = ""
-	gain_text = ""
+	desc = "Allows you to transmute five sheets of titanium, a flash, a suit of armor, and a pair of lungs \
+		to create a Maid in the Mirror. Maid in the Mirrors are decent combatants that can become incorporeal by \
+		phasing in and out of the mirror realm, serving as powerful scouts and ambushers."
+	gain_text = "Within each reflection, lies a gateway into an unimaginable world of colors never seen and \
+		people never met. The ascent is glass, and the walls are knives. Each step is blood, if you do not have a guide."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/void_pull,
 		/datum/heretic_knowledge/spell/furious_steel,
 	)
 	required_atoms = list(
-		/obj/item/knife = 1,
-		/obj/item/shard = 1,
-		/obj/item/paper = 1,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/clothing/suit/armor = 1,
+		/obj/item/assembly/flash = 1,
+		/obj/item/organ/lungs = 1,
 	)
 	cost = 1
 	route = PATH_SIDE
+	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/maid_in_the_mirror

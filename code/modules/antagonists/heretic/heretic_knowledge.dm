@@ -261,19 +261,41 @@
 /datum/heretic_knowledge/mark/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
+/**
+ * Signal proc for [COMSIG_HERETIC_MANSUS_GRASP_ATTACK].
+ *
+ * Whenever we cast mansus grasp on someone, apply our mark.
+ */
 /datum/heretic_knowledge/mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
 
 	create_mark(source, target)
 
+/**
+ * Signal proc for [COMSIG_HERETIC_BLADE_ATTACK].
+ *
+ * Whenever we attack someone with our blade, attempt to trigger any marks on them.
+ */
 /datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
 	trigger_mark(source, target)
 
+/**
+ * Creates the mark status effect on our target.
+ * This proc handles the instatiate and the application of the station effect,
+ * and returns the /datum/status_effect instance that was made.
+ *
+ * Can be overriden to set or pass in additional vars of the status effect.
+ */
 /datum/heretic_knowledge/mark/proc/create_mark(mob/living/source, mob/living/target)
 	return target.apply_status_effect(mark_type)
 
+/**
+ * Handles triggering the mark on the target.
+ *
+ * If there is no mark, returns FALSE. Returns TRUE if a mark was triggered.
+ */
 /datum/heretic_knowledge/mark/proc/trigger_mark(mob/living/source, mob/living/target)
 	var/datum/status_effect/eldritch/mark = target.has_status_effect(/datum/status_effect/eldritch)
 	if(!istype(mark))
@@ -300,18 +322,37 @@
 /datum/heretic_knowledge/blade_upgrade/on_lose(mob/user)
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_HERETIC_RANGED_BLADE_ATTACK))
 
+
+/**
+ * Signal proc for [COMSIG_HERETIC_BLADE_ATTACK].
+ *
+ * Apply any melee effects from hitting someone with our blade.
+ */
 /datum/heretic_knowledge/blade_upgrade/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
 	do_melee_effects(source, target, blade)
 
+/**
+ * Signal proc for [COMSIG_HERETIC_RANGED_BLADE_ATTACK].
+ *
+ * Apply any ranged effects from hitting someone with our blade.
+ */
 /datum/heretic_knowledge/blade_upgrade/proc/on_ranged_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
 	do_ranged_effects(source, target, blade)
 
+/**
+ * Overridable proc that invokes special effects
+ * whenever the heretic attacks someone in melee with their heretic blade.
+ */
 /datum/heretic_knowledge/blade_upgrade/proc/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 
+/**
+ * Overridable proc that invokes special effects
+ * whenever the heretic clicks on someone at range with their heretic blade.
+ */
 /datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 
 /*

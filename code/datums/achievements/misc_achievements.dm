@@ -153,10 +153,10 @@
 	icon = "voidascend"
 
 /datum/award/achievement/misc/blade_ascension
-	name = "All that perish"
+	name = "Silver and Steel"
 	desc = "You've become the master of all duellists - the paragon of blades."
 	database_id = MEDAL_BLADE_ASCENSION
-	icon = "voidascend"
+	icon = "voidascend" // MELBERT TODO icon
 
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"

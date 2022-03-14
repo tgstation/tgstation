@@ -458,6 +458,7 @@
 /// Each knife will block an attack straight up.
 /datum/status_effect/protective_blades
 	id = "Silver Knives"
+	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
 	tick_interval = -1
 	// Set in on_creation()
@@ -471,12 +472,8 @@
 	// Internal vars
 	/// If TRUE, we self-delete our status effect after all the blades are deleted.
 	var/delete_on_blades_gone = TRUE
-	/// A list of blade effects
+	/// A list of blade effects orbiting / protecting our owner
 	var/list/obj/effect/floating_blade/blades = list()
-
-/datum/status_effect/protective_blades/Destroy()
-	QDEL_LIST(blades)
-	return ..()
 
 /datum/status_effect/protective_blades/on_creation(
 	mob/living/new_owner,
@@ -485,17 +482,21 @@
 	blade_orbit_radius = 20,
 	time_between_initial_blades = 0.25 SECONDS,
 )
-	. = ..()
 
 	src.duration = new_duration
 	src.max_num_blades = max_num_blades
 	src.blade_orbit_radius = blade_orbit_radius
 	src.time_between_initial_blades = time_between_initial_blades
+	return ..()
 
 /datum/status_effect/protective_blades/on_apply()
 	RegisterSignal(owner, COMSIG_HUMAN_CHECK_SHIELDS, .proc/on_shield_reaction)
 	for(var/blade_num in 1 to max_num_blades)
-		addtimer(CALLBACK(src, .proc/create_blade), (blade_num - 1) * time_between_initial_blades)
+		var/time_until_created = (blade_num - 1) * time_between_initial_blades
+		if(time_until_created <= 0)
+			create_blade()
+		else
+			addtimer(CALLBACK(src, .proc/create_blade), time_until_created)
 
 	return TRUE
 
@@ -509,6 +510,7 @@
 	var/obj/effect/floating_blade/blade = new(get_turf(owner))
 	blades += blade
 	blade.orbit(owner, blade_orbit_radius)
+	playsound(get_turf(owner), 'sound/items/unsheath.ogg', 33, TRUE)
 
 /datum/status_effect/protective_blades/proc/on_shield_reaction(
 	mob/living/carbon/human/source,
@@ -546,17 +548,19 @@
 	blades -= to_remove
 	qdel(to_remove)
 
-	if(delete_on_blades_gone && !length(blades))
+	if(!length(blades) && delete_on_blades_gone)
 		qdel(src)
+
+	return TRUE
 
 /// A special subtype that doesn't disappear when all blades are gone
 /// It instead regenerates over time back to the max after blades are consumed
-/datum/status_effect/protective_blades/recharge
+/datum/status_effect/protective_blades/recharging
 	delete_on_blades_gone = FALSE
 	/// The amount of time it takes for a blade to recharge
 	var/blade_recharge_time = 1 MINUTES
 
-/datum/status_effect/protective_blades/recharge/on_creation(
+/datum/status_effect/protective_blades/recharging/on_creation(
 	mob/living/new_owner,
 	new_duration = -1,
 	max_num_blades = 4,
@@ -565,10 +569,14 @@
 	blade_recharge_time = 1 MINUTES,
 )
 
-	. = ..()
 	src.blade_recharge_time = blade_recharge_time
+	return ..()
 
-/datum/status_effect/protective_blades/recharge/remove_blade(obj/effect/floating_blade/to_remove)
+/datum/status_effect/protective_blades/recharging/remove_blade(obj/effect/floating_blade/to_remove)
+	. = ..()
+	if(!.)
+		return
+
 	addtimer(CALLBACK(src, .proc/create_blade), blade_recharge_time)
 
 /datum/status_effect/lightningorb

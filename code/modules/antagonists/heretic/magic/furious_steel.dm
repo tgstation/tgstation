@@ -4,8 +4,9 @@
 		While orbiting you, these blades will protect you from from attacks, but will be consumed on use. \
 		Additionally, you can click to fire the blades at a target, dealing damage and causing bleeding."
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "furious_steel"
+	action_icon_state = "furious_steel0"
 	action_background_icon_state = "bg_ecult"
+	base_icon_state = "furious_steel"
 	invocation = "F'LSH'NG S'LV'R!"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_FORBIDDEN
@@ -18,7 +19,7 @@
 	sound = 'sound/weapons/guillotine.ogg'
 	active_msg = "You summon forth three blades of furious silver."
 	deactive_msg = "You conceal the blades of furious silver."
-
+	/// A ref to the status effect surrounding our heretic on activation.
 	var/datum/status_effect/protective_blades/blade_effect
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/Destroy()
@@ -36,6 +37,7 @@
 
 	. = ..()
 	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, 3, 25, 0.66 SECONDS)
+	RegisterSignal(blade_effect, COMSIG_PARENT_QDELETING, .proc/on_status_effect_deleted)
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/on_deactivation(mob/user)
 	. = ..()
@@ -49,18 +51,17 @@
 /obj/effect/proc_holder/spell/aimed/furious_steel/ready_projectile(obj/projectile/to_launch, atom/target, mob/user, iteration)
 	. = ..()
 	to_launch.def_zone = check_zone(user.zone_selected)
-	if(!istype(to_launch, /obj/projectile/floating_blade))
-		return
-
-	var/obj/projectile/floating_blade/launched_blade = to_launch
-	launched_blade.caster_weakref = WEAKREF(user)
+	to_launch.firer = user
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/fire_projectile(mob/living/user, atom/target)
 	. = ..()
 	blade_effect.remove_blade(blade_effect.blades[1])
 
-	if(QDELETED(blade_effect))
-		on_deactivation()
+/obj/effect/proc_holder/spell/aimed/furious_steel/proc/on_status_effect_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	blade_effect = null
+	on_deactivation()
 
 /obj/projectile/floating_blade
 	name = "blade"
@@ -72,23 +73,20 @@
 	sharpness = SHARP_EDGED
 	wound_bonus = 15
 	pass_flags = PASSTABLE | PASSFLAPS
-	plane = GAME_PLANE
-	/// Weakref to whatever casted our blade, so we can't stab ourselves our our minions.
-	var/datum/weakref/caster_weakref
 
 /obj/projectile/floating_blade/Initialize(mapload)
 	. = ..()
 	add_filter("knife", 2, list("type" = "outline", "color" = "#f8f8ff", "size" = 1))
 
 /obj/projectile/floating_blade/prehit_pierce(atom/hit)
-	if(isliving(hit))
-		var/mob/living/caster = caster_weakref?.resolve()
-		var/mob/living/living_hit = hit
-		if(caster == living_hit)
+	if(isliving(hit) && isliving(firer))
+		var/mob/living/caster = firer
+		var/mob/living/victim = hit
+		if(caster == victim)
 			return PROJECTILE_PIERCE_PHASE
 
 		if(caster.mind)
-			var/datum/antagonist/heretic_monster/monster = living_hit.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
+			var/datum/antagonist/heretic_monster/monster = victim.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
 			if(monster?.master == caster.mind)
 				return PROJECTILE_PIERCE_PHASE
 
