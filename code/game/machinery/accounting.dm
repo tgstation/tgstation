@@ -15,7 +15,7 @@
 
 /obj/machinery/accounting/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(!inserted_id)
+	if(inserted_id)
 		return FALSE
 	default_unfasten_wrench(user, tool)
 	update_appearance()
