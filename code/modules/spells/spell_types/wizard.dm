@@ -37,26 +37,6 @@
 			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 
-/obj/effect/proc_holder/spell/targeted/genetic/mutate
-	name = "Mutate"
-	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."
-
-	school = SCHOOL_TRANSMUTATION
-	charge_max = 400
-	requires_wizard_garb = TRUE
-	invocation = "BIRUZ BENNAR"
-	invocation_type = INVOCATION_SHOUT
-	range = -1
-	include_user = TRUE
-
-	mutations = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk)
-	duration = 300
-	cooldown_min = 300 //25 deciseconds reduction per rank
-
-	action_icon_state = "mutate"
-	sound = 'sound/magic/mutate.ogg'
-
-
 /obj/effect/proc_holder/spell/targeted/smoke
 	name = "Smoke"
 	desc = "This spell spawns a cloud of choking smoke at your location."
@@ -218,7 +198,7 @@
 	requires_wizard_garb = FALSE
 	invocation = "IA IA"
 	invocation_type = INVOCATION_SHOUT
-	summon_amt = 10
+	summon_amount = 10
 	range = 3
 
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
@@ -228,7 +208,7 @@
 	name = "Summon Creatures (DANGEROUS)"
 	requires_wizard_garb = TRUE
 	charge_max = 5000
-	summon_amt = 2
+	summon_amount = 2
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
 	name = "Lesser summon bees"
@@ -236,7 +216,7 @@
 	charge_max = 600
 	requires_wizard_garb = TRUE
 	invocation = "NOT THE BEES"
-	summon_amt = 9
+	summon_amount = 9
 	action_icon_state = "bee"
 	cooldown_min = 20 SECONDS
 
@@ -303,7 +283,7 @@
 	sound = 'sound/magic/tail_swing.ogg'
 	charge_max = 150
 	requires_wizard_garb = FALSE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	range = 2
 	cooldown_min = 150
 	invocation_type = INVOCATION_NONE

@@ -1,12 +1,13 @@
 /obj/effect/forcefield
-	desc = "A space wizard's magic wall."
 	name = "FORCEWALL"
+	desc = "A space wizard's magic wall."
 	icon_state = "m_shield"
 	anchored = TRUE
 	opacity = FALSE
 	density = TRUE
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	var/timeleft = 300 //Set to 0 for permanent forcefields (ugh)
+	/// Set to 0 for permanent forcefields (ugh)
+	var/timeleft = 30 SECCONDS
 
 /obj/effect/forcefield/Initialize(mapload)
 	. = ..()

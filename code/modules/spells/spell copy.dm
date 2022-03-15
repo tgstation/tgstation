@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		to_chat(user, span_warning("Not when you're incapacitated!"))
 		return FALSE
 
-	if(!antimagic_allowed)
+	if(!requires_no_antimagic)
 		var/antimagic = user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
 		if(antimagic)
 			if(isitem(antimagic))
@@ -502,7 +502,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(user.stat && !requires_conscious)
 		return FALSE
 
-	if(!antimagic_allowed && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
+	if(!requires_no_antimagic && user.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE))
 		return FALSE
 
 	if(!ishuman(user))

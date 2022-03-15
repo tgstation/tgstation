@@ -476,36 +476,40 @@
 	nodamage = FALSE
 	speed = 0.3
 
+	/// The power of the zap itself when it electrocutes someone
 	var/zap_power = 20000
+	/// The range of the zap itself when it electrocutes someone
 	var/zap_range = 15
+	/// The flags of the zap itself when it electrocutes someone
 	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
-	var/chain
-	var/mob/living/caster
+	/// A reference to the chain beam between the caster and the projectile
+	var/datum/beam/chain
 
 /obj/projectile/magic/aoe/lightning/fire(setAngle)
-	if(caster)
-		chain = caster.Beam(src, icon_state = "lightning[rand(1, 12)]")
-	..()
+	if(firer)
+		chain = firer.Beam(src, icon_state = "lightning[rand(1, 12)]")
+	return ..()
 
 /obj/projectile/magic/aoe/lightning/on_hit(target)
 	. = ..()
 	if(ismob(target))
-		var/mob/M = target
-		if(M.anti_magic_check())
+		var/mob/mob_target = target
+		if(mob_target.anti_magic_check())
 			visible_message(span_warning("[src] fizzles on contact with [target]!"))
 			qdel(src)
 			return BULLET_ACT_BLOCK
+
 	tesla_zap(src, zap_range, zap_power, zap_flags)
 	qdel(src)
+
+/obj/projectile/magic/aoe/lightning/Destroy()
+	qdel(chain)
+	return ..()
 
 /obj/projectile/magic/aoe/lightning/no_zap
 	zap_power = 10000
 	zap_range = 4
 	zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_LOW_POWER_GEN
-
-/obj/projectile/magic/aoe/lightning/Destroy()
-	qdel(chain)
-	. = ..()
 
 /obj/projectile/magic/aoe/fireball
 	name = "bolt of fireball"
@@ -514,22 +518,38 @@
 	damage_type = BRUTE
 	nodamage = FALSE
 
-	//explosion values
+	/// Heavy explosion range of the fireball
 	var/exp_heavy = 0
+	/// Light explosion range of the fireball
 	var/exp_light = 2
-	var/exp_flash = 3
+	/// Fire radius of the fireball
 	var/exp_fire = 2
+	/// Flash radius of the fireball
+	var/exp_flash = 3
 
 /obj/projectile/magic/aoe/fireball/on_hit(target)
 	. = ..()
 	if(ismob(target))
-		var/mob/living/M = target
-		if(M.anti_magic_check())
+		var/mob/mob_target = target
+		if(mob_target.anti_magic_check())
 			visible_message(span_warning("[src] vanishes into smoke on contact with [target]!"))
 			return BULLET_ACT_BLOCK
-		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, your at about 65 damage if you stop drop and roll immediately
-	var/turf/T = get_turf(target)
-	explosion(T, devastation_range = -1, heavy_impact_range = exp_heavy, light_impact_range = exp_light, flame_range = exp_fire, flash_range = exp_flash, adminlog = FALSE, explosion_cause = src)
+		//between this 10 burn, the 10 brute, the explosion brute,
+		// and the onfire burn, your at about 65 damage
+		// (if you stop drop and roll immediately)
+		mob_target.take_overall_damage(0, 10)
+
+	var/turf/target_turf = get_turf(target)
+	explosion(
+		target_turf,
+		devastation_range = -1,
+		heavy_impact_range = exp_heavy,
+		light_impact_range = exp_light,
+		flame_range = exp_fire,
+		flash_range = exp_flash,
+		adminlog = FALSE,
+		explosion_cause = src,
+	)
 
 
 //still magic related, but a different path

@@ -1,45 +1,50 @@
 /// The base distance a wizard rod will go without upgrades.
 #define BASE_WIZ_ROD_RANGE 13
 
-/obj/effect/proc_holder/spell/targeted/rod_form
+/datum/action/cooldown/spell/rod_form
 	name = "Rod Form"
-	desc = "Take on the form of an immovable rod, destroying all in your path. Purchasing this spell multiple times will also increase the rod's damage and travel range."
-	requires_wizard_garb = TRUE
-	requires_human = FALSE
-	charge_max = 250
-	cooldown_min = 100
-	range = -1
+	desc = "Take on the form of an immovable rod, destroying all in your path. \
+		Purchasing this spell multiple times will also increase the rod's damage and travel range."
+	action_icon_state = "immrod"
+
 	school = SCHOOL_TRANSMUTATION
-	include_user = TRUE
+	charge_max = 25 SECONDS
+	cooldown_reduction_per_rank = 3.75 SECONDS
+	range = -1
+
 	invocation = "CLANG!"
 	invocation_type = INVOCATION_SHOUT
-	action_icon_state = "immrod"
+	spell_requirements = (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_OFF_CENTCOM)
+
 	/// The extra distance we travel per additional spell level.
 	var/distance_per_spell_rank = 3
 	/// The extra damage we deal per additional spell level.
 	var/damage_per_spell_rank = 20
 
-/obj/effect/proc_holder/spell/targeted/rod_form/cast(list/targets, mob/user = usr)
-	var/area/our_area = get_area(user)
-	if(istype(our_area, /area/wizard_station))
-		to_chat(user, span_warning("You know better than to trash Wizard Federation property. Best wait until you leave to use [src]."))
-		return
+/datum/action/cooldown/spell/rod_form/can_cast_spell()
+	if(!isturf(owner.loc))
+		to_chat(owner, span_warning("You can't cast [src] within [owner.loc]!"))
+		return FALSE
 
+	return ..()
+
+/datum/action/cooldown/spell/rod_form/cast(atom/cast_on)
 	// You travel farther when you upgrade the spell.
 	var/rod_max_distance = BASE_WIZ_ROD_RANGE + (spell_level * distance_per_spell_rank)
+	// The destination turf of the rod - just a bit over the max range we calculated, for safety
+	var/turf/distant_turf = get_ranged_target_turf(get_turf(cast_on), cast_on.dir, (rod_max_distance + 2))
 	// You do more damage when you upgrade the spell.
 	var/rod_damage_bonus = (spell_level * damage_per_spell_rank)
 
-	for(var/mob/living/caster in targets)
-		new /obj/effect/immovablerod/wizard(
-			get_turf(caster),
-			get_ranged_target_turf(get_turf(caster), caster.dir, (rod_max_distance + 2)), // Just a bit over the distance we got
-			null,
-			FALSE,
-			caster,
-			rod_max_distance,
-			rod_damage_bonus,
-		)
+	new /obj/effect/immovablerod/wizard(
+		get_turf(cast_on),
+		distant_turf,
+		null,
+		FALSE,
+		cast_on,
+		rod_max_distance,
+		rod_damage_bonus,
+	)
 
 /// Wizard Version of the Immovable Rod.
 /obj/effect/immovablerod/wizard

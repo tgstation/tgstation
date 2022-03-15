@@ -5,7 +5,7 @@
 	cooldown_min = 0
 	level_max = 1
 	requires_wizard_garb = FALSE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	action_icon = 'icons/mob/actions/actions_items.dmi'
 	action_icon_state = "voice_of_god"
 	var/command

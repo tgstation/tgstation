@@ -2,15 +2,16 @@
 	name = "Curse of the Barnyard"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	action_icon_state = "barn"
+
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 15 SECONDS
-	cooldown_min = 3 SECONDS
-	requires_wizard_garb = FALSE
-	requires_conscious = FALSE
+	cooldown_reduction_per_rank = 3 SECONDS
+
 	invocation = "KN'A FTAGHU, PUCK 'BTHNK!"
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
 
-	// ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
 	active_msg = "You prepare to curse a target..."
 	deactive_msg = "You dispel the curse."
 
@@ -40,14 +41,14 @@
 	var/chosen_type = pick(GLOB.cursed_animal_masks)
 	var/obj/item/clothing/mask/animal/cursed_mask = new chosen_type(get_turf(target))
 
-	target.visible_message(
+	cast_on.visible_message(
 		span_danger("[target]'s face bursts into flames, and a barnyard animal's head takes its place!"),
 		span_userdanger("Your face burns up, and shortly after the fire you realise you have the face of a [cursed_mask.animal_type]!"),
 	)
 
 	// Can't drop? Nuke it
 	if(!cast_on.dropItemToGround(cast_on.wear_mask))
-		qdel(target.wear_mask)
+		qdel(cast_on.wear_mask)
 
 	cast_on.equip_to_slot_if_possible(cursed_mask, ITEM_SLOT_MASK, TRUE, TRUE)
 	cast_on.flash_act()

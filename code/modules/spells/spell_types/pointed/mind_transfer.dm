@@ -1,11 +1,13 @@
-/datum/action/cooldown/spell/pointed/blind/mind_transfer
+/datum/action/cooldown/spell/pointed/mind_transfer
 	name = "Mind Transfer"
 	desc = "This spell allows the user to switch bodies with a target next to him."
 	action_icon_state = "mindswap"
+
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
 	cooldown_min = 20 SECONDS //10 seconds reduction per rank
-	requires_wizard_garb = FALSE
+	spell_requirements = NONE
+
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
 	range = 1
@@ -24,16 +26,18 @@
 		/mob/living/simple_animal/hostile/megafauna,
 	))
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/can_cast_spell()
+/datum/action/cooldown/spell/pointed/mind_transfer/can_cast_spell()
 	. = ..()
 	if(!.)
-		return
+		return FALSE
+	if(!isliving(owner))
+		return FALSE
 	if(owner.suiciding)
-		to_chat(user, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
+		to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
 		return FALSE
 	return TRUE
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/pointed/mind_transfer/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -42,26 +46,26 @@
 		to_chat(owner, span_warning("You can only swap minds with living beings!"))
 		return FALSE
 	if(is_type_in_typecache(cast_on, blacklisted_mobs))
-		to_chat(user, span_warning("This creature is too powerful to control!"))
+		to_chat(owner, span_warning("This creature is too powerful to control!"))
 		return FALSE
 	if(isguardian(cast_on))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
 		if(stand.summoner && stand.summoner == owner)
-			to_chat(user, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
+			to_chat(owner, span_warning("Swapping minds with your own guardian would just put you back into your own head!"))
 			return FALSE
 
 	var/mob/living/living_target = cast_on
 	if(living_target.stat == DEAD)
-		to_chat(user, span_warning("You don't particularly want to be dead!"))
+		to_chat(owner, span_warning("You don't particularly want to be dead!"))
 		return FALSE
 	if(!living_target.key || !living_target.mind)
-		to_chat(user, span_warning("[living_target.p_theyve(TRUE)] appear[living_target.p_s()] to be catatonic! \
+		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] appear[living_target.p_s()] to be catatonic! \
 			Not even magic can affect [living_target.p_their()] vacant mind."))
 		return FALSE
 
 	return TRUE
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/cast(mob/living/cast_on)
+/datum/action/cooldown/spell/pointed/mind_transfer/cast(mob/living/cast_on)
 
 	var/mob/living/to_swap = cast_on
 	if(isguardian(cast_on))
@@ -77,7 +81,7 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key[1] == "@" \
 	)
-		to_chat(user, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
+		to_chat(owner, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE
 
 	// MIND TRANSFER BEGIN
@@ -91,8 +95,9 @@
 	qdel(to_swap_ghost)
 	// MIND TRANSFER END
 
+	var/mob/living/living_owner = owner
 	// Here we knock both mobs out for a time.
-	owner.Unconscious(unconscious_amount_caster)
+	living_owner.Unconscious(unconscious_amount_caster)
 	to_swap.Unconscious(unconscious_amount_victim)
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened

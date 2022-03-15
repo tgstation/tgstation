@@ -2,15 +2,18 @@
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
 	action_icon_state = "blind"
-	school = SCHOOL_TRANSMUTATION
+
 	sound = 'sound/magic/blind.ogg'
+	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 30 SECONDS
-	cooldown_min = 5 SECONDS //12 deciseconds reduction per rank
-	requires_wizard_garb = FALSE
+	cooldown_reduction_per_rank = 6.25 SECONDS
+
 	invocation = "STI KALY"
 	invocation_type = INVOCATION_WHISPER
-	on_afflicted_message = span_notice("Your eyes cry out in pain!")
-	// ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
+	spell_requirements = NONE
+	on_afflicted_message = span_warning("Your eyes cry out in pain!")
+
+	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 	active_msg = "You prepare to blind a target..."
 
 	var/eye_blind_amount = 10

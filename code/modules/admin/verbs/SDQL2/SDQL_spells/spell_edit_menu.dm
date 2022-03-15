@@ -26,12 +26,12 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"action_icon",
 		"active_msg",
 		"aim_assist",
-		"antimagic_allowed",
+		//"requires_no_antimagic",
 		"base_icon_state",
 		"can_cast_on_centcom",
 		"charge_max",
 		"charge_type",
-		"requires_wizard_garb",
+		//"requires_wizard_garb",
 		"cone_level",
 		"deactive_msg",
 		"desc",
@@ -41,8 +41,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"hand_var_overrides",
 		"holder_var_amount",
 		"holder_var_type",
-		"requires_human",
-		"include_user",
+		//"requires_human",
 		"inner_radius",
 		"invocation_self_message",
 		"invocation_type",
@@ -50,16 +49,14 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"max_targets",
 		"message",
 		"name",
-		"requires_non_abstract",
+		//"requires_non_abstract",
 		"overlay_icon_state",
 		"overlay_icon",
 		"overlay_lifespan",
 		"overlay",
-		"requires_unphased",
-		"player_lock",
+		//"requires_unphased",
 		"projectile_type",
 		"projectile_amount",
-		"projectile_var_overrides",
 		"projectiles_per_fire",
 		"random_target_priority",
 		"random_target",
@@ -68,7 +65,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"respect_density",
 		"selection_type",
 		"smoke_amt",
-		"smoke_spread",
+		"smoke_type",
 		"sound",
 		"sparks_amt",
 		"sparks_spread",
@@ -79,19 +76,17 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 
 	//If a spell creates a datum with vars it overrides, this list should contain an association with the variable containing the path of the created datum.
 	var/static/list/special_list_vars = list(
-		"projectile_var_overrides" = "projectile_type",
 		"hand_var_overrides" = "hand_path",
 	)
 
 	var/static/list/special_var_lists = list(
-		"projectile_type" = "projectile_var_overrides",
 		"hand_path" = "hand_var_overrides",
 	)
 
 	var/static/list/enum_vars = list(
 		"invocation_type" = list(INVOCATION_NONE, INVOCATION_WHISPER, INVOCATION_SHOUT, INVOCATION_EMOTE),
 		"selection_type" = list("view", "range"),
-		"smoke_spread" = list(0, 1, 2, 3),
+		"smoke_type" = list(0, 1, 2, 3),
 		"random_target_priority" = list(0, 1),
 	)
 
@@ -213,7 +208,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			"requires_non_abstract" = "If this is true, the spell cannot be cast by brains and pAIs.",
 			"requires_conscious" = "Whether the spell can be cast if the user is unconscious or dead.",
 			"requires_unphased" = "Whether the spell can be cast while the user is jaunting or bloodcrawling.",
-			"antimagic_allowed" = "Whether the spell can be cast while the user is affected by anti-magic effects.",
+			"requires_no_antimagic" = "Whether the spell can be cast while the user is affected by anti-magic effects.",
 			"invocation_type" = "How the spell is invoked.\n\
 				When set to \"none\", the user will not state anything when invocating.\n\
 				When set to \"whisper\", the user whispers the invocation, as if with the whisper verb.\n\
@@ -230,7 +225,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 				Keep in mind, just because an atom is affected by the spell doesn't mean the query will have any effect on it.",
 			"overlay_lifetime" = "The amount of time in deciseconds the overlay will persist.",
 			"sparks_spread" = "Whether the spell produces sparks when cast.",
-			"smoke_spread" = "The kind of smoke, if any, the spell produces when cast.",
+			"smoke_type" = "The kind of smoke, if any, the spell produces when cast.",
 			"can_cast_on_centcom" = "If true, the spell can be cast on the centcom Z-level.",
 			"max_targets" = "The maximum number of mobs the spell can target.",
 			"target_ignore_prev" = "If false, the same mob can be targeted multiple times.",
@@ -243,9 +238,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			"active_msg" = "The message the user sees when activating the spell.",
 			"projectile_amount" = "The maximum number of projectiles the user can fire with each cast of the spell.",
 			"projectiles_per_fire" = "The amount of projectiles fired with each click of the mouse.",
-			"projectile_var_overrides" = "The fired projectiles will have the appropriate variables overridden by the corresponding values in this associative list.\n\
-				You should probably set \"name\", \"icon\", and \"icon_state\".\n\
-				Refer to code/modules/projectiles/projectile.dm to see what other vars you can override.",
 			"cone_level" = "How many tiles out the cone will extend.",
 			"respect_density" = "If true, the cone produced by the spell is blocked by walls.",
 			"aim_assist" = "If true, the spell has turf-based aim assist.",
@@ -750,17 +742,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			out_icon.Insert(getFlatIcon(out_image, no_anim = TRUE))
 			action_icon_base64 = icon2base64(out_icon)
 
-		if("projectile_var_overrides/icon", "projectile_var_overrides/icon_state")
-			var/atom/A = /obj/projectile
-			var/icon = initial(A.icon)
-			var/icon_state = initial(A.icon_state)
-			if(list_vars["projectile_var_overrides"]?["icon"])
-				icon = list_vars["projectile_var_overrides"]["icon"]["value"]
-			if(list_vars["projectile_var_overrides"]?["icon_state"])
-				icon_state = list_vars["projectile_var_overrides"]["icon_state"]["value"]
-			var/icon/out_icon = icon(icon, icon_state, frame = 1)
-			projectile_icon_base64 = icon2base64(out_icon)
-
 		if("hand_var_overrides/icon", "hand_var_overrides/icon_state")
 			var/atom/A = /obj/item/melee/touch_attack
 			var/icon = initial(A.icon)
@@ -787,16 +768,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			out_image.overlays += image(overlay_icon)
 			out_icon.Insert(getFlatIcon(out_image, no_anim = TRUE))
 			action_icon_base64 = icon2base64(out_icon)
-			if(list_vars["projectile_var_overrides"])
-				var/atom/A = saved_vars["projectile_type"]
-				var/icon = initial(A.icon)
-				var/icon_state = initial(A.icon_state)
-				if(list_vars["projectile_var_overrides"]?["icon"])
-					icon = list_vars["projectile_var_overrides"]["icon"]["value"]
-				if(list_vars["projectile_var_overrides"]?["icon_state"])
-					icon_state = list_vars["projectile_var_overrides"]["icon_state"]["value"]
-				out_icon = icon(icon, icon_state, frame = 1)
-				projectile_icon_base64 = icon2base64(out_icon)
 			if(list_vars["hand_var_overrides"])
 				var/atom/A = saved_vars["hand_path"]
 				var/icon = initial(A.icon)

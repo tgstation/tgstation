@@ -9,7 +9,7 @@
 	summon_lifespan = 300
 	charge_max = 300
 	requires_wizard_garb = FALSE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	range = 0
 	cast_sound = null
 	requires_human = TRUE
@@ -39,7 +39,7 @@
 	summon_lifespan = 250
 	charge_max = 300
 	requires_wizard_garb = FALSE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	range = 0
 	cast_sound = null
 	requires_human = TRUE
@@ -77,7 +77,7 @@
 	summon_lifespan = 500
 	charge_max = 300
 	requires_wizard_garb = FALSE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	range = 0
 	cast_sound = null
 	requires_human = TRUE
@@ -112,7 +112,7 @@
 	panel = "Mime"
 	requires_wizard_garb = FALSE
 	requires_human = TRUE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	charge_max = 3000
 	range = -1
 	include_user = TRUE
@@ -156,7 +156,7 @@
 	charge_max = 600
 	sound = null
 	requires_wizard_garb = FALSE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	range = -1
 	include_user = TRUE
 
@@ -181,7 +181,7 @@
 	panel = "Mime"
 	charge_max = 300
 	requires_wizard_garb = FALSE
-	antimagic_allowed = TRUE
+	requires_no_antimagic = TRUE
 	invocation_type = INVOCATION_EMOTE
 	invocation_self_message = span_danger("You fire your finger gun!")
 	range = 20

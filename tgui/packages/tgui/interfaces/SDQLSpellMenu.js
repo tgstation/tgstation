@@ -61,6 +61,7 @@ const typevars = (type) => {
       options: null,
       default_value: '',
     },
+    /*
     { name: 'requires_wizard_garb', type: 'bool', options: null, default_value: false },
     { name: 'requires_human', type: 'bool', options: null, default_value: false },
     {
@@ -77,11 +78,12 @@ const typevars = (type) => {
       default_value: false,
     },
     {
-      name: 'antimagic_allowed',
+      name: 'requires_no_antimagic',
       type: 'bool',
       options: null,
       default_value: false,
     },
+    */
     {
       name: 'invocation_type',
       type: 'string_enum',
@@ -105,7 +107,7 @@ const typevars = (type) => {
     { name: 'message', type: 'string', options: null, default_value: '' },
     { name: 'sparks_amt', type: 'int', options: null, default_value: 0 },
     {
-      name: 'smoke_spread',
+      name: 'smoke_type',
       type: 'int_enum',
       options: ['none', 'harmless', 'harmful', 'sleeping'],
       default_value: 'none',
@@ -242,12 +244,6 @@ const typevars = (type) => {
           type: 'int',
           options: null,
           default_value: 1,
-        },
-        {
-          name: 'projectile_var_overrides',
-          type: 'list',
-          options: null,
-          default_value: {},
         }
       );
       break;
@@ -443,7 +439,7 @@ const varCondition = (entry, saved_vars) => {
     case 'sparks_amt':
       return !!saved_vars['sparks_spread'];
     case 'smoke_amt':
-      return !!saved_vars['smoke_spread'];
+      return !!saved_vars['smoke_type'];
     case 'random_target_priority':
       return !!saved_vars['random_target'];
     default:
