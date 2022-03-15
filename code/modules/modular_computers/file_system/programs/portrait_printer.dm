@@ -2,6 +2,9 @@
 ///how much paper it takes from the printer to create a canvas.
 #define CANVAS_PAPER_COST 10
 
+#define SEARCH_MODE_TITLE "Title"
+#define SEARCH_MODE_CREATOR "Author"
+
 /**
  * ## portrait printer!
  *
@@ -20,10 +23,21 @@
 	size = 9
 	tgui_id = "NtosPortraitPrinter"
 	program_icon = "paint-brush"
+	/**
+	* The last input in the search tab, stored here and reused in the UI to show successive users if
+	* the current list of paintings is limited to the results of a search or not.
+	*/
+	var/search_string
+	/// Whether the search function will check the title of the painting or the author's name.
+	var/search_mode = SEARCH_MODE_TITLE
+	/// Stores the result of the search, for later access.
+	var/list/matching_paintings
 
 /datum/computer_file/program/portrait_printer/ui_data(mob/user)
 	var/list/data = list()
-	data["paintings"] = SSpersistent_paintings.painting_ui_data()
+	data["paintings"] = matching_paintings || SSpersistent_paintings.painting_ui_data()
+	data["search_string"] = search_string
+	data["search_mode"] = search_mode
 	return data
 
 /datum/computer_file/program/portrait_printer/ui_assets(mob/user)
@@ -35,7 +49,34 @@
 	. = ..()
 	if(.)
 		return
+	switch(action)
+		if("search")
+			search_string = params["to_search"]
+			generate_matching_paintings_list()
+			. = TRUE
+		if("change_search_mode")
+			search_mode = search_mode == SEARCH_MODE_TITLE ? SEARCH_MODE_CREATOR : SEARCH_MODE_TITLE
+			generate_matching_paintings_list()
+			. = TRUE
+		if("select")
+			print_painting(params["selected"])
 
+/datum/computer_file/program/portrait_printer/proc/generate_matching_paintings_list()
+	matching_paintings = null
+	if(!search_string)
+		return
+	matching_paintings = SSpersistent_paintings.painting_ui_data()
+	for(var/painting in matching_paintings)
+		var/haystack_text = ""
+		switch(search_mode)
+			if(SEARCH_MODE_TITLE)
+				haystack_text = painting["title"]
+			if(SEARCH_MODE_CREATOR)
+				haystack_text = painting["creator"]
+		if(!findtext(haystack_text, search_string))
+			matching_paintings -= list(painting) // Necessary list wrapping to remove the sublist itself.
+
+/datum/computer_file/program/portrait_printer/proc/print_painting(selected_painting)
 	//printer check!
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
@@ -49,7 +90,7 @@
 	printer.stored_paper -= CANVAS_PAPER_COST
 
 	//canvas printing!
-	var/datum/painting/chosen_portrait = locate(params["selected"]) in SSpersistent_paintings.paintings
+	var/datum/painting/chosen_portrait = locate(selected_painting) in SSpersistent_paintings.paintings
 
 	var/png = "data/paintings/images/[chosen_portrait.md5].png"
 	var/icon/art_icon = new(png)
@@ -75,3 +116,7 @@
 	printed_canvas.update_icon()
 	to_chat(usr, span_notice("You have printed [chosen_portrait.title] onto a new canvas."))
 	playsound(computer.physical, 'sound/items/poster_being_created.ogg', 100, TRUE)
+
+#undef CANVAS_PAPER_COST
+#undef SEARCH_MODE_TITLE
+#undef SEARCH_MODE_CREATOR
