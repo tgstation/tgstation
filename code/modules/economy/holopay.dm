@@ -16,13 +16,29 @@
 	var/shop_logo = "donate"
 	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
 	var/force_fee = 0
-	/// Current holder of the linked card
-	var/datum/weakref/holder
 
 /obj/structure/holopay/examine(mob/user)
 	. = ..()
 	if(force_fee)
 		. += span_boldnotice("This holopay forces a payment of <b>[force_fee]</b> credit\s per swipe instead of a variable amount.")
+
+/obj/structure/holopay/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/structure/holopay/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(istype(held_item, /obj/item/card/id))
+		context[SCREENTIP_CONTEXT_LMB] = "Pay"
+		var/obj/item/card/id/held_id = held_item
+		if(held_id.my_store && held_id.my_store == src)
+			context[SCREENTIP_CONTEXT_RMB] = "Dissipate pay stand"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	else if(istype(held_item, /obj/item/holochip))
+		context[SCREENTIP_CONTEXT_LMB] = "Pay"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/holopay/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -43,7 +59,7 @@
 			playsound(loc, 'sound/weapons/egloves.ogg', 80, TRUE)
 
 /obj/structure/holopay/deconstruct()
-	dissapate()
+	dissipate()
 	return ..()
 
 /obj/structure/holopay/Destroy()
@@ -57,7 +73,7 @@
 		return ..()
 	/// Users can pay with an ID to skip the UI
 	if(istype(held_item, /obj/item/card/id))
-		if(force_fee && tgui_alert(holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
+		if(force_fee && tgui_alert(item_holder, "This holopay has a [force_fee] cr fee. Confirm?", "Holopay Fee", list("Pay", "Cancel")) != "Pay")
 			return TRUE
 		process_payment(user)
 		return TRUE
@@ -91,6 +107,16 @@
 		to_chat(user, "What is this, the 1800s? We only take card here.")
 		return TRUE
 	return ..()
+
+/obj/structure/holopay/attackby_secondary(obj/item/weapon, mob/user, params)
+	/// Can kill it by right-clicking with ID because it seems useful and intuitive, to me, at least
+	if(!istype(weapon, /obj/item/card/id))
+		return ..()
+	var/obj/item/card/id/attacking_id = weapon
+	if(!attacking_id.my_store || attacking_id.my_store != src)
+		return ..()
+	dissipate()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/holopay/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -173,32 +199,39 @@
 	set_light(2)
 	visible_message(span_notice("A holographic pay stand appears."))
 	/// Start checking if the source projection is in range
-	RegisterSignal(card, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-	if(card.loc)
-		holder = WEAKREF(card.loc)
-		RegisterSignal(card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
+	track(linked_card)
 	return TRUE
+
+/obj/structure/holopay/proc/track(atom/movable/thing)
+	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
+	for(var/atom/movable/location in locations)
+		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+
+/obj/structure/holopay/proc/untrack(atom/movable/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
+	for(var/atom/movable/location in locations)
+		UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
 
 /**
  * A periodic check to see if the projecting card is nearby.
- * Deletes the holopay if true.
+ * Deletes the holopay if not.
  */
-/obj/structure/holopay/proc/check_operation()
-	SIGNAL_HANDLER
-	var/card_holder = holder?.resolve()
-	if(!card_holder || linked_card.loc != card_holder)
-		if(card_holder)
-			UnregisterSignal(card_holder, COMSIG_MOVABLE_MOVED)
-		holder = WEAKREF(linked_card.loc)
-		RegisterSignal(linked_card.loc, COMSIG_MOVABLE_MOVED, .proc/check_operation)
-	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range) || !IN_GIVEN_RANGE(src, linked_card.loc, max_holo_range))
-		dissapate()
+/obj/structure/holopay/proc/handle_move(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
+	if(ismovable(old_loc))
+		untrack(old_loc)
+	if(!IN_GIVEN_RANGE(src, linked_card, max_holo_range))
+		dissipate()
+		return
+	if(ismovable(source.loc))
+		track(source.loc)
 
 /**
  * Creates holopay vanishing effects.
  * Deletes the holopay thereafter.
  */
-/obj/structure/holopay/proc/dissapate()
+/obj/structure/holopay/proc/dissipate()
 	playsound(loc, "sound/effects/empulse.ogg", 40, TRUE)
 	visible_message(span_notice("The pay stand vanishes."))
 	qdel(src)
@@ -220,7 +253,7 @@
 		to_chat(user, span_warning("You don't have a valid account."))
 		return FALSE
 	var/datum/bank_account/payee = id_card.registered_account
-	if(payee == linked_card.registered_account)
+	if(payee == linked_card?.registered_account)
 		balloon_alert(user, "invalid transaction")
 		to_chat(user, span_warning("You can't pay yourself."))
 		return FALSE
