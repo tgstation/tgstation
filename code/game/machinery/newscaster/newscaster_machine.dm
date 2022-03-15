@@ -83,7 +83,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		. += mutable_appearance(icon, state)
 		. += emissive_appearance(icon, state, alpha = src.alpha)
 
-		if(!GLOB.news_network.wanted_issue.active && alert)
+		if(GLOB.news_network.wanted_issue.active && alert)
 			. += mutable_appearance(icon, "[base_icon_state]_alert")
 			. += emissive_appearance(icon, "[base_icon_state]_alert", alpha = src.alpha)
 
@@ -364,7 +364,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		if("toggleWanted")
 			viewing_wanted = TRUE
 			alert = FALSE
-			update_appearance()
+			update_overlays()
 			return TRUE
 
 		if("setCriminalName")
@@ -386,6 +386,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				return TRUE
 			GLOB.news_network.submitWanted(criminal_name, crime_description, current_user?.account_holder, current_image, adminMsg = FALSE, newMessage = TRUE)
 			current_image = null
+			return TRUE
+
+		if("clearWantedIssue")
+			var/obj/item/card/id/id_card
+			if(isliving(usr))
+				var/mob/living/living_user = usr
+				id_card = living_user.get_idcard(hand_first = TRUE)
+			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+				say("Clearance not found.")
+				return TRUE
+			GLOB.news_network.wanted_issue.active = FALSE
 			return TRUE
 
 		if("printNewspaper")
@@ -569,7 +580,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/remove_alert()
 	alert = FALSE
-	update_appearance()
+	update_overlays()
 
 /**
  * When a new feed message is made that will alert all newscasters, this causes the newscasters to sent out a spoken message as well as create a sound.

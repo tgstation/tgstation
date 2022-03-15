@@ -221,35 +221,41 @@ const NewscasterWantedScreen = (props, context) => {
       textAlign="center"
       mr={1.5}
       width={25}>
-      <Stack vertical>
-        <Stack.Item>
-          <Box bold color="red">
-            Active Wanted Issue:
-            <Button
-              content="X"
-              color="red"
-              position="relative"
-              top="20%"
-              left="20%"
-              onClick={() => act('cancelCreation')} />
-          </Box>
-          <Section>
-            <Box bold>
-              {wanted.criminal}
-            </Box>
-            <Box italic>
-              {wanted.crime}
-            </Box>
-          </Section>
-          <Box
-            as="img"
-            src={wanted.image} />
-          <Box italic>
-            Posted by {wanted.author ? wanted.author : "N/A"}
-          </Box>
-        </Stack.Item>
-      </Stack>
-      <Divider />
+      {wanted.map(activeWanted => (
+        <>
+          <Stack vertical>
+            <Stack.Item>
+              <Box bold color="red">
+                {activeWanted.active?"Active Wanted Issue:"
+                  :"Dismissed Wanted Issue:"}
+                <Button
+                  content="X"
+                  color="red"
+                  position="relative"
+                  top="20%"
+                  left="18%"
+                  onClick={() => act('cancelCreation')} />
+              </Box>
+              <Section>
+                <Box bold>
+                  {activeWanted.criminal}
+                </Box>
+                <Box italic>
+                  {activeWanted.crime}
+                </Box>
+              </Section>
+              {activeWanted?.image?(
+                <Box
+                  as="img"
+                  src={activeWanted.image} />):null}
+              <Box italic>
+                Posted by {activeWanted.author ? activeWanted.author : "N/A"}
+              </Box>
+            </Stack.Item>
+          </Stack>
+          <Divider />
+        </>
+      ))}
       {security_mode
         ?(
           <>
@@ -259,6 +265,7 @@ const NewscasterWantedScreen = (props, context) => {
                 <Button
                   content={criminal_name ? criminal_name : " N/A"}
                   disabled={!security_mode}
+                  icon="pen"
                   onClick={() => act('setCriminalName')} />
               </LabeledList.Item>
               <LabeledList.Item
@@ -267,6 +274,7 @@ const NewscasterWantedScreen = (props, context) => {
                   content={crime_description ? crime_description : " N/A"}
                   nowrap={false}
                   disabled={!security_mode}
+                  icon="pen"
                   onClick={() => act('setCrimeData')} />
               </LabeledList.Item>
             </LabeledList>
@@ -280,13 +288,23 @@ const NewscasterWantedScreen = (props, context) => {
               <Button
                 content={"Set Wanted Issue"}
                 disabled={!security_mode}
+                icon="volume-up"
                 onClick={() => act('submitWantedIssue')} />
+              <Button
+                content={"Clear Wanted"}
+                disabled={!security_mode}
+                icon="times"
+                color="red"
+                onClick={() => act('clearWantedIssue')} />
             </Section>
           </>
         ) : (
           <Box>
-            Please contact your local security officer if spotted.
-          </Box>)}
+            {wanted.active
+              ? "Please contact your local security officer if spotted."
+              : "No wanted issue posted. Have a secure day."}
+          </Box>
+        )}
     </Modal>
   );
 };
@@ -414,15 +432,17 @@ const NewscasterChannelSelector = (props, context) => {
       minHeight="100%"
       width={(window.innerWidth - 410) + "px"}>
       <Tabs vertical>
-        <Tabs.Tab
-          pt={0.75}
-          pb={0.75}
-          mr={1}
-          disabled={!wanted.active && !security_mode}
-          textColor={(!wanted.active && !security_mode) ? "grey" : "white"}
-          onClick={() => act('toggleWanted')}>
-          Wanted Issue
-        </Tabs.Tab>
+        {wanted.map(activeWanted => (
+          <Tabs.Tab
+            pt={0.75}
+            pb={0.75}
+            mr={1}
+            key={activeWanted.index}
+            textColor={!activeWanted.active ? "grey" : "white"}
+            onClick={() => act('toggleWanted')}>
+            Wanted Issue
+          </Tabs.Tab>
+        ))}
         {channels.map(channel => (
           <Tabs.Tab
             key={channel.index}
