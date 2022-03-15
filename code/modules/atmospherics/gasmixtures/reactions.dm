@@ -82,11 +82,12 @@
 		"MAX_TEMP" = WATER_VAPOR_CONDENSATION_POINT,
 	)
 
-/datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, turf/open/location)
+/datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
-	if(!isturf(location))
+	if(!isturf(holder))
 		return
 
+	var/turf/open/location = holder
 	switch(air.temperature)
 		if(-INFINITY to WATER_VAPOR_DEPOSITION_POINT)
 			if(location?.freeze_turf())
