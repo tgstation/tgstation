@@ -68275,26 +68275,10 @@
 "ydc" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/bot,
-/obj/structure/sign/poster/official/random{
-	pixel_x = 32
-	},
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/machinery/vending/coffee,
-/obj/effect/turf_decal/bot,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/corner,
 /obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/iron,
 /area/engineering/break_room)
