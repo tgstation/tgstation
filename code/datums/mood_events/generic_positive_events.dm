@@ -291,8 +291,8 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/playing_cards/add_effects(param)
-	var/card_players = 1 // start with 1 in case they're on the same tile or something
-	for(var/mob/living/carbon/player in oview(owner, COMBAT_MESSAGE_RANGE))
+	var/card_players = 1
+	for(var/mob/living/carbon/player in viewers(COMBAT_MESSAGE_RANGE, owner))
 		var/player_has_cards = player.is_holding(/obj/item/toy/singlecard) || player.is_holding(/obj/item/toy/cards/deck) || player.is_holding(/obj/item/toy/cards/cardhand)
 		if(player_has_cards)
 			card_players++
