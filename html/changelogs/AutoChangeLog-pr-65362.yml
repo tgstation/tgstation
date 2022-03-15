@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Podpeople now take self-respiration into account when taking damage from critical condition, like most other species."
