@@ -198,6 +198,8 @@
 
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
 	SIGNAL_HANDLER
+	var/found_turf = FALSE
+
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
 		return
 	if(alarm_type == FIRELOCK_ALARM_TYPE_GENERIC)
@@ -209,21 +211,30 @@
 
 	if(!watched_turfs)
 		watched_turfs = CalculateWatchedTurfs()
-	for (var/turf/checked_turf in watched_turfs)
-		if(!checked_turf.density && source == checked_turf)
-			var/datum/gas_mixture/environment = checked_turf.return_air()
-			var/result
 
+	for(var/turf/checked_turf in watched_turfs)
+		if(source == checked_turf)
+			found_turf = TRUE
+
+	var/result
+
+	for (var/turf/checked_turf in watched_turfs)
+		if(!checked_turf.density && found_turf)
+			var/datum/gas_mixture/environment = checked_turf.return_air()
 			if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 				result = FIRELOCK_ALARM_TYPE_HOT
 			if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
 				result = FIRELOCK_ALARM_TYPE_COLD
-			if(!result && alarm_type)
-				start_deactivation_process()
-				return
-			else if(result && !alarm_type)
-				start_activation_process(result)
-				return
+
+	if(result && alarm_type)
+		return
+	else if(!result && alarm_type)
+		start_deactivation_process()
+		return
+	else if(result && !alarm_type)
+		start_activation_process(result)
+		return
+
 /**
  * Begins activation process of us and our neighbors.
  *
