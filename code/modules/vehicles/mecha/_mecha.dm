@@ -457,13 +457,13 @@
 				if(0.75 to INFINITY)
 					occupant.clear_alert(ALERT_CHARGE)
 				if(0.5 to 0.75)
-					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 1)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 1)
 				if(0.25 to 0.5)
-					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 2)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/lowcell, 3)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 3)
 				else
-					occupant.throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/emptycell)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell/mech)
 
 		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)

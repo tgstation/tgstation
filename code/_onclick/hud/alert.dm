@@ -613,8 +613,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	update_appearance(updates=UPDATE_DESC)
 
 /atom/movable/screen/alert/emptycell/update_desc()
-	desc = initial(desc)
 	. = ..()
+	desc = initial(desc)
 	if(length(GLOB.roundstart_station_borgcharger_areas))
 		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
 
@@ -628,10 +628,24 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	update_appearance(updates=UPDATE_DESC)
 
 /atom/movable/screen/alert/lowcell/update_desc()
-	desc = initial(desc)
 	. = ..()
+	desc = initial(desc)
 	if(length(GLOB.roundstart_station_borgcharger_areas))
 		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
+
+//MECH
+
+/atom/movable/screen/alert/lowcell/mech/update_desc()
+	. = ..()
+	desc = initial(desc)
+	if(length(GLOB.roundstart_station_mechcharger_areas))
+		desc += " Power ports are available in [english_list(GLOB.roundstart_station_mechcharger_areas)]."
+
+/atom/movable/screen/alert/emptycell/mech/update_desc()
+	. = ..()
+	desc = initial(desc)
+	if(length(GLOB.roundstart_station_mechcharger_areas))
+		desc += " Power ports are available in [english_list(GLOB.roundstart_station_mechcharger_areas)]."
 
 //Ethereal
 
@@ -659,9 +673,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's plasma core has no charge remaining. No modules available until plasma core is recharged. \
 		Unit can be refilled through plasma ore."
 
+/atom/movable/screen/alert/emptycell/plasma/update_desc()
+	. = ..()
+	desc = initial(desc)
+
 /atom/movable/screen/alert/lowcell/plasma
 	name = "Low Charge"
 	desc = "Unit's plasma core is running low. Unit can be refilled through plasma ore."
+
+/atom/movable/screen/alert/lowcell/plasma/update_desc()
+	. = ..()
+	desc = initial(desc)
 
 //Need to cover all use cases - emag, illegal upgrade module, malf AI hack, traitor cyborg
 /atom/movable/screen/alert/hacked
