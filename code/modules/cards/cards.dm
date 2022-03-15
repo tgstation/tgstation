@@ -46,7 +46,7 @@
 	if(istype(src, /obj/item/toy/cards/deck))
 		target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
 		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
-		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
+		SEND_SIGNAL(thrower, COMSIG_ADD_MOOD_EVENT, "won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
 		add_memory_in_range(
 			target,
 			7,
