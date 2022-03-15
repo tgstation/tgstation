@@ -33,6 +33,7 @@
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_ICE)
 
 /turf/open/misc/ice/icemoon
+	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	slowdown = 0
 
