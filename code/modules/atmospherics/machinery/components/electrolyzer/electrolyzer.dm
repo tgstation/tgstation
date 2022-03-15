@@ -95,7 +95,9 @@
 	if(!env)
 		return
 
-	call_reactions(env, delta_time)
+	call_reactions(delta_time)
+
+	env.garbage_collect()
 
 	air_update_turf(FALSE, FALSE)
 
@@ -104,25 +106,10 @@
 
 	cell.use((5 * (1.5 * delta_time * working_power) * working_power) / (efficiency + working_power))
 
-/obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/environment, delta_time)
+/obj/machinery/electrolyzer/proc/call_reactions(delta_time)
 	for(var/reaction in GLOB.electrolyzer_reactions)
 		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
-		var/list/reqs = current_reaction.requirements
-		if(!reaction_check(reqs, environment))
-			continue
 		current_reaction.react(loc, working_power, delta_time)
-
-/obj/machinery/electrolyzer/proc/reaction_check(list/reqs, datum/gas_mixture/environment)
-	var/temp = environment.temperature
-	var/list/cached_gases = environment.gases
-	if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
-		return FALSE
-	for(var/id in reqs)
-		if (id == "MIN_TEMP" || id == "MAX_TEMP")
-			continue
-		if(!cached_gases[id] || cached_gases[id][MOLES] < reqs[id])
-			return FALSE
-	return TRUE
 
 /obj/machinery/electrolyzer/RefreshParts()
 	var/manipulator = 0

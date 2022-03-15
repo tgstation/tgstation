@@ -4,11 +4,13 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
  * Global proc to build the electrolyzer reactions list
  */
 /proc/electrolyzer_reactions_list()
-	. = list()
+	var/list/built_reaction_list = list()
 	for(var/reaction_path in subtypesof(/datum/electrolyzer_reaction))
 		var/datum/electrolyzer_reaction/reaction = new reaction_path()
 
-		.[reaction.id] = reaction
+		built_reaction_list[reaction.id] = reaction
+
+	return built_reaction_list
 
 /datum/electrolyzer_reaction
 	var/list/requirements
@@ -16,6 +18,19 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/id = "r"
 
 /datum/electrolyzer_reaction/proc/react(turf/location, working_power, delta_time)
+	return
+
+/datum/electrolyzer_reaction/proc/reaction_check(datum/gas_mixture/environment)
+	var/temp = environment.temperature
+	var/list/cached_gases = environment.gases
+	if((requirements["MIN_TEMP"] && temp < requirements["MIN_TEMP"]) || (requirements["MAX_TEMP"] && temp > requirements["MAX_TEMP"]))
+		return FALSE
+	for(var/id in requirements)
+		if (id == "MIN_TEMP" || id == "MAX_TEMP")
+			continue
+		if(!cached_gases[id] || cached_gases[id][MOLES] < requirements[id])
+			return FALSE
+	return TRUE
 
 /datum/electrolyzer_reaction/h2o_conversion
 	name = "H2O Conversion"
@@ -27,6 +42,9 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/h2o_conversion/react(turf/location, working_power, delta_time)
 
 	var/datum/gas_mixture/air_mixture = location.return_air()
+
+	if(!reaction_check(air_mixture))
+		return
 
 	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
 	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES], (5 * delta_time * (working_power ** 2)))
@@ -45,6 +63,9 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /datum/electrolyzer_reaction/nob_conversion/react(turf/location, working_power, delta_time)
 
 	var/datum/gas_mixture/air_mixture = location.return_air()
+
+	if(!reaction_check(air_mixture))
+		return
 
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
 	var/proportion = min(air_mixture.gases[/datum/gas/hypernoblium][MOLES], (3 * delta_time * (working_power ** 2)))
