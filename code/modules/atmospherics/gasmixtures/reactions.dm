@@ -77,11 +77,14 @@
 	id = "vapor"
 
 /datum/gas_reaction/water_vapor/init_reqs()
-	requirements = list(/datum/gas/water_vapor = MOLES_GAS_VISIBLE)
+	requirements = list(
+		/datum/gas/water_vapor = MOLES_GAS_VISIBLE,
+		"MAX_TEMP" = WATER_VAPOR_CONDENSATION_POINT,
+	)
 
 /datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
-	if(isturf(holder))
+	if(!isturf(holder))
 		return
 
 	var/turf/open/location = holder
@@ -110,7 +113,7 @@
 /datum/gas_reaction/miaster/init_reqs()
 	requirements = list(
 		/datum/gas/miasma = MINIMUM_MOLE_COUNT,
-		"MIN_TEMP" = MIASTER_STERILIZATION_TEMP
+		"MIN_TEMP" = MIASTER_STERILIZATION_TEMP,
 	)
 
 /datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
@@ -228,7 +231,7 @@
 	requirements = list(
 		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		"MIN_TEMP" = HYDROGEN_MINIMUM_BURN_TEMPERATURE
+		"MIN_TEMP" = HYDROGEN_MINIMUM_BURN_TEMPERATURE,
 	)
 
 /datum/gas_reaction/h2fire/react(datum/gas_mixture/air, datum/holder)
@@ -291,7 +294,7 @@
 	requirements = list(
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
-		"MIN_TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
+		"MIN_TEMP" = TRITIUM_MINIMUM_BURN_TEMPERATURE,
 	)
 
 /datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
@@ -511,7 +514,7 @@
 	requirements = list(
 		/datum/gas/nitrous_oxide = 10,
 		/datum/gas/plasma = 10,
-		"MAX_TEMP" = T20C + 20 // Yes, someone used this as a bomb timer. I hate players
+		"MAX_TEMP" = BZ_FORMATION_MAX_TEMPERATURE,
 	)
 
 /datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
@@ -649,7 +652,7 @@
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitrium = MINIMUM_MOLE_COUNT,
-		"MAX_TEMP" = NITRIUM_DECOMPOSITION_MAX_TEMP
+		"MAX_TEMP" = NITRIUM_DECOMPOSITION_MAX_TEMP,
 	)
 
 /datum/gas_reaction/nitrium_decomposition/react(datum/gas_mixture/air)
@@ -692,7 +695,7 @@
 		/datum/gas/plasma = 40,
 		/datum/gas/carbon_dioxide = 20,
 		/datum/gas/bz = 20,
-		"MIN_TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
+		"MIN_TEMP" = FREON_FORMATION_MIN_TEMPERATURE,
 	)
 
 /datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
@@ -936,7 +939,7 @@
 /datum/gas_reaction/zauker_decomp/init_reqs()
 	requirements = list(
 		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT,
-		/datum/gas/zauker = MINIMUM_MOLE_COUNT
+		/datum/gas/zauker = MINIMUM_MOLE_COUNT,
 	)
 
 /datum/gas_reaction/zauker_decomp/react(datum/gas_mixture/air, datum/holder)
