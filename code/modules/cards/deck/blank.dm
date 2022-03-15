@@ -1,6 +1,7 @@
 /obj/item/toy/cards/deck/blank
 	name = "custom deck of cards"
 	desc = "A deck of playing cards that can be customized with writing."
+	cardgame_desc = "custom card game"
 	icon_state = "deck_white_full"
 	deckstyle = "white"
 	has_unique_card_icons = FALSE

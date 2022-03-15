@@ -22,7 +22,7 @@
 	if(!throwingdatum?.thrower) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
 
-	var/mob/living/user = throwingdatum.thrower
+	var/mob/living/thrower = throwingdatum.thrower
 
 	var/has_no_cards = !LAZYLEN(cards)
 	if(has_no_cards)
@@ -42,9 +42,19 @@
 		card.update_appearance()
 	update_appearance()
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
-	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
-	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
+
+	if(istype(src, /obj/item/toy/cards/deck))
+		target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
+		SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "won_52_card_pickup", /datum/mood_event/won_52_card_pickup)
+		add_memory_in_range(
+			target,
+			7,
+			MEMORY_PLAYING_52_PICKUP,
+			list(DETAIL_PROTAGONIST = thrower, DETAIL_DEUTERAGONIST = target, DETAIL_WHAT_BY = src),
+			story_value = STORY_VALUE_OKAY,
+			memory_flags = MEMORY_CHECK_BLINDNESS
+		)
 
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)

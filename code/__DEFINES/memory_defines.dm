@@ -99,7 +99,7 @@
 /// Nuke ops nuke code memory
 #define MEMORY_NUKECODE "nuke_code"
 /// A memory of having to play 52 card pickup
-#define MEMORY_52_CARD_PICKUP "52_card_pickup"
+#define MEMORY_PLAYING_52_PICKUP "playing_52_pickup"
 /// A memory of playing cards with others
 #define MEMORY_PLAYING_CARDS "playing_cards"
 
@@ -157,5 +157,10 @@
 #define DETAIL_MEDAL_TYPE "MEDAL_TYPE"
 #define DETAIL_MEDAL_REASON "MEDAL_REASON"
 #define DETAIL_NUKE_CODE "NUKE_CODE"
+// for cardgames
+#define DETAIL_PLAYERS "PLAYERS"
+#define DETAIL_CARDGAME "CARDGAME"
+#define DETAIL_DEALER "DEALER"
+#define DETAIL_HELD_CARD_ITEM "HELD_CARD_ITEM" // could either be a singlecard, cardhand, or a deck
 
 
