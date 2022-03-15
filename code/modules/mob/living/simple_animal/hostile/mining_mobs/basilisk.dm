@@ -43,7 +43,7 @@
 	damage = 10
 	damage_type = BURN
 	nodamage = FALSE
-	flag = ENERGY
+	armor_flag = ENERGY
 	temperature = -50 // Cools you down! per hit!
 	var/slowdown = TRUE //Determines if the projectile applies a slowdown status effect on carbons or not
 

@@ -5,7 +5,7 @@
 	damage_type = OXY
 	nodamage = TRUE
 	armour_penetration = 100
-	flag = NONE
+	armor_flag = NONE
 
 /obj/projectile/magic/death
 	name = "bolt of death"

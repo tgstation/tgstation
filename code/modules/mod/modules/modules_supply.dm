@@ -538,7 +538,7 @@
 	nodamage = TRUE
 	range = 6
 	suppressed = SUPPRESSED_VERY
-	flag = BOMB
+	armor_flag = BOMB
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 1

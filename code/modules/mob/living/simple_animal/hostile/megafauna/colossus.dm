@@ -268,7 +268,7 @@
 	if(istype(P, /obj/projectile/magic))
 		ActivationReaction(P.firer, ACTIVATE_MAGIC, P.damage_type)
 		return
-	ActivationReaction(P.firer, P.flag, P.damage_type)
+	ActivationReaction(P.firer, P.armor_flag, P.damage_type)
 
 /obj/machinery/anomalous_crystal/proc/ActivationReaction(mob/user, method, damtype)
 	if(!COOLDOWN_FINISHED(src, cooldown_timer))

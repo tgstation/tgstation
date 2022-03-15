@@ -31,7 +31,7 @@
 	ricochet_incidence_leeway = 0
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
-	flag = BOMB
+	armor_flag = BOMB
 	speed = 1.2
 	wound_bonus = 30
 	bare_wound_bonus = 30

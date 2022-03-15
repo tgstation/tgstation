@@ -290,7 +290,7 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
-	flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
+	armor_flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
 	phasing_ignore_direct_target = TRUE // If we don't do this the blastcannon shot can be blocked by random items.
