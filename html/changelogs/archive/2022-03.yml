@@ -483,3 +483,49 @@
   - qol: Change barricade, grille, and girder mapping spawners to have a ~20% not
       to spawn.
   - qol: Change ornament mapping spawner to only spawn lamps and red phones.
+2022-03-15:
+  Ebb-Real:
+  - bugfix: Fixes the syndie screwdriver using the wrong belt sprite.
+  - imageadd: Added belt sprites for the syndie screwdriver and all alien tools.
+  Fikou:
+  - spellcheck: fixes double the in motion cameras
+  Nari Harimoto:
+  - qol: Each Map now comes with a standard amount of gas cans in Ordanance Storage
+      (except kilo which gets slightly less, because Kilo is too small) so you do
+      not need to have to learn vastly different mixing methods per map, removed stored
+      co2 as it is not used
+  Pepsilawn:
+  - bugfix: Removed the extra keycard auth device hidden under the CE's extinguisher
+      cabinet
+  SuperNovaa41:
+  - code_imp: Removes a forgotten devil proc in photocopier code.
+  - code_imp: Updates `init_gaslist_cache` to match current code standards.
+  TemporalOroboros:
+  - expansion: Splashed blood is as infective as bled blood.
+  cacogen:
+  - bugfix: Fixed firelock screentips telling silicons they could knock or bash them
+  - bugfix: Fixed firelock screentips saying bash with combat mode off and knock with
+      it on (it's the opposite)
+  - qol: Adds firelock screentips for silicons, monkeys and xenos
+  carshalash:
+  - bugfix: Clown tears will no longer explode on creation.
+  interestingusernam3:
+  - bugfix: Centcom will no longer include empty "Identified Shift Divergences" sections
+      in their reports (which would previously occur every time there were only hidden
+      station traits present).
+  - bugfix: Cheese wheels and royal cheese no longer count as cheese wedges for recipes.
+  - code_imp: Cheese wedges are no longer the superclass for all cheese.
+  lewcc:
+  - bugfix: Fixes airlock reinforcement not being removable.
+  - refactor: Heavily refactors reinforcing and un-reinforcing airlocks.
+  san7890:
+  - bugfix: On KiloStation, there is no longer a weird floor decal on a wall. Nanotrasen
+      has commissioned an institution-wide inquiry to find out which joker put it
+      there.
+  tastyfish:
+  - bugfix: Geese now act like geese if provoked again.
+  vincentiusvin:
+  - bugfix: fixed an outdated quip about purchasing an ordnance paper.
+  - bugfix: added the ordnance circuitboards to the techweb, forgot about this in
+      the original pr.
+  - qol: added a small tooltip to the compressor buffer port.

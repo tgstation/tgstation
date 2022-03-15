@@ -1,6 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "fixed an outdated quip about purchasing an ordnance paper."
-  - bugfix: "added the ordnance circuitboards to the techweb, forgot about this in the original pr."
-  - qol: "added a small tooltip to the compressor buffer port."

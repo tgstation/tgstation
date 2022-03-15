@@ -49,6 +49,7 @@
 		"rdservercontrol",
 		"restaurant_portal",
 		"rglass",
+		"roll",
 		"salestagger",
 		"sec_38",
 		"sec_Islug",
@@ -58,6 +59,8 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
+		"toner",
+		"toner_large",
 	)
 
 /datum/techweb_node/mmi

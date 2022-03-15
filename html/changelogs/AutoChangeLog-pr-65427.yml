@@ -1,4 +1,0 @@
-author: "Pepsilawn"
-delete-after: True
-changes: 
-  - bugfix: "Removed the extra keycard auth device hidden under the CE's extinguisher cabinet"
