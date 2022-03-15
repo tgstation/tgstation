@@ -47,7 +47,7 @@
 
 		if(parent_deck.holodeck)
 			flags_1 |= HOLOGRAM_1
-			holodeck.spawned += src
+			parent_deck.holodeck.spawned += src
 
 
 /obj/item/toy/singlecard/examine(mob/living/carbon/human/user)
