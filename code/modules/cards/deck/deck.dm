@@ -47,6 +47,8 @@
 		return
 
 	// generate a normal playing card deck
+	cards += new /obj/item/toy/singlecard(mapload, "Joker", src)
+	cards += new /obj/item/toy/singlecard(mapload, "Mime", src)
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
 		cards += new /obj/item/toy/singlecard(mapload, "Ace of [suit]", src)
 		for(var/i in 2 to 10)
