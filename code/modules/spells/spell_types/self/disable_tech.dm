@@ -12,6 +12,7 @@
 	var/emp_light = 3
 
 /datum/action/cooldown/spell/emp/cast(atom/cast_on)
+	. = ..()
 	empulse(get_turf(cast_on), emp_heavy, emp_light)
 
 /datum/action/cooldown/spell/emp/disable_tech
@@ -19,7 +20,7 @@
 	desc = "This spell disables all weapons, cameras and most other technology in range."
 	sound = 'sound/magic/disable_tech.ogg'
 
-	cooldown_time =  = 40 SECONDS
+	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
 	invocation = "NEC CANTIO"

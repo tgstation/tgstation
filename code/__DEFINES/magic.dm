@@ -38,6 +38,9 @@
 /// Forces the wizard to emote (and be able to) to cast the spell.
 #define INVOCATION_EMOTE "emote"
 
+/// Macro for checking if a mob can currently invoke a spell of certain types
+#define CAN_INVOKE(mob, type) ((type == INVOCATION_WHISPER || type == INVOCATION_SHOUT) && !mob.can_speak_vocal())
+
 // Smoke types
 /// No smoke is made on cast
 #define NO_SMOKE 0

@@ -10,10 +10,11 @@
 	if(cast_on == owner)
 		return FALSE
 
-	if(cast_on.anchored)
+	if(!ismovable(cast_on))
 		return FALSE
 
-	return ismovable(cast_on)
+	var/atom/movable/cast_on_movable = cast_on
+	return !cast_on.anchored
 
 /datum/action/cooldown/spell/aoe/repulse/get_things_to_cast_on(atom/center)
 	return view(outer_radius, center)
@@ -79,7 +80,7 @@
 	action_background_icon_state = "bg_alien"
 	sound = 'sound/magic/tail_swing.ogg'
 
-	cooldown_time =  = 15 SECONDS
+	cooldown_time = 15 SECONDS
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC

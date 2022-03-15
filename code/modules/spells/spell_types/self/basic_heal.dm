@@ -5,7 +5,7 @@
 
 	sound = 'sound/magic/staff_healing.ogg'
 	school = SCHOOL_RESTORATION
-	cooldown_time =  = 10 SECONDS
+	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 1.25 SECONDS
 	spell_requirements = SPELL_REQUIRES_HUMAN
 
@@ -18,6 +18,7 @@
 	var/burn_to_heal = 10
 
 /datum/action/cooldown/spell/basic_heal/cast(mob/living/cast_on)
+	. = ..()
 	cast_on.visible_message(
 		span_warning("A wreath of gentle light passes over [cast_on]!"),
 		span_notice("You wreath yourself in healing light!"),

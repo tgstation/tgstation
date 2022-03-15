@@ -20,6 +20,7 @@
 	return !!cast_on.dna
 
 /datum/action/cooldown/spell/apply_mutations/cast(mob/living/carbon/human/cast_on)
+	. = ..()
 	for(var/mutation in mutations_to_add)
 		cast_on.dna.add_mutation(mutation)
 	addtimer(CALLBACK(src, .proc/remove_mutations, cast_on), mutation_duration, TIMER_DELETE_ME)

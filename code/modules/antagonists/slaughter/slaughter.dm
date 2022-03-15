@@ -126,6 +126,22 @@
 
 	return ..()
 
+/mob/living/simple_animal/hostile/imp/slaughter/phasein(atom/target, forced = FALSE)
+	. = ..()
+	if(!.)
+		return
+	current_hitstreak = 0
+	wound_bonus = initial(wound_bonus)
+	bare_wound_bonus = initial(bare_wound_bonus)
+
+/mob/living/simple_animal/hostile/imp/slaughter/phaseout(obj/effect/decal/cleanable/to_blood)
+	. = ..()
+	if(!.)
+		return
+	current_hitstreak = 0
+	wound_bonus = initial(wound_bonus)
+	bare_wound_bonus = initial(bare_wound_bonus)
+
 /obj/effect/decal/cleanable/blood/innards
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."

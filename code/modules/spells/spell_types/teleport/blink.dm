@@ -10,7 +10,7 @@
 
 	invocation_type = INVOCATION_NONE
 
-	smoke_spread = SMOKE_HARMLESS
+	smoke_type = SMOKE_HARMLESS
 	smoke_amt = 0
 
 	inner_tele_radius = 0

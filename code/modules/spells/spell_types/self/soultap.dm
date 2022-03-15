@@ -31,6 +31,7 @@
 	return isliving(cast_on)
 
 /datum/action/cooldown/spell/cast(mob/living/cast_on)
+	. = ..()
 	to_chat(cast_on, span_danger("Your body feels drained and there is a burning pain in your chest."))
 	cast_on.maxHealth -= HEALTH_LOST_PER_SOUL_TAP
 	cast_on.health = min(cast_on.health, cast_on.maxHealth)

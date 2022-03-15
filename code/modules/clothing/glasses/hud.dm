@@ -211,6 +211,9 @@
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
 		H.add_hud_to(user)
 
+/datum/action/item_action/switch_hud
+	name = "Switch HUD"
+
 /obj/item/clothing/glasses/hud/toggle/thermal
 	name = "thermal HUD scanner"
 	desc = "Thermal imaging HUD in the shape of glasses."
@@ -255,4 +258,3 @@
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"
 	inhand_icon_state = "sunglasses"
-

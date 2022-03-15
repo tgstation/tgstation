@@ -291,14 +291,20 @@
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
 
-// /obj/effect/proc_holder/spell signals
+// /datum/action/cooldown/spell signals
 
 // TODO DOC
+#define COMSIG_MOB_BEFORE_SPELL_CAST "mob_spell__pre_cast"
+// TODO DOC
 #define COMSIG_SPELL_BEFORE_CAST "spell_pre_cast"
-	/// Return to cancel the cast from beginning.
+	/// Return from COMSIG_MOB_BEFORE_SPELL_CAST or COMSIG_SPELL_BEFORE_CAST to cease the cast
 	#define COMPONENT_CANCEL_SPELL (1<<0)
 // TODO DOC
+#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
+// TODO DOC
 #define COMSIG_SPELL_CAST "spell_cast"
+// TODO DOC
+#define COMSIG_MOB_AFTER_SPELL_CAST "mob_after_spell_cast"
 // TODO DOC
 #define COMSIG_SPELL_AFTER_CAST "spell_after_cast"
 

@@ -215,6 +215,17 @@
 	. = ..()
 	UnregisterSignal(M, COMSIG_MOB_SAY)
 
+/datum/action/item_action/instrument
+	name = "Use Instrument"
+	desc = "Use the instrument specified"
+
+/datum/action/item_action/instrument/Trigger(trigger_flags)
+	if(istype(target, /obj/item/instrument))
+		var/obj/item/instrument/I = target
+		I.interact(usr)
+		return
+	return ..()
+
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"
 	desc = "An exquisitely decorated bike horn, capable of honking in a variety of notes."

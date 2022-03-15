@@ -11,7 +11,6 @@
 	invocation = "STI KALY"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
-	on_afflicted_message = span_warning("Your eyes cry out in pain!")
 
 	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 	active_msg = "You prepare to blind a target..."
@@ -31,6 +30,8 @@
 	return !human_target.is_blind()
 
 /datum/action/cooldown/spell/pointed/blind/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
 	cast_on.blind_eyes(eye_blind_amount)
 	cast_on.blur_eyes(eye_blurry_amount)
 	cast_on.dna?.add_mutation(/datum/mutation/human/blind)

@@ -29,6 +29,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/rod_form/cast(atom/cast_on)
+	. = ..()
 	// You travel farther when you upgrade the spell.
 	var/rod_max_distance = BASE_WIZ_ROD_RANGE + (spell_level * distance_per_spell_rank)
 	// The destination turf of the rod - just a bit over the max range we calculated, for safety

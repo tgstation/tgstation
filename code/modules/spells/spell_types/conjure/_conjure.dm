@@ -18,7 +18,7 @@
 	var/summon_ignore_prev_spawn_points = TRUE
 
 /datum/action/cooldown/spell/conjure/cast(atom/cast_on)
-
+	. = ..()
 	var/list/turf/to_summon_in = range(range, cast_on)
 
 	if(!summon_ignore_density)

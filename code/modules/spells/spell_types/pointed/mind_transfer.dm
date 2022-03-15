@@ -66,7 +66,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/mind_transfer/cast(mob/living/cast_on)
-
+	. = ..()
 	var/mob/living/to_swap = cast_on
 	if(isguardian(cast_on))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on

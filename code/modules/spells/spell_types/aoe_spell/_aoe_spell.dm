@@ -23,6 +23,7 @@
 
 // At this point, cast_on == owner. Either works.
 /datum/action/cooldown/spell/aoe/cast(atom/cast_on)
+	. = ..()
 	for(var/atom/thing_to_target as anything in get_things_to_cast_on(cast_on))
 		if(!is_valid_target(turf_to_target))
 			continue

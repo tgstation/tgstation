@@ -10,7 +10,7 @@
 
 	invocation_type = INVOCATION_NONE
 
-	smoke_spread = SMOKE_HARMFUL
+	smoke_type = SMOKE_HARMFUL
 	smoke_amt = 4
 
 /// Chaplain smoke.
@@ -22,5 +22,5 @@
 
 	spell_requirements = NONE
 
-	smoke_spread = SMOKE_HARMFUL
+	smoke_type = SMOKE_HARMFUL
 	smoke_amt = 2

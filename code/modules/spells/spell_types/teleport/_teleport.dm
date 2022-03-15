@@ -16,12 +16,12 @@
 	var/post_teleport_sound = 'sound/weapons/zapbang.ogg'
 
 /datum/action/cooldown/spell/teleport/cast(atom/cast_on)
+	. = ..()
 	var/turf/destination = get_destination(cast_on)
 	if(!destination)
 		return
 
-	if(do_teleport(cast_on, destination, channel = TELEPORT_CHANNEL_MAGIC))
-		playsound(get_turf(user), post_teleport_sound, 50, TRUE)
+	do_teleport(cast_on, destination, asoundout = post_teleport_sound, channel = TELEPORT_CHANNEL_MAGIC)
 
 /datum/action/cooldown/spell/teleport/proc/get_destination(atom/center)
 	CRASH("[type] did not implement get_destination and either has no effects or implemented the spell incorrectly.")
@@ -43,14 +43,14 @@
 	var/list/valid_turfs = list()
 	var/list/possibles = RANGE_TURFS(outer_tele_radius, center)
 	if(inner_tele_radius > 0)
-		 possibles -= RANGE_TURFS(inner_tele_radius, center)
+		possibles -= RANGE_TURFS(inner_tele_radius, center)
 
 	for(var/turf/nearby_turf as anything in possibles)
 		if(isspaceturf(nearby_turf) && (destination_flags & TELEPORT_SPELL_SKIP_SPACE))
 			continue
 		if(nearby_turf.density && (destination_flags & TELEPORT_SPELL_SKIP_DENSE))
 			continue
-		if(nearby_turf.is_blocked_turf(exlude_mobs = TRUE) && (destination_flags & TELEPORT_SPELL_SKIP_BLOCKED))
+		if(nearby_turf.is_blocked_turf(exclude_mobs = TRUE) && (destination_flags & TELEPORT_SPELL_SKIP_BLOCKED))
 			continue
 
 		if(nearby_turf.x > world.maxx - outer_tele_radius || nearby_turf.x < outer_tele_radius)
@@ -75,27 +75,30 @@
 	var/invocation_says_area = TRUE
 
 /datum/action/cooldown/spell/teleport/area_teleport/get_destination(atom/center)
-	if(!ispath(last_chosen_area))
-		CRSAH("[type] made it to get_destination without an area selected.")
+	if(!ispath(last_chosen_area_type))
+		CRASH("[type] made it to get_destination without an area selected.")
 
 	var/list/valid_turfs = list()
-	for(var/turf/possible_destination as anything in get_area_turfs(last_chosen_area))
+	for(var/turf/possible_destination as anything in get_area_turfs(last_chosen_area_type))
 		if(isspaceturf(possible_destination) && (destination_flags & TELEPORT_SPELL_SKIP_SPACE))
 			continue
 		if(possible_destination.density && (destination_flags & TELEPORT_SPELL_SKIP_DENSE))
 			continue
-		if(possible_destination.is_blocked_turf(exlude_mobs = TRUE) && (destination_flags & TELEPORT_SPELL_SKIP_BLOCKED))
+		if(possible_destination.is_blocked_turf(exclude_mobs = TRUE) && (destination_flags & TELEPORT_SPELL_SKIP_BLOCKED))
 			continue
 
 		valid_turfs += possible_destination
 
 	if(!length(valid_turfs))
-		to_chat(cast_on, span_warning("The spell matrix was unable to locate a suitable teleport destination."))
 		return
 
 	return pick(valid_turfs)
 
 /datum/action/cooldown/spell/teleport/area_teleport/before_cast(list/targets)
+	. = ..()
+	if(!.)
+		return FALSE
+
 	var/area/target_area
 	if(randomise_selection)
 		target_area = pick(GLOB.teleportlocs)
@@ -105,21 +108,23 @@
 	if(isnull(target_area) || isnull(GLOB.teleportlocs[target_area]))
 		return FALSE
 
-	last_chosen_area = target_area
+	last_chosen_area_type = target_area
 	return TRUE
 
 /datum/action/cooldown/spell/teleport/area_teleport/cast(atom/cast_on)
-	cast_on.buckled?.unbuckle_mob(cast_on, force = TRUE)
+	if(isliving(cast_on))
+		var/mob/living/living_cast_on = cast_on
+		living_cast_on.buckled?.unbuckle_mob(cast_on, force = TRUE)
 	return ..()
 
 /datum/action/cooldown/spell/teleport/area_teleport/invocation()
 	var/area/last_chosen_area = GLOB.teleportlocs[last_chosen_area_type]
 
-	if(!invocation_says_area || isnull(last_chosen_area)
+	if(!invocation_says_area || isnull(last_chosen_area))
 		return ..()
 
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
-			user.say("[invocation] [uppertext(last_chosen_area.name)]", forced = "spell ([src])")
+			owner.say("[invocation] [uppertext(last_chosen_area.name)]", forced = "spell ([src])")
 		if(INVOCATION_WHISPER)
-			user.whisper("[invocation] [uppertext(last_chosen_area.name)]", forced = "spell ([src])")
+			owner.whisper("[invocation] [uppertext(last_chosen_area.name)]", forced = "spell ([src])")

@@ -35,8 +35,8 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"cone_level",
 		"deactive_msg",
 		"desc",
-		"drawmessage",
-		"dropmessage",
+		"draw_message",
+		"drop_message",
 		"hand_path",
 		"hand_var_overrides",
 		"holder_var_amount",
@@ -241,8 +241,8 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			"cone_level" = "How many tiles out the cone will extend.",
 			"respect_density" = "If true, the cone produced by the spell is blocked by walls.",
 			"aim_assist" = "If true, the spell has turf-based aim assist.",
-			"drawmessage" = "The message the user sees when activating the spell.",
-			"dropmessage" = "The message the user sees when canceling the spell.",
+			"draw_message" = "The message the user sees when activating the spell.",
+			"drop_message" = "The message the user sees when canceling the spell.",
 			"hand_var_overrides" = "The touch attack will have the appropriate variables overridden by the corresponding values in this associative list.\n\
 				You should probably set \"name\", \"desc\", \"catchphrase\", \"on_use_sound\" \"icon\", \"icon_state\", and \"inhand_icon_state\".\n\
 				Refer to code/modules/spells/spell_types/godhand.dm to see what other vars you can override.",

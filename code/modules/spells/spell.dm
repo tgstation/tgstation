@@ -1,90 +1,6 @@
 
-GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for the badmin verb for now
-
-/datum/action/cooldown/spell
-
-
-
-/obj/effect/proc_holder
-	var/panel = "Debug"//What panel the proc holder needs to go on.
-	var/active = FALSE //Used by toggle based abilities.
-	var/ranged_mousepointer
-	var/mob/living/ranged_ability_user
-	var/ranged_clickcd_override = -1
-	var/has_action = TRUE
-	var/datum/action/spell_action/action = null
-	var/action_icon = 'icons/mob/actions/actions_spells.dmi'
-	var/action_icon_state = "spell_default"
-	var/action_background_icon_state = "bg_spell"
-	var/base_action = /datum/action/spell_action
-	var/datum/weakref/owner
-
-/obj/effect/proc_holder/Initialize(mapload, mob/living/new_owner)
-	. = ..()
-	owner = WEAKREF(new_owner)
-	if(has_action)
-		action = new base_action(src)
-
-/obj/effect/proc_holder/Destroy()
-	if(!QDELETED(action))
-		qdel(action)
-	action = null
-	return ..()
-
-/obj/effect/proc_holder/proc/on_gain(mob/living/user)
-	return
-
-/obj/effect/proc_holder/proc/on_lose(mob/living/user)
-	return
-
-/obj/effect/proc_holder/proc/fire(mob/living/user)
-	return TRUE
-
-/obj/effect/proc_holder/proc/get_panel_text()
-	return ""
-
-
-/obj/effect/proc_holder/proc/InterceptClickOn(mob/living/caller, params, atom/A)
-	if(caller.ranged_ability != src || ranged_ability_user != caller) //I'm not actually sure how these would trigger, but, uh, safety, I guess?
-		to_chat(caller, span_warning("<b>[caller.ranged_ability.name]</b> has been disabled."))
-		caller.ranged_ability.remove_ranged_ability()
-		return TRUE //TRUE for failed, FALSE for passed.
-	if(ranged_clickcd_override >= 0)
-		ranged_ability_user.next_click = world.time + ranged_clickcd_override
-	else
-		ranged_ability_user.next_click = world.time + CLICK_CD_CLICK_ABILITY
-	ranged_ability_user.face_atom(A)
-	return FALSE
-
-/obj/effect/proc_holder/proc/add_ranged_ability(mob/living/user, msg, forced)
-	if(!user || !user.client)
-		return
-	if(user.ranged_ability && user.ranged_ability != src)
-		if(forced)
-			to_chat(user, span_warning("<b>[user.ranged_ability.name]</b> has been replaced by <b>[name]</b>."))
-			user.ranged_ability.remove_ranged_ability()
-		else
-			return
-	user.ranged_ability = src
-	user.click_intercept = src
-	user.update_mouse_pointer()
-	ranged_ability_user = user
-	if(msg)
-		to_chat(ranged_ability_user, msg)
-	active = TRUE
-	update_appearance()
-
-/obj/effect/proc_holder/proc/remove_ranged_ability(msg)
-	if(!ranged_ability_user || !ranged_ability_user.client || (ranged_ability_user.ranged_ability && ranged_ability_user.ranged_ability != src)) //To avoid removing the wrong ability
-		return
-	ranged_ability_user.ranged_ability = null
-	ranged_ability_user.click_intercept = null
-	ranged_ability_user.update_mouse_pointer()
-	if(msg)
-		to_chat(ranged_ability_user, msg)
-	ranged_ability_user = null
-	active = FALSE
-	update_appearance()
+/// Needed for the badmin verb for now
+GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /datum/action/cooldown/spell
 	name = "Spell"
@@ -113,7 +29,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 	/// The amount adjusted with the mob's var when the spell is used
 	var/holder_var_amount = 20
 	/// What is uttered when the user casts the spell
-	var/invocation = "HURP DURP"
+	var/invocation
 	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
 	var/invocation_self_message
 	/// What type of invocation the spell is.
@@ -123,8 +39,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 	var/spell_requirements = SPELL_REQUIRES_WIZARD_GARB
 	/// The range of the spell.
 	var/range = 7
-	/// What is shown to people afflicted by the spell
-	var/on_afflicted_message = ""
 	/// The current spell level if taken multiple times by a wizard
 	var/spell_level = 0
 	/// The max possible spell level
@@ -179,8 +93,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 		return FALSE
 
 	if(isliving(owner))
-		var/mob/living/living_owner = owner
-		if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak_vocal())
+		if(!CAN_INVOKE(invocation_type, owner))
 			to_chat(owner, span_warning("You can't get the words out to cast [src]!"))
 			return FALSE
 
@@ -204,23 +117,18 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 
 	return TRUE
 
+// click_to_activate spells: [target] is what was clicked on
+// All other spells: [target] is the owner of the spell
 /datum/action/cooldown/spell/Activate(atom/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	// Targeted spell: `target` is what was clicked on
-	// Self spell: `target` is the owner of the spell
-	StartCooldown(10 SECONDS)
+	StartCooldown(cooldown_time / 4)
 	if(!before_cast(target))
 		return FALSE
 
-	if(owner?.ckey)
-		owner.log_message(span_danger("cast the spell [name]."), LOG_ATTACK)
-	invocation()
-	if(sound)
-		playsound(get_turf(owner), sound, 50, TRUE)
-
-	SEND_SIGNAL(owner, COMSIG_SPELL_CAST, src)
 	cast(target)
 	after_cast(target)
+
 	StartCooldown()
 	UpdateButtonIcon()
 
@@ -245,23 +153,39 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 /// Actions done before the actual cast() is called.
 /// Return FALSE to cancel the spell casat before it occurs, TRUE to let it happen
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
-	if(SEND_SIGNAL(owner, COMSIG_SPELL_BEFORE_CAST, src) & COMPONENT_CANCEL_SPELL)
+	SHOULD_CALL_PARENT(TRUE)
+
+	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST) | SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src)
+	if(sig_return & COMPONENT_CANCEL_SPELL)
 		return FALSE
+
 	return TRUE
 
 /**
  * Actions done as the main effect of the spell.
  *
- * For self targeted spells, `cast_on` is the same as `owner`.
- * For click spells, `cast_on` is whatever the owner clicked on.
+ * For spells without a click intercept, [cast_on] will be the owner.
+ * For click spells, [cast_on] is whatever the owner clicked on in casting the spell.
  */
 /datum/action/cooldown/spell/proc/cast(atom/cast_on)
+	SHOULD_CALL_PARENT(TRUE)
+
+	SEND_SIGNAL(src, COMSIG_SPELL_CAST)
+	SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src)
+
+	if(owner?.ckey)
+		owner.log_message("cast the spell [name][cast_on != owner ? " on [cast_on]":""].", LOG_ATTACK)
 
 /// Actions done after the main cast is finished.
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
-	SEND_SIGNAL(owner, COMSIG_SPELL_AFTER_CAST, src)
-	if(isliving(cast_on) && on_afflicted_message)
-		to_chat(cast_on, on_afflicted_message)
+	// No "should call parent" for after cast, as
+	// spells should be free to override to have no after-cast at all
+
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src)
+	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST)
+
+	invocation()
+	play_spell_sound()
 
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(cast_on))
@@ -283,9 +207,11 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 		smoke.set_up(smoke_amt, get_turf(cast_on))
 		smoke.start()
 
-	return TRUE
-
 /datum/action/cooldown/spell/proc/invocation()
+	/* TODO Unit test this
+	if(!invocation || invocation_type == INVOCATION_NONE)
+		return
+	*/
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
 			//Auto-mute? Fuck that noise
@@ -300,6 +226,13 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 				owner.whisper(replacetext(invocation," ","`"))
 		if(INVOCATION_EMOTE)
 			owner.visible_message(invocation, invocation_self_message)
+
+/datum/action/cooldown/spell/proc/play_spell_sound()
+	if(!sound)
+		return FALSE
+
+	playsound(get_turf(owner), sound, 50, TRUE)
+	return TRUE
 
 /datum/action/cooldown/spell/proc/revert_cast()
 	next_use_time = 0

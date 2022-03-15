@@ -119,3 +119,7 @@
 /obj/item/implanter/explosive_macro
 	name = "implanter (macrobomb)"
 	imp_type = /obj/item/implant/explosive/macro
+
+/datum/action/item_action/explosive_implant
+	check_flags = NONE
+	name = "Activate Explosive Implant"

@@ -17,7 +17,7 @@
 	var/wall_type = /obj/effect/forcefield/wizard
 
 /datum/action/cooldown/spell/cast(atom/cast_on)
-
+	. = ..()
 	new wall_type(get_turf(owner), owner)
 
 	if(owner.dir == SOUTH || owner.dir == NORTH)

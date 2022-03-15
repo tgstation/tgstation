@@ -29,7 +29,7 @@
 	return !(human_target.wear_mask.type in GLOB.cursed_animal_masks)
 
 /datum/action/cooldown/spell/pointed/barnyardcurse/cast(mob/living/carbon/human/cast_on)
-
+	. = ..()
 	if(cast_on.anti_magic_check())
 		cast_on.visible_message(
 			span_danger("[cast_on]'s face bursts into flames, which instantly burst outward, leaving [cast_on.p_them()] unharmed!"),

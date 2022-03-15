@@ -88,11 +88,11 @@
 
 /datum/action/cooldown/spell/pointed/projectile/on_deactivation()
 	. = ..()
-	if(charge_type == "recharge")
-		StartCooldown(cooldown_time * (current_amount / projectile_amount))
+	StartCooldown(cooldown_time * (current_amount / projectile_amount))
 
 // cast_on is a turf, or atom target, that we clicked on to fire at.
 /datum/action/cooldown/spell/pointed/projectile/cast(atom/cast_on)
+	. = ..()
 	if(!isturf(owner.loc))
 		return FALSE
 

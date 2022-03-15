@@ -88,3 +88,6 @@
 		playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
 		return TRUE
 	return FALSE
+
+/datum/action/item_action/startchainsaw
+	name = "Pull The Starting Cord"

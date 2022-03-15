@@ -654,11 +654,14 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set desc = "Gives a spell to a mob."
 
 	var/list/spell_list = list()
-	var/type_length = length_char("/obj/effect/proc_holder/spell") + 2
-	for(var/spell in GLOB.spells)
-		spell_list[copytext_char("[spell]", type_length)] = spell
-	var/spell_desc = input("Choose the spell to give to that guy", "ABRAKADABRA") as null|anything in sort_list(spell_list)
-	if(!spell_desc)
+	for(var/datum/action/cooldown/spell/to_add as anything in GLOB.spells)
+		spell_list[to_add.name] = to_add.type
+
+	var/chosen_spell = tgui_input_list(usr, "Choose the spell to give to that guy", "ABRAKADABRA", sort_list(spell_list))
+	if(isnull(chosen_spell))
+		return
+	var/datum/action/cooldown/spell/spell_path = spell_list[spell_desc]
+	if(!ispath(spell_path))
 		return
 
 	var/robeless = (tgui_alert(usr, "Would you like to force this spell to be robeless?", "Robeless Casting?", list("Force Robeless", "Use Spell Setting")) == "Force Robeless")
@@ -669,19 +672,18 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(spell_recipient)] the spell [spell_desc][robeless ? " (Forced robeless)" : ""].")
-	message_admins(span_adminnotice("[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [spell_desc][spell_desc][robeless ? " (Forced robeless)" : ""]."))
+	message_admins("[key_name_admin(usr)] gave [key_name_admin(spell_recipient)] the spell [spell_desc][spell_desc][robeless ? " (Forced robeless)" : ""].")
 
-	var/spell_path = spell_list[spell_desc]
-	var/obj/effect/proc_holder/spell/new_spell = new spell_path()
+	var/datum/action/cooldown/spell/new_spell = new spell_path(spell_recipient.mind || spell_recipient)
 
 	if(robeless)
-		new_spell.requires_wizard_garb = FALSE
+		new_spell.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
 
-	if(spell_recipient.mind)
-		spell_recipient.mind.AddSpell(new_spell)
-	else
-		spell_recipient.AddSpell(new_spell)
-		message_admins(span_danger("Spells given to mindless mobs will not be transferred in mindswap or cloning!"))
+	new_spell.Grant(spell_recipient)
+
+	if(!spell_recipient.mind)
+		to_chat(usr, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
+			and as such will not be transferred on their mind changing (mindswap)."))
 
 /client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
 	set category = "Admin.Fun"

@@ -14,6 +14,7 @@
 	var/ex_flash = 4
 
 /datum/action/cooldown/spell/cast(atom/cast_on)
+	. = ..()
 	explosion(
 		target,
 		devastation_range = ex_severe,

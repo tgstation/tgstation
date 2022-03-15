@@ -314,13 +314,13 @@ const typevars = (type) => {
       );
       ret.push(
         {
-          name: 'drawmessage',
+          name: 'draw_message',
           type: 'string',
           options: null,
           default_value: '',
         },
         {
-          name: 'dropmessage',
+          name: 'drop_message',
           type: 'string',
           options: null,
           default_value: '',

@@ -16,7 +16,7 @@
 	return isliving(cast_on)
 
 /datum/action/cooldown/spell/charge/cast(mob/living/cast_on)
-
+	. = ..()
 	var/atom/charged_item
 	var/burnt_out = TRUE
 	if(isliving(cast_on.pulling))

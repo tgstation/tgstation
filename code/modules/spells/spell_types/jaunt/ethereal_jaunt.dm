@@ -1,15 +1,13 @@
-/datum/action/cooldown/spell/ethereal_jaunt
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt
 	name = "Ethereal Jaunt"
 	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
 	action_icon_state = "jaunt"
 	sound = 'sound/magic/ethereal_enter.ogg'
 
-	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
-	invocation_type = INVOCATION_NONE
-	spell_requirements = (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT)
+	spell_requirements = (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
 
 	var/exit_jaunt_sound = 'sound/magic/ethereal_exit.ogg'
 	/// For how long are we jaunting?
@@ -25,18 +23,8 @@
 	/// List of valid exit points
 	var/list/exit_point_list
 
-/datum/action/cooldown/spell/ethereal_jaunt/can_cast_spell()
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/cast(mob/living/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
-	var/area/owner_area = get_area(owner)
-	if(owner_area?.area_flags & NOTELEPORT)
-		to_chat(user, span_danger("Some dull, universal force is stopping you from jaunting here."))
-		return FALSE
-
-	return isliving(owner)
-
-/datum/action/cooldown/spell/ethereal_jaunt/cast(mob/living/cast_on)
 	do_jaunt(cast_on)
 
 /**
@@ -48,7 +36,7 @@
  * Or immediately calls start_jaunt:
  * - if jaunt_out_time = 0
  */
-/datum/action/cooldown/spell/ethereal_jaunt/proc/do_jaunt(mob/living/cast_on)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt(mob/living/cast_on)
 	// Make sure they don't die or get jostled or something
 	cast_on.notransform = TRUE
 
@@ -77,7 +65,7 @@
  *
  * Calls start_jaunt.
  */
-/datum/action/cooldown/spell/ethereal_jaunt/proc/do_jaunt_out(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt_out(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
 	REMOVE_TRAIT(cart_on, TRAIT_IMMOBILIZED, type)
 	start_jaunt(cast_on, holder)
 
@@ -88,7 +76,7 @@
  *
  * Calls stop_jaunt after the jaunt runs out.
  */
-/datum/action/cooldown/spell/ethereal_jaunt/proc/start_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/start_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
 	LAZYINITLIST(exit_point_list)
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
 	addtimer(CALLBACK(src, .proc/stop_jaunt, cast_on, holder, get_turf(holder)), jaunt_duration)
@@ -103,7 +91,7 @@
  * Or immediately calls end_jaunt:
  * - if jaunt_in_time >= 2.5 seconds
  */
-/datum/action/cooldown/spell/ethereal_jaunt/proc/stop_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/start_point)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/stop_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/start_point)
 	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)
 	// Caster escaped our holder somehow
 	if(cast_on.loc != holder)
@@ -140,7 +128,7 @@
  *
  * Calls end_jaunt.
  */
-/datum/action/cooldown/spell/ethereal_jaunt/proc/do_jaunt_out(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/final_point)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt_in(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/final_point)
 	new jaunt_in_type(final_point, holder.dir)
 	cast_on.setDir(holder.dir)
 
@@ -153,7 +141,7 @@
  * If the final_point is dense for some reason,
  * tries to put the caster in an adjacent turf.
  */
-/datum/action/cooldown/spell/ethereal_jaunt/proc/end_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/final_point)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/end_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/final_point)
 	qdel(holder)
 	if(!QDELETED(cast_on) && final_point.density)
 		var/list/aside_turfs = get_adjacent_open_turfs(final_point)
@@ -169,7 +157,7 @@
  * spots are kept in the list, in case the last few changed since we passed
  * by (doors closing, engineers building walls, etc)
  */
-/datum/action/cooldown/spell/ethereal_jaunt/proc/update_exit_point(mob/living/source)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/update_exit_point(mob/living/source)
 	SIGNAL_HANDLER
 
 	var/turf/location = get_turf(source)
@@ -180,7 +168,7 @@
 		exit_point_list.Cut(5)
 
 /// Does some steam effects from the jaunt at passed loc.
-/datum/action/cooldown/spell/ethereal_jaunt/proc/do_steam_effetcs(turf/loc)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_steam_effetcs(turf/loc)
 	var/datum/effect_system/steam_spread/steam = new()
 	steam.set_up(10, FALSE, loc)
 	steam.start()

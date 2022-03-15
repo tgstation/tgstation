@@ -17,4 +17,5 @@
 	var/timestop_duration = 10 SECONDS
 
 /datum/action/cooldown/spell/timestop/cast(atom/cast_on)
+	. = ..()
 	new /obj/effect/timestop/magic(get_turf(cast_on), timestop_range, timestop_duration, list(cast_on))

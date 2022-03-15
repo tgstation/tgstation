@@ -1,4 +1,4 @@
-/obj/effect/proc_holder/spell/targeted/area_teleport/teleport
+/datum/action/cooldown/spell/teleport/area_teleport/wizard
 	name = "Teleport"
 	desc = "This spell teleports you to an area of your selection."
 	action_icon_state = "teleport"
@@ -11,13 +11,15 @@
 	invocation = "SCYAR NILA"
 	invocation_type = INVOCATION_SHOUT
 
-	smoke_spread = SMOKE_HARMLESS
+	smoke_type = SMOKE_HARMLESS
 	smoke_amt = 2
 
 	post_teleport_sound = 'sound/magic/teleport_app.ogg'
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/teleport/santa
+/datum/action/cooldown/spell/teleport/area_teleport/wizard/santa
 	name = "Santa Teleport"
+
+	school = SCHOOL_TRANSLOCATION // Santa magic is NOT forbidden arts
 
 	invocation = "HO HO HO"
 	spell_requirements = SPELL_REQUIRES_WIZARD_GARB

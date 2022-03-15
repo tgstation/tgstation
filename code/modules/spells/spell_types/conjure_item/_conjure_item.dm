@@ -15,18 +15,18 @@
 	/// Whether we delete the last item(s) we made after the spell is cast
 	var/delete_old = TRUE
 	/// List of weakrefs to items summoned
-	var/list/datum/weakref/item_refs = list()
+	var/list/datum/weakref/item_refs
 
 /datum/action/cooldown/spell/conjure_item/Destroy()
-	QDEL_LIST(item_refs)
+	QDEL_LAZYLIST(item_refs)
 	return ..()
 
 /datum/action/cooldown/spell/conjure_item/is_valid_target(atom/cast_on)
 	return iscarbon(cast_on)
 
 /datum/action/cooldown/spell/conjure_item/cast(mob/living/carbon/cast_on)
-	if (delete_old && length(item_refs))
-		QDEL_LIST(item_refs)
+	if(delete_old && LAZYLEN(item_refs))
+		QDEL_LAZYLIST(item_refs)
 		return
 
 	var/obj/item/existing_item = cast_on.get_active_held_item()
@@ -37,5 +37,5 @@
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
 	var/obj/item/made_item = new item_type()
-	item_refs += WEAKREF(made_item)
+	LAZYADD(item_refs, WEAKREF(made_item))
 	return made_item

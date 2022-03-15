@@ -38,7 +38,7 @@
 	user.cut_overlay(halo)
 
 /datum/action/cooldown/spell/tesla/cast(atom/cast_on)
-	ready = FALSE
+	. = ..()
 
 	// byond, why you suck?
 	charge_sound = sound(null, repeat = 0, wait = 1, channel = charge_sound.channel)
