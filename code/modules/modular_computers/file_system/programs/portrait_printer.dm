@@ -51,8 +51,9 @@
 		return
 	switch(action)
 		if("search")
-			search_string = params["to_search"]
-			generate_matching_paintings_list()
+			if(search_string ! = params["to_search"])
+				search_string = params["to_search"]
+				generate_matching_paintings_list()
 			. = TRUE
 		if("change_search_mode")
 			search_mode = search_mode == SEARCH_MODE_TITLE ? SEARCH_MODE_CREATOR : SEARCH_MODE_TITLE
