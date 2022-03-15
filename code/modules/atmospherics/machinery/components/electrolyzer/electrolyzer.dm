@@ -32,6 +32,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+	SSair.start_processing_machine(src)
 	update_appearance()
 
 /obj/machinery/electrolyzer/Destroy()
@@ -63,7 +64,8 @@
 	if(panel_open)
 		. += "electrolyzer-open"
 
-/obj/machinery/electrolyzer/process(delta_time)
+/obj/machinery/electrolyzer/process_atmos()
+
 	if(!is_operational && on)
 		on = FALSE
 	if(!on)
@@ -95,7 +97,7 @@
 	if(!env)
 		return
 
-	call_reactions(delta_time)
+	call_reactions(env)
 
 	env.garbage_collect()
 
@@ -104,12 +106,12 @@
 	if(anchored)
 		return
 
-	cell.use((5 * (1.5 * delta_time * working_power) * working_power) / (efficiency + working_power))
+	cell.use((5 * (3 * working_power) * working_power) / (efficiency + working_power))
 
-/obj/machinery/electrolyzer/proc/call_reactions(delta_time)
+/obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
 	for(var/reaction in GLOB.electrolyzer_reactions)
 		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
-		current_reaction.react(loc, working_power, delta_time)
+		current_reaction.react(loc, env, working_power)
 
 /obj/machinery/electrolyzer/RefreshParts()
 	var/manipulator = 0
@@ -192,7 +194,7 @@
 			usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
 			update_appearance()
 			if (on)
-				START_PROCESSING(SSmachines, src)
+				SSair.start_processing_machine(src)
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)
