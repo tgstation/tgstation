@@ -720,6 +720,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/kitchen/diner
 	name = "\improper Diner"
+	icon_state = "diner"
 
 /area/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
