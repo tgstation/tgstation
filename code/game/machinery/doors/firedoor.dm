@@ -210,7 +210,7 @@
 	if(!watched_turfs)
 		watched_turfs = CalculateWatchedTurfs()
 	for (var/turf/checked_turf in watched_turfs)
-		if(!checked_turf.density)
+		if(!checked_turf.density && source == checked_turf)
 			var/datum/gas_mixture/environment = checked_turf.return_air()
 			var/result
 
