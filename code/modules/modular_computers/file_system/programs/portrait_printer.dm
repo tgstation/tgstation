@@ -51,7 +51,7 @@
 		return
 	switch(action)
 		if("search")
-			if(search_string ! = params["to_search"])
+			if(search_string != params["to_search"])
 				search_string = params["to_search"]
 				generate_matching_paintings_list()
 			. = TRUE
