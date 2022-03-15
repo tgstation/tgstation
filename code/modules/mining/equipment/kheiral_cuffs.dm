@@ -108,11 +108,14 @@
 		victim = user
 	else
 		return ..()
-	user.visible_message(span_suicide("[user] locks [src] around their neck, and is starting to age rapidly! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.visible_message(span_suicide("[user] locks [src] around their neck, wrinkles forming across their face. It looks like [user.p_theyre()] trying to commit suicide!"))
 	for(var/mult in 1 to 5) // Rapidly age
 		if(!do_after(victim, 0.5 SECONDS)) // just to space out the aging, either way you still dust.
 			break
+		var/before_age = victim.age
 		victim.age = round((victim.age * 1.5),1)
+		to_chat(victim, span_danger("You age [(victim.age - before_age)] years!"))
 
+	to_chat(victim, span_danger("At the ripe age of [victim.age], your cells fail their cycle of mitosis, allowing the sands of time to wash over you."))
 	victim.dust(TRUE, TRUE, TRUE)
 	return MANUAL_SUICIDE
