@@ -1,6 +1,6 @@
 import { resolveAsset } from '../assets';
 import { useBackend, useLocalState } from '../backend';
-import { Button, NoticeBox, Section, Stack, Input} from '../components';
+import { Button, NoticeBox, Section, Stack, Input } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosPortraitPrinter = (props, context) => {
@@ -11,13 +11,13 @@ export const NtosPortraitPrinter = (props, context) => {
     search_string,
     search_mode,
   } = data;
-  const got_paintings = !!paintings.length 
-  const current_portrait_title = got_paintings &&
-    paintings[listIndex]["title"];
-  const current_portrait_author = got_paintings &&
-    "By " + paintings[listIndex]["creator"];
-  const current_portrait_asset_name = got_paintings &&
-    "paintings" + "_" + paintings[listIndex]["md5"];
+  const got_paintings = !!paintings.length;
+  const current_portrait_title = got_paintings
+    && paintings[listIndex]["title"];
+  const current_portrait_author = got_paintings
+    && "By " + paintings[listIndex]["creator"];
+  const current_portrait_asset_name = got_paintings
+    && "paintings" + "_" + paintings[listIndex]["md5"];
   return (
     <NtosWindow
       title="Art Galaxy"
@@ -35,15 +35,15 @@ export const NtosPortraitPrinter = (props, context) => {
                   act('search', {
                     to_search: value,
                   });
-				  setListIndex(0);
+                  setListIndex(0);
                 }} />
               <Button
                 content={search_mode}
                 onClick={() => {
                   act('change_search_mode');
-                  if(search_string) {
+                  if (search_string) {
                     setListIndex(0);
-                  };
+                  }
                 }} />
             </Section>
           </Stack.Item>
@@ -54,30 +54,30 @@ export const NtosPortraitPrinter = (props, context) => {
                 align="center"
                 justify="center"
                 direction="column">
-                  {got_paintings ? (
-                    <>
-                      <Stack.Item>
-                        <img
-                          src={resolveAsset(current_portrait_asset_name)}
-                          height="128px"
-                          width="128px"
-                          style={{
-                            'vertical-align': 'middle',
-                            '-ms-interpolation-mode': 'nearest-neighbor',
-                          }} />
-                      </Stack.Item>
-                      <Stack.Item className="Section__titleText">
-                        {current_portrait_title}
-                      </Stack.Item>
-                      <Stack.Item>
-                        {current_portrait_author}
-                      </Stack.Item>
-                    </>
-                  ) : (
-                    <Stack.Item className="Section__titleText">
-                      No paintings found.
+                {got_paintings ? (
+                  <>
+                    <Stack.Item>
+                      <img
+                        src={resolveAsset(current_portrait_asset_name)}
+                        height="128px"
+                        width="128px"
+                        style={{
+                          'vertical-align': 'middle',
+                          '-ms-interpolation-mode': 'nearest-neighbor',
+                        }} />
                     </Stack.Item>
-                  )}
+                    <Stack.Item className="Section__titleText">
+                      {current_portrait_title}
+                    </Stack.Item>
+                    <Stack.Item>
+                      {current_portrait_author}
+                    </Stack.Item>
+                  </>
+                ) : (
+                  <Stack.Item className="Section__titleText">
+                    No paintings found.
+                  </Stack.Item>
+                )}
               </Stack>
             </Section>
           </Stack.Item>
