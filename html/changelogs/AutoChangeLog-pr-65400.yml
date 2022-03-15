@@ -1,5 +1,0 @@
-author: "Ebb-Real"
-delete-after: True
-changes: 
-  - bugfix: "Fixes the syndie screwdriver using the wrong belt sprite."
-  - imageadd: "Added belt sprites for the syndie screwdriver and all alien tools."

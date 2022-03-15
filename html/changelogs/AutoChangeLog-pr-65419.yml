@@ -1,4 +1,0 @@
-author: "interestingusernam3"
-delete-after: True
-changes: 
-  - bugfix: "Centcom will no longer include empty \"Identified Shift Divergences\" sections in their reports (which would previously occur every time there were only hidden station traits present)."
