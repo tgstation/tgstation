@@ -65,8 +65,8 @@
 		target_floor.make_plating()
 	else if(prob(reac_volume))
 		exposed_turf.burn_tile()
-	if(isfloorturf(target_floor))
-		for(var/turf/nearby_turf in RANGE_TURFS(1, target_floor))
+	if(isfloorturf(exposed_turf))
+		for(var/turf/nearby_turf in RANGE_TURFS(1, exposed_turf))
 			if(!locate(/obj/effect/hotspot) in nearby_turf)
 				new /obj/effect/hotspot(nearby_turf)
 

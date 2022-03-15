@@ -2782,11 +2782,11 @@
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
 "mN" = (
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mO" = (
 /obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mP" = (
 /obj/effect/decal/remains/human,
@@ -2802,24 +2802,24 @@
 /obj/structure/ladder/unbreakable/rune{
 	id = "academy_coldroom"
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mT" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mU" = (
 /obj/item/food/meat/slab,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mV" = (
 /obj/item/clothing/gloves/combat,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mX" = (
 /obj/item/clothing/under/syndicate,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "mY" = (
 /turf/closed/mineral/random,
@@ -2846,20 +2846,20 @@
 "nj" = (
 /obj/structure/rack,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "nk" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "nl" = (
 /obj/item/clothing/mask/gas/syndicate,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "nm" = (
 /mob/living/simple_animal/hostile/bear,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/academy/academycellar)
 "nn" = (
 /obj/structure/frame/computer{

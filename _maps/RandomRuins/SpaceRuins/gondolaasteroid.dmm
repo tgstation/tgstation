@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav)
 "d" = (
 /turf/open/floor/grass,

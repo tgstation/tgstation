@@ -12,7 +12,7 @@
 /area/ruin/powered/shuttle)
 "de" = (
 /obj/item/flashlight/lantern,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ec" = (
 /obj/item/clothing/suit/hooded/wintercoat,
@@ -42,7 +42,7 @@
 /area/ruin/powered/shuttle)
 "lH" = (
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "mN" = (
 /turf/closed/wall/mineral/wood,
@@ -108,7 +108,7 @@
 /turf/open/floor/grass/fairy,
 /area/ruin/powered/shuttle)
 "OU" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "QD" = (
 /turf/template_noop,
@@ -125,11 +125,11 @@
 /area/ruin/powered/shuttle)
 "Wb" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Wc" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "WK" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,

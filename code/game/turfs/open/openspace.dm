@@ -128,7 +128,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	else if(istype(C, /obj/item/stack/tile/iron))
 		build_with_floor_tiles(C, user)
 
-/turf/open/openspace/build_with_floor_tiles(obj/item/stack/tiles/iron/used_tiles)
+/turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())
 		return
 	return ..()
@@ -162,7 +162,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
-	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
+	var/replacement_turf = /turf/open/misc/asteroid/snow/icemoon
 	/// Replaces itself with replacement_turf if the turf below this one is in a no ruins allowed area (usually ruins themselves)
 	var/protect_ruin = TRUE
 	/// If true mineral turfs below this openspace turf will be mined automatically

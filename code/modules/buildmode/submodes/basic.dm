@@ -30,7 +30,7 @@
 			clicked_turf.PlaceOnTop(/turf/closed/wall/r_wall)
 		else
 			clicked_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR) // Gotta do something
-		log_admin("Build Mode: [key_name(c)] built [T] at [AREACOORD(T)]")
+		log_admin("Build Mode: [key_name(c)] built [clicked_turf] at [AREACOORD(clicked_turf)]")
 		return
 	else if(right_click)
 		log_admin("Build Mode: [key_name(c)] deleted [object] at [AREACOORD(object)]")

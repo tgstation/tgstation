@@ -16,19 +16,19 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "ae" = (
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "af" = (
 /obj/item/greentext,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "ag" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -40,13 +40,13 @@
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "ai" = (
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "aj" = (
 /obj/structure/flora/rock,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -55,19 +55,19 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "al" = (
 /obj/effect/forcefield/cult,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "am" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "an" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
@@ -84,7 +84,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "aq" = (
 /obj/item/ectoplasm,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
@@ -102,7 +102,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "at" = (
 /obj/structure/spawner/skeleton,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
@@ -241,7 +241,7 @@
 	desc = "Rusted mines planted out by the miners before, probably to keep the cave monsters at bay.";
 	name = "rusted mine"
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -257,7 +257,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "aQ" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -275,7 +275,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "aT" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -312,7 +312,7 @@
 	desc = "An old rune inscribed on the floor, giving off an intense amount of heat.";
 	name = "flame rune"
 	},
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
@@ -334,13 +334,13 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bc" = (
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "be" = (
 /obj/structure/spawner/mining/goliath,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -352,7 +352,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bh" = (
 /mob/living/simple_animal/hostile/skeleton,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -371,7 +371,7 @@
 "bo" = (
 /obj/structure/flora/rock,
 /obj/item/soulstone/anybody,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -380,19 +380,19 @@
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
 	name = "shock rune"
 	},
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bu" = (
 /obj/structure/spider/cocoon,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "bv" = (
 /obj/structure/destructible/cult/pylon,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -405,7 +405,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bx" = (
 /obj/item/organ/brain/alien,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -426,7 +426,7 @@
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bB" = (
 /obj/item/clothing/head/collectable/wizard,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -460,25 +460,25 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "bG" = (
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bH" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/under/misc/patriotsuit,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bI" = (
 /obj/item/bedsheet/patriot,
-/turf/open/floor/plating/asteroid/basalt/lava{
+/turf/open/misc/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_four)
 "bJ" = (
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -539,7 +539,7 @@
 "bX" = (
 /obj/structure/table,
 /obj/item/paper/crumpled/awaymissions/caves/unsafe_area,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -554,7 +554,7 @@
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -571,13 +571,13 @@
 /obj/item/pickaxe/rusted{
 	pixel_x = 5
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cc" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -586,7 +586,7 @@
 	desc = "Rusted mines planted out by the miners before, probably to keep the cave monsters at bay.";
 	name = "rusted mine"
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -612,13 +612,13 @@
 /area/awaymission/caves/research)
 "ci" = (
 /obj/item/shard,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
 "cj" = (
 /obj/structure/flora/rock,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -626,7 +626,7 @@
 /obj/structure/sign/warning/xeno_mining{
 	pixel_y = -32
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -652,7 +652,7 @@
 /area/awaymission/caves/research)
 "cq" = (
 /obj/structure/flora/rock,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -700,13 +700,13 @@
 /area/awaymission/caves/bmp_asteroid)
 "cy" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
 "cz" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -770,7 +770,7 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cL" = (
 /obj/structure/spawner/mining/basilisk,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -800,7 +800,7 @@
 /obj/item/pickaxe/rusted{
 	pixel_x = 5
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -836,7 +836,7 @@
 	desc = "A rare breed of bat which roosts deep in caves.";
 	name = "Cave Bat"
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -878,7 +878,7 @@
 /area/awaymission/caves/research)
 "da" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1090,7 +1090,7 @@
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1131,7 +1131,7 @@
 /area/awaymission/caves/northblock)
 "ef" = (
 /obj/effect/decal/cleanable/ash,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1209,7 +1209,7 @@
 /area/awaymission/caves/northblock)
 "eu" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1310,7 +1310,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eQ" = (
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1347,7 +1347,7 @@
 /area/awaymission/caves/listeningpost)
 "fb" = (
 /obj/structure/spawner/mining/hivelord,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1363,25 +1363,25 @@
 /obj/item/slimepotion/fireproof,
 /obj/item/slimepotion/fireproof,
 /obj/item/clothing/glasses/thermal,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fd" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fe" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fg" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1397,19 +1397,19 @@
 /obj/effect/mob_spawn/ghost_role/human/skeleton{
 	name = "spooky skeleton remains"
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fk" = (
 /obj/item/grenade/syndieminibomb/concussion,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fl" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1424,13 +1424,13 @@
 /obj/item/organ/eyes/robotic/thermals,
 /obj/item/gun/energy/laser/captain/scattershot,
 /obj/item/slimepotion/fireproof,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fo" = (
 /mob/living/simple_animal/hostile/asteroid/fugu,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1459,13 +1459,13 @@
 /area/awaymission/caves/bmp_asteroid)
 "fv" = (
 /obj/structure/glowshroom/single,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "fw" = (
 /obj/item/gun/energy/laser/captain/scattershot,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1504,7 +1504,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "fF" = (
 /obj/item/slimepotion/fireproof,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1523,7 +1523,7 @@
 /obj/structure/sign/departments/medbay{
 	pixel_x = -32
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1547,7 +1547,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "fP" = (
 /obj/structure/grille,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1560,7 +1560,7 @@
 "fR" = (
 /obj/structure/grille,
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1598,7 +1598,7 @@
 /obj/item/stack/sheet/mineral/adamantine{
 	amount = 15
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1631,7 +1631,7 @@
 	name = "\proper wilson";
 	desc = "It's a beachball with a face crudely drawn onto it with some soot."
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1668,7 +1668,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "gk" = (
 /obj/effect/landmark/awaystart,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1682,7 +1682,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "gn" = (
 /obj/item/grown/log,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1709,7 +1709,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "gs" = (
 /obj/item/assembly/igniter,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
@@ -1758,7 +1758,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "gD" = (
 /obj/structure/spawner/mining/hivelord,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1823,7 +1823,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "gQ" = (
 /obj/structure/spawner/mining/basilisk,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1834,13 +1834,13 @@
 /obj/item/stack/sheet/mineral/mythril{
 	amount = 12
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
 "gS" = (
 /obj/structure/girder,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1857,7 +1857,7 @@
 	desc = "Rusted mines planted out by the miners before, probably to keep the cave monsters at bay.";
 	name = "rusted mine"
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1905,7 +1905,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/bmp_asteroid)
 "lO" = (
-/turf/open/floor/plating/asteroid/basalt/airless,
+/turf/open/misc/asteroid/basalt/airless,
 /area/awaymission/caves/bmp_asteroid/level_two)
 "no" = (
 /obj/machinery/light/small/built/directional/east,
@@ -1914,7 +1914,7 @@
 	name = "\improper MECH TUNNEL PASSAGE B1 TO A2";
 	pixel_x = 32
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -1935,7 +1935,7 @@
 "rk" = (
 /obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/giant_spider/hunter,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -1955,7 +1955,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "tK" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -1993,7 +1993,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "Bb" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -2004,13 +2004,13 @@
 	pixel_x = 32
 	},
 /obj/machinery/light/small/built/directional/east,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "Ep" = (
 /mob/living/simple_animal/hostile/giant_spider/hunter,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -2036,7 +2036,7 @@
 /area/awaymission/caves/bmp_asteroid)
 "GX" = (
 /mob/living/simple_animal/hostile/giant_spider/nurse,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
@@ -2058,7 +2058,7 @@
 /area/awaymission/caves/northblock)
 "MT" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -2095,13 +2095,13 @@
 "PV" = (
 /obj/item/mjollnir,
 /mob/living/simple_animal/hostile/giant_spider/nurse,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_three)
 "Qh" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -2112,7 +2112,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid)
@@ -2127,13 +2127,13 @@
 	name = "\improper MECH TUNNEL PASSAGE A2 TO A1";
 	pixel_x = -32
 	},
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)
 "YY" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/basalt{
+/turf/open/misc/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14;TEMP=2.7"
 	},
 /area/awaymission/caves/bmp_asteroid/level_two)

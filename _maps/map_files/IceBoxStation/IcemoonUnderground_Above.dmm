@@ -109,7 +109,7 @@
 /obj/structure/fence/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "av" = (
 /obj/effect/turf_decal/tile/bar,
@@ -126,7 +126,7 @@
 /area/service/bar)
 "aw" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "az" = (
 /turf/open/floor/iron,
@@ -186,7 +186,7 @@
 /obj/structure/fence/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "aH" = (
 /obj/machinery/light/directional/east,
@@ -700,7 +700,7 @@
 /area/maintenance/department/medical/morgue)
 "cp" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "cq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -738,7 +738,7 @@
 /obj/structure/sign/plaques/kiddie/devils_tooth{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "cv" = (
 /obj/machinery/door/airlock/maintenance{
@@ -1054,7 +1054,7 @@
 /obj/structure/fence/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "dw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1390,7 +1390,7 @@
 /area/cargo/warehouse)
 "eA" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "eC" = (
 /obj/structure/extinguisher_cabinet/directional/south,
@@ -1681,7 +1681,7 @@
 /area/commons/lounge)
 "fM" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fO" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -1994,7 +1994,7 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "gH" = (
 /obj/structure/sink{
@@ -2356,7 +2356,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hJ" = (
 /obj/structure/window/reinforced{
@@ -2545,7 +2545,7 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ik" = (
 /obj/machinery/light/dim/directional/east,
@@ -3103,7 +3103,7 @@
 /area/icemoon/underground/explored)
 "jZ" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/engineering/lobby)
 "ka" = (
 /obj/structure/sign/warning/vacuum{
@@ -3298,7 +3298,7 @@
 	c_tag = "Labor Camp External North";
 	network = list("labor")
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/laborcamp)
 "kH" = (
 /obj/structure/closet/athletic_mixed,
@@ -5038,7 +5038,7 @@
 /area/mine/eva)
 "qc" = (
 /obj/item/clothing/suit/hooded/wintercoat/science,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "qe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5570,7 +5570,7 @@
 /area/mine/laborcamp/security)
 "rJ" = (
 /obj/structure/chair/wood,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
@@ -6374,7 +6374,7 @@
 /obj/structure/railing/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "tZ" = (
 /obj/machinery/conveyor{
@@ -6896,7 +6896,7 @@
 "vR" = (
 /obj/item/stack/sheet/animalhide/monkey,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "vS" = (
 /obj/item/radio/intercom/directional/south,
@@ -7267,7 +7267,7 @@
 /area/mine/laborcamp)
 "xi" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "xj" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -7440,7 +7440,7 @@
 /area/service/theater)
 "xO" = (
 /obj/structure/flora/rock/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "xR" = (
 /obj/effect/landmark/xeno_spawn,
@@ -7532,7 +7532,7 @@
 "yg" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "yh" = (
 /obj/structure/sign/warning/gasmask{
@@ -7746,7 +7746,7 @@
 /area/medical/virology)
 "yW" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/laborcamp)
 "yX" = (
 /obj/structure/window/reinforced,
@@ -8409,7 +8409,7 @@
 /obj/item/flashlight/lantern{
 	light_on = 1
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Bc" = (
 /obj/structure/cable/multilayer/multiz,
@@ -8591,7 +8591,7 @@
 /area/mine/eva)
 "BG" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/eva)
 "BH" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
@@ -8784,7 +8784,7 @@
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Ct" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -8926,7 +8926,7 @@
 	},
 /area/mine/living_quarters)
 "CM" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/lavaland/surface/outdoors/explored)
 "CN" = (
 /obj/structure/table,
@@ -9085,7 +9085,7 @@
 /area/medical/virology)
 "Dk" = (
 /obj/structure/fence/door,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Dm" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -9521,11 +9521,11 @@
 /obj/structure/fence/end{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "EL" = (
 /obj/structure/railing/corner,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "EM" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
@@ -9565,7 +9565,7 @@
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ET" = (
 /turf/closed/wall,
@@ -9700,7 +9700,7 @@
 /turf/closed/wall/r_wall,
 /area/engineering/lobby)
 "Fp" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Fq" = (
 /turf/closed/wall/mineral/wood,
@@ -9813,11 +9813,11 @@
 /area/medical/virology)
 "FP" = (
 /obj/item/stack/rods/ten,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "FQ" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "FR" = (
 /turf/closed/mineral/random/snow/high_chance,
@@ -10136,7 +10136,7 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "GL" = (
 /obj/machinery/hydroponics/soil,
@@ -10796,7 +10796,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "Iy" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored)
 "IA" = (
 /obj/structure/sign/directions/engineering{
@@ -10905,7 +10905,7 @@
 /area/medical/virology)
 "IP" = (
 /obj/structure/fence,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "IQ" = (
 /obj/machinery/door/airlock/mining/glass{
@@ -11020,7 +11020,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jg" = (
 /obj/effect/turf_decal/siding/brown,
@@ -11052,7 +11052,7 @@
 /obj/structure/marker_beacon/burgundy{
 	name = "landing marker"
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11177,7 +11177,7 @@
 /area/service/hydroponics)
 "JK" = (
 /obj/machinery/light/directional/north,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/storage)
 "JL" = (
 /obj/machinery/door/airlock/maintenance{
@@ -11242,7 +11242,7 @@
 /area/icemoon/underground/explored)
 "JV" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/eva)
 "JW" = (
 /obj/structure/rack,
@@ -11326,7 +11326,7 @@
 /obj/structure/sign/poster/official/here_for_your_safety{
 	pixel_x = 32
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Kj" = (
 /obj/machinery/camera/directional/west{
@@ -11340,7 +11340,7 @@
 	c_tag = "Labor Camp External West";
 	network = list("labor")
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/laborcamp)
 "Km" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -11721,7 +11721,7 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Lw" = (
 /obj/structure/disposalpipe/segment{
@@ -12220,7 +12220,7 @@
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "MY" = (
 /obj/effect/decal/cleanable/dirt,
@@ -12356,7 +12356,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "NH" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/storage)
 "NI" = (
 /obj/structure/table,
@@ -12516,7 +12516,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Om" = (
 /obj/effect/turf_decal/stripes/line{
@@ -12601,7 +12601,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "OE" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -12652,7 +12652,7 @@
 /obj/structure/railing{
 	dir = 10
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "OK" = (
 /obj/structure/railing/corner{
@@ -12989,7 +12989,7 @@
 /area/mine/living_quarters)
 "PI" = (
 /obj/structure/marker_beacon/burgundy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "PJ" = (
 /obj/structure/disposalpipe/segment{
@@ -13168,11 +13168,11 @@
 /obj/structure/marker_beacon{
 	icon_state = "markerburgundy-on"
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Qi" = (
 /obj/effect/spawner/random/structure/crate,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Qk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -13527,7 +13527,7 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_x = -32
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Rm" = (
 /obj/structure/cable,
@@ -14126,7 +14126,7 @@
 /obj/structure/fence/door/opened{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "SZ" = (
 /obj/structure/table/reinforced,
@@ -14355,7 +14355,7 @@
 /area/hallway/secondary/service)
 "TE" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/storage)
 "TH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14404,7 +14404,7 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_x = -32
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "TM" = (
 /obj/item/clothing/mask/animal/pig,
@@ -14789,7 +14789,7 @@
 /area/maintenance/department/chapel)
 "UU" = (
 /obj/structure/railing,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "UV" = (
 /obj/effect/turf_decal/tile/brown{
@@ -15132,7 +15132,7 @@
 /area/maintenance/department/chapel)
 "VW" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "VX" = (
 /obj/structure/stairs/north,
@@ -15351,7 +15351,7 @@
 "WF" = (
 /obj/item/organ/tail/monkey,
 /obj/effect/decal/cleanable/blood/splatter,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "WG" = (
 /obj/structure/cable,
@@ -15649,7 +15649,7 @@
 /obj/structure/railing{
 	dir = 9
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "XJ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -15745,7 +15745,7 @@
 /area/medical/chemistry)
 "XV" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/mine/storage)
 "XW" = (
 /obj/machinery/door/window/northleft{
@@ -15983,7 +15983,7 @@
 /area/science/xenobiology)
 "YF" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "YG" = (
 /obj/effect/decal/cleanable/dirt,

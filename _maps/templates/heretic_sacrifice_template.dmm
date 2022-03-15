@@ -20,7 +20,7 @@
 /area/heretic_sacrifice/flesh)
 "cW" = (
 /obj/structure/no_effect_signpost/void,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/heretic_sacrifice/void)
 "dX" = (
 /obj/effect/decal/cleanable/oil,
@@ -58,7 +58,7 @@
 /area/heretic_sacrifice/rust)
 "jB" = (
 /obj/machinery/light/very_dim/directional/south,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/heretic_sacrifice/void)
 "lz" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -148,7 +148,7 @@
 /area/heretic_sacrifice/ash)
 "qn" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/heretic_sacrifice/void)
 "qu" = (
 /obj/effect/turf_decal/weather/dirt,
@@ -538,7 +538,7 @@
 /area/heretic_sacrifice/ash)
 "Rb" = (
 /obj/effect/landmark/heretic/void,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/heretic_sacrifice/void)
 "Rh" = (
 /obj/effect/turf_decal/trimline/brown/line{
@@ -605,7 +605,7 @@
 	},
 /area/heretic_sacrifice/ash)
 "Wb" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/heretic_sacrifice/void)
 "WD" = (
 /turf/closed/indestructible/iron{
@@ -614,7 +614,7 @@
 /area/heretic_sacrifice/rust)
 "Xk" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/heretic_sacrifice/void)
 "Xr" = (
 /turf/open/floor/plating/rust,

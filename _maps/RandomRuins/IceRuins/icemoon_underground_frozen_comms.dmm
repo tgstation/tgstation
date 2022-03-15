@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aD" = (
 /obj/structure/fence/cut/medium,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "aU" = (
 /turf/open/genturf,
@@ -13,7 +13,7 @@
 "cv" = (
 /obj/structure/flora/rock/pile/icy,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/powered/shuttle)
 "cH" = (
 /obj/structure/table/reinforced/rglass,
@@ -28,11 +28,11 @@
 "dq" = (
 /obj/structure/flora/tree/dead,
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "el" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "eC" = (
 /obj/effect/turf_decal/stripes/line{
@@ -53,7 +53,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "hY" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored/rivers)
 "kr" = (
 /turf/open/floor/iron/smooth{
@@ -80,7 +80,7 @@
 	},
 /area/ruin/powered/shuttle)
 "qS" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rd" = (
 /obj/structure/table/reinforced/rglass,
@@ -100,12 +100,12 @@
 /area/ruin/powered/shuttle)
 "rn" = (
 /mob/living/simple_animal/hostile/asteroid/wolf,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "rS" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "st" = (
 /obj/machinery/door/airlock/public,
@@ -118,16 +118,16 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "te" = (
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "th" = (
 /obj/structure/fence/end{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uz" = (
 /obj/structure/tank_dispenser,
@@ -145,7 +145,7 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 4
 	},
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "wJ" = (
 /obj/structure/sink{
@@ -160,7 +160,7 @@
 /area/icemoon/underground/explored)
 "yl" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "yF" = (
 /obj/structure/closet/wardrobe/grey,
@@ -176,7 +176,7 @@
 /obj/structure/rack,
 /obj/item/stack/cable_coil/five,
 /obj/item/wirecutters,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "zi" = (
 /obj/machinery/suit_storage_unit,
@@ -196,14 +196,14 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "zz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "AY" = (
 /obj/structure/fence/corner{
@@ -225,14 +225,14 @@
 /area/ruin/powered/shuttle)
 "Cu" = (
 /obj/structure/fence/cut/large,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "CH" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/north,
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Et" = (
 /obj/effect/turf_decal/stripes/line{
@@ -246,7 +246,7 @@
 	pixel_y = 22;
 	req_access_txt = "47"
 	},
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "FK" = (
 /mob/living/simple_animal/hostile/asteroid/wolf,
@@ -258,7 +258,7 @@
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Gl" = (
 /obj/effect/decal/cleanable/dirt,
@@ -273,14 +273,14 @@
 /obj/structure/window/reinforced/spawner/north,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "GQ" = (
 /obj/structure/window/reinforced/spawner,
 /obj/structure/grille,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "HT" = (
 /obj/structure/closet/wardrobe/grey,
@@ -295,13 +295,13 @@
 /area/icemoon/underground/explored)
 "Js" = (
 /obj/structure/fence,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jt" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Kh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -311,7 +311,7 @@
 /obj/item/wrench,
 /obj/item/crowbar/large/heavy,
 /obj/machinery/light/small/built/directional/south,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Kr" = (
 /obj/machinery/light/small/broken/directional/north,
@@ -321,7 +321,7 @@
 /obj/structure/fence/end{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "MS" = (
 /obj/effect/turf_decal/siding/wood{
@@ -343,14 +343,14 @@
 /obj/effect/turf_decal/box/corners{
 	dir = 1
 	},
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "OM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /obj/structure/rack,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Qj" = (
 /obj/effect/turf_decal/box/corners,
@@ -362,7 +362,7 @@
 	pixel_y = 2
 	},
 /obj/item/screwdriver,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "RK" = (
 /obj/machinery/door/poddoor/shutters/window/preopen{
@@ -388,23 +388,23 @@
 /area/ruin/powered/shuttle)
 "Tz" = (
 /obj/structure/flora/tree/dead,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "TG" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Ux" = (
 /obj/structure/grille,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "Vq" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "VN" = (
 /obj/structure/frame/computer{
@@ -426,7 +426,7 @@
 /obj/structure/window/reinforced/spawner/east,
 /obj/structure/window/reinforced/spawner/west,
 /obj/structure/grille,
-/turf/open/misc/icemoon,
+/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 
 (1,1,1) = {"

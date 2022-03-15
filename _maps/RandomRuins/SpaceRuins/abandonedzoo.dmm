@@ -15,11 +15,11 @@
 /turf/closed/mineral/random,
 /area/ruin/space/has_grav/abandonedzoo)
 "ai" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "aj" = (
 /obj/structure/flora/rock,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "al" = (
 /obj/structure/flora/ausbushes/genericbush,
@@ -33,7 +33,7 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub{
 	will_burrow = 0
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "aq" = (
 /obj/structure/flora/ausbushes/grassybush,
@@ -41,11 +41,11 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "ar" = (
 /obj/structure/flora/rock/pile,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "as" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "at" = (
 /turf/closed/wall/r_wall,
@@ -551,7 +551,7 @@
 "xW" = (
 /obj/structure/flora/rock,
 /obj/machinery/light/directional/south,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/space/has_grav/abandonedzoo)
 "Ck" = (
 /obj/effect/turf_decal/tile/green{

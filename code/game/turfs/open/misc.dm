@@ -34,6 +34,9 @@
 		build_with_floor_tiles(W, user)
 		return TRUE
 
+/turf/open/misc/plating/asteroid/attack_paw(mob/user, list/modifiers)
+	return attack_hand(user, modifiers)
+
 /turf/open/misc/ex_act(severity, target)
 	. = ..()
 
@@ -62,7 +65,7 @@
 		if(EXPLODE_LIGHT)
 			if (prob(50))
 				break_tile()
-				shotspot_expose(1000,CELL_VOLUME)
+				hotspot_expose(1000,CELL_VOLUME)
 
 
 /turf/open/misc/is_shielded()

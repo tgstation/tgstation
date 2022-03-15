@@ -199,7 +199,7 @@
 /turf/open/water/beach,
 /area/ruin/powered/beach)
 "bW" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "bY" = (
 /obj/machinery/light/directional/north,
@@ -619,7 +619,7 @@
 /area/ruin/powered/beach)
 "sZ" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/layer4,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
 "ta" = (
 /obj/structure/curtain,

@@ -137,7 +137,7 @@
 /area/mine/eva)
 "fb" = (
 /obj/item/clothing/head/helmet/skull,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fk" = (
 /obj/structure/fluff/tram_rail/end{
@@ -163,7 +163,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "fQ" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fR" = (
 /obj/structure/lattice/catwalk,
@@ -218,11 +218,11 @@
 /area/icemoon/underground/explored)
 "hf" = (
 /obj/effect/gibspawner/human/bodypartless,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hh" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hv" = (
 /obj/machinery/door/airlock/external{
@@ -328,7 +328,7 @@
 /obj/structure/fence/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "kf" = (
 /obj/structure/fence/corner{
@@ -400,7 +400,7 @@
 	},
 /obj/item/bodypart/chest,
 /obj/item/organ/heart,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "lX" = (
 /obj/structure/fence{
@@ -538,11 +538,11 @@
 /area/icemoon/underground/explored)
 "qy" = (
 /mob/living/simple_animal/hostile/asteroid/gutlunch,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "qA" = (
 /obj/structure/fence,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "qC" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -764,7 +764,7 @@
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "AT" = (
 /obj/structure/rack,
@@ -780,7 +780,7 @@
 /area/icemoon/underground/explored)
 "Bf" = (
 /obj/effect/gibspawner/human,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "BH" = (
 /obj/effect/turf_decal/stripes/end{
@@ -914,7 +914,7 @@
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Gv" = (
 /obj/structure/closet/crate/bin,
@@ -985,7 +985,7 @@
 /obj/structure/fence/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "IH" = (
 /obj/structure/fence{
@@ -1080,7 +1080,7 @@
 /obj/structure/fence/end{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Lv" = (
 /obj/structure/window/reinforced/spawner/east,

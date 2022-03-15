@@ -447,7 +447,7 @@
 	c_tag = "Monastery Asteroid Dock Port";
 	network = list("ss13","monastery")
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "en" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -537,7 +537,7 @@
 	c_tag = "Monastery Asteroid Dock Staboard";
 	network = list("ss13","monastery")
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "fm" = (
 /obj/structure/window/reinforced{
@@ -564,7 +564,7 @@
 /area/shuttle/escape)
 "fx" = (
 /obj/structure/flora/ausbushes,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "fz" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -628,7 +628,7 @@
 /obj/item/paper{
 	text = "Lord, today let our dreams runneth on prayer. Amen."
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "gl" = (
 /obj/structure/window/reinforced{
@@ -715,7 +715,7 @@
 /area/shuttle/escape)
 "iv" = (
 /obj/structure/flora/ausbushes/fernybush,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "iw" = (
 /obj/structure/lattice,
@@ -756,7 +756,7 @@
 	c_tag = "Monastery Asteroid Primary Entrance";
 	network = list("ss13","monastery")
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "iM" = (
 /obj/machinery/door/airlock/grunge{
@@ -1303,7 +1303,7 @@
 /area/shuttle/escape)
 "pA" = (
 /obj/structure/flora/ausbushes/leafybush,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "pB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
@@ -1805,7 +1805,7 @@
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "vU" = (
 /obj/item/kirbyplants{
@@ -1921,7 +1921,7 @@
 /area/shuttle/escape)
 "wG" = (
 /obj/structure/chair,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "wM" = (
 /obj/machinery/light/small/directional/north,
@@ -2581,7 +2581,7 @@
 /turf/open/floor/grass,
 /area/shuttle/escape)
 "EN" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "ET" = (
 /obj/structure/flora/ausbushes/ppflowers,
@@ -2770,7 +2770,7 @@
 "HO" = (
 /obj/structure/flora/ausbushes/leafybush,
 /obj/structure/flora/ausbushes/reedbush,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "HS" = (
 /obj/structure/flora/ausbushes/sparsegrass,
@@ -3015,7 +3015,7 @@
 /obj/structure/table,
 /obj/item/plate,
 /obj/item/kitchen/fork,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "Kw" = (
 /obj/machinery/door/window/eastleft{
@@ -3537,7 +3537,7 @@
 /obj/item/flashlight/lantern{
 	icon_state = "lantern-on"
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape)
 "Py" = (
 /obj/machinery/hydroponics/soil,

@@ -13,7 +13,7 @@
 /turf/closed/mineral/snowmountain,
 /area/awaymission/snowdin/cave/mountain)
 "af" = (
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "ag" = (
 /obj/effect/light_emitter{
@@ -21,7 +21,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "ah" = (
 /obj/effect/baseturf_helper/asteroid/snow,
@@ -35,22 +35,22 @@
 /area/awaymission/snowdin/cave)
 "ak" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "al" = (
 /obj/structure/flora/tree/dead,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "am" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "an" = (
 /turf/open/floor/plating/snowed,
 /area/awaymission/snowdin/cave)
 "ao" = (
 /obj/structure/flora/stump,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "ap" = (
 /obj/effect/turf_decal/weather/snow,
@@ -69,7 +69,7 @@
 /area/awaymission/snowdin/cave)
 "av" = (
 /obj/effect/baseturf_helper/asteroid/snow,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "aw" = (
 /obj/machinery/computer,
@@ -283,7 +283,7 @@
 /area/awaymission/snowdin/post/kitchen)
 "bg" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf = /turf/open/floor/plating/asteroid/snow/ice;
+	baseturf = /turf/open/misc/asteroid/snow/ice;
 	name = "asteroid snowice baseturf editor"
 	},
 /turf/closed/indestructible/rock/snow/ice,
@@ -1594,7 +1594,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "eN" = (
 /obj/structure/dresser,
@@ -1823,7 +1823,7 @@
 /area/awaymission/snowdin/outside)
 "fq" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "fr" = (
 /turf/open/lava/plasma,
@@ -2547,7 +2547,7 @@
 "ho" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "hp" = (
 /obj/item/chair,
@@ -2888,7 +2888,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "ih" = (
 /obj/effect/turf_decal/weather/snow,
@@ -3318,7 +3318,7 @@
 /area/awaymission/snowdin/post/garage)
 "iY" = (
 /obj/structure/fence,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "iZ" = (
 /obj/item/clothing/head/cone,
@@ -3335,7 +3335,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "jb" = (
 /obj/effect/light_emitter{
@@ -3347,7 +3347,7 @@
 /area/awaymission/snowdin/cave)
 "jc" = (
 /mob/living/simple_animal/hostile/bear/snow,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "jd" = (
 /obj/structure/bookcase/random,
@@ -3813,24 +3813,24 @@
 /obj/structure/fence/corner{
 	dir = 9
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "ko" = (
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "kp" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /obj/structure/sign/nanotrasen,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "kq" = (
 /obj/structure/fence/door/opened,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "kr" = (
 /obj/structure/fence{
@@ -3840,11 +3840,11 @@
 /area/awaymission/snowdin/outside)
 "ks" = (
 /obj/structure/fence/door,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "kt" = (
 /obj/structure/fence/corner,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "ku" = (
 /turf/closed/wall/ice,
@@ -4588,7 +4588,7 @@
 /obj/structure/fence/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "lU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -4968,7 +4968,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "na" = (
 /turf/closed/wall/ice,
@@ -5720,10 +5720,10 @@
 /area/awaymission/snowdin/post/engineering)
 "oY" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "oZ" = (
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "pa" = (
 /turf/closed/wall/ice,
@@ -5788,7 +5788,7 @@
 /area/awaymission/snowdin/post/secpost)
 "pl" = (
 /obj/effect/spawner/random/exotic/snow_gear,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "pm" = (
 /obj/effect/turf_decal/tile/red{
@@ -6149,7 +6149,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "qj" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/post/cavern2)
 "qk" = (
 /obj/structure/closet/cabinet,
@@ -6504,7 +6504,7 @@
 /obj/structure/statue/snow/snowman{
 	anchored = 1
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "rk" = (
 /obj/structure/rack,
@@ -6568,7 +6568,7 @@
 /area/awaymission/snowdin/post/engineering)
 "rv" = (
 /mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "rw" = (
 /obj/structure/fence,
@@ -6758,11 +6758,11 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "sf" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "sg" = (
 /obj/effect/mapping_helpers/airlock/locked,
@@ -7003,7 +7003,7 @@
 /obj/structure/fence/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "sO" = (
 /obj/structure/fence{
@@ -7068,7 +7068,7 @@
 /obj/item/clothing/head/bowler{
 	pixel_y = 13
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "sW" = (
 /obj/machinery/power/turbine{
@@ -7079,11 +7079,11 @@
 /area/awaymission/snowdin/post/engineering)
 "sX" = (
 /obj/structure/flora/rock/icy,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "sY" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "sZ" = (
 /obj/machinery/space_heater,
@@ -7162,7 +7162,7 @@
 /area/awaymission/snowdin/outside)
 "tm" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tn" = (
 /obj/effect/turf_decal/weather/snow,
@@ -7211,7 +7211,7 @@
 	set_luminosity = 6
 	},
 /mob/living/simple_animal/hostile/bear/snow,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tt" = (
 /mob/living/simple_animal/hostile/skeleton/templar,
@@ -7238,17 +7238,17 @@
 "tA" = (
 /obj/structure/flora/bush,
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tB" = (
 /obj/structure/flora/grass/both,
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tC" = (
 /obj/structure/flora/grass/both,
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tE" = (
 /turf/closed/indestructible/rock/snow,
@@ -7262,29 +7262,29 @@
 /area/awaymission/snowdin/cave)
 "tH" = (
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tI" = (
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "tJ" = (
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "tK" = (
 /obj/effect/mob_spawn/corpse/human/clown,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tN" = (
 /turf/open/misc/ice/smooth,
 /area/awaymission/snowdin/outside)
 "tP" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "tQ" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "tR" = (
 /obj/structure/barricade/wooden/snowed,
@@ -7343,7 +7343,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "ud" = (
 /mob/living/simple_animal/hostile/bear/snow,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "ue" = (
 /turf/open/floor/wood,
@@ -7378,7 +7378,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "uo" = (
 /obj/structure/chair/stool/directional/west,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7410,7 +7410,7 @@
 /obj/structure/fence{
 	pixel_x = 16
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "ux" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -7450,7 +7450,7 @@
 /obj/structure/fence{
 	pixel_x = -16
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "uD" = (
 /obj/machinery/door/airlock/maintenance{
@@ -7522,7 +7522,7 @@
 "uQ" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "uS" = (
 /mob/living/simple_animal/hostile/skeleton/plasmaminer,
@@ -7569,12 +7569,12 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "uY" = (
 /obj/structure/barricade/wooden/snowed,
 /obj/structure/spider/stickyweb,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "uZ" = (
 /obj/machinery/door/airlock/external/glass/ruin,
@@ -7655,7 +7655,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "vl" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "vn" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -7763,7 +7763,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern1)
 "vF" = (
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7779,11 +7779,11 @@
 "vH" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "vI" = (
 /mob/living/simple_animal/hostile/asteroid/basilisk,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7792,12 +7792,12 @@
 "vJ" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "vK" = (
 /obj/effect/decal/cleanable/blood/old,
 /mob/living/simple_animal/hostile/bear/snow,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "vL" = (
 /turf/closed/wall/mineral/titanium,
@@ -7813,18 +7813,18 @@
 /area/awaymission/snowdin/post/broken_shuttle)
 "vO" = (
 /obj/structure/fluff/fokoff_sign,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "vP" = (
 /obj/structure/bed,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
 	},
 /area/awaymission/snowdin/cave)
 "vQ" = (
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7844,11 +7844,11 @@
 /area/awaymission/snowdin/post/broken_shuttle)
 "vV" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "vW" = (
 /mob/living/simple_animal/hostile/skeleton/ice,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7863,11 +7863,11 @@
 /area/awaymission/snowdin/post/broken_shuttle)
 "vZ" = (
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "wa" = (
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "wb" = (
 /obj/structure/chair{
@@ -7888,7 +7888,7 @@
 /mob/living/simple_animal/hostile/skeleton/ice{
 	name = "Captain Bones"
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7899,7 +7899,7 @@
 /mob/living/simple_animal/hostile/skeleton/ice{
 	name = "Privateer Jones"
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7909,7 +7909,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7919,7 +7919,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7927,7 +7927,7 @@
 /area/awaymission/snowdin/cave)
 "wi" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7937,7 +7937,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7945,13 +7945,13 @@
 /area/awaymission/snowdin/cave)
 "wk" = (
 /obj/structure/barricade/sandbags,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "wl" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7969,7 +7969,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7977,13 +7977,13 @@
 /area/awaymission/snowdin/cave)
 "wp" = (
 /obj/structure/flora/tree/pine/xmas/presents,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "wq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -7992,7 +7992,7 @@
 "wu" = (
 /obj/structure/table/wood,
 /obj/item/trash/candy,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8000,7 +8000,7 @@
 /area/awaymission/snowdin/cave)
 "wv" = (
 /obj/item/trash/can,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8009,7 +8009,7 @@
 "wx" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "wy" = (
 /obj/structure/bonfire/prelit{
@@ -8020,7 +8020,7 @@
 	light_range = 4;
 	name = "fire light"
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8028,7 +8028,7 @@
 /area/awaymission/snowdin/cave)
 "wz" = (
 /obj/structure/closet/crate/wooden,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8036,7 +8036,7 @@
 /area/awaymission/snowdin/cave)
 "wA" = (
 /obj/structure/table/wood,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8044,7 +8044,7 @@
 /area/awaymission/snowdin/cave)
 "wB" = (
 /obj/item/key/atv,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "wC" = (
 /obj/vehicle/ridden/atv{
@@ -8055,7 +8055,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "wD" = (
 /turf/closed/wall,
@@ -8066,7 +8066,7 @@
 "wF" = (
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "wG" = (
 /obj/machinery/power/smes/engineering,
@@ -8795,7 +8795,7 @@
 /area/awaymission/snowdin/cave)
 "yN" = (
 /obj/structure/barricade/sandbags,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8914,14 +8914,14 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
 	},
 /area/awaymission/snowdin/outside)
 "zh" = (
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8932,7 +8932,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8989,7 +8989,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -8997,7 +8997,7 @@
 /area/awaymission/snowdin/outside)
 "zs" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9023,7 +9023,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9033,7 +9033,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9064,7 +9064,7 @@
 /area/awaymission/snowdin/igloo)
 "zF" = (
 /mob/living/simple_animal/hostile/skeleton/eskimo,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "zG" = (
 /obj/machinery/space_heater,
@@ -9101,7 +9101,7 @@
 /area/awaymission/snowdin/post/mining_dock)
 "zK" = (
 /obj/item/stack/sheet/iron,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "zL" = (
 /obj/machinery/door/airlock/public/glass{
@@ -9117,7 +9117,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9206,7 +9206,7 @@
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/skeleton/eskimo,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9278,7 +9278,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9297,7 +9297,7 @@
 /area/awaymission/snowdin/cave/cavern)
 "Aq" = (
 /mob/living/simple_animal/hostile/skeleton/plasmaminer,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Ar" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -9325,7 +9325,7 @@
 	set_luminosity = 6
 	},
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Av" = (
 /obj/machinery/door/airlock/external/glass/ruin,
@@ -9369,7 +9369,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9427,7 +9427,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9482,7 +9482,7 @@
 /area/awaymission/snowdin/post/minipost)
 "AS" = (
 /obj/item/stack/sheet/mineral/wood,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "AW" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -9520,11 +9520,11 @@
 /area/awaymission/snowdin/post/minipost)
 "Bc" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Bd" = (
 /mob/living/simple_animal/hostile/skeleton/eskimo,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9552,7 +9552,7 @@
 	dir = 4
 	},
 /mob/living/simple_animal/hostile/skeleton/eskimo,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9612,7 +9612,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9738,7 +9738,7 @@
 "BL" = (
 /obj/effect/turf_decal/weather/snow/corner,
 /mob/living/simple_animal/hostile/skeleton/eskimo,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9805,7 +9805,7 @@
 /area/awaymission/snowdin/cave)
 "BW" = (
 /obj/item/clothing/head/cone,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "BY" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -9857,12 +9857,12 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 3
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Ch" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/exotic/snow_gear,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9870,7 +9870,7 @@
 /area/awaymission/snowdin/cave)
 "Ci" = (
 /obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Cj" = (
 /obj/structure/fence{
@@ -9889,27 +9889,27 @@
 "Cn" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mob_spawn/corpse/human/syndicatesoldier,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Co" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Cp" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Cq" = (
 /obj/item/stack/sheet/mineral/plastitanium,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Cr" = (
 /obj/item/shard,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Cs" = (
 /obj/structure/girder,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -9926,7 +9926,7 @@
 /obj/item/shard{
 	icon_state = "medium"
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Cx" = (
 /obj/machinery/light/small/broken/directional/west,
@@ -9954,11 +9954,11 @@
 /area/awaymission/snowdin/cave)
 "CF" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "CG" = (
 /obj/item/shard,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10061,7 +10061,7 @@
 /area/awaymission/snowdin/cave)
 "CR" = (
 /obj/effect/gibspawner/generic,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10161,11 +10161,11 @@
 /area/awaymission/snowdin/cave)
 "Db" = (
 /obj/structure/fence,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Dc" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10173,7 +10173,7 @@
 /area/awaymission/snowdin/cave)
 "Dd" = (
 /obj/item/shard,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "De" = (
 /obj/structure/table/reinforced,
@@ -10270,7 +10270,7 @@
 "Do" = (
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Dp" = (
 /obj/effect/turf_decal/weather/snow,
@@ -10329,7 +10329,7 @@
 /area/awaymission/snowdin/cave)
 "Du" = (
 /obj/structure/girder,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10341,7 +10341,7 @@
 /area/awaymission/snowdin/cave)
 "Dw" = (
 /obj/item/stack/rods,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10421,7 +10421,7 @@
 /area/awaymission/snowdin/cave)
 "DE" = (
 /obj/item/stack/sheet/mineral/plastitanium,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10467,11 +10467,11 @@
 "DL" = (
 /obj/item/stack/rods,
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "DM" = (
 /mob/living/simple_animal/hostile/bear/snow,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10556,7 +10556,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "DW" = (
 /obj/effect/light_emitter{
@@ -10574,7 +10574,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "DX" = (
 /obj/item/shard,
@@ -10639,7 +10639,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Ef" = (
 /obj/item/reagent_containers/food/drinks/bottle/beer{
@@ -10671,12 +10671,12 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Ei" = (
 /obj/item/shard,
 /mob/living/simple_animal/hostile/bear/snow,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -10789,7 +10789,7 @@
 "Ey" = (
 /obj/structure/girder,
 /obj/effect/turf_decal/weather/snow,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -11000,11 +11000,11 @@
 /area/awaymission/snowdin/cave/cavern)
 "EV" = (
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "EW" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "EX" = (
 /obj/item/pickaxe/drill{
@@ -11016,7 +11016,7 @@
 "EY" = (
 /obj/item/shard,
 /obj/structure/flora/grass/both,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "EZ" = (
 /obj/effect/turf_decal/weather/snow,
@@ -11030,19 +11030,19 @@
 "Fa" = (
 /obj/structure/flora/grass/both,
 /obj/structure/flora/bush,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Fb" = (
 /obj/structure/fence{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Fc" = (
 /obj/structure/fence/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Fd" = (
 /obj/structure/statue/snow/snowman{
@@ -11052,17 +11052,17 @@
 /obj/item/clothing/head/helmet{
 	pixel_y = 8
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Fe" = (
 /obj/structure/fence,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Ff" = (
 /obj/structure/fence/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Fg" = (
 /obj/effect/turf_decal/bot,
@@ -11082,7 +11082,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Fj" = (
 /obj/effect/turf_decal/bot,
@@ -11091,7 +11091,7 @@
 "Fk" = (
 /obj/item/shard,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Fl" = (
 /obj/structure/fence{
@@ -11102,7 +11102,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Fn" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
@@ -11129,7 +11129,7 @@
 /obj/item/clothing/head/helmet{
 	pixel_y = 8
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Fu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible{
@@ -11139,7 +11139,7 @@
 /area/awaymission/snowdin/outside)
 "Fw" = (
 /obj/item/shard,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Fx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
@@ -11157,11 +11157,11 @@
 	oxy_damage = 50
 	},
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "FC" = (
 /obj/effect/baseturf_helper/asteroid/snow{
-	baseturf = /turf/open/floor/plating/asteroid/snow/ice;
+	baseturf = /turf/open/misc/asteroid/snow/ice;
 	name = "asteroid snowice baseturf editor"
 	},
 /turf/closed/wall/ice,
@@ -11185,7 +11185,7 @@
 /obj/item/clothing/head/hos{
 	pixel_y = 10
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "FG" = (
 /obj/item/shard,
@@ -11202,7 +11202,7 @@
 "FI" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "FK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -11232,12 +11232,12 @@
 	id = "snowdin_belt_mine";
 	name = "mining conveyor"
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "FO" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/loading_area,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "FP" = (
 /obj/machinery/light/small/directional/north,
@@ -11247,7 +11247,7 @@
 /obj/structure/fence/door{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "FT" = (
 /obj/structure/ore_box,
@@ -11269,7 +11269,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "FZ" = (
 /turf/closed/wall/ice,
@@ -11292,7 +11292,7 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Gd" = (
 /turf/closed/wall/ice,
@@ -11365,7 +11365,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Gt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible{
@@ -11613,7 +11613,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "Ho" = (
 /turf/open/floor/engine/plasma,
@@ -11639,7 +11639,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "Hs" = (
 /obj/machinery/light/directional/west,
@@ -12490,7 +12490,7 @@
 /area/awaymission/snowdin/post/mining_main)
 "JR" = (
 /obj/effect/spawner/random/exotic/antag_gear,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "JU" = (
 /obj/effect/turf_decal/stripes/line{
@@ -13003,7 +13003,7 @@
 /area/awaymission/snowdin/cave)
 "LF" = (
 /mob/living/simple_animal/hostile/giant_spider/nurse/ice,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "LK" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -13014,7 +13014,7 @@
 /area/awaymission/snowdin/post)
 "LL" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/post/minipost)
 "LV" = (
 /obj/machinery/light/broken/directional/south,
@@ -13086,7 +13086,7 @@
 /area/awaymission/snowdin/post/engineering)
 "Mv" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/post/cavern1)
 "MJ" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -13115,7 +13115,7 @@
 /area/awaymission/snowdin/post/kitchen)
 "MM" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "MP" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -13142,7 +13142,7 @@
 /area/awaymission/snowdin/post/dorm)
 "Nd" = (
 /mob/living/simple_animal/hostile/giant_spider/ice,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Nh" = (
 /obj/structure/closet/cabinet,
@@ -13415,7 +13415,7 @@
 "Pe" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Pm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
@@ -13435,7 +13435,7 @@
 /area/awaymission/snowdin/post/dorm)
 "Pn" = (
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Po" = (
 /obj/machinery/airalarm/directional/north,
@@ -13444,7 +13444,7 @@
 "Pq" = (
 /obj/structure/closet/crate/wooden,
 /obj/effect/spawner/random/exotic/antag_gear_weak,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -13523,7 +13523,7 @@
 	set_luminosity = 6
 	},
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/post/mining_main)
 "Qh" = (
 /obj/structure/table,
@@ -13570,7 +13570,7 @@
 /area/awaymission/snowdin/post)
 "QF" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/post/garage)
 "QJ" = (
 /obj/structure/table,
@@ -13613,7 +13613,7 @@
 "RM" = (
 /obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/giant_spider/hunter/ice,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "RO" = (
 /obj/structure/table,
@@ -13702,7 +13702,7 @@
 /obj/item/melee/baton/security{
 	pixel_x = 4
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/outside)
 "So" = (
 /obj/machinery/light/small/directional/west,
@@ -13723,7 +13723,7 @@
 /area/awaymission/snowdin/post)
 "Ss" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Su" = (
 /obj/machinery/light/small/directional/north,
@@ -13733,7 +13733,7 @@
 "SD" = (
 /obj/machinery/light/small/directional/north,
 /obj/item/stack/rods,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -13814,7 +13814,7 @@
 /area/awaymission/snowdin/post/gateway)
 "TC" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "TD" = (
 /obj/machinery/light/small/directional/south,
@@ -13822,7 +13822,7 @@
 /area/awaymission/snowdin/post/engineering)
 "TH" = (
 /obj/structure/chair/stool/directional/south,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -13937,15 +13937,15 @@
 /area/awaymission/snowdin/post/mining_dock)
 "UY" = (
 /obj/machinery/light/small/directional/west,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Vd" = (
 /mob/living/simple_animal/hostile/giant_spider/hunter/ice,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Vg" = (
 /obj/machinery/light/small/broken/directional/east,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/post/cavern1)
 "Vq" = (
 /obj/machinery/light/broken/directional/south,
@@ -13958,7 +13958,7 @@
 	set_luminosity = 6
 	},
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "Vu" = (
 /obj/machinery/light/broken/directional/north,
@@ -13997,7 +13997,7 @@
 /obj/structure/sign/nanotrasen{
 	pixel_y = -32
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/post/mining_dock)
 "VJ" = (
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -14113,7 +14113,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "WM" = (
 /obj/machinery/light/small/directional/north,
@@ -14210,7 +14210,7 @@
 	set_cap = 3;
 	set_luminosity = 6
 	},
-/turf/open/floor/plating/asteroid/snow,
+/turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/post/mining_main)
 "XK" = (
 /obj/machinery/light/small/directional/south,
@@ -14224,7 +14224,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "XP" = (
 /obj/effect/spawner/random/structure/crate_abandoned,
@@ -14247,7 +14247,7 @@
 /area/awaymission/snowdin/igloo)
 "XU" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/snow{
+/turf/open/misc/asteroid/snow{
 	floor_variance = 0;
 	icon_state = "snow_dug";
 	slowdown = 1
@@ -14358,7 +14358,7 @@
 	id = "snowdin_belt_mine"
 	},
 /obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/asteroid/snow/ice,
+/turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/post/mining_dock)
 "YZ" = (
 /obj/effect/turf_decal/stripes/line,

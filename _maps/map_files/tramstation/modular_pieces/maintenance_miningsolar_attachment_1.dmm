@@ -6,7 +6,7 @@
 /turf/closed/wall,
 /area/mine/explored)
 "l" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "z" = (
 /obj/modular_map_connector,
@@ -31,7 +31,7 @@
 /area/mine/explored)
 "S" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "Z" = (
 /obj/effect/turf_decal/sand/plating,

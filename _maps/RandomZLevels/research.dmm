@@ -6,17 +6,17 @@
 /turf/closed/mineral,
 /area/space/nearstation)
 "ac" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "ad" = (
 /turf/closed/mineral,
 /area/awaymission/research/exterior)
 "ae" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/research/exterior)
 "af" = (
 /mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/research/exterior)
 "ag" = (
 /turf/closed/wall/mineral/plastitanium{
@@ -288,7 +288,7 @@
 /obj/item/stack/sheet/mineral/bananium{
 	amount = 50
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "aZ" = (
 /obj/machinery/light/directional/west,
@@ -376,11 +376,11 @@
 /area/awaymission/research/interior/engineering)
 "bj" = (
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/research/exterior)
 "bk" = (
 /obj/item/bikehorn,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bl" = (
 /turf/closed/wall/r_wall,
@@ -532,7 +532,7 @@
 /area/awaymission/research/interior/maint)
 "by" = (
 /obj/item/clothing/mask/gas/clown_hat,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "bz" = (
 /turf/open/floor/iron/dark,
@@ -5178,10 +5178,10 @@
 "mc" = (
 /obj/item/stack/rods,
 /obj/item/shard,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/awaymission/research/exterior)
 "md" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/awaymission/research/exterior)
 "me" = (
 /turf/closed/wall/mineral/titanium,

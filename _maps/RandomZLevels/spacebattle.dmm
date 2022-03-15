@@ -2328,7 +2328,7 @@
 /turf/open/space,
 /area/awaymission/spacebattle/syndicate6)
 "jk" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/space/nearstation)
 "jl" = (
 /turf/closed/wall/mineral/plasma,

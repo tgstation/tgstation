@@ -44063,7 +44063,7 @@
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
 "nlU" = (
-/turf/open/floor/plating/asteroid/basalt/airless,
+/turf/open/misc/asteroid/basalt/airless,
 /area/space/nearstation)
 "nmE" = (
 /obj/structure/rack,
@@ -72747,7 +72747,7 @@
 /area/hallway/secondary/command)
 "xuf" = (
 /obj/structure/fluff/iced_abductor,
-/turf/open/floor/plating/asteroid/basalt/airless,
+/turf/open/misc/asteroid/basalt/airless,
 /area/space/nearstation)
 "xuu" = (
 /turf/closed/wall/r_wall,

@@ -7,7 +7,7 @@
 
 /turf/open/misc/basalt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass/basalt, "dig up")
+	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass/basalt, 2, "dig up")
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)
