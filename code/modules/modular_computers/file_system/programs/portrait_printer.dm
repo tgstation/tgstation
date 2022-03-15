@@ -2,8 +2,6 @@
 ///how much paper it takes from the printer to create a canvas.
 #define CANVAS_PAPER_COST 10
 
-#define SEARCH_MODE_TITLE "Title"
-#define SEARCH_MODE_CREATOR "Author"
 
 /**
  * ## portrait printer!
@@ -29,7 +27,7 @@
 	*/
 	var/search_string
 	/// Whether the search function will check the title of the painting or the author's name.
-	var/search_mode = SEARCH_MODE_TITLE
+	var/search_mode = PAINTINGS_FILTER_SEARCH_TITLE
 	/// Stores the result of the search, for later access.
 	var/list/matching_paintings
 
@@ -37,7 +35,7 @@
 	var/list/data = list()
 	data["paintings"] = matching_paintings || SSpersistent_paintings.painting_ui_data()
 	data["search_string"] = search_string
-	data["search_mode"] = search_mode
+	data["search_mode"] = search_mode == PAINTINGS_FILTER_SEARCH_TITLE ? "Title" : "Author"
 	return data
 
 /datum/computer_file/program/portrait_printer/ui_assets(mob/user)
@@ -56,7 +54,7 @@
 				generate_matching_paintings_list()
 			. = TRUE
 		if("change_search_mode")
-			search_mode = search_mode == SEARCH_MODE_TITLE ? SEARCH_MODE_CREATOR : SEARCH_MODE_TITLE
+			search_mode = search_mode == PAINTINGS_FILTER_SEARCH_TITLE ? PAINTINGS_FILTER_SEARCH_CREATOR : PAINTINGS_FILTER_SEARCH_TITLE
 			generate_matching_paintings_list()
 			. = TRUE
 		if("select")
@@ -66,16 +64,7 @@
 	matching_paintings = null
 	if(!search_string)
 		return
-	matching_paintings = SSpersistent_paintings.painting_ui_data()
-	for(var/painting in matching_paintings)
-		var/haystack_text = ""
-		switch(search_mode)
-			if(SEARCH_MODE_TITLE)
-				haystack_text = painting["title"]
-			if(SEARCH_MODE_CREATOR)
-				haystack_text = painting["creator"]
-		if(!findtext(haystack_text, search_string))
-			matching_paintings -= list(painting) // Necessary list wrapping to remove the sublist itself.
+	matching_paintings = SSpersistent_paintings.painting_ui_data(filter = search_mode, search_text = search_string)
 
 /datum/computer_file/program/portrait_printer/proc/print_painting(selected_painting)
 	//printer check!
@@ -119,5 +108,3 @@
 	playsound(computer.physical, 'sound/items/poster_being_created.ogg', 100, TRUE)
 
 #undef CANVAS_PAPER_COST
-#undef SEARCH_MODE_TITLE
-#undef SEARCH_MODE_CREATOR
