@@ -19,7 +19,7 @@
 	//moodlet
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/honorbound)
 	//checking spells cast by honorbound
-	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, .proc/spell_check)
+	RegisterSignal(owner, COMSIG_SPELL_CAST, .proc/spell_check)
 	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, .proc/staff_check)
 	//signals that check for guilt
 	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, .proc/attackby_guilt)
@@ -42,7 +42,7 @@
 		COMSIG_ATOM_BULLET_ACT,
 		COMSIG_ATOM_HITBY,
 		COMSIG_MOB_CLICKON,
-		COMSIG_MOB_CAST_SPELL,
+		COMSIG_SPELL_CAST,
 		COMSIG_MOB_FIRED_GUN,
 		))
 	. = ..()

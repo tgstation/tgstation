@@ -108,7 +108,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
-	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_CAST_SPELL, src) & COMPONENT_CANCEL_SPELL)
+	if(SEND_SIGNAL(user, COMSIG_SPELL_BEFORE_CAST, src) & COMPONENT_CANCEL_SPELL)
 		return FALSE
 
 	if(player_lock)
@@ -271,7 +271,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		recharging = TRUE
 	if(sound)
 		playMagSound()
-	SEND_SIGNAL(user, COMSIG_MOB_CAST_SPELL, src)
+	SEND_SIGNAL(user, COMSIG_SPELL_CAST, src)
 	cast(targets,user=user)
 	after_cast(targets)
 	if(action)

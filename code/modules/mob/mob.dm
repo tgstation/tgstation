@@ -772,43 +772,17 @@
 /mob/proc/get_status_tab_items()
 	. = list()
 
-/// Gets all relevant proc holders for the browser statpenl
-/mob/proc/get_proc_holders()
-	. = list()
-	if(mind)
-		. += get_spells_for_statpanel(mind.spell_list)
-	. += get_spells_for_statpanel(mob_spell_list)
-
 /**
  * Convert a list of spells into a displyable list for the statpanel
  *
  * Shows charge and other important info
  */
-/mob/proc/get_spells_for_statpanel(list/spells)
+/mob/proc/get_spells_for_statpanel()
 	var/list/data = list()
+	var/index = 1
 	for(var/datum/action/cooldown/spell in actions)
-		switch(spell.charge_type)
-			if("recharge")
-				data[++data.len] = list(
-					"[spell.panel]",
-					"[spell.charge_counter/10.0]/[spell.charge_max/10]",
-					spell.name,
-					REF(spell),
-				)
-			if("charges")
-				data[++data.len] = list(
-					"[spell.panel]",
-					"[spell.charge_counter]/[spell.charge_max]",
-					spell.name,
-					REF(spell),
-				)
-			if("holdervar")
-				data[++data.len] = list(
-					"[spell.panel]",
-					"[spell.holder_var_type] [spell.holder_var_amount]",
-					spell.name,
-					REF(spell),
-				)
+		data[index++] = spell.get_statpanel_format()
+
 	return data
 
 #define MOB_FACE_DIRECTION_DELAY 1

@@ -141,17 +141,10 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 	still_recharging_msg = span_warning("[name] is still recharging!")
 
 /datum/action/cooldown/spell/PreActivate(atom/target)
-	if(SEND_SIGNAL(owner, COMSIG_MOB_PRE_CAST_SPELL, src) & COMPONENT_CANCEL_SPELL)
-		return FALSE
 	if(!can_cast_spell())
 		return FALSE
 	if(!is_valid_target(target))
 		return FALSE
-
-	//	if("charges")
-	//		charge_counter-- //returns the charge if the targets selecting fails
-	//	if("holdervar")
-	//		adjust_var(owner, holder_var_type, holder_var_amount)
 
 	UpdateButtonIcon()
 	return Activate()
@@ -215,7 +208,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 
 	// Targeted spell: `target` is what was clicked on
 	// Self spell: `target` is the owner of the spell
-
 	StartCooldown(10 SECONDS)
 	if(!before_cast(target))
 		return FALSE
@@ -226,11 +218,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 	if(sound)
 		playsound(get_turf(owner), sound, 50, TRUE)
 
-	SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src)
+	SEND_SIGNAL(owner, COMSIG_SPELL_CAST, src)
 	cast(target)
 	after_cast(target)
 	StartCooldown()
 	UpdateButtonIcon()
+
 	return TRUE
 
 /*
@@ -250,7 +243,11 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 */
 
 /// Actions done before the actual cast() is called.
+/// Return FALSE to cancel the spell casat before it occurs, TRUE to let it happen
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
+	if(SEND_SIGNAL(owner, COMSIG_SPELL_BEFORE_CAST, src) & COMPONENT_CANCEL_SPELL)
+		return FALSE
+	return TRUE
 
 /**
  * Actions done as the main effect of the spell.
@@ -262,6 +259,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 
 /// Actions done after the main cast is finished.
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
+	SEND_SIGNAL(owner, COMSIG_SPELL_AFTER_CAST, src)
 	if(isliving(cast_on) && on_afflicted_message)
 		to_chat(cast_on, on_afflicted_message)
 
@@ -305,17 +303,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 
 /datum/action/cooldown/spell/proc/revert_cast()
 	next_use_time = 0
-	/*
-	switch(charge_type)
-		if("recharge")
-			charge_counter = charge_max
-		if("charges")
-			charge_counter++
-		if("holdervar")
-			adjust_var(owner, holder_var_type, -holder_var_amount)
-	*/
 	UpdateButtonIcon()
 
+/*
 /datum/action/cooldown/spell/proc/adjust_var(type, amount)
 	if(!isliving(owner))
 		return
@@ -345,6 +335,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 			// that'll happen if you try to adjust
 			// non-numeric or even non-existent vars
 			owner.vars[type] += amount
+*/
 
 /// TODO: This is ugly, and should be replaced
 /datum/action/cooldown/spell/proc/los_check(atom/from_atom, atom/to_atom)
@@ -369,6 +360,17 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell)) //needed for 
 		previous_step = next_step
 	qdel(dummy)
 	return TRUE
+
+/datum/action/cooldown/spell/proc/get_statpanel_format()
+	var/time_remaining = max(next_use_time - world.time, 0)
+	var/time_remaining_in_seconds = round(time_remaining / 10, 0.1)
+
+	return list(
+		"[panel]",
+		"[time_remaining_in_seconds]/[cooldown_time / 10]",
+		name,
+		REF(src),
+	)
 
 /datum/action/cooldown/spell/vv_get_dropdown()
 	. = ..()

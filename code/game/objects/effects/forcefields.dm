@@ -7,7 +7,7 @@
 	density = TRUE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	/// Set to 0 for permanent forcefields (ugh)
-	var/timeleft = 30 SECCONDS
+	var/timeleft = 30 SECONDS
 
 /obj/effect/forcefield/Initialize(mapload)
 	. = ..()

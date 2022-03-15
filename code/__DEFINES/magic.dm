@@ -73,3 +73,11 @@ DEFINE_BITFIELD(spell_requirements, list(
 	"SPELL_REQUIRES_UNPHASED" = SPELL_REQUIRES_UNPHASED,
 	"SPELL_REQUIRES_WIZARD_GARB" = SPELL_REQUIRES_WIZARD_GARB,
 ))
+
+// Bitflags for teleport spells
+/// Whether the teleport spell skips over space turfs
+#define TELEPORT_SPELL_SKIP_SPACE (1 << 0)
+/// Whether the teleport spell skips over dense turfs
+#define TELEPORT_SPELL_SKIP_DENSE (1 << 1)
+/// Whether the teleport spell skips over blocked turfs
+#define TELEPORT_SPELL_SKIP_BLOCKED (1 << 2)

@@ -403,10 +403,6 @@
 	if(locate(/obj/item/assembly/health) in src)
 		. += "Health: [health]"
 
-/mob/living/carbon/get_proc_holders()
-	. = ..()
-	. += add_abilities_to_panel()
-
 /mob/living/carbon/attack_ui(slot, params)
 	if(!has_hand_for_held_index(active_hand_index))
 		return 0

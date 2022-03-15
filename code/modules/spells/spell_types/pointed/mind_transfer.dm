@@ -5,7 +5,7 @@
 
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
-	cooldown_min = 20 SECONDS //10 seconds reduction per rank
+	cooldown_reduction_per_rank =  10 SECONDS
 	spell_requirements = NONE
 
 	invocation = "GIN'YU CAPAN"

@@ -73,7 +73,7 @@ SUBSYSTEM_DEF(statpanels)
 
 		if(target.mob)
 			var/mob/target_mob = target.mob
-			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(target_mob.mob_spell_list) || length(target_mob.mind?.spell_list)))
+			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(target_mob.actions)))
 				if(num_fires % default_wait == 0)
 					set_spells_tab(target, target_mob)
 
@@ -146,17 +146,17 @@ SUBSYSTEM_DEF(statpanels)
 	target << output(url_encode(json_encode(sdql2A)), "statbrowser:update_sdql2")
 
 /datum/controller/subsystem/statpanels/proc/set_spells_tab(client/target, mob/target_mob)
-	var/list/proc_holders = target_mob.get_proc_holders()
+	var/list/spells = target_mob.get_spells_for_statpanel()
 	target.spell_tabs.Cut()
 
-	for(var/proc_holder_list as anything in proc_holders)
-		target.spell_tabs |= proc_holder_list[1]
+	for(var/spell_list as anything in spells)
+		target.spell_tabs |= spell_list[1]
 
-	var/proc_holders_encoded = ""
-	if(length(proc_holders))
-		proc_holders_encoded = url_encode(json_encode(proc_holders))
+	var/spells_encoded = ""
+	if(length(spells))
+		spells_encoded = url_encode(json_encode(spells))
 
-	target << output("[url_encode(json_encode(target.spell_tabs))];[proc_holders_encoded]", "statbrowser:update_spells")
+	target << output("[url_encode(json_encode(target.spell_tabs))];[spells_encoded]", "statbrowser:update_spells")
 
 /datum/controller/subsystem/statpanels/proc/set_turf_examine_tab(client/target, mob/target_mob)
 	var/list/overrides = list()

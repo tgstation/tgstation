@@ -9,7 +9,6 @@
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
-	range = -1
 
 	/// Typepath of whatever item we summon
 	var/item_type = /obj/item/banhammer
@@ -18,14 +17,14 @@
 	/// List of weakrefs to items summoned
 	var/list/datum/weakref/item_refs = list()
 
-/datum/action/cooldown/spell/Destroy()
+/datum/action/cooldown/spell/conjure_item/Destroy()
 	QDEL_LIST(item_refs)
 	return ..()
 
-/datum/action/cooldown/spell/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/conjure_item/is_valid_target(atom/cast_on)
 	return iscarbon(cast_on)
 
-/datum/action/cooldown/spell/cast(mob/living/carbon/cast_on)
+/datum/action/cooldown/spell/conjure_item/cast(mob/living/carbon/cast_on)
 	if (delete_old && length(item_refs))
 		QDEL_LIST(item_refs)
 		return

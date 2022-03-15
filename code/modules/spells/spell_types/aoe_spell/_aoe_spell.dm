@@ -28,8 +28,6 @@
 			continue
 		cast_on_thing_in_aoe(thing_to_target)
 
-	return TRUE
-
 /datum/action/cooldown/spell/aoe/proc/get_things_to_cast_on(atom/center)
 	if(inner_radius >= 0)
 		return range(outer_radius, center) - range(inner_radius, center)
