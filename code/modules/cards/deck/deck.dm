@@ -130,7 +130,7 @@
 		if(held_card_item)
 			card_players[person] = held_card_item
 
-	if(card_players.len >= 2) // need at least 2 people to play a cardgame, duh!
+	if(length(card_players) >= 2) // need at least 2 people to play a cardgame, duh!
 		for(var/mob/living/carbon/player in card_players)
 			var/other_players = english_list(card_players - player)
 			var/obj/item/toy/held_card_item = card_players[player]
