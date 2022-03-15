@@ -84,15 +84,14 @@
 	if(!isturf(new_turf))
 		return
 
-	var/mob/living/bridges = loc
 	if(is_station_level(new_turf.z))
 		far_from_home = FALSE
-		if(bridges)
-			remove_kheiral_network(bridges)
+		if(isliving(loc))
+			remove_kheiral_network(loc)
 	else
 		far_from_home = TRUE
-		if(bridges)
-			connect_kheiral_network(bridges)
+		if(isliving(loc))
+			connect_kheiral_network(loc)
 
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
