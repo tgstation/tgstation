@@ -1664,7 +1664,7 @@
 "iq" = (
 /obj/effect/landmark/prisonwarp,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/prison)
 "ir" = (
 /turf/closed/indestructible/fakeglass,
@@ -1743,7 +1743,7 @@
 /area/centcom/control)
 "iA" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
+/turf/open/indestructible/dark,
 /area/centcom/prison)
 "iB" = (
 /turf/closed/indestructible/fakedoor{
