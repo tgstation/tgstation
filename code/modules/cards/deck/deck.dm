@@ -12,8 +12,6 @@
 	var/shuffle_time = DECK_SHUFFLE_TIME
 	/// Deck shuffling cooldown.
 	COOLDOWN_DECLARE(shuffle_cooldown)
-	/// Tracks holodeck cards, since they shouldn't be infinite
-	var/obj/machinery/computer/holodeck/holo = null
 	/// If the deck is the standard 52 playing card deck (used for poker and blackjack)
 	var/is_standard_deck = TRUE
 	/// The amount of cards to spawn in the deck (optional)
@@ -217,8 +215,6 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	force = 5
 	throwforce = 10
-	throw_speed = 3
-	throw_range = 7
 	attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
 	attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
 	resistance_flags = NONE

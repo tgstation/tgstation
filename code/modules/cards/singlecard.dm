@@ -44,9 +44,11 @@
 		throw_range = parent_deck.throw_range
 		attack_verb_continuous = parent_deck.attack_verb_continuous
 		attack_verb_simple = parent_deck.attack_verb_simple
-	// we need to figure out how to do holodeck cards
-	//if(holo)
-	//	holo.spawned += card_to_add
+
+		if(parent_deck.holodeck)
+			flags_1 |= HOLOGRAM_1
+			holodeck.spawned += src
+
 
 /obj/item/toy/singlecard/examine(mob/living/carbon/human/user)
 	. = ..()
