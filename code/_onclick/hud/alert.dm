@@ -608,7 +608,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged."
 	icon_state = "empty_cell"
 
+/atom/movable/screen/alert/emptycell/Initialize(mapload)
+	. = ..()
+	update_appearance(updates=UPDATE_DESC)
+
 /atom/movable/screen/alert/emptycell/update_desc()
+	desc = initial(desc)
 	. = ..()
 	if(length(GLOB.roundstart_station_borgcharger_areas))
 		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
@@ -618,7 +623,12 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's power cell is running low."
 	icon_state = "low_cell"
 
+/atom/movable/screen/alert/lowcell/Initialize(mapload)
+	. = ..()
+	update_appearance(updates=UPDATE_DESC)
+
 /atom/movable/screen/alert/lowcell/update_desc()
+	desc = initial(desc)
 	. = ..()
 	if(length(GLOB.roundstart_station_borgcharger_areas))
 		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
