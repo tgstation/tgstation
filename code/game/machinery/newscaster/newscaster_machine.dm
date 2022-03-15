@@ -144,17 +144,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	//Here is all the UI_data sent about the current wanted issue, as well as making a new one in the UI.
 	data["viewing_wanted"] = viewing_wanted
-	data["active_wanted_issue"] = !isnull(GLOB.news_network.wanted_issue?.active)
+	data["making_wanted_issue"] = !(GLOB.news_network.wanted_issue?.active)
 	data["criminal_name"] = criminal_name
 	data["crime_description"] = crime_description
 	var/list/wanted_info = list()
 	if(GLOB.news_network.wanted_issue)
+		if(GLOB.news_network.wanted_issue.img)
+			user << browse_rsc(GLOB.news_network.wanted_issue.img, "wanted_photo.png")
 		wanted_info = list(list(
 			"active" = GLOB.news_network.wanted_issue.active,
 			"criminal" = GLOB.news_network.wanted_issue.criminal,
 			"crime" = GLOB.news_network.wanted_issue.body,
-			"image" = GLOB.news_network.wanted_issue.img,
 			"author" = GLOB.news_network.wanted_issue.scannedUser,
+			"image" = "wanted_photo.png"
 		))
 
 	//Code breaking down the channels that have been made on-station thus far. ha

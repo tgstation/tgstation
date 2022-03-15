@@ -8,7 +8,7 @@
 import { useBackend, useSharedState, useLocalState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
-import { BlockQuote, Box, Button, Divider, Modal, Section, Stack, Tabs, TextArea } from '../components';
+import { BlockQuote, Box, Button, Divider, LabeledList, Modal, Section, Stack, Tabs, TextArea } from '../components';
 import { Window } from '../layouts';
 import { marked } from 'marked';
 import { sanitizeText } from "../sanitize";
@@ -78,10 +78,17 @@ const NewscasterChannelCreation = (props, context) => {
     <Modal
       textAlign="center"
       mr={1.5}>
+      <Button
+        content="X"
+        color="red"
+        position="relative"
+        top="20%"
+        left="50%"
+        onClick={() => act('cancelCreation')} />
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
-            Enter channel name Here:
+            Enter channel name here:
           </Box>
           <TextArea
             fluid
@@ -135,10 +142,6 @@ const NewscasterChannelCreation = (props, context) => {
               onClick={() => act('createChannel', {
                 lockedmode: lockedmode,
               })} />
-            <Button
-              content="Cancel"
-              color="red"
-              onClick={() => act('cancelCreation')} />
           </Box>
         </Stack.Item>
       </Stack>
@@ -161,6 +164,13 @@ const NewscasterCommentCreation = (props, context) => {
     <Modal
       textAlign="center"
       mr={1.5}>
+      <Button
+        content="X"
+        color="red"
+        position="relative"
+        top="20%"
+        left="50%"
+        onClick={() => act('cancelCreation')} />
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
@@ -186,10 +196,6 @@ const NewscasterCommentCreation = (props, context) => {
               onClick={() => act('createComment', {
                 messageID: viewing_message,
               })} />
-            <Button
-              content={"Cancel"}
-              color="red"
-              onClick={() => act('cancelCreation')} />
           </Box>
         </Stack.Item>
       </Stack>
@@ -203,7 +209,7 @@ const NewscasterWantedScreen = (props, context) => {
     viewing_wanted,
     photo_data,
     security_mode,
-    wanted,
+    wanted = [],
     criminal_name,
     crime_description,
   } = data;
@@ -219,53 +225,68 @@ const NewscasterWantedScreen = (props, context) => {
         <Stack.Item>
           <Box bold color="red">
             Active Wanted Issue:
-          </Box>
-          <Box italic>
-            {wanted.author ? "Posted by {wanted.author}." : "N/A"}
+            <Button
+              content="X"
+              color="red"
+              position="relative"
+              top="20%"
+              left="20%"
+              onClick={() => act('cancelCreation')} />
           </Box>
           <Section>
-            <Button
-              content={"Criminal Name:"}
-              disabled={!security_mode}
-              onClick={() => act('setCriminalName')} />
-            {criminal_name ? criminal_name : " N/A"}
+            <Box bold>
+              {wanted.criminal}
+            </Box>
+            <Box italic>
+              {wanted.crime}
+            </Box>
           </Section>
-        </Stack.Item>
-        <Stack.Item>
-          <Section>
-            <Button
-              content={"Criminal Activity:"}
-              disabled={!security_mode}
-              onClick={() => act('setCrimeData')} />
-            {crime_description ? crime_description : " N/A"}
-          </Section>
-        </Stack.Item>
-        <Stack.Item>
           <Box
             as="img"
             src={wanted.image} />
-          <Section>
-            <Button
-              icon="camera"
-              selected={photo_data}
-              disabled={!security_mode}
-              content={photo_data ? "Remove photo" : "Attach photo"}
-              onClick={() => act('togglePhoto')} />
-          </Section>
-        </Stack.Item>
-        <Stack.Item>
-          <Section>
-            <Button
-              content={"Set Wanted Issue"}
-              disabled={!security_mode}
-              onClick={() => act('submitWantedIssue')} />
-            <Button
-              content={"Close"}
-              color="red"
-              onClick={() => act('cancelCreation')} />
-          </Section>
+          <Box italic>
+            Posted by {wanted.author ? wanted.author : "N/A"}
+          </Box>
         </Stack.Item>
       </Stack>
+      <Divider />
+      {security_mode
+        ?(
+          <>
+            <LabeledList>
+              <LabeledList.Item
+                label="Criminal Name">
+                <Button
+                  content={criminal_name ? criminal_name : " N/A"}
+                  disabled={!security_mode}
+                  onClick={() => act('setCriminalName')} />
+              </LabeledList.Item>
+              <LabeledList.Item
+                label="Criminal Activity">
+                <Button
+                  content={crime_description ? crime_description : " N/A"}
+                  nowrap={false}
+                  disabled={!security_mode}
+                  onClick={() => act('setCrimeData')} />
+              </LabeledList.Item>
+            </LabeledList>
+            <Section>
+              <Button
+                icon="camera"
+                selected={photo_data}
+                disabled={!security_mode}
+                content={photo_data ? "Remove photo" : "Attach photo"}
+                onClick={() => act('togglePhoto')} />
+              <Button
+                content={"Set Wanted Issue"}
+                disabled={!security_mode}
+                onClick={() => act('submitWantedIssue')} />
+            </Section>
+          </>
+        ) : (
+          <Box>
+            Please contact your local security officer if spotted.
+          </Box>)}
     </Modal>
   );
 };
@@ -386,7 +407,7 @@ const NewscasterChannelSelector = (props, context) => {
     channels = [],
     viewing_channel,
     security_mode,
-    active_wanted_issue,
+    wanted = [],
   } = data;
   return (
     <Section
@@ -397,7 +418,8 @@ const NewscasterChannelSelector = (props, context) => {
           pt={0.75}
           pb={0.75}
           mr={1}
-          textColor="white"
+          disabled={!wanted.active && !security_mode}
+          textColor={(!wanted.active && !security_mode) ? "grey" : "white"}
           onClick={() => act('toggleWanted')}>
           Wanted Issue
         </Tabs.Tab>
