@@ -198,7 +198,6 @@
 		cached_gases[/datum/gas/water_vapor][MOLES] += plasma_burn_rate * 0.25
 
 	SET_REACTION_RESULTS((plasma_burn_rate) * (1 + oxygen_burn_ratio))
-	air.reaction_results["fire"] += plasma_burn_rate * (1 + oxygen_burn_ratio)
 	var/energy_released = FIRE_PLASMA_ENERGY_RELEASED * plasma_burn_rate
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
@@ -258,7 +257,6 @@
 		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel / HYDROGEN_BURN_H2_FACTOR
 
 	SET_REACTION_RESULTS(burned_fuel * fire_scale) // This is actually a lie. We use 10x less moles here but make 10x more energy.
-	air.reaction_results["fire"] += burned_fuel * fire_scale
 
 	var/energy_released = FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel * fire_scale
 	if(energy_released > 0)
@@ -322,7 +320,6 @@
 
 
 	SET_REACTION_RESULTS(burned_fuel * effect_scale)
-	air.reaction_results["fire"] += burned_fuel * effect_scale
 
 	var/turf/open/location
 	if(istype(holder, /datum/pipeline)) //Find the tile the reaction is occuring on, or a random part of the network if it's a pipenet.
