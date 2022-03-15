@@ -22,23 +22,17 @@
 	if(is_operational)
 		begin_processing()
 
+	if(!mapload)
+		return
+
 	var/area/my_area = get_area(src)
-	if(my_area.type in GLOB.the_station_areas)
-		GLOB.station_recharging_stations += src
-		update_area_names()
+	if(!(my_area.type in GLOB.the_station_areas))
+		return
 
-/obj/machinery/recharge_station/proc/update_area_names()
-	GLOB.station_recharging_station_area_names.Cut()
-	for(var/atom/charge_station in GLOB.station_recharging_stations)
-		var/area_name = get_area_name(charge_station, format_text = TRUE)
-		if(!(area_name in GLOB.station_recharging_station_area_names))
-			GLOB.station_recharging_station_area_names += area_name
-	GLOB.station_recharging_station_area_names = sort_list(GLOB.station_recharging_station_area_names)
-
-/obj/machinery/recharge_station/Destroy()
-	GLOB.station_recharging_stations -= src
-	update_area_names()
-	return ..()
+	var/area_name = get_area_name(src, format_text = TRUE)
+	if(area_name in GLOB.roundstart_station_borgcharger_areas)
+		return
+	GLOB.roundstart_station_borgcharger_areas += area_name
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0

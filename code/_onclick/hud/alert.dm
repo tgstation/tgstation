@@ -608,32 +608,20 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	desc = "Unit's power cell has no charge remaining. No modules available until power cell is recharged."
 	icon_state = "empty_cell"
 
-/atom/movable/screen/alert/emptycell/MouseEntered(location,control,params)
-	update_appearance(updates=UPDATE_DESC)
-	return ..()
-
 /atom/movable/screen/alert/emptycell/update_desc()
 	. = ..()
-	desc = initial(desc)
-	var/turf/owner_turf = get_turf(owner)
-	if(is_station_level(owner_turf.z) && length(GLOB.station_recharging_station_area_names))
-		desc += " Recharging stations are available in [english_list(GLOB.station_recharging_station_area_names)]."
+	if(length(GLOB.roundstart_station_borgcharger_areas))
+		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
 
 /atom/movable/screen/alert/lowcell
 	name = "Low Charge"
 	desc = "Unit's power cell is running low."
 	icon_state = "low_cell"
 
-/atom/movable/screen/alert/lowcell/MouseEntered(location,control,params)
-	update_appearance(updates=UPDATE_DESC)
-	return ..()
-
 /atom/movable/screen/alert/lowcell/update_desc()
 	. = ..()
-	desc = initial(desc)
-	var/turf/owner_turf = get_turf(owner)
-	if(is_station_level(owner_turf.z) && length(GLOB.station_recharging_station_area_names))
-		desc += " Recharging stations are available in [english_list(GLOB.station_recharging_station_area_names)]."
+	if(length(GLOB.roundstart_station_borgcharger_areas))
+		desc += " Recharging stations are available in [english_list(GLOB.roundstart_station_borgcharger_areas)]."
 
 //Ethereal
 
