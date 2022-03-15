@@ -18,8 +18,10 @@
 	var/decksize = INFINITY
 	/// The description of the cardgame that is played with this deck (used for memories)
 	var/cardgame_desc = "card game"
-	///Wielding status for holding with two hands
+	/// Wielding status for holding with two hands
 	var/wielded = FALSE
+	/// The holodeck computer used to spawn a holographic deck (see /obj/item/toy/cards/deck/syndicate/holographic)
+	var/obj/machinery/computer/holodeck/holodeck
 
 	// the below vars will be inherited by the singlecards spawned in the deck
 	hitsound = null
