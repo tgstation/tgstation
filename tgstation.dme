@@ -1849,6 +1849,7 @@
 #include "code\modules\admin\smites\supply_pod.dm"
 #include "code\modules\admin\smites\supply_pod_quick.dm"
 #include "code\modules\admin\verbs\admin.dm"
+#include "code\modules\admin\verbs\admin_newscaster.dm"
 #include "code\modules\admin\verbs\adminevents.dm"
 #include "code\modules\admin\verbs\adminfun.dm"
 #include "code\modules\admin\verbs\admingame.dm"

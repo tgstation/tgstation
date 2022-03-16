@@ -389,14 +389,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("clearWantedIssue")
-			var/obj/item/card/id/id_card
-			if(isliving(usr))
-				var/mob/living/living_user = usr
-				id_card = living_user.get_idcard(hand_first = TRUE)
-			if(!(ACCESS_ARMORY in id_card?.GetAccess()))
-				say("Clearance not found.")
-				return TRUE
-			GLOB.news_network.wanted_issue.active = FALSE
+			clear_wanted_issue(user = usr)
 			return TRUE
 
 		if("printNewspaper")
@@ -690,6 +683,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			balloon_alert(usr, "photo selected.")
 		else
 			balloon_alert(usr, "no photo identified.")
+
+/obj/machinery/newscaster/proc/clear_wanted_issue(user)
+	var/obj/item/card/id/id_card
+	if(isliving(usr))
+		var/mob/living/living_user = usr
+		id_card = living_user.get_idcard(hand_first = TRUE)
+	if(!(ACCESS_ARMORY in id_card?.GetAccess()))
+		say("Clearance not found.")
+		return TRUE
+	GLOB.news_network.wanted_issue.active = FALSE
+	return
 
 /**
  * This proc removes a station_request from the global list of requests, after checking that the owner of that request is the one who is trying to remove it.
