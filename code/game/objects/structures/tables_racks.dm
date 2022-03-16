@@ -60,6 +60,7 @@
 		)
 
 		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+		register_context()
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -267,15 +268,13 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = ..()
-
 	if(istype(held_item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
 		if(dealer_deck.wielded)
 			context[SCREENTIP_CONTEXT_LMB] = "Deal card"
 			context[SCREENTIP_CONTEXT_RMB] = "Deal card faceup"
 			return CONTEXTUAL_SCREENTIP_SET
-	return .
+	return NONE
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	return
