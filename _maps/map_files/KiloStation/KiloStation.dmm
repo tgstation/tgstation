@@ -65220,6 +65220,7 @@
 /area/service/chapel/funeral)
 "rcR" = (
 /obj/machinery/light/directional/west,
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/service/chapel/monastery)
 "rcU" = (
