@@ -1197,7 +1197,7 @@
 	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
 		return FALSE
 	var/turf/T = get_turf(user)
-	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
 	if(S?.on)

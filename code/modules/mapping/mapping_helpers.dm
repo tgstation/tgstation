@@ -57,27 +57,27 @@
 
 /obj/effect/baseturf_helper/asteroid
 	name = "asteroid baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid
+	baseturf = /turf/open/misc/asteroid
 
 /obj/effect/baseturf_helper/asteroid/airless
 	name = "asteroid airless baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/airless
+	baseturf = /turf/open/misc/asteroid/airless
 
 /obj/effect/baseturf_helper/asteroid/basalt
 	name = "asteroid basalt baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturf = /turf/open/misc/asteroid/basalt
 
 /obj/effect/baseturf_helper/asteroid/snow
 	name = "asteroid snow baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/snow
+	baseturf = /turf/open/misc/asteroid/snow
 
 /obj/effect/baseturf_helper/beach/sand
 	name = "beach sand baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/sand
+	baseturf = /turf/open/misc/beach/sand
 
 /obj/effect/baseturf_helper/beach/water
 	name = "water baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/water
+	baseturf = /turf/open/water/beach
 
 /obj/effect/baseturf_helper/lava
 	name = "lava baseturf editor"
