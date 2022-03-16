@@ -42,6 +42,7 @@
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddComponent(/datum/component/two_handed, attacksound='sound/items/cardflip.ogg')
+	register_context()
 
 	if(!is_standard_deck)
 		return
@@ -83,15 +84,9 @@
 		var/marked_color = card.getMarkedColor(user)
 		if(marked_color)
 			. += span_notice("The top card of the deck has a [marked_color] mark on the corner!")
-
-	. += span_notice("Left-click to draw a card face down.")
-	. += span_notice("Right-click to draw a card face up.")
-	. += span_notice("Alt-Click to shuffle the deck.")
-	. += span_notice("Click and drag the deck to yourself to pickup.")
+	. += span_notice("Click and drag the deck to yourself to pickup.") // This should be a context screentip
 
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = ..()
-
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Draw card"
 		context[SCREENTIP_CONTEXT_RMB] = "Draw card faceup"
@@ -105,7 +100,8 @@
 	if(istype(held_item, /obj/item/toy/cards/cardhand))
 		context[SCREENTIP_CONTEXT_LMB] = "Recycle cards"
 		return CONTEXTUAL_SCREENTIP_SET
-	return .
+
+	return NONE
 
 /**
  * Shuffles the cards in the deck
