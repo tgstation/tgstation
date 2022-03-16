@@ -7151,7 +7151,6 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 1
 	},
-/obj/structure/tramwall,
 /turf/open/floor/iron,
 /area/hallway/primary/tram/center)
 "bes" = (
