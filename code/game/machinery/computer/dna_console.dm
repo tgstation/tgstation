@@ -47,9 +47,6 @@
 /// Input from tgui interface. Progress to previous gene.
 #define PREV_GENE 2
 
-/// List of genes in sequence for iterating.
-#define GENE_LETTERS list("A", "T", "C", "G");
-
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
 	desc = "Scan DNA."
@@ -382,7 +379,7 @@
 	return data
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
-	var/static/list/gene_letters = GENE_LETTERS
+	var/static/list/gene_letters = list("A", "T", "C", "G");
 	var/static/gene_letter_count = length(gene_letters)
 
 	. = ..()
@@ -525,28 +522,29 @@
 			if(genepos > length(sequence))
 				CRASH("Unexpected input for \[\"pos\"\] param sent to [type] tgui interface. Consult tgui logs for error.")
 
-			// X out the gene.
-			if(pulse_action == CLEAR_GENE)
-				newgene = "X"
-				var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
-				defaultseq = copytext(defaultseq, 1, genepos) + newgene + copytext(defaultseq, genepos + 1)
-				scanner_occupant.dna.default_mutation_genes[path] = defaultseq
-			// Either try to apply a joker if selected in the interface, or iterate the next gene.
-			else if(pulse_action == NEXT_GENE)
-				if((tgui_view_state["jokerActive"]) && (jokerready < world.time))
-					var/truegenes = GET_SEQUENCE(path)
-					newgene = truegenes[genepos]
-					jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+			switch(pulse_action)
+				// X out the gene.
+				if(CLEAR_GENE)
+					newgene = "X"
+					var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
+					defaultseq = copytext(defaultseq, 1, genepos) + newgene + copytext(defaultseq, genepos + 1)
+					scanner_occupant.dna.default_mutation_genes[path] = defaultseq
+				// Either try to apply a joker if selected in the interface, or iterate the next gene.
+				if(NEXT_GENE)
+					if((tgui_view_state["jokerActive"]) && (jokerready < world.time))
+						var/truegenes = GET_SEQUENCE(path)
+						newgene = truegenes[genepos]
+						jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+					else
+						var/current_letter = gene_letters.Find(sequence[genepos])
+						newgene = (current_letter == gene_letter_count) ? gene_letters[1] : gene_letters[current_letter + 1]
+				// Iterate previous gene.
+				if(PREV_GENE)
+					var/current_letter = gene_letters.Find(sequence[genepos]) || 1
+					newgene = (current_letter == 1) ? gene_letters[gene_letter_count] : gene_letters[current_letter - 1]
+				// Unknown input.
 				else
-					var/current_letter = gene_letters.Find(sequence[genepos])
-					newgene = (current_letter == gene_letter_count) ? gene_letters[1] : gene_letters[current_letter + 1]
-			// Iterate previous gene.
-			else if(pulse_action == PREV_GENE)
-				var/current_letter = gene_letters.Find(sequence[genepos]) || 1
-				newgene = (current_letter == 1) ? gene_letters[gene_letter_count] : gene_letters[current_letter - 1]
-			// Unknown input.
-			else
-				CRASH("Unexpected input for \[\"pulseAction\"\] param sent to [type] tgui interface. Consult tgui logs for error.")
+					CRASH("Unexpected input for \[\"pulseAction\"\] param sent to [type] tgui interface. Consult tgui logs for error.")
 
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant genetic damage
@@ -2285,5 +2283,3 @@
 #undef CLEAR_GENE
 #undef NEXT_GENE
 #undef PREV_GENE
-
-#undef GENE_LETTERS
