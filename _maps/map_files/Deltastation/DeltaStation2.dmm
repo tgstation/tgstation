@@ -19242,7 +19242,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/camera/preset/ordnance{
-	dir = 4
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/science/test_area)
