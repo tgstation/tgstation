@@ -136,7 +136,9 @@
 		var/obj/item/toy/singlecard/card = cards[starting_card_pos + i]
 		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = CARDS_PIXEL_X_OFFSET + (i * pixel_divider))
 		var/rotation_angle = CARDS_ANGLE_OFFSET + (i * angle_divider)
-		card.transform = turn(card.transform, rotation_angle)
+		var/matrix/M = matrix()
+		M.Turn(rotation_angle)
+		card_overlay.transform = M
 		add_overlay(card_overlay)
 
 #undef CARD_DISPLAY_LIMIT
