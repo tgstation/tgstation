@@ -478,7 +478,6 @@
 		// params["pos"] - The BYOND index of the letter in the gene sequence to be
 		//  changed. Expects a text string from TGUI and will convert to a number
 		if("pulse_gene")
-			if()
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			if(!can_modify_occupant())
