@@ -478,6 +478,7 @@
 		// params["pos"] - The BYOND index of the letter in the gene sequence to be
 		//  changed. Expects a text string from TGUI and will convert to a number
 		if("pulse_gene")
+			if()
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			if(!can_modify_occupant())
@@ -506,6 +507,8 @@
 			var/sequence = GET_GENE_STRING(path, scanner_occupant.dna)
 
 			var/newgene = params["gene"]
+			if(length(newgene) > 1) // Oh come on
+				return // fuck off
 			var/genepos = text2num(params["pos"])
 
 			// If the new gene is J, this means we're dealing with a JOKER
