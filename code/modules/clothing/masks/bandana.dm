@@ -65,6 +65,11 @@
 	desc = "A fine black bandana with nanotech lining."
 	icon_state = "bandblack"
 
+/obj/item/clothing/mask/bandana/white
+	name = "white bandana"
+	desc = "A fine white bandana with nanotech lining."
+	icon_state = "bandwhite"
+
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
