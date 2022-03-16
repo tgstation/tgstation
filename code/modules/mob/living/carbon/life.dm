@@ -73,8 +73,6 @@
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
 
 	var/datum/gas_mixture/environment
 	if(loc)
@@ -119,6 +117,11 @@
 				loc_as_obj.handle_internal_lifeform(src,0)
 
 	check_breath(breath)
+
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		var/obj/machinery/atmospherics/components/unary/cryo_cell/loc_as_cryo = loc
+		loc_as_cryo.airs[1].merge(breath)
+		return
 
 	if(breath)
 		loc.assume_air(breath)
