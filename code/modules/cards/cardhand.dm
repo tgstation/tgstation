@@ -116,10 +116,29 @@
 	attackby(weapon, user, params, flip_card = TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
+#define CARD_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand
+#define CARDS_PIXEL_X_OFFSET -4 // start out displaying the 1st card -5 pixels left
+#define CARDS_ANGLE_OFFSET -45 // start out displaying the 1st card -45 degrees counter clockwise
+
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
 	cut_overlays()
-	for(var/i in 1 to cards.len)
-		var/obj/item/toy/singlecard/card = cards[i]
-		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = (i - 1) * 3, pixel_y = (i - 1) * 3)
+	var/starting_card_pos = max(1, cards.len - CARD_DISPLAY_LIMIT) // only display the top cards in the cardhand
+	var/cards_to_display = min(CARD_DISPLAY_LIMIT, cards.len)
+	// 90 degrees from the 1st card to the last, so split the divider by total cards displayed
+	var/angle_divider = round(90/(cards_to_display - 1))
+	// 10 pixels from the 1st card to the last, so split the divider by total cards displayed
+	var/pixel_divider = round(8/(cards_to_display - 1))
+
+	// starting from the 1st card to last, we want to slowly increase the angle and pixel_x offset
+	// to spread the cards out using our dividers
+	for(var/i in 0 to cards_to_display - 1)
+		var/obj/item/toy/singlecard/card = cards[starting_card_pos + i]
+		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = CARDS_PIXEL_X_OFFSET + (i * pixel_divider))
+		var/rotation_angle = CARDS_ANGLE_OFFSET + (i * angle_divider)
+		card.transform = turn(card.transform, rotation_angle)
 		add_overlay(card_overlay)
+
+#undef CARD_DISPLAY_LIMIT
+#undef CARDS_PIXEL_X_OFFSET
+#undef CARDS_ANGLE_OFFSET
