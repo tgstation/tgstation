@@ -41,9 +41,6 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 
 /datum/electrolyzer_reaction/h2o_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
 
-	if(!reaction_check(air_mixture))
-		return
-
 	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
 	var/proportion = min(air_mixture.gases[/datum/gas/water_vapor][MOLES], (2.5 * (working_power ** 2)))
 	air_mixture.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2
@@ -59,9 +56,6 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	)
 
 /datum/electrolyzer_reaction/nob_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power)
-
-	if(!reaction_check(air_mixture))
-		return
 
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
 	var/proportion = min(air_mixture.gases[/datum/gas/hypernoblium][MOLES], (1.5 * (working_power ** 2)))

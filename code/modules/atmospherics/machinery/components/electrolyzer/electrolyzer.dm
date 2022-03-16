@@ -99,8 +99,6 @@
 
 	call_reactions(env)
 
-	env.garbage_collect()
-
 	air_update_turf(FALSE, FALSE)
 
 	if(anchored)
@@ -111,7 +109,13 @@
 /obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
 	for(var/reaction in GLOB.electrolyzer_reactions)
 		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
+
+		if(!current_reaction.reaction_check(air_mixture))
+			continue
+
 		current_reaction.react(loc, env, working_power)
+
+	env.garbage_collect()
 
 /obj/machinery/electrolyzer/RefreshParts()
 	var/manipulator = 0
