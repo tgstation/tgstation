@@ -527,8 +527,7 @@
 				if(CLEAR_GENE)
 					newgene = "X"
 					var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
-					defaultseq = copytext(defaultseq, 1, genepos) + newgene + copytext(defaultseq, genepos + 1)
-					scanner_occupant.dna.default_mutation_genes[path] = defaultseq
+					scanner_occupant.dna.default_mutation_genes[path] = copytext(defaultseq, 1, genepos) + "X" + copytext(defaultseq, genepos + 1)
 				// Either try to apply a joker if selected in the interface, or iterate the next gene.
 				if(NEXT_GENE)
 					if((tgui_view_state["jokerActive"]) && (jokerready < world.time))
@@ -548,8 +547,7 @@
 
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant genetic damage
-			sequence = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
-			scanner_occupant.dna.mutation_index[path] = sequence
+			scanner_occupant.dna.mutation_index[path] = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
 			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff)
 			scanner_occupant.domutcheck()
 
