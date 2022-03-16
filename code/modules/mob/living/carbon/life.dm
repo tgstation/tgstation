@@ -118,11 +118,6 @@
 
 	check_breath(breath)
 
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		var/obj/machinery/atmospherics/components/unary/cryo_cell/loc_as_cryo = loc
-		loc_as_cryo.airs[1].merge(breath)
-		return
-
 	if(breath)
 		loc.assume_air(breath)
 

@@ -316,12 +316,14 @@ GLOBAL_VAR_INIT(cryo_overlay_cover_off, mutable_appearance('icons/obj/cryogenics
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 
-	if(breath_request > 0)
-		var/datum/gas_mixture/air1 = airs[1]
-		var/breath_percentage = breath_request / air1.volume
-		return air1.remove(air1.total_moles() * breath_percentage)
-	else
+	if(breath_request <= 0)
 		return null
+	var/datum/gas_mixture/air1 = airs[1]
+	var/breath_percentage = breath_request / air1.volume
+	return air1.remove(air1.total_moles() * breath_percentage)
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/assume_air(datum/gas_mixture/giver)
+	airs[1].merge(giver)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/living/user, direction)
 	if(message_cooldown <= world.time)
