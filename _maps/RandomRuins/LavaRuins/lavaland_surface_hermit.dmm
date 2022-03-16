@@ -1,62 +1,56 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
+"a" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"ab" = (
+"b" = (
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/ruin/powered)
-"ac" = (
+"c" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/powered)
-"ad" = (
-/obj/item/shovel,
-/turf/open/misc/asteroid{
-	name = "dirt"
-	},
-/area/ruin/powered)
-"ae" = (
+"e" = (
 /obj/item/clothing/suit/space/orange,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
-"af" = (
+"f" = (
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
-"ag" = (
+"g" = (
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
-"ah" = (
+"h" = (
 /obj/item/shovel,
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
-"ai" = (
+"i" = (
 /obj/item/reagent_containers/glass/bucket,
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
-"aj" = (
+"j" = (
 /obj/structure/water_source/puddle,
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
-"ak" = (
+"k" = (
 /obj/structure/glowshroom/single,
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
-"al" = (
+"l" = (
 /obj/item/storage/toolbox/emergency,
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
-"am" = (
+"m" = (
 /obj/structure/rack,
 /obj/item/seeds/reishi,
 /obj/item/seeds/plump,
@@ -65,77 +59,77 @@
 /obj/item/seeds/tower,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
-"an" = (
+"n" = (
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"ao" = (
+"o" = (
 /turf/open/floor/plating,
 /area/ruin/powered)
-"ap" = (
+"p" = (
 /obj/structure/rack,
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/ore,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
-"aq" = (
+"q" = (
 /obj/structure/glowshroom/single,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"ar" = (
+"r" = (
 /obj/structure/rack,
 /obj/item/pickaxe/emergency,
 /obj/item/tank/internals/oxygen,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
-"as" = (
+"s" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"at" = (
+"t" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/ruin/powered)
-"au" = (
+"u" = (
 /obj/structure/bed/pod,
 /obj/item/bedsheet/black,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"av" = (
+"v" = (
 /obj/structure/fans,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"aw" = (
+"w" = (
 /obj/machinery/smartfridge/survival_pod/preloaded,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"ax" = (
+"x" = (
 /obj/effect/mob_spawn/ghost_role/human/hermit,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"ay" = (
+"y" = (
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"az" = (
+"z" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/tubes,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"aA" = (
+"A" = (
 /obj/structure/table,
 /obj/item/knife/combat/survival,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"aB" = (
+"B" = (
 /obj/structure/table/survival_pod,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"aC" = (
+"C" = (
 /obj/structure/tubes,
 /obj/item/crowbar,
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"aD" = (
+"D" = (
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 1
 	},
@@ -143,411 +137,340 @@
 /obj/structure/fans/tiny,
 /turf/open/floor/pod/dark,
 /area/ruin/powered)
-"aE" = (
+"E" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/powered)
-"aF" = (
+"F" = (
 /turf/closed/wall/mineral/titanium,
 /area/ruin/powered)
-"aG" = (
+"G" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/ruin/powered)
-"aH" = (
+"H" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Escape Pod Airlock"
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
-"aI" = (
+"I" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered)
-"aJ" = (
+"J" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
 /area/ruin/powered)
-"aK" = (
-/turf/open/misc/asteroid{
-	name = "dirt"
-	},
-/area/ruin/powered)
-"aL" = (
+"L" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/cultivator,
 /turf/open/floor/plating,
 /area/ruin/powered)
-"aM" = (
+"M" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
-"aN" = (
-/obj/structure/rack,
-/obj/item/pickaxe/emergency,
-/obj/item/tank/internals/oxygen,
-/turf/open/misc/asteroid/basalt,
-/area/ruin/powered)
-"aO" = (
-/obj/structure/rack,
-/obj/item/seeds/reishi,
-/obj/item/seeds/plump,
-/obj/item/seeds/plump,
-/obj/item/food/grown/mushroom/glowshroom,
-/obj/item/seeds/tower,
-/turf/open/misc/asteroid/basalt,
-/area/ruin/powered)
-"aP" = (
+"P" = (
 /turf/template_noop,
 /area/template_noop)
-"aQ" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/misc/asteroid/basalt,
-/area/ruin/powered)
-"aR" = (
-/obj/structure/rack,
-/obj/item/storage/bag/plants/portaseeder,
-/obj/item/storage/bag/ore,
-/obj/item/storage/medkit/regular,
-/turf/open/misc/asteroid/basalt,
-/area/ruin/powered)
-"aS" = (
+"S" = (
 /obj/item/clothing/head/helmet/space/orange,
 /turf/open/misc/asteroid{
 	name = "dirt"
 	},
-/area/ruin/powered)
-"aT" = (
-/obj/item/reagent_containers/glass/bucket,
-/turf/open/misc/asteroid{
-	name = "dirt"
-	},
-/area/ruin/powered)
-"aU" = (
-/turf/open/misc/asteroid/basalt,
-/area/ruin/powered)
-"aV" = (
-/obj/item/clothing/head/helmet/space/orange,
-/turf/open/misc/asteroid{
-	name = "dirt"
-	},
-/area/ruin/powered)
-"aW" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
-/area/lavaland/surface/outdoors)
-"aX" = (
-/obj/structure/glowshroom/single,
-/turf/open/misc/asteroid{
-	name = "dirt"
-	},
-/area/ruin/powered)
-"aY" = (
-/obj/structure/water_source/puddle,
-/turf/open/misc/asteroid{
-	name = "dirt"
-	},
-/area/ruin/powered)
-"aZ" = (
-/obj/item/storage/toolbox/emergency,
-/turf/open/misc/asteroid{
-	name = "dirt"
-	},
-/area/ruin/powered)
-"FO" = (
-/obj/item/clothing/suit/space/orange,
-/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 
 (1,1,1) = {"
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
 "}
 (2,1,1) = {"
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aW
-aW
-aW
-aP
-aP
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+s
+s
+s
+P
+P
 "}
 (3,1,1) = {"
-aP
-aP
-aP
-aP
-aP
-aa
-aa
-aa
-aa
-aa
-aW
-aW
-aW
-aW
-aW
-aP
+P
+P
+P
+P
+P
+a
+a
+a
+a
+a
+s
+s
+s
+s
+s
+P
 "}
 (4,1,1) = {"
-aP
-aP
-aP
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aW
-aW
-aW
-aW
-aP
+P
+P
+P
+a
+a
+a
+a
+a
+a
+a
+a
+s
+s
+s
+s
+P
 "}
 (5,1,1) = {"
-aP
-aP
-aa
-aa
-aa
-ab
-ac
-ab
-at
-at
-at
-at
-at
-aW
-aW
-aW
+P
+P
+a
+a
+a
+b
+c
+b
+t
+t
+t
+t
+t
+s
+s
+s
 "}
 (6,1,1) = {"
-aP
-aa
-aa
-aa
-ab
-ab
-aL
-an
-at
-av
-ax
-aB
-at
-aW
-aW
-aW
+P
+a
+a
+a
+b
+b
+L
+n
+t
+v
+x
+B
+t
+s
+s
+s
 "}
 (7,1,1) = {"
-aa
-aa
-aa
-aa
-ab
-aO
-ao
-ao
-at
-aw
-ay
-ay
-aD
-aW
-aW
-aW
+a
+a
+a
+a
+b
+m
+o
+o
+t
+w
+y
+y
+D
+s
+s
+s
 "}
 (8,1,1) = {"
-aa
-ab
-ab
-ab
-ac
-aU
-ao
-aq
-ao
-ao
-az
-aC
-at
-aW
-aW
-aW
+a
+b
+b
+b
+c
+f
+o
+q
+o
+o
+z
+C
+t
+s
+s
+s
 "}
 (9,1,1) = {"
-aa
-ab
-aU
-aT
-aK
-aU
-aU
-ao
-ao
-ao
-at
-at
-at
-aW
-aW
-aW
+a
+b
+f
+i
+g
+f
+f
+o
+o
+o
+t
+t
+t
+s
+s
+s
 "}
 (10,1,1) = {"
-aa
-ab
-aV
-aY
-aK
-aK
-aU
-aU
-au
-ao
-aA
-ab
-aP
-aW
-aW
-aW
+a
+b
+S
+j
+g
+g
+f
+f
+u
+o
+A
+b
+P
+s
+s
+s
 "}
 (11,1,1) = {"
-aa
-ac
-FO
-ad
-aZ
-ac
-aR
-aN
-ac
-ac
-ac
-ab
-aP
-aP
-aW
-aW
+a
+c
+e
+h
+l
+c
+p
+r
+c
+c
+c
+b
+P
+P
+s
+s
 "}
 (12,1,1) = {"
-aa
-ab
-ab
-aX
-aQ
-ab
-ab
-ab
-ab
-aa
-aa
-aP
-aP
-aE
-aH
-aE
+a
+b
+b
+k
+M
+b
+b
+b
+b
+a
+a
+P
+P
+E
+H
+E
 "}
 (13,1,1) = {"
-aa
-aa
-ab
-ab
-ab
-ab
-aa
-aa
-aa
-aa
-aP
-aP
-aP
-aF
-aI
-aF
+a
+a
+b
+b
+b
+b
+a
+a
+a
+a
+P
+P
+P
+F
+I
+F
 "}
 (14,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aP
-aP
-aP
-aP
-aF
-aI
-aF
+a
+a
+a
+a
+a
+a
+a
+a
+a
+P
+P
+P
+P
+F
+I
+F
 "}
 (15,1,1) = {"
-aP
-aP
-aa
-aa
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aG
-aJ
-aG
+P
+P
+a
+a
+P
+P
+P
+P
+P
+P
+P
+P
+P
+G
+J
+G
 "}
 (16,1,1) = {"
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
-aP
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
 "}
