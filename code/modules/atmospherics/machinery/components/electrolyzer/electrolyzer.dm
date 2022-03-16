@@ -110,7 +110,7 @@
 	for(var/reaction in GLOB.electrolyzer_reactions)
 		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
 
-		if(!current_reaction.reaction_check(air_mixture))
+		if(!current_reaction.reaction_check(env))
 			continue
 
 		current_reaction.react(loc, env, working_power)
