@@ -61,7 +61,7 @@
 	var/list/message_list = list()
 
 	data["user"] = list()
-	data["user"]["name"] = "Centcomm Official"
+	data["user"]["name"] = "Centcom Official"
 	data["user"]["job"] = "Official"
 	data["user"]["department"] = "Department of News"
 
@@ -259,7 +259,7 @@
 		if("submitWantedIssue")
 			if(!crime_description || !criminal_name)
 				return TRUE
-			GLOB.news_network.submitWanted(criminal_name, crime_description, "Centcomm Official", current_image, adminMsg = TRUE, newMessage = TRUE)
+			GLOB.news_network.submitWanted(criminal_name, crime_description, "Centcom Official", current_image, adminMsg = TRUE, newMessage = TRUE)
 			current_image = null
 			return TRUE
 
@@ -303,7 +303,7 @@
 		return TRUE
 	var/choice = tgui_alert(usr, "Please confirm feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 	if(choice == "Confirm")
-		GLOB.news_network.CreateFeedChannel(channel_name, "Centcomm Offical", channel_desc, locked = channel_locked)
+		GLOB.news_network.CreateFeedChannel(channel_name, "Centcom Offical", channel_desc, locked = channel_locked)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 	creating_channel = FALSE
 
@@ -315,7 +315,7 @@
 		creating_comment = FALSE
 		return TRUE
 	var/datum/newscaster/feed_comment/new_feed_comment = new/datum/newscaster/feed_comment
-	new_feed_comment.author = "Centcomm Offical"
+	new_feed_comment.author = "Centcom Offical"
 	new_feed_comment.body = comment_text
 	new_feed_comment.time_stamp = station_time_timestamp()
 	current_message.comments += new_feed_comment
@@ -352,7 +352,7 @@
 		return TRUE
 	if(temp_message)
 		feed_channel_message = temp_message
-	GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", "Centcomm Official", current_channel.channel_name, send_photo_data(), adminMessage = TRUE, allow_comments = TRUE)
+	GLOB.news_network.SubmitArticle("<font face=\"[PEN_FONT]\">[parsemarkdown(feed_channel_message, usr)]</font>", "Centcom Official", current_channel.channel_name, send_photo_data(), adminMessage = TRUE, allow_comments = TRUE)
 	SSblackbox.record_feedback("amount", "newscaster_stories", 1)
 	feed_channel_message = ""
 	current_image = null
