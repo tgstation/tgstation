@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - rscadd: "Random Poster Spawners now have directional variants. You don't have to memorize the pixel offset for those anymore (it was 32)."

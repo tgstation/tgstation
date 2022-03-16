@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "Dog AI's should no longer lock up and become unresponsive after failed fetch attempts"
-  - soundadd: "Dogs in harass mode that are guarding against someone will now make growling sounds"

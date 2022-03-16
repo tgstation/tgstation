@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - qol: "/tg/c cards now support in chat tooltips, finally you don't need to look up what Hivemind means for the 200th time"
-  - code_imp: "tgui chat now supports embedding components into it via html attributes. Go make the game look better lads."

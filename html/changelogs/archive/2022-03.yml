@@ -529,3 +529,45 @@
   - bugfix: added the ordnance circuitboards to the techweb, forgot about this in
       the original pr.
   - qol: added a small tooltip to the compressor buffer port.
+2022-03-16:
+  Iamgoofball:
+  - qol: Anyone who has access to the cells and the gulag shuttle can now use the
+      gulag teleporter
+  JohnFulpWillard:
+  - bugfix: Armsky and Pingsky aren't pAI controllable anymore.
+  - bugfix: Podpeople now take self-respiration into account when taking damage from
+      critical condition, like most other species.
+  LemonInTheDark:
+  - qol: /tg/c cards now support in chat tooltips, finally you don't need to look
+      up what Hivemind means for the 200th time
+  - code_imp: tgui chat now supports embedding components into it via html attributes.
+      Go make the game look better lads.
+  ORCACommander:
+  - qol: Updated Title Card Specifications
+  OneAsianTortoise:
+  - qol: hand labeler paper roll and toner cartridge can be printed at autolathe and
+      protolathes now
+  OperativeLyn:
+  - bugfix: Fixed two firelocks being on the same tile in the Starfury.
+  Ryll/Shaps:
+  - bugfix: Dog AI's should no longer lock up and become unresponsive after failed
+      fetch attempts
+  - soundadd: Dogs in harass mode that are guarding against someone will now make
+      growling sounds
+  TemporalOroboros:
+  - bugfix: Water vapor should wet and freeze floors once again.
+  Thunder12345:
+  - rscdel: Lean has been removed entirely from the game
+  Wallem:
+  - rscadd: Seeing how many miners we lose on a weekly basis, we've decided to dig
+      through some of our prototypes to get something to help you all. Your venders
+      have been supplied with Kheiral Cuffs, a wrist-worn suit sensor range booster.
+      Note that any accelerated aging caused by the device will not be counted towards
+      your retirement.
+  san7890:
+  - rscadd: Random Poster Spawners now have directional variants. You don't have to
+      memorize the pixel offset for those anymore (it was 32).
+  - admin: When you send people to Admin Prison for any number of reasons, please
+      take joy in knowing they can't explode out the floors any more.
+  vincentiusvin:
+  - bugfix: fixes the doppler array nullifying some of your bombs.

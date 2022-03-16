@@ -1,4 +1,0 @@
-author: "OperativeLyn"
-delete-after: True
-changes: 
-  - bugfix: "Fixed two firelocks being on the same tile in the Starfury."

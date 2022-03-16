@@ -1,4 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "Water vapor should wet and freeze floors once again."

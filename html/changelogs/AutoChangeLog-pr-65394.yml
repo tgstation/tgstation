@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - bugfix: "fixes the doppler array nullifying some of your bombs."
