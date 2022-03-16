@@ -123,13 +123,27 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/Activate(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	// First, start a short "buffer" cooldown to prevent them spamming the button
 	StartCooldown(cooldown_time / 4)
+	// Pre-casting of the spell
+	// Pre-cast is the very last chance for a spell to cancel
+	// Stuff like target input would go here.
 	if(!before_cast(target))
 		return FALSE
 
+	// Spell is offically being cast
+	// We do invocation and sound effects here, before cast
+	// (That way stuff like teleports or shape-shifts can be said before done)
+	spell_feedback()
+
+	// Actually cast the spell. Main effects go here
 	cast(target)
+	// And then proceede with the aftermath of the cast
+	// Final effects that happen after all the casting is done can go here
 	after_cast(target)
 
+	// The entire spell is done, start the cooldown at its set duration
+	// and update the icon so it looks disabled
 	StartCooldown()
 	UpdateButtonIcon()
 
@@ -179,14 +193,10 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /// Actions done after the main cast is finished.
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
-	// No "should call parent" for after cast, as
-	// spells should be free to override to have no after-cast at all
+	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src)
 	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST)
-
-	invocation()
-	play_spell_sound()
 
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
@@ -208,6 +218,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		smoke.set_up(smoke_amt, get_turf(owner))
 		smoke.start()
 
+/datum/action/cooldown/spell/proc/spell_feedback()
+	if(invocation_type != INVOCATION_NONE)
+		invocation()
+	if(sound)
+		playsound(get_turf(owner), sound, 50, TRUE)
+
 /datum/action/cooldown/spell/proc/invocation()
 	/* MELBERT TODO Unit test this
 	if(!invocation || invocation_type == INVOCATION_NONE)
@@ -227,13 +243,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 				owner.whisper(replacetext(invocation," ","`"))
 		if(INVOCATION_EMOTE)
 			owner.visible_message(invocation, invocation_self_message)
-
-/datum/action/cooldown/spell/proc/play_spell_sound()
-	if(!sound)
-		return FALSE
-
-	playsound(get_turf(owner), sound, 50, TRUE)
-	return TRUE
 
 /datum/action/cooldown/spell/proc/revert_cast()
 	next_use_time = 0

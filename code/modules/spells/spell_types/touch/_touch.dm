@@ -74,8 +74,8 @@
 				return
 	*/
 
-// Overrides after_cast, as invocation / sounds are done when the hand hits someone
-/datum/action/cooldown/spell/touch/after_cast(atom/cast_on)
+// Overrides spell_feedback, as invocation / sounds are done when the hand hits someone
+/datum/action/cooldown/spell/touch/spell_feedback()
 	return
 
 /**
@@ -116,7 +116,9 @@
 		return FALSE
 
 	invocation()
-	play_spell_sound()
+	if(sound)
+		playsound(get_turf(owner), sound, 50, TRUE)
+
 	return TRUE
 
 /**
