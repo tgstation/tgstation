@@ -121,7 +121,8 @@
 
 	occupant_vis = new(null, src)
 	vis_contents += occupant_vis
-	airs[1].volume = CELL_VOLUME * 0.5
+	if(airs[1])
+		airs[1].volume = CELL_VOLUME * 0.5
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/set_occupant(atom/movable/new_occupant)
 	. = ..()
