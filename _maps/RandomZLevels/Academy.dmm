@@ -359,20 +359,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/academy/academyaft)
-"bQ" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/headmaster)
 "bR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -421,20 +407,6 @@
 "cd" = (
 /turf/open/floor/iron/dark,
 /area/awaymission/academy/headmaster)
-"ce" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/headmaster)
 "cg" = (
 /obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/iron/showroomfloor,
@@ -456,19 +428,6 @@
 "ck" = (
 /obj/machinery/door/airlock/plasma,
 /turf/open/floor/carpet,
-/area/awaymission/academy/headmaster)
-"cl" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/awaymission/academy/headmaster)
 "co" = (
 /obj/machinery/portable_atmospherics/scrubber/huge,
@@ -608,21 +567,6 @@
 /obj/structure/closet/crate/internals,
 /obj/item/tank/internals/oxygen,
 /obj/item/tank/internals/oxygen/red,
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/headmaster)
-"cV" = (
-/obj/structure/closet/crate,
-/obj/item/crowbar/red,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/awaymission/academy/headmaster)
 "dc" = (
@@ -1311,19 +1255,6 @@
 /obj/structure/closet/crate/trashcart,
 /turf/open/floor/iron/grimy,
 /area/awaymission/academy/academyaft)
-"fP" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
 "fR" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1397,50 +1328,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/awaymission/academy/academyaft)
-"gk" = (
-/obj/machinery/recharger,
-/obj/structure/table/reinforced,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
-"gl" = (
-/obj/structure/table/reinforced,
-/obj/item/pen/red,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
-"gm" = (
-/obj/structure/filingcabinet/filingcabinet,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
 "gn" = (
 /obj/machinery/door/window{
 	dir = 4
@@ -1501,52 +1388,6 @@
 /obj/item/scalpel,
 /turf/open/floor/iron,
 /area/awaymission/academy/classrooms)
-"gH" = (
-/obj/structure/table,
-/obj/item/paper/fluff/awaymissions/academy/grade/aplus,
-/obj/item/gun/ballistic/shotgun/automatic/combat,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
-"gI" = (
-/obj/structure/table,
-/obj/item/gun/ballistic/revolver/russian,
-/obj/item/paper/fluff/awaymissions/academy/grade/bminus,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
-"gJ" = (
-/obj/structure/table,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
 "gK" = (
 /obj/structure/window/reinforced,
 /obj/item/ammo_casing,
@@ -1565,20 +1406,6 @@
 /obj/structure/mineral_door/wood,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
-"gO" = (
-/obj/structure/chair/stool/directional/south,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
 "gP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1599,22 +1426,11 @@
 /obj/machinery/door/airlock/gold,
 /turf/open/floor/carpet,
 /area/awaymission/academy/classrooms)
-"gW" = (
-/obj/structure/table,
-/obj/item/gun/energy/floragun,
-/obj/item/paper/fluff/awaymissions/academy/grade/dminus,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
+"gU" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "gX" = (
 /obj/structure/closet/crate,
 /obj/item/stack/sheet/glass,
@@ -2025,6 +1841,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/awaymission/academy/academyaft)
+"je" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/revolver/russian,
+/obj/item/paper/fluff/awaymissions/academy/grade/bminus,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "jf" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless{
@@ -2271,6 +2094,13 @@
 /obj/machinery/door/window,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academygate)
+"kb" = (
+/obj/item/clothing/gloves/combat,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
+"kc" = (
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "ke" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -2334,21 +2164,6 @@
 	},
 /mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/iron/white/corner,
-/area/awaymission/academy/classrooms)
-"kB" = (
-/obj/structure/chair,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/mob/living/simple_animal/hostile/wizard,
-/turf/open/floor/iron/dark,
 /area/awaymission/academy/classrooms)
 "kC" = (
 /mob/living/simple_animal/hostile/wizard,
@@ -2781,13 +2596,6 @@
 	},
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
-"mN" = (
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"mO" = (
-/obj/structure/reagent_dispensers/beerkeg,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
 "mP" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/plating,
@@ -2798,29 +2606,6 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/academy/academyengine)
-"mS" = (
-/obj/structure/ladder/unbreakable/rune{
-	id = "academy_coldroom"
-	},
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"mT" = (
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"mU" = (
-/obj/item/food/meat/slab,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"mV" = (
-/obj/item/clothing/gloves/combat,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"mX" = (
-/obj/item/clothing/under/syndicate,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
 "mY" = (
 /turf/closed/mineral/random,
 /area/space/nearstation)
@@ -2843,24 +2628,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/academyaft)
-"nj" = (
-/obj/structure/rack,
-/obj/item/reagent_containers/food/drinks/bottle/wine,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"nk" = (
-/obj/effect/decal/remains/human,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"nl" = (
-/obj/item/clothing/mask/gas/syndicate,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
-"nm" = (
-/mob/living/simple_animal/hostile/bear,
-/turf/open/floor/plating/asteroid/snow,
-/area/awaymission/academy/academycellar)
 "nn" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -2896,6 +2663,12 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
+"ou" = (
+/obj/structure/ladder/unbreakable/rune{
+	id = "academy_coldroom"
+	},
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "ox" = (
 /obj/structure/toilet{
 	dir = 8
@@ -2904,20 +2677,10 @@
 /obj/effect/decal/cleanable/vomit,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/academy/academyaft)
-"qd" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/awaymission/academy/headmaster)
+"oQ" = (
+/obj/item/food/meat/slab,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "rl" = (
 /obj/structure/chair/stool/directional/west,
 /turf/open/floor/carpet,
@@ -2930,20 +2693,45 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyaft)
+"sr" = (
+/obj/structure/chair,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/mob/living/simple_animal/hostile/wizard,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "sw" = (
 /obj/machinery/power/terminal{
 	dir = 1
 	},
 /turf/open/floor/vault,
 /area/awaymission/academy/academyengine)
+"tO" = (
+/obj/machinery/light/directional/west,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "uM" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/academy/academyaft)
+"vA" = (
+/obj/item/clothing/mask/gas/syndicate,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "vD" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/academy/classrooms)
+"vM" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
+"wg" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/headmaster)
 "xr" = (
 /obj/machinery/light/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -2953,6 +2741,11 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/awaymission/academy/headmaster)
+"zI" = (
+/obj/item/clothing/under/syndicate,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "zR" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -2982,6 +2775,17 @@
 /mob/living/simple_animal/hostile/giant_spider/hunter,
 /turf/open/floor/engine/cult,
 /area/awaymission/academy/academycellar)
+"BI" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
+"BQ" = (
+/obj/machinery/light/directional/west,
+/obj/machinery/portable_atmospherics/pump,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/headmaster)
 "Ct" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
@@ -2990,6 +2794,10 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
+/area/awaymission/academy/classrooms)
+"CM" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/awaymission/academy/classrooms)
 "Dy" = (
 /obj/structure/cable,
@@ -3005,6 +2813,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/side,
 /area/awaymission/academy/classrooms)
+"Eq" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/headmaster)
 "Fd" = (
 /obj/machinery/light/directional/north,
 /obj/effect/turf_decal/tile/red{
@@ -3032,10 +2845,23 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/academy/academyaft)
+"Hs" = (
+/obj/structure/table,
+/obj/item/paper/fluff/awaymissions/academy/grade/aplus,
+/obj/item/gun/ballistic/shotgun/automatic/combat,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "Id" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/awaymission/academy/academyengine)
+"Il" = (
+/obj/structure/table/reinforced,
+/obj/item/pen/red,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "In" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -3051,6 +2877,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/awaymission/academy/academyengine)
+"JF" = (
+/mob/living/simple_animal/hostile/bear,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "JT" = (
 /obj/structure/noticeboard/directional/north,
 /turf/open/floor/iron,
@@ -3077,19 +2907,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyaft)
-"Mj" = (
+"Md" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/portable_atmospherics/pump,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/academy/headmaster)
 "Mm" = (
@@ -3100,20 +2920,12 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
-"MK" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+"MN" = (
+/obj/structure/closet/crate,
+/obj/item/crowbar/red,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
-/area/awaymission/academy/classrooms)
+/area/awaymission/academy/headmaster)
 "Of" = (
 /obj/structure/noticeboard/directional/north,
 /turf/open/floor/wood,
@@ -3132,6 +2944,21 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/awaymission/academy/headmaster)
+"QT" = (
+/obj/structure/table,
+/obj/item/gun/energy/floragun,
+/obj/item/paper/fluff/awaymissions/academy/grade/dminus,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
+"RA" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/headmaster)
+"SR" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "Tk" = (
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -3151,11 +2978,21 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/academy/academyaft)
+"TL" = (
+/obj/machinery/recharger,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "TQ" = (
 /obj/structure/noticeboard/directional/north,
 /obj/item/paper/fluff/awaymissions/academy/class/pyromancy,
 /turf/open/floor/iron/grimy,
 /area/awaymission/academy/classrooms)
+"Ua" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/misc/asteroid/snow,
+/area/awaymission/academy/academycellar)
 "UD" = (
 /obj/structure/table,
 /obj/machinery/light/directional/east,
@@ -3200,6 +3037,11 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/grimy,
 /area/awaymission/academy/classrooms)
+"Wl" = (
+/obj/structure/filingcabinet/filingcabinet,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "Wq" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet,
@@ -3218,6 +3060,11 @@
 /obj/structure/mirror/directional/north,
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/academy/academyaft)
+"Xl" = (
+/obj/structure/chair/stool/directional/south,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/academy/classrooms)
 "XO" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/vault,
@@ -4523,11 +4370,11 @@ aa
 aG
 mD
 mD
-mN
-mN
-nj
-nj
-nj
+kc
+kc
+BI
+BI
+BI
 mD
 mD
 aG
@@ -4652,13 +4499,13 @@ aa
 aa
 aG
 mD
-mN
-mN
-mN
-mN
-mN
-mU
-mN
+kc
+kc
+kc
+kc
+kc
+oQ
+kc
 mD
 aG
 aa
@@ -4782,13 +4629,13 @@ aa
 aa
 aG
 mD
-mN
-mS
-mN
-mT
-mN
-mN
-mN
+kc
+ou
+kc
+SR
+kc
+kc
+kc
 mD
 mD
 aG
@@ -4912,14 +4759,14 @@ aa
 aa
 aG
 mD
-mN
-mN
-mN
-mU
-mN
-mN
-mN
-mN
+kc
+kc
+kc
+oQ
+kc
+kc
+kc
+kc
 mD
 aG
 aa
@@ -5042,14 +4889,14 @@ aa
 aG
 aG
 mD
-mN
-mN
-mU
-mN
-mU
-mT
-mN
-mN
+kc
+kc
+oQ
+kc
+oQ
+SR
+kc
+kc
 mD
 aG
 aa
@@ -5172,14 +5019,14 @@ aa
 aG
 mD
 mD
-mN
-mN
-mN
-mU
-mN
-mN
-mN
-mN
+kc
+kc
+kc
+oQ
+kc
+kc
+kc
+kc
 mD
 mD
 aG
@@ -5301,16 +5148,16 @@ aa
 aa
 aG
 mD
-mN
-mN
-mT
-mN
-mN
-mN
-mN
-mU
-mN
-mN
+kc
+kc
+SR
+kc
+kc
+kc
+kc
+oQ
+kc
+kc
 mD
 aG
 aa
@@ -5431,16 +5278,16 @@ aa
 aa
 aG
 mD
-mN
-mN
-mN
-mN
-mN
-mN
-mN
-mN
-mN
-mN
+kc
+kc
+kc
+kc
+kc
+kc
+kc
+kc
+kc
+kc
 mD
 aG
 aa
@@ -5561,16 +5408,16 @@ aa
 aa
 aG
 mD
-mO
-mO
-mO
-mN
-mN
+Ua
+Ua
+Ua
+kc
+kc
 mD
 mD
-mN
-mN
-mN
+kc
+kc
+kc
 mD
 aG
 aa
@@ -5691,16 +5538,16 @@ aa
 aa
 aG
 mD
-mO
-mO
-mO
+Ua
+Ua
+Ua
 mD
 mD
 mD
 mD
-mN
-mN
-mN
+kc
+kc
+kc
 mD
 aG
 aa
@@ -5828,8 +5675,8 @@ mD
 mD
 mD
 mD
-mN
-mN
+kc
+kc
 mD
 mD
 aG
@@ -5955,11 +5802,11 @@ aG
 mD
 mD
 mD
-mN
-mN
-mN
-mN
-mN
+kc
+kc
+kc
+kc
+kc
 mD
 mY
 aa
@@ -6084,12 +5931,12 @@ aG
 aG
 mD
 mD
-mN
-mN
-mN
-nm
-mN
-mN
+kc
+kc
+kc
+JF
+kc
+kc
 mD
 aG
 aa
@@ -6214,12 +6061,12 @@ aG
 aG
 aG
 mD
-mV
-nk
-mN
-mN
-mU
-mT
+kb
+gU
+kc
+kc
+oQ
+SR
 mD
 aG
 aa
@@ -6344,12 +6191,12 @@ aa
 aG
 aG
 mD
-mX
-nl
-mN
-mN
-mN
-mN
+zI
+vA
+kc
+kc
+kc
+kc
 mD
 aG
 aa
@@ -6475,11 +6322,11 @@ aa
 aG
 mD
 mD
-mN
-nm
-mN
-nm
-mN
+kc
+JF
+kc
+JF
+kc
 mD
 aG
 aa
@@ -6605,10 +6452,10 @@ aa
 aG
 aG
 mD
-mN
-mN
-mN
-mN
+kc
+kc
+kc
+kc
 mD
 mD
 aG
@@ -12664,14 +12511,14 @@ ej
 ej
 ej
 bE
-fP
-fP
-fP
-MK
-fP
-fP
-fP
-fP
+CM
+CM
+CM
+tO
+CM
+CM
+CM
+CM
 fD
 ho
 ho
@@ -12794,14 +12641,14 @@ eY
 bE
 bE
 bE
-fP
-gk
-fP
-fP
-fP
-fP
-fP
-fP
+CM
+TL
+CM
+CM
+CM
+CM
+CM
+CM
 fD
 ho
 ho
@@ -12901,13 +12748,13 @@ aP
 aa
 aa
 ab
-qd
+Md
 cd
-cl
+RA
 cd
-ce
+Eq
 cd
-Mj
+BQ
 as
 dh
 dt
@@ -12924,14 +12771,14 @@ eD
 eD
 eD
 bE
-kB
-gl
-fP
-fP
-gH
-gO
-gJ
-gO
+sr
+Il
+CM
+CM
+Hs
+Xl
+vM
+Xl
 fD
 zR
 ho
@@ -13032,11 +12879,11 @@ aa
 aa
 ab
 cd
-cl
+RA
 cd
-ce
+Eq
 Dy
-cl
+RA
 cd
 as
 di
@@ -13054,14 +12901,14 @@ eD
 fq
 eD
 bE
-fP
-gm
-fP
-fP
-gI
-gO
-gJ
-gO
+CM
+Wl
+CM
+CM
+je
+Xl
+vM
+Xl
 fD
 ho
 ho
@@ -13161,13 +13008,13 @@ ab
 aP
 aP
 ab
-cl
+RA
 cd
-cl
+RA
 Dy
-cl
+RA
 cd
-cl
+RA
 as
 kk
 dv
@@ -13184,14 +13031,14 @@ eD
 fr
 eD
 bE
-fP
-fP
-fP
-fP
-gJ
-gO
-gW
-gO
+CM
+CM
+CM
+CM
+vM
+Xl
+QT
+Xl
 fD
 ho
 ho
@@ -13296,7 +13143,7 @@ as
 as
 cv
 cH
-cl
+RA
 cU
 as
 dk
@@ -13421,13 +13268,13 @@ aa
 aP
 aP
 ab
-bQ
+wg
 as
 co
 cw
 as
 cd
-cV
+MN
 as
 di
 Zc

@@ -4,13 +4,13 @@
 /area/template_noop)
 "b" = (
 /obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "d" = (
 /obj/structure/rack,
 /obj/item/pickaxe/mini,
 /obj/item/relic,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "g" = (
 /obj/effect/turf_decal/sand/plating,
@@ -22,7 +22,7 @@
 "h" = (
 /obj/item/stack/cable_coil/five,
 /obj/item/stock_parts/cell/high/empty,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "m" = (
 /turf/closed/wall,
@@ -50,17 +50,17 @@
 /area/mine/explored)
 "M" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "O" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "P" = (
 /obj/structure/rack,
 /obj/item/storage/toolbox/mechanical,
 /obj/machinery/light/small/directional/east,
 /obj/effect/spawner/random/maintenance/three,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "Q" = (
 /obj/modular_map_connector,
@@ -75,7 +75,7 @@
 /area/mine/explored)
 "U" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "X" = (
 /turf/closed/wall/rock/porous,

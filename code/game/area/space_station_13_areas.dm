@@ -1407,6 +1407,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "cargo_bay"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/cargo/lobby
+	name = "\improper Cargo Lobby"
+	icon_state = "cargo_lobby"
+
 /area/cargo/qm
 	name = "\improper Quartermaster's Office"
 	icon_state = "quart_office"
