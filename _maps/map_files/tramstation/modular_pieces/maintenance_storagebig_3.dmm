@@ -53,15 +53,15 @@
 /turf/open/floor/plating,
 /area/maintenance/port/central)
 "O" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "P" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "S" = (
 /obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "V" = (
 /turf/closed/wall,

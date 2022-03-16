@@ -10,7 +10,7 @@
 /area/maintenance/port/aft)
 "e" = (
 /obj/effect/spawner/random/structure/crate,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/port/aft)
 "f" = (
 /turf/template_noop,
@@ -22,7 +22,7 @@
 /area/maintenance/port/aft)
 "j" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/port/aft)
 "k" = (
 /obj/effect/decal/cleanable/dirt,
@@ -46,7 +46,7 @@
 /turf/closed/wall/rust,
 /area/maintenance/port/aft)
 "z" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/port/aft)
 "C" = (
 /turf/closed/wall,
@@ -86,11 +86,11 @@
 "O" = (
 /obj/item/stack/ore/glass,
 /obj/effect/spawner/random/decoration/glowstick,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/port/aft)
 "R" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/port/aft)
 "T" = (
 /turf/closed/wall/rock/porous,

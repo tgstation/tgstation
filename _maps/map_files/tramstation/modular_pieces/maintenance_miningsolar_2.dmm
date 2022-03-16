@@ -9,7 +9,7 @@
 /turf/open/floor/plating/airless,
 /area/mine/explored)
 "k" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "m" = (
 /obj/modular_map_connector,
@@ -19,7 +19,7 @@
 /area/mine/explored)
 "q" = (
 /obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "v" = (
 /obj/effect/turf_decal/sand/plating,
@@ -37,7 +37,7 @@
 "G" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/three,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "J" = (
 /turf/template_noop,
@@ -46,11 +46,11 @@
 /obj/modular_map_root/tramstation{
 	key = "maintenance_miningsolar_attachment"
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "R" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "W" = (
 /obj/effect/turf_decal/sand/plating,

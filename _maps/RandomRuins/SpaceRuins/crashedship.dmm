@@ -1459,7 +1459,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/bmpship/aft)
 "fS" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship)
 "fT" = (
 /obj/structure/frame/computer{
@@ -1584,7 +1584,7 @@
 /turf/open/floor/plating/airless,
 /area/awaymission/bmpship/fore)
 "gp" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship/fore)
 "gq" = (
 /obj/structure/rack,
@@ -1592,10 +1592,10 @@
 /area/awaymission/bmpship/fore)
 "gr" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship/fore)
 "gs" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship/midship)
 "gt" = (
 /turf/open/floor/plating/airless{
@@ -1630,7 +1630,7 @@
 /obj/effect/decal/remains/human,
 /obj/item/clothing/head/helmet/space/eva,
 /obj/effect/gibspawner/generic,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship)
 "gF" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
@@ -1688,7 +1688,7 @@
 /area/awaymission/bmpship/aft)
 "gQ" = (
 /obj/item/clothing/suit/space/eva,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship)
 "gR" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
@@ -1766,7 +1766,7 @@
 /area/awaymission/bmpship/aft)
 "hn" = (
 /obj/item/clothing/gloves/color/fyellow,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship)
 "ho" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -1861,7 +1861,7 @@
 /area/awaymission/bmpship/midship)
 "Kj" = (
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/awaymission/bmpship/midship)
 "KU" = (
 /obj/machinery/door/poddoor/shutters{

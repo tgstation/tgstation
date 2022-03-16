@@ -84,7 +84,7 @@
 /turf/open/floor/iron/airless,
 /area/mine/explored)
 "L" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "Q" = (
 /obj/effect/turf_decal/sand,

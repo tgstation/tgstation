@@ -1,5 +1,5 @@
 /datum/map_generator/cave_generator/icemoon
-	open_turf_types = list(/turf/open/floor/plating/asteroid/snow/icemoon = 19, /turf/open/floor/plating/ice/icemoon = 1)
+	open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 19, /turf/open/misc/ice/icemoon = 1)
 	closed_turf_types = list(/turf/closed/mineral/random/snow = 1)
 
 
