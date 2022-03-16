@@ -77,7 +77,7 @@
 /obj/item/storage/bag/plants/portaseeder,
 /obj/item/storage/bag/ore,
 /obj/item/storage/firstaid/regular,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "aq" = (
 /obj/structure/glowshroom/single,
