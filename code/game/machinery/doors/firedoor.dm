@@ -551,6 +551,11 @@
 			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
 
+/obj/machinery/door/firedoor/Moved()
+	. = ..()
+	UnregisterSignal(src, COMSIG_TURF_EXPOSE)
+	watched_turfs = list()
+
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
 	density = TRUE
