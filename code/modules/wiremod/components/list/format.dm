@@ -9,9 +9,12 @@
 	desc = "A component that formats lists, replacing %n in the format string with corresponding nth list item."
 	category = "List"
 
-	var/regex/param_regex = new(@"%([0-9]+)", "g")
+	var/static/regex/list_param_regex = new(@"%([0-9]+)", "g")
 	// Used to provide what src should be in the regex replace proc. Necessary due to terrible byond API.
 	var/static/obj/item/circuit_component/format/regex_context
+
+	/// The regex used to find a parameter.
+	var/regex/param_regex
 
 	var/datum/port/input/format_port
 	var/datum/port/input/param_list_port
@@ -22,6 +25,10 @@
 	/// The result from the output
 	var/datum/port/output/output
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+/obj/item/circuit_component/format/Initialize(mapload)
+	. = ..()
+	param_regex = list_param_regex
 
 /obj/item/circuit_component/format/proc/make_params_port()
 	param_list_port = add_input_port("Params", PORT_TYPE_LIST(PORT_TYPE_ANY))
@@ -92,7 +99,12 @@
 /obj/item/circuit_component/format/assoc
 	display_name = "Format Associative List"
 	desc = "A component that formats associative lists, replacing %key in the format string with corresponding list\[key] item."
-	param_regex = new(@"%([a-zA-Z0-9_]+)", "g")
+
+	var/static/regex/assoc_param_regex = new(@"%([a-zA-Z0-9_]+)", "g")
+
+/obj/item/circuit_component/format/assoc/Initialize(mapload)
+	. = ..()
+	param_regex = assoc_param_regex
 
 /obj/item/circuit_component/format/assoc/get_list_item(list/param_list, index_string)
 	return param_list[index_string]
