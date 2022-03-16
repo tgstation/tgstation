@@ -75,6 +75,7 @@
 						<a href='?src=[REF(src)];play_sound=airlock_alien_prying'>Airlock Prying</a>
 						<a href='?src=[REF(src)];play_sound=lightningbolt'>Lightning Bolt</a>
 						<a href='?src=[REF(src)];play_sound=explosionfar'>Distant Explosion</a>
+						<a href='?src=[REF(src)];play_sound=bababooey'>Bababooey</a>
 						</div>
 						</div>
 						"}
@@ -105,7 +106,7 @@
 
 /obj/vehicle/sealed/mecha/combat/honker/play_stepsound()
 	if(squeak)
-		playsound(src, SFX_CLOWN_STEP, 70, 1)
+		playsound(src, "clownstep", 70, 1)
 	squeak = !squeak
 
 /obj/vehicle/sealed/mecha/combat/honker/Topic(href, href_list)
@@ -138,6 +139,8 @@
 				playsound(src, 'sound/magic/lightningbolt.ogg', 50)
 			if("explosionfar")
 				playsound(src, 'sound/effects/explosionfar.ogg', 50)
+			if("bababooey")
+				playsound(src, 'sound/misc/bababooey.ogg', 50)
 
 
 //DARK H.O.N.K.
