@@ -1211,7 +1211,7 @@
 /area/ruin/space/has_grav/hotel)
 "kj" = (
 /obj/machinery/light/directional/west,
-/turf/open/water/beach/coastline_t,
+/turf/open/misc/beach/coastline_t,
 /area/ruin/space/has_grav/hotel/pool)
 "kk" = (
 /obj/structure/flora/ausbushes/leafybush,
@@ -1484,7 +1484,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "mJ" = (
-/turf/open/water/beach/coastline_t,
+/turf/open/misc/beach/coastline_t,
 /area/ruin/space/has_grav/hotel/pool)
 "mK" = (
 /turf/open/misc/beach/coastline_b{
