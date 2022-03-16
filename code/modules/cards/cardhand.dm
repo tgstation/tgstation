@@ -134,7 +134,7 @@
 	// to spread the cards out using our dividers
 	for(var/i in 0 to cards_to_display - 1)
 		var/obj/item/toy/singlecard/card = cards[starting_card_pos + i]
-		var/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = CARDS_PIXEL_X_OFFSET + (i * pixel_divider))
+		var/image/card_overlay = image(icon, icon_state = card.icon_state, pixel_x = CARDS_PIXEL_X_OFFSET + (i * pixel_divider))
 		var/rotation_angle = CARDS_ANGLE_OFFSET + (i * angle_divider)
 		var/matrix/M = matrix()
 		M.Turn(rotation_angle)
