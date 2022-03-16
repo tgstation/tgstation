@@ -23,6 +23,7 @@
 		for(var/obj/item/toy/singlecard/new_card in cards_to_combine)
 			new_card.forceMove(src)
 			cards += new_card
+	register_context()
 	update_appearance()
 
 /obj/item/toy/cards/cardhand/suicide_act(mob/living/carbon/user)
