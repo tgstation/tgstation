@@ -16,43 +16,43 @@
 /area/ruin/powered)
 "ae" = (
 /obj/item/clothing/suit/space/orange,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "af" = (
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "ag" = (
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "ah" = (
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "ai" = (
 /obj/item/reagent_containers/glass/bucket,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "aj" = (
 /obj/structure/water_source/puddle,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "ak" = (
 /obj/structure/glowshroom/single,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
 "al" = (
 /obj/item/storage/toolbox/emergency,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
@@ -63,7 +63,7 @@
 /obj/item/seeds/plump,
 /obj/item/food/grown/mushroom/glowshroom,
 /obj/item/seeds/tower,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "an" = (
 /obj/machinery/hydroponics/soil,
@@ -87,10 +87,10 @@
 /obj/structure/rack,
 /obj/item/pickaxe/emergency,
 /obj/item/tank/internals/oxygen,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "as" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "at" = (
 /turf/closed/wall/mineral/titanium/survival/pod,
@@ -185,7 +185,7 @@
 /area/ruin/powered)
 "aM" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/plating/asteroid/basalt,
+/turf/open/misc/asteroid/basalt,
 /area/ruin/powered)
 "aN" = (
 /obj/structure/rack,
@@ -218,7 +218,7 @@
 /area/ruin/powered)
 "aS" = (
 /obj/item/clothing/head/helmet/space/orange,
-/turf/open/floor/plating/asteroid{
+/turf/open/misc/asteroid{
 	name = "dirt"
 	},
 /area/ruin/powered)
