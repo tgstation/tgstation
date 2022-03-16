@@ -88,7 +88,7 @@
 	flags_inv = HIDEHAIR //bald
 	icon_state = "shrine_wig"
 	inhand_icon_state = "shrine_wig"
-	dynamic_hair_suffix = ""
+
 	worn_y_offset = 1
 
 /obj/item/clothing/head/cardborg

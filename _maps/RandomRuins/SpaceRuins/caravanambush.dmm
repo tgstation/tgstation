@@ -305,7 +305,7 @@
 /turf/template_noop,
 /area/template_noop)
 "dD" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "dE" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -336,11 +336,11 @@
 /area/ruin/unpowered)
 "ew" = (
 /obj/effect/gibspawner/human,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "ex" = (
 /obj/item/stack/sheet/iron,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "eG" = (
 /obj/item/stack/cable_coil{
