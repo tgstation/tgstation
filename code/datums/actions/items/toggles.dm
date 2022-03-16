@@ -22,11 +22,6 @@
 /datum/action/item_action/toggle_firemode
 	name = "Toggle Firemode"
 
-/datum/action/item_action/rcl_gui
-	name = "Toggle Fast Wiring Gui"
-	icon_icon = 'icons/mob/actions/actions_items.dmi'
-	button_icon_state = "rcl_gui"
-
 /datum/action/item_action/toggle_gunlight
 	name = "Toggle Gunlight"
 
@@ -36,17 +31,11 @@
 /datum/action/item_action/toggle_barrier_spread
 	name = "Toggle Barrier Spread"
 
-/datum/action/item_action/equip_unequip_ted_gun
-	name = "Equip/Unequip TED Gun"
-
 /datum/action/item_action/toggle_paddles
 	name = "Toggle Paddles"
 
 /datum/action/item_action/toggle_mister
 	name = "Toggle Mister"
-
-/datum/action/item_action/activate_injector
-	name = "Activate Injector"
 
 /datum/action/item_action/toggle_helmet_light
 	name = "Toggle Helmet Light"

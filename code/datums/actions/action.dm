@@ -34,7 +34,7 @@
 		RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/on_target_update_icon)
 
 	if(istype(target, /datum/mind))
-		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_mind_swapped)
+		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_target_mind_swapped)
 
 /datum/action/Destroy()
 	if(owner)
@@ -165,7 +165,7 @@
 
 	UpdateButtonIcon()
 
-/datum/action/proc/on_target_mind_transferred(datum/mind/source, mob/old_current)
+/datum/action/proc/on_target_mind_swapped(datum/mind/source, mob/old_current)
 	SIGNAL_HANDLER
 
 	Remove(old_current)

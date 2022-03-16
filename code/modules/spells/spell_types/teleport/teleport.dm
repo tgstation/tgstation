@@ -1,11 +1,11 @@
 /datum/action/cooldown/spell/teleport/area_teleport/wizard
 	name = "Teleport"
 	desc = "This spell teleports you to an area of your selection."
-	action_icon_state = "teleport"
+	button_icon_state = "teleport"
 	sound = 'sound/magic/teleport_diss.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	charge_max = 1 MINUTES
+	cooldown_time = 1 MINUTES
 	cooldown_reduction_per_rank = 10 SECONDS
 
 	invocation = "SCYAR NILA"

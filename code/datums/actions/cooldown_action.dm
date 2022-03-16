@@ -39,6 +39,10 @@
 		unset_click_ability()
 	return ..()
 
+/datum/action/cooldown/Unshare(mob/freeloader)
+
+	return ..()
+
 /// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
 	if(shared_cooldown)

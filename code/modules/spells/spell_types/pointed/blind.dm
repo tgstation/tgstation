@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/blind
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
-	action_icon_state = "blind"
+	button_icon_state = "blind"
 
 	sound = 'sound/magic/blind.ogg'
 	school = SCHOOL_TRANSMUTATION

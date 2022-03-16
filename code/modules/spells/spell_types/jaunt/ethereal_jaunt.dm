@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt
 	name = "Ethereal Jaunt"
 	desc = "This spell turns your form ethereal, temporarily making you invisible and able to pass through walls."
-	action_icon_state = "jaunt"
+	button_icon_state = "jaunt"
 	sound = 'sound/magic/ethereal_enter.ogg'
 
 	cooldown_time = 30 SECONDS
@@ -54,7 +54,7 @@
 	do_steam_effects(cast_turf)
 
 	if(jaunt_out_time > 0)
-		ADD_TRAIT(cart_on, TRAIT_IMMOBILIZED, type)
+		ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, type)
 		addtimer(CALLBACK(src, .proc/do_jaunt_out, cast_on, holder), jaunt_out_time)
 	else
 		start_jaunt(cast_on, holder)
@@ -66,7 +66,7 @@
  * Calls start_jaunt.
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt_out(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
-	REMOVE_TRAIT(cart_on, TRAIT_IMMOBILIZED, type)
+	REMOVE_TRAIT(cast_on, TRAIT_IMMOBILIZED, type)
 	start_jaunt(cast_on, holder)
 
 /**
@@ -168,7 +168,7 @@
 		exit_point_list.Cut(5)
 
 /// Does some steam effects from the jaunt at passed loc.
-/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_steam_effetcs(turf/loc)
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_steam_effects(turf/loc)
 	var/datum/effect_system/steam_spread/steam = new()
 	steam.set_up(10, FALSE, loc)
 	steam.start()

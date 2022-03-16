@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/aoe/knock
 	name = "Knock"
 	desc = "This spell opens nearby doors and closets."
-	action_icon_state = "knock"
+	button_icon_state = "knock"
 
 	sound = 'sound/magic/knock.ogg'
 	school = SCHOOL_TRANSMUTATION

@@ -21,7 +21,7 @@
 		Summons an unending stream of bolt action rifles that deal little damage, \
 		but will knock targets down. Requires both hands free to use. \
 		Learning this spell makes you unable to learn Arcane Barrage."
-	action_icon_state = "bolt_action"
+	button_icon_state = "bolt_action"
 
 	item_type = /obj/item/gun/ballistic/rifle/enchanted
 
@@ -30,6 +30,6 @@
 	desc = "Fire a torrent of arcane energy at your foes with this (powerful) spell. \
 		Deals much more damage than Lesser Summon Guns, but won't knock targets down. Requires both hands free to use. \
 		Learning this spell makes you unable to learn Lesser Summon Gun."
-	action_icon_state = "arcane_barrage"
+	button_icon_state = "arcane_barrage"
 
 	item_type = /obj/item/gun/ballistic/rifle/enchanted/arcane_barrage

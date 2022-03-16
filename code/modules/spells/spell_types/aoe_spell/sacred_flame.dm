@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/aoe/sacred_flame
 	name = "Sacred Flame"
 	desc = "Makes everyone around you more flammable, and lights yourself on fire."
-	action_icon_state = "sacredflame"
+	button_icon_state = "sacredflame"
 	sound = 'sound/magic/fireball.ogg'
 
 	school = SCHOOL_EVOCATION

@@ -5,10 +5,10 @@
 	name = "Rod Form"
 	desc = "Take on the form of an immovable rod, destroying all in your path. \
 		Purchasing this spell multiple times will also increase the rod's damage and travel range."
-	action_icon_state = "immrod"
+	button_icon_state = "immrod"
 
 	school = SCHOOL_TRANSMUTATION
-	charge_max = 25 SECONDS
+	cooldown_time = 25 SECONDS
 	cooldown_reduction_per_rank = 3.75 SECONDS
 	range = -1
 

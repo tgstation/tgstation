@@ -1,7 +1,7 @@
 /// A spell type that adds mutations to the caster temporarily.
 /datum/action/cooldown/spell/apply_mutations
 	name = "Mutate"
-	action_icon_state = "mutate"
+	button_icon_state = "mutate"
 	sound = 'sound/magic/mutate.ogg'
 
 	school = SCHOOL_TRANSMUTATION
@@ -17,7 +17,8 @@
 	return ..()
 
 /datum/action/cooldown/spell/apply_mutations/is_valid_target(atom/cast_on)
-	return !!cast_on.dna
+	var/mob/living/carbon/human/human_caster = cast_on // Requires human anyways
+	return !!human_caster.dna
 
 /datum/action/cooldown/spell/apply_mutations/cast(mob/living/carbon/human/cast_on)
 	. = ..()
@@ -30,7 +31,7 @@
 		return
 
 	for(var/mutation in mutations_to_add)
-		cast_on.dna.remove_mutations(mutation)
+		cast_on.dna.remove_mutation(mutation)
 
 /datum/action/cooldown/spell/apply_mutations/mutate
 	desc = "This spell causes you to turn into a hulk and gain laser vision for a short while."

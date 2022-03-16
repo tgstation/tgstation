@@ -25,7 +25,7 @@
 /datum/action/cooldown/spell/aoe/cast(atom/cast_on)
 	. = ..()
 	for(var/atom/thing_to_target as anything in get_things_to_cast_on(cast_on))
-		if(!is_valid_target(turf_to_target))
+		if(!is_valid_target(thing_to_target))
 			continue
 		cast_on_thing_in_aoe(thing_to_target)
 

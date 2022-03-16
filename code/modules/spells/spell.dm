@@ -5,9 +5,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell
 	name = "Spell"
 	desc = "A wizard spell."
-	action_icon = 'icons/mob/actions/actions_spells.dmi'
-	action_icon_state = "spell_default"
-	action_background_icon_state = "bg_spell"
+	background_icon_state = "bg_spell"
+	icon_icon = 'icons/mob/actions/actions_spells.dmi'
+	button_icon_state = "spell_default"
 
 	/// The panel this action shows up in the stat panel in.
 	var/panel = "Spells"
@@ -93,7 +93,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	if(isliving(owner))
-		if(!CAN_INVOKE(invocation_type, owner))
+		var/mob/living/living_owner = owner
+		if(!CAN_INVOKE(invocation_type, living_owner))
 			to_chat(owner, span_warning("You can't get the words out to cast [src]!"))
 			return FALSE
 
@@ -188,7 +189,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	play_spell_sound()
 
 	if(sparks_amt)
-		do_sparks(sparks_amt, FALSE, get_turf(cast_on))
+		do_sparks(sparks_amt, FALSE, get_turf(owner))
 
 	if(smoke_type)
 		var/smoke_type
@@ -204,11 +205,11 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			CRASH("Invalid smoke type for spell [type]. Got [smoke_type].")
 
 		var/datum/effect_system/smoke = new smoke_type()
-		smoke.set_up(smoke_amt, get_turf(cast_on))
+		smoke.set_up(smoke_amt, get_turf(owner))
 		smoke.start()
 
 /datum/action/cooldown/spell/proc/invocation()
-	/* TODO Unit test this
+	/* MELBERT TODO Unit test this
 	if(!invocation || invocation_type == INVOCATION_NONE)
 		return
 	*/

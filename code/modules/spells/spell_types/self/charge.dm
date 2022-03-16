@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/charge
 	name = "Charge"
 	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
-	action_icon_state = "charge"
+	button_icon_state = "charge"
 
 	sound = 'sound/magic/charge.ogg'
 	school = SCHOOL_TRANSMUTATION
@@ -60,7 +60,7 @@
 				if(prob(80))
 					cast_on.dropItemToGround(spell_granter, TRUE)
 					spell_granter.visible_message(span_warning("[spell_granter] catches fire and burns to ash!"))
-					new /obj/efect/decal/cleanable/ash(spell_granter.drop_location())
+					new /obj/effect/decal/cleanable/ash(spell_granter.drop_location())
 					qdel(spell_granter)
 
 				else
@@ -109,13 +109,13 @@
 	else
 		to_chat(cast_on, span_notice("[charged_item] suddenly feels very warm!"))
 
-/// Returns TRUE if the charge burnt the cell out
+/// Returns TRUE if the charge burnt the cell out, FALSE otherwise
 /datum/action/cooldown/spell/charge/proc/charge_cell(obj/item/stock_parts/cell/to_charge)
 	if(prob(80))
-		battery.maxcharge -= 200
-	if(battery.maxcharge <= 1) //Div by 0 protection
-		battery.maxcharge = 1
+		to_charge.maxcharge -= 200
+	if(to_charge.maxcharge <= 1) //Div by 0 protection
+		to_charge.maxcharge = 1
 		return TRUE
 
-	battery.charge = battery.maxcharge
+	to_charge.charge = to_charge.maxcharge
 	return FALSE

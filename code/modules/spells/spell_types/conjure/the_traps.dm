@@ -1,9 +1,9 @@
 /datum/action/cooldown/spell/conjure/the_traps
 	name = "The Traps!"
 	desc = "Summon a number of traps around you. They will damage and enrage any enemies that step on them."
-	action_icon_state = "the_traps"
+	button_icon_state = "the_traps"
 
-	charge_max = 25 SECONDS
+	cooldown_time = 25 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
 
 	invocation = "CAVERE INSIDIAS"
@@ -23,7 +23,7 @@
 	var/trap_charges = 1
 
 /datum/action/cooldown/spell/conjure/the_traps/post_summon(atom/summoned_object)
-	if(!istype(post_summon, /obj/structure/trap))
+	if(!istype(summoned_object, /obj/structure/trap))
 		return
 
 	var/obj/structure/trap/summoned_trap = summoned_object

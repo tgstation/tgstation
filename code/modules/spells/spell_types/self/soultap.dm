@@ -12,8 +12,7 @@
 /datum/action/cooldown/spell/tap
 	name = "Soul Tap"
 	desc = "Fuel your spells using your own soul!"
-	action_icon = 'icons/mob/actions/actions_spells.dmi'
-	action_icon_state = "soultap"
+	button_icon_state = "soultap"
 
 	// I could see why this wouldn't be necromancy, but messing with souls or whatever. Ectomancy?
 	school = SCHOOL_NECROMANCY

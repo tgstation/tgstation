@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/barnyardcurse
 	name = "Curse of the Barnyard"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
-	action_icon_state = "barn"
+	button_icon_state = "barn"
 
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 15 SECONDS

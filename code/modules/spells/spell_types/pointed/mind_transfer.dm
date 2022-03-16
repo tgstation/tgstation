@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/pointed/mind_transfer
 	name = "Mind Transfer"
 	desc = "This spell allows the user to switch bodies with a target next to him."
-	action_icon_state = "mindswap"
+	button_icon_state = "mindswap"
 
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS

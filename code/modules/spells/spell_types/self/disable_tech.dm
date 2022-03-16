@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/emp
 	name = "Emplosion"
 	desc = "This spell emplodes an area."
-	action_icon_state = "emp"
+	button_icon_state = "emp"
 
 	sound = 'sound/weapons/zapbang.ogg'
 	school = SCHOOL_EVOCATION

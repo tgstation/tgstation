@@ -2,8 +2,7 @@
 /datum/action/cooldown/spell/pointed/projectile/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
-	base_icon_state = "spellcard"
-	action_icon_state = "spellcard0"
+	button_icon_state = "spellcard0"
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 5 SECONDS
@@ -13,7 +12,9 @@
 	invocation = "Sigi'lu M'Fan 'Tasia"
 	invocation_type = INVOCATION_SHOUT
 	range = 40
+	click_cd_override = 1
 
+	base_icon_state = "spellcard"
 	projectile_type = /obj/projectile/spellcard
 	projectile_amount = 5
 	projectiles_per_fire = 7
@@ -30,7 +31,6 @@
 	var/projectile_location_spread_amount = 12
 	/// A ref to our lockon component, which is created and destroyed on activation and deactivation.
 	var/datum/component/lockon_aiming/lockon_component
-	ranged_clickcd_override = TRUE
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/Destroy()
 	QDEL_NULL(lockon_component)

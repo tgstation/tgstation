@@ -85,9 +85,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 
 	var/static/list/enum_vars = list(
 		"invocation_type" = list(INVOCATION_NONE, INVOCATION_WHISPER, INVOCATION_SHOUT, INVOCATION_EMOTE),
-		"selection_type" = list("view", "range"),
-		"smoke_type" = list(0, 1, 2, 3),
-		"random_target_priority" = list(0, 1),
+		"smoke_type" = list(NO_SMOKE, SMOKE_HARMLESS, SMOKE_HARMFUL, SMOKE_SLEEPING),
 	)
 
 	//base64 representations of any icons that may need to be displayed

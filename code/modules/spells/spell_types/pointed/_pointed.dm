@@ -6,9 +6,8 @@
  */
 /datum/action/cooldown/spell/pointed
 	click_to_activate = TRUE
-	// ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
-	// action_icon_state = "projectile"
 
+	var/base_icon_state
 	/// Message showing to the spell owner upon activating pointed spell.
 	var/active_msg = "You prepare to use the spell on a target..."
 	/// Message showing to the spell owner upon deactivating pointed spell.
@@ -34,9 +33,11 @@
 
 /datum/action/cooldown/spell/pointed/proc/on_activation()
 	to_chat(owner, span_notice("[active_msg] <B>Left-click to activate the spell on a target!</B>"))
+	button_icon_state = "[base_icon_state]1"
 
 /datum/action/cooldown/spell/pointed/proc/on_deactivation()
 	to_chat(owner, span_notice("[deactive_msg]"))
+	button_icon_state = "[base_icon_state]0"
 
 /datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
 

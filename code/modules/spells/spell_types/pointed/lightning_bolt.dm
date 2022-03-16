@@ -1,8 +1,7 @@
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt
 	name = "Lightning Bolt"
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
-	action_icon_state = "lightning0"
-	base_icon_state = "lightning"
+	button_icon_state = "lightning0"
 
 	sound = 'sound/magic/lightningbolt.ogg'
 	school = SCHOOL_EVOCATION
@@ -13,6 +12,7 @@
 	invocation = "P'WAH, UNLIM'TED P'WAH"
 	invocation_type = INVOCATION_SHOUT
 
+	base_icon_state = "lightning"
 	active_msg = "You energize your hands with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 	projectile_type = /obj/projectile/magic/aoe/lightning

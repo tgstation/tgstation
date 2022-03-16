@@ -34,8 +34,9 @@
 		cast_on.dropItemToGround(existing_item)
 
 	cast_on.put_in_hands(make_item(), TRUE)
+	return ..()
 
-/obj/effect/proc_holder/spell/targeted/conjure_item/proc/make_item()
+/datum/action/cooldown/spell/conjure_item/proc/make_item()
 	var/obj/item/made_item = new item_type()
 	LAZYADD(item_refs, WEAKREF(made_item))
 	return made_item

@@ -276,15 +276,15 @@ Burning extracts:
 	effect_desc = "Transforms the user into a slime. They can transform back at will and do not lose any items."
 
 /obj/item/slimecross/burning/black/do_effect(mob/user)
-	var/mob/living/L = user
-	if(!istype(L))
+	if(!isliving(user))
 		return
+	var/mob/living/living_user = user
 	user.visible_message(span_danger("[src] absorbs [user], transforming [user.p_them()] into a slime!"))
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/S = new()
-	S.remove_on_restore = TRUE
-	user.mind.AddSpell(S)
-	S.cast(list(user),user)
-	..()
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/slimeform = new(user.mind || user)
+	slimeform.remove_on_restore = TRUE
+	slimeform.Grant(user)
+	slimeform.cast(user)
+	return ..()
 
 /obj/item/slimecross/burning/lightpink
 	colour = "light pink"

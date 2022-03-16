@@ -2,7 +2,7 @@
 	name = "Smoke"
 	desc = "This spell spawns a cloud of smoke at your location. \
 		People within will begin to choke and drop their items."
-	action_icon_state = "smoke"
+	button_icon_state = "smoke"
 
 	school = SCHOOL_CONJURATION
 	cooldown_time = 12 SECONDS

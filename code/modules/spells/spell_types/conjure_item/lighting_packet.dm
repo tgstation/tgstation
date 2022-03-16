@@ -3,7 +3,7 @@
 	name = "Thrown Lightning"
 	desc = "Forged from eldrich energies, a packet of pure power, \
 		known as a spell packet will appear in your hand, that - when thrown - will stun the target."
-	action_icon_state = "thrownlightning"
+	button_icon_state = "thrownlightning"
 
 	cooldown_time = 1 SECONDS
 	level_max = 0

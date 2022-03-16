@@ -2,7 +2,7 @@
 	name = "Tesla Blast"
 	desc = "Charge up a tesla arc and release it at random nearby targets! \
 		You can move freely while it charges. The arc jumps between targets and can knock them down."
-	action_icon_state = "lightning"
+	button_icon_state = "lightning"
 
 	sound = 'sound/magic/lightningbolt.ogg'
 	cooldown_time = 30 SECONDS
@@ -13,19 +13,25 @@
 	school = SCHOOL_EVOCATION
 	range = 7
 
+	/// The halo that appears around the caster while charging the spell
 	var/static/mutable_appearance/halo
-	var/sound/charge_sound // so far only way i can think of to stop a sound, thank MSO for the idea.
-
+	/// The sound played while charging the spell
+	/// Quote: "the only way i can think of to stop a sound, thank MSO for the idea."
+	var/sound/charge_sound
 
 /datum/action/cooldown/spell/tesla/before_cast(atom/cast_on)
-	to_chat(user, span_notice("You start gathering power..."))
+	. = ..()
+	if(!.)
+		return FALSE
+
+	to_chat(cast_on, span_notice("You start gathering power..."))
 	charge_sound = new /sound('sound/magic/lightning_chargeup.ogg', channel = 7)
 	halo = halo || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
-	user.add_overlay(halo)
+	cast_on.add_overlay(halo)
 	playsound(get_turf(cast_on), charge_sound, 50, FALSE)
 
-	if(!do_after(user, 10 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
-		revert_cast()
+	if(!do_after(cast_on, 10 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
+		revert_cast(cast_on)
 		return FALSE
 
 	return TRUE
@@ -34,8 +40,8 @@
 	reset_tesla(owner)
 	return ..()
 
-/datum/action/cooldown/spell/tesla/proc/reset_tesla()
-	user.cut_overlay(halo)
+/datum/action/cooldown/spell/tesla/proc/reset_tesla(atom/to_reset)
+	to_reset.cut_overlay(halo)
 
 /datum/action/cooldown/spell/tesla/cast(atom/cast_on)
 	. = ..()

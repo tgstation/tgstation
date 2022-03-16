@@ -127,4 +127,4 @@
 		if(INVOCATION_SHOUT)
 			owner.say("[invocation] [uppertext(last_chosen_area.name)]", forced = "spell ([src])")
 		if(INVOCATION_WHISPER)
-			owner.whisper("[invocation] [uppertext(last_chosen_area.name)]", forced = "spell ([src])")
+			owner.whisper("[invocation] [uppertext(last_chosen_area.name)]")

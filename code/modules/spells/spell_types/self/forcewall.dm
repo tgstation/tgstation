@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/forcewall
 	name = "Forcewall"
 	desc = "Create a magical barrier that only you can pass through."
-	action_icon_state = "shield"
+	button_icon_state = "shield"
 
 	sound = 'sound/magic/forcewall.ogg'
 	school = SCHOOL_TRANSMUTATION
@@ -16,7 +16,7 @@
 	/// The typepath to the wall we create on cast.
 	var/wall_type = /obj/effect/forcefield/wizard
 
-/datum/action/cooldown/spell/cast(atom/cast_on)
+/datum/action/cooldown/spell/forcewall/cast(atom/cast_on)
 	. = ..()
 	new wall_type(get_turf(owner), owner)
 

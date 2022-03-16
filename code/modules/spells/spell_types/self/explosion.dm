@@ -13,7 +13,7 @@
 	/// The flash range of the resulting explosion.
 	var/ex_flash = 4
 
-/datum/action/cooldown/spell/cast(atom/cast_on)
+/datum/action/cooldown/spell/explosion/cast(atom/cast_on)
 	. = ..()
 	explosion(
 		target,
