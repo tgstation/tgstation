@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "ac" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "ad" = (
 /turf/closed/wall,

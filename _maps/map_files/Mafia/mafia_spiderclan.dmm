@@ -86,12 +86,12 @@
 /turf/open/floor/carpet/black,
 /area/mafia)
 "t" = (
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/mafia)
 "u" = (
 /obj/effect/baseturf_helper/asteroid,
 /obj/effect/landmark/mafia/town_center,
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/mafia)
 "v" = (
 /obj/mafia_game_board,
@@ -107,7 +107,7 @@
 	icon_state = "katana";
 	name = "seppuku katana"
 	},
-/turf/open/floor/plating/beach/sand,
+/turf/open/misc/beach/sand,
 /area/mafia)
 "S" = (
 /turf/closed/wall/mineral/wood,

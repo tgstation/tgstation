@@ -33,6 +33,10 @@
 /turf/open/zAirOut(direction, turf/source)
 	return (direction == UP)
 
+/turf/open/update_icon()
+	. = ..()
+	update_visuals()
+
 /turf/open/indestructible
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
@@ -55,6 +59,9 @@
 
 /turf/open/indestructible/white
 	icon_state = "white"
+
+/turf/open/indestructible/dark
+	icon_state = "darkfull"
 
 /turf/open/indestructible/light
 	icon_state = "light_on-1"
@@ -258,3 +265,46 @@
 
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
+
+/// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
+/// To support floor tile creation
+/// I'd make it a component, but one of these things is space. So no.
+/turf/open/proc/build_with_rods(obj/item/stack/rods/used_rods, mob/user)
+	var/obj/structure/lattice/catwalk_bait = locate(/obj/structure/lattice, src)
+	var/obj/structure/lattice/catwalk/existing_catwalk = locate(/obj/structure/lattice/catwalk, src)
+	if(existing_catwalk)
+		to_chat(user, span_warning("There is already a catwalk here!"))
+		return
+
+	if(catwalk_bait)
+		if(used_rods.use(1))
+			qdel(catwalk_bait)
+			to_chat(user, span_notice("You construct a catwalk."))
+			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+			new /obj/structure/lattice/catwalk(src)
+		else
+			to_chat(user, span_warning("You need two rods to build a catwalk!"))
+		return
+
+	if(used_rods.use(1))
+		to_chat(user, span_notice("You construct a lattice."))
+		playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+		new /obj/structure/lattice(src)
+	else
+		to_chat(user, span_warning("You need one rod to build a lattice."))
+
+/// Very similar to build_with_rods, this exists to allow consistent behavior between different types in terms of how
+/// Building floors works
+/turf/open/proc/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles, user)
+	var/obj/structure/lattice/soon_to_be_floor = locate(/obj/structure/lattice, src)
+	if(!soon_to_be_floor)
+		to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+		return
+	if(!used_tiles.use(1))
+		to_chat(user, span_warning("You need one floor tile to build a floor!"))
+		return
+
+	qdel(soon_to_be_floor)
+	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	to_chat(user, span_notice("You build a floor."))
+	PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

@@ -92,7 +92,7 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/user)
+/obj/item/clothing/accessory/attack_self_secondary(mob/user)
 	if(initial(above_suit) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
@@ -104,7 +104,7 @@
 	. = ..()
 	. += span_notice("\The [src] can be attached to a uniform. Alt-click to remove it once attached.")
 	if(initial(above_suit))
-		. += span_notice("\The [src] can be worn above or below your suit. Alt-click to toggle.")
+		. += span_notice("\The [src] can be worn above or below your suit. Right-click to toggle.")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"

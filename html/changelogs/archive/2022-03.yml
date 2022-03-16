@@ -454,3 +454,120 @@
   - balance: being inside the fridge guarantees you to survive nuclear bomb
   TiviPlus:
   - bugfix: potentially fixed some admin features for mech equipment
+2022-03-14:
+  Fikou:
+  - bugfix: modsuit nominal sound no longer plays when youre deaf
+  GoblinBackwards:
+  - bugfix: Removed random wall from in front of the kitchen on Tramstation.
+  JohnFulpWillard:
+  - qol: Revs/Traitors adding more threat is now shown on the roundend report.
+  - bugfix: IceBox's Psychology office medical computer records console now faces
+      the right way.
+  Nari Harimoto:
+  - bugfix: Engineering borgs can now place wallmounts again
+  OperativeLyn:
+  - bugfix: Fixed two firelocks being on the same tile in the derelict outpost space
+      ruin.
+  Wallem:
+  - qol: Most foods decompose into JUST moldy food, which then gets eaten by ants,
+      leaving only the anthills and ultimately making them more visible.
+  - bugfix: Cleanable decals will try to merge their reagents before they delete if
+      they have mergeable_decal = TRUE, meaning ants will now properly stack their
+      reagents when they spawn on the same tile.
+  - qol: Ants no longer spawn on lavaland's basalt.
+  san7890:
+  - rscadd: Instead of having four different corners on each floor, Nanotrasen has
+      decided to slap down full corners on each floor to keep that one floor looking
+      that masterful shade of beige.
+  timothymtorres:
+  - qol: Change barricade, grille, and girder mapping spawners to have a ~20% not
+      to spawn.
+  - qol: Change ornament mapping spawner to only spawn lamps and red phones.
+2022-03-15:
+  Ebb-Real:
+  - bugfix: Fixes the syndie screwdriver using the wrong belt sprite.
+  - imageadd: Added belt sprites for the syndie screwdriver and all alien tools.
+  Fikou:
+  - spellcheck: fixes double the in motion cameras
+  Nari Harimoto:
+  - qol: Each Map now comes with a standard amount of gas cans in Ordanance Storage
+      (except kilo which gets slightly less, because Kilo is too small) so you do
+      not need to have to learn vastly different mixing methods per map, removed stored
+      co2 as it is not used
+  Pepsilawn:
+  - bugfix: Removed the extra keycard auth device hidden under the CE's extinguisher
+      cabinet
+  SuperNovaa41:
+  - code_imp: Removes a forgotten devil proc in photocopier code.
+  - code_imp: Updates `init_gaslist_cache` to match current code standards.
+  TemporalOroboros:
+  - expansion: Splashed blood is as infective as bled blood.
+  cacogen:
+  - bugfix: Fixed firelock screentips telling silicons they could knock or bash them
+  - bugfix: Fixed firelock screentips saying bash with combat mode off and knock with
+      it on (it's the opposite)
+  - qol: Adds firelock screentips for silicons, monkeys and xenos
+  carshalash:
+  - bugfix: Clown tears will no longer explode on creation.
+  interestingusernam3:
+  - bugfix: Centcom will no longer include empty "Identified Shift Divergences" sections
+      in their reports (which would previously occur every time there were only hidden
+      station traits present).
+  - bugfix: Cheese wheels and royal cheese no longer count as cheese wedges for recipes.
+  - code_imp: Cheese wedges are no longer the superclass for all cheese.
+  lewcc:
+  - bugfix: Fixes airlock reinforcement not being removable.
+  - refactor: Heavily refactors reinforcing and un-reinforcing airlocks.
+  san7890:
+  - bugfix: On KiloStation, there is no longer a weird floor decal on a wall. Nanotrasen
+      has commissioned an institution-wide inquiry to find out which joker put it
+      there.
+  tastyfish:
+  - bugfix: Geese now act like geese if provoked again.
+  vincentiusvin:
+  - bugfix: fixed an outdated quip about purchasing an ordnance paper.
+  - bugfix: added the ordnance circuitboards to the techweb, forgot about this in
+      the original pr.
+  - qol: added a small tooltip to the compressor buffer port.
+2022-03-16:
+  Iamgoofball:
+  - qol: Anyone who has access to the cells and the gulag shuttle can now use the
+      gulag teleporter
+  JohnFulpWillard:
+  - bugfix: Armsky and Pingsky aren't pAI controllable anymore.
+  - bugfix: Podpeople now take self-respiration into account when taking damage from
+      critical condition, like most other species.
+  LemonInTheDark:
+  - qol: /tg/c cards now support in chat tooltips, finally you don't need to look
+      up what Hivemind means for the 200th time
+  - code_imp: tgui chat now supports embedding components into it via html attributes.
+      Go make the game look better lads.
+  ORCACommander:
+  - qol: Updated Title Card Specifications
+  OneAsianTortoise:
+  - qol: hand labeler paper roll and toner cartridge can be printed at autolathe and
+      protolathes now
+  OperativeLyn:
+  - bugfix: Fixed two firelocks being on the same tile in the Starfury.
+  Ryll/Shaps:
+  - bugfix: Dog AI's should no longer lock up and become unresponsive after failed
+      fetch attempts
+  - soundadd: Dogs in harass mode that are guarding against someone will now make
+      growling sounds
+  TemporalOroboros:
+  - bugfix: Water vapor should wet and freeze floors once again.
+  Thunder12345:
+  - rscdel: Lean has been removed entirely from the game
+  Wallem:
+  - rscadd: Seeing how many miners we lose on a weekly basis, we've decided to dig
+      through some of our prototypes to get something to help you all. Your venders
+      have been supplied with Kheiral Cuffs, a wrist-worn suit sensor range booster.
+      Note that any accelerated aging caused by the device will not be counted towards
+      your retirement.
+  san7890:
+  - rscadd: Random Poster Spawners now have directional variants. You don't have to
+      memorize the pixel offset for those anymore (it was 32).
+  - admin: When you send people to Admin Prison for any number of reasons, please
+      take joy in knowing they can't explode out the floors any more.
+  vincentiusvin:
+  - bugfix: fixes the doppler array nullifying some of your bombs.
