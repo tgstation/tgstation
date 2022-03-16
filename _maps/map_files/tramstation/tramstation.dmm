@@ -44029,7 +44029,8 @@
 "oyz" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/machinery/power/tracker,
-/turf/open/space/basic,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
 /area/solars/starboard)
 "oyC" = (
 /obj/effect/decal/cleanable/dirt,
@@ -46974,15 +46975,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/aisat/hallway)
-"pBS" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/cable,
-/obj/machinery/power/solar{
-	id = "portsolar";
-	name = "Port Solar Array"
-	},
-/turf/open/space/basic,
-/area/solars/port/aft)
 "pCb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55170,6 +55162,12 @@
 /obj/structure/chair/stool/bar/directional/east,
 /turf/open/floor/iron,
 /area/security/prison)
+"sFT" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/machinery/power/tracker,
+/obj/structure/cable,
+/turf/open/floor/plating/airless,
+/area/solars/port/aft)
 "sGq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom/directional/north,
@@ -61458,7 +61456,7 @@
 	id = "forestarboard";
 	name = "Starboard Solar Array"
 	},
-/turf/open/space/basic,
+/turf/open/floor/plating/airless,
 /area/solars/starboard)
 "uWD" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -62660,7 +62658,7 @@
 	id = "portsolar";
 	name = "Port Solar Array"
 	},
-/turf/open/space/openspace,
+/turf/open/floor/plating/airless,
 /area/solars/port/aft)
 "vvu" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
@@ -115049,7 +115047,7 @@ uWB
 xkt
 uWB
 xkt
-xkt
+aDX
 uWB
 ajc
 ajc
@@ -115307,7 +115305,7 @@ xkt
 uWB
 uWB
 xkt
-xkt
+aDX
 uWB
 ajc
 xkt
@@ -115560,12 +115558,12 @@ ajc
 jxr
 jwD
 uWB
-xkt
+aDX
 xkt
 uWB
 uWB
 xkt
-xkt
+aDX
 uWB
 aDX
 uWB
@@ -115818,7 +115816,7 @@ jxr
 ajc
 ajc
 uWB
-xkt
+aDX
 xkt
 uWB
 uWB
@@ -116076,7 +116074,7 @@ ajc
 ajc
 ajc
 uWB
-xkt
+aDX
 xkt
 uWB
 uWB
@@ -116334,7 +116332,7 @@ ajc
 ajc
 ajc
 uWB
-xkt
+aDX
 xkt
 xkt
 xkt
@@ -157573,7 +157571,7 @@ jwD
 vvr
 cCq
 vvr
-cCq
+qSr
 vvr
 cCq
 vvr
@@ -157830,7 +157828,7 @@ ajc
 vvr
 cCq
 vvr
-cCq
+qSr
 vvr
 cCq
 vvr
@@ -158087,7 +158085,7 @@ jwD
 vvr
 cCq
 vvr
-cCq
+qSr
 vvr
 cCq
 vvr
@@ -158344,7 +158342,7 @@ ajc
 jwD
 ajc
 aYr
-cCq
+qSr
 aYr
 aYr
 gNY
@@ -158598,17 +158596,17 @@ dDG
 dDG
 ajc
 ajc
-jwD
 ajc
-aYr
-cCq
-aYr
-aYr
-gNY
-aYr
-vKS
-aYr
-aYr
+ajc
+ajc
+sFT
+ajc
+ajc
+ajc
+ajc
+ajc
+ajc
+ajc
 aYr
 aYr
 aYr
@@ -158853,15 +158851,15 @@ dDG
 dDG
 dDG
 unm
+ajc
+ajc
 jwD
-jwD
-pBS
-vKY
-vvr
-cCq
-vvr
-cCq
-vvr
+ajc
+aYr
+qSr
+aYr
+aYr
+gNY
 aYr
 vKS
 aYr
@@ -159110,12 +159108,12 @@ dDG
 dDG
 dDG
 dDG
-ajc
-ajc
-pBS
+jwD
+jwD
+vvr
 vKY
 vvr
-cCq
+qSr
 vvr
 cCq
 vvr
@@ -159369,14 +159367,14 @@ dDG
 dDG
 ajc
 ajc
-pBS
+vvr
 vKY
 vvr
 cCq
 vvr
 cCq
 vvr
-gNY
+aYr
 vKS
 aYr
 aYr
@@ -159619,21 +159617,21 @@ dDG
 dDG
 dDG
 wgT
-aRN
-aRN
-aRN
-wgT
-wgT
-wgT
+dDG
+dDG
+dDG
+dDG
+dDG
+ajc
+ajc
+vvr
 vKY
-vKY
-sCF
-vKY
-qSr
-qSr
-qSr
-qSr
-aYr
+vvr
+cCq
+vvr
+cCq
+vvr
+gNY
 vKS
 aYr
 aYr
@@ -159876,21 +159874,21 @@ dDG
 dDG
 dDG
 wgT
-dDG
-dDG
-dDG
-dDG
-dDG
-dDG
-ajc
-ajc
-ajc
-pBS
-cCq
-vvr
-cCq
-vvr
-gNY
+aRN
+aRN
+aRN
+wgT
+wgT
+wgT
+vKY
+vKY
+sCF
+vKY
+qSr
+qSr
+qSr
+qSr
+aYr
 vKS
 aYr
 aYr
@@ -160142,12 +160140,12 @@ dDG
 ajc
 ajc
 ajc
-pBS
-cCq
 vvr
 cCq
 vvr
-aYr
+cCq
+vvr
+gNY
 vKS
 aYr
 aYr
@@ -160396,11 +160394,11 @@ dDG
 dDG
 dDG
 dDG
-unm
-jwD
-jwD
-pBS
-vKY
+ajc
+ajc
+ajc
+vvr
+cCq
 vvr
 cCq
 vvr
@@ -160653,14 +160651,14 @@ dDG
 dDG
 dDG
 dDG
-dDG
-dDG
-ajc
+unm
 jwD
-ajc
-aYr
-aYr
-gNY
+jwD
+vvr
+vKY
+vvr
+cCq
+vvr
 aYr
 vKS
 aYr
@@ -160911,17 +160909,17 @@ dDG
 dDG
 dDG
 dDG
-unm
-jxr
-jxr
-jxr
-vKS
-vKS
-vKS
-vKS
-vKS
+dDG
+ajc
+jwD
+ajc
+aYr
+aYr
 gNY
-uwO
+aYr
+vKS
+aYr
+aYr
 aYr
 aYr
 aYr
@@ -161168,17 +161166,17 @@ dDG
 dDG
 dDG
 dDG
-dDG
-ajc
-ajc
-ajc
-ajc
-aYr
-aYr
-aYr
+unm
+jxr
+jxr
+jxr
+vKS
+vKS
+vKS
+vKS
+vKS
 gNY
-aYr
-aYr
+uwO
 aYr
 aYr
 aYr
@@ -161433,7 +161431,7 @@ ajc
 aYr
 aYr
 aYr
-uwO
+gNY
 aYr
 aYr
 aYr
@@ -161683,7 +161681,6 @@ dDG
 dDG
 dDG
 dDG
-dDG
 ajc
 ajc
 ajc
@@ -161691,6 +161688,7 @@ ajc
 aYr
 aYr
 aYr
+uwO
 aYr
 aYr
 aYr
