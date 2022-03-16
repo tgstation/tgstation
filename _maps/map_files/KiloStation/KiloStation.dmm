@@ -23066,9 +23066,7 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/drinks/trophy/bronze_cup,
-/obj/machinery/camera/directional/west{
-	c_tag = Chapel Office Annex
-	},
+/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/carpet/royalblue,
 /area/service/chapel/office)
 "daF" = (
@@ -76005,8 +76003,7 @@
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "uCY" = (
-/obj/structure/grille,
-/obj/structure/window/bronze/fulltile,
+/obj/effect/spawner/structure/window/bronze,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "uDs" = (
