@@ -428,7 +428,7 @@
 /area/shuttle/pirate)
 "xj" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "xs" = (

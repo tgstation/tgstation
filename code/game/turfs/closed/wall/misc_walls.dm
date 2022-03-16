@@ -115,6 +115,7 @@
 	icon = 'icons/turf/walls/reinforced_rock.dmi'
 	icon_state = "porous_rock-0"
 	base_icon_state = "porous_rock"
+	turf_flags = NO_RUST
 	sheet_amount = 1
 	hardness = 50
 	girder_type = null

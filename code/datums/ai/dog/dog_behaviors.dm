@@ -45,6 +45,8 @@
 /datum/ai_behavior/simple_equip/finish_action(datum/ai_controller/controller, success)
 	. = ..()
 	controller.blackboard[BB_FETCH_TARGET] = null
+	if(!success)
+		controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
 /datum/ai_behavior/simple_equip/proc/pickup_item(datum/ai_controller/controller, obj/item/target)
 	var/atom/pawn = controller.pawn
@@ -82,6 +84,7 @@
 
 /datum/ai_behavior/deliver_item/finish_action(datum/ai_controller/controller, success)
 	. = ..()
+	controller.blackboard[BB_FETCH_TARGET] = null
 	controller.blackboard[BB_FETCH_DELIVER_TO] = null
 
 /// Actually drop the fetched item to the target
@@ -98,7 +101,7 @@
 		controller.pawn.visible_message(span_notice("[controller.pawn] delivers [carried_item] to [return_target]."))
 
 	carried_item.forceMove(get_turf(return_target))
-	controller.blackboard -= BB_SIMPLE_CARRY_ITEM
+	controller.blackboard[BB_SIMPLE_CARRY_ITEM] = null
 	return TRUE
 
 /// This behavior involves either eating a snack we can reach, or begging someone holding a snack
@@ -184,21 +187,34 @@
 		finish_action(controller, TRUE)
 		return
 
+	if(!controller.blackboard[BB_DOG_HARASS_FRUSTRATION])
+		controller.blackboard[BB_DOG_HARASS_FRUSTRATION] = world.time
+	else if(controller.blackboard[BB_DOG_HARASS_FRUSTRATION] + AI_DOG_HARASS_FRUSTRATE_TIME < world.time) // if we haven't actually bit them in a while, give up
+		living_pawn.visible_message(span_danger("[living_pawn] yawns and seems to lose interest in harassing [harass_target]."))
+		finish_action(controller, FALSE)
+		return
+
 	// subtypes of this behavior can change behavior for how eager/averse the pawn is to attack the target as opposed to falling back/making noise/getting help
 	if(in_range(living_pawn, living_target))
 		attack(controller, living_target)
-	else if(DT_PROB(50, delta_time))
+	else if(DT_PROB(15, delta_time))
 		living_pawn.manual_emote("[pick("barks", "growls", "stares")] menacingly at [harass_target]!")
+		if(DT_PROB(40, delta_time))
+			playsound(living_pawn, pick('sound/creatures/dog/growl1.ogg', 'sound/creatures/dog/growl2.ogg'), 50, TRUE, -1)
 
 /datum/ai_behavior/harass/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.blackboard[BB_DOG_HARASS_TARGET] = null
+	controller.blackboard[BB_DOG_HARASS_FRUSTRATION] = null
 
 /// A proc representing when the mob is pushed to actually attack the target. Again, subtypes can be used to represent different attacks from different animals, or it can be some other generic behavior
 /datum/ai_behavior/harass/proc/attack(datum/ai_controller/controller, mob/living/living_target)
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
+
+	controller.blackboard[BB_DOG_HARASS_FRUSTRATION] = world.time
+
 	// make sure the pawn gets some temporary strength boost to actually attack the target instead of pathetically nuzzling them.
 	var/old_melee_lower = living_pawn.melee_damage_lower
 	var/old_melee_upper = living_pawn.melee_damage_upper

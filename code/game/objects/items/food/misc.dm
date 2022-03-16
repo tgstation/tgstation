@@ -1,16 +1,26 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
+/**
+ * # Abstract cheese class
+ *
+ * Everything that is a subclass of this counts as cheese for regal rats.
+ */
 /obj/item/food/cheese
+	name = "the concept of cheese"
+	desc = "This probably shouldn't exist."
+	tastes = list("cheese" = 1)
+	foodtypes = DAIRY
+	/// used to determine how much health rats/regal rats recover when they eat it.
+	var/rat_heal = 0
+
+/obj/item/food/cheese/wedge
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("cheese" = 1)
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	/// used to determine how much health rats/regal rats recover when they eat it.
-	var/rat_heal = 10
+	rat_heal = 10
 
 /obj/item/food/cheese/wheel
 	name = "cheese wheel"
@@ -25,7 +35,7 @@
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
 
 /obj/item/food/cheese/wheel/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -206,6 +216,10 @@
 	name = "moldy mess"
 	desc = "A rancid, disgusting culture of mold and ants. Somewhere under there, at <i>some point,</i> there was food."
 	food_reagents = list(/datum/reagent/consumable/mold = 30)
+	preserved_food = FALSE
+	ant_attracting = TRUE
+	decomp_type = null
+	decomposition_time = 30 SECONDS
 
 /obj/item/food/badrecipe/moldy/bacteria
 	name = "bacteria rich moldy mess"
@@ -269,7 +283,7 @@
 	icon_state = "spidereggs"
 	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
 	tastes = list("cobwebs" = 1)
-	foodtypes = MEAT 
+	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/spiderling

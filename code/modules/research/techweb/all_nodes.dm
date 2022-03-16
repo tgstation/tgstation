@@ -49,6 +49,7 @@
 		"rdservercontrol",
 		"restaurant_portal",
 		"rglass",
+		"roll",
 		"salestagger",
 		"sec_38",
 		"sec_Islug",
@@ -58,6 +59,8 @@
 		"space_heater",
 		"tech_disk",
 		"titaniumglass",
+		"toner",
+		"toner_large",
 	)
 
 /datum/techweb_node/mmi
@@ -508,8 +511,11 @@
 		"stack_machine",
 		"tesla_coil",
 		"thermomachine",
-		"w-recycler" , "emitter",
+		"w-recycler", 
+		"emitter",
 		"welding_goggles",
+		"anomaly_refinery",
+		"tank_compressor",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)

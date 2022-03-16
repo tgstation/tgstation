@@ -63,8 +63,7 @@
 	clothing_flags = THICKMATERIAL | SNUG_FIT
 	armor = list(MELEE = 20, BULLET = 0, LASER = 20,ENERGY = 30, BOMB = 100, BIO = 0, FIRE = 80, ACID = 50)
 	flags_inv = HIDEFACE|HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	dynamic_hair_suffix = ""
-	dynamic_fhair_suffix = ""
+
 	cold_protection = HEAD
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	heat_protection = HEAD
