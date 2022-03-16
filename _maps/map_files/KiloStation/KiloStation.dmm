@@ -5872,7 +5872,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/anestetic_mix,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/dark,
 /area/medical/medbay/central)
 "aFq" = (
@@ -7878,7 +7878,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/bot,
-/obj/machinery/portable_atmospherics/canister/anestetic_mix,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/dark,
 /area/medical/medbay/central)
 "aSe" = (
