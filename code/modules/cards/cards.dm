@@ -30,7 +30,7 @@
 
 	for(var/obj/item/toy/singlecard/card in cards)
 		cards -= card
-		card.forceMove(drop_location())
+		card.forceMove(target.drop_location())
 		if(prob(50))
 			card.Flip()
 		card.pixel_x = rand(-16, 16)
