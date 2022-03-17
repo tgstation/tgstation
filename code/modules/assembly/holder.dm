@@ -111,7 +111,7 @@
 		var/obj/item/assembly/attached_assembly = weapon
 		if(!attached_assembly.secured)
 			add_assembly(attached_assembly, user)
-			balloon_alert(user, span_notice("You add the part to the assembly."))
+			balloon_alert(user, "part added")
 		return
 	return ..()
 /obj/item/assembly_holder/AltClick(mob/user)
