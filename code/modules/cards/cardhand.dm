@@ -23,6 +23,11 @@
 		for(var/obj/item/toy/singlecard/new_card in cards_to_combine)
 			new_card.forceMove(src)
 			cards += new_card
+
+	// only using this for debugging purposes for the Card DLC PR (remove before it gets merged)
+	if(cards.len <= 1)
+		CRASH("why the fuck is there only 1 card or zero cards in a cardhand?")
+
 	update_appearance()
 
 /obj/item/toy/cards/cardhand/suicide_act(mob/living/carbon/user)
@@ -78,7 +83,7 @@
 	user.put_in_hands(selected_card)
 	update_appearance()
 
-	if(length(cards) == 1)
+	if(cards.len == 1)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		var/obj/item/toy/singlecard/last_card = draw(user)
 		last_card.pickup(user)
@@ -116,15 +121,20 @@
 	attackby(weapon, user, params, flip_card = TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-#define CARD_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand
+#define CARDS_MAX_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand
 #define CARDS_PIXEL_X_OFFSET -4 // start out displaying the 1st card -5 pixels left
 #define CARDS_ANGLE_OFFSET -45 // start out displaying the 1st card -45 degrees counter clockwise
 
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
+
+	// this is for debugging please remove this before Card DLC PR gets merged -TimT
+	if(cards.len <= 1)
+		CRASH("why the fuck is there only 1 card or zero cards in a cardhand?")
+
 	cut_overlays()
-	var/starting_card_pos = max(1, cards.len - CARD_DISPLAY_LIMIT) // only display the top cards in the cardhand
-	var/cards_to_display = min(CARD_DISPLAY_LIMIT, cards.len)
+	var/starting_card_pos = max(1, cards.len - CARDS_MAX_DISPLAY_LIMIT) // only display the top cards in the cardhand
+	var/cards_to_display = min(CARDS_MAX_DISPLAY_LIMIT, cards.len)
 	// 90 degrees from the 1st card to the last, so split the divider by total cards displayed
 	var/angle_divider = round(90/(cards_to_display - 1))
 	// 10 pixels from the 1st card to the last, so split the divider by total cards displayed
@@ -141,6 +151,6 @@
 		card_overlay.transform = M
 		add_overlay(card_overlay)
 
-#undef CARD_DISPLAY_LIMIT
+#undef CARDS_MAX_DISPLAY_LIMIT
 #undef CARDS_PIXEL_X_OFFSET
 #undef CARDS_ANGLE_OFFSET

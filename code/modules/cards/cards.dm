@@ -76,7 +76,7 @@
 		card.pixel_x = 0
 		card.pixel_y = 0
 		var/matrix/M = matrix()
-		M.Turn(0) // I think this resets the angle to 0 but needs to be tested
+		M.Turn(0)
 		card.transform = M
 		card.update_appearance()
 		cards += card
