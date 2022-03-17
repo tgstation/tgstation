@@ -84,6 +84,7 @@
 	data["objectives"] = get_objectives()
 	data["goal"] = thief_flavor["goal"]
 	data["intro"] = thief_flavor["introduction"]
+	data["policy"] = get_policy(ROLE_THIEF)
 	return data
 
 /datum/outfit/thief

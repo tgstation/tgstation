@@ -14,6 +14,7 @@ type Info = {
   goal: string;
   intro: string;
   honor: BooleanLike;
+  policy: string;
 };
 
 export const AntagInfoThief = (props, context) => {
@@ -21,6 +22,7 @@ export const AntagInfoThief = (props, context) => {
   const {
     intro,
     goal,
+    policy,
   } = data;
   return (
     <Window
@@ -44,10 +46,11 @@ export const AntagInfoThief = (props, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section textAlign="center" textColor="red" fontSize="19px">
-              Remember: You don&apos;t have a license to freely kill like
-              other antagonists.
-            </Section>
+            {!!policy && (
+              <Section textAlign="center" textColor="red" fontSize="19px">
+                {policy}
+              </Section>
+            )}
           </Stack.Item>
         </Stack>
       </Window.Content>
