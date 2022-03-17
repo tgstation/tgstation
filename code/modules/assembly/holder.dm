@@ -120,7 +120,7 @@
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
 	if(..())
 		return TRUE
-	balloon_alert(user, span_notice("You disassemble [src]!"))
+	balloon_alert(user, "disassembled")
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.on_detach()
 		LAZYREMOVE(assemblies, assembly)
