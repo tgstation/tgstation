@@ -128,7 +128,7 @@
 
 	var/required_tool_type = TOOL_CAUTERY
 	var/obj/item/close_tool = user.get_inactive_held_item()
-	var/is_robotic = the_surgery.requires_bodypart_type == BODYPART_ROBOTIC
+	var/is_robotic = the_surgery.requires_bodypart_type == BODYTYPE_ROBOTIC
 
 	if(is_robotic)
 		required_tool_type = TOOL_SCREWDRIVER

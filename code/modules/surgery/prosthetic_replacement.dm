@@ -42,7 +42,7 @@
 		tool = organ_storage_contents
 	if(istype(tool, /obj/item/bodypart))
 		var/obj/item/bodypart/bodypart_to_attach = tool
-		if(bodypart_to_attach.status != BODYPART_ROBOTIC)
+		if(IS_ORGANIC_LIMB(bodypart_to_attach))
 			organ_rejection_dam = 10
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target

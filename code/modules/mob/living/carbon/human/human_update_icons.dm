@@ -568,55 +568,6 @@ generate/load female uniform sprites matching all previously decided variables
 		else //No offsets or Unwritten number of hands
 			return list("x" = 0, "y" = 0)//Handle held offsets
 
-//produces a key based on the human's limbs
-/mob/living/carbon/human/generate_icon_render_key()
-	. = "[dna.species.limbs_id]"
-
-	if(dna.check_mutation(/datum/mutation/human/hulk))
-		. += "-coloured-hulk"
-	else if(dna.species.use_skintones)
-		. += "-coloured-[skin_tone]"
-	else if(dna.species.fixed_mut_color)
-		. += "-coloured-[dna.species.fixed_mut_color]"
-	else if(dna.features["mcolor"])
-		. += "-coloured-[dna.features["mcolor"]]"
-	else
-		. += "-not_coloured"
-
-	. += "-[body_type]"
-
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		. += "-[BP.body_zone]"
-
-		if(!HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
-			for(var/obj/item/organ/external/organ as anything in BP.external_organs)
-				if(organ.can_draw_on_bodypart(src)) //make sure we're drawn before generating a key
-					. += "([organ.cache_key])"
-
-		if(BP.status == BODYPART_ORGANIC)
-			. += "-organic"
-		else
-			. += "-robotic"
-		if(BP.use_digitigrade)
-			. += "-digitigrade[BP.use_digitigrade]"
-		if(BP.dmg_overlay_type)
-			. += "-[BP.dmg_overlay_type]"
-		if(HAS_TRAIT(BP, TRAIT_PLASMABURNT))
-			. += "-plasmaburnt"
-
-	if(HAS_TRAIT(src, TRAIT_HUSK))
-		. += "-husk"
-
-	if(HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
-		. += "-invisible"
-
-/mob/living/carbon/human/load_limb_from_cache()
-	..()
-	update_hair()
-
-
-
 /mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
 	if(observers?.len)
 		for(var/M in observers)
@@ -633,11 +584,9 @@ generate/load female uniform sprites matching all previously decided variables
 					break
 
 // Only renders the head of the human
-/mob/living/carbon/human/proc/update_body_parts_head_only()
-	if (!dna)
-		return
-
-	if (!dna.species)
+// Only renders the head of the human
+/mob/living/carbon/human/proc/update_body_parts_head_only(var/update_limb_data)
+	if (!dna?.species)
 		return
 
 	var/obj/item/bodypart/HD = get_bodypart("head")
@@ -645,7 +594,7 @@ generate/load female uniform sprites matching all previously decided variables
 	if (!istype(HD))
 		return
 
-	HD.update_limb()
+	HD.update_limb(is_creating = update_limb_data)
 
 	add_overlay(HD.get_limb_icon())
 	update_damage_overlays()
@@ -669,7 +618,7 @@ generate/load female uniform sprites matching all previously decided variables
 			else
 				eye_overlay = mutable_appearance('icons/mob/human_face.dmi', E.eye_icon_state, -BODY_LAYER)
 			if((EYECOLOR in dna.species.species_traits) && E)
-				eye_overlay.color = eye_color
+				eye_overlay.color = "#" + eye_color
 			if(OFFSET_FACE in dna.species.offset_features)
 				eye_overlay.pixel_x += dna.species.offset_features[OFFSET_FACE][1]
 				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
@@ -679,3 +628,4 @@ generate/load female uniform sprites matching all previously decided variables
 
 	update_inv_head()
 	update_inv_wear_mask()
+

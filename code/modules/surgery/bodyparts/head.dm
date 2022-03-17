@@ -72,7 +72,7 @@
 
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
-	if(status == BODYPART_ORGANIC && show_organs_on_examine)
+	if(IS_ORGANIC_LIMB(src) && show_organs_on_examine)
 		if(!brain)
 			. += span_info("The brain has been removed from [src].")
 		else if(brain.suicided || brainmob?.suiciding)
@@ -106,7 +106,7 @@
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	var/turf/head_turf = get_turf(src)
-	if(status != BODYPART_ROBOTIC)
+	if(IS_ORGANIC_LIMB(src))
 		playsound(head_turf, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	for(var/obj/item/head_item in src)
 		if(head_item == brain)
@@ -213,7 +213,7 @@
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
-		if(status != BODYPART_ROBOTIC) //having a robotic head hides certain features.
+		if(status != BODYTYPE_ROBOTIC) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hairstyle)
 				var/datum/sprite_accessory/sprite = GLOB.facial_hairstyles_list[facial_hairstyle]

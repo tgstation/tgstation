@@ -49,12 +49,7 @@
 #define MOB_SPIRIT (1 << 9)
 #define MOB_PLANT (1 << 10)
 
-//Organ defines for carbon mobs
-#define ORGAN_ORGANIC 1
-#define ORGAN_ROBOTIC 2
 
-#define BODYPART_ORGANIC 1
-#define BODYPART_ROBOTIC 2
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
@@ -63,7 +58,49 @@
 #define ALIEN_BODYPART "alien"
 #define LARVA_BODYPART "larva"
 
+//Bodypart change blocking flags
+#define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
+//Bodytype defines for how things can be worn, surgery, and other misc things.
+#define BODYTYPE_ORGANIC (1<<0)
+#define BODYTYPE_ROBOTIC (1<<1)
+#define BODYTYPE_HUMANOID (1<<2) //Everything
+#define BODYTYPE_DIGITIGRADE (1<<3) //Cancer
+
+//Defines for Species IDs
+#define SPECIES_ABDUCTOR "abductor"
+#define SPECIES_ANDROID "android"
+#define SPECIES_CORPORATE "corporate"
+#define SPECIES_DULLAHAN "dullahan"
+#define SPECIES_ETHEREAL "ethereal"
+#define SPECIES_FELINID "felinid"
+#define SPECIES_FLYPERSON "fly"
+#define SPECIES_HUMAN "human"
+#define SPECIES_JELLYPERSON "jelly"
+#define SPECIES_SLIMEPERSON "slime_person"
+#define SPECIES_LUMINESCENT "luminescent"
+#define SPECIES_STARGAZER "stargazer"
+#define SPECIES_LIZARD "lizard"
+#define SPECIES_ASHWALKER "ashwalker"
+#define SPECIES_KOBOLD "kobold"
+#define SPECIES_MONKEY "monkey"
+#define SPECIES_MOTH "moth"
+#define SPECIES_MUSH "mush"
+#define SPECIES_PLASMAMAN "plasmaman"
+#define SPECIES_POD "pod_person"
+#define SPECIES_SHADOW "shadow"
+#define SPECIES_SKELETON "skeleton"
+#define SPECIES_SNAIL "snail"
+#define SPECIES_VAMPIRE "vampire"
+#define SPECIES_ZOMBIE "zombie"
+#define SPECIES_SHITCODEZOMBIE "krokodil_zombie"
+
+//See: datum/species/var/digitigrade_customization
+#define DIGITIGRADE_NEVER 0
+#define DIGITIGRADE_OPTIONAL 1
+#define DIGITIGRADE_FORCED 2
+
+//TODO: Remove entirely in favor of the BODYTYPE system
 ///Body type bitfields for allowed_animal_origin used to check compatible surgery body types (use NONE for no matching body type)
 #define HUMAN_BODY (1 << 0)
 #define MONKEY_BODY (1 << 1)

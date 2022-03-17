@@ -89,7 +89,7 @@
 	if(!istype(O))
 		return
 
-	if(O.status == BODYPART_ROBOTIC)
+	if(!IS_ORGANIC_LIMB(O))
 		return
 
 	if (!(flags & CALTROP_BYPASS_SHOES))
