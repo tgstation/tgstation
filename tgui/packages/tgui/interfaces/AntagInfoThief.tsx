@@ -45,13 +45,13 @@ export const AntagInfoThief = (props, context) => {
               </Stack>
             </Section>
           </Stack.Item>
-          <Stack.Item>
-            {!!policy && (
+          {!!policy && (
+            <Stack.Item>
               <Section textAlign="center" textColor="red" fontSize="19px">
                 {policy}
               </Section>
-            )}
-          </Stack.Item>
+            </Stack.Item>
+          )}
         </Stack>
       </Window.Content>
     </Window>
