@@ -130,7 +130,7 @@
 /obj/item/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)
 	if(LAZYLEN(assemblies) == 1)
-		balloon_alert(user, span_danger("Assembly part missing!"))
+		balloon_alert(user, "part missing!")
 		return
 
 	for(var/obj/item/assembly/assembly as anything in assemblies)
