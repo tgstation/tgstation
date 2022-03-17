@@ -221,7 +221,7 @@
 /mob/living/carbon/update_body(is_creating)
 	update_body_parts(is_creating)
 
-/mob/living/carbon/proc/update_body_parts(var/update_limb_data)
+/mob/living/carbon/proc/update_body_parts(update_limb_data)
 	//Check the cache to see if it needs a new sprite
 	update_damage_overlays()
 	var/list/needs_update = list()

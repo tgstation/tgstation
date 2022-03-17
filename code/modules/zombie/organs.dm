@@ -23,7 +23,7 @@
 	GLOB.zombie_infection_list -= src
 	. = ..()
 
-/obj/item/organ/zombie_infection/Insert(var/mob/living/carbon/M, special = 0)
+/obj/item/organ/zombie_infection/Insert(mob/living/carbon/M, special = 0)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
@@ -67,7 +67,7 @@
 	var/flags = TIMER_STOPPABLE
 	timer_id = addtimer(CALLBACK(src, .proc/zombify, owner), revive_time, flags)
 
-/obj/item/organ/zombie_infection/proc/zombify(var/mob/living/carbon/C)
+/obj/item/organ/zombie_infection/proc/zombify(mob/living/carbon/target)
 	timer_id = null
 
 	if(!converts_living && owner.stat != DEAD)
@@ -75,24 +75,24 @@
 
 	if(!iszombie(owner))
 		old_species = owner.dna.species.type
-		C.set_species(/datum/species/zombie/infectious)
+		target.set_species(/datum/species/zombie/infectious)
 
-	var/stand_up = (C.stat == DEAD) || (C.stat == UNCONSCIOUS)
+	var/stand_up = (target.stat == DEAD) || (target.stat == UNCONSCIOUS)
 
 	//Fully heal the zombie's damage the first time they rise
-	C.setToxLoss(0, 0)
-	C.setOxyLoss(0, 0)
-	C.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
+	target.setToxLoss(0, 0)
+	target.setOxyLoss(0, 0)
+	target.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
 
-	if(!C.revive())
+	if(!target.revive())
 		return
 
-	C.grab_ghost()
-	C.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
-	playsound(C.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
-	C.do_jitter_animation(living_transformation_time)
-	C.Stun(living_transformation_time)
-	to_chat(C, "<span class='alertalien'>You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence.</span>")
+	target.grab_ghost()
+	target.visible_message("<span class='danger'>[owner] suddenly convulses, as [owner.p_they()][stand_up ? " stagger to [owner.p_their()] feet and" : ""] gain a ravenous hunger in [owner.p_their()] eyes!</span>", "<span class='alien'>You HUNGER!</span>")
+	playsound(target.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
+	target.do_jitter_animation(living_transformation_time)
+	target.Stun(living_transformation_time)
+	to_chat(target, "<span class='alertalien'>You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence.</span>")
 
 /obj/item/organ/zombie_infection/nodamage
 	causes_damage = FALSE
