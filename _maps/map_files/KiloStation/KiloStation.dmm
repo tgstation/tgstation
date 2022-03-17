@@ -61150,9 +61150,6 @@
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/lobby)
-"pOb" = (
-/turf/closed/mineral/random/labormineral,
-/area/space)
 "pOl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -98063,7 +98060,7 @@ aaa
 aaa
 aaa
 aaa
-pOb
+aaa
 aaa
 aaa
 aaa
@@ -100124,7 +100121,7 @@ aaa
 aaa
 aaa
 aaa
-pOb
+aaa
 aaa
 aaa
 aaa
