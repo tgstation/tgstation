@@ -46,7 +46,7 @@
 	playsound(my_turf, 'sound/effects/meteorimpact.ogg', 100 , FALSE, FALSE)
 	user.log_message("cut down [src] at [AREACOORD(src)]", LOG_ATTACK)
 	for(var/i=1 to log_amount)
-		new /obj/item/grown/log/tree(my_turf)
+		new /obj/item/grown/log/tree(drop_location())
 	var/obj/structure/flora/stump/new_stump = new(my_turf)
 	new_stump.name = "[name] stump"
 	qdel(src)
