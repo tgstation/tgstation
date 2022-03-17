@@ -71,13 +71,13 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_CENTCOM = /obj/item/clothing/gloves/combat
 	),
 	DYE_REGISTRY_BANDANA = list(
-		DYE_RED = /obj/item/clothing/mask/bandana/red,
-		DYE_YELLOW = /obj/item/clothing/mask/bandana/gold,
-		DYE_GREEN = /obj/item/clothing/mask/bandana/green,
-		DYE_BLUE = /obj/item/clothing/mask/bandana/blue,
-		DYE_BLACK = /obj/item/clothing/mask/bandana/black,
-		DYE_WHITE = /obj/item/clothing/mask/bandana/white,
-		DYE_MIME = /obj/item/clothing/mask/bandana/skull
+		DYE_RED = /obj/item/clothing/mask/bandana/color/red,
+		DYE_YELLOW = /obj/item/clothing/mask/bandana/color/gold,
+		DYE_GREEN = /obj/item/clothing/mask/bandana/color/green,
+		DYE_BLUE = /obj/item/clothing/mask/bandana/color/blue,
+		DYE_BLACK = /obj/item/clothing/mask/bandana/color/black,
+		DYE_WHITE = /obj/item/clothing/mask/bandana/color/white,
+		DYE_MIME = /obj/item/clothing/mask/bandana/color/skull
 	),
 	DYE_REGISTRY_SNEAKERS = list(
 		DYE_RED = /obj/item/clothing/shoes/sneakers/red,
