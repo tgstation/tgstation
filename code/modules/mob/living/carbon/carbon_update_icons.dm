@@ -265,7 +265,6 @@
 /////////////////////////
 // Limb Icon Cache 2.0 //
 /////////////////////////
-//Updated by Kapu#1178
 /*
 	Called from update_body_parts() these procs handle the limb icon cache.
 	the limb icon cache adds an icon_render_key to a human mob, it represents:

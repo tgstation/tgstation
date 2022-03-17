@@ -136,6 +136,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_arm"
 	animal_origin = MONKEY_BODYPART
+	bodytype = BODYTYPE_MONKEY
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
@@ -230,6 +231,7 @@
 /obj/item/bodypart/r_arm/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_arm"
+	bodytype = BODYTYPE_MONKEY
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
 	px_x = 5
@@ -317,6 +319,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_leg"
 	animal_origin = MONKEY_BODYPART
+	bodytype = BODYTYPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 
@@ -407,6 +410,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_leg"
 	animal_origin = MONKEY_BODYPART
+	bodytype = BODYTYPE_MONKEY
 	wound_resistance = -10
 	px_y = 4
 

@@ -270,6 +270,7 @@
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_head"
 	animal_origin = MONKEY_BODYPART
+	bodytype = BODYTYPE_MONKEY
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/animal_parts.dmi'
