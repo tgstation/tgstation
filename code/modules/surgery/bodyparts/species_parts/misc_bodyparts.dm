@@ -220,11 +220,11 @@
 ///MUSHROOM
 /obj/item/bodypart/head/mushroom
 	limb_id = "mush"
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE
 
 /obj/item/bodypart/chest/mushroom
 	limb_id = "mush"
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE
 
 /obj/item/bodypart/l_arm/mushroom
 	limb_id = "mush"
@@ -258,60 +258,6 @@
 
 /obj/item/bodypart/r_leg/golem
 	limb_id = "golem"
-
-///
-/obj/item/bodypart/head/golem/alloy
-	limb_id = "a_golem"
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/alloy
-	limb_id = "a_golem"
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/l_arm/golem/alloy
-	limb_id = "a_golem"
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/r_arm/golem/alloy
-	limb_id = "a_golem"
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/l_leg/golem/alloy
-	limb_id = "a_golem"
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/r_leg/golem/alloy
-	limb_id = "a_golem"
-	should_draw_greyscale = FALSE
-
-///
-/obj/item/bodypart/head/golem/bananium
-	limb_id = "ba_golem"
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/chest/golem/bananium
-	limb_id = "ba_golem"
-	is_dimorphic = FALSE
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/l_arm/golem/bananium
-	limb_id = "ba_golem"
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/r_arm/golem/bananium
-	limb_id = "ba_golem"
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/l_leg/golem/bananium
-	limb_id = "ba_golem"
-	should_draw_greyscale = FALSE
-
-/obj/item/bodypart/r_leg/golem/bananium
-	limb_id = "ba_golem"
-	should_draw_greyscale = FALSE
 
 ///
 /obj/item/bodypart/head/golem/cult
@@ -402,7 +348,7 @@
 
 /obj/item/bodypart/chest/golem/cardboard
 	limb_id = "c_golem"
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/l_arm/golem/cardboard

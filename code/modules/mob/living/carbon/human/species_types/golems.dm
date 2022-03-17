@@ -628,14 +628,7 @@
 	attack_sound = 'sound/items/airhorn2.ogg'
 	prefix = "Bananium"
 	special_names = null
-	bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/golem/bananium,
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/golem/bananium,
-		BODY_ZONE_HEAD = /obj/item/bodypart/head/golem/bananium,
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/golem/bananium,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/golem/bananium,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/golem/bananium,
-	)
+	examine_limb_id = SPECIES_GOLEM
 
 	/// Cooldown for producing honks
 	COOLDOWN_DECLARE(honkooldown)
