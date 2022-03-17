@@ -130,7 +130,7 @@
 	if(!ishuman(user))
 		return
 	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
-		balloon_alert(user, span_warning("[src] is still recharging..."))
+		balloon_alert(user, "still recharging...")
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
 	INVOKE_ASYNC(src, .proc/signal)
