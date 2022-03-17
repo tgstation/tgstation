@@ -1,0 +1,4 @@
+author: "capsaicinz"
+delete-after: True
+changes: 
+  - bugfix: "soulscythes are now immune to mining planet storms"
