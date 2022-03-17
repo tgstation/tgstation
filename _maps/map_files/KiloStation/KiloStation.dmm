@@ -18948,7 +18948,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
-/turf/closed/wall,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/port/greater)
 "cry" = (
 /turf/open/space/basic,
@@ -36863,7 +36865,9 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
-/turf/closed/wall,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
 /area/maintenance/port/greater)
 "hWZ" = (
 /obj/effect/turf_decal/tile/neutral{
