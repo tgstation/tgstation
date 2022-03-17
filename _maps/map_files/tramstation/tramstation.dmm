@@ -23823,7 +23823,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/ai_monitored/security/armory)
 "hex" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -30885,6 +30885,7 @@
 /obj/structure/chair/stool/bar/directional/south,
 /obj/effect/landmark/start/assistant,
 /obj/machinery/duct,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/commons/lounge)
 "jIX" = (
@@ -56397,7 +56398,7 @@
 	network = list("ss13","Security")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/security/processing)
 "tgg" = (
 /obj/structure/disposalpipe/segment{
@@ -61534,7 +61535,7 @@
 /obj/machinery/light_switch/directional/north,
 /obj/structure/closet/emcloset,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/security/processing)
 "uYt" = (
 /obj/structure/window/reinforced,
@@ -69910,7 +69911,7 @@
 /obj/machinery/firealarm/directional/south,
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/security/processing)
 "ybW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/corner,
@@ -69936,7 +69937,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/space/basic,
+/turf/open/floor/iron/dark,
 /area/security/processing)
 "ycI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -155901,9 +155902,9 @@ dDG
 dhe
 dhe
 hNf
-cou
-cou
-cou
+pby
+pby
+pby
 cou
 laC
 lsi
