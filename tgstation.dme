@@ -736,6 +736,7 @@
 #include "code\datums\components\overlay_lighting.dm"
 #include "code\datums\components\payment.dm"
 #include "code\datums\components\pellet_cloud.dm"
+#include "code\datums\components\phylactery.dm"
 #include "code\datums\components\pricetag.dm"
 #include "code\datums\components\punchcooldown.dm"
 #include "code\datums\components\radiation_countdown.dm"

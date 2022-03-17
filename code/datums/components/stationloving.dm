@@ -66,7 +66,8 @@
 /datum/component/stationloving/proc/check_soul_imbue()
 	SIGNAL_HANDLER
 
-	return disallow_soul_imbue
+	if(disallow_soul_imbue)
+		return COMPONENT_BLOCK_IMBUE
 
 /datum/component/stationloving/proc/check_mark_retrieval()
 	SIGNAL_HANDLER
