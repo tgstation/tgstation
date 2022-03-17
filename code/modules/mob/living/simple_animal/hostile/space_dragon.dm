@@ -206,18 +206,10 @@
 		destroy_rifts()
 	..()
 	add_dragon_overlay()
-	rift.Remove(src)
-	QDEL_NULL(rift)
-	small_sprite.Remove(src)
 	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
-	QDEL_NULL(small_sprite)
 
 /mob/living/simple_animal/hostile/space_dragon/revive(full_heal, admin_revive)
 	. = ..()
-	rift = new
-	rift.Grant(src)
-	small_sprite = new
-	small_sprite.Grant(src)
 	add_dragon_overlay()
 	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
