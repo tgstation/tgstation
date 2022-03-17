@@ -37,10 +37,10 @@
 /area/maintenance/department/security)
 "n" = (
 /obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/security)
 "o" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/security)
 "t" = (
 /obj/effect/decal/cleanable/dirt,
@@ -87,7 +87,7 @@
 /area/maintenance/department/security)
 "H" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/security)
 "I" = (
 /obj/effect/turf_decal/sand,
@@ -126,7 +126,7 @@
 /area/maintenance/department/security)
 "R" = (
 /obj/effect/spawner/random/trash/garbage,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/security)
 "S" = (
 /turf/closed/wall/rock/porous,
@@ -136,7 +136,7 @@
 	pixel_x = 5;
 	pixel_y = -1
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/security)
 "U" = (
 /obj/structure/grille,

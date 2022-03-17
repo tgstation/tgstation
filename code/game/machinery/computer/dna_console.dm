@@ -506,6 +506,8 @@
 			var/sequence = GET_GENE_STRING(path, scanner_occupant.dna)
 
 			var/newgene = params["gene"]
+			if(length(newgene) > 1) // Oh come on
+				return // fuck off
 			var/genepos = text2num(params["pos"])
 
 			// If the new gene is J, this means we're dealing with a JOKER

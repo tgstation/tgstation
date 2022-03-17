@@ -10,41 +10,41 @@
 	dir = 1;
 	layer = 2.9
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "d" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "e" = (
 /obj/machinery/computer/emergency_shuttle{
 	dir = 4;
 	use_power = 0
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "f" = (
 /mob/living/simple_animal/hostile/asteroid/goliath,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "g" = (
 /obj/structure/mineral_door/iron,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "h" = (
 /obj/item/pickaxe,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "i" = (
 /obj/effect/station_crash,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "k" = (
 /obj/structure/closet/crate,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "l" = (
 /obj/machinery/power/smes,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "m" = (
 /obj/structure/window/reinforced{
@@ -61,7 +61,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 "L" = (
 /obj/docking_port/mobile/emergency{
@@ -71,7 +71,7 @@
 	name = "\proper a meteor with engines strapped to it";
 	width = 40
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/shuttle/escape/meteor)
 
 (1,1,1) = {"

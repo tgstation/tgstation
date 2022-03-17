@@ -1,4 +1,0 @@
-author: "Nari Harimoto"
-delete-after: True
-changes: 
-  - bugfix: "Engineering borgs can now place wallmounts again"
