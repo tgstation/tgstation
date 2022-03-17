@@ -1,0 +1,5 @@
+author: "MacBlaze1"
+delete-after: True
+changes: 
+  - expansion: "More than two assemblies can now be combined for use in bombs, grenades, or anything else assembly holders are used in."
+  - qol: "signalers can now be triggered through right click"
