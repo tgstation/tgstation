@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	///What number message is this? IE: The first message sent in a round including automated messages is message 1.
 	var/message_ID
 
-/datum/feed_message/proc/returnAuthor(censor)
+/datum/feed_message/proc/return_author(censor)
 	if(censor == -1)
 		censor = author_censor
 	var/txt = "[GLOB.news_network.redacted_text]"
@@ -54,7 +54,7 @@ GLOBAL_LIST_EMPTY(request_list)
 		txt = author
 	return txt
 
-/datum/feed_message/proc/returnBody(censor)
+/datum/feed_message/proc/return_body(censor)
 	if(censor == -1)
 		censor = body_censor
 	var/txt = "[GLOB.news_network.redacted_text]"
@@ -62,7 +62,7 @@ GLOBAL_LIST_EMPTY(request_list)
 		txt = body
 	return txt
 
-/datum/feed_message/proc/toggleCensorAuthor()
+/datum/feed_message/proc/toggle_censor_author()
 	if(author_censor)
 		author_censor_time.Add(GLOB.news_network.last_action*-1)
 	else
@@ -70,7 +70,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	author_censor = !author_censor
 	GLOB.news_network.last_action ++
 
-/datum/feed_message/proc/toggleCensorBody()
+/datum/feed_message/proc/toggle_censor_body()
 	if(body_censor)
 		body_censor_time.Add(GLOB.news_network.last_action*-1)
 	else
@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	channel_ID = channel_id
 	return channel_ID
 
-/datum/feed_channel/proc/returnAuthor(censor)
+/datum/feed_channel/proc/return_author(censor)
 	if(censor == -1)
 		censor = author_censor
 	var/txt = "[GLOB.news_network.redacted_text]"
@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(request_list)
 		txt = author
 	return txt
 
-/datum/feed_channel/proc/toggleCensorDclass()
+/datum/feed_channel/proc/toggle_censor_D_class()
 	if(censored)
 		D_class_censor_time.Add(GLOB.news_network.last_action*-1)
 	else
@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	censored = !censored
 	GLOB.news_network.last_action ++
 
-/datum/feed_channel/proc/toggleCensorAuthor()
+/datum/feed_channel/proc/toggle_censor_author()
 	if(author_censor)
 		author_censor_time.Add(GLOB.news_network.last_action*-1)
 	else
@@ -181,10 +181,10 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/message_count = 0
 
 /datum/feed_network/New()
-	CreateFeedChannel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
+	create_feed_channel("Station Announcements", "SS13", "Company news, staff annoucements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
 	wanted_issue = new /datum/wanted_message
 
-/datum/feed_network/proc/CreateFeedChannel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel)
+/datum/feed_network/proc/create_feed_channel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel)
 	var/datum/feed_channel/newChannel = new /datum/feed_channel
 	newChannel.channel_name = channel_name
 	newChannel.author = author
@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(request_list)
 		newChannel.channel_ID = hardset_channel
 	network_channels += newChannel
 
-/datum/feed_network/proc/SubmitArticle(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)
+/datum/feed_network/proc/submit_article(msg, author, channel_name, datum/picture/picture, adminMessage = FALSE, allow_comments = TRUE, update_alert = TRUE)
 	var/datum/feed_message/newMsg = new /datum/feed_message
 	newMsg.author = author
 	newMsg.body = msg
@@ -218,7 +218,7 @@ GLOBAL_LIST_EMPTY(request_list)
 	message_count ++
 	newMsg.message_ID = message_count
 
-/datum/feed_network/proc/submitWanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = FALSE, newMessage = FALSE)
+/datum/feed_network/proc/submit_wanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = FALSE, newMessage = FALSE)
 	wanted_issue.active = TRUE
 	wanted_issue.criminal = criminal
 	wanted_issue.body = body
@@ -232,14 +232,14 @@ GLOBAL_LIST_EMPTY(request_list)
 			N.news_alert()
 			N.update_appearance()
 
-/datum/feed_network/proc/deleteWanted()
+/datum/feed_network/proc/delete_wanted()
 	wanted_issue.active = FALSE
 	wanted_issue.criminal = null
 	wanted_issue.body = null
 	wanted_issue.scanned_user = null
 	wanted_issue.img = null
-	for(var/obj/machinery/newscaster/NEWSCASTER in GLOB.allCasters)
-		NEWSCASTER.update_appearance()
+	for(var/obj/machinery/newscaster/updated_newscaster in GLOB.allCasters)
+		updated_newscaster.update_appearance()
 
 /datum/feed_network/proc/save_photo(icon/photo)
 	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)

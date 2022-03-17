@@ -559,7 +559,7 @@
 				return menu
 			var/i = 1
 			for(var/datum/feed_message/msg in current.messages)
-				menu +="-[msg.returnBody(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.returnAuthor(-1)]</FONT>\]</FONT><BR>"
+				menu +="-[msg.return_body(-1)] <BR><FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[msg.return_author(-1)]</FONT>\]</FONT><BR>"
 				menu +="<b><font size=1>[msg.comments.len] comment[msg.comments.len > 1 ? "s" : ""]</font></b><br>"
 				if(msg.img)
 					user << browse_rsc(msg.img, "tmp_photo[i].png")
@@ -667,7 +667,7 @@
 				host_pda.ui_mode = PDA_UI_NEWSCASTER_ERROR
 				host_pda.Topic(null,list("choice"="Refresh"))
 				return
-			GLOB.news_network.SubmitArticle(message,host_pda.owner,current_channel)
+			GLOB.news_network.submit_article(message,host_pda.owner,current_channel)
 			host_pda.Topic(null,list("choice"=num2text(host_pda.ui_mode)))
 			return
 
