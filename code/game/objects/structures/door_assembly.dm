@@ -205,6 +205,10 @@
 					if(!mineral)
 						if(istype(G, /obj/item/stack/sheet/mineral) && G.sheettype)
 							var/M = G.sheettype
+							var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
+							if(!ispath(mineralassembly))
+								to_chat(user, span_warning("You cannot add [G] to [src]!"))
+								return
 							if(G.get_amount() >= 2)
 								playsound(src, 'sound/items/crowbar.ogg', 100, TRUE)
 								user.visible_message(span_notice("[user] adds [G.name] to the airlock assembly."), \
@@ -214,7 +218,6 @@
 										return
 									to_chat(user, span_notice("You install [M] plating into the airlock assembly."))
 									G.use(2)
-									var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
 									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
 
 									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
