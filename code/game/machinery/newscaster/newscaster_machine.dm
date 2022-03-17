@@ -18,9 +18,9 @@
 	var/paper_remaining = 0
 
 	///What newscaster channel is currently being viewed by the player?
-	var/datum/newscaster/feed_channel/current_channel
+	var/datum/feed_channel/current_channel
 	///What newscaster feed_message is currently having a comment written for it?
-	var/datum/newscaster/feed_message/current_message
+	var/datum/feed_message/current_message
 	///The message that's currently being written for a feed story.
 	var/feed_channel_message
 	///The current image that will be submitted with the newscaster story.
@@ -155,13 +155,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"active" = GLOB.news_network.wanted_issue.active,
 			"criminal" = GLOB.news_network.wanted_issue.criminal,
 			"crime" = GLOB.news_network.wanted_issue.body,
-			"author" = GLOB.news_network.wanted_issue.scannedUser,
+			"author" = GLOB.news_network.wanted_issue.scanned_user,
 			"image" = "wanted_photo.png"
 		))
 
 	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
-	for(var/datum/newscaster/feed_channel/channel as anything in GLOB.news_network.network_channels)
+	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		channel_list += list(list(
 			"name" = channel.channel_name,
 			"author" = channel.author,
@@ -170,13 +170,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			"ID" = channel.channel_ID,
 		))
 	if(current_channel)
-		for(var/datum/newscaster/feed_message/feed_message as anything in current_channel.messages)
+		for(var/datum/feed_message/feed_message as anything in current_channel.messages)
 			var/photo_ID = null
 			var/list/comment_list
 			if(feed_message.img)
 				user << browse_rsc(feed_message.img, "tmp_photo[feed_message.message_ID].png")
 				photo_ID = "tmp_photo[feed_message.message_ID].png"
-			for(var/datum/newscaster/feed_comment/comment_message as anything in feed_message.comments)
+			for(var/datum/feed_comment/comment_message as anything in feed_message.comments)
 				comment_list += list(list(
 					"auth" = comment_message.author,
 					"body" = comment_message.body,
@@ -187,8 +187,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				"body" = feed_message.body,
 				"time" = feed_message.time_stamp,
 				"channel_num" = feed_message.parent_ID,
-				"censored_message" = feed_message.bodyCensor,
-				"censored_author" = feed_message.authorCensor,
+				"censored_message" = feed_message.body_censor,
+				"censored_author" = feed_message.author_censor,
 				"ID" = feed_message.message_ID,
 				"photo" = photo_ID,
 				"comments" = comment_list
@@ -252,7 +252,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			var/prototype_channel = params["channel"]
 			if(isnull(prototype_channel))
 				return TRUE
-			for(var/datum/newscaster/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
+			for(var/datum/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
 				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
 
@@ -303,12 +303,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
-			for(var/datum/newscaster/feed_message/iterated_feed_message as anything in current_channel.messages)
+			for(var/datum/feed_message/iterated_feed_message as anything in current_channel.messages)
 				if(iterated_feed_message.message_ID == questionable_message)
 					iterated_feed_message.toggleCensorBody()
 					break
 
-		if("authorCensor")
+		if("author_censor")
 			var/obj/item/card/id/id_card
 			if(isliving(usr))
 				var/mob/living/living_user = usr
@@ -317,7 +317,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				say("Clearance not found.")
 				return TRUE
 			var/questionable_message = params["messageID"]
-			for(var/datum/newscaster/feed_message/iterated_feed_message in current_channel.messages)
+			for(var/datum/feed_message/iterated_feed_message in current_channel.messages)
 				if(iterated_feed_message.message_ID == questionable_message)
 					iterated_feed_message.toggleCensorAuthor()
 					break
@@ -331,7 +331,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 				say("Clearance not found.")
 				return TRUE
 			var/prototype_channel = (params["channel"])
-			for(var/datum/newscaster/feed_channel/potential_channel in GLOB.news_network.network_channels)
+			for(var/datum/feed_channel/potential_channel in GLOB.news_network.network_channels)
 				if(prototype_channel == potential_channel.channel_ID)
 					current_channel = potential_channel
 					break
@@ -345,7 +345,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			var/commentable_message = params["messageID"]
 			if(!commentable_message)
 				return TRUE
-			for(var/datum/newscaster/feed_message/iterated_feed_message as anything in current_channel.messages)
+			for(var/datum/feed_message/iterated_feed_message as anything in current_channel.messages)
 				if(iterated_feed_message.message_ID == commentable_message)
 					current_message = iterated_feed_message
 			return TRUE
@@ -556,16 +556,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return TRUE
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/new_newspaper = new /obj/item/newspaper
-	for(var/datum/newscaster/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
+	for(var/datum/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
 		new_newspaper.news_content += iterated_feed_channel
 	if(GLOB.news_network.wanted_issue.active)
-		new_newspaper.wantedAuthor = GLOB.news_network.wanted_issue.scannedUser
+		new_newspaper.wantedAuthor = GLOB.news_network.wanted_issue.scanned_user
 		new_newspaper.wantedCriminal = GLOB.news_network.wanted_issue.criminal
 		new_newspaper.wantedBody = GLOB.news_network.wanted_issue.body
 		if(GLOB.news_network.wanted_issue.img)
 			new_newspaper.wantedPhoto = GLOB.news_network.wanted_issue.img
 	new_newspaper.forceMove(drop_location())
-	new_newspaper.creationTime = GLOB.news_network.lastAction
+	new_newspaper.creation_time = GLOB.news_network.last_action
 	paper_remaining--
 
 /**
@@ -598,7 +598,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/proc/create_channel(channel_locked)
 	if(!channel_name)
 		return
-	for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
+	for(var/datum/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
 		if(iterated_feed_channel.channel_name == channel_name)
 			tgui_alert(usr, "ERROR: Feed channel with that name already exists on the Network.", list("Okay"))
 			return TRUE
@@ -622,7 +622,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(!current_user)
 		creating_comment = FALSE
 		return TRUE
-	var/datum/newscaster/feed_comment/new_feed_comment = new/datum/newscaster/feed_comment
+	var/datum/feed_comment/new_feed_comment = new/datum/feed_comment
 	new_feed_comment.author = current_user.account_holder
 	new_feed_comment.body = comment_text
 	new_feed_comment.time_stamp = station_time_timestamp()
@@ -638,9 +638,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /obj/machinery/newscaster/proc/start_creating_channel()
 	//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
 	var/list/existing_authors = list()
-	for(var/datum/newscaster/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
-		if(iterated_feed_channel.authorCensor)
-			existing_authors += GLOB.news_network.redactedText
+	for(var/datum/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
+		if(iterated_feed_channel.author_censor)
+			existing_authors += GLOB.news_network.redacted_text
 		else
 			existing_authors += iterated_feed_channel.author
 	if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
@@ -654,7 +654,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  * Finally, it submits the message to the network, is logged globally, and clears all message-specific variables from the machine.
  */
 /obj/machinery/newscaster/proc/create_story(channel_name)
-	for(var/datum/newscaster/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
+	for(var/datum/feed_channel/potential_channel as anything in GLOB.news_network.network_channels)
 		if(channel_name == potential_channel.channel_ID)
 			current_channel = potential_channel
 			break

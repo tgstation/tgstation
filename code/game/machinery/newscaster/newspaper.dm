@@ -12,14 +12,14 @@
 	var/screen = 0
 	var/pages = 0
 	var/curr_page = 0
-	var/list/datum/newscaster/feed_channel/news_content = list()
+	var/list/datum/feed_channel/news_content = list()
 	var/scribble=""
 	var/scribble_page = null
 	var/wantedAuthor
 	var/wantedCriminal
 	var/wantedBody
 	var/wantedPhoto
-	var/creationTime
+	var/creation_time
 
 /obj/item/newspaper/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... until [user.p_their()] eyes light up with realization!"))
@@ -48,12 +48,12 @@
 						dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
 				else
 					dat+="Contents:<BR><ul>"
-					for(var/datum/newscaster/feed_channel/NP in news_content)
+					for(var/datum/feed_channel/NP in news_content)
 						pages++
 					if(wantedAuthor)
 						dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [pages+2]\]</FONT><BR>"
 					var/temp_page=0
-					for(var/datum/newscaster/feed_channel/NP in news_content)
+					for(var/datum/feed_channel/NP in news_content)
 						temp_page++
 						dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
 					dat+="</ul>"
@@ -61,36 +61,36 @@
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(human_user)];mach_close=newspaper_main'>Done reading</A></DIV>"
 			if(1) // X channel pages inbetween.
-				for(var/datum/newscaster/feed_channel/NP in news_content)
+				for(var/datum/feed_channel/NP in news_content)
 					pages++
-				var/datum/newscaster/feed_channel/C = news_content[curr_page]
-				dat += "<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.returnAuthor(notContent(C.authorCensorTime))]</FONT>\]</FONT><BR><BR>"
-				if(notContent(C.DclassCensorTime))
+				var/datum/feed_channel/C = news_content[curr_page]
+				dat += "<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.returnAuthor(notContent(C.author_censor_time))]</FONT>\]</FONT><BR><BR>"
+				if(notContent(C.D_class_censor_time))
 					dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
 				else
 					if(!length(C.messages))
 						dat+="No Feed stories stem from this channel..."
 					else
 						var/i = 0
-						for(var/datum/newscaster/feed_message/MESSAGE in C.messages)
-							if(MESSAGE.creationTime > creationTime)
+						for(var/datum/feed_message/MESSAGE in C.messages)
+							if(MESSAGE.creation_time > creation_time)
 								if(i == 0)
 									dat+="No Feed stories stem from this channel..."
 								break
 							if(i == 0)
 								dat+="<ul>"
 							i++
-							dat+="-[MESSAGE.returnBody(notContent(MESSAGE.bodyCensorTime))] <BR>"
+							dat+="-[MESSAGE.returnBody(notContent(MESSAGE.body_censor_time))] <BR>"
 							if(MESSAGE.img)
 								user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
 								dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
-							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(notContent(MESSAGE.authorCensorTime))]</FONT>\]</FONT><BR><BR>"
+							dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.returnAuthor(notContent(MESSAGE.author_censor_time))]</FONT>\]</FONT><BR><BR>"
 						dat+="</ul>"
 				if(scribble_page==curr_page)
 					dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
 				dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV>"
 			if(2) //Last page
-				for(var/datum/newscaster/feed_channel/NP in news_content)
+				for(var/datum/feed_channel/NP in news_content)
 					pages++
 				if(wantedAuthor!=null)
 					dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
@@ -118,7 +118,7 @@
 		return FALSE
 	for(var/i=L.len;i>0;i--)
 		var/num = abs(L[i])
-		if(creationTime <= num)
+		if(creation_time <= num)
 			continue
 		else
 			if(L[i] > 0)
