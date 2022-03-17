@@ -75,8 +75,6 @@
 
 	/// What status effect we assign on application
 	var/status_effect_type
-	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
-	var/datum/surgery/attached_surgery
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
 	var/cryo_progress
 
@@ -91,8 +89,6 @@
 	var/wound_flags = (FLESH_WOUND | BONE_WOUND | ACCEPTS_GAUZE)
 
 /datum/wound/Destroy()
-	if(attached_surgery)
-		QDEL_NULL(attached_surgery)
 	remove_wound()
 	set_limb(null)
 	victim = null
