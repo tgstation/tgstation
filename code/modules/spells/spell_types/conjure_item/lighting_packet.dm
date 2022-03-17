@@ -6,7 +6,7 @@
 	button_icon_state = "thrownlightning"
 
 	cooldown_time = 1 SECONDS
-	level_max = 0
+	spell_max_level = 1
 
 	spell_requirements = SPELL_REQUIRES_WIZARD_GARB
 

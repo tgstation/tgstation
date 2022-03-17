@@ -38,9 +38,6 @@
 /// Forces the wizard to emote (and be able to) to cast the spell.
 #define INVOCATION_EMOTE "emote"
 
-/// Macro for checking if a mob can currently invoke a spell of certain types
-#define CAN_INVOKE(mob, type) ((type == INVOCATION_WHISPER || type == INVOCATION_SHOUT) && !mob.can_speak_vocal())
-
 // Smoke types
 /// No smoke is made on cast
 #define NO_SMOKE 0
@@ -66,6 +63,8 @@
 #define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 5)
 /// Whether the spell can be cast on centcom level
 #define SPELL_REQUIRES_OFF_CENTCOM (1 << 6)
+/// Whether the spell must be cast by someone with a mind
+#define SPELL_REQUIRES_MIND (1 << 7)
 
 DEFINE_BITFIELD(spell_requirements, list(
 	"SPELL_REQUIRES_CONSCIOUS" = SPELL_REQUIRES_CONSCIOUS,

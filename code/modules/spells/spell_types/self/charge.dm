@@ -7,10 +7,10 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank = 5 SECONDS
-	spell_requirements = NONE
 
 	invocation = "DIRI CEL"
 	invocation_type = INVOCATION_WHISPER
+	spell_requirements = NONE
 
 /datum/action/cooldown/spell/charge/is_valid_target(atom/cast_on)
 	return isliving(cast_on)

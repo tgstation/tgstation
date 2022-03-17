@@ -6,45 +6,46 @@
 	/// The moveforce of the throw done by the repulsion.
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
-/datum/action/cooldown/spell/aoe/repulse/is_valid_target(atom/cast_on)
-	if(cast_on == owner)
+/datum/action/cooldown/spell/aoe/repulse/is_affected_by_aoe(atom/thing)
+	if(thing == owner)
 		return FALSE
 
-	if(!ismovable(cast_on))
+	if(!ismovable(thing))
 		return FALSE
 
-	var/atom/movable/cast_on_movable = cast_on
-	return !cast_on_movable.anchored
+	var/atom/movable/movable_thing = thing
+	return !movable_thing.anchored
 
 /datum/action/cooldown/spell/aoe/repulse/get_things_to_cast_on(atom/center)
 	return view(outer_radius, center)
 
-/datum/action/cooldown/spell/aoe/repulse/cast_on_thing_in_aoe(atom/cast_on)
-	if(ismob(cast_on))
-		var/mob/cast_on_mob = cast_on
-		if(cast_on_mob.anti_magic_check())
+/datum/action/cooldown/spell/aoe/repulse/cast_on_thing_in_aoe(atom/victim, atom/caster)
+	if(ismob(victim))
+		var/mob/victim_mob = victim
+		if(victim_mob.anti_magic_check())
 			return
 
-	var/turf/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(cast_on, owner)))
-	var/dist_from_caster = get_dist(cast_on, owner)
+	var/turf/throwtarget = get_edge_target_turf(caster, get_dir(caster, get_step_away(victim, caster)))
+	var/dist_from_caster = get_dist(victim, caster)
 
 	if(dist_from_caster == 0)
-		if(isliving(cast_on))
-			var/mob/living/cast_on_living = cast_on
-			cast_on_living.Paralyze(10 SECONDS)
-			cast_on_living.adjustBruteLoss(5)
-			to_chat(cast_on, span_userdanger("You're slammed into the floor by [owner]!"))
+		if(isliving(victim))
+			var/mob/living/victim_living = victim
+			victim_living.Paralyze(10 SECONDS)
+			victim_living.adjustBruteLoss(5)
+			to_chat(victim, span_userdanger("You're slammed into the floor by [caster]!"))
 	else
 		if(sparkle_path)
-			new sparkle_path(get_turf(cast_on), get_dir(user, cast_on)) // Created sparkles will disappear on their own
+			// Created sparkles will disappear on their own
+			new sparkle_path(get_turf(victim), get_dir(caster, victim))
 
-		if(isliving(cast_on))
-			var/mob/living/cast_on_living = cast_on
-			cast_on_living.Paralyze(4 SECONDS)
-			to_chat(cast_on, span_userdanger("You're thrown back by [owner]!"))
+		if(isliving(victim))
+			var/mob/living/victim_living = victim
+			victim_living.Paralyze(4 SECONDS)
+			to_chat(victim, span_userdanger("You're thrown back by [caster]!"))
 
 		// So stuff gets tossed around at the same time.
-		owner.safe_throw_at(throwtarget, ((clamp((max_throw - (clamp(dist_from_caster - 2, 0, dist_from_caster))), 3, max_throw))), 1, owner, force = repulse_force)
+		caster.safe_throw_at(throwtarget, ((clamp((max_throw - (clamp(dist_from_caster - 2, 0, dist_from_caster))), 3, max_throw))), 1, caster, force = repulse_force)
 
 /datum/action/cooldown/spell/aoe/repulse/wizard
 	name = "Repulse"
@@ -60,14 +61,14 @@
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 6.25 SECONDS
 
-/datum/action/cooldown/spell/aoe/repulse/wizard/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/aoe/repulse/wizard/is_affected_by_aoe(atom/thing)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	if(isliving(cast_on))
-		var/mob/living/cast_on_living = cast_on
-		if(cast_on_living.anti_magic_check())
+	if(isliving(thing))
+		var/mob/living/living_thing = cast_on
+		if(living_thing.anti_magic_check())
 			return FALSE
 
 	return TRUE

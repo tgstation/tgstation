@@ -25,7 +25,6 @@
 
 	invocation = "NEC CANTIO"
 	invocation_type = INVOCATION_SHOUT
-	range = -1
 
 	emp_heavy = 6
 	emp_light = 10

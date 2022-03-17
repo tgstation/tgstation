@@ -458,15 +458,74 @@
 	name = "Area Bolt"
 	desc = "What the fuck does this do?!"
 	damage = 0
-	var/proxdet = TRUE
+
+	/// A lazylist of factions.
+	/// People hit by the projectile who have share a faction in this list are skipped.
+	var/list/ignored_factions
+	/// The AOE radius that the projectile will trigger on people.
+	var/trigger_range = 1
+	/// Whether our projectile will only be able to hit the original target / clicked on atom
+	var/can_only_hit_target = FALSE
+
+	/// Whether we get blocked by antimagic
+	var/blocked_by_antimagic = TRUE
+	/// Whether we get blocked by holiness
+	var/blocked_by_holiness = TRUE
+
+	/// Whether our projectile leaves a trail behind it  as it moves.
+	var/trail = FALSE
+	/// The duration of the trail before deleting.
+	var/trail_lifespan = 0 SECONDS
+	/// The icon the trail uses.
+	var/trail_icon = 'icons/obj/wizard.dmi'
+	/// The icon state the trail uses.
+	var/trail_icon_state = "trail"
 
 /obj/projectile/magic/aoe/Range()
-	if(proxdet)
-		for(var/mob/living/L in range(1, get_turf(src)))
-			if(L.stat != DEAD && L != firer && !L.anti_magic_check())
-				return Bump(L)
-	..()
+	if(trigger_range >= 1)
+		for(var/mob/living/nearby_guy in range(1, get_turf(src)))
+			if(nearby_guy.stat != DEAD && nearby_guy != firer && !nearby_guy.anti_magic_check())
+				return Bump(nearby_guy)
 
+	return ..()
+
+/obj/projectile/magic/aoe/can_hit_target(atom/target, list/passthrough, direct_target = FALSE, ignore_loc = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(can_only_hit_target && target != original)
+		return FALSE
+
+	//Unsure about the direct target, I guess it could always skip these.
+	if(ismob(target) && !direct_target)
+		var/mob/mob_target = target
+		if(mob_target.anti_magic_check(blocked_by_antimagic, blocked_by_holiness))
+			return FALSE
+		if(LAZYLEN(ignored_factions) && faction_check(mob_target.faction, ignored_factions))
+			return FALSE
+
+	return TRUE
+
+/obj/projectile/magic/aoe/Moved(atom/OldLoc, Dir)
+	. = ..()
+	if(trail)
+		create_trail()
+
+/// Creates and handles the trail that follows the projectile.
+/obj/projectile/magic/aoe/proc/create_trail()
+	if(!trajectory)
+		return
+
+	var/datum/point/vector/previous = trajectory.return_vector_after_increments(1, -1)
+	var/obj/effect/overlay/trail = new /obj/effect/overlay(previous.return_turf())
+	trail.pixel_x = previous.return_px()
+	trail.pixel_y = previous.return_py()
+	trail.icon = trail_icon
+	trail.icon_state = trail_icon_state
+	//might be changed to temp overlay
+	trail.set_density(FALSE)
+	trail.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	QDEL_IN(trail, trail_lifespan)
 
 /obj/projectile/magic/aoe/lightning
 	name = "lightning bolt"
@@ -527,17 +586,17 @@
 	/// Flash radius of the fireball
 	var/exp_flash = 3
 
-/obj/projectile/magic/aoe/fireball/on_hit(target)
+/obj/projectile/magic/aoe/fireball/on_hit(atom/target, blocked = FALSE, pierce_hit)
 	. = ..()
-	if(ismob(target))
-		var/mob/mob_target = target
-		if(mob_target.anti_magic_check())
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.anti_magic_check())
 			visible_message(span_warning("[src] vanishes into smoke on contact with [target]!"))
 			return BULLET_ACT_BLOCK
 		//between this 10 burn, the 10 brute, the explosion brute,
 		// and the onfire burn, your at about 65 damage
 		// (if you stop drop and roll immediately)
-		mob_target.take_overall_damage(0, 10)
+		living_target.take_overall_damage(0, 10)
 
 	var/turf/target_turf = get_turf(target)
 	explosion(
@@ -551,6 +610,57 @@
 		explosion_cause = src,
 	)
 
+/obj/projectile/magic/aoe/magic_missile
+	name = "magic missile"
+	icon_state = "magicm"
+	range = 20
+	speed = 5
+	trigger_range = 0
+	linger = TRUE
+	nodamage = FALSE
+	paralyze = 60
+	hitsound = 'sound/magic/mm_hit.ogg'
+
+	trail = TRUE
+	trail_lifespan = 5
+	trail_icon_state = "magicmd"
+
+/obj/projectile/magic/aoe/magic_missile/on_hit(target)
+	. = ..()
+	if(ismob(target))
+		var/mob/M = target
+		if(M.anti_magic_check())
+			M.visible_message(span_warning("[src] vanishes on contact with [target]!"))
+			return BULLET_ACT_BLOCK
+
+
+/obj/projectile/magic/aoe/magic_missile/lesser
+	color = "red" //Looks more culty this way
+	range = 10
+
+/obj/projectile/magic/aoe/juggernaut
+	name = "Gauntlet Echo"
+	icon_state = "cultfist"
+	alpha = 180
+	damage = 30
+	damage_type = BRUTE
+	knockdown = 50
+	hitsound = 'sound/weapons/punch3.ogg'
+	trigger_range = 0
+	check_holy = TRUE
+	ignored_factions = list("cult")
+	range = 15
+	speed = 7
+
+/obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
+	. = ..()
+	var/turf/T = get_turf(src)
+	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
+	new /obj/effect/temp_visual/cult/sac(T)
+	for(var/obj/O in range(src,1))
+		if(O.density && !istype(O, /obj/structure/destructible/cult))
+			O.take_damage(90, BRUTE, MELEE, 0)
+			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))
 
 //still magic related, but a different path
 

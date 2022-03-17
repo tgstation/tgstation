@@ -3,11 +3,11 @@
 	name = "Dispense Wizard Justice"
 	desc = "This spell dispenses wizard justice."
 
-	range = 3
+	summon_radius = 3
 	summon_type = list(/mob/living/simple_animal/bot/secbot/ed209)
 	summon_amount = 10
 
-/datum/action/cooldown/spell/conjure/summon_ed_swarm/post_summon(atom/summoned_object)
+/datum/action/cooldown/spell/conjure/summon_ed_swarm/post_summon(atom/summoned_object, atom/cast_on)
 	if(!istype(summoned_object, /mob/living/simple_animal/bot/secbot/ed209))
 		return
 

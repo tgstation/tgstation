@@ -1,10 +1,8 @@
 /datum/action/cooldown/spell/conjure
-	name = "Conjure"
-	desc = "This spell conjures objs of the specified types in range."
-
 	sound = 'sound/items/welder.ogg'
 	school = SCHOOL_CONJURATION
 
+	var/summon_radius = 7
 	/// A list of types that will be created on summon.
 	/// The type is picked from this list, not all provided are guaranteed.
 	var/list/summon_type = list()
@@ -19,7 +17,7 @@
 
 /datum/action/cooldown/spell/conjure/cast(atom/cast_on)
 	. = ..()
-	var/list/turf/to_summon_in = range(range, cast_on)
+	var/list/turf/to_summon_in = range(summon_radius, cast_on)
 
 	if(!summon_ignore_density)
 		for(var/turf/summon_turf in to_summon_in)
@@ -45,7 +43,7 @@
 			if(summon_lifespan > 0)
 				QDEL_IN(summoned_object, summon_lifespan)
 
-			post_summon(summoned_object)
+			post_summon(summoned_object, cast_on)
 
-/datum/action/cooldown/spell/conjure/proc/post_summon(atom/summoned_object)
+/datum/action/cooldown/spell/conjure/proc/post_summon(atom/summoned_object, atom/cast_on)
 	return

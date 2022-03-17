@@ -7,11 +7,10 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 1.25 SECONDS
-	spell_requirements = NONE
 
 	invocation = "TARCOL MINTI ZHERI"
 	invocation_type = INVOCATION_SHOUT
-	range = -1
+	spell_requirements = NONE
 
 	/// The typepath to the wall we create on cast.
 	var/wall_type = /obj/effect/forcefield/wizard
@@ -28,20 +27,42 @@
 		new wall_type(get_step(owner, NORTH), owner)
 		new wall_type(get_step(owner, SOUTH), owner)
 
+/datum/action/cooldown/spell/forcewall/cult
+	name = "Shield"
+	desc = "This spell creates a temporary forcefield to shield yourself and allies from incoming fire."
+	background_icon_state = "bg_demon"
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "cultforcewall"
 
-/obj/effect/forcefield/wizard
-	/// A weakref to whoever casted our forcefield.
-	var/datum/weakref/caster_weakref
+	cooldown_time = 40 SECONDS
+	invocation_type = INVOCATION_NONE
 
-/obj/effect/forcefield/wizard/Initialize(mapload, mob/caster)
+	wall_type = /obj/effect/forcefield/cult
+
+/datum/action/cooldown/spell/forcewall/mime
+	name = "Invisible Blockade"
+	desc = "Form an invisible three tile wide blockade."
+	background_icon_state = "bg_mime"
+	icon_icon = 'icons/mob/actions/actions_mime.dmi'
+	button_icon_state = "invisible_blockade"
+	panel = "Mime"
+	sound = null
+
+	school = SCHOOL_MIME
+	cooldown_time = 1 MINUTES
+	cooldown_reduction_per_rank = 0 SECONDS
+	spell_requirements = (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN)
+
+	invocation = "" // Set via get_invocation_content().
+	invocation_type = INVOCATION_EMOTE
+	invocation_self_message = "<span class='notice'>You form a blockade in front of yourself.</span>"
+	spell_max_level = 1
+
+	wall_type = /obj/effect/forcefield/mime/advanced
+
+/datum/action/cooldown/spell/forcewall/mime/New()
 	. = ..()
-	caster_weakref = WEAKREF(caster)
+	AddComponent(/datum/component/mime_spell, CALLBACK(src, .proc/get_invocation_content))
 
-/obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(WEAKREF(mover) == caster_weakref)
-		return TRUE
-	if(isliving(mover))
-		var/mob/living/living_mover = mover
-		if(living_mover.anti_magic_check(chargecost = 0))
-			return TRUE
+/datum/action/cooldown/spell/forcewall/mime/proc/get_invocation_content(mob/living/carbon/human/caster)
+	return "<b>[caster.real_name]</b> looks as if a blockade is in front of [caster.p_them()]."

@@ -10,7 +10,7 @@
 	can_cast_on_centcom = FALSE
 	sound = 'sound/effects/magic.ogg'
 	cooldown_min = 300
-	level_max = 0
+	spell_max_level = 1
 	action_icon_state = "spacetime"
 
 /obj/effect/proc_holder/spell/spacetime_dist/can_cast(mob/user = usr)

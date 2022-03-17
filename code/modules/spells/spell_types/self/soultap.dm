@@ -17,7 +17,7 @@
 	// I could see why this wouldn't be necromancy, but messing with souls or whatever. Ectomancy?
 	school = SCHOOL_NECROMANCY
 	cooldown_time = 1 SECONDS
-	level_max = 0
+	spell_max_level = 1
 
 	invocation = "AT ANY COST!"
 	invocation_type = INVOCATION_SHOUT

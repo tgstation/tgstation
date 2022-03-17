@@ -6,15 +6,15 @@
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank =  10 SECONDS
-	spell_requirements = NONE
+	spell_requirements = SPELL_REQUIRES_MIND
 
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
-	range = 1
 
 	// ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 	active_msg = "You prepare to swap minds with a target..."
 	deactive_msg = "You dispel mind swap."
+	cast_range = 1
 
 	/// For how long is the caster stunned for after the spell
 	var/unconscious_amount_caster = 40 SECONDS

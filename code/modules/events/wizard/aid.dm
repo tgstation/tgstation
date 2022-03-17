@@ -44,15 +44,15 @@
 				if(S.charge_max < S.charge_counter)
 					S.charge_counter = S.charge_max
 				switch(S.spell_level)
-					if(1)
-						S.name = "Efficient [S.name]"
 					if(2)
-						S.name = "Quickened [S.name]"
+						S.name = "Efficient [S.name]"
 					if(3)
-						S.name = "Free [S.name]"
+						S.name = "Quickened [S.name]"
 					if(4)
-						S.name = "Instant [S.name]"
+						S.name = "Free [S.name]"
 					if(5)
+						S.name = "Instant [S.name]"
+					if(6)
 						S.name = "Ludicrous [S.name]"
 
 			to_chat(L, span_notice("You suddenly feel more competent with your casting!"))

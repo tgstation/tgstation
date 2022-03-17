@@ -7,17 +7,17 @@
 	school = SCHOOL_EVOCATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS
-	spell_requirements = NONE
 
 	invocation = "P'WAH, UNLIM'TED P'WAH"
 	invocation_type = INVOCATION_SHOUT
+	spell_requirements = NONE
 
 	base_icon_state = "lightning"
 	active_msg = "You energize your hands with arcane lightning!"
 	deactive_msg = "You let the energy flow out of your hands back into yourself..."
 	projectile_type = /obj/projectile/magic/aoe/lightning
 
-	/// The range the bolt itself
+	/// The range the bolt itself (different to the range of the projectile)
 	var/bolt_range = 15
 	/// The power of the bolt itself
 	var/bolt_power = 20000

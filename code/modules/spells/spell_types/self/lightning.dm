@@ -11,13 +11,26 @@
 	invocation = "UN'LTD P'WAH!"
 	invocation_type = INVOCATION_SHOUT
 	school = SCHOOL_EVOCATION
-	range = 7
 
+	/// Whether we're currently channelling a tesla blast or not
+	var/currently_channeling = FALSE
+	/// The radius around (either the caster or people shocked) to which the tesla blast can reach
+	var/shock_radius = 7
 	/// The halo that appears around the caster while charging the spell
 	var/static/mutable_appearance/halo
 	/// The sound played while charging the spell
 	/// Quote: "the only way i can think of to stop a sound, thank MSO for the idea."
 	var/sound/charge_sound
+
+/datum/action/cooldown/spell/tesla/can_cast_spell()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(currently_channeling)
+		to_chat(owner, span_warning("You're already channeling [src]!"))
+		return FALSE
+
+	return TRUE
 
 /datum/action/cooldown/spell/tesla/before_cast(atom/cast_on)
 	. = ..()
@@ -30,8 +43,9 @@
 	cast_on.add_overlay(halo)
 	playsound(get_turf(cast_on), charge_sound, 50, FALSE)
 
+	currently_channeling = TRUE
 	if(!do_after(cast_on, 10 SECONDS, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_HELD_ITEM)))
-		revert_cast(cast_on)
+		reset_tesla(cast_on)
 		return FALSE
 
 	return TRUE
@@ -42,6 +56,7 @@
 
 /datum/action/cooldown/spell/tesla/proc/reset_tesla(atom/to_reset)
 	to_reset.cut_overlay(halo)
+	currently_channeling = FALSE
 
 /datum/action/cooldown/spell/tesla/cast(atom/cast_on)
 	. = ..()
@@ -53,12 +68,12 @@
 
 	var/mob/living/carbon/to_zap_first = get_target(cast_on)
 	if(QDELETED(to_zap_first))
-		to_chat(cast_on, span_warning("No targets found!"))
+		to_chat(cast_on, span_warning("No targets nearby!"))
 		revert_cast()
 		return
 
 	zap_target(cast_on, to_zap_first)
-	reset_tesla()
+	reset_tesla(cast_on)
 
 /datum/action/cooldown/spell/tesla/proc/zap_target(atom/origin, mob/living/carbon/to_zap, bolt_energy = 30, bounces = 5)
 	origin.Beam(to_zap, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
@@ -80,7 +95,7 @@
 
 /datum/action/cooldown/spell/tesla/proc/get_target(atom/center)
 	var/list/possibles = list()
-	for(var/mob/living/carbon/to_check in view(range, center))
+	for(var/mob/living/carbon/to_check in view(shock_radius, center))
 		if(to_check == center || to_check == owner)
 			continue
 		if(!los_check(center, to_check))

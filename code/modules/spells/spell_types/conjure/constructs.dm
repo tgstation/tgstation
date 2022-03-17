@@ -10,6 +10,14 @@
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
-	range = 0
 
+	summon_radius = 0
 	summon_type = list(/obj/structure/constructshell)
+
+/datum/action/cooldown/spell/conjure/conjure/construct/lesser
+	background_icon_state = "bg_demon"
+	cooldown_time = 3 MINUTES
+
+/datum/action/cooldown/spell/conjure/conjure/construct/lesser/cult
+	cooldown_time = 250 SECONDS
+	spell_requirements = SPELL_REQUIRES_WIZARD_GARB

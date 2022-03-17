@@ -13,7 +13,7 @@
 	invocation = "NECREM IMORTIUM!"
 	invocation_type = INVOCATION_SHOUT
 	range = -1
-	level_max = 0 //cannot be improved
+	spell_max_level = 1 //cannot be improved
 	cooldown_min = 10
 	include_user = TRUE
 

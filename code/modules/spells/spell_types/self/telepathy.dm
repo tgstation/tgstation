@@ -1,0 +1,71 @@
+
+/datum/action/cooldown/spell/telepathy
+	name = "Telepathy"
+	desc = "Telepathically transmits a message to the target."
+	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "r_transmit"
+
+	spell_requirements = NONE
+
+	/// Radius around the caster that living targets are picked to choose from
+	var/telepathy_radius = 7
+	/// The span surrounding the telepathy message
+	var/telepathy_span = "notice"
+	/// The bolded span surrounding the telepathy message
+	var/bold_telepathy_span = "boldnotice"
+
+	/// Whether we're blocked by antimagic
+	var/blocked_by_antimagic = FALSE
+	/// Whether we're blocked by holiness
+	var/blocked_by_holy = FALSE
+	/// Whether we're blocked by tinfoil
+	var/blocked_by_tinfoil = TRUE
+
+/datum/action/cooldown/spell/telepathy/before_cast(atom/cast_on)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/list/mobs_to_chose = get_telepathy_targets(cast_on)
+	if(!length(mobs_to_chose))
+		to_chat(cast_on, span_warning("No targets nearby."))
+		return FALSE
+
+	var/chosen_mob = tgui_input_list(cast_on, "Choose a target to whisper to.", "[src]", sort_names(mobs_to_chose))
+	if(!chosen_mob)
+		return FALSE
+
+	var/message = tgui_input_text(cast_on, "What do you wish to whisper to [chosen_mob]?", "[src]")
+	if(!message)
+		return FALSE
+
+	send_telepathy(cast_on, chosen_mob, message)
+	return TRUE
+
+/datum/action/cooldown/spell/telepathy/proc/send_telepathy(mob/living/from_mob, mob/living/to_mob, message)
+
+	log_directed_talk(from_mob, to_mob, message, LOG_SAY, "[src]")
+
+	var/formatted_message = "<span class='[telepathy_span]'>[message]</span>"
+
+	to_chat(from_mob, "<span class='[bold_telepathy_span]'>You transmit to [to_mob]:</span> [formatted_message]")
+	if(!to_mob.anti_magic_check(blocked_by_antimagic, blocked_by_holy, blocked_by_tinfoil, 0)) //hear no evil
+		to_chat(to_mob, "<span class='[bold_telepathy_span]'>You hear something behind you talking...</span> [formatted_message]")
+
+	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
+		if(!isobserver(ghost))
+			continue
+
+		var/from_link = FOLLOW_LINK(ghost, from_mob)
+		var/from_mob_name = "<span class='[bold_telepathy_span]'>[from_mob] [src]:</span>"
+		var/to_link = FOLLOW_LINK(ghost, to_mob)
+		var/to_mob_name = span_name("[to_mob]")
+
+		to_chat(ghost, "[from_link] [from_mob_name] [formatted_message] [to_link] [to_mob_name]")
+
+/datum/action/cooldown/spell/telepathy/proc/get_telepathy_targets(atom/center)
+	var/list/mobs_to_chose = list()
+	for(var/mob/living/living_thing in view(telepathy_radius, center))
+		mobs_to_chose += living_thing
+
+	return mobs_to_chose

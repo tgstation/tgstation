@@ -17,20 +17,20 @@
 	var/firestacks_to_give = 20
 
 // All livings in view are valid, including ourselves
-/datum/action/cooldown/spell/aoe/sacred_flame/is_valid_target(atom/cast_on)
-	return isliving(cast_on)
+/datum/action/cooldown/spell/aoe/sacred_flame/is_affected_by_aoe(atom/thing)
+	return isliving(thing)
 
 /datum/action/cooldown/spell/aoe/sacred_flame/get_things_to_cast_on(atom/center)
 	return view(outer_radius, center)
 
-/datum/action/cooldown/spell/aoe/sacred_flame/cast_on_thing_in_aoe(mob/living/cast_on)
-	if(cast_on.anti_magic_check())
+/datum/action/cooldown/spell/aoe/sacred_flame/cast_on_thing_in_aoe(mob/living/victim, mob/living/caster)
+	if(victim.anti_magic_check())
 		return
 
-	cast_on.adjust_fire_stacks(firestacks_to_give)
+	victim.adjust_fire_stacks(firestacks_to_give)
 	// Let people who got afflicted know they're suddenly a matchstick
 	// But skip the caster - they'll know anyways.
-	if(cast_on != owner)
+	if(victim != caster)
 		to_chat(cast_on, span_warning("You suddenly feel very flammable."))
 
 /datum/action/cooldown/spell/aoe/sacred_flame/cast(mob/living/cast_on)

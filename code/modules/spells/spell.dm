@@ -18,16 +18,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	/// for casting things that do not align
 	/// with their sect's alignment - see magic.dm in defines to learn more
 	var/school = SCHOOL_UNSET
-	/// The message displayed if someone tries to cast the spell when it's not ready yet
-	var/still_recharging_msg = span_notice("The spell is still recharging!")
 	/// If the spell uses the wizard spell rank system, the cooldown reduction per rank of the spell
 	var/cooldown_reduction_per_rank = 0 SECONDS
-	/// Only used if charge_type equals to "holder_var".
-	/// The var to reduce on use
-	var/holder_var_type = "bruteloss"
-	/// Only used if charge_type equals to "holder_var".
-	/// The amount adjusted with the mob's var when the spell is used
-	var/holder_var_amount = 20
 	/// What is uttered when the user casts the spell
 	var/invocation
 	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
@@ -37,22 +29,16 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	var/invocation_type = INVOCATION_NONE
 	/// Flag for certain states that the spell requires the user be in to cast.
 	var/spell_requirements = SPELL_REQUIRES_WIZARD_GARB
-	/// The range of the spell.
-	var/range = 7
-	/// The current spell level if taken multiple times by a wizard
-	var/spell_level = 0
+	/// The current spell level, if taken multiple times by a wizard
+	var/spell_level = 1
 	/// The max possible spell level
-	var/level_max = 4
+	var/spell_max_level = 5
 	/// If set to a positive number, the spell will produce sparks when casted.
 	var/sparks_amt = 0
 	/// What type of smoke is spread on cast. Harmless, harmful, or sleeping smoke.
 	var/smoke_type = NO_SMOKE
 	/// The amount of smoke spread.
 	var/smoke_amt = 0
-
-/datum/action/cooldown/spell/New()
-	. = ..()
-	still_recharging_msg = span_warning("[name] is still recharging!")
 
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(!can_cast_spell())
@@ -63,6 +49,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	UpdateButtonIcon()
 	return Activate()
 
+
+/// Checks if the owner of the spell can currently cast it.
+/// Does not check anything involving potential targets.
 /datum/action/cooldown/spell/proc/can_cast_spell()
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
@@ -74,6 +63,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if(!charge_check(user))
 		return FALSE
 	*/
+
+	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
+		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_CONSCIOUS) && owner.stat > CONSCIOUS)
 		to_chat(owner, span_warning("You need to be conscious to cast [src]!"))
@@ -92,11 +84,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
 
-	if(isliving(owner))
-		var/mob/living/living_owner = owner
-		if(!CAN_INVOKE(invocation_type, living_owner))
-			to_chat(owner, span_warning("You can't get the words out to cast [src]!"))
-			return FALSE
+	if(!can_invoke())
+		return FALSE
 
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
@@ -118,8 +107,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	return TRUE
 
-// click_to_activate spells: [target] is what was clicked on
-// All other spells: [target] is the owner of the spell
+/// Check if the target we're casting on is a valid target.
+/// For spells with click_to_activate = TRUE, cast_on will be whatever is clicked
+/// For all other spells, cast_on will be the caster of the spell
+/datum/action/cooldown/spell/proc/is_valid_target(atom/cast_on)
+	return TRUE
+
 /datum/action/cooldown/spell/Activate(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -131,14 +124,14 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if(!before_cast(target))
 		return FALSE
 
-	// Spell is offically being cast
+	// Spell is officially being cast
 	// We do invocation and sound effects here, before cast
 	// (That way stuff like teleports or shape-shifts can be said before done)
 	spell_feedback()
 
 	// Actually cast the spell. Main effects go here
 	cast(target)
-	// And then proceede with the aftermath of the cast
+	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
 	after_cast(target)
 
@@ -148,22 +141,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	UpdateButtonIcon()
 
 	return TRUE
-
-/*
-/obj/effect/proc_holder/spell/proc/charge_check(mob/user, silent = FALSE)
-	switch(charge_type)
-		if("recharge")
-			if(charge_counter < charge_max)
-				if(!silent)
-					to_chat(user, still_recharging_msg)
-				return FALSE
-		if("charges")
-			if(!charge_counter)
-				if(!silent)
-					to_chat(user, span_warning("[name] has no charges left!"))
-				return FALSE
-	return TRUE
-*/
 
 /// Actions done before the actual cast() is called.
 /// Return FALSE to cancel the spell casat before it occurs, TRUE to let it happen
@@ -244,6 +221,28 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		if(INVOCATION_EMOTE)
 			owner.visible_message(invocation, invocation_self_message)
 
+/datum/action/cooldown/spell/proc/can_invoke()
+	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_INVOKE) & COMPONENT_CANCEL_INVOKE)
+		return FALSE
+
+	if(invocation_type == INVOCATION_NONE)
+		return TRUE
+
+	if(!isliving(owner))
+		to_chat(owner, span_warning("You need to be living to invoke [src]!"))
+		return FALSE
+
+	var/mob/living/living_owner = owner
+	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
+		to_chat(owner, span_warning("You can't get form to invoke [src]!"))
+		return FALSE
+
+	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak_vocal())
+		to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
+		return FALSE
+
+	return TRUE
+
 /datum/action/cooldown/spell/proc/revert_cast()
 	next_use_time = 0
 	UpdateButtonIcon()
@@ -314,6 +313,32 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		name,
 		REF(src),
 	)
+
+// MELBERT TODO unit test this
+/datum/action/cooldown/spell/proc/level_spell(bypass_cap = FALSE)
+	// Spell cannot be levelled
+	if(spell_max_level <= 1 || !cooldown_reduction_per_rank)
+		return FALSE
+
+	// Spell is at cap, and we will not bypass it
+	if(!bypass_cap && (spell_level >= spell_max_level))
+		return FALSE
+
+	spell_level++
+	cooldown_time -= cooldown_reduction_per_rank
+	return TRUE
+
+/datum/action/cooldown/spell/proc/delevel_spell()
+	// Spell cannot be levelled
+	if(spell_max_level <= 1 || !cooldown_reduction_per_rank)
+		return FALSE
+
+	if(spell_level <= 1)
+		return FALSE
+
+	spell_level--
+	cooldown_time += cooldown_reduction_per_rank
+	return TRUE
 
 /datum/action/cooldown/spell/vv_get_dropdown()
 	. = ..()

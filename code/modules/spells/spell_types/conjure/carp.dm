@@ -8,6 +8,6 @@
 
 	invocation = "NOUK FHUNMM SACP RISSKA"
 	invocation_type = INVOCATION_SHOUT
-	range = 1
 
+	summon_radius = 1
 	summon_type = list(/mob/living/simple_animal/hostile/carp)

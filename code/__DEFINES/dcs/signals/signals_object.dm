@@ -307,6 +307,11 @@
 #define COMSIG_MOB_AFTER_SPELL_CAST "mob_after_spell_cast"
 // TODO DOC
 #define COMSIG_SPELL_AFTER_CAST "spell_after_cast"
+// TODO DOC
+#define COMSIG_SPELL_CAN_INVOKE "spell_can_invoke"
+	// TODO DOC
+	#define COMPONENT_CANCEL_INVOKE (1<<0)
+
 
 // /obj/item/camera signals
 

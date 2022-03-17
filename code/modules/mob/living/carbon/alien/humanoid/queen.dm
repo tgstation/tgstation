@@ -37,7 +37,6 @@
 	maxHealth = 400
 	health = 400
 	icon_state = "alienq"
-	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize(mapload)
 	//there should only be one queen
@@ -52,9 +51,14 @@
 
 	real_name = src.name
 
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
-	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
+	var/datum/action/cooldown/spell/repulse/xeno/tail_whip = new(src)
+	tail_whip.Grant(src)
+
+	var/datum/action/small_sprite/smallsprite = new(src)
 	smallsprite.Grant(src)
+
+
+	AddAbility(new/obj/effect/proc_holder/alien/royal/queen/promote())
 	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/queen/create_internal_organs()
@@ -63,7 +67,7 @@
 	internal_organs += new /obj/item/organ/alien/acid
 	internal_organs += new /obj/item/organ/alien/neurotoxin
 	internal_organs += new /obj/item/organ/alien/eggsac
-	..()
+	return ..()
 
 //Queen verbs
 /obj/effect/proc_holder/alien/lay_egg

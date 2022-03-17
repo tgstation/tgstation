@@ -127,7 +127,6 @@
 	range = 20
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
-	still_recharging_msg = "<span class='warning'>You can't muster any flames!</span>"
 	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
 	respect_density = TRUE
 	cone_levels = 3

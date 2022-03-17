@@ -70,7 +70,6 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		"sparks_amt",
 		"sparks_spread",
 		"requires_conscious",
-		"still_recharging_msg",
 		"target_ignore_prev",
 	)
 

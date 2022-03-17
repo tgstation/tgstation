@@ -3,6 +3,7 @@
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
 	button_icon_state = "spellcard0"
+	click_cd_override = 1
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 5 SECONDS
@@ -11,10 +12,9 @@
 
 	invocation = "Sigi'lu M'Fan 'Tasia"
 	invocation_type = INVOCATION_SHOUT
-	range = 40
-	click_cd_override = 1
 
 	base_icon_state = "spellcard"
+	cast_range = 40
 	projectile_type = /obj/projectile/spellcard
 	projectile_amount = 5
 	projectiles_per_fire = 7

@@ -459,3 +459,34 @@
 /obj/item/book/granter/crafting_recipe/trash_cannon/recoil(mob/living/carbon/user)
 	to_chat(user, span_warning("The book turns to dust in your hands."))
 	qdel(src)
+
+// MELBERT TODO sort granters
+/obj/item/book/granter/spell/mimery_blockade
+	spell = /obj/effect/proc_holder/spell/targeted/forcewall/mime
+	spellname = "Invisible Blockade"
+	name = "Guide to Advanced Mimery Vol 1"
+	desc = "The pages don't make any sound when turned."
+	icon_state ="bookmime"
+	remarks = list("...")
+
+/obj/item/book/granter/spell/mimery_blockade/attack_self(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)
+
+/obj/item/book/granter/spell/mimery_guns
+	spell = /obj/effect/proc_holder/spell/aimed/finger_guns
+	spellname = "Finger Guns"
+	name = "Guide to Advanced Mimery Vol 2"
+	desc = "There aren't any words written..."
+	icon_state ="bookmime"
+	remarks = list("...")
+
+/obj/item/book/granter/spell/mimery_guns/attack_self(mob/user)
+	. = ..()
+	if(!.)
+		return
+	if(!locate(/obj/effect/proc_holder/spell/targeted/mime/speak) in user.mind.spell_list)
+		user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak)

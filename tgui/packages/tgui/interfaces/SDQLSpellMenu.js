@@ -44,12 +44,6 @@ const typevars = (type) => {
     },
     { name: 'charge_max', type: 'int', options: null, default_value: 100 },
     {
-      name: 'still_recharging_msg',
-      type: 'string',
-      options: null,
-      default_value: '',
-    },
-    {
       name: 'holder_var_type',
       type: 'string',
       options: null,

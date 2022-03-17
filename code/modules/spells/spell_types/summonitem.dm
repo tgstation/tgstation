@@ -7,7 +7,7 @@
 	invocation = "GAR YOK"
 	invocation_type = INVOCATION_WHISPER
 	range = -1
-	level_max = 0 //cannot be improved
+	spell_max_level = 1 //cannot be improved
 	cooldown_min = 100
 	include_user = TRUE
 	action_icon_state = "summons"

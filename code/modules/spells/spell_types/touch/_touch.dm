@@ -111,8 +111,7 @@
 /datum/action/cooldown/spell/touch/proc/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(!isliving(victim) || !(caster.mobility_flags & MOBILITY_USE))
 		return FALSE
-	if(!CAN_INVOKE(invocation_type, caster))
-		to_chat(caster, span_warning("You can't get the words out!"))
+	if(!can_invoke())
 		return FALSE
 
 	invocation()

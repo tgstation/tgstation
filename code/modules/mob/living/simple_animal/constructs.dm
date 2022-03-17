@@ -54,14 +54,17 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	var/spellnum = 1
 	for(var/spell in construct_spells)
-		var/the_spell = new spell(null)
-		AddSpell(the_spell)
+		var/datum/action/cooldown/spell/new_spell = new spell(src)
+		new_spell.Grant
+
+		/* MELBERT TODO reimplement
 		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
 		var/pos = 2+spellnum*31
 		if(construct_spells.len >= 4)
 			pos -= 31*(construct_spells.len - 4)
 		S.action.button.screen_loc = "6:[pos],4:-2"
 		S.action.button.moved = "6:[pos],4:-2"
+		*/
 		spellnum++
 	if(runetype)
 		our_rune = new runetype(src)
@@ -155,9 +158,9 @@
 	mob_size = MOB_SIZE_LARGE
 	force_threshold = 10
 	construct_spells = list(
-						/obj/effect/proc_holder/spell/targeted/forcewall/cult,
-						/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut
-						)
+		/datum/action/cooldown/spell/forcewall/cult,
+		/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut,
+	)
 	runetype = /datum/action/innate/cult/create_rune/wall
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"

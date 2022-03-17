@@ -7,11 +7,14 @@
 /datum/action/cooldown/spell/pointed
 	click_to_activate = TRUE
 
+	/// The base icon state of the spell's button icon, used for editing the icon "on" and "off"
 	var/base_icon_state
 	/// Message showing to the spell owner upon activating pointed spell.
 	var/active_msg = "You prepare to use the spell on a target..."
 	/// Message showing to the spell owner upon deactivating pointed spell.
 	var/deactive_msg = "You dispel the magic..."
+	/// The casting range of our spell
+	var/cast_range = 7
 	/// Variable dictating if the spell will use turf based aim assist
 	var/aim_assist = TRUE
 
@@ -33,31 +36,33 @@
 
 /datum/action/cooldown/spell/pointed/proc/on_activation()
 	to_chat(owner, span_notice("[active_msg] <B>Left-click to activate the spell on a target!</B>"))
-	button_icon_state = "[base_icon_state]1"
+	if(base_icon_state)
+		button_icon_state = "[base_icon_state]1"
 
 /datum/action/cooldown/spell/pointed/proc/on_deactivation()
 	to_chat(owner, span_notice("[deactive_msg]"))
-	button_icon_state = "[base_icon_state]0"
+	if(base_icon_state)
+		button_icon_state = "[base_icon_state]0"
 
-/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/click_target)
 
 	var/atom/aim_assist_target
-	if(aim_assist && isturf(target))
+	if(aim_assist && isturf(click_target))
 		// Find any human in the list. We aren't picky, it's aim assist after all
-		aim_assist_target = locate(/mob/living/carbon/human) in target
+		aim_assist_target = locate(/mob/living/carbon/human) in click_target
 		if(!aim_assist_target)
 			// If we didn't find a human, we settle for any living at all
-			aim_assist_target = locate(/mob/living) in target
+			aim_assist_target = locate(/mob/living) in click_target
 
-	return ..(caller, params, aim_assist_target || target)
+	return ..(caller, params, aim_assist_target || click_target)
 
 /datum/action/cooldown/spell/pointed/is_valid_target(atom/cast_on)
 	if(cast_on == owner)
 		to_chat(owner, span_warning("You cannot cast [src] on yourself!"))
 		return FALSE
 
-	if(get_dist(owner, cast_on) > range)
-		to_chat(owner, span_warning("[target.p_theyre(TRUE)] too far away!"))
+	if(get_dist(owner, cast_on) > cast_range)
+		to_chat(owner, span_warning("[cast_on.p_theyre(TRUE)] too far away!"))
 		return FALSE
 
 	return TRUE
@@ -71,7 +76,7 @@
 /datum/action/cooldown/spell/pointed/projectile
 	unset_after_click = FALSE
 	/// What projectile we create when we shoot our spell.
-	var/projectile_type = /obj/projectile/magic/teleport
+	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
 	/// How many projectiles we can fire per cast. Not all at once, per click
 	var/projectile_amount = 1
 	/// How many projectiles we have yet to fire
@@ -111,7 +116,7 @@
 /datum/action/cooldown/spell/pointed/projectile/proc/fire_projectile(atom/target)
 	current_amount--
 	for(var/i in 1 to projectiles_per_fire)
-		var/obj/projectile/to_fire = new projectile_type(get_turf(owner))
+		var/obj/projectile/to_fire = new projectile_type()
 		ready_projectile(to_fire, target, owner, i)
 		to_fire.fire()
 	return TRUE

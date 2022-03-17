@@ -7,16 +7,19 @@
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/Initialize(mapload)
 	real_name = name
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/repulse/xeno(src))
+
+	var/datum/action/cooldown/spell/repulse/xeno/tail_whip = new(src)
+	tail_whip.Grant(src)
+
 	AddAbility(new /obj/effect/proc_holder/alien/royal/praetorian/evolve())
-	. = ..()
+	return ..()
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/create_internal_organs()
 	internal_organs += new /obj/item/organ/alien/plasmavessel/large
 	internal_organs += new /obj/item/organ/alien/resinspinner
 	internal_organs += new /obj/item/organ/alien/acid
 	internal_organs += new /obj/item/organ/alien/neurotoxin
-	..()
+	return ..()
 
 /obj/effect/proc_holder/alien/royal/praetorian/evolve
 	name = "Evolve"

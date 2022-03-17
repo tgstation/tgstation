@@ -24,3 +24,17 @@
 
 	smoke_type = SMOKE_HARMFUL
 	smoke_amt = 2
+
+/datum/action/cooldown/spell/smoke/disable
+	name = "Paralysing Smoke"
+	desc = "This spell spawns a cloud of paralysing smoke."
+	background_icon_state = "bg_cult"
+
+	cooldown_time = 20 SECONDS
+	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
+
+	cooldown_reduction_per_rank = 2.5 SECONDS //25 deciseconds reduction per rank
+
+	smoke_spread = SMOKE_SLEEPING
+	smoke_amt = 4

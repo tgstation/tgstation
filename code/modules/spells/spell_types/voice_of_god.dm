@@ -2,8 +2,6 @@
 	name = "Voice of God"
 	desc = "Speak with an incredibly compelling voice, forcing listeners to obey your commands."
 	charge_max = 1200 //variable
-	cooldown_min = 0
-	level_max = 1
 	requires_wizard_garb = FALSE
 	requires_no_antimagic = TRUE
 	action_icon = 'icons/mob/actions/actions_items.dmi'

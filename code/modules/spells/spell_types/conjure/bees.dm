@@ -12,7 +12,7 @@
 
 	invocation = "NOT THE BEES"
 	invocation_type = INVOCATION_SHOUT
-	range = 3
 
+	summon_radius = 3
 	summon_type = list(/mob/living/simple_animal/hostile/bee/toxin)
 	summon_amount = 9

@@ -1,49 +1,33 @@
 #define SHADOW_REGEN_RATE 1.5
 
-/obj/effect/proc_holder/spell/targeted/shadowwalk
+/datum/action/cooldown/spell/jaunt/shadowwalk
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
-	charge_max = 0
-	requires_wizard_garb = FALSE
-	requires_no_antimagic = TRUE
-	requires_unphased = TRUE
-	selection_type = "range"
-	range = -1
-	include_user = TRUE
-	cooldown_min = 0
-	overlay = null
-	action_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	action_icon_state = "ninja_cloak"
-	action_background_icon_state = "bg_alien"
+	background_icon_state = "bg_alien"
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "ninja_cloak"
 
-/obj/effect/proc_holder/spell/targeted/shadowwalk/cast_check(skipcharge = 0,mob/user = usr)
+	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED|SPELL_REQUIRES_NO_ANTIMAGIC)
+
+/datum/action/cooldown/spell/jaunt/shadowwalk/cast(mob/living/cast_on)
 	. = ..()
-	if(!.)
-		return FALSE
-	var/area/noteleport_check = get_area(user)
-	if(noteleport_check && noteleport_check.area_flags & NOTELEPORT)
-		to_chat(user, span_danger("Some dull, universal force is stopping you from melting into the shadows here."))
-		return FALSE
-
-/obj/effect/proc_holder/spell/targeted/shadowwalk/cast(list/targets,mob/living/user = usr)
-	var/L = user.loc
-	if(istype(user.loc, /obj/effect/dummy/phased_mob/shadow))
-		var/obj/effect/dummy/phased_mob/shadow/S = L
-		S.end_jaunt(FALSE)
+	if(is_jaunting(cast_on))
+		var/obj/effect/dummy/phased_mob/shadow/jaunt_holder = cast_on.loc
+		jaunt_holder.end_jaunt(FALSE)
 		return
+
+	var/turf/cast_turf = get_turf(cast_on)
+	if(cast_turf.get_lumcount() < SHADOW_SPECIES_LIGHT_THRESHOLD)
+		playsound(cast_turf, 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+		cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
+		cast_on.SetAllImmobility(0)
+		cast_on.setStaminaLoss(0, FALSE)
+		var/obj/effect/dummy/phased_mob/shadow/jaunt_holder = new(cast_turf)
+		cast_on.forceMove(jaunt_holder)
+		jaunt_holder.jaunter = cast_on
+
 	else
-		var/turf/T = get_turf(user)
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			playsound(get_turf(user), 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
-			visible_message(span_boldwarning("[user] melts into the shadows!"))
-			user.SetAllImmobility(0)
-			user.setStaminaLoss(0, 0)
-			var/obj/effect/dummy/phased_mob/shadow/S2 = new(get_turf(user.loc))
-			user.forceMove(S2)
-			S2.jaunter = user
-		else
-			to_chat(user, span_warning("It isn't dark enough here!"))
+		to_chat(cast_on, span_warning("It isn't dark enough here!"))
 
 /obj/effect/dummy/phased_mob/shadow
 	var/mob/living/jaunter

@@ -9,7 +9,7 @@
 	invocation = "HO HO HO"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
-	range = 3
 
+	summon_radius = 3
 	summon_type = list(/obj/item/a_gift)
 	summon_amount = 5

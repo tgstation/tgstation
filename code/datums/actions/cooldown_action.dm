@@ -14,10 +14,10 @@
 	var/text_cooldown = TRUE
 	/// Setting for intercepting clicks before activating the ability
 	var/click_to_activate = FALSE
-	///
+	/// What icon to replace our mouse cursor with when active. Optional, Requires click_to_activate
 	var/ranged_mousepointer
-	///
-	var/click_cd_override = 0
+	/// The cooldown added onto the user's next click. Requires click_to_activate
+	var/click_cd_override = CLICK_CD_CLICK_ABILITY
 	/// If TRUE, we will unset after using our click intercept. Requires click_to_activate
 	var/unset_after_click = TRUE
 	/// Shares cooldowns with other cooldown abilities of the same value, not active if null
@@ -40,7 +40,7 @@
 	return ..()
 
 /datum/action/cooldown/Unshare(mob/freeloader)
-
+	// MELBERT TODO support for shared cooldown click intercepts
 	return ..()
 
 /// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
@@ -97,10 +97,7 @@
 	// And if we reach here, the spell was cast successfully
 	if(unset_after_click)
 		unset_click_ability()
-	if(click_cd_override >= 0)
-		caller.next_click = world.time + click_cd_override
-	else
-		caller.next_click = world.time + CLICK_CD_CLICK_ABILITY
+	caller.next_click = world.time + click_cd_override
 
 	return TRUE
 
@@ -125,9 +122,6 @@
 	owner.click_intercept = null
 	if(ranged_mousepointer)
 		owner.client?.mouse_pointer_icon = initial(owner.client?.mouse_pointer_icon)
-	return TRUE
-
-/datum/action/cooldown/proc/is_valid_target(atom/cast_on)
 	return TRUE
 
 /datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)

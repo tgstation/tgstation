@@ -46,7 +46,7 @@
 		cast_on,
 		cast_on,
 		shape_names_to_image,
-		custom_check = CALLBACK(src, .proc/check_menu, user),
+		custom_check = CALLBACK(src, .proc/check_menu, cast_on),
 		radius = 38,
 	)
 
@@ -99,18 +99,18 @@
 	var/obj/effect/gib_type = isalien(cast_on) ? /obj/effect/gibspawner/xeno : /obj/effect/gibspawner/generic
 
 	for(var/obj/machinery/atmospherics/components/unary/possible_vent in range(10, get_turf(cast_on)))
-		if(length(possible_vent.parents) && possiblevent.parents[1] == our_pipeline)
+		if(length(possible_vent.parents) && possible_vent.parents[1] == our_pipeline)
 			new gib_type(get_turf(possible_vent))
 			playsound(possible_vent, 'sound/effects/reee.ogg', 75, TRUE)
 
-	priority_announce("We detected a pipe blockage around [get_area(get_turf(shapeshifted_targets))], please dispatch someone to investigate.", "Central Command")
+	priority_announce("We detected a pipe blockage around [get_area(get_turf(cast_on))], please dispatch someone to investigate.", "Central Command")
 	cast_on.death()
 	qdel(cast_on)
 
 /datum/action/cooldown/spell/shapeshift/proc/check_menu(mob/living/caster)
 	if(QDELETED(src))
 		return FALSE
-	if(QDELETD(caster))
+	if(QDELETED(caster))
 		return FALSE
 
 	return !caster.incapacitated()
@@ -123,19 +123,18 @@
 	var/mob/living/new_shape = new shapeshift_type(caster.loc)
 	var/obj/shapeshift_holder/new_shape_holder = new(new_shape, src, caster)
 
-	spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
-	spell_requirements &= ~SPELL_REQUIRES_HUMAN
+	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
 	return new_shape
 
-/obj/effect/proc_holder/spell/targeted/shapeshift/proc/restore_form(mob/living/caster)
+/datum/action/cooldown/spell/shapeshift/proc/restore_form(mob/living/caster)
 	var/obj/shapeshift_holder/current_shift = is_shifted(caster)
-	if(QDELETED(shapeshift_ability))
+	if(QDELETED(current_shift))
 		return
 
 	var/mob/living/restored_player = current_shift.stored
 
-	shapeshift_ability.restore()
+	current_shift.restore()
 	spell_requirements = initial(spell_requirements)
 
 	return restored_player
@@ -147,9 +146,9 @@
 	var/mob/living/stored
 	var/mob/living/shape
 	var/restoring = FALSE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/source
+	var/datum/action/cooldown/spell/shapeshift/source
 
-/obj/shapeshift_holder/Initialize(mapload, obj/effect/proc_holder/spell/targeted/shapeshift/_source, mob/living/caster)
+/obj/shapeshift_holder/Initialize(mapload, datum/action/cooldown/spell/shapeshift/_source, mob/living/caster)
 	. = ..()
 	source = _source
 	shape = loc

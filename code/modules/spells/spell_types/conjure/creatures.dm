@@ -9,8 +9,8 @@
 	invocation = "IA IA"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
-	range = 3
 
+	summon_radius = 3
 	summon_type = list(/mob/living/simple_animal/hostile/netherworld)
 	summon_amount = 10
 

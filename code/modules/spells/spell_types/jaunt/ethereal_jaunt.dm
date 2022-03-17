@@ -173,6 +173,43 @@
 	steam.set_up(10, FALSE, loc)
 	steam.start()
 
+
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift
+	name = "Phase Shift"
+	desc = "This spell allows you to pass through walls."
+	background_icon_state = "bg_demon"
+	icon_icon = 'icons/mob/actions/actions_cult.dmi'
+	button_icon_state = "phaseshift"
+
+	school = SCHOOL_TRANSMUTATION
+	cooldown_time = 25 SECONDS
+	invocation_type = INVOCATION_NONE
+	spell_requirements = NONE
+
+	jaunt_duration = 5 SECONDS
+	jaunt_in_time = 0.6 SECONDS
+	jaunt_out_time = 0.6 SECONDS
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
+
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/jaunt_steam(mobloc)
+	return
+
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/angelic
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith/angelic
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out/angelic
+
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/mystic
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith/mystic
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out/mystic
+
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/golem
+	cooldown_time = 80 SECONDS
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/cult/phase
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/cult/phase/out
+
+
+/// The dummy that holds people jaunting. Maybe one day we can replace it.
 /obj/effect/dummy/phased_mob/spell_jaunt
 	movespeed = 2 //quite slow.
 	var/reappearing = FALSE

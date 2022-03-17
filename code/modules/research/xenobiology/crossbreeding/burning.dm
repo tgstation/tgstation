@@ -280,10 +280,10 @@ Burning extracts:
 		return
 	var/mob/living/living_user = user
 	user.visible_message(span_danger("[src] absorbs [user], transforming [user.p_them()] into a slime!"))
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/slimeform/slimeform = new(user.mind || user)
-	slimeform.remove_on_restore = TRUE
-	slimeform.Grant(user)
-	slimeform.cast(user)
+	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
+	transform.remove_on_restore = TRUE
+	transform.Grant(user)
+	transform.cast(user)
 	return ..()
 
 /obj/item/slimecross/burning/lightpink

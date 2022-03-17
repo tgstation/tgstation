@@ -224,7 +224,7 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/mob/target_mob = target.mob
 
-	if(((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs)) && (locate(/datum/action/cooldown/spell in target_mob.actions)))
+	if(((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs)) && (locate(/datum/action/cooldown/spell) in target_mob.actions))
 		set_spells_tab(target, target_mob)
 		return TRUE
 
