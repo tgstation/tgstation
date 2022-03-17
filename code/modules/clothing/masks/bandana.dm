@@ -40,42 +40,46 @@
 		else
 			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 
-/obj/item/clothing/mask/bandana/red
-	name = "red bandana"
-	desc = "A fine red bandana with nanotech lining."
-	icon_state = "bandred"
-
-/obj/item/clothing/mask/bandana/blue
-	name = "blue bandana"
-	desc = "A fine blue bandana with nanotech lining."
-	icon_state = "bandblue"
-
-/obj/item/clothing/mask/bandana/green
-	name = "green bandana"
-	desc = "A fine green bandana with nanotech lining."
-	icon_state = "bandgreen"
-
-/obj/item/clothing/mask/bandana/gold
-	name = "gold bandana"
-	desc = "A fine gold bandana with nanotech lining."
-	icon_state = "bandgold"
-
-/obj/item/clothing/mask/bandana/black
-	name = "black bandana"
-	desc = "A fine black bandana with nanotech lining."
-	icon_state = "bandblack"
-
-/obj/item/clothing/mask/bandana/white
-	name = "white bandana"
-	desc = "A fine white bandana with nanotech lining."
-	icon_state = "bandwhite"
-
-/obj/item/clothing/mask/bandana/skull
-	name = "skull bandana"
-	desc = "A fine black bandana with nanotech lining and a skull emblem."
-	icon_state = "bandskull"
-
 /obj/item/clothing/mask/bandana/durathread
 	name = "durathread bandana"
 	desc = "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
 	icon_state = "banddurathread"
+
+/obj/item/clothing/mask/bandana/color
+	dying_key = DYE_REGISTRY_BANDANA
+
+/obj/item/clothing/mask/bandana/color/red
+	name = "red bandana"
+	desc = "A fine red bandana with nanotech lining."
+	icon_state = "bandred"
+
+/obj/item/clothing/mask/bandana/color/blue
+	name = "blue bandana"
+	desc = "A fine blue bandana with nanotech lining."
+	icon_state = "bandblue"
+
+/obj/item/clothing/mask/bandana/color/green
+	name = "green bandana"
+	desc = "A fine green bandana with nanotech lining."
+	icon_state = "bandgreen"
+
+/obj/item/clothing/mask/bandana/color/gold
+	name = "gold bandana"
+	desc = "A fine gold bandana with nanotech lining."
+	icon_state = "bandgold"
+
+/obj/item/clothing/mask/bandana/color/black
+	name = "black bandana"
+	desc = "A fine black bandana with nanotech lining."
+	icon_state = "bandblack"
+
+/obj/item/clothing/mask/bandana/color/white
+	name = "white bandana"
+	desc = "A fine white bandana with nanotech lining."
+	icon_state = "bandwhite"
+
+/obj/item/clothing/mask/bandana/color/skull
+	name = "skull bandana"
+	desc = "A fine black bandana with nanotech lining and a skull emblem."
+	icon_state = "bandskull"
+
