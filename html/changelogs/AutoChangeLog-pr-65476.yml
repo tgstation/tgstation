@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "DeltaStation's Bomb Range no longer has a floating camera. Instead, the camera has been redirected to attach on the wall the proper way."
