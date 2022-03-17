@@ -233,7 +233,6 @@
 	limb.desc = "A synthetically produced [selected_category] limb, grown in a tube. This one is for the [parse_zone(limb.body_zone)]."
 	limb.limb_id = selected_category
 	limb.update_icon_dropped()
-	limb.original_owner = WEAKREF(src)  //prevents updating the icon, so a lizard arm on a human stays a lizard arm etc.
 
 /obj/machinery/limbgrower/RefreshParts()
 	reagents.maximum_volume = 0

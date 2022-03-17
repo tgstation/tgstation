@@ -9,7 +9,7 @@
 	/// The icon for Organic limbs using greyscale
 	var/icon_greyscale = DEFAULT_BODYPART_ICON_ORGANIC
 	///The icon for non-greyscale limbs
-	var/icon_static = null
+	var/icon_static = 'icons/mob/human_parts.dmi'
 	///The icon for husked limbs
 	var/icon_husk = 'icons/mob/human_parts.dmi'
 	///The type of husk for building an iconstate
@@ -17,7 +17,6 @@
 	layer = BELOW_MOB_LAYER //so it isn't hidden behind objects when on the floor
 	grind_results = list(/datum/reagent/bone_dust = 10, /datum/reagent/liquidgibs = 5) // robotic bodyparts and chests/heads cannot be ground
 	var/mob/living/carbon/owner
-	var/datum/weakref/original_owner
 	var/needs_processing = FALSE
 
 	///A bitfield of bodytypes for clothing, surgery, and misc information
@@ -728,17 +727,6 @@
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 //set is_creating to true if you want to change the appearance of the limb outside of mutation changes or forced changes.
 /obj/item/bodypart/proc/update_limb(dropping_limb = FALSE, is_creating = FALSE)
-	/*if(source)
-		limb_owner = source
-		if(!original_owner)
-			original_owner = source
-	else
-		limb_owner = owner
-		if(original_owner && original_owner != owner) //Foreign limb
-			no_update = TRUE
-		else
-			no_update = FALSE*/
-
 	if(HAS_TRAIT(owner, TRAIT_HUSK) && IS_ORGANIC_LIMB(src))
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		is_husked = TRUE
@@ -793,9 +781,6 @@
 	if(!IS_ORGANIC_LIMB(src))
 		dmg_overlay_type = "robotic"
 
-	/*if(dropping_limb)
-		no_update = TRUE //when attached, the limb won't be affected by the appearance changes of its mob owner.
-		*/
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
@@ -810,7 +795,7 @@
 	add_overlay(standing)
 
 //Gives you a proper icon appearance for the dismembered limb
-/obj/item/bodypart/proc/get_limb_icon(dropped, draw_external_organs)
+/obj/item/bodypart/proc/get_limb_icon(dropped)
 	icon_state = "" //to erase the default sprite, we're building the visual aspects of the bodypart through overlays alone.
 
 	. = list()
@@ -846,8 +831,8 @@
 		return
 
 	////This is the MEAT of limb icon code
-	limb.icon = icon
-	if(!should_draw_greyscale || !icon)
+	limb.icon = icon_greyscale
+	if(!should_draw_greyscale || !icon_greyscale)
 		limb.icon = icon_static
 
 	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
@@ -867,9 +852,9 @@
 		draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
 
 	if(draw_color)
-		limb.color = "#[draw_color]"
+		limb.color = "[draw_color]"
 		if(aux_zone)
-			aux.color = "#[draw_color]"
+			aux.color = "[draw_color]"
 
 	//EMISSIVE CODE START
 	if(blocks_emissive)
@@ -883,9 +868,6 @@
 			aux.overlays += aux_em_block
 
 	//EMISSIVE CODE END
-	if(!draw_external_organs)
-		return
-
 	//Draw external organs like horns and frills
 	for(var/obj/item/organ/external/external_organ in external_organs)
 		if(!dropped && !external_organ.can_draw_on_bodypart(owner))

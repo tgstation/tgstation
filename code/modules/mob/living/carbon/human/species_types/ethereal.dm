@@ -75,6 +75,12 @@
 	var/obj/item/organ/heart/ethereal/ethereal_heart = C.getorganslot(ORGAN_SLOT_HEART)
 	ethereal_heart.ethereal_color = default_color
 
+	//The following code is literally only to make admin-spawned ethereals not be black.
+	C.dna.features["mcolor"] = C.dna.features["ethcolor"] //Ethcolor and Mut color are both dogshit and i hate them
+	for(var/obj/item/bodypart/BP as anything in C.bodyparts)
+		if(BP.limb_id == SPECIES_ETHEREAL)
+			BP.update_limb(is_creating = TRUE)
+
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
 	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
@@ -94,6 +100,9 @@
 
 /datum/species/ethereal/spec_updatehealth(mob/living/carbon/human/H)
 	. = ..()
+	if(!ethereal_light)
+		return
+
 	if(H.stat != DEAD && !EMPeffect)
 		var/healthpercent = max(H.health, 0) / 100
 		if(!emageffect)

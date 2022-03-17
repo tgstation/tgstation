@@ -218,13 +218,8 @@
 
 	. += emissive_blocker(standing.icon, standing.icon_state, alpha = standing.alpha)
 
-/mob/living/carbon/update_body()
-	update_body_parts()
-
-/mob/living/carbon/proc/assign_bodypart_ownership()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		BP.original_owner = WEAKREF(src)
+/mob/living/carbon/update_body(is_creating)
+	update_body_parts(is_creating)
 
 /mob/living/carbon/proc/update_body_parts(var/update_limb_data)
 	//Check the cache to see if it needs a new sprite

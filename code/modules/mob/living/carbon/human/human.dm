@@ -8,6 +8,7 @@
 	create_bodyparts()
 
 	setup_human_dna()
+	prepare_huds() //Prevents a nasty runtime on human init
 
 	if(dna.species)
 		INVOKE_ASYNC(src, .proc/set_species, dna.species.type)

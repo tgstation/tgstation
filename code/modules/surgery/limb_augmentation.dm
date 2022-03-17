@@ -59,7 +59,12 @@
 			tool.cut_overlays()
 			tool = tool.contents[1]
 		if(istype(tool) && user.temporarilyRemoveItemFromInventory(tool))
-			tool.replace_limb(target, TRUE)
+			if(!tool.replace_limb(target, TRUE))
+				display_results(user, target, "<span class='warning'>You fail in replacing [target]'s [parse_zone(target_zone)]! Their body has rejected [tool]!</span>",
+				"<span class='warning'>[user] fails to replace [target]'s [parse_zone(target_zone)]!</span>",
+				"<span class='warning'>[user] fails to replaces [target]'s [parse_zone(target_zone)]!</span>")
+				tool.forceMove(target.loc)
+				return
 		display_results(user, target, span_notice("You successfully augment [target]'s [parse_zone(target_zone)]."),
 			span_notice("[user] successfully augments [target]'s [parse_zone(target_zone)] with [tool]!"),
 			span_notice("[user] successfully augments [target]'s [parse_zone(target_zone)]!"))

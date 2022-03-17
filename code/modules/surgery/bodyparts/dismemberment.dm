@@ -129,6 +129,7 @@
 			organ.transfer_to_limb(src, phantom_owner)
 
 	update_icon_dropped()
+	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
 	phantom_owner.update_hair()
@@ -304,11 +305,13 @@
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special)
 	if(!istype(limb_owner))
 		return
-	var/obj/item/bodypart/limb = limb_owner.get_bodypart(body_zone) //needs to happen before attach because multiple limbs in same zone breaks helpers
-	if(!attach_limb(limb_owner, special))//we can attach this limb and drop the old after because of our robust bodyparts system. you know, just for a sec.
-		return
-	if(limb)
-		limb.drop_limb(1)
+	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
+	if(old_limb)
+		drop_limb(TRUE)
+
+	. = attach_limb(limb_owner, special)
+	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
+		old_limb.attach_limb(limb_owner, TRUE)
 
 /obj/item/bodypart/head/replace_limb(mob/living/carbon/head_owner, special)
 	if(!istype(head_owner))
@@ -323,6 +326,11 @@
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
 	. = TRUE
+
+	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype))
+		return FALSE
+
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
@@ -365,11 +373,11 @@
 	if(can_be_disabled)
 		update_disabled()
 
+	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_hair()
 	new_limb_owner.update_damage_overlays()
-
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.

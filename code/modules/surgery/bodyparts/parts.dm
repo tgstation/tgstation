@@ -8,6 +8,7 @@
 	var/acceptable_bodytype = BODYTYPE_HUMANOID
 	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
+	is_dimorphic = TRUE
 	px_x = 0
 	px_y = 0
 	stam_damage_coeff = 1

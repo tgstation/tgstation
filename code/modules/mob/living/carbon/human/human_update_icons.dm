@@ -58,7 +58,7 @@ There are several things that need to be remembered:
 	update_body_parts() // basically a better and cooler handle_mutant_bodyparts (at least until handle_mutant_bodyparts is annihilated)
 
 
-/mob/living/carbon/human/update_body()
+/mob/living/carbon/human/update_body(is_creating)
 	dna.species.handle_body(src)
 	..()
 
