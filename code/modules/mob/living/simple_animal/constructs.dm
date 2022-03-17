@@ -42,8 +42,6 @@
 	var/can_repair = FALSE
 	/// Whether this construct can repair itself. Works independently of can_repair.
 	var/can_repair_self = FALSE
-	var/runetype
-	var/datum/action/innate/cult/create_rune/our_rune
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 
@@ -54,8 +52,8 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	var/spellnum = 1
 	for(var/spell in construct_spells)
-		var/datum/action/cooldown/spell/new_spell = new spell(src)
-		new_spell.Grant
+		var/datum/action/new_spell = new spell(src)
+		new_spell.Grant(src)
 
 		/* MELBERT TODO reimplement
 		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
@@ -66,18 +64,17 @@
 		S.action.button.moved = "6:[pos],4:-2"
 		*/
 		spellnum++
+
+	/* MELBERT TODO probably no longer needed
 	if(runetype)
 		our_rune = new runetype(src)
 		our_rune.Grant(src)
 		var/pos = 2+spellnum*31
 		our_rune.button.screen_loc = "6:[pos],4:-2"
 		our_rune.button.moved = "6:[pos],4:-2"
+	*/
 	if(icon_state)
 		add_overlay("glow_[icon_state]_[theme]")
-
-/mob/living/simple_animal/hostile/construct/Destroy()
-	QDEL_NULL(our_rune)
-	return ..()
 
 /mob/living/simple_animal/hostile/construct/Login()
 	. = ..()
@@ -159,9 +156,9 @@
 	force_threshold = 10
 	construct_spells = list(
 		/datum/action/cooldown/spell/forcewall/cult,
-		/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut,
+		/datum/action/cooldown/spell/basic_projectile/juggernaut,
+		/datum/action/innate/cult/create_rune/wall,
 	)
-	runetype = /datum/action/innate/cult/create_rune/wall
 	playstyle_string = "<b>You are a Juggernaut. Though slow, your shell can withstand heavy punishment, \
 						create shield walls, rip apart enemies and walls alike, and even deflect energy weapons.</b>"
 
@@ -225,8 +222,10 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
-	runetype = /datum/action/innate/cult/create_rune/tele
+	construct_spells = list(
+		/datum/action/spell/cooldown/jaunt/ethereal_jaunt/shift/shift,
+		/datum/action/innate/cult/create_rune/tele,
+	)
 	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
 
 	var/attack_refund = 10 //1 second per attack
@@ -260,12 +259,18 @@
 //////////////////////////Wraith-alts////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith/angelic
 	theme = THEME_HOLY
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/angelic)
+	construct_spells = list(
+		/datum/action/spell/cooldown/jaunt/ethereal_jaunt/shift/angelic,
+		/datum/action/innate/cult/create_rune/tele,
+	)
 	loot = list(/obj/item/ectoplasm/angelic)
 
 /mob/living/simple_animal/hostile/construct/wraith/mystic
 	theme = THEME_WIZARD
-	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/mystic)
+	construct_spells = list(
+		/datum/action/spell/cooldown/jaunt/ethereal_jaunt/shift/mystic,
+		/datum/action/innate/cult/create_rune/tele,
+	)
 	loot = list(/obj/item/ectoplasm/mystic)
 
 /mob/living/simple_animal/hostile/construct/wraith/noncult
@@ -292,13 +297,13 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	attack_sound = 'sound/weapons/punch2.ogg'
 	construct_spells = list(
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-						/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
-						)
-	runetype = /datum/action/innate/cult/create_rune/revive
+		/datum/action/cooldown/spell/conjure/cult_floor,
+		/datum/action/cooldown/spell/conjure/cult_wall,
+		/datum/action/cooldown/spell/conjure/soulstone,
+		/datum/action/cooldown/spell/conjure/construct/lesser,
+		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
+		/datum/action/innate/cult/create_rune/revive,
+	)
 	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
 
 						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
@@ -360,30 +365,32 @@
 	theme = THEME_HOLY
 	loot = list(/obj/item/ectoplasm/angelic)
 	construct_spells = list(
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/purified,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-						/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
-						)
-
+		/datum/action/cooldown/spell/conjure/soulstone/purified,
+		/datum/action/cooldown/spell/conjure/construct/lesser,
+		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
+		/datum/action/innate/cult/create_rune/revive,
+	)
 /mob/living/simple_animal/hostile/construct/artificer/mystic
 	theme = THEME_WIZARD
 	loot = list(/obj/item/ectoplasm/mystic)
 	construct_spells = list(
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/mystic,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-						/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
-						)
+		/datum/action/cooldown/spell/conjure/cult_floor,
+		/datum/action/cooldown/spell/conjure/cult_wall,
+		/datum/action/cooldown/spell/conjure/soulstone/mystic,
+		/datum/action/cooldown/spell/conjure/construct/lesser,
+		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
+		/datum/action/innate/cult/create_rune/revive,
+	)
 
 /mob/living/simple_animal/hostile/construct/artificer/noncult
 	construct_spells = list(
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/wall,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/floor,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone/noncult,
-						/obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser,
-						/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
-						)
+		/datum/action/cooldown/spell/conjure/cult_floor,
+		/datum/action/cooldown/spell/conjure/cult_wall,
+		/datum/action/cooldown/spell/conjure/soulstone/noncult,
+		/datum/action/cooldown/spell/conjure/construct/lesser,
+		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
+		/datum/action/innate/cult/create_rune/revive,
+	)
 
 /////////////////////////////Harvester/////////////////////////
 /mob/living/simple_animal/hostile/construct/harvester
@@ -401,8 +408,10 @@
 	attack_verb_simple = "butcher"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/area_conversion,
-							/obj/effect/proc_holder/spell/targeted/forcewall/cult)
+	construct_spells = list(
+		/datum/action/cooldown/spell/aoe/area_conversion,
+		/datum/action/cooldown/spell/forcewall/cult,
+	)
 	playstyle_string = "<B>You are a Harvester. You are incapable of directly killing humans, but your attacks will remove their limbs: \
 						Bring those who still cling to this world of illusion back to the Geometer so they may know Truth. Your form and any you are pulling can pass through runed walls effortlessly.</B>"
 	can_repair = TRUE

@@ -36,9 +36,9 @@
 	cast_on.become_blind(ABYSSAL_GAZE_BLIND)
 	addtimer(CALLBACK(src, .proc/cure_blindness, cast_on), blind_duration)
 	if(ishuman(cast_on))
-		var/mob/living/carbon/human/human_cast_on = targets[1]
+		var/mob/living/carbon/human/human_cast_on = cast_on
 		human_cast_on.adjust_coretemperature(-amount_to_cool)
-	human_cast_on.adjust_bodytemperature(-amount_to_cool)
+	cast_on.adjust_bodytemperature(-amount_to_cool)
 
 /**
  * cure_blidness: Cures Abyssal Gaze blindness from the target

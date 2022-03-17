@@ -79,12 +79,9 @@
 /mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload, obj/effect/dummy/phased_mob/bloodpool)//Bloodpool is the blood pool we spawn in
 	. = ..()
 	ADD_TRAIT(src, TRAIT_BLOODCRAWL_EAT, "innate")
-	var/obj/effect/proc_holder/spell/bloodcrawl/bloodspell = new
-	AddSpell(bloodspell)
-	if(istype(loc, /obj/effect/dummy/phased_mob))
-		bloodspell.phased = TRUE
-	if(bloodpool)
-		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(src)
+	crawl.Grant(src)
+	bloodpool?.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN, COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
 
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/simple_animal/hostile/imp/slaughter/proc/bodyslam(atom/attack_target)

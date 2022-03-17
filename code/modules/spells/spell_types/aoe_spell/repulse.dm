@@ -19,7 +19,7 @@
 /datum/action/cooldown/spell/aoe/repulse/get_things_to_cast_on(atom/center)
 	return view(outer_radius, center)
 
-/datum/action/cooldown/spell/aoe/repulse/cast_on_thing_in_aoe(atom/victim, atom/caster)
+/datum/action/cooldown/spell/aoe/repulse/cast_on_thing_in_aoe(atom/movable/victim, atom/caster)
 	if(ismob(victim))
 		var/mob/victim_mob = victim
 		if(victim_mob.anti_magic_check())
@@ -45,7 +45,7 @@
 			to_chat(victim, span_userdanger("You're thrown back by [caster]!"))
 
 		// So stuff gets tossed around at the same time.
-		caster.safe_throw_at(throwtarget, ((clamp((max_throw - (clamp(dist_from_caster - 2, 0, dist_from_caster))), 3, max_throw))), 1, caster, force = repulse_force)
+		victim.safe_throw_at(throwtarget, ((clamp((max_throw - (clamp(dist_from_caster - 2, 0, dist_from_caster))), 3, max_throw))), 1, caster, force = repulse_force)
 
 /datum/action/cooldown/spell/aoe/repulse/wizard
 	name = "Repulse"
@@ -67,7 +67,7 @@
 		return FALSE
 
 	if(isliving(thing))
-		var/mob/living/living_thing = cast_on
+		var/mob/living/living_thing = thing
 		if(living_thing.anti_magic_check())
 			return FALSE
 

@@ -402,11 +402,12 @@
 		if(L.maxHealth <= 0)
 			to_chat(L, span_userdanger("Your weakened soul is completely consumed by the [src]!"))
 			return
+		/* MELBER TODO this is just a soul tap
 		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
 			spell.charge_counter = spell.charge_max
 			spell.recharging = FALSE
 			spell.update_appearance()
-
+		*/
 /obj/projectile/magic/wipe
 	name = "bolt of possession"
 	icon_state = "wipe"
@@ -616,13 +617,13 @@
 	range = 20
 	speed = 5
 	trigger_range = 0
-	linger = TRUE
+	can_only_hit_target = TRUE
 	nodamage = FALSE
-	paralyze = 60
+	paralyze = 6 SECONDS
 	hitsound = 'sound/magic/mm_hit.ogg'
 
 	trail = TRUE
-	trail_lifespan = 5
+	trail_lifespan = 0.5 SECONDS
 	trail_icon_state = "magicmd"
 
 /obj/projectile/magic/aoe/magic_missile/on_hit(target)
@@ -647,7 +648,7 @@
 	knockdown = 50
 	hitsound = 'sound/weapons/punch3.ogg'
 	trigger_range = 0
-	check_holy = TRUE
+	blocked_by_holiness = TRUE
 	ignored_factions = list("cult")
 	range = 15
 	speed = 7

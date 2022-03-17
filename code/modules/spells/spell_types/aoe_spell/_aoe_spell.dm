@@ -23,7 +23,7 @@
 	// Get every atom around us to our aoe cast on
 	var/list/atom/things_to_cast_on = get_things_to_cast_on(cast_on)
 	// If we have a target limit, shuffle it (for fariness)
-	if(max_target > 0)
+	if(max_targets > 0)
 		things_to_cast_on = shuffle(things_to_cast_on)
 
 	// Now go through and cast our spell where applicable

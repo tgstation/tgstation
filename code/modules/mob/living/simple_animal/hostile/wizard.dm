@@ -36,11 +36,12 @@
 	var/next_cast = 0
 	var/datum/action/cooldown/spell/pointed/projectile/fireball/fireball
 	var/datum/action/cooldown/spell/teleport/radius_turf/blink/blink
-	var/obj/effect/proc_holder/spell/targeted/projectile/magic_missile/magic_missile
+	var/datum/action/cooldown/spell/aoe/magic_missile/magic_missile
 
 /mob/living/simple_animal/hostile/wizard/Initialize(mapload)
 	. = ..()
-	implants += new /obj/item/implant/exile(src)
+	var/obj/item/implant/exile/exiled = new /obj/item/implant/exile(src)
+	exiled.implant(src)
 
 	fireball = new(src)
 	fireball.spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_MIND)

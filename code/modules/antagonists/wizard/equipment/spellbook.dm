@@ -1,28 +1,44 @@
 /datum/spellbook_entry
+	/// The name of the entry
 	var/name = "Entry Name"
-
-	var/spell_type = null
+	/// The type of spell that the entry grants
+	var/spell_type
+	/// The description of the entry
 	var/desc = ""
-	var/category = "Offensive"
+	/// The category the entry falls in
+	var/category = "Error"
+	/// How many book charges does the spell take
 	var/cost = 2
+	/// How many times has the spell been purchased
 	var/times = 0
+	/// Is this refundable?
 	var/refundable = TRUE
-	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
+	/// A reference to the actual spell that's purchased. Just kinda generated whenever.
+	var/datum/action/cooldown/spell/spell
+	/// Flavor. Verb used in saying how the spell is aquired. Ex "[Learn] Fireball" or "[Summon] Ghosts"
 	var/buy_word = "Learn"
+	/// The cooldown of the spell
 	var/cooldown
+	/// Whether the spell requires wizard garb or not
 	var/requires_wizard_garb = FALSE
-	var/limit //used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
-	var/list/no_coexistance_typecache //Used so you can't have specific spells together
+	/// Used to prevent a spellbook_entry from being bought more than X times with one wizard spellbook
+	var/limit
+	/// Used so you can't have specific spells together
+	var/list/no_coexistance_typecache
 
 /datum/spellbook_entry/New()
 	..()
 	no_coexistance_typecache = typecacheof(no_coexistance_typecache)
 
+/datum/spellbook_entry/Destroy(force, ...)
+	spell = null
+	return ..()
+
 /datum/spellbook_entry/proc/IsAvailable() // For config prefs / gamemode restrictions - these are round applied
 	return TRUE
 
-/datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user,obj/item/spellbook/book) // Specific circumstances
-	if(book.uses<cost || limit == 0)
+/datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user, obj/item/spellbook/book) // Specific circumstances
+	if(book.uses < cost || limit == 0)
 		return FALSE
 	for(var/spell in user.mind.spell_list)
 		if(is_type_in_typecache(spell, no_coexistance_typecache))
@@ -30,11 +46,11 @@
 	return TRUE
 
 /datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
-	if(!S || QDELETED(S))
-		S = new spell_type()
+	if(!spell || QDELETED(spell))
+		spell = new spell_type()
 	//Check if we got the spell already
-	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
-		if(initial(S.name) != initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
+	for(var/datum/action/cooldown/spell/aspell in user.mind.spell_list)
+		if(initial(spell.name) != initial(aspell.name)) // Not using directly in case it was learned from one spellbook then upgraded in another
 			continue
 		if(aspell.spell_level >= aspell.level_max)
 			to_chat(user,  span_warning("This spell cannot be improved further!"))
@@ -71,8 +87,8 @@
 	//No same spell found - just learn it
 	log_spellbook("[key_name(user)] learned [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-	user.mind.AddSpell(S)
-	to_chat(user, span_notice("You have learned [S.name]."))
+	user.mind.AddSpell(spell)
+	to_chat(user, span_notice("You have learned [spell.name]."))
 	return TRUE
 
 /datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user,obj/item/spellbook/book)
@@ -80,10 +96,10 @@
 		return FALSE
 	if(!book.can_refund)
 		return FALSE
-	if(!S)
-		S = new spell_type()
-	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
-		if(initial(S.name) == initial(aspell.name))
+	if(!spell)
+		spell = new spell_type()
+	for(var/datum/action/cooldown/spell/aspell in user.mind.spell_list)
+		if(initial(spell.name) == initial(aspell.name))
 			return TRUE
 	return FALSE
 
@@ -92,16 +108,16 @@
 	if(!(user in A.contents))
 		to_chat(user, span_warning("You can only refund spells at the wizard lair!"))
 		return -1
-	if(!S)
-		S = new spell_type()
+	if(!spell)
+		spell = new spell_type()
 	var/spell_levels = 0
-	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
-		if(initial(S.name) == initial(aspell.name))
+	for(var/datum/action/cooldown/spell/aspell in user.mind.spell_list)
+		if(initial(spell.name) == initial(aspell.name))
 			spell_levels = aspell.spell_level
 			user.mind.spell_list.Remove(aspell)
 			name = initial(name)
 			log_spellbook("[key_name(user)] refunded [src] for [cost * (spell_levels+1)] points")
-			qdel(S)
+			qdel(spell)
 			return cost * (spell_levels+1)
 	return -1
 
@@ -109,129 +125,136 @@
 /datum/spellbook_entry/proc/GetInfo()
 	if(!spell_type)
 		return
-	if(!S)
-		S = new spell_type()
-	if(S.charge_type == "recharge")
-		cooldown = S.charge_max/10
-	if(S.requires_wizard_garb)
+	if(!spell)
+		spell = new spell_type()
+	if(spell.charge_type == "recharge")
+		cooldown = spell.charge_max/10
+	if(spell.requires_wizard_garb)
 		requires_wizard_garb = TRUE
 
 /datum/spellbook_entry/fireball
 	name = "Fireball"
 	desc = "Fires an explosive fireball at a target. Considered a classic among all wizards."
-	spell_type = /obj/effect/proc_holder/spell/aimed/fireball
+	spell_type = /datum/action/cooldown/spell/pointed/projectile/fireball
+	category = "Offensive"
 
 /datum/spellbook_entry/spell_cards
 	name = "Spell Cards"
 	desc = "Blazing hot rapid-fire homing cards. Send your foes to the shadow realm with their mystical power!"
-	spell_type = /obj/effect/proc_holder/spell/aimed/spell_cards
+	spell_type = /datum/action/cooldown/spell/pointed/projectile/spell_cards
+	category = "Offensive"
 
 /datum/spellbook_entry/rod_form
 	name = "Rod Form"
 	desc = "Take on the form of an immovable rod, destroying all in your path. Purchasing this spell multiple times will also increase the rod's damage and travel range."
-	spell_type = /obj/effect/proc_holder/spell/targeted/rod_form
+	spell_type = /datum/action/cooldown/spell/rod_form
+	category = "Offensive"
 
 /datum/spellbook_entry/magicm
 	name = "Magic Missile"
 	desc = "Fires several, slow moving, magic projectiles at nearby targets."
-	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
+	spell_type = /datum/action/cooldown/spell/aoe/magic_missile
 	category = "Defensive"
 
 /datum/spellbook_entry/disintegrate
 	name = "Smite"
 	desc = "Charges your hand with an unholy energy that can be used to cause a touched victim to violently explode."
-	spell_type = /obj/effect/proc_holder/spell/targeted/touch/disintegrate
+	spell_type = /datum/action/cooldown/spell/touch/smite
+	category = "Offensive"
 
 /datum/spellbook_entry/disabletech
 	name = "Disable Tech"
 	desc = "Disables all weapons, cameras and most other technology in range."
-	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
+	spell_type = /datum/action/cooldown/spell/emp/disable_tech
 	category = "Defensive"
 	cost = 1
 
 /datum/spellbook_entry/repulse
 	name = "Repulse"
 	desc = "Throws everything around the user away."
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
+	spell_type = /datum/action/cooldown/spell/aoe/repulse
 	category = "Defensive"
 
 /datum/spellbook_entry/lightning_packet
 	name = "Thrown Lightning"
 	desc = "Forged from eldrich energies, a packet of pure power, known as a spell packet will appear in your hand, that when thrown will stun the target."
-	spell_type = /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
+	spell_type = /datum/action/cooldown/spell/conjure_item/spellpacket
 	category = "Defensive"
 
 /datum/spellbook_entry/timestop
 	name = "Time Stop"
 	desc = "Stops time for everyone except for you, allowing you to move freely while your enemies and even projectiles are frozen."
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/timestop
+	spell_type = /datum/action/cooldown/spell/timestop
 	category = "Defensive"
 
 /datum/spellbook_entry/smoke
 	name = "Smoke"
 	desc = "Spawns a cloud of choking smoke at your location."
-	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
+	spell_type = /datum/action/cooldown/spell/smoke
 	category = "Defensive"
 	cost = 1
 
 /datum/spellbook_entry/blind
 	name = "Blind"
 	desc = "Temporarily blinds a single target."
-	spell_type = /obj/effect/proc_holder/spell/pointed/trigger/blind
+	spell_type = /datum/action/cooldown/spell/pointed/blind
+	category = "Offensive"
 	cost = 1
 
 /datum/spellbook_entry/mindswap
 	name = "Mindswap"
 	desc = "Allows you to switch bodies with a target next to you. You will both fall asleep when this happens, and it will be quite obvious that you are the target's body if someone watches you do it."
-	spell_type = /obj/effect/proc_holder/spell/pointed/mind_transfer
+	spell_type = /datum/action/cooldown/spell/pointed/mind_transfer
 	category = "Mobility"
 
 /datum/spellbook_entry/forcewall
 	name = "Force Wall"
 	desc = "Create a magical barrier that only you can pass through."
-	spell_type = /obj/effect/proc_holder/spell/targeted/forcewall
+	spell_type = /datum/action/cooldown/spell/forcewall
 	category = "Defensive"
 	cost = 1
 
 /datum/spellbook_entry/blink
 	name = "Blink"
 	desc = "Randomly teleports you a short distance."
-	spell_type = /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
+	spell_type = /datum/action/cooldown/spell/teleport/radius_turf/blink
 	category = "Mobility"
 
 /datum/spellbook_entry/teleport
 	name = "Teleport"
 	desc = "Teleports you to an area of your selection."
-	spell_type = /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
+	spell_type = /datum/action/cooldown/spell/teleport/area_teleport/wizard
 	category = "Mobility"
 
 /datum/spellbook_entry/mutate
 	name = "Mutate"
 	desc = "Causes you to turn into a hulk and gain laser vision for a short while."
-	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
+	spell_type = /datum/action/cooldown/spell/apply_mutations/mutate
+	category = "Offensive"
 
 /datum/spellbook_entry/jaunt
 	name = "Ethereal Jaunt"
 	desc = "Turns your form ethereal, temporarily making you invisible and able to pass through walls."
-	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
+	spell_type = /datum/action/cooldown/spell/jaunt/ethereal_jaunt
 	category = "Mobility"
 
 /datum/spellbook_entry/knock
 	name = "Knock"
 	desc = "Opens nearby doors and closets."
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/knock
+	spell_type = /datum/action/cooldown/spell/aoe/knock
 	category = "Mobility"
 	cost = 1
 
 /datum/spellbook_entry/fleshtostone
 	name = "Flesh to Stone"
 	desc = "Charges your hand with the power to turn victims into inert statues for a long period of time."
-	spell_type = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone
+	spell_type = /datum/action/cooldown/spell/touch/flesh_to_stone
+	category = "Offensive"
 
 /datum/spellbook_entry/summonitem
 	name = "Summon Item"
 	desc = "Recalls a previously marked item to your hand from anywhere in the universe."
-	spell_type = /obj/effect/proc_holder/spell/targeted/summonitem
+	spell_type = /datum/action/cooldown/spell/targeted/summonitem // MELBERT TODO
 	category = "Assistance"
 	cost = 1
 
@@ -243,34 +266,37 @@
 	between reincarnations grows steadily with use, along with the weakness \
 	that the new skeleton body will experience upon 'birth'. Note that \
 	becoming a lich destroys all internal organs except the brain."
-	spell_type = /obj/effect/proc_holder/spell/targeted/lichdom
+	spell_type = /datum/action/cooldown/spell/targeted/lichdom // MELBERT TODO
 	category = "Defensive"
 
 /datum/spellbook_entry/teslablast
 	name = "Tesla Blast"
 	desc = "Charge up a tesla arc and release it at a random nearby target! You can move freely while it charges. The arc jumps between targets and can knock them down."
-	spell_type = /obj/effect/proc_holder/spell/targeted/tesla
+	spell_type = /datum/action/cooldown/spell/tesla
+	category = "Offensive"
 
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
 	desc = "Fire a lightning bolt at your foes! It will jump between targets, but can't knock them down."
-	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
+	spell_type = /datum/action/cooldown/spell/pointed/projectile/lightningbolt
+	category = "Offensive"
 	cost = 1
 
-/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user, obj/item/spellbook/book)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
+	ADD_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, spell_type)
 
 /datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, "lightning_bolt_spell")
+	REMOVE_TRAIT(user, TRAIT_TESLA_SHOCKIMMUNE, spell_type)
 
 /datum/spellbook_entry/infinite_guns
 	name = "Lesser Summon Guns"
 	desc = "Why reload when you have infinite guns? Summons an unending stream of bolt action rifles that deal little damage, but will knock targets down. Requires both hands free to use. Learning this spell makes you unable to learn Arcane Barrage."
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
+	spell_type = /datum/action/cooldown/spell/conjure_item/infinite_guns/gun
+	category = "Offensive"
 	cost = 3
-	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/arcane_barrage)
 
 /datum/spellbook_entry/infinite_guns/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
 	for (var/obj/item/currentItem in user.get_all_gear())
@@ -281,9 +307,9 @@
 /datum/spellbook_entry/arcane_barrage
 	name = "Arcane Barrage"
 	desc = "Fire a torrent of arcane energy at your foes with this (powerful) spell. Deals much more damage than Lesser Summon Guns, but won't knock targets down. Requires both hands free to use. Learning this spell makes you unable to learn Lesser Summon Gun."
-	spell_type = /obj/effect/proc_holder/spell/targeted/infinite_guns/arcane_barrage
+	spell_type = /datum/action/cooldown/spell/conjure_item/infinite_guns/gun/arcane_barrage
 	cost = 3
-	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/infinite_guns/gun
+	no_coexistance_typecache = list(/datum/action/cooldown/spell/conjure_item/infinite_guns/gun)
 
 /datum/spellbook_entry/arcane_barrage/Refund(mob/living/carbon/human/user, obj/item/spellbook/book)
 	for (var/obj/item/currentItem in user.get_all_gear())
@@ -294,47 +320,48 @@
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
-	spell_type = /obj/effect/proc_holder/spell/pointed/barnyardcurse
+	spell_type = /datum/action/cooldown/spell/pointed/barnyardcurse
+	category = "Offensive"
 
 /datum/spellbook_entry/charge
 	name = "Charge"
 	desc = "This spell can be used to recharge a variety of things in your hands, from magical artifacts to electrical components. A creative wizard can even use it to grant magical power to a fellow magic user."
-	spell_type = /obj/effect/proc_holder/spell/targeted/charge
+	spell_type = /datum/action/cooldown/spell/charge
 	category = "Assistance"
 	cost = 1
 
 /datum/spellbook_entry/shapeshift
 	name = "Wild Shapeshift"
 	desc = "Take on the shape of another for a time to use their natural abilities. Once you've made your choice it cannot be changed."
-	spell_type = /obj/effect/proc_holder/spell/targeted/shapeshift
+	spell_type = /datum/action/cooldown/spell/shapeshift
 	category = "Assistance"
 	cost = 1
 
 /datum/spellbook_entry/tap
 	name = "Soul Tap"
 	desc = "Fuel your spells using your own soul!"
-	spell_type = /obj/effect/proc_holder/spell/self/tap
+	spell_type = /datum/action/cooldown/spell/tap
 	category = "Assistance"
 	cost = 1
 
 /datum/spellbook_entry/spacetime_dist
 	name = "Spacetime Distortion"
 	desc = "Entangle the strings of space-time in an area around you, randomizing the layout and making proper movement impossible. The strings vibrate..."
-	spell_type = /obj/effect/proc_holder/spell/spacetime_dist
+	spell_type = /datum/action/cooldown/spell/spacetime_dist // MELBERT TODO
 	category = "Defensive"
 	cost = 1
 
 /datum/spellbook_entry/the_traps
 	name = "The Traps!"
 	desc = "Summon a number of traps around you. They will damage and enrage any enemies that step on them."
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
+	spell_type = /datum/action/cooldown/spell/conjure/the_traps
 	category = "Defensive"
 	cost = 1
 
 /datum/spellbook_entry/bees
 	name = "Lesser Summon Bees"
 	desc = "This spell magically kicks a transdimensional beehive, instantly summoning a swarm of bees to your location. These bees are NOT friendly to anyone."
-	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/creature/bee
+	spell_type = /datum/action/cooldown/spell/conjure/bee
 	category = "Defensive"
 
 
@@ -355,6 +382,7 @@
 	name = "Staff of Change"
 	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
 	item_path = /obj/item/gun/magic/staff/change
+	category = "Offensive"
 
 /datum/spellbook_entry/item/staffanimation
 	name = "Staff of Animation"
@@ -366,11 +394,13 @@
 	name = "Staff of Chaos"
 	desc = "A caprious tool that can fire all sorts of magic without any rhyme or reason. Using it on people you care about is not recommended."
 	item_path = /obj/item/gun/magic/staff/chaos
+	category = "Offensive"
 
 /datum/spellbook_entry/item/spellblade
 	name = "Spellblade"
 	desc = "A sword capable of firing blasts of energy which rip targets limb from limb."
 	item_path = /obj/item/gun/magic/staff/spellblade
+	category = "Offensive"
 
 /datum/spellbook_entry/item/staffdoor
 	name = "Staff of Door Creation"
@@ -400,15 +430,18 @@
 
 /datum/spellbook_entry/item/soulstones
 	name = "Soulstone Shard Kit"
-	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
+	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. \
+		The spell Artificer allows you to create arcane machines for the captured souls to pilot."
 	item_path = /obj/item/storage/belt/soulstone/full
 	category = "Assistance"
 
 /datum/spellbook_entry/item/soulstones/Buy(mob/living/carbon/human/user,obj/item/spellbook/book)
 	. =..()
-	if(.)
-		user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(null))
-	return .
+	if(!.)
+		return
+
+	var/datum/action/cooldown/spell/conjure/construct/bonus_spell = new(user.mind || user)
+	bonus_spell.Grant(user)
 
 /datum/spellbook_entry/item/necrostone
 	name = "A Necromantic Stone"
@@ -496,11 +529,13 @@
 	name = "Mjolnir"
 	desc = "A mighty hammer on loan from Thor, God of Thunder. It crackles with barely contained power."
 	item_path = /obj/item/mjollnir
+	category = "Offensive"
 
 /datum/spellbook_entry/item/singularity_hammer
 	name = "Singularity Hammer"
 	desc = "A hammer that creates an intensely powerful field of gravity where it strikes, pulling everything nearby to the point of impact."
 	item_path = /obj/item/singularityhammer
+	category = "Offensive"
 
 /datum/spellbook_entry/item/warpwhistle
 	name = "Warp Whistle"
@@ -513,17 +548,19 @@
 	name = "High Frequency Blade"
 	desc = "An incredibly swift enchanted blade resonating at a frequency high enough to be able to slice through anything."
 	item_path = /obj/item/highfrequencyblade/wizard
+	category = "Offensive"
 	cost = 3
 
 /datum/spellbook_entry/duffelbag
 	name = "Bestow Cursed Duffel Bag"
 	desc = "A curse that firmly attaches a demonic duffel bag to the target's back. The duffel bag will make the person it's attached to take periodical damage if it is not fed regularly, and regardless of whether or not it's been fed, it will slow the person wearing it down significantly."
-	spell_type = /obj/effect/proc_holder/spell/targeted/touch/duffelbag
+	spell_type = /datum/action/cooldown/spell/touch/duffelbag
 	category = "Defensive"
 	cost = 1
 
-//THESE ARE NOT PURCHASABLE SPELLS! They're references to old spells that got removed + shit that sounds stupid but fun so we can painfully lock behind a dimmer component
-
+// THESE ARE NOT PURCHASABLE SPELLS!
+// They're references to old spells that got removed +
+// shit that sounds stupid but fun so we can painfully lock behind a dimmer component
 /datum/spellbook_entry/challenge
 	name = "Take the Challenge"
 	refundable = FALSE
@@ -539,7 +576,7 @@
 	desc = "A \"Friendly\" Wizard will protect the station, and try to kill you. They get a spellbook much like you, but will use it for \"GOOD\"."
 
 /// How much threat we need to let these rituals happen on dynamic
-#define MINIMUM_THREAT_FOR_RITUALS 100
+#define MINIMUM_THREAT_FOR_RITUALspell 100
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"
@@ -646,6 +683,8 @@
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
+
+	/// The number of book charges we have to buy spells
 	var/uses = 10
 
 	/// The bonus that you get from going semi-random.
@@ -657,8 +696,20 @@
 	/// Determines if this spellbook can refund anything.
 	var/can_refund = TRUE
 
+	/// A ref to the owner of the book
 	var/mob/living/carbon/human/owner
+
+	/// A list to all spellbook entries within
 	var/list/entries = list()
+
+/obj/item/spellbook/Initialize(mapload)
+	. = ..()
+	prepare_spells()
+
+/obj/item/spellbook/Destroy(force)
+	owner = null
+	entries.Cut()
+	return ..()
 
 /obj/item/spellbook/examine(mob/user)
 	. = ..()
@@ -666,10 +717,6 @@
 		. += {"There is a small signature on the front cover: "[owner]"."}
 	else
 		. += "It appears to have no author."
-
-/obj/item/spellbook/Initialize(mapload)
-	. = ..()
-	prepare_spells()
 
 /obj/item/spellbook/attack_self(mob/user)
 	if(!owner)
