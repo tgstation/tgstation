@@ -25,7 +25,7 @@
 			cards += new_card
 
 	// only using this for debugging purposes for the Card DLC PR (remove before it gets merged)
-	if(cards.len <= 1)
+	if(!mapload && cards.len <= 1)
 		CRASH("why the fuck is there only 1 card or zero cards in a cardhand?")
 
 	register_context()
