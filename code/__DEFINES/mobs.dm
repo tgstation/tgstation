@@ -50,6 +50,9 @@
 #define MOB_PLANT (1 << 10)
 
 
+//Organ defines for carbon mobs
+#define ORGAN_ORGANIC 1
+#define ORGAN_ROBOTIC 2
 
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
@@ -66,6 +69,8 @@
 #define BODYTYPE_ROBOTIC (1<<1)
 #define BODYTYPE_HUMANOID (1<<2) //Everything
 #define BODYTYPE_DIGITIGRADE (1<<3) //Cancer
+#define BODYTYPE_MONKEY (1<<4)
+#define BODYTYPE_SNOUTED (1<<5)
 
 //Defines for Species IDs
 #define SPECIES_ABDUCTOR "abductor"
@@ -73,7 +78,7 @@
 #define SPECIES_CORPORATE "corporate"
 #define SPECIES_DULLAHAN "dullahan"
 #define SPECIES_ETHEREAL "ethereal"
-#define SPECIES_FELINID "felinid"
+#define SPECIES_FELINE "felinid"
 #define SPECIES_FLYPERSON "fly"
 #define SPECIES_HUMAN "human"
 #define SPECIES_JELLYPERSON "jelly"
@@ -81,19 +86,21 @@
 #define SPECIES_LUMINESCENT "luminescent"
 #define SPECIES_STARGAZER "stargazer"
 #define SPECIES_LIZARD "lizard"
-#define SPECIES_ASHWALKER "ashwalker"
-#define SPECIES_KOBOLD "kobold"
+#define SPECIES_LIZARD_ASH "ashwalker"
+#define SPECIES_LIZARD_SILVER "silverscale"
+#define SPECIES_NIGHTMARE "nightmare"
 #define SPECIES_MONKEY "monkey"
 #define SPECIES_MOTH "moth"
-#define SPECIES_MUSH "mush"
+#define SPECIES_MUSHROOM "mush"
 #define SPECIES_PLASMAMAN "plasmaman"
-#define SPECIES_POD "pod_person"
+#define SPECIES_PODPERSON "pod_person"
 #define SPECIES_SHADOW "shadow"
 #define SPECIES_SKELETON "skeleton"
 #define SPECIES_SNAIL "snail"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
-#define SPECIES_SHITCODEZOMBIE "krokodil_zombie"
+#define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
+#define SPECIES_ZOMBIE_SHITCODE "krokodil_zombie"
 
 //See: datum/species/var/digitigrade_customization
 #define DIGITIGRADE_NEVER 0

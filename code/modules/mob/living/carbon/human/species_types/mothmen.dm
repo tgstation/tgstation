@@ -29,7 +29,7 @@
 	payday_modifier = 0.75
 	family_heirlooms = list(/obj/item/flashlight/lantern/heirloom_moth)
 
-	bodypart_overides = list(
+	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/moth,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/moth,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/moth,

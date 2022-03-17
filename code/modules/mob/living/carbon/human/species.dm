@@ -79,12 +79,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/mutant_organs = list()
 	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
 	var/list/bodypart_overrides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm,\
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm,\
-		BODY_ZONE_HEAD = /obj/item/bodypart/head,\
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,\
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,\
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest)
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest
+	)
 
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
@@ -234,8 +235,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 
 /datum/species/New()
-	if(!limbs_id) //if we havent set a limbs id to use, just use our own id
-		limbs_id = id
 	wings_icons = string_list(wings_icons)
 
 	if(!plural_form)
@@ -417,9 +416,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
-	fix_non_native_limbs(C)
+
 	C.mob_biotypes = inherent_biotypes
 
+	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
@@ -776,7 +776,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(DIGITIGRADE in species_traits))
+		if(species_human.socks && species_human.num_legs >= 2 && !(src.bodytype & BODYTYPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -850,21 +850,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 ////PUT ALL YOUR WEIRD ASS REAL-LIMB HANDLING HERE
 	///Digi handling
-	if(H.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
+	if(source.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 		var/uniform_compatible = FALSE
 		var/suit_compatible = FALSE
-		if(!(H.w_uniform) || (H.w_uniform.supports_variations & DIGITIGRADE_VARIATION) || (H.w_uniform.supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON)) //Checks uniform compatibility
+		if(!(source.w_uniform) || (source.w_uniform.supports_variations & DIGITIGRADE_VARIATION) || (source.w_uniform.supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON)) //Checks uniform compatibility
 			uniform_compatible = TRUE
-		if((!H.wear_suit) || (H.wear_suit.supports_variations & DIGITIGRADE_VARIATION) || !(H.wear_suit.body_parts_covered & LEGS) || (H.wear_suit.supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON)) //Checks suit compatability
+		if((!source.wear_suit) || (source.wear_suit.supports_variations & DIGITIGRADE_VARIATION) || !(source.wear_suit.body_parts_covered & LEGS) || (source.wear_suit.supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON)) //Checks suit compatability
 			suit_compatible = TRUE
 
-		if((uniform_compatible && suit_compatible) || (suit_compatible && H.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
-			for(var/obj/item/bodypart/BP as anything in H.bodyparts)
+		if((uniform_compatible && suit_compatible) || (suit_compatible && source.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
+			for(var/obj/item/bodypart/BP as anything in source.bodyparts)
 				if(BP.bodytype & BODYTYPE_DIGITIGRADE)
 					BP.limb_id = "digitigrade"
 
 		else
-			for(var/obj/item/bodypart/BP as anything in H.bodyparts)
+			for(var/obj/item/bodypart/BP as anything in source.bodyparts)
 				if(BP.bodytype & BODYTYPE_DIGITIGRADE)
 					BP.limb_id = "lizard"
 	///End digi handling
@@ -2505,34 +2505,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
 			continue
 
-		switch(old_part.body_zone)
-			if(BODY_ZONE_HEAD)
-				var/obj/item/bodypart/head/new_part = new new_species.bodypart_overrides[BODY_ZONE_HEAD]()
-				new_part.replace_limb(C, TRUE)
-				new_part.update_limb(is_creating = TRUE)
-				qdel(old_part)
-			if(BODY_ZONE_CHEST)
-				var/obj/item/bodypart/chest/new_part = new new_species.bodypart_overrides[BODY_ZONE_CHEST]()
-				new_part.replace_limb(C, TRUE)
-				new_part.update_limb(is_creating = TRUE)
-				qdel(old_part)
-			if(BODY_ZONE_L_ARM)
-				var/obj/item/bodypart/l_arm/new_part = new new_species.new_species.bodypart_overrides[BODY_ZONE_L_ARM]()
-				new_part.replace_limb(C, TRUE)
-				new_part.update_limb(is_creating = TRUE)
-				qdel(old_part)
-			if(BODY_ZONE_R_ARM)
-				var/obj/item/bodypart/r_arm/new_part = new new_species.new_species.bodypart_overrides[BODY_ZONE_R_ARM]()
-				new_part.replace_limb(C, TRUE)
-				new_part.update_limb(is_creating = TRUE)
-				qdel(old_part)
-			if(BODY_ZONE_L_LEG)
-				var/obj/item/bodypart/l_leg/new_part = new new_species.bodypart_overrides[BODY_ZONE_L_LEG]()
-				new_part.replace_limb(C, TRUE)
-				new_part.update_limb(is_creating = TRUE)
-				qdel(old_part)
-			if(BODY_ZONE_R_LEG)
-				var/obj/item/bodypart/r_leg/new_part = new new_species.bodypart_overrides[BODY_ZONE_R_LEG]()
-				new_part.replace_limb(C, TRUE)
-				new_part.update_limb(is_creating = TRUE)
-				qdel(old_part)
+		var/path = new_species.bodypart_overrides?[old_part.body_zone]
+		var/obj/item/bodypart/new_part
+		if(path)
+			new_part = new path()
+			new_part.replace_limb(C, TRUE)
+			new_part.update_limb(is_creating = TRUE)
+			qdel(old_part)

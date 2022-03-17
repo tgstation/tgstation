@@ -99,7 +99,7 @@
 
 	if(((supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON) ||(supports_variations & DIGITIGRADE_VARIATION)) && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.dna.bodytype & DIGITIGRADE_VARIATION)
+		if(H.dna.species.bodytype & DIGITIGRADE_VARIATION)
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 

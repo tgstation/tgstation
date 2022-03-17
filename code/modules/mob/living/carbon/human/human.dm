@@ -1147,12 +1147,6 @@
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail
 
-/mob/living/carbon/human/species/synth
-	race = /datum/species/synth
-
-/mob/living/carbon/human/species/synth/military
-	race = /datum/species/synth/military
-
 /mob/living/carbon/human/species/vampire
 	race = /datum/species/vampire
 
@@ -1161,6 +1155,3 @@
 
 /mob/living/carbon/human/species/zombie/infectious
 	race = /datum/species/zombie/infectious
-
-/mob/living/carbon/human/species/zombie/krokodil_addict
-	race = /datum/species/krokodil_addict

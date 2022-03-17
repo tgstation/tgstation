@@ -159,7 +159,7 @@
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(status && (BP.status != status))
+		if(status && !(BP.bodytype & status))
 			continue
 		if((brute && BP.brute_dam) || (burn && BP.burn_dam) || (stamina && BP.stamina_dam))
 			parts += BP
@@ -170,7 +170,7 @@
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X
-		if(status && (BP.status != status))
+		if(status && !(BP.bodytype & status))
 			continue
 		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
 			parts += BP

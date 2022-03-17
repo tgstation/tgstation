@@ -26,6 +26,15 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/plant
 
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/pod,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/pod,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/pod,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/pod,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/pod,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/pod,
+	)
+
 /datum/species/pod/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD)
 		return

@@ -136,15 +136,9 @@
 	ears = null
 	tongue = null
 
-/obj/item/bodypart/head/update_limb(dropping_limb, mob/living/carbon/source)
-	var/mob/living/carbon/head_owner
-	if(source)
-		head_owner = source
-	else
-		head_owner = owner
-
-	real_name = head_owner.real_name
-	if(HAS_TRAIT(head_owner, TRAIT_HUSK))
+/obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
+	real_name = owner.real_name
+	if(HAS_TRAIT(owner, TRAIT_HUSK))
 		real_name = "Unknown"
 		hairstyle = "Bald"
 		facial_hairstyle = "Shaved"
@@ -152,7 +146,7 @@
 		stored_lipstick_trait = null
 
 	else if(!animal_origin)
-		var/mob/living/carbon/human/human_head_owner = head_owner
+		var/mob/living/carbon/human/human_head_owner = owner
 		var/datum/species/owner_species = human_head_owner.dna.species
 
 		//Facial hair
@@ -213,7 +207,7 @@
 	. = ..()
 	if(dropped) //certain overlays only appear when the limb is being detached from its owner.
 
-		if(status != BODYTYPE_ROBOTIC) //having a robotic head hides certain features.
+		if(IS_ORGANIC_LIMB(src)) //having a robotic head hides certain features.
 			//facial hair
 			if(facial_hairstyle)
 				var/datum/sprite_accessory/sprite = GLOB.facial_hairstyles_list[facial_hairstyle]

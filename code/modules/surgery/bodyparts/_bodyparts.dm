@@ -530,7 +530,7 @@
 //Cannot remove negative damage (i.e. apply damage)
 /obj/item/bodypart/proc/heal_damage(brute, burn, stamina, required_status, updating_health = TRUE)
 
-	if(required_status && status != required_status) //So we can only heal certain kinds of limbs, ie robotic vs organic.
+	if(required_status && !(bodytype & required_status)) //So we can only heal certain kinds of limbs, ie robotic vs organic.
 		return
 
 	if(brute)
@@ -739,14 +739,14 @@
 		else
 			no_update = FALSE*/
 
-	if(HAS_TRAIT(C, TRAIT_HUSK) && IS_ORGANIC_LIMB(src))
+	if(HAS_TRAIT(owner, TRAIT_HUSK) && IS_ORGANIC_LIMB(src))
 		dmg_overlay_type = "" //no damage overlay shown when husked
 		is_husked = TRUE
 	else
 		dmg_overlay_type = initial(dmg_overlay_type)
 		is_husked = FALSE
 
-	if(!dropping_limb && owner.dna?.check_mutation(HULK)) //Please remove hulk from the game. I beg you.
+	if(!dropping_limb && owner.dna?.check_mutation(/datum/mutation/human/hulk)) //Please remove hulk from the game. I beg you.
 		mutation_color = "00aa00"
 	else
 		mutation_color = null
@@ -761,7 +761,7 @@
 	if(!is_creating)
 		return
 
-	if(!animal_origin && ishuman(limb_owner))
+	if(!animal_origin && ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 
 		var/datum/species/S = human_owner.dna.species
@@ -780,14 +780,6 @@
 				species_color = human_owner.dna.features["mcolor"]
 		else
 			species_color = null
-
-		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
-		if(NO_BONES in S.species_traits)
-			bone_status = BONE_FLAG_NO_BONES
-		else
-			bone_status = BONE_FLAG_NORMAL
-			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
-
 
 		draw_color = mutation_color
 		if(should_draw_greyscale) //Should the limb be colored?
@@ -839,7 +831,7 @@
 	if(animal_origin)
 		if(IS_ORGANIC_LIMB(src))
 			limb.icon = 'icons/mob/animal_parts.dmi'
-			if(species_id == "husk")
+			if(limb_id == "husk")
 				limb.icon_state = "[animal_origin]_husk_[body_zone]"
 			else
 				limb.icon_state = "[animal_origin]_[body_zone]"
@@ -856,7 +848,7 @@
 	////This is the MEAT of limb icon code
 	limb.icon = icon
 	if(!should_draw_greyscale || !icon)
-		limb.icon = static_icon
+		limb.icon = icon_static
 
 	if(is_dimorphic) //Does this type of limb have sexual dimorphism?
 		limb.icon_state = "[limb_id]_[body_zone]_[limb_gender]"
@@ -901,7 +893,7 @@
 		//Some externals have multiple layers for background, foreground and between
 		for(var/external_layer in external_organ.all_layers)
 			if(external_organ.layers & external_layer)
-				external_organ.get_overlays(., image_dir, external_organ.bitflag_to_layer(external_layer), icon_gender, draw_color)
+				external_organ.get_overlays(., image_dir, external_organ.bitflag_to_layer(external_layer), limb_gender, draw_color)
 
 /obj/item/bodypart/deconstruct(disassembled = TRUE)
 	drop_organs()

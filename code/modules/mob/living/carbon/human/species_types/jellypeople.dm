@@ -27,6 +27,15 @@
 	species_language_holder = /datum/language_holder/jelly
 	ass_image = 'icons/ass/assslime.png'
 
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/jelly,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/jelly,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/jelly,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/jelly,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/jelly,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly,
+	)
+
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
@@ -147,6 +156,15 @@
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/slime,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/slime,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/slime,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/slime,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/slime,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/slime,
+	)
 
 /datum/species/jelly/slime/on_species_loss(mob/living/carbon/C)
 	if(slime_split)
@@ -425,6 +443,7 @@
 	name = "Luminescent"
 	plural_form = null
 	id = SPECIES_LUMINESCENT
+	examine_limb_id = SPECIES_JELLYPERSON
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	var/obj/effect/dummy/luminescent_glow/glow
 	var/obj/item/slime_extract/current_extract
@@ -432,6 +451,7 @@
 	var/datum/action/innate/use_extract/extract_minor
 	var/datum/action/innate/use_extract/major/extract_major
 	var/extract_cooldown = 0
+
 
 //Species datums don't normally implement destroy, but JELLIES SUCK ASS OUT OF A STEEL STRAW
 /datum/species/jelly/luminescent/Destroy(force, ...)
@@ -608,6 +628,7 @@
 	name = "Stargazer"
 	plural_form = null
 	id = SPECIES_STARGAZER
+	examine_limb_id = SPECIES_JELLYPERSON
 	/// Special "project thought" telepathy action for stargazers.
 	var/datum/action/innate/project_thought/project_action
 

@@ -19,7 +19,7 @@
 /obj/item/bodypart/r_leg/snail
 	limb_id = "snail"
 
-///ABDUCTCOR
+///ABDUCTOR
 /obj/item/bodypart/head/abductor
 	limb_id = "abductor"
 	is_dimorphic = FALSE
@@ -144,7 +144,7 @@
 
 /obj/item/bodypart/chest/fly
 	limb_id = "fly"
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/l_arm/fly
@@ -238,14 +238,14 @@
 /obj/item/bodypart/r_leg/mushroom
 	limb_id = "mush"
 
-///GOLEMS (i hate xenobio)
+///GOLEMS (i hate xenobio SO FUCKING MUCH)
 /obj/item/bodypart/head/golem
 	limb_id = "golem"
 	is_dimorphic = FALSE
 
 /obj/item/bodypart/chest/golem
 	limb_id = "golem"
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE
 
 /obj/item/bodypart/l_arm/golem
 	limb_id = "golem"

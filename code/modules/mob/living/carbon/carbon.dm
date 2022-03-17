@@ -1053,7 +1053,7 @@
 				limb_list -= BODY_ZONE_CHEST
 		else
 			limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_CHEST)
-		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sortList(limb_list)
+		var/result = input(usr, "Please choose which bodypart to [edit_action]","[capitalize(edit_action)] Bodypart") as null|anything in sort_list(limb_list)
 		if(result)
 			var/obj/item/bodypart/BP = get_bodypart(result)
 			if(edit_action == "remove")
@@ -1082,7 +1082,7 @@
 				if((edit_action == "add") && BP)
 					to_chat(usr, "<span class='boldwarning'>[src] already has such bodypart.</span>")
 				else
-					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sortList(limbtypes)
+					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()
 
 					if(new_bp.replace_limb(src, TRUE, TRUE))

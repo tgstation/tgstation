@@ -190,7 +190,7 @@
 		return
 	var/mob/living/carbon/human/burn_human = burn_living
 	var/datum/species/burn_species = burn_human.dna.species
-	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android) || istype(burn_species, /datum/species/synth)) //ignore plasmamen/robotic species
+	if(istype(burn_species, /datum/species/plasmaman) || istype(burn_species, /datum/species/android)) //ignore plasmamen/robotic species
 		return
 
 	var/list/plasma_parts = list()//a list of the organic parts to be turned into plasma limbs
@@ -198,7 +198,7 @@
 	for(var/obj/item/bodypart/burn_limb as anything in burn_human.bodyparts)
 		if(IS_ORGANIC_LIMB(burn_limb) && burn_limb.limb_id != SPECIES_PLASMAMAN) //getting every organic, non-plasmaman limb (augments/androids are immune to this)
 			plasma_parts += burn_limb
-		if(!IS_ORGANIC_LIMB(burnlimb))
+		if(!IS_ORGANIC_LIMB(burn_limb))
 			robo_parts += burn_limb
 
 	burn_human.adjustToxLoss(15)

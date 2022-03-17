@@ -124,22 +124,9 @@
 //
 // FUCK YOU AUGMENT CODE - With love, Kapu
 /mob/living/carbon/proc/newBodyPart(zone)
-	var/obj/item/bodypart/new_bodypart
-	switch(zone)
-		if(BODY_ZONE_L_ARM)
-			new_bodypart = new dna.species.species_l_arm()
-		if(BODY_ZONE_R_ARM)
-			new_bodypart = new dna.species.species_r_arm()
-		if(BODY_ZONE_HEAD)
-			new_bodypart = new dna.species.species_head()
-		if(BODY_ZONE_L_LEG)
-			new_bodypart = new dna.species.species_l_leg()
-		if(BODY_ZONE_R_LEG)
-			new_bodypart = new dna.species.species_r_leg()
-		if(BODY_ZONE_CHEST)
-			new_bodypart = new dna.species.species_chest()
-
-	new_bodypart = L
+	var/path = dna.species.bodypart_overrides[zone]
+	var/obj/item/bodypart/new_bodypart = new path()
+	return new_bodypart
 
 /mob/living/carbon/alien/larva/newBodyPart(zone)
 	var/obj/item/bodypart/new_bodypart

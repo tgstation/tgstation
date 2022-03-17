@@ -123,6 +123,7 @@
 //flags for alternate styles: These are hard sprited so don't set this if you didn't put the effort in
 #define NORMAL_STYLE 0
 #define ALT_STYLE 1
+#define DIGITIGRADE_STYLE 2
 
 //Flags (actual flags, fucker ^) for clothing variations
 #define NO_VARIATION (1<<0)

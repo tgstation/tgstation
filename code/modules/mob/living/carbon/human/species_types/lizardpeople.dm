@@ -43,7 +43,7 @@
 
 	ass_image = 'icons/ass/asslizard.png'
 
-	bodypart_overides = list(
+	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/lizard,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/lizard,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/lizard,

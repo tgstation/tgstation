@@ -40,10 +40,12 @@
 /mob/living/carbon/regenerate_icons()
 	if(notransform)
 		return 1
+	icon_render_keys = list() //Clear this bad larry out
 	update_inv_hands()
 	update_inv_handcuffed()
 	update_inv_legcuffed()
 	update_fire()
+	update_body_parts()
 
 
 /mob/living/carbon/update_inv_hands()
