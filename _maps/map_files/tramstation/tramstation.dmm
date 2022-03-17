@@ -17657,9 +17657,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/hallway/primary/tram/right)
-"eXc" = (
-/turf/open/misc/asteroid/airless,
-/area/space)
 "eXf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -128945,7 +128942,7 @@ ajc
 ajc
 ajc
 ajc
-eXc
+ajc
 ajc
 ajc
 ajc
