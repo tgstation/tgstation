@@ -13,11 +13,11 @@
 	if(!wood && !herbage && !rock)
 		return ..() //play generic metal thunk, tap or welder sound instead
 	if(herbage)
-		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, FALSE)
+		playsound(src, SFX_CRUNCHY_BUSH_WHACK, 50, vary = FALSE)
 	if(wood)
-		playsound(src, SFX_TREE_CHOP, 50, FALSE)
+		playsound(src, SFX_TREE_CHOP, 50, vary = FALSE)
 	if(rock)
-		playsound(src, SFX_ROCK_TAP, 50, FALSE)
+		playsound(src, SFX_ROCK_TAP, 50, vary = FALSE)
 
 //trees
 /obj/structure/flora/tree
