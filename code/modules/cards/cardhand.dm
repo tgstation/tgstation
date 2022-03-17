@@ -28,6 +28,7 @@
 	if(cards.len <= 1)
 		CRASH("why the fuck is there only 1 card or zero cards in a cardhand?")
 
+	register_context()
 	update_appearance()
 
 /obj/item/toy/cards/cardhand/suicide_act(mob/living/carbon/user)
@@ -48,8 +49,6 @@
 			. += span_notice("There is a [marked_color] mark on the corner of a card in the cardhand!")
 
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = ..()
-
 	if(istype(held_item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = held_item
 		if(dealer_deck.wielded)
@@ -64,7 +63,7 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Combine cards faceup"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return .
+	return NONE
 
 /obj/item/toy/cards/cardhand/attack_self(mob/living/user)
 	if(!isliving(user) || !user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, NO_TK))

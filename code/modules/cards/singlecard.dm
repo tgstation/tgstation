@@ -49,6 +49,8 @@
 			flags_1 |= HOLOGRAM_1
 			parent_deck.holodeck.spawned += src
 
+	register_context()
+
 
 /obj/item/toy/singlecard/examine(mob/living/carbon/human/user)
 	. = ..()
@@ -67,12 +69,8 @@
 	var/marked_color = getMarkedColor(user)
 	if(marked_color)
 		. += span_notice("The card has a [marked_color] mark on the corner!")
-	. += span_notice("Right-click to flip it.")
-	. += span_notice("Alt-click to rotate it 90 degrees.")
 
 /obj/item/toy/singlecard/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	. = ..()
-
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate counter-clockwise"
 		// add a ALT_RMB screentip to rotate clockwise
@@ -101,7 +99,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = blank ? "Write on card" : "Mark card"
 		return CONTEXTUAL_SCREENTIP_SET
 
-	return .
+	return NONE
 
 /obj/item/toy/singlecard/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] an unlucky card!"))
