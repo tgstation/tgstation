@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen corrected an oversight with the Security Medical ward on TramStation; it now has an Air Alarm and APC."

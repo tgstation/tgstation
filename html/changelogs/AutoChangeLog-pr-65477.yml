@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "KiloStation's Chapel Entrance now receives power."
-  - bugfix: "There is no longer a space turf in the middle of an asteroid on KiloStation with gravity attached to it."

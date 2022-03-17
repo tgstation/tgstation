@@ -1,5 +1,0 @@
-author: "capsaicinz"
-delete-after: True
-changes: 
-  - bugfix: "supply pods, crab-17s, explosions in general(?), and ash drakes(?????????) no longer make a shattering sound."
-  - code_imp: "turns some \"if (\"s into \"if(\"s in sound.dm"
