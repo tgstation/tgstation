@@ -590,6 +590,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
+#undef THUNDERDOME_TEMPLATE_FILE
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE
