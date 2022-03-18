@@ -27900,11 +27900,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"lio" = (
-/obj/structure/chair,
-/obj/structure/chair,
-/turf/open/floor/iron/cafeteria,
-/area/hallway/secondary/exit/departure_lounge)
 "liN" = (
 /obj/machinery/light/small/broken/directional/south,
 /obj/item/trash/energybar,
@@ -104196,7 +104191,7 @@ hto
 veG
 uEc
 dXd
-lio
+fwM
 eMj
 ulg
 wAz

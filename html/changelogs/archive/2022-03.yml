@@ -571,3 +571,85 @@
       take joy in knowing they can't explode out the floors any more.
   vincentiusvin:
   - bugfix: fixes the doppler array nullifying some of your bombs.
+2022-03-17:
+  Fikou:
+  - imageadd: new punching bag sprites!!!!!!!!!!!!!!!!
+  JosephJomama:
+  - imageadd: The police baton has been resprited into a handsome beatin' stick worthy
+      for a lone-wolf detective who doesn't play by the rules to whack perps with.
+  LemonInTheDark:
+  - rscadd: Rather then being tileable with just floor tiles, lavaland turfs, asteroid
+      and snow (among other things) now support lattice -> floor tile construction
+  - bugfix: Because of the above, you can now properly fix the icebox mining shuttle
+  - refactor: Non floor turfs are no longer typed as floor. This may break things,
+      please yell at me if it does
+  Thunder12345:
+  - bugfix: Pride pins can be reskinned again, accessories whose location can be toggled
+      now do so with right-click.
+  capsaicinz:
+  - bugfix: supply pods, crab-17s, explosions in general(?), and ash drakes(?????????)
+      no longer make a shattering sound.
+  - code_imp: turns some "if ("s into "if("s in sound.dm
+  dragomagol:
+  - admin: Silicon law logs are shorter and easier to read
+  san7890:
+  - imageadd: On the mapping end, the Abductor Ship, the Wizard's Ship, and the Thunderdome
+      Administration and Observation Areas now have new area turf sprites. Does this
+      matter to your in-game experience? Probably not.
+  - rscadd: 'On DeltaStation, IceBoxStation, and TramStation: Nanotrasen has now blocked
+      off the area informally known as the "Cargo Lobby", and formally defined it.'
+  - bugfix: Nanotrasen corrected an oversight with the Security Medical ward on TramStation;
+      it now has an Air Alarm and APC.
+  - bugfix: DeltaStation's Bomb Range no longer has a floating camera. Instead, the
+      camera has been redirected to attach on the wall the proper way.
+  - bugfix: The Syndicate realized that the indoor portion of their top-secret Nuclear
+      Operative base actually partially owned some of the outside portion of the planetary
+      body it rests on. It has been corrected.
+  - rscadd: Nanotrasen decided to shuffle some things around in DeltaStation's Grand
+      Surgery Theatre's Viewing Room in order to save the cost of having to purchase
+      two new chairs with each station.
+  - bugfix: KiloStation's Chapel Entrance now receives power.
+  - bugfix: There is no longer a space turf in the middle of an asteroid on KiloStation
+      with gravity attached to it.
+2022-03-18:
+  Fikou:
+  - bugfix: drones are no longer shy around maint rats and such
+  GoblinBackwards:
+  - bugfix: Prevents invalid materials being used on airlock assemblies.
+  JohnFulpWillard:
+  - bugfix: Ants now don't appear on icemoon/space asteroids, rather than only lavaland.
+  MMMiracles:
+  - bugfix: Patches up the sporadically popping up space turfs that appeared in tram's
+      security wing.
+  - bugfix: The bar now has an air alarm.
+  MacBlaze1:
+  - expansion: More than two assemblies can now be combined for use in bombs, grenades,
+      or anything else assembly holders are used in.
+  - qol: signalers can now be triggered through right click
+  Melbert:
+  - bugfix: Makes the wizard's Lich Phylactery mechanic actually work consistently.
+  - bugfix: The description of the Bind Soul spell (and entry) should match its behavior
+      a bit more accurately now. You will revive regardless if your body is destroyed
+      or leaves the z-level. With each revival, the time it takes to respawn does
+      not change, but the duration of the stun does.
+  - refactor: Makes Phylacteries a component.
+  - qol: Gave Lich Phylacerties some QoL features and pizazz. Examining it'll offer
+      more information to wizards and ghosts.
+  RandomGamer123:
+  - bugfix: Engineering departmental order consoles can now once again order gas canisters.
+  SuperNovaa41:
+  - bugfix: Fixes being able to spam deny sounds on deliver first crates.
+  TemporalOroboros:
+  - bugfix: Using telekinesis will no longer break chameleon.
+  Zergspower:
+  - rscadd: Parts and Machine frame to build an ORM from the golem ship
+  - rscdel: Removed Prebuilt ORM from the golem ship
+  capsaicinz:
+  - bugfix: soulscythes are now immune to mining planet storms
+  nevimer:
+  - bugfix: native fast gui boxes work again
+  san7890:
+  - imageadd: On the mapping end, the Diner now has it's own area turf. If you don't
+      know what that means, just know that it's a good thing.
+  - rscadd: Nanotrasen decided to do a few more cost-cutting procedures, removing
+      lights from a certain outdoor section of KiloStation.
