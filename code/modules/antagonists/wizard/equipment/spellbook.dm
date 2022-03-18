@@ -576,7 +576,7 @@
 	desc = "A \"Friendly\" Wizard will protect the station, and try to kill you. They get a spellbook much like you, but will use it for \"GOOD\"."
 
 /// How much threat we need to let these rituals happen on dynamic
-#define MINIMUM_THREAT_FOR_RITUALspell 100
+#define MINIMUM_THREAT_FOR_RITUALS 100
 
 /datum/spellbook_entry/summon
 	name = "Summon Stuff"

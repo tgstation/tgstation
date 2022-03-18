@@ -5,7 +5,7 @@
 	sound = 'sound/magic/fleshtostone.ogg'
 
 	school = SCHOOL_TRANSMUTATION
-	cooldown_time =  = 1 MINUTES
+	cooldown_time = 1 MINUTES
 	cooldown_min = 10 SECONDS
 
 	invocation = "STAUN EI!!"
