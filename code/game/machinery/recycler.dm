@@ -213,7 +213,6 @@
 	L.adjustBruteLoss(crush_damage)
 
 /obj/machinery/recycler/on_deconstruction()
-	. = ..()
 	safety_mode = TRUE
 
 /obj/machinery/recycler/deathtrap
