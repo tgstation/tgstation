@@ -1,0 +1,795 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"c" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/space)
+"d" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomehea";
+	name = "Heavy Supply"
+	},
+/obj/effect/turf_decal/loading_area,
+/turf/open/floor/iron,
+/area/space)
+"e" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"f" = (
+/turf/open/floor/circuit/green,
+/area/space)
+"g" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Red Team";
+	network = list("thunder");
+	pixel_x = 11;
+	pixel_y = -9;
+	resistance_flags = 64
+	},
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/space)
+"h" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/gun/energy/laser,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/space)
+"i" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/space)
+"j" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"k" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"l" = (
+/turf/closed/indestructible/fakeglass,
+/area/space)
+"m" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"n" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"o" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/space)
+"p" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/space)
+"q" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/space)
+"r" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"s" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/space)
+"t" = (
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron,
+/area/space)
+"u" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/space)
+"v" = (
+/turf/closed/indestructible/riveted,
+/area/space)
+"w" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/vest,
+/obj/item/clothing/head/helmet/swat,
+/obj/item/gun/energy/laser,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/space)
+"x" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/space)
+"y" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"z" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/red,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/tdome/red,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/red,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"A" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/space)
+"B" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"C" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"D" = (
+/obj/structure/rack,
+/obj/item/clothing/under/color/green,
+/obj/item/clothing/shoes/sneakers/brown,
+/obj/item/clothing/suit/armor/tdome/green,
+/obj/item/clothing/head/helmet/thunderdome,
+/obj/item/melee/baton/security/loaded,
+/obj/item/melee/energy/sword/saber/green,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"E" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/space)
+"F" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/space)
+"G" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+"H" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"I" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/space)
+"J" = (
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/space)
+"K" = (
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/space)
+"L" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/space)
+"M" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"N" = (
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/space)
+"O" = (
+/obj/machinery/igniter/on,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/space)
+"P" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/space)
+"Q" = (
+/obj/machinery/camera/motion/thunderdome{
+	pixel_x = 10
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"R" = (
+/turf/open/floor/iron,
+/area/space)
+"S" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/space)
+"T" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/space)
+"U" = (
+/obj/machinery/camera/directional/north{
+	c_tag = "Green Team";
+	network = list("thunder");
+	pixel_x = 12;
+	pixel_y = -10;
+	resistance_flags = 64
+	},
+/obj/effect/landmark/thunderdome/one,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/space)
+"V" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/space)
+"W" = (
+/obj/effect/landmark/thunderdome/two,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"X" = (
+/obj/machinery/flasher{
+	id = "tdomeflash";
+	name = "Thunderdome Flash"
+	},
+/turf/open/floor/circuit/green,
+/area/space)
+"Y" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdomegen";
+	name = "General Supply"
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/space)
+"Z" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/space)
+
+(1,1,1) = {"
+R
+v
+v
+v
+v
+v
+v
+v
+v
+R
+R
+"}
+(2,1,1) = {"
+R
+v
+z
+z
+z
+z
+z
+z
+v
+R
+R
+"}
+(3,1,1) = {"
+R
+v
+Y
+Y
+Y
+Y
+Y
+Y
+v
+v
+v
+"}
+(4,1,1) = {"
+R
+v
+L
+C
+C
+C
+C
+I
+d
+w
+v
+"}
+(5,1,1) = {"
+R
+v
+A
+N
+F
+F
+N
+o
+d
+w
+v
+"}
+(6,1,1) = {"
+R
+v
+A
+F
+g
+F
+F
+o
+d
+w
+v
+"}
+(7,1,1) = {"
+R
+v
+A
+N
+F
+F
+N
+o
+d
+w
+v
+"}
+(8,1,1) = {"
+R
+v
+V
+W
+W
+W
+W
+T
+d
+w
+v
+"}
+(9,1,1) = {"
+v
+v
+m
+m
+m
+m
+m
+m
+v
+v
+v
+"}
+(10,1,1) = {"
+l
+O
+G
+c
+k
+k
+Z
+G
+O
+l
+R
+"}
+(11,1,1) = {"
+l
+R
+R
+R
+R
+R
+R
+R
+R
+l
+R
+"}
+(12,1,1) = {"
+l
+S
+P
+P
+P
+P
+P
+P
+S
+l
+R
+"}
+(13,1,1) = {"
+l
+R
+M
+M
+M
+M
+M
+M
+R
+l
+R
+"}
+(14,1,1) = {"
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+R
+"}
+(15,1,1) = {"
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+R
+"}
+(16,1,1) = {"
+l
+R
+s
+s
+f
+f
+s
+s
+R
+l
+R
+"}
+(17,1,1) = {"
+l
+R
+s
+s
+X
+Q
+s
+s
+R
+l
+R
+"}
+(18,1,1) = {"
+l
+R
+s
+s
+f
+f
+s
+s
+R
+l
+R
+"}
+(19,1,1) = {"
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+R
+"}
+(20,1,1) = {"
+l
+R
+s
+s
+s
+s
+s
+s
+R
+l
+R
+"}
+(21,1,1) = {"
+l
+R
+j
+j
+j
+j
+j
+j
+R
+l
+R
+"}
+(22,1,1) = {"
+l
+S
+P
+P
+P
+P
+P
+P
+S
+l
+R
+"}
+(23,1,1) = {"
+l
+R
+R
+R
+R
+R
+R
+R
+R
+l
+R
+"}
+(24,1,1) = {"
+l
+O
+y
+H
+n
+n
+t
+y
+O
+l
+R
+"}
+(25,1,1) = {"
+v
+v
+B
+B
+B
+B
+B
+B
+v
+v
+v
+"}
+(26,1,1) = {"
+R
+v
+p
+e
+e
+e
+e
+i
+d
+h
+v
+"}
+(27,1,1) = {"
+R
+v
+K
+J
+q
+q
+J
+u
+d
+h
+v
+"}
+(28,1,1) = {"
+R
+v
+K
+q
+U
+q
+q
+u
+d
+h
+v
+"}
+(29,1,1) = {"
+R
+v
+K
+J
+q
+q
+J
+u
+d
+h
+v
+"}
+(30,1,1) = {"
+R
+v
+E
+b
+b
+b
+b
+x
+d
+h
+v
+"}
+(31,1,1) = {"
+R
+v
+r
+r
+r
+r
+r
+r
+v
+v
+v
+"}
+(32,1,1) = {"
+R
+v
+D
+D
+D
+D
+D
+D
+v
+R
+R
+"}
+(33,1,1) = {"
+R
+v
+v
+v
+v
+v
+v
+v
+v
+R
+R
+"}
