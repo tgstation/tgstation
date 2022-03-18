@@ -3006,6 +3006,7 @@
 #include "code\modules\mafia\map_pieces.dm"
 #include "code\modules\mafia\outfits.dm"
 #include "code\modules\mafia\roles.dm"
+#include "code\modules\mapping\access_helpers.dm"
 #include "code\modules\mapping\map_template.dm"
 #include "code\modules\mapping\mapping_helpers.dm"
 #include "code\modules\mapping\preloader.dm"
