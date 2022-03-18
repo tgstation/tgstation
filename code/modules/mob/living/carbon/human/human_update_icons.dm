@@ -1,4 +1,4 @@
-#define RESOLVE_ICON_STATE(I) (I.worn_icon_state || I.icon_state)
+#define RESOLVE_ICON_STATE(worn_item) (worn_item.worn_icon_state || worn_item.icon_state)
 
 	///////////////////////
 	//UPDATE_ICONS SYSTEM//
@@ -158,12 +158,12 @@ There are several things that need to be remembered:
 	var/mutable_appearance/id_overlay = overlays_standing[ID_LAYER]
 
 	if(wear_id)
-		var/obj/item/I = wear_id
-		update_hud_id(I)
+		var/obj/item/worn_item = wear_id
+		update_hud_id(worn_item)
 		var/handled_by_bodytype
 		var/icon_file
 
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(I)))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/mob.dmi'
 			handled_by_bodytype = FALSE
 
@@ -202,12 +202,12 @@ There are several things that need to be remembered:
 
 	var/mutable_appearance/gloves_overlay
 	if(gloves)
-		var/obj/item/I = gloves
-		update_hud_gloves(I)
+		var/obj/item/worn_item = gloves
+		update_hud_gloves(worn_item)
 		var/icon_file
 		var/handled_by_bodytype
 
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(I)))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/hands.dmi'
 			handled_by_bodytype = FALSE
 
@@ -233,15 +233,15 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(glasses)
-		var/obj/item/I = glasses
+		var/obj/item/worn_item = glasses
 		var/mutable_appearance/glasses_overlay
-		update_hud_glasses(I)
+		update_hud_glasses(worn_item)
 
 		var/handled_by_bodytype
 		var/icon_file
 		if(!(head?.flags_inv & HIDEEYES) && !(wear_mask?.flags_inv & HIDEEYES))
 
-			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(I)))
+			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 				icon_file = 'icons/mob/clothing/eyes.dmi'
 				handled_by_bodytype = FALSE
 
@@ -267,14 +267,14 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(ears)
-		var/obj/item/I = ears
+		var/obj/item/worn_item = ears
 		var/mutable_appearance/ears_overlay
-		update_hud_ears(I)
+		update_hud_ears(worn_item)
 
 		var/handled_by_bodytype = TRUE
 		var/icon_file
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(I))))
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			handled_by_bodytype = FALSE
 			icon_file = 'icons/mob/clothing/ears.dmi'
 
@@ -296,13 +296,13 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(wear_neck)
-		var/obj/item/I = wear_neck
+		var/obj/item/worn_item = wear_neck
 
 		if(!(ITEM_SLOT_NECK in check_obscured_slots()))
 			var/icon_file
 			//var/handled_by_bodytype = FALSE //UNCOMMENT WHEN USING IN FUTURE
 
-			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(I))))
+			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 				//handled_by_bodytype = FALSE
 				icon_file = 'icons/mob/clothing/neck.dmi'
 
@@ -323,19 +323,19 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(shoes)
-		var/obj/item/I = shoes
+		var/obj/item/worn_item = shoes
 		var/mutable_appearance/shoes_overlay
 		var/icon_file
-		update_hud_shoes(I)
+		update_hud_shoes(worn_item)
 		var/handled_by_bodytype = TRUE
 
 		//(Currently) unused digitigrade handling
-		/*if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (I.supports_variations & DIGITIGRADE_VARIATION))
+		/*if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations & DIGITIGRADE_VARIATION))
 			var/obj/item/bodypart/leg = src.get_bodypart(BODY_ZONE_L_LEG)
 			if(leg.limb_id == "digitigrade")//Snowflakey and bad. But it makes it look consistent.
 				icon_file = DIGITIGRADE_SHOES_PATH*/
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(I))))
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			handled_by_bodytype = FALSE
 			icon_file = DEFAULT_SHOES_PATH
 
@@ -359,12 +359,12 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(s_store)
-		var/obj/item/I = s_store
+		var/obj/item/worn_item = s_store
 		var/mutable_appearance/s_store_overlay
-		update_hud_s_store(I)
-		var/t_state = I.inhand_icon_state
+		update_hud_s_store(worn_item)
+		var/t_state = worn_item.inhand_icon_state
 		if(!t_state)
-			t_state = I.icon_state
+			t_state = worn_item.icon_state
 
 		s_store_overlay = mutable_appearance('icons/mob/clothing/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
 
@@ -383,13 +383,13 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(head)
-		var/obj/item/I = head
+		var/obj/item/worn_item = head
 		var/mutable_appearance/head_overlay
-		update_hud_head(I)
+		update_hud_head(worn_item)
 		var/handled_by_bodytype = FALSE
 		var/icon_file
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(I))))
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			handled_by_bodytype = FALSE
 			icon_file = 'icons/mob/clothing/head.dmi'
 
@@ -413,13 +413,13 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(belt)
-		var/obj/item/I = belt
+		var/obj/item/worn_item = belt
 		var/mutable_appearance/belt_overlay
-		update_hud_belt(I)
+		update_hud_belt(worn_item)
 		var/handled_by_bodytype = TRUE
 		var/icon_file
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(I))))
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			handled_by_bodytype = FALSE
 			icon_file = 'icons/mob/clothing/belt.dmi'
 
@@ -442,19 +442,19 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(wear_suit)
-		var/obj/item/I = wear_suit
+		var/obj/item/worn_item = wear_suit
 		var/mutable_appearance/suit_overlay
-		update_hud_wear_suit(I)
+		update_hud_wear_suit(worn_item)
 		var/icon_file
 
 		var/handled_by_bodytype = TRUE
 
 		//More currently unused digitigrade handling
 		/*if(dna.species.bodytype & BODYTYPE_DIGITIGRADE)
-			if(I.supports_variations & DIGITIGRADE_VARIATION)
+			if(worn_item.supports_variations & DIGITIGRADE_VARIATION)
 				icon_file = DIGITIGRADE_SUIT_PATH*/
 
-		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(I))))
+		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			handled_by_bodytype = FALSE
 			icon_file = DEFAULT_SUIT_PATH
 
@@ -504,15 +504,15 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(wear_mask)
-		var/obj/item/I = wear_mask
-		update_hud_wear_mask(I)
+		var/obj/item/worn_item = wear_mask
+		update_hud_wear_mask(worn_item)
 		var/mutable_appearance/mask_overlay
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 		var/handled_by_bodytype = TRUE
 
 		if(!(ITEM_SLOT_MASK in check_obscured_slots()))
 
-			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(I))))
+			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 				icon_file = 'icons/mob/clothing/mask.dmi'
 				handled_by_bodytype = FALSE
 
@@ -537,13 +537,13 @@ There are several things that need to be remembered:
 		inv.update_icon()
 
 	if(back)
-		var/obj/item/I = back
+		var/obj/item/worn_item = back
 		var/mutable_appearance/back_overlay
-		update_hud_back(I)
+		update_hud_back(worn_item)
 		var/icon_file = 'icons/mob/clothing/back.dmi'
 		var/handled_by_bodytype = TRUE
 
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(I)))
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
 			icon_file = 'icons/mob/clothing/back.dmi'
 			handled_by_bodytype = FALSE
 
@@ -572,32 +572,32 @@ There are several things that need to be remembered:
 		return
 
 	var/list/hands = list()
-	for(var/obj/item/I in held_items)
+	for(var/obj/item/worn_item in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-			I.screen_loc = ui_hand_position(get_held_index_of_item(I))
-			client.screen += I
+			worn_item.screen_loc = ui_hand_position(get_held_index_of_item(worn_item))
+			client.screen += worn_item
 			if(observers?.len)
 				for(var/M in observers)
 					var/mob/dead/observe = M
 					if(observe.client && observe.client.eye == src)
-						observe.client.screen += I
+						observe.client.screen += worn_item
 					else
 						observers -= observe
 						if(!observers.len)
 							observers = null
 							break
 
-		var/t_state = I.inhand_icon_state
+		var/t_state = worn_item.inhand_icon_state
 		if(!t_state)
-			t_state = I.icon_state
+			t_state = worn_item.icon_state
 
-		var/icon_file = I.lefthand_file
+		var/icon_file = worn_item.lefthand_file
 		var/mutable_appearance/hand_overlay
-		if(get_held_index_of_item(I) % 2 == 0)
-			icon_file = I.righthand_file
-			hand_overlay = I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		if(get_held_index_of_item(worn_item) % 2 == 0)
+			icon_file = worn_item.righthand_file
+			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 		else
-			hand_overlay = I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+			hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
 
 		hands += hand_overlay
 	overlays_standing[HANDS_LAYER] = hands
@@ -622,86 +622,86 @@ There are several things that need to be remembered:
 
 //human HUD updates for items in our inventory
 
-/mob/living/carbon/human/proc/update_hud_uniform(obj/item/I)
-	I.screen_loc = ui_iclothing
+/mob/living/carbon/human/proc/update_hud_uniform(obj/item/worn_item)
+	worn_item.screen_loc = ui_iclothing
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/proc/update_hud_id(obj/item/I)
-	I.screen_loc = ui_id
+/mob/living/carbon/human/proc/update_hud_id(obj/item/worn_item)
+	worn_item.screen_loc = ui_id
 	if((client && hud_used?.hud_shown))
-		client.screen += I
-	update_observer_view(I)
+		client.screen += worn_item
+	update_observer_view(worn_item)
 
-/mob/living/carbon/human/proc/update_hud_gloves(obj/item/I)
-	I.screen_loc = ui_gloves
+/mob/living/carbon/human/proc/update_hud_gloves(obj/item/worn_item)
+	worn_item.screen_loc = ui_gloves
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/proc/update_hud_glasses(obj/item/I)
-	I.screen_loc = ui_glasses
+/mob/living/carbon/human/proc/update_hud_glasses(obj/item/worn_item)
+	worn_item.screen_loc = ui_glasses
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/proc/update_hud_ears(obj/item/I)
-	I.screen_loc = ui_ears
+/mob/living/carbon/human/proc/update_hud_ears(obj/item/worn_item)
+	worn_item.screen_loc = ui_ears
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/proc/update_hud_shoes(obj/item/I)
-	I.screen_loc = ui_shoes
+/mob/living/carbon/human/proc/update_hud_shoes(obj/item/worn_item)
+	worn_item.screen_loc = ui_shoes
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/proc/update_hud_s_store(obj/item/I)
-	I.screen_loc = ui_sstore1
+/mob/living/carbon/human/proc/update_hud_s_store(obj/item/worn_item)
+	worn_item.screen_loc = ui_sstore1
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/proc/update_hud_wear_suit(obj/item/I)
-	I.screen_loc = ui_oclothing
+/mob/living/carbon/human/proc/update_hud_wear_suit(obj/item/worn_item)
+	worn_item.screen_loc = ui_oclothing
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/proc/update_hud_belt(obj/item/I)
+/mob/living/carbon/human/proc/update_hud_belt(obj/item/worn_item)
 	belt.screen_loc = ui_belt
 	if(client && hud_used?.hud_shown)
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
-/mob/living/carbon/human/update_hud_head(obj/item/I)
-	I.screen_loc = ui_head
+/mob/living/carbon/human/update_hud_head(obj/item/worn_item)
+	worn_item.screen_loc = ui_head
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
 //update whether our mask item appears on our hud.
-/mob/living/carbon/human/update_hud_wear_mask(obj/item/I)
-	I.screen_loc = ui_mask
+/mob/living/carbon/human/update_hud_wear_mask(obj/item/worn_item)
+	worn_item.screen_loc = ui_mask
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
 //update whether our neck item appears on our hud.
-/mob/living/carbon/human/update_hud_neck(obj/item/I)
-	I.screen_loc = ui_neck
+/mob/living/carbon/human/update_hud_neck(obj/item/worn_item)
+	worn_item.screen_loc = ui_neck
 	if((client && hud_used) && (hud_used.inventory_shown && hud_used.hud_shown))
-		client.screen += I
-	update_observer_view(I,TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item,TRUE)
 
 //update whether our back item appears on our hud.
-/mob/living/carbon/human/update_hud_back(obj/item/I)
-	I.screen_loc = ui_back
+/mob/living/carbon/human/update_hud_back(obj/item/worn_item)
+	worn_item.screen_loc = ui_back
 	if(client && hud_used?.hud_shown)
-		client.screen += I
-	update_observer_view(I, TRUE)
+		client.screen += worn_item
+	update_observer_view(worn_item, TRUE)
 
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
@@ -791,7 +791,7 @@ generate/load female uniform sprites matching all previously decided variables
 		else //No offsets or Unwritten number of hands
 			return list("x" = 0, "y" = 0)//Handle held offsets
 
-/mob/living/carbon/human/proc/update_observer_view(obj/item/I, inventory)
+/mob/living/carbon/human/proc/update_observer_view(obj/item/worn_item, inventory)
 	if(observers?.len)
 		for(var/M in observers)
 			var/mob/dead/observe = M
@@ -799,7 +799,7 @@ generate/load female uniform sprites matching all previously decided variables
 				if(observe.hud_used)
 					if(inventory && !observe.hud_used.inventory_shown)
 						continue
-					observe.client.screen += I
+					observe.client.screen += worn_item
 			else
 				observers -= observe
 				if(!observers.len)

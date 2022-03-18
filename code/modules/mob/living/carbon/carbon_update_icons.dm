@@ -226,19 +226,19 @@
 	update_damage_overlays()
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
-	for(var/obj/item/bodypart/BP as anything in bodyparts)
-		BP.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
-		var/old_key = icon_render_keys?[BP.body_zone]
-		icon_render_keys[BP.body_zone] = (BP.is_husked) ? generate_husk_key(BP) : generate_icon_key(BP)
-		if(!(icon_render_keys[BP.body_zone] == old_key))
-			needs_update += BP
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
+		var/old_key = icon_render_keys?[limb.body_zone]
+		icon_render_keys[limb.body_zone] = (limb.is_husked) ? generate_husk_key(limb) : generate_icon_key(limb)
+		if(!(icon_render_keys[limb.body_zone] == old_key))
+			needs_update += limb
 
 
 	var/list/missing_bodyparts = get_missing_limbs()
 	if(((dna ? dna.species.max_bodypart_count : 6) - icon_render_keys.len) != missing_bodyparts.len)
 		limb_count_update = TRUE
-		for(var/X in missing_bodyparts)
-			icon_render_keys -= X
+		for(var/missing_limb in missing_bodyparts)
+			icon_render_keys -= missing_limb
 
 	if(!needs_update.len && !limb_count_update)
 		return
@@ -247,13 +247,13 @@
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
-	for(var/obj/item/bodypart/BP as anything in bodyparts)
-		if(BP in needs_update)
-			var/bp_icon = BP.get_limb_icon()
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		if(limb in needs_update)
+			var/bp_icon = limb.get_limb_icon()
 			new_limbs += bp_icon
-			limb_icon_cache[icon_render_keys[BP.body_zone]] = bp_icon
+			limb_icon_cache[icon_render_keys[limb.body_zone]] = bp_icon
 		else
-			new_limbs += limb_icon_cache[icon_render_keys[BP.body_zone]]
+			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]]
 
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
@@ -275,15 +275,16 @@
 	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
 	See RemieRichards on irc.rizon.net #coderbus (RIP remie :sob:)
 */
-/mob/living/carbon/proc/generate_icon_key(obj/item/bodypart/BP)
-	if(BP.is_dimorphic)
-		. += "[BP.limb_gender]-"
-	. += "[BP.limb_id]"
-	. += "-[BP.body_zone]"
-	if(BP.should_draw_greyscale && BP.draw_color)
-		. += "-[BP.draw_color]"
+/mob/living/carbon/proc/generate_icon_key(obj/item/bodypart/limb)
+	if(limb.is_dimorphic)
+		. += "[limb.limb_gender]-"
+	. += "[limb.limb_id]"
+	. += "-[limb.body_zone]"
+	if(limb.should_draw_greyscale && limb.draw_color)
+		. += "-[limb.draw_color]"
 
-/mob/living/carbon/proc/generate_husk_key(obj/item/bodypart/BP)
-	. += "[BP.husk_type]"
+///Generates a cache key specifically for husks
+/mob/living/carbon/proc/generate_husk_key(obj/item/bodypart/limb)
+	. += "[limb.husk_type]"
 	. += "-husk"
-	. += "-[BP.body_zone]"
+	. += "-[limb.body_zone]"

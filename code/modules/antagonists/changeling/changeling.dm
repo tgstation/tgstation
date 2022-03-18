@@ -652,9 +652,9 @@
 
 	chosen_dna.transfer_identity(user, TRUE)
 
-	for(var/obj/item/bodypart/BP as anything in user.bodyparts)
-		if(IS_ORGANIC_LIMB(BP))
-			BP.update_limb(is_creating = TRUE)
+	for(var/obj/item/bodypart/limb as anything in user.bodyparts)
+		if(IS_ORGANIC_LIMB(limb))
+			limb.update_limb(is_creating = TRUE)
 
 	user.updateappearance(mutcolor_update = TRUE)
 	user.domutcheck()

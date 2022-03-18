@@ -326,15 +326,11 @@
 	return
 
 /mob/living/carbon/proc/handle_bodyparts(delta_time, times_fired)
-	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
-		stam_regen = TRUE
 		if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
-		if(BP.needs_processing)
-			. |= BP.on_life(delta_time, times_fired, stam_regen)
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
+		. |= BP.on_life()
 
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
 	if(stat != DEAD)
