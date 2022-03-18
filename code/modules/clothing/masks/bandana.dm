@@ -47,6 +47,12 @@
 
 /obj/item/clothing/mask/bandana/color
 	dying_key = DYE_REGISTRY_BANDANA
+	name = "bandana"
+	desc = "A fine bandana with nanotech lining."
+	icon_state = "bandwhite"
+	greyscale_config = /datum/greyscale_config/bandskull
+	greyscale_config_worn = /datum/greyscale_config/bandana_worn
+	greyscale_colors = "#555555"
 
 /obj/item/clothing/mask/bandana/color/red
 	name = "red bandana"
@@ -80,7 +86,11 @@
 
 /obj/item/clothing/mask/bandana/color/skull
 	name = "skull bandana"
-	desc = "A fine black bandana with nanotech lining and a skull emblem."
+	desc = "A fine bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
 	greyscale_config = /datum/greyscale_config/bandskull
-	greyscale_colors = "#555555"
+	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
+
+/obj/item/clothing/mask/bandana/color/skull/black
+	desc = "A fine black bandana with nanotech lining and a skull emblem."
+	greyscale_colors = "#000000"
