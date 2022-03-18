@@ -10048,10 +10048,6 @@
 /obj/item/pen,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"Gx" = (
-/obj/structure/sign/poster/contraband/random/directional/north,
-/turf/closed/wall,
-/area/maintenance/department/chapel)
 "Gz" = (
 /obj/machinery/door/window/northleft{
 	base_state = "right";
@@ -63395,7 +63391,7 @@ ak
 ak
 Et
 Et
-Gx
+UK
 dE
 bg
 Ro
@@ -63652,7 +63648,7 @@ ak
 Et
 Et
 Et
-Gx
+UK
 Qj
 zo
 cD
