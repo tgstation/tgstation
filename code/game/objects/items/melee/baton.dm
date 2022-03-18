@@ -56,23 +56,7 @@
 	var/context_living_rmb_inactive = "Attack"
 
 	/// For sprite selecting option, between classical wooden baton and black nightstick
-	/var/spriteSelected = FALSE
-
-	/obj/item/melee/baton/attackself(user)
-  		if(spriteSelected)
-		return //We already selected the sprite for the baton
-		var/spriteSelection = input(user, "Select preffered look for your baton", "Baton Look") in list("classic_baton", "classic_baton_black")
-		icon_state = spriteSelection
-		updateIcon()
-
-	// Create radial menu for choosing borg model
-	var/list/spriteSelection = list()
-	for(var/option in model_list)
-		var/obj/item/melee/baton/model = var/spriteSelection
-		var/spriteSelection = initial("classic_baton", "classic_baton_black")
-		spriteSelection[option] = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = model_icon)
-
-	var/input_model = show_radial_menu(src, src, spriteSelection, radius = 42)
+	var/spriteSelected = FALSE
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
@@ -286,14 +270,22 @@
 		user.do_attack_animation(user)
 	return
 
+/obj/item/melee/baton/attack_self(user)
+	if(spriteSelected)
+		return //We already selected the sprite for the baton
+	var/spriteSelection = input(user, "Select a look for your baton (Classic_baton is wooden one, classic_baton_black is metalic nightstick)", "Baton Look") in list("classic_baton", "classic_baton_black")
+	icon_state = spriteSelection
+	worn_icon_state = spriteSelection
+	inhand_icon_state = spriteSelection
+	update_icon()
+	spriteSelected = TRUE
+
 /obj/item/conversion_kit
 	name = "conversion kit"
 	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "uk"
 	custom_price = PAYCHECK_HARD * 4.5
-
-/obj/item/melee/baton/black
 
 /obj/item/melee/baton/telescopic
 	name = "telescopic baton"
