@@ -84,7 +84,7 @@
 	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
 	if(!do_after(source, equip_cooldown, target=target))
 		return
-	if(!chassis || !(get_dir(chassis, target)&chassis.dir))
+	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
 		return
 	if(!patient_insertion_check(target, source))
 		return

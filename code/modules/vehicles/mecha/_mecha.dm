@@ -398,7 +398,7 @@
 			. += "It's falling apart."
 	if(LAZYLEN(flat_equipment))
 		. += "It's equipped with:"
-		for(var/obj/item/mecha_parts/mecha_equipment/ME in flat_equipment)
+		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
 			. += "[icon2html(ME, user)] \A [ME]."
 	if(enclosed)
 		return
