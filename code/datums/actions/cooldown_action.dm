@@ -3,6 +3,7 @@
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
+
 	// Internal use
 	/// The actual next time this ability can be used
 	var/next_use_time = 0
@@ -79,6 +80,8 @@
 		else
 			click_result = set_click_ability()
 		if(click_result)
+			// We may have had another button active that's being deactivated by our own activation
+			// ...So just make sure any buttons have their correct icons
 			for(var/datum/action/cooldown/ability in owner.actions)
 				ability.UpdateButtonIcon()
 		return click_result
@@ -126,23 +129,27 @@
 
 /datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	. = ..()
-	var/time_left = max(next_use_time - world.time, 0)
 	if(button)
-		if(text_cooldown)
-			button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
-	if(!owner || time_left == 0)
+		update_button_text()
+		if(IsAvailable() && owner.click_intercept == src)
+			button.color = COLOR_GREEN
+
+/datum/action/cooldown/proc/update_button_text()
+	var/time_left = max(next_use_time - world.time, 0)
+	if(text_cooldown && time_left >= 0)
+		button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
+	else
 		button.maptext = ""
-	if(IsAvailable() && owner.click_intercept == src)
-		button.color = COLOR_GREEN
 
 /datum/action/cooldown/process()
-	var/time_left = max(next_use_time - world.time, 0)
-	if(!owner || time_left == 0)
+	if(!owner || (next_use_time - world.time) <= 0)
+		UpdateButtonIcon()
 		STOP_PROCESSING(SSfastprocess, src)
-	UpdateButtonIcon()
+
+	update_button_text()
 
 /datum/action/cooldown/Grant(mob/M)
-	..()
+	. = ..()
 	if(owner)
 		UpdateButtonIcon()
 		if(next_use_time > world.time)

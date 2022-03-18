@@ -145,7 +145,9 @@
 				objectives += hijack_objective
 
 /datum/antagonist/wizard/on_removal()
-	owner.RemoveAllSpells() // TODO keep track which spells are wizard spells which innate stuff
+	for(var/datum/action/cooldown/spell/spell in owner.current?.actions)
+		if(spell.target == owner)
+			qdel(spell)
 	return ..()
 
 /datum/antagonist/wizard/proc/equip_wizard()
@@ -215,7 +217,7 @@
 	. = ..()
 	if(!owner)
 		CRASH("Antag datum with no owner.")
-	if(!ishuamn(owner.current))
+	if(!ishuman(owner.current))
 		return
 
 	var/list/spells_to_grant = list()
@@ -361,13 +363,14 @@
 	else
 		parts += span_redtext("The wizard has failed!")
 
+	/* MELBERT TODO: make this log spellbook purchases more comprehensively
 	if(owner.spell_list.len>0)
 		parts += "<B>[owner.name] used the following spells: </B>"
 		var/list/spell_names = list()
 		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
 			spell_names += S.name
 		parts += spell_names.Join(", ")
-
+	*/
 	return parts.Join("<br>")
 
 //Wizard with apprentices report

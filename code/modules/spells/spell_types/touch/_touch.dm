@@ -31,7 +31,7 @@
 /datum/action/cooldown/spell/touch/proc/create_hand(mob/living/carbon/cast_on)
 	var/obj/item/melee/touch_attack/new_hand = new hand_path(cast_on)
 	if(!cast_on.put_in_hands(new_hand, del_on_fail = TRUE))
-		revert_spell()
+		revert_cast()
 		if (user.usable_hands == 0)
 			to_chat(user, span_warning("You dont have any usable hands!"))
 		else
@@ -56,7 +56,7 @@
 		QDEL_NULL(attached_hand)
 
 	if(revert_after)
-		revert_spell()
+		revert_cast()
 
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)
 	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))

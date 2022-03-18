@@ -25,7 +25,7 @@
 /datum/action/cooldown/spell/aoe/magic_missile/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
 	fire_projectile(victim, caster)
 
-/datum/action/cooldown/spell/aoe/magic_missile/proc/fire_projectile(atom/target, mob/caster)
+/datum/action/cooldown/spell/aoe/magic_missile/proc/fire_projectile(atom/victim, mob/caster)
 	var/obj/projectile/to_fire = new projectile_type()
 	to_fire.preparePixelProjectile(victim, caster)
 	to_fire.fire()
@@ -40,4 +40,4 @@
 	spell_requirements = NONE
 
 	max_targets = 6
-	proj_type = /obj/projectile/magic/spell/magic_missile/lesser
+	projectile_type = /obj/projectile/magic/aoe/magic_missile/lesser

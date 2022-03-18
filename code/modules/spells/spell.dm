@@ -40,6 +40,35 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	/// The amount of smoke spread.
 	var/smoke_amt = 0
 
+/datum/action/cooldown/spell/Grant(mob/grant_to)
+	if(!target)
+		stack_trace("Someone tried to grant a spell to someone which was incorrectly created. Please assign a target in New()!")
+
+	if(istype(target, /datum/mind))
+		var/datum/mind/mind_target = target
+		if(mind_target.current != grant_to)
+			return
+
+	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
+		RegisterSignal(grant_to, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
+	if(spell_requirements & SPELL_REQUIRES_CONSCIOUS)
+		RegisterSignal(grant_to, COMSIG_MOB_STATCHANGE, .proc/update_icon_on_signal)
+	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
+		RegisterSignal(grant_to, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
+
+	return ..()
+
+/datum/action/cooldown/spell/Remove(mob/living/remove_from)
+	UnregisterSignal(remove_from, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_STATCHANGE, COMSIG_MOB_EQUIPPED_ITEM))
+	return ..()
+
+/// A simple helper signal proc that calls UpdateButtonIcon
+/// when a signal relevant to our spell requirements has been caught.
+/datum/action/cooldown/spell/proc/update_icon_on_signal(datum/source)
+	SIGNAL_HANDLER
+
+	UpdateButtonIcon()
+
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(!can_cast_spell())
 		return FALSE
@@ -49,6 +78,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	UpdateButtonIcon()
 	return Activate()
 
+/datum/action/cooldown/spell/IsAvailable()
+	return ..() && can_cast_spell()
 
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
@@ -314,10 +345,14 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		REF(src),
 	)
 
-// MELBERT TODO unit test this
+// MELBERT TODO unit test this (ensure upgradable spells have cooldown_reduction_per_rank etc)
+/**
+ * Levels the spell up a single level, reducing the cooldown.
+ * If bypass_cap is TRUE, will level the spell up past it's set cap.
+ */
 /datum/action/cooldown/spell/proc/level_spell(bypass_cap = FALSE)
-	// Spell cannot be levelled
-	if(spell_max_level <= 1 || !cooldown_reduction_per_rank)
+	// Spell cannot be levelled or gains no benefit from  being levelled
+	if(spell_max_level <= 1 || !cooldown_time || !cooldown_reduction_per_rank)
 		return FALSE
 
 	// Spell is at cap, and we will not bypass it
@@ -326,8 +361,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	spell_level++
 	cooldown_time -= cooldown_reduction_per_rank
+	update_spell_name()
 	return TRUE
 
+/**
+ * Levels the spell down a single level, down to 1.
+ */
 /datum/action/cooldown/spell/proc/delevel_spell()
 	// Spell cannot be levelled
 	if(spell_max_level <= 1 || !cooldown_reduction_per_rank)
@@ -338,7 +377,27 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	spell_level--
 	cooldown_time += cooldown_reduction_per_rank
+	update_spell_name()
 	return TRUE
+
+/**
+ * Updates the spell's name based on its level.
+ */
+/datum/action/cooldown/spell/proc/update_spell_name()
+	var/spell_title = ""
+	switch(spell_level)
+		if(2)
+			spell_title = "Efficient "
+		if(3)
+			spell_title = "Quickened "
+		if(4)
+			spell_title = "Free "
+		if(5)
+			spell_title = "Instant "
+		if(6)
+			spell_title = "Ludicrous "
+
+	name = "[spell_title][initial(name)]"
 
 /datum/action/cooldown/spell/vv_get_dropdown()
 	. = ..()

@@ -14,12 +14,12 @@
 
 /datum/action/cooldown/spell/basic_projectile/cast(atom/cast_on)
 	. = ..()
-	var/turf/target_turf = get_turf(user)
+	var/turf/target_turf = get_turf(cast_on)
 	for(var/i in 1 to projectile_range - 1)
 		var/turf/next_turf = get_step(target_turf, cast_on.dir)
 		if(next_turf.density)
 			break
-		target_turf = new_turf
+		target_turf = next_turf
 
 	fire_projectile(target_turf, cast_on)
 

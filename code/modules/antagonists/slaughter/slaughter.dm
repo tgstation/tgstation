@@ -167,28 +167,33 @@
 /obj/item/organ/heart/demon/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
-	user.visible_message(span_warning("[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"), \
-		span_danger("An unnatural hunger consumes you. You raise [src] your mouth and devour it!"))
+	user.visible_message(span_warning(
+		"[user] raises [src] to [user.p_their()] mouth and tears into it with [user.p_their()] teeth!"),
+		span_danger("An unnatural hunger consumes you. You raise [src] your mouth and devour it!"),
+		)
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
-	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
-		if(knownspell.type == /obj/effect/proc_holder/spell/bloodcrawl)
-			to_chat(user, span_warning("...and you don't feel any different."))
-			qdel(src)
-			return
-	user.visible_message(span_warning("[user]'s eyes flare a deep crimson!"), \
-		span_userdanger("You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!"))
+
+	if(locate(/datum/action/cooldown/spell/jaunt/bloodcrawl) in user.actions)
+		to_chat(user, span_warning("...and you don't feel any different."))
+		qdel(src)
+		return
+
+	user.visible_message(
+		span_warning("[user]'s eyes flare a deep crimson!"),
+		span_userdanger("You feel a strange power seep into your body... you have absorbed the demon's blood-travelling powers!"),
+	)
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	src.Insert(user) //Consuming the heart literally replaces your heart with a demon heart. H A R D C O R E
 
 /obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
 	..()
-	if(M.mind)
-		M.mind.AddSpell(new /obj/effect/proc_holder/spell/bloodcrawl(null))
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(M.mind || M)
+	crawl.Grant(M)
 
 /obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
 	..()
-	if(M.mind)
-		M.mind.RemoveSpell(/obj/effect/proc_holder/spell/bloodcrawl)
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = locate() in M.actions
+	qdel(crawl)
 
 /obj/item/organ/heart/demon/Stop()
 	return 0 // Always beating.

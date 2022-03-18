@@ -724,9 +724,12 @@
 
 /datum/species/golem/runic/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species)
 	. = ..()
-	phase_shift = new(grant_to)
-	phase_shift.StartCooldown()
-	phase_shift.Grant(grant_to)
+	// Create our species specific spells here.
+	// Note we link them to the mob, not the mind,
+	// so they're not moved around on mindswaps
+	jaunt = new(grant_to)
+	jaunt.StartCooldown()
+	jaunt.Grant(grant_to)
 
 	abyssal_gaze = new(grant_to)
 	abyssal_gaze.StartCooldown()
@@ -737,6 +740,8 @@
 	dominate.Grant(grant_to)
 
 /datum/species/golem/runic/on_species_loss(mob/living/carbon/C)
+	// Aaand cleanup our species specific spells.
+	// No free rides.
 	QDEL_NULL(phase_shift)
 	QDEL_NULL(abyssal_gaze)
 	QDEL_NULL(dominate)

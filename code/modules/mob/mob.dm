@@ -780,7 +780,7 @@
 /mob/proc/get_spells_for_statpanel()
 	var/list/data = list()
 	var/index = 1
-	for(var/datum/action/cooldown/spell in actions)
+	for(var/datum/action/cooldown/spell/spell in actions)
 		data[index++] = spell.get_statpanel_format()
 
 	return data
@@ -885,32 +885,6 @@
 	if(ghost)
 		ghost.notify_cloning(message, sound, source, flashwindow)
 		return ghost
-
-///Add a spell to the mobs spell list
-/mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
-	// HACK: Preferences menu creates one of every selectable species.
-	// Some species, like vampires, create spells when they're made.
-	// The "action" is created when those spells Initialize.
-	// Preferences menu can create these assets at *any* time, primarily before
-	// the atoms SS initializes.
-	// That means "action" won't exist.
-	if (isnull(S.action))
-		return
-
-	LAZYADD(mob_spell_list, S)
-	S.action.Grant(src)
-
-///Remove a spell from the mobs spell list
-/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
-	if(!spell)
-		return
-	for(var/X in mob_spell_list)
-		var/obj/effect/proc_holder/spell/S = X
-		if(istype(S, spell))
-			LAZYREMOVE(mob_spell_list, S)
-			qdel(S)
-	if(client)
-		client << output(null, "statbrowser:check_spells")
 
 ///Return any anti magic atom on this mob that matches the magic type
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)

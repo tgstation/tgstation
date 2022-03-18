@@ -46,7 +46,8 @@
  */
 /mob/living/simple_animal/hostile/heretic_summon/proc/add_spells()
 	for(var/spell in spells_to_add)
-		AddSpell(new spell())
+		var/datum/action/cooldown/spell/new_spell = new spell(src)
+		new_spell.Grant(src)
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet
 	name = "Raw Prophet"

@@ -67,8 +67,12 @@
 
 /datum/action/cooldown/spell/pointed/mind_transfer/cast(mob/living/cast_on)
 	. = ..()
+	swap_minds(owner, cast_on)
+
+/datum/action/cooldown/spell/pointed/mind_transfer/swap_minds(mob/living/caster, mob/living/cast_on)
+
 	var/mob/living/to_swap = cast_on
-	if(isguardian(cast_on))
+	if(isguardian(body_two))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
 		if(stand.summoner)
 			to_swap = stand.summoner
@@ -81,27 +85,26 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
 		|| mind_to_swap.key[1] == "@" \
 	)
-		to_chat(owner, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
+		to_chat(caster, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE
 
 	// MIND TRANSFER BEGIN
 	var/mob/dead/observer/to_swap_ghost = to_swap.ghostize()
-	owner.mind.transfer_to(to_swap)
-	to_swap_ghost.mind.transfer_to(owner)
+	caster.mind.transfer_to(to_swap)
+	to_swap_ghost.mind.transfer_to(caster)
 
 	if(to_swap_ghost.key)
 		// Have to transfer the key, since the mind was "not active"
-		owner.key = to_swap_ghost.key
+		caster.key = to_swap_ghost.key
 	qdel(to_swap_ghost)
 	// MIND TRANSFER END
 
-	var/mob/living/living_owner = owner
 	// Here we knock both mobs out for a time.
-	living_owner.Unconscious(unconscious_amount_caster)
+	caster.Unconscious(unconscious_amount_caster)
 	to_swap.Unconscious(unconscious_amount_victim)
 	// Only the caster and victim hear the sounds,
 	// that way no one knows for sure if the swap happened
-	SEND_SOUND(owner, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
 	SEND_SOUND(to_swap, sound('sound/magic/mandswap.ogg'))
 
 	return TRUE

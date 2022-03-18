@@ -223,14 +223,17 @@
 	attack_sound = 'sound/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	construct_spells = list(
-		/datum/action/spell/cooldown/jaunt/ethereal_jaunt/shift/shift,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift,
 		/datum/action/innate/cult/create_rune/tele,
 	)
-	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
+	playstyle_string = "<b>You are a Wraith. Though relatively fragile, you are fast, deadly, \
+		can phase through walls, and your attacks will lower the cooldown on phasing.</b>"
 
-	var/attack_refund = 10 //1 second per attack
-	var/crit_refund = 50 //5 seconds when putting a target into critical
-	var/kill_refund = 250 //full refund on kills
+	// Accomplishing various things gives you a refund on jaunt, to jump in and out.
+	/// The seconds refunded per attack
+	var/attack_refund = 1 SECONDS
+	/// The seconds refunded when putting a target into critical
+	var/crit_refund = 5 SECONDS
 
 /mob/living/simple_animal/hostile/construct/wraith/AttackingTarget() //refund jaunt cooldown when attacking living targets
 	var/prev_stat
@@ -242,16 +245,22 @@
 	. = ..()
 
 	if(. && isnum(prev_stat))
-		var/mob/living/L = target
-		var/refund = 0
-		if(QDELETED(L) || (L.stat == DEAD && prev_stat != DEAD)) //they're dead, you killed them
-			refund += kill_refund
-		else if(HAS_TRAIT(L, TRAIT_CRITICAL_CONDITION) && prev_stat == CONSCIOUS) //you knocked them into critical
-			refund += crit_refund
-		if(L.stat != DEAD && prev_stat != DEAD)
-			refund += attack_refund
-		for(var/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/S in mob_spell_list)
-			S.charge_counter = min(S.charge_counter + refund, S.charge_max)
+		var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/jaunt = locate() in actions
+		if(!jaunt)
+			return
+
+		var/total_refund = 0 SECONDS
+		// they're dead, and you killed them - full refund
+		if(QDELETED(living_target) || (living_target.stat == DEAD && prev_stat != DEAD))
+			total_refund += jaunt.cooldown_time
+		// you knocked them into critical
+		else if(HAS_TRAIT(living_target, TRAIT_CRITICAL_CONDITION) && prev_stat == CONSCIOUS)
+			total_refund += crit_refund
+
+		if(living_target.stat != DEAD && prev_stat != DEAD)
+			total_refund += attack_refund
+
+		jaunt.next_use_time -= total_refund
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON
@@ -260,7 +269,7 @@
 /mob/living/simple_animal/hostile/construct/wraith/angelic
 	theme = THEME_HOLY
 	construct_spells = list(
-		/datum/action/spell/cooldown/jaunt/ethereal_jaunt/shift/angelic,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/angelic,
 		/datum/action/innate/cult/create_rune/tele,
 	)
 	loot = list(/obj/item/ectoplasm/angelic)
@@ -268,7 +277,7 @@
 /mob/living/simple_animal/hostile/construct/wraith/mystic
 	theme = THEME_WIZARD
 	construct_spells = list(
-		/datum/action/spell/cooldown/jaunt/ethereal_jaunt/shift/mystic,
+		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/mystic,
 		/datum/action/innate/cult/create_rune/tele,
 	)
 	loot = list(/obj/item/ectoplasm/mystic)
@@ -304,11 +313,11 @@
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/innate/cult/create_rune/revive,
 	)
-	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, \
+	playstyle_string = "<b>You are an Artificer. You are incredibly weak and fragile, \
+		but you are able to construct fortifications, use magic missile, and repair allied constructs, shades, \
+		and yourself (by clicking on them). Additionally, <i>and most important of all,</i> you can create new constructs \
+		by producing soulstones to capture souls, and shells to place those soulstones into.</b>"
 
-						use magic missile, repair allied constructs, shades, and yourself (by clicking on them), \
-						<i>and, most important of all,</i> create new constructs by producing soulstones to capture souls, \
-						and shells to place those soulstones into.</b>"
 	can_repair = TRUE
 	can_repair_self = TRUE
 	///The health HUD applied to this mob.

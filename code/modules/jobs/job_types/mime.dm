@@ -93,11 +93,17 @@
 	var/picked_spell = show_radial_menu(user, src, spell_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
 	switch(picked_spell)
 		if("Invisible Wall")
-			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_wall(null))
+			var/datum/action/cooldown/spell/conjure/mime/invisible_wall/wall = new(user.mind || user)
+			wall.Grant(user)
+
 		if("Invisible Chair")
-			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_chair(null))
+			var/datum/action/cooldown/spell/conjure/mime/invisible_chair/chair = new(user.mind || user)
+			chair.Grant(user)
+
 		if("Invisible Box")
-			user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/mime_box(null))
+			var/datum/action/cooldown/spell/conjure/mime/invisible_chair/box = new(user.mind || user)
+			box.Grant(user)
+
 		else
 			return
 	to_chat(user, span_warning("The book disappears into thin air."))
