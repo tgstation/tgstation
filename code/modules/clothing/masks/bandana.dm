@@ -82,4 +82,5 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
-
+	greyscale_config = /datum/greyscale_config/bandskull
+	greyscale_colors = "#555555"

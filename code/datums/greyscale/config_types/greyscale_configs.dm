@@ -453,4 +453,9 @@
 	icon_file = 'icons/mob/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter_worn.json'
 
+/datum/greyscale_config/bandskull
+	name = "Skull Bandana"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/bandskull.json'
+
 
