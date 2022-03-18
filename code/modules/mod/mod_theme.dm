@@ -361,7 +361,7 @@
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
 		/obj/item/mail,
-		/obj/item/small_delivery,
+		/obj/item/delivery/small,
 		/obj/item/paper,
 		/obj/item/storage/bag/mail,
 	)
