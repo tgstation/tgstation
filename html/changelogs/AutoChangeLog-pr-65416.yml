@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "you cant hide stuff in locked modsuit storages, it empties when removed from the suit"
