@@ -196,8 +196,8 @@
 					to_chat(user,span_notice("[capitalize(CM.name)] added to storage."))
 				else
 					to_chat(user, span_notice("There was not enough genetic data to extract a viable chromosome."))
-				if(A.crispr_charge)
-					crispr_charges++
+			if(A.research && A.crispr_charge)
+				crispr_charges++
 			qdel(I)
 			return
 
