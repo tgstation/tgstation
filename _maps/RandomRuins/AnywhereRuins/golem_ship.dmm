@@ -83,7 +83,9 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "p" = (
-/obj/machinery/mineral/ore_redemption,
+/obj/item/circuitboard/machine/ore_redemption,
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/five,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "q" = (
@@ -149,6 +151,14 @@
 	},
 /obj/item/storage/medkit/fire,
 /obj/item/storage/medkit/fire,
+/obj/item/stock_parts/matter_bin,
+/obj/item/assembly/igniter,
+/obj/item/stock_parts/micro_laser,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
+/obj/item/stack/sheet/glass,
 /turf/open/floor/mineral/titanium/purple,
 /area/ruin/powered/golem_ship)
 "B" = (

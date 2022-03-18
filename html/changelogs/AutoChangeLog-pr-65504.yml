@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "Rather then being tileable with just floor tiles, lavaland turfs, asteroid and snow (among other things) now support lattice -> floor tile construction"
-  - bugfix: "Because of the above, you can now properly fix the icebox mining shuttle"
-  - refactor: "Non floor turfs are no longer typed as floor. This may break things, please yell at me if it does"
