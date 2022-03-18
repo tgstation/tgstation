@@ -211,12 +211,10 @@
 	var/sensor_tag
 	var/sanitize_external
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list) // needed to override obj/machinery/embedded_controller/Topic, dont think its actually used in game other than here but the code is still here
-
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AirlockController")
+		ui = new(user, src, "AirlockController", src)
 		ui.open()
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_data(mob/user)
@@ -226,7 +224,7 @@
 	data["exteriorStatus"] = program.memory["exterior_status"] ? program.memory["exterior_status"] : "----"
 	data["interiorStatus"] = program.memory["interior_status"] ? program.memory["interior_status"] : "----"
 	data["pumpStatus"] = program.memory["pump_status"] ? program.memory["pump_status"] : "----"
-	return data		
+	return data
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_act(action, params)
 	. = ..()

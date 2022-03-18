@@ -50,16 +50,6 @@
 	if(istype(signal) && program)
 		program.receive_signal(signal)
 
-/obj/machinery/embedded_controller/Topic(href, href_list)
-	. = ..()
-	if(.)
-		return
-
-	process_command(href_list["command"])
-
-	usr.set_machine(src)
-	addtimer(CALLBACK(src, .proc/updateDialog), 5)
-
 /obj/machinery/embedded_controller/proc/process_command(command)
 	if(program)
 		program.receive_user_command(command)
