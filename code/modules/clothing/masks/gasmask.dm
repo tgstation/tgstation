@@ -12,7 +12,7 @@
 	icon_state = "gas_mask"
 	greyscale_config = /datum/greyscale_config/gas_mask
 	greyscale_config_worn = /datum/greyscale_config/gas_mask_worn
-	greyscale_colors = "#ffffff#01B069"
+	greyscale_colors = "#c0c0c0#00ff98"
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -114,7 +114,7 @@
 	icon_state = "gas_mask_badge"
 	greyscale_config = /datum/greyscale_config/gas_mask_badge
 	greyscale_config_worn = /datum/greyscale_config/gas_mask_badge_worn
-	greyscale_colors = "#0033d9#0026FF#FFD800"
+	greyscale_colors = "#0099ff#0066ff#FFD800"
 	inhand_icon_state = "gas_cap"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
