@@ -9,9 +9,10 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	icon_state = "gas_mask"
 	greyscale_config = /datum/greyscale_config/gas_mask
 	greyscale_config_worn = /datum/greyscale_config/gas_mask_worn
-	greyscale_colors = "#7A7A7A#01B069"
+	greyscale_colors = "#ffffff#01B069"
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -101,7 +102,7 @@
 	name = "atmospheric gas mask"
 	desc = "Improved gas mask utilized by atmospheric technicians. It's flameproof!"
 	inhand_icon_state = "gas_atmos"
-	greyscale_colors = "#303030#FFD800"
+	greyscale_colors = "#595959#FFD800"
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 20, ACID = 10)
 	permeability_coefficient = 0.001
 	resistance_flags = FIRE_PROOF
@@ -110,15 +111,17 @@
 /obj/item/clothing/mask/gas/atmos/captain
 	name = "captain's gas mask"
 	desc = "Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone."
+	icon_state = "gas_mask_badge"
 	greyscale_config = /datum/greyscale_config/gas_mask_badge
 	greyscale_config_worn = /datum/greyscale_config/gas_mask_badge_worn
-	greyscale_colors = "#303030#0026FF#FFD800"
+	greyscale_colors = "#0033d9#0026FF#FFD800"
 	inhand_icon_state = "gas_cap"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/mask/gas/atmos/centcom
 	name = "\improper CentCom gas mask"
 	desc = "Oooh, gold and green. Fancy! This should help as you sit in your office."
+	icon_state = "gas_mask_badge"
 	greyscale_config = /datum/greyscale_config/gas_mask_badge
 	greyscale_config_worn = /datum/greyscale_config/gas_mask_badge_worn
 	greyscale_colors = "#00C617#00FF21#FFD800"
