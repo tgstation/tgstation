@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - rscadd: "A mix-up in blueprints meant that TramStation didn't have a formally defined Ordnance Launch Area. This has now been rectified."
+  - bugfix: "TramStation's Ordnance Mixing no longer owns that bit of space that the waste gas is meant to exit the burn chamber from."
+  - bugfix: "TramStation's Ordnance Launch Area's APC now has connectivity to the grid."
