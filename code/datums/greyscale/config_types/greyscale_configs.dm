@@ -453,4 +453,22 @@
 	icon_file = 'icons/mob/clothing/suits/moth.dmi'
 	json_config = 'code/datums/greyscale/json_configs/moth_coat_winter_worn.json'
 
+/datum/greyscale_config/gas_mask
+	name = "Gas Mask"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gas_mask.json'
 
+/datum/greyscale_config/gas_mask_worn
+	name = "Gas Mask (Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gas_mask_worn.json'
+
+/datum/greyscale_config/gas_mask_badge
+	name = "Gas Mask (Badge)"
+	icon_file = 'icons/obj/clothing/masks.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gas_mask_badge.json'
+
+/datum/greyscale_config/gas_mask_badge_worn
+	name = "Gas Mask (Badge, Worn)"
+	icon_file = 'icons/mob/clothing/mask.dmi'
+	json_config = 'code/datums/greyscale/json_configs/gas_mask_badge_worn.json'

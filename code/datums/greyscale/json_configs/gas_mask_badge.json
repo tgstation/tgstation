@@ -1,0 +1,22 @@
+{
+	"gas_mask": [
+		{
+			"type": "icon_state",
+			"icon_state": "gas_alt",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gas_alt_eyes",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "gas_alt_badge",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}
