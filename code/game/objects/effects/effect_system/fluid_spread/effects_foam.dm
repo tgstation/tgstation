@@ -79,7 +79,7 @@
 		kill_foam()
 		return
 
-	var/fraction = (delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
+	var/fraction = ((delta_time SECONDS) * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 	var/turf/location = loc
 	for(var/obj/object as anything in location)
 		if(object == src)
@@ -101,7 +101,7 @@
 
 /**
  * Applies the effect of this foam to a mob.
- * 
+ *
  * Arguments:
  * - [foaming][/mob/living]: The mob that this foam is acting on.
  * - delta_time: The amount of time that this foam is acting on them over.

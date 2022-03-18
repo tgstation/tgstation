@@ -74,7 +74,7 @@
 		if(locate(type) in spread_turf)
 			continue // Don't spread smoke where there's already smoke!
 		for(var/mob/living/smoker in spread_turf)
-			smoke_mob(smoker)
+			smoke_mob(smoker, SSOBJ_DT)
 
 		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group)
 		reagents.copy_to(spread_smoke, reagents.total_volume)
@@ -344,7 +344,7 @@
 		return
 
 	var/turf/location = get_turf(src)
-	var/fraction = delta_time / initial(lifetime)
+	var/fraction = (delta_time SECONDS) / initial(lifetime)
 	for(var/atom/movable/thing as anything in location)
 		if(thing == src)
 			continue
@@ -363,7 +363,7 @@
 	if(smoker.internal != null || smoker.has_smoke_protection())
 		return FALSE
 
-	var/fraction = delta_time / initial(lifetime)
+	var/fraction = (delta_time SECONDS) / initial(lifetime)
 	reagents.copy_to(smoker, fraction * reagents.total_volume)
 	reagents.expose(smoker, INGEST, fraction)
 	return TRUE
