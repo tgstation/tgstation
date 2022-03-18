@@ -159,8 +159,13 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
+			var/datum/map_template/tdome = SSmapping.map_templates["thunderdome.dmm"]
+			var/turf/tdome_corner = locate(thunderdome.x, thunderdome.y, 1)
+			tdome.load(tdome_corner)
+			/*
 			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
 			template.copy_contents_to(thunderdome)
+			*/
 		if("set_name")
 			var/new_name = input(holder, "Please input a new name for the station.", "What?", "") as text|null
 			if(!new_name)

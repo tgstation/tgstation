@@ -1,0 +1,278 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/riveted,
+/area/space)
+"c" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"e" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"f" = (
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"g" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"h" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"o" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"v" = (
+/obj/machinery/igniter/on,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"y" = (
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"z" = (
+/obj/machinery/flasher{
+	id = "tdomeflash";
+	name = "Thunderdome Flash"
+	},
+/turf/open/floor/circuit/green,
+/area/tdome/arena_source)
+"A" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"G" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"I" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"J" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"K" = (
+/turf/open/floor/circuit/green,
+/area/tdome/arena_source)
+"L" = (
+/obj/machinery/door/poddoor{
+	id = "thunderdome";
+	name = "Thunderdome Blast Door"
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"O" = (
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"R" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+"T" = (
+/obj/effect/turf_decal/tile/green,
+/turf/open/floor/iron,
+/area/tdome/arena_source)
+
+(1,1,1) = {"
+a
+L
+L
+L
+L
+L
+L
+a
+"}
+(2,1,1) = {"
+v
+g
+G
+R
+R
+h
+g
+v
+"}
+(3,1,1) = {"
+y
+y
+y
+y
+y
+y
+y
+y
+"}
+(4,1,1) = {"
+A
+c
+c
+c
+c
+c
+c
+A
+"}
+(5,1,1) = {"
+y
+J
+J
+J
+J
+J
+J
+y
+"}
+(6,1,1) = {"
+y
+e
+e
+e
+e
+e
+e
+y
+"}
+(7,1,1) = {"
+y
+e
+e
+e
+e
+e
+e
+y
+"}
+(8,1,1) = {"
+y
+e
+e
+K
+K
+e
+e
+y
+"}
+(9,1,1) = {"
+y
+e
+e
+z
+K
+e
+e
+y
+"}
+(10,1,1) = {"
+y
+e
+e
+K
+K
+e
+e
+y
+"}
+(11,1,1) = {"
+y
+e
+e
+e
+e
+e
+e
+y
+"}
+(12,1,1) = {"
+y
+e
+e
+e
+e
+e
+e
+y
+"}
+(13,1,1) = {"
+y
+o
+o
+o
+o
+o
+o
+y
+"}
+(14,1,1) = {"
+A
+c
+c
+c
+c
+c
+c
+A
+"}
+(15,1,1) = {"
+y
+y
+y
+y
+y
+y
+y
+y
+"}
+(16,1,1) = {"
+v
+f
+O
+I
+I
+T
+f
+v
+"}
+(17,1,1) = {"
+a
+L
+L
+L
+L
+L
+L
+a
+"}
