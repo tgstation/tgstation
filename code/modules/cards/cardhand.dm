@@ -121,7 +121,7 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 #define CARDS_MAX_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand
-#define CARDS_PIXEL_X_OFFSET -4 // start out displaying the 1st card -5 pixels left
+#define CARDS_PIXEL_X_OFFSET -5 // start out displaying the 1st card -5 pixels left
 #define CARDS_ANGLE_OFFSET -45 // start out displaying the 1st card -45 degrees counter clockwise
 
 /obj/item/toy/cards/cardhand/update_overlays()
@@ -137,7 +137,7 @@
 	// 90 degrees from the 1st card to the last, so split the divider by total cards displayed
 	var/angle_divider = round(90/(cards_to_display - 1))
 	// 10 pixels from the 1st card to the last, so split the divider by total cards displayed
-	var/pixel_divider = round(8/(cards_to_display - 1))
+	var/pixel_divider = round(10/(cards_to_display - 1))
 
 	// starting from the 1st card to last, we want to slowly increase the angle and pixel_x offset
 	// to spread the cards out using our dividers
