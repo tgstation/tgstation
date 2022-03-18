@@ -278,15 +278,8 @@
 		var/obj/item/toy/crayon/crayon = painting_implement
 		return crayon.paint_color
 	else if(istype(painting_implement, /obj/item/pen))
-		var/obj/item/pen/P = painting_implement
-		switch(P.colour)
-			if("black")
-				return "#000000"
-			if("blue")
-				return "#0000ff"
-			if("red")
-				return "#ff0000"
-		return P.colour
+		var/obj/item/pen/pen = painting_implement
+		return pen.colour
 	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/glass/rag))
 		return canvas_color
 
@@ -557,10 +550,10 @@
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
 	///Chosen paint color
-	var/current_color
+	var/current_color = "#000000"
 
 /obj/item/paint_palette/attack_self(mob/user, modifiers)
 	. = ..()
-	var/chosen_color = input(user,"Pick new color","Palette") as color|null
+	var/chosen_color = input(user,"Pick new color","Palette", current_color) as color|null
 	if(chosen_color)
 		current_color = chosen_color
