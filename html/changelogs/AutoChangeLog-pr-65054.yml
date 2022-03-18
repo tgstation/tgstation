@@ -1,4 +1,0 @@
-author: "vincentiusvin"
-delete-after: True
-changes: 
-  - code_imp: "minor change to TGUI button content to use flexboxes. This caused a bug in the past, report if you notice anything weird."

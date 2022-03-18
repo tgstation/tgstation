@@ -43,7 +43,7 @@
 	MA.icon = 'icons/effects/effects.dmi'
 	MA.icon_state = "launchpad_target"
 	MA.layer = ABOVE_OPEN_TURF_LAYER
-	MA.plane = 0
+	MA.plane = GAME_PLANE
 	holder.appearance = MA
 
 	update_indicator()

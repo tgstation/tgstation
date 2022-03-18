@@ -431,7 +431,7 @@
 /datum/reagent/consumable/roy_rogers
 	name = "Roy Rogers"
 	description = "A sweet fizzy drink."
-	color = "#53090B" 
+	color = "#53090B"
 	quality = DRINK_GOOD
 	taste_description = "fruity overlysweet cola"
 	glass_icon_state = "royrogers"
@@ -439,7 +439,7 @@
 	glass_desc = "90% sugar in a glass."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/roy_roger/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
+/datum/reagent/consumable/roy_rogers/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	M.Jitter(6 * REM * delta_time) //not as strong as coffe, still this is a lot of sugar
 	M.adjust_drowsyness(-5 * REM * delta_time)
 	M.adjust_bodytemperature(-5 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * delta_time, M.get_body_temp_normal())
@@ -805,11 +805,11 @@
 /datum/reagent/consumable/cinderella
 	name = "Cinderella"
 	description = "Most definitely a fruity alcohol cocktail to have while partying with your friends."
-	color = "#FF6A50" 
+	color = "#FF6A50"
 	quality = DRINK_VERYGOOD
 	taste_description = "sweet tangy fruit"
 	glass_icon_state = "cinderella"
-	glass_name = "Cinderlla"
+	glass_name = "Cinderella"
 	glass_desc = "There is not a single drop of alcohol in this thing."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -857,7 +857,7 @@
 
 /datum/reagent/consumable/caramelshake
 	name = "Caramel Shake"
-	description = "A aramel flavored milkshake. Your teeth hurt looking at it."
+	description = "A caramel flavored milkshake. Your teeth hurt looking at it."
 	color = "#E17C00"
 	quality = DRINK_GOOD
 	nutriment_factor = 10 * REAGENTS_METABOLISM
@@ -1147,31 +1147,10 @@
 	..()
 	. = TRUE
 
-/datum/reagent/consumable/lean
-	name = "Lean"
-	description = "The drank that makes you go wheezy."
-	color = "#DE55ED"
-	quality = DRINK_NICE
-	taste_description = "purple and a hint of opioid."
-	glass_icon_state = "lean"
-	glass_name = "Lean"
-	glass_desc = "A drink that makes your life less miserable."
-	addiction_types = list(/datum/addiction/opiods = 6)
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-
-/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(M.slurring < 3)
-		M.slurring += 2 * REM * delta_time
-	if(M.druggy < 3)
-		M.adjust_drugginess(1 * REM * delta_time)
-	if(M.drowsyness < 3)
-		M.adjust_drowsyness(1 * REM * delta_time)
-	return ..()
-
 /datum/reagent/consumable/agua_fresca
 	name = "Agua Fresca"
 	description = "A refreshing watermelon agua fresca. Perfect on a day at the holodeck."
-	color = "#D25B66" 
+	color = "#D25B66"
 	quality = DRINK_VERYGOOD
 	taste_description = "cool refreshing watermelon"
 	glass_icon_state = "aguafresca"

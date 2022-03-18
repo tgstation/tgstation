@@ -49,7 +49,7 @@
 /turf/open/floor/iron/smooth,
 /area/maintenance/starboard/lesser)
 "K" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/starboard/lesser)
 "L" = (
 /obj/effect/decal/cleanable/dirt,
@@ -58,15 +58,15 @@
 "O" = (
 /obj/effect/spawner/random/structure/girder,
 /obj/item/stack/sheet/iron,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/starboard/lesser)
 "P" = (
 /obj/item/relic,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/starboard/lesser)
 "Q" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/starboard/lesser)
 
 (1,1,1) = {"

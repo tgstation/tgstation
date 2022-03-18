@@ -157,19 +157,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/gravity_generator)
-"aJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/engineering/gravity_generator)
 "aK" = (
 /obj/structure/table,
 /obj/item/rcd_ammo/large,
@@ -300,20 +287,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/engineering/gravity_generator)
-"bi" = (
-/obj/machinery/gravity_generator/main/station,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/engineering/gravity_generator)
 "bk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1078,13 +1051,6 @@
 /area/construction)
 "dN" = (
 /obj/structure/table,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-"dO" = (
-/obj/structure/table,
-/obj/machinery/light/directional/south,
-/obj/item/storage/firstaid/regular,
-/obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dP" = (
@@ -2060,6 +2026,11 @@
 /obj/machinery/chem_mass_spec,
 /turf/open/floor/iron,
 /area/medical/chemistry)
+"mO" = (
+/obj/machinery/gravity_generator/main/station,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "nn" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -2259,6 +2230,10 @@
 "wU" = (
 /turf/closed/wall/r_wall,
 /area/science/misc_lab)
+"xy" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "yK" = (
 /obj/structure/fans/tiny/invisible,
 /obj/effect/turf_decal/stripes/line{
@@ -2271,6 +2246,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"AA" = (
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/obj/item/storage/medkit/regular,
+/obj/item/healthanalyzer/advanced,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "AE" = (
 /obj/machinery/airalarm/unlocked{
 	dir = 1;
@@ -7600,7 +7582,7 @@ dJ
 dJ
 dJ
 dJ
-dO
+AA
 cS
 gz
 fO
@@ -8036,9 +8018,9 @@ ad
 af
 ak
 av
-aJ
-aJ
-aJ
+xy
+xy
+xy
 av
 by
 bU
@@ -8128,9 +8110,9 @@ ad
 af
 ak
 dT
-aJ
+xy
 av
-bi
+mO
 av
 by
 bV
@@ -8220,9 +8202,9 @@ ad
 af
 ak
 av
-aJ
-aJ
-aJ
+xy
+xy
+xy
 av
 by
 bW

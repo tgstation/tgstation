@@ -92,7 +92,7 @@
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/U, user)
 	return
 
-/obj/item/clothing/accessory/AltClick(mob/user)
+/obj/item/clothing/accessory/attack_self_secondary(mob/user)
 	if(initial(above_suit) && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		above_suit = !above_suit
 		to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] your suit.")
@@ -104,7 +104,7 @@
 	. = ..()
 	. += span_notice("\The [src] can be attached to a uniform. Alt-click to remove it once attached.")
 	if(initial(above_suit))
-		. += span_notice("\The [src] can be worn above or below your suit. Alt-click to toggle.")
+		. += span_notice("\The [src] can be worn above or below your suit. Right-click to toggle.")
 
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
@@ -231,7 +231,7 @@
 	icon_state = "gold"
 	medaltype = "medal-gold"
 	custom_materials = list(/datum/material/gold=1000)
-	
+
 /obj/item/clothing/accessory/medal/med_medal
 	name = "exemplary performance medal"
 	desc = "A medal awarded to those who have shown distinguished conduct, performance, and initiative within the medical department."
@@ -465,6 +465,7 @@
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your sexuality, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
+	above_suit = TRUE
 	obj_flags = UNIQUE_RENAME
 	unique_reskin = list("Rainbow Pride" = "pride",
 						"Bisexual Pride" = "pride_bi",
@@ -472,4 +473,6 @@
 						"Asexual Pride" = "pride_ace",
 						"Non-binary Pride" = "pride_enby",
 						"Transgender Pride" = "pride_trans",
+						"Intersex Pride" = "pride_intersex",
+						"Lesbian Pride" = "pride_lesbian",
 						)

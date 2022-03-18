@@ -4873,7 +4873,7 @@
 /area/ruin/space/has_grav/ancientstation/mining)
 "mu" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/ancient,
+/obj/item/storage/medkit/ancient,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/defibrillator,
 /obj/item/paper/fluff/ruins/oldstation/protosleep{

@@ -130,8 +130,8 @@
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
-	else if(istype(target, /turf/open/floor/plating/asteroid))
-		var/turf/open/floor/plating/asteroid/sand_turf = target
+	else if(istype(target, /turf/open/misc/asteroid))
+		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
 		sand_turf.getDug()
@@ -171,7 +171,7 @@
 
 	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
 		INVOKE_ASYNC(src, .proc/move_ore, ore)
-		playsound(src, "rustle", 50, TRUE)
+		playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/stored_ore as anything in ores)
@@ -361,17 +361,17 @@
 	. = ..()
 	if(!accretion_turfs)
 		accretion_turfs = typecacheof(list(
-			/turf/open/floor/plating/asteroid,
-			/turf/open/floor/plating/ashplanet,
-			/turf/open/floor/plating/dirt,
+			/turf/open/misc/asteroid,
+			/turf/open/misc/ashplanet,
+			/turf/open/misc/dirt,
 		))
 	if(!keep_turfs)
 		keep_turfs = typecacheof(list(
-			/turf/open/floor/plating/grass,
+			/turf/open/misc/grass,
 			/turf/open/floor/plating/snowed,
-			/turf/open/floor/plating/sandy_dirt,
-			/turf/open/floor/plating/ironsand,
-			/turf/open/floor/plating/ice,
+			/turf/open/misc/sandy_dirt,
+			/turf/open/misc/ironsand,
+			/turf/open/misc/ice,
 			/turf/open/indestructible/hierophant,
 			/turf/open/indestructible/boss,
 			/turf/open/indestructible/necropolis,

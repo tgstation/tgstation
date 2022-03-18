@@ -814,9 +814,9 @@
 /area/shuttle/escape/luxury)
 "cG" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/advanced,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/advanced,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/fire,
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},

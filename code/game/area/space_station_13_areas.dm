@@ -654,6 +654,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Recreation Area"
 	icon_state = "rec"
 
+/area/commons/fitness/recreation/entertainment
+	name = "\improper Entertainment Center"
+	icon_state = "entertainment"
+
 // Commons - Vacant Rooms
 /area/commons/vacant_room
 	name = "\improper Vacant Room"
@@ -716,6 +720,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/kitchen/diner
 	name = "\improper Diner"
+	icon_state = "diner"
 
 /area/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
@@ -893,6 +898,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
+	icon_state = "atmos_projectroom"
+
+/area/engineering/atmos/pumproom
+	name = "\improper Atmospherics Pumping Room"
+	icon_state = "atmos_pump_room"
+
+/area/engineering/atmos/mix
+	name = "\improper Atmospherics Mixing Room"
+	icon_state = "atmos_mix"
 
 /area/engineering/atmos/storage
 	name = "\improper Atmospherics Storage Room"
@@ -904,9 +918,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/office
 	name = "\improper Atmospherics Office"
+	icon_state = "atmos_office"
 
 /area/engineering/atmos/hfr_room
 	name = "\improper Atmospherics HFR Room"
+	icon_state = "atmos_HFR"
 
 /area/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
@@ -953,7 +969,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage/tech
 	name = "Technical Storage"
-	icon_state = "aux_storage"
+	icon_state = "tech_storage"
 
 /area/engineering/storage/tcomms
 	name = "Telecomms Storage"
@@ -986,6 +1002,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
+	base_lighting_alpha = 255
 
 /area/solars/fore
 	name = "\improper Fore Solar Array"
@@ -1390,6 +1407,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Cargo Bay"
 	icon_state = "cargo_bay"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/cargo/lobby
+	name = "\improper Cargo Lobby"
+	icon_state = "cargo_lobby"
 
 /area/cargo/qm
 	name = "\improper Quartermaster's Office"

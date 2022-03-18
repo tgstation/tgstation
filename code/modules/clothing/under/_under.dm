@@ -10,7 +10,8 @@
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	limb_integrity = 30
-	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
+	/// The variable containing the flags for how the woman uniform cropping is supposed to interact with the sprite.
+	var/female_sprite_flags = FEMALE_UNIFORM_FULL
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
 	var/sensor_mode = NO_SENSORS
@@ -93,7 +94,7 @@
 	..()
 	if(adjusted)
 		adjusted = NORMAL_STYLE
-		fitted = initial(fitted)
+		female_sprite_flags = initial(female_sprite_flags)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
@@ -308,13 +309,13 @@
 		return
 	adjusted = !adjusted
 	if(adjusted)
-		if(fitted != FEMALE_UNIFORM_TOP)
-			fitted = NO_FEMALE_UNIFORM
+		if(female_sprite_flags != FEMALE_UNIFORM_TOP_ONLY)
+			female_sprite_flags = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted (and also the arms, realistically)
 			body_parts_covered &= ~CHEST
 			body_parts_covered &= ~ARMS
 	else
-		fitted = initial(fitted)
+		female_sprite_flags = initial(female_sprite_flags)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 			body_parts_covered |= ARMS

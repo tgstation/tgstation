@@ -548,7 +548,7 @@
 				. += get_airlock_overlay("sparks_open", overlays_file, em_block = FALSE)
 
 	if(note)
-		. += get_airlock_overlay(note_type(), note_overlay_file, em_block = TRUE)
+		. += get_airlock_overlay(get_note_state(frame_state), note_overlay_file, em_block = TRUE)
 
 	if(frame_state == AIRLOCK_FRAME_CLOSED && seal)
 		. += get_airlock_overlay("sealed", overlays_file, em_block = TRUE)
@@ -815,16 +815,29 @@
 		updateDialog()
 
 /obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TRUE
 	if(panel_open && detonated)
 		to_chat(user, span_warning("[src] has no maintenance panel!"))
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	panel_open = !panel_open
 	to_chat(user, span_notice("You [panel_open ? "open":"close"] the maintenance panel of the airlock."))
 	tool.play_tool_sound(src)
 	update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
+	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
+		. = TOOL_ACT_TOOLTYPE_SUCCESS  // everything after this shouldn't result in attackby
+		if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
+			return .
+		to_chat(user, span_notice("You start cutting through the outer grille."))
+		if(!tool.use_tool(src, user, 10, volume=100))
+			return .
+		if(!panel_open)  // double check it wasn't closed while we were trying to snip
+			return .
+		user.visible_message(span_notice("[user] cut through [src]'s outer grille."),
+							span_notice("You cut through [src]'s outer grille."))
+		security_level = AIRLOCK_SECURITY_PLASTEEL_O
+		return .
 	if(note)
 		if(user.CanReach(src))
 			user.visible_message(span_notice("[user] cuts down [note] from [src]."), span_notice("You remove [note] from [src]."))
@@ -834,10 +847,113 @@
 		note.forceMove(tool.drop_location())
 		note = null
 		update_appearance()
-		return TRUE
-	else
-		return FALSE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/obj/machinery/door/airlock/crowbar_act(mob/living/user, obj/item/tool)
+
+	if(!panel_open || security_level == AIRLOCK_SECURITY_NONE)
+		return ..()
+
+	var/layer_flavor
+	var/next_level
+	var/starting_level = security_level
+
+	switch(security_level)
+		if(AIRLOCK_SECURITY_PLASTEEL_O_S)
+			layer_flavor = "outer layer of shielding"
+			next_level = AIRLOCK_SECURITY_PLASTEEL_I
+
+		if(AIRLOCK_SECURITY_PLASTEEL_I_S)
+			layer_flavor = "inner layer of shielding"
+			next_level = AIRLOCK_SECURITY_NONE
+		else
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	user.visible_message(span_notice("You start prying away [src]'s [layer_flavor]."))
+	if(!tool.use_tool(src, user, 40, volume=100))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!panel_open || security_level != starting_level)
+		// if the plating's already been broken, don't break it again
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	user.visible_message(span_notice("[user] removes [src]'s shielding."),
+							span_notice("You remove [src]'s [layer_flavor]."))
+	security_level = next_level
+	spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
+	if(next_level == AIRLOCK_SECURITY_NONE)
+		modify_max_integrity(max_integrity / AIRLOCK_INTEGRITY_MULTIPLIER)
+		damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
+		update_appearance()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/door/airlock/welder_act(mob/living/user, obj/item/tool)
+
+	if(!panel_open || security_level == AIRLOCK_SECURITY_NONE)
+		return ..()
+
+	var/layer_flavor
+	var/next_level
+	var/starting_level = security_level
+
+	var/material_to_spawn
+	var/amount_to_spawn
+
+	switch(security_level)
+		if(AIRLOCK_SECURITY_IRON)
+			layer_flavor = "panel's shielding"
+			next_level = AIRLOCK_SECURITY_NONE
+			material_to_spawn = /obj/item/stack/sheet/iron
+			amount_to_spawn = 2
+		if(AIRLOCK_SECURITY_PLASTEEL_O)
+			layer_flavor = "outer layer of shielding"
+			next_level = AIRLOCK_SECURITY_PLASTEEL_O_S
+		if(AIRLOCK_SECURITY_PLASTEEL_I)
+			layer_flavor = "inner layer of shielding"
+			next_level = AIRLOCK_SECURITY_PLASTEEL_I_S
+		else
+			return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	if(!tool.tool_start_check(user, amount=2))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	to_chat(user, span_notice("You begin cutting the [layer_flavor]..."))
+
+	if(!tool.use_tool(src, user, 4 SECONDS, volume=50, amount=2))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	if(!panel_open || security_level != starting_level)
+		// see if anyone's screwing with us
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	user.visible_message(
+		span_notice("[user] cuts through [src]'s shielding."),  // passers-by don't get the full picture
+		span_notice("You cut through [src]'s [layer_flavor]."),
+		span_hear("You hear welding.")
+	)
+
+	security_level = next_level
+
+	if(material_to_spawn)
+		spawn_atom_to_turf(material_to_spawn, user.loc, amount_to_spawn)
+
+	if(security_level == AIRLOCK_SECURITY_NONE)
+		update_appearance()
+
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/door/airlock/proc/try_reinforce(mob/user, obj/item/stack/sheet/material, amt_required, new_security_level)
+	if(material.get_amount() < amt_required)
+		to_chat(user, span_warning("You need at least [amt_required] sheets of [material] to reinforce [src]."))
+		return FALSE
+	to_chat(user, span_notice("You start reinforcing [src]."))
+	if(!do_after(user, 2 SECONDS, src))
+		return FALSE
+	if(!panel_open || !material.use(amt_required))
+		return FALSE
+	user.visible_message(span_notice("[user] reinforces [src] with [material]."),
+						span_notice("You reinforce [src] with [material]."))
+	security_level = new_security_level
+	update_appearance()
+	return TRUE
 
 /obj/machinery/door/airlock/attackby(obj/item/C, mob/user, params)
 	if(!issilicon(user) && !isAdminGhostAI(user))
@@ -845,126 +961,21 @@
 			return
 	add_fingerprint(user)
 
-	if(panel_open || !is_wire_tool(C))
-		switch(security_level)
-			if(AIRLOCK_SECURITY_NONE)
-				if(istype(C, /obj/item/stack/sheet/iron))
-					var/obj/item/stack/sheet/iron/S = C
-					if(S.get_amount() < 2)
-						to_chat(user, span_warning("You need at least 2 iron sheets to reinforce [src]."))
-						return
-					to_chat(user, span_notice("You start reinforcing [src]."))
-					if(do_after(user, 2 SECONDS, src))
-						if(!panel_open || !S.use(2))
-							return
-						user.visible_message(span_notice("[user] reinforces \the [src] with iron."),
-											span_notice("You reinforce \the [src] with iron."))
-						security_level = AIRLOCK_SECURITY_IRON
-						update_appearance()
-					return
-				else if(istype(C, /obj/item/stack/sheet/plasteel))
-					var/obj/item/stack/sheet/plasteel/S = C
-					if(S.get_amount() < 2)
-						to_chat(user, span_warning("You need at least 2 plasteel sheets to reinforce [src]."))
-						return
-					to_chat(user, span_notice("You start reinforcing [src]."))
-					if(do_after(user, 2 SECONDS, src))
-						if(!panel_open || !S.use(2))
-							return
-						user.visible_message(span_notice("[user] reinforces \the [src] with plasteel."),
-											span_notice("You reinforce \the [src] with plasteel."))
-						security_level = AIRLOCK_SECURITY_PLASTEEL
-						modify_max_integrity(max_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
-						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
-						update_appearance()
-					return
-			if(AIRLOCK_SECURITY_IRON)
-				if(C.tool_behaviour == TOOL_WELDER)
-					if(!C.tool_start_check(user, amount=2))
-						return
-					to_chat(user, span_notice("You begin cutting the panel's shielding..."))
-					if(C.use_tool(src, user, 40, volume=50, amount = 2))
-						if(!panel_open)
-							return
-						user.visible_message(span_notice("[user] cuts through \the [src]'s shielding."),
-										span_notice("You cut through \the [src]'s shielding."),
-										span_hear("You hear welding."))
-						security_level = AIRLOCK_SECURITY_NONE
-						spawn_atom_to_turf(/obj/item/stack/sheet/iron, user.loc, 2)
-						update_appearance()
-					return
-			if(AIRLOCK_SECURITY_PLASTEEL_I_S)
-				if(C.tool_behaviour == TOOL_CROWBAR)
-					var/obj/item/crowbar/W = C
-					to_chat(user, span_notice("You start removing the inner layer of shielding..."))
-					if(W.use_tool(src, user, 40, volume=100))
-						if(!panel_open)
-							return
-						if(security_level != AIRLOCK_SECURITY_PLASTEEL_I_S)
-							return
-						user.visible_message(span_notice("[user] remove \the [src]'s shielding."),
-											span_notice("You remove \the [src]'s inner shielding."))
-						security_level = AIRLOCK_SECURITY_NONE
-						modify_max_integrity(max_integrity / AIRLOCK_INTEGRITY_MULTIPLIER)
-						damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_N
-						spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
-						update_appearance()
-					return
-			if(AIRLOCK_SECURITY_PLASTEEL_I)
-				if(C.tool_behaviour == TOOL_WELDER)
-					if(!C.tool_start_check(user, amount=2))
-						return
-					to_chat(user, span_notice("You begin cutting the inner layer of shielding..."))
-					if(C.use_tool(src, user, 40, volume=50, amount=2))
-						if(!panel_open)
-							return
-						user.visible_message(span_notice("[user] cuts through \the [src]'s shielding."),
-										span_notice("You cut through \the [src]'s shielding."),
-										span_hear("You hear welding."))
-						security_level = AIRLOCK_SECURITY_PLASTEEL_I_S
-					return
-			if(AIRLOCK_SECURITY_PLASTEEL_O_S)
-				if(C.tool_behaviour == TOOL_CROWBAR)
-					to_chat(user, span_notice("You start removing outer layer of shielding..."))
-					if(C.use_tool(src, user, 40, volume=100))
-						if(!panel_open)
-							return
-						if(security_level != AIRLOCK_SECURITY_PLASTEEL_O_S)
-							return
-						user.visible_message(span_notice("[user] remove \the [src]'s shielding."),
-											span_notice("You remove \the [src]'s shielding."))
-						security_level = AIRLOCK_SECURITY_PLASTEEL_I
-						spawn_atom_to_turf(/obj/item/stack/sheet/plasteel, user.loc, 1)
-					return
-			if(AIRLOCK_SECURITY_PLASTEEL_O)
-				if(C.tool_behaviour == TOOL_WELDER)
-					if(!C.tool_start_check(user, amount=2))
-						return
-					to_chat(user, span_notice("You begin cutting the outer layer of shielding..."))
-					if(C.use_tool(src, user, 40, volume=50, amount=2))
-						if(!panel_open)
-							return
-						user.visible_message(span_notice("[user] cuts through \the [src]'s shielding."),
-										span_notice("You cut through \the [src]'s shielding."),
-										span_hear("You hear welding."))
-						security_level = AIRLOCK_SECURITY_PLASTEEL_O_S
-					return
-			if(AIRLOCK_SECURITY_PLASTEEL)
-				if(C.tool_behaviour == TOOL_WIRECUTTER)
-					if(hasPower() && shock(user, 60)) // Protective grille of wiring is electrified
-						return
-					to_chat(user, span_notice("You start cutting through the outer grille."))
-					if(C.use_tool(src, user, 10, volume=100))
-						if(!panel_open)
-							return
-						user.visible_message(span_notice("[user] cut through \the [src]'s outer grille."),
-											span_notice("You cut through \the [src]'s outer grille."))
-						security_level = AIRLOCK_SECURITY_PLASTEEL_O
-					return
-
 	if(is_wire_tool(C) && panel_open)
 		attempt_wire_interaction(user)
 		return
+	else if(panel_open && security_level == AIRLOCK_SECURITY_NONE && istype(C, /obj/item/stack/sheet))
+		if(istype(C, /obj/item/stack/sheet/iron))
+			return try_reinforce(user, C, 2, AIRLOCK_SECURITY_IRON)
+
+		else if(istype(C, /obj/item/stack/sheet/plasteel))
+			if(!try_reinforce(user, C, 2, AIRLOCK_SECURITY_PLASTEEL))
+				return FALSE
+			modify_max_integrity(max_integrity * AIRLOCK_INTEGRITY_MULTIPLIER)
+			damage_deflection = AIRLOCK_DAMAGE_DEFLECTION_R
+			update_appearance()
+			return TRUE
+
 	else if(istype(C, /obj/item/pai_cable))
 		var/obj/item/pai_cable/cable = C
 		cable.plugin(src, user)
@@ -1462,18 +1473,23 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/door/airlock/proc/note_type() //Returns a string representing the type of note pinned to this airlock
+/**
+ * Returns a string representing the type of note pinned to this airlock
+ * Arguments:
+ * * frame_state - The AIRLOCK_FRAME_ value, as used in update_overlays()
+ **/
+/obj/machinery/door/airlock/proc/get_note_state(frame_state)
 	if(!note)
 		return
 	else if(istype(note, /obj/item/paper))
 		var/obj/item/paper/pinned_paper = note
 		if(pinned_paper.info && pinned_paper.show_written_words)
-			return "note_words"
+			return "note_words_[frame_state]"
 		else
-			return "note"
+			return "note_[frame_state]"
 
 	else if(istype(note, /obj/item/photo))
-		return "photo"
+		return "photo_[frame_state]"
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

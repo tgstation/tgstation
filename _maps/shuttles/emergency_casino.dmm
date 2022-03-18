@@ -16,6 +16,10 @@
 	},
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"aI" = (
+/obj/structure/sign/poster/random/directional/east,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/escape)
 "aS" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron,
@@ -57,17 +61,6 @@
 /obj/structure/chair/stool/bar/directional/south,
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/carpet/green,
-/area/shuttle/escape)
-"cn" = (
-/obj/structure/rack,
-/obj/item/skub,
-/obj/effect/turf_decal/delivery,
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
-/obj/item/reagent_containers/food/drinks/bottle/hooch,
-/obj/item/clothing/head/foilhat,
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "cu" = (
 /obj/structure/chair/comfy/shuttle{
@@ -177,13 +170,6 @@
 "ge" = (
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/carpet/green,
-/area/shuttle/escape)
-"gg" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/structure/chair/stool/directional/north,
-/turf/open/floor/wood,
 /area/shuttle/escape)
 "gm" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -332,10 +318,6 @@
 	},
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
-"ji" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
 "jE" = (
 /obj/structure/chair/sofa/corp/left{
 	dir = 1
@@ -415,10 +397,6 @@
 /obj/effect/turf_decal/siding,
 /turf/open/floor/carpet/royalblue,
 /area/shuttle/escape)
-"kU" = (
-/obj/structure/chair/stool/directional/east,
-/turf/open/floor/wood,
-/area/shuttle/escape)
 "la" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/fancy/cigarettes/cigars{
@@ -427,6 +405,23 @@
 /obj/item/lighter,
 /obj/item/lighter,
 /turf/open/floor/carpet/green,
+/area/shuttle/escape)
+"lo" = (
+/obj/structure/table,
+/obj/item/radio/intercom/directional/south,
+/obj/item/storage/medkit/regular{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "lx" = (
 /obj/structure/sign/poster/official/help_others{
@@ -522,6 +517,12 @@
 "mz" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
+/area/shuttle/escape)
+"mT" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/effect/turf_decal/delivery,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "ni" = (
 /obj/structure/window/reinforced{
@@ -718,6 +719,15 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)
+"tk" = (
+/obj/structure/rack,
+/obj/item/skub,
+/obj/effect/turf_decal/delivery,
+/obj/item/reagent_containers/food/drinks/bottle/hooch,
+/obj/item/clothing/head/foilhat,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
 "vi" = (
 /obj/structure/table,
 /obj/item/toy/gun,
@@ -852,23 +862,6 @@
 /obj/item/toy/crayon/spraycan,
 /turf/open/floor/sepia,
 /area/shuttle/escape)
-"xh" = (
-/obj/structure/table,
-/obj/item/radio/intercom/directional/south,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/storage/firstaid/fire,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = -3
-	},
-/obj/item/storage/firstaid/o2{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/escape)
 "xI" = (
 /obj/structure/sink{
 	dir = 1
@@ -917,14 +910,6 @@
 "yJ" = (
 /obj/structure/bed/dogbed,
 /turf/open/floor/mineral/titanium/purple,
-/area/shuttle/escape)
-"yT" = (
-/obj/machinery/recharge_station,
-/obj/effect/turf_decal/delivery,
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
-/turf/open/floor/iron/recharge_floor,
 /area/shuttle/escape)
 "zc" = (
 /obj/structure/table,
@@ -980,10 +965,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
-"BD" = (
-/obj/structure/chair/stool/bar/directional/north,
-/turf/open/floor/carpet/green,
-/area/shuttle/escape)
 "BY" = (
 /obj/effect/spawner/random/entertainment/arcade,
 /turf/open/floor/carpet/green,
@@ -1016,20 +997,6 @@
 /obj/effect/turf_decal/tile/bar,
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/iron,
-/area/shuttle/escape)
-"CL" = (
-/obj/structure/sign/poster/random{
-	pixel_x = 32
-	},
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/escape)
-"Dp" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/effect/turf_decal/delivery,
-/obj/structure/sign/poster/random{
-	pixel_x = -32
-	},
-/turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "Dv" = (
 /obj/structure/shuttle/engine/heater{
@@ -1340,6 +1307,12 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
+"Pj" = (
+/obj/machinery/recharge_station,
+/obj/effect/turf_decal/delivery,
+/obj/structure/sign/poster/random/directional/west,
+/turf/open/floor/iron/recharge_floor,
+/area/shuttle/escape)
 "Pu" = (
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/drinks/drinkingglass{
@@ -1453,13 +1426,6 @@
 /obj/structure/chair/stool/directional/south,
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/directional/south,
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"Td" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/obj/structure/chair/stool/directional/north,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "Ty" = (
@@ -1700,12 +1666,12 @@ wv
 Uu
 kM
 LR
-yT
+Pj
 vP
-Dp
+mT
 OR
-cn
-yT
+tk
+Pj
 MS
 kk
 Uu
@@ -1724,9 +1690,9 @@ Fv
 LR
 Km
 Fv
-CL
+aI
 LR
-CL
+aI
 Fv
 Vl
 Uu
@@ -1855,7 +1821,7 @@ Uu
 Eh
 el
 Fi
-xh
+lo
 Uu
 "}
 (12,1,1) = {"

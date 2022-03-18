@@ -35,7 +35,7 @@
 
 		if ("aid")
 			new /obj/item/tank/internals/emergency_oxygen(src)
-			new /obj/item/storage/firstaid/emergency(src)
+			new /obj/item/storage/medkit/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("tank")

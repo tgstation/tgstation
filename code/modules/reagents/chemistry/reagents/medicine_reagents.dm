@@ -7,7 +7,6 @@
 // where all the reagents related to medicine go.
 
 /datum/reagent/medicine
-	name = "Medicine"
 	taste_description = "bitterness"
 	failed_chem = /datum/reagent/impurity/healing/medicine_failure
 
