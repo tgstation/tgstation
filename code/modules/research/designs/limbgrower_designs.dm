@@ -4,7 +4,7 @@
 
 /datum/design/leftarm
 	name = "Left Arm"
-	id = "leftarm"
+	id = "l_arm"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/l_arm
@@ -12,7 +12,7 @@
 
 /datum/design/rightarm
 	name = "Right Arm"
-	id = "rightarm"
+	id = "r_arm"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/r_arm
@@ -20,35 +20,19 @@
 
 /datum/design/leftleg
 	name = "Left Leg"
-	id = "leftleg"
+	id = "l_leg"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/l_leg
-	category = list("initial",SPECIES_HUMAN,SPECIES_LIZARD,SPECIES_MOTH,SPECIES_PLASMAMAN,SPECIES_ETHEREAL)
+	category = list("initial",SPECIES_HUMAN,SPECIES_LIZARD,SPECIES_MOTH,SPECIES_PLASMAMAN,SPECIES_ETHEREAL, "digitigrade")
 
 /datum/design/rightleg
 	name = "Right Leg"
-	id = "rightleg"
+	id = "r_leg"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	build_path = /obj/item/bodypart/r_leg
-	category = list("initial",SPECIES_HUMAN,SPECIES_LIZARD,SPECIES_MOTH,SPECIES_PLASMAMAN,SPECIES_ETHEREAL)
-
-/datum/design/digi_leftleg
-	name = "Digitigrade Left Leg"
-	id = "digi_leftleg"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 30)
-	build_path = /obj/item/bodypart/l_leg/digitigrade
-	category = list(SPECIES_LIZARD)
-
-/datum/design/digi_rightleg
-	name = "Digitigrade Right Leg"
-	id = "digi_rightleg"
-	build_type = LIMBGROWER
-	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 30)
-	build_path = /obj/item/bodypart/r_leg/digitigrade
-	category = list(SPECIES_LIZARD)
+	category = list("initial",SPECIES_HUMAN,SPECIES_LIZARD,SPECIES_MOTH,SPECIES_PLASMAMAN,SPECIES_ETHEREAL, "digitigrade")
 
 //Non-limb limb designs
 
@@ -266,8 +250,8 @@
 	build_path = /obj/item/disk/design_disk/limbs/felinid
 
 /obj/item/disk/design_disk/limbs/lizard
-	name = "Lizard Limb Design Disk"
-	limb_designs = list(/datum/design/lizard_tail, /datum/design/lizard_tongue, /datum/design/digi_leftleg, /datum/design/digi_rightleg)
+	name = "Lizard Organ Design Disk"
+	limb_designs = list(/datum/design/lizard_tail, /datum/design/lizard_tongue)
 
 /datum/design/limb_disk/lizard
 	name = "Lizard Limb Design Disk"
