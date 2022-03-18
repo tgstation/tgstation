@@ -40,7 +40,7 @@
 		M.Turn(angle)
 		card.transform = M
 		card.update_appearance()
-	update_appearance()
+		
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 
 	if(istype(src, /obj/item/toy/cards/deck))
@@ -58,6 +58,9 @@
 
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
+		return
+		
+	update_appearance()
 
 /**
  * This is used to insert a list of cards into a deck or cardhand

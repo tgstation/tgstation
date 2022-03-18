@@ -29,7 +29,7 @@
 	icon_state = "deck_syndicate_full"
 
 /obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/holodeck)
-	var/obj/item/toy/cards/deck/syndicate/holographic/deck = new(loc, holodeck)
+	var/obj/item/toy/cards/deck/syndicate/holographic/deck = new(get_turf(src), holodeck)
 	deck.flags_1 |= HOLOGRAM_1
 	return deck
 

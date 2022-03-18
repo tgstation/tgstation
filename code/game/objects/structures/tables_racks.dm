@@ -216,6 +216,7 @@
 			var/obj/item/toy/singlecard/card = dealer_deck.draw(user)
 			if(card)
 				src.attackby(card, user, params)
+			return
 
 	if(istype(I, /obj/item/riding_offhand))
 		var/obj/item/riding_offhand/riding_item = I
