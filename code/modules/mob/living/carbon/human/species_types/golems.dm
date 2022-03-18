@@ -742,7 +742,7 @@
 /datum/species/golem/runic/on_species_loss(mob/living/carbon/C)
 	// Aaand cleanup our species specific spells.
 	// No free rides.
-	QDEL_NULL(phase_shift)
+	QDEL_NULL(jaunt)
 	QDEL_NULL(abyssal_gaze)
 	QDEL_NULL(dominate)
 	return ..()

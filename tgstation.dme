@@ -4005,6 +4005,7 @@
 #include "code\modules\spells\spell_types\self\disable_tech.dm"
 #include "code\modules\spells\spell_types\self\forcewall.dm"
 #include "code\modules\spells\spell_types\self\lightning.dm"
+#include "code\modules\spells\spell_types\self\mime_vow.dm"
 #include "code\modules\spells\spell_types\self\mutate.dm"
 #include "code\modules\spells\spell_types\self\rod_form.dm"
 #include "code\modules\spells\spell_types\self\smoke.dm"

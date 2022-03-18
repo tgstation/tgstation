@@ -73,7 +73,8 @@
 		return
 
 	if(H.mind)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
+		var/datum/action/cooldown/spell/vow_of_silence/vow = new(H.mind)
+		vow.Grant(H)
 		H.mind.miming = TRUE
 
 	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]

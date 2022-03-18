@@ -69,10 +69,10 @@
 	. = ..()
 	swap_minds(owner, cast_on)
 
-/datum/action/cooldown/spell/pointed/mind_transfer/swap_minds(mob/living/caster, mob/living/cast_on)
+/datum/action/cooldown/spell/pointed/mind_transfer/proc/swap_minds(mob/living/caster, mob/living/cast_on)
 
 	var/mob/living/to_swap = cast_on
-	if(isguardian(body_two))
+	if(isguardian(cast_on))
 		var/mob/living/simple_animal/hostile/guardian/stand = cast_on
 		if(stand.summoner)
 			to_swap = stand.summoner

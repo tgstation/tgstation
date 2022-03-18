@@ -14,7 +14,7 @@
 	outer_radius = 7
 
 	/// The projectile type fired at all people around us
-	var/obj/projectile/projectile_type = /obj/projectile/magic/spell/magic_missile
+	var/obj/projectile/projectile_type = /obj/projectile/magic/aoe/magic_missile
 
 /datum/action/cooldown/spell/aoe/magic_missile/is_affected_by_aoe(atom/thing)
 	if(thing == owner)

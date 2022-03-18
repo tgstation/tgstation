@@ -52,8 +52,8 @@
 	for(var/obj/item/trait_needed as anything in no_drops)
 		ADD_TRAIT(trait_needed, TRAIT_NODROP, CURSED_ITEM_TRAIT(trait_needed.type))
 
-	var/datum/action/cooldown/spell/aoe/knock/waldos_key = new(equipped.mind || equipped)
-	waldos_key.Grant(equipped)
+	var/datum/action/cooldown/spell/aoe/knock/waldos_key = new(equipped_on.mind || equipped_on)
+	waldos_key.Grant(equipped_on)
 
 /datum/outfit/synthetic
 	name = "Factory Error Synth"

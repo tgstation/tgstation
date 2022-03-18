@@ -275,7 +275,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	return TRUE
 
 /datum/action/cooldown/spell/proc/revert_cast()
-	next_use_time = 0
+	next_use_time = world.time // Basically, ensures that the ability can be used now
 	UpdateButtonIcon()
 
 /*

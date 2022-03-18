@@ -9,11 +9,10 @@
 	var/obj/item/melee/touch_attack/hand_path = /obj/item/melee/touch_attack
 	/// Ref to the hand we currently have deployed.
 	var/obj/item/melee/touch_attack/attached_hand
-
-	var/draw_message = "You channel the power of the spell to your hand."
-	var/drop_message = "You draw the power out of your hand."
-	var/on_hit_sound
-	var/hand_charges = 1
+	/// The message displayed to the person upon creating the touch hand
+	var/draw_message = span_notice("You channel the power of the spell to your hand.")
+	/// The message displayed upon willingly dropping / deleting / cancelling the touch hand before using it
+	var/drop_message = span_notice("You draw the power out of your hand.")
 
 /datum/action/cooldown/spell/touch/Destroy()
 	remove_hand()
@@ -32,16 +31,17 @@
 	var/obj/item/melee/touch_attack/new_hand = new hand_path(cast_on)
 	if(!cast_on.put_in_hands(new_hand, del_on_fail = TRUE))
 		revert_cast()
-		if (user.usable_hands == 0)
-			to_chat(user, span_warning("You dont have any usable hands!"))
+		if (cast_on.usable_hands == 0)
+			to_chat(cast_on, span_warning("You dont have any usable hands!"))
 		else
-			to_chat(user, span_warning("Your hands are full!"))
+			to_chat(cast_on, span_warning("Your hands are full!"))
 		return FALSE
 
 	attached_hand = new_hand
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_hand_hit)
 	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, .proc/on_hand_deleted)
-	to_chat(user, span_notice("[draw_message]"))
+	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, .proc/on_hand_dropped)
+	to_chat(cast_on, draw_message)
 	return TRUE
 
 /**
@@ -49,18 +49,20 @@
  *
  * If revert_after is TRUE, we will additionally refund the cooldown of the spell.
  */
-/datum/action/cooldown/spell/touch/proc/remove_hand(revert_after = FALSE)
+/datum/action/cooldown/spell/touch/proc/remove_hand(mob/living/hand_owner, revert_after = FALSE)
 	if(!QDELETED(attached_hand))
-		UnregisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK)
-		UnregisterSignal(attached_hand, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(attached_hand, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED))
+		hand_owner?.temporarilyRemoveItemFromInventory(attached_hand)
 		QDEL_NULL(attached_hand)
 
 	if(revert_after)
+		if(hand_owner)
+			to_chat(hand_owner, drop_message)
 		revert_cast()
 
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)
 	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
-		remove_hand(revert_after = TRUE)
+		remove_hand(cast_on, revert_after = TRUE)
 		return
 
 	create_hand(cast_on)
@@ -101,7 +103,7 @@
 	if(!cast_on_hand_hit(hand, victim, caster))
 		return
 
-	remove_hand()
+	remove_hand(caster)
 
 /**
  * The actual process of casting the spell on the victim from the caster.
@@ -131,6 +133,17 @@
 
 	remove_hand(revert_after = TRUE)
 
+/**
+ * Signal proc for [COMSIG_ITEM_DROPPED] from our attached hand.
+ *
+ * If our caster drops the hand, remove the hand / revert the cast
+ * Basically gives them an easy hotkey to lose their hand without needing to click the button
+ */
+/datum/action/cooldown/spell/touch/proc/on_hand_dropped(datum/source, mob/living/dropper)
+	SIGNAL_HANDLER
+
+	remove_hand(dropper, revert_after = TRUE) // MELBER TODO check if arm removed
+
 /obj/item/melee/touch_attack
 	name = "\improper outstretched hand"
 	desc = "High Five?"
@@ -139,7 +152,7 @@
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "latexballon"
 	inhand_icon_state = null
-	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
+	item_flags = NEEDS_PERMIT | ABSTRACT
 	w_class = WEIGHT_CLASS_HUGE
 	force = 0
 	throwforce = 0

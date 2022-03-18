@@ -20,7 +20,7 @@
 
 /// This proc does obj, mob and turf cone effects on all targets in the passed list.
 /datum/action/cooldown/spell/cone/proc/do_cone_effects(list/target_turf_list, atom/caster, level = 1)
-	for(var/target_turf in target_turf_list)
+	for(var/turf/target_turf as anything in target_turf_list)
 		if(QDELETED(target_turf)) //if turf is no longer there
 			continue
 
@@ -28,7 +28,7 @@
 		if(!isopenturf(target_turf))
 			continue
 
-		for(var/movable_content in target_turf)
+		for(var/atom/movable/movable_content as anything in target_turf)
 			if(isobj(movable_content))
 				do_obj_cone_effect(movable_content, level)
 			else if(isliving(movable_content))

@@ -2,12 +2,12 @@
 	name = "Smite"
 	desc = "This spell charges your hand with an unholy energy \
 		that can be used to cause a touched victim to violently explode."
-	action_icon_state = "gib"
+	button_icon_state = "gib"
 	sound = 'sound/magic/disintegrate.ogg'
 
 	school = SCHOOL_EVOCATION
-	charge_max = 1 MINUTES
-	cooldown_min = 10 SECONDS
+	cooldown_time = 1 MINUTES
+	cooldown_reduction_per_rank = 10 SECONDS
 
 	invocation = "EI NATH!!"
 	sparks_amt = 4

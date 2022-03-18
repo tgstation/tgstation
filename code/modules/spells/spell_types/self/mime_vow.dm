@@ -1,4 +1,4 @@
-/datum/action/cooldown/spell/speak
+/datum/action/cooldown/spell/vow_of_silence
 	name = "Speech"
 	desc = "Make (or break) a vow of silence."
 	background_icon_state = "bg_mime"
@@ -12,7 +12,8 @@
 	spell_requirements = (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIND)
 	spell_max_level = 1
 
-/datum/action/cooldown/spell/speak/cast(mob/living/carbon/human/cast_on)
+/datum/action/cooldown/spell/vow_of_silence/cast(mob/living/carbon/human/cast_on)
+	. = ..()
 	cast_on.mind.miming = !cast_on.mind.miming
 	if(cast_on.mind.miming)
 		to_chat(cast_on, span_notice("You make a vow of silence."))
