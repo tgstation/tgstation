@@ -32,8 +32,6 @@
 				qdel(S)
 			else
 				S.be_replaced()
-	if(ranged_ability)
-		ranged_ability.remove_ranged_ability(src)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 

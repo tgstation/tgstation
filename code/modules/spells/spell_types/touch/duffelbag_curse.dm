@@ -1,8 +1,8 @@
 
-/datum/action/cooldown/spell/touch/duffelbag/duffelbag
+/datum/action/cooldown/spell/touch/duffelbag
 	name = "Bestow Cursed Duffel Bag"
 	desc = "A spell that summons a duffel bag demon on the target, slowing them down and slowly eating them."
-	action_icon_state = "duffelbag_curse"
+	button_icon_state = "duffelbag_curse"
 	sound = 'sound/magic/mm_hit.ogg'
 
 	school = SCHOOL_CONJURATION

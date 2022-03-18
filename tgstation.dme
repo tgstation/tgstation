@@ -4018,6 +4018,7 @@
 #include "code\modules\spells\spell_types\teleport\_teleport.dm"
 #include "code\modules\spells\spell_types\teleport\blink.dm"
 #include "code\modules\spells\spell_types\teleport\teleport.dm"
+#include "code\modules\spells\spell_types\touch\_touch.dm"
 #include "code\modules\spells\spell_types\touch\duffelbag_curse.dm"
 #include "code\modules\spells\spell_types\touch\flesh_to_stone.dm"
 #include "code\modules\spells\spell_types\touch\smite.dm"

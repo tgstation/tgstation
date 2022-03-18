@@ -225,6 +225,7 @@
 	return isliving(cast_on)
 
 /datum/action/cooldown/spell/night_vision/cast(mob/living/cast_on)
+	. = ..()
 	to_chat(cast_on, span_notice("You toggle your night vision."))
 
 	var/next_mode_text = ""
@@ -243,4 +244,4 @@
 			next_mode_text = "ON"
 
 	cast_on.update_sight()
-	name = "[initial(name)] \[[mode_text]\]"
+	name = "[initial(name)] \[[next_mode_text]\]"

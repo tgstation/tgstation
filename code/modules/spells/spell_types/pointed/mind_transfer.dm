@@ -11,7 +11,7 @@
 	invocation = "GIN'YU CAPAN"
 	invocation_type = INVOCATION_WHISPER
 
-	// ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 	active_msg = "You prepare to swap minds with a target..."
 	deactive_msg = "You dispel mind swap."
 	cast_range = 1

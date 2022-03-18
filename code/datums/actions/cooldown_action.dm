@@ -44,7 +44,8 @@
 	// MELBERT TODO support for shared cooldown click intercepts
 	return ..()
 
-/// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
+/// Starts a cooldown time to be shared with similar abilities
+/// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
 	if(shared_cooldown)
 		for(var/datum/action/cooldown/shared_ability in owner.actions - src)
@@ -55,7 +56,8 @@
 					shared_ability.StartCooldownSelf(cooldown_time)
 	StartCooldownSelf(override_cooldown_time)
 
-/// Starts a cooldown time for this ability only, will use default cooldown time if an override is not specified
+/// Starts a cooldown time for this ability only
+/// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
 	if(isnum(override_cooldown_time))
 		next_use_time = world.time + override_cooldown_time
