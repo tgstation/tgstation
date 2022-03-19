@@ -56,7 +56,7 @@
 	var/context_living_rmb_inactive = "Attack"
 
 	/// For sprite selecting option, between classical wooden baton and black nightstick
-	var/spriteSelected = FALSE
+	var/sprite_selected = FALSE
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
@@ -271,7 +271,7 @@
 	return
 
 /obj/item/melee/baton/attack_self(user)
-	if(spriteSelected)
+	if(sprite_selected)
 		return //We already selected the sprite for the baton
 	var/spriteSelection = input(user, "Select a look for your baton (Classic_baton is wooden one, classic_baton_black is metalic nightstick)", "Baton Look") in list("classic_baton", "classic_baton_black")
 	icon_state = spriteSelection
