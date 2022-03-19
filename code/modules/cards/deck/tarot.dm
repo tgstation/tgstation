@@ -26,17 +26,35 @@
 		card.transform = M
 	return
 
+#define TAROT_GHOST_TIMER (5 MINUTES)
+
 /obj/item/toy/cards/deck/tarot/haunted
 	name = "haunted tarot game deck"
 	desc = "A spooky looking tarot deck. You can sense a supernatural presence linked to the cards..."
-	var/mob/living/carbon/psychic // the person holding the cards
+	/// ghost notification cooldown
+	COOLDOWN_DECLARE(ghost_alert_cooldown)
 
 /obj/item/toy/cards/deck/tarot/haunted/on_wield(obj/item/source, mob/living/carbon/user)
 	. = ..()
 	ADD_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld is opened. You can sense the dead souls calling out..."))
 
+	if(!COOLDOWN_FINISHED(src, ghost_alert_cooldown))
+		return
+
+	COOLDOWN_START(src, ghost_alert_cooldown, TAROT_GHOST_TIMER)
+	notify_ghosts(
+		"Someone has begun playing with a [src.name] in [get_area(src)]!",
+		source = src,
+		header = "Haunted Tarot Deck",
+		ghost_sound = 'sound/effects/ghost2.ogg',
+		notify_volume = 75,
+		action = NOTIFY_ORBIT,
+	)
+
 /obj/item/toy/cards/deck/tarot/haunted/on_unwield(obj/item/source, mob/living/carbon/user)
 	. = ..()
 	REMOVE_TRAIT(user, TRAIT_SIXTHSENSE, MAGIC_TRAIT)
 	to_chat(user, span_notice("The veil to the underworld closes shut. You feel your senses returning to normal."))
+
+#undef TAROT_GHOST_TIMER
