@@ -122,7 +122,9 @@
 /datum/component/palette/proc/get_palette_data(datum/source, data)
 	SIGNAL_HANDLER
 	var/list/painting_data = list()
-	for(var/index in 1 to length(colors))
-		var/hexcolor = colors[index]
-		painting_data += list(list("color" = hexcolor, "is_selected" = hexcolor == selected_color))
+	for(var/hexcolor in colors)
+		painting_data += list(list(
+			"color" = hexcolor,
+			"is_selected" = hexcolor == selected_color
+		))
 	data["paint_tool_palette"] = painting_data
