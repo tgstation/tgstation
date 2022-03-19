@@ -200,7 +200,7 @@
 	. = ..()
 	if(.)
 		return
-	if(usr.loc != src && in_range(src, usr))
+	if(usr.loc != src)
 		switch(action)
 			if("stopmaint")
 				mecha_flags &= ~ADDING_MAINT_ACCESS_POSSIBLE
