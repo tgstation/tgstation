@@ -269,8 +269,9 @@
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_head"
+	limb_id = SPECIES_MONKEY
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY
+	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 
 /obj/item/bodypart/head/alien
 	icon = 'icons/mob/animal_parts.dmi'

@@ -328,7 +328,7 @@
 	. = TRUE
 
 	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
-	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype))
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
 		return FALSE
 
 	moveToNullspace()

@@ -362,11 +362,8 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = s_store
 		var/mutable_appearance/s_store_overlay
 		update_hud_s_store(worn_item)
-		var/t_state = worn_item.inhand_icon_state
-		if(!t_state)
-			t_state = worn_item.icon_state
 
-		s_store_overlay = mutable_appearance('icons/mob/clothing/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
+		s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
 
 		if(!s_store_overlay)
 			return

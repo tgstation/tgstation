@@ -33,10 +33,13 @@
 	..()
 
 /obj/item/bodypart/chest/monkey
-	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_chest"
+	limb_id = SPECIES_MONKEY
+	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
+	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_MONKEY
 
 /obj/item/bodypart/chest/alien
@@ -133,10 +136,12 @@
 
 
 /obj/item/bodypart/l_arm/monkey
-	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_arm"
+	limb_id = SPECIES_MONKEY
+	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY
+	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
@@ -229,9 +234,10 @@
 
 
 /obj/item/bodypart/r_arm/monkey
-	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_arm"
-	bodytype = BODYTYPE_MONKEY
+	limb_id = SPECIES_MONKEY
+	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	animal_origin = MONKEY_BODYPART
 	wound_resistance = -10
 	px_x = 5
@@ -316,10 +322,12 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/l_leg/monkey
-	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_l_leg"
+	limb_id = SPECIES_MONKEY
+	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY
+	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	wound_resistance = -10
 	px_y = 4
 
@@ -402,15 +410,13 @@
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
-
-/obj/item/bodypart/r_leg/digitigrade
-	name = "right digitigrade leg"
-
 /obj/item/bodypart/r_leg/monkey
 	icon = 'icons/mob/animal_parts.dmi'
 	icon_state = "default_monkey_r_leg"
+	limb_id = SPECIES_MONKEY
+	should_draw_greyscale = FALSE
 	animal_origin = MONKEY_BODYPART
-	bodytype = BODYTYPE_MONKEY
+	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	wound_resistance = -10
 	px_y = 4
 
