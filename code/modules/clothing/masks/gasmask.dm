@@ -144,6 +144,9 @@
 	visor_flags_inv = HIDEEYES
 	visor_flags_cover = MASKCOVERSEYES
 	resistance_flags = FIRE_PROOF
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	weldingvisortoggle(user)
@@ -165,6 +168,9 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 2,ENERGY = 2, BOMB = 0, BIO = 75, FIRE = 0, ACID = 0)
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
@@ -174,6 +180,9 @@
 	strip_delay = 60
 	w_class = WEIGHT_CLASS_SMALL
 	has_fov = FALSE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/clown_hat
 	name = "clown wig and mask"
@@ -190,6 +199,9 @@
 	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
 	var/list/clownmask_designs = list()
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/clown_hat/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -237,6 +249,9 @@
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem/bananium)
 	has_fov = FALSE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/mime
 	name = "mime mask"
@@ -251,6 +266,9 @@
 	species_exception = list(/datum/species/golem)
 	has_fov = FALSE
 	var/list/mimemask_designs = list()
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/mime/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -294,6 +312,9 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
@@ -305,6 +326,9 @@
 	resistance_flags = FLAMMABLE
 	species_exception = list(/datum/species/golem)
 	has_fov = FALSE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/cyborg
 	name = "cyborg visor"
@@ -313,6 +337,9 @@
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/owl_mask
 	name = "owl mask"
@@ -322,6 +349,9 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	has_fov = FALSE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/carp
 	name = "carp mask"
@@ -329,6 +359,9 @@
 	icon_state = "carp_mask"
 	has_fov = FALSE
 	flags_cover = MASKCOVERSEYES
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/tiki_mask
 	name = "tiki mask"
@@ -344,6 +377,9 @@
 	dog_fashion = null
 	species_exception = list(/datum/species/golem/wood)
 	var/list/tikimask_designs = list()
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)
 	.=..()
@@ -385,6 +421,9 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	flags_inv = HIDEFACIALHAIR|HIDEFACE|HIDEEYES|HIDEEARS|HIDEHAIR|HIDESNOUT
 	has_fov = FALSE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/mask/gas/driscoll
 	name = "driscoll mask"
@@ -393,3 +432,6 @@
 	flags_inv = HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "driscoll_mask"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
