@@ -15285,9 +15285,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"Wi" = (
-/turf/open/genturf,
-/area/icemoon/underground/explored)
 "Wj" = (
 /obj/machinery/light/small/directional/south,
 /obj/structure/sign/warning/coldtemp{
@@ -37259,7 +37256,7 @@ wS
 ak
 ak
 EO
-Wi
+ak
 ak
 EO
 zd
