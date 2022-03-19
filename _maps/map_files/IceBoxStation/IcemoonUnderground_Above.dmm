@@ -7022,9 +7022,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"wd" = (
-/turf/closed/wall/ice,
-/area/icemoon/underground/unexplored/rivers)
 "we" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
@@ -7796,6 +7793,7 @@
 "yS" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/rack,
+/obj/item/pickaxe,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "yT" = (
@@ -52423,7 +52421,7 @@ ps
 ts
 Et
 Et
-kK
+NW
 ak
 ak
 vO
@@ -58585,7 +58583,7 @@ ak
 ak
 ak
 ak
-As
+Et
 wx
 kK
 kK
@@ -58842,12 +58840,12 @@ ak
 ak
 ak
 ak
-As
-As
+Et
+Et
 PG
 PG
 PG
-As
+Et
 ak
 ak
 ak
@@ -59100,11 +59098,11 @@ ak
 ak
 ak
 ak
-As
+Et
 Dk
 Dk
 Dk
-As
+Et
 ak
 ak
 ak
@@ -59357,11 +59355,11 @@ ak
 ak
 ak
 ak
-As
+Et
 mv
 mv
 mv
-As
+Et
 ak
 ak
 ak
@@ -59614,11 +59612,11 @@ kK
 ak
 ak
 ak
-wd
+HQ
 Xn
 lV
 Xn
-wd
+HQ
 ak
 ak
 ak
