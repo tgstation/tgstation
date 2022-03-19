@@ -1,6 +1,6 @@
 #define SHADOW_REGEN_RATE 1.5
 
-/datum/action/cooldown/spell/jaunt/shadowwalk
+/datum/action/cooldown/spell/jaunt/shadow_walk
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
 	background_icon_state = "bg_alien"
@@ -9,7 +9,7 @@
 
 	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED|SPELL_REQUIRES_NO_ANTIMAGIC)
 
-/datum/action/cooldown/spell/jaunt/shadowwalk/cast(mob/living/cast_on)
+/datum/action/cooldown/spell/jaunt/shadow_walk/cast(mob/living/cast_on)
 	. = ..()
 	if(is_jaunting(cast_on))
 		var/obj/effect/dummy/phased_mob/shadow/jaunt_holder = cast_on.loc
