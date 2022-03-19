@@ -484,7 +484,9 @@
 
 	. = 0
 
-#define HEALING_PER_MOL 1.1 //Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
+#define HEALING_PER_MOL 1.1
+
+///Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
 
 	if(M.loc)
 		environment = M.loc.return_air()
