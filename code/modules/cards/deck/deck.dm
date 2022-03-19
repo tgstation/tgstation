@@ -42,8 +42,8 @@
 		return
 
 	// generate a normal playing card deck
-	cards += new /obj/item/toy/singlecard(src, "Joker", src)
-	cards += new /obj/item/toy/singlecard(src, "Mime", src)
+	cards += new /obj/item/toy/singlecard(src, "Joker Clown", src)
+	cards += new /obj/item/toy/singlecard(src, "Joker Mime", src)
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
 		cards += new /obj/item/toy/singlecard(src, "Ace of [suit]", src)
 		for(var/i in 2 to 10)
