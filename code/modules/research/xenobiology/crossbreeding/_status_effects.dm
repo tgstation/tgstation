@@ -285,6 +285,10 @@
 		var/mob/living/carbon/human/H = owner
 		H.physiology.brute_mod /= 0.9
 
+/datum/status_effect/metalcookie/be_replaced()
+	on_remove()
+	return ..()
+
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
 	status_type = STATUS_EFFECT_REPLACE
@@ -303,6 +307,10 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.siemens_coeff = original_coeff
+
+/datum/status_effect/sparkcookie/be_replaced()
+	on_remove()
+	return ..()
 
 /datum/status_effect/toxincookie
 	id = "toxincookie"
@@ -430,6 +438,10 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.physiology.burn_mod /= 0.9
+
+/datum/status_effect/adamantinecookie/be_replaced()
+	on_remove()
+	return ..()
 
 ///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////
