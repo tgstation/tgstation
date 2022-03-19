@@ -461,9 +461,9 @@
 				if(0.25 to 0.5)
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 2)
 				if(0.01 to 0.25)
-					occupant.throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/lowcell, 3)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell, 3)
 				else
-					occupant.throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/emptycell)
+					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell)
 
 		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
