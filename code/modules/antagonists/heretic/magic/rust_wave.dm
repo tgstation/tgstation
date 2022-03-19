@@ -62,7 +62,7 @@
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
 	name = "Patron's Reach"
 	desc = "Channels energy into your hands to release a wave of rust."
-	proj_type = /obj/projectile/magic/spell/rust_wave
+	proj_type = /obj/projectile/magic/aoe/rust_wave
 	school = SCHOOL_FORBIDDEN
 	charge_max = 350
 	requires_wizard_garb = FALSE
@@ -72,7 +72,7 @@
 	invocation = "SPR'D TH' WO'D"
 	invocation_type = INVOCATION_WHISPER
 
-/obj/projectile/magic/spell/rust_wave
+/obj/projectile/magic/aoe/rust_wave
 	name = "Patron's Reach"
 	icon_state = "eldritch_projectile"
 	alpha = 180

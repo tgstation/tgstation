@@ -10,6 +10,13 @@
 	delete_old = FALSE
 	item_type = /obj/item/gun/ballistic/rifle
 
+/datum/action/cooldown/spell/conjure_item/infinite_guns/Remove(mob/living/remove_from)
+	var/obj/item/existing = remove_from.is_holding_item_of_type(item_type)
+	if(existing)
+		qdel(existing)
+
+	return ..()
+
 // Because enchanted guns self-delete and regenerate themselves,
 // let's not bother with tracking their weakrefs.
 /datum/action/cooldown/spell/conjure_item/infinite_guns/make_item()

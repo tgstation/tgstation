@@ -33,7 +33,7 @@
 		"fond memories with your buddy Keith",
 	)
 	if(duffel_victim.anti_magic_check())
-		to_chat(caster, span_warning("The spell can't seem to affect [duffelvictim]!"))
+		to_chat(caster, span_warning("The spell can't seem to affect [duffel_victim]!"))
 		to_chat(duffel_victim, span_warning("You really don't feel like talking about your [pick(elaborate_backstory)] with complete strangers today."))
 		return TRUE
 

@@ -24,6 +24,16 @@
 	/// The flags the bolt itself takes when zapping someone
 	var/bolt_flags =  ZAP_MOB_DAMAGE
 
+/datum/action/cooldown/spell/pointed/projectile/lightningbolt/Grant(mob/grant_to)
+	. = ..()
+	if(IS_WIZARD(grant_to))
+		ADD_TRAIT(grant_to, TRAIT_TESLA_SHOCKIMMUNE, type)
+
+/datum/action/cooldown/spell/pointed/projectile/lightningbolt/Remove(mob/living/remove_from)
+	. = ..()
+	REMOVE_TRAIT(remove_from, TRAIT_TESLA_SHOCKIMMUNE, type)
+
+
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
 	if(!istype(to_fire, /obj/projectile/magic/aoe/lightning))

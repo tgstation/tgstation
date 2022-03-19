@@ -45,8 +45,12 @@
 	return "<b>[caster.real_name]</b> pulls out an invisible chair and sits down."
 
 /datum/action/cooldown/spell/conjure/mime/invisible_chair/post_summon(atom/summoned_object, mob/living/carbon/human/cast_on)
-	summoned_object.setDir(cast_on.dir)
-	summoned_object.buckle_mob(cast_on)
+	if(!istype(summoned_object, /obj/structure/chair/mime))
+		return
+
+	var/obj/structure/chair/mime/chair = summoned_object
+	chair.setDir(cast_on.dir)
+	chair.buckle_mob(cast_on)
 
 /datum/action/cooldown/spell/conjure/mime/invisible_box
 	name = "Invisible Box"
