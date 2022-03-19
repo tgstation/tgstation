@@ -52,37 +52,37 @@
 	icon_state = "bandana"
 	greyscale_config = /datum/greyscale_config/bandana
 	greyscale_config_worn = /datum/greyscale_config/bandana_worn
-	greyscale_colors = "#555555"
+	greyscale_colors = "#DCDCDC"
 
 /obj/item/clothing/mask/bandana/color/red
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
-	greyscale_colors = "#cc1818"
+	greyscale_colors = "#A02525"
 
 /obj/item/clothing/mask/bandana/color/blue
 	name = "blue bandana"
 	desc = "A fine blue bandana with nanotech lining."
-	greyscale_colors = "#00c3ff"
+	greyscale_colors = "#294A98"
 
 /obj/item/clothing/mask/bandana/color/green
 	name = "green bandana"
 	desc = "A fine green bandana with nanotech lining."
-	greyscale_colors = "#00ff22"
+	greyscale_colors = "#3D9829"
 
 /obj/item/clothing/mask/bandana/color/gold
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
-	greyscale_colors = "#eeff00"
+	greyscale_colors = "#DAC20E"
 
 /obj/item/clothing/mask/bandana/color/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
-	greyscale_colors = "#000000"
+	greyscale_colors = "#3F3F3F"
 
 /obj/item/clothing/mask/bandana/color/white
 	name = "white bandana"
 	desc = "A fine white bandana with nanotech lining."
-	greyscale_colors = "#ffffff"
+	greyscale_colors = "#DCDCDC"
 
 /obj/item/clothing/mask/bandana/color/skull
 	name = "skull bandana"
@@ -90,7 +90,8 @@
 	icon_state = "bandana_skull"
 	greyscale_config = /datum/greyscale_config/bandskull
 	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
+	greyscale_colors = "#3F3F3F#C6C6C6"
 
 /obj/item/clothing/mask/bandana/color/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
-	greyscale_colors = "#ffffff#000000"
+	greyscale_colors = "#3F3F3F#C6C6C6"
