@@ -532,7 +532,10 @@
 /obj/item/clothing/mask/chameleon
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. While good for concealing your identity, it isn't good for blocking gas flow." //More accurate
-	icon_state = "gas_alt"
+	icon_state = "gas_mask"
+	greyscale_config = /datum/greyscale_config/gas_mask
+	greyscale_config_worn = /datum/greyscale_config/gas_mask_worn
+	greyscale_colors = "#c0c0c0#00ff98"
 	inhand_icon_state = "gas_alt"
 	resistance_flags = NONE
 	armor = list(MELEE = 5, BULLET = 5, LASER = 5, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 50)
