@@ -611,3 +611,68 @@
   - bugfix: KiloStation's Chapel Entrance now receives power.
   - bugfix: There is no longer a space turf in the middle of an asteroid on KiloStation
       with gravity attached to it.
+2022-03-18:
+  Fikou:
+  - bugfix: drones are no longer shy around maint rats and such
+  GoblinBackwards:
+  - bugfix: Prevents invalid materials being used on airlock assemblies.
+  JohnFulpWillard:
+  - bugfix: Ants now don't appear on icemoon/space asteroids, rather than only lavaland.
+  MMMiracles:
+  - bugfix: Patches up the sporadically popping up space turfs that appeared in tram's
+      security wing.
+  - bugfix: The bar now has an air alarm.
+  MacBlaze1:
+  - expansion: More than two assemblies can now be combined for use in bombs, grenades,
+      or anything else assembly holders are used in.
+  - qol: signalers can now be triggered through right click
+  Melbert:
+  - bugfix: Makes the wizard's Lich Phylactery mechanic actually work consistently.
+  - bugfix: The description of the Bind Soul spell (and entry) should match its behavior
+      a bit more accurately now. You will revive regardless if your body is destroyed
+      or leaves the z-level. With each revival, the time it takes to respawn does
+      not change, but the duration of the stun does.
+  - refactor: Makes Phylacteries a component.
+  - qol: Gave Lich Phylacerties some QoL features and pizazz. Examining it'll offer
+      more information to wizards and ghosts.
+  RandomGamer123:
+  - bugfix: Engineering departmental order consoles can now once again order gas canisters.
+  SuperNovaa41:
+  - bugfix: Fixes being able to spam deny sounds on deliver first crates.
+  TemporalOroboros:
+  - bugfix: Using telekinesis will no longer break chameleon.
+  Zergspower:
+  - rscadd: Parts and Machine frame to build an ORM from the golem ship
+  - rscdel: Removed Prebuilt ORM from the golem ship
+  capsaicinz:
+  - bugfix: soulscythes are now immune to mining planet storms
+  nevimer:
+  - bugfix: native fast gui boxes work again
+  san7890:
+  - imageadd: On the mapping end, the Diner now has it's own area turf. If you don't
+      know what that means, just know that it's a good thing.
+  - rscadd: Nanotrasen decided to do a few more cost-cutting procedures, removing
+      lights from a certain outdoor section of KiloStation.
+2022-03-19:
+  Fikou:
+  - bugfix: you cant hide stuff in locked modsuit storages, it empties when removed
+      from the suit
+  Son-of-Space:
+  - bugfix: Engineers have finally solved for the reason why their solar setups on
+      TramStation never worked.
+  Twaticus:
+  - imageadd: further medkit tweaks
+  carshalash:
+  - qol: Adds three new orderable fish crates to split rates of fish one gets.
+  san7890:
+  - bugfix: Nanotrasen has decided to quit installling posters on ice turfs near Lower
+      Chapel Maintenance on IceBoxStation.
+  - bugfix: Nanotrasen will no longer stop placing two chairs on the same spot in
+      IceBoxStation Departures.
+  - rscadd: A mix-up in blueprints meant that TramStation didn't have a formally defined
+      Ordnance Launch Area. This has now been rectified.
+  - bugfix: TramStation's Ordnance Mixing no longer owns that bit of space that the
+      waste gas is meant to exit the burn chamber from.
+  - bugfix: TramStation's Ordnance Launch Area's APC now has connectivity to the grid.
+  - bugfix: Nanotrasen busted out some pulse rifles to get rid of some loose rock
+      debris in the Northwestern Quadrant of KiloStation.

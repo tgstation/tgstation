@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes: 
+  - qol: "Added a search function to the \"Marlowe Treeby's Art Galaxy\" app. You can now search for paintings by title or author now."
+  - qol: "Speaking of the same app, the name of the author is now displayed under that of the painting in its preview section."
+  - bugfix: "Fixed a potential BSOD in its TGUI if no painting was ever archived."
+  - qol: "The AI Portrait Picker also got a similar treatment."

@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Ants now don't appear on icemoon/space asteroids, rather than only lavaland."

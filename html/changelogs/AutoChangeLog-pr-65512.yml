@@ -1,5 +1,0 @@
-author: "Zergspower"
-delete-after: True
-changes: 
-  - rscadd: "Parts and Machine frame to build an ORM from the golem ship"
-  - rscdel: "Removed Prebuilt ORM from the golem ship"

@@ -1,4 +1,0 @@
-author: "nevimer"
-delete-after: True
-changes: 
-  - bugfix: "native fast gui boxes work again"

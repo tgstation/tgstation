@@ -1,0 +1,5 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - qol: "It is now easier to tell that lower maintenance on box is traversable and is reliable to traverse."
+  - balance: "tweaked access reqs for certain doors in lower maintenance on BoxStation."
