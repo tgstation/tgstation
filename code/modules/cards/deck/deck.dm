@@ -87,10 +87,16 @@
 	. += span_notice("Click and drag the deck to yourself to pickup.") // This should be a context screentip
 
 /obj/item/toy/cards/deck/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(src == held_item)
+		var/obj/item/toy/cards/deck/dealer_deck = held_item
+		context[SCREENTIP_CONTEXT_LMB] = dealer_deck.wielded ? "Recycle mode" : "Dealer mode"
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Shuffle"
+		return CONTEXTUAL_SCREENTIP_SET
+
 	if(isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Draw card"
 		context[SCREENTIP_CONTEXT_RMB] = "Draw card faceup"
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Shuffle"
+		// add drag & drop screentip here in the future
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/toy/singlecard))

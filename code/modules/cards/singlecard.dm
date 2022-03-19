@@ -71,9 +71,8 @@
 		. += span_notice("The card has a [marked_color] mark on the corner!")
 
 /obj/item/toy/singlecard/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate counter-clockwise"
-		// add a ALT_RMB screentip to rotate clockwise
+	if(isnull(held_item) || src == held_item)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Rotate counter-clockwise" // add a ALT_RMB screentip to rotate clockwise
 		context[SCREENTIP_CONTEXT_RMB] = "Flip card"
 		return CONTEXTUAL_SCREENTIP_SET
 
