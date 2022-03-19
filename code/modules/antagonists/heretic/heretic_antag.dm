@@ -679,6 +679,7 @@
 	name = "summon monsters"
 	target_amount = 2
 	explanation_text = "Summon 2 monsters from the Mansus into this realm."
+	/// The total number of summons the objective owner has done
 	var/num_summoned = 0
 
 /datum/objective/heretic_summon/check_completion()
