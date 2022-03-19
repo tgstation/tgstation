@@ -2,7 +2,7 @@ import { Color } from 'common/color';
 import { decodeHtmlEntities } from 'common/string';
 import { Component, createRef, RefObject } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Divider } from '../components';
+import { Box, Button, Flex } from '../components';
 import { Window } from '../layouts';
 
 const PX_PER_UNIT = 24;
@@ -202,7 +202,7 @@ export const Canvas = (props, context) => {
   const scaled_width = width * PX_PER_UNIT;
   const scaled_height = height * PX_PER_UNIT;
   const average_plaque_height = 90;
-  const palette_height = 36
+  const palette_height = 36;
   return (
     <Window
       width={scaled_width + 72}
@@ -226,13 +226,14 @@ export const Canvas = (props, context) => {
               <Flex.Item>
                 {data.paint_tool_palette.map(element => (
                   <Button
+                    key={element.key}
                     backgroundColor={element.color}
                     style={{
-                      "width" : "24px",
-                      "height" : "24px",
-                      "border-style" : "solid",
-                      "border-color" : element.is_selected ? "lightblue" : "black",
-                      "border-width" : "2px",
+                      "width": "24px",
+                      "height": "24px",
+                      "border-style": "solid",
+                      "border-color": element.is_selected ? "lightblue" : "black",
+                      "border-width": "2px",
                     }}
                     onClick={() => act('select_color', {
                       selected_color: element.color,

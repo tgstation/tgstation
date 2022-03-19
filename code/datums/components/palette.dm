@@ -121,6 +121,7 @@
 /datum/component/palette/proc/get_palette_data(datum/source, data)
 	SIGNAL_HANDLER
 	var/list/painting_data = list()
-	for(var/hexcolor in colors)
-		painting_data.Add(list(list("color" = hexcolor, "is_selected" = hexcolor == selected_color)))
+	for(var/index in 1 to length(colors))
+		var/hexcolor = colors[index]
+		painting_data.Add(list(list("color" = hexcolor, "is_selected" = hexcolor == selected_color, "key" = "[index]")))
 	data["paint_tool_palette"] = painting_data
