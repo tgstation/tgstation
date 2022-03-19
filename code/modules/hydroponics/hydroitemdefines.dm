@@ -585,22 +585,22 @@
 			var/new_style = tgui_input_list(trimmer, "Select a hairstyle", "Grooming", GLOB.pod_hair_list)
 			if(isnull(new_style))
 				return
-			trimmer.visible_message(span_notice(
-				"[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+			trimmer.visible_message(
+				span_notice("[trimmer] tries to change [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
 				span_notice("You try to change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
 			)
-			if(new_style && do_after(trimmer, 60, target = pod))
-				trimmer.visible_message(span_notice(
-					"[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
+			if(new_style && do_after(trimmer, 6 SECONDS, target = pod))
+				trimmer.visible_message(
+					span_notice("[trimmer] successfully changes [pod == trimmer ? trimmer.p_their() : pod.name + "'s"] hairstyle using [src]."),
 					span_notice("You successfully change [pod == trimmer ? "your" : pod.name + "'s"] hairstyle using [src].")
 				)
 
 				var/datum/species/pod/species = pod.dna?.species
 				species?.change_hairstyle(pod, new_style)
 		else
-			..()
+			return ..()
 	else
-		..()
+		return ..()
 
 /obj/item/geneshears
 	name = "Botanogenetic Plant Shears"
