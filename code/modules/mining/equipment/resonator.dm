@@ -1,7 +1,3 @@
-#define RESONATOR_MODE_AUTO   1
-#define RESONATOR_MODE_MANUAL 2
-#define RESONATOR_MODE_MATRIX 3
-
 /**********************Resonator**********************/
 
 /obj/item/resonator
@@ -175,7 +171,3 @@
 	else
 		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 2 seconds."))
 		mode = RESONATOR_MODE_AUTO
-
-#undef RESONATOR_MODE_AUTO
-#undef RESONATOR_MODE_MANUAL
-#undef RESONATOR_MODE_MATRIX
