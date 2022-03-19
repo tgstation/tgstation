@@ -94,7 +94,7 @@
 
 	refill()
 
-/obj/item/paint_palette/set_painting_tool_color(chosen_color)
+/obj/item/toy/crayon/set_painting_tool_color(chosen_color)
 	. = ..()
 	paint_color = chosen_color
 	update_appearance()
@@ -731,7 +731,7 @@
 			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
 
 		var/mob/living/carbon/C = target
-		user.visible_message(spazn_danger("[user] sprays [src] into the face of [target]!"))
+		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))
 		to_chat(target, span_userdanger("[user] sprays [src] into your face!"))
 
 		if(C.client)
