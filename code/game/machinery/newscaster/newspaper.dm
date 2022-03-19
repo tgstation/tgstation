@@ -33,7 +33,10 @@
 	return(TOXLOSS)
 
 /obj/item/newspaper/attack_self(mob/user)
-	if(ishuman(user))
+	if(!ishuman(user))
+		to_chat(user, span_warning("The paper is full of unintelligible symbols!"))
+		return
+	else
 		var/mob/living/carbon/human/human_user = user
 		var/dat
 		pages = 0
@@ -110,8 +113,6 @@
 		dat+="<BR><HR><div align='center'>[curr_page+1]</div>"
 		human_user << browse(dat, "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
-	else
-		to_chat(user, span_warning("The paper is full of unintelligible symbols!"))
 
 /obj/item/newspaper/proc/notContent(list/L)
 	if(!L.len)

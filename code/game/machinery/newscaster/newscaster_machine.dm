@@ -111,7 +111,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 /obj/machinery/newscaster/ui_data(mob/user)
 	var/list/data = list()
-	var/list/channel_list = list()
 	var/list/message_list = list()
 
 	//Code displaying name and Job Information, taken from the player mob's ID card if one exists.
@@ -158,14 +157,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	//Code breaking down the channels that have been made on-station thus far. ha
 	//Then, breaks down the messages that have been made on those channels.
-	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
-		channel_list += list(list(
-			"name" = channel.channel_name,
-			"author" = channel.author,
-			"censored" = channel.censored,
-			"locked" = channel.locked,
-			"ID" = channel.channel_ID,
-		))
 	if(current_channel)
 		for(var/datum/feed_message/feed_message as anything in current_channel.messages)
 			var/photo_ID = null
@@ -207,8 +198,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		data["channelLocked"] = current_channel.locked
 		data["channelCensored"] = current_channel.censored
 
-	//We send all the information about all channels and all messages in existance.
-	data["channels"] = channel_list
+	//We send all the information about all messages in existance.
 	data["messages"] = message_list
 	data["wanted"] = wanted_info
 
@@ -225,6 +215,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["bountyText"] = bounty_text
 
 	return data
+
+/obj/machinery/newscaster/ui_static_data(mob/user)
+	var/list/data = list()
+	var/list/channel_list = list()
+	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
+		channel_list += list(list(
+			"name" = channel.channel_name,
+			"author" = channel.author,
+			"censored" = channel.censored,
+			"locked" = channel.locked,
+			"ID" = channel.channel_ID,
+		))
+
+	data["channels"] = channel_list
+	return data
+
 
 /obj/machinery/newscaster/ui_act(action, params)
 	. = ..()
@@ -608,6 +614,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		GLOB.news_network.create_feed_channel(channel_name, current_user.account_holder, channel_desc, locked = channel_locked)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 	can_create_channel = FALSE
+	update_static_data(usr)
 
 /**
  * Constructs a comment to attach to the currently selected feed_message of choice, assuming that a user can be found and that a message body has been written.
