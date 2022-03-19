@@ -56,7 +56,7 @@
 	var/context_living_rmb_inactive = "Attack"
 
 	/// For sprite selecting option, between classical wooden baton and black nightstick
-	var/spriteSelected = FALSE
+	var/sprite_selected = FALSE
 
 /obj/item/melee/baton/Initialize(mapload)
 	. = ..()
