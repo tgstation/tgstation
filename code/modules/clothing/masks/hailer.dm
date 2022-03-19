@@ -57,6 +57,9 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
 	has_fov = FALSE
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 	var/aggressiveness = AGGR_BAD_COP
 	var/overuse_cooldown = FALSE
 	var/recent_uses = 0
