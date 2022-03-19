@@ -57,32 +57,32 @@
 /obj/item/clothing/mask/bandana/color/red
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
-	icon_state = "bandred"
+	greyscale_colors = "#cc1818"
 
 /obj/item/clothing/mask/bandana/color/blue
 	name = "blue bandana"
 	desc = "A fine blue bandana with nanotech lining."
-	icon_state = "bandblue"
+	greyscale_colors = "#00c3ff"
 
 /obj/item/clothing/mask/bandana/color/green
 	name = "green bandana"
 	desc = "A fine green bandana with nanotech lining."
-	icon_state = "bandgreen"
+	greyscale_colors = "#00ff22"
 
 /obj/item/clothing/mask/bandana/color/gold
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
-	icon_state = "bandgold"
+	greyscale_colors = "#eeff00"
 
 /obj/item/clothing/mask/bandana/color/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
-	icon_state = "bandblack"
+	greyscale_colors = "#000000"
 
 /obj/item/clothing/mask/bandana/color/white
 	name = "white bandana"
 	desc = "A fine white bandana with nanotech lining."
-	icon_state = "bandwhite"
+	greyscale_colors = "#ffffff"
 
 /obj/item/clothing/mask/bandana/color/skull
 	name = "skull bandana"
@@ -93,4 +93,4 @@
 
 /obj/item/clothing/mask/bandana/color/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
-	greyscale_colors = "#000000"
+	greyscale_colors = "#ffffff#000000"
