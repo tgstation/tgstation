@@ -582,7 +582,7 @@
 	dye_color = DYE_RAINBOW
 
 /obj/item/toy/crayon/rainbow/afterattack(atom/target, mob/user, proximity, params)
-	paint_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+	set_painting_tool_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 	. = ..()
 
 /*
@@ -704,11 +704,8 @@
 	. = ..()
 	// If default crayon red colour, pick a more fun spraycan colour
 	if(!paint_color)
-		paint_color = pick("#DA0000","#FF9300","#FFF200","#A8E61D","#00B7EF",
-		"#DA00FF")
+		set_painting_tool_color(pick("#DA0000", "#FF9300", "#FFF200", "#A8E61D", "#00B7EF", "#DA00FF"))
 	refill()
-	update_appearance()
-
 
 /obj/item/toy/crayon/spraycan/examine(mob/user)
 	. = ..()
@@ -734,7 +731,7 @@
 			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
 
 		var/mob/living/carbon/C = target
-		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))
+		user.visible_message(spazn_danger("[user] sprays [src] into the face of [target]!"))
 		to_chat(target, span_userdanger("[user] sprays [src] into your face!"))
 
 		if(C.client)
