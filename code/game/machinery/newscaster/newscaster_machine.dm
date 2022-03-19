@@ -28,11 +28,9 @@
 	///Is there currently an alert on this newscaster that hasn't been seen yet?
 	var/alert = FALSE
 	///Is the current user creating a new channel at the moment?
-	var/creating_channel = FALSE
+	var/can_create_channel = FALSE
 	///Is the current user creating a new comment at the moment?
 	var/creating_comment = FALSE
-	///Is the current user editing or viewing a new wanted issue at the moment?
-	var/viewing_wanted  = FALSE
 	///What is the user submitted, criminal name for the new wanted issue?
 	var/criminal_name
 	///What is the user submitted, crime description for the new wanted issue?
@@ -139,11 +137,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	data["security_mode"] = (ACCESS_ARMORY in card?.GetAccess())
 	data["photo_data"] = !isnull(current_image)
-	data["creating_channel"] = creating_channel
+	data["can_create_channel"] = can_create_channel
 	data["creating_comment"] = creating_comment
 
 	//Here is all the UI_data sent about the current wanted issue, as well as making a new one in the UI.
-	data["viewing_wanted"] = viewing_wanted
 	data["making_wanted_issue"] = !(GLOB.news_network.wanted_issue?.active)
 	data["criminal_name"] = criminal_name
 	data["crime_description"] = crime_description
@@ -268,7 +265,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("startCreateChannel")
-			start_creating_channel()
+			start_create_channel()
 			return TRUE
 
 		if("setChannelName")
@@ -289,9 +286,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("cancelCreation")
-			creating_channel = FALSE
+			can_create_channel = FALSE
 			creating_comment = FALSE
-			viewing_wanted = FALSE
 			return TRUE
 
 		if("storyCensor")
@@ -362,7 +358,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("toggleWanted")
-			viewing_wanted = TRUE
 			alert = FALSE
 			update_overlays()
 			return TRUE
@@ -390,7 +385,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("clearWantedIssue")
 			clear_wanted_issue(user = usr)
-			return TRUE
+			for(var/obj/machinery/newscaster/other_newscaster in GLOB.allCasters)
+				other_newscaster.update_appearance()
+				return TRUE
 
 		if("printNewspaper")
 			print_paper()
@@ -610,7 +607,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(choice == "Confirm")
 		GLOB.news_network.create_feed_channel(channel_name, current_user.account_holder, channel_desc, locked = channel_locked)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
-	creating_channel = FALSE
+	can_create_channel = FALSE
 
 /**
  * Constructs a comment to attach to the currently selected feed_message of choice, assuming that a user can be found and that a message body has been written.
@@ -631,11 +628,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	creating_comment = FALSE
 
 /**
- * This proc performs checks before enabling the creating_channel var on the newscaster, such as preventing a user from having multiple channels,
+ * This proc performs checks before enabling the can_create_channel var on the newscaster, such as preventing a user from having multiple channels,
  * preventing an un-ID'd user from making a channel, and preventing censored authors from making a channel.
- * Otherwise, sets creating_channel to TRUE.
+ * Otherwise, sets can_create_channel to TRUE.
  */
-/obj/machinery/newscaster/proc/start_creating_channel()
+/obj/machinery/newscaster/proc/start_create_channel()
 	//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
 	var/list/existing_authors = list()
 	for(var/datum/feed_channel/iterated_feed_channel as anything in GLOB.news_network.network_channels)
@@ -644,9 +641,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		else
 			existing_authors += iterated_feed_channel.author
 	if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
-		tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
+		can_create_channel = FALSE
 		return TRUE
-	creating_channel = TRUE
+	can_create_channel = TRUE
+	return TRUE
 
 /**
  * Creates a new feed story to the global newscaster network.
@@ -693,7 +691,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		say("Clearance not found.")
 		return TRUE
 	GLOB.news_network.wanted_issue.active = FALSE
-	return
+	return TRUE
 
 /**
  * This proc removes a station_request from the global list of requests, after checking that the owner of that request is the one who is trying to remove it.

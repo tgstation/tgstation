@@ -19,6 +19,8 @@ const CENSOR_MESSAGE = "This channel has been deemed as threatening to \
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
   const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', NEWSCASTER_SCREEN);
+  const [wantedScreen, setWantedScreen] = useLocalState(context, 'wantedScreen', false);
+  const [channelScreen, setChannelScreen] = useLocalState(context, 'channelScreen', false);
   const NEWSCASTER_SCREEN = 1;
   const BOUNTYBOARD_SCREEN = 2;
   return (
@@ -64,14 +66,15 @@ export const Newscaster = (props, context) => {
 const NewscasterChannelCreation = (props, context) => {
   const { act, data } = useBackend(context);
   const [lockedmode, setLockedmode] = useLocalState(context, 'lockedmode', 1);
+  const [channelScreen, setChannelScreen] = useLocalState(context, 'channelScreen', false);
   const {
-    creating_channel,
+    can_create_channel,
     creating_comment,
     viewing_channel,
     name,
     desc,
   } = data;
-  if (!creating_channel) {
+  if (!channelScreen) {
     return null;
   }
   return (
@@ -83,67 +86,77 @@ const NewscasterChannelCreation = (props, context) => {
         color="red"
         position="relative"
         top="20%"
-        left="50%"
-        onClick={() => act('cancelCreation')} />
+        left="23%"
+        onClick={() => act('cancelCreation', setChannelScreen(false))} />
       <Stack vertical>
-        <Stack.Item>
-          <Box pb={1}>
-            Enter channel name here:
-          </Box>
-          <TextArea
-            fluid
-            height="40px"
-            width="240px"
-            backgroundColor="black"
-            textColor="white"
-            maxLength={42}
-            onChange={(e, name) => act('setChannelName', {
-              channeltext: name,
-            })}>
-            Channel Name
-          </TextArea>
-        </Stack.Item>
-        <Stack.Item>
-          <Box pb={1}>
-            Enter channel description here:
-          </Box>
-          <TextArea
-            fluid
-            height="150px"
-            width="240px"
-            backgroundColor="black"
-            textColor="white"
-            maxLength={512}
-            onChange={(e, desc) => act('setChannelDesc', {
-              channeldesc: desc,
-            })}>
-            Channel Description
-          </TextArea>
-        </Stack.Item>
-        <Stack.Item>
-          <Section>
-            Set Channel as Public or Private
-            <Box pt={1}>
-              <Button
-                selected={!lockedmode}
-                content="Public"
-                onClick={() => act(setLockedmode(false))} />
-              <Button
-                selected={!!lockedmode}
-                content="Private"
-                onClick={() => act(setLockedmode(true))} />
-            </Box>
-          </Section>
-        </Stack.Item>
-        <Stack.Item>
-          <Box>
-            <Button
-              content="Submit Channel"
-              onClick={() => act('createChannel', {
-                lockedmode: lockedmode,
-              })} />
-          </Box>
-        </Stack.Item>
+        {!can_create_channel
+          ? (
+            <Stack.Item textColor="red">
+              ERROR: User cannot be found or already has an owned feed channel.
+            </Stack.Item>)
+          : (
+            <>
+              <Stack.Item>
+                <Box pb={1}>
+                  Enter channel name here:
+                </Box>
+                <TextArea
+                  fluid
+                  height="40px"
+                  width="240px"
+                  backgroundColor="black"
+                  textColor="white"
+                  maxLength={42}
+                  onChange={(e, name) => act('setChannelName', {
+                    channeltext: name,
+                  })}>
+                  Channel Name
+                </TextArea>
+              </Stack.Item>
+              <Stack.Item>
+                <Box pb={1}>
+                  Enter channel description here:
+                </Box>
+                <TextArea
+                  fluid
+                  height="150px"
+                  width="240px"
+                  backgroundColor="black"
+                  textColor="white"
+                  maxLength={512}
+                  onChange={(e, desc) => act('setChannelDesc', {
+                    channeldesc: desc,
+                  })}>
+                  Channel Description
+                </TextArea>
+              </Stack.Item>
+              <Stack.Item>
+                <Section>
+                  Set Channel as Public or Private
+                  <Box pt={1}>
+                    <Button
+                      selected={!lockedmode}
+                      content="Public"
+                      onClick={() => act(setLockedmode(false))} />
+                    <Button
+                      selected={!!lockedmode}
+                      content="Private"
+                      onClick={() => act(setLockedmode(true))} />
+                  </Box>
+                </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <Box>
+                  <Button
+                    content="Submit Channel"
+                    onClick={() => act('createChannel', {
+                      lockedmode: lockedmode,
+                    },
+                    setChannelScreen(false))} />
+                </Box>
+              </Stack.Item>
+            </>
+          )}
       </Stack>
     </Modal>
   );
@@ -152,7 +165,6 @@ const NewscasterChannelCreation = (props, context) => {
 /** The modal menu that contains the prompts to making new comments. */
 const NewscasterCommentCreation = (props, context) => {
   const { act, data } = useBackend(context);
-  const [lockedmode, setLockedmode] = useLocalState(context, 'lockedmode', 1);
   const {
     creating_comment,
     viewing_message,
@@ -205,6 +217,7 @@ const NewscasterCommentCreation = (props, context) => {
 
 const NewscasterWantedScreen = (props, context) => {
   const { act, data } = useBackend(context);
+  const [wantedScreen, setWantedScreen] = useLocalState(context, 'wantedScreen', false);
   const {
     viewing_wanted,
     photo_data,
@@ -213,7 +226,7 @@ const NewscasterWantedScreen = (props, context) => {
     criminal_name,
     crime_description,
   } = data;
-  if (!viewing_wanted) {
+  if (!wantedScreen) {
     return null;
   }
   return (
@@ -234,7 +247,7 @@ const NewscasterWantedScreen = (props, context) => {
                   position="relative"
                   top="20%"
                   left="18%"
-                  onClick={() => act('cancelCreation')} />
+                  onClick={() => act(setWantedScreen(false))} />
               </Box>
               <Section>
                 <Box bold>
@@ -289,7 +302,8 @@ const NewscasterWantedScreen = (props, context) => {
                 content={"Set Wanted Issue"}
                 disabled={!security_mode}
                 icon="volume-up"
-                onClick={() => act('submitWantedIssue')} />
+                onClick={() => { act('submitWantedIssue',
+                  setWantedScreen(false)); }} />
               <Button
                 content={"Clear Wanted"}
                 disabled={!security_mode}
@@ -421,6 +435,8 @@ const NewscasterChannelBox = (_, context) => {
 /** Channel select is the left-hand menu where all the channels are listed. */
 const NewscasterChannelSelector = (props, context) => {
   const { act, data } = useBackend(context);
+  const [wantedScreen, setWantedScreen] = useLocalState(context, 'wantedScreen', false);
+  const [channelScreen, setChannelScreen] = useLocalState(context, 'channelScreen', false);
   const {
     channels = [],
     viewing_channel,
@@ -438,8 +454,10 @@ const NewscasterChannelSelector = (props, context) => {
             pb={0.75}
             mr={1}
             key={activeWanted.index}
-            textColor={!activeWanted.active ? "grey" : "white"}
-            onClick={() => act('toggleWanted')}>
+            icon={activeWanted.active ? "skull-crossbones" : null}
+            textColor={activeWanted.active ? "red" : "grey"}
+            onClick={() => { act('toggleWanted',
+              setWantedScreen(true)); }}>
             Wanted Issue
           </Tabs.Tab>
         ))}
@@ -464,7 +482,7 @@ const NewscasterChannelSelector = (props, context) => {
           mr={1}
           textColor="white"
           color="Green"
-          onClick={() => act('startCreateChannel')}>
+          onClick={() => act('startCreateChannel', setChannelScreen(true))}>
           Create Channel [+]
         </Tabs.Tab>
       </Tabs>
