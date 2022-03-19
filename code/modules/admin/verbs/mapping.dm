@@ -54,6 +54,7 @@ GLOBAL_LIST_INIT(admin_verbs_debug_mapping, list(
 	/client/proc/place_ruin,
 	/client/proc/station_food_debug,
 	/client/proc/station_stack_debug,
+	/client/proc/invalid_airlock_access,
 ))
 GLOBAL_PROTECT(admin_verbs_debug_mapping)
 
@@ -422,3 +423,21 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 	popup.set_content(page_contents)
 	popup.open()
 
+/client/proc/invalid_airlock_access()
+	set name = "Find Invalid Airlock Access"
+	set category = "Mapping"
+
+	var/page_contents = {"<b>List of airlocks with invalid accesses set:</b><br>"}
+	var/static/regex/check_regex = new(@"^(\d{1,3};)*\d{1,3}$","g") // Match valid door accesses
+
+	for(var/obj/machinery/door/airlock/airlock in world)
+		if(airlock.req_access_txt && !check_regex.Find(airlock.req_access_txt))
+			var/turf/location = get_turf(airlock)
+			page_contents += "[ADMIN_VERBOSEJMP(location)]\n\tREQ_ACCESS_TXT = \"[airlock.req_access_txt]\"<br>"
+		if(airlock.req_one_access_txt && !check_regex.Find(airlock.req_one_access_txt))
+			var/turf/location = get_turf(airlock)
+			page_contents += "[ADMIN_VERBOSEJMP(location)]\n\tREQ_ONE_ACCESS_TXT = \"[airlock.req_one_access_txt]\"<br>"
+
+	var/datum/browser/popup = new(mob, "invalidairlock", "Invalid Door Accesses", 600, 400)
+	popup.set_content(page_contents)
+	popup.open()
