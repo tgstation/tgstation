@@ -50,7 +50,7 @@
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
 	icon_state = "bandwhite"
-	greyscale_config = /datum/greyscale_config/bandskull
+	greyscale_config = /datum/greyscale_config/bandana
 	greyscale_config_worn = /datum/greyscale_config/bandana_worn
 	greyscale_colors = "#555555"
 
