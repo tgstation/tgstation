@@ -87,13 +87,13 @@
 		to_chat(user, span_warning("[src] won't work on a robotic limb!"))
 		return FALSE
 	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [C]'s [affecting.name].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [C]'s [affecting.name].</span></span>")
+		user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [C]'s [parse_zone(affecting.body_zone)].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [C]'s [parse_zone(affecting.body_zone)].</span></span>")
 		var/previous_damage = affecting.get_damage()
 		if(affecting.heal_damage(brute, burn))
 			C.update_damage_overlays()
 		post_heal_effects(max(previous_damage - affecting.get_damage(), 0), C, user)
 		return TRUE
-	to_chat(user, span_warning("[C]'s [affecting.name] can not be healed with [src]!"))
+	to_chat(user, span_warning("[C]'s [parse_zone(affecting.body_zone)] can not be healed with [src]!"))
 	return FALSE
 
 ///Override this proc for special post heal effects.
