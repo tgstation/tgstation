@@ -484,14 +484,18 @@
 
 	. = 0
 
+#define HEALING_PER_MOL 1.1 //Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
+
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
 		gases = environment.gases
 		if(gases[/datum/gas/plasma])
-			. += power * min(0.5, gases[/datum/gas/plasma][MOLES] * 1.1)
+			. += power * min(0.5, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
-		. += power * 0.75
+		. += power * 0.75 //Determines how much the symptom heals if injected or ingested
+
+#undef HEALING_PER_MOL
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
