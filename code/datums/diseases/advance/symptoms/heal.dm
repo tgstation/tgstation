@@ -453,6 +453,9 @@
 		return TRUE
 	return FALSE
 
+///Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
+#define HEALING_PER_MOL 1.1
+
 /datum/symptom/heal/plasma
 	name = "Plasma Fixation"
 	desc = "The virus draws plasma from the atmosphere and from inside the body to heal and stabilize body temperature."
@@ -484,10 +487,6 @@
 
 	. = 0
 
-///Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
-
-#define HEALING_PER_MOL 1.1
-
 	if(M.loc)
 		environment = M.loc.return_air()
 	if(environment)
@@ -496,8 +495,6 @@
 			. += power * min(0.5, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
 	if(M.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. += power * 0.75 //Determines how much the symptom heals if injected or ingested
-
-#undef HEALING_PER_MOL
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = 4 * actual_power
@@ -527,6 +524,8 @@
 			M.update_damage_overlays()
 	return 1
 
+///Plasma End
+#undef HEALING_PER_MOL
 
 /datum/symptom/heal/radiation
 	name = "Radioactive Resonance"
