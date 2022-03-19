@@ -89,7 +89,7 @@
 	if(mood_events.len)
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
-			msg += event.description
+			msg += event.description + "\n"
 	else
 		msg += "[span_nicegreen("I don't have much of a reaction to anything right now.")]\n"
 	to_chat(user, msg)
