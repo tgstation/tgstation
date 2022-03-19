@@ -10040,10 +10040,6 @@
 /obj/structure/speaking_tile,
 /turf/closed/mineral/ash_rock,
 /area/awaymission/errorroom)
-"Mc" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "Mh" = (
 /obj/machinery/door/poddoor{
 	id = "thunderdome";
@@ -79629,6 +79625,6 @@ aa
 aa
 aa
 aa
-Mc
-Mc
+aa
+ad
 "}
