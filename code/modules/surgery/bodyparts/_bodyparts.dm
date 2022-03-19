@@ -840,7 +840,7 @@
 	else
 		limb.icon_state = "[limb_id]_[body_zone]"
 
-	icon_exists(limb.icon, limb.state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
+	icon_exists(limb.icon, limb.icon_state, TRUE) //Prints a stack trace on the first failure of a given iconstate.
 
 	if(aux_zone) //Hand shit
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, image_dir)
