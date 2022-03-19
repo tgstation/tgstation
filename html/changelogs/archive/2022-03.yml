@@ -653,3 +653,26 @@
       know what that means, just know that it's a good thing.
   - rscadd: Nanotrasen decided to do a few more cost-cutting procedures, removing
       lights from a certain outdoor section of KiloStation.
+2022-03-19:
+  Fikou:
+  - bugfix: you cant hide stuff in locked modsuit storages, it empties when removed
+      from the suit
+  Son-of-Space:
+  - bugfix: Engineers have finally solved for the reason why their solar setups on
+      TramStation never worked.
+  Twaticus:
+  - imageadd: further medkit tweaks
+  carshalash:
+  - qol: Adds three new orderable fish crates to split rates of fish one gets.
+  san7890:
+  - bugfix: Nanotrasen has decided to quit installling posters on ice turfs near Lower
+      Chapel Maintenance on IceBoxStation.
+  - bugfix: Nanotrasen will no longer stop placing two chairs on the same spot in
+      IceBoxStation Departures.
+  - rscadd: A mix-up in blueprints meant that TramStation didn't have a formally defined
+      Ordnance Launch Area. This has now been rectified.
+  - bugfix: TramStation's Ordnance Mixing no longer owns that bit of space that the
+      waste gas is meant to exit the burn chamber from.
+  - bugfix: TramStation's Ordnance Launch Area's APC now has connectivity to the grid.
+  - bugfix: Nanotrasen busted out some pulse rifles to get rid of some loose rock
+      debris in the Northwestern Quadrant of KiloStation.
