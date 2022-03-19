@@ -8,6 +8,9 @@
 	icon_state = "deck_nanotrasen_full"
 	w_class = WEIGHT_CLASS_SMALL
 	worn_icon_state = "card"
+	hitsound = null
+	attack_verb_continuous = list("attacks")
+	attack_verb_simple = list("attack")
 	/// The amount of time it takes to shuffle
 	var/shuffle_time = DECK_SHUFFLE_TIME
 	/// Deck shuffling cooldown.
@@ -22,15 +25,6 @@
 	var/wielded = FALSE
 	/// The holodeck computer used to spawn a holographic deck (see /obj/item/toy/cards/deck/syndicate/holographic)
 	var/obj/machinery/computer/holodeck/holodeck
-
-	// the below vars will be inherited by the singlecards spawned in the deck
-	hitsound = null
-	force = 0
-	throwforce = 0
-	throw_speed = 3
-	throw_range = 7
-	attack_verb_continuous = list("attacks")
-	attack_verb_simple = list("attack")
 	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
 	var/has_unique_card_icons = TRUE
 	/// The art style of deck used (determines both deck and card icons used)
