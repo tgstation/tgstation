@@ -29,12 +29,7 @@
 	icon_state = "deck_syndicate_full"
 
 /obj/effect/holodeck_effect/cards/activate(obj/machinery/computer/holodeck/holodeck)
-	// delete this before PR merged
-	log_admin("Checking to see where the fuck the holodeck cards spawn and why they keep going into nullspace.")
-	log_admin("Holodeck spawned at [loc]")
-	log_admin("Holodeck spawned at [get_turf(src)]")
-
-	var/obj/item/toy/cards/deck/syndicate/holographic/deck = new(get_turf(src), holodeck)
+	var/obj/item/toy/cards/deck/syndicate/holographic/deck = new(loc, holodeck)
 	deck.flags_1 |= HOLOGRAM_1
 	return deck
 

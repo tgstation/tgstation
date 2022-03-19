@@ -42,14 +42,14 @@
 		return
 
 	// generate a normal playing card deck
-	cards += new /obj/item/toy/singlecard(mapload, "Joker", src)
-	cards += new /obj/item/toy/singlecard(mapload, "Mime", src)
+	cards += new /obj/item/toy/singlecard(src, "Joker", src)
+	cards += new /obj/item/toy/singlecard(src, "Mime", src)
 	for(var/suit in list("Hearts", "Spades", "Clubs", "Diamonds"))
-		cards += new /obj/item/toy/singlecard(mapload, "Ace of [suit]", src)
+		cards += new /obj/item/toy/singlecard(src, "Ace of [suit]", src)
 		for(var/i in 2 to 10)
-			cards += new /obj/item/toy/singlecard(mapload, "[i] of [suit]", src)
+			cards += new /obj/item/toy/singlecard(src, "[i] of [suit]", src)
 		for(var/person in list("Jack", "Queen", "King"))
-			cards += new /obj/item/toy/singlecard(mapload, "[person] of [suit]", src)
+			cards += new /obj/item/toy/singlecard(src, "[person] of [suit]", src)
 
 /// triggered on wield of two handed item
 /obj/item/toy/cards/deck/proc/on_wield(obj/item/source, mob/user)

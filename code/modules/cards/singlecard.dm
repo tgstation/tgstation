@@ -46,7 +46,6 @@
 		attack_verb_simple = parent_deck.attack_verb_simple
 
 		if(parent_deck.holodeck)
-			log_admin("Holodeck card spawned at [mapload]")
 			flags_1 |= HOLOGRAM_1
 			parent_deck.holodeck.spawned += src
 

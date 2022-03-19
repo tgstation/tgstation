@@ -25,4 +25,4 @@
 	. = ..()
 	var/cards_against_space = world.file2list("strings/[deckstyle].txt")
 	for(var/card in cards_against_space)
-		cards += new /obj/item/toy/singlecard(mapload, card, src)
+		cards += new /obj/item/toy/singlecard(src, card, src)
