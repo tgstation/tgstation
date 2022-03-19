@@ -1,0 +1,4 @@
+author: "Vladoricious"
+delete-after: True
+changes: 
+  - qol: "All accessories show above the suit by default and can be toggled."
