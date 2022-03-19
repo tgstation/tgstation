@@ -148,7 +148,7 @@
 	if(istype(item, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = item
 		if(!dealer_deck.wielded) // recycle card into deck (if unwielded)
-			dealer_deck.insert(list(src))
+			dealer_deck.insert(src)
 			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
 		card = dealer_deck.draw(user)
@@ -177,7 +177,7 @@
 
 	if(istype(item, /obj/item/toy/cards/cardhand)) // insert into cardhand
 		var/obj/item/toy/cards/cardhand/target_cardhand = item
-		target_cardhand.insert(list(src))
+		target_cardhand.insert(src)
 		return
 
 	var/can_item_write

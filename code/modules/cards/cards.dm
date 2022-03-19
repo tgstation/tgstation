@@ -40,7 +40,7 @@
 		M.Turn(angle)
 		card.transform = M
 		card.update_appearance()
-		
+
 	playsound(src, 'sound/items/cardshuffle.ogg', 50, TRUE)
 
 	if(istype(src, /obj/item/toy/cards/deck))
@@ -59,7 +59,7 @@
 	if(istype(src, /obj/item/toy/cards/cardhand))
 		qdel(src)
 		return
-		
+
 	update_appearance()
 
 /**
@@ -70,9 +70,21 @@
  * (see the deck/insert proc)
  *
  * Arguments:
- * * list/cards_to_add - List of card objects to be inserted
+ * * card_item - Either a singlecard or cardhand that gets inserted into the src
  */
-/obj/item/toy/cards/proc/insert(list/cards_to_add)
+/obj/item/toy/cards/proc/insert(obj/item/toy/card_item)
+	var/cards_to_add = list()
+	var/obj/item/toy/cards/cardhand/recycled_cardhand
+
+	if(istype(card_item, /obj/item/toy/singlecard))
+		cards_to_add += card_item
+
+	if(istype(card_item, /obj/item/toy/cards/cardhand))
+		recycled_cardhand = card_item
+		cards_to_add = recycled_cardhand.cards
+		recycled_cardhand.cards = list()
+		qdel(recycled_cardhand)
+
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
 		card.forceMove(src)
 		// reset the position and angle

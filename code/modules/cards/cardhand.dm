@@ -101,8 +101,7 @@
 	if(istype(weapon, /obj/item/toy/cards/deck))
 		var/obj/item/toy/cards/deck/dealer_deck = weapon
 		if(!dealer_deck.wielded) // recycle cardhand into deck (if unwielded)
-			dealer_deck.insert(cards)
-			qdel(src)
+			dealer_deck.insert(src)
 			user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 			return
 		card = dealer_deck.draw(user)
@@ -111,7 +110,7 @@
 		if(flip_card)
 			card.Flip()
 			card.update_appearance()
-		insert(list(card))
+		insert(card)
 		return
 
 	return ..()

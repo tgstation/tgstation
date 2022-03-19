@@ -189,20 +189,24 @@
 			icon_state = "deck_[deckstyle]_empty"
 	return ..()
 
-/obj/item/toy/cards/deck/insert(list/cards_to_add)
-	for(var/obj/item/toy/singlecard/card in cards_to_add)
-		card.Flip(CARD_FACEDOWN) // any card inserted into the deck is always facedown
+/obj/item/toy/cards/deck/insert(obj/item/toy/card_item)
+	// any card inserted into the deck is always facedown
+	if(istype(card_item, /obj/item/toy/singlecard))
+		var/obj/item/toy/singlecard/card = card_item
+		card.Flip(CARD_FACEDOWN)
+	if(istype(card_item, /obj/item/toy/cards/cardhand))
+		var/obj/item/toy/cards/cardhand/cardhand = card_item
+		for(var/obj/item/toy/singlecard/card in cardhand.cards)
+			card.Flip(CARD_FACEDOWN)
 	. = ..()
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
 	if(istype(item, /obj/item/toy/singlecard))
-		insert(list(item))
+		insert(item)
 		user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 	if(istype(item, /obj/item/toy/cards/cardhand))
-		var/obj/item/toy/cards/cardhand/recycled_cardhand = item
-		insert(recycled_cardhand.cards)
-		qdel(recycled_cardhand)
+		insert(item)
 		user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 	return ..()
