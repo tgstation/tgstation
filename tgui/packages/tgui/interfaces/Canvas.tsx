@@ -182,13 +182,18 @@ const getImageSize = value => {
   return [width, height];
 };
 
+type PaletteColor = {
+  color: string;
+  is_selected: boolean;
+}
+
 type CanvasData = {
   grid: string[][],
   finalized: boolean,
   name: string,
   editable: boolean,
   paint_tool_color: string | null,
-  paint_tool_palette: string[] | null,
+  paint_tool_palette: PaletteColor[] | null,
   author: string | null,
   medium: string | null,
   patron: string | null,
@@ -224,9 +229,9 @@ export const Canvas = (props, context) => {
           <Flex align="center" justify="center" direction="column">
             {!!data.editable && !!data.paint_tool_palette && (
               <Flex.Item>
-                {data.paint_tool_palette.map(element => (
+                {data.paint_tool_palette.map((element, index) => (
                   <Button
-                    key={element.key}
+                    key={`${index}`}
                     backgroundColor={element.color}
                     style={{
                       "width": "24px",

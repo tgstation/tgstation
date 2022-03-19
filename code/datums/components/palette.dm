@@ -44,6 +44,7 @@
 	QDEL_LIST(menu_choices)
 	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF_SECONDARY, COMSIG_PARENT_EXAMINE,
 		COMSIG_ITEM_DROPPED, COMSIG_PAINTING_TOOL_SET_COLOR, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA))
+	return ..()
 
 /datum/component/palette/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -123,5 +124,5 @@
 	var/list/painting_data = list()
 	for(var/index in 1 to length(colors))
 		var/hexcolor = colors[index]
-		painting_data.Add(list(list("color" = hexcolor, "is_selected" = hexcolor == selected_color, "key" = "[index]")))
+		painting_data += list(list("color" = hexcolor, "is_selected" = hexcolor == selected_color))
 	data["paint_tool_palette"] = painting_data
