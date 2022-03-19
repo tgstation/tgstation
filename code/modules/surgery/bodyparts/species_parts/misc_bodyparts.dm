@@ -429,7 +429,7 @@
 
 /obj/item/bodypart/chest/golem/snow
 	limb_id = "sn_golem"
-	is_dimorphic = FALSE
+	is_dimorphic = TRUE //WHO MADE SNOW BREASTS?
 	should_draw_greyscale = FALSE
 
 /obj/item/bodypart/l_arm/golem/snow
