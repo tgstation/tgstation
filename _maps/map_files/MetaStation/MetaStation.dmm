@@ -7432,7 +7432,6 @@
 "bNp" = (
 /obj/effect/spawner/random/maintenance,
 /obj/structure/closet,
-/obj/structure/closet,
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
