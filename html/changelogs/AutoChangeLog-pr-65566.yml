@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - qol: "Heretic targets which become uncompletable (being deleted) will remove themselves from a heretic's sacrifice list"
