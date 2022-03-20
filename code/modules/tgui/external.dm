@@ -213,5 +213,9 @@
 		payload = json_decode(href_list["payload"])
 	// Pass message to window
 	if(window)
+		//this proc is called from /client/Topic() which is called at the very end of a tick like a verb, so try to queue this high cost proc if
+		//the sever is overloaded.
+		if(TRY_QUEUE_VERB(window, /datum/tgui_window.proc/on_message, type, payload, href_list))
+			return TRUE
 		window.on_message(type, payload, href_list)
 	return TRUE
