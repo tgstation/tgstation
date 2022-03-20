@@ -619,7 +619,7 @@
 	return brute_dam
 
 /obj/item/bodypart/proc/get_burn_damage()
-	return brute_dam
+	return burn_dam
 
 /obj/item/bodypart/proc/get_max_damage()
 	return max_damage
