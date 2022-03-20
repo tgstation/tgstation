@@ -38,7 +38,6 @@
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
 
 	if(head)
-		head.no_update = TRUE
 		head.drop_limb()
 
 		if(!QDELETED(head)) //drop_limb() deletes the limb if no drop location exists and character setup dummies are located in nullspace.

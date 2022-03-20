@@ -75,7 +75,6 @@
 //Defines for Species IDs
 #define SPECIES_ABDUCTOR "abductor"
 #define SPECIES_ANDROID "android"
-#define SPECIES_CORPORATE "corporate"
 #define SPECIES_DULLAHAN "dullahan"
 #define SPECIES_ETHEREAL "ethereal"
 #define SPECIES_FELINE "felinid"

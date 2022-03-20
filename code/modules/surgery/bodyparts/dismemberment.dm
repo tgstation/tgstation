@@ -459,12 +459,6 @@
 		return FALSE
 	limb = newBodyPart(limb_zone, 0, 0)
 	if(limb)
-		if(!noheal)
-			limb.set_brute_dam(0)
-			limb.set_burn_dam(0)
-			limb.brutestate = 0
-			limb.burnstate = 0
-
 		if(!limb.attach_limb(src, 1))
 			qdel(limb)
 			return FALSE

@@ -107,8 +107,6 @@
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	var/turf/head_turf = get_turf(src)
-	if(IS_ORGANIC_LIMB(src))
-		playsound(head_turf, 'sound/misc/splort.ogg', 50, TRUE, -1)
 	for(var/obj/item/head_item in src)
 		if(head_item == brain)
 			if(user)
@@ -136,6 +134,8 @@
 	eyes = null
 	ears = null
 	tongue = null
+
+	return ..()
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	real_name = owner.real_name
@@ -192,16 +192,6 @@
 			lip_style = null
 			lip_color = "white"
 	..()
-
-/obj/item/bodypart/head/update_icon_dropped()
-	var/list/standing = get_limb_icon(TRUE)
-	if(!standing.len)
-		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
-		return
-	for(var/image/img in standing)
-		img.pixel_x = px_x
-		img.pixel_y = px_y
-	add_overlay(standing)
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
 	cut_overlays()
