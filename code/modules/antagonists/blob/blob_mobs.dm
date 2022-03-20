@@ -147,8 +147,8 @@
 		return
 	if(key || stat)
 		return
-	var/pod_ask = tgui_alert(usr,"Become a blob spore?", "Are you bulbous enough?", list("Yes", "No"))
-	if(pod_ask == "No" || !src || QDELETED(src))
+	var/pod_ask = tgui_alert(usr, "Are you bulbous enough?", "Blob Spore", list("Yes", "No"))
+	if(pod_ask == "No" || QDELETED(src))
 		return
 	if(key)
 		to_chat(user, span_warning("Someone else already took this spore!"))

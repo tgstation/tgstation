@@ -98,9 +98,8 @@
 			INVOKE_ASYNC(src, .proc/signal)
 			. = TRUE
 		if("freq")
-			frequency = unformat_frequency(params["freq"])
-			frequency = sanitize_frequency(frequency, TRUE)
-			set_frequency(frequency)
+			var/new_frequency = sanitize_frequency(unformat_frequency(params["freq"]), TRUE)
+			set_frequency(new_frequency)
 			. = TRUE
 		if("code")
 			code = text2num(params["code"])
@@ -123,6 +122,19 @@
 			set_frequency(signaler2.frequency)
 			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
 	..()
+
+/obj/item/assembly/signaler/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(!can_interact(user))
+		return
+	if(!ishuman(user))
+		return
+	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_SIGNALLER_SEND))
+		balloon_alert(user, "still recharging...")
+		return
+	TIMER_COOLDOWN_START(src, COOLDOWN_SIGNALLER_SEND, 1 SECONDS)
+	INVOKE_ASYNC(src, .proc/signal)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/assembly/signaler/proc/signal()
 	if(!radio_connection)

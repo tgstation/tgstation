@@ -41,7 +41,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "bW" = (
 /obj/effect/spawner/random/structure/billboard/lizardsgas,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "cm" = (
 /obj/structure/cable,
@@ -84,7 +84,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "ig" = (
 /obj/structure/table/wood,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "iA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
@@ -185,7 +185,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "ua" = (
 /obj/effect/spawner/random/structure/billboard/roadsigns,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "uh" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -202,7 +202,7 @@
 /turf/open/floor/iron/white/corner,
 /area/ruin/space/has_grav/thelizardsgas)
 "wb" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "xb" = (
 /obj/structure/cable,
@@ -271,7 +271,7 @@
 /obj/item/chair/plastic,
 /obj/item/chair/plastic,
 /obj/item/chair/plastic,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "Bu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
@@ -343,7 +343,7 @@
 /obj/structure/flora/rock/pile{
 	icon_state = "basalt"
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "Io" = (
 /obj/machinery/power/smes{
@@ -371,7 +371,7 @@
 /obj/structure/disposaloutlet{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "JP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -459,7 +459,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "RB" = (
 /obj/structure/marker_beacon/burgundy,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "Ss" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden,
@@ -500,7 +500,7 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "Um" = (
 /obj/structure/flora/rock/pile,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav/thelizardsgas)
 "UO" = (
 /turf/open/floor/iron/white/side{
@@ -542,7 +542,9 @@
 /area/ruin/space/has_grav/thelizardsgas)
 "WY" = (
 /obj/machinery/air_sensor/atmos/plasma_tank,
-/turf/open/floor/engine/plasma,
+/turf/open/floor/engine/plasma{
+	initial_gas_mix = "plasma=35000;TEMP=293.15"
+	},
 /area/ruin/space/has_grav/thelizardsgas)
 "XB" = (
 /obj/machinery/power/terminal,

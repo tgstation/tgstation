@@ -79,7 +79,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/asset_name in assets)
 		.[asset_name] = SSassets.transport.get_asset_url(asset_name, assets[asset_name])
 
-
 // For registering or sending multiple others at once
 /datum/asset/group
 	_abstract = /datum/asset/group

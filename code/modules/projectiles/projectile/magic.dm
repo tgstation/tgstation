@@ -297,11 +297,6 @@
 	if(weld_state)
 		unmagify()
 
-///Fade away into nothing
-/obj/structure/closet/decay/proc/decay()
-	animate(src, alpha = 0, time = 30)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, src), 30)
-
 /obj/structure/closet/decay/open(mob/living/user, force = FALSE)
 	. = ..()
 	if(.)
@@ -313,6 +308,15 @@
 	update_appearance()
 
 	addtimer(CALLBACK(src, .proc/decay), 15 SECONDS)
+
+///Fade away into nothing
+/obj/structure/closet/decay/proc/decay()
+	animate(src, alpha = 0, time = 3 SECONDS)
+	addtimer(CALLBACK(src, .proc/decay_finished), 3 SECONDS)
+
+/obj/structure/closet/decay/proc/decay_finished()
+	dump_contents()
+	qdel(src)
 
 /obj/projectile/magic/flying
 	name = "bolt of flying"

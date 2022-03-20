@@ -27,6 +27,7 @@ GLOBAL_LIST_EMPTY(tech_list) //list of all /datum/tech datums indexed by id.
 GLOBAL_LIST_EMPTY(surgeries_list) //list of all surgeries by name, associated with their path.
 GLOBAL_LIST_EMPTY(crafting_recipes) //list of all table craft recipes
 GLOBAL_LIST_EMPTY(rcd_list) //list of Rapid Construction Devices.
+GLOBAL_LIST_EMPTY(intercoms_list) //list of wallmounted intercom radios.
 GLOBAL_LIST_EMPTY(apcs_list) //list of all Area Power Controller machines, separate from machines for powernet speeeeeeed.
 GLOBAL_LIST_EMPTY(tracked_implants) //list of all current implants that are tracked to work out what sort of trek everyone is on. Sadly not on lavaworld not implemented...
 GLOBAL_LIST_EMPTY(tracked_chem_implants) //list of implants the prisoner console can track and send inject commands too
@@ -50,3 +51,6 @@ GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/comp
 
 GLOBAL_LIST_EMPTY(air_scrub_names) // Name list of all air scrubbers
 GLOBAL_LIST_EMPTY(air_vent_names) // Name list of all air vents
+
+GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas) // List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
+GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas) // List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.

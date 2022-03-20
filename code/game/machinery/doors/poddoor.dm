@@ -27,19 +27,28 @@
 
 /obj/machinery/door/poddoor/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
 		return
-	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100, 1)
-	if(isnull(change_id))
+	var/change_id = tgui_input_number(user, "Set the door controllers ID", "Door Controller ID", id, 100)
+	if(!change_id || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	id = round(change_id)
+	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
 	balloon_alert(user, "ID changed")
 
 /obj/machinery/door/poddoor/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if(machine_stat & NOPOWER)
+		open(TRUE)
+		return
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_FINISHED)
@@ -54,6 +63,9 @@
 
 /obj/machinery/door/poddoor/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_ELECTRONICS)
@@ -69,6 +81,9 @@
 
 /obj/machinery/door/poddoor/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
+	if (density)
+		balloon_alert(user, "open the door first!")
+		return
 	if (!panel_open)
 		return
 	if (deconstruction != BLASTDOOR_NEEDS_WIRES)
@@ -163,6 +178,9 @@
 	else
 		return ..()
 
+/obj/machinery/door/poddoor/bumpopen()
+	return
+
 //"BLAST" doors are obviously stronger than regular doors when it comes to BLASTS.
 /obj/machinery/door/poddoor/ex_act(severity, target)
 	if(severity <= EXPLODE_LIGHT)
@@ -184,10 +202,6 @@
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
 	return
-
-/obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
-	if(machine_stat & NOPOWER)
-		open(TRUE)
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))

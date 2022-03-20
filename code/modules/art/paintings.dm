@@ -55,6 +55,9 @@
 	///boolean that blocks persistence from saving it. enabled from printing copies, because we do not want to save copies.
 	var/no_save = FALSE
 
+	///reference to the last patron's mind datum, used to allow them (and no others) to change the frame before the round ends.
+	var/datum/weakref/last_patron
+
 	var/datum/painting/painting_metadata
 
 	// Painting overlay offset when framed
@@ -165,33 +168,68 @@
 	try_rename(user)
 
 /obj/item/canvas/proc/patron(mob/user)
-	if(!finalized || !painting_metadata.loaded_from_json || !isliving(user))
+	if(!finalized || !isliving(user))
 		return
+	if(!painting_metadata.loaded_from_json)
+		if(tgui_alert(user, "The painting hasn't been archived yet and will be lost at the end of the shift if not placed in an elegible frame. Continue?","Unarchived Painting",list("Yes","No")) != "Yes")
+			return
 	var/mob/living/living_user = user
 	var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 	if(!id_card)
-		to_chat(user,span_notice("You don't even have a id and you want to be an art patron?"))
+		to_chat(user, span_warning("You don't even have a id and you want to be an art patron?"))
 		return
 	if(!id_card.registered_account || !id_card.registered_account.account_job)
-		to_chat(user,span_notice("No valid non-departmental account found."))
+		to_chat(user, span_warning("No valid non-departmental account found."))
 		return
 	var/datum/bank_account/account = id_card.registered_account
-	if(account.account_balance < painting_metadata.credit_value)
-		to_chat(user,span_notice("You can't afford this."))
+	if(!account.has_money(painting_metadata.credit_value))
+		to_chat(user, span_warning("You can't afford this."))
 		return
 	var/sniped_amount = painting_metadata.credit_value
 	var/offer_amount = tgui_input_number(user, "How much do you want to offer?", "Patronage Amount", (painting_metadata.credit_value + 1), account.account_balance, painting_metadata.credit_value)
-	if(isnull(offer_amount))
+	if(!offer_amount || QDELETED(user) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
-	if(offer_amount <= 0 || sniped_amount != painting_metadata.credit_value || offer_amount < painting_metadata.credit_value+1 || !user.canUseTopic(src))
+	if(sniped_amount != painting_metadata.credit_value)
 		return
 	if(!account.adjust_money(-offer_amount))
-		to_chat(user,span_warning("Transaction failure. Please try again."))
+		to_chat(user, span_warning("Transaction failure. Please try again."))
 		return
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
-	to_chat(user,span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now offical patron of this painting."))
+	last_patron = WEAKREF(user.mind)
+	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now offical patron of this painting."))
+	var/list/possible_frames = SSpersistent_paintings.get_available_frames(offer_amount)
+	if(possible_frames.len <= 1) // Not much room for choices here.
+		return
+	if(tgui_alert(user, "Do you want to change the frame appearance now? You can do so later this shift with Alt-Click as long as you're a patron.","Patronage Frame",list("Yes","No")) != "Yes")
+		return
+	if(!can_select_frame(user))
+		return
+	SStgui.close_uis(src) // Close the examine ui so that the radial menu doesn't end up covered by it and people don't get confused.
+	select_new_frame(user, possible_frames)
+
+/obj/item/canvas/proc/select_new_frame(mob/user, list/candidates)
+	var/possible_frames = candidates || SSpersistent_paintings.get_available_frames(painting_metadata.credit_value)
+	var/list/radial_options = list()
+	for(var/frame_name in possible_frames)
+		radial_options[frame_name] = image(icon, "[icon_state]frame_[frame_name]")
+	var/result = show_radial_menu(user, loc, radial_options, radius = 60, custom_check = CALLBACK(src, .proc/can_select_frame, user), tooltips = TRUE)
+	if(!result)
+		return
+	painting_metadata.frame_type = result
+	var/obj/structure/sign/painting/our_frame = loc
+	our_frame.balloon_alert(user, "frame set to [result]")
+	our_frame.update_appearance()
+
+/obj/item/canvas/proc/can_select_frame(mob/user)
+	if(!istype(loc, /obj/structure/sign/painting))
+		return FALSE
+	if(!user?.CanReach(loc) || IS_DEAD_OR_INCAP(user))
+		return FALSE
+	if(!last_patron || !IS_WEAKREF_OF(user?.mind, last_patron))
+		return FALSE
+	return TRUE
 
 /obj/item/canvas/update_overlays()
 	. = ..()
@@ -288,8 +326,8 @@
 	height = 19
 	pixel_x = 6
 	pixel_y = 9
-	framed_offset_x = 8
-	framed_offset_y = 9
+	framed_offset_x = 7
+	framed_offset_y = 7
 
 /obj/item/canvas/twentythree_nineteen
 	name = "canvas (23x19)"
@@ -298,8 +336,8 @@
 	height = 19
 	pixel_x = 4
 	pixel_y = 10
-	framed_offset_x = 6
-	framed_offset_y = 8
+	framed_offset_x = 5
+	framed_offset_y = 7
 
 /obj/item/canvas/twentythree_twentythree
 	name = "canvas (23x23)"
@@ -309,7 +347,7 @@
 	pixel_x = 5
 	pixel_y = 9
 	framed_offset_x = 5
-	framed_offset_y = 6
+	framed_offset_y = 5
 
 /obj/item/canvas/twentyfour_twentyfour
 	name = "canvas (AI Universal Standard)"
@@ -319,8 +357,8 @@
 	height = 24
 	pixel_x = 2
 	pixel_y = 1
-	framed_offset_x = 4
-	framed_offset_y = 5
+	framed_offset_x = 2
+	framed_offset_y = 2
 
 /obj/item/wallframe/painting
 	name = "painting frame"
@@ -371,6 +409,8 @@
 	if(current_canvas)
 		current_canvas.ui_interact(user)
 		. += span_notice("Use wirecutters to remove the painting.")
+		if(IS_WEAKREF_OF(user?.mind, current_canvas.last_patron))
+			. += span_notice("<b>Alt-Click</b> to change select a new appearance for the frame of this painting.")
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -380,6 +420,11 @@
 		to_chat(user, span_notice("You remove the painting from the frame."))
 		update_appearance()
 		return TRUE
+
+/obj/structure/sign/painting/AltClick(mob/user)
+	. = ..()
+	if(current_canvas?.can_select_frame(user))
+		INVOKE_ASYNC(current_canvas, /obj/item/canvas.proc/select_new_frame, user)
 
 /obj/structure/sign/painting/proc/frame_canvas(mob/user,obj/item/canvas/new_canvas)
 	if(user.transferItemToLoc(new_canvas,src))
@@ -410,14 +455,12 @@
 	if(!current_canvas?.generated_icon)
 		return
 
-	var/mutable_appearance/MA = mutable_appearance(current_canvas.generated_icon)
-	MA.pixel_x = current_canvas.framed_offset_x
-	MA.pixel_y = current_canvas.framed_offset_y
-	. += MA
-	var/mutable_appearance/frame = mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame")
-	frame.pixel_x = current_canvas.framed_offset_x - 1
-	frame.pixel_y = current_canvas.framed_offset_y - 1
-	. += frame
+	var/mutable_appearance/painting = mutable_appearance(current_canvas.generated_icon)
+	painting.pixel_x = current_canvas.framed_offset_x
+	painting.pixel_y = current_canvas.framed_offset_y
+	. += painting
+	var/frame_type = current_canvas.painting_metadata.frame_type
+	. += mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame_[frame_type]") //add the frame
 
 /**
  * Loads a painting from SSpersistence. Called globally by said subsystem when it inits

@@ -117,7 +117,7 @@
 	icon_state = "orange_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/orangejuice = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "orange" = 5)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | ORANGES
 
 /obj/item/food/snowcones/blue
 	name = "bluecherry snowcone"
@@ -149,7 +149,7 @@
 	icon_state = "fruitsalad_sc"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/limejuice = 5, /datum/reagent/consumable/orangejuice = 5, /datum/reagent/water = 11)
 	tastes = list("ice" = 1, "water" = 1, "oranges" = 5, "limes" = 5, "lemons" = 5, "citrus" = 5, "salad" = 5)
-	foodtypes = FRUIT
+	foodtypes = FRUIT | ORANGES
 
 /obj/item/food/snowcones/pineapple
 	name = "pineapple snowcone"
@@ -277,7 +277,7 @@
 	name = "orange creamsicle"
 	desc = "A classic orange creamsicle. A sunny frozen treat."
 	food_reagents = list(/datum/reagent/consumable/orangejuice = 4, /datum/reagent/consumable/cream = 2, /datum/reagent/consumable/vanilla = 2, /datum/reagent/consumable/sugar = 4)
-	foodtypes = FRUIT | DAIRY | SUGAR
+	foodtypes = FRUIT | DAIRY | SUGAR | ORANGES
 
 /obj/item/food/popsicle/creamsicle_berry
 	name = "berry creamsicle"

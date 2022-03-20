@@ -113,7 +113,7 @@
 
 /datum/holiday/valentines
 	name = VALENTINES
-	begin_day = 14
+	begin_day = 13
 	end_day = 15
 	begin_month = FEBRUARY
 

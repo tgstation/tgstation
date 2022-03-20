@@ -32,6 +32,7 @@ GLOBAL_PROTECT(href_token)
 	var/deadmined
 
 	var/datum/filter_editor/filteriffic
+	var/datum/colorblind_tester/color_test = new
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE
@@ -103,10 +104,13 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
 	deadmined = TRUE
-	var/client/C
-	if ((C = owner) || (C = GLOB.directory[target]))
+
+	var/client/client = owner || GLOB.directory[target]
+
+	if (!isnull(client))
 		disassociate()
-		add_verb(C, /client/proc/readmin)
+		add_verb(client, /client/proc/readmin)
+		client.disable_combo_hud()
 
 /datum/admins/proc/associate(client/client)
 	if(IsAdminAdvancedProcCall())

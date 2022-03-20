@@ -68,6 +68,14 @@
 		//doesn't have an object argument because this is "Stacking" with the animate call above
 		//3 billion% intentional
 
+/**
+ * Shear the transform on either or both axes.
+ * * x - X axis shearing
+ * * y - Y axis shearing
+ */
+/matrix/proc/Shear(x, y)
+	return Multiply(matrix(1, x, 0, y, 1, 0))
+
 //Dumps the matrix data in format a-f
 /matrix/proc/tolist()
 	. = list()

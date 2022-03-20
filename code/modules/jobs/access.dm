@@ -108,20 +108,4 @@
 /obj/item/proc/get_sechud_job_icon_state()
 	var/obj/item/card/id/id_card = GetID()
 
-	if(!id_card)
-		return "hudno_id"
-
-	var/card_assignment = id_card.get_trim_assignment()
-
-	// Is this one of the jobs with dedicated HUD icons?
-	if(card_assignment in SSjob.station_jobs)
-		return "hud[ckey(card_assignment)]"
-	if(card_assignment in SSjob.additional_jobs_with_icons)
-		return "hud[ckey(card_assignment)]"
-
-	// If not, is it one of the jobs that should use the NT logo?
-	if(card_assignment in SSjob.centcom_jobs)
-		return "hudcentcom"
-
-	// If none of the above apply, job name is unknown.
-	return "hudunknown"
+	return id_card?.get_trim_sechud_icon_state() || SECHUD_NO_ID

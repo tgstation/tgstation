@@ -66,10 +66,11 @@
 	start_turf = null
 	return ..()
 
-/obj/effect/immovablerod/wizard/Moved()
-	. = ..()
+/obj/effect/immovablerod/wizard/Move()
 	if(get_dist(start_turf, get_turf(src)) >= max_distance)
 		stop_travel()
+		return
+	return ..()
 
 /obj/effect/immovablerod/wizard/penetrate(mob/living/penetrated)
 	if(penetrated.anti_magic_check())

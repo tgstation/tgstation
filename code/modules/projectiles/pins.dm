@@ -261,12 +261,12 @@
 			pin_owner = null
 			owned = FALSE
 			return
-		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit", 1, 10000, 1)
-		if(isnull(transaction_amount))
+		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
+		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return
 		pin_owner = id
 		owned = TRUE
-		payment_amount = round(transaction_amount)
+		payment_amount = transaction_amount
 		gun_owners += user
 		to_chat(user, span_notice("You link the card to the firing pin."))
 

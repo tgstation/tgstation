@@ -80,11 +80,27 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			if(event_source)
 				event_source.trigger_event(usr)
 				event_source = null
+				update_appearance()
 				. = TRUE
 		if("bsa_unlock")
 			if(!event_source)
 				sendEvent(KEYCARD_BSA_UNLOCK)
 				. = TRUE
+
+/obj/machinery/keycard_auth/update_appearance(updates)
+	. = ..()
+
+	if(event_source && !(machine_stat & (NOPOWER|BROKEN)))
+		set_light(1.4, 0.7, "#5668E1")
+	else
+		set_light(0)
+
+/obj/machinery/keycard_auth/update_overlays()
+	. = ..()
+
+	if(event_source && !(machine_stat & (NOPOWER|BROKEN)))
+		. += mutable_appearance(icon, "auth_on")
+		. += emissive_appearance(icon, "auth_on", alpha = src.alpha)
 
 /obj/machinery/keycard_auth/proc/sendEvent(event_type)
 	triggerer = usr
@@ -99,13 +115,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 	waiting = FALSE
 
 /obj/machinery/keycard_auth/proc/triggerEvent(source)
-	icon_state = "auth_on"
 	event_source = source
+	update_appearance()
 	addtimer(CALLBACK(src, .proc/eventTriggered), 20)
 
 /obj/machinery/keycard_auth/proc/eventTriggered()
-	icon_state = "auth_off"
 	event_source = null
+	update_appearance()
 
 /obj/machinery/keycard_auth/proc/trigger_event(confirmer)
 	log_game("[key_name(triggerer)] triggered and [key_name(confirmer)] confirmed event [event]")

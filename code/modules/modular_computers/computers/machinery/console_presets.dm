@@ -52,7 +52,7 @@
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/aidiag())
 	hard_drive.store_file(new/datum/computer_file/program/robocontrol())
-
+	hard_drive.store_file(new/datum/computer_file/program/scipaper_program())
 
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/console/preset/command

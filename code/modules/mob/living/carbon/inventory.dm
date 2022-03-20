@@ -162,27 +162,40 @@
  *
  * This handles creating an alert and adding an overlay to it
  */
-/mob/living/carbon/proc/give()
-	var/obj/item/offered_item = get_active_held_item()
-	if(!offered_item)
-		to_chat(src, span_warning("You're not holding anything to give!"))
+/mob/living/carbon/proc/give(mob/living/carbon/offered)
+	if(has_status_effect(/datum/status_effect/offering))
+		to_chat(src, span_warning("You're already offering up something!"))
 		return
 
 	if(IS_DEAD_OR_INCAP(src))
 		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
-	if(has_status_effect(/datum/status_effect/offering))
-		to_chat(src, span_warning("You're already offering up something!"))
+	var/obj/item/offered_item = get_active_held_item()
+	if(!offered_item)
+		to_chat(src, span_warning("You're not holding anything to give!"))
 		return
+
+	if(offered)
+		if(IS_DEAD_OR_INCAP(offered))
+			to_chat(src, span_warning("They're unable to take anything in their current state!"))
+			return
+
+		if(!CanReach(offered))
+			to_chat(src, span_warning("You have to be adjacent to offer things!"))
+			return
+	else
+		if(!(locate(/mob/living/carbon) in orange(1, src)))
+			to_chat(src, span_warning("There's nobody adjacent to offer it to!"))
+			return
 
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
 
-	visible_message(span_notice("[src] is offering [offered_item]."), \
-					span_notice("You offer [offered_item]."), null, 2)
+	visible_message(span_notice("[src] is offering [offered ? "[offered] " : ""][offered_item]."), \
+					span_notice("You offer [offered ? "[offered] " : ""][offered_item]."), null, 2)
 
-	apply_status_effect(/datum/status_effect/offering, offered_item)
+	apply_status_effect(/datum/status_effect/offering, offered_item, null, offered)
 
 /**
  * Proc called when the player clicks the give alert
@@ -195,6 +208,9 @@
  */
 /mob/living/carbon/proc/take(mob/living/carbon/offerer, obj/item/I)
 	clear_alert("[offerer]")
+	if(IS_DEAD_OR_INCAP(src))
+		to_chat(src, span_warning("You're unable to take anything in your current state!"))
+		return
 	if(get_dist(src, offerer) > 1)
 		to_chat(src, span_warning("[offerer] is out of range!"))
 		return

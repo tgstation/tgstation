@@ -3,7 +3,7 @@
 	var/obj/item/melee/touch_attack/attached_hand = null
 	var/drawmessage = "You channel the power of the spell to your hand."
 	var/dropmessage = "You draw the power out of your hand."
-	invocation_type = "none" //you scream on connecting, not summoning
+	invocation_type = INVOCATION_NONE //you scream on connecting, not summoning
 	include_user = TRUE
 	range = -1
 

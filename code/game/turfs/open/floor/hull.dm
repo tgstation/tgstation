@@ -12,6 +12,15 @@
 		return FALSE
 	return ..()
 
+/// RCD-immune plating generated only by shuttle code for shuttle ceilings on multi-z maps, should not be mapped in or creatable in any other way
+/turf/open/floor/engine/hull/ceiling
+	name = "shuttle ceiling plating"
+	var/old_turf_type
+
+/turf/open/floor/engine/hull/ceiling/AfterChange(flags, oldType)
+	. = ..()
+	old_turf_type = oldType
+
 /turf/open/floor/engine/hull/reinforced
 	name = "exterior reinforced hull plating"
 	desc = "Extremely sturdy exterior hull plating that separates you from the uncaring vacuum of space."

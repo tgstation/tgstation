@@ -38,6 +38,10 @@
 	var/tank_holder_icon_state = "holder_generic"
 	///Used by process() to track if there's a reason to process each tick
 	var/excited = TRUE
+	/// How our particular tank explodes.
+	var/list/explosion_info
+	/// List containing reactions happening inside our tank.
+	var/list/reaction_info
 
 /obj/item/tank/ui_action_click(mob/user)
 	toggle_internals(user)
@@ -80,20 +84,30 @@
 
 	populate_gas()
 
+	reaction_info = list()
+	explosion_info = list()
+
+	AddComponent(/datum/component/atmos_reaction_recorder, reset_criteria = list(COMSIG_GASMIX_MERGING = air_contents, COMSIG_GASMIX_REMOVING = air_contents), target_list = reaction_info)
+
+	// This is separate from the reaction recorder. 
+	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
+	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/tank/proc/populate_gas()
 	return
 
-/obj/item/tank/Destroy()
-	air_contents = null
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
 /obj/item/tank/ComponentInitialize()
 	. = ..()
 	if(tank_holder_icon_state)
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+
+/obj/item/tank/Destroy()
+	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)
+	air_contents = null
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/item/tank/examine(mob/user)
 	var/obj/icon = src
@@ -323,5 +337,13 @@
 		log_atmos("[type] exploded with a power of [power] and a mix of ", air_contents)
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
 	return ..()
+
+/obj/item/tank/proc/merging_information()
+	SIGNAL_HANDLER
+	if(air_contents.return_pressure() > TANK_FRAGMENT_PRESSURE)
+		explosion_info += TANK_MERGE_OVERPRESSURE
+
+/obj/item/tank/proc/explosion_information()
+	return list(TANK_RESULTS_REACTION = reaction_info, TANK_RESULTS_MISC = explosion_info)
 
 #undef ASSUME_AIR_DT_FACTOR

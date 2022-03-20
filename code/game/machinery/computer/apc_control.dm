@@ -119,7 +119,7 @@
 			addtimer(CALLBACK(src, .proc/restore_comp), rand(3,5) * 9)
 		if("access-apc")
 			var/ref = params["ref"]
-			playsound(src, "terminal_type", 50, FALSE)
+			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
 			var/obj/machinery/power/apc/APC = locate(ref) in GLOB.apcs_list
 			if(!APC)
 				return
@@ -191,7 +191,7 @@
 		return
 	obj_flags |= EMAGGED
 	log_game("[key_name(user)] emagged [src] at [AREACOORD(src)]")
-	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/computer/apc_control/proc/log_activity(log_text)
 	if(!should_log)

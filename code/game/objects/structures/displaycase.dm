@@ -92,7 +92,7 @@
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()
 		trigger_alarm()
 
@@ -508,14 +508,15 @@
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 				return
 
-			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000, 1)
-			if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
+			var/new_price_input = tgui_input_number(usr, "Sale price for this vend-a-tray", "New Price", 10, 1000)
+			if(!new_price_input || QDELETED(usr) || QDELETED(src))
+				return
+			if(payments_acc != potential_acc.registered_account)
 				to_chat(usr, span_warning("[src] rejects your new price."))
 				return
-			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
+			if(!usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 				to_chat(usr, span_warning("You need to get closer!"))
 				return
-			new_price_input = round(new_price_input)
 			sale_price = new_price_input
 			to_chat(usr, span_notice("The cost is now set to [sale_price]."))
 			SStgui.update_uis(src)
@@ -585,7 +586,7 @@
 	. = ..()
 	if(!broken && !(flags_1 & NODECONSTRUCT_1))
 		broken = TRUE
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 		update_appearance()
 		trigger_alarm() //In case it's given an alarm anyway.
 

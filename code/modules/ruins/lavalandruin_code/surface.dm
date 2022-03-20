@@ -14,6 +14,7 @@
 	flags_1 = ON_BORDER_1
 	appearance_flags = 0
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	density = TRUE
 	bound_width = 416

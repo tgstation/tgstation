@@ -5,7 +5,7 @@
 	greyscale_config = /datum/greyscale_config/beret
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
 	. = ..()

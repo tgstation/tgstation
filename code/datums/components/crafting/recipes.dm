@@ -378,11 +378,35 @@
 	name = "Medbot"
 	result = /mob/living/simple_animal/bot/medbot
 	reqs = list(/obj/item/healthanalyzer = 1,
-				/obj/item/storage/firstaid = 1,
+				/obj/item/storage/medkit = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
+	parts = list(
+		/obj/item/storage/medkit = 1,
+		/obj/item/healthanalyzer = 1,
+		)
 	time = 40
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
+	var/mob/living/simple_animal/bot/medbot/bot = result
+	var/obj/item/storage/medkit/medkit = bot.contents[3]
+	bot.medkit_type = medkit
+	bot.healthanalyzer = bot.contents[4]
+
+	if (istype(medkit, /obj/item/storage/medkit/fire))
+		bot.skin = "ointment"
+	else if (istype(medkit, /obj/item/storage/medkit/toxin))
+		bot.skin = "tox"
+	else if (istype(medkit, /obj/item/storage/medkit/o2))
+		bot.skin = "o2"
+	else if (istype(medkit, /obj/item/storage/medkit/brute))
+		bot.skin = "brute"
+	else if (istype(medkit, /obj/item/storage/medkit/advanced))
+		bot.skin = "advanced"
+
+	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
 	name = "Honkbot"
@@ -631,6 +655,11 @@
 				/obj/item/radio = 1)
 	tool_behaviors = list(TOOL_WIRECUTTER)
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/radiogloves/New()
+	..()
+	blacklist |= typesof(/obj/item/radio/headset)
+	blacklist |= typesof(/obj/item/radio/intercom)
 
 /datum/crafting_recipe/mixedbouquet
 	name = "Mixed bouquet"
@@ -1168,7 +1197,7 @@
 	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
 		return FALSE
 	var/turf/T = get_turf(user)
-	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
 	if(S?.on)
@@ -1204,13 +1233,13 @@
 
 /datum/crafting_recipe/shutters
 	name = "Shutters"
-	reqs = list(/obj/item/stack/sheet/plasteel = 10,
-				/obj/item/stack/cable_coil = 10,
+	reqs = list(/obj/item/stack/sheet/plasteel = 5,
+				/obj/item/stack/cable_coil = 5,
 				/obj/item/electronics/airlock = 1
 				)
 	result = /obj/machinery/door/poddoor/shutters/preopen
 	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_MULTITOOL, TOOL_WIRECUTTER, TOOL_WELDER)
-	time = 15 SECONDS
+	time = 10 SECONDS
 	category = CAT_MISC
 	one_per_turf = TRUE
 
@@ -1236,7 +1265,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/mod_core
+/datum/crafting_recipe/mod_core_standard
 	name = "MOD core (Standard)"
 	result = /obj/item/mod/core/standard
 	tool_behaviors = list(TOOL_SCREWDRIVER)
@@ -1248,7 +1277,7 @@
 				)
 	category = CAT_MISC
 
-/datum/crafting_recipe/mod_core
+/datum/crafting_recipe/mod_core_ethereal
 	name = "MOD core (Ethereal)"
 	result = /obj/item/mod/core/ethereal
 	tool_behaviors = list(TOOL_SCREWDRIVER)

@@ -28,6 +28,7 @@
 
 #define COMP_STATE_ARREST "*Arrest*"
 #define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_SUSPECTED "Suspected"
 #define COMP_STATE_PAROL "Paroled"
 #define COMP_STATE_DISCHARGED "Discharged"
 #define COMP_STATE_NONE "None"
@@ -134,6 +135,7 @@
 	var/static/list/component_options = list(
 		COMP_STATE_ARREST,
 		COMP_STATE_PRISONER,
+		COMP_STATE_SUSPECTED,
 		COMP_STATE_PAROL,
 		COMP_STATE_DISCHARGED,
 		COMP_STATE_NONE,
@@ -181,6 +183,7 @@
 
 #undef COMP_STATE_ARREST
 #undef COMP_STATE_PRISONER
+#undef COMP_STATE_SUSPECTED
 #undef COMP_STATE_PAROL
 #undef COMP_STATE_DISCHARGED
 #undef COMP_STATE_NONE
@@ -296,6 +299,8 @@
 								if("*Arrest*")
 									background = "'background-color:#990000;'"
 								if("Incarcerated")
+									background = "'background-color:#CD6500;'"
+								if("Suspected")
 									background = "'background-color:#CD6500;'"
 								if("Paroled")
 									background = "'background-color:#CD6500;'"
@@ -534,7 +539,7 @@ What a mess.*/
 									to_chat(usr, span_notice("The fine has been paid in full."))
 								SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
 								qdel(C)
-								playsound(src, "terminal_type", 25, FALSE)
+								playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 						else
 							to_chat(usr, span_warning("Fines can only be paid with holochips!"))
 
@@ -769,10 +774,8 @@ What a mess.*/
 					if("age")
 						if(istype(active1, /datum/data/record))
 							var/t1 = tgui_input_number(usr, "Input age", "Security records", active1.fields["age"], AGE_MAX, AGE_MIN)
-
 							if (!t1)
 								return
-
 							if(!canUseSecurityRecordsConsole(usr, "age", a1))
 								return
 							active1.fields["age"] = t1
@@ -856,15 +859,11 @@ What a mess.*/
 							var/maxFine = CONFIG_GET(number/maxfine)
 
 							var/t1 = tgui_input_text(usr, "Input citation crime", "Security Records")
-							var/fine = round(tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine, 1))
-
-							if (isnull(fine))
+							if(!t1)
 								return
-							fine = min(fine, maxFine)
-
-							if(!canUseSecurityRecordsConsole(usr, t1, null, a2))
+							var/fine = tgui_input_number(usr, "Input citation fine", "Security Records", 50, maxFine)
+							if (!fine || QDELETED(usr) || QDELETED(src) || !canUseSecurityRecordsConsole(usr, t1, null, a2))
 								return
-
 							var/datum/data/crime/crime = GLOB.data_core.createCrimeEntry(t1, "", authenticated, station_time_timestamp(), fine)
 							for (var/obj/item/pda/P in GLOB.PDAs)
 								if(P.owner == active1.fields["name"])
@@ -900,6 +899,7 @@ What a mess.*/
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=none'>None</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
+							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=suspected'>Suspected</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
@@ -914,8 +914,10 @@ What a mess.*/
 						if((istype(active1, /datum/data/record) && L.Find(rank)))
 							temp = "<h5>Rank:</h5>"
 							temp += "<ul>"
-							for(var/rank in SSjob.station_jobs)
-								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[rank]'>[rank]</a></li>"
+							var/list/station_job_templates = SSid_access.station_job_templates
+							for(var/path in station_job_templates)
+								var/rank = station_job_templates[path]
+								temp += "<li><a href='?src=[REF(src)];choice=Change Rank;rank=[path]'>[rank]</a></li>"
 							temp += "</ul>"
 						else
 							tgui_alert(usr, "You do not have the required rank to do this!")
@@ -925,8 +927,19 @@ What a mess.*/
 				switch(href_list["choice"])
 					if("Change Rank")
 						if(active1)
-							active1.fields["rank"] = strip_html(href_list["rank"])
-							active1.fields["trim"] = active1.fields["rank"]
+							var/text = strip_html(href_list["rank"])
+							var/path = text2path(text)
+							if(ispath(path))
+								var/rank = SSid_access.station_job_templates[path]
+								if(rank)
+									active1.fields["rank"] = rank
+									active1.fields["trim"] = active1.fields["rank"]
+								else
+									message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+									log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid path: [path]")
+							else if(!isnull(text))
+								message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
+								log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set change a crew member rank to an invalid value: [text]")
 
 					if("Change Criminal Status")
 						if(active2)
@@ -938,6 +951,8 @@ What a mess.*/
 									active2.fields["criminal"] = "*Arrest*"
 								if("incarcerated")
 									active2.fields["criminal"] = "Incarcerated"
+								if("suspected")
+									active2.fields["criminal"] = "Suspected"
 								if("paroled")
 									active2.fields["criminal"] = "Paroled"
 								if("released")
@@ -1014,7 +1029,7 @@ What a mess.*/
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Discharged")
+					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged")
 				if(5)
 					R.fields["p_stat"] = pick("*Unconscious*", "Active", "Physically Unfit")
 				if(6)

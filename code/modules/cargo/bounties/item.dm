@@ -3,26 +3,14 @@
 	var/required_count = 1
 	///How many items have been shipped for the bounty so far
 	var/shipped_count = 0
-	///Types accepted by the bounty (including all subtypes, unless include_subtypes is set to FALSE)
+	///Types accepted|denied by the bounty. (including all subtypes, unless include_subtypes is set to FALSE)
 	var/list/wanted_types
 	///Set to FALSE to make the bounty not accept subtypes of the wanted_types
 	var/include_subtypes = TRUE
-	///Types that should not be accepted by the bounty, also excluding all their subtypes
-	var/list/exclude_types
-	///Individual types that should be accepted even if their supertypes are excluded (yes, apparently this is necessary)
-	var/list/special_include_types
 
 /datum/bounty/item/New()
 	..()
-	wanted_types = typecacheof(wanted_types, only_root_path = !include_subtypes)
-	if (exclude_types)
-		exclude_types = string_assoc_list(typecacheof(exclude_types))
-		for (var/e_type in exclude_types)
-			wanted_types[e_type] = FALSE
-	if (special_include_types)
-		for (var/i_type in special_include_types)
-			wanted_types[i_type] = TRUE
-	wanted_types = string_assoc_list(wanted_types)
+	wanted_types = string_assoc_list(zebra_typecacheof(wanted_types, only_root_path = !include_subtypes))
 
 /datum/bounty/item/can_claim()
 	return ..() && shipped_count >= required_count

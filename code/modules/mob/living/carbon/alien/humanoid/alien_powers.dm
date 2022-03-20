@@ -132,10 +132,8 @@ Doesn't work on other aliens/AI.*/
 	if(isnull(donation_target))
 		return FALSE
 	var/amount = tgui_input_number(user, "Amount", "Transfer Plasma to [donation_target]", max_value = user.getPlasma())
-	if(isnull(amount))
+	if(!amount || QDELETED(user) || QDELETED(donation_target))
 		return FALSE
-
-	amount = min(abs(round(amount)), user.getPlasma())
 	if (get_dist(user, donation_target) <= 1)
 		donation_target.adjustPlasma(amount)
 		user.adjustPlasma(-amount)

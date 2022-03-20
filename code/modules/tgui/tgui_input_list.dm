@@ -23,7 +23,7 @@
 			return
 	/// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		return input(user, message, title) as null|anything in items
+		return input(user, message, title, default) as null|anything in items
 	var/datum/tgui_list_input/input = new(user, message, title, items, default, timeout)
 	input.ui_interact(user)
 	input.wait()
@@ -132,7 +132,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "ListInputModal")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_list_input/ui_close(mob/user)
@@ -143,15 +142,13 @@
 	return GLOB.always_state
 
 /datum/tgui_list_input/ui_static_data(mob/user)
-	. = list(
-		"init_value" = default || items[1],
-		"items" = items,
-		"message" = message,
-		"preferences" = list(),
-		"title" = title
-	)
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	. = list()
+	.["init_value"] = default || items[1]
+	.["items"] = items
+	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["message"] = message
+	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["title"] = title
 
 /datum/tgui_list_input/ui_data(mob/user)
 	. = list()
@@ -167,11 +164,12 @@
 			if (!(params["entry"] in items))
 				return
 			set_choice(items_map[params["entry"]])
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			SStgui.close_uis(src)
 			closed = TRUE
+			SStgui.close_uis(src)
 			return TRUE
 
 /datum/tgui_list_input/proc/set_choice(choice)
