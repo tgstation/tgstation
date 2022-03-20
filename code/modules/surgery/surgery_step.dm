@@ -9,9 +9,9 @@
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
 	var/silicons_obey_prob = FALSE
-	var/list/preop_sound //Sound played when the step is started
-	var/list/success_sound //Sound played if the step succeeded
-	var/list/failure_sound //Sound played if the step fails
+	var/preop_sound //Sound played when the step is started
+	var/success_sound //Sound played if the step succeeded
+	var/failure_sound //Sound played if the step fails
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -130,9 +130,9 @@
 		span_notice("[user] begins to perform surgery on [target]."))
 
 /datum/surgery_step/proc/play_preop_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!preop_sound || !preop_sound.len)
+	if(!preop_sound)
 		return
-	playsound(get_turf(target), pick(preop_sound), 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
+	playsound(get_turf(target), preop_sound, 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
 	SEND_SIGNAL(user, COMSIG_MOB_SURGERY_STEP_SUCCESS, src, target, target_zone, tool, surgery, default_display_results)
@@ -143,7 +143,7 @@
 	return TRUE
 
 /datum/surgery_step/proc/play_success_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!success_sound || !success_sound.len)
+	if(!success_sound)
 		return
 	playsound(get_turf(target), pick(success_sound), 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 
@@ -163,7 +163,7 @@
 	return FALSE
 
 /datum/surgery_step/proc/play_failure_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!failure_sound || !failure_sound.len)
+	if(!failure_sound)
 		return
 	playsound(get_turf(target), pick(failure_sound), 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 
