@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
 	//overloaded
-	if(hsrc && TRY_QUEUE_VERB(src, .proc/Topic_wrapper, hsrc, href, href_list))
+	if(hsrc && hsrc != holder && TRY_QUEUE_VERB(src, .proc/Topic_wrapper, hsrc, href, href_list))
 		return
 	..() //redirect to hsrc.Topic()
 
