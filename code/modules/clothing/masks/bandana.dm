@@ -64,6 +64,11 @@
 	desc = "A fine blue bandana with nanotech lining."
 	greyscale_colors = "#294A98"
 
+/obj/item/clothing/mask/bandana/color/purple
+	name = "purple bandana"
+	desc = "A fine purple bandana with nanotech lining."
+	greyscale_colors = "#8019a0"
+
 /obj/item/clothing/mask/bandana/color/green
 	name = "green bandana"
 	desc = "A fine green bandana with nanotech lining."
@@ -73,6 +78,11 @@
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
 	greyscale_colors = "#DAC20E"
+
+/obj/item/clothing/mask/bandana/color/orange
+	name = "orange bandana"
+	desc = "A fine orange bandana with nanotech lining."
+	greyscale_colors = "#da930e"
 
 /obj/item/clothing/mask/bandana/color/black
 	name = "black bandana"
