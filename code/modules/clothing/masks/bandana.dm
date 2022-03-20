@@ -87,7 +87,7 @@
 /obj/item/clothing/mask/bandana/color/skull
 	name = "skull bandana"
 	desc = "A fine bandana with nanotech lining and a skull emblem."
-	icon_state = "bandana_skull"
+	icon_state = "bandskull"
 	greyscale_config = /datum/greyscale_config/bandskull
 	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
 	greyscale_colors = "#3F3F3F#C6C6C6"

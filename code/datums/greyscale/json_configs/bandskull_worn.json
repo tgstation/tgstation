@@ -1,5 +1,5 @@
 {
-    "bandana_skull_worn": [
+    "bandskull_worn": [
         {
             "type": "icon_state",
             "icon_state": "bandskull_cloth_worn",
