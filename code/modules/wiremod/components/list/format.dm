@@ -57,6 +57,7 @@
 	// Inject the parameters.
 	param_regex.context = src
 	output.set_output(param_regex.Replace(format_port.value, /regex/format_component/proc/process_format_component_param))
+	param_regex.context = null
 
 /**
  * # Format Associative List Component
