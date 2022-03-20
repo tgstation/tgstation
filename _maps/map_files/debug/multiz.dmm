@@ -741,8 +741,7 @@
 /area/commons/storage/primary)
 "dx" = (
 /obj/machinery/light/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/closed/wall/r_wall,
+/turf/open/floor/plating,
 /area/commons/storage/primary)
 "dy" = (
 /obj/effect/turf_decal/stripes/line{
@@ -785,8 +784,10 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dF" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/engine/airless,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron,
 /area/commons/storage/primary)
 "dG" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -929,7 +930,7 @@
 	},
 /area/hallway/secondary/service)
 "eC" = (
-/turf/open/floor/iron,
+/turf/open/openspace,
 /area/maintenance/department/bridge)
 "eD" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
@@ -1030,12 +1031,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace,
 /area/engineering/storage)
-"gr" = (
-/obj/machinery/atmospherics/components/binary/volume_pump{
-	dir = 1
-	},
-/turf/closed/wall/r_wall,
-/area/commons/storage/primary)
 "gK" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8;
@@ -1073,12 +1068,6 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage)
-"hs" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/turf/closed/wall/r_wall,
-/area/commons/storage/primary)
 "hY" = (
 /obj/structure/railing/corner,
 /turf/open/floor/plating,
@@ -1158,11 +1147,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"ls" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/atmospherics/components/trinary/mixer,
-/turf/open/floor/plating,
-/area/commons/storage/primary)
 "lu" = (
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 1
@@ -1174,8 +1158,6 @@
 	dir = 6
 	},
 /obj/structure/industrial_lift,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
-/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "mb" = (
@@ -1188,13 +1170,6 @@
 	},
 /obj/structure/industrial_lift,
 /turf/open/floor/plating,
-/area/commons/storage/primary)
-"mN" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/closed/wall/r_wall,
 /area/commons/storage/primary)
 "mZ" = (
 /turf/open/floor/iron{
@@ -1215,8 +1190,6 @@
 "nS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/industrial_lift,
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "od" = (
@@ -1238,13 +1211,6 @@
 	},
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"oy" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/closed/wall/r_wall,
-/area/commons/storage/primary)
 "oA" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating,
@@ -1253,13 +1219,6 @@
 /obj/effect/turf_decal/stripes/asteroid/line,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-"qn" = (
-/obj/machinery/button/ignition/incinerator/atmos{
-	pixel_x = 8;
-	pixel_y = -36
-	},
-/turf/open/floor/plating,
-/area/commons/storage/primary)
 "qo" = (
 /turf/open/openspace,
 /area/engineering/storage)
@@ -1282,9 +1241,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/openspace,
 /area/engineering/storage)
-"rB" = (
-/turf/open/floor/engine/airless,
-/area/maintenance/department/bridge)
 "rN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 8
@@ -1292,9 +1248,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central)
-"sb" = (
-/turf/open/floor/engine/airless,
-/area/commons/storage/primary)
 "sh" = (
 /turf/open/floor/iron{
 	dir = 1
@@ -1325,25 +1278,11 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage)
-"ts" = (
-/obj/machinery/light/directional/east,
-/turf/closed/wall/r_wall,
-/area/maintenance/department/bridge)
 "ty" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
-"tP" = (
-/obj/machinery/igniter/incinerator_atmos,
-/turf/open/floor/engine,
-/area/commons/storage/primary)
-"um" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/commons/storage/primary)
 "uv" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -1422,7 +1361,6 @@
 	dir = 5
 	},
 /obj/structure/industrial_lift,
-/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "yX" = (
@@ -1438,10 +1376,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
-"zn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/closed/wall/r_wall,
-/area/commons/storage/primary)
 "zC" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -1490,7 +1424,6 @@
 	dir = 4
 	},
 /obj/structure/industrial_lift,
-/obj/machinery/portable_atmospherics/canister/plasma,
 /turf/open/floor/plating,
 /area/commons/storage/primary)
 "BM" = (
@@ -1506,10 +1439,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/main)
-"CD" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
 "CK" = (
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
@@ -1533,6 +1462,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/engineering/storage)
+"DU" = (
+/obj/structure/table,
+/obj/item/flashlight{
+	pixel_y = 5
+	},
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "Eb" = (
 /obj/effect/turf_decal/stripes/white/line,
 /obj/structure/railing{
@@ -1540,15 +1476,6 @@
 	},
 /turf/open/floor/plating,
 /area/engineering/storage)
-"Er" = (
-/obj/machinery/light/directional/east,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
-/area/commons/storage/primary)
-"Es" = (
-/turf/open/space/basic,
-/area/maintenance/department/bridge)
 "EF" = (
 /obj/machinery/atmospherics/components/binary/valve,
 /turf/open/floor/plating,
@@ -1570,12 +1497,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/construction)
-"FI" = (
-/obj/machinery/power/turbine/turbine_outlet,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
-/area/commons/storage/primary)
 "FL" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/hidden{
@@ -1601,24 +1522,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
-"Hw" = (
-/obj/machinery/power/turbine/inlet_compressor,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
-/area/commons/storage/primary)
-"Ih" = (
-/obj/machinery/power/turbine/core_rotor,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
-/area/commons/storage/primary)
-"Ik" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/engine/airless,
-/area/commons/storage/primary)
+"Ht" = (
+/obj/machinery/light/directional/east,
+/turf/open/openspace,
+/area/hallway/secondary/service)
 "In" = (
 /obj/structure/railing{
 	dir = 4
@@ -1664,12 +1571,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"Kr" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/commons/storage/primary)
 "Kw" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -1704,21 +1605,11 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/plating,
 /area/maintenance/department/bridge)
-"NB" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/engine,
-/area/commons/storage/primary)
 "Ob" = (
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/openspace,
 /area/space/nearstation)
-"Of" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/turf/open/floor/plating,
-/area/commons/storage/primary)
 "Og" = (
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/plating,
@@ -1782,12 +1673,6 @@
 "TY" = (
 /turf/closed/wall/r_wall,
 /area/hallway/secondary/service)
-"Uf" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/closed/wall/r_wall,
-/area/commons/storage/primary)
 "Um" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 8
@@ -1836,14 +1721,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
-"YE" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
-/area/commons/storage/primary)
 "Zc" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -3688,8 +3565,8 @@ dJ
 dB
 dl
 dE
-dJ
-dJ
+dH
+dI
 dB
 dl
 dE
@@ -3742,8 +3619,8 @@ dJ
 dB
 dl
 dE
-CD
-dJ
+dH
+dI
 dB
 dl
 dE
@@ -3795,16 +3672,16 @@ dk
 dk
 dC
 dl
-Uf
-cS
-cS
+dE
+dH
+dI
 dB
+dl
+dE
+dJ
+DU
 cS
-oy
-cS
-cS
-cS
-ad
+af
 ad
 ac
 ab
@@ -3848,17 +3725,17 @@ by
 Zk
 mG
 xK
-qn
-hs
-NB
-um
-YE
-cS
+dl
 dF
-mN
-Ik
-sb
-rB
+dk
+dk
+dC
+dl
+dF
+dk
+dk
+cS
+af
 ad
 ac
 ab
@@ -3902,17 +3779,17 @@ by
 aW
 yX
 nS
-Of
+dl
+dl
+dl
+dl
+dl
+dl
+dl
+dl
+dl
 cS
-tP
-Hw
-Ih
-FI
-dF
-zn
-sb
-sb
-rB
+af
 ad
 ac
 ab
@@ -3956,17 +3833,17 @@ by
 yR
 Bm
 lT
-ls
-zn
-Kr
-cS
-Er
-cS
-dF
+dl
+dl
+dl
+dl
+dl
+dl
+dl
 dx
-sb
-sb
-rB
+dl
+cS
+af
 ad
 ac
 ab
@@ -4011,16 +3888,16 @@ cS
 cS
 cS
 cS
-zn
-zn
-zn
-gr
-zn
-zn
-zn
-sb
-sb
-rB
+cS
+cS
+cS
+cS
+cS
+cS
+cS
+cS
+cS
+af
 ad
 ac
 ab
@@ -4069,12 +3946,12 @@ af
 oA
 af
 af
-ad
-Es
-ts
-rB
-rB
-rB
+af
+af
+oA
+af
+af
+af
 ad
 ac
 ab
@@ -6334,15 +6211,15 @@ dY
 dY
 dY
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6388,15 +6265,15 @@ dY
 dY
 dY
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6442,15 +6319,15 @@ dY
 dY
 dY
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6496,15 +6373,15 @@ dY
 dY
 dY
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6550,15 +6427,15 @@ dY
 dY
 dY
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6604,15 +6481,15 @@ SN
 SN
 SN
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6654,19 +6531,19 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6708,19 +6585,19 @@ dY
 dY
 dY
 TY
-dY
-dY
-dY
+iu
+iu
+iu
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6762,19 +6639,19 @@ dY
 dY
 dY
 TY
-dY
-eN
-dY
+iu
+Ht
+iu
 eF
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
@@ -6820,15 +6697,15 @@ TY
 TY
 TY
 TY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
-dY
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
+iu
 eC
 ad
 au
