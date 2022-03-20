@@ -511,7 +511,7 @@
 		"stack_machine",
 		"tesla_coil",
 		"thermomachine",
-		"w-recycler", 
+		"w-recycler",
 		"emitter",
 		"welding_goggles",
 		"anomaly_refinery",
@@ -573,9 +573,9 @@
 	prereq_ids = list("engineering")
 	design_ids = list(
 		"hyper_cell",
-		"power_compressor",
+/* 		"power_compressor",
 		"power_turbine",
-		"power_turbine_console",
+		"power_turbine_console", */
 		"smes",
 		"super_capacitor",
 		"super_cell",
