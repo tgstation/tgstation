@@ -1,0 +1,4 @@
+author: "this awesome text"
+delete-after: True
+changes: 
+  - balance: "MODsuits have some armor."

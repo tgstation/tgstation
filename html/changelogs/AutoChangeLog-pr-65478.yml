@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen has stamped out the odd issues with lighting and gravity on the MetaStation AI Satellite."
+  - bugfix: "Nanotrasen also realized it was a good idea to not install their cameras and lights on the windows surrounding MetaStation's AI Satellite."

@@ -27900,11 +27900,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"lio" = (
-/obj/structure/chair,
-/obj/structure/chair,
-/turf/open/floor/iron/cafeteria,
-/area/hallway/secondary/exit/departure_lounge)
 "liN" = (
 /obj/machinery/light/small/broken/directional/south,
 /obj/item/trash/energybar,
@@ -37205,10 +37200,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/service/kitchen/diner)
-"pUJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/medical/surgery/aft)
 "pUL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/tile/green{
@@ -94713,7 +94704,7 @@ bde
 uxW
 kaR
 iGC
-pUJ
+tzO
 srr
 weu
 dHO
@@ -104196,7 +104187,7 @@ hto
 veG
 uEc
 dXd
-lio
+fwM
 eMj
 ulg
 wAz
