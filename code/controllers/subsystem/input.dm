@@ -69,7 +69,8 @@ SUBSYSTEM_DEF(input)
 
 ///stupid workaround for byond not recognizing the /atom.proc/Click typepath for the queued click callbacks
 /datum/controller/subsystem/input/proc/wrap_Click(atom/clicked_atom, location, control, params)
-	return clicked_atom.Click(location, control, params)
+	if(usr)
+		clicked_atom.Click(location, control, params)
 
 /datum/controller/subsystem/input/fire()
 	var/moves_this_run = 0
