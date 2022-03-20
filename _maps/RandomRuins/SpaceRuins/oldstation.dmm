@@ -3010,6 +3010,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/paper/fluff/ruins/oldstation/generator_manual,
 /obj/item/clothing/gloves/color/yellow,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/charlie/storage)
 "if" = (
@@ -3491,6 +3492,10 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/wrench,
 /obj/item/wirecutters,
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = 23
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/charlie/storage)
 "iX" = (
@@ -7466,6 +7471,15 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/ancientstation/delta/hall)
+"ZY" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/east{
+	start_charge = 0
+	},
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/ancientstation/charlie/dorms)
 
 (1,1,1) = {"
 aa
@@ -9510,7 +9524,7 @@ ht
 iZ
 jJ
 FV
-jS
+ZY
 Fv
 bN
 kE
