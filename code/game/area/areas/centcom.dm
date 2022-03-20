@@ -19,11 +19,11 @@
 	icon_state = "centcom_control"
 
 /area/centcom/evacuation
-	name = "CentCom Evacuation Wing"
+	name = "CentCom Recovery Wing"
 	icon_state = "centcom_evacuation"
 
 /area/centcom/evacuation/ship
-	name = "CentCom Evacuation Ship"
+	name = "CentCom Recovery Ship"
 	icon_state = "centcom_evacuation_ship"
 
 /area/centcom/fore
