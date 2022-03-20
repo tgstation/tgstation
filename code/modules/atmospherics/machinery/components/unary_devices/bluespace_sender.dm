@@ -171,7 +171,7 @@
 
 		if("retrieve")
 			if(bluespace_network.total_moles() > 0)
-				var/datum/gas_mixture/remove = bluespace_network.remove(bluespace_network.total_moles())
+				var/datum/gas_mixture/remove = bluespace_network.remove_ratio(1)
 				airs[1].merge(remove)
 				update_parents()
 				bluespace_network.garbage_collect()

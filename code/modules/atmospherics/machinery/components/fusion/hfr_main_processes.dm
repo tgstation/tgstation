@@ -411,24 +411,26 @@
 		return
 	// All gases in the moderator slowly burn away over time, whether used for production or not
 	if(moderator_internal.total_moles() > 0)
-		moderator_internal.remove(moderator_internal.total_moles() * (1 - (1 - 0.0005 * power_level) ** delta_time))
+		moderator_internal.remove_ratio(1 - (1 - 0.0005 * power_level) ** delta_time)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_damageheal(delta_time)
 	// Archive current health for damage cap purposes
 	critical_threshold_proximity_archived = critical_threshold_proximity
+	//Internal fusion total moles
+	var/internal_fusion_total_moles = internal_fusion.total_moles()
 
 	// If we're operating at an extreme power level, take increasing damage for the amount of fusion mass over a low threshold
 	if(power_level >= HYPERTORUS_OVERFULL_MIN_POWER_LEVEL)
-		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion.total_moles() + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
+		var/overfull_damage_taken = HYPERTORUS_OVERFULL_MOLAR_SLOPE * internal_fusion_total_moles + HYPERTORUS_OVERFULL_TEMPERATURE_SLOPE * coolant_temperature + HYPERTORUS_OVERFULL_CONSTANT
 		critical_threshold_proximity = max(critical_threshold_proximity + max(overfull_damage_taken * delta_time, 0), 0)
 
 	// If we're running on a thin fusion mix, heal up
-	if(internal_fusion.total_moles() < HYPERTORUS_SUBCRITICAL_MOLES && power_level <= 5)
-		var/subcritical_heal_restore = (internal_fusion.total_moles() - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
+	if(internal_fusion_total_moles < HYPERTORUS_SUBCRITICAL_MOLES && power_level <= 5)
+		var/subcritical_heal_restore = (internal_fusion_total_moles - HYPERTORUS_SUBCRITICAL_MOLES) / HYPERTORUS_SUBCRITICAL_SCALE
 		critical_threshold_proximity = max(critical_threshold_proximity + min(subcritical_heal_restore * delta_time, 0), 0)
 
 	// If coolant is sufficiently cold, heal up
-	if(internal_fusion.total_moles() > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) && power_level <= 4)
+	if(internal_fusion_total_moles > 0 && (airs[1].total_moles() && coolant_temperature < HYPERTORUS_COLD_COOLANT_THRESHOLD) && power_level <= 4)
 		var/cold_coolant_heal_restore = log(10, max(coolant_temperature, 1) * HYPERTORUS_COLD_COOLANT_SCALE) - (HYPERTORUS_COLD_COOLANT_MAX_RESTORE * 2)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(cold_coolant_heal_restore * delta_time, 0), 0)
 
@@ -438,8 +440,8 @@
 	critical_threshold_proximity = min(critical_threshold_proximity_archived + (delta_time * DAMAGE_CAP_MULTIPLIER * melting_point), critical_threshold_proximity)
 
 	// If we have a preposterous amount of mass in the fusion mix, things get bad extremely fast
-	if(internal_fusion.total_moles() >= HYPERTORUS_HYPERCRITICAL_MOLES)
-		var/hypercritical_damage_taken = max((internal_fusion.total_moles() - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
+	if(internal_fusion_total_moles >= HYPERTORUS_HYPERCRITICAL_MOLES)
+		var/hypercritical_damage_taken = max((internal_fusion_total_moles - HYPERTORUS_HYPERCRITICAL_MOLES) * HYPERTORUS_HYPERCRITICAL_SCALE, 0)
 		critical_threshold_proximity = max(critical_threshold_proximity + min(hypercritical_damage_taken, HYPERTORUS_HYPERCRITICAL_MAX_DAMAGE), 0) * delta_time
 
 	// High power fusion might create other matter other than helium, iron is dangerous inside the machine, damage can be seen
@@ -505,11 +507,11 @@
 			linked_output.airs[1].merge(removed)
 
 	if (selected_fuel)
-		var/datum/gas_mixture/internal_remove
+		var/datum/gas_mixture/internal_removed
 		for(var/gas_id in selected_fuel.primary_products)
 			if(internal_fusion.gases[gas_id][MOLES] > 0)
-				internal_remove = internal_fusion.remove_specific(gas_id, internal_fusion.gases[gas_id][MOLES] * (1 - (1 - 0.25) ** delta_time))
-				linked_output.airs[1].merge(internal_remove)
+				internal_removed = internal_fusion.remove_specific_ratio(gas_id, 1 - (1 - 0.25) ** delta_time)
+				linked_output.airs[1].merge(internal_removed)
 	internal_fusion.garbage_collect()
 	moderator_internal.garbage_collect()
 
@@ -524,7 +526,7 @@
 	if(airs[1].total_moles() * 0.05 <= MINIMUM_MOLE_COUNT)
 		return
 	var/datum/gas_mixture/cooling_port = airs[1]
-	var/datum/gas_mixture/cooling_remove = cooling_port.remove(0.05 * cooling_port.total_moles())
+	var/datum/gas_mixture/cooling_remove = cooling_port.remove_ratio(0.05)
 	//Cooling of the moderator gases with the cooling loop in and out the core
 	if(moderator_internal.total_moles() > 0)
 		var/coolant_temperature_delta = cooling_remove.temperature - moderator_internal.temperature
