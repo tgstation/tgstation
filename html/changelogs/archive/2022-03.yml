@@ -676,3 +676,33 @@
   - bugfix: TramStation's Ordnance Launch Area's APC now has connectivity to the grid.
   - bugfix: Nanotrasen busted out some pulse rifles to get rid of some loose rock
       debris in the Northwestern Quadrant of KiloStation.
+2022-03-20:
+  Dex:
+  - bugfix: Fixed training toolbox sprite
+  Ghommie:
+  - qol: Added a search function to the "Marlowe Treeby's Art Galaxy" app. You can
+      now search for paintings by title or author now.
+  - qol: Speaking of the same app, the name of the author is now displayed under that
+      of the painting in its preview section.
+  - bugfix: Fixed a potential BSOD in its TGUI if no painting was ever archived.
+  - qol: The AI Portrait Picker also got a similar treatment.
+  Son-of-Space:
+  - qol: It is now easier to tell that lower maintenance on box is traversable and
+      is reliable to traverse.
+  - balance: tweaked access reqs for certain doors in lower maintenance on BoxStation.
+  SuperNovaa41:
+  - bugfix: Fixes two random lattices in the bottom corner of the Cent Com map
+  Vladoricious:
+  - qol: All accessories show above the suit by default and can be toggled.
+  cacogen:
+  - expansion: Can Shift+Ctrl+Click people to give items to them directly now
+  - bugfix: Fixed runtime on Give screen alert where a proximity check was happening
+      twice
+  - bugfix: Fixed being able to take things as a dead person
+  - qol: Tooltips of low/no power screen alerts (used by cyborgs, MODsuits, mechs
+      and ethereals) will tell you the actual locations of the roundstart station
+      chargers
+  - bugfix: Fixes issue with low/no power screen alerts not clearing after leaving
+      a mech
+  jjpark-kb:
+  - rscadd: resonators will now have their fields spread

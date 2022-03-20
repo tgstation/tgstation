@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - expansion: "Can Shift+Ctrl+Click people to give items to them directly now"
-  - bugfix: "Fixed runtime on Give screen alert where a proximity check was happening twice"
-  - bugfix: "Fixed being able to take things as a dead person"
