@@ -32,6 +32,10 @@
 	smoothing_groups = list(SMOOTH_GROUP_TURF_OPEN, SMOOTH_GROUP_FLOOR_ICE)
 	canSmoothWith = list(SMOOTH_GROUP_FLOOR_ICE)
 
+//Used in the SnowCabin ruin
+/turf/open/misc/ice/smooth/temperature
+	temperature = 180
+
 /turf/open/misc/ice/icemoon
 	baseturfs = /turf/open/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

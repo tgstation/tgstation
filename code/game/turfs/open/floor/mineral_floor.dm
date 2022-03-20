@@ -170,6 +170,9 @@
 /turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/mineral/plastitanium/red/temperature
+	temperature = 180
+
 /turf/open/floor/mineral/plastitanium/red/brig
 	name = "brig floor"
 

@@ -69,7 +69,7 @@
 	planetary_atmos = TRUE
 
 /turf/open/floor/plating/snowed/temperatre
-	temperature = 255.37
+	temperature = 180
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
