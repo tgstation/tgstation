@@ -22,21 +22,10 @@
 	to_chat(c, span_notice("***********************************************************"))
 
 /datum/buildmode_mode/boom/change_settings(client/c)
-	explosions[BOOM_DEVASTATION] = input(c, "Range of total devastation. 0 to none", text("Input")) as num|null
-	if(explosions[BOOM_DEVASTATION] == null || explosions[BOOM_DEVASTATION] < 0)
-		explosions[BOOM_DEVASTATION] = 0
-	explosions[BOOM_HEAVY] = input(c, "Range of heavy impact. 0 to none", text("Input")) as num|null
-	if(explosions[BOOM_HEAVY] == null || explosions[BOOM_HEAVY] < 0)
-		explosions[BOOM_HEAVY] = 0
-	explosions[BOOM_LIGHT] = input(c, "Range of light impact. 0 to none", text("Input")) as num|null
-	if(explosions[BOOM_LIGHT] == null || explosions[BOOM_LIGHT] < 0)
-		explosions[BOOM_LIGHT] = 0
-	explosions[BOOM_FLASH] = input(c, "Range of flash. 0 to none", text("Input")) as num|null
-	if(explosions[BOOM_FLASH] == null || explosions[BOOM_FLASH] < 0)
-		explosions[BOOM_FLASH] = 0
-	explosions[BOOM_FLAMES] = input(c, "Range of flames. 0 to none", text("Input")) as num|null
-	if(explosions[BOOM_FLAMES] == null || explosions[BOOM_FLAMES] < 0)
-		explosions[BOOM_FLAMES] = 0
+	for (var/explosion_level in explosions)
+		explosions[explosion_level] = input(c, "Range of total [explosion_level]. 0 to none", text("Input")) as num|null
+		if(explosions[explosion_level] == null || explosions[explosion_level] < 0)
+			explosions[explosion_level] = 0
 
 /datum/buildmode_mode/boom/handle_click(client/c, params, obj/object)
 	var/list/modifiers = params2list(params)
