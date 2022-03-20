@@ -43476,6 +43476,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
+"koM" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/extinguisher_cabinet/directional/west,
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "koN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -54329,6 +54335,7 @@
 /area/command/heads_quarters/hop)
 "nDy" = (
 /obj/machinery/airalarm/directional/west,
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "nDB" = (
@@ -79765,6 +79772,12 @@
 "vhr" = (
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
+"vhN" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron,
+/area/commons/fitness/recreation)
 "vhT" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -142969,8 +142982,8 @@ ogT
 ead
 uiz
 kWC
-kWC
-kWC
+koM
+vhN
 iTD
 nww
 uOW
