@@ -27,13 +27,13 @@
 	///The ID of a species used to generate the icon. Needs to match the icon_state portion in the limbs file!
 	var/limb_id = SPECIES_HUMAN
 	//Defines what sprite the limb should use if it is also sexually dimorphic.
-	var/limb_gender = "m"
+	VAR_PROTECTED/limb_gender = "m"
 	///Does this limb have a greyscale version?
 	var/uses_mutcolor = TRUE
 	///Is there a sprite difference between male and female?
 	var/is_dimorphic = FALSE
 	///The actual color a limb is drawn as, set by /proc/update_limb()
-	var/draw_color
+	VAR_PROTECTED/draw_color
 
 	/// BODY_ZONE_CHEST, BODY_ZONE_L_ARM, etc , used for def_zone
 	var/body_zone
@@ -60,15 +60,15 @@
 	var/brutestate = 0
 	var/burnstate = 0
 	///The current amount of brute damage the limb has
-	var/brute_dam = 0
+	VAR_PROTECTED/brute_dam = 0
 	///The current amount of burn damage the limb has
-	var/burn_dam = 0
+	VAR_PROTECTED/burn_dam = 0
 	///The current amount of stamina damage the limb has
-	var/stamina_dam = 0
+	VAR_PROTECTED/stamina_dam = 0
 	///The maximum stamina damage a bodypart can take
-	var/max_stamina_damage = 0
+	VAR_PROTECTED/max_stamina_damage = 0
 	///The maximum "physical" damage a bodypart can take. Set by children
-	var/max_damage = 0
+	VAR_PROTECTED/max_damage = 0
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
 	///Subtracted to brute damage taken
@@ -130,7 +130,6 @@
 	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
 
-
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
 	if(can_be_disabled)
@@ -179,7 +178,7 @@
 		. += span_warning("The flesh on this limb appears badly cooked.")
 
 /obj/item/bodypart/blob_act()
-	take_damage(max_damage)
+	receive_damage(max_damage)
 
 
 /obj/item/bodypart/attack(mob/living/carbon/victim, mob/user)
@@ -616,6 +615,17 @@
 		total = max(total, stamina_dam)
 	return total
 
+/obj/item/bodypart/proc/get_brute_damage()
+	return brute_dam
+
+/obj/item/bodypart/proc/get_burn_damage()
+	return brute_dam
+
+/obj/item/bodypart/proc/get_max_damage()
+	return max_damage
+
+/obj/item/bodypart/proc/get_stamina_damage()
+	return stamina_dam
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/update_disabled()
@@ -1058,3 +1068,6 @@
 	var/mob/living/carbon/our_owner = owner //dropping nulls the limb
 	var/obj/item/bodypart/new_part = new new_type()
 	new_part.replace_limb(our_owner, TRUE)
+
+/obj/item/bodypart/proc/access_var(var_name)
+	return vars[var_name]

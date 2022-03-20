@@ -25,4 +25,4 @@
 	TEST_ASSERT_EQUAL(victim.getBruteLoss(), expected_damage, "Victim took incorrect amount of damage, expected [expected_damage], got [victim.getBruteLoss()].")
 
 	var/obj/item/bodypart/expected_part = victim.get_bodypart(BODY_ZONE_CHEST)
-	TEST_ASSERT_EQUAL(expected_part.brute_dam, expected_damage, "Intended bodypart took incorrect amount of damage, either it hit another bodypart or armor was incorrectly applied. Expected [expected_damage], got [expected_part.brute_dam].")
+	TEST_ASSERT_EQUAL(expected_part.get_brute_damage(), expected_damage, "Intended bodypart took incorrect amount of damage, either it hit another bodypart or armor was incorrectly applied. Expected [expected_damage], got [expected_part.get_brute_damage()].")

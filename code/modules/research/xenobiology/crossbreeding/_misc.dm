@@ -24,9 +24,9 @@ Slimecrossing Items
 /datum/saved_bodypart/New(obj/item/bodypart/part)
 	old_part = part
 	bodypart_type = part.type
-	brute_dam = part.brute_dam
-	burn_dam = part.burn_dam
-	stamina_dam = part.stamina_dam
+	brute_dam = part.get_brute_damage()
+	burn_dam = part.get_burn_damage()
+	stamina_dam = part.get_stamina_damage()
 
 /mob/living/carbon/proc/apply_saved_bodyparts(list/datum/saved_bodypart/parts)
 	var/list/dont_chop = list()

@@ -229,7 +229,7 @@
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
 		var/old_key = icon_render_keys?[limb.body_zone]
-		icon_render_keys[limb.body_zone] = (limb.is_husked) ? generate_husk_key(limb) : generate_icon_key(limb)
+		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key() : limb.generate_icon_key()
 		if(!(icon_render_keys[limb.body_zone] == old_key))
 			needs_update += limb
 
@@ -275,16 +275,16 @@
 	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
 	See RemieRichards on irc.rizon.net #coderbus (RIP remie :sob:)
 */
-/mob/living/carbon/proc/generate_icon_key(obj/item/bodypart/limb)
-	if(limb.is_dimorphic)
-		. += "[limb.limb_gender]-"
-	. += "[limb.limb_id]"
-	. += "-[limb.body_zone]"
-	if(limb.should_draw_greyscale && limb.draw_color)
-		. += "-[limb.draw_color]"
+/obj/item/bodypart/proc/generate_icon_key()
+	if(is_dimorphic)
+		. += "[limb_gender]-"
+	. += "[limb_id]"
+	. += "-[body_zone]"
+	if(should_draw_greyscale && draw_color)
+		. += "-[draw_color]"
 
 ///Generates a cache key specifically for husks
-/mob/living/carbon/proc/generate_husk_key(obj/item/bodypart/limb)
-	. += "[limb.husk_type]"
+/obj/item/bodypart/proc/generate_husk_key()
+	. += "[husk_type]"
 	. += "-husk"
-	. += "-[limb.body_zone]"
+	. += "-[body_zone]"

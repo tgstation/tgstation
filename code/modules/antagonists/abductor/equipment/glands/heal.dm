@@ -53,7 +53,7 @@
 		if(!limb)
 			replace_limb(zone)
 			return
-		if((limb.get_damage() >= (limb.max_damage / 2)) || (!IS_ORGANIC_LIMB(limb)))
+		if((limb.get_damage() >= (limb.get_max_damage() / 2)) || (!IS_ORGANIC_LIMB(limb)))
 			replace_limb(zone, limb)
 			return
 
@@ -72,7 +72,7 @@
 		return
 
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(BODY_ZONE_CHEST)
-	if((chest.get_damage() >= (chest.max_damage / 4)) || (!IS_ORGANIC_LIMB(chest)))
+	if((chest.get_damage() >= (chest.get_max_damage() / 4)) || (!IS_ORGANIC_LIMB(chest)))
 		replace_chest(chest)
 		return
 

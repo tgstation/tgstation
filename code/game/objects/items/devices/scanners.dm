@@ -306,8 +306,8 @@ GENE SCANNER
 			if(mode == SCANNER_VERBOSE)
 				for(var/obj/item/bodypart/limb as anything in damaged)
 					dmgreport += "<tr><td><font color='#cc3333'>[capitalize(parse_zone(limb.body_zone))]:</font></td>"
-					dmgreport += "<td><font color='#cc3333'>[(limb.brute_dam > 0) ? "[CEILING(limb.brute_dam,1)]" : "0"]</font></td>"
-					dmgreport += "<td><font color='#ff9933'>[(limb.burn_dam > 0) ? "[CEILING(limb.burn_dam,1)]" : "0"]</font></td></tr>"
+					dmgreport += "<td><font color='#cc3333'>[(limb.get_brute_damage() > 0) ? "[CEILING(limb.get_brute_damage(),1)]" : "0"]</font></td>"
+					dmgreport += "<td><font color='#ff9933'>[(limb.get_burn_damage() > 0) ? "[CEILING(limb.get_burn_damage(),1)]" : "0"]</font></td></tr>"
 			dmgreport += "</font></table>"
 			render_list += dmgreport // tables do not need extra linebreak
 
