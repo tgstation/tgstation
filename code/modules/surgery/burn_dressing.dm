@@ -34,7 +34,7 @@
 	repeatable = TRUE
 	preop_sound = list('sound/surgery/scalpel1.ogg')
 	success_sound = list('sound/surgery/retractor2.ogg')
-	falure_sound = list('sound/surgery/organ1.ogg')
+	failure_sound = list('sound/surgery/organ1.ogg')
 	/// How much sanitization is added per step
 	var/sanitization_added = 0.5
 	/// How much infestation is removed per step (positive number)

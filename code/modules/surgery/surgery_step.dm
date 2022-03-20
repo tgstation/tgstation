@@ -11,7 +11,7 @@
 	var/silicons_obey_prob = FALSE
 	var/list/preop_sound //Sound played when the step is started
 	var/list/success_sound //Sound played if the step succeeded
-	var/list/falure_sound //Sound played if the step fails
+	var/list/failure_sound //Sound played if the step fails
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
@@ -163,9 +163,9 @@
 	return FALSE
 
 /datum/surgery_step/proc/play_failure_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!falure_sound || !falure_sound.len)
+	if(!failure_sound || !failure_sound.len)
 		return
-	playsound(get_turf(target), pick(falure_sound), 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
+	playsound(get_turf(target), pick(failure_sound), 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 
 /datum/surgery_step/proc/tool_check(mob/user, obj/item/tool)
 	return TRUE

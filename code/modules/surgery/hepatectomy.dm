@@ -30,7 +30,7 @@
 	time = 52
 	preop_sound = list('sound/surgery/scalpel1.ogg')
 	success_sound = list('sound/surgery/organ1.ogg')
-	falure_sound = list('sound/surgery/organ2.ogg')
+	failure_sound = list('sound/surgery/organ2.ogg')
 
 /datum/surgery_step/hepatectomy/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to cut out a damaged piece of [target]'s liver..."),

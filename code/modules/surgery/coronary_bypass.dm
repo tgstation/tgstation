@@ -30,7 +30,7 @@
 	time = 16
 	preop_sound = list('sound/surgery/scalpel1.ogg')
 	success_sound = list('sound/surgery/scalpel2.ogg')
-	falure_sound = list('sound/surgery/organ2.ogg')
+	failure_sound = list('sound/surgery/organ2.ogg')
 
 /datum/surgery_step/incise_heart/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to make an incision in [target]'s heart..."),
@@ -72,7 +72,7 @@
 	time = 90
 	preop_sound = list('sound/surgery/hemostat1.ogg')
 	success_sound = list('sound/surgery/hemostat1.ogg')
-	falure_sound = list('sound/surgery/organ2.ogg')
+	failure_sound = list('sound/surgery/organ2.ogg')
 
 /datum/surgery_step/coronary_bypass/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin to graft a bypass onto [target]'s heart..."),
