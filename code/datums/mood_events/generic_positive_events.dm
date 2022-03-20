@@ -191,14 +191,6 @@
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>"
 	mood_change = 10
 
-/datum/mood_event/area
-	description = "" //Fill this out in the area
-	mood_change = 0
-
-/datum/mood_event/area/add_effects(_mood_change, _description)
-	mood_change = _mood_change
-	description = _description
-
 /datum/mood_event/confident_mane
 	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>"
 	mood_change = 2
