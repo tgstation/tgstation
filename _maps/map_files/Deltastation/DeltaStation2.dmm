@@ -54335,7 +54335,6 @@
 /area/command/heads_quarters/hop)
 "nDy" = (
 /obj/machinery/airalarm/directional/west,
-/obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "nDB" = (
