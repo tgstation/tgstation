@@ -82,10 +82,16 @@
 #define FIRE_TRITIUM_ENERGY_RELEASED 2.8e5
 /// The minimum number of moles of trit that must be burnt for a tritium fire reaction to produce a radiation pulse. (0.01 moles trit or 10 moles oxygen to start producing rads.)
 #define TRITIUM_RADIATION_MINIMUM_MOLES 0.1
+/// The minimum released energy necessary for tritium to release radiation during combustion. (at a mix volume of [CELL_VOLUME]).
+#define TRITIUM_RADIATION_RELEASE_THRESHOLD (FIRE_TRITIUM_ENERGY_RELEASED * TRITIUM_BURN_OXY_FACTOR)
 /// A scaling factor for the range of radiation pulses produced by tritium fires.
-#define TRITIUM_RADIATION_RANGE_DIVISOR 1.5
+#define TRITIUM_RADIATION_RANGE_DIVISOR 4
 /// A scaling factor for the irradiation threshold of radiation pulses produced by tritium fires.
 #define TRITIUM_RADIATION_THRESHOLD_BASE 15
+// A scaling factor for the irradiation chance from energy released. This is the energy release required for everything in range to have a 50% chance of getting irradiated.
+#define TRITIUM_RADIATION_CHANCE_ENERGY_THRESHOLD_BASE 1.68e9
+// The minimum radiation pulse range from tritium fires.
+#define TRITIUM_MINIMUM_RADIATION_RANGE 6
 
 // - Freon:
 /// The maximum temperature freon can combust at.
