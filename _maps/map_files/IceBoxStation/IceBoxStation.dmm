@@ -12535,6 +12535,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/service/hydroponics)
+"dCI" = (
+/obj/machinery/oven,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "dCW" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 4
@@ -13497,8 +13501,8 @@
 /area/service/kitchen/diner)
 "eex" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating/icemoon,
-/area/maintenance/port/aft)
+/turf/open/space/basic,
+/area/maintenance/solars/port/aft)
 "eeA" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -14684,6 +14688,7 @@
 "eHC" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/small/broken/directional/north,
+/obj/machinery/vending/dinnerware,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -17687,10 +17692,6 @@
 /turf/open/floor/plating,
 /area/cargo/lobby)
 "gip" = (
-/obj/structure/sink/kitchen{
-	dir = 8;
-	pixel_x = 11
-	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
@@ -18011,6 +18012,7 @@
 /area/engineering/storage)
 "gpn" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/cafeteria{
 	dir = 5
 	},
@@ -19176,6 +19178,16 @@
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"gTr" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	dir = 4;
+	name = "old sink";
+	pixel_x = -12
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "gTu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
 /obj/effect/turf_decal/tile/yellow{
@@ -19607,12 +19619,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/prison)
-"hbc" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating{
-	icon_state = "panelscorched"
-	},
-/area/maintenance/port/aft)
 "hbB" = (
 /obj/machinery/door/airlock/mining/glass{
 	name = "Mining Dock";
@@ -27103,11 +27109,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
-"kMk" = (
-/obj/effect/spawner/random/trash/mess,
-/obj/machinery/light/small/built/directional/south,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "kMm" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -30104,10 +30105,7 @@
 /area/security/lockers)
 "muk" = (
 /obj/machinery/processor,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/open/floor/plating,
 /area/maintenance/port/aft)
 "muM" = (
 /obj/structure/cable,
@@ -31676,6 +31674,10 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nmI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall,
+/area/maintenance/port/aft)
 "nmJ" = (
 /obj/item/stamp{
 	pixel_x = -3;
@@ -38407,6 +38409,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/hallway/secondary/service)
+"qBB" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/port/aft)
 "qBL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/general/visible{
 	dir = 8
@@ -72620,12 +72627,12 @@ gXW
 gXW
 gXW
 gXW
-gXW
-gXW
-gXW
-gXW
-gXW
-gXW
+bCq
+bCq
+bCq
+bCq
+bCq
+bCq
 gXW
 bGI
 chN
@@ -72878,11 +72885,11 @@ cwi
 cwi
 gXW
 bCq
-bCq
-bCq
-bCq
-bCq
-bCq
+fnW
+gTr
+mtn
+sUh
+nmI
 eex
 bGI
 dHe
@@ -73135,10 +73142,10 @@ vyd
 bLv
 gXW
 bCq
-fnW
-cAB
-mtn
-sUh
+dCI
+eVN
+bHE
+qBB
 muk
 bHD
 cgA
@@ -73396,7 +73403,7 @@ eHC
 dGb
 ejY
 gtz
-kMk
+cAB
 bHD
 exy
 ciS
@@ -73906,8 +73913,8 @@ bHE
 bYu
 bZk
 bCq
-grt
 bCq
+grt
 kkF
 tEH
 bCq
@@ -74164,7 +74171,7 @@ bWw
 bZj
 bCq
 gpn
-hbc
+swV
 vVI
 fzn
 wTY
