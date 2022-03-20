@@ -7881,9 +7881,13 @@
 "bUT" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/enzyme{
-	layer = 5
+	layer = 5;
+	pixel_x = -7;
+	pixel_y = 13
 	},
-/obj/item/reagent_containers/food/condiment/flour,
+/obj/item/reagent_containers/food/condiment/flour{
+	pixel_x = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUU" = (
@@ -7897,11 +7901,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUW" = (
-/obj/structure/table,
-/obj/machinery/microwave{
-	pixel_x = -3;
-	pixel_y = 6
-	},
+/obj/machinery/vending/dinnerware,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUY" = (
@@ -7994,8 +7994,17 @@
 /area/service/janitor)
 "bVW" = (
 /obj/structure/table,
-/obj/item/kitchen/rollingpin,
-/obj/item/reagent_containers/glass/beaker,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 10
+	},
+/obj/item/flashlight/lamp{
+	on = 0;
+	pixel_x = -7;
+	pixel_y = 18
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = -4
+	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
 	},
@@ -8115,6 +8124,8 @@
 /obj/item/stack/rods{
 	amount = 4
 	},
+/obj/item/clothing/suit/apron/chef,
+/obj/item/clothing/head/chefhat,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -9549,11 +9560,26 @@
 /turf/open/floor/iron,
 /area/service/janitor)
 "cvZ" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/clothing/suit/apron/chef,
 /obj/machinery/button/door/directional/east{
 	id = "abandoned_kitchen";
 	name = "Shutters Control"
+	},
+/obj/item/book/manual/wiki/cooking_to_serve_man{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/structure/table,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -11;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/rag{
+	pixel_x = -10;
+	pixel_y = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -12532,7 +12558,7 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "diy" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "diY" = (
@@ -12958,6 +12984,15 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
+"dpi" = (
+/obj/machinery/door/poddoor/shutters{
+	id = "abandoned_kitchen"
+	},
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "dpm" = (
 /obj/structure/chair/pew/left,
 /turf/open/floor/iron/chapel{
@@ -26066,6 +26101,10 @@
 "iix" = (
 /obj/structure/closet/crate/bin,
 /obj/item/knife/kitchen,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/light/small/broken/directional/north,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "iiC" = (
@@ -27458,7 +27497,7 @@
 /turf/open/floor/grass,
 /area/science/research)
 "iLj" = (
-/obj/structure/table,
+/obj/machinery/oven,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "iLp" = (
@@ -31216,6 +31255,11 @@
 	},
 /turf/open/space,
 /area/space)
+"keR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "keY" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -40236,6 +40280,13 @@
 	},
 /turf/open/floor/carpet,
 /area/command/heads_quarters/captain/private)
+"nlN" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/maintenance/port)
 "nmk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
@@ -45113,6 +45164,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/corner,
 /area/hallway/secondary/entry)
+"pcT" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/closet/secure_closet/freezer/kitchen/maintenance,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "pcU" = (
 /obj/structure/table,
 /obj/item/folder/yellow{
@@ -48082,6 +48139,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/spawner/random/trash/mess,
+/obj/structure/chair/stool/bar/directional/west,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "qhw" = (
@@ -50389,7 +50448,7 @@
 /area/command/bridge)
 "reI" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/maintenance/port/aft)
 "reQ" = (
 /obj/effect/turf_decal/siding/purple{
@@ -55991,6 +56050,13 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
+"tpx" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Storage Room";
+	req_access_txt = "12"
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "tpy" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -57685,13 +57751,6 @@
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron,
 /area/science/mixing)
-"tUP" = (
-/obj/structure/girder,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/random/structure/grille,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "tVh" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -59983,6 +60042,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/science/research)
+"uUR" = (
+/obj/effect/spawner/random/structure/grille,
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "uUX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit,
@@ -60639,6 +60703,12 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/science/mixing)
+"vhd" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "vhr" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/neutral{
@@ -63471,6 +63541,9 @@
 /area/security/lockers)
 "wmt" = (
 /obj/effect/decal/cleanable/food/flour,
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "wmB" = (
@@ -66593,7 +66666,7 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "xuA" = (
-/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "xuL" = (
@@ -67221,9 +67294,9 @@
 /turf/open/floor/iron/dark,
 /area/engineering/storage/tech)
 "xEf" = (
-/obj/structure/table,
-/obj/item/flashlight/lamp{
-	on = 0
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/processor{
+	pixel_y = 1
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -68247,11 +68320,8 @@
 /area/science/xenobiology)
 "ydn" = (
 /obj/structure/table,
-/obj/item/reagent_containers/food/condiment/saltshaker{
-	pixel_x = -3
-	},
-/obj/item/reagent_containers/food/condiment/peppermill{
-	pixel_x = 3
+/obj/machinery/microwave{
+	pixel_y = 6
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
@@ -85166,7 +85236,7 @@ bUT
 bVW
 rQn
 diy
-dux
+tpx
 xuA
 reI
 nof
@@ -85421,10 +85491,10 @@ cUJ
 dux
 iLj
 dvt
-bXE
+vhd
 hvt
 dux
-dux
+pcT
 dux
 qWj
 dux
@@ -85681,8 +85751,8 @@ wmt
 bXC
 bYH
 dux
-bXE
-erp
+dux
+dux
 erp
 dux
 iGm
@@ -85939,8 +86009,8 @@ mGO
 iZM
 inl
 cZE
-tUP
-dux
+erp
+keR
 dux
 xAq
 dux
@@ -86197,7 +86267,7 @@ xEf
 dux
 ipo
 mGz
-dux
+uUR
 exc
 wSN
 dux
@@ -86447,7 +86517,7 @@ jNC
 qHM
 koV
 dux
-dux
+dpi
 hIt
 dux
 dux
@@ -86704,7 +86774,7 @@ bPL
 alK
 rDS
 rDS
-tWo
+nlN
 qhe
 dux
 bYK

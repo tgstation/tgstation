@@ -3988,6 +3988,7 @@
 	pixel_x = -8
 	},
 /obj/effect/turf_decal/delivery,
+/obj/item/reagent_containers/glass/rag,
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
 "aXz" = (
@@ -7061,14 +7062,11 @@
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
 "bLS" = (
-/obj/structure/sink/kitchen{
-	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
-	name = "old sink";
-	pixel_y = 28
-	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/vending/dinnerware,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
 "bLT" = (
@@ -25017,6 +25015,9 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "eXx" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
 /turf/open/floor/iron/white/side,
 /area/service/kitchen/abandoned)
 "eXA" = (
@@ -46029,6 +46030,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
 /obj/machinery/light/cold/directional/east,
+/obj/effect/gibspawner/human/bodypartless,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -51723,6 +51725,7 @@
 	pixel_y = 28
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/mess,
 /turf/open/floor/iron/white/side,
 /area/service/kitchen/abandoned)
 "mHA" = (
@@ -58960,7 +58963,9 @@
 "oUU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/random/trash/mess,
+/obj/machinery/processor{
+	pixel_y = 1
+	},
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
 "oVe" = (
@@ -66084,7 +66089,6 @@
 /obj/structure/table,
 /obj/machinery/microwave{
 	desc = "Cooks and boils stuff, somehow.";
-	pixel_x = -3;
 	pixel_y = 5
 	},
 /obj/machinery/airalarm/directional/east,
@@ -67682,8 +67686,12 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/suit/apron/chef,
 /obj/item/clothing/head/chefhat,
+/obj/item/reagent_containers/food/condiment/flour,
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/poster/contraband/random/directional/south,
+/obj/item/kitchen/rollingpin{
+	pixel_x = -4
+	},
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
 "rzT" = (
@@ -74008,6 +74016,11 @@
 	},
 /obj/item/reagent_containers/blood/random,
 /obj/effect/turf_decal/bot,
+/obj/item/reagent_containers/food/condiment/enzyme{
+	layer = 5;
+	pixel_y = 8;
+	pixel_x = -6
+	},
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
 "tnR" = (
@@ -79459,6 +79472,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 8
 	},
+/obj/machinery/oven,
 /turf/open/floor/plating,
 /area/service/kitchen/abandoned)
 "uYQ" = (
@@ -81304,8 +81318,12 @@
 /turf/open/floor/iron/dark,
 /area/medical/surgery/theatre)
 "vAO" = (
-/obj/machinery/light/small/directional/north,
 /obj/effect/turf_decal/bot,
+/obj/structure/sink/kitchen{
+	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
+	name = "old sink";
+	pixel_y = 28
+	},
 /turf/open/floor/iron,
 /area/service/kitchen/abandoned)
 "vAS" = (
@@ -134195,7 +134213,7 @@ aDE
 hVC
 jKX
 wty
-klt
+cqr
 vAO
 npV
 eXm
@@ -134966,7 +134984,7 @@ wde
 fXq
 hVC
 taP
-cqr
+klt
 bLS
 irG
 rbe
