@@ -56261,6 +56261,7 @@
 /area/engineering/atmos)
 "ogT" = (
 /obj/machinery/camera/directional/west,
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/commons/fitness/recreation)
 "oha" = (
