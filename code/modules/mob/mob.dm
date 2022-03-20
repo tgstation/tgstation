@@ -458,6 +458,13 @@
 	set name = "Examine"
 	set category = "IC"
 
+	if(TRY_QUEUE_VERB(src, .proc/finish_examinate, examinify))//try to queue this verb for the next tick if the server is overloaded
+		return
+
+	finish_examinate(examinify)
+
+/mob/proc/finish_examinate(atom/examinify)
+
 	if(isturf(examinify) && !(sight & SEE_TURFS) && !(examinify in view(client ? client.view : world.view, src)))
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
@@ -662,6 +669,12 @@
 	set category = "Object"
 	set src = usr
 
+	if(TRY_QUEUE_VERB(src, .proc/execute_mode))
+		return
+	execute_mode()
+
+///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
+/mob/proc/execute_mode()
 	if(ismecha(loc))
 		return
 
@@ -1127,7 +1140,8 @@
 /mob/proc/update_mouse_pointer()
 	if(!client)
 		return
-	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
+	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
+		client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
 	if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 		client.mouse_pointer_icon = examine_cursor_icon
 	if(istype(loc, /obj/vehicle/sealed))
