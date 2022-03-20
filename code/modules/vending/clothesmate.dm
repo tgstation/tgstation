@@ -25,6 +25,7 @@
 		/obj/item/clothing/head/beret/black = 3,
 		/obj/item/clothing/head/kippah = 3,
 		/obj/item/clothing/head/taqiyahred = 3,
+		/obj/item/clothing/mask/bandana/color = 3,
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/neck/scarf/pink = 3,
 		/obj/item/clothing/neck/scarf/red = 3,

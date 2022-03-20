@@ -458,7 +458,7 @@
 	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandana.json'
 
-/datum/greyscale_config/bandana_worn
+/datum/greyscale_config/bandana/worn
 	name = "Worn Bandana"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandana_worn.json'
@@ -468,7 +468,7 @@
 	icon_file = 'icons/obj/clothing/masks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandskull.json'
 
-/datum/greyscale_config/bandskull_worn
+/datum/greyscale_config/bandskull/worn
 	name = "Worn Skull Bandana"
 	icon_file = 'icons/mob/clothing/mask.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bandskull_worn.json'

@@ -50,9 +50,10 @@
 	name = "bandana"
 	desc = "A fine bandana with nanotech lining."
 	icon_state = "bandana"
+	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana
-	greyscale_config_worn = /datum/greyscale_config/bandana_worn
-	greyscale_colors = "#DCDCDC"
+	greyscale_config_worn = /datum/greyscale_config/bandana/worn
+	greyscale_colors = "#3F3F3F"
 
 /obj/item/clothing/mask/bandana/color/red
 	name = "red bandana"
@@ -98,8 +99,9 @@
 	name = "skull bandana"
 	desc = "A fine bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+	worn_icon_state = "bandskull_worn"
 	greyscale_config = /datum/greyscale_config/bandskull
-	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
+	greyscale_config_worn = /datum/greyscale_config/bandskull/worn
 	greyscale_colors = "#3F3F3F#C6C6C6"
 
 /obj/item/clothing/mask/bandana/color/skull/black
