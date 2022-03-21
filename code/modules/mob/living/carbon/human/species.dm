@@ -848,27 +848,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
 
-////PUT ALL YOUR WEIRD ASS REAL-LIMB HANDLING HERE
-	///Digi handling
-	if(source.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
-		var/uniform_compatible = FALSE
-		var/suit_compatible = FALSE
-		if(!(source.w_uniform) || (source.w_uniform.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON))) //Checks uniform compatibility
-			uniform_compatible = TRUE
-		if((!source.wear_suit) || (source.wear_suit.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON)) || !(source.wear_suit.body_parts_covered & LEGS)) //Checks suit compatability
-			suit_compatible = TRUE
-
-		if((uniform_compatible && suit_compatible) || (suit_compatible && source.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
-			for(var/obj/item/bodypart/limb as anything in source.bodyparts)
-				if(limb.bodytype & BODYTYPE_DIGITIGRADE)
-					limb.limb_id = "digitigrade"
-
-		else
-			for(var/obj/item/bodypart/limb as anything in source.bodyparts)
-				if(limb.bodytype & BODYTYPE_DIGITIGRADE)
-					limb.limb_id = "lizard"
-	///End digi handling
-
 	if(!bodyparts_to_add)
 		return
 

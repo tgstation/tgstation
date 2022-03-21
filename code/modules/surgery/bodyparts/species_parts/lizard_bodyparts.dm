@@ -36,8 +36,42 @@
 	limb_id = "digitigrade"
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
 
+/obj/item/bodypart/l_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		var/uniform_compatible = FALSE
+		var/suit_compatible = FALSE
+		if(!(human_owner.w_uniform) || (human_owner.w_uniform.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON))) //Checks uniform compatibility
+			uniform_compatible = TRUE
+		if((!human_owner.wear_suit) || (human_owner.wear_suit.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON)) || !(human_owner.wear_suit.body_parts_covered & LEGS)) //Checks suit compatability
+			suit_compatible = TRUE
+
+		if((uniform_compatible && suit_compatible) || (suit_compatible && human_owner.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
+			src.limb_id = "digitigrade"
+
+		else
+			src.limb_id = "lizard"
+
 /obj/item/bodypart/r_leg/digitigrade
 	icon_greyscale = 'icons/mob/species/lizard/bodyparts.dmi'
 	uses_mutcolor = TRUE
 	limb_id = "digitigrade"
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC | BODYTYPE_DIGITIGRADE
+
+/obj/item/bodypart/r_leg/digitigrade/update_limb(dropping_limb = FALSE, is_creating = FALSE)
+	. = ..()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		var/uniform_compatible = FALSE
+		var/suit_compatible = FALSE
+		if(!(human_owner.w_uniform) || (human_owner.w_uniform.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON))) //Checks uniform compatibility
+			uniform_compatible = TRUE
+		if((!human_owner.wear_suit) || (human_owner.wear_suit.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON)) || !(human_owner.wear_suit.body_parts_covered & LEGS)) //Checks suit compatability
+			suit_compatible = TRUE
+
+		if((uniform_compatible && suit_compatible) || (suit_compatible && human_owner.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
+			src.limb_id = "digitigrade"
+
+		else
+			src.limb_id = "lizard"

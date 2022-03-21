@@ -847,6 +847,7 @@
 	if(!IS_ORGANIC_LIMB(src))
 		dmg_overlay_type = "robotic"
 
+	return TRUE
 
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()

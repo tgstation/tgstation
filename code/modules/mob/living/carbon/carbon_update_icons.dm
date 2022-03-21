@@ -221,24 +221,24 @@
 /mob/living/carbon/update_body(is_creating)
 	update_body_parts(is_creating)
 
+///Checks to see if any bodyparts need to be redrawn, then does so.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
-	//Check the cache to see if it needs a new sprite
 	update_damage_overlays()
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
-		var/old_key = icon_render_keys?[limb.body_zone]
-		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key() : limb.generate_icon_key()
-		if(!(icon_render_keys[limb.body_zone] == old_key))
+		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
+		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key() : limb.generate_icon_key() //Generates a key for the current bodypart
+		if(!(icon_render_keys[limb.body_zone] == old_key)) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
 
 	var/list/missing_bodyparts = get_missing_limbs()
-	if(((dna ? dna.species.max_bodypart_count : 6) - icon_render_keys.len) != missing_bodyparts.len)
+	if(((dna ? dna.species.max_bodypart_count : 6) - icon_render_keys.len) != missing_bodyparts.len) //Checks to see if the target gained or lost any limbs.
 		limb_count_update = TRUE
 		for(var/missing_limb in missing_bodyparts)
-			icon_render_keys -= missing_limb
+			icon_render_keys -= missing_limb //Removes dismembered limbs from the key list
 
 	if(!needs_update.len && !limb_count_update)
 		return
@@ -248,12 +248,12 @@
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		if(limb in needs_update)
+		if(limb in needs_update) //Checks to see if the limb needs to be redrawn
 			var/bodypart_icon = limb.get_limb_icon()
 			new_limbs += bodypart_icon
-			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon
+			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
-			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]]
+			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
 
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
