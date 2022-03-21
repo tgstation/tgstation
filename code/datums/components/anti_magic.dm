@@ -85,7 +85,7 @@
 	UnregisterSignal(user, COMSIG_MOB_RESTRICT_MAGIC)
 	user.update_action_buttons()
 
-/datum/component/anti_magic/proc/block_receiving_magic(datum/source, mob/user, casted_magic_flags, charge_cost)
+/datum/component/anti_magic/proc/block_receiving_magic(mob/user, casted_magic_flags, charge_cost)
 	SIGNAL_HANDLER
 
 	// disclaimer - All anti_magic sources will be drained a charge_cost
@@ -118,7 +118,7 @@
 	return NONE
 
 /// cannot cast magic with the same type of antimagic present
-/datum/component/anti_magic/proc/restrict_casting_magic(datum/source, mob/user, magic_flags)
+/datum/component/anti_magic/proc/restrict_casting_magic(mob/user, magic_flags)
 	SIGNAL_HANDLER
 
 	if(magic_flags & antimagic_flags)

@@ -934,7 +934,7 @@
 	if(magic_flags == NONE) // magic with the NONE flag can always be cast
 		return TRUE
 
-	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, src, magic_flags)
+	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, magic_flags)
 	return restrict_magic_flags == NONE
 
 /**
@@ -948,7 +948,7 @@
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
 		return FALSE
 
-	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost) & COMPONENT_MAGIC_BLOCKED
+	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost) & COMPONENT_MAGIC_BLOCKED
 
 	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		is_magic_blocked = TRUE
