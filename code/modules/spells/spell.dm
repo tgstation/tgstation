@@ -2,6 +2,51 @@
 /// Needed for the badmin verb for now
 GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
+/**
+ * # The spell action
+ *
+ * This is the base action for how many of the game's
+ * spells (and spell adjacent) abilities function.
+ *
+ * These spells function off of a cooldown-based system,
+ * but can be ajusted to function with other methods
+ * via components or otherwise.
+ *
+ * ## Pre-spell checks:
+ * - [can_cast_spell][/datum/action/cooldown/spell/can_cast_spell] checks if the OWNER
+ * of the spell is able to cast the spell. Note that in rare occasions, such as shared spells,
+ * the owner may not be the caster of the spell.
+ * - [is_valid_target][/datum/action/cooldown/spell/is_valid_target] checks if the TARGET
+ * THE SPELL IS BEING CAST ON is a valid target for the spell. NOTE: The CAST TARGET is often THE SAME as
+ * THE OWNER OF THE SPELL, but is not always - click_to_activate spells will pass the clicked target
+ * into is_valid_target, while every other spell will use owner in is_valid_target.
+ * - [can_invoke][/datum/action/cooldown/spell/can_invoke] is run in can_cast_spell to check if
+ * the OWNER of the spell is able to say the current invocation.
+ *
+ * ## The spell chain:
+ * - [before_cast][/datum/action/cooldown/spell/before_cast] is the last chance for being able
+ * to interrupt a spell cast. Returning FALSE from it will stop a spell from casting. You can hook
+ * additional checks into this.
+ * - [spell_feedback][/datum/action/cooldown/spell/spell_feedback] is called right before cast, and handles
+ * invocation and sound effects. Overridable, if you want a special method of invocation or sound effects,
+ * or if you wish to call it in a different location (such as after_cast).
+ * - [cast][/datum/action/cooldown/spell/cast] is where the brunt of the spell effects should be done
+ * and implemented.
+ * - [after_cast][/datum/action/cooldown/spell/after_cast] is any aftermath, final effects that follow
+ * the main cast of the spell.
+ *
+ * ## Other procs called / may be called within the chain:
+ * - [invocation][/datum/action/cooldown/spell/invocation] handles saying any vocal invocations the spell
+ * may have, and can be overriden or extended. Called by spell_feedback().
+ * - [revert_cast][/datum/action/cooldown/spell/revert_cast] is a way to handle reverting a spell's
+ * cooldown and making it ready again if it fails to go off during cast. Not called anywhere by default.
+ *
+ * ## Other procs of note:
+ * - [level_spell][/datum/action/cooldown/spell/level_spell] is where the process of adding a spell level is handled.
+ * this can be extended if you wish to add special effects on level.
+ * - [delevel_spell][/datum/action/cooldown/spell/delevel_spell] is where the process of removing a spell level is handled.
+ * this can be extended if you wish to add special effects on level.
+ */
 /datum/action/cooldown/spell
 	name = "Spell"
 	desc = "A wizard spell."
@@ -259,12 +304,13 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if(invocation_type == INVOCATION_NONE)
 		return TRUE
 
+	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
 	if(!isliving(owner))
 		to_chat(owner, span_warning("You need to be living to invoke [src]!"))
 		return FALSE
 
 	var/mob/living/living_owner = owner
-	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
+	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE)) // melbert todo cl
 		to_chat(owner, span_warning("You can't get form to invoke [src]!"))
 		return FALSE
 
