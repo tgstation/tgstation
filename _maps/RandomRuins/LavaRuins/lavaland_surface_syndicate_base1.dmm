@@ -3679,7 +3679,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
-	id = "syndie_lavaland_incineratorturbine"
+	mapping_id = "syndie_lavaland_incineratorturbine"
 	},
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)

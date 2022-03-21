@@ -6222,10 +6222,6 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/engineering)
 "qR" = (
-/obj/machinery/computer/turbine_computer{
-	dir = 1;
-	id = "snowdin_turbine"
-	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
