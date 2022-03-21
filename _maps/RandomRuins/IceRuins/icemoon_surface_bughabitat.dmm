@@ -251,7 +251,7 @@
 "Cv" = (
 /obj/machinery/light/warm/directional/east,
 /obj/structure/closet,
-/obj/item/food/cheese,
+/obj/item/food/cheese/wedge,
 /obj/item/stack/rods/ten,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)

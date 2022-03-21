@@ -1,0 +1,4 @@
+author: "GoblinBackwards"
+delete-after: True
+changes: 
+  - bugfix: "Prevents iron/adamantine/yellow slime cookies from being to able to stack their bonuses."

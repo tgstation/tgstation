@@ -19,6 +19,18 @@
 	. = ..()
 	recharging_turf = get_step(loc, dir)
 
+	if(!mapload)
+		return
+
+	var/area/my_area = get_area(src)
+	if(!(my_area.type in GLOB.the_station_areas))
+		return
+
+	var/area_name = get_area_name(src, format_text = TRUE)
+	if(area_name in GLOB.roundstart_station_mechcharger_areas)
+		return
+	GLOB.roundstart_station_mechcharger_areas += area_name
+
 /obj/machinery/mech_bay_recharge_port/Destroy()
 	if (recharge_console?.recharge_port == src)
 		recharge_console.recharge_port = null

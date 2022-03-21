@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes: 
-  - bugfix: "Makes the wizard's Lich Phylactery mechanic actually work consistently."
-  - bugfix: "The description of the Bind Soul spell (and entry) should match its behavior a bit more accurately now. You will revive regardless if your body is destroyed or leaves the z-level. With each revival, the time it takes to respawn does not change, but the duration of the stun does."
-  - refactor: "Makes Phylacteries a component."
-  - qol: "Gave Lich Phylacerties some QoL features and pizazz. Examining it'll offer more information to wizards and ghosts."

@@ -1,5 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - bugfix: "Patches up the sporadically popping up space turfs that appeared in tram's security wing."
-  - bugfix: "The bar now has an air alarm."
