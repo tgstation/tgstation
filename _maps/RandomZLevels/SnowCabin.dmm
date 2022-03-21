@@ -4870,7 +4870,7 @@
 	desc = "Shut up, we don't talk about him.";
 	name = "exploration squad Clown"
 	},
-/turf/open/misc/ice/smooth/temperature,
+/turf/open/misc/ice/smooth,
 /area/awaymission/cabin/caves)
 "Wd" = (
 /obj/structure/statue/snow/snowman{
