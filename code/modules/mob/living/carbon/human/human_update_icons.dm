@@ -51,8 +51,11 @@ There are several things that need to be remembered:
 */
 
 //HAIR OVERLAY
-/mob/living/carbon/human/update_hair()
-	dna.species.handle_hair(src)
+/mob/living/carbon/human/update_hair(is_creating = FALSE)
+	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+	my_head.update_limb(is_creating)
+	update_body_parts()
+
 
 //used when putting/removing clothes that hide certain mutant body parts to just update those and not update the whole body.
 /mob/living/carbon/human/proc/update_mutant_bodyparts()
@@ -865,7 +868,6 @@ generate/load female uniform sprites matching all previously decided variables
 				eye_overlay.pixel_y += dna.species.offset_features[OFFSET_FACE][2]
 			add_overlay(eye_overlay)
 
-	dna.species.handle_hair(src)
 
 	update_inv_head()
 	update_inv_wear_mask()

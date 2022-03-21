@@ -30,19 +30,47 @@
 
 	//Limb appearance info:
 	var/real_name = "" //Replacement name
-	//Hair colour and style
+	///Hair color source
+	var/hair_color_source = null
+	///Hair colour and style
 	var/hair_color = "#000000"
-	var/hairstyle = "Bald"
+	///An override color that can be cleared later.
+	var/override_hair_color = null
+	///An override that cannot be cleared under any circumstances
+	var/fixed_hair_color = null
+
+	var/hair_style = "Bald"
 	var/hair_alpha = 255
+	var/hair_gradient_style = null
+	var/hair_gradient_color = null
 	//Facial hair colour and style
 	var/facial_hair_color = "#000000"
 	var/facial_hairstyle = "Shaved"
-	//Eye Colouring
+	var/facial_hair_gradient_style = null
+	var/facial_hair_gradient_color = null
+	///Is the hair currently hidden by something?
+	var/hair_hidden
+	///Is the facial hair currently hidden by something?
+	var/facial_hair_hidden
+	///Draw this head as "debrained"
+	VAR_PROTECTED/show_debrained = FALSE
+
+
 
 	var/lip_style
 	var/lip_color = "white"
 
 	var/stored_lipstick_trait
+	///The image for hair
+	var/mutable_appearance/hair_overlay
+	///The image for hair gradient
+	var/mutable_appearance/hair_gradient_overlay
+	///The image for face hair
+	var/mutable_appearance/facial_overlay
+	///The image for facial hair gradient
+	var/mutable_appearance/facial_gradient_overlay
+
+
 
 
 /obj/item/bodypart/head/Destroy()
@@ -137,61 +165,126 @@
 
 	return ..()
 
+#define SET_OVERLAY_VALUE(X,Y,Z) if(X) X.Y = Z
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
+	. = ..()
+
 	real_name = owner.real_name
 	if(HAS_TRAIT(owner, TRAIT_HUSK))
 		real_name = "Unknown"
-		hairstyle = "Bald"
+		hair_style = "Bald"
 		facial_hairstyle = "Shaved"
 		lip_style = null
 		stored_lipstick_trait = null
 
-	else if(!animal_origin)
+	else if(!animal_origin && ishuman(owner))
+
 		var/mob/living/carbon/human/human_head_owner = owner
 		var/datum/species/owner_species = human_head_owner.dna.species
 
-		//Facial hair
-		if(human_head_owner.facial_hairstyle && (FACEHAIR in owner_species.species_traits))
-			facial_hairstyle = human_head_owner.facial_hairstyle
-			if(owner_species.hair_color)
-				if(owner_species.hair_color == "mutcolor")
-					facial_hair_color = human_head_owner.dna.features["mcolor"]
-				else if(hair_color == "fixedmutcolor")
-					facial_hair_color = owner_species.fixed_mut_color
-				else
-					facial_hair_color = owner_species.hair_color
-			else
-				facial_hair_color = human_head_owner.facial_hair_color
-			hair_alpha = owner_species.hair_alpha
-		else
-			facial_hairstyle = "Shaved"
-			facial_hair_color = "#000000"
-			hair_alpha = 255
-		//Hair
-		if(human_head_owner.hairstyle && (HAIR in owner_species.species_traits))
-			hairstyle = human_head_owner.hairstyle
-			if(owner_species.hair_color)
-				if(owner_species.hair_color == "mutcolor")
-					hair_color = human_head_owner.dna.features["mcolor"]
-				else if(hair_color == "fixedmutcolor")
-					hair_color = owner_species.fixed_mut_color
-				else
-					hair_color = owner_species.hair_color
-			else
-				hair_color = human_head_owner.hair_color
-			hair_alpha = owner_species.hair_alpha
-		else
-			hairstyle = "Bald"
-			hair_color = "#000000"
-			hair_alpha = initial(hair_alpha)
-		// lipstick
 		if(human_head_owner.lip_style && (LIPS in owner_species.species_traits))
 			lip_style = human_head_owner.lip_style
 			lip_color = human_head_owner.lip_color
 		else
 			lip_style = null
 			lip_color = "white"
-	..()
+
+		///FACIAL HAIR CHECKS START
+		//we check if our hat or helmet hides our facial hair.
+		if(human_head_owner.head)
+			var/obj/item/I = human_head_owner.head
+			if(I.flags_inv & HIDEFACIALHAIR)
+				src.facial_hair_hidden = TRUE
+
+		if(human_head_owner.wear_mask)
+			var/obj/item/I = human_head_owner.wear_mask
+			if(I.flags_inv & HIDEFACIALHAIR)
+				src.facial_hair_hidden = TRUE
+		///FACIAL HAIR CHECKS END
+		///HAIR CHECKS START
+		if(human_head_owner.head)
+			var/obj/item/I = human_head_owner.head
+			if(I.flags_inv & HIDEHAIR)
+				src.hair_hidden = TRUE
+
+		if(human_head_owner.w_uniform)
+			var/obj/item/item_uniform = human_head_owner.w_uniform
+			if(item_uniform.flags_inv & HIDEHAIR)
+				src.hair_hidden = TRUE
+
+		if(human_head_owner.wear_mask)
+			var/obj/item/I = human_head_owner.wear_mask
+			if(I.flags_inv & HIDEHAIR)
+				src.hair_hidden = TRUE
+		///HAIR CHECKS END
+
+		if(!hair_hidden && !owner.getorgan(/obj/item/organ/brain) && !(NOBLOOD in species_flags_list))
+			src.show_debrained = TRUE
+		else
+			src.show_debrained = FALSE
+
+		//CREATION-ONLY START
+		if(is_creating)
+			var/datum/sprite_accessory/sprite_accessory
+
+			src.facial_overlay = null
+			src.facial_gradient_overlay = null
+			src.hair_overlay = null
+			src.hair_gradient_overlay = null
+
+			src.hair_alpha = owner_species.hair_alpha
+			src.hair_color = human_head_owner.hair_color
+			src.facial_hair_color = human_head_owner.hair_color
+			src.fixed_hair_color = owner_species.fixed_mut_color //Can be null
+			src.hair_style = human_head_owner.hairstyle
+			src.facial_hairstyle = human_head_owner.facial_hairstyle
+
+
+			if(src.facial_hairstyle && !src.facial_hair_hidden && (FACEHAIR in species_flags_list))
+				sprite_accessory = GLOB.facial_hairstyles_list[src.facial_hairstyle]
+				if(sprite_accessory)
+					//Create the overlay
+					src.facial_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+					//Gradients
+					src.facial_hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_FACIAL_HAIR_KEY)
+					if(src.facial_hair_gradient_style)
+						src.facial_hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_FACIAL_HAIR_KEY)
+						src.facial_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[src.facial_hair_gradient_style], src.facial_hair_gradient_color)
+
+					src.facial_overlay.overlays += emissive_blocker(sprite_accessory.icon, sprite_accessory.icon_state, alpha = hair_alpha)
+
+			if(!src.hair_hidden && !src.show_debrained && (HAIR in species_flags_list))
+				sprite_accessory = GLOB.hairstyles_list[src.hair_style]
+				if(sprite_accessory)
+					src.hair_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+					src.hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_HAIR_KEY)
+					if(src.hair_gradient_style)
+						src.hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_HAIR_KEY)
+						src.hair_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.hair_gradients_list[src.hair_gradient_style], src.hair_gradient_color)
+
+		//CREATION-ONLY END
+		//HAIR COLOR START
+		if(!src.override_hair_color)
+			if(src.hair_color_source)
+				if(src.hair_color_source == "fixedmutcolor")
+					SET_OVERLAY_VALUE(src.facial_overlay, color, src.fixed_hair_color)
+					SET_OVERLAY_VALUE(src.hair_overlay, color, src.fixed_hair_color)
+				else if(src.hair_color_source == "mutcolor")
+					SET_OVERLAY_VALUE(src.facial_overlay, color, src.facial_hair_color)
+					SET_OVERLAY_VALUE(src.hair_overlay, color, src.hair_color)
+				else
+					SET_OVERLAY_VALUE(src.facial_overlay, color, src.hair_color_source)
+					SET_OVERLAY_VALUE(src.hair_overlay, color, src.hair_color_source)
+			else
+				SET_OVERLAY_VALUE(src.facial_overlay, color, src.hair_color)
+				SET_OVERLAY_VALUE(src.hair_overlay, color, src.hair_color)
+		else
+			SET_OVERLAY_VALUE(src.facial_overlay, color, src.override_hair_color)
+			SET_OVERLAY_VALUE(src.hair_overlay, color, src.override_hair_color)
+		//HAIR COLOR END
+
+#undef SET_OVERLAY_VALUE
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/item/bodypart/head/get_limb_icon(dropped, draw_external_organs)
 	cut_overlays()
@@ -222,7 +315,7 @@
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
 			else
-				var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[hairstyle]
+				var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[src.hair_style]
 				if(sprite2)
 					var/image/hair_overlay = image(sprite2.icon, "[sprite2.icon_state]", -HAIR_LAYER, SOUTH)
 					hair_overlay.color = hair_color
@@ -244,6 +337,47 @@
 
 			if(eyes.eye_color)
 				eyes_overlay.color = eyes.eye_color
+
+	else
+		if(!facial_hair_hidden && facial_overlay && (FACEHAIR in species_flags_list))
+			facial_overlay.alpha = hair_alpha
+			. += facial_overlay
+			if(facial_gradient_overlay)
+				. += facial_gradient_overlay
+
+		if(show_debrained)
+			. += mutable_appearance('icons/mob/human_face.dmi', "debrained", HAIR_LAYER)
+
+		else if(!hair_hidden && hair_overlay && (HAIR in species_flags_list))
+			hair_overlay.alpha = hair_alpha
+			. += hair_overlay
+			if(hair_gradient_overlay)
+				. += hair_gradient_overlay
+
+/mob/proc/set_haircolor()
+	return
+
+/mob/living/carbon/human/set_haircolor(hex_string, override)
+	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+	if(!my_head)
+		return
+
+	if(override)
+		my_head.override_hair_color = hex_string
+	else
+		my_head.hair_color = hex_string
+	update_body_parts()
+
+/obj/item/bodypart/head/proc/make_gradient_overlay(file, icon, layer, datum/sprite_accessory/gradient, grad_color)
+	RETURN_TYPE(/mutable_appearance)
+
+	var/mutable_appearance/gradient_overlay = mutable_appearance(layer = -layer)
+	var/icon/temp = icon(gradient.icon, gradient.icon_state)
+	var/icon/temp_hair = icon(file, icon)
+	temp.Blend(temp_hair, ICON_ADD)
+	gradient_overlay.icon = temp
+	gradient_overlay.color = grad_color
+	return gradient_overlay
 
 /obj/item/bodypart/head/talk_into(mob/holder, message, channel, spans, datum/language/language, list/message_mods)
 	var/mob/headholder = holder

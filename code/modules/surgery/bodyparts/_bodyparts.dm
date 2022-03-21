@@ -866,7 +866,7 @@
 ///Generates an /image for the limb to be used as an overlay
 /obj/item/bodypart/proc/get_limb_icon(dropped)
 	SHOULD_CALL_PARENT(TRUE)
-	RETURN_TYPE(/image)
+	RETURN_TYPE(/list)
 
 	icon_state = "" //to erase the default sprite, we're building the visual aspects of the bodypart through overlays alone.
 

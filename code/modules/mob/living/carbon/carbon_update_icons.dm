@@ -288,3 +288,26 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+
+/obj/item/bodypart/head/generate_icon_key()
+	. = ..()
+	. += "-[facial_hairstyle]"
+	. += "-[facial_hair_color]"
+	if(facial_hair_gradient_style)
+		. += "-[facial_hair_gradient_style]"
+		if(hair_gradient_color)
+			. += "-[facial_hair_gradient_color]"
+	if(facial_hair_hidden)
+		. += "-FACIAL_HAIR_HIDDEN"
+	if(show_debrained)
+		. += "-SHOW_DEBRAINED"
+		return
+
+	. += "-[hair_style]"
+	. += "-[fixed_hair_color || override_hair_color || hair_color]"
+	if(hair_gradient_style)
+		. += "-[hair_gradient_style]"
+		if(hair_gradient_color)
+			. += "-[hair_gradient_color]"
+	if(hair_hidden)
+		. += "-HAIR_HIDDEN"
