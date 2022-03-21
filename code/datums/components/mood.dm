@@ -137,7 +137,6 @@
 			mood_level = 9
 	update_mood_icon()
 
-
 /datum/component/mood/proc/update_mood_icon()
 	var/mob/living/owner = parent
 	if(!(owner.client || owner.hud_used))
@@ -216,9 +215,6 @@
 
 	if(HAS_TRAIT(parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
 		add_event(null, "jolly", /datum/mood_event/jolly)
-
-
-
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
@@ -322,7 +318,6 @@
 		qdel(moodlet)
 	update_mood()
 
-
 /datum/component/mood/proc/modify_hud(datum/source)
 	SIGNAL_HANDLER
 
@@ -424,7 +419,6 @@
 	SIGNAL_HANDLER
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
-
 
 /datum/component/mood/proc/HandleAddictions()
 	if(!iscarbon(parent))
