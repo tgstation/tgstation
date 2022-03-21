@@ -4,8 +4,6 @@
 	desc = "It's impolite to stare at a person's chest."
 	icon_state = "default_human_chest"
 	max_damage = 200
-	///The bodytype required to attach to this chest
-	var/acceptable_bodytype = BODYTYPE_HUMANOID
 	body_zone = BODY_ZONE_CHEST
 	body_part = CHEST
 	is_dimorphic = TRUE
@@ -15,6 +13,9 @@
 	max_stamina_damage = 120
 	grind_results = null
 	wound_resistance = 10
+	///The bodytype required to attach to this chest
+	var/acceptable_bodytype = BODYTYPE_HUMANOID
+
 	var/obj/item/cavity_item
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)

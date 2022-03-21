@@ -429,14 +429,14 @@
 	new_head_owner.update_damage_overlays()
 
 ///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
-/obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/C)
-	if(!C.dna.species)
+/obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
+	if(!carbon_owner.dna.species)
 		return
 	var/all_limb_flags
-	for(var/obj/item/bodypart/BP as anything in C.bodyparts)
-		all_limb_flags =  all_limb_flags | BP.bodytype
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		all_limb_flags =  all_limb_flags | limb.bodytype
 
-	C.dna.species.bodytype = all_limb_flags
+	carbon_owner.dna.species.bodytype = all_limb_flags
 
 //Regenerates all limbs. Returns amount of limbs regenerated
 /mob/living/proc/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())

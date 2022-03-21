@@ -240,12 +240,12 @@
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /obj/item/disk/design_disk/limbs/felinid
-	name = "Felinid Limb Design Disk"
+	name = "Felinid Organ Design Disk"
 	limb_designs = list(/datum/design/cat_tail, /datum/design/cat_ears)
 
 /datum/design/limb_disk/felinid
-	name = "Felinid Limb Design Disk"
-	desc = "Contains designs for felinid bodyparts for the limbgrower - Felinid ears and tail."
+	name = "Felinid Organ Design Disk"
+	desc = "Contains designs for felinid organs for the limbgrower - Felinid ears and tail."
 	id = "limbdesign_felinid"
 	build_path = /obj/item/disk/design_disk/limbs/felinid
 
@@ -254,27 +254,27 @@
 	limb_designs = list(/datum/design/lizard_tail, /datum/design/lizard_tongue)
 
 /datum/design/limb_disk/lizard
-	name = "Lizard Limb Design Disk"
-	desc = "Contains designs for lizard bodyparts for the limbgrower - Lizard tongue, tail, and digitigrade legs."
+	name = "Lizard Organ Design Disk"
+	desc = "Contains designs for lizard organs for the limbgrower - Lizard tongue, and tail"
 	id = "limbdesign_lizard"
 	build_path = /obj/item/disk/design_disk/limbs/lizard
 
 /obj/item/disk/design_disk/limbs/plasmaman
-	name = "Plasmaman Limb Design Disk"
+	name = "Plasmaman Organ Design Disk"
 	limb_designs = list(/datum/design/plasmaman_stomach, /datum/design/plasmaman_liver, /datum/design/plasmaman_lungs, /datum/design/plasmaman_tongue)
 
 /datum/design/limb_disk/plasmaman
-	name = "Plasmaman Limb Design Disk"
+	name = "Plasmaman Organ Design Disk"
 	desc = "Contains designs for plasmaman organs for the limbgrower - Plasmaman tongue, liver, stomach, and lungs."
 	id = "limbdesign_plasmaman"
 	build_path = /obj/item/disk/design_disk/limbs/plasmaman
 
 /obj/item/disk/design_disk/limbs/ethereal
-	name = "Ethereal Limb Design Disk"
+	name = "Ethereal Organ Design Disk"
 	limb_designs = list(/datum/design/ethereal_stomach, /datum/design/ethereal_tongue, /datum/design/ethereal_lungs)
 
 /datum/design/limb_disk/ethereal
-	name = "Ethereal Limb Design Disk"
+	name = "Ethereal Organ Design Disk"
 	desc = "Contains designs for ethereal organs for the limbgrower - Ethereal tongue and stomach."
 	id = "limbdesign_ethereal"
 	build_path = /obj/item/disk/design_disk/limbs/ethereal

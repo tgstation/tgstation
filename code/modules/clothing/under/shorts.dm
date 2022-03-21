@@ -4,7 +4,7 @@
 	gender = PLURAL
 	body_parts_covered = GROIN
 	female_sprite_flags = NO_FEMALE_UNIFORM
-	supports_variations = DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations = DIGITIGRADE_VARIATION
 	can_adjust = FALSE
 	icon = 'icons/obj/clothing/under/shorts_pants.dmi'
 	worn_icon = 'icons/mob/clothing/under/shorts_pants.dmi'

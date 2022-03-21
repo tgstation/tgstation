@@ -853,20 +853,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(source.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 		var/uniform_compatible = FALSE
 		var/suit_compatible = FALSE
-		if(!(source.w_uniform) || (source.w_uniform.supports_variations & DIGITIGRADE_VARIATION) || (source.w_uniform.supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON)) //Checks uniform compatibility
+		if(!(source.w_uniform) || (source.w_uniform.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON))) //Checks uniform compatibility
 			uniform_compatible = TRUE
-		if((!source.wear_suit) || (source.wear_suit.supports_variations & DIGITIGRADE_VARIATION) || !(source.wear_suit.body_parts_covered & LEGS) || (source.wear_suit.supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON)) //Checks suit compatability
+		if((!source.wear_suit) || (source.wear_suit.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON)) || !(source.wear_suit.body_parts_covered & LEGS)) //Checks suit compatability
 			suit_compatible = TRUE
 
 		if((uniform_compatible && suit_compatible) || (suit_compatible && source.wear_suit?.flags_inv & HIDEJUMPSUIT)) //If the uniform is hidden, it doesnt matter if its compatible
-			for(var/obj/item/bodypart/BP as anything in source.bodyparts)
-				if(BP.bodytype & BODYTYPE_DIGITIGRADE)
-					BP.limb_id = "digitigrade"
+			for(var/obj/item/bodypart/limb as anything in source.bodyparts)
+				if(limb.bodytype & BODYTYPE_DIGITIGRADE)
+					limb.limb_id = "digitigrade"
 
 		else
-			for(var/obj/item/bodypart/BP as anything in source.bodyparts)
-				if(BP.bodytype & BODYTYPE_DIGITIGRADE)
-					BP.limb_id = "lizard"
+			for(var/obj/item/bodypart/limb as anything in source.bodyparts)
+				if(limb.bodytype & BODYTYPE_DIGITIGRADE)
+					limb.limb_id = "lizard"
 	///End digi handling
 
 	if(!bodyparts_to_add)
@@ -1045,7 +1045,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!((I.supports_variations & DIGITIGRADE_VARIATION) || (I.supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON)))
+				if(!(I.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE
@@ -2494,15 +2494,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	return to_add
 
-/datum/species/proc/replace_body(mob/living/carbon/C, datum/species/new_species)
-	new_species ||= C.dna.species //If no new species is provided, assume its src.
+/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species)
+	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && C.dna.features["legs"] == "Digitigrade Legs") || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
+	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == "Digitigrade Legs") || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
 		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/r_leg/digitigrade
 		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/l_leg/digitigrade
 
-	for(var/obj/item/bodypart/old_part as anything in C.bodyparts)
+	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
 			continue
 
@@ -2510,6 +2510,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/new_part
 		if(path)
 			new_part = new path()
-			new_part.replace_limb(C, TRUE)
+			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
 			qdel(old_part)

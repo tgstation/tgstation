@@ -1060,7 +1060,7 @@
 					BP.drop_limb(TRUE)
 					admin_ticket_log("[key_name_admin(usr)] has removed [src]'s [parse_zone(BP.body_zone)]")
 				else
-					to_chat(usr, "<span class='boldwarning'>[src] doesn't have such bodypart.</span>")
+					to_chat(usr, span_boldwarning("[src] doesn't have such bodypart."))
 					admin_ticket_log("[key_name_admin(usr)] has attempted to modify the bodyparts of [src]")
 			else
 				var/list/limbtypes = list()
@@ -1079,7 +1079,7 @@
 						limbtypes = typesof(/obj/item/bodypart/r_leg)
 
 				if((edit_action == "add") && BP)
-					to_chat(usr, "<span class='boldwarning'>[src] already has such bodypart.</span>")
+					to_chat(usr, span_boldwarning("[src] already has such bodypart."))
 				else
 					var/limb2add = input(usr, "Select a bodypart type to add", "Add/Replace Bodypart") as null|anything in sort_list(limbtypes)
 					var/obj/item/bodypart/new_bp = new limb2add()

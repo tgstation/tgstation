@@ -45,20 +45,20 @@
 	// Androids don't eat, hunger or metabolise foods. Let's do some cleanup.
 	C.set_safe_hunger_level()
 
-/datum/species/human/android/replace_body(mob/living/carbon/C, datum/species/new_species)
-	..()
+/datum/species/human/android/replace_body(mob/living/carbon/target, datum/species/new_species)
+	. = ..()
 	var/skintone
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		skintone = H.skin_tone
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		skintone = human_target.skin_tone
 
-	for(var/obj/item/bodypart/BP as anything in C.bodyparts)
-		if(BP.body_zone == BODY_ZONE_HEAD || BP.body_zone == BODY_ZONE_CHEST)
-			BP.is_dimorphic = TRUE
-		BP.skin_tone ||= skintone
-		BP.limb_id = SPECIES_HUMAN
-		BP.should_draw_greyscale = TRUE
-		BP.name = "human [parse_zone(BP.body_zone)]"
-		BP.update_limb()
-		BP.brute_reduction = 5
-		BP.burn_reduction = 4
+	for(var/obj/item/bodypart/limb as anything in target.bodyparts)
+		if(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
+			limb.is_dimorphic = TRUE
+		limb.skin_tone ||= skintone
+		limb.limb_id = SPECIES_HUMAN
+		limb.should_draw_greyscale = TRUE
+		limb.name = "human [parse_zone(limb.body_zone)]"
+		limb.update_limb()
+		limb.brute_reduction = 5
+		limb.burn_reduction = 4

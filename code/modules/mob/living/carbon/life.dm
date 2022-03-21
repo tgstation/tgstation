@@ -329,8 +329,8 @@
 	if(stam_regen_start_time <= world.time)
 		if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
-	for(var/obj/item/bodypart/BP as anything in bodyparts)
-		. |= BP.on_life()
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		. |= limb.on_life(delta_time, times_fired)
 
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
 	if(stat != DEAD)

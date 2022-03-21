@@ -122,23 +122,35 @@ There are several things that need to be remembered:
 		var/mutable_appearance/uniform_overlay
 
 		if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID)) //Agggggggghhhhh
-			if(gender == FEMALE && U.adjusted != NO_FEMALE_UNIFORM)
+			if(body_type == FEMALE && U.adjusted != NO_FEMALE_UNIFORM)
 				uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/clothing/under/default.dmi', isinhands = FALSE, femaleuniform = U.adjusted, override_state = target_overlay)
 
 		//Change check_adjustable_clothing.dm if you change this
 		var/handled_by_bodytype = TRUE
 		var/icon_file
+		var/woman
 		if(!uniform_overlay)
-			//I was told to leave support in for Digitigrade clothing incase someone wanted it. So, here it is.
 			//BEGIN SPECIES HANDLING
-			//if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (U.supports_variations & DIGITIGRADE_VARIATION))
-			//	icon_file = DIGITIGRADE_PATH
+			if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (U.supports_variations & DIGITIGRADE_VARIATION))
+				icon_file = DIGITIGRADE_PATH
+
+			//Female sprites have lower priority than digitigrade sprites
+			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID)) //Agggggggghhhhh
+				if(gender == FEMALE && U.adjusted != NO_FEMALE_UNIFORM)
+					woman = TRUE
 
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(U)))
 				icon_file = DEFAULT_UNIFORM_PATH
 				handled_by_bodytype = FALSE
 			//END SPECIES HANDLING
-			uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = icon_file, isinhands = FALSE, override_state = target_overlay)
+			uniform_overlay = U.build_worn_icon(
+				default_layer = UNIFORM_LAYER,
+				default_icon_file = icon_file,
+				isinhands = FALSE,
+				femaleuniform = woman ? U.adjusted : null,
+				override_state = target_overlay,
+				override_file = handled_by_bodytype ? icon_file : null
+			)
 
 		if(OFFSET_UNIFORM in dna.species.offset_features && !handled_by_bodytype)
 			uniform_overlay?.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
@@ -299,15 +311,22 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = wear_neck
 
 		if(!(ITEM_SLOT_NECK in check_obscured_slots()))
+			var/mutable_appearance/neck_overlay
 			var/icon_file
-			//var/handled_by_bodytype = FALSE //UNCOMMENT WHEN USING IN FUTURE
+			var/handled_by_bodytype = TRUE
 
 			if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
-				//handled_by_bodytype = FALSE
+				handled_by_bodytype = FALSE
 				icon_file = 'icons/mob/clothing/neck.dmi'
 
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
+			neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
 
+			if(!neck_overlay)
+				return
+			if(OFFSET_NECK in dna.species.offset_features && !handled_by_bodytype)
+				neck_overlay.pixel_x += dna.species.offset_features[OFFSET_NECK][1]
+				neck_overlay.pixel_y += dna.species.offset_features[OFFSET_NECK][2]
+			overlays_standing[NECK_LAYER] = neck_overlay
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
@@ -725,7 +744,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 */
-/obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null)
+/obj/item/proc/build_worn_icon(default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, override_file = null)
 
 	//Find a valid icon_state from variables+arguments
 	var/t_state
@@ -735,8 +754,11 @@ generate/load female uniform sprites matching all previously decided variables
 		t_state = !isinhands ? (worn_icon_state ? worn_icon_state : icon_state) : (inhand_icon_state ? inhand_icon_state : icon_state)
 
 	//Find a valid icon file from variables+arguments
-	var/file2use = !isinhands ? (worn_icon ? worn_icon : default_icon_file) : default_icon_file
-
+	var/file2use
+	if(override_file)
+		file2use = override_file
+	else
+		file2use = !isinhands ? (worn_icon ? worn_icon : default_icon_file) : default_icon_file
 	//Find a valid layer from variables+arguments
 	var/layer2use = alternate_worn_layer ? alternate_worn_layer : default_layer
 

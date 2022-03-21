@@ -97,7 +97,7 @@
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
-	if(((supports_variations & DIGITIGRADE_VARIATION_NO_NEW_ICON) ||(supports_variations & DIGITIGRADE_VARIATION)) && ishuman(user))
+	if((supports_variations & DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE

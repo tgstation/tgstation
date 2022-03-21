@@ -158,21 +158,21 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/zombie
 	)
 
-/datum/species/human/krokodil_addict/replace_body(mob/living/carbon/C, datum/species/new_species)
+/datum/species/human/krokodil_addict/replace_body(mob/living/carbon/target, datum/species/new_species)
 	..()
 	var/skintone
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
-		skintone = H.skin_tone
+	if(ishuman(target))
+		var/mob/living/carbon/human/human_target = target
+		skintone = human_target.skin_tone
 
-	for(var/obj/item/bodypart/BP as anything in C.bodyparts)
-		if(IS_ORGANIC_LIMB(BP))
-			if(BP.body_zone == BODY_ZONE_HEAD || BP.body_zone == BODY_ZONE_CHEST)
-				BP.is_dimorphic = TRUE
-			BP.skin_tone ||= skintone
-			BP.limb_id = SPECIES_HUMAN
-			BP.should_draw_greyscale = TRUE
-			BP.name = "human [parse_zone(BP.body_zone)]"
-			BP.update_limb()
+	for(var/obj/item/bodypart/limb as anything in target.bodyparts)
+		if(IS_ORGANIC_LIMB(limb))
+			if(limb.body_zone == BODY_ZONE_HEAD || limb.body_zone == BODY_ZONE_CHEST)
+				limb.is_dimorphic = TRUE
+			limb.skin_tone ||= skintone
+			limb.limb_id = SPECIES_HUMAN
+			limb.should_draw_greyscale = TRUE
+			limb.name = "human [parse_zone(limb.body_zone)]"
+			limb.update_limb()
 
 #undef REGENERATION_DELAY

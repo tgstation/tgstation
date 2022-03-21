@@ -78,8 +78,10 @@
 
 	//Coloring and proper item icon update
 	var/skin_tone = ""
-	var/should_draw_greyscale = TRUE //Limbs need this information as a back-up incase they are generated outside of a carbon (limbgrower)
 	var/species_color = ""
+	///Limbs need this information as a back-up incase they are generated outside of a carbon (limbgrower)
+	var/should_draw_greyscale = TRUE
+	///An "override" color that can be applied to ANY limb, greyscale or not.
 	var/mutation_color = ""
 
 	///for nonhuman bodypart (e.g. monkey)
@@ -255,9 +257,8 @@
 	return bodypart_organs
 
 //Return TRUE to get whatever mob this is in to update health.
-/obj/item/bodypart/proc/on_life()
+/obj/item/bodypart/proc/on_life(delta_time, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
-
 	if(stamina_dam > DAMAGE_PRECISION && owner.stam_regen_start_time <= world.time)					//DO NOT update health here, it'll be done in the carbon's life.
 		heal_damage(0, 0, INFINITY, null, FALSE)
 		. |= BODYPART_LIFE_UPDATE_HEALTH
@@ -817,18 +818,18 @@
 	if(!animal_origin && ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 
-		var/datum/species/S = human_owner.dna.species
+		var/datum/species/owner_species = human_owner.dna.species
 		species_flags_list = human_owner.dna.species.species_traits //Literally only exists for a single use of NOBLOOD, but, no reason to remove it i guess...?
 		limb_gender = (human_owner.gender == MALE) ? "m" : "f"
 
-		if(S.use_skintones)
+		if(owner_species.use_skintones)
 			skin_tone = human_owner.skin_tone
 		else
 			skin_tone = ""
 
-		if(((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits)) && uses_mutcolor) //Ethereal code. Motherfuckers.
-			if(S.fixed_mut_color)
-				species_color = S.fixed_mut_color
+		if(((MUTCOLORS in owner_species.species_traits) || (DYNCOLORS in owner_species.species_traits)) && uses_mutcolor) //Ethereal code. Motherfuckers.
+			if(owner_species.fixed_mut_color)
+				species_color = owner_species.fixed_mut_color
 			else
 				species_color = human_owner.dna.features["mcolor"]
 		else
@@ -838,7 +839,7 @@
 		if(should_draw_greyscale) //Should the limb be colored?
 			draw_color ||= (species_color) || (skin_tone && skintone2hex(skin_tone))
 
-		dmg_overlay_type = S.damage_overlay_type
+		dmg_overlay_type = owner_species.damage_overlay_type
 
 	else if(animal_origin == MONKEY_BODYPART) //currently monkeys are the only non human mob to have damage overlays.
 		dmg_overlay_type = animal_origin
@@ -1068,6 +1069,3 @@
 	var/mob/living/carbon/our_owner = owner //dropping nulls the limb
 	var/obj/item/bodypart/new_part = new new_type()
 	new_part.replace_limb(our_owner, TRUE)
-
-/obj/item/bodypart/proc/access_var(var_name)
-	return vars[var_name]
