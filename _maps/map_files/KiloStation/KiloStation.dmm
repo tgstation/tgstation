@@ -82116,13 +82116,6 @@
 "wGF" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/maintenance/port/aft)
-"wGJ" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/structure/sign/poster/contraband/fun_police{
-	pixel_y = -32
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "wGL" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/neutral,
@@ -101477,7 +101470,7 @@ euM
 euM
 jiK
 cmU
-wGJ
+cmU
 cmU
 aeU
 aeU
