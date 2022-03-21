@@ -425,7 +425,7 @@
 	"playing_cards_starts":[
 		"%PLAYERS are waiting for %PROTAGONIST to start the %CARDGAME",
 		"The %CARDGAME has been setup by %DEALER",
-		"%DEALER starts shuffling the deck for %CARDGAME"
+		"%DEALER starts shuffling the deck for the %CARDGAME"
 	],
 	"playing_cards_moods":[
 		"%PROTAGONIST %MOOD as they hold the %HELD_CARD_ITEM for the %CARDGAME.",
