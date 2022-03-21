@@ -53,6 +53,8 @@ There are several things that need to be remembered:
 //HAIR OVERLAY
 /mob/living/carbon/human/update_hair(is_creating = FALSE)
 	var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
+	if(!my_head)
+		return
 	my_head.update_limb(is_creating)
 	update_body_parts()
 
