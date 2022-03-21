@@ -22967,7 +22967,7 @@
 	},
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
@@ -75210,7 +75210,7 @@
 /area/security/checkpoint/science/research)
 "upX" = (
 /obj/machinery/power/turbine/core_rotor{
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)

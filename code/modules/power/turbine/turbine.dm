@@ -417,7 +417,7 @@
 	damage = max(damage + damage_done * 0.5, 0)
 	damage = min(damage_archived + 10, damage)
 	if(temperature_difference < 0)
-		damage = min(damage - 2, 0)
+		damage = max(damage - 2, 0)
 
 	if((damage - damage_archived >= 2 || damage > 30) && COOLDOWN_FINISHED(src, turbine_damage_alert))
 		call_alert(damage_done)

@@ -40848,7 +40848,7 @@
 "nqo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/turbine_computer{
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /obj/structure/cable/layer1,
 /turf/open/floor/iron,
@@ -45765,7 +45765,7 @@
 "pek" = (
 /obj/machinery/power/turbine/core_rotor{
 	dir = 4;
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/engine,

@@ -2519,9 +2519,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
-/obj/machinery/computer/turbine_computer{
-	id = "incineratorturbine"
-	},
 /turf/open/floor/iron/dark/corner{
 	dir = 1
 	},
@@ -33658,7 +33655,7 @@
 "hvm" = (
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -44067,7 +44064,7 @@
 /area/hallway/primary/fore)
 "kwe" = (
 /obj/machinery/power/turbine/core_rotor{
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,

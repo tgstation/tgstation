@@ -21052,7 +21052,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron/dark,
@@ -29878,7 +29878,7 @@
 "mnG" = (
 /obj/machinery/power/turbine/core_rotor{
 	dir = 8;
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,

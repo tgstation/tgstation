@@ -31030,7 +31030,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/computer/turbine_computer{
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
@@ -35688,7 +35688,7 @@
 "lPf" = (
 /obj/machinery/power/turbine/core_rotor{
 	dir = 4;
-	mapping_id = main_turbine
+	mapping_id = "main_turbine"
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
