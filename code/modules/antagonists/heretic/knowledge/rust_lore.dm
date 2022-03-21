@@ -177,7 +177,7 @@
 	gain_text = "The corrosion was unstoppable. The rust was unpleasable. \
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/cleave,
+		/datum/heretic_knowledge/rifle,
 		/datum/heretic_knowledge/final/rust_final,
 		/datum/heretic_knowledge/summon/rusty,
 	)

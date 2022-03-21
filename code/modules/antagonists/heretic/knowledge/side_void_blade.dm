@@ -1,3 +1,6 @@
+// Sidepaths for knowledge between Void and Blade.
+
+/// The max health given to Shattered Risen
 #define RISEN_MAX_HEALTH 125
 
 /datum/heretic_knowledge/limited_amount/risen_corpse

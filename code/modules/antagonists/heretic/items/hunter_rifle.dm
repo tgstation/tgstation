@@ -1,0 +1,146 @@
+
+// Either override process_fire or fire_gun for the delay
+// Ammo casing read_proj to handle the tracking
+
+/obj/item/gun/ballistic/rifle/lionhunter
+	name = "\improper Lionhunter's Rifle"
+	desc = ""
+	icon_state = "moistprime"
+	inhand_icon_state = "moistprime"
+	worn_icon_state = "moistprime"
+	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/lionhunter
+	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	zoomable = TRUE
+	zoom_amt = 5
+	zoom_out_amt = 3
+
+/obj/item/ammo_box/magazine/internal/boltaction/lionhunter
+	name = "lionhunter rifle internal magazine"
+	ammo_type = /obj/item/ammo_casing/a762/lionhunter
+	caliber = CALIBER_A762
+	max_ammo = 3
+	multiload = TRUE
+
+/obj/item/ammo_casing/a762/lionhunter
+	projectile_type = /obj/projectile/bullet/a762/lionhunter
+	/// Whether we're currently aiming this casing at something
+	var/currently_aiming = FALSE
+	/// How many seconds it takes to aim per tile of distance between the target
+	var/seconds_per_distance = 0.5
+	/// The minimum distance required to gain a damage bonus from aiming
+	var/min_distance = 4
+
+/obj/item/ammo_casing/a762/lionhunter/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
+	if(!loaded_projectile)
+		return
+	if(!check_fire(target, user))
+		return
+
+	return ..()
+
+/obj/item/ammo_casing/a762/lionhunter/proc/check_fire(atom/target, mob/living/user)
+	// In case someone puts this in turrets or something wacky, just fire like normal
+	if(!iscarbon(user))
+		return TRUE
+
+	if(currently_aiming)
+		user.balloon_alert(user, "already aiming!")
+		return FALSE
+
+	var/distance = get_dist(user, target)
+	var/fire_time = min((distance SECONDS) * seconds_per_distance, 10 SECONDS)
+
+	if(distance <= min_distance || !isliving(target))
+		return TRUE
+
+	currently_aiming = TRUE
+	user.balloon_alert(user, "taking aim...")
+	user.playsound_local(get_turf(user), 'sound/weapons/gun/general/chunkyrack.ogg', 100, TRUE)
+
+	var/image/reticle = image(
+		icon = 'icons/mob/actions/actions_items.dmi',
+		icon_state = "sniper_zoom",
+		layer = ABOVE_MOB_LAYER,
+		loc = target,
+	)
+	reticle.alpha = 0
+
+	//flick_overlay_view(reticle, target, fire_time)
+	//user.client?.images |= reticle
+	//target.client?.images |= reticle
+
+	var/list/mob/viewers = viewers(target)
+	// The shooter might be out of view, but they should be included
+	viewers |= user
+
+	for(var/mob/viewer as anything in viewers)
+		viewer.client?.images |= reticle
+
+	// Animate the fade in
+	animate(reticle, fire_time * 0.5, alpha = 255)
+	animate(fire_time * 0.25, transform = turn(reticle.transform, 180))
+	animate(fire_time * 0.25, transform = turn(reticle.transform, 180))
+
+	. = do_after(user, fire_time, target, IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, .proc/check_fire_callback, target, user))
+
+	currently_aiming = FALSE
+	for(var/mob/viewer as anything in viewers)
+		viewer.client?.images -= reticle
+
+	if(!.)
+		user.balloon_alert(user, "interrupted!")
+
+	return .
+
+/obj/item/ammo_casing/a762/lionhunter/proc/check_fire_callback(mob/living/target, mob/living/user)
+	if(!isturf(target.loc))
+		return FALSE
+
+	return TRUE
+
+/obj/item/ammo_casing/a762/lionhunter/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+	if(!loaded_projectile)
+		return
+
+	var/distance = get_dist(user, target)
+	// If we're close range, or the target's not a living, OR for some reason a non-carbon is firing the gun
+	// The projectile is dry-fired. Make the projectile considerably weaker
+	if(distance <= min_distance || !isliving(target) || !iscarbon(user))
+		loaded_projectile.projectile_phasing = NONE
+		loaded_projectile.knockdown = 0 SECONDS
+		loaded_projectile.stutter *= 0.33
+		loaded_projectile.damage *= 0.75
+		loaded_projectile.stamina *= 0.5
+
+	// BUT, if we're at a decent range and the target's a living mob,
+	// the projectile's been channel fired. It has full effects and homes in.
+	else
+		loaded_projectile.homing = TRUE
+		loaded_projectile.homing_turn_speed = 80
+		loaded_projectile.set_homing_target(target)
+
+	return ..()
+
+/obj/projectile/bullet/a762/lionhunter
+	name = "hunter's 7.62 bullet"
+	damage = 40
+	stamina = 60
+	knockdown = 0.5 SECONDS
+	stutter = 6 SECONDS
+	armour_penetration = 50
+	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
+
+/obj/item/ammo_box/a762/lionhunter
+	name = "stripper clip (7.62mm hunter)"
+	desc = "A stripper clip of mysterious, atypical ammo. It doesn't fit into normal ballistic rifles."
+	icon_state = "762"
+	ammo_type = /obj/item/ammo_casing/a762/lionhunter
+	max_ammo = 3
+	multiple_sprites = AMMO_BOX_PER_BULLET
+
+/obj/effect/temp_visual/bullet_target
+	icon = 'icons/mob/actions/actions_items.dmi'
+	icon_state = "sniper_zoom"
+	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
+	light_range = 2

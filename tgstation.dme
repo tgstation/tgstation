@@ -2047,6 +2047,7 @@
 #include "code\modules\antagonists\heretic\items\heretic_armor.dm"
 #include "code\modules\antagonists\heretic\items\heretic_blades.dm"
 #include "code\modules\antagonists\heretic\items\heretic_necks.dm"
+#include "code\modules\antagonists\heretic\items\hunter_rifle.dm"
 #include "code\modules\antagonists\heretic\items\madness_mask.dm"
 #include "code\modules\antagonists\heretic\knowledge\ash_lore.dm"
 #include "code\modules\antagonists\heretic\knowledge\blade_lore.dm"

@@ -14,7 +14,6 @@
 	clothes_req = FALSE
 	antimagic_allowed = TRUE
 	phase_allowed = TRUE
-	selection_type = "range"
 	range = -1
 	include_user = TRUE
 	overlay = null
@@ -60,7 +59,7 @@
 
 	if(user_turf.is_blocked_turf(exclude_mobs = TRUE))
 		to_chat(user, span_warning("Something is blocking you from [we_are_phasing ? "exiting":"entering"] the mirror's realm here!"))
-		return FALSE
+		return FALSE /// MELBERT TODO breaks recharging I hate spells I hate spells
 
 	return TRUE
 

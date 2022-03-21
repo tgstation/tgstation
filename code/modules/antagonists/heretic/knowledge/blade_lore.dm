@@ -293,7 +293,8 @@
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Swift Blades"
 	desc = "Attacking someone with a Darkened Blade in both hands \
-		will now deliver a blow with both at once, dealing two attacks in rapid succession."
+		will now deliver a blow with both at once, dealing two attacks in rapid succession. \
+		The second blow will be slightly weaker."
 	gain_text = "From here, I began to learn the Colonel's arts. The prowess was finally mine to have."
 	next_knowledge = list(/datum/heretic_knowledge/spell/furious_steel)
 	route = PATH_BLADE
@@ -339,7 +340,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/summon/maid_in_mirror,
 		/datum/heretic_knowledge/final/blade_final,
-		// MELBERT TODO rust-blade sidepath
+		/datum/heretic_knowledge/rifle,
 	)
 	spell_to_add = /obj/effect/proc_holder/spell/aimed/furious_steel
 	cost = 1
@@ -361,11 +362,9 @@
 /datum/heretic_knowledge/final/blade_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
 	if(!.)
-		return
+		return FALSE
 
-	if(!(locate(/obj/item/bodypart/head) in sacrifice.bodyparts))
-		return TRUE
-	return FALSE
+	return !sacrifice.get_bodypart(BODY_ZONE_HEAD)
 
 /datum/heretic_knowledge/final/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
