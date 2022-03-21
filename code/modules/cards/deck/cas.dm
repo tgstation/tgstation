@@ -23,6 +23,11 @@
 
 /obj/item/toy/cards/deck/cas/Initialize(mapload)
 	. = ..()
-	var/cards_against_space = world.file2list("strings/[deckstyle].txt")
-	for(var/card in cards_against_space)
+	var/static/list/cards_against_space = world.file2list("strings/[deckstyle].txt")
+	var/list/possible_cards = cards_against_space.Copy()
+	var/list/random_cards = list()
+
+	for(var/i in 1 to decksize)
+		random_cards += pick_n_take(possible_cards)
+	for(var/card in random_cards)
 		cards += new /obj/item/toy/singlecard(src, card, src)
