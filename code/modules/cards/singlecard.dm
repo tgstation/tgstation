@@ -206,7 +206,7 @@
 		var/cardtext = stripped_input(user, "What do you wish to write on the card?", "Card Writing", "", 50)
 		if(!cardtext || !user.canUseTopic(src, BE_CLOSE))
 			return
-		name = cardtext
+
 		cardname = cardtext
 		blank = FALSE
 		update_appearance()
