@@ -65,6 +65,10 @@
 	return make_plating(force_plating)
 
 /turf/open/floor/wood/cold
+	temperature = 255.37
+
+//Used in Snowcabin.dm
+/turf/open/floor/wood/freezing
 	temperature = 180
 
 /turf/open/floor/wood/airless
