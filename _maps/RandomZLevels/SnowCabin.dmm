@@ -12,7 +12,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "af" = (
 /turf/open/floor/wood/freezing,
@@ -24,14 +24,14 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "ah" = (
 /obj/structure/fence/door/opened,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "ai" = (
 /obj/structure/fence{
@@ -40,7 +40,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "aj" = (
 /obj/structure/chair/office/light{
@@ -199,7 +199,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "aH" = (
 /obj/machinery/shower{
@@ -530,7 +530,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "bL" = (
 /obj/structure/bed,
@@ -884,21 +884,21 @@
 	},
 /area/awaymission/cabin)
 "cZ" = (
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "da" = (
 /obj/structure/chair,
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "db" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
 /obj/structure/table/reinforced,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dc" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -909,7 +909,7 @@
 	desc = "A fancy bottle of vodka. The name isn't in Galactic Common though.";
 	name = "Porosha Vodka"
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dd" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -919,7 +919,7 @@
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for making it harder to get dragged into the ring.";
 	name = "announcer seat"
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "de" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -927,35 +927,35 @@
 	},
 /obj/structure/table/reinforced,
 /obj/item/hourglass,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "df" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dg" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dh" = (
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "di" = (
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dk" = (
 /obj/structure/chair,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dl" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dm" = (
 /obj/structure/table/reinforced,
@@ -966,38 +966,38 @@
 	name = "soviet PDA";
 	note = "<b>TRANSLATED TO GALACTIC COMMON:</b><br>My partner has left to help those Nanotrasen fucks three days ago. They said that a distress signal came from down south and they had to check it out. How fucking long does it take to investigate a mining outpost? Either those Nanotrasen fuckers betrayed us or something really did go wrong. Either way, I'm leaving before this becomes an issue for me and anyone else here. That dumb idiot."
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dn" = (
 /obj/structure/table/reinforced,
 /obj/item/megaphone/sec{
 	name = "soviet megaphone"
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "do" = (
 /obj/structure/table/reinforced,
 /obj/item/cigbutt/cigarbutt,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dp" = (
 /obj/machinery/vending/sovietsoda,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dq" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dr" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/reagent_containers/pill/patch/libital,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ds" = (
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dt" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
@@ -1034,7 +1034,7 @@
 	name = "fat space polar bear";
 	speed = 3
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dA" = (
 /turf/closed/wall/ice,
@@ -1043,7 +1043,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 9
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "dE" = (
 /obj/structure/chair{
@@ -1052,38 +1052,38 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dF" = (
 /obj/structure/chair{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dG" = (
 /obj/structure/kitchenspike,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dH" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "dI" = (
 /obj/structure/table,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dJ" = (
 /obj/structure/kitchenspike,
 /obj/effect/decal/cleanable/blood/gibs,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dK" = (
 /obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dM" = (
 /obj/structure/chair{
@@ -1092,55 +1092,55 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dN" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "dO" = (
 /obj/structure/chair{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dP" = (
 /obj/item/shard,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dQ" = (
 /obj/item/lighter/greyscale,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dR" = (
 /obj/structure/chair{
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dS" = (
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dT" = (
 /obj/item/broken_bottle,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dU" = (
 /obj/item/chair,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dV" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dW" = (
 /obj/item/reagent_containers/pill/patch/libital,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "dZ" = (
 /obj/structure/chair{
@@ -1157,7 +1157,7 @@
 	name = "fat space polar bear";
 	speed = 3
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "eb" = (
 /obj/structure/closet,
@@ -1248,7 +1248,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin)
 "eq" = (
 /obj/machinery/door/poddoor/shutters{
@@ -1256,7 +1256,7 @@
 	name = "garage door"
 	},
 /obj/structure/fans/tiny,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin)
 "er" = (
 /obj/effect/turf_decal/weather/snow/corner,
@@ -1264,7 +1264,7 @@
 	set_cap = 1;
 	set_luminosity = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin)
 "et" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1326,7 +1326,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 5
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eA" = (
 /obj/structure/table/wood,
@@ -1351,14 +1351,14 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eD" = (
 /obj/structure/bonfire/dense{
 	desc = "Multiple logs thrown together into a pile hastily. Let's burn it for fun!.";
 	name = "pile of logs"
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eE" = (
 /obj/structure/table/wood,
@@ -1372,7 +1372,7 @@
 /obj/item/grown/log/tree{
 	pixel_x = 14
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eF" = (
 /obj/structure/table/wood,
@@ -1383,7 +1383,7 @@
 /obj/item/grown/log/tree{
 	pixel_x = 7
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eG" = (
 /obj/structure/mineral_door/wood,
@@ -1394,34 +1394,34 @@
 /obj/structure/window/reinforced/fulltile/ice{
 	name = "frozen window"
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
 "eI" = (
 /obj/effect/turf_decal/stripes/red/corner,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eJ" = (
 /obj/effect/turf_decal/stripes/red/line,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eK" = (
 /obj/machinery/conveyor_switch/oneway{
 	id = "lumbermill"
 	},
 /obj/effect/turf_decal/stripes/red/line,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eL" = (
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eM" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eN" = (
 /obj/structure/bookcase/random,
@@ -1452,7 +1452,7 @@
 	id = "lumbermill"
 	},
 /obj/effect/turf_decal/stripes/red/full,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
 "eS" = (
 /obj/machinery/recycler/lumbermill{
@@ -1464,39 +1464,39 @@
 	},
 /obj/effect/turf_decal/stripes/red/full,
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
 "eT" = (
 /obj/structure/closet/crate/wooden{
 	anchored = 1
 	},
 /obj/effect/turf_decal/delivery/red,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
 "eU" = (
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 4
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eV" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eW" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
 /obj/item/wrench,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eX" = (
 /obj/effect/turf_decal/stripes/red/corner{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "eY" = (
 /obj/structure/closet/crate/wooden,
@@ -1539,7 +1539,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "fb" = (
 /obj/structure/fence{
@@ -1548,14 +1548,14 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "fc" = (
 /obj/structure/fence{
 	dir = 4
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "fd" = (
 /obj/structure/fence{
@@ -1564,7 +1564,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "fe" = (
 /obj/structure/table/wood,
@@ -1604,7 +1604,7 @@
 /area/awaymission/cabin/caves/mountain)
 "fi" = (
 /obj/item/trash/can,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "fk" = (
 /obj/machinery/computer/secure_data{
@@ -2363,12 +2363,12 @@
 	pixel_x = 16;
 	pixel_y = 16
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "hY" = (
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/item/reagent_containers/pill/patch/libital,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "hZ" = (
 /obj/structure/chair{
@@ -2378,42 +2378,42 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ia" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/shard/plasma,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ib" = (
 /obj/item/hatchet/wooden,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ic" = (
 /obj/effect/decal/cleanable/blood,
 /obj/item/trash/popcorn{
 	pixel_y = 12
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "id" = (
 /obj/structure/chair{
 	dir = 1
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ie" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "if" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ii" = (
 /turf/closed/indestructible/syndicate,
@@ -3302,7 +3302,7 @@
 	},
 /obj/effect/turf_decal/stripes/red/full,
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/lumbermill)
 "lP" = (
 /obj/effect/light_emitter{
@@ -3432,7 +3432,7 @@
 	name = "\improper SAWBLADE WARNING";
 	pixel_x = -32
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "my" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3581,14 +3581,14 @@
 /area/awaymission/cabin/caves)
 "nh" = (
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "ni" = (
 /obj/structure/chair{
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "nj" = (
 /obj/structure/chair{
@@ -3596,13 +3596,13 @@
 	},
 /obj/effect/decal/cleanable/blood,
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "nk" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 6
 	},
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
 "nn" = (
 /obj/structure/sign/warning/explosives,
@@ -3671,14 +3671,14 @@
 "nJ" = (
 /obj/effect/turf_decal/stripes/red/line,
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "nK" = (
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
 /obj/structure/barricade/wooden/snowed,
-/turf/open/floor/plating/snowed/temperatre,
+/turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
 "nL" = (
 /obj/effect/decal/cleanable/dirt/dust,

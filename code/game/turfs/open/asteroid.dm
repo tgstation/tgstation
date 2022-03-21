@@ -216,6 +216,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/snow/temperatre
 	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
 
+//Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
 	temperature = 180
 
