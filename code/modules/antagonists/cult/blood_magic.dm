@@ -436,14 +436,14 @@
 			target.Paralyze(16 SECONDS)
 			target.flash_act(1, TRUE)
 			if(issilicon(target))
-				var/mob/living/silicon/S = target
-				S.emp_act(EMP_HEAVY)
+				var/mob/living/silicon/silicon_target = target
+				silicon_target.emp_act(EMP_HEAVY)
 			else if(iscarbon(target))
-				var/mob/living/carbon/C = target
-				C.silent += 6
-				C.stuttering += 15
-				C.cultslurring += 15
-				C.Jitter(1.5 SECONDS)
+				var/mob/living/carbon/carbon_target = target
+				carbon_target.silent += 6
+				carbon_target.stuttering += 15
+				carbon_target.cultslurring += 15
+				carbon_target.Jitter(1.5 SECONDS)
 		uses--
 	..()
 
