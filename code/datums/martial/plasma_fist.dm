@@ -84,7 +84,7 @@
 		animate(A, color = oldcolor, time = 3 SECONDS)
 
 
-/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
+/datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
 	user.say("APOTHEOSIS!!", forced="plasma fist")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user

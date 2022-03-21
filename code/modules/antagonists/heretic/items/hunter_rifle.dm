@@ -1,7 +1,6 @@
-
-// Either override process_fire or fire_gun for the delay
-// Ammo casing read_proj to handle the tracking
-
+// The Lionhunter, a gun for heretics
+// The ammo it uses takes time to "charge" before firing,
+// releasing a homing, very damaging projectile
 /obj/item/gun/ballistic/rifle/lionhunter
 	name = "\improper Lionhunter's Rifle"
 	desc = ""
@@ -38,6 +37,7 @@
 
 	return ..()
 
+/// Checks if we can successfully fire our projectile.
 /obj/item/ammo_casing/a762/lionhunter/proc/check_fire(atom/target, mob/living/user)
 	// In case someone puts this in turrets or something wacky, just fire like normal
 	if(!iscarbon(user))
@@ -65,10 +65,6 @@
 	)
 	reticle.alpha = 0
 
-	//flick_overlay_view(reticle, target, fire_time)
-	//user.client?.images |= reticle
-	//target.client?.images |= reticle
-
 	var/list/mob/viewers = viewers(target)
 	// The shooter might be out of view, but they should be included
 	viewers |= user
@@ -76,7 +72,7 @@
 	for(var/mob/viewer as anything in viewers)
 		viewer.client?.images |= reticle
 
-	// Animate the fade in
+	// Animate the fade in // MELBERT TODO make sure this works
 	animate(reticle, fire_time * 0.5, alpha = 255)
 	animate(fire_time * 0.25, transform = turn(reticle.transform, 180))
 	animate(fire_time * 0.25, transform = turn(reticle.transform, 180))
@@ -92,6 +88,7 @@
 
 	return .
 
+/// Callback for the do_after within the check_fire proc to see if something will prevent us from firing while aiming
 /obj/item/ammo_casing/a762/lionhunter/proc/check_fire_callback(mob/living/target, mob/living/user)
 	if(!isturf(target.loc))
 		return FALSE
@@ -123,6 +120,8 @@
 
 /obj/projectile/bullet/a762/lionhunter
 	name = "hunter's 7.62 bullet"
+	// These stats are only applied if the weapon is fired fully aimed
+	// If fired without aiming or at someone too close, it will do much less
 	damage = 40
 	stamina = 60
 	knockdown = 0.5 SECONDS
@@ -130,6 +129,7 @@
 	armour_penetration = 50
 	projectile_phasing =  PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 
+// Extra ammunition can be made with a heretic ritual.
 /obj/item/ammo_box/a762/lionhunter
 	name = "stripper clip (7.62mm hunter)"
 	desc = "A stripper clip of mysterious, atypical ammo. It doesn't fit into normal ballistic rifles."

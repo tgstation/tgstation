@@ -28,7 +28,7 @@
  * Activate the spell for user.
  */
 /obj/effect/proc_holder/spell/aimed/proc/on_activation(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_CALL_PARENT(TRUE) // MELBERT TODO test that fireball and stuff still works.
 
 	current_amount = projectile_amount
 	add_ranged_ability(user, span_notice("[active_msg] <B>Left-click to shoot it at a target!</B>"), TRUE)

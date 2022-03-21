@@ -1,4 +1,4 @@
-
+/// Macro to check if the passed mob is currently in jaunting "in the mirror".
 #define IS_MIRROR_PHASED(mob) istype(user.loc, /obj/effect/dummy/phased_mob/mirror_walk)
 
 /obj/effect/proc_holder/spell/targeted/mirror_walk

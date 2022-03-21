@@ -163,7 +163,7 @@
 		for(var/V in occupants)
 			remove_occupant(V, over_atom)
 
-/obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
+/obj/item/pet_carrier/proc/load_occupant(mob/living/user, mob/living/target)
 	if(pet_carrier_full(src))
 		to_chat(user, span_warning("[src] is already carrying too much!"))
 		return

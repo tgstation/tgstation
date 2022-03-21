@@ -78,9 +78,9 @@
 		if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORT, channel, curturf, destturf) & COMPONENT_BLOCK_TELEPORT)
 			return FALSE
 
-		if(isobserver(teleatom))
-			teleatom.abstract_move(destturf)
-			return TRUE
+	if(isobserver(teleatom))
+		teleatom.abstract_move(destturf)
+		return TRUE
 
 	tele_play_specials(teleatom, curturf, effectin, asoundin)
 	var/success = teleatom.forceMove(destturf)
@@ -91,6 +91,8 @@
 	if(ismob(teleatom))
 		var/mob/M = teleatom
 		M.cancel_camera()
+
+	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_POST_TELEPORT)
 
 	return TRUE
 

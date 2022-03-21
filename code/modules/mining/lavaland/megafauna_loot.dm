@@ -905,7 +905,7 @@
  * user - the mob attacking with the saw
  * target - the mob being attacked
  */
-/obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
+/obj/item/melee/cleaving_saw/proc/nemesis_effects(mob/living/user, mob/living/target)
 	if(istype(target, /mob/living/simple_animal/hostile/asteroid/elite))
 		return
 	var/datum/status_effect/stacking/saw_bleed/existing_bleed = target.has_status_effect(/datum/status_effect/stacking/saw_bleed)

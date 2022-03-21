@@ -11,6 +11,7 @@
  *   Ashen Eyes
  *
  * Mark of Ash
+ * Ritual of Knowledge
  * Mask of Madness
  * > Sidepaths:
  *   Curse of Corrosion

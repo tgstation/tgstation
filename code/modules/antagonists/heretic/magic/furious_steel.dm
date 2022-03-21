@@ -23,8 +23,8 @@
 	var/datum/status_effect/protective_blades/blade_effect
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/Destroy()
-	. = ..()
 	QDEL_NULL(blade_effect)
+	return ..()
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/on_activation(mob/user)
 	if(!isliving(user))
@@ -51,7 +51,6 @@
 /obj/effect/proc_holder/spell/aimed/furious_steel/ready_projectile(obj/projectile/to_launch, atom/target, mob/user, iteration)
 	. = ..()
 	to_launch.def_zone = check_zone(user.zone_selected)
-	to_launch.firer = user
 
 /obj/effect/proc_holder/spell/aimed/furious_steel/fire_projectile(mob/living/user, atom/target)
 	. = ..()

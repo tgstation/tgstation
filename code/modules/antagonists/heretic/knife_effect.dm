@@ -1,4 +1,4 @@
-
+// "Floating ghost blade" effect for blade heretics
 /obj/effect/floating_blade
 	name = "knife"
 	icon = 'icons/obj/kitchen.dmi'

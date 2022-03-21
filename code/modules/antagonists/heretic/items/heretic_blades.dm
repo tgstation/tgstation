@@ -91,6 +91,6 @@
 
 // opting for /dark (darkened blade) instead of /blade (blade path) to avoid "sickly_blade/blade"
 /obj/item/melee/sickly_blade/dark
-	name = "\improper darkened blade"
+	name = "\improper darkened blade" // MELBERT TODO sprite
 	desc = "A blade made of brilliant silver that shines gloriously. Unknown rage is bottled within."
 	after_use_message = "The Colonel hears your call..."

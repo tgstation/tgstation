@@ -510,7 +510,8 @@
 	return ..()
 
 /datum/status_effect/eldritch/blade
-	effect_sprite = "emark2"
+	effect_sprite = "emark2" // MELBERT TODO sprite
+	/// If set, the owner of the status effect will not be able to leave this area.
 	var/area/locked_to
 
 /datum/status_effect/eldritch/blade/Destroy()
@@ -529,6 +530,9 @@
 /datum/status_effect/eldritch/blade/proc/on_teleport(mob/living/source, atom/destination, channel)
 	SIGNAL_HANDLER
 
+	if(!locked_to)
+		return
+
 	if(get_area(destination) == locked_to)
 		return
 
@@ -539,6 +543,9 @@
 
 /datum/status_effect/eldritch/blade/proc/on_move(mob/living/source, turf/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
+
+	if(!locked_to)
+		return
 
 	if(get_area(source) == locked_to)
 		return
