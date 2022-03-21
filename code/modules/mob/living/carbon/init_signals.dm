@@ -14,15 +14,19 @@
 	SIGNAL_HANDLER
 
 	failed_last_breath = FALSE
-	clear_alert("too_much_oxy")
-	clear_alert("not_enough_oxy")
-	clear_alert("too_much_plas")
-	clear_alert("not_enough_plas")
-	clear_alert("nitro")
-	clear_alert("too_much_nitro")
-	clear_alert("not_enough_nitro")
-	clear_alert("too_much_co2")
-	clear_alert("not_enough_co2")
+
+	clear_alert(ALERT_TOO_MUCH_OXYGEN)
+	clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
+
+	clear_alert(ALERT_TOO_MUCH_PLASMA)
+	clear_alert(ALERT_NOT_ENOUGH_PLASMA)
+
+	clear_alert(ALERT_TOO_MUCH_NITRO)
+	clear_alert(ALERT_NOT_ENOUGH_NITRO)
+
+	clear_alert(ALERT_TOO_MUCH_CO2)
+	clear_alert(ALERT_NOT_ENOUGH_CO2)
+
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "suffocation")

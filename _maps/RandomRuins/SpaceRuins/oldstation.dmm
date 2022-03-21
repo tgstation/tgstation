@@ -588,10 +588,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/ancientstation/medbay)
-"bG" = (
-/obj/structure/lattice,
-/turf/closed/wall/rust,
-/area/ruin/space/has_grav/ancientstation/betastorage)
 "bH" = (
 /obj/machinery/door/firedoor/closed,
 /obj/effect/decal/cleanable/dirt,
@@ -4877,7 +4873,7 @@
 /area/ruin/space/has_grav/ancientstation/mining)
 "mu" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/ancient,
+/obj/item/storage/medkit/ancient,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/defibrillator,
 /obj/item/paper/fluff/ruins/oldstation/protosleep{
@@ -7952,7 +7948,7 @@ mf
 DF
 DF
 br
-bG
+DF
 GU
 DF
 GU

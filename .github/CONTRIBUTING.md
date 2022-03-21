@@ -83,10 +83,10 @@ This should help you understand what you can and can't do with your newfound git
 Things you **CAN** do:
 * Label issues appropriately
 * Close issues when appropriate
-* Label PRs when appropriate
 
 Things you **CAN'T** do:
 * [Close PRs](https://imgur.com/w2RqpX8.png): Only maintainers are allowed to close PRs. Do not hit that button.
+* Label PRs, leave that for maintainers to handle.
 
 </details>
 
@@ -113,6 +113,7 @@ Things you **CAN'T** do:
 
 [MC Tab Guide](./guides/MC_tab.md)
 
+[Embedding tgui components in chat](../tgui/docs/chat-embedded-components.md)
 ## Pull Request Process
 
 There is no strict process when it comes to merging pull requests. Pull requests will sometimes take a while before they are looked at by a maintainer; the bigger the change, the more time it will take before they are accepted into the code. Every team member is a volunteer who is giving up their own time to help maintain and contribute, so please be courteous and respectful. Here are some helpful ways to make it easier for you and for the maintainers when making a pull request.

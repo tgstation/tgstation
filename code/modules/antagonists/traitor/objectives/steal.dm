@@ -22,6 +22,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 
 /datum/objective_item_handler
 	var/list/objectives_by_path
+	var/generated_items = FALSE
 
 /datum/objective_item_handler/New()
 	. = ..()
@@ -30,7 +31,6 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 		objectives_by_path[initial(item.targetitem)] = list()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, .proc/save_items)
 
-// Very inefficient proc, only gets called when the map finishes loading.
 /datum/objective_item_handler/proc/save_items()
 	for(var/obj/item/typepath as anything in objectives_by_path)
 		for(var/obj/item/object as anything in objectives_by_path[typepath])
@@ -39,6 +39,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 				objectives_by_path[typepath] -= object
 				continue
 			RegisterSignal(object, COMSIG_PARENT_QDELETING, .proc/remove_item)
+	generated_items = TRUE
 
 /datum/objective_item_handler/proc/remove_item(atom/source)
 	SIGNAL_HANDLER

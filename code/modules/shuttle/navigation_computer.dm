@@ -35,7 +35,7 @@
 	actions += new /datum/action/innate/shuttledocker_place(src)
 
 	set_init_ports()
-	
+
 	if(!mapload)
 		connect_to_shuttle(SSshuttle.get_containing_shuttle(src))
 
@@ -390,7 +390,7 @@
 		return
 	if(QDELETED(src) || QDELETED(owner) || !isliving(owner))
 		return
-	playsound(src, "terminal_type", 25, FALSE)
+	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 	var/turf/T = get_turf(L[selected])
 	if(isnull(T))
 		return

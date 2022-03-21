@@ -14,7 +14,7 @@
 /area/shuttle/escape)
 "ae" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
 "af" = (
@@ -29,7 +29,7 @@
 /area/shuttle/escape)
 "ah" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},
@@ -456,8 +456,8 @@
 /area/shuttle/escape)
 "bF" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/brute,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/brute,
+/obj/item/storage/medkit/regular{
 	pixel_x = 2;
 	pixel_y = 3
 	},

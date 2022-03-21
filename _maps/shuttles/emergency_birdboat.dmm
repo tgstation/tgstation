@@ -230,11 +230,11 @@
 /area/shuttle/escape)
 "aR" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/fire{
+/obj/item/storage/medkit/fire{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/toxin,
+/obj/item/storage/medkit/toxin,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aS" = (
@@ -252,11 +252,11 @@
 /area/shuttle/escape)
 "aU" = (
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/brute{
+/obj/item/storage/medkit/brute{
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)

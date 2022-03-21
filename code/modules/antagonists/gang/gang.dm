@@ -239,7 +239,7 @@
 	if(human_owner.stat != CONSCIOUS || human_owner.incapacitated())
 		return FALSE
 
-	var/obj/item/slapper/secret_handshake/secret_handshake_item = new(owner)
+	var/obj/item/hand_item/slapper/secret_handshake/secret_handshake_item = new(owner)
 	if(owner.put_in_hands(secret_handshake_item))
 		to_chat(owner, span_notice("You ready your secret handshake."))
 	else

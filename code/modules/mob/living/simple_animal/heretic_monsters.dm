@@ -29,6 +29,7 @@
 	pressure_resistance = 100
 	del_on_death = TRUE
 	deathmessage = "implodes into itself."
+	loot = list(/obj/effect/gibspawner/human)
 	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
 	/// Innate spells that are added when a beast is created.
@@ -56,14 +57,17 @@
 	status_flags = CANPUSH
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	maxHealth = 50
-	health = 50
+	maxHealth = 65
+	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/eyes)
 	spells_to_add = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,
 		/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,
 		/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch,
 	)
+	/// A weakref to the last target we smacked. Hitting targets consecutively does more damage.
+	var/datum/weakref/last_target
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
@@ -82,9 +86,39 @@
 		speech_action_background_icon_state = "bg_ecult", \
 	)
 
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Login()
+	var/datum/action/innate/expand_sight/sight_seer = new(src)
+	sight_seer.Grant(src)
+
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(user == src) // Easy to hit yourself + very fragile = accidental suicide, prevent that
+		return
+
+	return ..()
+
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/AttackingTarget(atom/attacked_target)
+	if(WEAKREF(attacked_target) == last_target)
+		melee_damage_lower = min(melee_damage_lower + 5, 30)
+		melee_damage_upper = min(melee_damage_upper + 5, 35)
+	else
+		melee_damage_lower = initial(melee_damage_lower)
+		melee_damage_upper = initial(melee_damage_upper)
+
 	. = ..()
-	client?.view_size.setTo(10)
+	if(!.)
+		return
+
+	SpinAnimation(5, 1)
+	last_target = WEAKREF(attacked_target)
+
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+	. = ..()
+	var/rotation_degree = (360 / 3)
+	if(movement_dir & WEST || movement_dir & SOUTH)
+		rotation_degree *= -1
+
+	var/matrix/to_turn = matrix(transform)
+	to_turn = turn(transform, rotation_degree)
+	animate(src, transform = to_turn, time = 0.1 SECONDS)
 
 /*
  * Callback for the mind_linker component.

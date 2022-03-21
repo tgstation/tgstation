@@ -29,11 +29,6 @@
 ///Forces the wizard to whisper (and be able to) to cast the spell.
 #define INVOCATION_WHISPER "whisper"
 
-///Spawns random guns near players and gives some players antag objectives
-#define SUMMON_GUNS "guns"
-///Spawns random wands and spellbooks near players and gives some players antag objectives
-#define SUMMON_MAGIC "magic"
-
 /// Default magic resistance that blocks normal magic (wizard, spells, magical staff projectiles)
 #define MAGIC_RESISTANCE (1<<0)
 /// Tinfoil hat magic resistance that blocks mental magic (telepathy, mind curses, abductors, jelly people)

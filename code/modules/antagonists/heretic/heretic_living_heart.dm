@@ -22,7 +22,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/obj/item/organ/organ_parent = parent
-	if(organ_parent.status != ORGAN_ORGANIC)
+	if(organ_parent.status != ORGAN_ORGANIC || (organ_parent.organ_flags & ORGAN_SYNTHETIC))
 		return COMPONENT_INCOMPATIBLE
 
 	if(!IS_HERETIC(organ_parent.owner))

@@ -17,7 +17,7 @@
 /area/ruin/space/has_grav/whiteship/box)
 "fd" = (
 /obj/structure/table,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 6;
 	pixel_y = -5
 	},

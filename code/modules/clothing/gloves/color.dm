@@ -14,6 +14,12 @@
 	cut_type = /obj/item/clothing/gloves/cut
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 
+/obj/item/clothing/gloves/color/yellow/heavy
+	name = "ceramic-lined insulated gloves"
+	desc = "A cheaper make of the standard insulated gloves, using internal ceramic lining to make up for the sub-par rubber material. The extra weight makes them more bulky to use."
+	slowdown = 1
+	w_class = WEIGHT_CLASS_NORMAL
+
 /obj/item/toy/sprayoncan
 	name = "spray-on insulation applicator"
 	desc = "What is the number one problem facing our station today?"

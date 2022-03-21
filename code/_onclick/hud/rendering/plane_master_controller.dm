@@ -95,4 +95,30 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 		LIGHTING_PLANE,
 	)
 
+/// Controller of all planes we're ok with changing with colorblind logic
+/atom/movable/plane_master_controller/colorblind
+	name = PLANE_MASTERS_COLORBLIND
+	controlled_planes = list(
+		PLANE_SPACE_PARALLAX,
+		GRAVITY_PULSE_PLANE,
+		FLOOR_PLANE,
+		GAME_PLANE,
+		GAME_PLANE_FOV_HIDDEN,
+		GAME_PLANE_UPPER,
+		GAME_PLANE_UPPER_FOV_HIDDEN,
+		ABOVE_GAME_PLANE,
+		MASSIVE_OBJ_PLANE,
+		GHOST_PLANE,
+		POINT_PLANE,
+		RAD_TEXT_PLANE,
+		LIGHTING_PLANE,
+		O_LIGHTING_VISUAL_PLANE,
+		ABOVE_LIGHTING_PLANE,
+		CAMERA_STATIC_PLANE,
+		ATMOS_GROUP_PLANE,
+		FULLSCREEN_PLANE,
+		RUNECHAT_PLANE,
+		HUD_PLANE,
+		ABOVE_HUD_PLANE,
+	)
 

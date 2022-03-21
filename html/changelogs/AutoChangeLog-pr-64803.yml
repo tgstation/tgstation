@@ -1,4 +1,0 @@
-author: "SmoSmoSmoSmok"
-delete-after: True
-changes: 
-  - bugfix: "Janitor cyborg's soap running out of uses will no longer glitch out"

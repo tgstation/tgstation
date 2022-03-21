@@ -37,7 +37,6 @@
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
-	salvageable = FALSE
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
 
@@ -236,6 +235,12 @@
 	var/mob/living/carbon/M = patient
 	if(!M)
 		return
+	if(M.loc != src)
+		to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("[patient] no longer detected. Life support functions diabled.")]")
+		log_message("[patient] no longer detected - Life support functions disabled.", LOG_MECHA)
+		STOP_PROCESSING(SSobj, src)
+		patient = null
+		update_equip_info()
 	if(M.health > 0)
 		M.adjustOxyLoss(-0.5 * delta_time)
 	M.AdjustStun(-40 * delta_time)
