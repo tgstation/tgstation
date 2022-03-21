@@ -3,17 +3,23 @@
 	resistance_flags = FIRE_PROOF
 	can_atmos_pass = ATMOS_PASS_DENSITY
 
+	///Theoretical volume of gas that's moving through the turbine, it expands the further it goes
 	var/gas_theoretical_volume = 0
-
+	///Stores the turf thermal conductivity to restore it later
 	var/our_turf_thermal_conductivity
-
+	///Checks if the machine is processing or not
 	var/active = FALSE
+	///The parts can be registered on the main one only when their panel is closed
 	var/can_connect = TRUE
 
-	var/open_overlay
-	var/on_overlay
+	///Overlay for panel_open
+	var/open_overlay //#TODO: get the overlay done
+	///Overlay for machine activation
+	var/on_overlay //#TODO: get the overlay done
 
+	///Reference to our turbine part
 	var/obj/item/turbine_parts/installed_part
+	///Path of the turbine part we can install
 	var/part_path
 
 /obj/machinery/power/turbine/Initialize(mapload)
@@ -31,6 +37,10 @@
 	var/turf/our_turf = get_turf(src)
 	if(our_turf.thermal_conductivity == 0 && isopenturf(our_turf))
 		our_turf.thermal_conductivity = our_turf_thermal_conductivity
+
+	if(installed_part)
+		QDEL_NULL(installed_part)
+
 	return ..()
 
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
@@ -90,14 +100,20 @@
 
 	part_path = /obj/item/turbine_parts/compressor
 
+	///Reference to the core part
 	var/obj/machinery/power/turbine/core_rotor/core
+
+/obj/machinery/power/turbine/inlet_compressor/Destroy()
+	if(core)
+		core = null
+	return ..()
 
 /obj/machinery/power/turbine/inlet_compressor/attackby(obj/item/object, mob/user, params)
 	if(!panel_open)
 		balloon_alert(user, "open the maintenance hatch first")
 		return ..()
 
-	if(!istype(object, /obj/item/turbine_parts/compressor))
+	if(!istype(object, part_path))
 		return ..()
 	var/obj/item/turbine_parts/compressor/compressor_part = object
 	if(!installed_part)
@@ -129,14 +145,20 @@
 
 	part_path = /obj/item/turbine_parts/stator
 
+	///Reference to the core part
 	var/obj/machinery/power/turbine/core_rotor/core
+
+/obj/machinery/power/turbine/turbine_outlet/Destroy()
+	if(core)
+		core = null
+	return ..()
 
 /obj/machinery/power/turbine/turbine_outlet/attackby(obj/item/object, mob/user, params)
 	if(!panel_open)
 		balloon_alert(user, "open the maintenance hatch first")
 		return ..()
 
-	if(!istype(object, /obj/item/turbine_parts/stator))
+	if(!istype(object, part_path))
 		return ..()
 	var/obj/item/turbine_parts/stator/stator_part = object
 	if(!installed_part)
@@ -168,34 +190,51 @@
 
 	part_path = /obj/item/turbine_parts/rotor
 
+	///ID to easily connect the main part of the turbine to the computer
 	var/mapping_id
 
-	var/flipped = FALSE
-
+	///Reference to the compressor
 	var/obj/machinery/power/turbine/inlet_compressor/compressor
+	///Reference to the turbine
 	var/obj/machinery/power/turbine/turbine_outlet/turbine
 
+	///Reference to the input turf
 	var/turf/open/input_turf
+	///Reference to the output turf
 	var/turf/open/output_turf
 
+	///Efficiency of the part installed in the compressor (from 0.25 to 0.85)
 	var/compressor_part_efficiency = 0.25
-	var/stator_part_efficiency = 0.85
+	///Efficiency of the part installed in the rotor (from 0.25 to 0.85)
 	var/rotor_part_efficiency = 0.25
+	///Efficiency of the part installed in the turbine (from 0.85 to 0.895) - don't go higher than that, it can cause #nan errors
+	var/stator_part_efficiency = 0.85
 
+	///Rotation per minute the machine is doing
 	var/rpm
+	///Amount of power the machine is producing
 	var/produced_energy
 
+	///First stage of the moving gasmix - compression from 2500 L to 1000 L - heat up
 	var/datum/gas_mixture/compressor_mixture
+	///Second stage of the moving gasmix - expansion from 1000 L to 3000 L - first cool down
 	var/datum/gas_mixture/rotor_mixture
+	///Third stage of the moving gasmix - expansion from 3000 L to 6000 L - second cool down
 	var/datum/gas_mixture/turbine_mixture
 
+	///Check to see if all parts are connected to the core
 	var/all_parts_connected = FALSE
+	///If the machine was completed before reopening it, try to remake it
 	var/was_complete = FALSE
 
+	///Max rmp that the installed parts can handle, limits the rpms
 	var/max_allowed_rpm = 0
+	///Max temperature that the installed parts can handle, unlimited and causes damage to the machine
 	var/max_allowed_temperature = 0
 
+	///Amount of damage the machine has received
 	var/damage = 0
+	///Used to calculate the max damage received per tick and if the alarm should be called
 	var/damage_archived = 0
 
 	COOLDOWN_DECLARE(turbine_damage_alert)
@@ -211,6 +250,7 @@
 /obj/machinery/power/turbine/core_rotor/enable_parts(mob/user)
 	. = ..()
 	if(was_complete)
+		was_complete = FALSE
 		activate_parts(user)
 
 /obj/machinery/power/turbine/core_rotor/disable_parts(mob/user)
@@ -292,7 +332,7 @@
 		balloon_alert(user, "open the maintenance hatch first")
 		return ..()
 	if(all_parts_connected)
-		if(istype(object, /obj/item/turbine_parts/compressor))
+		if(istype(object, compressor.part_path))
 			var/obj/item/turbine_parts/compressor/compressor_part = object
 			if(!compressor.installed_part)
 				user.transferItemToLoc(compressor_part, src)
@@ -313,7 +353,7 @@
 			balloon_alert(user, "already installed")
 			return
 
-		if(istype(object, /obj/item/turbine_parts/stator))
+		if(istype(object, turbine.part_path))
 			var/obj/item/turbine_parts/stator/stator_part = object
 			if(!turbine.installed_part)
 				user.transferItemToLoc(stator_part, src)
@@ -334,7 +374,7 @@
 			balloon_alert(user, "already installed")
 			return
 
-	if(istype(object, /obj/item/turbine_parts/rotor))
+	if(istype(object, part_path))
 		var/obj/item/turbine_parts/rotor/rotor_part = object
 		if(!installed_part)
 			user.transferItemToLoc(rotor_part, src)
@@ -384,7 +424,7 @@
 
 /obj/machinery/power/turbine/core_rotor/proc/call_alert(damage_done)
 	COOLDOWN_START(src, turbine_damage_alert, max(round(20 - damage_done), 5) SECONDS)
-	message_admins("AHHH YOU KILLING MEEEEE!!!11!!11!!!1111!!")
+	message_admins("AHHH YOU KILLING MEEEEE!!!11!!11!!!1111!!") //#TODO finish alert
 
 /obj/machinery/power/turbine/core_rotor/process_atmos()
 

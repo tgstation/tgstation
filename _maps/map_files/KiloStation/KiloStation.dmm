@@ -44584,11 +44584,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine,
 /area/ai_monitored/turret_protected/ai_upload)
-"kri" = (
-/obj/structure/lattice,
-/obj/structure/grille,
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "krn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -113834,7 +113829,7 @@ qlD
 acm
 acm
 acm
-kri
+cow
 aaa
 aaa
 aaa
@@ -114089,9 +114084,9 @@ daZ
 xzv
 aaa
 aaa
-kri
+cow
 aaa
-kri
+cow
 aaa
 aaa
 aaa
@@ -114346,9 +114341,9 @@ xzv
 xzv
 aaa
 aaa
-kri
+cow
 aaa
-kri
+cow
 aaa
 aaa
 aaa
@@ -114603,7 +114598,7 @@ xrj
 mnU
 aaa
 aaa
-kri
+cow
 aaa
 acm
 aaa
@@ -114860,7 +114855,7 @@ xzv
 xzv
 aaa
 aaa
-kri
+cow
 aaa
 acm
 aaa
@@ -115119,7 +115114,7 @@ aaa
 aaa
 acm
 acm
-kri
+cow
 aaa
 aaa
 aaa
@@ -115371,12 +115366,12 @@ aaa
 aaa
 aaa
 acm
-kri
-kri
-kri
+cow
+cow
+cow
 acm
 aaa
-kri
+cow
 aaa
 aaa
 aaa
@@ -115633,7 +115628,7 @@ acm
 aaa
 aaa
 aaa
-kri
+cow
 aaa
 aaa
 aaa
@@ -115882,14 +115877,14 @@ acm
 acm
 aaa
 acm
-kri
-kri
-kri
-kri
+cow
+cow
+cow
+cow
 acm
-kri
-kri
-kri
+cow
+cow
+cow
 acm
 aaa
 aaa
