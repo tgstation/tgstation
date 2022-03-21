@@ -59,7 +59,26 @@
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
 	var/list/data = list()
 
+	data["connected"] = main_control ? TRUE : FALSE
+	data["active"] = main_control?.active
+	data["rpm"] = main_control?.rpm ? main_control?.rpm : 0
+	data["power"] = main_control?.produced_energy ? main_control?.produced_energy : 0
+	data["temp"] = main_control?.input_turf.air.temperature
+	data["damage"] = main_control?.damage
+
+	data["can_turn_off"] = main_control?.rpm < 1000
+
 	return data
 
 /obj/machinery/computer/turbine_computer/ui_act(action, params)
 	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("toggle_power")
+			if(main_control?.all_parts_connected && main_control?.rpm < 1000)
+				main_control.active = !main_control.active
+				main_control.rpm = 0
+				main_control.produced_energy = 0
+				. = TRUE

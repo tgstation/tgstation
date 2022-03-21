@@ -181,7 +181,9 @@
 	var/compressor_part_efficiency = 0.25
 	var/stator_part_efficiency = 0.85
 	var/rotor_part_efficiency = 0.25
+
 	var/rpm
+	var/produced_energy
 
 	var/datum/gas_mixture/compressor_mixture
 	var/datum/gas_mixture/rotor_mixture
@@ -273,8 +275,8 @@
 	return TRUE
 
 /obj/machinery/power/turbine/core_rotor/proc/deactivate_parts()
-	compressor.core = null
-	turbine.core = null
+	compressor?.core = null
+	turbine?.core = null
 	compressor = null
 	turbine = null
 	input_turf = null
@@ -370,12 +372,14 @@
 /obj/machinery/power/turbine/core_rotor/proc/calculate_damage_done(temperature)
 	damage_archived = damage
 	var/temperature_difference = temperature - max_allowed_temperature
-	var/damage_done = log(1.0001, temperature_difference)
+	var/damage_done = round(log(90, max(temperature_difference, 1)), 0.5)
 
 	damage = max(damage + damage_done * 0.5, 0)
 	damage = min(damage_archived + 10, damage)
+	if(temperature_difference < 0)
+		damage = min(damage - 2, 0)
 
-	if((damage - damage_archived > 3 || damage > 30) && COOLDOWN_FINISHED(src, turbine_damage_alert))
+	if((damage - damage_archived >= 2 || damage > 30) && COOLDOWN_FINISHED(src, turbine_damage_alert))
 		call_alert(damage_done)
 
 /obj/machinery/power/turbine/core_rotor/proc/call_alert(damage_done)
@@ -417,10 +421,12 @@
 
 	work_done = max(work_done - compressor_work * 0.15 - turbine_work, 0)
 
-	rpm = ((work_done * compressor_part_efficiency) ** stator_part_efficiency) * rotor_part_efficiency / 60
+	rpm = ((work_done * compressor_part_efficiency) ** stator_part_efficiency) * rotor_part_efficiency / 15
 	rpm = min(rpm, max_allowed_rpm)
 
-	add_avail(rpm * 0.25 * 60)
+	produced_energy = rpm * 0.25 * 15
+
+	add_avail(produced_energy)
 
 	turbine_mixture.pump_gas_to(output_turf.air, turbine_mixture.return_pressure())
 	output_turf.air_update_turf(TRUE)
