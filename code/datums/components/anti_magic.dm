@@ -1,9 +1,14 @@
 /// This provides different types of magic resistance on an object
 /datum/component/anti_magic
+	/// A bitflag with the types of magic resistance on the object
 	var/antimagic_flags
+	/// The amount of times the object can protect the user from magic
 	var/charges
+	/// The inventory slot the object must be located at in order to activate
 	var/inventory_flags
+	/// The proc that is triggered when an object has been drained a antimagic charge
 	var/datum/callback/drain_antimagic
+	/// The proc that is triggered when the object is depleted of charges
 	var/datum/callback/expiration
 
 /**
@@ -11,10 +16,10 @@
  *
  * Magic resistance will prevent magic from affecting the user if it has the correct resistance
  * against the type of magic being used
- * 
+ *
  * args:
  * * antimagic_flags (optional) A bitflag with the types of magic resistance on the object
- * * charges (optional) The amount of times the object can protect the user from magic 
+ * * charges (optional) The amount of times the object can protect the user from magic
  * * inventory_flags (optional) The inventory slot the object must be located at in order to activate
  * * drain_antimagic (optional) The proc that is triggered when an object has been drained a antimagic charge
  * * expiration (optional) The proc that is triggered when the object is depleted of charges
@@ -27,9 +32,9 @@
 **/
 /datum/component/anti_magic/Initialize(
 		antimagic_flags = MAGIC_RESISTANCE,
-		charges = INFINITY, 
+		charges = INFINITY,
 		inventory_flags = ~ITEM_SLOT_BACKPACK, // items in a backpack won't activate, anywhere else is fine
-		datum/callback/drain_antimagic, 
+		datum/callback/drain_antimagic,
 		datum/callback/expiration
 	)
 
@@ -39,13 +44,13 @@
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/block_receiving_magic)
 		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic)
-		to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells but are unable to cast magic."))	
+		to_chat(parent, span_warning("Magic seems to flee from you. You are immune to spells but are unable to cast magic."))
 	else
 		return COMPONENT_INCOMPATIBLE
 
 	src.antimagic_flags = antimagic_flags
 	src.charges = charges
-	src.inventory_flags = inventory_flags 
+	src.inventory_flags = inventory_flags
 	src.drain_antimagic = drain_antimagic
 	src.expiration = expiration
 
@@ -119,7 +124,7 @@
 
 	if(magic_flags & antimagic_flags)
 		if(HAS_TRAIT(user, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) // this trait bypasses magic casting restrictions
-			return FALSE	
-		return TRUE	
+			return FALSE
+		return TRUE
 
 	return FALSE
