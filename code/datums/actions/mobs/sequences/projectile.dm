@@ -9,6 +9,11 @@
 	/// Our hidden aoe ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/complete/aoe_fire
 
+/datum/action/cooldown/mob_cooldown/direct_and_aoe/New(Target)
+	. = ..()
+	direct_fire = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct()
+	aoe_fire = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/complete()
+
 /datum/action/cooldown/mob_cooldown/direct_and_aoe/Destroy()
 	. = ..()
 	QDEL_NULL(direct_fire)
@@ -16,8 +21,6 @@
 
 /datum/action/cooldown/mob_cooldown/direct_and_aoe/Grant(mob/M)
 	. = ..()
-	direct_fire = new /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/direct()
-	aoe_fire = new /datum/action/cooldown/mob_cooldown/projectile_attack/shotgun_blast/pattern/circular/complete()
 	direct_fire.Grant(owner, FALSE)
 	aoe_fire.Grant(owner, FALSE)
 

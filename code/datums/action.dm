@@ -669,6 +669,10 @@
 	var/click_to_activate = FALSE
 	// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
+	// List of prerequisite actions that are used in this ability
+	var/list/sequence_actions
+	// List of prerequisite actions that have been initialized
+	var/list/initialized_actions
 
 /datum/action/cooldown/New()
 	..()
