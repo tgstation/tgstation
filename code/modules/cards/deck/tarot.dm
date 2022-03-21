@@ -26,7 +26,7 @@
 		card.transform = M
 	return
 
-#define TAROT_GHOST_TIMER (5 MINUTES)
+#define TAROT_GHOST_TIMER (666 SECONDS) // this translates into 11 mins and 6 seconds
 
 /obj/item/toy/cards/deck/tarot/haunted
 	name = "haunted tarot game deck"
