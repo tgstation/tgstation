@@ -926,7 +926,7 @@
 
 /**
  * Checks to see if the mob can cast normal magic spells.
- * 
+ *
  * args:
  * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
 **/
@@ -939,7 +939,7 @@
 
 /**
  * Checks to see if the mob can block magic
- * 
+ *
  * args:
  * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked (see flags at: /datum/component/anti_magic)
  * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
@@ -948,7 +948,7 @@
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
 		return FALSE
 
-	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost)
+	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, casted_magic_flags, charge_cost) & COMPONENT_MAGIC_BLOCKED
 
 	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		is_magic_blocked = TRUE
@@ -973,7 +973,7 @@
 				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 				antimagic_color = LIGHT_COLOR_DARK_BLUE
 				playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
-				
+
 			target.mob_light(_range = 2, _color = antimagic_color, _duration = 5 SECONDS)
 			target.add_overlay(antimagic_effect)
 			addtimer(CALLBACK(target, /atom/proc/cut_overlay, antimagic_effect), 50)

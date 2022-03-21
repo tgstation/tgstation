@@ -78,7 +78,6 @@
 			to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
 			break
 
-
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
@@ -105,7 +104,7 @@
 			span_userdanger("A feeling of cold splashes on [self_subject] as your forehead reflects magic targeting your mind!"))
 
 		if(ismob(parent))
-			return TRUE
+			return COMPONENT_MAGIC_BLOCKED
 
 		var/has_limited_charges = !(charges == INFINITY)
 		var/charge_was_drained = charge_cost > 0
@@ -115,8 +114,8 @@
 			if(charges <= 0)
 				expiration?.Invoke(user, parent)
 				qdel(src)
-		return TRUE
-	return FALSE
+		return COMPONENT_MAGIC_BLOCKED
+	return NONE
 
 /// cannot cast magic with the same type of antimagic present
 /datum/component/anti_magic/proc/restrict_casting_magic(datum/source, mob/user, magic_flags)
@@ -124,7 +123,7 @@
 
 	if(magic_flags & antimagic_flags)
 		if(HAS_TRAIT(user, TRAIT_ANTIMAGIC_NO_SELFBLOCK)) // this trait bypasses magic casting restrictions
-			return FALSE
-		return TRUE
+			return NONE
+		return COMPONENT_MAGIC_BLOCKED
 
-	return FALSE
+	return NONE
