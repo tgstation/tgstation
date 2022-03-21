@@ -19,7 +19,7 @@
 	attack_verb_simple = list("attack")
 	/// Artistic style of the deck
 	var/deckstyle = "nanotrasen"
-	/// If the cards in the deck have different card faces icons (blank and CAS decks do not)
+	/// If the cards in the deck have different icon states (blank and CAS decks do not)
 	var/has_unique_card_icons = TRUE
 	/// The name of the card
 	var/cardname = "Ace of Spades"
@@ -142,6 +142,10 @@
 		icon_state = blank ? "sc_blank_[deckstyle]" : "sc_scribble_[deckstyle]"
 	return ..()
 
+/obj/item/toy/singlecard/update_name()
+	name = flipped ? cardname : "card"
+	return ..()
+
 /obj/item/toy/singlecard/attackby(obj/item/item, mob/living/user, params, flip_card=FALSE)
 	var/obj/item/toy/singlecard/card
 
@@ -159,7 +163,6 @@
 	if(card) // card + card = combine into cardhand
 		if(flip_card)
 			card.Flip()
-			card.update_appearance()
 
 		if(istype(item, /obj/item/toy/cards/deck))
 			// only decks cause a balloon alert

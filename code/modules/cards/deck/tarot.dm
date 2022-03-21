@@ -1,3 +1,5 @@
+#define TAROT_GHOST_TIMER (666 SECONDS) // this translates into 11 mins and 6 seconds
+
 //These cards certainly won't tell the future, but you can play some nice games with them.
 /obj/item/toy/cards/deck/tarot
 	name = "tarot game deck"
@@ -19,14 +21,11 @@
 
 /obj/item/toy/cards/deck/tarot/draw(mob/user)
 	. = ..()
-	var/obj/item/toy/singlecard/card = .
-	var/matrix/M = matrix()
-	M.Turn(180)
 	if(prob(50))
+		var/obj/item/toy/singlecard/card = .
+		var/matrix/M = matrix()
+		M.Turn(180)
 		card.transform = M
-	return
-
-#define TAROT_GHOST_TIMER (666 SECONDS) // this translates into 11 mins and 6 seconds
 
 /obj/item/toy/cards/deck/tarot/haunted
 	name = "haunted tarot game deck"

@@ -24,10 +24,6 @@
 			new_card.forceMove(src)
 			cards += new_card
 
-	// only using this for debugging purposes for the Card DLC PR (remove before it gets merged)
-	if(!mapload && cards.len <= 1)
-		CRASH("why the fuck is there only 1 card or zero cards in a cardhand?")
-
 	register_context()
 	update_appearance()
 
@@ -38,9 +34,6 @@
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
-	if(cards.len == 0)
-		CRASH("The [src] should have been deleted since it has no cards inside it!")
-
 	for(var/obj/item/toy/singlecard/card in cards)
 		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
 			. += span_notice("You scan the cardhand with your x-ray vision and there is a: [card.cardname]")
@@ -85,7 +78,6 @@
 	var/obj/item/toy/singlecard/selected_card = draw(user, choice)
 	selected_card.pickup(user)
 	user.put_in_hands(selected_card)
-	update_appearance()
 
 	if(cards.len == 1)
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
@@ -114,7 +106,6 @@
 	if(card)
 		if(flip_card)
 			card.Flip()
-			card.update_appearance()
 		insert(card)
 		return
 

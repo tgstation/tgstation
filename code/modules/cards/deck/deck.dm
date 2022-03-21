@@ -195,13 +195,10 @@
 	. = ..()
 
 /obj/item/toy/cards/deck/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/toy/singlecard))
+	if(istype(item, /obj/item/toy/singlecard) || istype(item, /obj/item/toy/cards/cardhand))
 		insert(item)
-		user.balloon_alert_to_viewers("puts card in deck", vision_distance = COMBAT_MESSAGE_RANGE)
-		return
-	if(istype(item, /obj/item/toy/cards/cardhand))
-		insert(item)
-		user.balloon_alert_to_viewers("puts cards in deck", vision_distance = COMBAT_MESSAGE_RANGE)
+		var/card_grammar = istype(item, /obj/item/toy/singlecard) ? "card" : "cards"
+		user.balloon_alert_to_viewers("puts [card_grammar] in deck", vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 	return ..()
 
