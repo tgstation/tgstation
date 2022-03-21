@@ -1,4 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - rscadd: "Adds the Format List and Format Associate List wiremod component, for ease of formatting lists of items."
