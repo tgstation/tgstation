@@ -68,7 +68,7 @@
 	if(istype(mover, /obj/structure/blob))
 		return TRUE
 
-///override to use astar/JPS instead of walk_to so we can path around our blob targets
+///override to use astar/JPS instead of walk_to so we can take our blob pass_flags into account.
 /mob/living/simple_animal/hostile/blob/Goto(target, delay, minimum_distance)
 	if(prevent_goto_movement)
 		return FALSE
@@ -77,7 +77,7 @@
 	else
 		approaching_target = FALSE
 
-	SSmove_manager.jps_move(moving = src, chasing = target, delay = delay, repath_delay = 2 SECONDS, minimum_distance = minimum_distance, simulated_only = FALSE, skip_first = TRUE, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
+	SSmove_manager.jps_move(moving = src, chasing = target, delay = delay, repath_delay = 2 SECONDS, minimum_distance = minimum_distance, simulated_only = FALSE, skip_first = TRUE, timeout = 5 SECONDS, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
 	return TRUE
 
 /mob/living/simple_animal/hostile/blob/Process_Spacemove(movement_dir = 0)
