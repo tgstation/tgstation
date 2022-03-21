@@ -406,7 +406,6 @@
 /obj/structure/frame/computer{
 	dir = 1
 	},
-/obj/item/circuitboard/computer/turbine_computer,
 /obj/item/stack/sheet/glass,
 /obj/item/stack/sheet/glass,
 /turf/open/floor/circuit/green,

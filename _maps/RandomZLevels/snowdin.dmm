@@ -6772,15 +6772,6 @@
 	},
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/outside)
-"sM" = (
-/obj/machinery/power/compressor{
-	comp_id = "snowdin_turbine";
-	dir = 1;
-	luminosity = 2
-	},
-/obj/structure/cable,
-/turf/open/floor/engine/vacuum,
-/area/awaymission/snowdin/post/engineering)
 "sO" = (
 /obj/structure/fence{
 	dir = 4
@@ -6838,9 +6829,6 @@
 /turf/open/floor/iron/dark/snowdin,
 /area/awaymission/snowdin/outside)
 "sW" = (
-/obj/machinery/power/turbine{
-	luminosity = 2
-	},
 /obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/post/engineering)
@@ -27016,7 +27004,7 @@ rq
 rK
 sg
 sB
-sM
+sW
 sW
 tg
 dX

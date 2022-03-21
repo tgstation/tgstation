@@ -382,11 +382,6 @@
 	color = "#FF8888"
 	},
 /area/ruin/space/derelict/bridge/ai_upload)
-"bX" = (
-/obj/structure/rack,
-/obj/item/circuitboard/computer/turbine_computer,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/ai_upload)
 "bY" = (
 /obj/structure/frame/computer{
 	dir = 1
@@ -3572,11 +3567,6 @@
 "Oj" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/derelict/bridge/access)
-"Oo" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/power_compressor,
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/ai_upload)
 "OD" = (
 /obj/structure/closet/wardrobe/genetics_white,
 /obj/effect/spawner/random/maintenance/two,
@@ -3703,11 +3693,6 @@
 	dir = 1
 	},
 /turf/closed/wall/r_wall,
-/area/ruin/space/derelict/bridge/ai_upload)
-"Vg" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/power_turbine,
-/turf/open/floor/iron,
 /area/ruin/space/derelict/bridge/ai_upload)
 "Vt" = (
 /obj/structure/cable,
@@ -8868,9 +8853,9 @@ ax
 ax
 ax
 bo
-Oo
-Vg
-bX
+by
+by
+by
 bg
 ax
 bV
