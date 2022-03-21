@@ -81,8 +81,10 @@
 
 	if(istype(card_item, /obj/item/toy/cards/cardhand))
 		recycled_cardhand = card_item
-		cards_to_add = recycled_cardhand.cards
-		recycled_cardhand.cards = list()
+
+		for(var/obj/item/toy/singlecard/card in recycled_cardhand.cards)
+			cards_to_add += card
+			recycled_cardhand.cards -= card
 		qdel(recycled_cardhand)
 
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
@@ -95,6 +97,7 @@
 		card.transform = M
 		card.update_appearance()
 		cards += card
+		cards_to_add -= card
 	update_appearance()
 
 /**
