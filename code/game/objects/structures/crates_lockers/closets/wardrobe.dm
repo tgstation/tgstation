@@ -48,7 +48,7 @@
 	new /obj/item/clothing/mask/bandana/color/black(src)
 	new /obj/item/clothing/mask/bandana/color/black(src)
 	if(prob(40))
-		new /obj/item/clothing/mask/bandana/color/skull(src)
+		new /obj/item/clothing/mask/bandana/color/skull/black(src)
 	return
 
 
