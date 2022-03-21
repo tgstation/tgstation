@@ -8,20 +8,20 @@
  * Aristocrat's Way
  * > Sidepaths:
  *   Void Cloak
- *   ?
+ *   Shattered Ritual
  *
  * Mark of Void
  * Ritual of Knowledge
  * Void Phase
  * > Sidepaths:
  *   Carving Knife
- *   ?
+ *   Blood Siphon
  *
  * Seeking blade
  * Void Pull
  * > Sidepaths:
- *   Blood Siphon
- *   ?
+ *   Cleave
+ *   Maid in the Mirror
  *
  * Waltz at the End of Time
  */

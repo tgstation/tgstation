@@ -6,25 +6,25 @@
  *
  * The Cutting Edge
  * Grasp of the Blade
- * Blade Dance
+ * Dance of the Brand
  * > Sidepaths:
- *   ?
+ *   Shattered Risen
  *   Armorer's Ritual
  *
  * Mark of the Blade
  * Ritual of Knowledge
  * Stance of the Scarred Duelist
  * > Sidepaths:
- *   ?
+ *   Carving Knife
  *   Mawed Crucible
  *
  * Swift Blades
- * ?
+ * Furious Steel
  * > Sidepaths:
- *   ?
- *   Rusted Ritual
+ *   Maid in the Mirror
+ *   Lionhunter Rifle
  *
- * ?
+ * Maelstrom of Silver
  */
 /datum/heretic_knowledge/limited_amount/starting/base_blade
 	name = "The Cutting Edge"
@@ -187,11 +187,10 @@
 
 #undef BLADE_DANCE_COOLDOWN
 
-
 /datum/heretic_knowledge/mark/blade_mark
 	name = "Mark of the Blade"
-	desc = "Your Mansus Grasp now applies the Mark of the Blade. \
-		While marked, they will be unable to leave their current room. \
+	desc = "Your Mansus Grasp now applies the Mark of the Blade. While marked, \
+		the victim will be unable to leave their current room until it expires or is triggered. \
 		Triggering the mark will summon a knife that will orbit you for a short time. \
 		The knife will block any attack directed towards you, but is consumed on use."
 	gain_text = "There was no room for cowardace here. Those who ran were scolded. \
@@ -352,10 +351,10 @@
 		Bring 3 headless corpses to a transmutation rune to complete the ritual. \
 		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
 		These blades will protect you from all attacks, but are consumed on use. \
-		Additionally, you become a master of combat, gaining full wound and stun immunity \
-		while also dealing bonus damage and healing on strikes with your Darkened Blades."
+		Additionally, you become a master of combat, gaining full wound and stun immunity. \
+		Your Darkened Blades deal bonus damage and healing you on attack for a portion of the damage dealt."
 	gain_text = "The Colonel, in all of his expertise, revealed to me the three roots of victory. \
-		Cunning. Strength. And agony! This was their secret doctrine! With this knowledge in my potention, \
+		Cunning. Strength. And agony! This was their secret doctrine! With this knowledge in my potential, \
 		I AM UNMATCHED! A STORM OF STEEL AND SILVER IS UPON US! WITNESS MY ASCENSION!"
 	route = PATH_BLADE
 
@@ -381,7 +380,7 @@
 	if(target == source)
 		return
 
-	// Turns your blades into eswords, pretty much.
+	// Turns your heretic blades into eswords, pretty much.
 	var/bonus_damage = clamp(30 - blade.force, 0, 12)
 
 	target.apply_damage(
@@ -393,4 +392,5 @@
 		attack_direction = get_dir(source, target),
 	)
 
+	// And! Get some free healing for a portion of the bonus damage dealt.
 	source.heal_overall_damage(bonus_damage / 2, bonus_damage / 2)

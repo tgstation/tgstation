@@ -19,14 +19,14 @@
  * Ritual of Knowledge
  * Raw Ritual
  * > Sidepaths:
- *   Carving Knife
+ *   Blood Siphon
  *   Curse of Paralysis
  *
  * Bleeding Steel
  * Lonely Ritual
  * > Sidepaths:
  *   Ashen Ritual
- *   Blood Siphon
+ *   Cleave
  *
  * Priest's Final Hymn
  */

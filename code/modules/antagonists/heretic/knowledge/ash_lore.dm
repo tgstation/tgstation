@@ -20,7 +20,7 @@
  * Nightwater's Rebirth
  * > Sidepaths:
  *   Ashen Ritual
- *   Blood Cleave
+ *   Rusted Ritual
  *
  * Ashlord's Rite
  */
