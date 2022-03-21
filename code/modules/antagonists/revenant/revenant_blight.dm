@@ -20,7 +20,7 @@
 		affected_mob.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#1d2953")
 		if(affected_mob.dna && affected_mob.dna.species)
 			affected_mob.dna.species.handle_mutant_bodyparts(affected_mob)
-			affected_mob.set_species(null, TRUE)
+			affected_mob.set_haircolor(null, TRUE)
 		to_chat(affected_mob, span_notice("You feel better."))
 	..()
 
