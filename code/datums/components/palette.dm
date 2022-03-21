@@ -65,7 +65,7 @@
 /datum/component/palette/proc/open_radial_menu(mob/user)
 	var/list/choices = build_radial_list()
 
-	color_picker_menu = show_radial_menu_persistent(user, parent, choices, select_proc = CALLBACK(src, .proc/choice_selected, user), tooltips = TRUE, custom_radial_slice = "palette_bg")
+	color_picker_menu = show_radial_menu_persistent(user, parent, choices, select_proc = CALLBACK(src, .proc/choice_selected, user), tooltips = TRUE, radial_slice_icon = "palette_bg")
 
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/close_radial_menu)
 

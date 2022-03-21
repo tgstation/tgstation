@@ -27,24 +27,24 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /atom/movable/screen/radial/slice/set_parent(new_value)
 	. = ..()
-	if(parent?.custom_radial_slice)
-		icon_state = parent.custom_radial_slice
+	if(parent)
+		icon_state = parent.radial_slice_icon
 
 /atom/movable/screen/radial/slice/MouseEntered(location, control, params)
 	. = ..()
-	if(next_page)
+	if(next_page || !parent)
 		icon_state = "radial_slice_focus"
 	else
-		icon_state = "[parent?.custom_radial_slice || "radial_slice"]_focus"
+		icon_state = "[parent.radial_slice_icon]_focus"
 	if(tooltips)
 		openToolTip(usr, src, params, title = name)
 
 /atom/movable/screen/radial/slice/MouseExited(location, control, params)
 	. = ..()
-	if(next_page)
+	if(next_page || !parent)
 		icon_state = "radial_slice"
 	else
-		icon_state = parent?.custom_radial_slice || "radial_slice"
+		icon_state = parent.radial_slice_icon
 	if(tooltips)
 		closeToolTip(usr)
 
@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/entry_animation = TRUE
 
 	///A replacement icon state for the generic radial slice bg icon. Doesn't affect the next page nor the center buttons
-	var/custom_radial_slice
+	var/radial_slice_icon
 
 //If we swap to vis_contens inventory these will need a redo
 /datum/radial_menu/proc/check_screen_border(mob/user)
@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(choice_id == NEXT_PAGE_ID)
 		E.name = "Next Page"
 		E.next_page = TRUE
-		E.icon_state = "radial_slice" // Resets the bg icon state as custom_radial_slice isn't meant for next page buttons.
+		E.icon_state = "radial_slice" // Resets the bg icon state to the default for next page buttons.
 		E.add_overlay("radial_next")
 	else
 		//This isn't granted to exist, so use the ?. operator for conditionals that use it.
@@ -343,7 +343,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, custom_radial_slice)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE, radial_slice_icon = "radial_slice")
 	if(!user || !anchor || !length(choices))
 		return
 	if(!uniqueid)
@@ -362,7 +362,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	if(istype(custom_check))
 		menu.custom_check_callback = custom_check
 	menu.anchor = anchor
-	menu.custom_radial_slice = custom_radial_slice
+	menu.radial_slice_icon = radial_slice_icon
 	menu.check_screen_border(user) //Do what's needed to make it look good near borders or on hud
 	menu.set_choices(choices, tooltips)
 	menu.show_to(user)
