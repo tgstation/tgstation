@@ -130,12 +130,11 @@
 
 /obj/item/toy/cards/cardhand/update_overlays()
 	. = ..()
-
-	// this is for debugging please remove this before Card DLC PR gets merged -TimT
-	if(cards.len <= 1)
-		CRASH("why the fuck is there only 1 card or zero cards in a cardhand?")
-
 	cut_overlays()
+	if(cards.len <= 1)
+		icon_state = null // we want an error icon to appear if this doesn't get qdel
+		return
+
 	var/starting_card_pos = max(1, cards.len - CARDS_MAX_DISPLAY_LIMIT) // only display the top cards in the cardhand
 	var/cards_to_display = min(CARDS_MAX_DISPLAY_LIMIT, cards.len)
 	// 90 degrees from the 1st card to the last, so split the divider by total cards displayed

@@ -119,9 +119,6 @@
 	card = card || cards[1] //draw the card on top
 	cards -= card
 
-	var/last_card_in_hand = istype(src, /obj/item/toy/cards/cardhand) && cards.len > 1
-	if(!last_card_in_hand)
-		update_appearance()
-
+	update_appearance()
 	playsound(src, 'sound/items/cardflip.ogg', 50, TRUE)
 	return card
