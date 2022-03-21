@@ -15,7 +15,7 @@
 
 // Water Vapor:
 /// The temperature required for water vapor to condense.
-#define WATER_VAPOR_CONDENSATION_POINT (T0C + 10)
+#define WATER_VAPOR_CONDENSATION_POINT (T20C + 10)
 /// The temperature required for water vapor to condense as ice instead of water.
 #define WATER_VAPOR_DEPOSITION_POINT 200
 
