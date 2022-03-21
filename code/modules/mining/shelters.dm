@@ -5,6 +5,9 @@
 	var/list/whitelisted_turfs
 	var/list/banned_areas
 	var/list/banned_objects
+	has_ceiling = TRUE
+	ceiling_turf = /turf/open/floor/engine/hull
+	ceiling_baseturfs = list(/turf/open/floor/plating)
 
 /datum/map_template/shelter/New()
 	. = ..()
@@ -38,15 +41,6 @@
 		return SHELTER_DEPLOY_OUTSIDE_MAP
 
 	return SHELTER_DEPLOY_ALLOWED
-
-/datum/map_template/shelter/load(turf/T, centered)
-	. = ..()
-	var/affected = get_affected_turfs(T, centered)
-	for (var/turf/turf in affected)
-		var/turf/ceiling = get_step_multiz(turf, UP)
-		if (ceiling)
-			if (istype(ceiling, /turf/open/openspace) || istype(ceiling, /turf/open/space/openspace))
-				ceiling.ChangeTurf(/turf/open/floor/engine/hull, list(ceiling.type, /turf/open/floor/plating), CHANGETURF_INHERIT_AIR)
 
 /datum/map_template/shelter/alpha
 	name = "Shelter Alpha"
