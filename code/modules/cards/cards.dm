@@ -85,6 +85,7 @@
 		for(var/obj/item/toy/singlecard/card in recycled_cardhand.cards)
 			cards_to_add += card
 			recycled_cardhand.cards -= card
+			card.moveToNullspace()
 		qdel(recycled_cardhand)
 
 	for(var/obj/item/toy/singlecard/card in cards_to_add)
