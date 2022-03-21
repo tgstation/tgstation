@@ -170,24 +170,29 @@ new /datum/disease_ability/symptom/powerful/youth
 	desc = "Force the host you are following to cough with extra force, spreading your infection to those within two meters of your host even if your transmissibility is low.<br>Cooldown: 10 seconds"
 	cooldown_time = 100
 
-/datum/action/cooldown/disease_cough/Trigger()
-	if(!..())
-		return FALSE
-	var/mob/camera/disease/D = owner
-	var/mob/living/L = D.following_host
-	if(!L)
-		return FALSE
-	if(L.stat != CONSCIOUS)
-		to_chat(D, span_warning("Your host must be conscious to cough."))
-		return FALSE
-	to_chat(D, span_notice("You force [L.real_name] to cough."))
-	L.emote("cough")
-	if(L.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-		var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
-		SD.spread(2)
+/datum/action/cooldown/disease_cough/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_cough()
 	StartCooldown()
 	return TRUE
 
+/*
+ * Cause a cough to happen from the host.
+ */
+/datum/action/cooldown/disease_cough/proc/trigger_cough()
+	var/mob/camera/disease/our_disease = owner
+	var/mob/living/host = our_disease.following_host
+	if(!host)
+		return FALSE
+	if(host.stat != CONSCIOUS)
+		to_chat(our_disease, span_warning("Your host must be conscious to cough."))
+		return FALSE
+	to_chat(our_disease, span_notice("You force [host.real_name] to cough."))
+	host.emote("cough")
+	if(host.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
+		var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
+		disease_datum.spread(2)
+	return TRUE
 
 /datum/disease_ability/action/sneeze
 	name = "Voluntary Sneezing"
@@ -204,28 +209,35 @@ new /datum/disease_ability/symptom/powerful/youth
 	desc = "Force the host you are following to sneeze with extra force, spreading your infection to any victims in a 4 meter cone in front of your host even if your transmissibility is low.<br>Cooldown: 20 seconds"
 	cooldown_time = 200
 
-/datum/action/cooldown/disease_sneeze/Trigger()
-	if(!..())
-		return FALSE
-	var/mob/camera/disease/D = owner
-	var/mob/living/L = D.following_host
-	if(!L)
-		return FALSE
-	if(L.stat != CONSCIOUS)
-		to_chat(D, span_warning("Your host must be conscious to sneeze."))
-		return FALSE
-	to_chat(D, span_notice("You force [L.real_name] to sneeze."))
-	L.emote("sneeze")
-	if(L.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
-		var/datum/disease/advance/sentient_disease/SD = D.hosts[L]
-
-		for(var/mob/living/M in oview(4, SD.affected_mob))
-			if(is_source_facing_target(SD.affected_mob, M) && disease_air_spread_walk(get_turf(SD.affected_mob), get_turf(M)))
-				M.AirborneContractDisease(SD, TRUE)
-
+/datum/action/cooldown/disease_sneeze/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_sneeze()
 	StartCooldown()
 	return TRUE
 
+/*
+ * Cause a sneeze to happen from the host.
+ */
+/datum/action/cooldown/disease_sneeze/proc/trigger_sneeze()
+	var/mob/camera/disease/our_disease = owner
+	var/mob/living/host = our_disease.following_host
+	if(!host)
+		return FALSE
+	if(host.stat != CONSCIOUS)
+		to_chat(our_disease, span_warning("Your host must be conscious to sneeze."))
+		return FALSE
+	to_chat(our_disease, span_notice("You force [host.real_name] to sneeze."))
+	host.emote("sneeze")
+	if(host.CanSpreadAirborneDisease()) //don't spread germs if they covered their mouth
+		var/datum/disease/advance/sentient_disease/disease_datum = our_disease.hosts[host]
+		for(var/mob/living/nearby_mob in oview(4, disease_datum.affected_mob))
+			if(!is_source_facing_target(disease_datum.affected_mob, nearby_mob))
+				continue
+			if(!disease_air_spread_walk(get_turf(disease_datum.affected_mob), get_turf(nearby_mob)))
+				continue
+			nearby_mob.AirborneContractDisease(disease_datum, TRUE)
+
+	return TRUE
 
 /datum/disease_ability/action/infect
 	name = "Secrete Infection"
@@ -242,29 +254,33 @@ new /datum/disease_ability/symptom/powerful/youth
 	desc = "Cause the host you are following to excrete an infective substance from their pores, causing all objects touching their skin to transmit your infection to anyone who touches them for the next 30 seconds.<br>Cooldown: 40 seconds"
 	cooldown_time = 400
 
-/datum/action/cooldown/disease_infect/Trigger()
-	if(!..())
-		return FALSE
-	var/mob/camera/disease/D = owner
-	var/mob/living/carbon/human/H = D.following_host
-	if(!H)
-		return FALSE
-	for(var/V in H.get_equipped_items(FALSE))
-		var/obj/O = V
-		O.AddComponent(/datum/component/infective, D.disease_template, 300)
-	//no shoes? infect the floor.
-	if(!H.shoes)
-		var/turf/T = get_turf(H)
-		if(T && !isspaceturf(T))
-			T.AddComponent(/datum/component/infective, D.disease_template, 300)
-	//no gloves? infect whatever we are holding.
-	if(!H.gloves)
-		for(var/V in H.held_items)
-			if(!V)
-				continue
-			var/obj/O = V
-			O.AddComponent(/datum/component/infective, D.disease_template, 300)
+/datum/action/cooldown/disease_infect/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	trigger_infection()
 	StartCooldown()
+	return TRUE
+
+/*
+ * Trigger the infection action.
+ */
+/datum/action/cooldown/disease_infect/proc/trigger_infection()
+	var/mob/camera/disease/our_disease = owner
+	var/mob/living/carbon/human/host = our_disease.following_host
+	if(!host)
+		return FALSE
+	for(var/obj/thing as anything in host.get_equipped_items(FALSE))
+		thing.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
+	//no shoes? infect the floor.
+	if(!host.shoes)
+		var/turf/host_turf = get_turf(host)
+		if(host_turf && !isspaceturf(host_turf))
+			host_turf.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
+	//no gloves? infect whatever we are holding.
+	if(!host.gloves)
+		for(var/obj/held_thing as anything in host.held_items)
+			if(isnull(held_thing))
+				continue
+			held_thing.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
 	return TRUE
 
 /*******************BASE SYMPTOM TYPES*******************/

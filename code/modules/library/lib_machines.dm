@@ -120,7 +120,7 @@
 		else
 			title = null
 	if(href_list["setcategory"])
-		var/newcategory = tgui_input_list(usr, "Choose a category to search for:",, list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
+		var/newcategory = tgui_input_list(usr, "Choose a category to search for", "Category Search", list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
@@ -409,17 +409,17 @@
 		if(b && istype(b))
 			inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = stripped_input(usr, "Enter the author's name: ", max_length = 45)
+		var/newauthor = stripped_input(usr, "Enter the author's name", "Set Author", max_length = MAX_NAME_LEN)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
-		var/newcategory = tgui_input_list(usr, "Choose a category: ",, list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical"))
+		var/newcategory = tgui_input_list(usr, "Choose a category", "Set Category", list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion","Technical"))
 		if(newcategory)
 			upload_category = newcategory
 	if(href_list["upload"])
 		if(scanner)
 			if(scanner.cache)
-				var/choice = tgui_alert(usr, "Are you certain you wish to upload this title to the Archive?",, list("Confirm", "Abort"))
+				var/choice = tgui_alert(usr, "Are you certain you wish to upload this title to the Archive?", "Confirm Upload", list("Confirm", "Abort"))
 				if(choice == "Confirm")
 					if (!SSdbcore.Connect())
 						tgui_alert(usr,"Connection to Archive has been severed. Aborting.")
@@ -484,7 +484,7 @@
 					B.title = title
 					B.author = author
 					B.dat = content
-					B.icon_state = "book[rand(1,8)]"
+					B.icon_state = "book[rand(1,B.maximum_book_state)]"
 					visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 				break
 			qdel(query_library_print)
@@ -603,7 +603,7 @@
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"
-			B.icon_state = "book[rand(1,7)]"
+			B.icon_state = "book[rand(1,B.maximum_book_state)]"
 			qdel(P)
 		else
 			P.forceMove(drop_location())

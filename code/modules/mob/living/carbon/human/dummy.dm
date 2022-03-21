@@ -51,7 +51,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	///Travel to the bottom of the contents chain, expanding it out
 	for(var/i = 1; i <= length(items_to_check); i++) //Needs to be a c style loop since it can expand
 		var/obj/item/checking = items_to_check[i]
-		if(!checking) //Nulls in the list, depressing
+		if(QDELETED(checking)) //Nulls in the list, depressing
 			continue
 		if(!isitem(checking)) //What the fuck are you on
 			to_nuke += checking

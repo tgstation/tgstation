@@ -64,7 +64,7 @@
 	var/turf/T = get_turf(source)
 	playsound(T,'sound/effects/explosion2.ogg', 200, TRUE)
 	new /obj/effect/temp_visual/explosion(T)
-	explodee.ex_act(EXPLODE_HEAVY)
+	EX_ACT(explodee, EXPLODE_HEAVY)
 	UNREGISTER_BOMB_SIGNALS(source)
 
 /mob/living/simple_animal/hostile/guardian/bomb/proc/disable(atom/A)

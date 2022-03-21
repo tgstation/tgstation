@@ -159,7 +159,7 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and stops time."
 
 /obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
-	to_chat(target, "<span class=notice>You try to forget how you feel.</span>")
+	to_chat(target, span_notice("You try to forget how you feel."))
 	target.AddComponent(/datum/component/dejavu)
 
 /obj/item/slimecross/regenerative/cerulean
@@ -270,11 +270,11 @@ Regenerative extracts:
 	effect_desc = "Fully heals the target and boosts their armor."
 
 /obj/item/slimecross/regenerative/adamantine/core_effect(mob/living/target, mob/user) //WIP - Find out why this doesn't work.
-	target.apply_status_effect(STATUS_EFFECT_SLIMESKIN)
+	target.apply_status_effect(/datum/status_effect/slimeskin)
 
 /obj/item/slimecross/regenerative/rainbow
 	colour = "rainbow"
 	effect_desc = "Fully heals the target and temporarily makes them immortal, but pacifistic."
 
 /obj/item/slimecross/regenerative/rainbow/core_effect(mob/living/target, mob/user)
-	target.apply_status_effect(STATUS_EFFECT_RAINBOWPROTECTION)
+	target.apply_status_effect(/datum/status_effect/rainbow_protection)

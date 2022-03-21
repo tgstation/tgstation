@@ -7,7 +7,6 @@
 	..()
 
 	new /obj/item/storage/bag/garment/engineering_chief (src)
-	new /obj/item/tank/jetpack/suit(src)
 	new /obj/item/cartridge/ce(src)
 	new /obj/item/radio/headset/heads/ce(src)
 	new /obj/item/megaphone/command(src)

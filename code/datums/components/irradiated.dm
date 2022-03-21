@@ -12,7 +12,6 @@
 
 /// This atom is irradiated, and will glow green.
 /// Humans will take toxin damage until all their toxin damage is cleared.
-/// Items will attempt to irradiate whoever is holding them, as well as whatever they are inside.
 /datum/component/irradiated
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -47,7 +46,7 @@
 
 		start_burn_splotch_timer()
 
-		human_parent.throw_alert("irradiated", /atom/movable/screen/alert/irradiated)
+		human_parent.throw_alert(ALERT_IRRADIATED, /atom/movable/screen/alert/irradiated)
 
 /datum/component/irradiated/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
@@ -66,7 +65,7 @@
 
 	var/mob/living/carbon/human/human_parent = parent
 	if (istype(human_parent))
-		human_parent.clear_alert("irradiated")
+		human_parent.clear_alert(ALERT_IRRADIATED)
 
 	REMOVE_TRAIT(parent, TRAIT_IRRADIATED, REF(src))
 
@@ -190,7 +189,7 @@
 /atom/movable/screen/alert/irradiated
 	name = "Irradiated"
 	desc = "You're irradiated! Heal your toxins quick, and stand under a shower to halt the incoming damage."
-	icon_state = "irradiated"
+	icon_state = ALERT_IRRADIATED
 
 #undef RADIATION_BURN_SPLOTCH_DAMAGE
 #undef RADIATION_BURN_INTERVAL_MIN

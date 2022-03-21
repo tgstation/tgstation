@@ -141,6 +141,8 @@
 /mob/living/simple_animal/pet/dog/pug/mcgriff
 	name = "McGriff"
 	desc = "This dog can tell something smells around here, and that something is CRIME!"
+	gold_core_spawnable = NO_SPAWN
+	unique_pet = TRUE
 
 /mob/living/simple_animal/pet/dog/bullterrier
 	name = "\improper bull terrier"
@@ -523,7 +525,10 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	if(saved_head)
 		place_on_head(new saved_head)
 
-/mob/living/simple_animal/pet/dog/corgi/ian/proc/Write_Memory(dead)
+/mob/living/simple_animal/pet/dog/corgi/ian/Write_Memory(dead, gibbed)
+	. = ..()
+	if(!.)
+		return
 	var/json_file = file("data/npc_saves/Ian.json")
 	var/list/file_data = list()
 	if(!dead)

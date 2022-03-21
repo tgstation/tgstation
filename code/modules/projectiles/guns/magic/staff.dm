@@ -75,7 +75,7 @@
 	. = ..()
 	if(!is_wizard_or_friend(user))
 		to_chat(user, span_hypnophrase("<span style='font-size: 24px'>The staff feels weaker as you touch it</span>"))
-		balloon_alert(user, "the staff feels weaker as you touch it")
+		user.balloon_alert(user, "the staff feels weaker as you touch it")
 
 /obj/item/gun/magic/staff/healing/Initialize(mapload)
 	. = ..()

@@ -16,7 +16,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 
 /obj/structure/fireaxecabinet/Initialize(mapload)
 	. = ..()
-	fireaxe = new
+	fireaxe = new(src)
 	update_appearance()
 
 /obj/structure/fireaxecabinet/Destroy()

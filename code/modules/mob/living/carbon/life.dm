@@ -34,9 +34,6 @@
 
 	check_cremation(delta_time, times_fired)
 
-	//Updates the number of stored chemicals for powers
-	handle_changeling(delta_time, times_fired)
-
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
 			var/datum/addiction/addiction = SSaddiction.all_addictions[key]
@@ -136,7 +133,7 @@
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
 		failed_last_breath = FALSE
-		clear_alert("not_enough_oxy")
+		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
@@ -152,7 +149,7 @@
 		adjustOxyLoss(1)
 
 		failed_last_breath = TRUE
-		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+		throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		return FALSE
 
 	var/safe_oxy_min = 16
@@ -182,14 +179,14 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = TRUE
-		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+		throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
 		failed_last_breath = FALSE
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
-		clear_alert("not_enough_oxy")
+		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
@@ -213,30 +210,30 @@
 	if(Plasma_partialpressure > safe_plas_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert("too_much_plas", /atom/movable/screen/alert/too_much_plas)
+		throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 	else
-		clear_alert("too_much_plas")
+		clear_alert(ALERT_TOO_MUCH_PLASMA)
 
 	//NITROUS OXIDE
 	if(breath_gases[/datum/gas/nitrous_oxide])
 		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
-			throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
+			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
 				Sleeping(max(AmountSleeping() + 40, 200))
 		else if(SA_partialpressure > 0.01)
-			clear_alert("too_much_n2o")
+			clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
-			clear_alert("too_much_n2o")
+			clear_alert(ALERT_TOO_MUCH_N2O)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
-		clear_alert("too_much_n2o")
+		clear_alert(ALERT_TOO_MUCH_N2O)
 
 	//BZ (Facepunch port of their Agent B)
 	if(breath_gases[/datum/gas/bz])
@@ -367,18 +364,6 @@
 		if(W.processes) // meh
 			W.handle_process(delta_time, times_fired)
 
-//todo generalize this and move hud out
-/mob/living/carbon/proc/handle_changeling(delta_time, times_fired)
-	if(mind && hud_used?.lingchemdisplay)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			changeling.regenerate(delta_time, times_fired)
-			hud_used.lingchemdisplay.invisibility = 0
-			hud_used.lingchemdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#dd66dd'>[round(changeling.chem_charges)]</font></div>")
-		else
-			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
-
-
 /mob/living/carbon/handle_mutations(time_since_irradiated, delta_time, times_fired)
 	if(!dna?.temporary_mutations.len)
 		return
@@ -413,7 +398,7 @@
 				dna.temporary_mutations.Remove(mut)
 				continue
 	for(var/datum/mutation/human/HM in dna.mutations)
-		if(HM?.timed)
+		if(HM?.timeout)
 			dna.remove_mutation(HM.type)
 
 /*
@@ -444,37 +429,36 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	//Dizziness
 	if(dizziness)
-		var/client/C = client
-		var/pixel_x_diff = 0
-		var/pixel_y_diff = 0
-		var/temp
-		var/saved_dizz = dizziness
-		if(C)
-			var/oldsrc = src
-			var/amplitude = dizziness*(sin(dizziness * world.time) + 1) // This shit is annoying at high strength
-			src = null
-			spawn(0) // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-				if(C)
-					temp = amplitude * sin(saved_dizz * world.time)
-					pixel_x_diff += temp
-					C.pixel_x += temp
-					temp = amplitude * cos(saved_dizz * world.time)
-					pixel_y_diff += temp
-					C.pixel_y += temp
-					sleep(3)
-					if(C)
-						temp = amplitude * sin(saved_dizz * world.time)
-						pixel_x_diff += temp
-						C.pixel_x += temp
-						temp = amplitude * cos(saved_dizz * world.time)
-						pixel_y_diff += temp
-						C.pixel_y += temp
-					sleep(3)
-					if(C)
-						C.pixel_x -= pixel_x_diff
-						C.pixel_y -= pixel_y_diff
-			src = oldsrc
+		var/old_dizzy = dizziness
 		dizziness = max(dizziness - (restingpwr * delta_time), 0)
+
+		if(client)
+			//Want to be able to offset things by the time the animation should be "playing" at
+			var/time = world.time
+			var/delay = 0
+			var/pixel_x_diff = 0
+			var/pixel_y_diff = 0
+
+			var/amplitude = old_dizzy*(sin(old_dizzy * (time)) + 1) // This shit is annoying at high strengthvar/pixel_x_diff = 0
+			var/x_diff = amplitude * sin(old_dizzy * time)
+			var/y_diff = amplitude * cos(old_dizzy * time)
+			pixel_x_diff += x_diff
+			pixel_y_diff += y_diff
+			// Brief explanation. We're basically snapping between different pixel_x/ys instantly, with delays between
+			// Doing this with relative changes. This way we don't override any existing pixel_x/y values
+			// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
+			// Relative animations are weird, so we do actually need this
+			animate(client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+			delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
+
+			x_diff = amplitude * sin(dizziness * (time + delay))
+			y_diff = amplitude * cos(dizziness * (time + delay))
+			pixel_x_diff += x_diff
+			pixel_y_diff += y_diff
+			animate(pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+
+			// Now we reset back to our old pixel_x/y, since these animates are relative
+			animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
 
 	if(drowsyness)
 		adjust_drowsyness(-1 * restingpwr * delta_time)
@@ -506,11 +490,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(DT_PROB(16, delta_time))
 				slurring += 2
 			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
-			throw_alert("drunk", /atom/movable/screen/alert/drunk)
+			throw_alert(ALERT_DRUNK, /atom/movable/screen/alert/drunk)
 			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
-			clear_alert("drunk")
+			clear_alert(ALERT_DRUNK)
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(drunkenness >= 11 && slurring < 5)

@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/heal
-	true_name = "organic replicator"
+	abductor_hint = "organic replicator. Forcibly ejects damaged and robotic organs from the abductee and regenerates them. Additionally, forcibly removes reagents (via vomit) from the abductee if they have moderate toxin damage or poison within the bloodstream, and regenerates blood to a healthy threshold if too low. The abductee will also reject implants such as mindshields."
 	cooldown_low = 200
 	cooldown_high = 400
 	uses = -1
@@ -170,7 +170,7 @@
 /obj/item/organ/heart/gland/heal/proc/replace_limb(body_zone, obj/item/bodypart/limb)
 	if(limb)
 		owner.visible_message(span_warning("[owner]'s [limb.name] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.name] suddenly detaches from your body!"))
-		playsound(owner, "desecration", 50, TRUE, -1)
+		playsound(owner, SFX_DESECRATION, 50, TRUE, -1)
 		limb.drop_limb()
 	else
 		to_chat(owner, span_warning("You feel a weird tingle in your [parse_zone(body_zone)]... even if you don't have one."))

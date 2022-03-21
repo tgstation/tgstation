@@ -169,6 +169,16 @@ GLOBAL_VAR(station_nuke_source)
 				START_PROCESSING(SSobj, core)
 			return TRUE
 
+/obj/machinery/nuclearbomb/can_interact(mob/user)
+	if(HAS_TRAIT(user, TRAIT_CAN_USE_NUKE))
+		return TRUE
+	return ..()
+
+/obj/machinery/nuclearbomb/ui_state(mob/user)
+	if(HAS_TRAIT(user, TRAIT_CAN_USE_NUKE))
+		return GLOB.conscious_state
+	return ..()
+
 /obj/machinery/nuclearbomb/proc/get_nuke_state()
 	if(exploding)
 		return NUKE_ON_EXPLODING
@@ -316,7 +326,7 @@ GLOBAL_VAR(station_nuke_source)
 	. = ..()
 	if(.)
 		return
-	playsound(src, "terminal_type", 20, FALSE)
+	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)
@@ -605,7 +615,14 @@ GLOBAL_VAR(station_nuke_source)
 
 /proc/KillEveryoneOnStation()
 	for(var/mob/living/victim as anything in GLOB.mob_living_list)
-		if(victim.stat != DEAD && is_station_level(victim.z))
+		var/turf/target_turf = get_turf(victim)
+		if(istype(victim.loc, /obj/structure/closet/secure_closet/freezer))
+			var/obj/structure/closet/secure_closet/freezer/freezer = victim.loc
+			if(!freezer.jones)
+				to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as the nuclear bomb goes off. Luckily as \the [victim.loc] is lead-lined, you survive."))
+				freezer.jones = TRUE
+				continue
+		if(victim.stat != DEAD && target_turf && is_station_level(target_turf.z))
 			to_chat(victim, span_userdanger("You are shredded to atoms!"))
 			victim.gib()
 
@@ -614,7 +631,14 @@ GLOBAL_VAR(station_nuke_source)
 		return
 	for(var/_victim in GLOB.mob_living_list)
 		var/mob/living/victim = _victim
-		if(victim.stat != DEAD && victim.z == z)
+		var/turf/target_turf = get_turf(victim)
+		if(istype(victim.loc, /obj/structure/closet/secure_closet/freezer))
+			var/obj/structure/closet/secure_closet/freezer/freezer = victim.loc
+			if(!freezer.jones)
+				to_chat(victim, span_boldannounce("You hold onto \the [victim.loc] as the nuclear bomb goes off. Luckily as \the [victim.loc] is lead-lined, you survive."))
+				freezer.jones = TRUE
+				continue
+		if(victim.stat != DEAD && target_turf && target_turf.z == z)
 			to_chat(victim, span_userdanger("You are shredded to atoms!"))
 			victim.gib()
 
@@ -658,7 +682,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 30, BIO = 0, FIRE = 100, ACID = 100)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	var/fake = FALSE
-	var/turf/lastlocation
+	var/turf/last_secured_location
 	var/last_disk_move
 
 /obj/item/disk/nuclear/Initialize(mapload)
@@ -678,9 +702,19 @@ This is here to make the tiles around the station mininuke change when it's arme
 	if(fake)
 		STOP_PROCESSING(SSobj, src)
 		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
-	var/turf/newturf = get_turf(src)
 
-	if(newturf && lastlocation == newturf)
+	var/turf/new_turf = get_turf(src)
+
+	if (is_secured())
+		last_secured_location = new_turf
+		last_disk_move = world.time
+		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
+		if(istype(loneop) && loneop.occurrences < loneop.max_occurrences && prob(loneop.weight))
+			loneop.weight = max(loneop.weight - 1, 0)
+			if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
+				message_admins("[src] is secured (currently in [ADMIN_VERBOSEJMP(new_turf)]). The weight of Lone Operative is now [loneop.weight].")
+			log_game("[src] being secured has reduced the weight of the Lone Operative event to [loneop.weight].")
+	else
 		/// How comfy is our disk?
 		var/disk_comfort_level = 0
 
@@ -696,18 +730,18 @@ This is here to make the tiles around the station mininuke change when it's arme
 				if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
 					if(disk_comfort_level >= 2)
 						visible_message(span_notice("[src] sleeps soundly. Sleep tight, disky."))
-					message_admins("[src] is stationary in [ADMIN_VERBOSEJMP(newturf)]. The weight of Lone Operative is now [loneop.weight].")
-				log_game("[src] is stationary for too long in [loc_name(newturf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
+					message_admins("[src] is unsecured in [ADMIN_VERBOSEJMP(new_turf)]. The weight of Lone Operative is now [loneop.weight].")
+				log_game("[src] is unsecured for too long in [loc_name(new_turf)], and has increased the weight of the Lone Operative event to [loneop.weight].")
 
-	else
-		lastlocation = newturf
-		last_disk_move = world.time
-		var/datum/round_event_control/operative/loneop = locate(/datum/round_event_control/operative) in SSevents.control
-		if(istype(loneop) && loneop.occurrences < loneop.max_occurrences && prob(loneop.weight))
-			loneop.weight = max(loneop.weight - 1, 0)
-			if(loneop.weight % 5 == 0 && SSticker.totalPlayers > 1)
-				message_admins("[src] is on the move (currently in [ADMIN_VERBOSEJMP(newturf)]). The weight of Lone Operative is now [loneop.weight].")
-			log_game("[src] being on the move has reduced the weight of the Lone Operative event to [loneop.weight].")
+/obj/item/disk/nuclear/proc/is_secured()
+	if (last_secured_location == get_turf(src))
+		return FALSE
+
+	var/mob/holder = pulledby || get(src, /mob)
+	if (isnull(holder?.client))
+		return FALSE
+
+	return TRUE
 
 /obj/item/disk/nuclear/examine(mob/user)
 	. = ..()

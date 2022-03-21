@@ -10,7 +10,7 @@
 	var/datum/mind/memorizer_mind
 	///the action done to the target, see memory.dm in _DEFINES
 	var/action
-	///extra information used in the memories to more accurately describe what happened. Assoc list of key -> string identifying what kind of info it is, value is an atom or string identifying the detail.
+	///extra information used in the memories to more accurately describe what happened. Assoc list of key -> string identifying what kind of info it is, value is a string identifying the detail.
 	var/list/extra_info
 	///mood of the person memorizing the event when it happend. can change the style.
 	var/memorizer_mood
@@ -24,6 +24,14 @@
 	src.memorizer_mind = memorizer_mind
 	src.memorizer = memorizer
 	src.action = action
+	//You can feed atoms in, but they're gonna be reduced to text
+	for(var/key in extra_info)
+		var/thing = extra_info[key]
+		if(!isdatum(thing))
+			continue
+		var/datum/reduce_to_string = thing
+		extra_info[key] = "[reduce_to_string]"
+
 	src.extra_info = extra_info
 	src.memorizer_mood = memorizer_mood
 	src.story_value = story_value

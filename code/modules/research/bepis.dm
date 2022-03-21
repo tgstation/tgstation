@@ -7,6 +7,7 @@
 #define MAJOR_THRESHOLD 6*CARGO_CRATE_VALUE
 #define MINOR_THRESHOLD 4*CARGO_CRATE_VALUE
 #define STANDARD_DEVIATION 2*CARGO_CRATE_VALUE
+#define PART_CASH_OFFSET_AMOUNT 0.5*CARGO_CRATE_VALUE
 
 /obj/machinery/rnd/bepis
 	name = "\improper B.E.P.I.S. Chamber"
@@ -16,6 +17,7 @@
 	base_icon_state = "chamber"
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	use_power = IDLE_POWER_USE
 	active_power_usage = 1500
 	circuit = /obj/item/circuitboard/machine/bepis
@@ -91,10 +93,10 @@
 		C += ((Cap.rating - 1) * 0.1)
 	power_saver = 1 - C
 	for(var/obj/item/stock_parts/manipulator/Manip in component_parts)
-		M += ((Manip.rating - 1) * 250)
+		M += ((Manip.rating - 1) * PART_CASH_OFFSET_AMOUNT)
 	positive_cash_offset = M
 	for(var/obj/item/stock_parts/micro_laser/Laser in component_parts)
-		L += ((Laser.rating - 1) * 250)
+		L += ((Laser.rating - 1) * PART_CASH_OFFSET_AMOUNT)
 	negative_cash_offset = L
 	for(var/obj/item/stock_parts/scanning_module/Scan in component_parts)
 		S += ((Scan.rating - 1) * 0.25)
@@ -258,12 +260,12 @@
 	flick("chamber_flash",src)
 	update_appearance()
 	banked_cash = 0
-	if((gauss_real >= gauss_major) && (SSresearch.techweb_nodes_experimental.len > 0)) //Major Success.
-		say("Experiment concluded with major success. New technology node discovered on technology disc.")
-		new /obj/item/disk/tech_disk/major(dropturf,1)
-		if(SSresearch.techweb_nodes_experimental.len == 0)
-			say("Expended all available experimental technology nodes. Resorting to minor rewards.")
-		return
+	if((gauss_real >= gauss_major)) //Major Success.
+		if(SSresearch.techweb_nodes_experimental.len > 0)
+			say("Experiment concluded with major success. New technology node discovered on technology disc.")
+			new /obj/item/disk/tech_disk/major(dropturf,1)
+			return
+		say("Expended all available experimental technology nodes. Resorting to minor rewards.")
 	if(gauss_real >= gauss_minor) //Minor Success.
 		var/reward = pick(minor_rewards)
 		new reward(dropturf)

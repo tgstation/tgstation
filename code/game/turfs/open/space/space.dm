@@ -14,6 +14,7 @@
 	var/destination_y
 
 	var/static/datum/gas_mixture/immutable/space/space_gas = new
+	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
 	light_power = 0.25
@@ -123,41 +124,9 @@
 	if(!CanBuildHere())
 		return
 	if(istype(C, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = C
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		var/obj/structure/lattice/catwalk/W = locate(/obj/structure/lattice/catwalk, src)
-		if(W)
-			to_chat(user, span_warning("There is already a catwalk here!"))
-			return
-		if(L)
-			if(R.use(1))
-				qdel(L)
-				to_chat(user, span_notice("You construct a catwalk."))
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				new/obj/structure/lattice/catwalk(src)
-			else
-				to_chat(user, span_warning("You need two rods to build a catwalk!"))
-			return
-		if(R.use(1))
-			to_chat(user, span_notice("You construct a lattice."))
-			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-			ReplaceWithLattice()
-		else
-			to_chat(user, span_warning("You need one rod to build a lattice."))
-		return
-	if(istype(C, /obj/item/stack/tile/iron))
-		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-		if(L)
-			var/obj/item/stack/tile/iron/S = C
-			if(S.use(1))
-				qdel(L)
-				playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
-				to_chat(user, span_notice("You build a floor."))
-				PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
-			else
-				to_chat(user, span_warning("You need one floor tile to build a floor!"))
-		else
-			to_chat(user, span_warning("The plating is going to need some support! Place metal rods first."))
+		build_with_rods(C, user)
+	else if(istype(C, /obj/item/stack/tile/iron))
+		build_with_floor_tiles(C, user)
 
 
 /turf/open/space/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -240,6 +209,9 @@
 			return TRUE
 	return FALSE
 
+/turf/open/space/rust_heretic_act()
+	return FALSE
+
 /turf/open/space/ReplaceWithLattice()
 	var/dest_x = destination_x
 	var/dest_y = destination_y
@@ -248,3 +220,51 @@
 	destination_x = dest_x
 	destination_y = dest_y
 	destination_z = dest_z
+
+/turf/open/space/openspace
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "invisible"
+
+/turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
+	. = ..()
+	overlays += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
+	icon_state = "invisible"
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/space/openspace/LateInitialize()
+	. = ..()
+	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
+
+/turf/open/space/openspace/zAirIn()
+	return TRUE
+
+/turf/open/space/openspace/zAirOut()
+	return TRUE
+
+/turf/open/space/openspace/zPassIn(atom/movable/A, direction, turf/source)
+	if(direction == DOWN)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_IN_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_IN_UP)
+				return FALSE
+		return TRUE
+	return FALSE
+
+/turf/open/space/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+	if(A.anchored)
+		return FALSE
+	if(direction == DOWN)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_OUT_DOWN)
+				return FALSE
+		return TRUE
+	if(direction == UP)
+		for(var/obj/contained_object in contents)
+			if(contained_object.obj_flags & BLOCK_Z_OUT_UP)
+				return FALSE
+		return TRUE
+	return FALSE

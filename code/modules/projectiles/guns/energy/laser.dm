@@ -152,3 +152,38 @@
 
 /obj/item/gun/energy/laser/redtag/hitscan
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/redtag/hitscan)
+
+//Inferno and Cryo Pistols
+
+/obj/item/gun/energy/laser/thermal //the common parent of these guns, it just shoots hard bullets, somoene might like that?
+	name = "nanite pistol"
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of angry robots into the bad guys."
+	icon_state = "infernopistol"
+	inhand_icon_state = null
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite)
+	shaded_charge = TRUE
+	ammo_x_offset = 1
+	can_flashlight = TRUE
+	flight_x_offset = 15
+	flight_y_offset = 9
+	can_bayonet = TRUE
+	knife_x_offset = 19
+	knife_y_offset = 13
+	w_class = WEIGHT_CLASS_NORMAL
+	dual_wield_spread = 10 //as intended by the coders
+
+/obj/item/gun/energy/laser/thermal/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+
+/obj/item/gun/energy/laser/thermal/inferno //the magma gun
+	name = "inferno pistol"
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit globs of molten angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an violent eruption in anyone who is severely cold."
+	icon_state = "infernopistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/inferno)
+
+/obj/item/gun/energy/laser/thermal/cryo //the ice gun
+	name = "cryo pistol"
+	desc = "A modified handcannon with a self-replicating reserve of decommissioned weaponized nanites. Spit shards of frozen angry robots into the bad guys. While it doesn't manipulate temperature in of itself, it does cause an internal explosion in anyone who is severely hot."
+	icon_state = "cryopistol"
+	ammo_type = list(/obj/item/ammo_casing/energy/nanite/cryo)

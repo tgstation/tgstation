@@ -30,7 +30,7 @@
 /obj/machinery/mechpad/screwdriver_act(mob/user, obj/item/tool)
 	. = ..()
 	if(!.)
-		return default_deconstruction_screwdriver(user, "mechpad-o", "mechpad", tool)
+		return default_deconstruction_screwdriver(user, "mechpad-open", "mechpad", tool)
 
 /obj/machinery/mechpad/crowbar_act(mob/user, obj/item/tool)
 	..()

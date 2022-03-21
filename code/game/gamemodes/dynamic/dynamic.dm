@@ -1,5 +1,6 @@
 #define RULESET_STOP_PROCESSING 1
 
+#define FAKE_GREENSHIFT_FORM_CHANCE 15
 #define FAKE_REPORT_CHANCE 8
 #define REPORT_NEG_DIVERGENCE -15
 #define REPORT_POS_DIVERGENCE 15
@@ -32,6 +33,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 	/// Running information about the threat. Can store text or datum entries.
 	var/list/threat_log = list()
+	/// Threat log shown on the roundend report. Should only list player-made edits.
+	var/list/roundend_threat_log = list()
 	/// List of latejoin rules used for selecting the rules.
 	var/list/latejoin_rules
 	/// List of midround rules used for selecting the rules.
@@ -184,8 +187,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_injection_chance(dry_run = TRUE)]%</b> latejoin chance, <b>[get_midround_injection_chance(dry_run = TRUE)]%</b> midround chance)<BR>"
-	dat += "Latejoin: [(latejoin_injection_cooldown-world.time)>60*10 ? "[round((latejoin_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(latejoin_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
-	dat += "Midround: [(midround_injection_cooldown-world.time)>60*10 ? "[round((midround_injection_cooldown-world.time)/60/10,0.1)] minutes" : "[(midround_injection_cooldown-world.time)] seconds"] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Midround: [DisplayTimeText(midround_injection_cooldown-world.time)] <a href='?src=\ref[src];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
 	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
 
 /datum/game_mode/dynamic/Topic(href, href_list)
@@ -204,11 +207,9 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		if(!threatadd)
 			return
 		if(threatadd > 0)
-			create_threat(threatadd)
-			threat_log += "[worldtime2text()]: [key_name(usr)] increased threat by [threatadd] threat."
+			create_threat(threatadd, threat_log, "[worldtime2text()]: increased by [key_name(usr)]")
 		else
-			spend_midround_budget(-threatadd)
-			threat_log += "[worldtime2text()]: [key_name(usr)] decreased threat by [-threatadd] threat."
+			spend_midround_budget(-threatadd, threat_log, "[worldtime2text()]: decreased by [key_name(usr)]")
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
@@ -260,12 +261,16 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(shown_threat))
 		if(0 to 19)
-			if(!GLOB.current_living_antags.len)
-				. += "<b>Peaceful Waypoint</b></center><BR>"
-				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
-			else
+			var/show_core_territory = (GLOB.current_living_antags.len > 0)
+			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
+				show_core_territory = !show_core_territory
+
+			if (show_core_territory)
 				. += "<b>Core Territory</b></center><BR>"
 				. += "Your station orbits within reliably mundane, secure space. Although Nanotrasen has a firm grip on security in your region, the valuable resources and strategic position aboard your station make it a potential target for infiltrations. Monitor crew for non-loyal behavior, but expect a relatively tame shift free of large-scale destruction. We expect great things from your station."
+			else
+				. += "<b>Peaceful Waypoint</b></center><BR>"
+				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
 		if(20 to 39)
 			. += "<b>Anomalous Exogeology</b></center><BR>"
 			. += "Although your station lies within what is generally considered Nanotrasen-controlled space, the course of its orbit has caused it to cross unusually close to exogeological features with anomalous readings. Although these features offer opportunities for our research department, it is known that these little understood readings are often correlated with increased activity from competing interstellar organizations and individuals, among them the Wizard Federation and Cult of the Geometer of Blood - all known competitors for Anomaly Type B sites. Exercise elevated caution."
@@ -283,13 +288,24 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			. += "Your station is somehow in the middle of hostile territory, in clear view of any enemy of the corporation. Your likelihood to survive is low, and station destruction is expected and almost inevitable. Secure any sensitive material and neutralize any enemy you will come across. It is important that you at least try to maintain the station.<BR>"
 			. += "Good luck."
 
+	var/min_threat = 100
+	for(var/datum/dynamic_ruleset/ruleset as anything in init_rulesets(/datum/dynamic_ruleset))
+		if(ruleset.weight <= 0 || ruleset.cost <= 0)
+			continue
+		min_threat = min(ruleset.cost, min_threat)
+	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+
+	generate_station_goals(greenshift)
 	. += generate_station_goal_report()
 	. += generate_station_trait_report()
 
 	print_command_report(., "Central Command Status Summary", announce=FALSE)
-	priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
-	if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
-		set_security_level(SEC_LEVEL_BLUE)
+	if(greenshift)
+		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound())
+	else
+		priority_announce("A summary has been copied and printed to all communications consoles.", "Security level elevated.", ANNOUNCER_INTERCEPT)
+		if(SSsecurity_level.current_level < SEC_LEVEL_BLUE)
+			set_security_level(SEC_LEVEL_BLUE)
 
 /datum/game_mode/dynamic/proc/show_threatlog(mob/admin)
 	if(!SSticker.HasRoundStarted())
@@ -569,8 +585,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if((new_rule.acceptable(population, threat_level) && new_rule.cost <= mid_round_budget) || forced)
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
-			spend_midround_budget(new_rule.cost)
-			threat_log += "[worldtime2text()]: Forced rule [new_rule.name] spent [new_rule.cost]"
+			spend_midround_budget(new_rule.cost, threat_log, "[worldtime2text()]: Forced rule [new_rule.name]")
 			new_rule.pre_execute(population)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGH_IMPACT_RULESET)
@@ -601,7 +616,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), midround_delay_min, midround_delay_max)) + world.time)
 
 		// Time to inject some threat into the round
-		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
+		if(EMERGENCY_PAST_POINT_OF_NO_RETURN) // Unless the shuttle is past the point of no return
 			return
 
 		message_admins("DYNAMIC: Checking for midround injection.")
@@ -730,25 +745,37 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		ruleset.restricted_roles |= "Assistant"
+		ruleset.restricted_roles |= JOB_ASSISTANT
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)
 	mid_round_budget = min(threat_level, mid_round_budget + regain)
 
 /// Generate threat and increase the threat_level if it goes beyond, capped at 100
-/datum/game_mode/dynamic/proc/create_threat(gain)
+/datum/game_mode/dynamic/proc/create_threat(gain, list/threat_log, reason)
 	mid_round_budget = min(100, mid_round_budget + gain)
 	if(mid_round_budget > threat_level)
 		threat_level = mid_round_budget
+	for(var/list/logs in threat_log)
+		log_threat(gain, logs, reason)
+
+/datum/game_mode/dynamic/proc/log_threat(threat_change, list/threat_log, reason)
+	var/gain_or_loss = "+"
+	if(threat_change < 0)
+		gain_or_loss = "-"
+	threat_log += "Threat [gain_or_loss][abs(threat_change)] - [reason]."
 
 /// Expend round start threat, can't fall under 0.
-/datum/game_mode/dynamic/proc/spend_roundstart_budget(cost)
+/datum/game_mode/dynamic/proc/spend_roundstart_budget(cost, list/threat_log, reason)
 	round_start_budget = max(round_start_budget - cost,0)
+	for(var/list/logs in threat_log)
+		log_threat(cost, logs, reason)
 
 /// Expend midround threat, can't fall under 0.
-/datum/game_mode/dynamic/proc/spend_midround_budget(cost)
+/datum/game_mode/dynamic/proc/spend_midround_budget(cost, list/threat_log, reason)
 	mid_round_budget = max(mid_round_budget - cost,0)
+	for(var/list/logs in threat_log)
+		log_threat(cost, logs, reason)
 
 /// Turns the value generated by lorentz distribution to number between 0 and 100.
 /// Used for threat level and splitting the budgets.
@@ -781,5 +808,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	log_game("DYNAMIC: [text]")
 
 #undef FAKE_REPORT_CHANCE
+#undef FAKE_GREENSHIFT_FORM_CHANCE
 #undef REPORT_NEG_DIVERGENCE
 #undef REPORT_POS_DIVERGENCE

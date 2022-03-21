@@ -337,7 +337,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	desc = "Stop looking through the bluespace peephole."
 	button_icon_state = "cancel_peephole"
 
-/datum/action/peephole_cancel/Trigger()
+/datum/action/peephole_cancel/Trigger(trigger_flags)
 	. = ..()
 	to_chat(owner, span_warning("You move away from the peephole."))
 	owner.reset_perspective()
@@ -578,4 +578,4 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	<i>Choose a room, and enter the sphere<br>
 	Lay your head to rest, it soon becomes clear<br>
 	There's always more room around every bend<br>
-	Not all that's countable has an end...<i>"}
+	Not all that's countable has an end...</i>"}

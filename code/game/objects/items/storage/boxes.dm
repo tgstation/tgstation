@@ -821,7 +821,7 @@
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, "rustle", 50, TRUE, -5)
+	playsound(loc, SFX_RUSTLE, 50, TRUE, -5)
 	user.visible_message(span_notice("[user] hugs \the [src]."),span_notice("You hug \the [src]."))
 
 /////clown box & honkbot assembly
@@ -844,6 +844,14 @@
 		user.put_in_hands(A)
 	else
 		return ..()
+
+/obj/item/storage/box/clown/suicide_act(mob/user)
+	user.visible_message(span_suicide("[user] opens [src] and gets consumed by [p_them()]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(user, 'sound/misc/scary_horn.ogg', 70, vary = TRUE)
+	var/obj/item/clothing/head/mob_holder/consumed = new(src, user)
+	user.forceMove(consumed)
+	consumed.desc = "It's [user.real_name]! It looks like [user.p_they()] committed suicide!"
+	return OXYLOSS
 
 //////
 /obj/item/storage/box/hug/medical/PopulateContents()
@@ -908,7 +916,7 @@
 /obj/item/storage/box/beanbag
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
-	icon_state = "rubbershot_box"
+	icon_state = "beanbagshot_box"
 	illustration = null
 
 /obj/item/storage/box/beanbag/PopulateContents()
@@ -1590,10 +1598,24 @@
 	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate environmentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
 
 /obj/item/storage/box/hero/carphunter/PopulateContents()
-	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)
+	new /obj/item/clothing/suit/hooded/carp_costume/spaceproof/old(src)
 	new /obj/item/clothing/mask/gas/carp(src)
 	new /obj/item/knife/hunting(src)
 	new /obj/item/storage/box/papersack/meat(src)
+
+/obj/item/storage/box/hero/mothpioneer
+	name = "Mothic Fleet Pioneer - 2100's."
+	desc = "Some claim that the fleet engineers are directly responsible for most modern advancement in spacefaring design. Although the exact details of their past contributions are somewhat fuzzy, their ingenuity remains unmatched and unquestioned to this day."
+
+/obj/item/storage/box/hero/mothpioneer/PopulateContents()
+	new /obj/item/clothing/suit/mothcoat/original(src)
+	new /obj/item/clothing/head/mothcap(src)
+	new /obj/item/flashlight/lantern(src)
+	new /obj/item/screwdriver(src)
+	new /obj/item/wrench(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/stack/sheet/iron/fifty(src)
+	new /obj/item/stack/sheet/glass/fifty(src)
 
 /obj/item/storage/box/holy/clock
 	name = "Forgotten kit"

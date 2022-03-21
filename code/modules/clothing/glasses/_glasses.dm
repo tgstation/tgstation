@@ -142,11 +142,11 @@
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."
 	icon_state = "purple"
 	inhand_icon_state = "glasses"
-	clothing_flags = SCAN_REAGENTS //You can see reagents while wearing science goggles
 	actions_types = list(/datum/action/item_action/toggle_research_scanner)
 	glass_colour_type = /datum/client_colour/glass_colour/purple
 	resistance_flags = ACID_PROOF
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 80, ACID = 100)
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
 
 /obj/item/clothing/glasses/science/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_EYES)
@@ -297,14 +297,13 @@
 	name = "beer goggles"
 	icon_state = "sunhudbeer"
 	desc = "A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion."
-	clothing_flags = SCAN_REAGENTS
-	clothing_traits = list(TRAIT_BOOZE_SLIDER)
+	clothing_traits = list(TRAIT_BOOZE_SLIDER, TRAIT_REAGENT_SCANNER)
 
 /obj/item/clothing/glasses/sunglasses/chemical
 	name = "science glasses"
 	icon_state = "sunhudsci"
 	desc = "A pair of tacky purple sunglasses that allow the wearer to recognize various chemical compounds with only a glance."
-	clothing_flags = SCAN_REAGENTS
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
 
 /obj/item/clothing/glasses/sunglasses/gar
 	name = "black gar glasses"
@@ -527,8 +526,8 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	glass_colour_type = FALSE
-	clothing_flags = SCAN_REAGENTS
 	vision_flags = SEE_TURFS
+	clothing_traits = list(TRAIT_REAGENT_SCANNER)
 	var/list/hudlist = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_DIAGNOSTIC_ADVANCED, DATA_HUD_SECURITY_ADVANCED)
 	var/xray = FALSE
 

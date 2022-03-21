@@ -94,6 +94,9 @@
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
 
+/obj/item/screwdriver/nuke/get_belt_overlay()
+	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_nuke")
+
 /obj/item/paper/guides/antag/nuke_instructions
 	info = "How to break into a Nanotrasen self-destruct terminal and remove its plutonium core:<br>\
 	<ul>\
@@ -144,6 +147,7 @@
 /obj/item/paper/guides/antag/supermatter_sliver
 	info = "How to safely extract a supermatter sliver:<br>\
 	<ul>\
+	<li>You must have active magnetic anchoring at all times near an active supermatter crystal.</li>\
 	<li>Approach an active supermatter crystal with radiation shielded personal protective equipment. DO NOT MAKE PHYSICAL CONTACT.</li>\
 	<li>Use a supermatter scalpel (provided) to slice off a sliver of the crystal.</li>\
 	<li>Use supermatter extraction tongs (also provided) to safely pick up the sliver you sliced off.</li>\
@@ -160,6 +164,7 @@
 	inhand_icon_state = "supermattersliver"
 	pulseicon = "supermatter_sliver_pulse"
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 
 
 /obj/item/nuke_core/supermatter_sliver/attack_tk(mob/user) // no TK dusting memes

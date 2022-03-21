@@ -37,9 +37,12 @@
 /obj/machinery/artillerycontrol/Topic(href, href_list)
 	if(..())
 		return
-	var/A
-	A = input("Area to bombard", "Open Fire", A) in GLOB.teleportlocs
-	var/area/thearea = GLOB.teleportlocs[A]
+	var/target_area = tgui_input_list(usr, "Area to bombard", "Open Fire", GLOB.teleportlocs)
+	if(isnull(target_area))
+		return
+	if(isnull(GLOB.teleportlocs[target_area]))
+		return
+	var/area/thearea = GLOB.teleportlocs[target_area]
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(reload < reload_cooldown)
@@ -47,9 +50,9 @@
 	if(usr.contents.Find(src) || (in_range(src, usr) && isturf(loc)) || issilicon(usr))
 		priority_announce("Bluespace artillery fire detected. Brace for impact.")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has launched an artillery strike.")
-		var/list/L = list()
-		for(var/turf/T in get_area_turfs(thearea.type))
-			L+=T
-		var/loc = pick(L)
-		explosion(loc, explosiondev, explosionmed, explosionlight, explosion_cause = src)
+		var/list/possible_turfs = list()
+		for(var/turf/available_turf in get_area_turfs(thearea.type))
+			possible_turfs += available_turf
+		var/random_turf = pick(possible_turfs)
+		explosion(random_turf, explosiondev, explosionmed, explosionlight, explosion_cause = src)
 		reload = 0

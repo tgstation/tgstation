@@ -28,6 +28,22 @@
 	if(tank)
 		. += span_notice("[icon2html(tank, user)] It has \a [tank] mounted onto it.")
 
+/obj/item/melee/powerfist/wrench_act(mob/living/user, obj/item/tool)
+	switch(fisto_setting)
+		if(1)
+			fisto_setting = 2
+		if(2)
+			fisto_setting = 3
+		if(3)
+			fisto_setting = 1
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You tweak \the [src]'s piston valve to [fisto_setting]."))
+	return TRUE
+
+/obj/item/melee/powerfist/screwdriver_act(mob/living/user, obj/item/tool)
+	if(tank)
+		updateTank(tank, 1, user)
+		return TRUE
 
 /obj/item/melee/powerfist/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/tank/internals))
@@ -37,19 +53,6 @@
 				to_chat(user, span_warning("\The [IT] is too small for \the [src]."))
 				return
 			updateTank(W, 0, user)
-	else if(W.tool_behaviour == TOOL_WRENCH)
-		switch(fisto_setting)
-			if(1)
-				fisto_setting = 2
-			if(2)
-				fisto_setting = 3
-			if(3)
-				fisto_setting = 1
-		W.play_tool_sound(src)
-		to_chat(user, span_notice("You tweak \the [src]'s piston valve to [fisto_setting]."))
-	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(tank)
-			updateTank(tank, 1, user)
 
 /obj/item/melee/powerfist/proc/updateTank(obj/item/tank/internals/thetank, removing = 0, mob/living/carbon/human/user)
 	if(removing)

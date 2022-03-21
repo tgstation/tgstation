@@ -113,7 +113,7 @@
 				if(!user.is_literate())
 					to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 					return
-				var/newname = stripped_input(user, "What would you like to title this bookshelf?")
+				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
 				if(!user.canUseTopic(src, BE_CLOSE))
 					return
 				if(!newname)
@@ -121,7 +121,7 @@
 				else
 					name = "bookcase ([sanitize(newname)])"
 			else if(I.tool_behaviour == TOOL_CROWBAR)
-				if(contents.len)
+				if(length(contents))
 					to_chat(user, span_warning("You need to remove the books first!"))
 				else
 					I.play_tool_sound(src, 100)
@@ -142,17 +142,19 @@
 	if(load_random_books)
 		create_random_books(books_to_load, src, FALSE, random_category)
 		load_random_books = FALSE
-	if(contents.len)
-		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sort_names(contents.Copy())
-		if(choice)
-			if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
-				return
-			if(ishuman(user))
-				if(!user.get_active_held_item())
-					user.put_in_hands(choice)
-			else
-				choice.forceMove(drop_location())
-			update_appearance()
+	if(!length(contents))
+		return
+	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
+	if(isnull(choice))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
+		return
+	if(ishuman(user))
+		if(!user.get_active_held_item())
+			user.put_in_hands(choice)
+	else
+		choice.forceMove(drop_location())
+	update_appearance()
 
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
@@ -169,7 +171,7 @@
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
 		return ..()
-	var/amount = contents.len
+	var/amount = length(contents)
 	if(load_random_books)
 		amount += books_to_load
 	icon_state = "book-[clamp(amount, 0, 5)]"
@@ -220,6 +222,8 @@
 	var/unique = FALSE //false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title //The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
+	/// Maximum icon state number
+	var/maximum_book_state = 8
 
 
 /obj/item/book/attack_self(mob/user)
@@ -249,12 +253,14 @@
 		if(!literate)
 			to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
 			return
-		var/choice = tgui_input_list(usr, "What would you like to change?",,list("Title", "Contents", "Author", "Cancel"))
+		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
+		if(isnull(choice))
+			return
 		if(!user.canUseTopic(src, BE_CLOSE, literate))
 			return
 		switch(choice)
 			if("Title")
-				var/newtitle = reject_bad_text(stripped_input(user, "Write a new title:"))
+				var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if (length_char(newtitle) > 30)
@@ -267,7 +273,7 @@
 					name = newtitle
 					title = newtitle
 			if("Contents")
-				var/content = stripped_input(user, "Write your book's contents (HTML NOT allowed):","","",8192)
+				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = 8192, multiline = TRUE)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!content)
@@ -276,7 +282,7 @@
 				else
 					dat += content
 			if("Author")
-				var/newauthor = stripped_input(user, "Write the author's name:")
+				var/newauthor = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
 				if(!user.canUseTopic(src, BE_CLOSE, literate))
 					return
 				if(!newauthor)

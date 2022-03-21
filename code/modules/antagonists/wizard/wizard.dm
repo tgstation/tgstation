@@ -1,5 +1,5 @@
 /datum/antagonist/wizard
-	name = "Space Wizard"
+	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
 	antagpanel_category = "Wizard"
 	job_rank = ROLE_WIZARD
@@ -168,9 +168,6 @@
 	data["objectives"] = get_objectives()
 	return data
 
-/datum/antagonist/wizard/farewell()
-	to_chat(owner, span_userdanger("You have been brainwashed! You are no longer a wizard!"))
-
 /datum/antagonist/wizard/proc/rename_wizard()
 	set waitfor = FALSE
 
@@ -255,7 +252,8 @@
 	move_to_lair = FALSE
 
 /datum/antagonist/wizard/apprentice/imposter/greet()
-	to_chat(owner, "<B>You are an imposter! Trick and confuse the crew to misdirect malice from your handsome original!</B>")
+	. = ..()
+	to_chat(owner, "<B>Trick and confuse the crew to misdirect malice from your handsome original!</B>")
 	owner.announce_objectives()
 
 /datum/antagonist/wizard/apprentice/imposter/equip_wizard()

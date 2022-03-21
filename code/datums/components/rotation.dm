@@ -1,79 +1,66 @@
-#define ROTATION_ALTCLICK (1<<0)
-#define ROTATION_WRENCH (1<<1)
-#define ROTATION_VERBS (1<<2)
-#define ROTATION_COUNTERCLOCKWISE (1<<3)
-#define ROTATION_CLOCKWISE (1<<4)
-#define ROTATION_FLIP (1<<5)
+/// If an object needs to be rotated with a wrench
+#define ROTATION_REQUIRE_WRENCH (1<<0)
+/// If ghosts can rotate an object (if the ghost config is enabled)
+#define ROTATION_GHOSTS_ALLOWED (1<<1)
+/// If an object will ignore anchored for rotation (used for chairs)
+#define ROTATION_IGNORE_ANCHORED (1<<2)
+/// If an object will omit flipping from rotation (used for pipes since they use custom handling)
+#define ROTATION_NO_FLIPPING (1<<3)
+/// If an object needs to have an empty spot available in target direction (used for windoors and railings)
+#define ROTATION_NEEDS_ROOM (1<<4)
+
+/// Rotate an object clockwise
+#define ROTATION_CLOCKWISE -90
+/// Rotate an object counterclockwise
+#define ROTATION_COUNTERCLOCKWISE 90
+/// Rotate an object upside down
+#define ROTATION_FLIP 180
 
 /datum/component/simple_rotation
-	var/datum/callback/can_user_rotate //Checks if user can rotate
-	var/datum/callback/can_be_rotated  //Check if object can be rotated at all
-	var/datum/callback/after_rotation     //Additional stuff to do after rotation
-
+	/// Additional stuff to do after rotation
+	var/datum/callback/AfterRotation
+	/// Rotation flags for special behavior 
 	var/rotation_flags = NONE
-	var/default_rotation_direction = ROTATION_CLOCKWISE
 
-/datum/component/simple_rotation/Initialize(rotation_flags = NONE ,can_user_rotate,can_be_rotated,after_rotation)
+/**
+ * Adds the ability to rotate an object by Alt-click or using Right-click verbs.
+ * 
+ * args:
+ * * rotation_flags (optional) Bitflags that determine behavior for rotation (defined at the top of this file)
+ * * AfterRotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
+**/
+/datum/component/simple_rotation/Initialize(rotation_flags = NONE, AfterRotation)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	//throw if no rotation direction is specificed ?
-
 	src.rotation_flags = rotation_flags
+	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
 
-	if(can_user_rotate)
-		src.can_user_rotate = can_user_rotate
-	else
-		src.can_user_rotate = CALLBACK(src,.proc/default_can_user_rotate)
+/datum/component/simple_rotation/proc/AddSignals()
+	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
+	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 
-	if(can_be_rotated)
-		src.can_be_rotated = can_be_rotated
-	else
-		src.can_be_rotated = CALLBACK(src,.proc/default_can_be_rotated)
+/datum/component/simple_rotation/proc/AddVerbs()
+	var/obj/rotated_obj = parent
+	rotated_obj.verbs += /atom/movable/proc/SimpleRotateClockwise
+	rotated_obj.verbs += /atom/movable/proc/SimpleRotateCounterclockwise
+	if(!(rotation_flags & ROTATION_NO_FLIPPING))
+		rotated_obj.verbs += /atom/movable/proc/SimpleRotateFlip
 
-	if(after_rotation)
-		src.after_rotation = after_rotation
-	else
-		src.after_rotation = CALLBACK(src,.proc/default_after_rotation)
-
-	//Try Clockwise,counter,flip in order
-	if(src.rotation_flags & ROTATION_FLIP)
-		default_rotation_direction = ROTATION_FLIP
-	if(src.rotation_flags & ROTATION_COUNTERCLOCKWISE)
-		default_rotation_direction = ROTATION_COUNTERCLOCKWISE
-	if(src.rotation_flags & ROTATION_CLOCKWISE)
-		default_rotation_direction = ROTATION_CLOCKWISE
-
-/datum/component/simple_rotation/proc/add_signals()
-	if(rotation_flags & ROTATION_ALTCLICK)
-		RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/HandRot)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
-	if(rotation_flags & ROTATION_WRENCH)
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), .proc/WrenchRot)
-
-/datum/component/simple_rotation/proc/add_verbs()
-	if(rotation_flags & ROTATION_VERBS)
-		var/atom/movable/AM = parent
-		if(rotation_flags & ROTATION_FLIP)
-			AM.verbs += /atom/movable/proc/simple_rotate_flip
-		if(src.rotation_flags & ROTATION_CLOCKWISE)
-			AM.verbs += /atom/movable/proc/simple_rotate_clockwise
-		if(src.rotation_flags & ROTATION_COUNTERCLOCKWISE)
-			AM.verbs += /atom/movable/proc/simple_rotate_counterclockwise
-
-/datum/component/simple_rotation/proc/remove_verbs()
+/datum/component/simple_rotation/proc/RemoveVerbs()
 	if(parent)
-		var/atom/movable/AM = parent
-		AM.verbs -= /atom/movable/proc/simple_rotate_flip
-		AM.verbs -= /atom/movable/proc/simple_rotate_clockwise
-		AM.verbs -= /atom/movable/proc/simple_rotate_counterclockwise
+		var/obj/rotated_obj = parent
+		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateFlip
+		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateClockwise
+		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateCounterclockwise
 
-/datum/component/simple_rotation/proc/remove_signals()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
+/datum/component/simple_rotation/proc/RemoveSignals()
+	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
 
 /datum/component/simple_rotation/RegisterWithParent()
-	add_verbs()
-	add_signals()
+	AddVerbs()
+	AddSignals()
 	. = ..()
 
 /datum/component/simple_rotation/PostTransfer()
@@ -83,87 +70,107 @@
 	return COMPONENT_NOTRANSFER
 
 /datum/component/simple_rotation/UnregisterFromParent()
-	remove_verbs()
-	remove_signals()
+	RemoveVerbs()
+	RemoveSignals()
 	. = ..()
 
 /datum/component/simple_rotation/Destroy()
-	QDEL_NULL(can_user_rotate)
-	QDEL_NULL(can_be_rotated)
-	QDEL_NULL(after_rotation)
+	QDEL_NULL(AfterRotation)
 	//Signals + verbs removed via UnRegister
 	. = ..()
 
 /datum/component/simple_rotation/ClearFromParent()
-	remove_verbs()
+	RemoveVerbs()
 	return ..()
 
 /datum/component/simple_rotation/proc/ExamineMessage(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	examine_list += span_notice("Alt + Right-click to rotate it clockwise. Alt + Left-click to rotate it counterclockwise.")
+	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
+		examine_list += span_notice("This requires a wrench to be rotated.")
 
-	if(rotation_flags & ROTATION_ALTCLICK)
-		examine_list += span_notice("Alt-click to rotate it clockwise.")
-
-/datum/component/simple_rotation/proc/HandRot(datum/source, mob/user, rotation = default_rotation_direction)
+/datum/component/simple_rotation/proc/RotateRight(datum/source, mob/user)
 	SIGNAL_HANDLER
+	Rotate(user, ROTATION_CLOCKWISE)
 
-	if(!can_be_rotated.Invoke(user, rotation) || !can_user_rotate.Invoke(user, rotation))
-		return
-	BaseRot(user, rotation)
-
-/datum/component/simple_rotation/proc/WrenchRot(datum/source, obj/item/I, mob/living/user)
+/datum/component/simple_rotation/proc/RotateLeft(datum/source, mob/user)
 	SIGNAL_HANDLER
+	Rotate(user, ROTATION_COUNTERCLOCKWISE)
 
-	if(!can_be_rotated.Invoke(user,default_rotation_direction) || !can_user_rotate.Invoke(user,default_rotation_direction))
+/datum/component/simple_rotation/proc/Rotate(mob/user, degrees)
+	if(QDELETED(user))
+		CRASH("[src] is being rotated [user ? "with a qdeleting" : "without a"] user")
+	if(!istype(user))
+		CRASH("[src] is being rotated without a user of the wrong type: [user.type]")
+	if(!isnum(degrees))
+		CRASH("[src] is being rotated without providing the amount of degrees needed") 
+
+	if(!CanBeRotated(user, degrees) || !CanUserRotate(user, degrees))
 		return
-	BaseRot(user,default_rotation_direction)
-	return COMPONENT_BLOCK_TOOL_ATTACK
 
-/datum/component/simple_rotation/proc/BaseRot(mob/user,rotation_type)
-	var/atom/movable/AM = parent
-	var/rot_degree
-	switch(rotation_type)
-		if(ROTATION_CLOCKWISE)
-			rot_degree = -90
-		if(ROTATION_COUNTERCLOCKWISE)
-			rot_degree = 90
-		if(ROTATION_FLIP)
-			rot_degree = 180
-	AM.setDir(turn(AM.dir,rot_degree))
-	after_rotation.Invoke(user,rotation_type)
+	var/obj/rotated_obj = parent
+	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
+	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
+		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
+		
+	AfterRotation.Invoke(user, degrees)
 
-/datum/component/simple_rotation/proc/default_can_user_rotate(mob/living/user, rotation_type)
-	if(!istype(user) || !user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+/datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
+	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
+		return TRUE
+	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && isobserver(user) && CONFIG_GET(flag/ghost_interaction))
+		return TRUE	
+	return FALSE
+
+/datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees)
+	var/obj/rotated_obj = parent
+
+	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
+		if(!isliving(user))
+			return FALSE
+		var/obj/item/tool = user.get_active_held_item()
+		if(!tool || tool.tool_behaviour != TOOL_WRENCH)
+			rotated_obj.balloon_alert(user, "need a wrench!")
+			return FALSE
+	if(!(rotation_flags & ROTATION_IGNORE_ANCHORED) && rotated_obj.anchored)
+		if(istype(rotated_obj, /obj/structure/window))
+			rotated_obj.balloon_alert(user, "need to unscrew!")
+		else
+			rotated_obj.balloon_alert(user, "need to unwrench!")
 		return FALSE
+
+	if(rotation_flags & ROTATION_NEEDS_ROOM)
+		var/target_dir = turn(rotated_obj.dir, degrees)
+		var/obj/structure/window/rotated_window = rotated_obj
+		var/fulltile = istype(rotated_window) ? rotated_window.fulltile : FALSE
+		if(!valid_window_location(rotated_obj.loc, target_dir, is_fulltile = fulltile))
+			rotated_obj.balloon_alert(user, "can't rotate in that direction!")
+			return FALSE
 	return TRUE
 
-/datum/component/simple_rotation/proc/default_can_be_rotated(mob/user, rotation_type)
-	var/atom/movable/AM = parent
-	return !AM.anchored
+/datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, degrees)
+	return 
 
-/datum/component/simple_rotation/proc/default_after_rotation(mob/user, rotation_type)
-	to_chat(user,span_notice("You [rotation_type == ROTATION_FLIP ? "flip" : "rotate"] [parent]."))
-
-/atom/movable/proc/simple_rotate_clockwise()
+/atom/movable/proc/SimpleRotateClockwise()
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(null,usr,ROTATION_CLOCKWISE)
+		rotcomp.Rotate(usr, ROTATION_CLOCKWISE)
 
-/atom/movable/proc/simple_rotate_counterclockwise()
+/atom/movable/proc/SimpleRotateCounterclockwise()
 	set name = "Rotate Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(null,usr,ROTATION_COUNTERCLOCKWISE)
+		rotcomp.Rotate(usr, ROTATION_COUNTERCLOCKWISE)
 
-/atom/movable/proc/simple_rotate_flip()
+/atom/movable/proc/SimpleRotateFlip()
 	set name = "Flip"
 	set category = "Object"
 	set src in oview(1)
 	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
 	if(rotcomp)
-		rotcomp.HandRot(null,usr,ROTATION_FLIP)
+		rotcomp.Rotate(usr, ROTATION_FLIP)

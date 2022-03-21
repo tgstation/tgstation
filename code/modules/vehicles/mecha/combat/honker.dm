@@ -105,7 +105,7 @@
 
 /obj/vehicle/sealed/mecha/combat/honker/play_stepsound()
 	if(squeak)
-		playsound(src, "clownstep", 70, 1)
+		playsound(src, SFX_CLOWN_STEP, 70, 1)
 	squeak = !squeak
 
 /obj/vehicle/sealed/mecha/combat/honker/Topic(href, href_list)

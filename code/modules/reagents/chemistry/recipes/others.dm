@@ -187,10 +187,12 @@
 /datum/chemical_reaction/virus_food_plasma
 	results = list(/datum/reagent/toxin/plasma/plasmavirusfood = 1)
 	required_reagents = list(/datum/reagent/toxin/plasma = 1, /datum/reagent/consumable/virus_food = 1)
+	thermic_constant = 20 // To avoid the plasma boiling
 
 /datum/chemical_reaction/virus_food_plasma_synaptizine
 	results = list(/datum/reagent/toxin/plasma/plasmavirusfood/weak = 2)
 	required_reagents = list(/datum/reagent/medicine/synaptizine = 1, /datum/reagent/toxin/plasma/plasmavirusfood = 1)
+	thermic_constant = 20 // To avoid the plasma boiling
 
 /datum/chemical_reaction/virus_food_mutagen_sugar
 	results = list(/datum/reagent/toxin/mutagen/mutagenvirusfood/sugar = 2)
@@ -920,7 +922,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/ant_slurry // We're basically gluing ants together with synthflesh & maint sludge to make a bigger ant.
-	required_reagents = list(/datum/reagent/ants = 40, /datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/drug/maint/sludge = 5)
+	required_reagents = list(/datum/reagent/ants = 50, /datum/reagent/medicine/c2/synthflesh = 20, /datum/reagent/drug/maint/sludge = 5)
 	required_temp = 480
 	reaction_flags = REACTION_INSTANT
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
@@ -928,5 +930,5 @@
 /datum/chemical_reaction/ant_slurry/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/location = get_turf(holder.my_atom)
 	for(var/i in rand(1, created_volume) to created_volume)
-		new /mob/living/simple_animal/ant(location)
+		new /mob/living/simple_animal/hostile/ant(location)
 	..()

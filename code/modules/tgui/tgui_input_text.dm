@@ -15,7 +15,7 @@
  * * encode - Toggling this determines if input is filtered via html_encode. Setting this to FALSE gives raw input.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = TRUE, timeout = 0)
+/proc/tgui_input_text(mob/user, message = "", title = "Text Input", default, max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = TRUE, timeout = 0)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -24,15 +24,18 @@
 			user = client.mob
 		else
 			return
-	/// Client does NOT have tgui_input on: Returns regular input
+	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
-		if(max_length)
+		if(encode)
 			if(multiline)
 				return stripped_multiline_input(user, message, title, default, max_length)
 			else
 				return stripped_input(user, message, title, default, max_length)
 		else
-			return input(user, message, title, default)
+			if(multiline)
+				return input(user, message, title, default) as message|null
+			else
+				return input(user, message, title, default) as text|null
 	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout)
 	text_input.ui_interact(user)
 	text_input.wait()
@@ -54,7 +57,7 @@
  * * encode - If toggled, input is filtered via html_encode. Setting this to FALSE gives raw input.
  * * callback - The callback to be invoked when a choice is made.
  */
-/proc/tgui_input_text_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, encode = TRUE, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_input_text_async(mob/user, message = "", title = "Text Input", default, max_length = MAX_MESSAGE_LEN, multiline = FALSE, encode = TRUE, datum/callback/callback, timeout = 60 SECONDS)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -63,6 +66,18 @@
 			user = client.mob
 		else
 			return
+	// Client does NOT have tgui_input on: Returns regular input
+	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
+		if(encode)
+			if(multiline)
+				return stripped_multiline_input(user, message, title, default, max_length)
+			else
+				return stripped_input(user, message, title, default, max_length)
+		else
+			if(multiline)
+				return input(user, message, title, default) as message|null
+			else
+				return input(user, message, title, default) as text|null
 	var/datum/tgui_input_text/async/text_input = new(user, message, title, default, max_length, multiline, encode, callback, timeout)
 	text_input.ui_interact(user)
 
@@ -123,7 +138,6 @@
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TextInputModal")
-		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /datum/tgui_input_text/ui_close(mob/user)
@@ -134,16 +148,14 @@
 	return GLOB.always_state
 
 /datum/tgui_input_text/ui_static_data(mob/user)
-	. = list(
-		"max_length" = max_length,
-		"message" = message,
-		"multiline" = multiline,
-		"placeholder" = default, /// You cannot use default as a const
-		"preferences" = list(),
-		"title" = title
-	)
-	.["preferences"]["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
-	.["preferences"]["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	. = list()
+	.["large_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_large)
+	.["max_length"] = max_length
+	.["message"] = message
+	.["multiline"] = multiline
+	.["placeholder"] = default // Default is a reserved keyword
+	.["swapped_buttons"] = user.client.prefs.read_preference(/datum/preference/toggle/tgui_input_swapped)
+	.["title"] = title
 
 /datum/tgui_input_text/ui_data(mob/user)
 	. = list()
@@ -158,20 +170,22 @@
 		if("submit")
 			if(max_length)
 				if(length(params["entry"]) > max_length)
-					return FALSE
+					CRASH("[usr] typed a text string longer than the max length")
 				if(encode && (length(html_encode(params["entry"])) > max_length))
 					to_chat(usr, span_notice("Input uses special characters, thus reducing the maximum length."))
 			set_entry(params["entry"])
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 		if("cancel")
-			set_entry(null)
+			closed = TRUE
 			SStgui.close_uis(src)
 			return TRUE
 
 /datum/tgui_input_text/proc/set_entry(entry)
-	var/converted_entry = encode ? html_encode(entry) : entry
-	src.entry = trim(converted_entry, max_length)
+	if(!isnull(entry))
+		var/converted_entry = encode ? html_encode(entry) : entry
+		src.entry = trim(converted_entry, max_length)
 
 /**
  * # async tgui_input_text
@@ -179,7 +193,7 @@
  * An asynchronous version of tgui_input_text to be used with callbacks instead of waiting on user responses.
  */
 /datum/tgui_input_text/async
-	/// The callback to be invoked by the tgui_input_text upon having a choice made.
+	// The callback to be invoked by the tgui_input_text upon having a choice made.
 	var/datum/callback/callback
 
 /datum/tgui_input_text/async/New(mob/user, message, title, default, max_length, multiline, encode, callback, timeout)

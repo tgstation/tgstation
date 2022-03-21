@@ -413,7 +413,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/machinery/stasis{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "aY" = (
@@ -430,7 +432,7 @@
 "aZ" = (
 /obj/structure/table/glass,
 /obj/machinery/light/directional/north,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/structure/window/reinforced{
 	dir = 4;
 	layer = 2.9
@@ -515,7 +517,7 @@
 	dir = 4
 	},
 /obj/structure/table/glass,
-/obj/item/storage/firstaid/regular,
+/obj/item/storage/medkit/regular,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},

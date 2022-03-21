@@ -9,7 +9,7 @@
 /obj/narsie
 	name = "Nar'Sie"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/narsie.dmi'
+	icon = 'icons/obj/cult/narsie.dmi'
 	icon_state = "narsie"
 	anchored = TRUE
 	appearance_flags = LONG_GLIDE
@@ -57,7 +57,7 @@
 
 	var/area/area = get_area(src)
 	if(area)
-		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
+		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult/effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action = NOTIFY_ATTACK)
 	narsie_spawn_animation()
 

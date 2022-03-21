@@ -1,16 +1,16 @@
 import { Loader } from './common/Loader';
-import { InputButtons, Preferences, Validator } from './common/InputButtons';
+import { InputButtons } from './common/InputButtons';
 import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER } from 'common/keycodes';
-import { Box, Input, Section, Stack, TextArea } from '../components';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type TextInputData = {
+  large_buttons: boolean;
   max_length: number;
   message: string;
   multiline: boolean;
   placeholder: string;
-  preferences: Preferences;
   timeout: number;
   title: string;
 };
@@ -18,35 +18,31 @@ type TextInputData = {
 export const TextInputModal = (_, context) => {
   const { act, data } = useBackend<TextInputData>(context);
   const {
+    large_buttons,
     max_length,
-    message,
+    message = "",
     multiline,
     placeholder,
-    preferences,
     timeout,
     title,
   } = data;
-  const { large_buttons } = preferences;
   const [input, setInput] = useLocalState<string>(
     context,
     'input',
     placeholder || ''
   );
-  const [inputIsValid, setInputIsValid] = useLocalState<Validator>(
-    context,
-    'inputIsValid',
-    { isValid: !!placeholder, error: null }
-  );
   const onType = (value: string) => {
-    setInputIsValid(validateInput(value, max_length));
+    if (value === input) {
+      return;
+    }
     setInput(value);
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
-    = 125
-    + Math.ceil(message?.length / 3)
-    + (multiline ? 75 : 0)
-    + (large_buttons ? 5 : 0);
+    = 135
+    + (message.length > 30 ? Math.ceil(message.length / 4) : 0)
+    + (multiline || input.length >= 30 ? 75 : 0)
+    + (message.length && large_buttons ? 5 : 0);
 
   return (
     <Window title={title} width={325} height={windowHeight}>
@@ -54,8 +50,11 @@ export const TextInputModal = (_, context) => {
       <Window.Content
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_ENTER && inputIsValid.isValid) {
+          if (keyCode === KEY_ENTER) {
             act('submit', { entry: input });
+          }
+          if (keyCode === KEY_ESCAPE) {
+            act('cancel');
           }
         }}>
         <Section fill>
@@ -63,13 +62,14 @@ export const TextInputModal = (_, context) => {
             <Stack.Item>
               <Box color="label">{message}</Box>
             </Stack.Item>
-            <InputArea
-              input={input}
-              inputIsValid={inputIsValid}
-              onType={onType}
-            />
-            <Stack.Item pl={!large_buttons && 5} pr={!large_buttons && 5}>
-              <InputButtons input={input} inputIsValid={inputIsValid} />
+            <Stack.Item grow>
+              <InputArea input={input} onType={onType} />
+            </Stack.Item>
+            <Stack.Item>
+              <InputButtons
+                input={input}
+                message={`${input.length}/${max_length}`}
+              />
             </Stack.Item>
           </Stack>
         </Section>
@@ -80,43 +80,29 @@ export const TextInputModal = (_, context) => {
 
 /** Gets the user input and invalidates if there's a constraint. */
 const InputArea = (props, context) => {
-  const { data } = useBackend<TextInputData>(context);
-  const { multiline } = data;
+  const { act, data } = useBackend<TextInputData>(context);
+  const { max_length, multiline } = data;
   const { input, onType } = props;
 
-  if (!multiline) {
-    return (
-      <Stack.Item>
-        <Input
-          autoFocus
-          fluid
-          onInput={(_, value) => onType(value)}
-          placeholder="Type something..."
-          value={input}
-        />
-      </Stack.Item>
-    );
-  } else {
-    return (
-      <Stack.Item grow>
-        <TextArea
-          autoFocus
-          height="100%"
-          onInput={(_, value) => onType(value)}
-          placeholder="Type something..."
-          value={input}
-        />
-      </Stack.Item>
-    );
-  }
-};
-
-/** Helper functions */
-const validateInput = (input, max_length) => {
-  if (!!max_length && input.length > max_length) {
-    return { isValid: false, error: `Too long!` };
-  } else if (input.length === 0) {
-    return { isValid: false, error: null };
-  }
-  return { isValid: true, error: null };
+  return (
+    <TextArea
+      autoFocus
+      autoSelect
+      height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
+      maxLength={max_length}
+      onKeyDown={(event) => {
+        const keyCode = window.event ? event.which : event.keyCode;
+        if (keyCode === KEY_ENTER) {
+          act('submit', { entry: input });
+          event.preventDefault();
+        }
+        if (keyCode === KEY_ESCAPE) {
+          act('cancel');
+        }
+      }}
+      onInput={(_, value) => onType(value)}
+      placeholder="Type something..."
+      value={input}
+    />
+  );
 };

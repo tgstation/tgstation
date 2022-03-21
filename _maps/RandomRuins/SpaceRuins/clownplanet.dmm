@@ -144,7 +144,7 @@
 	},
 /area/ruin/powered/clownplanet)
 "aD" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aE" = (
 /obj/effect/turf_decal/stripes/corner{
@@ -156,11 +156,11 @@
 /area/ruin/powered/clownplanet)
 "aF" = (
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aG" = (
 /obj/effect/mob_spawn/corpse/human/clown,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aH" = (
 /turf/closed/mineral/bananium{
@@ -170,11 +170,11 @@
 "aI" = (
 /obj/item/gps/spaceruin,
 /obj/item/pickaxe,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aJ" = (
 /obj/item/flashlight/lamp/bananalamp,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 "aK" = (
 /obj/structure/flora/ausbushes/sunnybush,
@@ -374,7 +374,7 @@
 "bm" = (
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/ruin/powered/clownplanet)
 
 (1,1,1) = {"

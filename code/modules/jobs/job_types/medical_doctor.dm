@@ -24,7 +24,7 @@
 		/datum/job_department/medical,
 		)
 
-	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom)
 
 	mail_goodies = list(
 		/obj/item/healthanalyzer/advanced = 15,
@@ -36,7 +36,7 @@
 		/obj/effect/spawner/random/medical/memeorgans = 1
 	)
 	rpg_title = "Cleric"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/doctor
@@ -44,13 +44,13 @@
 	jobtype = /datum/job/doctor
 
 	id_trim = /datum/id_trim/job/medical_doctor
-	uniform = /obj/item/clothing/under/rank/medical/doctor
+	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	l_hand = /obj/item/storage/firstaid/medical
+	l_hand = /obj/item/storage/medkit/surgery
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med
@@ -59,3 +59,13 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+/datum/outfit/job/doctor/mod
+	name = "Medical Doctor (MODsuit)"
+
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/medical
+	suit = null
+	mask = /obj/item/clothing/mask/breath/medical
+	r_pocket = /obj/item/flashlight/pen
+	internals_slot = ITEM_SLOT_SUITSTORE

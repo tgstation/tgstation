@@ -87,7 +87,7 @@
 		to_chat(src, span_notice("Please wait [DisplayTimeText(announcing_vox - world.time)]."))
 		return
 
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text|null
+	var/message = tgui_input_text(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement)
 
 	if(!message || announcing_vox > world.time)
 		return
@@ -123,6 +123,7 @@
 
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
 	log_talk(message, LOG_SAY, tag="VOX Announcement")
+	say(";[message]", forced = "VOX Announcement")
 
 	for(var/word in words)
 		play_vox_word(word, src.z, null)

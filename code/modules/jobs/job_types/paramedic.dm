@@ -24,7 +24,7 @@
 		/datum/job_department/medical,
 		)
 
-	family_heirlooms = list(/obj/item/storage/firstaid/ancient/heirloom)
+	family_heirlooms = list(/obj/item/storage/medkit/ancient/heirloom)
 
 	mail_goodies = list(
 		/obj/item/reagent_containers/hypospray/medipen = 20,
@@ -35,7 +35,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = 5
 	)
 	rpg_title = "Corpse Runner"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/outfit/job/paramedic

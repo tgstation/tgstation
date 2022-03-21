@@ -13,7 +13,7 @@
 	if(!isatom(target))
 		return COMPONENT_INCOMPATIBLE
 	if(!rust_overlay)
-		rust_overlay = image(rust_icon, rust_icon)
+		rust_overlay = image(rust_icon, rust_icon_state)
 	ADD_TRAIT(target, TRAIT_RUSTY, ELEMENT_TRAIT(type))
 	RegisterSignal(target, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_rust_overlay)
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/handle_examine)
@@ -35,7 +35,7 @@
 
 /datum/element/rust/proc/apply_rust_overlay(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
-	overlays |= rust_overlay
+	overlays += rust_overlay
 
 /// Because do_after sleeps we register the signal here and defer via an async call
 /datum/element/rust/proc/secondary_tool_act(atom/source, mob/user, obj/item/item)

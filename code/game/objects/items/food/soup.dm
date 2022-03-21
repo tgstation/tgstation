@@ -64,7 +64,7 @@
 	name = "clown's tears"
 	desc = "Not very funny."
 	icon_state = "clownstears"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/banana = 10, /datum/reagent/water = 5, /datum/reagent/consumable/nutriment/vitamin = 16, /datum/reagent/consumable/clownstears = 10)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/banana = 10, /datum/reagent/lube = 5, /datum/reagent/consumable/nutriment/vitamin = 16, /datum/reagent/consumable/clownstears = 10)
 	tastes = list("a bad joke" = 1)
 	foodtypes = FRUIT | SUGAR
 

@@ -25,16 +25,18 @@
 /obj/effect/spawner/random/structure/girder
 	name = "girder spawner"
 	icon_state = "girder"
-	loot = list(
-		/obj/structure/girder = 4,
+	spawn_loot_chance = 90
+	loot = list( // 80% chance normal girder, 10% chance of displaced, 10% chance of nothing
+		/obj/structure/girder = 8,
 		/obj/structure/girder/displaced = 1,
 	)
 
 /obj/effect/spawner/random/structure/grille
 	name = "grille spawner"
 	icon_state = "grille"
-	loot = list(
-		/obj/structure/grille = 4,
+	spawn_loot_chance = 90
+	loot = list( // 80% chance normal grille, 10% chance of broken, 10% chance of nothing
+		/obj/structure/grille = 8,
 		/obj/structure/grille/broken = 1,
 	)
 
@@ -173,7 +175,43 @@
 /obj/effect/spawner/random/structure/barricade
 	name = "barricade spawner"
 	icon_state = "barricade"
+	spawn_loot_chance = 80
 	loot = list(
 		/obj/structure/barricade/wooden,
 		/obj/structure/barricade/wooden/crude,
+	)
+
+/obj/effect/spawner/random/structure/billboard
+	name = "billboard spawner"
+	icon = 'icons/obj/billboard.dmi'
+	icon_state = "billboard_random"
+	loot = list(
+		/obj/structure/billboard/azik = 50,
+		/obj/structure/billboard/donk_n_go = 50,
+		/obj/structure/billboard/space_cola = 50,
+		/obj/structure/billboard/nanotrasen = 35,
+		/obj/structure/billboard/nanotrasen/defaced = 15,
+	)
+
+/obj/effect/spawner/random/structure/billboard/nanotrasen //useful for station maps- NT isn't the sort to advertise for competitors
+	name = "\improper Nanotrasen billboard spawner"
+	loot = list(
+		/obj/structure/billboard/nanotrasen = 35,
+		/obj/structure/billboard/nanotrasen/defaced = 15,
+	)
+
+/obj/effect/spawner/random/structure/billboard/lizardsgas //for the space ruin, The Lizard's Gas. I don't see much use for the sprites below anywhere else since they're unifunctional.
+	name = "\improper The Lizards Gas billboard spawner"
+	loot = list(
+		/obj/structure/billboard/lizards_gas = 75,
+		/obj/structure/billboard/lizards_gas/defaced = 25,
+	)
+
+/obj/effect/spawner/random/structure/billboard/roadsigns //also pretty much only unifunctionally useful for gas stations
+	name = "\improper Gas Station billboard spawner"
+	loot = list(
+		/obj/structure/billboard/roadsign/two = 25,
+		/obj/structure/billboard/roadsign/twothousand = 25,
+		/obj/structure/billboard/roadsign/twomillion = 25,
+		/obj/structure/billboard/roadsign/error = 25,
 	)

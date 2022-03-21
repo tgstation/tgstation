@@ -120,7 +120,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += span_notice("This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]</b>.")
+		. += span_notice("This canister is Tier [mode]. A sticker on its side says <b>MAX SAFE PRESSURE: [siunit_pressure(initial(pressure_limit), 0)]; MAX SAFE TEMPERATURE: [siunit(heat_limit, "K", 0)]</b>.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -403,13 +403,17 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	switch(air_pressure)
 		if((40 * ONE_ATMOSPHERE) to INFINITY)
 			. += mutable_appearance(canister_overlay_file, "can-3")
+			. += emissive_appearance(canister_overlay_file, "can-3-light", alpha = src.alpha)
 		if((10 * ONE_ATMOSPHERE) to (40 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-2")
+			. += emissive_appearance(canister_overlay_file, "can-2-light", alpha = src.alpha)
 		if((5 * ONE_ATMOSPHERE) to (10 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-1")
+			. += emissive_appearance(canister_overlay_file, "can-1-light", alpha = src.alpha)
 		if((10) to (5 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-0")
-
+			. += emissive_appearance(canister_overlay_file, "can-0-light", alpha = src.alpha)
+	
 	update_window()
 
 /obj/machinery/portable_atmospherics/canister/update_greyscale()
@@ -496,7 +500,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 
 /obj/machinery/portable_atmospherics/canister/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
-	if(!.)
+	if(!. || QDELETED(src))
 		return
 	SSair.start_processing_machine(src)
 
@@ -620,8 +624,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		return
 	switch(action)
 		if("relabel")
-			var/label = tgui_input_list(usr, "New canister label", name, GLOB.gas_id_to_canister)
-			if(label && !..())
+			var/label = tgui_input_list(usr, "New canister label", "Canister", GLOB.gas_id_to_canister)
+			if(isnull(label))
+				return
+			if(!..())
 				var/newtype = GLOB.gas_id_to_canister[label]
 				if(newtype)
 					var/obj/machinery/portable_atmospherics/canister/replacement = newtype
@@ -650,7 +656,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				pressure = can_max_release_pressure
 				. = TRUE
 			else if(pressure == "input")
-				pressure = input("New release pressure ([can_min_release_pressure]-[can_max_release_pressure] kPa):", name, release_pressure) as num|null
+				pressure = tgui_input_number(usr, "New release pressure", "Canister Pressure", release_pressure, can_max_release_pressure, can_min_release_pressure)
 				if(!isnull(pressure) && !..())
 					. = TRUE
 			else if(text2num(pressure) != null)
@@ -684,7 +690,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 						logmsg += "\n[name]: [gaseslog[name]] moles."
 						if(n <= 5) //the first five gases added
 							admin_msg += "\n[name]: [gaseslog[name]] moles."
-						if(n == 5 && gaseslog.len > 5) //message added if more than 5 gases
+						if(n == 5 && length(gaseslog) > 5) //message added if more than 5 gases
 							admin_msg += "\nToo many gases to log. Check investigate log."
 					if(danger) //sent to admin's chat if contains dangerous gases
 						message_admins(admin_msg)
@@ -703,13 +709,10 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 				if("increase")
 					timer_set = min(maximum_timer_set, timer_set + 10)
 				if("input")
-					var/user_input = input(usr, "Set time to valve toggle.", name) as null|num
-					if(!user_input)
+					var/user_input = tgui_input_number(usr, "Set time to valve toggle", "Canister Timer", timer_set, maximum_timer_set, minimum_timer_set)
+					if(isnull(user_input) || QDELETED(usr) || QDELETED(src) || !usr.canUseTopic(src, BE_CLOSE, FALSE, TRUE))
 						return
-					var/N = text2num(user_input)
-					if(!N)
-						return
-					timer_set = clamp(N,minimum_timer_set,maximum_timer_set)
+					timer_set = user_input
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

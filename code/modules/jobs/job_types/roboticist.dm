@@ -31,7 +31,7 @@
 
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 	rpg_title = "Necromancer"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 
 /datum/job/roboticist/New()
@@ -58,3 +58,11 @@
 
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/roboticist)
+
+/datum/outfit/job/roboticist/mod
+	name = "Roboticist (MODsuit)"
+	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/standard
+	suit = null
+	mask = /obj/item/clothing/mask/breath
+	internals_slot = ITEM_SLOT_SUITSTORE

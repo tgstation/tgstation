@@ -1,3 +1,13 @@
+//how fast disposal machinery is ejecting things (does not effect range)
+/// The slowest setting for disposal eject speed
+#define EJECT_SPEED_SLOW 1
+/// The default setting for disposal eject speed
+#define EJECT_SPEED_MED 2
+/// The fast setting for disposal eject speed
+#define EJECT_SPEED_FAST 4
+/// The fastest setting for disposal eject speed
+#define EJECT_SPEED_YEET 6
+
 // the disposal outlet machine
 /obj/structure/disposaloutlet
 	name = "disposal outlet"
@@ -111,3 +121,8 @@
 		return
 	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
 	obj_flags |= EMAGGED
+
+#undef EJECT_SPEED_SLOW
+#undef EJECT_SPEED_MED
+#undef EJECT_SPEED_FAST
+#undef EJECT_SPEED_YEET

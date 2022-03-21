@@ -32,12 +32,16 @@ GLOBAL_PROTECT(href_token)
 	var/deadmined
 
 	var/datum/filter_editor/filteriffic
+	var/datum/colorblind_tester/color_test = new
 
 	/// Whether or not the user tried to connect, but was blocked by 2FA
 	var/blocked_by_2fa = FALSE
 
 	/// Whether or not this user can bypass 2FA
 	var/bypass_2fa = FALSE
+
+	/// A lazylist of tagged datums, for quick reference with the View Tags verb
+	var/list/tagged_datums
 
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
@@ -59,8 +63,9 @@ GLOBAL_PROTECT(href_token)
 	rank = R
 	admin_signature = "Nanotrasen Officer #[rand(0,9)][rand(0,9)][rand(0,9)]"
 	href_token = GenerateToken()
-	if(R.rights & R_DEBUG) //grant profile access
-		world.SetConfig("APP/admin", ckey, "role=admin")
+	if(!CONFIG_GET(flag/forbid_admin_profiling))
+		if(R.rights & R_DEBUG) //grant profile access, assuming admin profile access is enabled
+			world.SetConfig("APP/admin", ckey, "role=admin")
 	//only admins with +ADMIN start admined
 	if(protected)
 		GLOB.protected_admins[target] = src
@@ -99,10 +104,13 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
 	deadmined = TRUE
-	var/client/C
-	if ((C = owner) || (C = GLOB.directory[target]))
+
+	var/client/client = owner || GLOB.directory[target]
+
+	if (!isnull(client))
 		disassociate()
-		add_verb(C, /client/proc/readmin)
+		add_verb(client, /client/proc/readmin)
+		client.disable_combo_hud()
 
 /datum/admins/proc/associate(client/client)
 	if(IsAdminAdvancedProcCall())

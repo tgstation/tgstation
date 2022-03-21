@@ -167,6 +167,16 @@
 	else
 		..()
 
+/obj/item/gun/energy/plasmacutter/emp_act(severity)
+	if(!cell.charge)
+		return
+	cell.use(cell.charge/3)
+	if(isliving(loc))
+		var/mob/living/user = loc
+		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
+		user.adjust_fire_stacks(4)
+		user.IgniteMob()
+
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
@@ -213,7 +223,6 @@
 	automatic_charge_overlays = FALSE
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
-	var/atmos_link = FALSE
 	var/firing_core = FALSE
 
 /obj/item/gun/energy/wormhole_projector/examine(mob/user)
@@ -292,7 +301,7 @@
 	p_blue.link_portal(p_orange)
 
 /obj/item/gun/energy/wormhole_projector/proc/create_portal(obj/projectile/beam/wormhole/W, turf/target)
-	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null, atmos_link)
+	var/obj/effect/portal/P = new /obj/effect/portal(target, 300, null, FALSE, null)
 	RegisterSignal(P, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 	if(istype(W, /obj/projectile/beam/wormhole/orange))
 		qdel(p_orange)

@@ -55,8 +55,8 @@
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
 	SHOULD_CALL_PARENT(TRUE)
-	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span")
-	to_chat(chap, "<span class='notice'>[desc]</span")
+	to_chat(chap, "<span class='bold notice'>\"[quote]\"</span>")
+	to_chat(chap, "<span class='notice'>[desc]</span>")
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/I, mob/living/chap)
@@ -113,7 +113,7 @@
 				blessed.update_damage_overlays()
 		blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
 		to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-		playsound(chap, "punch", 25, TRUE, -1)
+		playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 		SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -305,7 +305,7 @@
 		to_chat(new_convert, span_warning("[GLOB.deity] has deemed your species as one that could never show honor."))
 		return FALSE
 	var/datum/dna/holy_dna = new_convert.dna
-	holy_dna.add_mutation(HONORBOUND)
+	holy_dna.add_mutation(/datum/mutation/human/honorbound)
 
 /datum/religion_sect/burden
 	name = "Punished God"
@@ -358,7 +358,7 @@
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
-	playsound(chap, "punch", 25, TRUE, -1)
+	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
 	SEND_SIGNAL(blessed, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE //trust me, you'll be feeling the pain from the maint drugs all well enough
 

@@ -89,6 +89,8 @@
 	var/flip_cooldown = 0
 	var/suppressor_x_offset ///pixel offset for the suppressor overlay on the x axis.
 	var/suppressor_y_offset ///pixel offset for the suppressor overlay on the y axis.
+	/// Check if you are able to see if a weapon has a bullet loaded in or not.
+	var/hidden_chambered = FALSE
 
 	///Gun internal magazine modification and misfiring
 
@@ -491,7 +493,7 @@
 	var/count_chambered = !(bolt_type == BOLT_TYPE_NO_BOLT || bolt_type == BOLT_TYPE_OPEN)
 	. += "It has [get_ammo(count_chambered)] round\s remaining."
 
-	if (!chambered)
+	if (!chambered && !hidden_chambered)
 		. += "It does not seem to have a round chambered."
 	if (bolt_locked)
 		. += "The [bolt_wording] is locked back and needs to be released before firing or de-fouling."

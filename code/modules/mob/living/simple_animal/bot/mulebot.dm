@@ -130,6 +130,14 @@
 /mob/living/simple_animal/bot/mulebot/proc/has_power()
 	return cell && cell.charge > 0 && (!wires.is_cut(WIRE_POWER1) && !wires.is_cut(WIRE_POWER2))
 
+/mob/living/simple_animal/bot/mulebot/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	if(bot_cover_flags & BOT_COVER_OPEN && !isAI(user))
+		wires.interact(user)
+		return
+	if(wires.is_cut(WIRE_RX) && isAI(user))
+		return
+
+	. = ..()
 
 /mob/living/simple_animal/bot/mulebot/proc/set_id(new_id)
 	id = new_id
@@ -140,33 +148,39 @@
 	..()
 	reached_target = FALSE
 
+/mob/living/simple_animal/bot/mulebot/screwdriver_act(mob/living/user, obj/item/tool)
+	. = ..()
+	update_appearance()
+
+/mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
+	if(!(bot_cover_flags & BOT_COVER_OPEN) || user.combat_mode)
+		return
+	if(!cell)
+		to_chat(user, span_warning("[src] doesn't have a power cell!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	cell.add_fingerprint(user)
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(cell)
+	else
+		cell.forceMove(drop_location())
+	visible_message(span_notice("[user] crowbars [cell] out from [src]."),
+					span_notice("You pry [cell] out of [src]."))
+	cell = null
+	diag_hud_set_mulebotcell()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		. = ..()
-		update_appearance()
-	else if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
+	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
-			return
+			return TRUE
 		if(!user.transferItemToLoc(I, src))
-			return
+			return TRUE
 		cell = I
 		diag_hud_set_mulebotcell()
 		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
 						span_notice("You insert [cell] into [src]."))
-	else if(I.tool_behaviour == TOOL_CROWBAR && bot_cover_flags & BOT_COVER_OPEN && !user.combat_mode)
-		if(!cell)
-			to_chat(user, span_warning("[src] doesn't have a power cell!"))
-			return
-		cell.add_fingerprint(user)
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(cell)
-		else
-			cell.forceMove(drop_location())
-		visible_message(span_notice("[user] crowbars [cell] out from [src]."),
-						span_notice("You pry [cell] out of [src]."))
-		cell = null
-		diag_hud_set_mulebotcell()
+		return TRUE
 	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
@@ -187,7 +201,7 @@
 		bot_cover_flags ^= BOT_COVER_LOCKED
 		to_chat(user, span_notice("You [bot_cover_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] [src]'s controls!"))
 	flick("[base_icon]-emagged", src)
-	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
@@ -224,14 +238,6 @@
 			visible_message(span_danger("Something shorts out inside [src]!"))
 			wires.cut_random()
 
-/mob/living/simple_animal/bot/mulebot/interact(mob/user)
-	if(bot_cover_flags & BOT_COVER_OPEN && !isAI(user))
-		wires.interact(user)
-	else
-		if(wires.is_cut(WIRE_RX) && isAI(user))
-			return
-		ui_interact(user)
-
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -240,8 +246,8 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)
 	var/list/data = list()
-	data["on"] = get_bot_flag(BOT_MODE_ON)
-	data["locked"] = get_bot_flag(BOT_COVER_LOCKED)
+	data["on"] = bot_mode_flags & BOT_MODE_ON
+	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
 	data["mode"] = mode ? mode_name[mode] : "Ready"
 	data["modeStatus"] = ""
@@ -267,7 +273,6 @@
 
 /mob/living/simple_animal/bot/mulebot/ui_act(action, params)
 	. = ..()
-
 	if(. || (bot_cover_flags & BOT_COVER_LOCKED && !usr.has_unlimited_silicon_privilege))
 		return
 
@@ -288,7 +293,7 @@
 					return
 			. = TRUE
 		else
-			bot_control(action, usr, params) // Kill this later.
+			bot_control(action, usr, params) // Kill this later. // Kill PDAs in general please
 			. = TRUE
 
 /mob/living/simple_animal/bot/mulebot/bot_control(command, mob/user, list/params = list(), pda = FALSE)
@@ -308,7 +313,7 @@
 		if("destination")
 			var/new_dest
 			if(pda)
-				new_dest = input(user, "Enter Destination:", name, destination) as null|anything in GLOB.deliverybeacontags
+				new_dest = tgui_input_list(user, "Enter Destination", "Mulebot Settings", GLOB.deliverybeacontags, destination)
 			else
 				new_dest = params["value"]
 			if(new_dest)
@@ -324,7 +329,7 @@
 		if("sethome")
 			var/new_home
 			if(pda)
-				new_home = input(user, "Enter Home:", name, home_destination) as null|anything in GLOB.deliverybeacontags
+				new_home = tgui_input_list(user, "Enter Home", "Mulebot Settings", GLOB.deliverybeacontags, home_destination)
 			else
 				new_home = params["value"]
 			if(new_home)
@@ -468,7 +473,7 @@
 
 /mob/living/simple_animal/bot/mulebot/call_bot()
 	..()
-	if(path?.len)
+	if(path && length(path))
 		target = ai_waypoint //Target is the end point of the path, the waypoint set by the AI.
 		destination = get_area_name(target, TRUE)
 		pathset = TRUE //Indicates the AI's custom path is initialized.
@@ -488,9 +493,9 @@
 
 /mob/living/simple_animal/bot/mulebot/Moved()
 	. = ..()
-
-	for(var/mob/living/carbon/human/future_pancake in loc)
-		run_over(future_pancake)
+	if(has_gravity())
+		for(var/mob/living/carbon/human/future_pancake in loc)
+			run_over(future_pancake)
 
 	diag_hud_set_mulebotcell()
 
@@ -525,7 +530,7 @@
 				at_target()
 				return
 
-			else if(path.len > 0 && target) // valid path
+			else if(length(path) && target) // valid path
 				var/turf/next = path[1]
 				reached_target = FALSE
 				if(next == loc)
@@ -574,14 +579,14 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/process_blocked(turf/next)
 	calc_path(avoid=next)
-	if(path.len > 0)
+	if(length(path))
 		buzz(DELIGHT)
 	mode = BOT_BLOCKED
 
 /mob/living/simple_animal/bot/mulebot/proc/process_nav()
 	calc_path()
 
-	if(path.len > 0)
+	if(length(path))
 		blockcount = 0
 		mode = BOT_BLOCKED
 		buzz(DELIGHT)

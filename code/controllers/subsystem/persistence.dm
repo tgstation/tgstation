@@ -423,7 +423,7 @@ SUBSYSTEM_DEF(persistence)
 /datum/controller/subsystem/persistence/proc/SaveScars()
 	for(var/i in GLOB.joined_player_list)
 		var/mob/living/carbon/human/ending_human = get_mob_by_ckey(i)
-		if(!istype(ending_human) || !ending_human.mind?.original_character_slot_index || !ending_human.client || !ending_human.client.prefs || !ending_human.client.prefs.persistent_scars)
+		if(!istype(ending_human) || !ending_human.mind?.original_character_slot_index || !ending_human.client?.prefs.read_preference(/datum/preference/toggle/persistent_scars))
 			continue
 
 		var/mob/living/carbon/human/original_human = ending_human.mind.original_character.resolve()

@@ -29,7 +29,7 @@
 	if(roundstart_signaller)
 		sigdev = new
 		sigdev.code = roundstart_signaller_code
-		sigdev.frequency = roundstart_signaller_freq
+		sigdev.set_frequency(roundstart_signaller_freq)
 
 	if(undertile_pressureplate)
 		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)

@@ -1,7 +1,8 @@
 #define CAN_HEAR_MASTERS (1<<0)
 #define CAN_HEAR_ACTIVE_HOLOCALLS (1<<1)
 #define CAN_HEAR_RECORD_MODE (1<<2)
-#define CAN_HEAR_ALL_FLAGS (CAN_HEAR_MASTERS|CAN_HEAR_ACTIVE_HOLOCALLS|CAN_HEAR_RECORD_MODE)
+#define CAN_HEAR_HOLOCALL_USER (1<<3)
+#define CAN_HEAR_ALL_FLAGS (CAN_HEAR_MASTERS|CAN_HEAR_ACTIVE_HOLOCALLS|CAN_HEAR_RECORD_MODE|CAN_HEAR_HOLOCALL_USER)
 
 /* Holograms!
  * Contains:
@@ -103,6 +104,8 @@ Possible to do for anyone motivated enough:
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	flags_1 = NODECONSTRUCT_1
 	on_network = FALSE
+	///Proximity monitor associated with this atom, needed for proximity checks.
+	var/datum/proximity_monitor/proximity_monitor
 	var/proximity_range = 1
 
 /obj/machinery/holopad/tutorial/Initialize(mapload)
@@ -300,7 +303,9 @@ Possible to do for anyone motivated enough:
 						LAZYADD(callnames[A], I)
 				callnames -= get_area(src)
 				var/result = tgui_input_list(usr, "Choose an area to call", "Holocall", sort_names(callnames))
-				if(QDELETED(usr) || !result || outgoing_call)
+				if(isnull(result))
+					return
+				if(QDELETED(usr) || outgoing_call)
 					return
 				if(usr.loc == loc)
 					var/input = text2num(params["headcall"])
@@ -503,7 +508,8 @@ Possible to do for anyone motivated enough:
 			Hologram.Impersonation = user
 
 		Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
-		Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+		Hologram.layer = FLY_LAYER //Above all the other objects/mobs. Or the vast majority of them.
+		Hologram.plane = ABOVE_GAME_PLANE
 		Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 		Hologram.name = "[user.name] (Hologram)"//If someone decides to right click.
 		Hologram.set_light(2) //hologram lighting
@@ -571,6 +577,21 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	qdel(masters[user]) // Get rid of user's hologram
 	unset_holo(user)
 	return TRUE
+
+/**
+ * Called by holocall to inform outgoing_call that the receiver picked up.
+ */
+/obj/machinery/holopad/proc/callee_picked_up()
+	calling = FALSE
+	set_can_hear_flags(CAN_HEAR_HOLOCALL_USER)
+
+/**
+ * Called by holocall to inform outgoing_call that the call is terminated.
+ */
+/obj/machinery/holopad/proc/callee_hung_up()
+	set_can_hear_flags(CAN_HEAR_HOLOCALL_USER, set_flag = FALSE)
+	calling = FALSE
+	outgoing_call = null
 
 /obj/machinery/holopad/proc/unset_holo(mob/living/user)
 	var/mob/living/silicon/ai/AI = user
@@ -666,6 +687,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	holder.selected_language = record.language
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	Hologram.plane = ABOVE_GAME_PLANE
 	Hologram.set_anchored(TRUE)//So space wind cannot drag it.
 	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2) //hologram lighting
@@ -719,15 +741,15 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(time_delta >= 1)
 		disk.record.entries += list(list(HOLORECORD_DELAY,time_delta))
 	disk.record.entries += list(list(HOLORECORD_SAY,message))
-	if(disk.record.entries.len >= HOLORECORD_MAX_LENGTH)
+	if(length(disk.record.entries) >= HOLORECORD_MAX_LENGTH)
 		record_stop()
 
 /obj/machinery/holopad/proc/replay_entry(entry_number)
 	if(!replay_mode)
 		return
-	if (!disk.record.entries.len) // check for zero entries such as photographs and no text recordings
+	if (!length(disk.record.entries)) // check for zero entries such as photographs and no text recordings
 		return // and pretty much just display them statically untill manually stopped
-	if(disk.record.entries.len < entry_number)
+	if(length(disk.record.entries) < entry_number)
 		if(loop_mode)
 			entry_number = 1
 		else
@@ -792,6 +814,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "holoray"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	density = FALSE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

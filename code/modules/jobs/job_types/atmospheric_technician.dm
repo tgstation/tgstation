@@ -35,7 +35,7 @@
 		/obj/item/grenade/gas_crystal/nitrous_oxide_crystal = 5,
 	)
 
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 	rpg_title = "Aeromancer"
 
 /datum/outfit/job/atmos
@@ -59,10 +59,10 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 
-/datum/outfit/job/atmos/rig
-	name = "Atmospheric Technician (Hardsuit)"
+/datum/outfit/job/atmos/mod
+	name = "Atmospheric Technician (MODsuit)"
 
-	suit = /obj/item/clothing/suit/space/hardsuit/atmos
 	suit_store = /obj/item/tank/internals/oxygen
+	back = /obj/item/mod/control/pre_equipped/atmospheric
 	mask = /obj/item/clothing/mask/gas/atmos
 	internals_slot = ITEM_SLOT_SUITSTORE

@@ -39,13 +39,12 @@
 	var/customjob = "Admin"
 	var/custommessage = "This is a test, please ignore."
 
-
-/obj/machinery/computer/message_monitor/attackby(obj/item/O, mob/living/user, params)
-	if(O.tool_behaviour == TOOL_SCREWDRIVER && (obj_flags & EMAGGED))
+/obj/machinery/computer/message_monitor/screwdriver_act(mob/living/user, obj/item/I)
+	if(obj_flags & EMAGGED)
 		//Stops people from just unscrewing the monitor and putting it back to get the console working again.
 		to_chat(user, span_warning("It is too hot to mess with!"))
-	else
-		return ..()
+		return TRUE
+	return ..()
 
 /obj/machinery/computer/message_monitor/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -288,10 +287,11 @@
 			for (var/obj/machinery/telecomms/message_server/M in GLOB.telecomms_list)
 				message_servers += M
 
-			if(message_servers.len > 1)
+			if(length(message_servers) > 1)
 				linkedServer = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
-				message = span_alert("NOTICE: Server selected.")
-			else if(message_servers.len > 0)
+				if(linkedServer)
+					message = span_alert("NOTICE: Server selected.")
+			else if(length(message_servers) > 0)
 				linkedServer = message_servers[1]
 				message = span_notice("NOTICE: Only Single Server Detected - Server selected.")
 			else
@@ -388,7 +388,7 @@
 					if("Recepient")
 						//Get out list of viable PDAs
 						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
-						if(GLOB.PDAs && GLOB.PDAs.len > 0)
+						if(GLOB.PDAs && length(GLOB.PDAs) > 0)
 							customrecepient = tgui_input_list(usr, "Select a PDA from the list", "PDA Selection", sendPDAs)
 						else
 							customrecepient = null

@@ -19,17 +19,6 @@
 	src.connections = connections
 	src.tracked = tracked
 
-/datum/component/connect_loc_behalf/CheckDupeComponent(datum/component/component, atom/movable/tracked, list/connections)
-	if(src.tracked != tracked)
-		return FALSE
-
-	// Not equivalent. Checks if they are not the same list via shallow comparison.
-	if(!compare_list(src.connections, connections))
-		return FALSE
-
-	return TRUE
-
-
 /datum/component/connect_loc_behalf/RegisterWithParent()
 	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
@@ -70,8 +59,7 @@
 	if(isnull(tracked_loc))
 		return
 
-	for (var/signal in connections)
-		parent.UnregisterSignal(tracked_loc, signal)
+	parent.UnregisterSignal(tracked_loc, connections)
 
 	tracked_loc = null
 

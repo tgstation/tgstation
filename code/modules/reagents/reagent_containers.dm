@@ -82,6 +82,8 @@
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, DO_NOT_SPLASH))
 		return ..()
+	if(!user.combat_mode)
+		return ..()
 	if (try_splash(user, target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -151,13 +153,6 @@
 		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transfered_by = user, methods = TOUCH)
 
 	return ..()
-
-/obj/item/reagent_containers/ex_act(severity)
-	if(reagents)
-		for(var/datum/reagent/R in reagents.reagent_list)
-			R.on_ex_act(severity)
-	if(!QDELETED(src))
-		return ..()
 
 /obj/item/reagent_containers/fire_act(exposed_temperature, exposed_volume)
 	reagents.expose_temperature(exposed_temperature)

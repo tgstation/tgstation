@@ -34,7 +34,7 @@
 	name = "syndie cosmetic spawner"
 	icon_state = "syndicate"
 	spawn_loot_count = 2
-	loot = list( // A selection of cosmetic syndicate items. Just a couple. No hardsuits or weapons.
+	loot = list( // A selection of cosmetic syndicate items. Just a couple. No space suits or weapons.
 		/obj/effect/spawner/random/clothing/syndie = 8,
 		/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 1,
 		/obj/effect/spawner/random/entertainment/cigarette_pack = 1,
@@ -44,10 +44,10 @@
 	name = "antag gear weak"
 	icon_state = "syndi_toolbox"
 	loot = list(
-		/obj/item/storage/firstaid/regular = 45,
-		/obj/item/storage/firstaid/toxin = 35,
-		/obj/item/storage/firstaid/brute = 27,
-		/obj/item/storage/firstaid/fire = 27,
+		/obj/item/storage/medkit/regular = 45,
+		/obj/item/storage/medkit/toxin = 35,
+		/obj/item/storage/medkit/brute = 27,
+		/obj/item/storage/medkit/fire = 27,
 		/obj/item/grenade/clusterbuster/smoke = 15,
 		/obj/item/clothing/under/chameleon = 13,
 		/obj/item/storage/toolbox/syndicate = 12,
@@ -65,7 +65,7 @@
 	name = "antag gear"
 	icon_state = "esword"
 	loot = list(
-		/obj/item/storage/firstaid/tactical = 35,
+		/obj/item/storage/medkit/tactical = 35,
 		/obj/item/book/granter/spell/summonitem = 20,
 		/obj/item/book/granter/spell/forcewall = 17,
 		/obj/item/pneumatic_cannon = 15,

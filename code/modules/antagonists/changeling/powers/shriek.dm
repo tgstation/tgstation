@@ -5,7 +5,7 @@
 	button_icon_state = "resonant_shriek"
 	chemical_cost = 20
 	dna_cost = 1
-	req_human = 1
+	req_human = TRUE
 
 //A flashy ability, good for crowd control and sowing chaos.
 /datum/action/changeling/resonant_shriek/sting_action(mob/user)

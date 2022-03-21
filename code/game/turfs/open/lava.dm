@@ -28,7 +28,7 @@
 	var/immunity_resistance_flags = LAVA_PROOF
 
 /turf/open/lava/ex_act(severity, target)
-	contents_explosion(severity, target)
+	return
 
 /turf/open/lava/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -79,6 +79,9 @@
 			to_chat(user, span_notice("You build a floor."))
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
+	return FALSE
+
+/turf/open/lava/rust_heretic_act()
 	return FALSE
 
 /turf/open/lava/singularity_act()
@@ -151,7 +154,7 @@
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
 	if(burn_target.movement_type & (FLYING|FLOATING)) //you're flying over it.
-		return isliving(burn_target) ? LAVA_BE_PROCESSING : LAVA_BE_IGNORING
+		return LAVA_BE_IGNORING
 
 	if(isobj(burn_target))
 		if(burn_target.throwing) // to avoid gulag prisoners easily escaping, throwing only works for objects.

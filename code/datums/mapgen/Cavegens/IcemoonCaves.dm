@@ -1,5 +1,5 @@
 /datum/map_generator/cave_generator/icemoon
-	open_turf_types = list(/turf/open/floor/plating/asteroid/snow/icemoon = 19, /turf/open/floor/plating/ice/icemoon = 1)
+	open_turf_types = list(/turf/open/misc/asteroid/snow/icemoon = 19, /turf/open/misc/ice/icemoon = 1)
 	closed_turf_types = list(/turf/closed/mineral/random/snow = 1)
 
 
@@ -18,6 +18,8 @@
 	birth_limit = 5
 	death_limit = 4
 	smoothing_iterations = 10
+
+/datum/map_generator/cave_generator/icemoon/surface/noruins //use this for when you don't want ruins to spawn in a certain area
 
 /datum/map_generator/cave_generator/icemoon/deep
 	closed_turf_types = list(/turf/closed/mineral/random/snow/underground = 1)

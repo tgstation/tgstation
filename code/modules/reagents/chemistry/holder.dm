@@ -242,9 +242,7 @@
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
 	new_reagent.ph = added_ph
-	if(data)
-		new_reagent.data = data
-		new_reagent.on_new(data)
+	new_reagent.on_new(data)
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete
@@ -426,6 +424,21 @@
 					return holder_reagent
 	return FALSE
 
+/**
+ * Check if this holder contains a reagent with a chemical_flags containing this flag
+ * Reagent takes the bitflag to search for
+ * Amount checks for having a specific amount of reagents matching that chemical
+ */
+/datum/reagents/proc/has_chemical_flag(chemical_flag, amount = 0)
+	var/found_amount = 0
+	var/list/cached_reagents = reagent_list
+	for(var/datum/reagent/holder_reagent as anything in cached_reagents)
+		if (holder_reagent.chemical_flags & chemical_flag)
+			found_amount += holder_reagent.volume
+			if(found_amount >= amount)
+				return TRUE
+	return FALSE
+
 
 /**
  * Transfer some stuff from this holder to a target object
@@ -577,38 +590,40 @@
 	return amount
 
 /// Copies the reagents to the target object
-/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
+/datum/reagents/proc/copy_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
 
-	var/datum/reagents/R
+	var/datum/reagents/target_holder
 	if(istype(target, /datum/reagents))
-		R = target
+		target_holder = target
 	else
 		if(!target.reagents)
 			return
-		R = target.reagents
+		target_holder = target.reagents
 
 	if(amount < 0)
 		return
 
-	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
+	amount = min(min(amount, total_volume), target_holder.maximum_volume - target_holder.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		var/copy_amount = reagent.volume * part
 		if(preserve_data)
 			trans_data = reagent.data
-		R.add_reagent(reagent.type, copy_amount * multiplier, trans_data, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+		target_holder.add_reagent(reagent.type, copy_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 
-	//pass over previous ongoing reactions before handle_reactions is called
-	transfer_reactions(R)
+	if(!no_react)
+		// pass over previous ongoing reactions before handle_reactions is called
+		transfer_reactions(target_holder)
 
-	src.update_total()
-	R.update_total()
-	R.handle_reactions()
-	src.handle_reactions()
+		src.update_total()
+		target_holder.update_total()
+		target_holder.handle_reactions()
+		src.handle_reactions()
+
 	return amount
 
 ///Multiplies the reagents inside this holder by a specific amount
@@ -1949,6 +1964,10 @@
 		qdel(reagents)
 	reagents = new /datum/reagents(max_vol, flags)
 	reagents.my_atom = src
+
+/atom/movable/chem_holder
+	name = "This atom exists to hold chems. If you can see this, make an issue report"
+	desc = "God this is stupid"
 
 #undef REAGENT_TRANSFER_AMOUNT
 #undef REAGENT_PURITY

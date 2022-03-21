@@ -30,6 +30,13 @@
 	jones = TRUE
 	flags_1 &= ~PREVENT_CONTENTS_EXPLOSION_1
 
+/obj/structure/closet/secure_closet/freezer/empty
+	name = "empty freezer"
+
+/obj/structure/closet/secure_closet/freezer/empty/open
+	req_access = null
+	locked = FALSE
+
 /obj/structure/closet/secure_closet/freezer/kitchen
 	name = "kitchen cabinet"
 	req_access = list(ACCESS_KITCHEN)

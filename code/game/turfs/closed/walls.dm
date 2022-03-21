@@ -270,7 +270,7 @@
 	if(.)
 		ChangeTurf(/turf/closed/wall/mineral/cult)
 
-/turf/closed/wall/get_dumping_location(obj/item/storage/source, mob/user)
+/turf/closed/wall/get_dumping_location()
 	return null
 
 /turf/closed/wall/acid_act(acidpwr, acid_volume)
@@ -324,5 +324,8 @@
 	if(prob(70))
 		new /obj/effect/temp_visual/glowing_rune(src)
 	return ..()
+
+/turf/closed/wall/metal_foam_base
+	girder_type = /obj/structure/foamedmetal
 
 #undef MAX_DENT_DECALS

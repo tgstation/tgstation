@@ -117,23 +117,22 @@
 				atomstothrow = range(3, target)
 			else
 				atomstothrow = orange(3, target)
-			for(var/atom/movable/A in atomstothrow)
-				if(A.anchored || A.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
+			for(var/atom/movable/scatter in atomstothrow)
+				if(scatter.anchored || scatter.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)
 					continue
-				if(ismob(A))
-					var/mob/M = A
-					if(M.mob_negates_gravity())
+				if(ismob(scatter))
+					var/mob/scatter_mob = scatter
+					if(scatter_mob.mob_negates_gravity())
 						continue
-				INVOKE_ASYNC(src, .proc/do_scatter, A, target)
+				do_scatter(scatter, target)
 			var/turf/targetturf = get_turf(target)
 			log_game("[key_name(source)] used a Gravitational Catapult repulse wave on [AREACOORD(targetturf)]")
 			return ..()
 
-/obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/A, atom/movable/target)
-	var/iter = 5-get_dist(A,target)
-	for(var/i in 0 to iter)
-		step_away(A,target)
-		sleep(2)
+/obj/item/mecha_parts/mecha_equipment/gravcatapult/proc/do_scatter(atom/movable/scatter, atom/movable/target)
+	var/dist = 5 - get_dist(scatter, target)
+	var/delay = 2
+	SSmove_manager.move_away(scatter, target, delay = delay, timeout = delay * dist, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 
 /obj/item/mecha_parts/mecha_equipment/gravcatapult/get_equip_info()
 	return "[..()] [mode==1?"([movable_target||"Nothing"])":null] \[<a href='?src=[REF(src)];mode=1'>S</a>|<a href='?src=[REF(src)];mode=2'>P</a>\]"
@@ -220,25 +219,26 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/get_equip_info()
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [name] - <a href='?src=[REF(src)];toggle_repairs=1'>[equip_ready?"Deactivate":"Activate"]</a>"
+	return "<span style=\"color:[activated?"#0f0":"#f00"];\">*</span>&nbsp; [src] - <a href='?src=[REF(src)];toggle_repairs=1'>[activated?"Deactivate":"Activate"]</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/Topic(href, href_list)
 	..()
-	if(href_list["toggle_repairs"])
-		chassis.cut_overlay(droid_overlay)
-		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
-		update_equip_info()
-		if(equip_ready)
-			START_PROCESSING(SSobj, src)
-			droid_overlay = new(src.icon, icon_state = "repair_droid_a")
-			log_message("Activated.", LOG_MECHA)
-		else
-			STOP_PROCESSING(SSobj, src)
-			droid_overlay = new(src.icon, icon_state = "repair_droid")
-			log_message("Deactivated.", LOG_MECHA)
-		chassis.add_overlay(droid_overlay)
-		send_byjax(chassis.occupants,"exosuit.browser", "[REF(src)]", get_equip_info())
+	if(!href_list["toggle_repairs"])
+		return
+	chassis.cut_overlay(droid_overlay)
+	activated = !activated //now set to FALSE and active, so update the UI
+	update_equip_info()
+	if(activated)
+		START_PROCESSING(SSobj, src)
+		droid_overlay = new(icon, icon_state = "repair_droid_a")
+		log_message("Activated.", LOG_MECHA)
+	else
+		STOP_PROCESSING(SSobj, src)
+		droid_overlay = new(icon, icon_state = "repair_droid")
+		log_message("Deactivated.", LOG_MECHA)
+	chassis.add_overlay(droid_overlay)
+	send_byjax(chassis.occupants,"exosuit.browser", "[REF(src)]", get_equip_info())
 
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/process(delta_time)
@@ -291,7 +291,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/proc/get_charge()
-	if(equip_ready) //disabled
+	if(activated) //disabled
 		return
 	var/pow_chan = get_chassis_area_power(get_area(chassis))
 	if(pow_chan)
@@ -312,9 +312,9 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/Topic(href, href_list)
 	..()
 	if(href_list["toggle_relay"])
-		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
+		activated = !activated //now set to FALSE and active, so update the UI
 		update_equip_info()
-		if(equip_ready) //inactive
+		if(activated) //inactive
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
@@ -324,7 +324,7 @@
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/get_equip_info()
 	if(!chassis)
 		return
-	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=[REF(src)];toggle_relay=1'>[equip_ready?"Deactivate":"Activate"]</a>"
+	return "<span style=\"color:[activated?"#0f0":"#f00"];\">*</span>&nbsp; [src.name] - <a href='?src=[REF(src)];toggle_relay=1'>[activated?"Deactivate":"Activate"]</a>"
 
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/process(delta_time)
@@ -382,9 +382,9 @@
 /obj/item/mecha_parts/mecha_equipment/generator/Topic(href, href_list)
 	..()
 	if(href_list["toggle"])
-		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
+		activated = !activated //now set to FALSE and active, so update the UI
 		update_equip_info()
-		if(equip_ready) //inactive
+		if(activated) //inactive
 			START_PROCESSING(SSobj, src)
 			log_message("Activated.", LOG_MECHA)
 		else
@@ -394,7 +394,7 @@
 /obj/item/mecha_parts/mecha_equipment/generator/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[equip_ready?"Deactivate":"Activate"]</a>"
+		return "[output] \[[fuel]: [round(fuel.amount*MINERAL_MATERIAL_AMOUNT,0.1)] cm<sup>3</sup>\] - <a href='?src=[REF(src)];toggle=1'>[activated?"Deactivate":"Activate"]</a>"
 
 /obj/item/mecha_parts/mecha_equipment/generator/action(mob/source, atom/movable/target, list/modifiers)
 	if(!chassis)
@@ -474,9 +474,9 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/Topic(href,href_list)
 	..()
 	if(href_list["toggle"])
-		equip_ready = !equip_ready //now set to FALSE and active, so update the UI
+		activated = !activated //now set to FALSE and active, so update the UI
 		update_equip_info()
-		if(equip_ready) //inactive
+		if(activated) //inactive
 			START_PROCESSING(SSobj, src)
 			enable()
 			log_message("Activated.", LOG_MECHA)
@@ -500,7 +500,7 @@
 /obj/item/mecha_parts/mecha_equipment/thrusters/get_equip_info()
 	var/output = ..()
 	if(output)
-		return "[output] <a href='?src=[REF(src)];toggle=1'>[equip_ready?"Deactivate":"Activate"]</a>"
+		return "[output] <a href='?src=[REF(src)];toggle=1'>[activated?"Deactivate":"Activate"]</a>"
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/proc/thrust(movement_dir)
 	if(!chassis)
@@ -545,7 +545,6 @@
 	name = "Ion thruster package"
 	desc = "A set of thrusters that allow for exosuit movement in zero-gravity environments."
 	detachable = FALSE
-	salvageable = FALSE
 	effect_type = /obj/effect/particle_effect/ion_trails
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/ion/thrust(movement_dir)

@@ -35,7 +35,7 @@
 		if(HG.awakened)
 			graces++
 	if(!graces)
-		owner.apply_status_effect(STATUS_EFFECT_HISWRATH)
+		owner.apply_status_effect(/datum/status_effect/his_wrath)
 		qdel(src)
 		return
 	var/grace_heal = bloodlust * 0.05
@@ -371,11 +371,11 @@
 	var/turf/location
 
 /datum/status_effect/crucible_soul/on_apply()
-	. = ..()
 	to_chat(owner,span_notice("You phase through reality, nothing is out of bounds!"))
 	owner.alpha = 180
 	owner.pass_flags |= PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE
 	location = get_turf(owner)
+	return TRUE
 
 /datum/status_effect/crucible_soul/on_remove()
 	to_chat(owner,span_notice("You regain your physicality, returning you to your original location..."))
@@ -383,7 +383,6 @@
 	owner.pass_flags &= ~(PASSCLOSEDTURF | PASSGLASS | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE | PASSTABLE | PASSMOB | PASSDOORS | PASSVEHICLE)
 	owner.forceMove(location)
 	location = null
-	return ..()
 
 /datum/status_effect/duskndawn
 	id = "Blessing of Dusk and Dawn"
@@ -392,14 +391,13 @@
 	alert_type =/atom/movable/screen/alert/status_effect/duskndawn
 
 /datum/status_effect/duskndawn/on_apply()
-	. = ..()
 	ADD_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
+	return TRUE
 
 /datum/status_effect/duskndawn/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, STATUS_EFFECT_TRAIT)
 	owner.update_sight()
-	return ..()
 
 /datum/status_effect/marshal
 	id = "Blessing of Wounded Soldier"
@@ -409,15 +407,13 @@
 	alert_type = /atom/movable/screen/alert/status_effect/marshal
 
 /datum/status_effect/marshal/on_apply()
-	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
+	return TRUE
 
 /datum/status_effect/marshal/on_remove()
-	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, STATUS_EFFECT_TRAIT)
 
 /datum/status_effect/marshal/tick()
-	. = ..()
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbie = owner
@@ -444,17 +440,18 @@
 
 /atom/movable/screen/alert/status_effect/crucible_soul
 	name = "Blessing of Crucible Soul"
-	desc = "You phased through the reality, you are halfway to your final destination..."
+	desc = "You phased through reality. You are halfway to your final destination..."
 	icon_state = "crucible"
 
 /atom/movable/screen/alert/status_effect/duskndawn
 	name = "Blessing of Dusk and Dawn"
-	desc = "Many things hide beyond the horizon, with Owl's help i managed to slip past sun's guard and moon's watch."
+	desc = "Many things hide beyond the horizon. With Owl's help I managed to slip past Sun's guard and Moon's watch."
 	icon_state = "duskndawn"
 
 /atom/movable/screen/alert/status_effect/marshal
 	name = "Blessing of Wounded Soldier"
-	desc = "Some people seek power through redemption, one thing many people don't know is that battle is the ultimate redemption and wounds let you bask in eternal glory."
+	desc = "Some people seek power through redemption. One thing many people don't know is that battle \
+		is the ultimate redemption, and wounds let you bask in eternal glory."
 	icon_state = "wounded_soldier"
 
 /datum/status_effect/lightningorb
@@ -558,4 +555,3 @@
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
 	to_chat(owner, span_warning("You don't feel any healthier."))
-

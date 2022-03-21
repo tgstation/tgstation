@@ -173,7 +173,9 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /obj/machinery/bsa/full/Initialize(mapload, cannon_direction = WEST)
 	. = ..()
-	top_layer = top_layer || mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
+	if(!top_layer)
+		top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
+		top_layer.plane = GAME_PLANE_UPPER
 	switch(cannon_direction)
 		if(WEST)
 			setDir(WEST)
@@ -300,8 +302,13 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	var/list/options = gps_locators
 	if(area_aim)
 		options += GLOB.teleportlocs
-	var/V = input(user,"Select target", "Select target",null) in options|null
-	target = options[V]
+	var/victim = tgui_input_list(user, "Select target", "Artillery Targeting", options)
+	if(isnull(victim))
+		return
+	if(isnull(options[victim]))
+		return
+	target = options[victim]
+	log_game("[key_name(user)] has aimed the artillery strike at [target].")
 
 
 /obj/machinery/computer/bsa_control/proc/get_target_name()

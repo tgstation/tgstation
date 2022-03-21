@@ -227,7 +227,7 @@
 	name = "police officer's hat"
 	desc = "A police officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/helmet/constable
 	name = "constable helmet"
@@ -239,9 +239,16 @@
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
-	desc = "An extremely robust, space-worthy helmet with the Nanotrasen logo emblazoned on the top."
+	desc = "An extremely robust helmet with the Nanotrasen logo emblazoned on the top."
 	icon_state = "swat"
 	inhand_icon_state = "swat"
+	clothing_flags = PLASMAMAN_HELMET_EXEMPT
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
+	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+
 
 /obj/item/clothing/head/helmet/thunderdome
 	name = "\improper Thunderdome helmet"
@@ -500,7 +507,7 @@
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
 	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("[src] fizzles and breaks apart!"))
 	magnification = null
 	new /obj/effect/decal/cleanable/ash/crematorium(drop_location()) //just in case they're in a locker or other containers it needs to use crematorium ash, see the path itself for an explanation
@@ -523,14 +530,13 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/update_icon_state()
-	var/state = "[initial(icon_state)]"
 	if(attached_light)
+		var/state = "[initial(icon_state)]"
 		if(attached_light.on)
 			state += "-flight-on" //"helmet-flight-on" // "helmet-cam-flight-on"
 		else
 			state += "-flight" //etc.
-
-	icon_state = state
+		icon_state = state
 	return ..()
 
 /obj/item/clothing/head/helmet/ui_action_click(mob/user, action)

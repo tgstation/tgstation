@@ -1,0 +1,91 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall,
+/area/maintenance/department/medical)
+"k" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/plasma_effects{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"l" = (
+/obj/structure/tank_holder/extinguisher,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"m" = (
+/obj/structure/tank_holder/extinguisher,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"n" = (
+/obj/machinery/vending/wallmed/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+"y" = (
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"J" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"S" = (
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/closet/firecloset,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/medical)
+"U" = (
+/obj/modular_map_connector,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance_hatch{
+	req_one_access_txt = "12"
+	},
+/turf/open/floor/iron/smooth,
+/area/maintenance/department/medical)
+
+(1,1,1) = {"
+l
+n
+s
+y
+"}
+(2,1,1) = {"
+k
+s
+s
+J
+"}
+(3,1,1) = {"
+m
+s
+s
+S
+"}
+(4,1,1) = {"
+a
+U
+a
+a
+"}

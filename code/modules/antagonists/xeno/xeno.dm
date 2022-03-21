@@ -9,7 +9,7 @@
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
 
 /datum/antagonist/xeno
-	name = "Xenomorph"
+	name = "\improper Xenomorph"
 	job_rank = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 	prevent_roundtype_conversion = FALSE

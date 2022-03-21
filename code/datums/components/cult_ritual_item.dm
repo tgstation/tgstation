@@ -111,7 +111,7 @@
 	if(!target.has_reagent(/datum/reagent/water/holywater))
 		return
 
-	INVOKE_ASYNC(src, .proc/do_purge_holywater, user)
+	INVOKE_ASYNC(src, .proc/do_purge_holywater, target, user)
 
 /*
  * Signal proc for [COMSIG_ITEM_ATTACK_OBJ].
@@ -259,7 +259,9 @@
 		return FALSE
 
 	entered_rune_name = tgui_input_list(cultist, "Choose a rite to scribe", "Sigils of Power", GLOB.rune_types)
-	if(!entered_rune_name || !can_scribe_rune(tool, cultist))
+	if(isnull(entered_rune_name))
+		return FALSE
+	if(!can_scribe_rune(tool, cultist))
 		return FALSE
 
 	rune_to_scribe = GLOB.rune_types[entered_rune_name]
@@ -325,6 +327,7 @@
 	made_rune.add_mob_blood(cultist)
 
 	to_chat(cultist, span_cult("The [lowertext(made_rune.cultist_name)] rune [made_rune.cultist_desc]"))
+	cultist.log_message("scribed \a [lowertext(made_rune.cultist_name)] rune at [AREACOORD(made_rune)] using [parent] ([parent.type])", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cult_runes_scribed", 1, made_rune.cultist_name)
 
 	return TRUE
@@ -447,7 +450,7 @@
 		to_chat(cultist, span_warning("This veil is not weak enough here - it can only be scribed in [english_list(summon_objective.summon_spots)]!"))
 		return FALSE
 
-	if(fail_if_last_site && summon_objective.summon_spots.len <= 1)
+	if(fail_if_last_site && length(summon_objective.summon_spots) <= 1)
 		to_chat(cultist, span_warning("This rune cannot be scribed here - the ritual site must be reserved for the final summoning!"))
 		return FALSE
 

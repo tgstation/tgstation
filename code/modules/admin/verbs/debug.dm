@@ -57,7 +57,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(C.key)
 			available.Add(C)
 	var/mob/choice = tgui_input_list(usr, "Choose a player to play the pAI", "Spawn pAI", sort_names(available))
-	if(!choice)
+	if(isnull(choice))
 		return
 	if(!isobserver(choice))
 		var/confirm = tgui_alert(usr, "[choice.key] isn't ghosting right now. Are you sure you want to yank them out of their body and place them in this pAI?", "Spawn pAI Confirmation", list("Yes", "No"))
@@ -173,7 +173,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/mob/adminmob = mob
 	if(M.ckey)
 		M.ghostize(FALSE)
-	M.ckey = ckey
+	M.key = key
 	init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
@@ -511,7 +511,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/list/L = M.get_contents()
 	for(var/t in L)
-		to_chat(usr, "[t]", confidential = TRUE)
+		to_chat(usr, "[t] [ADMIN_VV(t)] [ADMIN_TAG(t)]", confidential = TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Contents") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/modify_goals()
@@ -534,8 +534,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set category = "Debug"
 	set name = "Debug Mob Lists"
 	set desc = "For when you just gotta know"
-
-	switch(tgui_input_list(usr, "Which list?",, list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients")))
+	var/chosen_list = tgui_input_list(usr, "Which list?", "Select List", list("Players","Admins","Mobs","Living Mobs","Dead Mobs","Clients","Joined Clients"))
+	if(isnull(chosen_list))
+		return
+	switch(chosen_list)
 		if("Players")
 			to_chat(usr, jointext(GLOB.player_list,","), confidential = TRUE)
 		if("Admins")
@@ -599,6 +601,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
+/client/proc/open_colorblind_test()
+	set category = "Debug"
+	set name = "Colorblind Testing"
+	set desc = "Change your view to a budget version of colorblindness to test for usability"
+
+	if(!holder)
+		return
+	holder.color_test.ui_interact(mob)
+
 /client/proc/debug_huds(i as num)
 	set category = "Debug"
 	set name = "Debug HUDs"
@@ -615,8 +626,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!holder)
 		return
 	var/list/names = list()
-	for(var/i in GLOB.ruin_landmarks)
-		var/obj/effect/landmark/ruin/ruin_landmark = i
+	for(var/obj/effect/landmark/ruin/ruin_landmark as anything in GLOB.ruin_landmarks)
 		var/datum/map_template/ruin/template = ruin_landmark.ruin_template
 
 		var/count = 1
@@ -653,18 +663,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		exists[L.ruin_template] = landmark
 
 	var/list/names = list()
-	names += "---- Space Ruins ----"
-	for(var/name in SSmapping.space_ruins_templates)
-		names[name] = list(SSmapping.space_ruins_templates[name], ZTRAIT_SPACE_RUINS, list(/area/space))
-	names += "---- Lava Ruins ----"
-	for(var/name in SSmapping.lava_ruins_templates)
-		names[name] = list(SSmapping.lava_ruins_templates[name], ZTRAIT_LAVA_RUINS, list(/area/lavaland/surface/outdoors/unexplored))
-	names += "---- Ice Ruins ----"
-	for(var/name in SSmapping.ice_ruins_templates)
-		names[name] = list(SSmapping.ice_ruins_templates[name], ZTRAIT_ICE_RUINS, list(/area/icemoon/surface/outdoors/unexplored, /area/icemoon/underground/unexplored))
-	names += "---- Ice Underground Ruins ----"
-	for(var/name in SSmapping.ice_ruins_underground_templates)
-		names[name] = list(SSmapping.ice_ruins_underground_templates[name], ZTRAIT_ICE_RUINS_UNDERGROUND, list(/area/icemoon/underground/unexplored))
+	for (var/theme in SSmapping.themed_ruins)
+		names += "---- [theme] ----"
+		for (var/name in SSmapping.themed_ruins[theme])
+			var/datum/map_template/ruin/ruin = SSmapping.themed_ruins[theme][name]
+			names[name] = list(ruin, theme, list(ruin.default_area))
+
 
 	var/ruinname = input("Select ruin", "Spawn Ruin") as null|anything in sort_list(names)
 	var/data = names[ruinname]

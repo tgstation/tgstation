@@ -124,6 +124,17 @@
 	turf_type = /turf/open/floor/wood/tile
 	merge_type = /obj/item/stack/tile/wood/tile
 
+//Bamboo
+/obj/item/stack/tile/bamboo
+	name = "bamboo mat pieces"
+	singular_name = "bamboo mat piece"
+	desc = "A piece of a bamboo mat with a decorative trim."
+	icon_state = "tile_bamboo"
+	turf_type = /turf/open/floor/bamboo
+	merge_type = /obj/item/stack/tile/bamboo
+	resistance_flags = FLAMMABLE
+
+
 //Basalt
 /obj/item/stack/tile/basalt
 	name = "basalt tile"
@@ -131,7 +142,7 @@
 	desc = "Artificially made ashy soil themed on a hostile environment."
 	icon_state = "tile_basalt"
 	inhand_icon_state = "tile-basalt"
-	turf_type = /turf/open/floor/grass/fakebasalt
+	turf_type = /turf/open/floor/fakebasalt
 	merge_type = /obj/item/stack/tile/basalt
 
 //Carpets

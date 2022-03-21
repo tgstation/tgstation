@@ -25,10 +25,9 @@
 	var/verb_sing = "sings"
 	var/verb_yell = "yells"
 	var/speech_span
-	var/inertia_dir = 0
-	var/atom/inertia_last_loc
-	var/inertia_moving = 0
-	var/inertia_next_move = 0
+	///Are we moving with inertia? Mostly used as an optimization
+	var/inertia_moving = FALSE
+	///Delay in deciseconds between inertia based movement
 	var/inertia_move_delay = 5
 	/// Things we can pass through while moving. If any of this matches the thing we're trying to pass's [pass_flags_self], then we can pass through.
 	var/pass_flags = NONE
@@ -36,6 +35,8 @@
 	var/generic_canpass = TRUE
 	var/moving_diagonally = 0 //0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
 	var/atom/movable/moving_from_pull //attempt to resume grab after moving instead of before.
+	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
+	var/datum/movement_packet/move_packet
 	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 	/**
 	 * an associative lazylist of relevant nested contents by "channel", the list is of the form: list(channel = list(important nested contents of that type))
@@ -106,7 +107,6 @@
 
 
 /atom/movable/Destroy(force)
-	QDEL_NULL(proximity_monitor)
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 
@@ -133,12 +133,15 @@
 		orbiting.end_orbit(src)
 		orbiting = null
 
+	if(move_packet)
+		if(!QDELETED(move_packet))
+			qdel(move_packet)
+		move_packet = null
+
 	if(important_recursive_contents && (important_recursive_contents[RECURSIVE_CONTENTS_CLIENT_MOBS] || important_recursive_contents[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
 		SSspatial_grid.force_remove_from_cell(src)
 
 	LAZYCLEARLIST(client_mobs_in_contents)
-
-	LAZYCLEARLIST(important_recursive_contents)//has to be before moveToNullspace() so that we can exit our spatial_grid cell if we're in it
 
 	. = ..()
 
@@ -146,6 +149,12 @@
 		qdel(movable_content)
 
 	moveToNullspace()
+
+	//This absolutely must be after moveToNullspace()
+	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
+	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
+	LAZYCLEARLIST(important_recursive_contents)
+
 
 	vis_locs = null //clears this atom out of all viscontents
 	vis_contents.Cut()
@@ -171,7 +180,7 @@
 
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
 	if(message)
-		visible_message("<span class='danger'>[src] crashes into [impacted_turf]!</span>")
+		visible_message(span_danger("[src] crashes into [impacted_turf]!"))
 	var/atom/highest = impacted_turf
 	for(var/atom/hurt_atom as anything in impacted_turf.contents)
 		if(!hurt_atom.density)
@@ -254,29 +263,32 @@
 		destination = get_step_multiz(start, direction)
 		if(!destination)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(rider || src, "<span class='warning'>There's nowhere to go in that direction!</span>")
+				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
 			return FALSE
 	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || (movement_type & (FLYING|FLOATING)) || !has_gravity(start)))
 		return FALSE
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			if(rider)
-				to_chat(rider, "<span class='notice'>[src] is is not capable of flight.<span>")
+				to_chat(rider, span_warning("[src] is is not capable of flight."))
 			else
-				to_chat(src, "<span class='notice'>You are not Superman.<span>")
+				to_chat(src, span_warning("You are not Superman."))
 		return FALSE
 	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination) && destination.zPassIn(src, direction, start)))
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, "<span class='warning'>You couldn't move there!</span>")
+			to_chat(rider || src, span_warning("You couldn't move there!"))
 		return FALSE
 	return destination //used by some child types checks and zMove()
 
 /atom/movable/vv_edit_var(var_name, var_value)
 	var/static/list/banned_edits = list("step_x" = TRUE, "step_y" = TRUE, "step_size" = TRUE, "bounds" = TRUE)
 	var/static/list/careful_edits = list("bound_x" = TRUE, "bound_y" = TRUE, "bound_width" = TRUE, "bound_height" = TRUE)
+	var/static/list/not_falsey_edits = list("bound_width" = TRUE, "bound_height" = TRUE)
 	if(banned_edits[var_name])
 		return FALSE //PLEASE no.
-	if((careful_edits[var_name]) && (var_value % world.icon_size) != 0)
+	if(careful_edits[var_name] && (var_value % world.icon_size) != 0)
+		return FALSE
+	if(not_falsey_edits[var_name] && !var_value)
 		return FALSE
 
 	switch(var_name)
@@ -340,13 +352,12 @@
 			return TRUE
 		stop_pulling()
 
-	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, pulled_atom, state, force)
-
 	if(pulled_atom.pulledby)
 		log_combat(pulled_atom, pulled_atom.pulledby, "pulled from", src)
 		pulled_atom.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 	pulling = pulled_atom
 	pulled_atom.set_pulledby(src)
+	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, pulled_atom, state, force)
 	setGrabState(state)
 	if(ismob(pulled_atom))
 		var/mob/pulled_mob = pulled_atom
@@ -578,7 +589,6 @@
 				if(!. && set_dir_on_move)
 					setDir(first_step_dir)
 				else if (!inertia_moving)
-					inertia_next_move = world.time + inertia_move_delay
 					newtonian_move(direct)
 			moving_diagonally = 0
 			return
@@ -645,7 +655,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if (!inertia_moving)
-		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(movement_dir)
 	if (client_mobs_in_contents)
 		update_parallax_contents()
@@ -815,9 +824,9 @@
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
 		LAZYREMOVEASSOC(location.important_recursive_contents, RECURSIVE_CONTENTS_AREA_SENSITIVE, src)
 
-///propogates new_client's mob through our nested contents, similar to other important_recursive_contents procs
+///propogates ourselves through our nested contents, similar to other important_recursive_contents procs
 ///main difference is that client contents need to possibly duplicate recursive contents for the clients mob AND its eye
-/atom/movable/proc/enable_client_mobs_in_contents(client/new_client)
+/mob/proc/enable_client_mobs_in_contents()
 	var/turf/our_turf = get_turf(src)
 
 	if(our_turf && SSspatial_grid.initialized)
@@ -826,11 +835,10 @@
 		SSspatial_grid.enter_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
-		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, new_client.mob)
+		LAZYORASSOCLIST(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, src)
 
-///Clears the clients channel of this movables important_recursive_contents list and all nested locs
-/atom/movable/proc/clear_important_client_contents(client/former_client)
-
+///Clears the clients channel of this mob
+/mob/proc/clear_important_client_contents()
 	var/turf/our_turf = get_turf(src)
 
 	if(our_turf && SSspatial_grid.initialized)
@@ -839,7 +847,7 @@
 		SSspatial_grid.remove_from_pre_init_queue(src, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 	for(var/atom/movable/movable_loc as anything in get_nested_locs(src) + src)
-		LAZYREMOVEASSOC(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, former_client.mob)
+		LAZYREMOVEASSOC(movable_loc.important_recursive_contents, RECURSIVE_CONTENTS_CLIENT_MOBS, src)
 
 ///Sets the anchored var and returns if it was sucessfully changed or not.
 /atom/movable/proc/set_anchored(anchorvalue)
@@ -937,6 +945,9 @@
  * * movement_dir - 0 when stopping or any dir when trying to move
  */
 /atom/movable/proc/Process_Spacemove(movement_dir = 0)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_SPACEMOVE, movement_dir) & COMSIG_MOVABLE_STOP_SPACEMOVE)
+		return TRUE
+
 	if(has_gravity(src))
 		return TRUE
 
@@ -956,16 +967,17 @@
 
 
 /// Only moves the object if it's under no gravity
-/atom/movable/proc/newtonian_move(direction)
+/// Accepts the direction to move, and if the push should be instant
+/atom/movable/proc/newtonian_move(direction, instant = FALSE)
 	if(!isturf(loc) || Process_Spacemove(0))
-		inertia_dir = 0
 		return FALSE
 
-	inertia_dir = direction
-	if(!direction)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_NEWTONIAN_MOVE, direction) & COMPONENT_MOVABLE_NEWTONIAN_BLOCK)
 		return TRUE
-	inertia_last_loc = loc
-	SSspacedrift.processing[src] = src
+
+	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
+	AddComponent(/datum/component/drift, direction, instant)
+
 	return TRUE
 
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -1077,11 +1089,9 @@
 
 /atom/movable/proc/handle_buckled_mob_movement(newloc, direct, glide_size_override)
 	for(var/mob/living/buckled_mob as anything in buckled_mobs)
-		if(buckled_mob.loc != newloc && !buckled_mob.Move(newloc, direct, glide_size_override))
-			Move(buckled_mob.loc, direct)
+		if(!buckled_mob.Move(newloc, direct, glide_size_override)) //If a mob buckled to us can't make the same move as us
+			Move(buckled_mob.loc, direct) //Move back to its location
 			last_move = buckled_mob.last_move
-			inertia_dir = last_move
-			buckled_mob.inertia_dir = last_move
 			return FALSE
 	return TRUE
 
@@ -1175,44 +1185,6 @@
 	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = 1, easing=BACK_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
-
-/atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item)
-	var/image/attack_image
-	if(visual_effect_icon)
-		attack_image = image('icons/effects/effects.dmi', attacked_atom, visual_effect_icon, attacked_atom.layer + 0.1)
-	else if(used_item)
-		attack_image = image(icon = used_item, loc = attacked_atom, layer = attacked_atom.layer + 0.1)
-		attack_image.plane = GAME_PLANE
-
-		// Scale the icon.
-		attack_image.transform *= 0.4
-		// The icon should not rotate.
-		attack_image.appearance_flags = APPEARANCE_UI
-
-		// Set the direction of the icon animation.
-		var/direction = get_dir(src, attacked_atom)
-		if(direction & NORTH)
-			attack_image.pixel_y = -12
-		else if(direction & SOUTH)
-			attack_image.pixel_y = 12
-
-		if(direction & EAST)
-			attack_image.pixel_x = -14
-		else if(direction & WEST)
-			attack_image.pixel_x = 14
-
-		if(!direction) // Attacked self?!
-			attack_image.pixel_z = 16
-
-	if(!attack_image)
-		return
-
-	flick_overlay(attack_image, GLOB.clients, 10)
-
-	// And animate the attack!
-	animate(attack_image, alpha = 175, transform = matrix() * 0.75, pixel_x = 0, pixel_y = 0, pixel_z = 0, time = 3)
-	animate(time = 1)
-	animate(alpha = 0, time = 3, easing = CIRCULAR_EASING|EASE_OUT)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()
@@ -1387,37 +1359,6 @@
 		log_admin("[key_name(usr)] has added deadchat control to [src]")
 		message_admins(span_notice("[key_name(usr)] has added deadchat control to [src]"))
 
-/obj/item/proc/do_pickup_animation(atom/target)
-	set waitfor = FALSE
-	if(!istype(loc, /turf))
-		return
-	var/image/pickup_animation = image(icon = src, loc = loc, layer = layer + 0.1)
-	pickup_animation.plane = GAME_PLANE
-	pickup_animation.transform *= 0.75
-	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	var/turf/current_turf = get_turf(src)
-	var/direction
-	var/to_x = target.base_pixel_x
-	var/to_y = target.base_pixel_y
-
-	if(!QDELETED(current_turf) && !QDELETED(target))
-		direction = get_dir(current_turf, target)
-	if(direction & NORTH)
-		to_y += 32
-	else if(direction & SOUTH)
-		to_y -= 32
-	if(direction & EAST)
-		to_x += 32
-	else if(direction & WEST)
-		to_x -= 32
-	if(!direction)
-		to_y += 16
-	flick_overlay(pickup_animation, GLOB.clients, 6)
-	var/matrix/animation_matrix = new
-	animation_matrix.Turn(pick(-30, 30))
-	animate(pickup_animation, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = animation_matrix, easing = CUBIC_EASING)
-	sleep(1)
-	animate(pickup_animation, alpha = 0, transform = matrix(), time = 1)
 
 /**
 * A wrapper for setDir that should only be able to fail by living mobs.

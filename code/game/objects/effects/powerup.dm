@@ -116,7 +116,7 @@
 	. = ..()
 	if(!.)
 		return
-	target.apply_status_effect(STATUS_EFFECT_LIGHTNINGORB)
+	target.apply_status_effect(/datum/status_effect/lightningorb)
 
 /obj/effect/powerup/mayhem
 	name = "Orb of Mayhem"
@@ -127,4 +127,4 @@
 	. = ..()
 	if(!.)
 		return
-	target.apply_status_effect(STATUS_EFFECT_MAYHEM)
+	target.apply_status_effect(/datum/status_effect/mayhem)

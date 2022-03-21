@@ -110,7 +110,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount_per_transfer_from_this = 15
 	volume = 15
-	ignore_flags = 1 //so you can medipen through hardsuits
+	ignore_flags = 1 //so you can medipen through spacesuits
 	reagent_flags = DRAWABLE
 	flags_1 = null
 	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
@@ -279,7 +279,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/magillitis
 	name = "experimental autoinjector"
-	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or hardsuits, nor can the chemical inside be extracted."
+	desc = "A custom-frame needle injector with a small single-use reservoir, containing an experimental serum. Unlike the more common medipen frame, it cannot pierce through protective armor or space suits, nor can the chemical inside be extracted."
 	icon_state = "gorillapen"
 	inhand_icon_state = "gorillapen"
 	base_icon_state = "gorillapen"

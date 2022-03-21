@@ -1,5 +1,6 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
+	turf_flags = IS_SOLID
 	opacity = TRUE
 	density = TRUE
 	blocks_air = TRUE
@@ -74,7 +75,7 @@
 /turf/closed/indestructible/splashscreen
 	name = "Space Station 13"
 	desc = null
-	icon = 'icons/blank_title.png'
+	icon = 'icons/blanks/blank_title.png'
 	icon_state = ""
 	pixel_x = -64
 	plane = SPLASHSCREEN_PLANE

@@ -2124,6 +2124,22 @@
 	name = "Witch Wing"
 	icon_state = "witchwing"
 
+/datum/sprite_accessory/moth_wings/rosy
+	name = "Rosy"
+	icon_state = "rosy"
+
+/datum/sprite_accessory/moth_wings/feathery
+	name = "Feathery"
+	icon_state = "feathery"
+
+/datum/sprite_accessory/moth_wings/brown
+	name = "Brown"
+	icon_state = "brown"
+
+/datum/sprite_accessory/moth_wings/plasmafire
+	name = "Plasmafire"
+	icon_state = "plasmafire"
+
 /datum/sprite_accessory/moth_antennae //Finally splitting the sprite
 	icon = 'icons/mob/moth_antennae.dmi'
 	color_src = null
@@ -2191,6 +2207,21 @@
 /datum/sprite_accessory/moth_antennae/regal
 	name = "Regal"
 	icon_state = "regal"
+/datum/sprite_accessory/moth_antennae/rosy
+	name = "Rosy"
+	icon_state = "rosy"
+
+/datum/sprite_accessory/moth_antennae/feathery
+	name = "Feathery"
+	icon_state = "feathery"
+
+/datum/sprite_accessory/moth_antennae/brown
+	name = "Brown"
+	icon_state = "brown"
+
+/datum/sprite_accessory/moth_antennae/plasmafire
+	name = "Plasmafire"
+	icon_state = "plasmafire"
 
 /datum/sprite_accessory/moth_markings // the markings that moths can have. finally something other than the boring tan
 	icon = 'icons/mob/moth_markings.dmi'

@@ -1,6 +1,6 @@
-#define CAMERA_UPGRADE_XRAY 1
-#define CAMERA_UPGRADE_EMP_PROOF 2
-#define CAMERA_UPGRADE_MOTION 4
+#define CAMERA_UPGRADE_XRAY (1<<0)
+#define CAMERA_UPGRADE_EMP_PROOF (1<<1)
+#define CAMERA_UPGRADE_MOTION (1<<2)
 
 /obj/machinery/camera
 	name = "security camera"
@@ -11,6 +11,7 @@
 	idle_power_usage = 5
 	active_power_usage = 10
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF
 	damage_deflection = 12
 	armor = list(MELEE = 50, BULLET = 20, LASER = 20, ENERGY = 20, BOMB = 0, BIO = 0, FIRE = 90, ACID = 50)
@@ -42,6 +43,8 @@
 	var/internal_light = TRUE //Whether it can light up when an AI views it
 	///Represents a signel source of camera alarms about movement or camera tampering
 	var/datum/alarm_handler/alarm_manager
+	///Proximity monitor associated with this atom, for motion sensitive cameras.
+	var/datum/proximity_monitor/proximity_monitor
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
@@ -59,14 +62,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	light_range = 10
 	start_active = TRUE
 
-/obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
+/obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/old_assembly)
 	. = ..()
 	for(var/i in network)
 		network -= i
 		network += lowertext(i)
 	var/obj/structure/camera_assembly/assembly
-	if(CA)
-		assembly = CA
+	if(old_assembly) //check to see if the camera assembly was upgraded at all.
+		assembly = old_assembly
+		assembly_ref = WEAKREF(assembly) //important to do this now since upgrades call back to the assembly_ref
 		if(assembly.xray_module)
 			upgradeXRay()
 		else if(assembly.malf_xray_firmware_present) //if it was secretly upgraded via the MALF AI Upgrade Camera Network ability
@@ -82,7 +86,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	else
 		assembly = new(src)
 		assembly.state = 4 //STATE_FINISHED
-	assembly_ref = WEAKREF(assembly)
+		assembly_ref = WEAKREF(assembly)
 	GLOB.cameranet.cameras += src
 	GLOB.cameranet.addCamera(src)
 	if (isturf(loc))
@@ -101,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		network -= i
 		network += "[port.id]_[i]"
 
-/obj/machinery/proc/create_prox_monitor()
+/obj/machinery/camera/proc/create_prox_monitor()
 	if(!proximity_monitor)
 		proximity_monitor = new(src, 1)
 
@@ -229,10 +233,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		droppable_parts += assembly.emp_module
 	if(assembly.proxy_module)
 		droppable_parts += assembly.proxy_module
-	if(!droppable_parts.len)
+	if(!length(droppable_parts))
 		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sort_names(droppable_parts)
-	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	var/obj/item/choice = tgui_input_list(user, "Select a part to remove", "Part Removal", sort_names(droppable_parts))
+	if(isnull(choice))
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	to_chat(user, span_notice("You remove [choice] from [src]."))
 	if(choice == assembly.xray_module)

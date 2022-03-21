@@ -1,8 +1,8 @@
 /client/proc/manipulate_organs(mob/living/carbon/C in world)
 	set name = "Manipulate Organs"
 	set category = "Debug"
-	var/operation = input("Select organ operation.", "Organ Manipulation", "cancel") as null|anything in list("add organ", "add implant", "drop organ/implant", "remove organ/implant", "cancel")
-	if (!operation)
+	var/operation = tgui_input_list(usr, "Select organ operation", "Organ Manipulation", list("add organ", "add implant", "drop organ/implant", "remove organ/implant"))
+	if (isnull(operation))
 		return
 
 	var/list/organs = list()
@@ -12,8 +12,10 @@
 				var/dat = replacetext("[path]", "/obj/item/organ/", ":")
 				organs[dat] = path
 
-			var/obj/item/organ/organ = input("Select organ type:", "Organ Manipulation", null) as null|anything in organs
-			if(!organ)
+			var/obj/item/organ/organ = tgui_input_list(usr, "Select organ type", "Organ Manipulation", organs)
+			if(isnull(organ))
+				return
+			if(isnull(organs[organ]))
 				return
 			organ = organs[organ]
 			organ = new organ
@@ -26,8 +28,10 @@
 				var/dat = replacetext("[path]", "/obj/item/implant/", ":")
 				organs[dat] = path
 
-			var/obj/item/implant/organ = input("Select implant type:", "Organ Manipulation", null) as null|anything in organs
-			if(!organ)
+			var/obj/item/implant/organ = tgui_input_list(usr, "Select implant type", "Organ Manipulation", organs)
+			if(isnull(organ))
+				return
+			if(isnull(organs[organ]))
 				return
 			organ = organs[organ]
 			organ = new organ
@@ -44,12 +48,12 @@
 				var/obj/item/implant/I = X
 				organs["[I.name] ([I.type])"] = I
 
-			var/obj/item/organ = input("Select organ/implant:", "Organ Manipulation", null) as null|anything in organs
-			if(!organ)
+			var/obj/item/organ = tgui_input_list(usr, "Select organ/implant", "Organ Manipulation", organs)
+			if(isnull(organ))
+				return
+			if(isnull(organs[organ]))
 				return
 			organ = organs[organ]
-			if(!organ)
-				return
 			var/obj/item/organ/O
 			var/obj/item/implant/I
 

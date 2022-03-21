@@ -39,7 +39,7 @@
 
 	family_heirlooms = list(/obj/item/reagent_containers/food/drinks/trophy/silver_cup)
 	rpg_title = "Guild Questgiver"
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS
+	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_CREW_MANIFEST | JOB_EQUIP_RANK | JOB_CREW_MEMBER | JOB_NEW_PLAYER_JOINABLE | JOB_BOLD_SELECT_TEXT | JOB_REOPEN_ON_ROUNDSTART_LOSS | JOB_ASSIGN_QUIRKS | JOB_CAN_BE_INTERN
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
@@ -76,7 +76,7 @@
 		undershirt = /datum/sprite_accessory/undershirt/ian
 
 //only pet worth reviving
-/datum/job/hop/get_mail_goodies(mob/recipient)
+/datum/job/head_of_personnel/get_mail_goodies(mob/recipient)
 	. = ..()
 	// Strange Reagent if the pet is dead.
 	for(var/mob/living/simple_animal/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)

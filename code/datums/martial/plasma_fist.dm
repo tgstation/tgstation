@@ -89,6 +89,7 @@
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
+		ADD_TRAIT(human_attacker, TRAIT_FORCED_STANDING, type)
 		human_attacker.dna.species.species_traits += TRAIT_BOMBIMMUNE
 		human_attacker.unequip_everything()
 		human_attacker.underwear = "Nude"
@@ -112,9 +113,10 @@
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
-	var/datum/dna/dna = dying.has_dna()
-	if (dna?.species)
-		dna.species.species_traits -= TRAIT_BOMBIMMUNE
+	if(ishuman(dying))
+		var/mob/living/carbon/human/dying_human = dying
+		REMOVE_TRAIT(dying_human, TRAIT_FORCED_STANDING, type)
+		dying_human.dna.species.species_traits -= TRAIT_BOMBIMMUNE
 	if(dying.stat == DEAD)
 		return
 	dying.death()

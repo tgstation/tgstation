@@ -33,16 +33,16 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	contraband = list(/obj/item/reagent_containers/glass/bottle/cold = 2,
 					/obj/item/restraints/handcuffs = 4,
 					/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
-					/obj/item/storage/firstaid/tactical = 1)
+					/obj/item/storage/medkit/tactical = 1)
 	premium = list(/obj/item/storage/pill_bottle/psicodine = 2,
 					/obj/item/reagent_containers/hypospray/medipen = 3,
 					/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
-					/obj/item/storage/firstaid/regular = 3,
-					/obj/item/storage/firstaid/brute = 1,
-					/obj/item/storage/firstaid/fire = 1,
-					/obj/item/storage/firstaid/toxin = 1,
-					/obj/item/storage/firstaid/o2 = 1,
-					/obj/item/storage/firstaid/advanced = 1,
+					/obj/item/storage/medkit/regular = 3,
+					/obj/item/storage/medkit/brute = 1,
+					/obj/item/storage/medkit/fire = 1,
+					/obj/item/storage/medkit/toxin = 1,
+					/obj/item/storage/medkit/o2 = 1,
+					/obj/item/storage/medkit/advanced = 1,
 					/obj/item/defibrillator/loaded = 1,
 					/obj/item/wallframe/defib_mount = 1,
 					/obj/item/sensor_device = 2,
@@ -124,31 +124,6 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	icon_state = "syndie-ship"
 	ambientsounds = list('sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg')
 	area_flags = NOTELEPORT | UNIQUE_AREA
-
-	//Cybersun hardsuit
-
-/obj/item/clothing/head/helmet/space/hardsuit/cybersun
-	name = "Cybersun hardsuit helmet"
-	desc = "Prototype hardsuit helmet with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
-	icon_state = "cybersun"
-	inhand_icon_state = "cybersun"
-	hardsuit_type = "cybersun"
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, FIRE = 60, ACID = 60)
-	strip_delay = 600
-	actions_types = list()
-
-
-/obj/item/clothing/suit/space/hardsuit/cybersun
-	icon_state = "cybersun"
-	inhand_icon_state = "cybersun"
-	hardsuit_type = "cybersun"
-	name = "Cybersun hardsuit"
-	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
-	armor = list(MELEE = 30, BULLET = 40, LASER = 55, ENERGY = 55, BOMB = 30, BIO = 100, FIRE = 60, ACID = 60)
-	slowdown = 0
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
-	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
-	jetpack = /obj/item/tank/jetpack/suit
 
 //Special NT NPCs
 

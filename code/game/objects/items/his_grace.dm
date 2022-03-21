@@ -106,13 +106,13 @@
 				master.visible_message(span_boldwarning("[src] turns on [master]!"), "<span class='his_grace big bold'>[src] turns on you!</span>")
 				do_attack_animation(master, null, src)
 				master.emote("scream")
-				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
+				master.remove_status_effect(/datum/status_effect/his_grace)
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
 			else
-				master.apply_status_effect(STATUS_EFFECT_HISGRACE)
+				master.apply_status_effect(/datum/status_effect/his_grace)
 		return
 	forceMove(get_turf(src)) //no you can't put His Grace in a locker you just have to deal with Him
 	if(bloodthirst < HIS_GRACE_CONSUME_OWNER)

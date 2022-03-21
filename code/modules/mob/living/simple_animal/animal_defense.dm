@@ -46,7 +46,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, "punch", 25, TRUE, -1)
+	playsound(loc, SFX_PUNCH, 25, TRUE, -1)
 	visible_message(span_danger("[user] punches [src]!"), \
 					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
 	to_chat(user, span_danger("You punch [src]!"))
@@ -131,11 +131,6 @@
 			apply_damage(damage, damagetype, null, getarmor(null, armorcheck))
 		return TRUE
 
-/mob/living/simple_animal/bullet_act(obj/projectile/Proj, def_zone, piercing_hit = FALSE)
-	apply_damage(Proj.damage, Proj.damage_type)
-	Proj.on_hit(src, 0, piercing_hit)
-	return BULLET_ACT_HIT
-
 /mob/living/simple_animal/ex_act(severity, target, origin)
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return FALSE
@@ -188,3 +183,15 @@
 		else
 			visual_effect_icon = ATTACK_EFFECT_SMASH
 	..()
+
+/mob/living/simple_animal/emp_act(severity)
+	. = ..()
+	if(mob_biotypes & MOB_ROBOTIC)
+		switch (severity)
+			if (EMP_LIGHT)
+				visible_message(span_danger("[src] shakes violently, its parts coming loose!"))
+				apply_damage(maxHealth * 0.6)
+				Shake(5, 5, 1 SECONDS)
+			if (EMP_HEAVY)
+				visible_message(span_danger("[src] suddenly bursts apart!"))
+				apply_damage(maxHealth)

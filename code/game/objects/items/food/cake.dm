@@ -104,7 +104,7 @@
 	icon_state = "orangecake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
-	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR | ORANGES
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/cake/orange/MakeProcessable()
@@ -115,7 +115,7 @@
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "orangecake_slice"
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
-	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR | ORANGES
 
 /obj/item/food/cake/lime
 	name = "lime cake"
@@ -490,3 +490,30 @@
 
 /obj/item/food/cakeslice/pavlova/nuts
 	foodtypes = NUTS | FRUIT | SUGAR
+
+/obj/item/food/cake/fruit
+	name = "english fruitcake"
+	desc = "A proper good cake, innit?"
+	icon_state = "fruitcake"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15, /datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/cherryjelly = 5, )
+	tastes = list("dried fruit" = 5, "treacle" = 2, "christmas" = 2)
+	force = 7
+	throwforce = 7
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+
+/obj/item/food/cake/fruit/MakeProcessable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/fruit, 5, 30)
+
+/obj/item/food/cakeslice/fruit
+	name = "english fruitcake slice"
+	desc = "A proper good slice, innit?"
+	icon_state = "fruitcake_slice1"
+	base_icon_state = "fruitcake_slice"
+	tastes = list("dried fruit" = 5, "treacle" = 2, "christmas" = 2)
+	force = 2
+	throwforce = 2
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+
+/obj/item/food/cakeslice/fruit/Initialize(mapload)
+	. = ..()
+	icon_state = "[base_icon_state][rand(1,3)]"

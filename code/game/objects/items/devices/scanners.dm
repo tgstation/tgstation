@@ -97,7 +97,12 @@ GENE SCANNER
 	var/scanmode = SCANMODE_HEALTH
 	var/advanced = FALSE
 	custom_price = PAYCHECK_HARD
-	
+
+/obj/item/healthanalyzer/Initialize(mapload)
+	. = ..()
+
+	register_item_context()
+
 /obj/item/healthanalyzer/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click [src] to toggle the limb damage readout.")
@@ -146,6 +151,24 @@ GENE SCANNER
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/obj/item/healthanalyzer/add_item_context(
+	obj/item/source,
+	list/context,
+	atom/target,
+)
+	if (!isliving(target))
+		return NONE
+
+	switch (scanmode)
+		if (SCANMODE_HEALTH)
+			context[SCREENTIP_CONTEXT_LMB] = "Scan health"
+		if (SCANMODE_WOUND)
+			context[SCREENTIP_CONTEXT_LMB] = "Scan wounds"
+
+	context[SCREENTIP_CONTEXT_RMB] = "Scan chemicals"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE)
 	if(user.incapacitated())
@@ -170,9 +193,9 @@ GENE SCANNER
 		oxy_loss = max(rand(1, 40), oxy_loss, (300 - (tox_loss + fire_loss + brute_loss))) // Random oxygen loss
 
 	render_list += "[span_info("Analyzing results for [target]:")]\n<span class='info ml-1'>Overall status: [mob_status]</span>\n"
-	
+
 	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, advanced, user, mode)
-	
+
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
 		if(humantarget.undergoing_cardiac_arrest() && humantarget.stat != DEAD)
@@ -181,12 +204,17 @@ GENE SCANNER
 			advanced = TRUE
 
 	// Husk detection
-	if(advanced && HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
-		render_list += "<span class='alert ml-1'>Subject has been husked by severe burns.</span>\n"
-	else if (advanced && HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
-		render_list += "<span class='alert ml-1'>Subject has been husked by dessication.</span>\n"
-	else if(HAS_TRAIT(target, TRAIT_HUSK))
-		render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
+	if(HAS_TRAIT(target, TRAIT_HUSK))
+		if(advanced)
+			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
+				render_list += "<span class='alert ml-1'>Subject has been husked by severe burns.</span>\n"
+			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
+				render_list += "<span class='alert ml-1'>Subject has been husked by dessication.</span>\n"
+			else
+				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span>\n"
+
+		else
+			render_list += "<span class='alert ml-1'>Subject has been husked.</span>\n"
 
 	if(target.getStaminaLoss())
 		if(advanced)
@@ -229,7 +257,7 @@ GENE SCANNER
 
 	if(advanced && target.hallucinating())
 		render_list += "<span class='info ml-1'>Subject is hallucinating.</span>\n"
-		
+
 	//Eyes and ears
 	if(advanced && iscarbon(target))
 		var/mob/living/carbon/carbontarget = target
@@ -319,14 +347,14 @@ GENE SCANNER
 				missing_organs += "ears"
 			if(!humantarget.getorganslot(ORGAN_SLOT_EYES))
 				missing_organs += "eyes"
-				
+
 			if(length(missing_organs))
 				render = TRUE
 				for(var/organ in missing_organs)
 					toReport += "<tr><td><font color='#cc3333'>[organ]:</font></td>\
 						[advanced ? "<td><font color='#ff3333'>["-"]</font></td>" : ""]\
 						<td><font color='#cc3333'>["Missing"]</font></td></tr>"
-			
+
 			if(render)
 				render_list += toReport + "</table>" // tables do not need extra linebreak
 
@@ -336,7 +364,7 @@ GENE SCANNER
 
 		// Species and body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/mutant = humantarget.dna.check_mutation(HULK) \
+		var/mutant = humantarget.dna.check_mutation(/datum/mutation/human/hulk) \
 			|| targetspecies.mutantlungs != initial(targetspecies.mutantlungs) \
 			|| targetspecies.mutantbrain != initial(targetspecies.mutantbrain) \
 			|| targetspecies.mutantheart != initial(targetspecies.mutantheart) \
@@ -423,7 +451,7 @@ GENE SCANNER
 
 	if(istype(target) && target.reagents)
 		var/render_list = list()
-		
+
 		// Blood reagents
 		if(target.reagents.reagent_list.len)
 			render_list += "<span class='notice ml-1'>Subject contains the following reagents in their blood:</span>\n"
@@ -434,7 +462,7 @@ GENE SCANNER
 				render_list += "<span class='notice ml-2'>[round(reagent.volume, 0.001)] units of [reagent.name][reagent.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
 		else
 			render_list += "<span class='notice ml-1'>Subject contains no reagents in their blood.</span>\n"
-			
+
 		// Stomach reagents
 		var/obj/item/organ/stomach/belly = target.getorganslot(ORGAN_SLOT_STOMACH)
 		if(belly)
@@ -452,7 +480,7 @@ GENE SCANNER
 							render_list += "<span class='notice ml-2'>[round(bit_vol, 0.001)] units of [bit.name][bit.overdosed ? "</span> - [span_boldannounce("OVERDOSING")]" : ".</span>"]\n"
 			else
 				render_list += "<span class='notice ml-1'>Subject contains no reagents in their stomach.</span>\n"
-				
+
 		// Addictions
 		if(LAZYLEN(target.mind?.active_addictions))
 			render_list += "<span class='boldannounce ml-1'>Subject is addicted to the following types of drug:</span>\n"
@@ -462,7 +490,7 @@ GENE SCANNER
 		// Special eigenstasium addiction
 		if(target.has_status_effect(/datum/status_effect/eigenstasium))
 			render_list += "<span class='notice ml-1'>Subject is temporally unstable. Stabilising agent is recommended to reduce disturbances.</span>\n"
-		
+
 		// Allergies
 		for(var/datum/quirk/quirky as anything in target.quirks)
 			if(istype(quirky, /datum/quirk/item_quirk/allergic))
@@ -470,13 +498,13 @@ GENE SCANNER
 				var/allergies = allergies_quirk.allergy_string
 				render_list += "<span class='alert ml-1'>Subject is extremely allergic to the following chemicals:</span>\n"
 				render_list += "<span class='alert ml-2'>[allergies]</span>\n"
-		
+
 		// we handled the last <br> so we don't need handholding
 		to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
-	
+
 	if(!user.canUseTopic(src, BE_CLOSE))
 		return
 
@@ -577,6 +605,10 @@ GENE SCANNER
 	var/cooldown_time = 250
 	var/accuracy // 0 is the best accuracy.
 
+/obj/item/analyzer/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/atmospheric_scanner, requires_sight = TRUE)
+
 /obj/item/analyzer/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click [src] to activate the barometer function.")
@@ -584,48 +616,6 @@ GENE SCANNER
 /obj/item/analyzer/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
 	return BRUTELOSS
-
-/obj/item/analyzer/attack_self(mob/user)
-	add_fingerprint(user)
-
-	if (user.stat || user.is_blind())
-		return
-
-	var/turf/location = user.loc
-	if(!istype(location))
-		return
-
-	var/render_list = list()
-	var/datum/gas_mixture/environment = location.return_air()
-	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
-
-	render_list += "[span_info("<B>Results:</B>")]\
-				\n<span class='[abs(pressure - ONE_ATMOSPHERE) < 10 ? "info" : "alert"]'>Pressure: [round(pressure, 0.01)] kPa</span>\n"
-	if(total_moles)
-		var/list/env_gases = environment.gases
-
-		environment.assert_gases(arglist(GLOB.hardcoded_gases))
-		var/o2_concentration = env_gases[/datum/gas/oxygen][MOLES]/total_moles
-		var/n2_concentration = env_gases[/datum/gas/nitrogen][MOLES]/total_moles
-		var/co2_concentration = env_gases[/datum/gas/carbon_dioxide][MOLES]/total_moles
-		var/plasma_concentration = env_gases[/datum/gas/plasma][MOLES]/total_moles
-
-		render_list += "<span class='[abs(n2_concentration - N2STANDARD) < 20 ? "info" : "alert"]'>Nitrogen: [round(n2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/nitrogen][MOLES], 0.01)] mol)</span>\
-			\n<span class='[abs(o2_concentration - O2STANDARD) < 2 ? "info" : "alert"]'>Oxygen: [round(o2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/oxygen][MOLES], 0.01)] mol)</span>\
-			\n<span class='[co2_concentration > 0.01 ? "alert" : "info"]'>CO2: [round(co2_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/carbon_dioxide][MOLES], 0.01)] mol)</span>\
-			\n<span class='[plasma_concentration > 0.005 ? "alert" : "info"]'>Plasma: [round(plasma_concentration*100, 0.01)] % ([round(env_gases[/datum/gas/plasma][MOLES], 0.01)] mol)</span>\n"
-
-		environment.garbage_collect()
-
-		for(var/id in env_gases)
-			if(id in GLOB.hardcoded_gases)
-				continue
-			var/gas_concentration = env_gases[id][MOLES]/total_moles
-			render_list += "[span_alert("[env_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(env_gases[id][MOLES], 0.01)] mol)")]\n"
-		render_list += "[span_info("Temperature: [round(environment.temperature-T0C, 0.01)] &deg;C ([round(environment.temperature, 0.01)] K)")]\n"
-	// we handled the last <br> so we don't need handholding
-	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	..()
@@ -858,7 +848,9 @@ GENE SCANNER
 		options += get_display_name(A)
 
 	var/answer = tgui_input_list(user, "Analyze Potential", "Sequence Analyzer", sort_list(options))
-	if(answer && ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(isnull(answer))
+		return
+	if(ready && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		var/sequence
 		for(var/A in buffer) //this physically hurts but i dont know what anything else short of an assoc list
 			if(get_display_name(A) == answer)
@@ -898,7 +890,7 @@ GENE SCANNER
 	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "A wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
+	desc = "A wand that medically scans people. Inserting it into a medical kiosk makes it able to perform a health scan on the patient."
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY

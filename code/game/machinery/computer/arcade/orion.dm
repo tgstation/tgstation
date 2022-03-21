@@ -132,6 +132,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		radio.set_frequency(FREQ_MEDICAL)
 		radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
 
+		remove_radio_all(radio)//so we dont keep transmitting sec and medical comms
+
 		gamers[gamer] = ORION_GAMER_PAMPHLET //next report send a pamph
 
 		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
@@ -175,14 +177,16 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	data["reason"] = reason
 
+	data["settlers"] = settlers
+	data["settlermoods"] = settlermoods
+
 	return data
 
 /obj/machinery/computer/arcade/orion_trail/ui_static_data(mob/user)
 	var/list/static_data = list()
 	static_data["gamename"] = name
 	static_data["emagged"] = obj_flags & EMAGGED
-	static_data["settlers"] = settlers
-	static_data["settlermoods"] = settlermoods
+
 	return static_data
 
 /obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
@@ -209,13 +213,14 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	var/xp_gained = 0
 
+	gamer.played_game()
+
 	if(event)
 		event.response(src, action)
 		if(!settlers.len || food <= 0 || fuel <= 0)
 			set_game_over(gamer)
 			return
 		new_settler_mood() //events shake people up a bit and can also change food
-		update_static_data(usr)
 		return TRUE
 	switch(action)
 		if("start_game")
@@ -343,6 +348,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		event.emag_effect(src, gamer)
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
+	usr.lost_game()
+
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
 	reason = given_reason || death_reason(user)
@@ -390,7 +397,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive++
 	if(update)
 		new_settler_mood()//new faces!
-		update_static_data(usr)
 	return newcrew
 
 
@@ -411,7 +417,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive--
 	if(update)
 		new_settler_mood()//bro, i...
-		update_static_data(usr)
 	return removed
 
 /**
@@ -469,6 +474,8 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
+	usr.won_game()
+
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)

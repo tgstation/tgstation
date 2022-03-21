@@ -4,7 +4,7 @@
 	var/list/players_spawned = new
 
 /datum/antagonist/ashwalker
-	name = "Ash Walker"
+	name = "\improper Ash Walker"
 	job_rank = ROLE_LAVALAND
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE

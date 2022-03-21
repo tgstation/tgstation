@@ -207,9 +207,8 @@
 	to_chat(world, "<span class='infoplain'><BR><BR><BR><span class='big bold'>The round has ended.</span></span>")
 	log_game("The round has ended.")
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
-		cb.InvokeAsync()
+	for(var/datum/callback/roundend_callbacks as anything in round_end_events)
+		roundend_callbacks.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
 	var/speed_round = FALSE
@@ -347,6 +346,10 @@
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
 		parts += "[FOURSPACES]Threat left: [mode.mid_round_budget]"
+		if(mode.roundend_threat_log.len)
+			parts += "[FOURSPACES]Threat edits:"
+			for(var/entry as anything in mode.roundend_threat_log)
+				parts += "[FOURSPACES][FOURSPACES][entry]<BR>"
 		parts += "[FOURSPACES]Executed rules:"
 		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
 			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
@@ -643,7 +646,7 @@
 	name = "Show roundend report"
 	button_icon_state = "round_end"
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client)
 

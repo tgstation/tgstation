@@ -9,6 +9,7 @@
 	maxHealth = 70
 	health = 70
 	see_in_dark = 5
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	obj_damage = 10
 	butcher_results = list(/obj/item/clothing/head/crown = 1,)
 	response_help_continuous = "glares at"
@@ -53,6 +54,32 @@
 		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
 	to_chat(src, span_notice("You are an independent, invasive force on the station! Horde coins, trash, cheese, and the like from the safety of darkness!"))
 
+/mob/living/simple_animal/hostile/regalrat/attack_ghost(mob/user)
+	. = ..()
+	if(. || !(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
+		return
+	get_clicked_player(user)
+
+/**
+ * Sets a ghost to control the rat if the rat is eligible
+ *
+ * Asks the interacting ghost if they would like to control the rat.
+ * If they answer yes, and another ghost hasn't taken control, sets the ghost to control the rat.
+ * Arguments:
+ * * mob/user - The ghost to possibly control the rat
+ */
+/mob/living/simple_animal/hostile/regalrat/proc/get_clicked_player(mob/user)
+	if(key || stat)
+		return
+	var/rat_ask = tgui_alert(usr, "Become the Royal Rat?", "Are you sure?", list("Yes", "No"))
+	if(rat_ask != "Yes" || QDELETED(src))
+		return
+	if(key)
+		to_chat(user, span_warning("Someone else already took the rat!"))
+		return
+	key = user.key
+	log_game("[key_name(src)] took control of [name].")
+
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
 	if(prob(20))
 		riot.Trigger()
@@ -92,23 +119,25 @@
 	if(miasma_percentage>=0.25)
 		heal_bodypart_damage(1)
 
+#define REGALRAT_INTERACTION "regalrat"
 /mob/living/simple_animal/hostile/regalrat/AttackingTarget()
-	if (DOING_INTERACTION(src, "regalrat"))
+	if (DOING_INTERACTION(src, REGALRAT_INTERACTION))
 		return
-
-	. = ..()
-
 	if (QDELETED(target))
 		return
 
 	if (target.reagents && target.is_injectable(src, allowmobs = TRUE) && !istype(target, /obj/item/food/cheese))
 		src.visible_message(span_warning("[src] starts licking [target] passionately!"),span_notice("You start licking [target]..."))
-		if (do_mob(src, target, 2 SECONDS, interaction_key = "regalrat"))
+		if (do_mob(src, target, 2 SECONDS, interaction_key = REGALRAT_INTERACTION))
 			target.reagents.add_reagent(/datum/reagent/rat_spit,rand(1,3),no_react = TRUE)
 			to_chat(src, span_notice("You finish licking [target]."))
 	else
 		SEND_SIGNAL(target, COMSIG_RAT_INTERACT, src)
 
+	if (DOING_INTERACTION(src, REGALRAT_INTERACTION)) // check again in case we started interacting
+		return
+	return ..()
+#undef REGALRAT_INTERACTION
 /**
  * Conditionally "eat" cheese object and heal, if injured.
  *
@@ -141,15 +170,12 @@
 	name = "Rat King's Domain"
 	desc = "Corrupts this area to be more suitable for your rat army."
 	check_flags = AB_CHECK_CONSCIOUS
-	cooldown_time = 60
+	cooldown_time = 6 SECONDS
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	button_icon_state = "coffer"
 
-/datum/action/cooldown/domain/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/domain/proc/domain()
 	var/turf/T = get_turf(owner)
 	T.atmos_spawn_air("miasma=4;TEMP=[T20C]")
 	switch (rand(1,10))
@@ -163,6 +189,11 @@
 			new /obj/effect/decal/cleanable/dirt(T)
 	StartCooldown()
 
+/datum/action/cooldown/domain/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	domain()
+	StartCooldown()
+
 /**
  *This action checks all nearby mice, and converts them into hostile rats. If no mice are nearby, creates a new one.
  */
@@ -174,13 +205,10 @@
 	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "riot"
 	background_icon_state = "bg_clock"
-	cooldown_time = 80
+	cooldown_time = 8 SECONDS
 	///Checks to see if there are any nearby mice. Does not count Rats.
 
-/datum/action/cooldown/riot/Trigger()
-	. = ..()
-	if(!.)
-		return
+/datum/action/cooldown/riot/proc/riot()
 	var/cap = CONFIG_GET(number/ratcap)
 	var/something_from_nothing = FALSE
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
@@ -200,6 +228,11 @@
 		owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
 	else
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
+	StartCooldown()
+
+/datum/action/cooldown/riot/Activate(atom/target)
+	StartCooldown(10 SECONDS)
+	riot()
 	StartCooldown()
 
 /mob/living/simple_animal/hostile/rat

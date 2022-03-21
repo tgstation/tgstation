@@ -238,7 +238,7 @@
 "aK" = (
 /obj/effect/turf_decal/bot_red,
 /obj/effect/spawner/random/structure/crate_empty,
-/obj/effect/spawner/random/medical/firstaid_rare,
+/obj/effect/spawner/random/medical/medkit_rare,
 /obj/effect/spawner/random/food_or_drink/booze,
 /obj/effect/spawner/random/food_or_drink/salad,
 /obj/effect/spawner/random/maintenance/two,

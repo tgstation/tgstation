@@ -4,6 +4,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = TRUE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	pixel_z = 8
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
@@ -15,8 +16,8 @@
 	var/maxwater = 100
 	///How many units of nutrients will be drained in the tray.
 	var/nutridrain = 1
-	///The maximum nutrient of water in the tray
-	var/maxnutri = 10
+	///The maximum nutrient reagent container size of the tray.
+	var/maxnutri = 20
 	///The amount of pests in the tray (max 10)
 	var/pestlevel = 0
 	///The amount of weeds in the tray (max 10)
@@ -57,9 +58,96 @@
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
-	create_reagents(20)
+	create_reagents(maxnutri)
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/plant_analyzer = list(
+			SCREENTIP_CONTEXT_LMB = "Scan tray stats",
+			SCREENTIP_CONTEXT_RMB = "Scan tray chemicals"
+		),
+		/obj/item/cultivator = list(
+			SCREENTIP_CONTEXT_LMB = "Remove weeds",
+		),
+		/obj/item/shovel = list(
+			SCREENTIP_CONTEXT_LMB = "Clear tray",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	register_context()
+
+/obj/machinery/hydroponics/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	// If we don't have a seed, we can't do much.
+
+	// The only option is to plant a new seed.
+	if(!myseed)
+		if(istype(held_item, /obj/item/seeds))
+			context[SCREENTIP_CONTEXT_LMB] = "Plant seed"
+			return CONTEXTUAL_SCREENTIP_SET
+		return NONE
+
+	// If we DO have a seed, we can do a few things!
+
+	// With a hand we can harvest or remove dead plants
+	// If the plant's not in either state, we can't do much else, so early return.
+	if(isnull(held_item))
+		// Silicons can't interact with trays :frown:
+		if(issilicon(user))
+			return NONE
+
+		switch(plant_status)
+			if(HYDROTRAY_PLANT_DEAD)
+				context[SCREENTIP_CONTEXT_LMB] = "Remove dead plant"
+				return CONTEXTUAL_SCREENTIP_SET
+
+			if(HYDROTRAY_PLANT_HARVESTABLE)
+				context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
+				return CONTEXTUAL_SCREENTIP_SET
+
+		return NONE
+
+	// If the plant is harvestable, we can graft it with secateurs or harvest it with a plant bag.
+	if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
+		if(istype(held_item, /obj/item/secateurs))
+			context[SCREENTIP_CONTEXT_LMB] = "Graft plant"
+			return CONTEXTUAL_SCREENTIP_SET
+
+		if(istype(held_item, /obj/item/storage/bag/plants))
+			context[SCREENTIP_CONTEXT_LMB] = "Harvest plant"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	// If the plant's in good health, we can shear it.
+	if(istype(held_item, /obj/item/geneshears) && plant_health > GENE_SHEAR_MIN_HEALTH)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove plant gene"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	// If we've got a charged somatoray, we can mutation lock it.
+	if(istype(held_item, /obj/item/gun/energy/floragun) && myseed.endurance > FLORA_GUN_MIN_ENDURANCE && LAZYLEN(myseed.mutatelist))
+		var/obj/item/gun/energy/floragun/flower_gun = held_item
+		if(flower_gun.cell.charge >= flower_gun.cell.maxcharge)
+			context[SCREENTIP_CONTEXT_LMB] = "Lock mutation"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	// Edibles and pills can be composted.
+	if(IS_EDIBLE(held_item) || istype(held_item, /obj/item/reagent_containers/pill))
+		context[SCREENTIP_CONTEXT_LMB] = "Compost"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	// Aand if a reagent container has water or plant fertilizer in it, we can use it on the plant.
+	if(is_reagent_container(held_item) && length(held_item.reagents.reagent_list))
+		var/datum/reagent/most_common_reagent = held_item.reagents.get_master_reagent()
+		context[SCREENTIP_CONTEXT_LMB] = "[istype(most_common_reagent, /datum/reagent/water) ? "Water" : "Feed"] plant"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return NONE
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
@@ -68,12 +156,9 @@
 
 /obj/machinery/hydroponics/constructable/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+	AddComponent(/datum/component/simple_rotation)
 	AddComponent(/datum/component/plumbing/simple_demand)
 	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
-
-/obj/machinery/hydroponics/constructable/proc/can_be_rotated(mob/user, rotation_type)
-	return !anchored
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0
@@ -88,9 +173,21 @@
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
 	. = ..()
-	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>Alt-Click</b> to empty the tray's nutrients.")
+	. += span_notice("Use <b>Ctrl-Click</b> to activate autogrow. <b>RMB</b> to empty the tray's nutrients.")
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Tray efficiency at <b>[rating*100]%</b>.")
+
+/obj/machinery/hydroponics/constructable/add_context(
+	atom/source,
+	list/context,
+	obj/item/held_item,
+	mob/living/user,
+)
+
+	// Constructible trays will always show that you can activate auto-grow with ctrl+click
+	. = ..()
+	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Activate auto-grow"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/hydroponics/Destroy()
 	if(myseed)
@@ -737,8 +834,8 @@
 			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE))
 				continue // Don't show genes that can't be removed.
 			current_traits[gene.name] = gene
-		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sort_list(current_traits))
-		if(removed_trait == null)
+		var/removed_trait = tgui_input_list(user, "Trait to remove from the [myseed.plantname]", "Plant Trait Removal", sort_list(current_traits))
+		if(isnull(removed_trait))
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
@@ -807,7 +904,7 @@
 		if(!myseed)
 			to_chat(user, span_warning("[src] is empty!"))
 			return
-		if(myseed.endurance <= 20)
+		if(myseed.endurance <= FLORA_GUN_MIN_ENDURANCE)
 			to_chat(user, span_warning("[myseed.plantname] isn't hardy enough to sequence it's mutation!"))
 			return
 		if(!LAZYLEN(myseed.mutatelist))
@@ -818,8 +915,12 @@
 			for(var/muties in myseed.mutatelist)
 				var/obj/item/seeds/another_mut = new muties
 				fresh_mut_list[another_mut.plantname] = muties
-			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sort_list(fresh_mut_list))
-			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
+			var/locked_mutation = tgui_input_list(user, "Mutation to lock", "Plant Mutation Locks", sort_list(fresh_mut_list))
+			if(isnull(locked_mutation))
+				return
+			if(isnull(fresh_mut_list[locked_mutation]))
+				return
+			if(!user.canUseTopic(src, BE_CLOSE))
 				return
 			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
 			myseed.set_endurance(myseed.endurance/2)
@@ -874,7 +975,12 @@
 	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
 
 /obj/machinery/hydroponics/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
+/obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!anchored)
 		update_appearance()
 		return FALSE
@@ -882,6 +988,7 @@
 	if(warning == "Yes" && user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		reagents.clear_reagents()
 		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Update Tray Proc
@@ -933,6 +1040,7 @@
 	flags_1 = NODECONSTRUCT_1
 	unwrenchable = FALSE
 	self_sustaining_overlay_icon_state = null
+	maxnutri = 15
 
 /obj/machinery/hydroponics/soil/update_icon(updates=ALL)
 	. = ..()

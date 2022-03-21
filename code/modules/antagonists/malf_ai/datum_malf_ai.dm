@@ -2,7 +2,7 @@
 #define PROB_SPECIAL 30
 
 /datum/antagonist/malf_ai
-	name = "Malfunctioning AI"
+	name = "\improper Malfunctioning AI"
 	roundend_category = "traitors"
 	antagpanel_category = "Malf AI"
 	job_rank = ROLE_MALF
@@ -48,9 +48,6 @@
 		malf_ai.set_zeroth_law("")
 		malf_ai.remove_malf_abilities()
 		QDEL_NULL(malf_ai.malf_picker)
-
-	if(!silent && owner.current)
-		to_chat(owner.current,span_userdanger("You are no longer the [job_rank]!"))
 
 	owner.special_role = null
 
@@ -106,6 +103,7 @@
 			objectives += yandere_two
 
 /datum/antagonist/malf_ai/greet()
+	. = ..()
 	if(should_give_codewords)
 		give_codewords()
 

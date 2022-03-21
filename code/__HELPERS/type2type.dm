@@ -152,71 +152,6 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		. = "NONE"
 	return .
 
-//colour formats
-/proc/rgb2hsl(red, green, blue)
-	red /= 255;green /= 255;blue /= 255;
-	var/max = max(red,green,blue)
-	var/min = min(red,green,blue)
-	var/range = max-min
-
-	var/hue=0;var/saturation=0;var/lightness=0;
-	lightness = (max + min)/2
-	if(range != 0)
-		if(lightness < 0.5)
-			saturation = range/(max+min)
-		else
-			saturation = range/(2-max-min)
-
-		var/dred = ((max-red)/(6*max)) + 0.5
-		var/dgreen = ((max-green)/(6*max)) + 0.5
-		var/dblue = ((max-blue)/(6*max)) + 0.5
-
-		if(max==red)
-			hue = dblue - dgreen
-		else if(max==green)
-			hue = dred - dblue + (1/3)
-		else
-			hue = dgreen - dred + (2/3)
-		if(hue < 0)
-			hue++
-		else if(hue > 1)
-			hue--
-
-	return list(hue, saturation, lightness)
-
-/proc/hsl2rgb(hue, saturation, lightness)
-	var/red;var/green;var/blue;
-	if(saturation == 0)
-		red = lightness * 255
-		green = red
-		blue = red
-	else
-		var/a;var/b;
-		if(lightness < 0.5)
-			b = lightness*(1+saturation)
-		else
-			b = (lightness+saturation) - (saturation*lightness)
-		a = 2*lightness - b
-
-		red = round(255 * hue2rgb(a, b, hue+(1/3)))
-		green = round(255 * hue2rgb(a, b, hue))
-		blue = round(255 * hue2rgb(a, b, hue-(1/3)))
-
-	return list(red, green, blue)
-
-/proc/hue2rgb(a, b, hue)
-	if(hue < 0)
-		hue++
-	else if(hue > 1)
-		hue--
-	if(6*hue < 1)
-		return (a+(b-a)*6*hue)
-	if(2*hue < 1)
-		return b
-	if(3*hue < 2)
-		return (a+(b-a)*((2/3)-hue)*6)
-	return a
-
 /// For finding out what body parts a body zone covers, the inverse of the below basically
 /proc/zone2body_parts_covered(def_zone)
 	switch(def_zone)
@@ -340,58 +275,6 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 		else
 			. = max(0, min(255, 138.5177312231 * log(temp - 10) - 305.0447927307))
 
-
-/proc/color2hex(color) //web colors
-	if(!color)
-		return "#000000"
-
-	switch(color)
-		if("white")
-			return "#FFFFFF"
-		if("black")
-			return "#000000"
-		if("gray")
-			return "#808080"
-		if("brown")
-			return "#A52A2A"
-		if("red")
-			return "#FF0000"
-		if("darkred")
-			return "#8B0000"
-		if("crimson")
-			return "#DC143C"
-		if("orange")
-			return "#FFA500"
-		if("yellow")
-			return "#FFFF00"
-		if("green")
-			return "#008000"
-		if("lime")
-			return "#00FF00"
-		if("darkgreen")
-			return "#006400"
-		if("cyan")
-			return "#00FFFF"
-		if("blue")
-			return "#0000FF"
-		if("navy")
-			return "#000080"
-		if("teal")
-			return "#008080"
-		if("purple")
-			return "#800080"
-		if("indigo")
-			return "#4B0082"
-		else
-			return "#FFFFFF"
-
-/// Converts "#RRGGBB" to list(0xRR, 0xGG, 0xBB)
-/proc/hex2rgb(color)
-	var/r = hex2num(copytext(color, 2, 4))
-	var/g = hex2num(copytext(color, 4, 6))
-	var/b = hex2num(copytext(color, 6, 8))
-	return list(r, g, b)
-
 //This is a weird one:
 //It returns a list of all var names found in the string
 //These vars must be in the [var_name] format
@@ -427,13 +310,6 @@ GLOBAL_LIST_INIT(modulo_angle_to_dir, list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,
 				for(var/A in value)
 					if(var_source.vars.Find(A))
 						. += A
-
-//assumes format #RRGGBB #rrggbb
-/proc/color_hex2num(A)
-	if(!A || length(A) != length_char(A))
-		return 0
-	var/rgb = hex2rgb(A)
-	return rgb[1] + rgb[2] + rgb[3]
 
 //word of warning: using a matrix like this as a color value will simplify it back to a string after being set
 /proc/color_hex2color_matrix(string)

@@ -321,7 +321,7 @@
 			beaker_spawn = !beaker_spawn
 			return TRUE
 		if("setTargetList")
-			var/text = stripped_input(usr,"List","Enter a list of Recipe product names separated by commas", "Recipe", MAX_MESSAGE_LEN)
+			var/text = tgui_input_text(usr, "Enter a list of Recipe product names separated by commas", "Recipe List", multiline = TRUE)
 			reaction_names = list()
 			if(!text)
 				say("Could not find reaction")

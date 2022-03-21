@@ -26,7 +26,7 @@
 	else
 		. += E.bang_protect
 
-/mob/living/carbon/is_mouth_covered(head_only = 0, mask_only = 0)
+/mob/living/carbon/is_mouth_covered(head_only = FALSE, mask_only = FALSE)
 	if( (!mask_only && head && (head.flags_cover & HEADCOVERSMOUTH)) || (!head_only && wear_mask && (wear_mask.flags_cover & MASKCOVERSMOUTH)) )
 		return TRUE
 
@@ -84,7 +84,8 @@
 	SEND_SIGNAL(I, COMSIG_ITEM_ATTACK_ZONE, src, user, affecting)
 	send_item_attack_message(I, user, affecting.name, affecting)
 	if(I.force)
-		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness())
+		var/attack_direction = get_dir(user, src)
+		apply_damage(I.force, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness(), attack_direction = attack_direction)
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
 			if(prob(33))
 				I.add_mob_blood(src)
@@ -192,6 +193,8 @@
 	if(..()) //successful monkey bite.
 		for(var/thing in user.diseases)
 			var/datum/disease/D = thing
+			if(D.spread_flags & (DISEASE_SPREAD_SPECIAL | DISEASE_SPREAD_NON_CONTAGIOUS))
+				continue
 			ForceContractDisease(D)
 		return TRUE
 
@@ -362,6 +365,8 @@
 		return
 	//Propagation through pulling, fireman carry
 	if(!(flags & SHOCK_ILLUSION))
+		if(undergoing_cardiac_arrest())
+			set_heartattack(FALSE)
 		var/list/shocking_queue = list()
 		if(iscarbon(pulling) && source != pulling)
 			shocking_queue += pulling
@@ -606,6 +611,8 @@
 	var/obj/item/organ/ears/ears = getorganslot(ORGAN_SLOT_EARS)
 	if(ears && !HAS_TRAIT(src, TRAIT_DEAF))
 		. = TRUE
+	if(health <= hardcrit_threshold)
+		. = FALSE
 
 
 /mob/living/carbon/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
@@ -657,7 +664,7 @@
 		to_chat(src, span_danger("You fail to grasp your [grasped_part.name]."))
 		return
 
-	var/obj/item/self_grasp/grasp = new
+	var/obj/item/hand_item/self_grasp/grasp = new
 	if(starting_hand_index != active_hand_index || !put_in_active_hand(grasp))
 		to_chat(src, span_danger("You fail to grasp your [grasped_part.name]."))
 		QDEL_NULL(grasp)
@@ -665,13 +672,11 @@
 	grasp.grasp_limb(grasped_part)
 
 /// an abstract item representing you holding your own limb to staunch the bleeding, see [/mob/living/carbon/proc/grabbedby] will probably need to find somewhere else to put this.
-/obj/item/self_grasp
+/obj/item/hand_item/self_grasp
 	name = "self-grasp"
 	desc = "Sometimes all you can do is slow the bleeding."
 	icon_state = "latexballon"
 	inhand_icon_state = "nothing"
-	force = 0
-	throwforce = 0
 	slowdown = 1
 	item_flags = DROPDEL | ABSTRACT | NOBLUDGEON | SLOWS_WHILE_IN_HAND | HAND_ITEM
 	/// The bodypart we're staunching bleeding on, which also has a reference to us in [/obj/item/bodypart/var/grasped_by]
@@ -679,7 +684,7 @@
 	/// The carbon who owns all of this mess
 	var/mob/living/carbon/user
 
-/obj/item/self_grasp/Destroy()
+/obj/item/hand_item/self_grasp/Destroy()
 	if(user)
 		to_chat(user, span_warning("You stop holding onto your[grasped_part ? " [grasped_part.name]" : "self"]."))
 		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
@@ -691,12 +696,12 @@
 	return ..()
 
 /// The limb or the whole damn person we were grasping got deleted or dismembered, so we don't care anymore
-/obj/item/self_grasp/proc/qdel_void()
+/obj/item/hand_item/self_grasp/proc/qdel_void()
 	SIGNAL_HANDLER
 	qdel(src)
 
 /// We've already cleared that the bodypart in question is bleeding in [the place we create this][/mob/living/carbon/proc/grabbedby], so set up the connections
-/obj/item/self_grasp/proc/grasp_limb(obj/item/bodypart/grasping_part)
+/obj/item/hand_item/self_grasp/proc/grasp_limb(obj/item/bodypart/grasping_part)
 	user = grasping_part.owner
 	if(!istype(user))
 		stack_trace("[src] attempted to try_grasp() with [istype(user, /datum) ? user.type : isnull(user) ? "null" : user] user")

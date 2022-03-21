@@ -41,7 +41,7 @@ Difficulty: Extremely Hard
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
 	deathmessage = "falls to the ground, decaying into plasma particles."
-	deathsound = "bodyfall"
+	deathsound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
@@ -99,19 +99,19 @@ Difficulty: Extremely Hard
 	switch(chosen_attack)
 		if(1)
 			if(easy_attack)
-				frost_orbs.Trigger(target)
+				frost_orbs.Trigger(target = target)
 			else
-				hard_frost_orbs.Trigger(target)
+				hard_frost_orbs.Trigger(target = target)
 		if(2)
 			if(easy_attack)
-				snowball_machine_gun.Trigger(target)
+				snowball_machine_gun.Trigger(target = target)
 			else
-				hard_snowball_machine_gun.Trigger(target)
+				hard_snowball_machine_gun.Trigger(target = target)
 		if(3)
 			if(easy_attack)
-				ice_shotgun.Trigger(target)
+				ice_shotgun.Trigger(target = target)
 			else
-				hard_ice_shotgun.Trigger(target)
+				hard_ice_shotgun.Trigger(target = target)
 
 /// Pre-ability usage stuff
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/start_attack(mob/living/owner, datum/action/cooldown/activated)
@@ -199,7 +199,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/frost_orb/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /obj/projectile/colossus/snowball
 	name = "machine-gun snowball"
@@ -221,7 +221,7 @@ Difficulty: Extremely Hard
 /obj/projectile/colossus/ice_blast/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if(isturf(target) || isobj(target))
-		target.ex_act(EXPLODE_HEAVY)
+		EX_ACT(target, EXPLODE_HEAVY)
 
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
@@ -262,7 +262,7 @@ Difficulty: Extremely Hard
 	desc = "A pair of winter boots contractually made by a devil, they cannot be taken off once put on."
 	actions_types = list(/datum/action/item_action/toggle)
 	var/on = FALSE
-	var/change_turf = /turf/open/floor/plating/ice/icemoon/no_planet_atmos
+	var/change_turf = /turf/open/misc/ice/icemoon/no_planet_atmos
 	var/duration = 6 SECONDS
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize(mapload)

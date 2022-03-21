@@ -25,6 +25,38 @@
 		A.reagents.expose_temperature(-25)
 	return ..()
 
+///Extinguisher snowflake
+/obj/effect/particle_effect/water/extinguisher
+
+/obj/effect/particle_effect/water/extinguisher/Move()
+	. = ..()
+	if(!reagents)
+		return
+	reagents.expose(get_turf(src))
+	for(var/atom/thing as anything in get_turf(src))
+		reagents.expose(thing)
+
+/// Starts the effect moving at a target with a delay in deciseconds, and a lifetime in moves
+/// Returns the created loop
+/obj/effect/particle_effect/water/extinguisher/proc/move_at(atom/target, delay, lifetime)
+	var/datum/move_loop/loop = SSmove_manager.move_towards_legacy(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_forcemove)
+	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/movement_stopped)
+	return loop
+
+/obj/effect/particle_effect/water/extinguisher/proc/post_forcemove(datum/move_loop/source, success)
+	SIGNAL_HANDLER
+	if(!success)
+		end_life(source)
+
+/obj/effect/particle_effect/water/extinguisher/proc/movement_stopped(datum/move_loop/source)
+	SIGNAL_HANDLER
+	if(!QDELETED(src))
+		end_life(source)
+
+/obj/effect/particle_effect/water/extinguisher/proc/end_life(datum/move_loop/engine)
+	QDEL_IN(src, engine.delay) //Gotta let it stop drifting
+	animate(src, alpha = 0, time = engine.delay)
 
 /////////////////////////////////////////////
 // GENERIC STEAM SPREAD SYSTEM

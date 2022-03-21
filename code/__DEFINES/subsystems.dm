@@ -20,7 +20,7 @@
  *
  * make sure you add an update to the schema_version stable in the db changelog
  */
-#define DB_MINOR_VERSION 20
+#define DB_MINOR_VERSION 22
 
 
 //! ## Timing subsystem
@@ -181,7 +181,6 @@
 #define FIRE_PRIORITY_THROWING 25
 #define FIRE_PRIORITY_REAGENTS 26
 #define FIRE_PRIORITY_SPACEDRIFT 30
-#define FIRE_PRIORITY_FIELDS 30
 #define FIRE_PRIOTITY_SMOOTHING 35
 #define FIRE_PRIORITY_NETWORKS 40
 #define FIRE_PRIORITY_OBJ 40
@@ -193,14 +192,15 @@
 #define FIRE_PRIORITY_MOBS 100
 #define FIRE_PRIORITY_TGUI 110
 #define FIRE_PRIORITY_TICKER 200
-#define FIRE_PRIORITY_ATMOS_ADJACENCY 300
 #define FIRE_PRIORITY_STATPANEL 390
 #define FIRE_PRIORITY_CHAT 400
 #define FIRE_PRIORITY_RUNECHAT 410
+#define FIRE_PRIORITY_MOUSE_ENTERED 450
 #define FIRE_PRIORITY_OVERLAYS 500
 #define FIRE_PRIORITY_EXPLOSIONS 666
 #define FIRE_PRIORITY_TIMER 700
 #define FIRE_PRIORITY_SOUND_LOOPS 800
+#define FIRE_PRIORITY_SPEECH_CONTROLLER 900
 #define FIRE_PRIORITY_INPUT 1000 // This must always always be the max highest priority. Player input must never be lost.
 
 
@@ -214,7 +214,17 @@
 
 #define RUNLEVELS_DEFAULT (RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME)
 
-
+//SSticker.current_state values
+/// Game is loading
+#define GAME_STATE_STARTUP 0
+/// Game is loaded and in pregame lobby
+#define GAME_STATE_PREGAME 1
+/// Game is attempting to start the round
+#define GAME_STATE_SETTING_UP 2
+/// Game has round in progress
+#define GAME_STATE_PLAYING 3
+/// Game has round finished
+#define GAME_STATE_FINISHED 4
 
 //! ## Overlays subsystem
 

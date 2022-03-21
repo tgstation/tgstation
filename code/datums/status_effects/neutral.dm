@@ -130,11 +130,11 @@
 	icon_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
-	owner.apply_status_effect(STATUS_EFFECT_SURRENDER, src)
+	owner.apply_status_effect(/datum/status_effect/grouped/surrender, src)
 	return ..()
 
 /datum/status_effect/grouped/heldup/on_remove()
-	owner.remove_status_effect(STATUS_EFFECT_SURRENDER, src)
+	owner.remove_status_effect(/datum/status_effect/grouped/surrender, src)
 	return ..()
 
 // holdup is for the person aiming
@@ -164,7 +164,7 @@
 	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
 	var/give_alert_type = /atom/movable/screen/alert/give
 
-/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override)
+/datum/status_effect/offering/on_creation(mob/living/new_owner, obj/item/offer, give_alert_override, mob/living/carbon/offered)
 	. = ..()
 	if(!.)
 		return
@@ -172,10 +172,13 @@
 	if(give_alert_override)
 		give_alert_type = give_alert_override
 
-	for(var/mob/living/carbon/possible_taker in orange(1, owner))
-		if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
-			continue
-		register_candidate(possible_taker)
+	if(offered && owner.CanReach(offered) && !IS_DEAD_OR_INCAP(offered) && offered.can_hold_items())
+		register_candidate(offered)
+	else
+		for(var/mob/living/carbon/possible_taker in orange(1, owner))
+			if(!owner.CanReach(possible_taker) || IS_DEAD_OR_INCAP(possible_taker) || !possible_taker.can_hold_items())
+				continue
+			register_candidate(possible_taker)
 
 	if(!possible_takers) // no one around
 		qdel(src)
@@ -215,6 +218,7 @@
 	if(owner.CanReach(taker) && !IS_DEAD_OR_INCAP(taker))
 		return
 
+	to_chat(taker, span_warning("You moved out of range of [owner]!"))
 	remove_candidate(taker)
 
 /// The offerer moved, see if anyone is out of range now
@@ -348,7 +352,19 @@
 				to_chat(owner, span_userdanger("You start to convlse violently as you feel your consciousness merges across realities, your possessions flying wildy off your body!"))
 				owner.Jitter(200)
 				owner.Knockdown(10)
-			var/items = owner.get_contents()
+
+			var/list/items = list()
+			var/max_loop
+			if (length(owner.get_contents()) >= 10)
+				max_loop = 10
+			else
+				max_loop = length(owner.get_contents())
+			for (var/i in 1 to max_loop)
+				var/obj/item/item = owner.get_contents()[i]
+				if ((item.item_flags & DROPDEL) || HAS_TRAIT(item, TRAIT_NODROP)) // can't teleport these kinds of items
+					continue
+				items.Add(item)
+
 			if(!LAZYLEN(items))
 				return ..()
 			var/obj/item/item = pick(items)
@@ -447,7 +463,7 @@
 				human_species.randomize_main_appearance_element(human_mob)
 				human_species.randomize_active_underwear(human_mob)
 
-			owner.remove_status_effect(STATUS_EFFECT_EIGEN)
+			owner.remove_status_effect(/datum/status_effect/eigenstasium)
 
 	//Finally increment cycle
 	current_cycle++

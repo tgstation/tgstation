@@ -103,7 +103,7 @@
 	cube.color = COLOR_CYAN
 	cube.set_anchored(TRUE)
 	owner.forceMove(cube)
-	owner.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
+	owner.apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 	cryostylane_alert = owner.throw_alert("cryostylane_alert", /atom/movable/screen/alert/status_effect/freon/cryostylane)
 	cryostylane_alert.attached_effect = src //so the alert can reference us, if it needs to
 	..()
@@ -117,6 +117,6 @@
 
 /datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/carbon/owner, amount)
 	QDEL_NULL(cube)
-	owner.remove_status_effect(STATUS_EFFECT_STASIS, STASIS_CHEMICAL_EFFECT)
+	owner.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
 	owner.clear_alert("cryostylane_alert")
 	..()

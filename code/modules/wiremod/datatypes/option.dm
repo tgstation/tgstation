@@ -22,7 +22,7 @@
 	if(force)
 		return value_to_convert
 
-	if(!port.possible_options)
+	if(!length(port.possible_options))
 		return null
 
 	if(value_to_convert in port.possible_options)

@@ -7,6 +7,7 @@
 	name = "circuit assembly"
 	desc = "A small electronic device that can house an integrated circuit."
 	icon_state = "wiremod"
+	attachable = TRUE
 
 /obj/item/assembly/wiremod/Initialize(mapload)
 	. = ..()

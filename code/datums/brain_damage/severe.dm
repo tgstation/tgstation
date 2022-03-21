@@ -218,6 +218,9 @@
 				else
 					to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
 					owner.adjustOxyLoss(8)
+		else
+			//No effect
+			return
 
 /datum/brain_trauma/severe/discoordination
 	name = "Discoordination"
@@ -227,12 +230,12 @@
 	lose_text = "<span class='notice'>You feel in control of your hands again.</span>"
 
 /datum/brain_trauma/severe/discoordination/on_gain()
-	ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
-	..()
+	. = ..()
+	owner.apply_status_effect(/datum/status_effect/discoordinated)
 
 /datum/brain_trauma/severe/discoordination/on_lose()
-	REMOVE_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
-	..()
+	owner.remove_status_effect(/datum/status_effect/discoordinated)
+	return ..()
 
 /datum/brain_trauma/severe/pacifism
 	name = "Traumatic Non-Violence"

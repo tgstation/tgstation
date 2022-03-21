@@ -14,6 +14,7 @@
 	icon = 'icons/obj/machines/kitchenmachines.dmi'
 	icon_state = "oven_off"
 	density = TRUE
+	pass_flags_self = PASSMACHINE | LETPASSTHROW
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 5
 	layer = BELOW_OBJ_LAYER

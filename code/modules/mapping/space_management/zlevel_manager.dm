@@ -7,7 +7,7 @@
 	var/list/default_map_traits = DEFAULT_MAP_TRAITS
 
 	if (default_map_traits.len != world.maxz)
-		WARNING("More or less map attributes pre-defined ([default_map_traits.len]) than existent z-levels ([world.maxz]). Ignoring the larger.")
+		log_mapping("More or less map attributes pre-defined ([default_map_traits.len]) than existent z-levels ([world.maxz]). Ignoring the larger.")
 		if (default_map_traits.len > world.maxz)
 			default_map_traits.Cut(world.maxz + 1)
 

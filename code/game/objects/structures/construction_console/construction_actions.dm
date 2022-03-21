@@ -67,7 +67,11 @@
 	if(..())
 		return
 	var/list/buildlist = list("Walls and Floors" = RCD_FLOORWALL, "Airlocks" = RCD_AIRLOCK, "Deconstruction" = RCD_DECONSTRUCT, "Windows and Grilles" = RCD_WINDOWGRILLE)
-	var/buildmode = input(owner, "Set construction mode.", "Base Console", null) in buildlist
+	var/buildmode = tgui_input_list(owner, "Set construction mode", "Base Console", buildlist)
+	if(isnull(buildmode))
+		return
+	if(isnull(buildlist[buildmode]))
+		return
 	check_rcd()
 	base_console.internal_rcd.construction_mode = buildlist[buildmode]
 	to_chat(owner, "Build mode is now [buildmode].")

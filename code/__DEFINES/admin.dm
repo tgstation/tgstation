@@ -65,6 +65,7 @@
 #define ADMIN_COORDJMP(src) "[src ? src.Admin_Coordinates_Readable(FALSE, TRUE) : "nonexistent location"]"
 #define ADMIN_VERBOSEJMP(src) "[src ? src.Admin_Coordinates_Readable(TRUE, TRUE) : "nonexistent location"]"
 #define ADMIN_INDIVIDUALLOG(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];individuallog=[REF(user)]'>LOGS</a>)"
+#define ADMIN_TAG(datum) "(<A href='?src=[REF(src)];[HrefToken(TRUE)];tag_datum=[REF(datum)]'>TAG</a>)"
 
 /atom/proc/Admin_Coordinates_Readable(area_name, admin_jump_ref)
 	var/turf/T = Safe_COORD_Location()
@@ -143,6 +144,8 @@ GLOBAL_VAR_INIT(ghost_role_flags, (~0))
 
 /// for asay pings, this is the index in the return list for [/proc/check_admin_pings] that contains the message modified with underlines for the spotted names
 #define ADMINSAY_PING_UNDERLINE_NAME_INDEX "!underlined_names"
+/// for asay datum refs, this is the index in the return list for [/proc/check_memory_refs] that contains the message modified with underlines for the linked datums
+#define ADMINSAY_LINK_DATUM_REF "!datum_ref"
 
 /// When passed in as the duration for ban_panel, will make the ban default to permanent
 #define BAN_PANEL_PERMANENT "permanent"

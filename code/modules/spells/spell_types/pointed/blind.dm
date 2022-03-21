@@ -19,7 +19,7 @@
 	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/targeted/genetic/blind
-	mutations = list(BLINDMUT)
+	mutations = list(/datum/mutation/human/blind)
 	duration = 300
 	charge_max = 400 // needs to be higher than the duration or it'll be permanent
 	sound = 'sound/magic/blind.ogg'

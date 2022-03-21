@@ -614,6 +614,7 @@
 /obj/structure/festivus{
 	anchored = 1;
 	color = "#825427";
+	desc = "A sturdy pole designed to hold the vessel's solar sails in place.";
 	name = "mast";
 	pixel_x = -16;
 	pixel_y = 2

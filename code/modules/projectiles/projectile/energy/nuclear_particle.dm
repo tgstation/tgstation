@@ -3,7 +3,8 @@
 	name = "nuclear particle"
 	icon_state = "nuclear_particle"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
-	flag = TOX
+	flag = ENERGY
+	damage_type = TOX
 	damage = 10
 	speed = 0.4
 	hitsound = 'sound/weapons/emitter2.ogg'

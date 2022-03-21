@@ -120,7 +120,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/holder_var_amount = 20 //same. The amount adjusted with the mob's var when the spell is used
 
 	var/clothes_req = TRUE //see if it requires clothes
-	var/cult_req = FALSE //SPECIAL SNOWFLAKE clothes required for cult only spells
 	var/human_req = FALSE //spell can only be cast by humans
 	var/nonabstract_req = FALSE //spell can only be cast by mobs that are physical entities
 	var/stat_allowed = FALSE //see if it requires being conscious/alive, need to set to 1 for ghostpells
@@ -128,7 +127,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	var/antimagic_allowed = FALSE // If false, the spell cannot be cast while under the effect of antimagic
 	var/invocation = "HURP DURP" //what is uttered when the wizard casts the spell
 	var/invocation_emote_self = null
-	var/invocation_type = "none" //can be none, whisper, emote and shout
+	var/invocation_type = INVOCATION_NONE //can be none, whisper, emote and shout
 	var/range = 7 //the range of the spell; outer radius for aoe spells
 	var/message = "" //whatever it says to the guy affected by it
 	var/selection_type = "view" //can be "range" or "view"
@@ -155,6 +154,9 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	base_action = /datum/action/spell_action/spell
 
 /obj/effect/proc_holder/spell/proc/cast_check(skipcharge = 0,mob/user = usr) //checks if the spell can be cast based on its settings; skipcharge is used when an additional cast_check is called inside the spell
+	if(SEND_SIGNAL(user, COMSIG_MOB_PRE_CAST_SPELL, src) & COMPONENT_CANCEL_SPELL)
+		return FALSE
+
 	if(player_lock)
 		if(!user.mind || !(src in user.mind.spell_list) && !(src in user.mob_spell_list))
 			to_chat(user, span_warning("You shouldn't have this spell! Something's wrong."))
@@ -198,26 +200,18 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 		var/mob/living/carbon/human/H = user
 
-		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe,
-		/obj/item/clothing/suit/space/hardsuit/wizard,
-		/obj/item/clothing/head/wizard,
-		/obj/item/clothing/head/helmet/space/hardsuit/wizard,
-		/obj/item/clothing/suit/space/hardsuit/shielded/wizard,
-		/obj/item/clothing/head/helmet/space/hardsuit/shielded/wizard))
-
+		var/static/list/casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/head/wizard))
 		if(clothes_req) //clothes check
-			if(!is_type_in_typecache(H.wear_suit, casting_clothes))
+			var/passes_req = FALSE
+			if(istype(H.back, /obj/item/mod/control))
+				var/obj/item/mod/control/mod = H.back
+				if(istype(mod.theme, /datum/mod_theme/enchanted))
+					passes_req = TRUE
+			if(!passes_req && !is_type_in_typecache(H.wear_suit, casting_clothes))
 				to_chat(H, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE
-			if(!is_type_in_typecache(H.head, casting_clothes))
+			if(!passes_req && !is_type_in_typecache(H.head, casting_clothes))
 				to_chat(H, span_warning("You don't feel strong enough without your hat!"))
-				return FALSE
-		if(cult_req) //CULT_REQ CLOTHES CHECK
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/magusred) && !istype(H.wear_suit, /obj/item/clothing/suit/space/hardsuit/cult))
-				to_chat(H, span_warning("You don't feel strong enough without your armor."))
-				return FALSE
-			if(!istype(H.head, /obj/item/clothing/head/magus) && !istype(H.head, /obj/item/clothing/head/helmet/space/hardsuit/cult))
-				to_chat(H, span_warning("You don't feel strong enough without your helmet."))
 				return FALSE
 	else
 		if(clothes_req || human_req)
@@ -450,24 +444,28 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 
 				//targets += input("Choose the target for the spell.", "Targeting") as mob in possible_targets
 				//Adds a safety check post-input to make sure those targets are actually in range.
-				var/mob/M
+				var/mob/chosen_target
 				if(!random_target)
-					M = input("Choose the target for the spell.", "Targeting") as null|mob in sort_names(possible_targets)
+					chosen_target = tgui_input_list(user, "Choose the target for the spell", "Targeting", sort_names(possible_targets))
+					if(isnull(chosen_target))
+						return
+					if(!ismob(chosen_target) || user.incapacitated())
+						return
 				else
 					switch(random_target_priority)
 						if(TARGET_RANDOM)
-							M = pick(possible_targets)
+							chosen_target = pick(possible_targets)
 						if(TARGET_CLOSEST)
-							for(var/mob/living/L in possible_targets)
-								if(M)
-									if(get_dist(user,L) < get_dist(user,M))
-										if(los_check(user,L))
-											M = L
+							for(var/mob/living/living_target in possible_targets)
+								if(chosen_target)
+									if(get_dist(user, living_target) < get_dist(user, chosen_target))
+										if(los_check(user, living_target))
+											chosen_target = living_target
 								else
-									if(los_check(user,L))
-										M = L
-				if(M in view_or_range(range, user, selection_type))
-					targets += M
+									if(los_check(user, living_target))
+										chosen_target = living_target
+				if(chosen_target in view_or_range(range, user, selection_type))
+					targets += chosen_target
 
 		else
 			var/list/possible_targets = list()
@@ -476,7 +474,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 					continue
 				possible_targets += target
 			for(var/i in 1 to max_targets)
-				if(!possible_targets.len)
+				if(!length(possible_targets))
 					break
 				if(target_ignore_prev)
 					var/target = pick(possible_targets)
@@ -488,11 +486,11 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	if(!include_user && (user in targets))
 		targets -= user
 
-	if(!targets.len) //doesn't waste the spell
+	if(!length(targets)) //doesn't waste the spell
 		revert_cast(user)
 		return
 
-	perform(targets,user=user)
+	perform(targets, user=user)
 
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
@@ -503,7 +501,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target
 
-	if(!targets.len) //doesn't waste the spell
+	if(!length(targets)) //doesn't waste the spell
 		revert_cast()
 		return
 
@@ -595,11 +593,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	else
 		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_ROBELESS, "Unset Robeless")
 
-	if(cult_req)
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_CULT, "Set Cult Robeless")
-	else
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_CULT, "Unset Cult Robeless")
-
 	if(human_req)
 		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_HUMANONLY, "Unset Require Humanoid Mob")
 	else
@@ -617,12 +610,6 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return
 	if(href_list[VV_HK_SPELL_UNSET_ROBELESS])
 		clothes_req = TRUE
-		return
-	if(href_list[VV_HK_SPELL_SET_CULT])
-		cult_req = FALSE
-		return
-	if(href_list[VV_HK_SPELL_UNSET_CULT])
-		cult_req = TRUE
 		return
 	if(href_list[VV_HK_SPELL_UNSET_HUMANONLY])
 		human_req = FALSE

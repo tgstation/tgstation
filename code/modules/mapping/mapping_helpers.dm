@@ -57,27 +57,27 @@
 
 /obj/effect/baseturf_helper/asteroid
 	name = "asteroid baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid
+	baseturf = /turf/open/misc/asteroid
 
 /obj/effect/baseturf_helper/asteroid/airless
 	name = "asteroid airless baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/airless
+	baseturf = /turf/open/misc/asteroid/airless
 
 /obj/effect/baseturf_helper/asteroid/basalt
 	name = "asteroid basalt baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/basalt
+	baseturf = /turf/open/misc/asteroid/basalt
 
 /obj/effect/baseturf_helper/asteroid/snow
 	name = "asteroid snow baseturf editor"
-	baseturf = /turf/open/floor/plating/asteroid/snow
+	baseturf = /turf/open/misc/asteroid/snow
 
 /obj/effect/baseturf_helper/beach/sand
 	name = "beach sand baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/sand
+	baseturf = /turf/open/misc/beach/sand
 
 /obj/effect/baseturf_helper/beach/water
 	name = "water baseturf editor"
-	baseturf = /turf/open/floor/plating/beach/water
+	baseturf = /turf/open/water/beach
 
 /obj/effect/baseturf_helper/lava
 	name = "lava baseturf editor"
@@ -305,7 +305,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/custom_icon
 	name = "Custom Icon Injector"
 	icon_state = "icon"
-	///This is the var tha will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
+	///This is the var that will be set with the fetched icon. In case you want to set some secondary icon sheets like inhands and such.
 	var/target_variable = "icon"
 	///This should return raw dmi in response to http get request. For example: "https://github.com/tgstation/SS13-sprites/raw/master/mob/medu.dmi?raw=true"
 	var/icon_url
@@ -345,6 +345,51 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/custom_icon/generate_stack_trace()
 	. = ..()
 	. += " | target variable: [target_variable] | icon url: [icon_url]"
+
+///Fetches an external sound and applies to the target object
+/obj/effect/mapping_helpers/atom_injector/custom_sound
+	name = "Custom Sound Injector"
+	icon_state = "sound"
+	///This is the var that will be set with the fetched sound.
+	var/target_variable = "hitsound"
+	///This should return raw sound in response to http get request. For example: "https://github.com/tgstation/tgstation/blob/master/sound/misc/bang.ogg?raw=true"
+	var/sound_url
+	///The sound file we fetched from the http get request.
+	var/sound_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/check_validity()
+	var/static/sound_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(sound_cache[sound_url])
+		sound_file = sound_cache[sound_url]
+		return TRUE
+	log_asset("Custom Sound Helper fetching sound from: [sound_url]")
+	var/datum/http_request/request = new()
+	var/file_name = "tmp/custom_map_sound.ogg"
+	request.prepare(RUSTG_HTTP_METHOD_GET, sound_url, "", "", file_name)
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom sound from url [sound_url], code: [response.status_code], error: [response.error]")
+	var/sound/new_sound = new(file_name)
+	sound_cache[sound_url] = new_sound
+	query_in_progress = FALSE
+	sound_file = new_sound
+	return TRUE
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/inject(atom/target)
+	if(IsAdminAdvancedProcCall())
+		return
+	target.vars[target_variable] = sound_file
+
+/obj/effect/mapping_helpers/atom_injector/custom_sound/generate_stack_trace()
+	. = ..()
+	. += " | target variable: [target_variable] | sound url: [sound_url]"
 
 /obj/effect/mapping_helpers/dead_body_placer
 	name = "Dead Body placer"
@@ -493,12 +538,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
 		qdel(src)
+		return
 	if(locate(/obj/machinery/door/airlock) in turf)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
 			found_airlock.note = note_path
 			found_airlock.update_appearance()
 			qdel(src)
+			return
 		if(note_info)
 			var/obj/item/paper/paper = new /obj/item/paper(src)
 			if(note_name)
@@ -508,8 +555,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			paper.forceMove(found_airlock)
 			found_airlock.update_appearance()
 			qdel(src)
+			return
 		log_mapping("[src] at [x],[y] had no note_path or note_info, cannot place paper note.")
 		qdel(src)
+		return
 	log_mapping("[src] at [x],[y] could not find an airlock on current turf, cannot place paper note.")
 	qdel(src)
 
@@ -534,13 +583,68 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/ztrait_injector
 	name = "ztrait injector"
 	icon_state = "ztrait"
+	late = TRUE
 	/// List of traits to add to this Z-level.
 	var/list/traits_to_add = list()
 
-/obj/effect/mapping_helpers/ztrait_injector/Initialize()
-	. = ..()
+/obj/effect/mapping_helpers/ztrait_injector/LateInitialize()
 	var/datum/space_level/level = SSmapping.z_list[z]
 	if(!level || !length(traits_to_add))
 		return
 	level.traits |= traits_to_add
 	SSweather.update_z_level(level) //in case of someone adding a weather for the level, we want SSweather to update for that
+
+/obj/effect/mapping_helpers/circuit_spawner
+	name = "circuit spawner"
+	icon_state = "circuit"
+	/// The shell for the circuit.
+	var/atom/movable/circuit_shell
+	/// Capacity of the shell.
+	var/shell_capacity = SHELL_CAPACITY_VERY_LARGE
+	/// The url for the json. Example: "https://pastebin.com/raw/eH7VnP9d"
+	var/json_url
+
+/obj/effect/mapping_helpers/circuit_spawner/Initialize(mapload)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/spawn_circuit)
+
+/obj/effect/mapping_helpers/circuit_spawner/proc/spawn_circuit()
+	var/list/errors = list()
+	var/obj/item/integrated_circuit/loaded/new_circuit = new(loc)
+	var/json_data = load_data()
+	new_circuit.load_circuit_data(json_data, errors)
+	if(!circuit_shell)
+		return
+	circuit_shell = new(loc)
+	var/datum/component/shell/shell_component = circuit_shell.GetComponent(/datum/component/shell)
+	if(shell_component)
+		shell_component.shell_flags |= SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE
+		shell_component.attach_circuit(new_circuit)
+	else
+		shell_component = circuit_shell.AddComponent(/datum/component/shell, \
+			capacity = shell_capacity, \
+			shell_flags = SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE, \
+			starting_circuit = new_circuit, \
+			)
+
+/obj/effect/mapping_helpers/circuit_spawner/proc/load_data()
+	var/static/json_cache = list()
+	var/static/query_in_progress = FALSE //We're using a single tmp file so keep it linear.
+	if(query_in_progress)
+		UNTIL(!query_in_progress)
+	if(json_cache[json_url])
+		return json_cache[json_url]
+	log_asset("Circuit Spawner fetching json from: [json_url]")
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, json_url, "")
+	query_in_progress = TRUE
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+	if(response.errored || response.status_code != 200)
+		query_in_progress = FALSE
+		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
+	var/json_data = response["body"]
+	json_cache[json_url] = json_data
+	query_in_progress = FALSE
+	return json_data

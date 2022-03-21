@@ -131,7 +131,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/emag_act(mob/user)
 	if(!(obj_flags & EMAGGED))
 		to_chat(user, span_notice("You disable the security protocols[locked? " and unlock the console":""]."))
-		playsound(src, "sparks", 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
 	return ..()
@@ -318,7 +318,11 @@ Nothing else in the console has ID requirements.
 				say("No Design Disk Inserted!")
 				return TRUE
 			var/slot = text2num(params["slot"])
-			var/datum/design/design = SSresearch.techweb_design_by_id(params["selectedDesign"])
+			var/design_id = params["selectedDesign"]
+			if(!stored_research.researched_designs.Find(design_id))
+				stack_trace("ID did not map to a researched datum [design_id]")
+				return
+			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 			if(design)
 				if(design.build_type & (AUTOLATHE|PROTOLATHE|AWAY_LATHE)) // Specifically excludes circuit imprinter and mechfab
 					if(design.autolathe_exportable && !design.reagents_list.len)

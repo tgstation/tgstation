@@ -104,7 +104,7 @@
 		to_chat(caller, span_notice("This ability is still on cooldown."))
 		return
 
-	beast_owner.visible_message("<span class='warning>[beast_owner] slaps [living_target] with its tentacle!</span>", span_notice("You slap [living_target] with your tentacle."))
+	beast_owner.visible_message("<span class='warning'>[beast_owner] slaps [living_target] with its tentacle!</span>", span_notice("You slap [living_target] with your tentacle."))
 	playsound(beast_owner, 'sound/effects/assslap.ogg', 90)
 	var/atom/throw_target = get_edge_target_turf(target, beast_owner.dir)
 	living_target.throw_at(throw_target, 6, 4, beast_owner)

@@ -1,12 +1,12 @@
 /datum/computer_file/program/borg_monitor
 	filename = "siliconnect"
 	filedesc = "SiliConnect"
-	category = PROGRAM_CATEGORY_ROBO
+	category = PROGRAM_CATEGORY_SCI
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
-	transfer_access = ACCESS_ROBOTICS
+	transfer_access = list(ACCESS_ROBOTICS)
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
@@ -130,7 +130,7 @@
 				return
 			if(R.stat == DEAD) //Dead borgs will listen to you no longer
 				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[R]"))
-			var/message = stripped_input(usr, message = "Enter message to be sent to remote cyborg.", title = "Send Message")
+			var/message = tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
 			if(!message)
 				return
 			to_chat(R, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
@@ -162,14 +162,14 @@
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"
 	filedesc = "Roboverlord"
-	category = PROGRAM_CATEGORY_ROBO
+	category = PROGRAM_CATEGORY_SCI
 	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
-	transfer_access = null
+	transfer_access = list()
 	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
 
 /datum/computer_file/program/borg_monitor/syndicate/run_emag()

@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	visible_message(span_notice("[src] burns up, leaving a sheet of leather behind!"))
 	new /obj/item/stack/sheet/leather(loc) // only one sheet remains to incentivise not burning your wethide to dry it
 	qdel(src)
-	
+
 
 /*
  * Leather SHeet

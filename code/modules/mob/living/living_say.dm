@@ -126,7 +126,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/original_message = message
 	message = get_message_mods(message, message_mods)
 	var/datum/saymode/saymode = SSradio.saymodes[message_mods[RADIO_KEY]]
-	message = check_for_custom_say_emote(message, message_mods)
+	if (!forced)
+		message = check_for_custom_say_emote(message, message_mods)
 
 	if(!message)
 		return
@@ -215,11 +216,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			log_talk(message, LOG_SAY, forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
 	message = treat_message(message) // unfortunately we still need this
-	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args)
-	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
-		message = uppertext(message)
-	if(!message)
-		return
 
 	spans |= speech_span
 
@@ -232,6 +228,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		message = "[randomnote] [message] [randomnote]"
 		spans |= SPAN_SINGING
 
+	// Leaving this here so that anything that handles speech this way will be able to have spans affecting it and all that.
+	var/sigreturn = SEND_SIGNAL(src, COMSIG_MOB_SAY, args, message_range)
+	if (sigreturn & COMPONENT_UPPERCASE_SPEECH)
+		message = uppertext(message)
+	if(!message)
+		if(succumbed)
+			succumb()
+		return
+
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
@@ -240,6 +245,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		// radios don't pick up whispers very well
 		radio_message = stars(radio_message)
 		spans |= SPAN_ITALICS
+
+
 	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
@@ -254,7 +261,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/environment = T.return_air()
 	var/pressure = (environment)? environment.return_pressure() : 0
-	if(pressure < SOUND_MINIMUM_PRESSURE)
+	if(pressure < SOUND_MINIMUM_PRESSURE && !HAS_TRAIT(H, TRAIT_SIGN_LANG))
 		message_range = 1
 
 	if(pressure < ONE_ATMOSPHERE*0.4) //Thin air, let's italicise the message
@@ -263,7 +270,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods)//roughly 58% of living/say()'s total cost
 
 	if(succumbed)
-		succumb(1)
+		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
 
 	return TRUE
@@ -389,6 +396,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		if(M.client && (!M.client.prefs.read_preference(/datum/preference/toggle/enable_runechat) || (SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(src, TRAIT_BYPASS_MEASURES))))
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+	I.plane = ABOVE_GAME_PLANE
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
 

@@ -40,7 +40,11 @@
 	/// If specified, the singularity will slowly move to this target
 	var/atom/target
 
+	/// List of turfs we have yet to consume, but need to
+	var/list/turf/turfs_to_consume = list()
 
+	/// The time that has elapsed since our last move/eat call
+	var/time_since_last_eat
 
 /datum/component/singularity/Initialize(
 	bsa_targetable = TRUE,
@@ -65,7 +69,7 @@
 	src.singularity_size = singularity_size
 
 /datum/component/singularity/RegisterWithParent()
-	START_PROCESSING(SSdcs, src)
+	START_PROCESSING(SSsinguloprocess, src)
 
 	// The singularity stops drifting for no man!
 	parent.AddElement(/datum/element/forced_gravity, FALSE)
@@ -104,7 +108,7 @@
 	return ..()
 
 /datum/component/singularity/UnregisterFromParent()
-	STOP_PROCESSING(SSdcs, src)
+	STOP_PROCESSING(SSsinguloprocess, src)
 
 	parent.RemoveElement(/datum/element/bsa_blocker)
 	parent.RemoveElement(/datum/element/forced_gravity)
@@ -122,9 +126,17 @@
 	))
 
 /datum/component/singularity/process(delta_time)
-	if (roaming)
-		move()
-	eat()
+	// We want to move and eat once a second, but want to process our turf consume queue the rest of the time
+	time_since_last_eat += delta_time
+	digest()
+	if(TICK_CHECK)
+		return
+	if(time_since_last_eat > 1) // Delta time is in seconds for "reasons"
+		time_since_last_eat = 0
+		if (roaming)
+			move()
+		eat()
+		digest() // Try and process as much as you can with the time we have left
 
 /datum/component/singularity/proc/block_blob()
 	SIGNAL_HANDLER
@@ -166,33 +178,50 @@
 	thing.singularity_act(singularity_size, parent)
 
 /datum/component/singularity/proc/eat()
+	turfs_to_consume |= spiral_range_turfs(grav_pull, parent)
+
+/datum/component/singularity/proc/digest()
 	var/atom/atom_parent = parent
 
-	for (var/_tile in spiral_range_turfs(grav_pull, parent))
-		var/turf/tile = _tile
-		if (!tile || !isturf(atom_parent.loc))
+	if(!isturf(atom_parent.loc))
+		return
+
+	// We use a static index for this to prevent infinite runtimes.
+	// Maybe a might overengineered, but let's be safe yes?
+	var/static/cached_index = 0
+	if(cached_index)
+		var/old_index = cached_index
+		cached_index = 0 // Prevents infinite Cut() runtimes. Sorry MSO
+		turfs_to_consume.Cut(1, old_index + 1)
+
+	for (cached_index in 1 to length(turfs_to_consume))
+		var/turf/tile = turfs_to_consume[cached_index]
+		var/dist_to_tile = get_dist(tile, parent)
+
+		if(grav_pull < dist_to_tile) //If we've exited the singulo's range already, just skip us
 			continue
-		if (get_dist(tile, parent) > consume_range)
-			tile.singularity_pull(src, singularity_size)
-		else
+
+		var/in_consume_range = (dist_to_tile <= consume_range)
+		if (in_consume_range)
 			consume(src, tile)
+		else
+			tile.singularity_pull(parent, singularity_size)
 
-		for (var/_thing in tile)
-			var/atom/thing = _thing
-
-			// Because we can possibly yield in the middle of iteration, let's make sure what were looking at is still there
-			// Without this, you get "Qdeleted thing being thrown around"
-			if (QDELETED(thing))
+		for (var/atom/movable/thing as anything in tile)
+			if(thing == parent)
 				continue
+			if (in_consume_range)
+				consume(src, thing)
+			else
+				thing.singularity_pull(parent, singularity_size)
 
-			if (isturf(atom_parent.loc) && thing != parent)
-				var/atom/movable/movable_thing = thing
-				if (get_dist(movable_thing, parent) > consume_range)
-					movable_thing.singularity_pull(parent, singularity_size)
-				else
-					consume(src, movable_thing)
+		if(TICK_CHECK) //Yes this means the singulo can eat all of its host subsystem's cpu, but like it's the singulo, and it was gonna do that anyway
+			turfs_to_consume.Cut(1, cached_index + 1)
+			cached_index = 0
+			return
 
-			CHECK_TICK
+	turfs_to_consume.Cut()
+	cached_index = 0
 
 /datum/component/singularity/proc/move()
 	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
@@ -265,10 +294,10 @@
 	var/dir2
 	var/dir3
 	switch (direction)
-		if (NORTH || SOUTH)
+		if (NORTH, SOUTH)
 			dir2 = EAST
 			dir3 = WEST
-		if (EAST || WEST)
+		if (EAST, WEST)
 			dir2 = NORTH
 			dir3 = SOUTH
 	var/turf/farthest_perpendicular_turf = farthest_turf

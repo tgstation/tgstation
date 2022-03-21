@@ -215,6 +215,10 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for(var/obj/item/item in human_target.get_equipped_items(delete_pocket))
 		qdel(item)
+
+	var/obj/item/organ/brain/human_brain = human_target.getorganslot(BRAIN)
+	human_brain.destroy_all_skillchips() // get rid of skillchips to prevent runtimes
+
 	if(dresscode != "Naked")
 		human_target.equipOutfit(dresscode)
 

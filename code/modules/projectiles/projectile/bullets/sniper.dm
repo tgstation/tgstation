@@ -3,6 +3,7 @@
 /obj/projectile/bullet/p50
 	name =".50 bullet"
 	speed = 0.4
+	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
 	damage = 70
 	paralyze = 100
 	dismemberment = 50
@@ -33,8 +34,10 @@
 	name = "penetrator round"
 	icon_state = "gauss"
 	damage = 60
-	projectile_piercing = PASSMOB & PASSVEHICLE
-	projectile_phasing = (ALL & (~PASSMOB & ~PASSVEHICLE))
+	range = 50
+	projectile_piercing = PASSMOB|PASSVEHICLE
+	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
+	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //It goes through you cleanly.
 	paralyze = 0
 	breakthings = FALSE

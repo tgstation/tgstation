@@ -42,6 +42,7 @@
 
 
 /datum/reagent/blood/on_new(list/data)
+	. = ..()
 	if(istype(data))
 		SetViruses(src, data)
 
@@ -87,7 +88,14 @@
 
 	var/obj/effect/decal/cleanable/blood/bloodsplatter = locate() in exposed_turf //find some blood here
 	if(!bloodsplatter)
-		bloodsplatter = new(exposed_turf)
+		bloodsplatter = new(exposed_turf, data["viruses"])
+	else if(LAZYLEN(data["viruses"]))
+		var/list/viri_to_add = list()
+		for(var/datum/disease/virus in data["viruses"])
+			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+				viri_to_add += virus
+		if(LAZYLEN(viri_to_add))
+			bloodsplatter.AddComponent(/datum/component/infective, viri_to_add)
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 
@@ -134,6 +142,7 @@
 		src.data |= data.Copy()
 
 /datum/reagent/vaccine/fungal_tb
+	name = "Vaccine (Fungal Tuberculosis)"
 
 /datum/reagent/vaccine/fungal_tb/New(data)
 	. = ..()
@@ -155,7 +164,7 @@
 	glass_name = "glass of water"
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 /*
  * Water reaction to turf
@@ -240,7 +249,7 @@
 	glass_desc = "A glass of holy water."
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 	ph = 7.5 //God is alkaline
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
@@ -253,6 +262,11 @@
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_HOLY, type)
+
+/datum/reagent/water/holywater/on_mob_add(mob/living/L, amount)
+	. = ..()
+	if(data)
+		data["misc"] = 0
 
 /datum/reagent/water/holywater/on_mob_end_metabolize(mob/living/L)
 	REMOVE_TRAIT(L, TRAIT_HOLY, type)
@@ -1150,7 +1164,7 @@
 	penetrates_skin = NONE
 	var/clean_types = CLEAN_WASH
 	ph = 5.5
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_CLEANS
 
 /datum/reagent/space_cleaner/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -1774,9 +1788,8 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/carpet/expose_turf(turf/exposed_turf, reac_volume)
-	if(isplatingturf(exposed_turf) || istype(exposed_turf, /turf/open/floor/iron))
-		var/turf/open/floor/target_floor = exposed_turf
-		target_floor.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
+	if(isopenturf(exposed_turf) && exposed_turf.turf_flags & IS_SOLID && !istype(exposed_turf, /turf/open/floor/carpet))
+		exposed_turf.PlaceOnTop(carpet_type, flags = CHANGETURF_INHERIT_AIR)
 	..()
 
 /datum/reagent/carpet/black
@@ -2437,11 +2450,11 @@
 	metabolization_rate = 0.2 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/bz_metabolites/on_mob_life(mob/living/L, delta_time, times_fired)
-	if(L.mind)
-		var/datum/antagonist/changeling/changeling = L.mind.has_antag_datum(/datum/antagonist/changeling)
+/datum/reagent/bz_metabolites/on_mob_life(mob/living/carbon/target, delta_time, times_fired)
+	if(target.mind)
+		var/datum/antagonist/changeling/changeling = target.mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling)
-			changeling.chem_charges = max(changeling.chem_charges - (2 * REM * delta_time), 0)
+			changeling.adjust_chemicals(-2 * REM * delta_time)
 	return ..()
 
 /datum/reagent/pax/peaceborg
@@ -2628,13 +2641,14 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM //20 times as long, so it's actually viable to use
 	var/time_multiplier = 1 MINUTES //1 minute per unit of gravitum on objects. Seems overpowered, but the whole thing is very niche
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	self_consuming = TRUE //this works on objects, so it should work on skeletons and robots too
 
 /datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
 	. = ..()
 	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
 	addtimer(CALLBACK(exposed_obj, .proc/_RemoveElement, list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
 
-/datum/reagent/gravitum/on_mob_add(mob/living/L)
+/datum/reagent/gravitum/on_mob_metabolize(mob/living/L)
 	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
 	return ..()
 
@@ -2667,13 +2681,13 @@
 			var/datum/wound/W = thing
 			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 6, severe = 9, critical = 12) when the determination wears off if it was a combat rush
 		M.adjustStaminaLoss(stam_crash)
-	M.remove_status_effect(STATUS_EFFECT_DETERMINED)
+	M.remove_status_effect(/datum/status_effect/determined)
 	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
 		significant = TRUE
-		M.apply_status_effect(STATUS_EFFECT_DETERMINED) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
+		M.apply_status_effect(/datum/status_effect/determined) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
 
 	volume = min(volume, WOUND_DETERMINATION_MAX)
 
@@ -2685,32 +2699,39 @@
 		M.adjustStaminaLoss(-0.25 * REM * delta_time) // the more wounds, the more stamina regen
 	..()
 
-/datum/reagent/eldritch //unholy water, but for eldritch cultists. why couldn't they have both just used the same reagent? who knows. maybe nar'sie is considered to be too "mainstream" of a god to worship in the cultist community.
+// unholy water, but for heretics.
+// why couldn't they have both just used the same reagent?
+// who knows.
+// maybe nar'sie is considered to be too "mainstream" of a god to worship in the heretic community.
+/datum/reagent/eldritch
 	name = "Eldritch Essence"
-	description = "A strange liquid that defies the laws of physics. It re-energizes and heals those who can see beyond this fragile reality, but is incredibly harmful to the closed-minded. It metabolizes very quickly."
+	description = "A strange liquid that defies the laws of physics. \
+		It re-energizes and heals those who can see beyond this fragile reality, \
+		but is incredibly harmful to the closed-minded. It metabolizes very quickly."
 	taste_description = "Ag'hsj'saje'sh"
 	color = "#1f8016"
 	metabolization_rate = 2.5 * REAGENTS_METABOLISM  //0.5u/second
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/eldritch/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
-	if(IS_HERETIC(M))
-		M.adjust_drowsyness(-5 * REM * delta_time)
-		M.AdjustAllImmobility(-40 * REM * delta_time)
-		M.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
-		M.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
-		M.adjustOxyLoss(-2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(-2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(-2 * REM * delta_time, FALSE)
-		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
-			M.blood_volume += 3 * REM * delta_time
+/datum/reagent/eldritch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(IS_HERETIC(drinker))
+		drinker.adjust_drowsyness(-5 * REM * delta_time)
+		drinker.AdjustAllImmobility(-40 * REM * delta_time)
+		drinker.adjustStaminaLoss(-10 * REM * delta_time, FALSE)
+		drinker.adjustToxLoss(-2 * REM * delta_time, FALSE, forced = TRUE)
+		drinker.adjustOxyLoss(-2 * REM * delta_time, FALSE)
+		drinker.adjustBruteLoss(-2 * REM * delta_time, FALSE)
+		drinker.adjustFireLoss(-2 * REM * delta_time, FALSE)
+		if(drinker.blood_volume < BLOOD_VOLUME_NORMAL)
+			drinker.blood_volume += 3 * REM * delta_time
 	else
-		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
-		M.adjustToxLoss(2 * REM * delta_time, FALSE)
-		M.adjustFireLoss(2 * REM * delta_time, FALSE)
-		M.adjustOxyLoss(2 * REM * delta_time, FALSE)
-		M.adjustBruteLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3 * REM * delta_time, 150)
+		drinker.adjustToxLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustFireLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustOxyLoss(2 * REM * delta_time, FALSE)
+		drinker.adjustBruteLoss(2 * REM * delta_time, FALSE)
 	..()
+	return TRUE
 
 /datum/reagent/universal_indicator
 	name = "Universal Indicator"
@@ -2742,19 +2763,29 @@
 	var/ant_damage = 0
 	/// Tells the debuff how many ants we are being covered with.
 	var/amount_left = 0
+	/// List of possible common statements to scream when eating ants
+	var/static/list/ant_screams = list(
+		"THEY'RE UNDER MY SKIN!!",
+		"GET THEM OUT OF ME!!",
+		"HOLY HELL THEY BURN!!",
+		"MY GOD THEY'RE INSIDE ME!!",
+		"GET THEM OUT!!"
+		)
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, delta_time)
 	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
+	ant_damage++
+	if(ant_damage < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
+		return ..()
 	if(DT_PROB(5, delta_time))
 		if(DT_PROB(5, delta_time)) //Super rare statement
 			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
 		else
-			victim.say(pick("THEY'RE UNDER MY SKIN!!", "GET THEM OUT OF ME!!", "HOLY HELL THEY BURN!!", "MY GOD THEY'RE INSIDE ME!!", "GET THEM OUT!!"), forced = /datum/reagent/ants)
+			victim.say(pick(ant_screams), forced = /datum/reagent/ants)
 	if(DT_PROB(15, delta_time))
 		victim.emote("scream")
 	if(DT_PROB(2, delta_time)) // Stuns, but purges ants.
 		victim.vomit(rand(5,10), FALSE, TRUE, 1, TRUE, FALSE, purge_ratio = 1)
-	ant_damage++
 	return ..()
 
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
@@ -2768,7 +2799,7 @@
 		return
 	if(methods & (PATCH|TOUCH|VAPOR))
 		amount_left = round(reac_volume,0.1)
-		exposed_mob.apply_status_effect(STATUS_EFFECT_ANTS, amount_left)
+		exposed_mob.apply_status_effect(/datum/status_effect/ants, amount_left)
 
 /datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2792,7 +2823,7 @@
 		pests = new(exposed_turf)
 	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
 	pests.reagents.add_reagent(/datum/reagent/ants, spilled_ants)
-	pests.update_ant_damage(spilled_ants)
+	pests.update_ant_damage()
 
 //This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
 /datum/reagent/lead
@@ -2821,3 +2852,23 @@
 	kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
 	kronkus_enjoyer.adjustStaminaLoss(-2, FALSE)
 
+/datum/reagent/brimdust
+	name = "Brimdust"
+	description = "A brimdemon's dust. Consumption is not recommended, although plants like it."
+	reagent_state = SOLID
+	color = "#522546"
+	taste_description = "burning"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/brimdust/on_mob_life(mob/living/carbon/carbon, delta_time, times_fired)
+	. = ..()
+	carbon.adjustFireLoss((ispodperson(carbon) ? -1 : 1) * delta_time)
+
+/datum/reagent/brimdust/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjust_weedlevel(-1)
+		mytray.adjust_pestlevel(-1)
+		mytray.adjust_plant_health(round(chems.get_reagent_amount(src.type) * 1))
+		if(myseed)
+			myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.5))

@@ -125,7 +125,7 @@
 	QDEL_NULL(statue)
 	. = ..()
 
-/datum/action/item_action/organ_action/statue/Trigger()
+/datum/action/item_action/organ_action/statue/Trigger(trigger_flags)
 	. = ..()
 	if(!iscarbon(owner))
 		to_chat(owner, span_warning("Your body rejects the powers of the tongue!"))
@@ -317,7 +317,7 @@
 	languages_possible = languages_possible_alien
 
 /obj/item/organ/tongue/alien/modify_speech(datum/source, list/speech_args)
-	playsound(owner, "hiss", 25, TRUE, TRUE)
+	playsound(owner, SFX_HISS, 25, TRUE, TRUE)
 
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""

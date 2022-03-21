@@ -3,7 +3,7 @@
 	gender = MALE
 	pressure_resistance = 15
 	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD,GLAND_HUD)
-	has_limbs = 1
+	has_limbs = TRUE
 	held_items = list(null, null)
 	num_legs = 0 //Populated on init through list/bodyparts
 	usable_legs = 0 //Populated on init through list/bodyparts

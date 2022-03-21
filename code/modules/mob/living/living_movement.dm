@@ -75,9 +75,14 @@
 /mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
 	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated())
 		if(z_move_flags & ZMOVE_FEEDBACK)
-			to_chat(rider || src, "<span class='warning'>[rider ? src : "You"] can't do that right now!</span>")
+			to_chat(rider || src, span_warning("[rider ? src : "You"] can't do that right now!"))
 		return FALSE
 	if(!buckled || !(z_move_flags & ZMOVE_ALLOW_BUCKLED))
+		if(!(z_move_flags & ZMOVE_FALL_CHECKS) && incorporeal_move && (!rider || rider.incorporeal_move))
+			//An incorporeal mob will ignore obstacles unless it's a potential fall (it'd suck hard) or is carrying corporeal mobs.
+			//Coupled with flying/floating, this allows the mob to move up and down freely.
+			//By itself, it only allows the mob to move down.
+			z_move_flags |= ZMOVE_IGNORE_OBSTACLES
 		return ..()
 	switch(SEND_SIGNAL(buckled, COMSIG_BUCKLED_CAN_Z_MOVE, direction, start, destination, z_move_flags, src))
 		if(COMPONENT_RIDDEN_ALLOW_Z_MOVE) // Can be ridden.
@@ -88,7 +93,7 @@
 			if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS) && !buckled.anchored)
 				return buckled.can_z_move(direction, start, destination, z_move_flags, src)
 			if(z_move_flags & ZMOVE_FEEDBACK)
-				to_chat(src, "<span class='notice'>Unbuckle from [buckled] first.<span>")
+				to_chat(src, span_warning("Unbuckle from [buckled] first."))
 			return FALSE
 
 /mob/set_currently_z_moving(value)

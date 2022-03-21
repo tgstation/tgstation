@@ -373,9 +373,9 @@
 
 	#ifdef REAGENTS_TESTING //Kept in so that people who want to write fermireactions can contact me with this log so I can help them
 	if(GLOB.Debug2) //I want my spans for my sanity
-		message_admins("<span class='green'>Reaction step active for:[reaction.type]</spans>")
-		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]<spans>")
-		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]")
+		message_admins("<span class='green'>Reaction step active for:[reaction.type]</span>")
+		message_admins("<span class='notice'>|Reaction conditions| Temp: [holder.chem_temp], pH: [holder.ph], reactions: [length(holder.reaction_list)], awaiting reactions: [length(holder.failed_but_capable_reactions)], no. reagents:[length(holder.reagent_list)], no. prev reagents: [length(holder.previous_reagent_list)]</span>")
+		message_admins("<span class='warning'>Reaction vars: PreReacted:[reacted_vol] of [step_target_vol] of total [target_vol]. delta_t [delta_t], multiplier [multiplier], delta_chem_factor [delta_chem_factor] Pfactor [product_ratio], purity of [purity] from a delta_ph of [delta_ph]. DeltaTime: [delta_time]</span>")
 	#endif
 
 	//Apply thermal output of reaction to beaker

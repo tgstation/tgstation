@@ -49,7 +49,7 @@
 		if(prob(33))
 			var/obj/item/shard/S = new(drop_location())
 			target.Bumped(S)
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 	else
 		B.force = 0
 		B.throwforce = 0
@@ -151,6 +151,7 @@
 
 /obj/item/broken_bottle/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/caltrop, min_damage = force)
 	AddComponent(/datum/component/butchering, 200, 55)
 
 /obj/item/reagent_containers/food/drinks/bottle/beer
@@ -169,6 +170,15 @@
 	name = "Carp Lite"
 	desc = "Brewed with \"Pure Ice Asteroid Spring Water\"."
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer/light = 30)
+
+/obj/item/reagent_containers/food/drinks/bottle/rootbeer
+	name = "Two-Time root beer"
+	desc = "A popular, old-fashioned brand of root beer, known for its extremely sugary formula. Might make you want a nap afterwards."
+	volume = 30
+	list_reagents = list(/datum/reagent/consumable/rootbeer = 30)
+	foodtype = SUGAR | JUNKFOOD
+	custom_price = PAYCHECK_HARD * 1.5
+	custom_premium_price = PAYCHECK_HARD * 2
 
 /obj/item/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
@@ -738,10 +748,3 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
-
-/obj/item/reagent_containers/food/drinks/colocup/lean
-	name = "lean"
-	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
-	icon_state = "lean"
-	list_reagents = list(/datum/reagent/consumable/lean = 20)
-	random_sprite = FALSE

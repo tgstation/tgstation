@@ -384,7 +384,7 @@
 			force_effect = round(W.force/2)
 		if(prob(10 + force_effect))
 			discipline_slime(user)
-	if(istype(W, /obj/item/storage/bag/bio))
+	if(istype(W, /obj/item/storage/bag/xeno))
 		var/obj/item/storage/P = W
 		if(!effectmod)
 			to_chat(user, span_warning("The slime is not currently being mutated."))

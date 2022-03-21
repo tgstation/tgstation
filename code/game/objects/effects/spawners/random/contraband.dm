@@ -71,3 +71,24 @@
 		/obj/effect/spawner/random/entertainment/lighter = 5,
 		/obj/effect/spawner/random/food_or_drink/booze = 5,
 	)
+
+/obj/effect/spawner/random/contraband/cannabis
+	name = "Random Cannabis Spawner" //blasphemously overpowered, use extremely sparingly (if at all)
+	icon = 'goon/icons/obj/hydroponics.dmi'
+	icon_state = "cannabis_spawner"
+	loot = list(
+		/obj/item/food/grown/cannabis = 25,
+		/obj/item/food/grown/cannabis/white = 25,
+		/obj/item/food/grown/cannabis/death = 24,
+		/obj/item/food/grown/cannabis/rainbow = 25,
+		/obj/item/food/grown/cannabis/ultimate = 1, //very rare on purpose
+	)
+
+/obj/effect/spawner/random/contraband/cannabis/lizardsgas
+	loot = list(
+		/obj/item/food/grown/cannabis = 24,
+		/obj/item/food/grown/cannabis/white = 15,
+		/obj/item/food/grown/cannabis/death = 45, //i mean, it's been there for a while?
+		/obj/item/food/grown/cannabis/rainbow = 15,
+		/obj/item/food/grown/cannabis/ultimate = 1,
+	)

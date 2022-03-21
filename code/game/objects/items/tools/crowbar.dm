@@ -38,6 +38,7 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	icon_state = "crowbar"
+	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
 
@@ -59,6 +60,17 @@
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
 	force = 20
 	icon_state = "crowbar_powergame"
+
+/obj/item/crowbar/large/old
+	name = "old crowbar"
+	desc = "It's an old crowbar. Much larger than the pocket sized ones, carrying a lot more heft. They don't make 'em like they used to."
+	throwforce = 10
+	throw_speed = 2
+
+/obj/item/crowbar/large/old/Initialize()
+	. = ..()
+	if(prob(50))
+		icon_state = "crowbar_powergame"
 
 /obj/item/crowbar/power
 	name = "jaws of life"
@@ -120,7 +132,7 @@
 			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)
 			if(target_bodypart)
 				target_bodypart.drop_limb()
-				playsound(loc, "desecration", 50, TRUE, -1)
+				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)
@@ -128,11 +140,11 @@
 		user.visible_message(span_notice("[user] cuts [attacked_carbon]'s restraints with [src]!"))
 		qdel(attacked_carbon.handcuffed)
 		return
-	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(STATUS_EFFECT_CHOKINGSTRAND) && tool_behaviour == TOOL_WIRECUTTER)
+	else if(istype(attacked_carbon) && attacked_carbon.has_status_effect(/datum/status_effect/strandling) && tool_behaviour == TOOL_WIRECUTTER)
 		user.visible_message(span_notice("[user] attempts to cut the durathread strand from around [attacked_carbon]'s neck."))
 		if(do_after(user, 1.5 SECONDS, attacked_carbon))
 			user.visible_message(span_notice("[user] succesfully cuts the durathread strand from around [attacked_carbon]'s neck."))
-			attacked_carbon.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
+			attacked_carbon.remove_status_effect(/datum/status_effect/strandling)
 			playsound(loc, usesound, 50, TRUE, -1)
 		return
 	else

@@ -261,11 +261,8 @@
 			pin_owner = null
 			owned = FALSE
 			return
-		var/transaction_amount = input(user, "Insert valid deposit amount for gun purchase", "Money Deposit") as null|num
-		if(transaction_amount < 1)
-			to_chat(user, span_warning("ERROR: Invalid amount designated."))
-			return
-		if(!transaction_amount)
+		var/transaction_amount = tgui_input_number(user, "Insert valid deposit amount for gun purchase", "Money Deposit")
+		if(!transaction_amount || QDELETED(user) || QDELETED(src) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return
 		pin_owner = id
 		owned = TRUE

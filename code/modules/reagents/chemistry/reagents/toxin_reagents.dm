@@ -225,31 +225,30 @@
 	toxpwr = 0.5
 	taste_description = "death"
 	penetrates_skin = NONE
-	var/fakedeath_active = FALSE
 	ph = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
-	if(fakedeath_active)
-		L.fakedeath(type)
-
-/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
-	L.cure_fakedeath(type)
-	..()
-
-/datum/reagent/toxin/zombiepowder/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/holder_mob)
 	. = ..()
-	exposed_mob.adjustOxyLoss(0.5*REM, 0)
-	if(methods & INGEST)
-		var/datum/reagent/toxin/zombiepowder/zombiepowder = exposed_mob.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
-		if(istype(zombiepowder))
-			zombiepowder.fakedeath_active = TRUE
+	holder_mob.adjustOxyLoss(0.5*REM, 0)
+	if(data?["method"] & INGEST)
+		holder_mob.fakedeath(type)
+
+/datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/holder_mob)
+	holder_mob.cure_fakedeath(type)
+	return ..()
+
+/datum/reagent/toxin/zombiepowder/on_transfer(atom/target_atom, methods, trans_volume)
+	. = ..()
+	var/datum/reagent/zombiepowder = target_atom.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+	if(!zombiepowder || !(methods & INGEST))
+		return
+	LAZYINITLIST(zombiepowder.data)
+	zombiepowder.data["method"] |= INGEST
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M, delta_time, times_fired)
 	..()
-	if(fakedeath_active)
+	if(HAS_TRAIT(M, TRAIT_FAKEDEATH) && HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return TRUE
 	switch(current_cycle)
 		if(1 to 5)
@@ -259,7 +258,6 @@
 		if(5 to 8)
 			M.adjustStaminaLoss(40 * REM * delta_time, 0)
 		if(9 to INFINITY)
-			fakedeath_active = TRUE
 			M.fakedeath(type)
 
 /datum/reagent/toxin/ghoulpowder
@@ -458,7 +456,7 @@
 	..()
 
 /datum/reagent/toxin/fakebeer //disguised as normal beer for use by emagged brobots
-	name = "Beer"
+	name = "Beer...?"
 	description = "A specially-engineered sedative disguised as beer. It induces instant sleep in its target."
 	color = "#664300" // rgb: 102, 67, 0
 	metabolization_rate = 1.5 * REAGENTS_METABOLISM
@@ -792,11 +790,11 @@
 	toxpwr = 0
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/medicine/sodium_thiopental/on_mob_add(mob/living/L, amount)
+/datum/reagent/toxin/sodium_thiopental/on_mob_add(mob/living/L, amount)
 	. = ..()
 	ADD_TRAIT(L, TRAIT_ANTICONVULSANT, name)
 
-/datum/reagent/medicine/sodium_thiopental/on_mob_delete(mob/living/L)
+/datum/reagent/toxin/sodium_thiopental/on_mob_delete(mob/living/L)
 	. = ..()
 	REMOVE_TRAIT(L, TRAIT_ANTICONVULSANT, name)
 
@@ -1157,7 +1155,7 @@
 		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/bp = M.get_bodypart(selected_part)
 		if(bp)
-			playsound(M, get_sfx("desecration"), 50, TRUE, -1)
+			playsound(M, get_sfx(SFX_DESECRATION), 50, TRUE, -1)
 			M.visible_message(span_warning("[M]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
 			M.say("OOF!!", forced = /datum/reagent/toxin/bonehurtingjuice)
 			bp.receive_damage(20, 0, 200, wound_bonus = rand(30, 130))

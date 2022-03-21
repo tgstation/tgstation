@@ -76,7 +76,7 @@
 		/// Needs to run before as ComponentInitialize runs after this statement...why do we have ComponentInitialize again?
 
 
-/obj/Destroy(force=FALSE)
+/obj/Destroy(force)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
@@ -141,7 +141,7 @@
 			var/mob/living/carbon/human/H = usr
 			if(!(usr in nearby))
 				if(usr.client && usr.machine==src)
-					if(H.dna.check_mutation(TK))
+					if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
 						is_in_use = TRUE
 						ui_interact(usr)
 		if (is_in_use)
@@ -206,7 +206,7 @@
 	if(!anchored || current_size >= STAGE_FIVE)
 		step_towards(src,S)
 
-/obj/get_dumping_location(datum/component/storage/source,mob/user)
+/obj/get_dumping_location()
 	return get_turf(src)
 
 /**

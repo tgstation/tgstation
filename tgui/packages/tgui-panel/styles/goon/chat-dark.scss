@@ -411,6 +411,11 @@ em {
   font-size: 185%;
 }
 
+.bolddanger {
+  color: #c51e1e;
+  font-weight: bold;
+}
+
 .danger {
   color: #c51e1e;
 }
@@ -884,4 +889,9 @@ em {
 
 .ml-3 {
   margin-left: 3em;
+}
+
+.tooltip {
+  font-style: italic;
+  border-bottom: 1px dashed #fff;
 }

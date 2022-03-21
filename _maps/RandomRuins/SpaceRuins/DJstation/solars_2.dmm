@@ -1,0 +1,118 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"E" = (
+/turf/template_noop,
+/area/template_noop)
+"L" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/turf/template_noop,
+/area/ruin/space/djstation/solars)
+"P" = (
+/obj/structure/cable,
+/obj/machinery/power/solar/fake,
+/turf/open/floor/iron/solarpanel/airless,
+/area/ruin/space/djstation/solars)
+"U" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"V" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/ruin/space/djstation/solars)
+
+(1,1,1) = {"
+E
+E
+U
+E
+V
+E
+U
+U
+a
+"}
+(2,1,1) = {"
+a
+U
+P
+P
+L
+P
+P
+E
+a
+"}
+(3,1,1) = {"
+a
+E
+U
+E
+L
+E
+U
+E
+a
+"}
+(4,1,1) = {"
+a
+U
+P
+P
+L
+P
+P
+U
+a
+"}
+(5,1,1) = {"
+a
+E
+U
+E
+L
+E
+U
+E
+a
+"}
+(6,1,1) = {"
+a
+U
+P
+P
+L
+P
+P
+E
+a
+"}
+(7,1,1) = {"
+E
+E
+U
+E
+U
+E
+U
+E
+E
+"}
+(8,1,1) = {"
+E
+E
+a
+a
+a
+a
+a
+E
+E
+"}

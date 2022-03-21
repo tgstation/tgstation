@@ -482,7 +482,7 @@
 			R.damage_multiplier = modifier
 			R.burst()
 			return
-		new /obj/effect/temp_visual/resonance(target_turf, K.firer, null, 30)
+		new /obj/effect/temp_visual/resonance(target_turf, K.firer, null, RESONATOR_MODE_MANUAL, 100) //manual detonate mode and will NOT spread
 
 /obj/item/borg/upgrade/modkit/bounty
 	name = "death syphon"
@@ -496,13 +496,13 @@
 /obj/item/borg/upgrade/modkit/bounty/projectile_prehit(obj/projectile/kinetic/K, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target))
 		var/mob/living/L = target
-		var/list/existing_marks = L.has_status_effect_list(STATUS_EFFECT_SYPHONMARK)
+		var/list/existing_marks = L.has_status_effect_list(/datum/status_effect/syphon_mark)
 		for(var/i in existing_marks)
 			var/datum/status_effect/syphon_mark/SM = i
 			if(SM.reward_target == src) //we want to allow multiple people with bounty modkits to use them, but we need to replace our own marks so we don't multi-reward
 				SM.reward_target = null
 				qdel(SM)
-		L.apply_status_effect(STATUS_EFFECT_SYPHONMARK, src)
+		L.apply_status_effect(/datum/status_effect/syphon_mark, src)
 
 /obj/item/borg/upgrade/modkit/bounty/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/kinetic_accelerator/KA)
 	if(isliving(target))

@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/trauma
-	true_name = "white matter randomiser"
+	abductor_hint = "white matter randomiser. The abductee occasionally gains a random brain trauma, up to five times. The traumas can range from basic to deep-rooted."
 	cooldown_low = 800
 	cooldown_high = 1200
 	uses = 5

@@ -1,4 +1,3 @@
-
 ///holding bag for dice
 /obj/item/storage/dice
 	name = "bag of dice"

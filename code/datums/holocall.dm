@@ -96,9 +96,7 @@
 	dialed_holopads.Cut()
 
 	if(calling_holopad)//if the call is answered, then calling_holopad wont be in dialed_holopads and thus wont have set_holocall(src, FALSE) called
-		calling_holopad.calling = FALSE
-		calling_holopad.outgoing_call = null
-		calling_holopad.SetLightsAndPower()
+		calling_holopad.callee_hung_up()
 		calling_holopad = null
 	if(connected_holopad)
 		connected_holopad.SetLightsAndPower()
@@ -163,7 +161,7 @@
 	if(!Check())
 		return
 
-	calling_holopad.calling = FALSE
+	calling_holopad.callee_picked_up()
 	hologram = answering_holopad.activate_holo(user)
 	hologram.HC = src
 
@@ -352,20 +350,20 @@
 /datum/preset_holoimage/engineer
 	outfit_type = /datum/outfit/job/engineer
 
-/datum/preset_holoimage/engineer/rig
-	outfit_type = /datum/outfit/job/engineer/gloved/rig
+/datum/preset_holoimage/engineer/mod
+	outfit_type = /datum/outfit/job/engineer/mod
 
 /datum/preset_holoimage/engineer/ce
 	outfit_type = /datum/outfit/job/ce
 
-/datum/preset_holoimage/engineer/ce/rig
-	outfit_type = /datum/outfit/job/engineer/gloved/rig
+/datum/preset_holoimage/engineer/ce/mod
+	outfit_type = /datum/outfit/job/ce/mod
 
 /datum/preset_holoimage/engineer/atmos
 	outfit_type = /datum/outfit/job/atmos
 
-/datum/preset_holoimage/engineer/atmos/rig
-	outfit_type = /datum/outfit/job/engineer/gloved/rig
+/datum/preset_holoimage/engineer/atmos/mod
+	outfit_type = /datum/outfit/job/atmos/mod
 
 /datum/preset_holoimage/researcher
 	outfit_type = /datum/outfit/job/scientist
@@ -455,17 +453,19 @@
 	DELAY 10
 	SAY Oh, shit!
 	DELAY 10
-	PRESET /datum/preset_holoimage/engineer/atmos/rig
+	PRESET /datum/preset_holoimage/engineer/atmos/mod
 	LANGUAGE /datum/language/narsie
 	NAME Unknown
 	SAY RISE, MY LORD!!
 	DELAY 10
 	LANGUAGE /datum/language/common
 	NAME Plastic
-	PRESET /datum/preset_holoimage/engineer/rig
+	PRESET /datum/preset_holoimage/engineer/mod
 	SAY Fuck, fuck, fuck!
 	DELAY 20
-	SAY It's loose! CALL THE FUCKING SHUTT-
+	NAME Maria Dell
+	PRESET /datum/preset_holoimage/engineer/atmos
+	SAY GEORGE, WAIT-
 	DELAY 10
 	PRESET /datum/preset_holoimage/corgi
 	NAME Blackbox Automated Message

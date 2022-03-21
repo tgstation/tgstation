@@ -41,7 +41,7 @@
 		return
 
 	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
-	if(check_emote(message, forced))
+	if(message[1] == "*" && check_emote(message, forced))
 		return
 
 	. = say_dead(message)

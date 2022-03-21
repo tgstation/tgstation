@@ -22,13 +22,12 @@
 	permeability_coefficient = 0.5
 
 //Captain
-/obj/item/clothing/suit/captunic
-	name = "captain's parade tunic"
+/obj/item/clothing/suit/capjacket
+	name = "captain's parade jacket"
 	desc = "Worn by a Captain to show their class."
-	icon_state = "captunic"
+	icon_state = "capjacket"
 	inhand_icon_state = "bio_suit"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT
+	body_parts_covered = CHEST|GROIN|ARMS
 	allowed = list(/obj/item/disk, /obj/item/stamp, /obj/item/reagent_containers/food/drinks/flask, /obj/item/melee, /obj/item/storage/lockbox/medal, /obj/item/assembly/flash/handheld, /obj/item/storage/box/matches, /obj/item/lighter, /obj/item/clothing/mask/cigarette, /obj/item/storage/fancy/cigarettes, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 //Chef
@@ -69,15 +68,15 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
-/obj/item/clothing/suit/det_suit/grey
+/obj/item/clothing/suit/det_suit/dark
 	name = "noir trenchcoat"
-	desc = "A hard-boiled private investigator's grey trenchcoat."
-	icon_state = "greydet"
+	desc = "A hard-boiled private investigator's dark trenchcoat."
+	icon_state = "noirdet"
 	inhand_icon_state = "greydet"
 
 /obj/item/clothing/suit/det_suit/noir
 	name = "noir suit coat"
-	desc = "A dapper private investigator's grey suit coat."
+	desc = "A dapper private investigator's dark suit coat."
 	icon_state = "detsuit"
 	inhand_icon_state = "detsuit"
 

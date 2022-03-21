@@ -31,7 +31,7 @@
 /obj/item/clothing/shoes/bronze
 	name = "bronze boots"
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
-	icon = 'icons/obj/clothing/clockwork_garb.dmi'
+	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "clockwork_treads"
 	can_be_tied = FALSE
 

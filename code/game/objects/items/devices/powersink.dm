@@ -74,35 +74,34 @@
 	update_appearance()
 	set_light(0)
 
-/obj/item/powersink/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		if(mode == DISCONNECTED)
-			var/turf/T = loc
-			if(isturf(T) && T.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
-				attached = locate() in T
-				if(!attached)
-					to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
-				else
-					set_mode(CLAMPED_OFF)
-					user.visible_message( \
-						"[user] attaches \the [src] to the cable.", \
-						span_notice("You bolt \the [src] into the floor and connect it to the cable."),
-						span_hear("You hear some wires being connected to something."))
-			else
+/obj/item/powersink/wrench_act(mob/living/user, obj/item/tool)
+	. = TRUE
+	if(mode == DISCONNECTED)
+		var/turf/T = loc
+		if(isturf(T) && T.underfloor_accessibility >= UNDERFLOOR_INTERACTABLE)
+			attached = locate() in T
+			if(!attached)
 				to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
+			else
+				set_mode(CLAMPED_OFF)
+				user.visible_message( \
+					"[user] attaches \the [src] to the cable.", \
+					span_notice("You bolt \the [src] into the floor and connect it to the cable."),
+					span_hear("You hear some wires being connected to something."))
 		else
-			set_mode(DISCONNECTED)
-			user.visible_message( \
-				"[user] detaches \the [src] from the cable.", \
-				span_notice("You unbolt \the [src] from the floor and detach it from the cable."),
-				span_hear("You hear some wires being disconnected from something."))
-
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		user.visible_message( \
-			"[user] messes with \the [src] for a bit.", \
-			span_notice("You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench."))
+			to_chat(user, span_warning("\The [src] must be placed over an exposed, powered cable node!"))
 	else
-		return ..()
+		set_mode(DISCONNECTED)
+		user.visible_message( \
+			"[user] detaches \the [src] from the cable.", \
+			span_notice("You unbolt \the [src] from the floor and detach it from the cable."),
+			span_hear("You hear some wires being disconnected from something."))
+
+/obj/item/powersink/screwdriver_act(mob/living/user, obj/item/tool)
+	user.visible_message( \
+		"[user] messes with \the [src] for a bit.", \
+		span_notice("You can't fit the screwdriver into \the [src]'s bolts! Try using a wrench."))
+	return TRUE
 
 /obj/item/powersink/attack_paw(mob/user, list/modifiers)
 	return

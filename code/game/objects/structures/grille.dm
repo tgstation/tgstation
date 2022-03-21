@@ -114,7 +114,7 @@
 	to_chat(user, span_notice("You move [unanchored_items_on_tile == 1 ? "[last_item_moved]" : "some things"] out of the way."))
 
 	if(unanchored_items_on_tile - CLEAR_TILE_MOVE_LIMIT > 0)
-		to_chat(user, "<span class ='warning'>There's still too much stuff in the way!</span>")
+		to_chat(user, span_warning("There's still too much stuff in the way!"))
 		return FALSE
 
 	return TRUE
@@ -171,28 +171,38 @@
 	if(istype(caller))
 		. = . || (caller.pass_flags & PASSGRILLE)
 
+/obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(shock(user, 100))
+		return
+	tool.play_tool_sound(src, 100)
+	deconstruct()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/grille/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!isturf(loc) || !anchored)
+		return FALSE
+	add_fingerprint(user)
+	if(shock(user, 90))
+		return FALSE
+	tool.play_tool_sound(src, 100)
+	set_anchored(!anchored)
+	user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
+		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-	if(W.tool_behaviour == TOOL_WIRECUTTER)
-		if(!shock(user, 100))
-			W.play_tool_sound(src, 100)
-			deconstruct()
-	else if((W.tool_behaviour == TOOL_SCREWDRIVER) && (isturf(loc) || anchored))
-		if(!shock(user, 90))
-			W.play_tool_sound(src, 100)
-			set_anchored(!anchored)
-			user.visible_message(span_notice("[user] [anchored ? "fastens" : "unfastens"] [src]."), \
-				span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
+	if(istype(W, /obj/item/stack/rods) && broken)
+		if(shock(user, 90))
 			return
-	else if(istype(W, /obj/item/stack/rods) && broken)
 		var/obj/item/stack/rods/R = W
-		if(!shock(user, 90))
-			user.visible_message(span_notice("[user] rebuilds the broken grille."), \
-				span_notice("You rebuild the broken grille."))
-			repair_grille()
-			R.use(1)
-			return
+		user.visible_message(span_notice("[user] rebuilds the broken grille."), \
+			span_notice("You rebuild the broken grille."))
+		repair_grille()
+		R.use(1)
+		return TRUE
 
 //window placing begin
 	else if(is_glass_sheet(W) || istype(W, /obj/item/stack/sheet/bronze))
@@ -328,7 +338,7 @@
 					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock.
 	return ..()
 
-/obj/structure/grille/get_dumping_location(datum/component/storage/source,mob/user)
+/obj/structure/grille/get_dumping_location()
 	return null
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement

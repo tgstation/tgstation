@@ -72,14 +72,14 @@
 				to_chat(owner, span_notice("You have done well to understand [GLOB.deity]. You are almost at a breakthrough."))
 			else
 				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
-				dna.remove_mutation(TELEPATHY)
-				dna.remove_mutation(MUT_MUTE)
+				dna.remove_mutation(/datum/mutation/human/telepathy)
+				dna.remove_mutation(/datum/mutation/human/mute)
 				owner.remove_filter("burden_outline")
 		if(3)
 			if(increase)
 				to_chat(owner, span_notice("Your suffering is only a fraction of [GLOB.deity]'s, and yet the universal truths are coming to you."))
-				dna.add_mutation(TELEPATHY)
-				dna.add_mutation(MUT_MUTE)
+				dna.add_mutation(/datum/mutation/human/telepathy)
+				dna.add_mutation(/datum/mutation/human/mute)
 				owner.add_filter("burden_outline", 9, list("type" = "outline", "color" = "#6c6eff"))
 			else
 				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You feel like you're about to forget."))
@@ -93,12 +93,12 @@
 				to_chat(owner, span_notice("You're on the cusp of another breakthrough. [GLOB.deity] lost everything."))
 			else
 				to_chat(owner, span_warning("The weight on your shoulders feels lighter. You have lost some universal truths."))
-				dna.remove_mutation(TK)
-				dna.remove_mutation(MINDREAD)
+				dna.remove_mutation(/datum/mutation/human/telekinesis)
+				dna.remove_mutation(/datum/mutation/human/mindreader)
 		if(6)
 			to_chat(owner, span_notice("You have finally broken yourself enough to understand [GLOB.deity]. It's all so clear to you."))
-			dna.add_mutation(TK)
-			dna.add_mutation(MINDREAD)
+			dna.add_mutation(/datum/mutation/human/telekinesis)
+			dna.add_mutation(/datum/mutation/human/mindreader)
 
 /// Signal to decrease burden_level (see update_burden proc) if an organ is added
 /datum/mutation/human/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)

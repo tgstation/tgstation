@@ -22,6 +22,9 @@
 #define START_PROCESSING(Processor, Datum) if (!(Datum.datum_flags & DF_ISPROCESSING)) {Datum.datum_flags |= DF_ISPROCESSING;Processor.processing += Datum}
 #define STOP_PROCESSING(Processor, Datum) Datum.datum_flags &= ~DF_ISPROCESSING;Processor.processing -= Datum;Processor.currentrun -= Datum
 
+/// Used to trigger object removal from a processing list
+#define PROCESS_KILL 26
+
 //! SubSystem flags (Please design any new flags so that the default is off, to make adding flags to subsystems easier)
 
 /// subsystem does not initialize.
@@ -38,6 +41,7 @@
 
 /** Treat wait as a tick count, not DS, run every wait ticks. */
 /// (also forces it to run first in the tick (unless SS_BACKGROUND))
+/// (We don't want to be choked out by other subsystems queuing into us)
 /// (implies all runlevels because of how it works)
 /// This is designed for basically anything that works as a mini-mc (like SStimer)
 #define SS_TICKER 8
@@ -72,6 +76,13 @@
 	PreInit();\
 }\
 /datum/controller/subsystem/timer/##X
+
+#define MOVEMENT_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/movement/##X);\
+/datum/controller/subsystem/movement/##X/New(){\
+	NEW_SS_GLOBAL(SS##X);\
+	PreInit();\
+}\
+/datum/controller/subsystem/movement/##X
 
 #define PROCESSING_SUBSYSTEM_DEF(X) GLOBAL_REAL(SS##X, /datum/controller/subsystem/processing/##X);\
 /datum/controller/subsystem/processing/##X/New(){\

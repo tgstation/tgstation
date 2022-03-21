@@ -1,11 +1,7 @@
-/// How much to scale the light range of the explosion for blastcannon shots.
-#define BLASTCANNON_LIGHT_RANGE_SCALE (1/20)
-/// How much to scale the heavy range of the explosion for blastcannon shots.
-#define BLASTCANNON_HEAVY_RANGE_SCALE (1/10)
-/// How much to scale the devastation range of the explosion for blastcannon shots.
-#define BLASTCANNON_DEV_RANGE_SCALE (1/5)
 /// How much to scale the explosion ranges for blastcannon shots.
 #define BLASTCANNON_RANGE_EXP (1 / GLOB.DYN_EX_SCALE)
+/// How much to scale the explosion ranges for blastcannon shots.
+#define BLASTCANNON_RANGE_SCALE PI
 
 
 /**
@@ -156,9 +152,9 @@
 	SIGNAL_HANDLER
 	. = COMSIG_CANCEL_EXPLOSION
 
-	var/heavy = (arguments[EXARG_KEY_DEV_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_DEV_RANGE_SCALE
-	var/medium = (arguments[EXARG_KEY_HEAVY_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_HEAVY_RANGE_SCALE
-	var/light = (arguments[EXARG_KEY_LIGHT_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_LIGHT_RANGE_SCALE
+	var/heavy = (arguments[EXARG_KEY_DEV_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
+	var/medium = (arguments[EXARG_KEY_HEAVY_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
+	var/light = (arguments[EXARG_KEY_LIGHT_RANGE]**BLASTCANNON_RANGE_EXP) * BLASTCANNON_RANGE_SCALE
 	var/range = max(heavy, medium, light, 0)
 	if(!range)
 		visible_message(span_warning("[src] lets out a little \"phut\"."))
@@ -294,20 +290,25 @@
 	icon_state = "blastwave"
 	damage = 0
 	nodamage = FALSE
+	flag = BOMB // Doesn't actually have any functional purpose. But it makes sense.
 	movement_type = FLYING
 	projectile_phasing = ALL // just blows up the turfs lmao
+	phasing_ignore_direct_target = TRUE // If we don't do this the blastcannon shot can be blocked by random items.
 	/// The maximum distance this will inflict [EXPLODE_DEVASTATE]
 	var/heavy_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_HEAVY]
 	var/medium_ex_range = 0
 	/// The maximum distance this will inflict [EXPLODE_LIGHT]
 	var/light_ex_range = 0
+	/// Whether or not to care about the explosion block of the things we are passing through.
+	var/reactionary
 
-/obj/projectile/blastwave/Initialize(mapload, heavy_ex_range, medium_ex_range, light_ex_range)
-	range = max(heavy_ex_range, medium_ex_range, light_range, 0)
+/obj/projectile/blastwave/Initialize(mapload, heavy_ex_range, medium_ex_range, light_ex_range, reactionary = CONFIG_GET(flag/reactionary_explosions))
+	range = max(heavy_ex_range, medium_ex_range, light_ex_range, 0)
 	src.heavy_ex_range = heavy_ex_range
 	src.medium_ex_range = medium_ex_range
 	src.light_ex_range = light_ex_range
+	src.reactionary = reactionary
 	return ..()
 
 /obj/projectile/blastwave/Range()
@@ -315,16 +316,28 @@
 	if(QDELETED(src))
 		return
 
-	heavy_ex_range = max(heavy_ex_range - 1, 0)
-	medium_ex_range = max(medium_ex_range - 1, 0)
-	light_ex_range = max(light_ex_range - 1, 0)
+	var/decrement = 1
+	var/atom/location = loc
+	if (reactionary)
+		if(location.density || !isturf(location))
+			decrement += location.explosion_block
+		for(var/obj/thing in location)
+			if (thing == src)
+				continue
+			var/the_block = thing.explosion_block
+			decrement += the_block == EXPLOSION_BLOCK_PROC ? thing.GetExplosionBlock() : the_block
 
-	if(heavy_ex_range)
-		SSexplosions.highturf += loc
+	range = max(range - decrement + 1, 0) // Already decremented by 1 in the parent. Exists so that if we pass through something with negative block it extends the range.
+	heavy_ex_range = max(heavy_ex_range - decrement, 0)
+	medium_ex_range = max(medium_ex_range - decrement, 0)
+	light_ex_range = max(light_ex_range - decrement, 0)
+
+	if (heavy_ex_range)
+		SSexplosions.highturf += location
 	else if(medium_ex_range)
-		SSexplosions.medturf += loc
-	else if(light_range)
-		SSexplosions.lowturf += loc
+		SSexplosions.medturf += location
+	else if(light_ex_range)
+		SSexplosions.lowturf += location
 	else
 		qdel(src)
 		return
@@ -332,7 +345,5 @@
 /obj/projectile/blastwave/ex_act()
 	return FALSE
 
-#undef BLASTCANNON_LIGHT_RANGE_SCALE
-#undef BLASTCANNON_HEAVY_RANGE_SCALE
-#undef BLASTCANNON_DEV_RANGE_SCALE
 #undef BLASTCANNON_RANGE_EXP
+#undef BLASTCANNON_RANGE_SCALE

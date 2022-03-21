@@ -6,7 +6,7 @@
 	charge_max = 30 SECONDS
 	clothes_req = TRUE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	cooldown_min = 10 SECONDS
 	include_user = TRUE
@@ -71,7 +71,7 @@
 		found_exit = TRUE
 		break
 	if(!found_exit)
-		to_chat(target, "<span='danger'>Unable to find an unobstructed space, you find yourself ripped back to where you started.</span>")
+		to_chat(target, span_danger("Unable to find an unobstructed space, you find yourself ripped back to where you started."))
 	exit_point_list.Cut()
 	holder.forceMove(exit_point)
 

@@ -3,7 +3,7 @@
 /// Helper for getting the correct bucket for a given timer
 #define BUCKET_POS(timer) (((round((timer.timeToRun - timer.timer_subsystem.head_offset) / world.tick_lag)+1) % BUCKET_LEN)||BUCKET_LEN)
 /// Gets the maximum time at which timers will be invoked from buckets, used for deferring to secondary queue
-#define TIMER_MAX(timer_ss) (world.time + TICKS2DS(min(BUCKET_LEN-(timer_ss.practical_offset-DS2TICKS(world.time - timer_ss.head_offset))-1, BUCKET_LEN-1)))
+#define TIMER_MAX(timer_ss) (timer_ss.head_offset + TICKS2DS(BUCKET_LEN + timer_ss.practical_offset - 1))
 /// Max float with integer precision
 #define TIMER_ID_MAX (2**24)
 
@@ -261,6 +261,7 @@ SUBSYSTEM_DEF(timer)
 	alltimers += second_queue
 
 	for (var/datum/timedevent/t as anything in alltimers)
+		t.timer_subsystem = src // Recovered timers need to be reparented
 		t.bucket_joined = FALSE
 		t.bucket_pos = -1
 		t.prev = null
@@ -331,15 +332,20 @@ SUBSYSTEM_DEF(timer)
 
 
 /datum/controller/subsystem/timer/Recover()
-	//Find the current timer sub-subsystem in global and recover its buckets etc
+	// Find the current timer sub-subsystem in global and recover its buckets etc
 	var/datum/controller/subsystem/timer/timerSS = null
 	for(var/global_var in global.vars)
 		if (istype(global.vars[global_var],src.type))
 			timerSS = global.vars[global_var]
-	second_queue |= timerSS.second_queue
-	hashes |= timerSS.hashes
-	timer_id_dict |= timerSS.timer_id_dict
-	bucket_list |= timerSS.bucket_list
+
+	hashes = timerSS.hashes
+	timer_id_dict = timerSS.timer_id_dict
+
+	bucket_list = timerSS.bucket_list
+	second_queue = timerSS.second_queue
+
+	// The buckets are FUBAR
+	reset_buckets()
 
 /**
  * # Timed Event
@@ -466,7 +472,7 @@ SUBSYSTEM_DEF(timer)
 	if(buckethead == src)
 		bucket_list[bucket_pos] = next
 		timer_subsystem.bucket_count--
-	else if(timeToRun < TIMER_MAX(timer_subsystem))
+	else if(bucket_joined)
 		timer_subsystem.bucket_count--
 	else
 		var/l = length(second_queue)

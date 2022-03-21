@@ -2,7 +2,7 @@
 /obj/item/organ/external/wings
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_EXTERNAL_WINGS
-	layers = EXTERNAL_BEHIND | EXTERNAL_ADJACENT | EXTERNAL_FRONT
+	layers = ALL_EXTERNAL_OVERLAYS
 
 	feature_key = "wings"
 
@@ -104,7 +104,7 @@
 		buckled_obj.unbuckle_mob(human)
 		step(buckled_obj, olddir)
 	else
-		new /datum/forced_movement(human, get_ranged_target_turf(human, olddir, 4), 1, FALSE, CALLBACK(human, /mob/living/carbon/.proc/spin, 1, 1))
+		human.AddComponent(/datum/component/force_move, get_ranged_target_turf(human, olddir, 4), TRUE)
 	return TRUE
 
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
@@ -176,7 +176,9 @@
 	return GLOB.moth_wings_list
 
 /obj/item/organ/external/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	return TRUE
+	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
+		return TRUE
+	return FALSE
 
 /obj/item/organ/external/wings/moth/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()

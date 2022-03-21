@@ -1,5 +1,5 @@
 /obj/item/organ/heart/gland/chem
-	true_name = "intrinsic pharma-provider"
+	abductor_hint = "intrinsic pharma-provider. The abductee constantly produces random chemicals inside their bloodstream. They also quickly regenerate toxin damage."
 	cooldown_low = 50
 	cooldown_high = 50
 	uses = -1

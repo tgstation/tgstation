@@ -21,6 +21,8 @@
 
 //invocation types - what does the wizard need to do to invoke (cast) the spell?
 
+///Allows being able to cast the spell without saying anything.
+#define INVOCATION_NONE "none"
 ///Forces the wizard to shout (and be able to) to cast the spell.
 #define INVOCATION_SHOUT "shout"
 ///Forces the wizard to emote (and be able to) to cast the spell.

@@ -44,10 +44,6 @@ multiple modular subtrees with behaviors
 	var/movement_delay = 0.1 SECONDS
 
 	// The variables below are fucking stupid and should be put into the blackboard at some point.
-	///A list for the path we're currently following, if we're using JPS pathing
-	var/list/movement_path
-	///Cooldown for JPS movement, how often we're allowed to try making a new path
-	COOLDOWN_DECLARE(repath_cooldown)
 	///AI paused time
 	var/paused_until = 0
 
@@ -117,6 +113,8 @@ multiple modular subtrees with behaviors
 ///Proc for deinitializing the pawn to the old controller
 /datum/ai_controller/proc/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT))
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
@@ -133,7 +131,7 @@ multiple modular subtrees with behaviors
 ///Runs any actions that are currently running
 /datum/ai_controller/process(delta_time)
 	if(!able_to_run())
-		walk(pawn, 0) //stop moving
+		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
 
 	if(!LAZYLEN(current_behaviors) && idle_behavior)
@@ -261,3 +259,14 @@ multiple modular subtrees with behaviors
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding, likely pointing to whatever ID slot is relevant
 /datum/ai_controller/proc/get_access()
 	return
+
+///Returns the minimum required distance to preform one of our current behaviors. Honestly this should just be cached or something but fuck you
+/datum/ai_controller/proc/get_minimum_distance()
+	var/minimum_distance = max_target_distance
+	// right now I'm just taking the shortest minimum distance of our current behaviors, at some point in the future
+	// we should let whatever sets the current_movement_target also set the min distance and max path length
+	// (or at least cache it on the controller)
+	for(var/datum/ai_behavior/iter_behavior as anything in current_behaviors)
+		if(iter_behavior.required_distance < minimum_distance)
+			minimum_distance = iter_behavior.required_distance
+	return minimum_distance

@@ -84,7 +84,7 @@
 /obj/structure/academy_wizard_spawner
 	name = "Academy Defensive System"
 	desc = "Made by Abjuration, Inc."
-	icon = 'icons/obj/cult.dmi'
+	icon = 'icons/obj/cult/structures.dmi'
 	icon_state = "forge"
 	anchored = TRUE
 	max_integrity = 200

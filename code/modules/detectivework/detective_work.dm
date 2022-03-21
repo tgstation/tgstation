@@ -99,7 +99,16 @@
 	update_inv_gloves() //handles bloody hands overlays and updating
 	return TRUE
 
-/atom/proc/transfer_fingerprints_to(atom/A)
-	A.add_fingerprint_list(return_fingerprints())
-	A.add_hiddenprint_list(return_hiddenprints())
-	A.fingerprintslast = fingerprintslast
+/*
+ * Transfer all the fingerprints and hidden prints from [src] to [transfer_to].
+ */
+/atom/proc/transfer_fingerprints_to(atom/transfer_to)
+	transfer_to.add_fingerprint_list(return_fingerprints())
+	transfer_to.add_hiddenprint_list(return_hiddenprints())
+	transfer_to.fingerprintslast = fingerprintslast
+
+/*
+ * Transfer all the fibers from [src] to [transfer_to].
+ */
+/atom/proc/transfer_fibers_to(atom/transfer_to)
+	transfer_to.add_fiber_list(return_fibers())

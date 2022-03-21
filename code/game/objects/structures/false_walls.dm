@@ -83,30 +83,39 @@
 		qdel(src)
 	return T
 
+/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool)
+	if(!opening)
+		return ..()
+	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!density)
+		to_chat(user, span_warning("You can't reach, close it first!"))
+		return
+	var/turf/loc_turf = get_turf(src)
+	if(loc_turf.density)
+		to_chat(user, span_warning("[src] is blocked!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(!isfloorturf(loc_turf))
+		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
+	ChangeToWall()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+
+/obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
+	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
+		dismantle(user, TRUE)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return
+
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
-	if(opening)
+	if(!opening)
 		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 		return
-
-	if(W.tool_behaviour == TOOL_SCREWDRIVER)
-		if(density)
-			var/turf/T = get_turf(src)
-			if(T.density)
-				to_chat(user, span_warning("[src] is blocked!"))
-				return
-			if(!isfloorturf(T))
-				to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
-				return
-			user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
-			ChangeToWall()
-		else
-			to_chat(user, span_warning("You can't reach, close it first!"))
-
-	else if(W.tool_behaviour == TOOL_WELDER)
-		if(W.use_tool(src, user, 0, volume=50))
-			dismantle(user, TRUE)
-	else
-		return ..()
+	return ..()
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
@@ -125,7 +134,7 @@
 				new mineral(loc)
 	qdel(src)
 
-/obj/structure/falsewall/get_dumping_location(obj/item/storage/source,mob/user)
+/obj/structure/falsewall/get_dumping_location()
 	return null
 
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
@@ -287,6 +296,17 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = list(SMOOTH_GROUP_WALLS, SMOOTH_GROUP_WOOD_WALLS)
 	canSmoothWith = list(SMOOTH_GROUP_WOOD_WALLS)
+
+/obj/structure/falsewall/bamboo
+	name = "bamboo wall"
+	desc = "A wall with bamboo finish. Zen."
+	icon = 'icons/turf/walls/bamboo_wall.dmi'
+	icon_state = "bamboo"
+	mineral = /obj/item/stack/sheet/mineral/bamboo
+	walltype = /turf/closed/wall/mineral/bamboo
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = list(SMOOTH_GROUP_CLOSED_TURFS, SMOOTH_GROUP_WALLS, SMOOTH_GROUP_BAMBOO_WALLS)
+	canSmoothWith = list(SMOOTH_GROUP_BAMBOO_WALLS)
 
 /obj/structure/falsewall/iron
 	name = "rough iron wall"

@@ -269,3 +269,14 @@
 		return
 
 	description = span_nicegreen("Ahaha! [spilled_mob] spilled [spilled_mob.p_their()] [soda_can ? soda_can.name : "soda"] all over [spilled_mob.p_them()]self! Classic.\n")
+
+/datum/mood_event/gaming
+	description = span_nicegreen("I'm enjoying a nice gaming session!\n")
+	mood_change = 2
+	timeout = 30 SECONDS
+
+/datum/mood_event/gamer_won
+	description = span_nicegreen("I love winning videogames!\n")
+	mood_change = 10
+	timeout = 5 MINUTES
+

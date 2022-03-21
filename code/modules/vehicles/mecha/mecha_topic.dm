@@ -355,7 +355,7 @@
 
 	//Changes the exosuit name.
 	if(href_list["change_name"])
-		var/userinput = stripped_input(usr, "Choose a new exosuit name.", "Rename exosuit", "", MAX_NAME_LEN)
+		var/userinput = tgui_input_text(usr, "Choose a new exosuit name", "Rename exosuit", max_length = MAX_NAME_LEN)
 		if(!userinput || !locate(usr) in occupants || usr.incapacitated())
 			return
 		name = userinput

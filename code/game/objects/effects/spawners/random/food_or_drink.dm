@@ -6,6 +6,7 @@
 	name = "donk pocket box spawner"
 	icon_state = "donkpocket"
 	loot = list(
+		/obj/item/storage/box/donkpockets,
 		/obj/item/storage/box/donkpockets/donkpocketspicy,
 		/obj/item/storage/box/donkpockets/donkpocketteriyaki,
 		/obj/item/storage/box/donkpockets/donkpocketpizza,
@@ -184,18 +185,34 @@
 		/obj/item/food/cheesiehonkers = 5,
 		/obj/item/food/candy = 5,
 		/obj/item/food/chips = 5,
-	  /obj/item/food/sosjerky = 5,
+		/obj/item/food/sosjerky = 5,
 		/obj/item/food/no_raisin = 5,
 		/obj/item/food/peanuts = 5,
 		/obj/item/food/cnds = 5,
 		/obj/item/food/energybar = 5,
 		/obj/item/reagent_containers/food/drinks/dry_ramen = 5,
+		/obj/item/food/cornchips/random = 5,
+		/obj/item/food/semki = 5,
 		/obj/item/food/peanuts/random = 3,
 		/obj/item/food/cnds/random = 3,
 		/obj/item/storage/box/gum = 3,
 		/obj/item/food/syndicake = 1,
 		/obj/item/food/peanuts/ban_appeal = 1,
+		/obj/item/food/pistachios = 1,
 		/obj/item/food/candy/bronx = 1
+	)
+
+/obj/effect/spawner/random/food_or_drink/snack/lizard
+	name = "lizard snack spawner"
+	loot = list(
+		/obj/item/food/brain_pate = 5,
+		/obj/item/food/bread/root = 1,
+		/obj/item/food/breadslice/root = 5,
+		/obj/item/food/kebab/candied_mushrooms = 5,
+		/obj/item/food/steeped_mushrooms = 5,
+		/obj/item/food/larvae = 5,
+		/obj/item/food/emperor_roll = 5,
+		/obj/item/food/honey_roll = 5,
 	)
 
 /obj/effect/spawner/random/food_or_drink/condiment

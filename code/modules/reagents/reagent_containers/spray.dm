@@ -81,56 +81,13 @@
 
 /// Handles exposing atoms to the reagents contained in a spray's chempuff. Deletes the chempuff when it's completed.
 /obj/item/reagent_containers/spray/proc/do_spray(atom/target, wait_step, obj/effect/decal/chempuff/reagent_puff, range, puff_reagent_left, mob/user)
-	set waitfor = FALSE
-
-	var/puff_reagents_string = reagent_puff.reagents.log_list()
-
-	for(var/travelled_distance in 1 to range)
-		var/has_travelled_max_distance = (travelled_distance == range)
-
-		step_towards(reagent_puff, target)
-		sleep(wait_step)
-
-		for(var/atom/turf_atom in get_turf(reagent_puff))
-			if(turf_atom == reagent_puff || turf_atom.invisibility) //we ignore the puff itself and stuff below the floor
-				continue
-
-			if(puff_reagent_left <= 0)
-				break
-
-			if(stream_mode)
-				if(isliving(turf_atom))
-					var/mob/living/turf_mob = turf_atom
-
-					if(!turf_mob.can_inject())
-						continue
-
-					if((turf_mob.body_position == STANDING_UP) || has_travelled_max_distance)
-						reagent_puff.reagents.expose(turf_mob, VAPOR)
-						log_combat(user, turf_mob, "sprayed", src, addition="which had [puff_reagents_string]")
-						puff_reagent_left -= 1
-				else if(has_travelled_max_distance)
-					reagent_puff.reagents.expose(turf_atom, VAPOR)
-					log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
-					puff_reagent_left -= 1
-			else
-				reagent_puff.reagents.expose(turf_atom, VAPOR)
-				log_combat(user, turf_atom, "sprayed", src, addition="which had [puff_reagents_string]")
-				if(ismob(turf_atom))
-					puff_reagent_left -= 1
-
-		if(puff_reagent_left > 0 && (!stream_mode || has_travelled_max_distance))
-			var/turf/puff_turf = get_turf(reagent_puff)
-			reagent_puff.reagents.expose(puff_turf, VAPOR)
-			log_combat(user, puff_turf, "sprayed", src, addition="which had [puff_reagents_string]")
-			puff_reagent_left -= 1
-
-		// Did we use up all the puff early? Time to delete the puff and return.
-		if(puff_reagent_left <= 0)
-			qdel(reagent_puff)
-			return
-
-	qdel(reagent_puff)
+	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(reagent_puff, target, wait_step, timeout = range * wait_step, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	reagent_puff.user = user
+	reagent_puff.sprayer = src
+	reagent_puff.lifetime = puff_reagent_left
+	reagent_puff.stream = stream_mode
+	reagent_puff.RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, /obj/effect/decal/chempuff/proc/loop_ended)
+	reagent_puff.RegisterSignal(our_loop, COMSIG_MOVELOOP_POSTPROCESS, /obj/effect/decal/chempuff/proc/check_move)
 
 /obj/item/reagent_containers/spray/attack_self(mob/user)
 	. = ..()
@@ -221,7 +178,7 @@
 	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message(span_suicide("[user] pulls the trigger!"))
-			src.spray(user)
+			spray(user)
 			return BRUTELOSS
 		else
 			user.visible_message(span_suicide("[user] pulls the trigger...but \the [src] is empty!"))

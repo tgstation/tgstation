@@ -36,7 +36,7 @@
 
 			if (do_after(ninja ,10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				ninja_suit.cell.give(drain)
 				drain_total += drain
@@ -45,7 +45,7 @@
 
 		if(!(obj_flags & EMAGGED))
 			flick("apc-spark", ninja_gloves)
-			playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			obj_flags |= EMAGGED
 			locked = FALSE
 			update_appearance()
@@ -77,7 +77,7 @@
 
 			if (do_after(ninja,10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				charge -= drain
 				ninja_suit.cell.give(drain)
 				drain_total += drain
@@ -176,24 +176,16 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	AI_notify_hack()
-	if(do_after(ninja, 300))
-		var/announcement_pick = rand(0, 1)
-		switch(announcement_pick)
-			if(0)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with an alien device in nearby space.", "[command_name()] High-Priority Update")
-				var/datum/round_event_control/spawn_swarmer/swarmer_event = new/datum/round_event_control/spawn_swarmer
-				swarmer_event.runEvent()
-			if(1)
-				priority_announce("Attention crew, it appears that someone on your station has made unexpected communication with a syndicate ship in nearby space.", "[command_name()] High-Priority Update")
-				var/datum/round_event_control/pirates/pirate_event = new/datum/round_event_control/pirates
-				pirate_event.runEvent()
-		ninja_gloves.communication_console_hack_success = TRUE
-		var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
-		if(!ninja_antag)
-			return
-		var/datum/objective/terror_message/objective = locate() in ninja_antag.objectives
-		if(objective)
-			objective.completed = TRUE
+	if(!do_after(ninja, 30 SECONDS, src))
+		return
+	hack_console(ninja)
+	ninja_gloves.communication_console_hack_success = TRUE
+	var/datum/antagonist/ninja/ninja_antag = ninja.mind.has_antag_datum(/datum/antagonist/ninja)
+	if(!ninja_antag)
+		return
+	var/datum/objective/terror_message/objective = locate() in ninja_antag.objectives
+	if(objective)
+		objective.completed = TRUE
 
 //AIRLOCK//
 /obj/machinery/door/airlock/ninjadrain_act(obj/item/clothing/suit/space/space_ninja/ninja_suit, mob/living/carbon/human/ninja, obj/item/clothing/gloves/space_ninja/ninja_gloves)
@@ -268,7 +260,7 @@
 				maxcapacity = TRUE
 			if (do_after(ninja, 10, target = src))
 				spark_system.start()
-				playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				ninja_suit.cell.give(drain)
 				drain_total += drain
@@ -285,7 +277,7 @@
 	to_chat(src, span_danger("Warni-***BZZZZZZZZZRT*** UPLOADING SPYDERPATCHER VERSION 9.5.2..."))
 	if (do_after(ninja, 60, target = src))
 		spark_system.start()
-		playsound(loc, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
 		faction = list(ROLE_NINJA)
 		bubble_icon = "syndibot"
@@ -314,6 +306,6 @@
 		//Got that electric touch
 		var/datum/effect_system/spark_spread/spark_system = new /datum/effect_system/spark_spread()
 		spark_system.set_up(5, 0, loc)
-		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		visible_message(span_danger("[ninja] electrocutes [src] with [ninja.p_their()] touch!"), span_userdanger("[ninja] electrocutes you with [ninja.p_their()] touch!"))
 		Knockdown(3 SECONDS)

@@ -135,6 +135,8 @@ the new instance inside the host to be updated to the template's stats.
 			last_move_tick = world.time
 
 /mob/camera/disease/can_z_move(direction, turf/start, turf/destination, z_move_flags = NONE, mob/living/rider)
+	if(freemove)
+		return ..()
 	return FALSE
 
 /mob/camera/disease/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
@@ -212,7 +214,7 @@ the new instance inside the host to be updated to the template's stats.
 		possible_hosts.Cut(1, 2)
 
 	if(del_on_fail)
-		to_chat(src, "<span class=userdanger'>No hosts were available for your disease to infect.</span>")
+		to_chat(src, span_warning("No hosts were available for your disease to infect."))
 		qdel(src)
 	return FALSE
 
