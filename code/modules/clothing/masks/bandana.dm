@@ -119,6 +119,20 @@
 	greyscale_config_worn = /datum/greyscale_config/bandskull/worn
 	greyscale_colors = "#3F3F3F#C6C6C6"
 
+/obj/item/clothing/mask/bandana/color/skull/attack_self(mob/user)
+	adjustmask(user)
+	if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
+		src.worn_icon_state += "_up"
+		src.set_greyscale(
+			new_config = /datum/greyscale_config/bandskull_up,
+			new_worn_config = /datum/greyscale_config/bandskull_up/worn
+		)
+	else
+		src.worn_icon_state = initial(worn_icon_state)
+		src.set_greyscale(
+			new_config = /datum/greyscale_config/bandskull,
+			new_worn_config = /datum/greyscale_config/bandskull/worn
+
 /obj/item/clothing/mask/bandana/color/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	greyscale_colors = "#3F3F3F#C6C6C6"
