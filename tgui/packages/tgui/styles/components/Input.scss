@@ -1,0 +1,68 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../functions.scss' as *;
+
+$text-color: base.$color-fg !default;
+$background-color: #0a0a0a !default;
+$border-color: #88bfff !default;
+$border-radius: base.$border-radius !default;
+
+.Input {
+  position: relative;
+  display: inline-block;
+  width: base.em(120px);
+  border: base.em(1px) solid $border-color;
+  border: base.em(1px) solid rgba($border-color, 0.75);
+  border-radius: $border-radius;
+  color: $text-color;
+  background-color: $background-color;
+  padding: 0 base.em(4px);
+  margin-right: base.em(2px);
+  line-height: base.em(17px);
+  overflow: visible;
+}
+
+.Input--fluid {
+  display: block;
+  width: auto;
+}
+
+.Input__baseline {
+  display: inline-block;
+  color: transparent;
+}
+
+.Input__input {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 0;
+  outline: 0;
+  width: 100%;
+  font-size: base.em(12px);
+  line-height: base.em(17px);
+  height: base.em(17px);
+  margin: 0;
+  padding: 0 0.5em;
+  font-family: Verdana, sans-serif;
+  background-color: transparent;
+  color: $text-color;
+  color: inherit;
+
+  &:-ms-input-placeholder {
+    font-style: italic;
+    color: #777;
+    color: rgba(255, 255, 255, 0.45);
+  }
+}
+
+.Input--monospace .Input__input {
+  font-family: 'Consolas', monospace;
+}

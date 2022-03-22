@@ -1,0 +1,81 @@
+$badGradient: linear-gradient(to right, #9c1e1e, #6c2828, #9c1e1e);
+$normalGradient: linear-gradient(to right, #5d5041, #40372d, #5d5041);
+$goodGradient: linear-gradient(to right, #515d6c, #252a30, #515d6c);
+$veryGoodGradient:  linear-gradient(to right, #977949, #534328, #977949);
+$superGoodGradient: linear-gradient(to right, #9d9948, #777437, #9d9948);
+$bestGradient: linear-gradient(to right, #9d486b, #57283c, #9d486b);
+
+$_rep_map: (
+  'bad': $badGradient,
+  'normal': $normalGradient,
+  'good': $goodGradient,
+  'very-good': $veryGoodGradient,
+  'super-good': $superGoodGradient,
+  'best': $bestGradient
+);
+
+@each $reputation-name, $gradient-value in $_rep_map {
+  .reputation-#{$reputation-name} {
+    background-image: $gradient-value !important;
+  }
+
+  .reputation-#{$reputation-name}.Button {
+    background-position: 0 0;
+    transition: background-position 50ms;
+
+    &:hover {
+      transition: background-position 0ms;
+    }
+
+    &:focus {
+      transition: background-position 100ms;
+    }
+
+    &:hover,
+    &:focus {
+      background-position: 50em 0;
+    }
+  }
+}
+
+.UplinkObjective__Titlebar {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 0.6rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 0.4rem;
+
+  font-weight: bold;
+  border: black solid 2px;
+  border-bottom: none;
+}
+
+.UplinkObjective__EmptyObjective {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: black solid 2px;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  vertical-align: center;
+}
+
+.UplinkObjective__Content {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: black solid 2px;
+  border-top: none;
+  border-bottom: none;
+  padding: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0;
+}
+
+
+.UplinkObjective__Footer {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: black solid 2px;
+  border-top: none;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}

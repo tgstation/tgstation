@@ -1,0 +1,517 @@
+2019-03-02:
+  Basilman:
+  - bugfix: Fixes Arnold Pizza having a slight flavor of pineapple
+  - spellcheck: corrected CQC help instructions
+  Kamparauta:
+  - tweak: Nanotrasen has released a software update for pAI's that allows them to
+      synthesize various musical instruments.
+  Kierany9:
+  - bugfix: The hivemind radar works again.
+  MASMC:
+  - bugfix: Cult shields now don't shatter on anything but brute and burn damage.
+  SIX10:
+  - tweak: swapped nutrition values for sandwich and grilled cheese
+  ShizCalev:
+  - bugfix: Fixed beartraps cuffing a flying/floating mob when crossing over it.
+  - bugfix: Fixed beartraps cuffing and harming a mob who passes over them while inside/on
+      a vehicle.
+  - bugfix: Beartraps will now only cuff/harm you while in a vehicle if your legs
+      are exposed/the primary propulsion method (ie scooters/skateboards.)
+  - bugfix: Pineapple haters/lovers will get/no longer get pineapple pizzas respectively
+      from infinite pizza boxes.
+  - bugfix: Fixed janitors spawning with partially broken jani-holobarrier projectors.
+  - bugfix: Fixed janitcarts being unable to move through wet floor signs
+  - bugfix: Fixed 10mm rifle mags and sniper mags not reporting ammo/updating material
+      values.
+  TerraGS:
+  - rscadd: Floorbots can now be crafted with other kinds of toolboxes
+  - bugfix: Tablecrafting floorbots now requires the intended amount of floor tiles
+  - bugfix: Fixed a firebot related runtime
+  Time-Green:
+  - rscadd: 'Adds snailpeople as a rare genetics accident. sprite: Snailshell sprites
+      by nickvr628'
+  - tweak: loot crates can't explode after unlocking anymore
+  Tlaltecuhtli:
+  - balance: rebalanced the price of some almost never used traitor items
+  - balance: the power sink costs 10 tc
+  - rscadd: the robotics assembly crate now actually has parts for 2 of each friendly
+      bots
+  WJohnston:
+  - bugfix: Hats that partially cover up your hair should no longer leave baldness
+      lines, most notably seen with the HoP's cap, and should transition more smoothly
+      in some cases.
+  tralezab:
+  - rscadd: 'New negative trait: Unstable!'
+2019-03-05:
+  IndieanaJones:
+  - bugfix: Fixed space dragon being able to swoop and subsequently becoming invisible
+  MrDoomBringer:
+  - bugfix: The centcom podlauncher UI no longer looks like shit
+  - bugfix: Tooltips will no longer stay around if you hover over them (which would
+      lead to them blocking shit underneath)
+  TerraGS:
+  - code_imp: Cleans up bot construction code
+  Zxaber:
+  - tweak: The Mecha Hydraulic Clamp can now open firelocks and unpowered airlocks
+  actioninja:
+  - tweak: PubbyStation has been refitted from a Tesla and Singulo based engine to
+      a Supermatter based engine.
+2019-03-07:
+  Bawhoppen:
+  - rscadd: Disablers now have a new sprite and now can attach flashlights.
+  Denton:
+  - balance: Explosive lances no longer explode when thrown (but still do with melee
+      attacks).
+  IndieanaJones:
+  - bugfix: Fixed the Space Dragon announcement
+  - admin: Manually-spawned space dragon events can now have their announcement cancelled
+  Mickyan:
+  - rscadd: You can now use a razor on help intent to change your fellow crewmembers'
+      hair/facial hair styles
+  - rscadd: Using a wig in your hand lets you change it to a new style/color
+  - rscadd: 'Natural Wigs are now available in the Clothesmate: made of 100% natural
+      chromatic nanofibers, these wigs automatically match the color of your natural
+      hair'
+  MrDoomBringer:
+  - tweak: You no longer have to hold you ID in your active hand to pull out dosh
+  - tweak: Cards now tell you more about your account when withdrawing cash
+  ShizCalev:
+  - bugfix: Fixed candles not being extinguished by fire extinguishers, water containers,
+      ect.
+  - bugfix: Fixed candles not stopping processing when put out.
+  - bugfix: Adminhealing someone in crit will now properly clear the heartbeat sound.
+  - bugfix: Cybernetic organs work again, sorry!
+  TerraGS:
+  - bugfix: Blood cult halo now goes away when deconverted
+  Tlaltecuhtli:
+  - bugfix: rcd works when you hit catwalks/lattice
+  - bugfix: rcd works when you hit foamed floor
+  Unit2E:
+  - tweak: powersinks now become dense when anchored, like a machine.
+  Zxaber:
+  - tweak: Ripley now has an open cabin. This means it cannot protect against atmospheric
+      dangers, and it does not provide the user cover from ranged attacks, but moves
+      quicker and is slightly cheaper to manufacture.
+  - rscadd: A conversion kit is available in the exosuit fabricator that gives the
+      Ripley a pressurized cabin as before, but the added weight will slow it down
+      again.
+  actioninja:
+  - balance: New NT regulations have replaced the standard issue hybrid taser with
+      a pure disabler.
+  - balance: Also fuck the stun mode on the advanced energy gun who thought that was
+      a good idea.
+  - balance: The hos's laser can only fire three taser shots instead of five.
+  - balance: Energy crossbows have been reworked. They no longer paralyze, but instead
+      heavily blur vision, apply a huge burst of stamina damage, and knock you on
+      your ass for one second. Two shots is enough to down someone from stamina crit
+      on both the mini and large versions. The blur lasts for 10 seconds.
+  - balance: The price of the mini ebow has been reduced to 10TC to compensate for
+      this weaker effect.
+  - tweak: The ED-209 is now built with a DRAGnet and fires netshot instead of taser
+      bolts.
+  - balance: Stunshells can no longer be produced in any lathe.
+  - balance: The "pacifier" mech taser can no longer be built.
+  as334:
+  - rscadd: Fusion got reworked again. Start it using 250+ moles of plasma and carbon
+      dioxide, with tritium, all at 10000 degrees.
+  - rscadd: Fusion undergoes a chaotic reaction, and will release energy(or absorb
+      it with high instabilities), as well as releasing waste gases.
+  - rscadd: To accommodate fusion, filters have been changed to move gas in the same
+      way as volume pumps.
+  - rscadd: As well, hitting a volume pump with a multitool will overclock it, allowing
+      it to move gases to higher than normal pressures at the cost of leaking some
+      of the contents.
+  kriskog:
+  - bugfix: Non-kitchen fridges and meat lockers have had their access requirements
+      removed.
+  pubby:
+  - bugfix: Cough, beard, and undead virus now work properly
+  py01:
+  - tweak: Removed stamina damage from Mech Scattershot, added a little more brute.
+  tralezab:
+  - rscadd: 'New event: Fugitives!'
+  - rscadd: Fugitives will land on the station, and have to prepare for the hunters
+      looking for them!
+2019-03-14:
+  4dplanner:
+  - rscadd: sepia slime extract has a delay before activating
+  - balance: the user of a sepia slime extract is no longer immune to the time field
+  - balance: chilling sepia is now the support extract - it always freezes the user,
+      but not other marked people
+  - balance: give one to your golem!
+  - rscadd: burning sepia spawns the rewind camera. Take a selfie with someone and
+      give it to them to make sure they remember the moment forever!
+  - balance: you don't actually need to give them the photo, they'll remember anyway.
+      Keep it as a reminder.
+  - rscadd: 'rewinding resets your location to the turf you were on after 10 seconds,
+      and heals simple animals and objects. remove: timefreeze camera is admin spawn
+      only.'
+  - rscadd: recurring sepia recalls to the hand of the last person to touch it after
+      activating. Reusable timestop grenades!
+  - tweak: some special cameras don't prompt for customisation
+  - bugfix: timefreeze camera actually makes a photo
+  - bugfix: timestop stops pathing
+  - bugfix: timestop stops mechs
+  - bugfix: adds a check to make sure simple_animals don't get their AI toggled while
+      sentient
+  - bugfix: Adds the timestop overlay to frozen projectiles
+  - bugfix: Timestopped things have INFINITY move_resist as opposed to being anchored
+  - bugfix: Timestop will now unfreeze things that somehow leave it
+  - bugfix: mobs in the middle of a walk_to will have their walk stopped by timestop
+  - bugfix: mobs that are stunned will be stopped mid walk as well
+  - bugfix: Slimes respect mobility_flags & MOBILITY_MOVE
+  - bugfix: Slimes no longer automatically regain MOBILITY_MOVE whenever not cold
+  - bugfix: pulling respects changes in move_force
+  - bugfix: swapping places respects move_force if the participant is not willing
+  BuffEngineering:
+  - bugfix: You may no longer summon plasteel from the door dimension.
+  - tweak: High security airlocks are now 33% more materially efficient!
+  - bugfix: Boomers may now sip in peace knowing their cloning based longevity is
+      not at risk.
+  Caiggas:
+  - bugfix: Fixed jump-boots breaking after colliding with things at close range.
+  Carbonhell:
+  - server: youtube-dl works again for linux based servers
+  Ghommie:
+  - rscadd: Adds two cartons of space milks to the skellies pirate cutter's fridge.
+  JJRcop:
+  - admin: Play Internet Sound now respects start (like &t=xxx or &start=xxx) and
+      end times (like &end=xxx). This allows admins to choose a snippet of media to
+      play, like for example pick a song out of an hour long album compilation.
+  Kierany9:
+  - bugfix: Fixed Hivemind Hosts retaining powers on death and while dead
+  Menshin:
+  - bugfix: engineering APCs shouldn't be reset on Grid Check event anymore.
+  ShizCalev:
+  - bugfix: Corrected a minor issue where the regenerative core would trigger at -1
+      HP instead of at 0HP.
+  - bugfix: Sentient firebots can now use their fire extinguishers.
+  - bugfix: Fixed hacked firebots not resetting after being reset....
+  - bugfix: Revolvers will no longer immediately click when trying to suicide while
+      on an empty chamber.
+  - bugfix: Cult magic inhands now work again... for real this time.
+  SpaceManiac:
+  - bugfix: The wizard hardsuit now correctly grants magic resistance.
+  - bugfix: Cow tipping now properly stuns the cow.
+  - bugfix: Suiciding with the infernal contract now properly causes the victim to
+      yell out.
+  - bugfix: Accessing the notes panel within the first few seconds of connecting no
+      longer risks broken styling.
+  TerraGS:
+  - bugfix: Curing advanced voice change virus symptoms no longer leaves you unable
+      to speak
+  Unit2E:
+  - bugfix: people in fire resistant now get properly hot in fires they shouldn't
+      resist (temps of 35000K and over)
+  actioninja:
+  - bugfix: Fixed a few mapping issues with the Supermatter on Pubbystation
+  - bugfix: The ID console in the HoP's office on Meta has been rotated to face toward
+      the HoP when they're at their desk
+  dvanbale:
+  - bugfix: Removes dizziness when adminhealing
+  imsxz:
+  - balance: epinephrine no longer hard caps oxygen damage at ~30
+  - balance: epinephrine now gives the no crit damage trait, which makes creatures
+      not take passive oxygen(or brute if you cant breathe) damage while in critical
+  - tweak: epinephrine now heals minor oxygen damage at the same health threshold
+      that it currently heals other damage types at.
+  - bugfix: atropine and epinephrine now check if your health is under your mobs crit
+      threshold instead of using the number 0 before healing
+  monster860:
+  - bugfix: fixes advanced proccall
+  spookydonut:
+  - rscadd: Adds the ability to give shuttles a cooldown timer
+  tralezab:
+  - rscadd: The wizard has many more staves to play with!
+  - rscadd: Along with the new effects, the chaos bolt has a couple more bolts not
+      available my normal means
+2019-03-15:
+  4dplanner:
+  - bugfix: liver purging is more consistent
+  - bugfix: chemical recipes are more consistent
+  - tweak: chemical scans only show to 2 d.p
+  Dennok:
+  - bugfix: Turbines work again.
+  Denton:
+  - tweak: Clarified Syndicate ghost role flavor text to mention that agents are not
+      supposed to abandon their bases.
+  - balance: Rolling a 1 with the d20 of fate prevents you from being revived by any
+      means.
+  Lett1:
+  - bugfix: firebots now shop up on robotics pda's
+  ShizCalev:
+  - bugfix: Pacifists can now use wormhole projectors.
+  SpaceManiac:
+  - bugfix: pAIs are no longer immune to stamina damage.
+  - bugfix: Fixed a runtime when an AI core witnesses someone exit a cardboard box.
+  - bugfix: Fixed a runtime when attempting to blind a True Devil with a flashlight.
+  - bugfix: The implant chair no longer runtimes when implanting non-implant organs.
+  cacogen:
+  - spellcheck: Makes stun baton two words
+  plapatin:
+  - tweak: Added a big heap of fancy new clown names! Be slightly less generic!
+2019-03-17:
+  4dplanner:
+  - bugfix: Buckle objects can now properly specify lying angle
+  - bugfix: Wheelchairs and other such vehicles let you use UIs even if your legs
+      don't work
+  - bugfix: You can now pull objects while in a wheelchair even if your legs don't
+      work
+  - bugfix: You no longer have a chance of sleeping upside down in a bed
+  - tweak: No longer randomises lying direction a second time on fall
+  Nervere:
+  - bugfix: Fixed stunbatons being invisible.
+  ShizCalev:
+  - bugfix: Blind people will no longer be able to see pills being slipped into their
+      drinks...........
+  - bugfix: Fixed an issue causing slippery oil to be noninteractive.
+  - bugfix: Motor oil can now catch on fire. Better do your job, janitor!
+  - bugfix: Cleaned up some crayon and spraycan code for futureproofing.
+  WJohnston, Antur, and Arcane:
+  - rscadd: THE GOOSE IS LOOSE
+2019-03-18:
+  4dplanner:
+  - tweak: chemical scans actually display to 3 dp, sorry
+2019-03-19:
+  81Denton:
+  - bugfix: Curators no longer lose access to the aux base and mining station EVA
+      during skeleton shifts.
+  Farquaar:
+  - rscadd: Added several new religions to the Nanotrasen-approved faith list, including
+      Judaism, Rastafarianism, and Honkism
+  MrDoomBringer:
+  - bugfix: Gondolapods work again
+  - bugfix: the see-through pod effect for centcom podlaunchers works again
+  - bugfix: the Stealth effect for centcom podlaunchers works again
+  - admin: sparks will not generate if the quietLanding effect is on, for the centcom
+      podlauncher
+  - admin: makes input text clearer for the centcom podlauncher
+  ShizCalev:
+  - tweak: Added DRAGnet's to the armory on Delta & Pubby.
+  - bugfix: Added logging to cloning machinery.
+  - bugfix: Fixed a runtime with wabbajack / bolt of change causing the person that
+      was hit to go invisible and be unable to do anything.
+  - bugfix: Fixed carbons with no eyes having a flash overlay applied when they're
+      flashed.
+  - bugfix: Fixed species with no eyes getting flashed.
+  Time-Green:
+  - code_imp: Adds tools to make mutations transfer through cloning
+  Vile Beggar:
+  - rscadd: Mechs can now be equipped with disablers.
+2019-03-20:
+  Basilman:
+  - rscadd: Chaplain's holy whip now deals more damage to vampires.
+  - bugfix: Fixed adminheal not curing various status effects
+  - bugfix: Fixed certain alien organs (eyes, tongue, liver) not registering for organ
+      bounty.
+  Kmc2000:
+  - rscadd: Added darkmode! You can opt-in to this by clicking the settings icon on
+      goonchat, and looking for the toggle darkmode button.
+  Militaires:
+  - bugfix: Fixed cursed hearts maintaining red filter even when removed
+  MrStonedOne:
+  - rscdel: afk kicker no longer exempts ghosts
+  - rscadd: afk kicker now exempts people in the lobby join queue
+  - rscadd: afk kicker now exempts admins
+  - tweak: afk kicker now includes a link you can use rejoin quickly.
+  - tweak: '(Note: these all apply to the default disabled idle time kicker, not the
+      end of round lobby kicker)'
+  PKPenguin321:
+  - bugfix: Spasms should no longer cause you to step out of closed chambers, like
+      cryo or DNA scanners.
+  Pandolphina:
+  - bugfix: Miniature energy guns can fit in the holster
+  ShizCalev:
+  - tweak: Added DRAGnet crates to cargonia.
+  - bugfix: Fixed runtime when shooting podpeople with a alpha somatoray
+  - bugfix: Floorbots can now be constructed with normal toolboxes.
+  SpaceManiac:
+  - code_imp: Random docking ports (escape pod Lavaland destinations) print a more
+      informative warning and delete themselves if Lavaland does not exist.
+  Time-Green:
+  - bugfix: Snails can't wear glasses
+  - bugfix: Snails don't lube the floor when buckled anymore
+  Tlaltecuhtli:
+  - tweak: the eva suit crate now will have 1 space suit and 1 jetpack
+  - tweak: 'the miner starter kit will be the same as the ones miners can buy grammar:
+      changed the description of the medical refill crate to represent whats inside'
+  YPOQ:
+  - bugfix: Fixed a bug that caused limbs to take incorrect damage amounts when damage
+      exceeded the limb's damage cap
+  kevinz000:
+  - admin: Panic bunker block message is now a config.
+  nichlas0010:
+  - balance: The malf AI's APC-hacking is now no longer audible to people outside
+      of the AI's location.
+2019-03-21:
+  Militaires:
+  - tweak: Snails now utilize glasses offset system
+  ShizCalev:
+  - spellcheck: Repairing robotic limbs attached to yourself will no longer refer
+      to you in the third person.
+  - bugfix: You'll no longer hit an air alarm with your ID when unlocking it.
+  - bugfix: Admin modify bodyparts panel will now only show parts that are valid for
+      modification.
+  SpironoZeppeli:
+  - balance: Ethereals no longer die to their own charge levels
+  Tlaltecuhtli:
+  - bugfix: the medkits in the beach dome, city of clog and russian shuttle are no
+      longer empty
+  actioninja:
+  - bugfix: admin pms display in the proper colors
+  - bugfix: some uis are no longer unreadable.
+  - tweak: Updated the colors of the dark mode ui.
+  - tweak: darkmode is no longer the default
+2019-03-22:
+  Atlanta Ned:
+  - rscadd: If you've got Head of Staff access, you can now message Central Command.
+      Central Command is not responsible for any executions sustained as a result
+      of mutinous behavior.
+  Fikou:
+  - rscadd: added an ezmk pulse rifle to the seraph mech
+  - rscdel: removed the buckshot gun from the seraph mech
+  MMMiracles:
+  - tweak: The engine on Donutstation has been changed to the Supermatter.
+  MrStonedOne:
+  - tweak: Exempted byond accounts already in the round from the connected players
+      cap, allowing them to reconnect even if the server is full. This exemption applies
+      even if you are dead or are a ghost, but does not apply if you hit "observe"
+      from the lobby.
+  ShizCalev:
+  - bugfix: ED-209 tablecrafting recipe has been corrected to use a DRAGNet
+  - bugfix: Fixed an exploit allowing you to grab people from anywhere with a clowncar.
+  - bugfix: Simple mobs can now only damage clown cars from the inside if they're
+      able to smash through walls.
+  - imageadd: Mech disablers are no longer invisible.
+  - admin: Improved some cloning logging.
+  - bugfix: Emagging a cloning pod will now leave fingerprints.
+  - bugfix: Ejecting someone while they're being cloned will now leave fingerprints.
+  SpaceManiac:
+  - code_imp: Logs for certain kinds of errors will now include better debugging information.
+  - spellcheck: Renamed the "any color" paint bucket to "adaptive paint".
+  Tlaltecuhtli:
+  - balance: ai/borg uploads now have a gps signal when built which will be active
+      until its monitor gets decostructed
+  - balance: ai/borg uploads take slighty longer to deconstruct
+  anconfuzedrock:
+  - rscadd: New negative quirk - back pain causes very bad mood from wearing uneven
+      storage items on your back, but other back items like air tanks and shotguns
+      are okay.
+  plapatin:
+  - rscadd: Watch the Tip of the Round messages, there's a few extra ones out there
+      now, along with outdated ones being revised!
+2019-03-23:
+  Borisvanmemes:
+  - bugfix: ED 209s now drop DRAGNets and not tasers
+  MrStonedOne:
+  - bugfix: Fixed the connection cap being silly about what connections it counted
+      towards the limit.
+  SpaceManiac:
+  - bugfix: Heirloom bodybags no longer lose their heirloom status when deployed.
+  actioninja:
+  - bugfix: Goonchat properly loads the white theme by default.
+  - bugfix: The input bar no longer has weirdness with color when swapping themes.
+2019-03-24:
+  Mickyan:
+  - balance: Strong alcoholic beverages in excessive quantity are now far more dangerous.
+      Drink responsibly.
+2019-03-25:
+  ShizCalev:
+  - tweak: Added a chair to pubby's cloning room.
+  - bugfix: Fixed a minor runtime caused by admins clicking a follow link while in
+      the lobby.
+  actioninja:
+  - bugfix: Lot of small darkmode fixes
+2019-03-27:
+  4dplanner:
+  - bugfix: Humans can no longer use UIs while incapacitated
+  - bugfix: stabilised sepia slime randomly changes your speed as intended
+  81Denton:
+  - bugfix: Rolling a 17 on the d20 of fate no longer gives you an empty box.
+  Basilman:
+  - bugfix: fixed runtime from selectin missing bodypart due to ran_zone
+  - code_imp: changed how ran_zone selects a zone from a switch to pickweight
+  Kierany9:
+  - bugfix: Added a 15 second grace period after death to prevent people from avoiding
+      a hivemind host's Reclaim by succumbing.
+  Lett1:
+  - rscadd: 'Added a new holodeck program: Photobooth'
+  - rscadd: Comes with three cameras and black and white floors, a dresser and a mirror.
+  Menshin:
+  - bugfix: Janitor ERT leader now spawns properly equipped
+  ShizCalev:
+  - bugfix: Fixed a runtime that resulted in the character preview messing up if you
+      were set to a non-human species while having a command level position set to
+      high when enforce human authority is enabled.
+  - tweak: Examining a recharger will now tell you the amount of charge the inserted
+      device has.
+  - bugfix: Pulling someone while they're buckled to a chair will no longer offset
+      them and make them face you.
+  - bugfix: Buckling someone in while they're being pulled will now properly reset
+      their offsets.
+  - bugfix: Pulling offsets will now update properly while dragging someone who's
+      laying down.
+  Tlaltecuhtli:
+  - balance: beepsky smash now summons imaginary beepskys that deal stamina damage
+      instead of outright stunning
+  py01:
+  - balance: -Mechs no longer explode on death -Mechs and syndicate combat mechs sleep
+      the pilot for 2s when destroyed, other combat mechs for 4s. -Mechs now have
+      exit times. 1s for basic ripley, 2s for other mechs, 4s for all combat mechs.
+      You cannot punch or use equipment when exiting, and moving cancels.
+2019-03-28:
+  AnturK:
+  - bugfix: Spraypainting blast doors no longer makes them see-through.
+  - balance: Paint remover now works on blast doors and the like.
+  Fox McCloud:
+  - bugfix: Fixes a very longstanding LINDA bug where turfs adjacent to a hotspot
+      would be less prone to igniting
+  PKPenguin321:
+  - rscadd: Keep your eye out for a rare new arcade game!
+  - balance: X-Ray vision can no longer be obtained via a random gene sequence at
+      roundstart.
+  - balance: X-Ray now has 35 instability, up from 25.
+  - rscadd: A new gene, thermal vision, has been added to genetics.
+  - rscadd: You can create X-Ray vision by mixing Thermal Vision and Radioactive together.
+  ShizCalev:
+  - bugfix: Corrected cloning logs not showing the clone's key if they ghosted during
+      processing.
+  SpaceManiac:
+  - bugfix: The death icon for the "banned" AI core choice will now show properly.
+  SuicidalPickles:
+  - tweak: Medical Winter Coats can now equip Handheld Crew Monitors in their suit
+      storage slot.
+  Vile Beggar:
+  - bugfix: Wearing the CE jumpsuit along with the advanced hardsuit will now fully
+      protect you from radiation, as intended.
+  zeroisthebiggay:
+  - rscadd: Gave the Service Cyborg a Synthesizer! Try not to destroy the Human populace's
+      weak organic eardrums with it.
+  - rscdel: Service Cyborgs have lost their Violin to compensate for this. Your bashing
+      in of heads with the Guitar will remain unimpeded however.
+2019-03-29:
+  81Denton:
+  - bugfix: Fixed a bug that prevented strange reagent from reacting with hydroponics
+      trays. Use with care!
+  SpaceManiac:
+  - bugfix: If an admin sends a ghost back to the lobby, they can now choose a different
+      set of quirks.
+  - code_imp: The code to handle buckling latejoin players to chairs has been made
+      more flexible.
+  Spyro Zeppeli:
+  - balance: Changes ethereal low charge damage from brute to toxin
+  Tlaltecuhtli:
+  - bugfix: fixes exploit with holopets
+  Zxaber:
+  - rscadd: AIs can now use CTRL and a number key (1 - 9) to assign a location to
+      the number key, and then press the key later to jump their camera to that location.
+      The numpad keys will work as aliases for their respective numbers.
+  - rscadd: The Tilde key, or zero (or numpad zero), will return you to the last point
+      you jumped from.
+2019-03-30:
+  FloranOtten:
+  - rscadd: Added the Pod Shuttle
+  ShizCalev:
+  - tweak: Moved mapping related errors to their own log file.
+  Vile Beggar:
+  - bugfix: You no longer have to take off your clown/mime mask to shower properly.

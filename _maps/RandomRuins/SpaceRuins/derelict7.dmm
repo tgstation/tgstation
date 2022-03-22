@@ -1,0 +1,975 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aE" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"bp" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"bS" = (
+/turf/open/floor/carpet/airless,
+/area/ruin/space/has_grav)
+"bU" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"cD" = (
+/obj/structure/lattice,
+/obj/structure/door_assembly/door_assembly_med,
+/turf/template_noop,
+/area/ruin/space/has_grav)
+"dy" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"dV" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron/white/corner/airless,
+/area/ruin/space/has_grav)
+"ea" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"eK" = (
+/obj/item/shard,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"eP" = (
+/turf/closed/wall,
+/area/ruin/space/has_grav)
+"eX" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"fc" = (
+/obj/structure/disposalpipe/broken{
+	dir = 8
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"fW" = (
+/obj/effect/spawner/random/medical/patient_stretcher,
+/obj/effect/spawner/random/medical/minor_healing,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"gi" = (
+/obj/effect/spawner/random/structure/girder,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"gk" = (
+/obj/structure/closet/emcloset,
+/obj/item/gps/spaceruin,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"gw" = (
+/obj/structure/lattice,
+/obj/item/stack/tile/iron,
+/obj/structure/disposalpipe/broken,
+/turf/template_noop,
+/area/template_noop)
+"gK" = (
+/obj/structure/closet/cabinet,
+/obj/item/storage/pill_bottle/happy,
+/obj/item/clothing/ears/earmuffs,
+/turf/open/floor/wood/airless,
+/area/ruin/space/has_grav)
+"gX" = (
+/obj/structure/girder/displaced,
+/turf/template_noop,
+/area/template_noop)
+"hf" = (
+/obj/structure/lattice,
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"hl" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"iB" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/item/shard,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"jk" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/turf/open/floor/iron/white/corner/airless{
+	dir = 8
+	},
+/area/ruin/space/has_grav)
+"kI" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/carpet/airless,
+/area/ruin/space/has_grav)
+"lQ" = (
+/obj/structure/lattice,
+/obj/item/stack/tile/iron,
+/turf/template_noop,
+/area/template_noop)
+"lU" = (
+/obj/item/stack/tile/iron,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"mM" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged3"
+	},
+/area/ruin/space/has_grav)
+"nf" = (
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"or" = (
+/obj/item/stack/tile/iron,
+/turf/template_noop,
+/area/template_noop)
+"ox" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"oy" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/table_frame,
+/turf/open/floor/iron/checker/airless,
+/area/ruin/space/has_grav)
+"oP" = (
+/obj/structure/lattice,
+/obj/item/stack/sheet/iron,
+/turf/template_noop,
+/area/template_noop)
+"oX" = (
+/obj/structure/door_assembly/door_assembly_med,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"pc" = (
+/obj/effect/spawner/random/engineering/tank,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"pd" = (
+/obj/structure/lattice,
+/obj/structure/girder/displaced,
+/turf/template_noop,
+/area/template_noop)
+"pr" = (
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/ruin/space/has_grav)
+"pR" = (
+/obj/item/reagent_containers/pill/maintenance,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"qi" = (
+/obj/structure/sign/directions/medical{
+	dir = 4;
+	pixel_y = 26
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"rt" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"rN" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"tj" = (
+/obj/item/shard,
+/turf/template_noop,
+/area/template_noop)
+"tk" = (
+/obj/structure/lattice,
+/obj/machinery/light/broken/directional/north,
+/turf/template_noop,
+/area/template_noop)
+"tF" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"tH" = (
+/obj/item/stack/tile/iron,
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"tR" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged5"
+	},
+/area/ruin/space/has_grav)
+"uB" = (
+/obj/structure/disposalpipe/broken{
+	dir = 1
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"vW" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/airless{
+	icon_state = "damaged2"
+	},
+/area/ruin/space/has_grav)
+"wz" = (
+/obj/structure/lattice,
+/obj/item/stack/tile/iron,
+/obj/item/stack/sheet/iron,
+/turf/template_noop,
+/area/template_noop)
+"wI" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"wJ" = (
+/obj/structure/lattice,
+/obj/item/shard,
+/turf/template_noop,
+/area/template_noop)
+"wT" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"xk" = (
+/obj/structure/disposalpipe/broken{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"yO" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged2"
+	},
+/area/ruin/space/has_grav)
+"zw" = (
+/obj/effect/spawner/random/structure/table_or_rack,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"AV" = (
+/turf/open/floor/wood/airless,
+/area/ruin/space/has_grav)
+"AY" = (
+/obj/structure/door_assembly,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"BX" = (
+/obj/structure/disposalpipe/broken{
+	dir = 4
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"Ca" = (
+/obj/machinery/medical_kiosk,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"Cc" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/light/broken/directional/west,
+/turf/open/floor/iron/white/corner/airless{
+	dir = 8
+	},
+/area/ruin/space/has_grav)
+"Cg" = (
+/obj/machinery/door/firedoor/closed,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"Co" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/item/cartridge/signal,
+/turf/open/floor/iron/dark/side/airless{
+	dir = 1
+	},
+/area/ruin/space/has_grav)
+"CN" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/template_noop,
+/area/template_noop)
+"CT" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"Di" = (
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/vendor,
+/obj/machinery/light/broken/directional/south,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"DY" = (
+/turf/template_noop,
+/area/template_noop)
+"Et" = (
+/obj/structure/lattice,
+/obj/item/vending_refill/assist,
+/turf/template_noop,
+/area/template_noop)
+"EE" = (
+/obj/effect/spawner/random/trash/botanical_waste,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"Fv" = (
+/obj/item/stack/sheet/iron,
+/turf/template_noop,
+/area/template_noop)
+"FQ" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged1"
+	},
+/area/ruin/space/has_grav)
+"Gb" = (
+/obj/item/shard,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"GP" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/airless,
+/area/ruin/space/has_grav)
+"HE" = (
+/obj/structure/lattice,
+/obj/item/wallframe/apc,
+/turf/template_noop,
+/area/template_noop)
+"HO" = (
+/obj/item/stack/tile/wood,
+/turf/template_noop,
+/area/template_noop)
+"Il" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"IE" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"IR" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/grille,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"Jy" = (
+/obj/structure/closet,
+/obj/effect/spawner/random/maintenance/three,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"JI" = (
+/obj/structure/door_assembly,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"JN" = (
+/obj/structure/disposalpipe/broken{
+	dir = 4
+	},
+/obj/structure/disposalpipe/broken{
+	dir = 8
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"Ke" = (
+/obj/item/stack/rods,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"Kt" = (
+/obj/structure/disposalpipe/broken{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"La" = (
+/obj/structure/table,
+/obj/effect/spawner/random/entertainment/toy,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"Lc" = (
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"Lg" = (
+/obj/item/stack/rods,
+/turf/open/floor/wood/airless,
+/area/ruin/space/has_grav)
+"Lj" = (
+/turf/open/floor/iron/airless{
+	icon_state = "damaged4"
+	},
+/area/ruin/space/has_grav)
+"My" = (
+/obj/machinery/cell_charger,
+/obj/structure/table,
+/obj/item/stack/rods,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"Nw" = (
+/obj/item/shard,
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"NM" = (
+/obj/effect/spawner/random/medical/surgery_tool,
+/turf/template_noop,
+/area/template_noop)
+"NN" = (
+/obj/effect/turf_decal/trimline/neutral/warning{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/firelock_frame,
+/turf/open/floor/iron/dark/side/airless{
+	dir = 1
+	},
+/area/ruin/space/has_grav)
+"Pi" = (
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"Pn" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/has_grav)
+"Qf" = (
+/obj/structure/girder/displaced,
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"Qk" = (
+/obj/structure/lattice,
+/obj/item/stack/tile/wood,
+/turf/template_noop,
+/area/template_noop)
+"Qw" = (
+/obj/structure/lattice,
+/obj/structure/table_frame,
+/turf/template_noop,
+/area/template_noop)
+"Qy" = (
+/obj/item/wallframe/airalarm,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron/white/corner/airless{
+	dir = 8
+	},
+/area/ruin/space/has_grav)
+"QV" = (
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"Ri" = (
+/obj/structure/chair/comfy/beige,
+/turf/open/floor/carpet/airless,
+/area/ruin/space/has_grav)
+"Si" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/white/corner/airless{
+	dir = 8
+	},
+/area/ruin/space/has_grav)
+"Sz" = (
+/obj/item/wallframe/firealarm,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/has_grav)
+"SE" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/has_grav)
+"Tb" = (
+/obj/effect/turf_decal/trimline/neutral/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/corner/airless{
+	dir = 4
+	},
+/area/ruin/space/has_grav)
+"Ua" = (
+/obj/structure/door_assembly/door_assembly_mai,
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav)
+"Vn" = (
+/obj/effect/decal/cleanable/glass,
+/obj/structure/grille,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/has_grav)
+"We" = (
+/obj/structure/lattice,
+/obj/item/light/tube/broken,
+/turf/template_noop,
+/area/template_noop)
+"Wr" = (
+/obj/structure/door_assembly/door_assembly_mai,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"WX" = (
+/obj/effect/spawner/random/vending/colavend,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/has_grav)
+"Yt" = (
+/obj/effect/turf_decal/tile/blue,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/has_grav)
+"Yu" = (
+/obj/structure/lattice,
+/obj/item/wallframe/intercom,
+/obj/item/stack/rods,
+/turf/template_noop,
+/area/template_noop)
+"YX" = (
+/obj/structure/lattice,
+/obj/effect/decal/cleanable/glass,
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+DY
+DY
+DY
+gi
+CT
+CT
+CT
+CT
+gi
+DY
+DY
+DY
+DY
+"}
+(2,1,1) = {"
+DY
+eP
+wI
+eP
+eP
+Pi
+CT
+DY
+DY
+tj
+Pi
+DY
+DY
+"}
+(3,1,1) = {"
+DY
+eP
+My
+La
+eP
+gi
+CT
+eP
+Qf
+Vn
+wJ
+eP
+tF
+"}
+(4,1,1) = {"
+gi
+eP
+nf
+nf
+Qy
+Si
+uB
+jk
+hf
+wI
+jk
+Cc
+ox
+"}
+(5,1,1) = {"
+wI
+Ua
+nf
+Lj
+SE
+Sz
+CT
+wJ
+dy
+mM
+eX
+lQ
+wJ
+"}
+(6,1,1) = {"
+CT
+gi
+tR
+nf
+JN
+QV
+or
+tH
+QV
+dV
+dV
+dV
+dV
+"}
+(7,1,1) = {"
+rN
+eP
+eP
+AY
+JI
+IE
+gi
+pd
+Ua
+Qf
+hf
+IE
+IR
+"}
+(8,1,1) = {"
+eP
+ea
+eP
+qi
+fc
+Nw
+eP
+CN
+CT
+QV
+Qf
+tj
+DY
+"}
+(9,1,1) = {"
+CT
+rt
+Ua
+nf
+CT
+FQ
+pd
+Jy
+wI
+oP
+CT
+DY
+DY
+"}
+(10,1,1) = {"
+CT
+hl
+eP
+vW
+BX
+nf
+gi
+CT
+ox
+zw
+eP
+Pi
+DY
+"}
+(11,1,1) = {"
+CT
+QV
+rN
+mM
+SE
+ox
+gi
+oP
+CT
+eP
+Qf
+eP
+DY
+"}
+(12,1,1) = {"
+dy
+rt
+gi
+CT
+xk
+dy
+eP
+pR
+hf
+EE
+CT
+CT
+DY
+"}
+(13,1,1) = {"
+QV
+wI
+eP
+tk
+lQ
+HE
+Qf
+aE
+CT
+eP
+QV
+eX
+DY
+"}
+(14,1,1) = {"
+ox
+eP
+eP
+Yu
+Fv
+CT
+eP
+eP
+Qf
+gi
+Wr
+gi
+DY
+"}
+(15,1,1) = {"
+pc
+eP
+gk
+nf
+QV
+wz
+Qw
+dy
+GP
+bS
+AV
+wT
+DY
+"}
+(16,1,1) = {"
+gi
+eP
+Tb
+tR
+Ke
+Et
+WX
+eP
+kI
+bS
+Lg
+wT
+DY
+"}
+(17,1,1) = {"
+CT
+Cg
+Co
+yO
+ox
+DY
+Di
+eP
+Ri
+bS
+Qk
+Qk
+DY
+"}
+(18,1,1) = {"
+DY
+Il
+NN
+Kt
+cD
+gw
+Pn
+eP
+gK
+CT
+CT
+lU
+DY
+"}
+(19,1,1) = {"
+CT
+eP
+eP
+gi
+ox
+YX
+Vn
+rN
+eP
+lQ
+Ke
+Pi
+DY
+"}
+(20,1,1) = {"
+Pi
+CT
+gi
+Ca
+Lc
+Gb
+tj
+We
+eK
+QV
+CT
+HO
+DY
+"}
+(21,1,1) = {"
+DY
+CT
+oy
+iB
+Lc
+Ke
+CT
+ox
+Lc
+Yt
+QV
+Pi
+DY
+"}
+(22,1,1) = {"
+Pi
+tj
+IE
+bU
+bp
+CT
+hf
+CT
+fW
+Yt
+CT
+DY
+DY
+"}
+(23,1,1) = {"
+DY
+gi
+eP
+eP
+CT
+CT
+dy
+oX
+gX
+eP
+eP
+NM
+DY
+"}
+(24,1,1) = {"
+DY
+DY
+Pi
+gi
+DY
+wI
+NM
+CT
+CT
+CT
+DY
+DY
+DY
+"}
+(25,1,1) = {"
+DY
+DY
+DY
+CT
+pr
+CT
+CT
+dy
+DY
+DY
+DY
+DY
+DY
+"}

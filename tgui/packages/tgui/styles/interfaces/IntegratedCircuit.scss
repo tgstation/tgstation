@@ -1,0 +1,64 @@
+@use '../colors.scss';
+@use '../base.scss';
+
+$fg-map: colors.$fg-map !default;
+
+.CircuitInfo__Examined {
+  background-color: rgba(0, 0, 0, 1);
+  padding: 8px;
+  border-radius: 5px;
+
+  user-select: none;
+  pointer-events: none;
+}
+
+.ObjectComponent__Titlebar {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+
+  white-space: nowrap;
+
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ObjectComponent__Content {
+  white-space: nowrap;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ObjectComponent__Port {
+  position: relative;
+  width: 13px;
+  height: 13px;
+}
+
+.ObjectComponent__PortPos {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+@each $color-name, $color-value in $fg-map {
+  .color-stroke-#{$color-name} {
+    stroke: $color-value !important;
+  }
+
+  .color-fill-#{$color-name} {
+    fill: $color-value !important;
+  }
+}
+
+$border-color: #88bfff !default;
+$border-radius: base.$border-radius !default;
+
+.IntegratedCircuit__BlueBorder {
+  border: base.em(1px) solid $border-color;
+  border: base.em(1px) solid rgba($border-color, 0.75);
+  border-radius: $border-radius;
+}

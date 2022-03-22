@@ -1,0 +1,21 @@
+* text=auto
+
+## Enforce text mode and LF line breaks
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.md text eol=lf
+*.bat text eol=lf
+yarn.lock text eol=lf
+
+## Treat bundles as binary
+*.bundle.* binary
+*.chunk.* binary
+.yarn/releases/**/* binary
+.yarn/plugins/**/* binary

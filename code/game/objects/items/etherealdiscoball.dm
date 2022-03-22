@@ -1,0 +1,72 @@
+/obj/item/etherealballdeployer
+	name = "Portable Ethereal Disco Ball"
+	desc = "Press the button for a deployment of slightly-unethical PARTY!"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "ethdisco"
+
+/obj/item/etherealballdeployer/attack_self(mob/living/carbon/user)
+	.=..()
+	to_chat(user, span_notice("You deploy the Ethereal Disco Ball."))
+	new /obj/structure/etherealball(user.loc)
+	qdel(src)
+
+/obj/structure/etherealball
+	name = "Ethereal Disco Ball"
+	desc = "The ethics of this discoball are questionable."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "ethdisco_head_0"
+	anchored = TRUE
+	density = TRUE
+	var/TurnedOn = FALSE
+	var/current_color
+	var/TimerID
+	var/range = 7
+	var/power = 3
+
+/obj/structure/etherealball/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/structure/etherealball/attack_hand(mob/living/carbon/human/user, list/modifiers)
+	. = ..()
+	if(TurnedOn)
+		TurnOff()
+		to_chat(user, span_notice("You turn the disco ball off!"))
+	else
+		TurnOn()
+		to_chat(user, span_notice("You turn the disco ball on!"))
+
+/obj/structure/etherealball/AltClick(mob/living/carbon/human/user)
+	. = ..()
+	set_anchored(!anchored)
+	to_chat(user, span_notice("You [anchored ? null : "un"]lock the disco ball."))
+
+/obj/structure/etherealball/proc/TurnOn()
+	TurnedOn = TRUE //Same
+	DiscoFever()
+
+/obj/structure/etherealball/proc/TurnOff()
+	TurnedOn = FALSE
+	set_light(0)
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	update_appearance()
+	if(TimerID)
+		deltimer(TimerID)
+
+/obj/structure/etherealball/proc/DiscoFever()
+	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	current_color = random_color()
+	set_light(range, power, current_color)
+	add_atom_colour("#[current_color]", FIXED_COLOUR_PRIORITY)
+	update_appearance()
+	TimerID = addtimer(CALLBACK(src, .proc/DiscoFever), 5, TIMER_STOPPABLE)  //Call ourselves every 0.5 seconds to change colors
+
+/obj/structure/etherealball/update_icon_state()
+	icon_state = "ethdisco_head_[TurnedOn]"
+	return ..()
+
+/obj/structure/etherealball/update_overlays()
+	. = ..()
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "ethdisco_base")
+	base_overlay.appearance_flags = RESET_COLOR
+	. += base_overlay

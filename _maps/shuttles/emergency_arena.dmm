@@ -1,0 +1,327 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"f" = (
+/turf/template_noop,
+/area/template_noop)
+"g" = (
+/turf/closed/indestructible/necropolis,
+/area/shuttle/escape/arena)
+"h" = (
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape/arena)
+"i" = (
+/obj/structure/closet/crate/necropolis/dragon,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape/arena)
+"j" = (
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+"k" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape/arena)
+"l" = (
+/obj/structure/closet/crate/necropolis/tendril,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+"m" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+"n" = (
+/obj/effect/forcefield/arena_shuttle_entrance,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+"o" = (
+/obj/effect/forcefield/arena_shuttle_entrance,
+/obj/docking_port/mobile/emergency{
+	name = "The Arena"
+	},
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+"z" = (
+/obj/effect/landmark/shuttle_arena_safe,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+"T" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 1
+	},
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape/arena)
+"V" = (
+/obj/structure/healingfountain,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape/arena)
+
+(1,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+n
+g
+o
+g
+g
+g
+g
+g
+n
+g
+n
+g
+g
+g
+f
+"}
+(2,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+"}
+(3,1,1) = {"
+g
+h
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+h
+V
+g
+"}
+(4,1,1) = {"
+g
+h
+k
+l
+j
+m
+l
+j
+m
+l
+j
+k
+l
+j
+m
+l
+j
+m
+j
+j
+V
+g
+"}
+(5,1,1) = {"
+g
+i
+h
+h
+j
+j
+z
+j
+j
+z
+j
+h
+z
+j
+j
+z
+j
+j
+j
+j
+V
+g
+"}
+(6,1,1) = {"
+g
+i
+i
+h
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+T
+g
+"}
+(7,1,1) = {"
+g
+i
+i
+h
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+V
+g
+"}
+(8,1,1) = {"
+g
+i
+h
+h
+j
+j
+z
+j
+j
+z
+j
+j
+z
+j
+h
+z
+j
+j
+j
+j
+V
+g
+"}
+(9,1,1) = {"
+g
+h
+k
+l
+j
+m
+l
+j
+m
+l
+j
+m
+l
+j
+m
+l
+j
+m
+j
+j
+V
+g
+"}
+(10,1,1) = {"
+g
+h
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+j
+h
+g
+g
+"}
+(11,1,1) = {"
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+f
+"}

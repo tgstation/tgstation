@@ -1,0 +1,61 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
+
+$color-default-fill: colors.bg(colors.$primary) !default;
+$background-color: rgba(0, 0, 0, 0) !default;
+$border-radius: base.$border-radius !default;
+$bg-map: colors.$bg-map !default;
+
+.ProgressBar {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding: 0 0.5em;
+  border-width: base.em(1px) !important;
+  border-style: solid !important;
+  border-radius: $border-radius;
+  background-color: $background-color;
+  transition: border-color 900ms ease-out;
+}
+
+.ProgressBar__fill {
+  position: absolute;
+  top: -0.5px;
+  left: 0px;
+  bottom: -0.5px;
+}
+
+.ProgressBar__fill--animated {
+  transition: background-color 900ms ease-out, width 900ms ease-out;
+}
+
+.ProgressBar__content {
+  position: relative;
+  line-height: base.em(17px);
+  width: 100%;
+  text-align: right;
+}
+
+.ProgressBar--color--default {
+  border: base.em(1px) solid $color-default-fill;
+
+  .ProgressBar__fill {
+    background-color: $color-default-fill;
+  }
+}
+
+@each $color-name, $color-value in $bg-map {
+  .ProgressBar--color--#{$color-name} {
+    border-color: $color-value !important;
+
+    .ProgressBar__fill {
+      background-color: $color-value;
+    }
+  }
+}

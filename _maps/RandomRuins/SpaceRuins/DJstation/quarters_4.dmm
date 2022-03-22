@@ -1,0 +1,196 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/carpet/airless,
+/area/ruin/space/djstation)
+"g" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/djstation)
+"h" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/obj/item/stack/rods{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"i" = (
+/turf/closed/wall,
+/area/ruin/space/djstation)
+"p" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/barricade/wooden,
+/turf/template_noop,
+/area/template_noop)
+"q" = (
+/obj/structure/girder,
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/ruin/space/djstation)
+"t" = (
+/turf/open/floor/iron/freezer/airless,
+/area/ruin/space/djstation)
+"w" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/space/djstation)
+"x" = (
+/obj/item/bedsheet/random,
+/turf/open/floor/plating/airless,
+/area/ruin/space/djstation)
+"A" = (
+/obj/structure/bed,
+/turf/open/floor/plating/airless{
+	icon_state = "panelscorched"
+	},
+/area/ruin/space/djstation)
+"C" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/template_noop)
+"E" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating/airless,
+/area/ruin/space/djstation)
+"J" = (
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/space/djstation)
+"M" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/turf/template_noop,
+/area/space/nearstation)
+"P" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/obj/modular_map_connector,
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/structure/barricade/wooden,
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"W" = (
+/obj/structure/lattice,
+/obj/structure/grille/broken,
+/obj/item/stack/rods{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/turf/template_noop,
+/area/template_noop)
+"Y" = (
+/obj/structure/lattice,
+/obj/effect/spawner/random/structure/grille,
+/turf/template_noop,
+/area/space/nearstation)
+"Z" = (
+/obj/item/stack/sheet/mineral/wood{
+	pixel_x = 4;
+	pixel_y = -10
+	},
+/turf/open/floor/plating/airless{
+	icon_state = "platingdmg3"
+	},
+/area/ruin/space/djstation)
+
+(1,1,1) = {"
+a
+a
+a
+a
+p
+P
+i
+a
+i
+C
+"}
+(2,1,1) = {"
+a
+a
+i
+A
+Z
+b
+i
+t
+i
+a
+"}
+(3,1,1) = {"
+a
+U
+U
+U
+w
+x
+g
+E
+i
+W
+"}
+(4,1,1) = {"
+a
+a
+U
+a
+U
+a
+U
+U
+q
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+U
+a
+a
+U
+J
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+U
+a
+a
+M
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+M
+h
+Y
+M
+a
+a
+a
+a
+"}

@@ -1,0 +1,256 @@
+2011-02-05:
+  /tg/station ss13 team:
+  - unknown: "This really needs to be updated more often.\n\t"
+  - unknown: "Various map updates have been applied with many more to come. Expect\
+      \ overhauls! \n\t"
+  - unknown: "Mining system nearing completion.\n\t"
+  - unknown: "Massive overhaul to the electricity systems, the way singularity makes\
+      \ power, and various related functions.\n\t"
+  - unknown: "Mime spawns with White Gloves instead of Latex Gloves (apparently there's\
+      \ a difference!)\n\t"
+  - unknown: "A new event has been- CLANG! What the fuck was that?\n\t"
+  - unknown: "Ion storm laws should be much more interesting.\n\t"
+  - unknown: "Security reports should no longer list traitor heads/AIs as possible\
+      \ revs/cultists, nor should nuke operatives ever get named for anything.\n\t"
+  - unknown: "Pens are much more versatile and user friendly.\n\t"
+  - unknown: "Mech building is rapidly on its way! Ripleys can be built, consult your\
+      \ quartermasters.\n\t"
+  - unknown: "Traitors now have several new things they can steal.\n\t"
+  - unknown: "Some surgeries coded to accompany the new operating room and surgery\
+      \ tools.\n\t"
+  - unknown: "Research and Design is continuing development and should be rolled out\
+      \ shortly.\n\t"
+  - unknown: 'Various sprites added, tweaked, scrapped and fixed.
+
+      '
+2011-02-06:
+  /tg/station ss13 team:
+  - unknown: "Jesus christ it's a new map what the fuck\n\t"
+  - unknown: "Just kidding, it's only minor changes to medbay/mechbay/cybernetics/R&amp;D/toxins/robotics/chapel/theatre\n\
+      \t"
+  - unknown: "Okay so there's too many changes to list completely, but basically:\
+      \ toxins/R&amp;D/virology/xenobiology are south <i>through</i> medbay; robotics/cybernetics/mechbay\
+      \ are where toxins used to be, the theatre and chapel are above medbay.\n\t"
+  - unknown: "Theatre is a new place for the Clown and Mime to play, there are some\
+      \ costumes available, a stage and backstage, and seating for the audience.\n\
+      \t"
+  - unknown: "R&amp;D and Toxins have been combined together. R&amp;D is still work\
+      \ in progress. You need to head south through medbay to get there.\n\t"
+  - unknown: "Medbay has been re-arranged slightly. Honestly, it's nothing, I bet\
+      \ you won't even notice anything different. There's also a new surgery suite,\
+      \ complete with pre-op and post-op rooms. \n\t"
+  - unknown: "Virology's been rearranged, but it is mostly in the same place still.\n\
+      \t"
+  - unknown: "Xenobiology is work in progress. [There's some fun stuff still being\
+      \ coded]\n\t"
+  - unknown: "The Chapel is now to the north. You'll probably be thinking something\
+      \ like \"Goddamn, this place is fucking huge\", but it's actually smaller than\
+      \ the previous chapel.\n\t"
+  - unknown: "Robotics and related stuff is also work in progress - however, everything\
+      \ needed for making borgs is there. Note: de-braining will now be done by surgeons\
+      \ in medbay, rather than roboticists in robotics, in case you're wondering where\
+      \ your optable went.\n\t"
+  - unknown: "I added color-coded pipes in the areas I was working on. Red pipes run\
+      \ from air siphons and feed into the waste loop; blue pipes run from air vents\
+      \ and pump whatever atmos is set to pump. Yeah, there's TWO pipe networks on\
+      \ the station, who knew? Well, some of you probably did, but I didn't!\n\t"
+  - unknown: "Please bring all complaints/ideas/suggestions/bugfixes to: <a href=\"\
+      http://tgstation13.servehttp.com/phpBB3/viewtopic.php?p=14971#p14971\">This\
+      \ awesome thread on our forums</a>\n\t"
+  - unknown: 'This update brought to you by: veyveyr and Rookie, with help from friends!
+      [Now you know who to strangle, please be gentle q_q]
+
+      '
+2011-02-08:
+  /tg/station ss13 team:
+  - unknown: "The amount of power the station uses should be lower.\n\t"
+  - unknown: "The singularity now changes size based upon how much energy it has\n\
+      \t"
+  - unknown: "New Machine: Particle Accelerator.\n\t"
+  - unknown: "It might need a better name/sprite but when put together properly and\
+      \ turned on it will shoot Accelerated Particles.\n\t"
+  - unknown: "The particles irradiate mobs who get in the way and move through solid\
+      \ objects for a short time.\n\t"
+  - unknown: "The Particle Accelerator parts are set up by using a Wrench followed\
+      \ by a Cable Coil, then finished with a screwdriver.\n\t"
+  - unknown: "When you shoot the Singularity Generator with Accelerated Particles\
+      \ it will spawn a Singularity.\n\t"
+  - unknown: 'New layout for Engineering, might be changed up slightly in the next
+      few days.
+
+      '
+2011-02-11:
+  /tg/station ss13 team:
+  - unknown: "Headsets upgraded. Shortcuts for channels are: :command :security scie:nce\
+      \ :engineering :medical. Also there is :binary :whisper :traitor and old good\
+      \ :h for your department.\n\t"
+  - unknown: "\"One Click Queue\" added: When you quickly click on two things in a\
+      \ row, it will automatically queue the second click and execute it after the\
+      \ default 'action delay' of 1 second after the first click. Previously you had\
+      \ to spam-click until 1 second had passed. <b>THIS AFFECTS EVERYTHING. NEEDS\
+      \ TESTING.</b> - Skie\n\t"
+  - unknown: "EMP effects added for further revisions. - Darem\n\t"
+  - unknown: "Goon stuff removed, AI/Bots leave behind hidden fingerprints, firedoors\
+      \ fixed, powersinks eat more, small map changes. - Mport\n\t"
+  - unknown: "Big map changes in engineering/robotics/science wing. - errorage\n\t"
+  - unknown: "Welder Fixed. Now burns your eyes again. - errorage\n\t"
+  - unknown: "9x9 singularity sprite added. - Skie/Mport\n\t"
+  - unknown: "Ghetto surgery added. - Neophyte\n\t"
+  - unknown: "Nasty vent pump lag fixed. - Neophyte\n\t"
+  - unknown: 'Mech gameplay and building updates. - ConstantA
+
+      '
+2011-02-12:
+  /tg/station ss13 team:
+  - unknown: Added Durand combat exosuit.
+  - unknown: Players can modify operation permissions of newly constructed civilian
+      mechs. Click on mech with ID card or PDA with ID inside.
+  - unknown: Added robotics access to default mecha maintenance permissions (all mechs)
+      and operation permissions (civilian models only).
+  - unknown: Fixed double adminlog message of explosion proc.
+  - unknown: Fixed accidental mecha wreckage deletion.
+  - unknown: Tweaked mecha internal fire processing.
+  - unknown: Added some mecha-related sounds.
+  - unknown: Moved GaussRand to helpers.dm and added GaussRandRound helper proc.
+  - unknown: Other small changes.
+2011-02-14:
+  /tg/station team:
+  - unknown: ' Valentine''s day'
+  ConstantA:
+  - unknown: <b>Slight speed up for combat mechs..</b>
+  - unknown: <b><font color="red">Added H.O.N.K construction</font></b>
+  - unknown: <b>Fixed bug with switching intent while in mecha.</b>
+  Errorage:
+  - unknown: <b><font color="red">New Job!</font> - Shaft Miners have finally been
+      added and are available to play.</b>
+  - unknown: <b><font color="red">Mining outpost</font> - A new mining outpost has
+      been built, the mining dock on SS13 has been updated.</b>
+2011-02-15:
+  /tg/station team:
+  - unknown: ' Tuesday'
+  Errorage:
+  - unknown: <b>Mining station will now charge properly.</b>
+  - unknown: <b>Duffle bags (Money bags) can now be emptied.</b>
+  Rastaf0:
+  - unknown: <b>Added radio channels and headsets for miners (<tt>:h</tt> or <tt>:d</tt>
+      ("diggers" lol)) and for cargo techs (<tt>:h</tt> or <tt>:q</tt> )</b>
+  - unknown: <b>Added a personal headsets to HoP and QM.</b>
+  - unknown: <b>Aliens now attack bots instead of opening control window.</b>
+  - unknown: <b>All bots can be damaged and repaired.</b>
+  - unknown: <b>All bots are effected to EMP now.</b>
+  - unknown: <b>Atmos now starts with nitrous oxide in storage tank.</b>
+  Veyveyr:
+  - unknown: <b>New look for the pipe dispenser.</b>
+2011-02-18:
+  /tg/station team:
+  - unknown: ' Friday'
+  AtomicTroop:
+  - unknown: <b><font color="red">Mail Sorter job added.</font></b>
+  - unknown: <b><font color="red">Disposal system redone to allow for package transfers.
+      Packages are routed to mail sorter room and then routed to the rest of the station</font></b>
+  - unknown: <b>Disposal area moved. Old disposal area now just an incinerator and
+      a small disposal into space.</b>
+  - unknown: <b>New wrapping paper for sending packages.</b>
+  'Darem updates:':
+  - unknown: <b><font color="red">Research and Development system is LIVE.</font>
+      Scientists can now research new advancements in technology. Not much can be
+      made, right now, but the system is there. Technologies are researched by shoving
+      items into the destructive analyzer. Circuit Imprinter, Destructive Analyzer,
+      and Protolathe are controlled from the R&amp;D console.</b>
+  - unknown: <b>Autolathe, Protolathe, Destructive Analyzer, and Circuit Imprinter
+      can now be built, taken apart, and upgraded. The basic frame for all of the
+      above requires 5 metal.</b>
+  Errorage:
+  - unknown: <b>New look for the bio suits. (Biosuit and hood sprites by Cheridan)</b>
+  - unknown: <b>New radiation suits added along with radiation hoods and masks. Must
+      wear complete set to get full protection.</b>
+  Rastaf0:
+  - unknown: <b>Binary translator cost reduced to 1 telecrystal.</b>
+  'Veyveyr updates:':
+  - unknown: <b>New machine frame sprite.</b>
+  - unknown: <b>Braincase sprites for mechs added. Not actually used, yet.</b>
+2011-02-20:
+  /tg/station team:
+  - unknown: ' Sunday'
+  Darem:
+  - unknown: <b>Mass Spectrometer added to R&amp;D. Load it with a syringe of blood
+      and it will tell you the chemicals in it. Low reliability devices may yield
+      false information.</b>
+  - unknown: <b>Not all devices have a 100% reliability now.</b>
+  - unknown: <b>Miners now have access to mint foyer and loading area. Only captain
+      has access to the vault.</b>
+  - unknown: <b>More stuff can be analyzed in the destructive analyzer, protolathe
+      can produce intelicards.</b>
+  Errorage:
+  - unknown: <b>Slight updates to processing unit and stacking machine at the mining
+      outpost.</b>
+  - unknown: <b>Digging now yields sand, which can be smelted into glass.</b>
+  - unknown: <b>Stacking machine can now stack reinforced metal, regular and reinforced
+      glass too.</b>
+  - unknown: <b>Engineers now have two copies of the singularity safety manual.</b>
+  Neo:
+  - unknown: <b>Magboots now have a verb toggle like jumpsuit sensors.</b>
+  - unknown: <b>Jumpsuit sensors are now in all jumpsuits, except tactical turtlenecks.</b>
+  - unknown: <b>Tweaks to the AI report at round start.</b>
+  - unknown: <b>Syndi-cakes now heal traitors/rev heads/etc much more than anyone
+      else.</b>
+  - unknown: <b>Containment fields zap once again.</b>
+  - unknown: <b>Fire damage meter no longer lies about fire damage.</b>
+  Rastaf0:
+  - unknown: <b>Added blast door button to atmospherics.</b>
+  - unknown: <b>Toxins timer-igniter assemblies fixed.</b>
+  - unknown: <b>Engineering secure storage expanded.</b>
+  - unknown: <b>Added singularity telescreen.</b>
+2011-02-23:
+  /tg/station team:
+  - unknown: ' Red Army Day'
+  Errorage:
+  - unknown: <b>Added cloning manual. (Written by Perapsam)</b>
+  K0000:
+  - unknown: <b><font color="red">Cult mode updates.</font></b>
+  - unknown: <b>You can now read the arcane tome. It contains a simple guide for making
+      runes.</b>
+  - unknown: <b>Converting people doesnt give them word knowledge.</b>
+  - unknown: <b>Sacrifice monkeys or humans to gain new words.</b>
+  - unknown: <b>Total number of rune words set to 10</b>
+  - unknown: <b>Some minor bugfixes.</b>
+  Neo:
+  - unknown: <b>Fixed the 'be syndicate' choice to actually work on nuke rounds.</b>
+  - unknown: <b><font color="red">Syndicates no longer win if they detonate the nuke
+      on their ship.</font></b>
+  Rastaf0:
+  - unknown: <b>Secbot interface updated.</b>
+  - unknown: <b>Syringe auto-toggels mode when full.</b>
+  - unknown: <b>Captain's flask volume increased.</b>
+  Uhangi:
+  - unknown: <b>Antitox and Inaprovaline now mixable via chemistry.</b>
+  - unknown: <b>Explosive Ordinance Disosal (EOD) suits added to armory and security.</b>
+  - unknown: <b>Large beaker now holds 100 units of chemicals. (code by Slith)</b>
+2011-02-24:
+  /tg/station team:
+  - unknown: ' Thursday'
+  Darem:
+  - unknown: <b>Lighting code fixed for mining and thermite.</b>
+  - unknown: <b>R&amp;D instruction manual added to the R&amp;D lab.</b>
+  - unknown: <b>Fixed R&amp;D disk commands not working.</b>
+  - unknown: <b>Added portable power generators which run on solid plasma.</b>
+  - unknown: <b>You can now set the numer of coins to produce in the mint.</b>
+  - unknown: <b>Added two more portable power generators to R&amp;D.</b>
+  Deeyach:
+  - unknown: <b>New uniform for roboticists</b>
+  Errorage:
+  - unknown: <b>Slight mapping change to arrival hallway.</b>
+  Neo:
+  - unknown: <b>Game speed increased</b>
+  - unknown: <b>Mining stacking machine no longer devours stacks larger than 1 sheet
+      (it was only increasing its stock by 1 when given a stacked stack)</b>
+  - unknown: <b>Stackable uranium ore added (a better sprite is needed, contributions
+      are welcome)</b>
+  - unknown: <b>Made Meteor gamemode actually do stuff</b>
+  - unknown: <b>Made a bigger class of meteor</b>
+  - unknown: '<b>New R&amp;D item: Advanced Energy Gun</b>'
+  - unknown: <b>Law priority clarified with regards to ion laws and law 0.</b>
+  Uhangi:
+  - unknown: <b>New red bomb suit for security.</b>
+  Veyveyr:
+  - unknown: <b>Minor mapping fixes</b>

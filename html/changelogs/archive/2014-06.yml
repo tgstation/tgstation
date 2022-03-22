@@ -1,0 +1,41 @@
+2014-06-06:
+  Gun Hog:
+  - rscadd: Nanotrasen programmers have discovered a potential exploit involving a
+      station's door control networks. With sufficient computing power, the network
+      can be overloaded and forced to open or bolt closed every airlock at once.
+  - experiment: Some reports suggest that the latest firmware update to Artifical
+      Intelligence units installed in our research stations may contain this exploit.
+      Any such reports that state that should a station's AI unit "malfunction", it
+      may gain the ability to use this exploit to initate a full lockdown of the station.
+      Fire locks and blast doors are also said to be affected.
+  - rscadd: Nanotrasen officially holds no validity to these reports. We recommend
+      that station personnel disregard such rumors.
+2014-06-11:
+  Ikarrus:
+  - bugfix: Having the nuke disk will no longer prevent you from using teleporters
+      or crossing Z-levels. Leaving the Z-level however, will cause you to "suddenly
+      lose" the disk.
+  - rscadd: Pulled objects will now transition with you when as you transition Z-levels
+      in space.
+  Malkevin:
+  - rscdel: IEDs have been removed
+  - rscadd: Firebombs have been added
+  - experiment: They're as reliable and predictable as you would expect from a soda
+      can filled with flammable liquid and set off with an igniter contected to two
+      wires. Use your branes and take proper precautions or leave a charred corpse,
+      your choice.
+2014-06-12:
+  Cheridan:
+  - tweak: 'NT Baton Refurbishment Team Notice: ''Released'' option in security records
+      has been renamed ''Discharged'', and the sechud icon has been changed from a
+      blue R to a blue D. Stop beating your released prisoners, dummies; they''re
+      not revheads.'
+  - tweak: 'NT Entertainment Department Notice: The prize-dispensing mechanism in
+      Arcade machines has been replaced with a cheaper gas-powered motor. It should
+      still be completely safe, unless an electromagnetic field disrupts it!'
+  - tweak: 'Pill code tweaked. In short, you can feed monkeys pills now #whoa'
+  - rscadd: 'Casings ejected from guns will now spin #wow'
+2014-06-20:
+  Ikarrus:
+  - tweak: The 'Enter Exosuit' button was removed, and you have to click + drag yourself
+      to enter a mech now; like you would to enter a disposal unit.

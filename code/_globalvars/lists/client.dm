@@ -1,0 +1,2 @@
+GLOBAL_LIST_EMPTY(default_hotkeys)
+GLOBAL_LIST_EMPTY(keybindings_by_name)
