@@ -415,12 +415,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		var/obj/structure/bodycontainer/morgue/j = pick(trays)
 		var/mob/living/carbon/human/h = new /mob/living/carbon/human(j, 1)
 		h.death()
+		ADD_TRAIT(h, TRAIT_ON_ICE, j.type)
 		for (var/part in h.internal_organs) //randomly remove organs from each body, set those we keep to be in stasis
 			if (prob(40))
 				qdel(part)
-			else
-				var/obj/item/organ/O = part
-				O.organ_flags |= ORGAN_FROZEN
 		j.update_appearance()
 	qdel(src)
 

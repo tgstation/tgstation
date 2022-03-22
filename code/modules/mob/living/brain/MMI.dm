@@ -84,7 +84,7 @@
 
 		brainmob.reset_perspective()
 		brain = newbrain
-		brain.organ_flags |= ORGAN_FROZEN
+		brain.organ_flags |= ORGAN_NO_DECAY
 
 		name = "[initial(name)]: [brainmob.real_name]"
 		update_appearance()
@@ -124,7 +124,7 @@
 	brain.forceMove(drop_location())
 	if(Adjacent(user))
 		user.put_in_hands(brain)
-	brain.organ_flags &= ~ORGAN_FROZEN
+	brain.organ_flags &= ~ORGAN_NO_DECAY
 	brain = null //No more brain in here
 
 /obj/item/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
@@ -147,7 +147,7 @@
 	else if(!brain)
 		brain = new(src)
 		brain.name = "[L.real_name]'s brain"
-	brain.organ_flags |= ORGAN_FROZEN
+	brain.organ_flags |= ORGAN_NO_DECAY
 
 	name = "[initial(name)]: [brainmob.real_name]"
 	update_appearance()

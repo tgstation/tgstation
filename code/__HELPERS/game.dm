@@ -37,13 +37,20 @@
 
 		if(istype(object_to_check, /obj/item/organ))
 			found_organ = object_to_check
-			found_organ.organ_flags ^= ORGAN_FROZEN
+			if(HAS_TRAIT_FROM(found_organ, TRAIT_ON_ICE, first_object.type))
+				REMOVE_TRAIT(found_organ, TRAIT_ON_ICE, first_object.type)
+			else
+				ADD_TRAIT(found_organ, TRAIT_ON_ICE, first_object.type)
 
 		else if(istype(object_to_check, /mob/living/carbon))
 			var/mob/living/carbon/mob_to_check = object_to_check
-			for(var/organ in mob_to_check.internal_organs)
-				found_organ = organ
-				found_organ.organ_flags ^= ORGAN_FROZEN
+			if(HAS_TRAIT_FROM(mob_to_check, TRAIT_ON_ICE, first_object.type))
+				REMOVE_TRAIT(mob_to_check, TRAIT_ON_ICE, first_object.type)
+			else
+				ADD_TRAIT(mob_to_check, TRAIT_ON_ICE, first_object.type)
+
+			for(var/obj/item/organ in mob_to_check.internal_organs)
+				processed_list[organ] = organ
 
 		for(var/atom/contained_to_check in object_to_check) //objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
 			if(!processed_list[contained_to_check] && !istype(contained_to_check, /obj/structure/closet/crate/freezer) && !istype(contained_to_check, /obj/structure/closet/secure_closet/freezer))

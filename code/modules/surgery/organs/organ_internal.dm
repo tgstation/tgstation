@@ -51,6 +51,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			foodtypes = RAW | MEAT | GROSS,\
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, .proc/OnEatFrom))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_ON_ICE), /atom.proc/begin_freeze)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_ON_ICE), /atom.proc/begin_unfreeze)
 /*
  * Insert the organ into the select mob.
  *
@@ -119,8 +122,25 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	on_death(delta_time, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/on_death(delta_time, times_fired) //runs decay when outside of a person
-	if(organ_flags & (ORGAN_SYNTHETIC | ORGAN_FROZEN))
+	if(organ_flags & ORGAN_SYNTHETIC)
 		return
+
+	var/temperature
+	var/turf/organ_turf = get_turf(src)
+	if(owner || !organ_turf)
+		return
+	temperature = organ_turf.GetTemperature()
+	switch(temperature)
+		if(-INFINITY to T0C)
+			if(HAS_TRAIT_FROM(src, TRAIT_ON_ICE, "turf temp"))
+				return
+			ADD_TRAIT(src, TRAIT_ON_ICE, "turf temp")
+		else if(HAS_TRAIT_FROM(src, TRAIT_ON_ICE, "turf temp"))
+			REMOVE_TRAIT(src, TRAIT_ON_ICE, "turf temp")
+
+	if(organ_flags & ORGAN_NO_DECAY || obj_flags & FROZEN)
+		return
+
 	applyOrganDamage(decay_factor * maxHealth * delta_time)
 
 /obj/item/organ/proc/on_life(delta_time, times_fired) //repair organ damage if the organ is not failing

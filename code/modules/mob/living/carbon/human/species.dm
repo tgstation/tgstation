@@ -1578,7 +1578,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required)(type: /mob/living/carbon/human) The mob we will target
  */
 /datum/species/proc/handle_body_temperature(mob/living/carbon/human/humi, delta_time, times_fired)
-	//when in a cryo unit we suspend all natural body regulation
+	//when in a cryo unit, we suspend all natural body regulation
 	if(istype(humi.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
 
@@ -1593,6 +1593,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Do not cause more damage in statis
 	if(!IS_IN_STASIS(humi))
 		body_temperature_damage(humi, delta_time, times_fired)
+
+	if(humi.bodytemperature <= T0C)
+		if(HAS_TRAIT_FROM(humi, TRAIT_ON_ICE, "body temp"))
+			return
+		ADD_TRAIT(humi, TRAIT_ON_ICE, "body temp")
+
+	else if(HAS_TRAIT_FROM(humi, TRAIT_ON_ICE, "body temp"))
+		REMOVE_TRAIT(humi, TRAIT_ON_ICE, "body temp")
 
 /**
  * Used to stabilize the core temperature back to normal on living mobs

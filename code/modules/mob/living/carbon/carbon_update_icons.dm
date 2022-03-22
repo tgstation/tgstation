@@ -289,7 +289,6 @@
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
 
-
 //change the mob's icon to the one matching its key
 /mob/living/carbon/proc/load_limb_from_cache()
 	if(limb_icon_cache[icon_render_key])

@@ -385,7 +385,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(isobj(arrived) && air && air.temperature > T0C)
 		var/obj/O = arrived
 		if(O.obj_flags & FROZEN)
-			O.make_unfrozen()
+			O.begin_unfreeze()
 
 // A proc in case it needs to be recreated or badmins want to change the baseturfs
 /turf/proc/assemble_baseturfs(turf/fake_baseturf_type)

@@ -579,28 +579,28 @@
 	SIGNAL_HANDLER
 	if(isorgan(I))
 		var/obj/item/organ/organ = I
-		organ.organ_flags |= ORGAN_FROZEN
+		ADD_TRAIT(organ, TRAIT_ON_ICE, type)
 		return
 	if(istype(I, /obj/item/bodypart))
 		var/obj/item/bodypart/B = I
 		for(var/O in B.contents)
 			if(isorgan(O))
 				var/obj/item/organ/organ = O
-				organ.organ_flags |= ORGAN_FROZEN
+				ADD_TRAIT(organ, TRAIT_ON_ICE, type)
 
 ///unfreezes the organ and loops bodyparts like heads
 /obj/item/storage/organbox/proc/unfreeze(datum/source, obj/item/I)
 	SIGNAL_HANDLER
 	if(isorgan(I))
 		var/obj/item/organ/organ = I
-		organ.organ_flags  &= ~ORGAN_FROZEN
+		REMOVE_TRAIT(organ, TRAIT_ON_ICE, type)
 		return
 	if(istype(I, /obj/item/bodypart))
 		var/obj/item/bodypart/B = I
 		for(var/O in B.contents)
 			if(isorgan(O))
 				var/obj/item/organ/organ = O
-				organ.organ_flags  &= ~ORGAN_FROZEN
+				REMOVE_TRAIT(organ, TRAIT_ON_ICE, type)
 
 /obj/item/storage/organbox/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers) && I.is_open_container())

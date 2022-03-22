@@ -807,7 +807,7 @@
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
 	status = ORGAN_ORGANIC
-	organ_flags = ORGAN_FROZEN|ORGAN_UNREMOVABLE
+	organ_flags = ORGAN_NO_DECAY|ORGAN_UNREMOVABLE
 	items_to_create = list(/obj/item/cursed_katana)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'

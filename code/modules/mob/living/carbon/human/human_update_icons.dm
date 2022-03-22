@@ -608,6 +608,9 @@ generate/load female uniform sprites matching all previously decided variables
 	if(HAS_TRAIT(src, TRAIT_HUSK))
 		. += "-husk"
 
+	if(HAS_TRAIT(src, TRAIT_COLD_SKIN))
+		. += "-cold_skin"
+
 	if(HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 		. += "-invisible"
 

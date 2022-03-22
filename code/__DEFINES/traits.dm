@@ -147,6 +147,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NEARSIGHT "nearsighted"
 #define TRAIT_FAT "fat"
 #define TRAIT_HUSK "husk"
+#define TRAIT_ON_ICE "on ice"
+#define TRAIT_COLD_SKIN "cold skin"
 ///Blacklisted from being revived via defibrilator
 #define TRAIT_DEFIB_BLACKLISTED "defib_blacklisted"
 #define TRAIT_BADDNA "baddna"

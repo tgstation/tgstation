@@ -905,6 +905,10 @@
 		if(should_draw_greyscale)
 			draw_color = mutation_color || species_color || (skin_tone && skintone2hex(skin_tone))
 			if(draw_color)
+				if(owner && ishuman(owner))
+					var/mob/living/carbon/human/human_owner = owner
+					if(HAS_TRAIT(human_owner, TRAIT_COLD_SKIN))
+						draw_color = BlendRGB(draw_color, COLOR_WHITE, 0.2) //lighten our skin slightly
 				limb.color = draw_color
 				if(aux_zone)
 					aux.color = draw_color

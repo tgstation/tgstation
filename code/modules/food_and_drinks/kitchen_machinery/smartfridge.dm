@@ -452,7 +452,7 @@
 		return
 	if(isorgan(O))
 		var/obj/item/organ/organ = O
-		organ.organ_flags |= ORGAN_FROZEN
+		ADD_TRAIT(organ, TRAIT_ON_ICE, type)
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -467,7 +467,7 @@
 	. = ..()
 	if(isorgan(gone))
 		var/obj/item/organ/O = gone
-		O.organ_flags &= ~ORGAN_FROZEN
+		REMOVE_TRAIT(O, TRAIT_ON_ICE, type)
 
 // -----------------------------
 // Chemistry Medical Smartfridge

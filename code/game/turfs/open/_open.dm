@@ -190,7 +190,9 @@
 		if(I.resistance_flags & FREEZE_PROOF)
 			continue
 		if(!(I.obj_flags & FROZEN))
-			I.make_frozen_visual()
+			ADD_TRAIT(I, TRAIT_ON_ICE, type)
+			I.make_frozen() //immediately freeze
+			REMOVE_TRAIT(I, TRAIT_ON_ICE, type)
 	for(var/mob/living/L in contents)
 		if(L.bodytemperature <= 50)
 			L.apply_status_effect(/datum/status_effect/freon)

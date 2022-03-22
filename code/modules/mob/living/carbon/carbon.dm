@@ -15,6 +15,9 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_ON_ICE), /atom.proc/begin_freeze)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_ON_ICE), /atom.proc/begin_unfreeze)
+
 /mob/living/carbon/Destroy()
 	//This must be done first, so the mob ghosts correctly before DNA etc is nulled
 	. = ..()
@@ -348,7 +351,7 @@
 		return FALSE
 	visible_message(span_danger("[src] manages to [cuff_break ? "break" : "remove"] [I]!"))
 	to_chat(src, span_notice("You successfully [cuff_break ? "break" : "remove"] [I]."))
-	
+
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)

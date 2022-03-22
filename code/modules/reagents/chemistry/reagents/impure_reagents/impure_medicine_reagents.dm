@@ -694,7 +694,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	manual_heart = new(null, src)
 	original_heart.Remove(carbon_mob, special = TRUE) //So we don't suddenly die
 	original_heart.forceMove(manual_heart)
-	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
+	original_heart.organ_flags |= ORGAN_NO_DECAY //Not actually frozen, but we want to pause decay
 	manual_heart.Insert(carbon_mob, special = TRUE)
 	//these last so instert doesn't call them
 	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
@@ -711,7 +711,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	original_heart = organ
 	original_heart.Remove(carbon_mob, special = TRUE)
 	original_heart.forceMove(manual_heart)
-	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
+	original_heart.organ_flags |= ORGAN_NO_DECAY
 	if(!manual_heart)
 		manual_heart = new(null, src)
 	manual_heart.Insert(carbon_mob, special = TRUE)
@@ -722,7 +722,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!organ == manual_heart)
 		return
 	original_heart.forceMove(organ.loc)
-	original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
+	original_heart.organ_flags &= ~ORGAN_NO_DECAY //enable decay again
 	qdel(organ)
 
 ///We're done - remove the curse and restore the old one
@@ -734,7 +734,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	var/mob/living/carbon/carbon_mob = owner
 	if(original_heart) //Mostly a just in case
-		original_heart.organ_flags &= ~ORGAN_FROZEN //enable decay again
+		original_heart.organ_flags &= ~ORGAN_NO_DECAY //enable decay again
 		original_heart.Insert(carbon_mob, special = TRUE)
 	qdel(manual_heart)
 	to_chat(owner, span_userdanger("You feel your heart start beating normally again!"))
