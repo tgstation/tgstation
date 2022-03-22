@@ -1,0 +1,7 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - refactor: "cryotubes can now work with any gases"
+  - expansion: "cryotubes patients will actually breathe the air inside the tube and will respond to the gas accordingly (they'll suffer from breath loss if not in proper atmosphere inside the tube)"
+  - expansion: "cryoxadone heals only if the patient is alseep, making the use of the anesthetic no longer just fluff but also functional"
+  - qol: "replaced oxygen canisters with anesthetic ones (a mix of oxygen and n2o at 65-35 ratio) for allowing the patient to sleep"
