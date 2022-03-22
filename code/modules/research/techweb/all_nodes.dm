@@ -752,8 +752,7 @@
 		"comp_target_intercept",
 		"comp_counter_overlay",
 		"comp_object_overlay",
-		"comp_list_vox",
-		"comp_string_vox",
+		"comp_vox",
 		"comp_thought_listener",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)

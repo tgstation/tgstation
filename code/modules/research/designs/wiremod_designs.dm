@@ -351,15 +351,10 @@
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
-/datum/design/component/bci/list_vox
-	name = "List VOX Announcement Component"
-	id = "comp_list_vox"
-	build_path = /obj/item/circuit_component/list_vox
-
-/datum/design/component/bci/string_vox
-	name = "String VOX Announcement Component"
-	id = "comp_string_vox"
-	build_path = /obj/item/circuit_component/string_vox
+/datum/design/component/bci/vox
+	name = "VOX Announcement Component"
+	id = "comp_vox"
+	build_path = /obj/item/circuit_component/vox
 
 /datum/design/component/bci/thought_listener
 	name = "Thought Listener Component"

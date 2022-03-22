@@ -1,16 +1,19 @@
 /**
- * # VOX Announcement Components
+ * # VOX Announcement Component
  *
  * These play a VOX announcement with inputed words from either a string or a list.
  * Requires a BCI shell.
  */
 
-/obj/item/circuit_component/list_vox
-	display_name = "List VOX Announcement"
+/obj/item/circuit_component/vox
+	display_name = "VOX Announcement"
 	desc = "A component that plays a local VOX Announcement for the user. Requires a BCI shell."
 	category = "BCI"
 
 	required_shells = list(/obj/item/organ/cyberimp/bci)
+
+	var/datum/port/input/option/type_option
+	var/current_type
 
 	var/datum/port/input/word_list
 
@@ -18,17 +21,26 @@
 
 	var/obj/item/organ/cyberimp/bci/bci
 
-/obj/item/circuit_component/list_vox/populate_ports()
+/obj/item/circuit_component/vox/populate_options()
+	type_option = add_option_port("VOX Type", list(PORT_TYPE_LIST(PORT_TYPE_STRING), PORT_TYPE_STRING))
+
+/obj/item/circuit_component/vox/populate_ports()
 	word_list = add_input_port("Word List", PORT_TYPE_LIST(PORT_TYPE_STRING))
 
-/obj/item/circuit_component/list_vox/register_shell(atom/movable/shell)
+/obj/item/circuit_component/vox/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/organ/cyberimp/bci))
 		bci = shell
 
-/obj/item/circuit_component/list_vox/unregister_shell(atom/movable/shell)
+/obj/item/circuit_component/vox/unregister_shell(atom/movable/shell)
 	bci = null
 
-/obj/item/circuit_component/list_vox/input_received(datum/port/input/port)
+/obj/item/circuit_component/vox/pre_input_received(datum/port/input/port)
+	var/current_option = type_option.value
+	if(current_type != current_option)
+		current_type = current_option
+		word_list.set_datatype(current_type)
+
+/obj/item/circuit_component/vox/input_received(datum/port/input/port)
 	if(!bci)
 		return
 
@@ -37,42 +49,11 @@
 	if(!owner || !istype(owner) || !owner.client || !word_list.value)
 		return
 
-	for(var/word in word_list.value)
-		play_vox_word(word, only_listener = owner)
+	if(current_type == PORT_TYPE_STRING)
+		var/words_list = splittext(trim(word_list.value), " ")
 
-/obj/item/circuit_component/string_vox
-	display_name = "String VOX Announcement"
-	desc = "A component that plays a local VOX Announcement for the user. Requires a BCI shell."
-	category = "BCI"
-
-	required_shells = list(/obj/item/organ/cyberimp/bci)
-
-	var/datum/port/input/words
-
-	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
-
-	var/obj/item/organ/cyberimp/bci/bci
-
-/obj/item/circuit_component/string_vox/populate_ports()
-	words = add_input_port("Words", PORT_TYPE_STRING)
-
-/obj/item/circuit_component/string_vox/register_shell(atom/movable/shell)
-	if(istype(shell, /obj/item/organ/cyberimp/bci))
-		bci = shell
-
-/obj/item/circuit_component/string_vox/unregister_shell(atom/movable/shell)
-	bci = null
-
-/obj/item/circuit_component/string_vox/input_received(datum/port/input/port)
-	if(!bci)
-		return
-
-	var/mob/living/owner = bci.owner
-
-	if(!owner || !istype(owner) || !owner.client || !words.value)
-		return
-
-	var/words_list = splittext(trim(words.value), " ")
-
-	for(var/word in words_list)
-		play_vox_word(word, only_listener = owner)
+		for(var/word in words_list)
+			play_vox_word(word, only_listener = owner)
+	else
+		for(var/word in word_list.value)
+			play_vox_word(word, only_listener = owner)
