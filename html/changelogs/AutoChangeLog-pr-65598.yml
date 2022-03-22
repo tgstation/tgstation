@@ -1,0 +1,4 @@
+author: "MrStonedOne"
+delete-after: True
+changes: 
+  - bugfix: "blob spores and game-controlled blobbernuts no longer get stuck thinking they can't walk thru blob tiles. This has been broken for over a year and so you should expect blob spores to be more of a threat then you are used to."

@@ -890,7 +890,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		return FALSE
 	if(!istype(projectile.firer, /obj/machinery/power/emitter) && power_changes)
 		investigate_log("has been hit by [projectile] fired by [key_name(projectile.firer)]", INVESTIGATE_SUPERMATTER)
-	if(projectile.flag != BULLET || kiss_power)
+	if(projectile.armor_flag != BULLET || kiss_power)
 		if(kiss_power)
 			psyCoeff = 1
 			psy_overlay = TRUE

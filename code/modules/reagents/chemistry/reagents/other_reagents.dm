@@ -27,10 +27,10 @@
 			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 				continue
 
-			if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
-			else //ingest, patch or inject
+			if(methods & (INJECT|INGEST|PATCH))
 				exposed_mob.ForceContractDisease(strain)
+			else if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+				exposed_mob.ContactContractDisease(strain)
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
