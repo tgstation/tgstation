@@ -371,7 +371,6 @@
 	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
-	new_limb_owner.update_hair()
 	new_limb_owner.update_damage_overlays()
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)

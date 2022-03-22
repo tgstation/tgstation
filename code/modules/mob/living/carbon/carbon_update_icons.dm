@@ -229,7 +229,7 @@
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.update_limb(is_creating = update_limb_data) //Update limb actually doesn't do much, get_limb_icon is the cpu eater.
 		var/old_key = icon_render_keys?[limb.body_zone] //Checks the mob's icon render key list for the bodypart
-		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key() : limb.generate_icon_key() //Generates a key for the current bodypart
+		icon_render_keys[limb.body_zone] = (limb.is_husked) ? limb.generate_husk_key().Join() : limb.generate_icon_key().Join() //Generates a key for the current bodypart
 		if(!(icon_render_keys[limb.body_zone] == old_key)) //If the keys match, that means the limb doesn't need to be redrawn
 			needs_update += limb
 
@@ -276,6 +276,8 @@
 	See RemieRichards on irc.rizon.net #coderbus (RIP remie :sob:)
 */
 /obj/item/bodypart/proc/generate_icon_key()
+	RETURN_TYPE(/list)
+	. = list()
 	if(is_dimorphic)
 		. += "[limb_gender]-"
 	. += "[limb_id]"
@@ -289,6 +291,7 @@
 
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
+	RETURN_TYPE(/list)
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
