@@ -21,9 +21,14 @@
 	deckstyle = "black"
 	decksize = 50
 
+GLOBAL_LIST_INIT(card_decks, list(
+	black = world.file2list("strings/black.txt"),
+	white = world.file2list("strings/white.txt")
+))
+
 /obj/item/toy/cards/deck/cas/Initialize(mapload)
 	. = ..()
-	var/static/list/cards_against_space = world.file2list("strings/[deckstyle].txt")
+	var/list/cards_against_space = card_decks[deckstyle]
 	var/list/possible_cards = cards_against_space.Copy()
 	var/list/random_cards = list()
 
