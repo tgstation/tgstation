@@ -240,7 +240,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/format_embed_discord(message)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Ticket #[id]"
-	embed.description = "<byond://[world.address]:[world.port]>"
+	embed.description = "<byond://[world.internet_address]:[world.port]>"
 	embed.author = key_name(initiator_ckey)
 	var/round_state
 	switch(SSticker.current_state)
