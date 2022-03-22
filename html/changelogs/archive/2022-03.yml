@@ -751,3 +751,12 @@
       the maintenance room back there. Pour one out.
   - bugfix: All lights (and cameras) in the Kilostation chapel have been PREPARED
       FOR THE FUTURE. And by the future, I mean the wallening.
+2022-03-22:
+  GoblinBackwards:
+  - bugfix: Prevents iron/adamantine/yellow slime cookies from being to able to stack
+      their bonuses.
+  Jolly:
+  - bugfix: The Beach Biodome had the water turf corrected, and as such, shouldn't
+      have atmos issues.
+  OneAsianTortoise:
+  - bugfix: fixes medical scrub being named "under"
