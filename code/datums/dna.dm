@@ -475,8 +475,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
 	if(icon_update)
-		update_body()
-		update_hair()
+		update_body(TRUE)
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 
@@ -518,9 +517,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		domutcheck()
 
 	if(mrace || newfeatures || ui)
-		update_body()
-		update_hair()
-		update_body_parts()
+		update_body(TRUE)
 		update_mutations_overlay()
 
 	if(LAZYLEN(mutations))
@@ -598,9 +595,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if(icon_update)
 		dna.species.handle_body(src) // We want 'update_body_parts()' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
-		update_hair()
+		update_hair(TRUE)
 		if(mutcolor_update)
-			update_body_parts()
+			update_body_parts(TRUE)
 		if(mutations_overlay_update)
 			update_mutations_overlay()
 

@@ -474,8 +474,7 @@
 		facial_hairstyle = "Shaved"
 	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
-	update_body()
-	update_hair()
+	update_body(TRUE)
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()

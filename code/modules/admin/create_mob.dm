@@ -38,4 +38,4 @@
 	H.dna.features["moth_antennae"] = pick(GLOB.moth_antennae_list)
 
 	H.update_body(TRUE)
-	H.update_hair()
+	H.update_hair(TRUE)
