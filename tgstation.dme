@@ -4253,6 +4253,7 @@
 #include "code\modules\wiremod\components\list\concat.dm"
 #include "code\modules\wiremod\components\list\filter.dm"
 #include "code\modules\wiremod\components\list\foreach.dm"
+#include "code\modules\wiremod\components\list\format.dm"
 #include "code\modules\wiremod\components\list\get_column.dm"
 #include "code\modules\wiremod\components\list\index.dm"
 #include "code\modules\wiremod\components\list\index_table.dm"
