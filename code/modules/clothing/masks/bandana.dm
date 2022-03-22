@@ -1,6 +1,4 @@
 /obj/item/clothing/mask/bandana
-	name = "botany bandana"
-	desc = "A fine bandana with nanotech lining and a hydroponics pattern."
 	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
@@ -8,7 +6,6 @@
 	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
-	icon_state = "bandbotany"
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
@@ -110,6 +107,35 @@
 	desc = "A fine white bandana with nanotech lining."
 	greyscale_colors = "#DCDCDC"
 
+/obj/item/clothing/mask/bandana/color/striped
+	name = "striped bandana"
+	desc = "A fine bandana with nanotech lining and a stripe across."
+	icon_state = "bandstriped"
+	worn_icon_state = "bandstriped_worn"
+	greyscale_config = /datum/greyscale_config/bandstriped
+	greyscale_config_worn = /datum/greyscale_config/bandstriped/worn
+	greyscale_colors = "#3F3F3F#C6C6C6"
+
+/obj/item/clothing/mask/bandana/color/striped/attack_self(mob/user)
+	adjustmask(user)
+	if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
+		src.worn_icon_state += "_up"
+		src.set_greyscale(
+			new_config = /datum/greyscale_config/bandstriped_up,
+			new_worn_config = /datum/greyscale_config/bandstriped_up/worn
+		)
+	else
+		src.worn_icon_state = initial(worn_icon_state)
+		src.set_greyscale(
+			new_config = /datum/greyscale_config/bandstriped,
+			new_worn_config = /datum/greyscale_config/bandstriped/worn
+		)
+
+/obj/item/clothing/mask/bandana/color/striped/botany
+	name = "striped botany bandana"
+	desc = "A fine bandana with nanotech lining, a stripe across and botany colors."
+	greyscale_colors = "#3D9829#294A98"
+
 /obj/item/clothing/mask/bandana/color/skull
 	name = "skull bandana"
 	desc = "A fine bandana with nanotech lining and a skull emblem."
@@ -132,6 +158,7 @@
 		src.set_greyscale(
 			new_config = /datum/greyscale_config/bandskull,
 			new_worn_config = /datum/greyscale_config/bandskull/worn
+		)
 
 /obj/item/clothing/mask/bandana/color/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
