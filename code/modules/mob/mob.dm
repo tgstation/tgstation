@@ -948,38 +948,15 @@
 	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
 		return FALSE
 
-	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost) & COMPONENT_MAGIC_BLOCKED
+	var/list/protection_was_used = list() // this is a janky way of interrupting signals using lists
+	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, protection_was_used) & COMPONENT_MAGIC_BLOCKED
 
 	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
 		is_magic_blocked = TRUE
 	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
 		is_magic_blocked = TRUE
 
-	if(is_magic_blocked)
-		var/mob/living/carbon/human/target = src
-		if(istype(target))
-			var/mutable_appearance/antimagic_effect
-			var/antimagic_color
-
-			if(casted_magic_flags & MAGIC_RESISTANCE)
-				antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
-				antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
-				playsound(src, 'sound/magic/magic_block.ogg', 50, TRUE)
-			else if(casted_magic_flags & MAGIC_RESISTANCE_HOLY)
-				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
-				antimagic_color = LIGHT_COLOR_HOLY_MAGIC
-				playsound(src, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
-			else if(casted_magic_flags & MAGIC_RESISTANCE_MIND)
-				antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
-				antimagic_color = LIGHT_COLOR_DARK_BLUE
-				playsound(src, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
-
-			target.mob_light(_range = 2, _color = antimagic_color, _duration = 5 SECONDS)
-			target.add_overlay(antimagic_effect)
-			addtimer(CALLBACK(target, /atom/proc/cut_overlay, antimagic_effect), 50)
-		return TRUE
-
-	return FALSE
+	return is_magic_blocked
 
 /**
  * Buckle a living mob to this mob. Also turns you to face the other mob
