@@ -175,7 +175,8 @@
 	//Middle-mouse-button clicked object control for aimbot exploit detection.
 	var/atom/middragatom
 
-	/// Messages currently seen by this client
+	/// Messages currently seen by this client.
+	///associative list of the form: list(atom the message is located in = list(chatmessage datums in that loc))
 	var/list/seen_messages
 
 	/// datum wrapper for client view
