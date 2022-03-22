@@ -44323,10 +44323,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/atmos/pumproom)
-"kzz" = (
-/obj/structure/sign/poster/random/directional/north,
-/turf/closed/wall,
-/area/maintenance/department/bridge)
 "kzB" = (
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
@@ -121190,7 +121186,7 @@ wYc
 klM
 efj
 pry
-kzz
+vJP
 mNB
 sSI
 acm
