@@ -131,6 +131,11 @@
 			new_worn_config = /datum/greyscale_config/bandstriped/worn
 		)
 
+/obj/item/clothing/mask/bandana/color/striped/black
+	name = "striped bandana"
+	desc = "A fine black and white bandana with nanotech lining and a stripe across."
+	greyscale_colors = "#3F3F3F#C6C6C6"
+
 /obj/item/clothing/mask/bandana/color/striped/botany
 	name = "striped botany bandana"
 	desc = "A fine bandana with nanotech lining, a stripe across and botany colors."
