@@ -414,7 +414,7 @@
 	hitsound = 'sound/effects/explosion3.ogg'
 	damage = 0 //Handled manually.
 	damage_type = BURN
-	flag = ENERGY
+	armor_flag = ENERGY
 	range = 150
 	jitter = 10
 	var/obj/item/gun/energy/beam_rifle/gun
