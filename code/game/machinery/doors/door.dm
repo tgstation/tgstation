@@ -210,8 +210,8 @@
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED))
 		return
-	access_bypass |= !requiresID()
-	if(access_bypass || allowed(user))
+	access_bypass |= requiresID()
+	if(access_bypass && allowed(user))
 		if(density)
 			open()
 		else
