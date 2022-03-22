@@ -4,7 +4,9 @@
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
 	//circuit = /obj/item/circuitboard/computer/turbine_computer #TODO: all others as well
+	///Reference of the connected machine to this computer
 	var/obj/machinery/power/turbine/core_rotor/main_control
+	///Easy way to connect a computer and a turbine roundstart by setting an id on both this and the core_rotor
 	var/mapping_id
 
 /obj/machinery/computer/turbine_computer/Initialize(mapload)

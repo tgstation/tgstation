@@ -1,3 +1,20 @@
+///Multiplier for converting work done into rpm and rpm in energy out
+#define TURBINE_RPM_CONVERSION 15
+///Efficiency of the turbine to turn work into energy, higher values will yield more power
+#define TURBINE_ENERGY_RECTIFICATION_MULTIPLIER 0.25
+///Max allowed damage per tick
+#define TURBINE_MAX_TAKEN_DAMAGE 10
+///Amount of damage healed when under the heat threshold
+#define TURBINE_DAMAGE_HEALING 2
+///Amount of damage that the machine must have to start launching alarms to the engi comms
+#define TURBINE_DAMAGE_ALARM_START 30
+///Multiplier when converting the gas energy into gas work
+#define TURBINE_WORK_CONVERSION_MULTIPLIER 0.01
+///Multiplier when converting gas work back into heat
+#define TURBINE_HEAT_CONVERSION_MULTIPLIER 0.005
+///Amount of energy removed from the work done by the stator due to the consumption from the compressor working on the gases
+#define TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER 0.15
+
 /obj/machinery/power/turbine
 	density = TRUE
 	resistance_flags = FIRE_PROOF
@@ -415,15 +432,15 @@
 	var/damage_done = round(log(90, max(temperature_difference, 1)), 0.5)
 
 	damage = max(damage + damage_done * 0.5, 0)
-	damage = min(damage_archived + 10, damage)
+	damage = min(damage_archived + TURBINE_MAX_TAKEN_DAMAGE, damage)
 	if(temperature_difference < 0)
-		damage = max(damage - 2, 0)
+		damage = max(damage - TURBINE_DAMAGE_HEALING, 0)
 
-	if((damage - damage_archived >= 2 || damage > 30) && COOLDOWN_FINISHED(src, turbine_damage_alert))
+	if((damage - damage_archived >= 2 || damage > TURBINE_DAMAGE_ALARM_START) && COOLDOWN_FINISHED(src, turbine_damage_alert))
 		call_alert(damage_done)
 
 /obj/machinery/power/turbine/core_rotor/proc/call_alert(damage_done)
-	COOLDOWN_START(src, turbine_damage_alert, max(round(20 - damage_done), 5) SECONDS)
+	COOLDOWN_START(src, turbine_damage_alert, max(round(TURBINE_DAMAGE_ALARM_START - damage_done), 5) SECONDS)
 	message_admins("AHHH YOU KILLING MEEEEE!!!11!!11!!!1111!!") //#TODO finish alert
 
 /obj/machinery/power/turbine/core_rotor/process_atmos()
@@ -438,33 +455,33 @@
 
 	calculate_damage_done(input_turf_mixture.temperature)
 
-	var/compressor_work = input_turf_mixture.total_moles() * R_IDEAL_GAS_EQUATION * input_turf_mixture.temperature * log(input_turf_mixture.volume / compressor_mixture.volume) * 0.01
+	var/compressor_work = input_turf_mixture.total_moles() * R_IDEAL_GAS_EQUATION * input_turf_mixture.temperature * log(input_turf_mixture.volume / compressor_mixture.volume) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	input_turf.air.pump_gas_to(compressor_mixture, input_turf.air.return_pressure())
 	input_turf.air_update_turf(TRUE)
-	compressor_mixture.temperature = max((compressor_mixture.temperature * compressor_mixture.heat_capacity() + compressor_work * compressor_mixture.total_moles() * 0.005) / compressor_mixture.heat_capacity(), TCMB)
+	compressor_mixture.temperature = max((compressor_mixture.temperature * compressor_mixture.heat_capacity() + compressor_work * compressor_mixture.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / compressor_mixture.heat_capacity(), TCMB)
 
 	var/compressor_pressure = compressor_mixture.return_pressure()
 
-	var/rotor_work = compressor_mixture.total_moles() * R_IDEAL_GAS_EQUATION * compressor_mixture.temperature * log(compressor_mixture.volume / rotor_mixture.volume) * 0.01
+	var/rotor_work = compressor_mixture.total_moles() * R_IDEAL_GAS_EQUATION * compressor_mixture.temperature * log(compressor_mixture.volume / rotor_mixture.volume) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	rotor_work = rotor_work - compressor_work
 	compressor_mixture.pump_gas_to(rotor_mixture, compressor_mixture.return_pressure())
-	rotor_mixture.temperature = max((rotor_mixture.temperature * rotor_mixture.heat_capacity() + rotor_work * rotor_mixture.total_moles() * 0.005) / rotor_mixture.heat_capacity(), TCMB)
+	rotor_mixture.temperature = max((rotor_mixture.temperature * rotor_mixture.heat_capacity() + rotor_work * rotor_mixture.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / rotor_mixture.heat_capacity(), TCMB)
 
-	var/turbine_work = rotor_mixture.total_moles() * R_IDEAL_GAS_EQUATION * rotor_mixture.temperature * log(rotor_mixture.volume / turbine_mixture.volume) * 0.01
+	var/turbine_work = rotor_mixture.total_moles() * R_IDEAL_GAS_EQUATION * rotor_mixture.temperature * log(rotor_mixture.volume / turbine_mixture.volume) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	turbine_work = turbine_work - abs(rotor_work)
 	rotor_mixture.pump_gas_to(turbine_mixture, rotor_mixture.return_pressure())
-	turbine_mixture.temperature = max((turbine_mixture.temperature * turbine_mixture.heat_capacity() + turbine_work * turbine_mixture.total_moles() * 0.005) / turbine_mixture.heat_capacity(), TCMB)
+	turbine_mixture.temperature = max((turbine_mixture.temperature * turbine_mixture.heat_capacity() + turbine_work * turbine_mixture.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / turbine_mixture.heat_capacity(), TCMB)
 
 	var/turbine_pressure = turbine_mixture.return_pressure()
 
 	var/work_done = turbine_mixture.total_moles() * R_IDEAL_GAS_EQUATION * turbine_mixture.temperature * log(compressor_pressure / turbine_pressure)
 
-	work_done = max(work_done - compressor_work * 0.15 - turbine_work, 0)
+	work_done = max(work_done - compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 
-	rpm = ((work_done * compressor_part_efficiency) ** stator_part_efficiency) * rotor_part_efficiency / 15
+	rpm = ((work_done * compressor_part_efficiency) ** stator_part_efficiency) * rotor_part_efficiency / TURBINE_RPM_CONVERSION
 	rpm = min(rpm, max_allowed_rpm)
 
-	produced_energy = rpm * 0.25 * 15
+	produced_energy = rpm * TURBINE_ENERGY_RECTIFICATION_MULTIPLIER * TURBINE_RPM_CONVERSION
 
 	add_avail(produced_energy)
 
