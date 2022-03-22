@@ -760,8 +760,8 @@
 	var/mob/living/living_owner = owner
 	var/mob/living/living_scanned = scanned
 	living_scanned.apply_status_effect(/datum/status_effect/stagger)
-	var/datum/status_effect/agent_pinpointer/scan/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
-	scan_pinpointer.scan_scanned = living_scanned
+	var/datum/status_effect/agent_pinpointer/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
+	scan_pinpointer.scan_target = living_scanned
 
 	living_scanned.Jitter(5 SECONDS)
 	to_chat(living_scanned, span_warning("You've been staggered!"))

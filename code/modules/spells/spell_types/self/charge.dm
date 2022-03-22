@@ -48,9 +48,9 @@
 				burnt_out = TRUE
 				break
 
-			else if(istype(item, /obj/item/book/granter/spell))
-				var/obj/item/book/granter/spell/spell_granter = item
-				if(!spell_granter.oneuse)
+			else if(istype(item, /obj/item/book/granter/action/spell))
+				var/obj/item/book/granter/action/spell/spell_granter = item
+				if(spell_granter.uses >= INFINITY - 2000) // What're the odds someone uses 2000 uses of an infinite use book?
 					to_chat(cast_on, span_notice("This book is infinite use and can't be recharged, \
 						yet the magic has improved the book somehow..."))
 					burnt_out = TRUE
@@ -64,7 +64,7 @@
 					qdel(spell_granter)
 
 				else
-					spell_granter.used = FALSE
+					spell_granter.uses++
 					charged_item = spell_granter
 
 				break

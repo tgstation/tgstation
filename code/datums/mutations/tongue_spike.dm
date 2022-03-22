@@ -88,7 +88,7 @@
 	text_gain_indication = "<span class='notice'>Your feel like you can really connect with people by throwing your voice.</span>"
 	instability = 15
 	locked = TRUE
-	power = /datum/action/cooldown/spell/tongue_spike/chem
+	power_path = /datum/action/cooldown/spell/tongue_spike/chem
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
@@ -127,8 +127,7 @@
 		return
 
 	var/datum/action/send_chems/chem_action = new(src)
-	chem_action.transfered = embedded_mob
-	chem_action.spikey = src
+	chem_action.transfered_ref = WEAKREF(embedded_mob)
 	chem_action.Grant(fired_by)
 
 	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability \
@@ -159,7 +158,7 @@
 	if(!istype(target, /obj/item/hardened_spike/chem))
 		qdel(src)
 
-/datum/action/send_chems/Trigger()
+/datum/action/send_chems/Trigger(trigger_flags)
 	. = ..()
 	if(!.)
 		return FALSE

@@ -56,7 +56,7 @@
 
 /datum/mutation/human/thermal/modify()
 	. = ..()
-	var/datum/action/cooldown/spell/thermal_vision_activate/to_modify = .
+	var/datum/action/cooldown/spell/thermal_vision/to_modify = .
 	if(!istype(to_modify)) // null or invalid
 		return
 

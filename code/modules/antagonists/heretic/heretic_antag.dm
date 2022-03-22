@@ -213,7 +213,7 @@
  * If so, allow them to cast like normal.
  * If not, cancel the cast.
  */
-/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, obj/effect/proc_holder/spell/spell)
+/datum/antagonist/heretic/proc/on_spell_cast(mob/living/source, datum/action/cooldown/spell/spell)
 	SIGNAL_HANDLER
 
 	// Heretic spells are of the forbidden school, otherwise we don't care

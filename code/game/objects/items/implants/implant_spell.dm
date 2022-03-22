@@ -34,7 +34,7 @@
 	if (!.)
 		return
 
-	if (!spell)
+	if (!spell_to_give)
 		return FALSE
 
 	spell_to_give.Grant(target)

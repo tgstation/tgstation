@@ -877,12 +877,12 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		if(!isliving(M.current))
 			continue
 		var/list/all_items = M.current.get_all_contents() //this should get things in cheesewheels, books, etc.
-		for(var/obj/I in all_items) //Check for wanted items
-			if(istype(I, /obj/item/book/granter/spell))
-				var/obj/item/book/granter/spell/spellbook = I
-				if(!spellbook.used || !spellbook.oneuse) //if the book still has powers...
+		for(var/obj/thing in all_items) //Check for wanted items
+			if(istype(thing, /obj/item/book/granter/action/spell))
+				var/obj/item/book/granter/action/spell/spellbook = thing
+				if(spellbook.uses > 0) //if the book still has powers...
 					stolen_count++ //it counts. nice.
-			else if(is_type_in_typecache(I, wanted_items))
+			else if(is_type_in_typecache(thing, wanted_items))
 				stolen_count++
 	return stolen_count >= amount
 

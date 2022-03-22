@@ -311,7 +311,7 @@
 			//Random One-use spellbook
 			T.visible_message(span_userdanger("A magical looking book drops to the floor!"))
 			do_smoke(0, drop_location())
-			new /obj/item/book/granter/spell/random(drop_location())
+			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
 			T.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
