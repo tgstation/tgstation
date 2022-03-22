@@ -289,7 +289,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/datum/discord_embed/embed = format_embed_discord(message)
 		embed.content = extra_message
 		embed.footer = "This player requested an admin"
-		send2adminchat_webhook(embed, TRUE)
+		send2adminchat_webhook(embed, urgent = TRUE)
 		webhook_sent = WEBHOOK_URGENT
 	//send it to TGS if nobody is on and tell us how many were on
 	var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [message_to_send]")
@@ -301,7 +301,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		var/datum/discord_embed/embed = format_embed_discord(message)
 		embed.content = extra_message
 		embed.footer = "This player sent an ahelp when no admins are available [urgent? "and also requested an admin": ""]"
-		send2adminchat_webhook(embed, FALSE)
+		send2adminchat_webhook(embed, urgent = FALSE)
 		webhook_sent = WEBHOOK_NON_URGENT
 
 /proc/send2adminchat_webhook(message_or_embed, urgent)
@@ -596,7 +596,9 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			ahelp_link = replacetext(ahelp_link, "$TID", id)
 			embed.url = ahelp_link
 		embed.description = "[key_name(usr)] has sent an action to this ahelp. Action ID: [action]"
-		send2adminchat_webhook(embed, webhook_sent == WEBHOOK_URGENT)
+		if(webhook_sent == WEBHOOK_URGENT)
+			send2adminchat_webhook(embed, urgent = TRUE)
+		send2adminchat_webhook(embed, urgent = FALSE)
 		webhook_sent = WEBHOOK_NONE
 	switch(action)
 		if("ticket")
