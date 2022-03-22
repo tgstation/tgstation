@@ -1,0 +1,4 @@
+author: "Jolly"
+delete-after: True
+changes: 
+  - bugfix: "The Beach Biodome had the water turf corrected, and as such, shouldn't have atmos issues."
