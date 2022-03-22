@@ -1,21 +1,35 @@
+/**
+ * # Action system
+ *
+ * A simple base for an modular behavior attached to atom or datum.
+ */
 /datum/action
+	/// The name of the action
 	var/name = "Generic Action"
+	/// The description of what the action does
 	var/desc
+	/// The target the action is attached to. If the target datum is deleted, the action is as well.
+	/// Set in New() via the proc link_to(). PLEASE set a target if you're making an action
 	var/datum/target
-	var/check_flags = NONE
-	var/processing = FALSE
+	/// The screen button shown on our owner's actual screen. What they click to call Trigger() on the action.
 	var/atom/movable/screen/movable/action_button/button = null
-	var/buttontooltipstyle = ""
-	var/transparent_when_unavailable = TRUE
-
-	var/button_icon = 'icons/mob/actions/backgrounds.dmi' //This is the file for the BACKGROUND icon
-	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND //And this is the state for the background icon
-
-	var/icon_icon = 'icons/hud/actions.dmi' //This is the file for the ACTION icon
-	var/button_icon_state = "default" //And this is the state for the action icon
+	/// This is who currently owns the action, and most often, this is who is using the action if it is triggered
+	/// This can be the same as "target" but is not ALWAYS the same - this is set and unset with Grant() and Remove()
 	var/mob/owner
-	///All mobs that are sharing our action button.
-	var/list/sharers = list()
+	/// Flags that will determine of the owner / user of the action can... use the action
+	var/check_flags = NONE
+	/// The style the button's tooltips appear to be
+	var/buttontooltipstyle = ""
+	/// Whether the button becomes transparent when it can't be used or just reddened
+	var/transparent_when_unavailable = TRUE
+	/// This is the file for the BACKGROUND icon of the button
+	var/button_icon = 'icons/mob/actions/backgrounds.dmi'
+	/// This is the icon state state for the BACKGROUND icon of the button
+	var/background_icon_state = ACTION_BUTTON_DEFAULT_BACKGROUND
+	/// This is the file for the icon that appears OVER the button background
+	var/icon_icon = 'icons/hud/actions.dmi'
+	/// This is the icon state for the icon that appears OVER the button background
+	var/button_icon_state = "default"
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -26,6 +40,7 @@
 	if(desc)
 		button.desc = desc
 
+/// Links the passed target to our action, registering any relevant signals
 /datum/action/proc/link_to(Target)
 	target = Target
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
@@ -43,6 +58,7 @@
 	QDEL_NULL(button)
 	return ..()
 
+/// Granst the action to the passed mob, making it the owner
 /datum/action/proc/Grant(mob/M)
 	if(M)
 		if(owner)
@@ -76,6 +92,8 @@
 	else
 		Remove(owner)
 
+/// Signal proc that clears any references based on the owner or target deleting
+/// If the owner's deleted, we will simply remove from them, but if the target's deleted, we will self-delete
 /datum/action/proc/clear_ref(datum/ref)
 	SIGNAL_HANDLER
 	if(ref == owner)
@@ -83,6 +101,7 @@
 	if(ref == target)
 		qdel(src)
 
+/// Remove the passed mob from being owner of our action
 /datum/action/proc/Remove(mob/M)
 	for(var/datum/weakref/reference as anything in sharers)
 		var/mob/freeloader = reference.resolve()
@@ -105,6 +124,8 @@
 		button.locked = FALSE
 		button.id = null
 
+/// Actually triggers the effects of the action.
+/// Called when the on-screen button is clicked, for example.
 /datum/action/proc/Trigger(trigger_flags)
 	if(!IsAvailable())
 		return FALSE
@@ -112,7 +133,7 @@
 		return FALSE
 	return TRUE
 
-
+/// Whether our action is currently available to use or not
 /datum/action/proc/IsAvailable()
 	if(!owner)
 		return FALSE
@@ -128,7 +149,7 @@
 		return FALSE
 	return TRUE
 
-
+/// Updates the icon of the button on the owner's screen
 /datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	if(button)
 		if(!status_only)
@@ -154,39 +175,22 @@
 			button.color = rgb(255,255,255,255)
 			return TRUE
 
+/// Applies our button icon over top the background icon of the action
 /datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
 	if(icon_icon && button_icon_state && ((current_button.button_icon_state != button_icon_state) || force))
 		current_button.cut_overlays(TRUE)
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
+/// Signal proc for COMSIG_ATOM_UPDATED_ICON - for atoms, also updates our button icon on icon updates
 /datum/action/proc/on_target_update_icon(datum/source)
 	SIGNAL_HANDLER
 
 	UpdateButtonIcon()
 
+/// Signal proc for COMSIG_MIND_TRANSFERRED - for minds, transfers our action to our new mob on mind transfer
 /datum/action/proc/on_target_mind_swapped(datum/mind/source, mob/old_current)
 	SIGNAL_HANDLER
 
+	// MELBERT TODO removed the remove() since it shouldn't be needed, also check what happens with ghosts
 	Grant(source.current)
-
-//Adds our action button to the screen of another player
-/datum/action/proc/Share(mob/freeloader)
-	if(!freeloader.client)
-		return
-	sharers += WEAKREF(freeloader)
-	freeloader.client.screen += button
-	freeloader.actions += src
-	freeloader.update_action_buttons()
-
-//Removes our action button from the screen of another player
-/datum/action/proc/Unshare(mob/freeloader)
-	if(!freeloader.client)
-		return
-	for(var/freeloader_reference in sharers)
-		if(IS_WEAKREF_OF(freeloader, freeloader_reference))
-			sharers -= freeloader_reference
-			break
-	freeloader.client.screen -= button
-	freeloader.actions -= src
-	freeloader.update_action_buttons()
