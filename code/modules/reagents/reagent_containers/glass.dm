@@ -30,7 +30,7 @@
 				return // The drink might be empty after the delay, such as by spam-feeding
 			M.visible_message(span_danger("[user] feeds [M] something from [src]."), \
 						span_userdanger("[user] feeds you something from [src]."))
-			log_combat(user, M, "fed", reagents.log_list())
+			log_combat(user, M, "fed", reagents.get_reagent_log_string())
 		else
 			to_chat(user, span_notice("You swallow a gulp of [src]."))
 		SEND_SIGNAL(src, COMSIG_GLASS_DRANK, M, user)
