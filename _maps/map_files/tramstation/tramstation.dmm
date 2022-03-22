@@ -17106,8 +17106,8 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/directional/east,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "eNN" = (
@@ -17664,9 +17664,6 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/hallway/primary/tram/right)
-"eXc" = (
-/turf/open/misc/asteroid/airless,
-/area/space)
 "eXf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -33296,7 +33293,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "kCT" = (
@@ -129073,7 +129070,7 @@ ajc
 ajc
 ajc
 ajc
-eXc
+ajc
 ajc
 ajc
 ajc

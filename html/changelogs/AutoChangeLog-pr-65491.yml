@@ -1,0 +1,5 @@
+author: "kawoppi"
+delete-after: True
+changes: 
+  - imageadd: "adjusted black undershirt side sprites to be more in line with the front sprite"
+  - imageadd: "adjusted white undershirt side sprites to be more in line with the front sprite"
