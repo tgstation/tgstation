@@ -240,6 +240,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 /datum/admin_help/proc/format_embed_discord(message)
 	var/datum/discord_embed/embed = new()
 	embed.title = "Ticket #[id]"
+	embed.description = "<byond://[world.address]:[world.port]>"
 	embed.author = key_name(initiator_ckey)
 	var/round_state
 	switch(SSticker.current_state)
@@ -297,17 +298,19 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	if(admin_number_present <= 0)
 		to_chat(initiator, span_notice("No active admins are online, your adminhelp was sent to admins who are available through IRC or Discord."), confidential = TRUE)
 		heard_by_no_admins = TRUE
-		var/extra_message = CONFIG_GET(string/ahelp_message)
-		var/datum/discord_embed/embed = format_embed_discord(message)
-		embed.content = extra_message
-		embed.footer = "This player sent an ahelp when no admins are available [urgent? "and also requested an admin": ""]"
-		send2adminchat_webhook(embed, urgent = FALSE)
-		webhook_sent = WEBHOOK_NON_URGENT
+		var/regular_webhook_url = CONFIG_GET(string/regular_adminhelp_webhook_url)
+		if(regular_webhook_url && (!urgent || regular_webhook_url != CONFIG_GET(string/urgent_adminhelp_webhook_url)))
+			var/extra_message = CONFIG_GET(string/ahelp_message)
+			var/datum/discord_embed/embed = format_embed_discord(message)
+			embed.content = extra_message
+			embed.footer = "This player sent an ahelp when no admins are available [urgent? "and also requested an admin": ""]"
+			send2adminchat_webhook(embed, urgent = FALSE)
+			webhook_sent = WEBHOOK_NON_URGENT
 
 /proc/send2adminchat_webhook(message_or_embed, urgent)
 	var/webhook = CONFIG_GET(string/urgent_adminhelp_webhook_url)
 	if(!urgent)
-		webhook = CONFIG_GET(string/adminhelp_webhook_url)
+		webhook = CONFIG_GET(string/regular_adminhelp_webhook_url)
 
 	if(!webhook)
 		return
@@ -598,7 +601,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		embed.description = "[key_name(usr)] has sent an action to this ahelp. Action ID: [action]"
 		if(webhook_sent == WEBHOOK_URGENT)
 			send2adminchat_webhook(embed, urgent = TRUE)
-		send2adminchat_webhook(embed, urgent = FALSE)
+		if(webhook_sent == WEBHOOK_NON_URGENT || CONFIG_GET(string/regular_adminhelp_webhook_url) != CONFIG_GET(string/urgent_adminhelp_webhook_url))
+			send2adminchat_webhook(embed, urgent = FALSE)
 		webhook_sent = WEBHOOK_NONE
 	switch(action)
 		if("ticket")
@@ -670,7 +674,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	. = list()
 	.["bannedFromUrgentAhelp"] = is_banned_from(user.ckey, "Urgent Adminhelp")
 	.["urgentAhelpPromptMessage"] = CONFIG_GET(string/urgent_ahelp_user_prompt)
-	var/webhook_url = CONFIG_GET(string/adminhelp_webhook_url)
+	var/webhook_url = CONFIG_GET(string/urgent_adminhelp_webhook_url)
 	if(webhook_url)
 		.["urgentAhelpEnabled"] = TRUE
 

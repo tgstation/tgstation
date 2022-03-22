@@ -604,7 +604,7 @@
 
 /datum/config_entry/string/urgent_adminhelp_webhook_url
 
-/datum/config_entry/string/adminhelp_webhook_url
+/datum/config_entry/string/regular_adminhelp_webhook_url
 
 /datum/config_entry/string/adminhelp_webhook_pfp
 
