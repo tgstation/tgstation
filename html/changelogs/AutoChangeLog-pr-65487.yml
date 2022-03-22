@@ -1,0 +1,5 @@
+author: "capsaicinz"
+delete-after: True
+changes: 
+  - bugfix: "xray beams can now be resisted by laser-resistant armor"
+  - code_imp: "/obj/projectile flag is renamed to armor_flag"
