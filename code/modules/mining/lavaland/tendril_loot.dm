@@ -745,17 +745,22 @@
 	cooldown_time = 45 SECONDS
 	ranged_mousepointer = 'icons/effects/mouse_pointers/scan_target.dmi'
 
+/datum/action/cooldown/scan/IsAvailable()
+	return ..() && isliving(owner)
+
 /datum/action/cooldown/scan/Activate(atom/scanned)
 	StartCooldown(15 SECONDS)
+
 	if(owner.stat != CONSCIOUS)
 		return FALSE
 	if(!isliving(scanned) || scanned == owner)
-		balloon_alert(owner, "invalid scanned!")
+		owner.balloon_alert(owner, "invalid scanned!")
 		return FALSE
 
+	var/mob/living/living_owner = owner
 	var/mob/living/living_scanned = scanned
 	living_scanned.apply_status_effect(/datum/status_effect/stagger)
-	var/datum/status_effect/agent_pinpointer/scan_pinpointer = owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
+	var/datum/status_effect/agent_pinpointer/scan/scan_pinpointer = living_owner.apply_status_effect(/datum/status_effect/agent_pinpointer/scan)
 	scan_pinpointer.scan_scanned = living_scanned
 
 	living_scanned.Jitter(5 SECONDS)
@@ -764,11 +769,10 @@
 	addtimer(CALLBACK(living_scanned, /atom/.proc/remove_filter, "scan"), 30 SECONDS)
 
 	owner.playsound_local(get_turf(owner), 'sound/magic/smoke.ogg', 50, TRUE)
-	balloon_alert(owner, "[living_scanned] scanned")
+	owner.balloon_alert(owner, "[living_scanned] scanned")
 	addtimer(CALLBACK(src, /atom/.proc/balloon_alert, owner, "scan recharged"), cooldown_time)
 
 	StartCooldown()
-
 	return TRUE
 
 /datum/status_effect/agent_pinpointer/scan

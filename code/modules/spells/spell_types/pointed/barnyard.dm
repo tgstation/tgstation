@@ -2,6 +2,7 @@
 	name = "Curse of the Barnyard"
 	desc = "This spell dooms an unlucky soul to possess the speech and facial attributes of a barnyard animal."
 	button_icon_state = "barn"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
 
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 15 SECONDS
@@ -11,7 +12,6 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
 	active_msg = "You prepare to curse a target..."
 	deactive_msg = "You dispel the curse."
 

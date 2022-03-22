@@ -18,7 +18,8 @@
 
 /datum/action/cooldown/spell/timestop/Grant(mob/grant_to)
 	. = ..()
-	ADD_TRAIT(grant_to, TRAIT_TIME_STOP_IMMUNE, REF(src))
+	if(owner)
+		ADD_TRAIT(owner, TRAIT_TIME_STOP_IMMUNE, REF(src))
 
 /datum/action/cooldown/spell/timestop/Remove(mob/remove_from)
 	REMOVE_TRAIT(remove_from, TRAIT_TIME_STOP_IMMUNE, REF(src))

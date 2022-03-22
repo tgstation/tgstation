@@ -2,6 +2,7 @@
 	name = "Blind"
 	desc = "This spell temporarily blinds a single target."
 	button_icon_state = "blind"
+	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 
 	sound = 'sound/magic/blind.ogg'
 	school = SCHOOL_TRANSMUTATION
@@ -12,11 +13,13 @@
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 
-	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 	active_msg = "You prepare to blind a target..."
 
+	/// The amount of blind to apply
 	var/eye_blind_amount = 10
+	/// The amount of blurriness to apply
 	var/eye_blurry_amount = 20
+	/// The duration of the blind mutation placed on the person
 	var/blind_mutation_duration = 30 SECONDS
 
 /datum/action/cooldown/spell/pointed/blind/is_valid_target(atom/cast_on)
@@ -34,8 +37,9 @@
 	to_chat(cast_on, span_warning("Your eyes cry out in pain!"))
 	cast_on.blind_eyes(eye_blind_amount)
 	cast_on.blur_eyes(eye_blurry_amount)
-	cast_on.dna?.add_mutation(/datum/mutation/human/blind)
-	addtimer(CALLBACK(src, .proc/fix_eyes, cast_on), blind_mutation_duration)
+	if(cast_on.dna && blind_mutation_duration > 0 SECONDS)
+		cast_on.dna.add_mutation(/datum/mutation/human/blind)
+		addtimer(CALLBACK(src, .proc/fix_eyes, cast_on), blind_mutation_duration)
 	return TRUE
 
 /datum/action/cooldown/spell/pointed/blind/proc/fix_eyes(mob/living/carbon/human/cast_on)

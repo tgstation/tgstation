@@ -26,8 +26,8 @@
 
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/Grant(mob/grant_to)
 	. = ..()
-	if(IS_WIZARD(grant_to))
-		ADD_TRAIT(grant_to, TRAIT_TESLA_SHOCKIMMUNE, type)
+	if(IS_WIZARD(owner))
+		ADD_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE, type)
 
 /datum/action/cooldown/spell/pointed/projectile/lightningbolt/Remove(mob/living/remove_from)
 	. = ..()
