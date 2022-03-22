@@ -206,7 +206,7 @@
 	if(cutAiWire)
 		wires.cut(WIRE_AI)
 	if(autoname)
-		name = "\proper [get_area_name(src)]" //Formatted this way to work around a BYOND issue : "That's a Primary Tool Storage"
+		name = get_area_name(src, TRUE)
 	update_appearance()
 
 
