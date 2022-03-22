@@ -2,6 +2,7 @@
 
 /datum/map_template/shuttle
 	name = "Base Shuttle Template"
+	has_ceiling = TRUE
 	var/prefix = "_maps/shuttles/"
 	var/suffix
 	var/port_id
