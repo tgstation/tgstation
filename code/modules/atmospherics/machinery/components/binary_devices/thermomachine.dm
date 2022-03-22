@@ -146,7 +146,7 @@
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
 
 	if(!has_metalh2)
-		. += span_notice("Can be upgraded with 2 sheets of metallic hydrogen.")
+		. += span_notice("Can be upgraded with 3 sheets of metallic hydrogen.")
 	else
 		. += span_notice("Has been upgraded and does not need the thermal waste port anymore.")
 
