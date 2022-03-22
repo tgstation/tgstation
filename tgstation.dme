@@ -2468,6 +2468,7 @@
 #include "code\modules\client\preferences\species_features\lizard.dm"
 #include "code\modules\client\preferences\species_features\moth.dm"
 #include "code\modules\client\preferences\species_features\mutants.dm"
+#include "code\modules\client\preferences\species_features\pod.dm"
 #include "code\modules\client\preferences\species_features\vampire.dm"
 #include "code\modules\client\verbs\ooc.dm"
 #include "code\modules\client\verbs\ping.dm"
