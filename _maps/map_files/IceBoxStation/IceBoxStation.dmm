@@ -8164,12 +8164,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/atmos/pumproom)
-"bTW" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 1
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/disposal/incinerator)
 "bUt" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -37044,10 +37038,6 @@
 	},
 /turf/open/floor/iron,
 /area/engineering/lobby)
-"pQX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating/snowed/icemoon,
-/area/maintenance/disposal/incinerator)
 "pRo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -91188,9 +91178,9 @@ mLI
 fCB
 ljH
 dgm
-pQX
-pQX
-bTW
+lid
+lid
+snI
 gXW
 gXW
 gXW

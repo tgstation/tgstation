@@ -147,7 +147,7 @@
 	mapping_id = "syndie_lavaland_incineratorturbine"
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "cA" = (
 /obj/structure/table/reinforced,
@@ -181,6 +181,7 @@
 /obj/machinery/atmospherics/components/binary/thermomachine/freezer{
 	dir = 1
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "do" = (
@@ -539,6 +540,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "eq" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "er" = (
@@ -586,7 +588,7 @@
 /area/ruin/syndicate_lava_base/chemistry)
 "eA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "eB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -3677,10 +3679,7 @@
 /area/ruin/syndicate_lava_base/medbay)
 "nc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
-/obj/machinery/computer/turbine_computer{
-	dir = 1;
-	mapping_id = "syndie_lavaland_incineratorturbine"
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "nd" = (
@@ -4207,17 +4206,17 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber{
 	dir = 1
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "oA" = (
 /obj/machinery/igniter/incinerator_syndicatelava,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "oB" = (
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "oC" = (
 /obj/machinery/door/poddoor/incinerator_syndicatelava_aux,
@@ -4237,7 +4236,7 @@
 	dir = 1;
 	id = "syndie_lavaland_inc_in"
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "oF" = (
 /obj/structure/sign/warning/securearea,
@@ -4514,6 +4513,11 @@
 /area/ruin/syndicate_lava_base/main)
 "Ec" = (
 /obj/machinery/light/small/directional/south,
+/obj/machinery/computer/turbine_computer{
+	dir = 1;
+	mapping_id = "syndie_lavaland_incineratorturbine"
+	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "Ed" = (
@@ -4706,10 +4710,8 @@
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/main)
 "Oh" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/end,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "Oq" = (
@@ -4789,6 +4791,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/effect/turf_decal/stripes/corner,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
 "RK" = (
@@ -4832,7 +4835,7 @@
 /obj/machinery/power/turbine/turbine_outlet{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine,
 /area/ruin/syndicate_lava_base/engineering)
 "Uq" = (
 /obj/effect/decal/cleanable/dirt,

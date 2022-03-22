@@ -12761,6 +12761,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /obj/structure/chair/stool/directional/south,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "bCS" = (
@@ -25103,6 +25104,7 @@
 	},
 /area/engineering/supermatter/room)
 "dRb" = (
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "dRi" = (
@@ -29096,6 +29098,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "fjI" = (
@@ -34294,6 +34297,7 @@
 	pixel_x = 8;
 	pixel_y = 36
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "hca" = (
@@ -40385,7 +40389,7 @@
 	},
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating/airless,
-/area/maintenance/disposal/incinerator)
+/area/space/nearstation)
 "iYL" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -53561,6 +53565,11 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
 /area/cargo/warehouse)
+"noP" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
+/turf/open/floor/plating,
+/area/maintenance/disposal/incinerator)
 "noY" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -62565,7 +62574,7 @@
 	dir = 1
 	},
 /turf/open/space/basic,
-/area/maintenance/disposal/incinerator)
+/area/space/nearstation)
 "qlK" = (
 /obj/machinery/vending/dinnerware,
 /obj/effect/turf_decal/bot,
@@ -64351,6 +64360,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "qQX" = (
@@ -75212,6 +75222,7 @@
 /obj/machinery/power/turbine/core_rotor{
 	mapping_id = "main_turbine"
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "upZ" = (
@@ -76867,6 +76878,7 @@
 /obj/effect/turf_decal/box,
 /obj/machinery/portable_atmospherics/canister,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "uUB" = (
@@ -113311,7 +113323,7 @@ qQP
 uUx
 tgK
 aFJ
-cmJ
+acm
 acm
 aeo
 aeo
@@ -113824,7 +113836,7 @@ xzv
 xzv
 hbZ
 jXM
-lbb
+noP
 qlD
 acm
 acm
