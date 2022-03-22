@@ -706,3 +706,57 @@
       a mech
   jjpark-kb:
   - rscadd: resonators will now have their fields spread
+2022-03-21:
+  JohnFulpWillard:
+  - qol: You can now buckle people onto meatspikes the same way you buckle people
+      onto anything else.
+  Maurukas:
+  - bugfix: The medical escape pod on Kilostation is no longer walled off.
+  Melbert:
+  - qol: Heretic targets which become uncompletable (being deleted) will remove themselves
+      from a heretic's sacrifice list
+  OperativeLyn:
+  - bugfix: Fixed a missing blast door in IceBox's surgery room.
+  - bugfix: You ever noticed the floating piece of sand to the east of Tramstation?
+      Well it's now gone.
+  SuperNovaa41:
+  - bugfix: Fixes a runtime in build mode's KABOOM.
+  Tastyfish:
+  - rscadd: Adds the Format List and Format Associate List wiremod component, for
+      ease of formatting lists of items.
+  TheSilverNuke:
+  - balance: allows you to heal using plasma fixation in minor amounts of plasma such
+      as in Icebox's atmosphere
+  interestingusernam3:
+  - bugfix: The reality-defying cheese wedge in the Entemology Outreach Center on
+      Icemoon has been succesfully contained and replaced with a normal one.
+  san7890:
+  - imageadd: On the mapping end, CentCom has now been covered in a fresh new paint...
+      of area turfs! Who doesn't love those!
+  - bugfix: In MetaStation Maintenance to the east of Cargo and to the west of the
+      vault, in that little hallway, a deep dark secret was there. There were TWO
+      lockers present on the same tile. Nanotrasen has expertly trimmed it such that
+      only one locker will be placed there now.
+  - bugfix: Nanotrasen decided to make those fancy lights that point in the direction
+      of exiting the Arrivals shuttle actually point in the right direction.
+  - bugfix: Nanotrasen has stamped out the odd issues with lighting and gravity on
+      the MetaStation AI Satellite.
+  - bugfix: Nanotrasen also realized it was a good idea to not install their cameras
+      and lights on the windows surrounding MetaStation's AI Satellite.
+  this awesome text:
+  - balance: MODsuits have some armor.
+  unit0016:
+  - bugfix: The Kilostation chapel has less stacked turf decals. They're still around,
+      though.. Watching. Waiting... Additionally, magic power has been NUKED from
+      the maintenance room back there. Pour one out.
+  - bugfix: All lights (and cameras) in the Kilostation chapel have been PREPARED
+      FOR THE FUTURE. And by the future, I mean the wallening.
+2022-03-22:
+  GoblinBackwards:
+  - bugfix: Prevents iron/adamantine/yellow slime cookies from being to able to stack
+      their bonuses.
+  Jolly:
+  - bugfix: The Beach Biodome had the water turf corrected, and as such, shouldn't
+      have atmos issues.
+  OneAsianTortoise:
+  - bugfix: fixes medical scrub being named "under"
