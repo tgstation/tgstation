@@ -12,7 +12,7 @@
 
 /mob/living/simple_animal/hostile/bee
 	name = "bee"
-	desc = "Buzzy buzzy bee, stingy sti- Ouch!"
+	desc = "hey buddy i think you got the wrong hive, the buzz club's two trays down<br>fuck you<br>ah, fuck you bee-head. maybe you and i should settle it right here on the hive floor"
 	icon_state = ""
 	icon_living = ""
 	icon = 'icons/mob/bees.dmi'
