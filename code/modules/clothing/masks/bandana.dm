@@ -55,6 +55,21 @@
 	greyscale_config_worn = /datum/greyscale_config/bandana/worn
 	greyscale_colors = "#3F3F3F"
 
+/obj/item/clothing/mask/bandana/color/attack_self(mob/user)
+	adjustmask(user)
+	if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
+		src.worn_icon_state += "_up"
+		src.set_greyscale(
+			new_config = /datum/greyscale_config/bandana_up,
+			new_worn_config = /datum/greyscale_config/bandana_up/worn
+		)
+	else
+		src.worn_icon_state = initial(worn_icon_state)
+		src.set_greyscale(
+			new_config = /datum/greyscale_config/bandana,
+			new_worn_config = /datum/greyscale_config/bandana/worn
+		)
+
 /obj/item/clothing/mask/bandana/color/red
 	name = "red bandana"
 	desc = "A fine red bandana with nanotech lining."
