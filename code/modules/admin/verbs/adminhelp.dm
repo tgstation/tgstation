@@ -598,7 +598,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			var/ahelp_link = replacetext(CONFIG_GET(string/adminhelp_ahelp_link), "$RID", GLOB.round_id)
 			ahelp_link = replacetext(ahelp_link, "$TID", id)
 			embed.url = ahelp_link
-		embed.description = "[key_name(usr)] has sent an action to this ahelp. Action ID: [action]"
+		embed.description = "[key_name(usr)] has sent an action to this ticket. Action ID: [action]"
 		if(webhook_sent == WEBHOOK_URGENT)
 			send2adminchat_webhook(embed, urgent = TRUE)
 		if(webhook_sent == WEBHOOK_NON_URGENT || CONFIG_GET(string/regular_adminhelp_webhook_url) != CONFIG_GET(string/urgent_adminhelp_webhook_url))
