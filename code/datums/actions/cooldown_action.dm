@@ -72,21 +72,30 @@
 		return FALSE
 	if(!owner)
 		return FALSE
+
+	// If our cooldown action is a click_to_activate action:
+	// The actual action is activated on whatever the user clicks on -
+	// the target is what the action is being used on
+	// In trigger, we handle setting the click intercept
 	if(click_to_activate)
 		if(target)
 			// For automatic / mob handling
 			return InterceptClickOn(owner, null, target)
-		var/click_result = FALSE
-		if(owner.click_intercept == src)
-			click_result = unset_click_ability()
-		else
-			click_result = set_click_ability()
-		if(click_result)
-			// We may have had another button active that's being deactivated by our own activation
-			// ...So just make sure any buttons have their correct icons
-			for(var/datum/action/cooldown/ability in owner.actions)
-				ability.UpdateButtonIcon()
-		return click_result
+
+		var/datum/action/cooldown/already_set = owner.click_intercept
+		if(already_set == src)
+			// if we clicked ourself and we're already set, unset and return
+			return unset_click_ability(owner)
+
+		else if (istype(already_set))
+			// if we have an active set already, unset it before we set our's
+			already_set.unset_click_ability(owner)
+
+		return set_click_ability(owner)
+
+	// If our cooldown action is not a click_to_activate action:
+	// We can just continue on and use the action
+	// the target is the user of the action (often, the owner)
 	return PreActivate(owner)
 
 /// Intercepts client owner clicks to activate the ability
@@ -117,16 +126,16 @@
 /datum/action/cooldown/proc/Activate(atom/target)
 	return
 
-/datum/action/cooldown/proc/set_click_ability()
-	owner.click_intercept = src
+/datum/action/cooldown/proc/set_click_ability(mob/on_who)
+	on_who.click_intercept = src
 	if(ranged_mousepointer)
-		owner.client?.mouse_pointer_icon = ranged_mousepointer
+		on_who.client?.mouse_pointer_icon = ranged_mousepointer
 	return TRUE
 
-/datum/action/cooldown/proc/unset_click_ability()
-	owner.click_intercept = null
+/datum/action/cooldown/proc/unset_click_ability(mob/on_who)
+	on_who.click_intercept = null
 	if(ranged_mousepointer)
-		owner.client?.mouse_pointer_icon = initial(owner.client?.mouse_pointer_icon)
+		on_who.client?.mouse_pointer_icon = initial(on_who.client?.mouse_pointer_icon)
 	return TRUE
 
 /datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)

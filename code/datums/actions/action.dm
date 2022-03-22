@@ -168,7 +168,6 @@
 /datum/action/proc/on_target_mind_swapped(datum/mind/source, mob/old_current)
 	SIGNAL_HANDLER
 
-	Remove(old_current)
 	Grant(source.current)
 
 //Adds our action button to the screen of another player
