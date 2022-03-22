@@ -52443,6 +52443,11 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/engineering/atmos)
+"mUJ" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/item/poster/random_contraband,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "mUT" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
@@ -101471,7 +101476,7 @@ euM
 jiK
 cmU
 cmU
-cmU
+mUJ
 aeU
 aeU
 aeU
