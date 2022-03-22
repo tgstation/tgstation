@@ -12,6 +12,7 @@
 	body_parts_covered = NONE
 	throw_speed = 3
 	throw_range = 5
+	resistance_flags = FIRE_PROOF
 	attack_verb_continuous = list("connects")
 	attack_verb_simple = list("connect")
 	/// If we're in the glove slot
