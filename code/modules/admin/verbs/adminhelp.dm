@@ -941,32 +941,73 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
  * Checks a given message to see if any of the words contain an active admin's ckey with an @ before it
  *
  * Returns nothing if no pings are found, otherwise returns an associative list with ckey -> client
- * Also modifies msg to underline the pings, then stores them in the key [ADMINSAY_PING_UNDERLINE_NAME_INDEX] for returning
+ * Also modifies msg to underline the pings, then stores them in the key [ASAY_PING_UNDERLINE_NAME_INDEX] for returning
  *
  * Arguments:
  * * msg - the message being scanned
  */
-/proc/check_admin_pings(msg)
+/proc/check_asay_links(msg)
 	//explode the input msg into a list
 	var/list/msglist = splittext(msg, " ")
-	var/list/admins_to_ping = list()
+	var/list/detected_links = list()
+	var/list/pinged_admins = list()
 
 	var/i = 0
 	for(var/word in msglist)
 		i++
 		if(!length(word))
 			continue
-		if(word[1] != "@")
-			continue
-		var/ckey_check = lowertext(copytext(word, 2))
-		var/client/client_check = GLOB.directory[ckey_check]
-		if(client_check?.holder)
-			msglist[i] = "<u>[word]</u>"
-			admins_to_ping[ckey_check] = client_check
 
-	if(length(admins_to_ping))
-		admins_to_ping[ADMINSAY_PING_UNDERLINE_NAME_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
-		return admins_to_ping
+		var/link_type
+
+		switch(word[1])
+			if("@")
+				var/stripped_word = lowertext(copytext(word, 2))
+
+				// first we check if it's a ckey of an admin
+				var/client/client_check = GLOB.directory[stripped_word]
+				if(client_check?.holder)
+					msglist[i] = "<u>[word]</u>"
+					detected_link_types[word] = ASAY_LINK_ADMIN_PING
+					pinged_admins[word] = client_check
+					continue
+
+				// then if not, we check if it's a datum ref
+				var/word_with_brackets = "\[[stripped_word]\]" // the actual memory address lookups need the bracket wraps
+				var/datum/datum_check = locate(word_with_brackets)
+				if(!istype(datum_check))
+					continue
+				msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[word_with_brackets]'>[word]</A></u>"
+				detected_link_types[word] = ASAY_LINK_DATUM_REF
+				detected_links[stripped_word] = datum_check
+
+			if("#") // check if we're linking a ticket
+				var/possible_ticket_id = text2num(copytext(word, 2))
+				if(!possible_ticket_id)
+					continue
+
+				var/datum/admin_help/ahelp_check = GLOB.ahelp_tickets?.TicketByID(possible_ticket_id)
+				if(!our_ahelp)
+					continue
+
+				var/state_word
+				switch(ahelp_check.state)
+					if(AHELP_ACTIVE)
+						state_word = "Active"
+					if(AHELP_CLOSED)
+						state_word = "Closed"
+					if(AHELP_RESOLVED)
+						state_word = "Resolved"
+
+				msglist[i]= "<u><A href='?_src_=holder;[HrefToken()];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
+				detected_link_types[word] = ASAY_LINK_TICKET_REF
+				detected_links[word] = ahelp_check
+
+	if(length(detected_links))
+		var/list/final_return = list()
+		final_return[]
+		detected_links[ASAY_LINKING_MODIFIED_MESSAGE_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
+		return detected_links
 
 /**
  * Checks a given message to see if any of the words contain a memory ref for a datum. Said ref should not have brackets around it
@@ -977,7 +1018,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
  * Arguments:
  * * msg - the message being scanned
  */
-/proc/check_memory_refs(msg)
+/proc/check_linked_datums(msg)
 	if(!findtext(msg, GLOB.is_memref))
 		return
 
@@ -990,13 +1031,8 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 		i++
 		if(!length(word))
 			continue
-		var/word_with_brackets = "\[[word]\]" // the actual memory address lookups need the bracket wraps
-		var/datum/check_datum = locate(word_with_brackets)
-		if(!istype(check_datum))
-			continue
-		msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[word_with_brackets]'>[word_with_brackets]</A></u>"
-		datums_to_ref[word] = word
+
 
 	if(length(datums_to_ref))
-		datums_to_ref[ADMINSAY_LINK_DATUM_REF] = jointext(msglist, " ") // without tuples, we must make do!
+		datums_to_ref[ASAY_LINK_DATUM_REF] = jointext(msglist, " ") // without tuples, we must make do!
 		return datums_to_ref
