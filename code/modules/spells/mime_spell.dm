@@ -1,4 +1,11 @@
+/**
+ * ## Charge Spell Component
+ *
+ * Attached to a spell to make it require the user be miming to cast.
+ */
 /datum/component/mime_spell
+	/// Callback invoked whenever the invocation is checked.
+	/// Sets the invocation message emote for the spell to whatever is returned from the callback.
 	var/datum/callback/invocation_content_callback
 
 /datum/component/mime_spell/Initialize(datum/callback/invocation_content_callback)
@@ -20,6 +27,14 @@
 /datum/component/mime_spell/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_SPELL_CAN_INVOKE)
 
+/**
+ * Signal proc for [COMSIG_SPELL_CAN_INVOKE]
+ *
+ * Checks that the user is miming before they invoke the spell.
+ * If they are not miming, stop the invocation -
+ * otherwise set the invocation type to emote and
+ * invocation message to whatever is returned from the callback.
+ */
 /datum/component/mime_spell/proc/on_invoke_check(datum/source)
 	SIGNAL_HANDLER
 
