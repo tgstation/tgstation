@@ -131,9 +131,9 @@
 		for(var/mob/living/hitmob as anything in occupants)
 			hitmob.bullet_act(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
 		return BULLET_ACT_HIT
-	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.flag]).", LOG_MECHA, color="red")
+	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.damage_type]).", LOG_MECHA, color="red")
 	// yes we *have* to run the armor calc proc here I love tg projectile code too
-	try_damage_component(run_atom_armor(hitting_projectile.damage, hitting_projectile.damage_type, hitting_projectile.flag, 0, REVERSE_DIR(hitting_projectile.dir), hitting_projectile.armour_penetration), hitting_projectile.def_zone)
+	try_damage_component(run_atom_armor(hitting_projectile.damage, hitting_projectile.damage_type, hitting_projectile.damage_type, 0, REVERSE_DIR(hitting_projectile.dir), hitting_projectile.armour_penetration), hitting_projectile.def_zone)
 	return ..()
 
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
