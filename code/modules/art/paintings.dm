@@ -116,7 +116,13 @@
 	.["finalized"] = finalized
 	.["editable"] = !finalized //Ideally you should be able to draw moustaches on existing paintings in the gallery but that's not implemented yet
 	.["show_plaque"] = istype(loc,/obj/structure/sign/painting)
-	.["paint_tool_color"] = get_paint_tool_color(user.get_active_held_item())
+	var/obj/item/painting_implement = user.get_active_held_item()
+	.["paint_tool_color"] = get_paint_tool_color(painting_implement)
+	// Clearing additional data so that it doesn't linger around if the painting tool is dropped.
+	.["paint_tool_palette"] = null
+	if(!painting_implement)
+		return
+	SEND_SIGNAL(painting_implement, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .)
 
 /obj/item/canvas/examine(mob/user)
 	. = ..()
@@ -149,6 +155,9 @@
 			used = TRUE
 			update_appearance()
 			. = TRUE
+		if("select_color")
+			var/obj/item/painting_implement = user.get_active_held_item()
+			painting_implement?.set_painting_tool_color(params["selected_color"])
 		if("finalize")
 			. = TRUE
 			finalize(user)
@@ -540,6 +549,8 @@
 	desc_with_canvas = "A painting hung away from lesser minds."
 	persistence_id = "library_private"
 
+#define AVAILABLE_PALETTE_SPACE 14 // Enough to fill two radial menu pages
+
 /// Simple painting utility.
 /obj/item/paint_palette
 	name = "paint palette"
@@ -552,8 +563,16 @@
 	///Chosen paint color
 	var/current_color = "#000000"
 
+/obj/item/paint_palette/Initialize()
+	. = ..()
+	AddComponent(/datum/component/palette, AVAILABLE_PALETTE_SPACE, current_color)
+
 /obj/item/paint_palette/attack_self(mob/user, modifiers)
 	. = ..()
-	var/chosen_color = input(user,"Pick new color","Palette", current_color) as color|null
-	if(chosen_color)
-		current_color = chosen_color
+	pick_painting_tool_color(user, current_color)
+
+/obj/item/paint_palette/set_painting_tool_color(chosen_color)
+	. = ..()
+	current_color = chosen_color
+
+#undef AVAILABLE_PALETTE_SPACE

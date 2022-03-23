@@ -40,7 +40,7 @@
 	desc = "Yarr."
 	icon_state = "bandana"
 	inhand_icon_state = "bandana"
-	dynamic_hair_suffix = ""
+
 
 /obj/item/clothing/head/bandana/armored
 	armor = list(MELEE = 30, BULLET = 50, LASER = 30,ENERGY = 40, BOMB = 30, BIO = 30, FIRE = 60, ACID = 75)

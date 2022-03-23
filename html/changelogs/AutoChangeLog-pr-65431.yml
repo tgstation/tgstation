@@ -1,4 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - code_imp: "Updates `init_gaslist_cache` to match current code standards."

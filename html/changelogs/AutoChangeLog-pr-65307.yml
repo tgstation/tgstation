@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Fixed firelock screentips telling silicons they could knock or bash them"
-  - bugfix: "Fixed firelock screentips saying bash with combat mode off and knock with it on (it's the opposite)"
-  - qol: "Adds firelock screentips for silicons, monkeys and xenos"
