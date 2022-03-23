@@ -113,6 +113,8 @@
 	icon = 'icons/obj/turbine/turbine.dmi'
 	icon_state = "inlet_compressor"
 
+	circuit = /obj/item/circuitboard/machine/turbine_compressor
+
 	gas_theoretical_volume = 1000
 
 	part_path = /obj/item/turbine_parts/compressor
@@ -162,6 +164,8 @@
 	icon = 'icons/obj/turbine/turbine.dmi'
 	icon_state = "turbine_outlet"
 
+	circuit = /obj/item/circuitboard/machine/turbine_stator
+
 	gas_theoretical_volume = 6000
 
 	part_path = /obj/item/turbine_parts/stator
@@ -210,6 +214,8 @@
 	desc = "The middle part of a turbine generator, contains the rotor and the main computer."
 	icon = 'icons/obj/turbine/turbine.dmi'
 	icon_state = "core_rotor"
+
+	circuit = /obj/item/circuitboard/machine/turbine_rotor
 
 	gas_theoretical_volume = 3000
 

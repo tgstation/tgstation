@@ -73,15 +73,15 @@
 
 	return ..()
 
-/obj/item/turbine_parts/rotor
-	name = "rotor part"
-	desc = "Install in a turbine engine rotor to increase it's performances"
-	part_efficiency = 0.25
-	part_efficiency_increase_amount = 0.2
-
 /obj/item/turbine_parts/compressor
 	name = "compressor part"
 	desc = "Install in a turbine engine compressor to increase it's performances"
+	part_efficiency = 0.25
+	part_efficiency_increase_amount = 0.2
+
+/obj/item/turbine_parts/rotor
+	name = "rotor part"
+	desc = "Install in a turbine engine rotor to increase it's performances"
 	part_efficiency = 0.25
 	part_efficiency_increase_amount = 0.2
 

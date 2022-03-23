@@ -25,13 +25,13 @@
 	category = list("Subspace Telecomms")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/* /datum/design/board/turbine_computer
+/datum/design/board/turbine_computer
 	name = "Computer Design (Power Turbine Console Board)"
 	desc = "The circuit board for a power turbine console."
 	id = "power_turbine_console"
 	build_path = /obj/item/circuitboard/computer/turbine_computer
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE */
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/emitter
 	name = "Machine Design (Emitter Board)"
@@ -41,21 +41,29 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
-/* /datum/design/board/power_compressor
-	name = "Machine Design (Power Compressor Board)"
-	desc = "The circuit board for a power compressor."
-	id = "power_compressor"
-	build_path = /obj/item/circuitboard/machine/power_compressor
+/datum/design/board/turbine_compressor
+	name = "Machine Design (Turbine Compressor Board)"
+	desc = "The circuit board for a turbine compressor."
+	id = "turbine_compressor"
+	build_path = /obj/item/circuitboard/machine/turbine_compressor
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/power_turbine
-	name = "Machine Design (Power Turbine Board)"
-	desc = "The circuit board for a power turbine."
-	id = "power_turbine"
-	build_path = /obj/item/circuitboard/machine/power_turbine
+/datum/design/board/turbine_rotor
+	name = "Machine Design (Turbine Rotor Board)"
+	desc = "The circuit board for a turbine rotor."
+	id = "turbine_rotor"
+	build_path = /obj/item/circuitboard/machine/turbine_rotor
 	category = list ("Engineering Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE */
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/turbine_stator
+	name = "Machine Design (Turbine Stator Board)"
+	desc = "The circuit board for a turbine stator."
+	id = "turbine_stator"
+	build_path = /obj/item/circuitboard/machine/turbine_stator
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/board/thermomachine
 	name = "Machine Design (Thermomachine Board)"
