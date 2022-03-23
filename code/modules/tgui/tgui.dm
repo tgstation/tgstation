@@ -299,8 +299,7 @@
 			window = window,
 			src_object = src_object)
 		process_status()
-		if(src_object.ui_act(act_type, payload, src, state))
-			SStgui.update_uis(src_object)
+		TRY_QUEUE_VERB(src, .proc/check_ui_act, act_type, payload, state)
 		return FALSE
 	switch(type)
 		if("ready")
@@ -324,3 +323,10 @@
 			LAZYINITLIST(src_object.tgui_shared_states)
 			src_object.tgui_shared_states[href_list["key"]] = href_list["value"]
 			SStgui.update_uis(src_object)
+
+///wrapper for behavior to potentially wait until the next tick if the server is overloaded
+/datum/tgui/proc/check_ui_act(act_type, payload, current_state)
+	if(QDELETED(src) || QDELETED(src_object))
+		return
+	if(src_object.ui_act(act_type, payload, src, current_state))
+		SStgui.update_uis(src_object)
