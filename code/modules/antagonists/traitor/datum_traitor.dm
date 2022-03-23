@@ -15,6 +15,8 @@
 	var/give_uplink = TRUE
 	///if TRUE, this traitor will always get hijacking as their final objective
 	var/is_hijacker = FALSE
+	///Whether this Traitor has a progression uplink
+	var/progression_uplink = TRUE
 
 	///the name of the antag flavor this traitor has.
 	var/employer
@@ -47,7 +49,8 @@
 			uplink.uplink_handler = uplink_handler
 		else
 			uplink_handler = uplink.uplink_handler
-		uplink_handler.has_progression = TRUE
+		if(progression_uplink)
+			uplink_handler.has_progression = TRUE
 		SStraitor.register_uplink_handler(uplink_handler)
 
 		uplink_handler.has_objectives = TRUE
