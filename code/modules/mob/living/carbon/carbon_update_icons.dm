@@ -292,6 +292,7 @@
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
+	. = list()
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"

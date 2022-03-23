@@ -191,6 +191,7 @@
 
 		///FACIAL HAIR CHECKS START
 		//we check if our hat or helmet hides our facial hair.
+		src.facial_hair_hidden = FALSE
 		if(human_head_owner.head)
 			var/obj/item/I = human_head_owner.head
 			if(I.flags_inv & HIDEFACIALHAIR)
@@ -202,6 +203,7 @@
 				src.facial_hair_hidden = TRUE
 		///FACIAL HAIR CHECKS END
 		///HAIR CHECKS START
+		src.hair_hidden = FALSE
 		if(human_head_owner.head)
 			var/obj/item/I = human_head_owner.head
 			if(I.flags_inv & HIDEHAIR)
