@@ -152,7 +152,7 @@
 					to_chat(usr, "<b>Physical trauma analysis:</b>")
 					for(var/X in bodyparts)
 						var/obj/item/bodypart/BP = X
-						var/brutedamage = BP.get_brute_damage()
+						var/brutedamage = BP.brute_dam
 						if(brutedamage > 0)
 							status = "received minor physical injuries."
 							span = "notice"
@@ -168,7 +168,7 @@
 					to_chat(usr, "<b>Analysis of skin burns:</b>")
 					for(var/X in bodyparts)
 						var/obj/item/bodypart/BP = X
-						var/burndamage = BP.get_burn_damage()
+						var/burndamage = BP.burn_dam
 						if(burndamage > 0)
 							status = "signs of minor burns."
 							span = "notice"
@@ -474,7 +474,7 @@
 		facial_hairstyle = "Shaved"
 	hairstyle = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
-	update_body(TRUE)
+	update_body(is_creating = TRUE)
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()
@@ -729,8 +729,8 @@
 						hud_used.healthdoll.add_overlay(mutable_appearance('icons/hud/screen_gen.dmi', "[body_part.body_zone][icon_num]"))
 						continue
 					//Not hallucinating
-					var/damage = body_part.get_burn_damage() + body_part.get_brute_damage()
-					var/comparison = (body_part.get_max_damage()/5)
+					var/damage = body_part.burn_dam + body_part.brute_dam
+					var/comparison = (body_part.max_damage/5)
 					if(damage)
 						icon_num = 1
 					if(damage > (comparison))

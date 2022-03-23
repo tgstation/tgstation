@@ -45,7 +45,7 @@
 
 /mob/living/carbon/check_projectile_dismemberment(obj/projectile/P, def_zone)
 	var/obj/item/bodypart/affecting = get_bodypart(def_zone)
-	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.get_max_damage() - P.dismemberment))
+	if(affecting && affecting.dismemberable && affecting.get_damage() >= (affecting.max_damage - P.dismemberment))
 		affecting.dismember(P.damtype)
 
 /mob/living/carbon/proc/can_catch_item(skip_throw_mode_check)
@@ -233,11 +233,11 @@
 			var/obj/item/bodypart/bodypart = B
 			if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
 				continue
-			if(!affecting || ((affecting.get_damage() / affecting.get_max_damage()) < (bodypart.get_damage() / bodypart.get_max_damage())))
+			if(!affecting || ((affecting.get_damage() / affecting.max_damage) < (bodypart.get_damage() / bodypart.max_damage)))
 				affecting = bodypart
 	if(affecting)
 		dam_zone = affecting.body_zone
-		if(affecting.get_damage() >= affecting.get_max_damage())
+		if(affecting.get_damage() >= affecting.max_damage)
 			affecting.dismember()
 			return null
 		return affecting.body_zone
@@ -645,7 +645,7 @@
 	for (var/_limb in bodyparts)
 		var/obj/item/bodypart/limb = _limb
 		if (IS_ORGANIC_LIMB(limb))
-			. += (limb.get_brute_damage() * limb.body_damage_coeff) + (limb.get_burn_damage() * limb.body_damage_coeff)
+			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
 
 /mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
 	if(user != src)

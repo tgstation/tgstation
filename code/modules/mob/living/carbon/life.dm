@@ -740,7 +740,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	//Only starts when the chest has taken full damage
 	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
-	if(!(chest.get_damage() >= chest.get_max_damage()))
+	if(!(chest.get_damage() >= chest.max_damage))
 		return
 
 	//Burn off limbs one by one
@@ -751,7 +751,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		limb = get_bodypart(zone)
 		if(limb)
 			still_has_limbs = TRUE
-			if(limb.get_damage() >= limb.get_max_damage())
+			if(limb.get_damage() >= limb.max_damage)
 				limb.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 				if(limb.cremation_progress >= 100)
 					if(IS_ORGANIC_LIMB(limb)) //Non-organic limbs don't burn
@@ -767,7 +767,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	//Burn the head last
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(head)
-		if(head.get_damage() >= head.get_max_damage())
+		if(head.get_damage() >= head.max_damage)
 			head.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 			if(head.cremation_progress >= 100)
 				if(IS_ORGANIC_LIMB(head)) //Non-organic limbs don't burn

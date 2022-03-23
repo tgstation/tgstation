@@ -125,10 +125,13 @@
 #define ALT_STYLE 1
 #define DIGITIGRADE_STYLE 2
 
-//Flags (actual flags, fucker ^) for clothing variations
-#define NO_VARIATION (1<<0)
-#define DIGITIGRADE_VARIATION (1<<1)
-#define DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2) //Things like skirts that are digitigrade friendly w/o a new sprite
+//Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
+///No alternative sprites based on bodytype
+#define CLOTHING_NO_VARIATION (1<<0)
+///Has a sprite for digitigrade legs specifically.
+#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
+///The sprite works fine for digitigrade legs as-is.
+#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)

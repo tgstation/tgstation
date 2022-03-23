@@ -62,14 +62,21 @@
 #define LARVA_BODYPART "larva"
 
 //Bodypart change blocking flags
+///Bodypart does not get replaced during set_species()
 #define BP_BLOCK_CHANGE_SPECIES (1<<0)
 
 //Bodytype defines for how things can be worn, surgery, and other misc things.
+///The limb is organic
 #define BODYTYPE_ORGANIC (1<<0)
+///The limb is robotic
 #define BODYTYPE_ROBOTIC (1<<1)
-#define BODYTYPE_HUMANOID (1<<2) //Everything
+///The limb fits the human mold
+#define BODYTYPE_HUMANOID (1<<2)
+///The limb is digitigrade
 #define BODYTYPE_DIGITIGRADE (1<<3) //Cancer
+///The limb fits the monkey mold
 #define BODYTYPE_MONKEY (1<<4)
+///The limb is snouted
 #define BODYTYPE_SNOUTED (1<<5)
 
 //Defines for Species IDs

@@ -60,15 +60,15 @@
 	var/brutestate = 0
 	var/burnstate = 0
 	///The current amount of brute damage the limb has
-	VAR_PROTECTED/brute_dam = 0
+	var/brute_dam = 0
 	///The current amount of burn damage the limb has
-	VAR_PROTECTED/burn_dam = 0
+	var/burn_dam = 0
 	///The current amount of stamina damage the limb has
-	VAR_PROTECTED/stamina_dam = 0
+	var/stamina_dam = 0
 	///The maximum stamina damage a bodypart can take
-	VAR_PROTECTED/max_stamina_damage = 0
+	var/max_stamina_damage = 0
 	///The maximum "physical" damage a bodypart can take. Set by children
-	VAR_PROTECTED/max_damage = 0
+	var/max_damage = 0
 	///Gradually increases while burning when at full damage, destroys the limb when at 100
 	var/cremation_progress = 0
 	///Subtracted to brute damage taken
@@ -259,7 +259,8 @@
 //Return TRUE to get whatever mob this is in to update health.
 /obj/item/bodypart/proc/on_life(delta_time, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
-	if(stamina_dam > DAMAGE_PRECISION && owner.stam_regen_start_time <= world.time)					//DO NOT update health here, it'll be done in the carbon's life.
+	//DO NOT update health here, it'll be done in the carbon's life.
+	if(stamina_dam > DAMAGE_PRECISION && owner.stam_regen_start_time <= world.time)
 		heal_damage(0, 0, INFINITY, null, FALSE)
 		. |= BODYPART_LIFE_UPDATE_HEALTH
 
@@ -615,18 +616,6 @@
 	if(include_stamina)
 		total = max(total, stamina_dam)
 	return total
-
-/obj/item/bodypart/proc/get_brute_damage()
-	return brute_dam
-
-/obj/item/bodypart/proc/get_burn_damage()
-	return burn_dam
-
-/obj/item/bodypart/proc/get_max_damage()
-	return max_damage
-
-/obj/item/bodypart/proc/get_stamina_damage()
-	return stamina_dam
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/update_disabled()

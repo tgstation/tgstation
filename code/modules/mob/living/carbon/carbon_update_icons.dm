@@ -221,7 +221,7 @@
 /mob/living/carbon/update_body(is_creating)
 	update_body_parts(is_creating)
 
-///Checks to see if any bodyparts need to be redrawn, then does so.
+///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
 	update_damage_overlays()
 	var/list/needs_update = list()
@@ -289,6 +289,8 @@
 			continue
 		. += "-[external_organ.generate_icon_cache()]"
 
+	return .
+
 ///Generates a cache key specifically for husks
 /obj/item/bodypart/proc/generate_husk_key()
 	RETURN_TYPE(/list)
@@ -296,6 +298,7 @@
 	. += "[husk_type]"
 	. += "-husk"
 	. += "-[body_zone]"
+	return .
 
 /obj/item/bodypart/head/generate_icon_key()
 	. = ..()
@@ -309,7 +312,7 @@
 		. += "-FACIAL_HAIR_HIDDEN"
 	if(show_debrained)
 		. += "-SHOW_DEBRAINED"
-		return
+		return .
 
 	. += "-[hair_style]"
 	. += "-[fixed_hair_color || override_hair_color || hair_color]"
@@ -319,3 +322,5 @@
 			. += "-[hair_gradient_color]"
 	if(hair_hidden)
 		. += "-HAIR_HIDDEN"
+
+	return .

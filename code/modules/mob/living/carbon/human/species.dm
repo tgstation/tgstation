@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		BODY_ZONE_HEAD = /obj/item/bodypart/head,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
 
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
@@ -880,7 +880,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!(I.supports_variations & (DIGITIGRADE_VARIATION|DIGITIGRADE_VARIATION_NO_NEW_ICON)))
+				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
 					if(!disable_warning)
 						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
 					return FALSE

@@ -191,98 +191,98 @@
 
 		///FACIAL HAIR CHECKS START
 		//we check if our hat or helmet hides our facial hair.
-		src.facial_hair_hidden = FALSE
+		facial_hair_hidden = FALSE
 		if(human_head_owner.head)
-			var/obj/item/I = human_head_owner.head
-			if(I.flags_inv & HIDEFACIALHAIR)
-				src.facial_hair_hidden = TRUE
+			var/obj/item/hat = human_head_owner.head
+			if(hat.flags_inv & HIDEFACIALHAIR)
+				facial_hair_hidden = TRUE
 
 		if(human_head_owner.wear_mask)
-			var/obj/item/I = human_head_owner.wear_mask
-			if(I.flags_inv & HIDEFACIALHAIR)
-				src.facial_hair_hidden = TRUE
+			var/obj/item/mask = human_head_owner.wear_mask
+			if(mask.flags_inv & HIDEFACIALHAIR)
+				facial_hair_hidden = TRUE
 		///FACIAL HAIR CHECKS END
 		///HAIR CHECKS START
-		src.hair_hidden = FALSE
+		hair_hidden = FALSE
 		if(human_head_owner.head)
-			var/obj/item/I = human_head_owner.head
-			if(I.flags_inv & HIDEHAIR)
-				src.hair_hidden = TRUE
+			var/obj/item/hat = human_head_owner.head
+			if(hat.flags_inv & HIDEHAIR)
+				hair_hidden = TRUE
 
 		if(human_head_owner.w_uniform)
 			var/obj/item/item_uniform = human_head_owner.w_uniform
 			if(item_uniform.flags_inv & HIDEHAIR)
-				src.hair_hidden = TRUE
+				hair_hidden = TRUE
 
 		if(human_head_owner.wear_mask)
-			var/obj/item/I = human_head_owner.wear_mask
-			if(I.flags_inv & HIDEHAIR)
-				src.hair_hidden = TRUE
+			var/obj/item/mask = human_head_owner.wear_mask
+			if(mask.flags_inv & HIDEHAIR)
+				hair_hidden = TRUE
 		///HAIR CHECKS END
 
 		if(!hair_hidden && !owner.getorgan(/obj/item/organ/brain) && !(NOBLOOD in species_flags_list))
-			src.show_debrained = TRUE
+			show_debrained = TRUE
 		else
-			src.show_debrained = FALSE
+			show_debrained = FALSE
 
 		//CREATION-ONLY START
 		if(is_creating)
 			var/datum/sprite_accessory/sprite_accessory
 
-			src.facial_overlay = null
-			src.facial_gradient_overlay = null
-			src.hair_overlay = null
-			src.hair_gradient_overlay = null
+			facial_overlay = null
+			facial_gradient_overlay = null
+			hair_overlay = null
+			hair_gradient_overlay = null
 
-			src.hair_alpha = owner_species.hair_alpha
-			src.hair_color = human_head_owner.hair_color
-			src.facial_hair_color = human_head_owner.hair_color
-			src.fixed_hair_color = owner_species.fixed_mut_color //Can be null
-			src.hair_style = human_head_owner.hairstyle
-			src.facial_hairstyle = human_head_owner.facial_hairstyle
+			hair_alpha = owner_species.hair_alpha
+			hair_color = human_head_owner.hair_color
+			facial_hair_color = human_head_owner.hair_color
+			fixed_hair_color = owner_species.fixed_mut_color //Can be null
+			hair_style = human_head_owner.hairstyle
+			facial_hairstyle = human_head_owner.facial_hairstyle
 
 
-			if(src.facial_hairstyle && !src.facial_hair_hidden && (FACEHAIR in species_flags_list))
-				sprite_accessory = GLOB.facial_hairstyles_list[src.facial_hairstyle]
+			if(facial_hairstyle && !facial_hair_hidden && (FACEHAIR in species_flags_list))
+				sprite_accessory = GLOB.facial_hairstyles_list[facial_hairstyle]
 				if(sprite_accessory)
 					//Create the overlay
-					src.facial_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+					facial_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
 					//Gradients
-					src.facial_hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_FACIAL_HAIR_KEY)
-					if(src.facial_hair_gradient_style)
-						src.facial_hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_FACIAL_HAIR_KEY)
-						src.facial_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[src.facial_hair_gradient_style], src.facial_hair_gradient_color)
+					facial_hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_FACIAL_HAIR_KEY)
+					if(facial_hair_gradient_style)
+						facial_hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_FACIAL_HAIR_KEY)
+						facial_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[facial_hair_gradient_style], facial_hair_gradient_color)
 
-					src.facial_overlay.overlays += emissive_blocker(sprite_accessory.icon, sprite_accessory.icon_state, alpha = hair_alpha)
+					facial_overlay.overlays += emissive_blocker(sprite_accessory.icon, sprite_accessory.icon_state, alpha = hair_alpha)
 
-			if(!src.hair_hidden && !src.show_debrained && (HAIR in species_flags_list))
-				sprite_accessory = GLOB.hairstyles_list[src.hair_style]
+			if(!hair_hidden && !show_debrained && (HAIR in species_flags_list))
+				sprite_accessory = GLOB.hairstyles_list[hair_style]
 				if(sprite_accessory)
-					src.hair_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
-					src.hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_HAIR_KEY)
-					if(src.hair_gradient_style)
-						src.hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_HAIR_KEY)
-						src.hair_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.hair_gradients_list[src.hair_gradient_style], src.hair_gradient_color)
+					hair_overlay = mutable_appearance(sprite_accessory.icon, sprite_accessory.icon_state, -HAIR_LAYER)
+					hair_gradient_style = LAZYACCESS(human_head_owner.grad_style, GRADIENT_HAIR_KEY)
+					if(hair_gradient_style)
+						hair_gradient_color = LAZYACCESS(human_head_owner.grad_color, GRADIENT_HAIR_KEY)
+						hair_gradient_overlay = make_gradient_overlay(sprite_accessory.icon, sprite_accessory.icon_state, HAIR_LAYER, GLOB.hair_gradients_list[hair_gradient_style], hair_gradient_color)
 
 		//CREATION-ONLY END
 		//HAIR COLOR START
-		if(!src.override_hair_color)
-			if(src.hair_color_source)
-				if(src.hair_color_source == "fixedmutcolor")
-					SET_OVERLAY_VALUE(src.facial_overlay, color, src.fixed_hair_color)
-					SET_OVERLAY_VALUE(src.hair_overlay, color, src.fixed_hair_color)
-				else if(src.hair_color_source == "mutcolor")
-					SET_OVERLAY_VALUE(src.facial_overlay, color, src.facial_hair_color)
-					SET_OVERLAY_VALUE(src.hair_overlay, color, src.hair_color)
+		if(!override_hair_color)
+			if(hair_color_source)
+				if(hair_color_source == "fixedmutcolor")
+					SET_OVERLAY_VALUE(facial_overlay, color, fixed_hair_color)
+					SET_OVERLAY_VALUE(hair_overlay, color, fixed_hair_color)
+				else if(hair_color_source == "mutcolor")
+					SET_OVERLAY_VALUE(facial_overlay, color, facial_hair_color)
+					SET_OVERLAY_VALUE(hair_overlay, color, hair_color)
 				else
-					SET_OVERLAY_VALUE(src.facial_overlay, color, src.hair_color_source)
-					SET_OVERLAY_VALUE(src.hair_overlay, color, src.hair_color_source)
+					SET_OVERLAY_VALUE(facial_overlay, color, hair_color_source)
+					SET_OVERLAY_VALUE(hair_overlay, color, hair_color_source)
 			else
-				SET_OVERLAY_VALUE(src.facial_overlay, color, src.hair_color)
-				SET_OVERLAY_VALUE(src.hair_overlay, color, src.hair_color)
+				SET_OVERLAY_VALUE(facial_overlay, color, hair_color)
+				SET_OVERLAY_VALUE(hair_overlay, color, hair_color)
 		else
-			SET_OVERLAY_VALUE(src.facial_overlay, color, src.override_hair_color)
-			SET_OVERLAY_VALUE(src.hair_overlay, color, src.override_hair_color)
+			SET_OVERLAY_VALUE(facial_overlay, color, override_hair_color)
+			SET_OVERLAY_VALUE(hair_overlay, color, override_hair_color)
 		//HAIR COLOR END
 
 #undef SET_OVERLAY_VALUE
@@ -317,7 +317,7 @@
 					debrain_overlay.icon_state = "debrained"
 				. += debrain_overlay
 			else
-				var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[src.hair_style]
+				var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[hair_style]
 				if(sprite2 && (HAIR in species_flags_list))
 					var/image/hair_overlay = image(sprite2.icon, "[sprite2.icon_state]", -HAIR_LAYER, SOUTH)
 					hair_overlay.color = hair_color
@@ -356,7 +356,7 @@
 			if(hair_gradient_overlay)
 				. += hair_gradient_overlay
 
-/mob/proc/set_haircolor()
+/mob/proc/set_haircolor(hex_string, override)
 	return
 
 /mob/living/carbon/human/set_haircolor(hex_string, override)
@@ -368,7 +368,7 @@
 		my_head.override_hair_color = hex_string
 	else
 		my_head.hair_color = hex_string
-	update_body_parts()
+	update_hair(is_creating = TRUE)
 
 /obj/item/bodypart/head/proc/make_gradient_overlay(file, icon, layer, datum/sprite_accessory/gradient, grad_color)
 	RETURN_TYPE(/mutable_appearance)

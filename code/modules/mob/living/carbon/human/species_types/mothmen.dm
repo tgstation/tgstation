@@ -35,7 +35,7 @@
 		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/moth,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/moth,
 		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/moth,
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/moth
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/moth,
 	)
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C, datum/species/old_species, replace_current= TRUE, list/excluded_zones, visual_only)

@@ -86,7 +86,7 @@
 	if(!IS_ORGANIC_LIMB(affecting)) //Limb must be organic to be healed - RR
 		to_chat(user, span_warning("[src] won't work on a robotic limb!"))
 		return FALSE
-	if(affecting.get_brute_damage() && brute || affecting.get_burn_damage() && burn)
+	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 		user.visible_message(
 			span_infoplain(span_green("[user] applies [src] on [C]'s [parse_zone(affecting.body_zone)].")),
 			span_infoplain(span_green("You apply [src] on [C]'s [parse_zone(affecting.body_zone)]."))

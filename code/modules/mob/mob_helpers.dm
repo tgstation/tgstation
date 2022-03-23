@@ -378,7 +378,7 @@
 			dam = 1
 		else
 			dam = 0
-		if((brute_heal > 0 && affecting.get_brute_damage() > 0) || (burn_heal > 0 && affecting.get_burn_damage() > 0))
+		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYTYPE_ROBOTIC))
 				H.update_damage_overlays()
 			user.visible_message(span_notice("[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name]."), \

@@ -733,10 +733,10 @@
 		var/self_aware = FALSE
 		if(HAS_TRAIT(src, TRAIT_SELF_AWARE))
 			self_aware = TRUE
-		var/limb_max_damage = body_part.get_max_damage()
+		var/limb_max_damage = body_part.max_damage
 		var/status = ""
-		var/brutedamage = body_part.get_brute_damage()
-		var/burndamage = body_part.get_burn_damage()
+		var/brutedamage = body_part.brute_dam
+		var/burndamage = body_part.burn_dam
 		if(hallucination)
 			if(prob(30))
 				brutedamage += rand(30,40)

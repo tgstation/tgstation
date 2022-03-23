@@ -486,7 +486,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 
 	if(icon_updates)
 		character.icon_render_keys = list()
-		character.update_body(TRUE)
+		character.update_body(is_creating = TRUE)
 
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.

@@ -58,7 +58,7 @@
 		flesh_healing = max(flesh_healing - (0.5 * bandage_factor * delta_time), 0) // good bandages multiply the length of flesh healing
 
 	// if we have little/no infection, the limb doesn't have much burn damage, and our nutrition is good, heal some flesh
-	if(infestation <= WOUND_INFECTION_MODERATE && (limb.get_burn_damage() < 5) && (victim.nutrition >= NUTRITION_LEVEL_FED))
+	if(infestation <= WOUND_INFECTION_MODERATE && (limb.burn_dam < 5) && (victim.nutrition >= NUTRITION_LEVEL_FED))
 		flesh_healing += 0.2
 
 	// here's the check to see if we're cleared up

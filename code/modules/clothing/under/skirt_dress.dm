@@ -2,7 +2,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN
-	supports_variations = DIGITIGRADE_VARIATION_NO_NEW_ICON
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
 

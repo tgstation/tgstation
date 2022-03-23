@@ -132,16 +132,15 @@ There are several things that need to be remembered:
 		var/woman
 		if(!uniform_overlay)
 			//BEGIN SPECIES HANDLING
-			if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (U.supports_variations & DIGITIGRADE_VARIATION))
-				icon_file = DIGITIGRADE_PATH
+			if((dna?.species.bodytype & BODYTYPE_DIGITIGRADE) && (U.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
+				icon_file = DIGITIGRADE_UNIFORM_FILE
 
 			//Female sprites have lower priority than digitigrade sprites
-			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID)) //Agggggggghhhhh
-				if(body_type == "female" && U.adjusted != NO_FEMALE_UNIFORM)
-					woman = TRUE
+			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && body_type == "female" && U.adjusted != NO_FEMALE_UNIFORM) //Agggggggghhhhh
+				woman = TRUE
 
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(U)))
-				icon_file = DEFAULT_UNIFORM_PATH
+				icon_file = DEFAULT_UNIFORM_FILE
 				handled_by_bodytype = FALSE
 			//END SPECIES HANDLING
 			uniform_overlay = U.build_worn_icon(
@@ -350,14 +349,14 @@ There are several things that need to be remembered:
 		var/handled_by_bodytype = TRUE
 
 		//(Currently) unused digitigrade handling
-		/*if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations & DIGITIGRADE_VARIATION))
+		/*if((dna.species.bodytype & BODYTYPE_DIGITIGRADE) && (worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			var/obj/item/bodypart/leg = src.get_bodypart(BODY_ZONE_L_LEG)
 			if(leg.limb_id == "digitigrade")//Snowflakey and bad. But it makes it look consistent.
-				icon_file = DIGITIGRADE_SHOES_PATH*/
+				icon_file = DIGITIGRADE_SHOES_FILE*/
 
 		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			handled_by_bodytype = FALSE
-			icon_file = DEFAULT_SHOES_PATH
+			icon_file = DEFAULT_SHOES_FILE
 
 		shoes_overlay = shoes.build_worn_icon(default_layer = SHOES_LAYER, default_icon_file = icon_file)
 
@@ -468,12 +467,12 @@ There are several things that need to be remembered:
 
 		//More currently unused digitigrade handling
 		/*if(dna.species.bodytype & BODYTYPE_DIGITIGRADE)
-			if(worn_item.supports_variations & DIGITIGRADE_VARIATION)
-				icon_file = DIGITIGRADE_SUIT_PATH*/
+			if(worn_item.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION)
+				icon_file = DIGITIGRADE_SUIT_FILE*/
 
 		if(!(icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item))))
 			handled_by_bodytype = FALSE
-			icon_file = DEFAULT_SUIT_PATH
+			icon_file = DEFAULT_SUIT_FILE
 
 		suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
 
@@ -718,7 +717,7 @@ There are several things that need to be remembered:
 	worn_item.screen_loc = ui_back
 	if(client && hud_used?.hud_shown)
 		client.screen += worn_item
-	update_observer_view(worn_item, TRUE)
+	update_observer_view(worn_item, inventory = TRUE)
 
 /*
 Does everything in relation to building the /mutable_appearance used in the mob's overlays list
@@ -870,3 +869,4 @@ generate/load female uniform sprites matching all previously decided variables
 	update_inv_head()
 	update_inv_wear_mask()
 
+#undef RESOLVE_ICON_STATE

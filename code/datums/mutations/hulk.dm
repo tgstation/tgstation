@@ -57,7 +57,7 @@
  *arg1 is the arm to evaluate damage of and possibly break.
  */
 /datum/mutation/human/hulk/proc/break_an_arm(obj/item/bodypart/arm)
-	switch(arm.get_brute_damage())
+	switch(arm.brute_dam)
 		if(45 to 50)
 			arm.force_wound_upwards(/datum/wound/blunt/critical)
 		if(41 to 45)

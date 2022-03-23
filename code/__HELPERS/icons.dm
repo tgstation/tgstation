@@ -930,9 +930,9 @@ world
 	var/icon/flat_icon = safety ? A : new(A)
 	flat_icon.Blend(rgb(255,255,255))
 	flat_icon.BecomeAlphaMask()
-	var/icon/icon_static = icon('icons/effects/effects.dmi', "static_base")
-	icon_static.AddAlphaMask(flat_icon)
-	return icon_static
+	var/icon/static_icon = icon('icons/effects/effects.dmi', "static_base")
+	static_icon.AddAlphaMask(flat_icon)
+	return static_icon
 
 //What the mob looks like as a pitch black outline
 //By vg's ComicIronic
@@ -1322,7 +1322,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	pixel_x = initialpixelx
 	pixel_y = initialpixely
 
-///Checks if the given iconstate exists in the given file, then caches 1 or 0 into a list for further look-ups. Setting scream to TRUE will print a stack trace ONCE.
+///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
 /proc/icon_exists(file, state, scream)
 	var/static/list/icon_states_cache = list()
 	if(icon_states_cache[file]?[state])
