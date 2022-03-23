@@ -653,6 +653,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			existing_authors += iterated_feed_channel.author
 	if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
 		creating_channel = FALSE
+		tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
 		return TRUE
 	creating_channel = TRUE
 	return TRUE

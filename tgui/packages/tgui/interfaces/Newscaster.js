@@ -18,9 +18,9 @@ const CENSOR_MESSAGE = "This channel has been deemed as threatening to \
 
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
-  const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', NEWSCASTER_SCREEN);
   const NEWSCASTER_SCREEN = 1;
   const BOUNTYBOARD_SCREEN = 2;
+  const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', NEWSCASTER_SCREEN);
   return (
     <Window
       width={575}
@@ -84,73 +84,66 @@ const NewscasterChannelCreation = (props, context) => {
         left="23%"
         onClick={() => act('cancelCreation')} />
       <Stack vertical>
-        {!creating_channel
-          ? (
-            <Stack.Item textColor="red">
-              ERROR: User cannot be found or already has an owned feed channel.
-            </Stack.Item>)
-          : (
-            <>
-              <Stack.Item>
-                <Box pb={1}>
-                  Enter channel name here:
-                </Box>
-                <TextArea
-                  fluid
-                  height="40px"
-                  width="240px"
-                  backgroundColor="black"
-                  textColor="white"
-                  maxLength={42}
-                  onChange={(e, name) => act('setChannelName', {
-                    channeltext: name,
-                  })}>
-                  Channel Name
-                </TextArea>
-              </Stack.Item>
-              <Stack.Item>
-                <Box pb={1}>
-                  Enter channel description here:
-                </Box>
-                <TextArea
-                  fluid
-                  height="150px"
-                  width="240px"
-                  backgroundColor="black"
-                  textColor="white"
-                  maxLength={512}
-                  onChange={(e, desc) => act('setChannelDesc', {
-                    channeldesc: desc,
-                  })}>
-                  Channel Description
-                </TextArea>
-              </Stack.Item>
-              <Stack.Item>
-                <Section>
-                  Set Channel as Public or Private
-                  <Box pt={1}>
-                    <Button
-                      selected={!lockedmode}
-                      content="Public"
-                      onClick={() => act(setLockedmode(false))} />
-                    <Button
-                      selected={!!lockedmode}
-                      content="Private"
-                      onClick={() => act(setLockedmode(true))} />
-                  </Box>
-                </Section>
-              </Stack.Item>
-              <Stack.Item>
-                <Box>
-                  <Button
-                    content="Submit Channel"
-                    onClick={() => act('createChannel', {
-                      lockedmode: lockedmode,
-                    })} />
-                </Box>
-              </Stack.Item>
-            </>
-          )}
+        <>
+          <Stack.Item>
+            <Box pb={1}>
+              Enter channel name here:
+            </Box>
+            <TextArea
+              fluid
+              height="40px"
+              width="240px"
+              backgroundColor="black"
+              textColor="white"
+              maxLength={42}
+              onChange={(e, name) => act('setChannelName', {
+                channeltext: name,
+              })}>
+              Channel Name
+            </TextArea>
+          </Stack.Item>
+          <Stack.Item>
+            <Box pb={1}>
+              Enter channel description here:
+            </Box>
+            <TextArea
+              fluid
+              height="150px"
+              width="240px"
+              backgroundColor="black"
+              textColor="white"
+              maxLength={512}
+              onChange={(e, desc) => act('setChannelDesc', {
+                channeldesc: desc,
+              })}>
+              Channel Description
+            </TextArea>
+          </Stack.Item>
+          <Stack.Item>
+            <Section>
+              Set Channel as Public or Private
+              <Box pt={1}>
+                <Button
+                  selected={!lockedmode}
+                  content="Public"
+                  onClick={() => act(setLockedmode(false))} />
+                <Button
+                  selected={!!lockedmode}
+                  content="Private"
+                  onClick={() => act(setLockedmode(true))} />
+              </Box>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Box>
+              <Button
+                content="Submit Channel"
+                onClick={() => act('createChannel', {
+                  lockedmode: lockedmode,
+                })} />
+            </Box>
+          </Stack.Item>
+        </>
       </Stack>
     </Modal>
   );
@@ -160,10 +153,10 @@ const NewscasterChannelCreation = (props, context) => {
 const NewscasterCommentCreation = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    viewing_comment,
+    creating_comment,
     viewing_message,
   } = data;
-  if (!viewing_comment) {
+  if (!creating_comment) {
     return null;
   }
   return (
@@ -513,7 +506,7 @@ const NewscasterChannelMessages = (_, context) => {
     );
   }
   const visibleMessages = messages.filter(message => (
-    message.channel_num !== viewing_channel
+    message.ID !== viewing_channel
   ));
   return (
     <Section>
@@ -568,8 +561,7 @@ const NewscasterChannelMessages = (_, context) => {
                   }
                   onClick={() => act('startComment', {
                     messageID: message.ID,
-                  },
-                  setCommentScreen(true))}
+                  })}
                 />
               </>
             )} >
