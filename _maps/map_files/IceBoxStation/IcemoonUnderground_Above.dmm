@@ -3424,6 +3424,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
+"kS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/washing_machine,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "kT" = (
 /obj/structure/sink/kitchen{
 	dir = 8;
@@ -7881,6 +7892,18 @@
 	dir = 1
 	},
 /area/service/hydroponics)
+"zh" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/structure/table,
+/obj/item/rcl/pre_loaded,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "zi" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -9472,6 +9495,17 @@
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"En" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/chair/stool/directional/west,
+/obj/machinery/camera/emp_proof/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "Eo" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -10222,19 +10256,6 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"GM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/structure/table,
-/obj/machinery/camera/emp_proof/directional/south,
-/obj/item/rcl/pre_loaded,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "GN" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "73"
@@ -16010,17 +16031,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/eva)
-"Yy" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/washing_machine,
-/obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "Yz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -34164,7 +34174,7 @@ iK
 dj
 To
 cP
-aT
+En
 iK
 kK
 kK
@@ -34678,7 +34688,7 @@ cs
 fn
 cP
 vc
-GM
+zh
 GK
 kK
 kK
@@ -35703,7 +35713,7 @@ ak
 ak
 ak
 iK
-Yy
+kS
 vc
 Nu
 cP
