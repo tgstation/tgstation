@@ -30,7 +30,7 @@
 	///Is the current user creating a new channel at the moment?
 	var/can_create_channel = FALSE
 	///Is the current user creating a new comment at the moment?
-	var/creating_comment = FALSE
+	var/can_create_comment = FALSE
 	///What is the user submitted, criminal name for the new wanted issue?
 	var/criminal_name
 	///What is the user submitted, crime description for the new wanted issue?
@@ -137,7 +137,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["security_mode"] = (ACCESS_ARMORY in card?.GetAccess())
 	data["photo_data"] = !isnull(current_image)
 	data["can_create_channel"] = can_create_channel
-	data["creating_comment"] = creating_comment
+	data["can_create_comment"] = can_create_comment
 
 	//Here is all the UI_data sent about the current wanted issue, as well as making a new one in the UI.
 	data["making_wanted_issue"] = !(GLOB.news_network.wanted_issue?.active)
@@ -293,7 +293,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("cancelCreation")
 			can_create_channel = FALSE
-			creating_comment = FALSE
+			can_create_comment = FALSE
 			return TRUE
 
 		if("storyCensor")
@@ -341,9 +341,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("startComment")
 			if(!current_user)
-				creating_comment = FALSE
+				can_create_comment = FALSE
 				return TRUE
-			creating_comment = TRUE
+			can_create_comment = TRUE
 			var/commentable_message = params["messageID"]
 			if(!commentable_message)
 				return TRUE
@@ -621,10 +621,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/create_comment()
 	if(!comment_text)
-		creating_comment = FALSE
+		can_create_comment = FALSE
 		return TRUE
 	if(!current_user)
-		creating_comment = FALSE
+		can_create_comment = FALSE
 		return TRUE
 	var/datum/feed_comment/new_feed_comment = new/datum/feed_comment
 	new_feed_comment.author = current_user.account_holder
@@ -632,7 +632,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	new_feed_comment.time_stamp = station_time_timestamp()
 	current_message.comments += new_feed_comment
 	usr.log_message("(as [current_user.account_holder]) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
-	creating_comment = FALSE
+	can_create_comment = FALSE
 
 /**
  * This proc performs checks before enabling the can_create_channel var on the newscaster, such as preventing a user from having multiple channels,

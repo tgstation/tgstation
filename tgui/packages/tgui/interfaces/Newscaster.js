@@ -69,7 +69,7 @@ const NewscasterChannelCreation = (props, context) => {
   const [channelScreen, setChannelScreen] = useLocalState(context, 'channelScreen', false);
   const {
     can_create_channel,
-    creating_comment,
+    can_create_comment,
     viewing_channel,
     name,
     desc,
@@ -165,11 +165,12 @@ const NewscasterChannelCreation = (props, context) => {
 /** The modal menu that contains the prompts to making new comments. */
 const NewscasterCommentCreation = (props, context) => {
   const { act, data } = useBackend(context);
+  const [commentScreen, setCommentScreen] = useLocalState(context, 'commentScreen', false);
   const {
-    creating_comment,
+    can_create_comment,
     viewing_message,
   } = data;
-  if (!creating_comment) {
+  if (!can_create_comment) {
     return null;
   }
   return (
@@ -182,7 +183,7 @@ const NewscasterCommentCreation = (props, context) => {
         position="relative"
         top="20%"
         left="50%"
-        onClick={() => act('cancelCreation')} />
+        onClick={() => act('cancelCreation', setCommentScreen(false))} />
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
@@ -378,7 +379,7 @@ const NewscasterChannelBox = (_, context) => {
         <Stack.Item grow>
           {channelCensored ? (
             <Section>
-              <BlockQuote color="Red">
+              <BlockQuote color="red">
                 <b>ATTENTION:</b> {CENSOR_MESSAGE}
               </BlockQuote>
             </Section>)
@@ -456,8 +457,10 @@ const NewscasterChannelSelector = (props, context) => {
             key={activeWanted.index}
             icon={activeWanted.active ? "skull-crossbones" : null}
             textColor={activeWanted.active ? "red" : "grey"}
-            onClick={() => { act('toggleWanted',
-              setWantedScreen(true)); }}>
+            onClick={() => {
+              act('toggleWanted');
+              setWantedScreen(true);
+            }}>
             Wanted Issue
           </Tabs.Tab>
         ))}
@@ -469,7 +472,7 @@ const NewscasterChannelSelector = (props, context) => {
             mr={1}
             selected={viewing_channel === channel.ID}
             icon={channel.censored ? 'ban' : null}
-            textColor={channel.censored ? "Red" : "white"}
+            textColor={channel.censored ? "red" : "white"}
             onClick={() => act('setChannel', {
               channel: channel.ID,
             })}>
@@ -517,18 +520,18 @@ const NewscasterChannelMessages = (_, context) => {
   } = data;
   if (channelCensored) {
     return (
-      <Section color="Red">
+      <Section color="red">
         <b>ATTENTION:</b> Comments cannot be read at this time.<br />
         Thank you for your understanding, and have a secure day.
       </Section>
     );
   }
+  const visibleMessages = messages.filter(message => (
+    message.channel_num !== viewing_channel
+  ));
   return (
     <Section fill scrollable>
-      {messages.map(message => {
-        if (message.channel_num !== viewing_channel) {
-          return;
-        }
+      {visibleMessages.map(message => {
         return (
           <Section
             key={message.index}
@@ -536,7 +539,7 @@ const NewscasterChannelMessages = (_, context) => {
             title={(
               <i>
                 {message.censored_author ? (
-                  <Box textColor="Red">
+                  <Box textColor="red">
                     By: [REDACTED]. <b>D-Notice Notice</b> .
                   </Box>
                 ):(
@@ -579,13 +582,14 @@ const NewscasterChannelMessages = (_, context) => {
                   }
                   onClick={() => act('startComment', {
                     messageID: message.ID,
-                  })}
+                  },
+                  setCommentScreen(true))}
                 />
               </>
             )} >
             <BlockQuote>
               {message.censored_message ? (
-                <Section textColor="Red">
+                <Section textColor="red">
                   This message was deemed dangerous to the general welfare
                   of the station and therefore marked with a <b>D-Notice</b>.
                 </Section>
