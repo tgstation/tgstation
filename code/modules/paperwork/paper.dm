@@ -63,7 +63,6 @@
 
 /obj/item/paper/Destroy()
 	stamps = null
-	stamped = null
 	form_fields = null
 	stamped = null
 	. = ..()
