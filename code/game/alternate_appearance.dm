@@ -66,6 +66,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	var/image/image
 	var/add_ghost_version = FALSE
 	var/ghost_appearance
+	uses_global_hud_category = FALSE
 
 /datum/atom_hud/alternate_appearance/basic/New(key, image/I, options = AA_TARGET_SEE_APPEARANCE)
 	..()
@@ -75,8 +76,9 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	if(transfer_overlays)
 		I.copy_overlays(target)
 
-	add_atom_to_hud(target, I)
-	target.set_hud_image_active(appearance_key)
+	hud_icons = list(appearance_key)
+	add_atom_to_hud(target)
+	target.set_hud_image_active(appearance_key, exclusive_hud = src)
 
 	if((options & AA_TARGET_SEE_APPEARANCE) && ismob(target))
 		add_hud_to_mob(target)
