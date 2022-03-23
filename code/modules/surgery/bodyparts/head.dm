@@ -295,7 +295,7 @@
 
 		if(IS_ORGANIC_LIMB(src)) //having a robotic head hides certain features.
 			//facial hair
-			if(facial_hairstyle)
+			if(facial_hairstyle && (FACEHAIR in species_flags_list))
 				var/datum/sprite_accessory/sprite = GLOB.facial_hairstyles_list[facial_hairstyle]
 				if(sprite)
 					var/image/facial_overlay = image(sprite.icon, "[sprite.icon_state]", -HAIR_LAYER, SOUTH)
@@ -318,7 +318,7 @@
 				. += debrain_overlay
 			else
 				var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[src.hair_style]
-				if(sprite2)
+				if(sprite2 && (HAIR IN species_flags_list))
 					var/image/hair_overlay = image(sprite2.icon, "[sprite2.icon_state]", -HAIR_LAYER, SOUTH)
 					hair_overlay.color = hair_color
 					hair_overlay.alpha = hair_alpha
