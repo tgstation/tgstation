@@ -938,27 +938,28 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 	return potential_hits
 
 /**
- * Checks a given message to see if any of the words contain an active admin's ckey with an @ before it
+ * Checks a given message to see if any of the words are something we want to treat specially, as detailed below.
  *
- * Returns nothing if no pings are found, otherwise returns an associative list with ckey -> client
- * Also modifies msg to underline the pings, then stores them in the key [ASAY_PING_UNDERLINE_NAME_INDEX] for returning
+ * There are 3 cases where a word is something we want to act on
+ * 1. Admin pings, like @adminckey. Pings the admin in question, text is not clickable
+ * 2. Datum refs, like @0x2001169 or @mob_23. Clicking on the link opens up the VV for that datum
+ * 3. Ticket refs, like #3. Displays the status and ahelper in the link, clicking on it brings up the ticket panel for it.
+ * Returns a list being used as a tuple. Index ASAY_LINK_NEW_MESSAGE_INDEX contains the new message text (with clickable links and such)
+ * while index ASAY_LINK_PINGED_ADMINS_INDEX contains a list of pinged admin clients, if there are any.
  *
  * Arguments:
  * * msg - the message being scanned
  */
 /proc/check_asay_links(msg)
-	//explode the input msg into a list
-	var/list/msglist = splittext(msg, " ")
-	var/list/detected_links = list()
-	var/list/pinged_admins = list()
+	var/list/msglist = splittext(msg, " ") //explode the input msg into a list
+	var/list/pinged_admins = list() // if we ping any admins, store them here so we can ping them after
+	var/modified = FALSE // did we find anything?
 
 	var/i = 0
 	for(var/word in msglist)
 		i++
 		if(!length(word))
 			continue
-
-		var/link_type
 
 		switch(word[1])
 			if("@")
@@ -968,18 +969,18 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 				var/client/client_check = GLOB.directory[stripped_word]
 				if(client_check?.holder)
 					msglist[i] = "<u>[word]</u>"
-					detected_link_types[word] = ASAY_LINK_ADMIN_PING
-					pinged_admins[word] = client_check
+					pinged_admins[stripped_word] = client_check
+					modified = TRUE
 					continue
 
 				// then if not, we check if it's a datum ref
+
 				var/word_with_brackets = "\[[stripped_word]\]" // the actual memory address lookups need the bracket wraps
 				var/datum/datum_check = locate(word_with_brackets)
 				if(!istype(datum_check))
 					continue
 				msglist[i] = "<u><a href='?_src_=vars;[HrefToken(TRUE)];Vars=[word_with_brackets]'>[word]</A></u>"
-				detected_link_types[word] = ASAY_LINK_DATUM_REF
-				detected_links[stripped_word] = datum_check
+				modified = TRUE
 
 			if("#") // check if we're linking a ticket
 				var/possible_ticket_id = text2num(copytext(word, 2))
@@ -987,7 +988,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 					continue
 
 				var/datum/admin_help/ahelp_check = GLOB.ahelp_tickets?.TicketByID(possible_ticket_id)
-				if(!our_ahelp)
+				if(!ahelp_check)
 					continue
 
 				var/state_word
@@ -1000,39 +1001,11 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 						state_word = "Resolved"
 
 				msglist[i]= "<u><A href='?_src_=holder;[HrefToken()];ahelp=[REF(ahelp_check)];ahelp_action=ticket'>[word] ([state_word] | [ahelp_check.initiator_key_name])</A></u>"
-				detected_link_types[word] = ASAY_LINK_TICKET_REF
-				detected_links[word] = ahelp_check
+				modified = TRUE
 
-	if(length(detected_links))
-		var/list/final_return = list()
-		final_return[]
-		detected_links[ASAY_LINKING_MODIFIED_MESSAGE_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
-		return detected_links
+	if(modified)
+		var/list/return_list = list()
+		return_list[ASAY_LINK_NEW_MESSAGE_INDEX] = jointext(msglist, " ") // without tuples, we must make do!
+		return_list[ASAY_LINK_PINGED_ADMINS_INDEX] = pinged_admins
+		return return_list
 
-/**
- * Checks a given message to see if any of the words contain a memory ref for a datum. Said ref should not have brackets around it
- *
- * Returns nothing if no refs are found, otherwise returns an associative list with ckey -> client
- * Also modifies msg to underline and linkify the [ref] so other admins can click on the address to open the VV entry for said datum
- *
- * Arguments:
- * * msg - the message being scanned
- */
-/proc/check_linked_datums(msg)
-	if(!findtext(msg, GLOB.is_memref))
-		return
-
-	//explode the input msg into a list
-	var/list/msglist = splittext(msg, " ")
-	var/list/datums_to_ref = list()
-
-	var/i = 0
-	for(var/word in msglist)
-		i++
-		if(!length(word))
-			continue
-
-
-	if(length(datums_to_ref))
-		datums_to_ref[ASAY_LINK_DATUM_REF] = jointext(msglist, " ") // without tuples, we must make do!
-		return datums_to_ref
