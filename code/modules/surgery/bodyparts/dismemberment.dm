@@ -418,7 +418,7 @@
 		return
 	var/all_limb_flags
 	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
-		all_limb_flags =  all_limb_flags | limb.bodytype
+		all_limb_flags = all_limb_flags | limb.bodytype
 
 	carbon_owner.dna.species.bodytype = all_limb_flags
 

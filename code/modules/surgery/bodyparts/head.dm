@@ -355,7 +355,7 @@
 			. += hair_overlay
 			if(hair_gradient_overlay)
 				. += hair_gradient_overlay
-
+///Set the haircolor of a human. Override instead sets the override value, it will not be changed away from the override value until override is set to null.
 /mob/proc/set_haircolor(hex_string, override)
 	return
 
