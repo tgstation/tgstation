@@ -126,10 +126,6 @@ There are several things that need to be remembered:
 
 		var/mutable_appearance/uniform_overlay
 
-		if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID)) //Agggggggghhhhh
-			if(body_type == FEMALE && U.adjusted != NO_FEMALE_UNIFORM)
-				uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/clothing/under/default.dmi', isinhands = FALSE, femaleuniform = U.adjusted, override_state = target_overlay)
-
 		//Change check_adjustable_clothing.dm if you change this
 		var/handled_by_bodytype = TRUE
 		var/icon_file
@@ -141,7 +137,7 @@ There are several things that need to be remembered:
 
 			//Female sprites have lower priority than digitigrade sprites
 			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID)) //Agggggggghhhhh
-				if(gender == FEMALE && U.adjusted != NO_FEMALE_UNIFORM)
+				if(body_type == "female" && U.adjusted != NO_FEMALE_UNIFORM)
 					woman = TRUE
 
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(U)))
