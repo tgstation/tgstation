@@ -1,3 +1,10 @@
+// Defines for formatting spells for the stat panel.
+/// The stat panel the spell is displayed in.
+#define PANEL_DISPLAY_PANEL "panel"
+/// The cooldown shown in the stat panel.
+#define PANEL_DISPLAY_COOLDOWN "cooldown"
+/// The name shown int he stat panel.
+#define PANEL_DISPLAY_NAME "name"
 
 // Magic schools
 

@@ -14,11 +14,10 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
  *
  * ## Pre-spell checks:
  * - [can_cast_spell][/datum/action/cooldown/spell/can_cast_spell] checks if the OWNER
- * of the spell is able to cast the spell. Note that in rare occasions, such as shared spells,
- * the owner may not be the caster of the spell.
+ * of the spell is able to cast the spell.
  * - [is_valid_target][/datum/action/cooldown/spell/is_valid_target] checks if the TARGET
  * THE SPELL IS BEING CAST ON is a valid target for the spell. NOTE: The CAST TARGET is often THE SAME as
- * THE OWNER OF THE SPELL, but is not always - click_to_activate spells will pass the clicked target
+ * THE OWNER OF THE SPELL, but is not always: click_to_activate spells will pass the clicked target
  * into is_valid_target, while every other spell will use owner in is_valid_target.
  * - [can_invoke][/datum/action/cooldown/spell/can_invoke] is run in can_cast_spell to check if
  * the OWNER of the spell is able to say the current invocation.
@@ -54,7 +53,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "spell_default"
 
-	/// The panel this action shows up in the stat panel in.
+	/// The stat panel this action shows up in the stat panel in. If null, will not show up.
 	var/panel = "Spells"
 	/// The sound played on cast.
 	var/sound = null
@@ -86,9 +85,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	var/smoke_amt = 0
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
-	if(!target)
-		stack_trace("Someone tried to grant a spell to someone which was incorrectly created. Please assign a target in New()!")
-
 	if(istype(target, /datum/mind))
 		var/datum/mind/mind_target = target
 		if(mind_target.current != grant_to)
@@ -265,7 +261,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 				smoke_type = /datum/effect_system/smoke_spread/sleeping
 
 		if(!ispath(smoke_type))
-			CRASH("Invalid smoke type for spell [type]. Got [smoke_type].")
+			CRASH("Invalid smoke type for spell [type]. Got: [smoke_type || "null"].")
 
 		var/datum/effect_system/smoke = new smoke_type()
 		smoke.set_up(smoke_amt, get_turf(owner))
@@ -325,38 +321,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	next_use_time = world.time // Basically, ensures that the ability can be used now
 	UpdateButtonIcon()
 
-/*
-/datum/action/cooldown/spell/proc/adjust_var(type, amount)
-	if(!isliving(owner))
-		return
-
-	var/mob/living/living_owner = owner
-	switch(type)
-		if("bruteloss")
-			living_owner.adjustBruteLoss(amount)
-		if("fireloss")
-			living_owner.adjustFireLoss(amount)
-		if("toxloss")
-			living_owner.adjustToxLoss(amount)
-		if("oxyloss")
-			living_owner.adjustOxyLoss(amount)
-		if("stun")
-			living_owner.AdjustStun(amount)
-		if("knockdown")
-			living_owner.AdjustKnockdown(amount)
-		if("paralyze")
-			living_owner.AdjustParalyzed(amount)
-		if("immobilize")
-			living_owner.AdjustImmobilized(amount)
-		if("unconscious")
-			living_owner.AdjustUnconscious(amount)
-		else
-			//I bear no responsibility for the runtimes
-			// that'll happen if you try to adjust
-			// non-numeric or even non-existent vars
-			owner.vars[type] += amount
-*/
-
 /// TODO: This is ugly, and should be replaced
 /datum/action/cooldown/spell/proc/los_check(atom/from_atom, atom/to_atom)
 	//Checks for obstacles from A to B
@@ -380,17 +344,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		previous_step = next_step
 	qdel(dummy)
 	return TRUE
-
-/datum/action/cooldown/spell/proc/get_statpanel_format()
-	var/time_remaining = max(next_use_time - world.time, 0)
-	var/time_remaining_in_seconds = round(time_remaining / 10, 0.1)
-
-	return list(
-		"[panel]",
-		"[time_remaining_in_seconds]/[cooldown_time / 10]",
-		name,
-		REF(src),
-	)
 
 // MELBERT TODO unit test this (ensure upgradable spells have cooldown_reduction_per_rank etc)
 /**
@@ -446,43 +399,26 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	name = "[spell_title][initial(name)]"
 
-/datum/action/cooldown/spell/vv_get_dropdown()
-	. = ..()
-	VV_DROPDOWN_OPTION("", "---------")
-	if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_ROBELESS, "Set Robeless")
-	else
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_ROBELESS, "Unset Robeless")
+/// Formats the spell to be returned to the stat panel.
+/datum/action/cooldown/spell/proc/set_statpanel_format()
+	if(!panel)
+		return null
 
-	if(spell_requirements & SPELL_REQUIRES_HUMAN)
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_HUMANONLY, "Unset Require Humanoid Mob")
-	else
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_HUMANONLY, "Set Require Humanoid Mob")
+	var/time_remaining = max(next_use_time - world.time, 0)
+	var/time_remaining_in_seconds = round(time_remaining / 10, 0.1)
+	var/cooldown_time_in_seconds =  round(cooldown_time / 10, 0.1)
 
-	if(spell_requirements & SPELL_REQUIRES_NON_ABSTRACT)
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_UNSET_NONABSTRACT, "Unset Require Body")
-	else
-		VV_DROPDOWN_OPTION(VV_HK_SPELL_SET_NONABSTRACT, "Set Require Body")
+	var/list/stat_panel_data = list(
+		PANEL_DISPLAY_PANEL = panel,
+		PANEL_DISPLAY_COOLDOWN = "[time_remaining_in_seconds]/[cooldown_time_in_seconds]",
+		PANEL_DISPLAY_NAME = name,
+	)
 
-/datum/action/cooldown/spell/vv_do_topic(list/href_list)
-	. = ..()
-	if(href_list[VV_HK_SPELL_SET_ROBELESS])
-		spell_requirements |= SPELL_REQUIRES_WIZARD_GARB
-		return
-	if(href_list[VV_HK_SPELL_UNSET_ROBELESS])
-		spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
-		return
+	SEND_SIGNAL(src, COMSIG_SPELL_SET_STATPANEL, stat_panel_data)
 
-	if(href_list[VV_HK_SPELL_UNSET_HUMANONLY])
-		spell_requirements |= SPELL_REQUIRES_HUMAN
-		return
-	if(href_list[VV_HK_SPELL_SET_HUMANONLY])
-		spell_requirements &= ~SPELL_REQUIRES_HUMAN
-		return
-
-	if(href_list[VV_HK_SPELL_UNSET_NONABSTRACT])
-		spell_requirements |= SPELL_REQUIRES_NON_ABSTRACT
-		return
-	if(href_list[VV_HK_SPELL_SET_NONABSTRACT])
-		spell_requirements  &= ~SPELL_REQUIRES_NON_ABSTRACT
-		return
+	return list(
+		stat_panel_data[PANEL_DISPLAY_PANEL],
+		stat_panel_data[PANEL_DISPLAY_COOLDOWN],
+		stat_panel_data[PANEL_DISPLAY_NAME],
+		REF(src),
+	)

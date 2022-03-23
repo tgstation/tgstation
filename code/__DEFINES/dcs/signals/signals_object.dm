@@ -314,7 +314,8 @@
 	#define COMPONENT_CANCEL_INVOKE (1<<0)
 // TODO DOC
 #define COMSIG_SPELL_CAST_REVERTED "spell_cast_revert"
-
+// TODO DOC
+#define COMSIG_SPELL_SET_STATPANEL "spell_set_statpanel"
 
 // /obj/item/camera signals
 

@@ -781,7 +781,11 @@
 	var/list/data = list()
 	var/index = 1
 	for(var/datum/action/cooldown/spell/spell in actions)
-		data[index++] = spell.get_statpanel_format()
+		var/list/spell_data = spell.set_statpanel_format()
+		if(!spell_data)
+			return
+
+		data[index++] = spell_data
 
 	return data
 
