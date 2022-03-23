@@ -30,6 +30,8 @@
 	var/icon_icon = 'icons/hud/actions.dmi'
 	/// This is the icon state for the icon that appears OVER the button background
 	var/button_icon_state = "default"
+	/// A list of all child actions created and shared by this "parent" action
+	var/list/datum/weakref/shared
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -52,6 +54,7 @@
 		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_target_mind_swapped)
 
 /datum/action/Destroy()
+	QDEL_LAZYLIST(shared)
 	if(owner)
 		Remove(owner)
 	target = null
@@ -65,6 +68,7 @@
 			if(owner == M)
 				return
 			Remove(owner)
+		SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, M)
 		owner = M
 		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
@@ -109,6 +113,7 @@
 		LAZYREMOVE(M.actions, src)
 		M.update_action_buttons()
 	if(owner)
+		SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
 		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
 		if(target == owner)
 			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
@@ -188,3 +193,50 @@
 
 	// MELBERT TODO removed the remove() since it shouldn't be needed, also check what happens with ghosts
 	Grant(source.current)
+
+/**
+ * Handles sharing our action with another mob / player
+ *
+ * Essentially, creates a duplicate of our action,
+ * linked to us via the "shared" list
+ */
+/datum/action/proc/share_action(mob/share_with)
+	// Create a copy of our action
+	// It's not linked to anything, because
+	// we handle its references manually
+	var/datum/action/to_share = new type()
+	to_share.Grant(share_with)
+
+	LAZYADD(shared, to_share)
+	RegisterSignal(to_share, COMSIG_PARENT_QDELETING, .proc/on_shared_action_deleted)
+	RegisterSignal(to_share, COMSIG_ACTION_REMOVED, .proc/on_shared_action_removed)
+
+/**
+ * Handles unsharing our action from another mob / player
+ */
+/datum/action/proc/unshare_action(mob/share_with)
+	for(var/datum/action/to_unshare as anything in share_with.actions)
+		if(to_unshare.type != type)
+			continue
+		if(to_unshare.target != src || to_unshare.owner != share_with)
+			continue
+
+		qdel(to_unshare) // Handles refences in on_shared_action_deleted
+
+/// Signal proc for whenever a shared action is deleted.
+/// Handles removing its reference from our shared list.
+/datum/action/proc/on_shared_action_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	// Destroy() calls Remove(), so unregister these before they're caught again
+	UnregisterSignal(source, COMSIG_ACTION_REMOVED)
+	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	// Then clear its refs
+	LAZYREMOVE(shared, source)
+
+/// Signal proc for whenever a shared action is removed.
+/// We are only sharing the action with a certain mob, so if it's removed from said mob delete it / unshare it.
+/datum/action/proc/on_shared_action_removed(datum/source, mob/removed_from)
+	SIGNAL_HANDLER
+
+	unshare_action(removed_from)

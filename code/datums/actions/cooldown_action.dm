@@ -43,13 +43,19 @@
 /// Starts a cooldown time to be shared with similar abilities
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
+	// "Shared cooldowns" covers actions which are not the same type,
+	// but have the same cooldown group and are on the same mob
 	if(shared_cooldown)
 		for(var/datum/action/cooldown/shared_ability in owner.actions - src)
-			if(shared_cooldown == shared_ability.shared_cooldown)
-				if(isnum(override_cooldown_time))
-					shared_ability.StartCooldownSelf(override_cooldown_time)
-				else
-					shared_ability.StartCooldownSelf(cooldown_time)
+			if(shared_cooldown != shared_ability.shared_cooldown)
+				continue
+			shared_ability.StartCooldownSelf(override_cooldown_time)
+
+	// "Shared actions" covers actions which are of the same type of us
+	// that are shared with another mob entirely (stored in the "shared" lazylist)
+	for(var/datum/action/coooldown/shared in shared)
+		shared.StartCooldownSelf(override_cooldown_time)
+
 	StartCooldownSelf(override_cooldown_time)
 
 /// Starts a cooldown time for this ability only

@@ -138,8 +138,8 @@
 	var/mob/living/ridden_creature = parent
 
 	// MELBERT TODO make this work with nuactions
-	//for(var/datum/action/ability as anything in ridden_creature.abilities)
-	//	ability.Share(rider)
+	for(var/datum/action/ability as anything in ridden_creature.actions)
+		ability.share_action(rider)
 
 /// Takes away the riding parent's abilities from the rider
 /datum/component/riding/creature/proc/remove_abilities(mob/living/rider)
@@ -148,8 +148,8 @@
 
 	var/mob/living/ridden_creature = parent
 
-	//for(var/datum/action/ability as anything in ridden_creature.abilities)
-	//	ability.Unshare(rider)
+	for(var/datum/action/ability as anything in ridden_creature.actions)
+		ability.unshare_action(rider)
 
 /datum/component/riding/creature/riding_can_z_move(atom/movable/movable_parent, direction, turf/start, turf/destination, z_move_flags, mob/living/rider)
 	if(!(z_move_flags & ZMOVE_CAN_FLY_CHECKS))
