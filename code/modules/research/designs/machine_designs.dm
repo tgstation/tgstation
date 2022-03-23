@@ -330,6 +330,22 @@
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/anomaly_refinery
+	name = "Machine Design (Anomaly Refinery Board)"
+	desc = "The circuit board for an anomaly refinery"
+	id = "anomaly_refinery"
+	build_path = /obj/item/circuitboard/machine/anomaly_refinery
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/tank_compressor
+	name = "Machine Design (Tank Compressor Board)"
+	desc = "The circuit board for a tank compressor"
+	id = "tank_compressor"
+	build_path = /obj/item/circuitboard/machine/tank_compressor
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/board/microwave
 	name = "Machine Design (Microwave Board)"
 	desc = "The circuit board for a microwave."

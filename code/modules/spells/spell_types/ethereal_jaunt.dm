@@ -6,7 +6,7 @@
 	charge_max = 30 SECONDS
 	clothes_req = TRUE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	cooldown_min = 10 SECONDS
 	include_user = TRUE

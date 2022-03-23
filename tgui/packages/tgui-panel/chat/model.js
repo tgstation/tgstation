@@ -11,14 +11,22 @@ export const canPageAcceptType = (page, type) => (
   type.startsWith(MESSAGE_TYPE_INTERNAL) || page.acceptedTypes[type]
 );
 
-export const createPage = obj => ({
-  id: createUuid(),
-  name: 'New Tab',
-  acceptedTypes: {},
-  unreadCount: 0,
-  createdAt: Date.now(),
-  ...obj,
-});
+export const createPage = obj => {
+  let acceptedTypes = {};
+
+  for (let typeDef of MESSAGE_TYPES) {
+    acceptedTypes[typeDef.type] = !!typeDef.important;
+  }
+
+  return {
+    id: createUuid(),
+    name: 'New Tab',
+    acceptedTypes: acceptedTypes,
+    unreadCount: 0,
+    createdAt: Date.now(),
+    ...obj,
+  };
+};
 
 export const createMainPage = () => {
   const acceptedTypes = {};

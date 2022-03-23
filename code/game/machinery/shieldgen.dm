@@ -69,6 +69,7 @@
 	max_integrity = 20
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 
 /obj/structure/emergency_shield/cult/barrier
 	density = FALSE //toggled on right away by the parent rune
@@ -245,7 +246,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You short out the access controller."))
 
 /obj/machinery/shieldgen/update_icon_state()
@@ -449,7 +450,7 @@
 		return
 	obj_flags |= EMAGGED
 	locked = FALSE
-	playsound(src, "sparks", 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(user, span_warning("You short out the access controller."))
 
 //////////////Containment Field START

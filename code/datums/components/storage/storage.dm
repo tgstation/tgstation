@@ -530,7 +530,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			to_chat(M, span_warning("[parent] seems to be locked!"))
 			return FALSE
 		if(dump_destination.storage_contents_dump_act(src, M))
-			playsound(A, "rustle", 50, TRUE, -5)
+			playsound(A, SFX_RUSTLE, 50, TRUE, -5)
 			return TRUE
 	return FALSE
 
@@ -610,7 +610,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 	if(A.loc != M)
 		return
-	playsound(A, "rustle", 50, TRUE, -5)
+	playsound(A, SFX_RUSTLE, 50, TRUE, -5)
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(A, H.held_index)
@@ -721,7 +721,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(silent && !override)
 		return
 	if(rustle_sound)
-		playsound(parent, "rustle", 50, TRUE, -5)
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 	for(var/mob/viewing in viewers(user, null))
 		if(M == viewing)
 			to_chat(usr, span_notice("You put [I] [insert_preposition]to [parent]."))
@@ -817,7 +817,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(rustle_sound)
-		playsound(A, "rustle", 50, TRUE, -5)
+		playsound(A, SFX_RUSTLE, 50, TRUE, -5)
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -880,7 +880,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!quickdraw)
 		A.add_fingerprint(user)
 		user_show_to_mob(user)
-		playsound(A, "rustle", 50, TRUE, -5)
+		playsound(A, SFX_RUSTLE, 50, TRUE, -5)
 		return
 
 	var/obj/item/to_remove = locate() in real_location()

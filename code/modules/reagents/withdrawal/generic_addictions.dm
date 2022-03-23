@@ -124,11 +124,6 @@
 		return
 	to_chat(affected_carbon, span_warning("You feel yourself adapt to the darkness."))
 	var/mob/living/carbon/human/affected_human = affected_carbon
-
-	var/obj/item/organ/liver/empowered_liver = affected_carbon.getorgan(/obj/item/organ/liver)
-	if(empowered_liver)
-		ADD_TRAIT(empowered_liver, TRAIT_GREYTIDE_METABOLISM, "maint_drug_addiction")
-
 	var/obj/item/organ/eyes/empowered_eyes = affected_human.getorgan(/obj/item/organ/eyes)
 	if(empowered_eyes)
 		ADD_TRAIT(affected_human, TRAIT_NIGHT_VISION, "maint_drug_addiction")
@@ -183,15 +178,15 @@
 	. = ..()
 	var/list/possibilities = list()
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTHEAT))
-		possibilities += "temphot"
+		possibilities += ALERT_TEMPERATURE_HOT
 	if(!HAS_TRAIT(affected_carbon, TRAIT_RESISTCOLD))
-		possibilities += "tempcold"
+		possibilities += ALERT_TEMPERATURE_COLD
 	var/obj/item/organ/lungs/lungs = affected_carbon.getorganslot(ORGAN_SLOT_LUNGS)
 	if(lungs)
 		if(lungs.safe_oxygen_min)
-			possibilities += "not_enough_oxy"
+			possibilities += ALERT_NOT_ENOUGH_OXYGEN
 		if(lungs.safe_oxygen_max)
-			possibilities += "too_much_oxy"
+			possibilities += ALERT_TOO_MUCH_OXYGEN
 	var/type = pick(possibilities)
 	hallucination = new(affected_carbon, TRUE, type, 120 MINUTES)//last for a while basically
 

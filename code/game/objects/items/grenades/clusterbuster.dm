@@ -51,8 +51,6 @@
 
 /obj/item/grenade/clusterbuster/segment/Initialize(mapload, obj/item/grenade/clusterbuster/base)
 	. = ..()
-	if(!.)
-		return
 
 	if(base)
 		name = "[base.name] segment"

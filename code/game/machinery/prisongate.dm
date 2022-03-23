@@ -42,8 +42,7 @@
 				say("Stowaway detected in internal contents. Access denied.")
 				playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE)
 				COOLDOWN_START(src, spam_cooldown_time, SPAM_CD)
-				return FALSE
-			return TRUE
+			return FALSE
 	var/mob/living/carbon/the_toucher = gate_toucher
 	if(gate_active == FALSE)
 		return TRUE

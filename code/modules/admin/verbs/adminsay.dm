@@ -19,7 +19,13 @@
 		if(!iter_admin_client?.holder)
 			continue
 		window_flash(iter_admin_client)
-		SEND_SOUND(iter_admin_client.mob, sound('sound/misc/bloop.ogg'))
+		SEND_SOUND(iter_admin_client.mob, sound('sound/misc/asay_ping.ogg'))
+
+
+	var/list/linked_datums = check_memory_refs(msg)
+	if(length(linked_datums) && linked_datums[ADMINSAY_LINK_DATUM_REF])
+		msg = linked_datums[ADMINSAY_LINK_DATUM_REF]
+		linked_datums -= ADMINSAY_LINK_DATUM_REF
 
 	mob.log_talk(msg, LOG_ASAY)
 	msg = keywords_lookup(msg)

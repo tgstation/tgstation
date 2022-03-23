@@ -147,6 +147,9 @@
 	for(var/i in 1 to 4 + rand(1,2))
 		var/chosen = getbork()
 		var/obj/item/food_item = new chosen(T)
+		if(istype(food_item, /obj/item/food))
+			var/obj/item/food/foody = food_item
+			foody.food_flags |= FOOD_SILVER_SPAWNED
 		if(prob(5))//Fry it!
 			var/obj/item/food/deepfryholder/fried
 			fried = new(T, food_item)

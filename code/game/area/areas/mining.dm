@@ -46,14 +46,14 @@
 	icon_state = "mining_storage"
 
 /area/mine/production
-	name = "Mining Station Starboard Wing"
+	name = "Mining Station Production Wing"
 	icon_state = "mining_production"
 
 /area/mine/abandoned
 	name = "Abandoned Mining Station"
 
 /area/mine/living_quarters
-	name = "Mining Station Port Wing"
+	name = "Mining Station Living Quarters"
 	icon_state = "mining_living"
 
 /area/mine/eva
@@ -174,6 +174,11 @@
 
 /area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NO_ALERTS | NOTELEPORT
+
+/area/icemoon/surface/outdoors/noruins // when you want random generation without the chance of getting ruins
+	icon_state = "noruins"
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED | NO_ALERTS
+	map_generator =  /datum/map_generator/cave_generator/icemoon/surface/noruins
 
 /area/icemoon/surface/outdoors/labor_camp
 	name = "Icemoon Labor Camp"

@@ -1294,7 +1294,7 @@
 /obj/item/circuitboard/machine/doppler_array
 	name = "Tachyon-Doppler Research Array (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/doppler_array/research
+	build_path = /obj/machinery/doppler_array
 	req_components = list(
 		/obj/item/stock_parts/micro_laser = 2,
 		/obj/item/stock_parts/scanning_module = 4)
@@ -1321,3 +1321,22 @@
 	build_path = /obj/machinery/ecto_sniffer
 	req_components = list(
 		/obj/item/stock_parts/scanning_module = 1)
+
+/obj/item/circuitboard/machine/anomaly_refinery
+	name = "Anomaly Refinery (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/research/anomaly_refinery
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stock_parts/scanning_module = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		)
+
+/obj/item/circuitboard/machine/tank_compressor
+	name = "Tank Compressor (Machine Board)"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/atmospherics/components/binary/tank_compressor
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 5,
+		/obj/item/stock_parts/scanning_module = 4,
+		)

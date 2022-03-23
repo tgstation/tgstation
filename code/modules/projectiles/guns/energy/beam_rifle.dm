@@ -414,7 +414,7 @@
 	hitsound = 'sound/effects/explosion3.ogg'
 	damage = 0 //Handled manually.
 	damage_type = BURN
-	flag = ENERGY
+	armor_flag = ENERGY
 	range = 150
 	jitter = 10
 	var/obj/item/gun/energy/beam_rifle/gun
@@ -487,7 +487,7 @@
 	if(nodamage)
 		return FALSE
 	playsound(src, 'sound/effects/explosion3.ogg', 100, TRUE)
-	if(!piercing_hit)
+	if(!do_pierce)
 		AOE(get_turf(target) || get_turf(src))
 	if(!QDELETED(target))
 		handle_impact(target)

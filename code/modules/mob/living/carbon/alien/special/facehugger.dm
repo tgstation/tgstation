@@ -22,6 +22,7 @@
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN
 	max_integrity = 100
 	item_flags = XENOMORPH_HOLDABLE
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case
@@ -112,58 +113,55 @@
 		icon_state = "[base_icon_state]"
 		Leap(hit_atom)
 
-/obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/M)
+/obj/item/clothing/mask/facehugger/proc/valid_to_attach(mob/living/hit_mob)
 	// valid targets: carbons except aliens and devils
 	// facehugger state early exit checks
 	if(stat != CONSCIOUS)
 		return FALSE
 	if(attached)
 		return FALSE
-	if(iscarbon(M))
-		// disallowed carbons
-		if(isalien(M))
-			return FALSE
-		var/mob/living/carbon/target = M
-		// gotta have a head to be implanted (no changelings or sentient plants)
-		if(!target.get_bodypart(BODY_ZONE_HEAD))
-			return FALSE
-		// gotta be able to have the xeno implanted
-		if(HAS_TRAIT(M, TRAIT_XENO_IMMUNE))
-			return FALSE
-		// carbon, has head, not alien or devil, has no hivenode or embryo: valid
-		return TRUE
-
-	return FALSE
-
-/obj/item/clothing/mask/facehugger/proc/Leap(mob/living/M)
-	if(!valid_to_attach(M))
+	if(!iscarbon(hit_mob))
 		return FALSE
-	if(iscarbon(M))
-		var/mob/living/carbon/target = M
-		if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
-			return FALSE
+	// disallowed carbons
+	if(isalien(hit_mob))
+		return FALSE
+	var/mob/living/carbon/target = hit_mob
+	// gotta have a head to be implanted (no changelings or sentient plants)
+	if(!target.get_bodypart(BODY_ZONE_HEAD))
+		return FALSE
+	// gotta be able to have the xeno implanted
+	if(HAS_TRAIT(hit_mob, TRAIT_XENO_IMMUNE))
+		return FALSE
+	// carbon, has head, not an alien nor has an hivenode or embryo: valid
+	return TRUE
+
+/obj/item/clothing/mask/facehugger/proc/Leap(mob/living/hit_mob)
+	//check if not carbon/alien/has facehugger already/ect.
+	if(!valid_to_attach(hit_mob))
+		return FALSE
+	var/mob/living/carbon/target = hit_mob
+	if(target.wear_mask && istype(target.wear_mask, /obj/item/clothing/mask/facehugger))
+		return FALSE
 	// passed initial checks - time to leap!
-	M.visible_message(span_danger("[src] leaps at [M]'s face!"), \
-							span_userdanger("[src] leaps at your face!"))
+	target.visible_message(span_danger("[src] leaps at [target]'s face!"), \
+						span_userdanger("[src] leaps at your face!"))
 
 	// probiscis-blocker handling
-	if(iscarbon(M))
-		var/mob/living/carbon/target = M
+	if(target.is_mouth_covered(head_only = TRUE))
+		target.visible_message(span_danger("[src] smashes against [target]'s [target.head]!"), \
+							span_userdanger("[src] smashes against your [target.head]!"))
+		Die()
+		return FALSE
 
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if(H.is_mouth_covered(head_only = 1))
-				H.visible_message(span_danger("[src] smashes against [H]'s [H.head]!"), \
-									span_userdanger("[src] smashes against your [H.head]!"))
-				Die()
-				return FALSE
+	if(target.wear_mask)
+		var/obj/item/clothing/worn_mask = target.wear_mask
+		if(target.dropItemToGround(worn_mask))
+			target.visible_message(span_danger("[src] tears [worn_mask] off of [target]'s face!"), \
+								span_userdanger("[src] tears [worn_mask] off of your face!"))
 
-		if(target.wear_mask)
-			var/obj/item/clothing/W = target.wear_mask
-			if(target.dropItemToGround(W))
-				target.visible_message(span_danger("[src] tears [W] off of [target]'s face!"), \
-									span_userdanger("[src] tears [W] off of your face!"))
-		target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1)
+	if(!target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1))
+		return FALSE
+	log_combat(target, src, "was facehugged by")
 	return TRUE // time for a smoke
 
 /obj/item/clothing/mask/facehugger/proc/Attach(mob/living/M)

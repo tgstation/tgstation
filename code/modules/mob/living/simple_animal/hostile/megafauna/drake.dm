@@ -233,6 +233,7 @@
 /obj/effect/temp_visual/lava_warning
 	icon_state = "lavastaff_warn"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	light_range = 2
 	duration = 13
 	var/mob/owner
@@ -291,6 +292,7 @@
 	name = "fireball"
 	desc = "Get out of the way!"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	randomdir = FALSE
 	duration = 9
 	pixel_z = 270
@@ -303,6 +305,7 @@
 	icon = 'icons/mob/actions/actions_items.dmi'
 	icon_state = "sniper_zoom"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	light_range = 2
 	duration = 9
 
@@ -318,7 +321,7 @@
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
-	playsound(T, "explosion", 80, TRUE)
+	playsound(T, SFX_EXPLOSION, 80, TRUE)
 	new /obj/effect/hotspot(T)
 	T.hotspot_expose(DRAKE_FIRE_TEMP, DRAKE_FIRE_EXPOSURE, 1)
 	for(var/mob/living/L in T.contents)

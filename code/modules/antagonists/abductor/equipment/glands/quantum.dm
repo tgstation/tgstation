@@ -35,7 +35,7 @@
 		if(entangled_mob && ishuman(entangled_mob) && (entangled_mob.stat < DEAD))
 			to_chat(entangled_mob, span_userdanger("You suddenly feel an irresistible compulsion to follow an order..."))
 			to_chat(entangled_mob, span_mind_control("[command]"))
-			var/atom/movable/screen/alert/mind_control/mind_alert = entangled_mob.throw_alert("mind_control", /atom/movable/screen/alert/mind_control)
+			var/atom/movable/screen/alert/mind_control/mind_alert = entangled_mob.throw_alert(ALERT_MIND_CONTROL, /atom/movable/screen/alert/mind_control)
 			mind_alert.command = command
 			message_admins("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
 			log_game("[key_name(owner)] mirrored an abductor mind control message to [key_name(entangled_mob)]: [command]")
@@ -44,5 +44,5 @@
 /obj/item/organ/heart/gland/quantum/clear_mind_control()
 	if(active_mind_control)
 		to_chat(entangled_mob, span_userdanger("You feel the compulsion fade, and you completely forget about your previous orders."))
-		entangled_mob.clear_alert("mind_control")
+		entangled_mob.clear_alert(ALERT_MIND_CONTROL)
 	..()

@@ -49,7 +49,8 @@
 /obj/item/gun/ballistic/rifle/boltaction
 	name = "\improper Mosin Nagant"
 	desc = "This piece of junk looks like something that could have been used 700 years ago. It feels slightly moist."
-	sawn_desc = "An extremely sawn-off Mosin Nagant, popularly known as an \"obrez\". There was probably a reason it wasn't manufactured this short to begin with."
+	sawn_desc = "An extremely sawn-off Mosin Nagant, popularly known as an \"Obrez\". \
+		There was probably a reason it wasn't manufactured this short to begin with."
 	weapon_weight = WEAPON_HEAVY
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
@@ -122,10 +123,25 @@
 	can_jam = FALSE
 
 /obj/item/gun/ballistic/rifle/boltaction/brand_new
-	name = "Mosin Nagant"
-	desc = "Brand new Mosin Nagant issued by Nanotrasen for their interns. You would rather not to damage it."
+	desc = "A brand new Mosin Nagant issued by Nanotrasen for their interns. You would rather not to damage it."
 	can_be_sawn_off = FALSE
 	can_jam = FALSE
+
+/obj/item/gun/ballistic/rifle/boltaction/brand_new/prime
+	name = "\improper Regal Nagant"
+	desc = "A prized hunting Mosin Nagant. Used for the most dangerous game."
+	icon_state = "moistprime"
+	inhand_icon_state = "moistprime"
+	worn_icon_state = "moistprime"
+	can_be_sawn_off = TRUE
+	sawn_desc = "A sawn-off Regal Nagant... Doing this was a sin, I hope you're happy. \
+		You are now probably one of the few people in the universe to ever hold a \"Regal Obrez\". \
+		Even thinking about that name combination makes you ill."
+
+/obj/item/gun/ballistic/rifle/boltaction/brand_new/prime/sawoff(mob/user)
+	. = ..()
+	if(.)
+		name = "\improper Regal Obrez" // wear it loud and proud
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"

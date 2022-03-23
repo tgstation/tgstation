@@ -73,6 +73,16 @@
 	id = "comp_delay"
 	build_path = /obj/item/circuit_component/delay
 
+/datum/design/component/format
+	name = "Format List Component"
+	id = "comp_format"
+	build_path = /obj/item/circuit_component/format
+
+/datum/design/component/format_assoc
+	name = "Format Associative List Component"
+	id = "comp_format_assoc"
+	build_path = /obj/item/circuit_component/format/assoc
+
 /datum/design/component/index
 	name = "Index Component"
 	id = "comp_index"
@@ -380,6 +390,11 @@
 	name = "ID Access Reader Component"
 	id = "comp_id_access_reader"
 	build_path = /obj/item/circuit_component/id_access_reader
+
+/datum/design/component/setter_trigger
+	name = "Set Variable Trigger"
+	id = "comp_set_variable_trigger"
+	build_path = /obj/item/circuit_component/variable/setter/trigger
 
 /datum/design/component/access_checker
 	name = "Access Checker Component"

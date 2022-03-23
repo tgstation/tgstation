@@ -481,13 +481,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	addiction_types = list(/datum/addiction/alcohol = 5, /datum/addiction/maintenance_drugs = 2)
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/hooch/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
-	var/obj/item/organ/liver/liver = drinker.getorganslot(ORGAN_SLOT_LIVER)
-	if(liver && HAS_TRAIT(liver, TRAIT_GREYTIDE_METABOLISM))
-		drinker.heal_bodypart_damage(1 * REM * delta_time, 1 * REM * delta_time)
-		. = TRUE
-	return ..() || .
-
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
 	description = "A dark alcoholic beverage made with malted barley and yeast."
@@ -2819,3 +2812,22 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Tich Toch"
 	glass_desc = "Oh god."
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/helianthus
+	name = "Helianthus"
+	description = "A dark yet radiant mixture of absinthe and hallucinogens. The choice of all true artists."
+	boozepwr = 75
+	color = "#fba914"
+	quality = DRINK_VERYGOOD
+	taste_description = "golden memories"
+	glass_icon_state = "helianthus"
+	glass_name = "Helianthus"
+	glass_desc = "Another reason to cut off an ear..."
+	var/hal_amt = 4
+	var/hal_cap = 24
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/helianthus/on_mob_life(mob/living/carbon/drinker, delta_time, times_fired)
+	if(drinker.hallucination < hal_cap && DT_PROB(5, delta_time))
+		drinker.hallucination += hal_amt
+	..()

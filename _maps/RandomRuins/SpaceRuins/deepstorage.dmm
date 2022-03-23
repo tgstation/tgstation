@@ -5,9 +5,6 @@
 "ab" = (
 /turf/closed/mineral/random/low_chance,
 /area/ruin/unpowered/no_grav)
-"ac" = (
-/turf/open/floor/plating/asteroid/airless,
-/area/ruin/unpowered/no_grav)
 "af" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/kitchen)
@@ -1186,25 +1183,6 @@
 /obj/item/stack/medical/gauze,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
-"dc" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
-"dd" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/brute{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/brute,
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
 "de" = (
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/armory)
@@ -1801,17 +1779,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
-"eN" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/toxin{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/storage/firstaid/toxin,
-/obj/item/storage/pill_bottle/multiver,
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/deepstorage/armory)
 "eO" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/combat{
@@ -2771,6 +2738,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/hydroponics)
+"wK" = (
+/obj/structure/table,
+/obj/item/storage/medkit/regular{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/regular,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
 "Bb" = (
 /obj/machinery/conveyor{
 	dir = 10;
@@ -2784,6 +2760,17 @@
 	},
 /turf/closed/wall/mineral/iron,
 /area/ruin/space/has_grav/deepstorage/airlock)
+"Ht" = (
+/obj/structure/table,
+/obj/item/storage/medkit/toxin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/pill_bottle/multiver,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
 "Ik" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2791,6 +2778,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
+"Iy" = (
+/turf/open/misc/asteroid/airless,
+/area/ruin/unpowered/no_grav)
+"Mp" = (
+/obj/structure/table,
+/obj/item/storage/medkit/brute{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/storage/medkit/brute,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/deepstorage/armory)
 "Rs" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
@@ -2865,7 +2865,7 @@ aa
 ab
 aa
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -2893,9 +2893,9 @@ ab
 aa
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 aa
@@ -2920,8 +2920,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -2946,8 +2946,8 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -2972,9 +2972,9 @@ aa
 aa
 aa
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -3024,9 +3024,9 @@ ab
 aa
 aa
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 ab
 ab
@@ -3068,12 +3068,12 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
@@ -3120,19 +3120,19 @@ ab
 aa
 ab
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3172,19 +3172,19 @@ ab
 aa
 ab
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3229,13 +3229,13 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3429,7 +3429,7 @@ aa
 aa
 aa
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -3481,7 +3481,7 @@ aa
 aa
 aa
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -3520,8 +3520,8 @@ ab
 aa
 aa
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 "}
@@ -3533,7 +3533,7 @@ ab
 aa
 aa
 aa
-ac
+Iy
 ab
 ab
 ab
@@ -3572,20 +3572,20 @@ ab
 aa
 aa
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 "}
 (16,1,1) = {"
 aa
 ab
-ac
+Iy
 ab
 aa
 aa
 aa
-ac
+Iy
 ab
 ab
 ab
@@ -3623,9 +3623,9 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 "}
@@ -3633,12 +3633,12 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3675,22 +3675,22 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 "}
 (18,1,1) = {"
 aa
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3727,22 +3727,22 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 "}
 (19,1,1) = {"
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3772,7 +3772,7 @@ cp
 ab
 ab
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -3792,8 +3792,8 @@ ab
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3824,9 +3824,9 @@ cp
 cp
 cp
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3844,8 +3844,8 @@ ab
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 ab
 ab
@@ -3875,10 +3875,10 @@ fT
 gz
 gH
 gQ
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3927,11 +3927,11 @@ fT
 gz
 gI
 gQ
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -3981,10 +3981,10 @@ cp
 cp
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 aa
@@ -4035,8 +4035,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -4087,8 +4087,8 @@ fp
 fp
 fp
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -4139,8 +4139,8 @@ gZ
 gZ
 fp
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -4191,9 +4191,9 @@ gZ
 ha
 fp
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 aa
 aa
@@ -4244,8 +4244,8 @@ fp
 fp
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4256,7 +4256,7 @@ aa
 (29,1,1) = {"
 aa
 ab
-ac
+Iy
 ab
 aa
 aa
@@ -4297,7 +4297,7 @@ fp
 ab
 ab
 ab
-ac
+Iy
 aa
 aa
 aa
@@ -4308,9 +4308,9 @@ aa
 (30,1,1) = {"
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 ab
@@ -4349,7 +4349,7 @@ fp
 ab
 ab
 ab
-ac
+Iy
 aa
 aa
 aa
@@ -4361,8 +4361,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 ab
@@ -4401,7 +4401,7 @@ fp
 ab
 ab
 ab
-ac
+Iy
 ab
 aa
 aa
@@ -4413,8 +4413,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 ab
@@ -4436,7 +4436,7 @@ dt
 dN
 ef
 ev
-eN
+Ht
 fb
 fo
 fA
@@ -4453,8 +4453,8 @@ fp
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4483,7 +4483,7 @@ sL
 sL
 cx
 aQ
-dc
+wK
 du
 dO
 po
@@ -4505,8 +4505,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4535,7 +4535,7 @@ bR
 sL
 cy
 aQ
-dd
+Mp
 dv
 dP
 eh
@@ -4557,8 +4557,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4609,9 +4609,9 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -4662,8 +4662,8 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
@@ -4695,8 +4695,8 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 fd
 ab
 ab
@@ -4747,7 +4747,7 @@ ab
 ab
 ab
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -4796,10 +4796,10 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -4848,7 +4848,7 @@ ab
 ab
 ab
 ab
-ac
+Iy
 ab
 ab
 ab
@@ -4881,7 +4881,7 @@ aa
 aa
 aa
 aa
-ac
+Iy
 ab
 aa
 aa
@@ -4897,17 +4897,15 @@ ab
 ab
 ab
 ab
-ac
+Iy
 ab
-ac
-ac
+Iy
+Iy
 ab
-ac
-ac
-ac
-ac
-ab
-ab
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -4915,8 +4913,10 @@ ab
 ab
 ab
 ab
-ac
-ac
+ab
+ab
+Iy
+Iy
 aa
 aa
 aa
@@ -4933,10 +4933,10 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 ab
@@ -4948,16 +4948,16 @@ ab
 ab
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 ab
@@ -4967,16 +4967,16 @@ ab
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -4985,10 +4985,10 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -5000,35 +5000,35 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 ab
 ab
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 ab
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 aa
 aa
@@ -5038,8 +5038,8 @@ aa
 ab
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 ab
 aa
@@ -5052,8 +5052,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 aa
 aa
 aa
@@ -5061,12 +5061,12 @@ aa
 aa
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 ab
 aa
 ab
@@ -5077,9 +5077,9 @@ aa
 aa
 ab
 ab
-ac
-ac
-ac
+Iy
+Iy
+Iy
 ab
 ab
 aa
@@ -5090,8 +5090,8 @@ aa
 aa
 ab
 ab
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa
@@ -5113,13 +5113,13 @@ ab
 ab
 aa
 aa
-ac
-ac
-ac
-ac
-ac
-ac
-ac
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
+Iy
 aa
 aa
 aa
@@ -5142,8 +5142,8 @@ aa
 aa
 aa
 aa
-ac
-ac
+Iy
+Iy
 ab
 aa
 aa

@@ -7,11 +7,11 @@
 /area/mine/explored)
 "d" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "k" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "l" = (
 /obj/machinery/door/airlock/external{
@@ -43,16 +43,16 @@
 "v" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/two,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "z" = (
 /obj/item/stack/ore/iron{
 	pixel_y = -11
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "C" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "D" = (
 /obj/machinery/door/airlock/external{
@@ -63,19 +63,19 @@
 /area/maintenance/starboard/greater)
 "E" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "H" = (
 /obj/item/pickaxe/mini{
 	pixel_x = 5;
 	pixel_y = -1
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "J" = (
 /obj/item/stack/ore/glass,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "P" = (
 /obj/modular_map_root/tramstation{
@@ -86,7 +86,7 @@
 "Q" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/four,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "R" = (
 /turf/open/floor/plating,
@@ -99,7 +99,7 @@
 	pixel_x = -9;
 	pixel_y = 11
 	},
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "W" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,

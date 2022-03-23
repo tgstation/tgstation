@@ -145,6 +145,21 @@
 	breakouttime = 30 SECONDS
 	cuffsound = 'sound/weapons/cablecuff.ogg'
 
+/obj/item/restraints/handcuffs/cable/Initialize(mapload)
+	. = ..()
+
+	var/static/list/hovering_item_typechecks = list(
+		/obj/item/stack/rods = list(
+			SCREENTIP_CONTEXT_LMB = "Craft wired rod",
+		),
+
+		/obj/item/stack/sheet/iron = list(
+			SCREENTIP_CONTEXT_LMB = "Craft bola",
+		),
+	)
+
+	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+
 /**
  * # Sinew restraints
  *
@@ -266,6 +281,21 @@
 
 /obj/item/restraints/handcuffs/cable/zipties/used/attack()
 	return
+
+/**
+ * # Fake Zipties
+ *
+ * One-use handcuffs that is very easy to break out of, meant as a one-use alternative to regular fake handcuffs.
+ */
+/obj/item/restraints/handcuffs/cable/zipties/fake
+	name = "fake zipties"
+	desc = "Fake zipties meant for gag purposes."
+	breakouttime = 1 SECONDS
+
+/obj/item/restraints/handcuffs/cable/zipties/fake/used
+	desc = "A pair of broken fake zipties."
+	icon_state = "cuff_used"
+	inhand_icon_state = "cuff"
 
 /**
  * # Generic leg cuffs

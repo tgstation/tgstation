@@ -1,6 +1,6 @@
 /mob/living/simple_animal/mouse
 	name = "mouse"
-	desc = "They're a nasty, ugly, evil, disease-ridden rodent."
+	desc = "This cute little guy just loves the taste of uninsulated electrical cables. Isn't he adorable?"
 	icon_state = "mouse_gray"
 	icon_living = "mouse_gray"
 	icon_dead = "mouse_gray_dead"
@@ -203,6 +203,7 @@
 	foodtypes = GROSS | MEAT | RAW
 	grind_results = list(/datum/reagent/blood = 20, /datum/reagent/liquidgibs = 5)
 	decomp_req_handle = TRUE
+	ant_attracting = FALSE
 	decomp_type = /obj/item/food/deadmouse/moldy
 
 /obj/item/food/deadmouse/Initialize(mapload)

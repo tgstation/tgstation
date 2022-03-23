@@ -50,7 +50,7 @@
 		return
 	if(!mod.wearer.Adjacent(target))
 		return
-	if(istype(target, /obj/structure/closet/crate))
+	if(istype(target, /obj/structure/closet/crate) || istype(target, /obj/structure/big_delivery))
 		var/atom/movable/picked_crate = target
 		if(length(stored_crates) >= max_crates)
 			balloon_alert(mod.wearer, "too many crates!")
@@ -130,8 +130,8 @@
 		var/turf/closed/mineral/mineral_turf = target
 		mineral_turf.gets_drilled(mod.wearer)
 		drain_power(use_power_cost)
-	else if(istype(target, /turf/open/floor/plating/asteroid))
-		var/turf/open/floor/plating/asteroid/sand_turf = target
+	else if(istype(target, /turf/open/misc/asteroid))
+		var/turf/open/misc/asteroid/sand_turf = target
 		if(!sand_turf.can_dig(mod.wearer))
 			return
 		sand_turf.getDug()
@@ -171,7 +171,7 @@
 
 	for(var/obj/item/stack/ore/ore in get_turf(mod.wearer))
 		INVOKE_ASYNC(src, .proc/move_ore, ore)
-		playsound(src, "rustle", 50, TRUE)
+		playsound(src, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/stored_ore as anything in ores)
@@ -349,7 +349,7 @@
 	/// How many tiles we traveled through.
 	var/traveled_tiles = 0
 	/// Armor values per tile.
-	var/list/armor_values = list(MELEE = 5.5, BULLET = 1.5, LASER = 2, ENERGY = 2.5, BOMB = 2.5)
+	var/list/armor_values = list(MELEE = 4, BULLET = 1, LASER = 2, ENERGY = 2, BOMB = 4)
 	/// Speed added when you're fully covered in ash.
 	var/speed_added = 0.5
 	/// Turfs that let us accrete ash.
@@ -361,17 +361,17 @@
 	. = ..()
 	if(!accretion_turfs)
 		accretion_turfs = typecacheof(list(
-			/turf/open/floor/plating/asteroid,
-			/turf/open/floor/plating/ashplanet,
-			/turf/open/floor/plating/dirt,
+			/turf/open/misc/asteroid,
+			/turf/open/misc/ashplanet,
+			/turf/open/misc/dirt,
 		))
 	if(!keep_turfs)
 		keep_turfs = typecacheof(list(
-			/turf/open/floor/plating/grass,
+			/turf/open/misc/grass,
 			/turf/open/floor/plating/snowed,
-			/turf/open/floor/plating/sandy_dirt,
-			/turf/open/floor/plating/ironsand,
-			/turf/open/floor/plating/ice,
+			/turf/open/misc/sandy_dirt,
+			/turf/open/misc/ironsand,
+			/turf/open/misc/ice,
 			/turf/open/indestructible/hierophant,
 			/turf/open/indestructible/boss,
 			/turf/open/indestructible/necropolis,
@@ -457,6 +457,9 @@
 	var/animate_time = 0.25 SECONDS
 
 /obj/item/mod/module/sphere_transform/on_activation()
+	if(!mod.wearer.has_gravity())
+		balloon_alert(mod.wearer, "no gravity!")
+		return FALSE
 	. = ..()
 	if(!.)
 		return
@@ -535,7 +538,7 @@
 	nodamage = TRUE
 	range = 6
 	suppressed = SUPPRESSED_VERY
-	flag = BOMB
+	armor_flag = BOMB
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 1
