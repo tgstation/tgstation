@@ -4,7 +4,6 @@
 	cooldown_reduction_per_rank = 18.5 SECONDS
 
 	invocation_type = INVOCATION_NONE
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB
 
 	// Enchanted guns tend to self delete anyways.
 	delete_old = FALSE

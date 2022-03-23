@@ -1,5 +1,5 @@
 /obj/item/book/granter/action/spell/summonitem
-	granted_action = /obj/effect/proc_holder/spell/targeted/summonitem // MELBERT TODO
+	granted_action = /datum/action/cooldown/spell/summonitem
 	action_name = "instant summons"
 	icon_state ="booksummons"
 	desc = "This book is bright and garish, very hard to miss."

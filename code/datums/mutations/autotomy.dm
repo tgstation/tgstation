@@ -4,7 +4,7 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your joints feel loose.</span>"
 	instability = 30
-	power = /datum/action/cooldown/spell/self_amputation
+	power_path = /datum/action/cooldown/spell/self_amputation
 
 	energy_coeff = 1
 	synchronizer_coeff = 1

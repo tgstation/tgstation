@@ -8,8 +8,6 @@
 	cooldown_time = 1 SECONDS
 	spell_max_level = 1
 
-	spell_requirements = SPELL_REQUIRES_WIZARD_GARB
-
 	item_type = /obj/item/spellpacket/lightningbolt
 
 /datum/action/cooldown/spell/conjure_item/spellpacket/cast(mob/living/carbon/cast_on)

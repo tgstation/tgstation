@@ -2,7 +2,7 @@
 /datum/spellbook_entry/summonitem
 	name = "Summon Item"
 	desc = "Recalls a previously marked item to your hand from anywhere in the universe."
-	spell_type = /datum/action/cooldown/spell/targeted/summonitem // MELBERT TODO
+	spell_type = /datum/action/cooldown/spell/summonitem
 	category = "Assistance"
 	cost = 1
 

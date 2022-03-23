@@ -1,17 +1,9 @@
 /datum/action/cooldown/spell/conjure_item
-	name = "Summon Weapon"
-	desc = "A generic spell that should not exist. This summons an instance of a specific type of item, \
-		or if one already exists, un-summons it. Summons into hand if possible."
-
 	school = SCHOOL_CONJURATION
-	cooldown_time = 15 SECONDS
-	cooldown_reduction_per_rank = 3 SECONDS
-
 	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
 
 	/// Typepath of whatever item we summon
-	var/item_type = /obj/item/banhammer
+	var/obj/item/item_type
 	/// Whether we delete the last item(s) we made after the spell is cast
 	var/delete_old = TRUE
 	/// List of weakrefs to items summoned

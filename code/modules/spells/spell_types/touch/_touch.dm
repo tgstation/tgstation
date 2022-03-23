@@ -109,6 +109,7 @@
  * The actual process of casting the spell on the victim from the caster.
  *
  * Override / extend this to implement casting effects.
+ * Return TRUE on a successful cast, FALSE otherwise
  */
 /datum/action/cooldown/spell/touch/proc/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(!isliving(victim) || !(caster.mobility_flags & MOBILITY_USE))

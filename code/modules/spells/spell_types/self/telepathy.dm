@@ -7,6 +7,9 @@
 
 	spell_requirements = NONE
 
+	/// The next mob we send a telepathy message to.
+	var/mob/to_telepath_to
+
 	/// Radius around the caster that living targets are picked to choose from
 	var/telepathy_radius = 7
 	/// The span surrounding the telepathy message
@@ -32,23 +35,23 @@
 		return FALSE
 
 	var/chosen_mob = tgui_input_list(cast_on, "Choose a target to whisper to.", "[src]", sort_names(mobs_to_chose))
-	if(!chosen_mob)
+	if(QDELETED(src) || QDELETED(cast_on) || !chosen_mob)
 		return FALSE
 
 	var/message = tgui_input_text(cast_on, "What do you wish to whisper to [chosen_mob]?", "[src]")
-	if(!message)
+	if(QDELETED(src) || QDELETED(cast_on) || !message)
 		return FALSE
 
-	send_telepathy(cast_on, chosen_mob, message)
+	to_telepath_to = chosen_mob
 	return TRUE
 
-/datum/action/cooldown/spell/telepathy/proc/send_telepathy(mob/living/from_mob, mob/living/to_mob, message)
-
-	log_directed_talk(from_mob, to_mob, message, LOG_SAY, "[src]")
+/datum/action/cooldown/spell/telepathy/cast(atom/cast_on)
+	. = ..()
+	log_directed_talk(to_telepath_to, to_mob, message, LOG_SAY, "[src]")
 
 	var/formatted_message = "<span class='[telepathy_span]'>[message]</span>"
 
-	to_chat(from_mob, "<span class='[bold_telepathy_span]'>You transmit to [to_mob]:</span> [formatted_message]")
+	to_chat(to_telepath_to, "<span class='[bold_telepathy_span]'>You transmit to [to_mob]:</span> [formatted_message]")
 	if(!to_mob.anti_magic_check(blocked_by_antimagic, blocked_by_holy, blocked_by_tinfoil, 0)) //hear no evil
 		to_chat(to_mob, "<span class='[bold_telepathy_span]'>You hear something behind you talking...</span> [formatted_message]")
 
@@ -56,12 +59,14 @@
 		if(!isobserver(ghost))
 			continue
 
-		var/from_link = FOLLOW_LINK(ghost, from_mob)
-		var/from_mob_name = "<span class='[bold_telepathy_span]'>[from_mob] [src]:</span>"
+		var/from_link = FOLLOW_LINK(ghost, to_telepath_to)
+		var/from_mob_name = "<span class='[bold_telepathy_span]'>[to_telepath_to] [src]:</span>"
 		var/to_link = FOLLOW_LINK(ghost, to_mob)
 		var/to_mob_name = span_name("[to_mob]")
 
 		to_chat(ghost, "[from_link] [from_mob_name] [formatted_message] [to_link] [to_mob_name]")
+
+	to_telepath_to = null
 
 /datum/action/cooldown/spell/telepathy/proc/get_telepathy_targets(atom/center)
 	var/list/mobs_to_chose = list()

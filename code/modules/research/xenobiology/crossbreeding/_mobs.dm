@@ -9,7 +9,7 @@ Slimecrossing Mobs
 	name = "Slime Transformation"
 	desc = "Transform from a human to a slime, or back again!"
 	button_icon_state = "transformslime"
-	cooldown_time = 0
+	cooldown_time = 0 SECONDS
 
 	invocation_type = INVOCATION_NONE
 
@@ -17,19 +17,23 @@ Slimecrossing Mobs
 	convert_damage_type = CLONE
 	possible_shapes = list(/mob/living/simple_animal/slime/transformed_slime)
 
+	/// If TRUE, we self-delete (remove ourselves) the next time we turn back into a human
 	var/remove_on_restore = FALSE
 
 /datum/action/cooldown/spell/shapeshift/slime_form/restore_form(mob/living/shape)
 	. = ..()
+	if(!.)
+		return
+
 	if(remove_on_restore)
 		qdel(src)
-
 
 /// Transformed slime - from Burning Black
 /mob/living/simple_animal/slime/transformed_slime
 
-/mob/living/simple_animal/slime/transformed_slime/Reproduce() //Just in case.
-	to_chat(src, span_warning("I can't reproduce..."))
+// Just in case.
+/mob/living/simple_animal/slime/transformed_slime/Reproduce()
+	to_chat(src, span_warning("I can't reproduce...")) // Mood
 	return
 
 //Slime corgi - Chilling Pink
