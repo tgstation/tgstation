@@ -18,7 +18,7 @@
 			to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
 			return FALSE
 		else if(organ_to_manipulate.obj_flags & FROZEN)
-			to_chat(user, span_warning("[target]'s [organ_to_manipulate] is frozen!"))
+			to_chat(user, span_warning("[target]'s [organ_to_manipulate] [organ_to_manipulate.p_are()] frozen!"))
 			return FALSE
 
 	if(HAS_TRAIT(target, TRAIT_ON_ICE) && target.stat == DEAD)

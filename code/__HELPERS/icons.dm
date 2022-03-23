@@ -1084,6 +1084,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		return
 	if(HAS_TRAIT(src, TRAIT_COLD_SKIN)) //we've already applied the trait and updated our body, no need to do it again
 		return ..()
+	visible_message(span_warning("[src] goes pale."), span_danger("Goose bumps creep across your pale skin!"))
 	ADD_TRAIT(src, TRAIT_COLD_SKIN, "body temp")
 	update_body_parts()
 	return ..()
@@ -1101,6 +1102,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		return
 	if(!HAS_TRAIT(src, TRAIT_COLD_SKIN)) //never froze to begin with
 		return
+	visible_message(span_notice("The colour returns to [src]'s skin."), span_notice("You feel warmer."))
 	REMOVE_TRAIT(src, TRAIT_COLD_SKIN, "body temp")
 	update_body_parts()
 	return ..()

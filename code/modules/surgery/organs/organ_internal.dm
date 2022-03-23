@@ -155,6 +155,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_SYNTHETIC_EMP) //Synthetic organ has been emped, is now failing.
 		applyOrganDamage(decay_factor * maxHealth * delta_time)
 		return
+	if(obj_flags & FROZEN) //Organ is somehow frozen, is now failing.
+		applyOrganDamage(decay_factor * maxHealth * delta_time)
+		return
 	///Damage decrements by a percent of its maxhealth
 	var/healing_amount = healing_factor
 	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
