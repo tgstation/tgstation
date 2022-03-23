@@ -318,7 +318,7 @@
 				. += debrain_overlay
 			else
 				var/datum/sprite_accessory/sprite2 = GLOB.hairstyles_list[src.hair_style]
-				if(sprite2 && (HAIR IN species_flags_list))
+				if(sprite2 && (HAIR in species_flags_list))
 					var/image/hair_overlay = image(sprite2.icon, "[sprite2.icon_state]", -HAIR_LAYER, SOUTH)
 					hair_overlay.color = hair_color
 					hair_overlay.alpha = hair_alpha
