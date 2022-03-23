@@ -20,7 +20,7 @@
 	var/datum/port/output/result
 	var/datum/port/output/cooldown
 
-	var/use_cooldown = 0
+	COOLDOWN_DECLARE(use_cooldown)
 
 	var/see_invisible = SEE_INVISIBLE_LIVING
 
@@ -29,7 +29,7 @@
 	cooldown = add_output_port("Scan On Cooldown", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/view_sensor/input_received(datum/port/input/port)
-	if(world.time < use_cooldown)
+	if(!COOLDOWN_FINISHED(src, use_cooldown))
 		result.set_output(null)
 		cooldown.set_output(COMPONENT_SIGNAL)
 		return
@@ -57,7 +57,7 @@
 		object_list += target
 
 	result.set_output(object_list)
-	use_cooldown = world.time + VIEW_SENSOR_COOLDOWN
+	COOLDOWN_START(src, use_cooldown, VIEW_SENSOR_COOLDOWN)
 
 #undef VIEW_SENSOR_RANGE
 #undef VIEW_SENSOR_COOLDOWN
