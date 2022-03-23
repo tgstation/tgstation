@@ -74,7 +74,7 @@
 		to_add[key] = value
 		. += to_add
 
-/datum/lua_editor/proc/add_argument()
+/datum/lua_editor/proc/add_argument(list/target_list)
 	usr.client.mod_list_add(target_list, null, "a lua editor", "arguments")
 	SStgui.update_uis(src)
 
@@ -217,7 +217,7 @@
 						return
 			else
 				target_list = arguments
-			add_argument
+			add_argument(target_list)
 			return
 		if("callFunction")
 			var/list/recursive_indices = params["indices"]
