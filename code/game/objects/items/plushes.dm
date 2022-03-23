@@ -615,7 +615,7 @@
 		return ..()
 	if(splat)
 		to_chat(user, span_notice("[src] doesn't seem to be able to go hard right now."))
-		return	
+		return
 	if(going_hard)
 		to_chat(user, span_notice("[src] is already going too hard!"))
 		return
@@ -635,7 +635,7 @@
 		going_hard = FALSE
 		update_icon(UPDATE_OVERLAYS)
 	icon_state = "goat_splat"
-	playsound(src, "desecration", 50, TRUE)
+	playsound(src, SFX_DESECRATION, 50, TRUE)
 	visible_message(span_danger("[src] gets absolutely flattened!"))
 	splat = TRUE
 

@@ -1,0 +1,4 @@
+author: "TemporalOroboros"
+delete-after: True
+changes: 
+  - bugfix: "Blood-spread-only diseases will no longer always spread upon exposure to blood."

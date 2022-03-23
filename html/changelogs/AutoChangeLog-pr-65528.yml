@@ -1,0 +1,4 @@
+author: "Daggertail"
+delete-after: True
+changes: 
+  - qol: "Amputation, Compound Fracture Repair, Cavity Implantation, Augmentation, and Prosthetic Replacement surgeries now all clamp bleeders after retracting skin like most surgeries, rather than before."

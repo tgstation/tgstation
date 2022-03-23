@@ -1,5 +1,6 @@
 /turf/closed
 	layer = CLOSED_TURF_LAYER
+	turf_flags = IS_SOLID
 	opacity = TRUE
 	density = TRUE
 	blocks_air = TRUE

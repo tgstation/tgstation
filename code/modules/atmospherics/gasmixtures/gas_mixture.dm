@@ -9,15 +9,16 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 /proc/init_gaslist_cache()
-	. = list()
+	var/list/gases = list()
 	for(var/id in GLOB.meta_gas_info)
 		var/list/cached_gas = new(3)
 
-		.[id] = cached_gas
+		gases[id] = cached_gas
 
 		cached_gas[MOLES] = 0
 		cached_gas[ARCHIVE] = 0
 		cached_gas[GAS_META] = GLOB.meta_gas_info[id]
+	return gases
 
 /datum/gas_mixture
 	var/list/gases

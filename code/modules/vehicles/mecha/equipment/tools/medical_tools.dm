@@ -37,7 +37,6 @@
 	energy_drain = 20
 	range = MECHA_MELEE
 	equip_cooldown = 20
-	salvageable = FALSE
 	var/mob/living/carbon/patient = null
 	var/inject_amount = 10
 

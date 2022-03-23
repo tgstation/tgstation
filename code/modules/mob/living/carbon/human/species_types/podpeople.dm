@@ -4,11 +4,14 @@
 	plural_form = "Podpeople"
 	id = SPECIES_PODPERSON
 	default_color = "59CE00"
-	species_traits = list(MUTCOLORS,EYECOLOR, HAS_FLESH, HAS_BONE)
+	species_traits = list(MUTCOLORS, EYECOLOR, HAS_FLESH, HAS_BONE)
 	inherent_traits = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_CAN_STRIP,
 		TRAIT_PLANT_SAFE,
+	)
+	external_organs = list(
+		/obj/item/organ/external/pod_hair = "None",
 	)
 	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID | MOB_PLANT
 	inherent_factions = list("plants", "vines")
@@ -44,9 +47,21 @@
 
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(1 * delta_time, 0)
+	..()
 
 /datum/species/pod/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/plantbgone)
 		H.adjustToxLoss(3 * REAGENTS_EFFECT_MULTIPLIER * delta_time)
 		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * delta_time)
 		return TRUE
+
+/datum/species/pod/randomize_main_appearance_element(mob/living/carbon/human/human_mob)
+	var/hairstyle = pick(GLOB.pod_hair_list)
+	human_mob.dna.features["pod_hair"] = hairstyle
+	mutant_bodyparts["pod_hair"] = hairstyle
+	human_mob.update_body()
+
+/datum/species/pod/proc/change_hairstyle(mob/living/carbon/human/human_mob, new_style)
+	var/obj/item/organ/external/organ = human_mob.getorganslot(ORGAN_SLOT_EXTERNAL_POD_HAIR )
+	organ.set_sprite(new_style)
+	human_mob.update_body_parts()

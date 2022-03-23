@@ -297,6 +297,18 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	air_contents.temperature = 10000
 	SSair.start_processing_machine(src)
 
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix
+	name = "Anesthetic mix"
+	desc = "A mixture of N2O and Oxygen"
+	greyscale_config = /datum/greyscale_config/canister/double_stripe
+	greyscale_colors = "#9fba6c#3d4680"
+
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix/create_gas()
+	air_contents.add_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
+	air_contents.gases[/datum/gas/oxygen][MOLES] = (O2_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (N2O_ANESTHETIC * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
+	SSair.start_processing_machine(src)
+
 /**
  * Getter for the amount of time left in the timer of prototype canisters
  */
@@ -413,7 +425,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 		if((10) to (5 * ONE_ATMOSPHERE))
 			. += mutable_appearance(canister_overlay_file, "can-0")
 			. += emissive_appearance(canister_overlay_file, "can-0-light", alpha = src.alpha)
-	
+
 	update_window()
 
 /obj/machinery/portable_atmospherics/canister/update_greyscale()

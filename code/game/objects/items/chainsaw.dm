@@ -16,7 +16,7 @@
 	custom_materials = list(/datum/material/iron=13000)
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
@@ -70,7 +70,7 @@
 	if(on)
 		hitsound = 'sound/weapons/chainsawhit.ogg'
 	else
-		hitsound = "swing_hit"
+		hitsound = SFX_SWING_HIT
 
 	if(src == user.get_active_held_item()) //update inhands
 		user.update_inv_hands()

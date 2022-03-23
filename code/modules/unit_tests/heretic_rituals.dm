@@ -68,9 +68,9 @@
 
 		// Now, we can ACTUALLY run the ritual. Let's do it.
 		// Attempt to run the knowledge via the sacrifice rune.
-		// If do_rituals() returns FALSE with our knowledge, it messed up.
-		// If do_rituals() returns TRUE, then it was successful.
-		if(!our_rune.do_rituals(our_heretic, list(knowledge)))
+		// If do_ritual() returns FALSE with our knowledge, it messed up.
+		// If do_ritual() returns TRUE, then it was successful.
+		if(!our_rune.do_ritual(our_heretic, knowledge))
 			// We failed. The knowledge should have everything to succeed, yet it returned FALSE!
 			// Clean up the atoms it was meant to consume, so we can keep testing.
 			for(var/atom/leftover as anything in created_atoms)

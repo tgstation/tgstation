@@ -20,7 +20,7 @@
 	/// Slowdown added to the suit.
 	var/added_slowdown = -0.5
 	/// Armor values added to the suit parts.
-	var/list/armor_values = list(MELEE = 40, BULLET = 50, LASER = 30, ENERGY = 40)
+	var/list/armor_values = list(MELEE = 25, BULLET = 30, LASER = 15, ENERGY = 15)
 	/// List of parts of the suit that are spaceproofed, for giving them back the pressure protection.
 	var/list/spaceproofed = list()
 

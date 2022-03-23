@@ -20,15 +20,15 @@
 "h" = (
 /obj/structure/table,
 /obj/item/folder/blue,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "i" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "k" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/three,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/mine/explored)
 "s" = (
 /turf/closed/wall/rock/porous,

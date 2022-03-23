@@ -390,9 +390,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.add_hud_to(mob)
 
-	if (prefs.toggles & COMBOHUD_LIGHTING)
-		mob.lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
-
+	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
 
 /client/proc/disable_combo_hud()
@@ -408,9 +406,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	for (var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud in GLOB.active_alternate_appearances)
 		antag_hud.remove_hud_from(mob)
 
-	if (prefs.toggles & COMBOHUD_LIGHTING)
-		mob.lighting_alpha = initial(mob.lighting_alpha)
-
+	mob.lighting_alpha = mob.default_lighting_alpha()
 	mob.update_sight()
 
 /datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)

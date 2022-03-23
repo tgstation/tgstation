@@ -85,6 +85,12 @@
 
 	return ..()
 
+/mob/living/carbon/CtrlShiftClick(mob/user)
+	..()
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.give(src)
+
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
@@ -342,7 +348,7 @@
 		return FALSE
 	visible_message(span_danger("[src] manages to [cuff_break ? "break" : "remove"] [I]!"))
 	to_chat(src, span_notice("You successfully [cuff_break ? "break" : "remove"] [I]."))
-
+	
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
