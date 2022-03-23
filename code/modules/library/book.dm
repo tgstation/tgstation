@@ -22,7 +22,8 @@
 	var/unique = FALSE //false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title //The real name of the book.
 	var/window_size = null // Specific window size for the book, i.e: "1920x1080", Size x Width
-
+	/// Maximum icon state number
+	var/maximum_book_state = 8
 
 /obj/item/book/attack_self(mob/user)
 	if(!user.can_read(src))
@@ -30,7 +31,7 @@
 	user.visible_message(span_notice("[user] opens a book titled \"[title]\" and begins reading intently."))
 	on_read(user)
 
-/obj/item/book/proc/on_read(mob/user)		
+/obj/item/book/proc/on_read(mob/user)
 	if(dat)
 		if(ishuman(user))
 			var/mob/living/carbon/human/reader = user
@@ -45,9 +46,9 @@
 			if(is_book_manual && reader.drowsyness) // manuals are so boring they put us to sleep if we are already drowsy
 				to_chat(user, span_warning("As you are reading the boring [src], you suddenly doze off!"))
 				reader.AdjustSleeping(100)
-				
+
 			reader.book_titles_read[title] = TRUE
-			
+
 		user << browse("<meta charset=UTF-8><TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		onclose(user, "book")
 	else
