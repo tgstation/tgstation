@@ -908,7 +908,7 @@
 				if(owner && ishuman(owner))
 					var/mob/living/carbon/human/human_owner = owner
 					if(HAS_TRAIT(human_owner, TRAIT_COLD_SKIN))
-						draw_color = BlendRGB(draw_color, COLOR_BLUE_GRAY, 0.2) //lighten our skin slightly
+						draw_color = BlendRGB(draw_color, COLOR_BLUE_GRAY, 0.3) //lighten our skin slightly
 				limb.color = draw_color
 				if(aux_zone)
 					aux.color = draw_color

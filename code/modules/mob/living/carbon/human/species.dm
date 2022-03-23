@@ -1594,13 +1594,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!IS_IN_STASIS(humi))
 		body_temperature_damage(humi, delta_time, times_fired)
 
-	if(humi.bodytemperature <= T0C)
-		if(HAS_TRAIT_FROM(humi, TRAIT_ON_ICE, "body temp"))
-			return
-		ADD_TRAIT(humi, TRAIT_ON_ICE, "body temp")
-
-	else if(HAS_TRAIT_FROM(humi, TRAIT_ON_ICE, "body temp"))
-		REMOVE_TRAIT(humi, TRAIT_ON_ICE, "body temp")
 
 /**
  * Used to stabilize the core temperature back to normal on living mobs
@@ -1676,6 +1669,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		humi.adjust_bodytemperature(core_skin_change)
 
+	var/is_hulk = HAS_TRAIT(humi, TRAIT_HULK)
+
+	var/cold_damage_limit = bodytemp_cold_damage_limit + (is_hulk ? BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER : 0)
+
+	//give body blue/grey hue if we're beneath the cold damage limit
+	if(humi.bodytemperature < cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
+		if(HAS_TRAIT_FROM(humi, TRAIT_COLD_SKIN, "body temp"))
+			return
+		ADD_TRAIT(humi, TRAIT_COLD_SKIN, "body temp")
+		humi.update_body_parts()
+	else if(HAS_TRAIT_FROM(humi, TRAIT_COLD_SKIN, "body temp"))
+		REMOVE_TRAIT(humi, TRAIT_COLD_SKIN, "body temp")
+		humi.update_body_parts()
 
 /**
  * Used to set alerts and debuffs based on body temperature
@@ -1776,6 +1782,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod * delta_time, damage_type)
 			else
 				humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod * delta_time, damage_type)
+
+		//core is below freezing, as well as beneath cold_damage_limit, time to freeze those organs
+		if(humi.coretemperature <= T0C)
+			if(HAS_TRAIT_FROM(humi, TRAIT_ON_ICE, "body temp"))
+				return
+			ADD_TRAIT(humi, TRAIT_ON_ICE, "body temp")
+
+	//unfreeze organs
+	if(humi.coretemperature > T0C && HAS_TRAIT_FROM(humi, TRAIT_ON_ICE, "body temp"))
+		REMOVE_TRAIT(humi, TRAIT_ON_ICE, "body temp")
 
 /**
  * Used to apply burn wounds on random limbs

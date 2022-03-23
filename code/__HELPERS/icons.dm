@@ -1061,8 +1061,9 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 /atom/proc/begin_unfreeze()
 	SIGNAL_HANDLER
-	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //only make unfrozen if nothing is freezing us
-		addtimer(CALLBACK(src, .proc/make_unfrozen), 3 SECONDS)
+	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us, don't unfreeze
+		return
+	addtimer(CALLBACK(src, .proc/make_unfrozen), 3 SECONDS)
 
 /atom/proc/make_frozen()
 	return
@@ -1071,42 +1072,39 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	return
 
 /mob/living/carbon/make_frozen()
-	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //no longer being frozen by anything, so don't freeze
-		return
-	if(stat != DEAD) //frozen bodily organs in a living human doesn't make a lot of sense
+	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //nothing is freezing us, don't freeze
 		return
 	for(var/obj/item/organ/O in internal_organs)
 		ADD_TRAIT(O, TRAIT_ON_ICE, "owner body temp")
 		O.make_frozen() //no delay
 
-/mob/living/carbon/human/make_frozen()
-	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //no longer being frozen by anything, so don't freeze
-		return
-	if(HAS_TRAIT(src, TRAIT_COLD_SKIN)) //we've already applied the trait and updated our body, no need to do it again
-		return ..()
-	ADD_TRAIT(src, TRAIT_COLD_SKIN, "body temp")
-	update_body_parts()
-	return ..()
-
 /mob/living/carbon/make_unfrozen()
-	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us again, don't unfreeze
+	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us, don't unfreeze
 		return
-	//we don't check for death before running this in case we were revived and have organs to unfreeze
 	for(var/obj/item/organ/O in internal_organs)
 		REMOVE_TRAIT(O, TRAIT_ON_ICE, "owner body temp")
 		O.make_unfrozen() //no delay
 
+/mob/living/carbon/human/make_frozen()
+	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //nothing is freezing us, don't freeze
+		return
+	if(HAS_TRAIT_FROM(src, TRAIT_COLD_SKIN, "make_frozen()")) //already have it, don't need to apply it again
+		return ..()
+	ADD_TRAIT(src, TRAIT_COLD_SKIN, "make_frozen()")
+	update_body_parts()
+	return ..()
+
 /mob/living/carbon/human/make_unfrozen()
-	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us again, don't unfreeze
+	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us, don't unfreeze
 		return
-	if(!HAS_TRAIT(src, TRAIT_COLD_SKIN)) //never froze to begin with
-		return
-	REMOVE_TRAIT(src, TRAIT_COLD_SKIN, "body temp")
+	if(!HAS_TRAIT_FROM(src, TRAIT_COLD_SKIN, "make_frozen()")) //already removed it, don't need to remove it again
+		return ..()
+	REMOVE_TRAIT(src, TRAIT_COLD_SKIN, "make_frozen()")
 	update_body_parts()
 	return ..()
 
 /obj/make_frozen()
-	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //no longer being frozen by anything, so don't freeze
+	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //nothing is freezing us, don't freeze
 		return
 	if(resistance_flags & FREEZE_PROOF)
 		return
@@ -1118,7 +1116,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 //Assumes already frozed
 /obj/make_unfrozen()
-	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us again, don't unfreeze
+	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us, don't unfreeze
 		return
 	if(obj_flags & FROZEN)
 		name = replacetext(name, "frozen ", "")
