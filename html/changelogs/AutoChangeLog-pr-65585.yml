@@ -1,6 +1,0 @@
-author: "Jolly"
-delete-after: True
-changes: 
-  - rscadd: "Charlie and Delta Storage rooms were added (as an area)."
-  - rscadd: "Charlie Dorms were added (as an area)."
-  - imageadd: "Fresh coat of paint for the Old Station (Charlie Station ruin) area sprites."
