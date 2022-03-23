@@ -35,6 +35,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/list/filter_result = is_ooc_filtered(msg)
 	if (!CAN_BYPASS_FILTER(usr) && filter_result)
 		REPORT_CHAT_FILTER_TO_USER(usr, filter_result)
+		log_filter("OOC", msg, filter_result)
 		return
 
 	// Protect filter bypassers from themselves.
