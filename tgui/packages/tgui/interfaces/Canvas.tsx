@@ -182,12 +182,18 @@ const getImageSize = value => {
   return [width, height];
 };
 
+type PaletteColor = {
+  color: string;
+  is_selected: boolean;
+}
+
 type CanvasData = {
   grid: string[][],
   finalized: boolean,
   name: string,
   editable: boolean,
   paint_tool_color: string | null,
+  paint_tool_palette: PaletteColor[] | null,
   author: string | null,
   medium: string | null,
   patron: string | null,
@@ -201,11 +207,13 @@ export const Canvas = (props, context) => {
   const scaled_width = width * PX_PER_UNIT;
   const scaled_height = height * PX_PER_UNIT;
   const average_plaque_height = 90;
+  const palette_height = 36;
   return (
     <Window
       width={scaled_width + 72}
-      height={scaled_height + 70
-        + (data.show_plaque ? average_plaque_height : 0)}>
+      height={scaled_height + 75
+        + (data.show_plaque ? average_plaque_height : 0)
+		+ (data.editable && data.paint_tool_palette ? palette_height : 0)}>
       <Window.Content>
         <Box textAlign="center">
           <PaintCanvas
@@ -218,7 +226,26 @@ export const Canvas = (props, context) => {
             onCanvasModifiedHandler={(changed) => act("paint", { data: toMassPaintFormat(changed) })}
             editable={data.editable}
           />
-          <Flex align="center" justify="center">
+          <Flex align="center" justify="center" direction="column">
+            {!!data.editable && !!data.paint_tool_palette && (
+              <Flex.Item>
+                {data.paint_tool_palette.map((element, index) => (
+                  <Button
+                    key={`${index}`}
+                    backgroundColor={element.color}
+                    style={{
+                      "width": "24px",
+                      "height": "24px",
+                      "border-style": "solid",
+                      "border-color": element.is_selected ? "lightblue" : "black",
+                      "border-width": "2px",
+                    }}
+                    onClick={() => act('select_color', {
+                      selected_color: element.color,
+                    })} />
+                ))}
+              </Flex.Item>
+            )}
             {!data.finalized && (
               <Flex.Item>
                 <Button.Confirm

@@ -25,12 +25,13 @@
 	sharpness = NONE
 	shrapnel_type = null
 	embedding = null
+	impact_effect_type = null
 	ricochet_chance = 10000
 	ricochets_max = 4
 	ricochet_incidence_leeway = 0
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
-	flag = BOMB
+	armor_flag = BOMB
 	speed = 1.2
 	wound_bonus = 30
 	bare_wound_bonus = 30
@@ -44,6 +45,13 @@
 
 /// we only try to knock back the first 6 items per tile
 #define BACKBLAST_MAX_ITEM_KNOCKBACK 6
+
+/obj/projectile/bullet/incendiary/backblast/on_hit(atom/target, blocked)
+	. = ..()
+	var/turf/location = get_turf(target)
+	if(isopenturf(location))
+		new /obj/effect/hotspot(location)
+		location.hotspot_expose(700, 50, 1)
 
 /obj/projectile/bullet/incendiary/backblast/Move()
 	. = ..()

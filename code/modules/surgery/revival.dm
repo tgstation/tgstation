@@ -21,6 +21,8 @@
 		return FALSE
 	if(target.suiciding || HAS_TRAIT(target, TRAIT_HUSK))
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_DEFIB_BLACKLISTED))
+		return FALSE
 	var/obj/item/organ/brain/target_brain = target.getorganslot(ORGAN_SLOT_BRAIN)
 	if(!target_brain)
 		return FALSE

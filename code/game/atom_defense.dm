@@ -132,5 +132,5 @@
 	return FALSE
 
 /// A cut-out proc for [/atom/proc/bullet_act] so living mobs can have their own armor behavior checks without causing issues with needing their own on_hit call
-/atom/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile)
+/atom/proc/check_projectile_armor(def_zone, obj/projectile/impacting_projectile, is_silent)
 	return 0

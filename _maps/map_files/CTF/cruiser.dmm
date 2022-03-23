@@ -240,16 +240,7 @@
 /turf/closed/indestructible/riveted/plastinum,
 /area/ctf)
 "lY" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron,
 /area/ctf)
 "mb" = (
@@ -336,16 +327,7 @@
 /turf/open/floor/mineral/titanium/purple,
 /area/ctf)
 "tM" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
+/obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/pod/dark,
 /area/ctf)
 "tN" = (
@@ -476,16 +458,7 @@
 /area/ctf)
 "zs" = (
 /obj/structure/barricade/security/ctf,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron,
 /area/ctf)
 "zx" = (
@@ -598,19 +571,6 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/space/nearstation)
-"GF" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ctf)
 "GH" = (
 /obj/structure/window/reinforced{
 	dir = 4;
@@ -704,16 +664,7 @@
 /turf/open/floor/pod/light,
 /area/ctf)
 "Jr" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/pod/dark,
 /area/ctf)
 "Jt" = (
@@ -834,16 +785,7 @@
 /area/ctf)
 "Pn" = (
 /obj/structure/trap/ctf/green,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron,
 /area/ctf)
 "PU" = (
@@ -962,19 +904,6 @@
 /area/ctf)
 "Us" = (
 /turf/open/floor/pod/light,
-/area/ctf)
-"Ut" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/turf/open/floor/pod/dark,
 /area/ctf)
 "Vl" = (
 /obj/effect/turf_decal/siding/purple/corner,
@@ -4177,12 +4106,12 @@ wO
 zg
 zg
 zg
-Ut
-Ut
-Ut
-Ut
-Ut
-Ut
+Jr
+Jr
+Jr
+Jr
+Jr
+Jr
 xl
 Us
 nj
@@ -4698,7 +4627,7 @@ hc
 hc
 hc
 fU
-GF
+lY
 lY
 lY
 lY

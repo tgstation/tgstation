@@ -35,7 +35,7 @@
 		else
 			bank_account.account_job = /datum/job/unassigned
 		playsound(loc, 'sound/machines/synth_yes.ogg', 30 , TRUE)
-		say("New account registered under account identification number [bank_account.account_id].")
+		say("New account registered under account ID number [bank_account.account_id].")
 		update_appearance()
 		return
 	else

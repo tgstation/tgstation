@@ -42,6 +42,7 @@
 	maturation = 10
 	production = 1
 	yield = 1 //seeds if there isn't a dna inside
+	instability = 15 //allows it to gain reagent genes from nearby plants
 	potency = 30
 	var/volume = 5
 	var/ckey
@@ -194,11 +195,15 @@
 	podman.faction |= factions
 	if(!features["mcolor"])
 		features["mcolor"] = "#59CE00"
+	if(!features["pod_hair"])
+		features["pod_hair"] = pick(GLOB.pod_hair_list)
+
 	for(var/V in quirks)
 		new V(podman)
-	podman.hardset_dna(null,null,null,podman.real_name,blood_type, new /datum/species/pod,features)//Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
+	podman.hardset_dna(null, null, null, podman.real_name, blood_type, new /datum/species/pod, features) // Discard SE's and UI's, podman cloning is inaccurate, and always make them a podman
 	podman.set_cloned_appearance()
-	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 
+	podman.dna.species.exotic_blood = max(reagents_add) || /datum/reagent/water
+	log_cloning("[key_name(mind)] cloned as a podman via [src] in [parent] at [AREACOORD(parent)].")
 	parent.update_tray(user, 1)
 	return result

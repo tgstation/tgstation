@@ -630,7 +630,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Bar Lounge"
 	icon_state = "lounge"
 	mood_bonus = 5
-	mood_message = "<span class='nicegreen'>I love being in the bar!</span>\n"
+	mood_message = "I love being in the bar!"
 	mood_trait = TRAIT_EXTROVERT
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
@@ -653,6 +653,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/commons/fitness/recreation
 	name = "\improper Recreation Area"
 	icon_state = "rec"
+
+/area/commons/fitness/recreation/entertainment
+	name = "\improper Entertainment Center"
+	icon_state = "entertainment"
 
 // Commons - Vacant Rooms
 /area/commons/vacant_room
@@ -716,6 +720,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/kitchen/diner
 	name = "\improper Diner"
+	icon_state = "diner"
 
 /area/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
@@ -725,7 +730,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Bar"
 	icon_state = "bar"
 	mood_bonus = 5
-	mood_message = "<span class='nicegreen'>I love being in the bar!</span>\n"
+	mood_message = "I love being in the bar!"
 	mood_trait = TRAIT_EXTROVERT
 	airlock_wires = /datum/wires/airlock/service
 	sound_environment = SOUND_AREA_WOODFLOOR
@@ -764,7 +769,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Library"
 	icon_state = "library"
 	mood_bonus = 5
-	mood_message = "<span class='nicegreen'>I love being in the library!</span>\n"
+	mood_message = "I love being in the library!"
 	mood_trait = TRAIT_INTROVERT
 	area_flags = CULT_PERMITTED | BLOBS_ALLOWED | UNIQUE_AREA
 	sound_environment = SOUND_AREA_LARGE_SOFTFLOOR
@@ -798,7 +803,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Chapel"
 	icon_state = "chapel"
 	mood_bonus = 5
-	mood_message = "<span class='nicegreen'>Being in the chapel brings me peace.</span>\n"
+	mood_message = "Being in the chapel brings me peace."
 	mood_trait = TRAIT_SPIRITUAL
 	ambience_index = AMBIENCE_HOLY
 	flags_1 = NONE
@@ -822,6 +827,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/service/chapel/dock
 	name = "\improper Chapel Dock"
 	icon_state = "construction"
+
+/area/service/chapel/storage
+	name = "\improper Chapel Storage"
+	icon_state = "chapelstorage"
+
+/area/service/chapel/funeral
+	name = "\improper Chapel Funeral Room"
+	icon_state = "chapelfuneral"
 
 /area/service/lawoffice
 	name = "\improper Law Office"
@@ -885,6 +898,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
+	icon_state = "atmos_projectroom"
+
+/area/engineering/atmos/pumproom
+	name = "\improper Atmospherics Pumping Room"
+	icon_state = "atmos_pump_room"
+
+/area/engineering/atmos/mix
+	name = "\improper Atmospherics Mixing Room"
+	icon_state = "atmos_mix"
 
 /area/engineering/atmos/storage
 	name = "\improper Atmospherics Storage Room"
@@ -896,9 +918,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/atmos/office
 	name = "\improper Atmospherics Office"
+	icon_state = "atmos_office"
 
 /area/engineering/atmos/hfr_room
 	name = "\improper Atmospherics HFR Room"
+	icon_state = "atmos_HFR"
 
 /area/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
@@ -945,7 +969,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/engineering/storage/tech
 	name = "Technical Storage"
-	icon_state = "aux_storage"
+	icon_state = "tech_storage"
 
 /area/engineering/storage/tcomms
 	name = "Telecomms Storage"
@@ -978,6 +1002,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
+	base_lighting_alpha = 255
 
 /area/solars/fore
 	name = "\improper Fore Solar Array"
@@ -1097,14 +1122,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Medical Office"
 	icon_state = "med_office"
 
-/area/medical/surgery/room_c
-	name = "Surgery C"
-	icon_state = "surgery"
-
-/area/medical/surgery/room_d
-	name = "Surgery D"
-	icon_state = "surgery"
-
 /area/medical/break_room
 	name = "\improper Medical Break Room"
 	icon_state = "med_break"
@@ -1145,13 +1162,20 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "pharmacy"
 
 /area/medical/surgery
-	name = "Surgery"
+	name = "\improper Operating Room"
 	icon_state = "surgery"
 
-/area/medical/surgery/room_b
-	name = "Surgery B"
-	icon_state = "surgery"
+/area/medical/surgery/fore
+	name = "\improper Fore Operating Room"
+	icon_state = "foresurgery"
 
+/area/medical/surgery/aft
+	name = "\improper Aft Operating Room"
+	icon_state = "aftsurgery"
+
+/area/medical/surgery/theatre
+	name = "\improper Grand Surgery Theatre"
+	icon_state = "surgerytheatre"
 /area/medical/cryo
 	name = "Cryogenics"
 	icon_state = "cryo"
@@ -1168,7 +1192,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Psychology Office"
 	icon_state = "psychology"
 	mood_bonus = 3
-	mood_message = "<span class='nicegreen'>I feel at ease here.</span>\n"
+	mood_message = "I feel at ease here."
 	ambientsounds = list('sound/ambience/aurora_caelus_short.ogg')
 
 //Security
@@ -1192,6 +1216,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/security/brig
 	name = "\improper Brig"
 	icon_state = "brig"
+
+/area/security/medical
+	name = "\improper Security Medical"
+	icon_state = "security_medical"
 
 /area/security/brig/upper
 	name = "\improper Brig Overlook"
@@ -1380,6 +1408,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "cargo_bay"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
+/area/cargo/lobby
+	name = "\improper Cargo Lobby"
+	icon_state = "cargo_lobby"
+
 /area/cargo/qm
 	name = "\improper Quartermaster's Office"
 	icon_state = "quart_office"
@@ -1400,8 +1432,17 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
+/area/science/lobby
+	name = "\improper Science Lobby"
+	icon_state = "science_lobby"
+
+/area/science/lower
+	name = "\improper Lower Science Division"
+	icon_state = "lower_science"
+
 /area/science/breakroom
 	name = "\improper Science Break Room"
+	icon_state = "science_breakroom"
 
 /area/science/lab
 	name = "Research and Development"
@@ -1432,6 +1473,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Ordnance Mixing Chamber"
 	icon_state = "ord_mix_chamber"
 	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+
+/area/science/mixing/hallway
+	name = "\improper Ordnance Mixing Hallway"
+	icon_state = "ord_mix_hallway"
+
+/area/science/mixing/launch
+	name = "\improper Ordnance Mixing Launch Site"
+	icon_state = "ord_mix_launch"
 
 /area/science/genetics
 	name = "\improper Genetics Lab"

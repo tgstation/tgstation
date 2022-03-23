@@ -338,6 +338,11 @@
 		to_chat(usr, span_warning("There is another [recipe.title] here!"))
 		return FALSE
 
+	if(recipe.on_tram)
+		if(!locate(/obj/structure/industrial_lift/tram) in dest_turf)
+			to_chat(usr, span_warning("\The [recipe.title] must be constructed on a tram floor!"))
+			return FALSE
+
 	if(recipe.on_floor)
 		if(!isfloorturf(dest_turf))
 			to_chat(usr, span_warning("\The [recipe.title] must be constructed on the floor!"))
@@ -580,12 +585,13 @@
 	var/time = 0
 	var/one_per_turf = FALSE
 	var/on_floor = FALSE
+	var/on_tram = FALSE
 	var/placement_checks = FALSE
 	var/applies_mats = FALSE
 	var/trait_booster = null
 	var/trait_modifier = 1
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1,time = 0, one_per_turf = FALSE, on_floor = FALSE, on_tram = FALSE, window_checks = FALSE, placement_checks = FALSE, applies_mats = FALSE, trait_booster = null, trait_modifier = 1)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount
@@ -594,6 +600,7 @@
 	src.time = time
 	src.one_per_turf = one_per_turf
 	src.on_floor = on_floor
+	src.on_tram = on_tram
 	src.placement_checks = placement_checks
 	src.applies_mats = applies_mats
 	src.trait_booster = trait_booster

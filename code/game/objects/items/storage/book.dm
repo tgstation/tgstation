@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				H.update_damage_overlays()
 		H.visible_message(span_notice("[user] heals [H] with the power of [deity_name]!"))
 		to_chat(H, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-		playsound(src.loc, "punch", 25, TRUE, -1)
+		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "blessing", /datum/mood_event/blessing)
 	return TRUE
 
@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 	if (M.stat == DEAD)
 		M.visible_message(span_danger("[user] smacks [M]'s lifeless corpse with [src]."))
-		playsound(src.loc, "punch", 25, TRUE, -1)
+		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		return
 
 	if(user == M)
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(smack)
 		M.visible_message(span_danger("[user] beats [M] over the head with [src]!"), \
 				span_userdanger("[user] beats [M] over the head with [src]!"))
-		playsound(src.loc, "punch", 25, TRUE, -1)
+		playsound(src.loc, SFX_PUNCH, 25, TRUE, -1)
 		log_combat(user, M, "attacked", src)
 
 /obj/item/storage/book/bible/afterattack(atom/bible_smacked, mob/user, proximity)

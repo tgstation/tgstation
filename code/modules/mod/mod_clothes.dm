@@ -8,7 +8,7 @@
 	body_parts_covered = HEAD
 	heat_protection = HEAD
 	cold_protection = HEAD
-	dynamic_hair_suffix = ""
+
 	obj_flags = IMMUTABLE_SLOW
 	var/alternate_layer = NECK_LAYER
 	var/obj/item/mod/control/mod

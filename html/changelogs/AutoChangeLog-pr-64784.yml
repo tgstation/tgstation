@@ -1,4 +1,0 @@
-author: "ike709"
-delete-after: True
-changes: 
-  - refactor: "Timer subsystems can now recover from a deleted MC properly."

@@ -28,7 +28,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	name = "requests console"
 	desc = "A console intended to send requests to different departments on the station."
 	icon = 'icons/obj/terminals.dmi'
-	icon_state = "req_comp0"
+	icon_state = "req_comp_off"
 	base_icon_state = "req_comp"
 	var/department = "Unknown" //The list of all departments on the station (Determined from this variable on each unit) Set this to the same thing if you want several consoles in one department
 	var/list/messages = list() //List of all messages
@@ -81,23 +81,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console, 30)
 
 /obj/machinery/requests_console/update_icon_state()
 	if(open)
-		icon_state="[base_icon_state]_[hackState ? "rewired" : "open"]"
+		icon_state = "[base_icon_state]_[hackState ? "rewired" : "open"]"
 		return ..()
-	if(machine_stat & NOPOWER)
-		icon_state = "[base_icon_state]_off"
-		return ..()
+	icon_state = "[base_icon_state]_off"
+	return ..()
+
+/obj/machinery/requests_console/update_overlays()
+	. = ..()
+
+	if(open || (machine_stat & NOPOWER))
+		return
+
+	var/screen_state
 
 	if(emergency || (newmessagepriority == REQ_EXTREME_MESSAGE_PRIORITY))
-		icon_state = "[base_icon_state]3"
-		return ..()
-	if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
-		icon_state = "[base_icon_state]2"
-		return ..()
-	if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
-		icon_state = "[base_icon_state]1"
-		return ..()
-	icon_state = "[base_icon_state]0"
-	return ..()
+		screen_state = "[base_icon_state]3"
+	else if(newmessagepriority == REQ_HIGH_MESSAGE_PRIORITY)
+		screen_state = "[base_icon_state]2"
+	else if(newmessagepriority == REQ_NORMAL_MESSAGE_PRIORITY)
+		screen_state = "[base_icon_state]1"
+	else
+		screen_state = "[base_icon_state]0"
+
+	. += mutable_appearance(icon, screen_state)
+	. += emissive_appearance(icon, screen_state, alpha = src.alpha)
 
 /obj/machinery/requests_console/Initialize(mapload)
 	. = ..()

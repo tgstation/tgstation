@@ -320,3 +320,61 @@
 
 /obj/effect/turf_decal/siding/wideplating/dark/end
 	icon_state = "siding_wideplating_end"
+
+/obj/effect/turf_decal/siding/thinplating_new
+	icon_state = "siding_thinplating_new_line"
+	color = "#949494"
+
+/obj/effect/turf_decal/siding/thinplating_new/corner
+	icon_state = "siding_thinplating_new_corner"
+
+/obj/effect/turf_decal/siding/thinplating_new/end
+	icon_state = "siding_thinplating_new_end"
+
+/obj/effect/turf_decal/siding/thinplating_new/light
+	color = "#e2e2e2"
+
+/obj/effect/turf_decal/siding/thinplating_new/light/corner
+	icon_state = "siding_thinplating_new_corner"
+
+/obj/effect/turf_decal/siding/thinplating_new/light/end
+	icon_state = "siding_thinplating_new_end"
+
+/obj/effect/turf_decal/siding/thinplating_new/dark
+	icon_state = "siding_thinplating_new_line"
+	color = "#36373a"
+
+/obj/effect/turf_decal/siding/thinplating_new/dark/corner
+	icon_state = "siding_thinplating_new_corner"
+
+/obj/effect/turf_decal/siding/thinplating_new/dark/end
+	icon_state = "siding_thinplating_new_end"
+
+/obj/effect/turf_decal/siding/wideplating_new
+	icon_state = "siding_wideplating_new_line"
+	color = "#949494"
+
+/obj/effect/turf_decal/siding/wideplating_new/corner
+	icon_state = "siding_wideplating_new_corner"
+
+/obj/effect/turf_decal/siding/wideplating_new/end
+	icon_state = "siding_wideplating_new_end"
+
+/obj/effect/turf_decal/siding/wideplating_new/light
+	color = "#e2e2e2"
+
+/obj/effect/turf_decal/siding/wideplating_new/light/corner
+	icon_state = "siding_wideplating_new_corner"
+
+/obj/effect/turf_decal/siding/wideplating_new/light/end
+	icon_state = "siding_wideplating_new_end"
+
+/obj/effect/turf_decal/siding/wideplating_new/dark
+	icon_state = "siding_wideplating_new_line"
+	color = "#36373a"
+
+/obj/effect/turf_decal/siding/wideplating_new/dark/corner
+	icon_state = "siding_wideplating_new_corner"
+
+/obj/effect/turf_decal/siding/wideplating_new/dark/end
+	icon_state = "siding_wideplating_new_end"

@@ -158,6 +158,5 @@
 /obj/item/stock_parts/cell/minigun
 	name = "gatling gun fusion core"
 	desc = "Where did these come from?"
-	icon_state = "h+cell"
 	maxcharge = 500000
 	chargerate = 5000

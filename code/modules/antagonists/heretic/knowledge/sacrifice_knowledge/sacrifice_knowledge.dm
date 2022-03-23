@@ -14,11 +14,10 @@
 		If you have no targets, stand on a transmutation rune and invoke it to aquire some."
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
+	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
 	route = PATH_START
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
 	var/static/heretic_level_generated = FALSE
-	/// If TRUE, we skip the ritual when our target list is empty. Done to avoid locking up the heretic.
-	var/skip_this_ritual = FALSE
 	/// A weakref to the mind of our heretic.
 	var/datum/mind/heretic_mind
 	/// Lazylist of minds that we won't pick as targets.
@@ -48,38 +47,45 @@
 		CRASH("Failed to initialize heretic sacrifice z-level!")
 
 /datum/heretic_knowledge/hunt_and_sacrifice/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	var/obj/item/organ/heart/our_heart = user.getorganslot(ORGAN_SLOT_HEART)
-	if(!our_heart || !HAS_TRAIT(our_heart, TRAIT_LIVING_HEART))
+	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	// First we have to check if the heretic has a Living Heart.
+	// You may wonder why we don't straight up prevent them from invoking the ritual if they don't have one -
+	// Hunt and sacrifice should always be invokable for clarity's sake, even if it'll fail immediately.
+	if(heretic_datum.has_living_heart() != HERETIC_HAS_LIVING_HEART)
+		loc.balloon_alert(user, "ritual failed, no living heart!")
 		return FALSE
 
-	// We've got no targets set, let's try to set some. Adds the user to the list of atoms,
-	// then returns TRUE if skip_this_ritual is FALSE and the user's on top of the rune.
-	// If skip_this_ritual is TRUE, returns FALSE to fail the check and move onto the next ritual.
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	// We've got no targets set, let's try to set some.
+	// If we recently failed to aquire targets, we will be unable to aquire any.
 	if(!LAZYLEN(heretic_datum.sac_targets))
-		if(skip_this_ritual)
-			return FALSE
-
 		atoms += user
-		return (user in range(1, loc))
+		return TRUE
 
-	// Determine if livings in our atoms are valid
+	// If we have targets, we can check to see if we can do a sacrifice
+	// Let's remove any humans in our atoms list that aren't a sac target
 	for(var/mob/living/carbon/human/sacrifice in atoms)
 		// If the mob's not in soft crit or worse, or isn't one of the sacrifices, remove it from the list
-		if(sacrifice.stat < SOFT_CRIT || !(WEAKREF(sacrifice) in heretic_datum.sac_targets))
+		if(sacrifice.stat < SOFT_CRIT || !(sacrifice in heretic_datum.sac_targets))
 			atoms -= sacrifice
 
-	// Finally, return TRUE if we have a mob remaining in our list
-	// Otherwise, return FALSE and stop the ritual
-	return !!(locate(/mob/living/carbon/human) in atoms)
+	// Finally, return TRUE if we have a target in the list
+	if(locate(/mob/living/carbon/human) in atoms)
+		return TRUE
+
+	// or FALSE if we don't
+	loc.balloon_alert(user, "ritual failed, no sacrifice found!")
+	return FALSE
 
 /datum/heretic_knowledge/hunt_and_sacrifice/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
-	if(LAZYLEN(heretic_datum.sac_targets))
-		sacrifice_process(user, selected_atoms, loc)
-	else
-		obtain_targets(user)
+	if(!LAZYLEN(heretic_datum.sac_targets))
+		if(obtain_targets(user))
+			return TRUE
+		else
+			loc.balloon_alert(user, "ritual failed, no targets found!")
+			return FALSE
 
+	sacrifice_process(user, selected_atoms, loc)
 	return TRUE
 
 /**
@@ -106,9 +112,7 @@
 
 	if(!length(valid_targets))
 		if(!silent)
-			to_chat(user, span_danger("No sacrifice targets could be found! Attempt the ritual later."))
-		skip_this_ritual = TRUE
-		addtimer(VARSET_CALLBACK(src, skip_this_ritual, FALSE), 5 MINUTES)
+			to_chat(user, span_hierophant_warning("No sacrifice targets could be found!"))
 		return FALSE
 
 	// Now, let's try to get four targets.
@@ -119,21 +123,21 @@
 	var/list/datum/mind/final_targets = list()
 
 	// First target, any command.
-	for(var/datum/mind/head_mind as anything in shuffle_inplace(valid_targets))
+	for(var/datum/mind/head_mind as anything in shuffle(valid_targets))
 		if(head_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 			final_targets += head_mind
 			valid_targets -= head_mind
 			break
 
 	// Second target, any security
-	for(var/datum/mind/sec_mind as anything in shuffle_inplace(valid_targets))
+	for(var/datum/mind/sec_mind as anything in shuffle(valid_targets))
 		if(sec_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_SECURITY)
 			final_targets += sec_mind
 			valid_targets -= sec_mind
 			break
 
 	// Third target, someone in their department.
-	for(var/datum/mind/department_mind as anything in shuffle_inplace(valid_targets))
+	for(var/datum/mind/department_mind as anything in shuffle(valid_targets))
 		if(department_mind.assigned_role?.departments_bitflags & user.mind.assigned_role?.departments_bitflags)
 			final_targets += department_mind
 			valid_targets -= department_mind
@@ -175,12 +179,12 @@
 	var/mob/living/carbon/human/sacrifice = locate() in selected_atoms
 	if(!sacrifice)
 		CRASH("[type] sacrifice_process didn't have a human in the atoms list. How'd it make it so far?")
-	if(!(WEAKREF(sacrifice) in heretic_datum.sac_targets))
+	if(!(sacrifice in heretic_datum.sac_targets))
 		CRASH("[type] sacrifice_process managed to get a non-target human. This is incorrect.")
 
 	if(sacrifice.mind)
 		LAZYADD(target_blacklist, sacrifice.mind)
-	LAZYREMOVE(heretic_datum.sac_targets, WEAKREF(sacrifice))
+	heretic_datum.remove_sacrifice_target(sacrifice)
 
 	to_chat(user, span_hypnophrase("Your patrons accepts your offer."))
 
