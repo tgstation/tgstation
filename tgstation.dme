@@ -3601,7 +3601,6 @@
 #include "code\modules\power\solar.dm"
 #include "code\modules\power\terminal.dm"
 #include "code\modules\power\tracker.dm"
-#include "code\modules\power\turbine.dm"
 #include "code\modules\power\lighting\_light_defines.dm"
 #include "code\modules\power\lighting\light.dm"
 #include "code\modules\power\lighting\light_construct.dm"

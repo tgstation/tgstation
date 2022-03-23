@@ -134,6 +134,8 @@
 		return ..()
 	var/obj/item/turbine_parts/compressor/compressor_part = object
 	if(!installed_part)
+		if(!do_after(user, 2 SECONDS, src))
+			return
 		user.transferItemToLoc(compressor_part, src)
 		installed_part = compressor_part
 		if(core)
@@ -141,6 +143,8 @@
 		balloon_alert(user, "installed new part")
 		return
 	if(installed_part.part_efficiency < compressor_part.part_efficiency)
+		if(!do_after(user, 2 SECONDS, src))
+			return
 		user.transferItemToLoc(compressor_part, src)
 		user.put_in_hands(installed_part)
 		installed_part = compressor_part
@@ -179,6 +183,8 @@
 		return ..()
 	var/obj/item/turbine_parts/stator/stator_part = object
 	if(!installed_part)
+		if(!do_after(user, 2 SECONDS, src))
+			return
 		user.transferItemToLoc(stator_part, src)
 		installed_part = stator_part
 		if(core)
@@ -186,6 +192,8 @@
 		balloon_alert(user, "installed new part")
 		return
 	if(installed_part.part_efficiency < stator_part.part_efficiency)
+		if(!do_after(user, 2 SECONDS, src))
+			return
 		user.transferItemToLoc(stator_part, src)
 		user.put_in_hands(installed_part)
 		installed_part = stator_part
@@ -254,7 +262,21 @@
 	///Used to calculate the max damage received per tick and if the alarm should be called
 	var/damage_archived = 0
 
+	///Our internal radio
+	var/obj/item/radio/radio
+	///The key our internal radio uses
+	var/radio_key = /obj/item/encryptionkey/headset_eng
+	///The engineering channel
+	var/engineering_channel = "Engineering"
+
 	COOLDOWN_DECLARE(turbine_damage_alert)
+
+/obj/machinery/power/turbine/core_rotor/Initialize(mapload)
+	. = ..()
+	radio = new(src)
+	radio.keyslot = new radio_key
+	radio.set_listening(FALSE)
+	radio.recalculateChannels()
 
 /obj/machinery/power/turbine/core_rotor/LateInitialize()
 	. = ..()
@@ -262,6 +284,7 @@
 
 /obj/machinery/power/turbine/core_rotor/Destroy(mob/user)
 	deactivate_parts(user)
+	QDEL_NULL(radio)
 	return ..()
 
 /obj/machinery/power/turbine/core_rotor/enable_parts(mob/user)
@@ -294,17 +317,22 @@
 	compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, turn(dir, 180))
 	turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, dir)
 
+	var/parts_present = TRUE
 	if(!compressor || !turbine)
 		if(user)
 			balloon_alert(user, "missing parts detected")
-		return FALSE
+		parts_present = FALSE
 	if(compressor.dir != dir || !compressor.can_connect)
 		if(user)
 			balloon_alert(user, "wrong compressor direction")
-		return FALSE
+		parts_present = FALSE
 	if(turbine.dir != dir || !turbine.can_connect)
 		if(user)
 			balloon_alert(user, "wrong turbine direction")
+		parts_present = FALSE
+
+	if(!parts_present)
+		all_parts_connected = FALSE
 		return FALSE
 
 	compressor.core = src
@@ -352,6 +380,8 @@
 		if(istype(object, compressor.part_path))
 			var/obj/item/turbine_parts/compressor/compressor_part = object
 			if(!compressor.installed_part)
+				if(!do_after(user, 2 SECONDS, src))
+					return
 				user.transferItemToLoc(compressor_part, src)
 				compressor.installed_part = compressor_part
 				compressor_part_efficiency = compressor_part.part_efficiency
@@ -359,6 +389,8 @@
 				balloon_alert(user, "installed new part")
 				return
 			if(compressor.installed_part.part_efficiency < compressor_part.part_efficiency)
+				if(!do_after(user, 2 SECONDS, src))
+					return
 				user.transferItemToLoc(compressor_part, src)
 				user.put_in_hands(compressor.installed_part)
 				compressor.installed_part = compressor_part
@@ -373,6 +405,8 @@
 		if(istype(object, turbine.part_path))
 			var/obj/item/turbine_parts/stator/stator_part = object
 			if(!turbine.installed_part)
+				if(!do_after(user, 2 SECONDS, src))
+					return
 				user.transferItemToLoc(stator_part, src)
 				turbine.installed_part = stator_part
 				stator_part_efficiency = stator_part.part_efficiency
@@ -380,6 +414,8 @@
 				balloon_alert(user, "installed new part")
 				return
 			if(turbine.installed_part.part_efficiency < stator_part.part_efficiency)
+				if(!do_after(user, 2 SECONDS, src))
+					return
 				user.transferItemToLoc(stator_part, src)
 				user.put_in_hands(turbine.installed_part)
 				turbine.installed_part = stator_part
@@ -394,6 +430,8 @@
 	if(istype(object, part_path))
 		var/obj/item/turbine_parts/rotor/rotor_part = object
 		if(!installed_part)
+			if(!do_after(user, 2 SECONDS, src))
+				return
 			user.transferItemToLoc(rotor_part, src)
 			installed_part = rotor_part
 			rotor_part_efficiency = rotor_part.part_efficiency
@@ -401,6 +439,8 @@
 			balloon_alert(user, "installed new part")
 			return
 		if(installed_part.part_efficiency < rotor_part.part_efficiency)
+			if(!do_after(user, 2 SECONDS, src))
+				return
 			user.transferItemToLoc(rotor_part, src)
 			user.put_in_hands(installed_part)
 			installed_part = rotor_part
@@ -437,15 +477,37 @@
 		damage = max(damage - TURBINE_DAMAGE_HEALING, 0)
 
 	if((damage - damage_archived >= 2 || damage > TURBINE_DAMAGE_ALARM_START) && COOLDOWN_FINISHED(src, turbine_damage_alert))
-		call_alert(damage_done)
+		damage_alert(damage_done)
 
-/obj/machinery/power/turbine/core_rotor/proc/call_alert(damage_done)
+/obj/machinery/power/turbine/core_rotor/proc/damage_alert(damage_done)
 	COOLDOWN_START(src, turbine_damage_alert, max(round(TURBINE_DAMAGE_ALARM_START - damage_done), 5) SECONDS)
-	message_admins("AHHH YOU KILLING MEEEEE!!!11!!11!!!1111!!") //#TODO finish alert
+
+	var/integrity = damage / 500
+	integrity = max(round(100 - integrity * 100, 0.01), 0)
+
+	if(integrity <= 0)
+		failure()
+		return
+
+	radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
+
+/obj/machinery/power/turbine/core_rotor/proc/failure()
+	deactivate_parts()
+	if(rpm < 35000)
+		explosion(src, 0, 1, 4)
+		return
+	if(rpm < 87500)
+		explosion(src, 0, 2, 6)
+		return
+	if(rpm < 220000)
+		explosion(src, 1, 3, 7)
+		return
+	if(rpm < 550000)
+		explosion(src, 2, 5, 7)
 
 /obj/machinery/power/turbine/core_rotor/process_atmos()
 
-	if(!active)
+	if(!active || !all_parts_connected)
 		return
 
 	var/datum/gas_mixture/input_turf_mixture = input_turf.air

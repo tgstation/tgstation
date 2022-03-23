@@ -4,25 +4,39 @@
 	icon = 'icons/obj/turbine/turbine.dmi'
 	icon_state = "inlet_compressor"
 
+	///Efficiency of the part to the turbine machine
 	var/part_efficiency = 0
+	///Efficiency increase amount for each tier
 	var/part_efficiency_increase_amount = 0
 
+	///Current part tier
 	var/current_tier = 1
+	///Max part tier
 	var/max_tier = 4
 
+	///Stores the path of the material for the second tier upgrade
 	var/second_tier_material = /obj/item/stack/sheet/plasteel
+	///Amount of second tier material for the upgrade
 	var/second_tier_material_amount = 10
 
+	///Stores the path of the material for the third tier upgrade
 	var/third_tier_material = /obj/item/stack/sheet/mineral/titanium
+	///Amount of third tier material for the upgrade
 	var/third_tier_material_amount = 10
 
+	///Stores the path of the material for the fourth tier upgrade
 	var/fourth_tier_material = /obj/item/stack/sheet/mineral/metal_hydrogen
+	///Amount of fourth tier material for the upgrade
 	var/fourth_tier_material_amount = 5
 
+	///Max rpm reachable by the part
 	var/max_rpm = 35000
-	var/max_rpm_tier_multiplier = 2.5 //max should be 500000 rpm
+	///Multiplier to increase the max rpm per tier, max should be around 500000 rpm
+	var/max_rpm_tier_multiplier = 2.5
 
+	///Max temperature achievable by the part before the turbine starts to take damage
 	var/max_temperature = 50000
+	///Max temperature exponential value per tier
 	var/max_temperature_tier_exponential = 1.2
 
 /obj/item/turbine_parts/attackby(obj/item/attacking_item, mob/user, params)

@@ -80,6 +80,8 @@
 	switch(action)
 		if("toggle_power")
 			if(main_control?.all_parts_connected && main_control?.rpm < 1000)
+				if(!main_control.activate_parts(usr))
+					return TRUE
 				main_control.active = !main_control.active
 				main_control.rpm = 0
 				main_control.produced_energy = 0
