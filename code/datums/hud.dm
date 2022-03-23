@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(huds, list(
 
 	if(new_turf)
 		if(hud_users_all_z_levels[moved_atom])
-			hud_users[new_turf.z] |= moved_atom
+			hud_users[new_turf.z][moved_atom] = TRUE //hud users is associative, hud atoms isnt
 
 			for(var/atom/newly_seen_hud_atom as anything in get_hud_atoms_for_z_level(new_turf.z))
 				add_atom_to_single_mob_hud(moved_atom, newly_seen_hud_atom)
