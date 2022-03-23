@@ -600,18 +600,25 @@
  *
  * overridden here and in /mob/dead/observer for different point span classes and sanity checks
  */
-/mob/verb/pointed(atom/A as mob|obj|turf in view())//TODOKYLER: AHHHHH
+/mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
 	set category = "Object"
 
-	if(client && !(A in view(client.view, src)))
-		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	point_at(A)
+	if(TRY_QUEUE_VERB(src, .proc/wrap_pointed, A))
+		return
 
-	SEND_SIGNAL(src, COMSIG_MOB_POINTED, A)
+	return wrap_pointed(A)
+
+/mob/proc/wrap_pointed(atom/pointing_at)
+	if(client && !(pointing_at in view(client.view, src)))
+		return FALSE
+
+	point_at(pointing_at)
+
+	SEND_SIGNAL(src, COMSIG_MOB_POINTED, pointing_at)
 	return TRUE
 
 /**

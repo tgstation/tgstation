@@ -419,11 +419,14 @@
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
 	if(incapacitated())
 		return FALSE
+
+	return ..()
+
+/mob/living/wrap_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
-	visible_message("<span class='infoplain'>[span_name("[src]")] points at [A].</span>", span_notice("You point at [A]."))
-	return TRUE
 
+	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
 /mob/living/verb/succumb(whispered as null)
 	set hidden = TRUE
