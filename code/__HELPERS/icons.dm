@@ -1086,7 +1086,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		O.make_unfrozen() //no delay
 
 /mob/living/carbon/human/make_frozen()
-	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //nothing is freezing us, don't freeze
+	if(!HAS_TRAIT(src, TRAIT_ON_ICE))
 		return
 	if(HAS_TRAIT_FROM(src, TRAIT_COLD_SKIN, "make_frozen()")) //already have it, don't need to apply it again
 		return ..()
@@ -1095,7 +1095,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	return ..()
 
 /mob/living/carbon/human/make_unfrozen()
-	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us, don't unfreeze
+	if(HAS_TRAIT(src, TRAIT_ON_ICE))
 		return
 	if(!HAS_TRAIT_FROM(src, TRAIT_COLD_SKIN, "make_frozen()")) //already removed it, don't need to remove it again
 		return ..()
@@ -1104,7 +1104,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	return ..()
 
 /obj/make_frozen()
-	if(!HAS_TRAIT(src, TRAIT_ON_ICE)) //nothing is freezing us, don't freeze
+	if(!HAS_TRAIT(src, TRAIT_ON_ICE))
 		return
 	if(resistance_flags & FREEZE_PROOF)
 		return
@@ -1116,7 +1116,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 //Assumes already frozed
 /obj/make_unfrozen()
-	if(HAS_TRAIT(src, TRAIT_ON_ICE)) //something is freezing us, don't unfreeze
+	if(HAS_TRAIT(src, TRAIT_ON_ICE))
 		return
 	if(obj_flags & FROZEN)
 		name = replacetext(name, "frozen ", "")
