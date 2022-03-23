@@ -52,6 +52,9 @@ SUBSYSTEM_DEF(atoms)
 
 	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD)
 
+	// Reset atoms locs to ensure turf contents correctly include multitiles
+	fix_atoms_locs(atoms)
+
 	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
 	CreateAtoms(atoms, atoms_to_return)
 	clear_tracked_initalize()
@@ -152,6 +155,15 @@ SUBSYSTEM_DEF(atoms)
 			created_atoms += A.get_all_contents()
 
 	return qdeleted || QDELING(A)
+
+/// Force reset atoms loc, as map expansion can botch turf contents for multitiles
+/datum/controller/subsystem/atoms/proc/fix_atoms_locs(list/atoms)
+	if(atoms)
+		for(var/atom/movable/A in atoms)
+			A.loc = A.loc
+	else
+		for(var/atom/movable/A in world)
+			A.loc = A.loc
 
 /datum/controller/subsystem/atoms/proc/map_loader_begin()
 	set_tracked_initalized(INITIALIZATION_INSSATOMS)
