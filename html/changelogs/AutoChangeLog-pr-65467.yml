@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - qol: "Tooltips of low/no power screen alerts (used by cyborgs, MODsuits, mechs and ethereals) will tell you the actual locations of the roundstart station chargers"
-  - bugfix: "Fixes issue with low/no power screen alerts not clearing after leaving a mech"

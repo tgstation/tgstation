@@ -349,7 +349,7 @@
 	/// How many tiles we traveled through.
 	var/traveled_tiles = 0
 	/// Armor values per tile.
-	var/list/armor_values = list(MELEE = 5.5, BULLET = 1.5, LASER = 2, ENERGY = 2.5, BOMB = 2.5)
+	var/list/armor_values = list(MELEE = 4, BULLET = 1, LASER = 2, ENERGY = 2, BOMB = 4)
 	/// Speed added when you're fully covered in ash.
 	var/speed_added = 0.5
 	/// Turfs that let us accrete ash.
@@ -538,7 +538,7 @@
 	nodamage = TRUE
 	range = 6
 	suppressed = SUPPRESSED_VERY
-	flag = BOMB
+	armor_flag = BOMB
 	light_system = MOVABLE_LIGHT
 	light_range = 1
 	light_power = 1

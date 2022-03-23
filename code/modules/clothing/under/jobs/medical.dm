@@ -67,11 +67,13 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
-/obj/item/clothing/under/rank/medical/scrubs/blue
+/obj/item/clothing/under/rank/medical/scrubs
 	name = "medical scrubs"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/medical/scrubs/blue
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in baby blue."
 	icon_state = "scrubsblue"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/medical/scrubs/green
 	desc = "It's made of a special fiber that provides minor protection against biohazards. This one is in dark green."
