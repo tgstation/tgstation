@@ -372,6 +372,6 @@
 	timeout = 10 MINUTES
 
 /datum/mood_event/lost_52_card_pickup
-	description = span_warning("This is really embarrassing! I'm ashamed to pick up all these cards off the floor...\n")
+	description = "This is really embarrassing! I'm ashamed to pick up all these cards off the floor..."
 	mood_change = -3
 	timeout = 3 MINUTES

@@ -273,12 +273,12 @@
 	timeout = 5 MINUTES
 
 /datum/mood_event/won_52_card_pickup
-	description = span_nicegreen("HA! That loser will be picking cards up for a long time!\n")
+	description = "HA! That loser will be picking cards up for a long time!"
 	mood_change = 3
 	timeout = 3 MINUTES
 
 /datum/mood_event/playing_cards
-	description = span_nicegreen("I'm enjoying playing cards with other people!\n")
+	description = "I'm enjoying playing cards with other people!"
 	mood_change = 2
 	timeout = 3 MINUTES
 
