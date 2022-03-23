@@ -1516,11 +1516,9 @@
 
 /datum/reagent/halon/on_mob_metabolize(mob/living/L)
 	. = ..()
-	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
 	ADD_TRAIT(L, TRAIT_RESISTHEAT, type)
 
 /datum/reagent/halon/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/halon)
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
 
