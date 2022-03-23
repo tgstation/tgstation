@@ -49,7 +49,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 	hairdresser.hairstyle = new_style
 
-	hairdresser.update_hair()
+	hairdresser.update_hair(TRUE)
 
 /obj/structure/mirror/examine_status(mob/user)
 	if(broken)
