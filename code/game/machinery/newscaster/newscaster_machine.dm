@@ -27,10 +27,12 @@
 	var/datum/picture/current_image
 	///Is there currently an alert on this newscaster that hasn't been seen yet?
 	var/alert = FALSE
+	///Is the current user editing or viewing a new wanted issue at the moment?
+	var/viewing_wanted  = FALSE
 	///Is the current user creating a new channel at the moment?
-	var/can_create_channel = FALSE
+	var/creating_channel = FALSE
 	///Is the current user creating a new comment at the moment?
-	var/can_create_comment = FALSE
+	var/creating_comment = FALSE
 	///What is the user submitted, criminal name for the new wanted issue?
 	var/criminal_name
 	///What is the user submitted, crime description for the new wanted issue?
@@ -136,8 +138,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 	data["security_mode"] = (ACCESS_ARMORY in card?.GetAccess())
 	data["photo_data"] = !isnull(current_image)
-	data["can_create_channel"] = can_create_channel
-	data["can_create_comment"] = can_create_comment
+	data["creating_channel"] = creating_channel
+	data["creating_comment"] = creating_comment
 
 	//Here is all the UI_data sent about the current wanted issue, as well as making a new one in the UI.
 	data["making_wanted_issue"] = !(GLOB.news_network.wanted_issue?.active)
@@ -292,8 +294,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			return TRUE
 
 		if("cancelCreation")
-			can_create_channel = FALSE
-			can_create_comment = FALSE
+			creating_channel = FALSE
+			creating_comment = FALSE
+			viewing_wanted = FALSE
 			return TRUE
 
 		if("storyCensor")
@@ -341,9 +344,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("startComment")
 			if(!current_user)
-				can_create_comment = FALSE
+				creating_comment = FALSE
 				return TRUE
-			can_create_comment = TRUE
+			creating_comment = TRUE
 			var/commentable_message = params["messageID"]
 			if(!commentable_message)
 				return TRUE
@@ -365,6 +368,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("toggleWanted")
 			alert = FALSE
+			viewing_wanted = FALSE
 			update_overlays()
 			return TRUE
 
@@ -613,7 +617,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	if(choice == "Confirm")
 		GLOB.news_network.create_feed_channel(channel_name, current_user.account_holder, channel_desc, locked = channel_locked)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
-	can_create_channel = FALSE
+	creating_channel = FALSE
 	update_static_data(usr)
 
 /**
@@ -621,10 +625,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
  */
 /obj/machinery/newscaster/proc/create_comment()
 	if(!comment_text)
-		can_create_comment = FALSE
+		creating_comment = FALSE
 		return TRUE
 	if(!current_user)
-		can_create_comment = FALSE
+		creating_comment = FALSE
 		return TRUE
 	var/datum/feed_comment/new_feed_comment = new/datum/feed_comment
 	new_feed_comment.author = current_user.account_holder
@@ -632,12 +636,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	new_feed_comment.time_stamp = station_time_timestamp()
 	current_message.comments += new_feed_comment
 	usr.log_message("(as [current_user.account_holder]) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
-	can_create_comment = FALSE
+	creating_comment = FALSE
 
 /**
- * This proc performs checks before enabling the can_create_channel var on the newscaster, such as preventing a user from having multiple channels,
+ * This proc performs checks before enabling the creating_channel var on the newscaster, such as preventing a user from having multiple channels,
  * preventing an un-ID'd user from making a channel, and preventing censored authors from making a channel.
- * Otherwise, sets can_create_channel to TRUE.
+ * Otherwise, sets creating_channel to TRUE.
  */
 /obj/machinery/newscaster/proc/start_create_channel()
 	//This first block checks for pre-existing reasons to prevent you from making a new channel, like being censored, or if you have a channel already.
@@ -648,9 +652,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		else
 			existing_authors += iterated_feed_channel.author
 	if((current_user?.account_holder == "Unknown") || (current_user.account_holder in existing_authors) || isnull(current_user?.account_holder))
-		can_create_channel = FALSE
+		creating_channel = FALSE
 		return TRUE
-	can_create_channel = TRUE
+	creating_channel = TRUE
 	return TRUE
 
 /**

@@ -19,8 +19,6 @@ const CENSOR_MESSAGE = "This channel has been deemed as threatening to \
 export const Newscaster = (props, context) => {
   const { act, data } = useBackend(context);
   const [screenmode, setScreenmode] = useSharedState(context, 'tab_main', NEWSCASTER_SCREEN);
-  const [wantedScreen, setWantedScreen] = useLocalState(context, 'wantedScreen', false);
-  const [channelScreen, setChannelScreen] = useLocalState(context, 'channelScreen', false);
   const NEWSCASTER_SCREEN = 1;
   const BOUNTYBOARD_SCREEN = 2;
   return (
@@ -66,15 +64,12 @@ export const Newscaster = (props, context) => {
 const NewscasterChannelCreation = (props, context) => {
   const { act, data } = useBackend(context);
   const [lockedmode, setLockedmode] = useLocalState(context, 'lockedmode', 1);
-  const [channelScreen, setChannelScreen] = useLocalState(context, 'channelScreen', false);
   const {
-    can_create_channel,
-    can_create_comment,
-    viewing_channel,
+    creating_channel,
     name,
     desc,
   } = data;
-  if (!channelScreen) {
+  if (!creating_channel) {
     return null;
   }
   return (
@@ -87,9 +82,9 @@ const NewscasterChannelCreation = (props, context) => {
         position="relative"
         top="20%"
         left="23%"
-        onClick={() => act('cancelCreation', setChannelScreen(false))} />
+        onClick={() => act('cancelCreation')} />
       <Stack vertical>
-        {!can_create_channel
+        {!creating_channel
           ? (
             <Stack.Item textColor="red">
               ERROR: User cannot be found or already has an owned feed channel.
@@ -151,8 +146,7 @@ const NewscasterChannelCreation = (props, context) => {
                     content="Submit Channel"
                     onClick={() => act('createChannel', {
                       lockedmode: lockedmode,
-                    },
-                    setChannelScreen(false))} />
+                    })} />
                 </Box>
               </Stack.Item>
             </>
@@ -165,12 +159,11 @@ const NewscasterChannelCreation = (props, context) => {
 /** The modal menu that contains the prompts to making new comments. */
 const NewscasterCommentCreation = (props, context) => {
   const { act, data } = useBackend(context);
-  const [commentScreen, setCommentScreen] = useLocalState(context, 'commentScreen', false);
   const {
-    can_create_comment,
+    viewing_comment,
     viewing_message,
   } = data;
-  if (!can_create_comment) {
+  if (!viewing_comment) {
     return null;
   }
   return (
@@ -183,7 +176,7 @@ const NewscasterCommentCreation = (props, context) => {
         position="relative"
         top="20%"
         left="50%"
-        onClick={() => act('cancelCreation', setCommentScreen(false))} />
+        onClick={() => act('cancelCreation')} />
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
@@ -218,7 +211,6 @@ const NewscasterCommentCreation = (props, context) => {
 
 const NewscasterWantedScreen = (props, context) => {
   const { act, data } = useBackend(context);
-  const [wantedScreen, setWantedScreen] = useLocalState(context, 'wantedScreen', false);
   const {
     viewing_wanted,
     photo_data,
@@ -227,7 +219,7 @@ const NewscasterWantedScreen = (props, context) => {
     criminal_name,
     crime_description,
   } = data;
-  if (!wantedScreen) {
+  if (!viewing_wanted) {
     return null;
   }
   return (
@@ -248,7 +240,7 @@ const NewscasterWantedScreen = (props, context) => {
                   position="relative"
                   top="20%"
                   left="18%"
-                  onClick={() => act(setWantedScreen(false))} />
+                  onClick={() => act('cancelCreation')} />
               </Box>
               <Section>
                 <Box bold>
@@ -303,8 +295,7 @@ const NewscasterWantedScreen = (props, context) => {
                 content={"Set Wanted Issue"}
                 disabled={!security_mode}
                 icon="volume-up"
-                onClick={() => { act('submitWantedIssue',
-                  setWantedScreen(false)); }} />
+                onClick={() => act('submitWantedIssue')} />
               <Button
                 content={"Clear Wanted"}
                 disabled={!security_mode}
@@ -436,8 +427,6 @@ const NewscasterChannelBox = (_, context) => {
 /** Channel select is the left-hand menu where all the channels are listed. */
 const NewscasterChannelSelector = (props, context) => {
   const { act, data } = useBackend(context);
-  const [wantedScreen, setWantedScreen] = useLocalState(context, 'wantedScreen', false);
-  const [channelScreen, setChannelScreen] = useLocalState(context, 'channelScreen', false);
   const {
     channels = [],
     viewing_channel,
@@ -457,10 +446,7 @@ const NewscasterChannelSelector = (props, context) => {
             key={activeWanted.index}
             icon={activeWanted.active ? "skull-crossbones" : null}
             textColor={activeWanted.active ? "red" : "grey"}
-            onClick={() => {
-              act('toggleWanted');
-              setWantedScreen(true);
-            }}>
+            onClick={() => act('toggleWanted')}>
             Wanted Issue
           </Tabs.Tab>
         ))}
@@ -485,7 +471,7 @@ const NewscasterChannelSelector = (props, context) => {
           mr={1}
           textColor="white"
           color="Green"
-          onClick={() => act('startCreateChannel', setChannelScreen(true))}>
+          onClick={() => act('startCreateChannel')}>
           Create Channel [+]
         </Tabs.Tab>
       </Tabs>
@@ -530,7 +516,7 @@ const NewscasterChannelMessages = (_, context) => {
     message.channel_num !== viewing_channel
   ));
   return (
-    <Section fill scrollable>
+    <Section>
       {visibleMessages.map(message => {
         return (
           <Section
