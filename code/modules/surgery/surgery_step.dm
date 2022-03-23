@@ -21,8 +21,8 @@
 			to_chat(user, span_warning("[target]'s [organ_to_manipulate] [organ_to_manipulate.p_are()] frozen!"))
 			return FALSE
 
-	if(HAS_TRAIT(target, TRAIT_ON_ICE) && target.stat == DEAD)
-		to_chat(user, span_warning("[target]'s body is frozen!"))
+	if(HAS_TRAIT(target, TRAIT_ON_ICE))
+		to_chat(user, span_warning("[target] is frozen!"))
 		return FALSE
 
 	if(accept_hand)
