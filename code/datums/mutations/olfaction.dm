@@ -76,6 +76,9 @@
 		return
 
 	var/mob/living/carbon/new_target = tgui_input_list(caster, "Scent to remember", "Scent Tracking", sort_names(possibles))
+	if(QDELETED(src) || QDELETED(caster))
+		return
+
 	if(QDELETED(new_target))
 		// We don't have a new target OR an old target
 		if(QDELETED(old_target))

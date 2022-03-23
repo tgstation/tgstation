@@ -27,7 +27,7 @@
 	instability = 20
 	difficulty = 12
 	synchronizer_coeff = 1
-	power = /datum/action/cooldown/spell/pointed/projectile/cryo
+	power_path = /datum/action/cooldown/spell/pointed/projectile/cryo
 
 /datum/action/cooldown/spell/pointed/projectile/cryo
 	name = "Cryobeam"

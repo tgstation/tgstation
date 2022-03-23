@@ -94,7 +94,7 @@
 
 	return pick(valid_turfs)
 
-/datum/action/cooldown/spell/teleport/area_teleport/before_cast(list/targets)
+/datum/action/cooldown/spell/teleport/area_teleport/before_cast(atom/cast_on)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -103,9 +103,11 @@
 	if(randomise_selection)
 		target_area = pick(GLOB.teleportlocs)
 	else
-		target_area = tgui_input_list(usr, "Chose an area to teleport to.", "Teleport", GLOB.teleportlocs)
+		target_area = tgui_input_list(cast_on, "Chose an area to teleport to.", "Teleport", GLOB.teleportlocs)
 
-	if(isnull(target_area) || isnull(GLOB.teleportlocs[target_area]))
+	if(QDELETED(src) || QDELETED(cast_on))
+		return FALSE
+	if(!target_area || isnull(GLOB.teleportlocs[target_area]))
 		return FALSE
 
 	last_chosen_area_type = target_area

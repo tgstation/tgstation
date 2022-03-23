@@ -4031,6 +4031,7 @@
 #include "code\modules\spells\spell_types\conjure_item\_conjure_item.dm"
 #include "code\modules\spells\spell_types\conjure_item\infinite_guns.dm"
 #include "code\modules\spells\spell_types\conjure_item\lighting_packet.dm"
+#include "code\modules\spells\spell_types\conjure_item\snowball.dm"
 #include "code\modules\spells\spell_types\jaunt\_jaunt.dm"
 #include "code\modules\spells\spell_types\jaunt\bloodcrawl.dm"
 #include "code\modules\spells\spell_types\jaunt\ethereal_jaunt.dm"

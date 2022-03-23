@@ -68,7 +68,7 @@
 	if(HAS_TRAIT(potential_mark, TRAIT_NODROP))
 		link_message += "Though it feels redundant... "
 
-	link_message += "You mark [item] for recall."
+	link_message += "You mark [potential_mark] for recall."
 	to_chat(caster, span_notice(link_message))
 	mark_item(potential_mark)
 	return TRUE

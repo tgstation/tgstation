@@ -27,7 +27,8 @@
 /datum/action/cooldown/spell/spacetime_dist/can_cast_spell()
 	return ..() && ready
 
-/obj/effect/proc_holder/spell/spacetime_dist/cast(atom/cast_on)
+/datum/action/cooldown/spell/spacetime_dist/cast(atom/cast_on)
+	. = ..()
 	var/list/turf/to_switcharoo = get_targets_to_scramble(cast_on)
 	if(!length(to_switcharoo))
 		to_chat(cast_on, span_warning("For whatever reason, the strings nearby aren't keen on being tangled."))
@@ -41,9 +42,9 @@
 		var/obj/effect/cross_action/spacetime_dist/effect_a = new /obj/effect/cross_action/spacetime_dist(swap_a)
 		var/obj/effect/cross_action/spacetime_dist/effect_b = new /obj/effect/cross_action/spacetime_dist(swap_b)
 		effect_a.linked_dist = effect_b
-		effect_a.add_overlay(effect_b.photograph())
+		effect_a.add_overlay(swap_b.photograph())
 		effect_b.linked_dist = effect_a
-		effect_b.add_overlay(effect_a.photograph())
+		effect_b.add_overlay(swap_a.photograph())
 		effect_b.set_light(4, 30, "#c9fff5")
 		LAZYADD(effects, effect_a)
 		LAZYADD(effects, effect_b)
@@ -53,7 +54,7 @@
 	addtimer(CALLBACK(src, .proc/clean_turfs), duration)
 
 /// Callback which cleans up our effects list after the duration expires.
-/obj/effect/proc_holder/spell/spacetime_dist/proc/clean_turfs()
+/datum/action/cooldown/spell/spacetime_dist/proc/clean_turfs()
 	QDEL_LAZYLIST(effects)
 	ready = TRUE
 
@@ -81,7 +82,7 @@
 	// just randomly swap it with any turf in the area
 	if(length(turfs))
 		var/turf/loner = pick(turfs)
-		var/area/caster_area = get_area(user)
+		var/area/caster_area = get_area(center)
 		turf_steps[loner] = get_turf(pick(caster_area.contents))
 
 	return turf_steps

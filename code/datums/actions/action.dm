@@ -103,12 +103,6 @@
 
 /// Remove the passed mob from being owner of our action
 /datum/action/proc/Remove(mob/M)
-	for(var/datum/weakref/reference as anything in sharers)
-		var/mob/freeloader = reference.resolve()
-		if(!freeloader)
-			continue
-		Unshare(freeloader)
-	sharers = null
 	if(M)
 		if(M.client)
 			M.client.screen -= button

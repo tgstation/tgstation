@@ -709,6 +709,7 @@
 	special_names = null
 	inherent_factions = list("cult")
 	species_language_holder = /datum/language_holder/golem/runic
+
 	/// A ref to our jaunt spell that we get on species gain.
 	var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/golem/jaunt
 	/// A ref to our gaze spell that we get on species gain.
@@ -1267,8 +1268,10 @@
 		TRAIT_NODISMEMBER,
 	)
 
-	var/obj/effect/proc_holder/spell/targeted/conjure_item/snowball/ball
-	var/obj/effect/proc_holder/spell/aimed/cryo/cryo
+	/// A ref to our "throw snowball" spell we get on species gain.
+	var/datum/action/cooldown/spell/conjure_item/snowball/snowball
+	/// A ref to our cryobeam spell we get on species gain.
+	var/datum/action/cooldown/spell/pointed/projectile/cryo/cryo
 
 /datum/species/golem/snow/spec_death(gibbed, mob/living/carbon/human/H)
 	H.visible_message(span_danger("[H] turns into a pile of snow!"))
@@ -1279,31 +1282,23 @@
 	new /obj/item/food/grown/carrot(get_turf(H))
 	qdel(H)
 
-/datum/species/golem/snow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/golem/snow/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species)
 	. = ..()
-	ADD_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
-	ball = new
-	ball.charge_counter = 0
-	C.AddSpell(ball)
-	cryo = new
-	cryo.charge_counter = 0
-	C.AddSpell(cryo)
+	ADD_TRAIT(grant_to, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
 
-/datum/species/golem/snow/on_species_loss(mob/living/carbon/C)
-	. = ..()
-	REMOVE_TRAIT(C, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
-	if(ball)
-		C.RemoveSpell(ball)
-	if(cryo)
-		C.RemoveSpell(cryo)
+	snowball = new(grant_to)
+	snowball.StartCooldown()
+	snowball.Grant(grant_to)
 
-/obj/effect/proc_holder/spell/targeted/conjure_item/snowball
-	name = "Snowball"
-	desc = "Concentrates cryokinetic forces to create snowballs, useful for throwing at people."
-	item_type = /obj/item/toy/snowball
-	charge_max = 15
-	action_icon = 'icons/obj/toy.dmi'
-	action_icon_state = "snowball"
+	cryo = new(grant_to)
+	cryo.StartCooldown()
+	cryo.Grant(grant_to)
+
+/datum/species/golem/snow/on_species_loss(mob/living/carbon/remove_from)
+	REMOVE_TRAIT(remove_from, TRAIT_SNOWSTORM_IMMUNE, SPECIES_TRAIT)
+	QDEL_NULL(snowball)
+	QDEL_NULL(cryo)
+	return ..()
 
 /datum/species/golem/mhydrogen
 	name = "Metallic Hydrogen Golem"
