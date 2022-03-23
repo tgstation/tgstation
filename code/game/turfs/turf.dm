@@ -509,6 +509,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/burn_tile()
 	return
 
+/turf/proc/break_tile()
+	return
+
 /turf/proc/is_shielded()
 	return
 

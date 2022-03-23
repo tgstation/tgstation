@@ -44,7 +44,7 @@
 "p" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "u" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -62,7 +62,7 @@
 /area/maintenance/department/medical)
 "x" = (
 /obj/item/clothing/head/hardhat,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "y" = (
 /obj/modular_map_root/tramstation{
@@ -91,30 +91,30 @@
 /area/maintenance/department/medical)
 "B" = (
 /obj/effect/spawner/random/engineering/tool,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "D" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/effect/spawner/random/engineering/material_cheap,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "F" = (
 /obj/structure/barricade/wooden,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "H" = (
 /obj/structure/ore_box,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "I" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "M" = (
 /obj/item/storage/toolbox/mechanical,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "N" = (
 /obj/item/clothing/head/cone{
@@ -125,7 +125,7 @@
 	pixel_x = -9;
 	pixel_y = -10
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "O" = (
 /obj/effect/spawner/random/structure/girder,
@@ -145,7 +145,7 @@
 /turf/open/floor/catwalk_floor,
 /area/maintenance/department/medical)
 "W" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "X" = (
 /turf/closed/mineral/random/stationside/asteroid/porus,

@@ -210,7 +210,7 @@ distance_multiplier - Can be used to multiply the distance at which the sound is
 		switch(soundin)
 			if (SFX_SHATTER)
 				soundin = pick('sound/effects/glassbr1.ogg','sound/effects/glassbr2.ogg','sound/effects/glassbr3.ogg')
-			if (SFX_EXPLOSION_CREAKING)
+			if (SFX_EXPLOSION)
 				soundin = pick('sound/effects/explosion1.ogg','sound/effects/explosion2.ogg')
 			if (SFX_EXPLOSION_CREAKING)
 				soundin = pick('sound/effects/explosioncreak1.ogg', 'sound/effects/explosioncreak2.ogg')
