@@ -12,8 +12,17 @@
 
 /datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
-	if(surgery.organ_to_manipulate && !target.getorganslot(surgery.organ_to_manipulate))
-		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
+	if(surgery.organ_to_manipulate)
+		var/obj/organ_to_manipulate = target.getorganslot(surgery.organ_to_manipulate)
+		if(!organ_to_manipulate)
+			to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
+			return FALSE
+		else if(organ_to_manipulate.obj_flags & FROZEN)
+			to_chat(user, span_warning("[target]'s [organ_to_manipulate] is frozen!"))
+			return FALSE
+
+	if(HAS_TRAIT(target, TRAIT_ON_ICE) && target.stat == DEAD)
+		to_chat(user, span_warning("[target]'s body is frozen!"))
 		return FALSE
 
 	if(accept_hand)
