@@ -73,9 +73,9 @@
 	..()
 
 /obj/item/energy_katana/Destroy()
+	. = ..()
 	QDEL_NULL(spark_system)
 	QDEL_NULL(jaunt)
-	return ..()
 
 /**
  * Proc called when the katana is recalled to its space ninja.
