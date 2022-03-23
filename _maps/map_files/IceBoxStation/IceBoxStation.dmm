@@ -21897,6 +21897,7 @@
 "iid" = (
 /obj/machinery/modular_computer/console/preset/engineering,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/engineering/engine_smes)
 "iil" = (
@@ -24620,6 +24621,10 @@
 /obj/effect/spawner/random/trash/grille_or_waste,
 /turf/open/floor/plating,
 /area/maintenance/starboard/upper)
+"jyB" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/maintenance/port/aft)
 "jyF" = (
 /obj/machinery/dna_scannernew,
 /turf/open/floor/iron/dark,
@@ -82638,8 +82643,8 @@ bQg
 vCE
 uRV
 bCq
-bHE
-bHD
+bUt
+jyB
 iid
 tjb
 afb
