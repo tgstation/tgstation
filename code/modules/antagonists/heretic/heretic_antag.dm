@@ -314,18 +314,6 @@
 	var/obj/item/offhand = user.get_inactive_held_item()
 	return !QDELETED(offhand) && istype(offhand, /obj/item/melee/touch_attack/mansus_fist)
 
-/*
- * Signal proc for [COMSIG_MOB_LOGIN].
- *
- * Calls rework_network() on our reality smash tracker
- * whenever a login / client change happens, to ensure
- * influence client visibility is fixed.
- */
-/datum/antagonist/heretic/proc/fix_influence_network(mob/source)
-	SIGNAL_HANDLER
-
-	GLOB.reality_smash_track.rework_network()
-
 /**
  * Create our objectives for our heretic.
  */

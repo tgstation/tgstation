@@ -136,6 +136,11 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
+/datum/atom_hud/alternate_appearance/basic/heretic
+
+/datum/atom_hud/alternate_appearance/basic/heretic/mobShouldSee(mob/M)
+	return IS_HERETIC(M) || M.client.holder
+
 /datum/atom_hud/alternate_appearance/basic/blessed_aware
 
 /datum/atom_hud/alternate_appearance/basic/blessed_aware/mobShouldSee(mob/M)
