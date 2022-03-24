@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	presented_item = new(loc)
 	presented_item.start_animation(src)
 	current_sound_channel = SSsounds.reserve_sound_channel(src)
-	playsound(src, open_sound, 80, FALSE, channel = current_sound_channel)
+	playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	playsound(src, crate_open_sound, 80)
 
 /// The box has finished choosing, mark it as available for grabbing
@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 				user.put_in_hands(extra_mag)
 
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
-	playsound(src, grant_sound, 80, FALSE, channel = current_sound_channel)
+	playsound(src, grant_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
 	close_box()
 
 
