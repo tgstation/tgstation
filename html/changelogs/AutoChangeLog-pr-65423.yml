@@ -1,5 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - refactor: "refactored the electrolyzer to use datumized reactions instead of hardcode them in process"
-  - expansion: "added the hypernoblium to antinoblium conversion, when hypernoblium is exposed to the electrolyzer it will be converted to antinoblium"
