@@ -1876,11 +1876,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					continue
 				if(gas_amount > 5 && gas_amount < 10 && COOLDOWN_FINISHED(humi, gas_skin_timer))
 					to_chat(humi, span_warning(pick("Your skin feels itchy.", "You feel like burning.")))
-					COOLDOWN_START(humi, gas_sking_timer, 5 SECONDS)
+					COOLDOWN_START(humi, gas_skin_timer, 5 SECONDS)
 				else if(gas_amount >= 10 && COOLDOWN_FINISHED(humi, gas_skin_timer))
 					to_chat(humi, span_warning(pick("Your skin feels hot.", "You feel like burning.")))
 					humi.adjustFireLoss(gas_amount * 0.05 * delta_time)
-					COOLDOWN_START(humi, gas_sking_timer, 5 SECONDS)
+					COOLDOWN_START(humi, gas_skin_timer, 5 SECONDS)
 
 //////////
 // FIRE //
