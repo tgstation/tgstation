@@ -4056,6 +4056,7 @@
 #include "code\modules\spells\spell_types\self\lightning.dm"
 #include "code\modules\spells\spell_types\self\mime_vow.dm"
 #include "code\modules\spells\spell_types\self\mutate.dm"
+#include "code\modules\spells\spell_types\self\night_vision.dm"
 #include "code\modules\spells\spell_types\self\personality_commune.dm"
 #include "code\modules\spells\spell_types\self\rod_form.dm"
 #include "code\modules\spells\spell_types\self\smoke.dm"
