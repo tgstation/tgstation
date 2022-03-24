@@ -177,6 +177,7 @@ Lizard subspecies: ASHWALKERS
 		TRAIT_CAN_STRIP,
 		TRAIT_CHUNKYFINGERS,
 		TRAIT_VIRUSIMMUNE,
+		TRAIT_ILLITERATE,
 	)
 	species_language_holder = /datum/language_holder/lizard/ash
 
