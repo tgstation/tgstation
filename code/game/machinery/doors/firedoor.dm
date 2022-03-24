@@ -63,16 +63,10 @@
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop = new(src, FALSE)
 	CalculateAffectingAreas()
-	AddElement(/datum/element/atmos_sensitive, mapload)
-	var/static/list/loc_connections = list(
-		COMSIG_TURF_EXPOSE = .proc/check_atmos,
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	my_area = get_area(src)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 	CalculateWatchedTurfs()
-	check_atmos()
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -192,9 +186,11 @@
 	watched_turfs = list()
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(src),dir)
-		watched_turfs |= checked_turf
-		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/check_atmos)
+		if(checked_turf)
+			watched_turfs |= checked_turf
+			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/check_atmos)
 	watched_turfs |= get_turf(src)
+	check_atmos()
 
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
 	SIGNAL_HANDLER
@@ -208,9 +204,6 @@
 	for(var/area/place in affecting_areas)
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
-
-	if(!watched_turfs)
-		watched_turfs = CalculateWatchedTurfs()
 
 	for(var/turf/checked_turf in watched_turfs)
 		if(source == checked_turf)
@@ -553,8 +546,9 @@
 
 /obj/machinery/door/firedoor/Moved()
 	. = ..()
-	UnregisterSignal(src, COMSIG_TURF_EXPOSE)
-	watched_turfs = list()
+	for(var/turf/checked_turf in watched_turfs)
+		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
+	CalculateWatchedTurfs()
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
@@ -574,12 +568,6 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
-
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = .proc/on_exit,
-	)
-
-	AddElement(/datum/element/connect_loc, loc_connections)
 	adjust_lights_starting_offset()
 
 /obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
