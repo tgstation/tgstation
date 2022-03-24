@@ -213,6 +213,9 @@
 	L.Unconscious(100)
 	L.adjustBruteLoss(crush_damage)
 
+/obj/machinery/recycler/on_deconstruction()
+	safety_mode = TRUE
+
 /obj/machinery/recycler/deathtrap
 	name = "dangerous old crusher"
 	obj_flags = CAN_BE_HIT | EMAGGED

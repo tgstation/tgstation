@@ -7169,7 +7169,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "bCX" = (
@@ -11668,7 +11667,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "dgf" = (
@@ -15948,7 +15947,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "frB" = (
@@ -16905,7 +16903,6 @@
 /area/engineering/supermatter/room)
 "fRc" = (
 /obj/machinery/meter,
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
@@ -21504,7 +21501,6 @@
 "hZh" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "hZC" = (
@@ -33463,7 +33459,6 @@
 /obj/machinery/meter{
 	name = "Mixed Air Tank In"
 	},
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
@@ -37200,10 +37195,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/service/kitchen/diner)
-"pUJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/medical/surgery/aft)
 "pUL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/effect/turf_decal/tile/green{
@@ -41826,7 +41817,6 @@
 /area/icemoon/surface/outdoors/nospawn)
 "snb" = (
 /obj/machinery/meter,
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 4
 	},
@@ -48990,7 +48980,6 @@
 /obj/machinery/meter{
 	name = "Mixed Air Tank Out"
 	},
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
@@ -52469,7 +52458,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "xwY" = (
@@ -94708,7 +94697,7 @@ bde
 uxW
 kaR
 iGC
-pUJ
+tzO
 srr
 weu
 dHO
