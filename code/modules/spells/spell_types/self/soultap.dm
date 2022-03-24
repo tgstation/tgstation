@@ -40,7 +40,7 @@
 		return
 
 	for(var/datum/action/cooldown/spell/spell in cast_on.actions)
-		spell.next_use_time = 0
+		spell.next_use_time = world.time
 		spell.UpdateButtonIcon()
 
 #undef HEALTH_LOST_PER_SOUL_TAP

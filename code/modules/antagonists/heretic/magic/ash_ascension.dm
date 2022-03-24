@@ -1,111 +1,137 @@
-/obj/effect/proc_holder/spell/targeted/fire_sworn
+/datum/action/cooldown/spell/fire_sworn
 	name = "Oath of Flame"
 	desc = "For a minute, you will passively create a ring of fire around you."
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "fire_ring"
-	action_background_icon_state = "bg_ecult"
+	background_icon_state = "bg_ecult"
+	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "fire_ring"
+
+	school = SCHOOL_FORBIDDEN
+	cooldown_time = 70 SECONDS
+
 	invocation = "FL'MS"
 	invocation_type = INVOCATION_WHISPER
-	school = SCHOOL_FORBIDDEN
-	requires_wizard_garb = FALSE
-	range = -1
-	include_user = TRUE
-	charge_max = 700
-	///how long it lasts
+	spell_requirements = NONE
+
+	/// The radius of the fire ring
+	var/fire_radius = 1
+	/// How long it lasts
 	var/duration = 1 MINUTES
-	///who casted it right now
-	var/mob/current_user
 	///Determines if you get the fire ring effect
-	var/has_fire_ring = FALSE
+	var/current_timer
 
-/obj/effect/proc_holder/spell/targeted/fire_sworn/cast(list/targets, mob/user)
+/datum/action/cooldown/spell/fire_sworn/Remove(mob/living/remove_from)
+	if(current_timer)
+		end_cast(remove_from)
+	return ..()
+
+/datum/action/cooldown/spell/fire_sworn/cast(atom/cast_on)
 	. = ..()
-	current_user = user
-	has_fire_ring = TRUE
-	addtimer(CALLBACK(src, .proc/remove, user), duration, TIMER_OVERRIDE|TIMER_UNIQUE)
+	new /obj/effect/fire_ring(owner, fire_radius)
 
-/obj/effect/proc_holder/spell/targeted/fire_sworn/proc/remove()
-	has_fire_ring = FALSE
-	current_user = null
-
-/obj/effect/proc_holder/spell/targeted/fire_sworn/process(delta_time)
+/datum/action/cooldown/spell/fire_sworn/after_cast(atom/cast_on)
 	. = ..()
-	if(!has_fire_ring)
-		return
-	if(current_user.stat == DEAD)
-		remove()
-		return
-	if(!isturf(current_user.loc))
+	if(current_timer)
+		deltimer(current_timer)
+	current_timer = addtimer(CALLBACK(src, .proc/end_cast, owner), duration, TIMER_UNIQUE|TIMER_STOPPABLE)
+
+/datum/action/cooldown/spell/fire_sworn/proc/end_cast(atom/remove_from)
+	var/obj/effect/fire_ring/to_delete = locate() in remove_from
+	qdel(to_delete)
+	current_timer = null
+
+// An effect that puts a ring of fire around the mob it's located in.
+// Moved off of the fire_sworn spell due to cooldown actions processing on their own.
+/obj/effect/fire_ring
+	/// Radius of the fire ring.
+	var/ring_radius = 1
+
+/obj/effect/fire_ring/Initialize(mapload, ring_radus)
+	. = ..()
+	src.ring_radius = ring_radius
+	START_PROCESSING(SSprocessing, src)
+
+/obj/effect/fire_ring/Destroy(force)
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/effect/fire_ring/process(delta_time)
+	var/mob/living/owner = loc
+	if(QDELETED(owner) || owner.stat == DEAD)
+		qdel(src)
+		return PROCESS_KILL
+	if(!isturf(owner.loc))
 		return
 
-	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, current_user))
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, owner))
 		new /obj/effect/hotspot(nearby_turf)
 		nearby_turf.hotspot_expose(750, 25 * delta_time, 1)
-		for(var/mob/living/fried_living in nearby_turf.contents - current_user)
-			fried_living.adjustFireLoss(2.5 * delta_time)
+		for(var/mob/living/fried_living in nearby_turf.contents - owner)
+			fried_living.apply_damage(2.5 * delta_time, BURN)
 
-/obj/effect/proc_holder/spell/aoe_turf/fire_cascade
+/datum/action/cooldown/spell/fire_cascade
 	name = "Fire Cascade"
 	desc = "Heats the air around you."
+	background_icon_state = "bg_ecult"
+	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "fire_ring"
+	sound = 'sound/items/welder.ogg'
+
 	school = SCHOOL_FORBIDDEN
-	charge_max = 300 //twice as long as mansus grasp
-	requires_wizard_garb = FALSE
+	cooldown_time = 30 SECONDS
+
 	invocation = "C'SC'DE"
 	invocation_type = INVOCATION_WHISPER
-	range = 4
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "fire_ring"
-	action_background_icon_state = "bg_ecult"
+	spell_requirements = NONE
 
-/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/cast(list/targets, mob/user = usr)
-	INVOKE_ASYNC(src, .proc/fire_cascade, user, range)
+	/// The radius the flames will go around the caster.
+	var/flame_radius = 4
 
-/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/proc/fire_cascade(atom/centre, max_range)
-	playsound(get_turf(centre), 'sound/items/welder.ogg', 75, TRUE)
-	var/current_range = 1
-	for(var/i in 0 to max_range)
-		for(var/turf/nearby_turf as anything in spiral_range_turfs(current_range, centre))
+/datum/action/cooldown/spell/fire_cascade/cast(atom/cast_on)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/fire_cascade, cast_on, flame_radius)
+
+/// Spreads a huge wave of fire in a radius around us, staggered between levels
+/datum/action/cooldown/spell/fire_cascade/proc/fire_cascade(atom/centre, flame_radius = 1)
+	for(var/i in 0 to flame_radius)
+		for(var/turf/nearby_turf as anything in spiral_range_turfs(i + 1, centre))
 			new /obj/effect/hotspot(nearby_turf)
 			nearby_turf.hotspot_expose(750, 50, 1)
 			for(var/mob/living/fried_living in nearby_turf.contents - centre)
-				fried_living.adjustFireLoss(5)
+				fried_living.apply_damage(5, BURN)
 
-		current_range++
 		stoplag(0.3 SECONDS)
 
-/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big
-	range = 6
+/datum/action/cooldown/spell/fire_cascade/big
+	flame_radius = 6
 
-// Currently unused.
-/obj/effect/proc_holder/spell/pointed/ash_final
+// Currently unused - releases streams of fire around the caster.
+/datum/action/cooldown/spell/pointed/ash_beams
 	name = "Nightwatcher's Rite"
-	desc = "A powerful spell that releases 5 streams of fire away from you."
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "flames"
-	action_background_icon_state = "bg_ecult"
+	desc = "A powerful spell that releases five streams of eldritch fire towards the target."
+	background_icon_state = "bg_ecult"
+	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "flames"
+
+	school = SCHOOL_FORBIDDEN
+	cooldown_time = 300
+
 	invocation = "F'RE"
 	invocation_type = INVOCATION_WHISPER
-	school = SCHOOL_FORBIDDEN
-	charge_max = 300
-	range = 15
-	requires_wizard_garb = FALSE
+	spell_requirements = NONE
 
-/obj/effect/proc_holder/spell/pointed/ash_final/cast(list/targets, mob/user)
-	for(var/X in targets)
-		var/T
-		T = line_target(-25, range, X, user)
-		INVOKE_ASYNC(src, .proc/fire_line, user, T)
-		T = line_target(10, range, X, user)
-		INVOKE_ASYNC(src, .proc/fire_line, user, T)
-		T = line_target(0, range, X, user)
-		INVOKE_ASYNC(src, .proc/fire_line, user, T)
-		T = line_target(-10, range, X, user)
-		INVOKE_ASYNC(src, .proc/fire_line, user, T)
-		T = line_target(25, range, X, user)
-		INVOKE_ASYNC(src, .proc/fire_line, user, T)
-	return ..()
+	/// The length of the flame line spit out.
+	var/flame_line_length = 15
 
-/obj/effect/proc_holder/spell/pointed/ash_final/proc/line_target(offset, range, atom/at , atom/user)
+/datum/action/cooldown/spell/pointed/ash_beams/is_valid_target(atom/cast_on)
+	return TRUE
+
+/datum/action/cooldown/spell/pointed/ash_beams/cast(atom/target)
+	. = ..()
+	var/static/list/offsets = list(-25, -10, 0, 10, 25)
+	for(var/offset in offsets)
+		NVOKE_ASYNC(src, .proc/fire_line, user, line_target(offset, range, target, owner))
+
+/datum/action/cooldown/spell/pointed/ash_beams/proc/line_target(offset, range, atom/at, atom/user)
 	if(!at)
 		return
 	var/angle = ATAN2(at.x - user.x, at.y - user.y) + offset
@@ -117,7 +143,7 @@
 		T = check
 	return (get_line(user, T) - get_turf(user))
 
-/obj/effect/proc_holder/spell/pointed/ash_final/proc/fire_line(atom/source, list/turfs)
+/datum/action/cooldown/spell/pointed/ash_beams/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))

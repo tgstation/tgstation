@@ -1,31 +1,56 @@
-/obj/effect/proc_holder/spell/targeted/void_pull
+/datum/action/cooldown/spell/aoe/void_pull
 	name = "Void Pull"
-	desc = "Call the void, this pulls all nearby people closer to you, damages people already around you. If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
-	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "voidpull"
-	action_background_icon_state = "bg_ecult"
+	desc = "Call the void, this pulls all nearby people closer to you, and damages people already around you. \
+		If they are 4 tiles or closer they are also knocked down and a micro-stun is applied."
+	background_icon_state = "bg_ecult"
+	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
+	button_icon_state = "voidpull"
+	sound = 'sound/magic/voidblink.ogg'
+
+	school = SCHOOL_FORBIDDEN
+	cooldown_time = 40 SECONDS
+
 	invocation = "BR'NG F'RTH TH'M T' M'"
 	invocation_type = INVOCATION_WHISPER
-	school = SCHOOL_FORBIDDEN
-	requires_wizard_garb = FALSE
-	range = -1
-	include_user = TRUE
-	charge_max = 400
+	spell_requirements = NONE
 
-/obj/effect/proc_holder/spell/targeted/void_pull/cast(list/targets, mob/user)
+	outer_radius = 7
+	/// The radius of the actual damage circle done before cast
+	var/damage_radius = 1
+	/// The radius of the stun applied to nearby people on cast
+	var/stun_radius = 4
+
+// Before the cast, we do some small AOE damage around the caster
+/datum/action/cooldown/spell/aoe/void_pull/before_cast(atom/cast_on)
 	. = ..()
-	for(var/mob/living/living_mob in range(1, user) - user)
-		if(IS_HERETIC_OR_MONSTER(living_mob))
+	if(!.)
+		return
+
+	new /obj/effect/temp_visual/voidin(cast_on.drop_location())
+	for(var/mob/living/nearby_living in range(damage_radius, cast_on))
+		if(!is_affected_by_aoe(nearby_living))
 			continue
-		living_mob.adjustBruteLoss(30)
+		nearby_living.apply_damage(30, BRUTE)
 
-	playsound(user,'sound/magic/voidblink.ogg',100)
-	new /obj/effect/temp_visual/voidin(user.drop_location())
-	for(var/mob/living/livies in view(7, user) - user)
+/datum/action/cooldown/spell/aoe/void_pull/get_things_to_cast_on(atom/center)
+	return view(outer_radius, center)
 
-		if(get_dist(user, livies) < 4)
-			livies.AdjustKnockdown(3 SECONDS)
-			livies.AdjustParalyzed(0.5 SECONDS)
+/datum/action/cooldown/spell/aoe/void_pull/is_affected_by_aoe(atom/thing)
+	if(!isliving(thing) || thing == owner)
+		return FALSE
 
-		for(var/i in 1 to 3)
-			livies.forceMove(get_step_towards(livies,user))
+	var/mob/living/living_thing = thing
+	if(IS_HERETIC_OR_MONSTER(living_thing))
+		return FALSE
+
+	return TRUE
+
+// For the actual cast, we microstun people nearby and pull them in
+/datum/action/cooldown/spell/aoe/void_pull/cast_on_thing_in_aoe(mob/living/victim, atom/caster)
+	if(get_dist(victim, caster) < stun_radius)
+		victim.AdjustKnockdown(3 SECONDS)
+		victim.AdjustParalyzed(0.5 SECONDS)
+
+	for(var/i in 1 to 3)
+		// Take a few steps closer
+		victim.forceMove(get_step_towards(victim, caster))

@@ -75,7 +75,7 @@
 	desc = "Lay an egg to produce huggers to impregnate prey with."
 	plasma_cost = 75
 	check_turf = TRUE
-	action_icon_state = "alien_egg"
+	button_icon_state = "alien_egg"
 
 /obj/effect/proc_holder/alien/lay_egg/fire(mob/living/carbon/user)
 	if(!check_vent_block(user))
@@ -95,7 +95,7 @@
 	desc = "Produce a royal parasite to grant one of your children the honor of being your Praetorian."
 	plasma_cost = 500 //Plasma cost used on promotion, not spawning the parasite.
 
-	action_icon_state = "alien_queen_promote"
+	button_icon_state = "alien_queen_promote"
 
 
 

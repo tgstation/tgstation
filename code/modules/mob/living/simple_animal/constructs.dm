@@ -261,6 +261,7 @@
 			total_refund += attack_refund
 
 		jaunt.next_use_time -= total_refund
+		jaunt.UpdateButtonIcon()
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON

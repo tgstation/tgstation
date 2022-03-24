@@ -134,8 +134,6 @@
 
 	var/last_words ///used for database logging
 
-	var/list/obj/effect/proc_holder/abilities = list()
-
 	///whether this can be picked up and held.
 	var/can_be_held = FALSE
 	/// The w_class of the holder when held.

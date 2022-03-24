@@ -20,7 +20,7 @@
 	desc = "Praetorian"
 	plasma_cost = 500
 
-	action_icon_state = "alien_evolve_drone"
+	button_icon_state = "alien_evolve_drone"
 
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/humanoid/user)
 	var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)

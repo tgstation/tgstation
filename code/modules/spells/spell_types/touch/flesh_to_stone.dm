@@ -13,8 +13,7 @@
 	hand_path = /obj/item/melee/touch_attack/flesh_to_stone
 
 /datum/action/cooldown/spell/touch/flesh_to_stone/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	. = ..()
-	if(!.)
+	if(!isliving(victim))
 		return FALSE
 
 	var/mob/living/living_victim = victim

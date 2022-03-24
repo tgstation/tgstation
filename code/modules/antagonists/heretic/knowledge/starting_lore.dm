@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		/datum/heretic_knowledge/limited_amount/base_flesh,
 		/datum/heretic_knowledge/limited_amount/base_void,
 		)
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mansus_grasp
+	spell_to_add = /datum/action/cooldown/spell/touch/mansus_grasp
 	cost = 0
 	route = PATH_START
 

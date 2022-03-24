@@ -56,6 +56,6 @@
 		/datum/heretic_knowledge/spell/entropic_plume,
 		/datum/heretic_knowledge/spell/flame_birth,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/cleave
+	spell_to_add = /datum/action/cooldown/spell/pointed/cleave
 	cost = 1
 	route = PATH_SIDE

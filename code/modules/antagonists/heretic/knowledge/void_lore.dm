@@ -171,7 +171,7 @@
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/void_phase
+	spell_to_add = /datum/action/cooldown/spell/pointed/void_phase
 	cost = 1
 	route = PATH_VOID
 
@@ -220,7 +220,7 @@
 		/datum/heretic_knowledge/spell/blood_siphon,
 		/datum/heretic_knowledge/summon/rusty
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/void_pull
+	spell_to_add = /datum/action/cooldown/spell/aoe/void_pull
 	cost = 1
 	route = PATH_VOID
 

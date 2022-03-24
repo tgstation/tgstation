@@ -15,12 +15,10 @@
 	hand_path = /obj/item/melee/touch_attack/smite
 
 /datum/action/cooldown/spell/touch/smite/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	. = ..()
-	if(!.)
+	if(!isliving(victim))
 		return FALSE
 
 	do_sparks(sparks_amt, FALSE, get_turf(victim))
-
 	for(var/mob/living/nearby_spectator in view(caster, 7))
 		if(nearby_spectator == caster)
 			continue

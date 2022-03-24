@@ -181,10 +181,8 @@
 	icon_icon = 'icons/mob/actions/actions_cult.dmi'
 	button_icon_state = "phaseshift"
 
-	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 25 SECONDS
-	invocation_type = INVOCATION_NONE
-	spell_requirements = NONE
+	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
 
 	jaunt_duration = 5 SECONDS
 	jaunt_in_time = 0.6 SECONDS

@@ -18,6 +18,17 @@
 	remove_hand()
 	return ..()
 
+/datum/action/cooldown/spell/touch/can_cast_spell()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!iscarbon(owner))
+		return FALSE
+	var/mob/living/carbon/carbon_owner = owner
+	if(!(carbon_owner.mobility_flags & MOBILITY_USE))
+		return FALSE
+	return TRUE
+
 /datum/action/cooldown/spell/touch/is_valid_target(atom/cast_on)
 	return iscarbon(cast_on)
 
@@ -39,6 +50,7 @@
 
 	attached_hand = new_hand
 	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_hand_hit)
+	RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK_SECONDARY, .proc/on_secondary_hand_hit)
 	RegisterSignal(attached_hand, COMSIG_PARENT_QDELETING, .proc/on_hand_deleted)
 	RegisterSignal(attached_hand, COMSIG_ITEM_DROPPED, .proc/on_hand_dropped)
 	to_chat(cast_on, draw_message)
@@ -51,7 +63,7 @@
  */
 /datum/action/cooldown/spell/touch/proc/remove_hand(mob/living/hand_owner, revert_after = FALSE)
 	if(!QDELETED(attached_hand))
-		UnregisterSignal(attached_hand, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED))
+		UnregisterSignal(attached_hand, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_AFTERATTACK_SECONDARY, COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED))
 		hand_owner?.temporarilyRemoveItemFromInventory(attached_hand)
 		QDEL_NULL(attached_hand)
 
@@ -92,36 +104,81 @@
 		return
 	if(victim == caster)
 		return
+	if(!can_cast_spell())
+		return
 
 	INVOKE_ASYNC(src, .proc/do_hand_hit, source, victim, caster)
 
 /**
+ * Signal proc for [COMSIG_ITEM_AFTERATTACK_SECONDARY] from our attached hand.
+ *
+ * Same as on_hand_hit, but for if right-click was used on hit.
+ */
+/datum/action/cooldown/spell/touch/proc/on_secondary_hand_hit(datum/source, atom/victim, mob/caster, proximity_flag, click_parameters)
+	SIGNAL_HANDLER
+
+	if(!proximity_flag)
+		return
+	if(victim == caster)
+		return
+	if(!can_cast_spell())
+		return
+
+	INVOKE_ASYNC(src, .proc/do_secondary_hand_hit, source, victim, caster)
+
+/**
  * Calls cast_on_hand_hit() from the caster onto the victim.
- * If cast_on_hand_hit() returns success, follows up by deleting the hand.
  */
 /datum/action/cooldown/spell/touch/proc/do_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(!cast_on_hand_hit(hand, victim, caster))
 		return
 
+	invocation()
+	if(sound)
+		playsound(get_turf(owner), sound, 50, TRUE)
+
 	remove_hand(caster)
+
+/**
+ * Calls do_secondary_hand_hit() from the caster onto the victim.
+ */
+/datum/action/cooldown/spell/touch/proc/do_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	var/secondary_result = cast_on_secondary_hand_hit(hand, victim, caster)
+	switch(secondary_result)
+		// Continue will remove the hand here and stop
+		if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+			invocation()
+			if(sound)
+				playsound(get_turf(owner), sound, 50, TRUE)
+
+			remove_hand(caster)
+
+		// Call normal will call the normal cast proc
+		if(SECONDARY_ATTACK_CALL_NORMAL)
+			do_hand_hit(hand, victim, caster)
+
+		// Cancel chain will do nothing,
 
 /**
  * The actual process of casting the spell on the victim from the caster.
  *
  * Override / extend this to implement casting effects.
- * Return TRUE on a successful cast, FALSE otherwise
+ * Return TRUE on a successful cast to use up the hand (delete it)
+ * Return FALSE to do nothing and let them keep the hand in hand
  */
 /datum/action/cooldown/spell/touch/proc/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	if(!isliving(victim) || !(caster.mobility_flags & MOBILITY_USE))
-		return FALSE
-	if(!can_invoke())
-		return FALSE
+	return FALSE
 
-	invocation()
-	if(sound)
-		playsound(get_turf(owner), sound, 50, TRUE)
-
-	return TRUE
+/**
+ * For any special casting effects done if the user right-clicks
+ * on touch spell instead of left-clicking
+ *
+ * Return SECONDARY_ATTACK_CALL_NORMAL to call the normal cast_on_hand_hit
+ * Return SECONDARY_ATTACK_CONTINUE_CHAIN to prevent the normal cast_on_hand_hit from calling, but still use up the hand
+ * Return SECONDARY_ATTACK_CANCEL_CHAIN to prevent the spell from being used
+ */
+/datum/action/cooldown/spell/touch/proc/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * Signal proc for [COMSIG_PARENT_QDELETING] from our attached hand.

@@ -18,10 +18,6 @@
 	if(!iscarbon(victim))
 		return FALSE
 
-	. = ..()
-	if(!.)
-		return FALSE
-
 	var/mob/living/carbon/duffel_victim = victim
 	var/static/list/elaborate_backstory = list(
 		"spacewar origin story",

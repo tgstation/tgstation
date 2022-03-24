@@ -3,7 +3,7 @@
 	desc = "Allows aliens to hide beneath tables or certain items. Toggled on or off."
 	plasma_cost = 0
 
-	action_icon_state = "alien_hide"
+	button_icon_state = "alien_hide"
 
 /obj/effect/proc_holder/alien/hide/fire(mob/living/carbon/alien/user)
 	if(user.stat != CONSCIOUS)
@@ -25,7 +25,7 @@
 	desc = "Evolve into a higher alien caste."
 	plasma_cost = 0
 
-	action_icon_state = "alien_evolve_larva"
+	button_icon_state = "alien_evolve_larva"
 
 /obj/effect/proc_holder/alien/larva_evolve/fire(mob/living/carbon/alien/user)
 	if(!islarva(user))
@@ -65,4 +65,3 @@
 
 	larva.alien_evolve(new_xeno)
 	return
-

@@ -116,17 +116,17 @@
 	charge_max = 0
 	panel = "Revenant Abilities"
 	target_message = "<span class='revennotice'>You toggle your night vision.</span>"
-	action_icon = 'icons/mob/actions/actions_revenant.dmi'
-	action_icon_state = "r_nightvision"
-	action_background_icon_state = "bg_revenant"
+	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "r_nightvision"
+	background_icon_state = "bg_revenant"
 
 //Transmit: the revemant's only direct way to communicate. Sends a single message silently to a single mob
-/obj/effect/proc_holder/spell/targeted/telepathy/revenant
+/datum/action/cooldown/spell/telepathy/revenant
 	name = "Revenant Transmit"
 	panel = "Revenant Abilities"
-	action_icon = 'icons/mob/actions/actions_revenant.dmi'
-	action_icon_state = "r_transmit"
-	action_background_icon_state = "bg_revenant"
+	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "r_transmit"
+	background_icon_state = "bg_revenant"
 	notice = "revennotice"
 	boldnotice = "revenboldnotice"
 	holy_check = TRUE
@@ -134,8 +134,8 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant
 	requires_wizard_garb = 0
-	action_icon = 'icons/mob/actions/actions_revenant.dmi'
-	action_background_icon_state = "bg_revenant"
+	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
+	background_icon_state = "bg_revenant"
 	panel = "Revenant Abilities (Locked)"
 	name = "Report this to a coder"
 	var/reveal = 80 //How long it reveals the revenant in deciseconds
@@ -203,7 +203,7 @@
 	cast_amount = 40
 	var/shock_range = 2
 	var/shock_damage = 15
-	action_icon_state = "overload_lights"
+	button_icon_state = "overload_lights"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/overload/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
@@ -244,7 +244,7 @@
 	reveal = 40
 	unlock_amount = 10
 	cast_amount = 30
-	action_icon_state = "defile"
+	button_icon_state = "defile"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/defile/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))
@@ -294,7 +294,7 @@
 	range = 4
 	cast_amount = 60
 	unlock_amount = 125
-	action_icon_state = "malfunction"
+	button_icon_state = "malfunction"
 
 //A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
@@ -338,7 +338,7 @@
 	range = 3
 	cast_amount = 50
 	unlock_amount = 75
-	action_icon_state = "blight"
+	button_icon_state = "blight"
 
 /obj/effect/proc_holder/spell/aoe_turf/revenant/blight/cast(list/targets, mob/living/simple_animal/revenant/user = usr)
 	if(attempt_cast(user))

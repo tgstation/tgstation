@@ -2,8 +2,8 @@
 	name = "Emplosion"
 	desc = "This spell emplodes an area."
 	button_icon_state = "emp"
-
 	sound = 'sound/weapons/zapbang.ogg'
+
 	school = SCHOOL_EVOCATION
 
 	/// The heavy radius of the EMP

@@ -345,7 +345,6 @@
 
 /datum/action/cooldown/wrap
 	name = "Wrap"
-	panel = "Spider"
 	desc = "Wrap something or someone in a cocoon. If it's a human or similar species, \
 		you'll also consume them, allowing you to lay enriched eggs."
 	background_icon_state = "bg_alien"
@@ -482,7 +481,7 @@
 			var/mob/living/simple_animal/hostile/giant_spider/spider = owner
 			var/obj/structure/spider/eggcluster/eggs = locate() in get_turf(owner)
 			if(!eggs || !isturf(spider.loc))
-				var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_choice(get_turf(spider))
+				var/obj/effect/mob_spawn/ghost_role/spider/new_eggs = new egg_type(get_turf(spider))
 				new_eggs.directive = spider.directive
 				new_eggs.faction = spider.faction
 				UpdateButtonIcon(TRUE)

@@ -47,6 +47,6 @@
 		/datum/heretic_knowledge/summon/stalker,
 		/datum/heretic_knowledge/spell/voidpull,
 	)
-	spell_to_add = /obj/effect/proc_holder/spell/pointed/blood_siphon
+	spell_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
 	cost = 1
 	route = PATH_SIDE

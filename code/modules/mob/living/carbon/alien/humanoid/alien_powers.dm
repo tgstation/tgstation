@@ -13,9 +13,9 @@ Doesn't work on other aliens/AI.*/
 	var/check_turf = FALSE
 	has_action = TRUE
 	base_action = /datum/action/spell_action/alien
-	action_icon = 'icons/mob/actions/actions_xeno.dmi'
-	action_icon_state = "spell_default"
-	action_background_icon_state = "bg_alien"
+	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
+	button_icon_state = "spell_default"
+	background_icon_state = "bg_alien"
 
 /obj/effect/proc_holder/alien/Click()
 	if(!iscarbon(usr))
@@ -68,7 +68,7 @@ Doesn't work on other aliens/AI.*/
 	desc = "Plants some alien weeds."
 	plasma_cost = 50
 	check_turf = TRUE
-	action_icon_state = "alien_plant"
+	button_icon_state = "alien_plant"
 
 /obj/effect/proc_holder/alien/plant/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(user))
@@ -82,7 +82,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Whisper"
 	desc = "Whisper to someone."
 	plasma_cost = 10
-	action_icon_state = "alien_whisper"
+	button_icon_state = "alien_whisper"
 
 /obj/effect/proc_holder/alien/whisper/fire(mob/living/carbon/user)
 	var/list/possible_recipients = list()
@@ -118,7 +118,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Transfer Plasma"
 	desc = "Transfer Plasma to another alien."
 	plasma_cost = 0
-	action_icon_state = "alien_transfer"
+	button_icon_state = "alien_transfer"
 
 /obj/effect/proc_holder/alien/transfer/fire(mob/living/carbon/user)
 	var/list/mob/living/carbon/aliens_around = list()
@@ -147,7 +147,7 @@ Doesn't work on other aliens/AI.*/
 	name = "Corrosive Acid"
 	desc = "Drench an object in acid, destroying it over time."
 	plasma_cost = 200
-	action_icon_state = "alien_acid"
+	button_icon_state = "alien_acid"
 
 /obj/effect/proc_holder/alien/acid/on_gain(mob/living/carbon/user)
 	add_verb(user, /mob/living/carbon/proc/corrosive_acid)
@@ -196,7 +196,7 @@ Doesn't work on other aliens/AI.*/
 /obj/effect/proc_holder/alien/neurotoxin
 	name = "Spit Neurotoxin"
 	desc = "Spits neurotoxin at someone, paralyzing them for a short time."
-	action_icon_state = "alien_neurotoxin_0"
+	button_icon_state = "alien_neurotoxin_0"
 	active = FALSE
 
 /obj/effect/proc_holder/alien/neurotoxin/fire(mob/living/carbon/user)
@@ -272,7 +272,7 @@ Doesn't work on other aliens/AI.*/
 		"resin membrane" = /obj/structure/alien/resin/membrane,
 		"resin nest" = /obj/structure/bed/nest)
 
-	action_icon_state = "alien_resin"
+	button_icon_state = "alien_resin"
 
 /obj/effect/proc_holder/alien/resin/fire(mob/living/carbon/user)
 	if(locate(/obj/structure/alien/resin) in user.loc)
@@ -301,7 +301,7 @@ Doesn't work on other aliens/AI.*/
 	desc = "Blend into the shadows to stalk your prey."
 	active = 0
 
-	action_icon_state = "alien_sneak"
+	button_icon_state = "alien_sneak"
 
 /obj/effect/proc_holder/alien/sneak/fire(mob/living/carbon/alien/humanoid/user)
 	if(!active)
