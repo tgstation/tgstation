@@ -214,9 +214,9 @@
 	for (var/turf/checked_turf in watched_turfs)
 		if(!checked_turf.density && found_turf)
 			var/datum/gas_mixture/environment = checked_turf.return_air()
-			if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST && my_area.active_alarms[ALARM_ATMOS])
 				result = FIRELOCK_ALARM_TYPE_HOT
-			if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+			if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT && my_area.active_alarms[ALARM_ATMOS])
 				result = FIRELOCK_ALARM_TYPE_COLD
 
 	if(result && alarm_type)
@@ -300,6 +300,8 @@
 		if(!LAZYLEN(place.active_firelocks)) //if we were the last firelock still active in this particular area
 			for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 				fire_panel.set_status()
+			if(place == my_area)
+				place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 			place.unset_fire_alarm_effects()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
 	soundloop.stop()
