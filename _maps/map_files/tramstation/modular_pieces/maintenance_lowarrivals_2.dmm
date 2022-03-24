@@ -15,7 +15,7 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/west,
 /obj/effect/spawner/random/engineering/toolbox,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	req_one_access_txt = "32;19"
 	},
 /turf/open/floor/iron/smooth,
@@ -62,7 +62,7 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/east,
 /obj/effect/spawner/random/engineering/toolbox,
-/obj/machinery/door/window/southright{
+/obj/machinery/door/window/right/directional/south{
 	req_one_access_txt = "32;19"
 	},
 /turf/open/floor/iron/smooth,

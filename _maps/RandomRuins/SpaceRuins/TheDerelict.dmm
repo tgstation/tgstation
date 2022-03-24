@@ -910,7 +910,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "eB" = (
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	name = "Heads of Staff";
 	req_access_txt = "19"
 	},
@@ -2124,12 +2124,12 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jN" = (
-/obj/machinery/door/window/southleft,
+/obj/machinery/door/window/left/directional/south,
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "jO" = (
-/obj/machinery/door/window/southright,
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "jQ" = (

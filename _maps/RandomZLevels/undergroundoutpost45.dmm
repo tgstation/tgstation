@@ -1898,7 +1898,7 @@
 	pixel_y = 9
 	},
 /obj/item/pen,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -2033,7 +2033,7 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/item/folder/red,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	dir = 8;
 	name = "Security Checkpoint";
 	req_access_txt = "201"
@@ -2072,7 +2072,7 @@
 "eQ" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	dir = 4;
 	name = "Hydroponics Desk";
 	req_access_txt = "201"
@@ -2203,7 +2203,7 @@
 "fd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
@@ -2519,7 +2519,7 @@
 "fM" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	dir = 1;
 	name = "Hydroponics Desk";
 	req_access_txt = "201"
@@ -4121,7 +4121,7 @@
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "jy" = (
-/obj/machinery/door/window/southright{
+/obj/machinery/door/window/right/directional/south{
 	name = "Bar Door";
 	req_access_txt = "201"
 	},
@@ -8830,7 +8830,7 @@
 	id = "UO45_EngineeringOffice";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	dir = 4;
 	name = "Engineering Reception";
 	req_access_txt = "201"
@@ -9237,7 +9237,7 @@
 	id = "UO45_EngineeringOffice";
 	name = "Privacy Shutters"
 	},
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	dir = 4;
 	icon_state = "right";
