@@ -53,6 +53,6 @@
 /obj/item/paper/fluff/ruins/crashedship/old_diary
 	name = "Old Diary"
 	info = "DEAR DIARY: So we was on route to survey some magma planet, rumored to be home to literal demons, when our pilot done smashed the ship right into the biggest space rock he could find.\
-	 Perhaps he took the hell planet rumors too seriously. I was nappin' in the emergency supplies closet so I'm not wise to the details. I did peek out the door to see the whole engineering section gone.\
-	 I think I can get to our teleporter room without bein' sucked out into space. If I don't make it, give my stuff to charity."
+	 Perhaps he took the hell planet talk too seriously. I was nappin' in the emergency supplies closet so I'm not wise to the details. I did peek out the door to see the whole engineering section gone.\
+	 It ain't long until the lights in here sap all the power, and I think I can get to our teleporter room without bein' sucked out into space. If I don't make it, give my stuff to charity."
 
