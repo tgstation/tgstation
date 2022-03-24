@@ -236,6 +236,8 @@
 	var/radio_key = /obj/item/encryptionkey/headset_eng
 	///The engineering channel
 	var/engineering_channel = "Engineering"
+	///Ratio of the amount of gas going in the turbine
+	var/intake_regulator = 0.5
 
 	COOLDOWN_DECLARE(turbine_damage_alert)
 
@@ -393,7 +395,7 @@
 
 	calculate_damage_done(input_turf_mixture.temperature)
 
-	var/compressor_work = do_calculations(input_turf_mixture, compressor.machine_gasmix)
+	var/compressor_work = do_calculations(input_turf_mixture, compressor.machine_gasmix, regulated = TRUE)
 	input_turf.air_update_turf(TRUE)
 	var/compressor_pressure = max(compressor.machine_gasmix.return_pressure(), 0.01)
 
@@ -417,11 +419,16 @@
 	turbine.machine_gasmix.pump_gas_to(output_turf.air, turbine.machine_gasmix.return_pressure())
 	output_turf.air_update_turf(TRUE)
 
-/obj/machinery/power/turbine/core_rotor/proc/do_calculations(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove)
+/obj/machinery/power/turbine/core_rotor/proc/do_calculations(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, regulated = FALSE)
 	var/work_done = input_mix.total_moles() * R_IDEAL_GAS_EQUATION * input_mix.temperature * log((input_mix.volume * max(input_mix.return_pressure(), 0.01)) / (output_mix.volume * max(output_mix.return_pressure(), 0.01))) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
 		work_done = work_done - work_amount_to_remove
-	input_mix.pump_gas_to(output_mix, input_mix.return_pressure())
+
+	var/intake_size = 1
+	if(regulated)
+		intake_size = intake_regulator
+
+	input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
 	var/output_mix_heat_capacity = output_mix.heat_capacity()
 	if(!output_mix_heat_capacity)
 		return 0
