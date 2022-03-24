@@ -62,6 +62,8 @@
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
 #define BLOCKS_SPEECH (1<<16)
 #define PLASMAMAN_HELMET_EXEMPT (1<<17) //prevents from placing on plasmaman helmet
+///Plasmamen clothing will also protect them from getting gas skin interactions
+#define PLASMAMAN_ENVIRO_PROTECTION (1<<18)
 
 /// Flags for the organ_flags var on /obj/item/organ
 

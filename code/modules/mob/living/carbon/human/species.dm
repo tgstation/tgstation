@@ -1854,7 +1854,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
 /datum/species/proc/handle_gas_interaction(mob/living/carbon/human/humi, datum/gas_mixture/environment, delta_time, times_fired)
-	if((humi?.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE) && (humi?.head?.clothing_flags & STOPSPRESSUREDAMAGE))
+	if(((humi?.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE) || (humi?.wear_suit?.clothing_flags & PLASMAMAN_ENVIRO_PROTECTION)) && (humi?.head?.clothing_flags & STOPSPRESSUREDAMAGE))
 		return
 
 	for(var/gas_id in environment.gases)
