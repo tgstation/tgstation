@@ -69173,12 +69173,6 @@
 	},
 /turf/open/floor/iron,
 /area/security/lockers)
-"rUT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/engineering/atmos)
 "rUZ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -111731,7 +111725,7 @@ oAL
 aFr
 mry
 kPH
-rUT
+jlk
 tXl
 hoX
 kPH
