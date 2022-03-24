@@ -110,3 +110,5 @@
 	var/visual_only_organs = FALSE
 
 	COOLDOWN_DECLARE(bleeding_message_cd)
+	///Timer for messages on gas skin related events
+	COOLDOWN_DECLARE(gas_skin_timer)
