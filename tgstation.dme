@@ -3628,6 +3628,7 @@
 #include "code\modules\power\tesla\energy_ball.dm"
 #include "code\modules\power\turbine\turbine.dm"
 #include "code\modules\power\turbine\turbine_computer.dm"
+#include "code\modules\power\turbine\turbine_defines.dm"
 #include "code\modules\power\turbine\turbine_parts.dm"
 #include "code\modules\procedural_mapping\mapGenerator.dm"
 #include "code\modules\procedural_mapping\mapGeneratorModule.dm"

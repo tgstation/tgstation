@@ -10,9 +10,9 @@
 	var/part_efficiency_increase_amount = 0
 
 	///Current part tier
-	var/current_tier = 1
+	var/current_tier = TURBINE_PART_TIER_ONE
 	///Max part tier
-	var/max_tier = 4
+	var/max_tier = TURBINE_PART_TIER_FOUR
 
 	///Stores the path of the material for the second tier upgrade
 	var/obj/item/stack/sheet/second_tier_material = /obj/item/stack/sheet/plasteel
@@ -44,11 +44,11 @@
 	. += "This is a tier [current_tier] turbine part, rated for [max_rpm] rpm and [max_temperature] K."
 	var/upgrade_material_name_amount
 	switch(current_tier)
-		if(1)
+		if(TURBINE_PART_TIER_ONE)
 			upgrade_material_name_amount = "[second_tier_material_amount] [initial(second_tier_material.name)] sheets"
-		if(2)
+		if(TURBINE_PART_TIER_TWO)
 			upgrade_material_name_amount = "[third_tier_material_amount] [initial(third_tier_material.name)] sheets"
-		if(3)
+		if(TURBINE_PART_TIER_THREE)
 			upgrade_material_name_amount = "[fourth_tier_material_amount] [initial(fourth_tier_material.name)] sheets"
 
 	if(upgrade_material_name_amount)
@@ -60,7 +60,7 @@
 	if(current_tier >= max_tier)
 		return FALSE
 	switch(current_tier)
-		if(1)
+		if(TURBINE_PART_TIER_ONE)
 			if(istype(attacking_item, second_tier_material))
 				var/obj/item/stack/sheet/second_tier = attacking_item
 				if(second_tier.use(second_tier_material_amount) && do_after(user, 1 SECONDS, src))
@@ -69,7 +69,7 @@
 					max_rpm *= max_rpm_tier_multiplier
 					max_temperature = max_temperature ** max_temperature_tier_exponential
 				return TRUE
-		if(2)
+		if(TURBINE_PART_TIER_TWO)
 			if(istype(attacking_item, third_tier_material))
 				var/obj/item/stack/sheet/third_tier = attacking_item
 				if(third_tier.use(third_tier_material_amount) && do_after(user, 2 SECONDS, src))
@@ -78,7 +78,7 @@
 					max_rpm *= max_rpm_tier_multiplier
 					max_temperature = max_temperature ** max_temperature_tier_exponential
 				return TRUE
-		if(3)
+		if(TURBINE_PART_TIER_THREE)
 			if(istype(attacking_item, fourth_tier_material))
 				var/obj/item/stack/sheet/fourth_tier = attacking_item
 				if(fourth_tier.use(fourth_tier_material_amount) && do_after(user, 3 SECONDS, src))
