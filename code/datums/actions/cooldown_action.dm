@@ -53,7 +53,10 @@
 
 	// "Shared actions" covers actions which are of the same type of us
 	// that are shared with another mob entirely (stored in the "shared" lazylist)
-	for(var/datum/action/coooldown/shared in shared)
+	for(var/datum/weakref/shared_ref as anything in shared)
+		var/datum/action/cooldown/shared = shared_ref.resolve()
+		if(QDELETED(shared) || !istype(shared))
+			continue
 		shared.StartCooldownSelf(override_cooldown_time)
 
 	StartCooldownSelf(override_cooldown_time)
@@ -112,7 +115,7 @@
 
 	// And if we reach here, the spell was cast successfully
 	if(unset_after_click)
-		unset_click_ability()
+		unset_click_ability(caller)
 	caller.next_click = world.time + click_cd_override
 
 	return TRUE

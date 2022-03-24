@@ -29,7 +29,7 @@
 		return FALSE
 
 	to_send = tgui_input_text(cast_on, "What would you like to tell your other self?", "Commune")
-	if(!to_send || QDELETED(src) || QDELETED(cast_on) || QDELETED(trauma.owner))
+	if(!to_send || QDELETED(src) || QDELETED(cast_on) || QDELETED(trauma.owner) || !IsAvailable())
 		return FALSE
 
 	return TRUE

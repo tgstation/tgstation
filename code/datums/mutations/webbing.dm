@@ -17,6 +17,7 @@
 		return
 	REMOVE_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
 
+// In the future this could be unified with the spider's web action
 /datum/action/cooldown/spell/lay_genetic_web
 	name = "Lay Web"
 	desc = "Drops a web. Only you will be able to traverse your web easily, making it pretty good for keeping you safe."

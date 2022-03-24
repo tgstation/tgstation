@@ -401,6 +401,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Whether or not orbiting is blocked or not
 #define TRAIT_ORBITING_FORBIDDEN "orbiting_forbidden"
+/// Whether a spider's consumed this mob
+#define TRAIT_SPIDER_CONSUMED "spider_consumed"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions

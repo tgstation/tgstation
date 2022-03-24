@@ -197,45 +197,48 @@
 /**
  * Handles sharing our action with another mob / player
  *
- * Essentially, creates a duplicate of our action,
- * linked to us via the "shared" list
+ * Essentially, creates a duplicate of our action, and grant it
+ * to whoever we're sharing the action with.
+ *
+ * The duplicate is linked to our action, so if we go, it goes.
+ * The duplicate is stored as a weakref in the shared lazylist.
+ *
+ * Returns the instance of the created shared action.
  */
 /datum/action/proc/share_action(mob/share_with)
-	// Create a copy of our action
-	// It's not linked to anything, because
-	// we handle its references manually
-	var/datum/action/to_share = new type()
+	// We already have this action, either our own version or are already sharing
+	if(locate(type) in share_with.actions)
+		return
+
+	// Create a copy of our action, linked to us
+	// That way childs can reference the parent action
+	// And, if the parent's deleted, all childs are too
+	var/datum/action/to_share = new type(src)
 	to_share.Grant(share_with)
 
-	LAZYADD(shared, to_share)
-	RegisterSignal(to_share, COMSIG_PARENT_QDELETING, .proc/on_shared_action_deleted)
+	LAZYADD(shared, WEAKREF(to_share))
 	RegisterSignal(to_share, COMSIG_ACTION_REMOVED, .proc/on_shared_action_removed)
+	return to_share
 
 /**
- * Handles unsharing our action from another mob / player
+ * Handles unsharing our action from another mob / player.
  */
 /datum/action/proc/unshare_action(mob/share_with)
 	for(var/datum/action/to_unshare as anything in share_with.actions)
-		if(to_unshare.type != type)
-			continue
-		if(to_unshare.target != src || to_unshare.owner != share_with)
+		if(to_unshare.type != type || to_unshare.target != src)
 			continue
 
-		qdel(to_unshare) // Handles refences in on_shared_action_deleted
+		LAZYREMOVE(shared, WEAKREF(to_unshare))
+		UnregisterSignal(to_unshare, COMSIG_ACTION_REMOVED)
+		// unshare_action() can be called during a destroy, as Destroy() calls Remove().
+		if(!QDELETED(to_unshare))
+			qdel(to_unshare)
 
-/// Signal proc for whenever a shared action is deleted.
-/// Handles removing its reference from our shared list.
-/datum/action/proc/on_shared_action_deleted(datum/source)
-	SIGNAL_HANDLER
-
-	// Destroy() calls Remove(), so unregister these before they're caught again
-	UnregisterSignal(source, COMSIG_ACTION_REMOVED)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
-	// Then clear its refs
-	LAZYREMOVE(shared, source)
-
-/// Signal proc for whenever a shared action is removed.
-/// We are only sharing the action with a certain mob, so if it's removed from said mob delete it / unshare it.
+/**
+ * Signal proc for [COMSIG_ACTION_REMOVED] on shared actions
+ *
+ * If our action's removed from a mob we're sharing with, unshare it
+ */
 /datum/action/proc/on_shared_action_removed(datum/source, mob/removed_from)
 	SIGNAL_HANDLER
 

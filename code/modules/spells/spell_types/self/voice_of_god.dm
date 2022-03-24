@@ -25,7 +25,7 @@
 		return FALSE
 
 	command = tgui_input_text(cast_on, "Speak with the Voice of God", "Command")
-	if(QDELETED(src) || QDELETED(cast_on))
+	if(QDELETED(src) || QDELETED(cast_on) || !IsAvailable())
 		return FALSE
 	if(!command)
 		revert_cast()

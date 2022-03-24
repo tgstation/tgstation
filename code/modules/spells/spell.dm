@@ -260,12 +260,13 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			if(SMOKE_SLEEPING)
 				smoke_type = /datum/effect_system/smoke_spread/sleeping
 
-		if(!ispath(smoke_type))
-			CRASH("Invalid smoke type for spell [type]. Got: [smoke_type || "null"].")
+		if(ispath(smoke_type))
+			var/datum/effect_system/smoke = new smoke_type()
+			smoke.set_up(smoke_amt, get_turf(owner))
+			smoke.start()
+		else
+			stack_trace("Invalid smoke type for spell [type]. Got: [smoke_type || "null"].")
 
-		var/datum/effect_system/smoke = new smoke_type()
-		smoke.set_up(smoke_amt, get_turf(owner))
-		smoke.start()
 
 /datum/action/cooldown/spell/proc/spell_feedback()
 	if(invocation_type != INVOCATION_NONE)
