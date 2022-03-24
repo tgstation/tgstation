@@ -760,3 +760,102 @@
       have atmos issues.
   OneAsianTortoise:
   - bugfix: fixes medical scrub being named "under"
+2022-03-23:
+  Daggertail:
+  - qol: Amputation, Compound Fracture Repair, Cavity Implantation, Augmentation,
+      and Prosthetic Replacement surgeries now all clamp bleeders after retracting
+      skin like most surgeries, rather than before.
+  Ghilker:
+  - refactor: cryotubes can now work with any gases
+  - expansion: cryotubes patients will actually breathe the air inside the tube and
+      will respond to the gas accordingly (they'll suffer from breath loss if not
+      in proper atmosphere inside the tube)
+  - expansion: cryoxadone heals only if the patient is alseep, making the use of the
+      anesthetic no longer just fluff but also functional
+  - qol: replaced oxygen canisters with anesthetic ones (a mix of oxygen and n2o at
+      65-35 ratio) for allowing the patient to sleep
+  Ghommie:
+  - rscadd: 'Added a palette component for palettes and spraycans: Right click the
+      item while it''s in your active hand to access a radial menu that allows you
+      to store, select or edit up to 14 colors for palettes and 8 for spraycans. Right-Click
+      one of the color to pick a new color value, Left-Click to select it.'
+  - qol: Furthermore, a graphical palette containing the colors of the palette component
+      will show up in the Canvas UI when painting with a tool that has said component,
+      allowing you to select colors without unfocusing from the UI window.
+  - rscdel: Removed the ctrl-click (color picker) shortcut from spraycans, as I felt
+      it to be too clunky and no longer necessary now (I'm the person that made it
+      btw).
+  GoblinBackwards:
+  - bugfix: Bluespace shelters now come with a ceiling.
+  - code_imp: Added optional automatic ceiling generation for map templates.
+  - bugfix: Recyclers no longer eat their own parts when dismantled.
+  Iamgoofball:
+  - bugfix: Fixes the description for mice being incredibly rude, judgmental, and
+      insulting towards mice, who are objectively adorable.
+  Jolly:
+  - rscadd: Charlie and Delta Storage rooms were added (as an area).
+  - rscadd: Charlie Dorms were added (as an area).
+  - imageadd: Fresh coat of paint for the Old Station (Charlie Station ruin) area
+      sprites.
+  LordVollkorn:
+  - bugfix: Proximity sensors inside chemical grenades should work now.
+  Melbert:
+  - balance: Flesh Heretic's summon objective now counts all summons done, alive or
+      dead, instead of all alive summons. Still does not include flesh ghouls or voiceless
+      dead.
+  MrStonedOne:
+  - bugfix: blob spores and game-controlled blobbernuts no longer get stuck thinking
+      they can't walk thru blob tiles. This has been broken for over a year and so
+      you should expect blob spores to be more of a threat then you are used to.
+  Pickle-Coding:
+  - bugfix: Fixes tritium fires not releasing radiation when they should.
+  - bugfix: Fixes water vapour condensation requiring a temperature 20K lower than
+      usual.
+  - code_imp: Adds defines for tritium fire radiation stuff.
+  RandomGamer123:
+  - bugfix: Makes shuttle engine crates actually purchasable if you bought the BYOS
+      shuttle.
+  Shiets, Dragomagol:
+  - rscadd: Podpeople now have plant-like growths springing from their heads!
+  - rscadd: Podpeople can style their "hair" with secateurs
+  SmArtKar:
+  - bugfix: BCI overlays now actually work
+  - imageadd: Changed BCI counter overlay numbers to make them more readable
+  SuperNovaa41:
+  - bugfix: Fixes being able to use revival surgery on blacklisted defib victims
+  TemporalOroboros:
+  - bugfix: Blood-spread-only diseases will no longer always spread upon exposure
+      to blood.
+  capsaicinz:
+  - bugfix: xray beams can now be resisted by laser-resistant armor
+  - code_imp: /obj/projectile flag is renamed to armor_flag
+  kawoppi:
+  - imageadd: adjusted black undershirt side sprites to be more in line with the front
+      sprite
+  - imageadd: adjusted white undershirt side sprites to be more in line with the front
+      sprite
+  san7890:
+  - bugfix: There is no longer a poster splayed out over a vending machine in KiloStation's
+      Botany Section.
+  - bugfix: Nanotrasen realized that Kilo's Arrivals had a horrendous glitch... the
+      lights and cameras weren't hooked up to anything. How saddening. It's been fixed
+      now.
+  - bugfix: Also, Nanotrasen realized they spilled some dark juice (trademark) on
+      some other lattices in that area so they cleaned up after themselves as well.
+      How responsible!
+  - bugfix: Nanotrasen decided that today was a good day to remove the random floating
+      poster on the exterior of Security on KiloStation.
+  - bugfix: Nanotrasen realized that they should stop installing grilles right on
+      top of the Air Flow Meters on IceBoxStation.
+  timothymtorres:
+  - qol: Mood events colors now accurately reflect the severity for the positive or
+      negative. Really good is bold green, good is green, neutral is gray, bad is
+      red, and really bad is bold red.
+  - bugfix: Fixed icebox plasma facility mood event color not working.
+  - code_imp: Improved mood events descriptions to be simpler to write.
+2022-03-24:
+  Ghilker:
+  - refactor: refactored the electrolyzer to use datumized reactions instead of hardcode
+      them in process
+  - expansion: added the hypernoblium to antinoblium conversion, when hypernoblium
+      is exposed to the electrolyzer it will be converted to antinoblium

@@ -2522,20 +2522,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
-"lN" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
-	},
-/area/ruin/space/derelict/atmospherics)
-"lO" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	name = "engine outlet injector"
-	},
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
-	},
-/area/ruin/space/derelict/atmospherics)
 "lP" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access";
@@ -3158,11 +3144,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
-"pZ" = (
-/obj/machinery/air_sensor/atmos/air_tank,
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+"pR" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("ks13" = "Air Supply")
 	},
+/turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "rC" = (
 /obj/structure/closet/crate,
@@ -3669,6 +3655,14 @@
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
+"TE" = (
+/obj/machinery/air_sensor{
+	chamber_id = "ks13"
+	},
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
+/area/ruin/space/derelict/atmospherics)
 "TJ" = (
 /obj/machinery/light/directional/west,
 /obj/item/storage/box/lights/mixed,
@@ -3684,6 +3678,14 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
+"Ue" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "ks13"
+	},
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
+/area/ruin/space/derelict/atmospherics)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/template_noop)
@@ -3706,6 +3708,14 @@
 "VV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/airless,
+/area/ruin/space/derelict/atmospherics)
+"Wm" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "ks13"
+	},
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
 /area/ruin/space/derelict/atmospherics)
 "Xq" = (
 /obj/item/stack/cable_coil/cut,
@@ -8008,7 +8018,7 @@ gk
 lv
 lv
 lv
-lt
+pR
 ls
 lt
 lt
@@ -8119,7 +8129,7 @@ go
 go
 gk
 lw
-lN
+Ue
 Qt
 PR
 MS
@@ -8231,8 +8241,8 @@ gc
 go
 go
 gk
-pZ
-lO
+TE
+Wm
 ES
 VV
 mk
