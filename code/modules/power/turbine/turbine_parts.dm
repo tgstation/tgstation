@@ -15,17 +15,17 @@
 	var/max_tier = 4
 
 	///Stores the path of the material for the second tier upgrade
-	var/second_tier_material = /obj/item/stack/sheet/plasteel
+	var/obj/item/stack/sheet/second_tier_material = /obj/item/stack/sheet/plasteel
 	///Amount of second tier material for the upgrade
 	var/second_tier_material_amount = 10
 
 	///Stores the path of the material for the third tier upgrade
-	var/third_tier_material = /obj/item/stack/sheet/mineral/titanium
+	var/obj/item/stack/sheet/third_tier_material = /obj/item/stack/sheet/mineral/titanium
 	///Amount of third tier material for the upgrade
 	var/third_tier_material_amount = 10
 
 	///Stores the path of the material for the fourth tier upgrade
-	var/fourth_tier_material = /obj/item/stack/sheet/mineral/metal_hydrogen
+	var/obj/item/stack/sheet/fourth_tier_material = /obj/item/stack/sheet/mineral/metal_hydrogen
 	///Amount of fourth tier material for the upgrade
 	var/fourth_tier_material_amount = 5
 
@@ -45,11 +45,11 @@
 	var/upgrade_material_name_amount
 	switch(current_tier)
 		if(1)
-			upgrade_material_name_amount = "[second_tier_material_amount] [initial(second_tier_material).name] sheets"
+			upgrade_material_name_amount = "[second_tier_material_amount] [initial(second_tier_material.name)] sheets"
 		if(2)
-			upgrade_material_name_amount = "[third_tier_material_amount] [initial(third_tier_material).name] sheets"
+			upgrade_material_name_amount = "[third_tier_material_amount] [initial(third_tier_material.name)] sheets"
 		if(3)
-			upgrade_material_name_amount = "[fourth_tier_material_amount] [initial(fourth_tier_material).name] sheets"
+			upgrade_material_name_amount = "[fourth_tier_material_amount] [initial(fourth_tier_material.name)] sheets"
 
 	if(upgrade_material_name_amount)
 		. += "Can be upgraded with [upgrade_material_name_amount]."
