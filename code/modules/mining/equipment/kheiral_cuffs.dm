@@ -1,15 +1,15 @@
 /**********************Kheiral Cuffs**********************/
 /// Acts as a GPS beacon & connects to station crew monitors from lavaland
-/obj/item/clothing/gloves/kheiral_cuffs
+/obj/item/kheiral_cuffs
 	name = "\improper Kheiral cuffs"
 	desc = "A prototype wrist communicator powered by Kheiral Matter. When both ends are clamped to one wrist, acts as a signal range booster for your suit sensors.\n<i>A small engraving on the inside reads, \"NOT HANDCUFFS\"</i>"
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
+	slot_flags = ITEM_SLOT_GLOVES
 	throwforce = 0
-	transfer_prints = TRUE
-	siemens_coefficient = 1
-	body_parts_covered = NONE
+	w_class = WEIGHT_CLASS_SMALL
+	gender = PLURAL
 	throw_speed = 3
 	throw_range = 5
 	resistance_flags = FIRE_PROOF
@@ -22,22 +22,22 @@
 	/// If we're off the station's Z-level
 	var/far_from_home = FALSE
 
-/obj/item/clothing/gloves/kheiral_cuffs/Initialize()
+/obj/item/kheiral_cuffs/Initialize()
 	. = ..()
 	update_icon(UPDATE_OVERLAYS)
 	RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, .proc/check_z)
 
 	check_z(new_turf = loc)
 
-/obj/item/clothing/gloves/kheiral_cuffs/examine(mob/user)
+/obj/item/kheiral_cuffs/examine(mob/user)
 	. = ..()
 	if(gps_enabled)
 		. += span_notice("The cuff's GPS signal is on.")
 
-/obj/item/clothing/gloves/kheiral_cuffs/item_action_slot_check(slot)
+/obj/item/kheiral_cuffs/item_action_slot_check(slot)
 	return slot == ITEM_SLOT_GLOVES
 
-/obj/item/clothing/gloves/kheiral_cuffs/equipped(mob/user, slot, initial)
+/obj/item/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()
 	if(slot != ITEM_SLOT_GLOVES)
 		return
@@ -45,7 +45,7 @@
 	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	connect_kheiral_network(user)
 
-/obj/item/clothing/gloves/kheiral_cuffs/dropped(mob/user, silent)
+/obj/item/kheiral_cuffs/dropped(mob/user, silent)
 	. = ..()
 	if(on_wrist)
 		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -53,7 +53,7 @@
 	remove_kheiral_network(user)
 
 /// Enables the GPS and adds the multiz trait
-/obj/item/clothing/gloves/kheiral_cuffs/proc/connect_kheiral_network(mob/living/user)
+/obj/item/kheiral_cuffs/proc/connect_kheiral_network(mob/living/user)
 	if(gps_enabled)
 		return
 	if(!on_wrist || !far_from_home)
@@ -68,7 +68,7 @@
 	gps_enabled = TRUE
 
 /// Disables the GPS and removes the multiz trait
-/obj/item/clothing/gloves/kheiral_cuffs/proc/remove_kheiral_network(mob/user)
+/obj/item/kheiral_cuffs/proc/remove_kheiral_network(mob/user)
 	if(!gps_enabled)
 		return
 	if(on_wrist && far_from_home)
@@ -79,7 +79,7 @@
 	gps_enabled = FALSE
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
-/obj/item/clothing/gloves/kheiral_cuffs/proc/check_z(datum/source, turf/old_turf, turf/new_turf)
+/obj/item/kheiral_cuffs/proc/check_z(datum/source, turf/old_turf, turf/new_turf)
 	SIGNAL_HANDLER
 
 	if(!isturf(new_turf))
@@ -94,16 +94,16 @@
 		if(isliving(loc))
 			connect_kheiral_network(loc)
 
-/obj/item/clothing/gloves/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "strandcuff_emissive", alpha = src.alpha)
 
-/obj/item/clothing/gloves/kheiral_cuffs/update_overlays()
+/obj/item/kheiral_cuffs/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "strand_light", alpha = src.alpha)
 
-/obj/item/clothing/gloves/kheiral_cuffs/suicide_act(mob/living/carbon/user)
+/obj/item/kheiral_cuffs/suicide_act(mob/living/carbon/user)
 	var/mob/living/carbon/human/victim
 	if(ishuman(user))
 		victim = user
