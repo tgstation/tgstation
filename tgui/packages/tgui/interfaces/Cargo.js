@@ -144,9 +144,9 @@ const CargoStatus = (props, context) => {
  * Take entire supplies tree
  * and return a flat supply pack list that matches search,
  * sorted by name and only the first page.
- * @param {category[]} supplies Supplies list.
+ * @param {any[]} supplies Supplies list.
  * @param {string} search The search term
- * @returns {pack[]} The flat list of supply packs.
+ * @returns {any[]} The flat list of supply packs.
  */
 const searchForSupplies = (supplies, search) => {
   search = search.toLowerCase();
