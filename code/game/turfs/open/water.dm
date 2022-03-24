@@ -1,6 +1,5 @@
 /turf/open/water
 	gender = PLURAL
-	name = "water"
 	desc = "Shallow water."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "riverwater_motion"
@@ -19,3 +18,13 @@
 
 /turf/open/water/jungle
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
+/turf/open/water/beach
+	gender = PLURAL
+	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "water"
+	base_icon_state = "water"
+	baseturfs = /turf/open/water/beach
+
+

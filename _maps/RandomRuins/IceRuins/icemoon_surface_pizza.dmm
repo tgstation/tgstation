@@ -387,7 +387,7 @@
 /area/ruin/pizzeria/kitchen)
 "kI" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "lm" = (
 /obj/effect/turf_decal/tile/blue{
@@ -444,15 +444,15 @@
 /obj/structure/sign/poster/official/moth_piping{
 	pixel_y = 32
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "nr" = (
 /obj/structure/flora/rock/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "om" = (
 /obj/structure/flora/grass/brown,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "ow" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1067,7 +1067,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Jt" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1231,7 +1231,7 @@
 /area/ruin/pizzeria/kitchen)
 "NK" = (
 /obj/structure/flora/ausbushes/pointybush,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "NL" = (
 /turf/closed/wall,
@@ -1280,7 +1280,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Pj" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1412,7 +1412,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "Sm" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Sw" = (
 /obj/structure/chair/sofa,
@@ -1471,7 +1471,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/ruin/pizzeria)
 "TK" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "TU" = (
 /obj/effect/turf_decal/tile/blue{
@@ -1582,7 +1582,7 @@
 /area/ruin/pizzeria)
 "WH" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "WO" = (
 /obj/effect/turf_decal/tile/red{

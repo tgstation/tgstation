@@ -244,19 +244,6 @@
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
 /**
- * Handles the copying of devil contract paper. Transfers all the text, stamps and so on from the old paper, to the copy.
- *
- * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.
- * Does not check if it has enough toner because devil contracts cost no toner to print.
- */
-/obj/machinery/photocopier/proc/make_devil_paper_copy()
-	if(!paper_copy)
-		return
-	var/obj/item/paper/employment_contract/E = paper_copy
-	var/obj/item/paper/employment_contract/C = new(loc, E.employee_name)
-	give_pixel_offset(C)
-
-/**
  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
  *
  * Checks first if `paper_copy` exists. Since this proc is called from a timer, it's possible that it was removed.

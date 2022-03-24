@@ -720,6 +720,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/service/kitchen/diner
 	name = "\improper Diner"
+	icon_state = "diner"
 
 /area/service/kitchen/abandoned
 	name = "\improper Abandoned Kitchen"
@@ -1406,6 +1407,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Cargo Bay"
 	icon_state = "cargo_bay"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/cargo/lobby
+	name = "\improper Cargo Lobby"
+	icon_state = "cargo_lobby"
 
 /area/cargo/qm
 	name = "\improper Quartermaster's Office"

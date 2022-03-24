@@ -2,7 +2,8 @@
 	. = ..()
 
 	if (!isnull(held_item))
-		return .
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Offer item"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if (!ishuman(user))
 		return .
