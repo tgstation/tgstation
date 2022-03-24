@@ -481,24 +481,25 @@ GLOBAL_VAR_INIT(say_disabled, FALSE)
 			for(var/listened_tags in atmos_comp.atmos_chambers)
 				LAZYINITLIST(listened_to[listened_tags])
 				listened_to[listened_tags] += atmos_comp
-		else
-			var/list/tags = splittext(machine.id_tag, "_")
-			if(tags.len == 0 || length(tags[1]) == 0)
-				to_chat(usr, "Machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] does not have a tag or have an empty identifier tag: [machine.id_tag]", confidential=TRUE)
-				tagless += 1
-				continue
-			if(tags.len != 2 || !(tags[2] in valid_tag_endings))
-				to_chat(usr, "Invalid tag for machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type]. Tag = [machine.id_tag]", confidential=TRUE)
-				invalid_tag += 1
-				continue
-			if(broadcasters[machine.id_tag])
-				var/obj/original_machine = broadcasters[machine.id_tag]
-				to_chat(usr, "Duplicate machine id_tag ([machine.id_tag]) detected. Implicated machineries: [ADMIN_VERBOSEJMP(machine)] under [machine.type] and [ADMIN_VERBOSEJMP(original_machine)] under [original_machine.type]", confidential=TRUE)
-				duplicate_tag += 1
-				continue
-			broadcasters[machine.id_tag] = machine
-			LAZYINITLIST(broadcasted_to[tags[1]])
-			broadcasted_to[tags[1]] += machine
+			continue
+		// Code below is for valid machineries that are not atmos control.
+		var/list/tags = splittext(machine.id_tag, "_")
+		if(tags.len == 0 || length(tags[1]) == 0)
+			to_chat(usr, "Machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type] does not have a tag or have an empty identifier tag: [machine.id_tag]", confidential=TRUE)
+			tagless += 1
+			continue
+		if(tags.len != 2 || !(tags[2] in valid_tag_endings))
+			to_chat(usr, "Invalid tag for machine [ADMIN_VERBOSEJMP(machine)] under type [machine.type]. Tag = [machine.id_tag]", confidential=TRUE)
+			invalid_tag += 1
+			continue
+		if(broadcasters[machine.id_tag])
+			var/obj/original_machine = broadcasters[machine.id_tag]
+			to_chat(usr, "Duplicate machine id_tag ([machine.id_tag]) detected. Implicated machineries: [ADMIN_VERBOSEJMP(machine)] under [machine.type] and [ADMIN_VERBOSEJMP(original_machine)] under [original_machine.type]", confidential=TRUE)
+			duplicate_tag += 1
+			continue
+		broadcasters[machine.id_tag] = machine
+		LAZYINITLIST(broadcasted_to[tags[1]])
+		broadcasted_to[tags[1]] += machine
 
 	for (var/tag in listened_to)
 		if(!broadcasted_to[tag])
