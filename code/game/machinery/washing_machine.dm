@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(panel_open)
 		. += "wm_panel"
 
-/obj/machinery/washing_machine/improvised_chem_heater/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/washing_machine/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!panel_open || busy)
 		return FALSE
