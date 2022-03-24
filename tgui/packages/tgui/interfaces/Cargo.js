@@ -157,7 +157,7 @@ const searchForSupplies = (supplies, search) => {
       pack.name?.toLowerCase().includes(search.toLowerCase())
       || pack.desc?.toLowerCase().includes(search.toLowerCase())),
     sortBy(pack => pack.name),
-    packs => packs.slice(0, 20),
+    packs => packs.slice(0, 25),
   ])(supplies);
 };
 
