@@ -1569,6 +1569,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_environment(mob/living/carbon/human/humi, datum/gas_mixture/environment, delta_time, times_fired)
 	handle_environment_pressure(humi, environment, delta_time, times_fired)
+	handle_gas_interaction(humi, environment, delta_time, times_fired)
 
 /**
  * Body temperature handler for species
@@ -1852,6 +1853,34 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * delta_time)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
+/datum/species/proc/handle_gas_interaction(mob/living/carbon/human/humi, datum/gas_mixture/environment, delta_time, times_fired)
+	if((humi?.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE) && (humi?.head?.clothing_flags & STOPSPRESSUREDAMAGE))
+		return
+
+	for(var/gas_id in environment.gases)
+		var/gas_amount = environment.gases[gas_id][MOLES]
+		switch(gas_id)
+			if(/datum/gas/water_vapor)
+				if(humi.wear_mask?.clothing_flags & BLOCK_GAS_SMOKE_EFFECT || humi.wear_mask?.clothing_flags & MASKCOVERSEYES || humi.head?.flags_cover & HEADCOVERSEYES)
+					continue
+				if(gas_amount < 5)
+					continue
+				humi.apply_status_effect(/datum/status_effect/gas_fog, gas_id)
+
+			if(/datum/gas/nitryl)
+				if(ispodperson(humi))
+					humi.adjustToxLoss(- gas_amount * 0.5 * delta_time)
+					humi.adjustBruteLoss(- gas_amount * 0.5 * delta_time)
+					var/current_reagent = humi.reagents.get_reagent_amount(/datum/reagent/nitryl)
+					humi.reagents.add_reagent(/datum/reagent/nitryl, max(0, 1 - current_reagent))
+					continue
+				if(gas_amount > 5 && gas_amount < 10 && COOLDOWN_FINISHED(humi, gas_skin_timer))
+					to_chat(humi, span_warning(pick("Your skin feels itchy.", "You feel like burning.")))
+					COOLDOWN_START(humi, gas_sking_timer, 5 SECONDS)
+				else if(gas_amount >= 10 && COOLDOWN_FINISHED(humi, gas_skin_timer))
+					to_chat(humi, span_warning(pick("Your skin feels hot.", "You feel like burning.")))
+					humi.adjustFireLoss(gas_amount * 0.05 * delta_time)
+					COOLDOWN_START(humi, gas_sking_timer, 5 SECONDS)
 
 //////////
 // FIRE //

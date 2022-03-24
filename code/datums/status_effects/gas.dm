@@ -51,3 +51,57 @@
 /datum/status_effect/freon/watcher
 	duration = 8
 	can_melt = FALSE
+
+/datum/status_effect/gas_fog
+	id = "gas_fog"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 2 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/gas_fog
+	var/datum/gas/gas_to_check
+	var/warned = FALSE
+	var/current_timer
+
+/atom/movable/screen/alert/status_effect/gas_fog
+	name = "Foggy"
+	desc = "You can't see anything in front of you!"
+
+/datum/status_effect/gas_fog/on_remove()
+	owner.cure_blind(EYES_COVERED)
+	owner.clear_fullscreen("tint", 0)
+	gas_to_check = null
+
+/datum/status_effect/gas_fog/on_creation(mob/living/new_owner, gas_id)
+	. = ..()
+	gas_to_check = gas_id
+
+/datum/status_effect/gas_fog/tick()
+	var/datum/gas_mixture/environment = owner.loc?.return_air()
+	var/gas_amount = environment?.gases[gas_to_check][MOLES]
+	if(gas_amount >= 0)
+		check_impaired_type(gas_amount)
+	if(warned && (world.time - current_timer > 10 SECONDS))
+		current_timer = world.time
+		warned = FALSE
+
+/datum/status_effect/gas_fog/proc/check_impaired_type(gas_amount)
+	switch(gas_amount)
+		if(5 to 14)
+			owner.cure_blind(EYES_COVERED)
+			if(!warned)
+				warned = TRUE
+				to_chat(owner, span_notice("You can't see beyond a few meters from you due to the fog."))
+			owner.overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 1)
+		if(15 to 29)
+			owner.cure_blind(EYES_COVERED)
+			if(!warned)
+				warned = TRUE
+				to_chat(owner, span_warning("You can't see almost right next to you due to the fog."))
+			owner.overlay_fullscreen("tint", /atom/movable/screen/fullscreen/impaired, 2)
+		if(30 to INFINITY)
+			if(!warned)
+				warned = TRUE
+				to_chat(owner, span_warning("The fog stops you from seeing around you!"))
+			owner.become_blind(EYES_COVERED)
+		else
+			owner.cure_blind(EYES_COVERED)
+			owner.clear_fullscreen("tint", 0)
