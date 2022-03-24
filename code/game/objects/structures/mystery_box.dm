@@ -104,6 +104,12 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	. = ..()
 	generate_valid_types()
 
+/obj/structure/mystery_box/Destroy()
+	QDEL_NULL(presented_item)
+	if(current_sound_channel)
+		SSsounds.free_sound_channel(current_sound_channel)
+	return ..()
+
 /obj/structure/mystery_box/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	switch(box_state)
@@ -227,8 +233,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	add_filter("weapon_rays", 3, list("type" = "rays", "size" = 28, "color" = COLOR_VIVID_YELLOW))
 
 /obj/mystery_box_item/Destroy(force)
-	. = ..()
 	parent_box = null
+	return ..()
 
 // this way, clicking on the prize will work the same as clicking on the box
 /obj/mystery_box_item/attack_hand(mob/living/user, list/modifiers)
