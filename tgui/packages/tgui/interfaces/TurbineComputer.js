@@ -18,7 +18,7 @@ export const TurbineComputer = (props, context) => {
   return (
     <Window
       width={310}
-      height={165}>
+      height={185}>
       <Window.Content>
         <Section
           title="Status"
