@@ -50911,7 +50911,6 @@
 /area/maintenance/fore/greater)
 "wLl" = (
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
-/obj/machinery/door/airlock/public/glass/incinerator/atmos_interior,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/embedded_controller/radio/airlock_controller/incinerator_atmos{
