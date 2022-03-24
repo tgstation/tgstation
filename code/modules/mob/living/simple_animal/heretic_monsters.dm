@@ -178,6 +178,7 @@
  */
 /mob/living/simple_animal/hostile/heretic_summon/armsy/Initialize(mapload, spawn_bodyparts = TRUE, worm_length = 6)
 	. = ..()
+	AddElement(/datum/element/blood_walk)
 	if(worm_length < 3)
 		stack_trace("[type] created with invalid len ([worm_length]). Reverting to 3.")
 		worm_length = 3 //code breaks below 3, let's just not allow it.
@@ -251,7 +252,6 @@
 	if(!follow)
 		return
 
-	gib_trail()
 	if(back && back.loc != oldloc)
 		back.Move(oldloc)
 
@@ -261,14 +261,6 @@
 
 	oldloc = loc
 
-/// Creates a tail of blood / gibs as we move.
-/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/gib_trail()
-	if(front) // head makes gibs
-		return
-	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/tracks))
-	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
-	decal.setDir(dir)
-
 /mob/living/simple_animal/hostile/heretic_summon/armsy/Destroy()
 	if(front)
 		front.icon_state = "armsy_end"
@@ -276,6 +268,7 @@
 		front.back = null
 	if(back)
 		QDEL_NULL(back) // chain destruction baby
+	RemoveElement(/datum/element/blood_walk)
 	return ..()
 
 /*
