@@ -392,6 +392,29 @@
 		to_chat(usr, pick("You try to stamp but you miss!", "There is no where else you can stamp!"))
 		return FALSE
 
+/**
+ * is_approved
+ *
+ * To determine if a paper has the correct stamp. If no department stamp is specified then the
+ * regular granted stamp (/obj/item/stamp) is checked
+ *
+ * Arguments:
+ * * department (optional) - The department stamp we are checking for
+ */
+/obj/item/paper/proc/is_approved(department_stamp)
+	if(department_stamp)
+		return stamped && (department_stamp in stamped)
+	else
+		return stamped && ("stamp-ok" in stamped)
+
+/**
+ * is_denied
+ *
+ * To determine if a paper has the DENIED stamp
+ */
+/obj/item/paper/proc/is_denied()
+	return stamped && ("stamp-deny" in stamped)
+
 /obj/item/paper/ui_act(action, params, datum/tgui/ui)
 	. = ..()
 	if(.)
