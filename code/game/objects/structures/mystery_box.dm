@@ -97,6 +97,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	var/list/valid_types
 	/// If the prize is a ballistic gun with an external magazine, should we grant the user a spare mag?
 	var/grant_extra_mag = TRUE
+	/// Stores the current sound channel we're using so we can cut off our own sounds as needed. Randomized after each roll
+	var/current_sound_channel
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
@@ -134,7 +136,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 	update_icon_state()
 	presented_item = new(loc)
 	presented_item.start_animation(src)
-	playsound(src, open_sound, 80, FALSE, channel = CHANNEL_MBOX)
+	current_sound_channel = SSsounds.reserve_sound_channel(src)
+	playsound(src, open_sound, 80, FALSE, channel = current_sound_channel)
 	playsound(src, crate_open_sound, 80)
 
 /// The box has finished choosing, mark it as available for grabbing
@@ -162,6 +165,8 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 
 /// The cooldown between activations has finished, shake to show that
 /obj/structure/mystery_box/proc/ready_again()
+	SSsounds.free_sound_channel(current_sound_channel)
+	current_sound_channel = null
 	box_state = MYSTERY_BOX_STANDBY
 	Shake(10, 0, 0.5 SECONDS)
 
@@ -180,7 +185,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 				user.put_in_hands(extra_mag)
 
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)
-	playsound(src, grant_sound, 80, FALSE, channel = CHANNEL_MBOX)
+	playsound(src, grant_sound, 80, FALSE, channel = current_sound_channel)
 	close_box()
 
 
