@@ -84,6 +84,12 @@
 		to_chat(user, span_warning("You get a feeling that leaving the station might be a REALLY dumb idea..."))
 		dumb_rev_heads += user.mind
 		return
+
+	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
+		to_chat(user, span_warning("You start mashing buttons at random!"))
+		if(do_after(user, 100, target = src))
+			ui_act("move", modifiers)
+		return
 	. = ..()
 
 /obj/machinery/computer/shuttle/mining/common
