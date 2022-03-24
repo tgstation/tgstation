@@ -268,7 +268,6 @@
 		front.back = null
 	if(back)
 		QDEL_NULL(back) // chain destruction baby
-	RemoveElement(/datum/element/blood_walk)
 	return ..()
 
 /*
