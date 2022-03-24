@@ -76,18 +76,18 @@ const NewscasterChannelCreation = (props, context) => {
     <Modal
       textAlign="center"
       mr={1.5}>
-      <Button
-        content="X"
-        color="red"
-        position="relative"
-        top="20%"
-        left="23%"
-        onClick={() => act('cancelCreation')} />
       <Stack vertical>
         <>
           <Stack.Item>
             <Box pb={1}>
               Enter channel name here:
+              <Button
+                content="X"
+                color="red"
+                position="relative"
+                top="20%"
+                left="15%"
+                onClick={() => act('cancelCreation')} />
             </Box>
             <TextArea
               fluid
@@ -163,17 +163,17 @@ const NewscasterCommentCreation = (props, context) => {
     <Modal
       textAlign="center"
       mr={1.5}>
-      <Button
-        content="X"
-        color="red"
-        position="relative"
-        top="20%"
-        left="50%"
-        onClick={() => act('cancelCreation')} />
       <Stack vertical>
         <Stack.Item>
           <Box pb={1}>
             Enter comment:
+            <Button
+              content="X"
+              color="red"
+              position="relative"
+              top="20%"
+              left="25%"
+              onClick={() => act('cancelCreation')} />
           </Box>
           <TextArea
             fluid
@@ -243,10 +243,11 @@ const NewscasterWantedScreen = (props, context) => {
                   {activeWanted.crime}
                 </Box>
               </Section>
-              {activeWanted?.image?(
-                <Box
-                  as="img"
-                  src={activeWanted.image} />):null}
+              <Box
+                as="img"
+                src={activeWanted.image
+                  ? activeWanted.image
+                  : null} />
               <Box italic>
                 Posted by {activeWanted.author ? activeWanted.author : "N/A"}
               </Box>

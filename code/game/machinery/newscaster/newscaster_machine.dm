@@ -140,6 +140,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	data["photo_data"] = !isnull(current_image)
 	data["creating_channel"] = creating_channel
 	data["creating_comment"] = creating_comment
+	data["viewing_wanted"] = viewing_wanted
 
 	//Here is all the UI_data sent about the current wanted issue, as well as making a new one in the UI.
 	data["making_wanted_issue"] = !(GLOB.news_network.wanted_issue?.active)
@@ -297,6 +298,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			creating_channel = FALSE
 			creating_comment = FALSE
 			viewing_wanted = FALSE
+			criminal_name = null
+			crime_description = null
 			return TRUE
 
 		if("storyCensor")
@@ -368,7 +371,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("toggleWanted")
 			alert = FALSE
-			viewing_wanted = FALSE
+			viewing_wanted = TRUE
 			update_overlays()
 			return TRUE
 
