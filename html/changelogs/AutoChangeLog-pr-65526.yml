@@ -1,0 +1,4 @@
+author: "tnekohue"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Departmental Techfab machine board for service being named oddly compared to the other ones."
