@@ -39,6 +39,23 @@
 	///Max temperature exponential value per tier
 	var/max_temperature_tier_exponential = 1.2
 
+/obj/item/turbine_parts/examine(mob/user)
+	. = ..()
+	. += "This is a tier [current_tier] turbine part, rated for [max_rpm] rpm and [max_temperature] K."
+	var/upgrade_material_name_amount
+	switch(current_tier)
+		if(1)
+			upgrade_material_name_amount = "[second_tier_material_amount] [initial(second_tier_material).name] sheets"
+		if(2)
+			upgrade_material_name_amount = "[third_tier_material_amount] [initial(third_tier_material).name] sheets"
+		if(3)
+			upgrade_material_name_amount = "[fourth_tier_material_amount] [initial(fourth_tier_material).name] sheets"
+
+	if(upgrade_material_name_amount)
+		. += "Can be upgraded with [upgrade_material_name_amount]."
+	else
+		. += "Is already at max tier."
+
 /obj/item/turbine_parts/attackby(obj/item/attacking_item, mob/user, params)
 	if(current_tier >= max_tier)
 		return FALSE
@@ -76,18 +93,21 @@
 /obj/item/turbine_parts/compressor
 	name = "compressor part"
 	desc = "Install in a turbine engine compressor to increase it's performances"
+	icon_state = "compressor_part"
 	part_efficiency = 0.25
 	part_efficiency_increase_amount = 0.2
 
 /obj/item/turbine_parts/rotor
 	name = "rotor part"
 	desc = "Install in a turbine engine rotor to increase it's performances"
+	icon_state = "rotor_part"
 	part_efficiency = 0.25
 	part_efficiency_increase_amount = 0.2
 
 /obj/item/turbine_parts/stator
 	name = "stator part"
 	desc = "Install in a turbine engine turbine to increase it's performances"
+	icon_state = "stator_part"
 	part_efficiency = 0.85
 	part_efficiency_increase_amount = 0.015
 	second_tier_material = /obj/item/stack/sheet/mineral/titanium
