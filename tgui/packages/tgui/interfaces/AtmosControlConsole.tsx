@@ -171,7 +171,7 @@ export const AtmosControlConsole = (props, context) => {
             </Stack>
           </Section>
         )}
-        <AtmosHandbookContent />
+        <AtmosHandbookContent vertical />
       </Window.Content>
     </Window>
   );
