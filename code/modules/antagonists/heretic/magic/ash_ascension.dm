@@ -129,7 +129,7 @@
 	. = ..()
 	var/static/list/offsets = list(-25, -10, 0, 10, 25)
 	for(var/offset in offsets)
-		INVOKE_ASYNC(src, .proc/fire_line, user, line_target(offset, range, target, owner))
+		INVOKE_ASYNC(src, .proc/fire_line, owner, line_target(offset, flame_line_length, target, owner))
 
 /datum/action/cooldown/spell/pointed/ash_beams/proc/line_target(offset, range, atom/at, atom/user)
 	if(!at)

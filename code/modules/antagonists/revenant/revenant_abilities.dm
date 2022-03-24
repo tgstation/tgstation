@@ -127,11 +127,11 @@
 	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
 	button_icon_state = "r_transmit"
 
-	notice = "revennotice"
-	boldnotice = "revenboldnotice"
+	telepathy_span = "revennotice"
+	bold_telepathy_span = "revenboldnotice"
 
-	holy_check = TRUE
-	tinfoil_check = FALSE
+	blocked_by_holy = TRUE
+	blocked_by_tinfoil = FALSE
 
 /datum/action/cooldown/spell/aoe/revenant
 	panel = "Revenant Abilities (Locked)"
@@ -191,7 +191,7 @@
 			return FALSE
 
 		name = "[initial(name)] ([cast_amount]E)"
-		to_chat(user, span_revennotice("You have unlocked [initial(name)]!"))
+		to_chat(cast_on, span_revennotice("You have unlocked [initial(name)]!"))
 		panel = "Revenant Abilities"
 		locked = FALSE
 		revert_cast()
@@ -267,8 +267,8 @@
 
 	unlock_amount = 10
 	cast_amount = 30
-	reveal = 4 SECONDS
-	stun = 2 SECONDS
+	reveal_duration = 4 SECONDS
+	stun_duration = 2 SECONDS
 
 /datum/action/cooldown/spell/aoe/revenant/defile/is_affected_by_aoe(atom/thing)
 	return isturf(thing)
@@ -322,7 +322,7 @@
 	unlock_amount = 125
 
 /datum/action/cooldown/spell/aoe/revenant/malfunction/is_affected_by_aoe(atom/thing)
-	return turf(thing)
+	return isturf(thing)
 
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
@@ -331,9 +331,9 @@
 			new /obj/effect/temp_visual/revenant(bot.loc)
 			bot.bot_cover_flags &= ~BOT_COVER_LOCKED
 			bot.bot_cover_flags |= BOT_COVER_OPEN
-			bot.emag_act(user)
+			bot.emag_act(caster)
 	for(var/mob/living/carbon/human/human in victim)
-		if(human == user)
+		if(human == caster)
 			continue
 		if(human.anti_magic_check(FALSE, TRUE))
 			continue
@@ -347,11 +347,11 @@
 		if(prob(20))
 			if(prob(50))
 				new /obj/effect/temp_visual/revenant(thing.loc)
-			thing.emag_act(user)
+			thing.emag_act(caster)
 	// Only works on cyborgs, not AI!
 	for(var/mob/living/silicon/robot/cyborg in victim)
-		playsound(S, 'sound/machines/warning-buzzer.ogg', 50, TRUE)
-		new /obj/effect/temp_visual/revenant(S.loc)
+		playsound(cyborg, 'sound/machines/warning-buzzer.ogg', 50, TRUE)
+		new /obj/effect/temp_visual/revenant(cyborg.loc)
 		cyborg.spark_system.start()
 		cyborg.emp_act(EMP_HEAVY)
 
@@ -368,7 +368,7 @@
 	unlock_amount = 75
 
 /datum/action/cooldown/spell/aoe/revenant/blight/is_affected_by_aoe(atom/thing)
-	return turf(thing)
+	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/revenant/blight/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
 	for(var/mob/living/mob in victim)
