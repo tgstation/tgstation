@@ -39,11 +39,21 @@
 	///Path of the turbine part we can install
 	var/part_path
 
+	var/installed_part_efficiency
+
+	var/has_gasmix = FALSE
+	var/datum/gas_mixture/machine_gasmix
+
 /obj/machinery/power/turbine/Initialize(mapload)
 	. = ..()
 
+	if(has_gasmix)
+		machine_gasmix = new
+		machine_gasmix.volume = gas_theoretical_volume
+
 	if(part_path)
 		installed_part = new part_path(src)
+		installed_part_efficiency = installed_part.part_efficiency
 
 	var/turf/our_turf = get_turf(src)
 	if(our_turf.thermal_conductivity != 0 && isopenturf(our_turf))
@@ -57,6 +67,9 @@
 
 	if(installed_part)
 		QDEL_NULL(installed_part)
+
+	if(machine_gasmix)
+		machine_gasmix = null
 
 	return ..()
 
@@ -107,6 +120,42 @@
 		our_turf_thermal_conductivity = new_turf.thermal_conductivity
 		new_turf.thermal_conductivity = 0
 
+/obj/machinery/power/turbine/attackby(obj/item/object, mob/user, params)
+	if(!panel_open)
+		balloon_alert(user, "open the maintenance hatch first")
+		return ..()
+
+	if(!istype(object, part_path))
+		return ..()
+
+	install_part(object, user)
+
+/obj/machinery/power/turbine/proc/install_part(obj/item/turbine_parts/part_object, mob/user)
+	if(!installed_part)
+		if(!do_after(user, 2 SECONDS, src))
+			return
+		user.transferItemToLoc(part_object, src)
+		installed_part = part_object
+		installed_part_efficiency = part_object.part_efficiency
+		calculate_parts_limits()
+		balloon_alert(user, "installed new part")
+		return
+	if(installed_part.part_efficiency < part_object.part_efficiency)
+		if(!do_after(user, 2 SECONDS, src))
+			return
+		user.transferItemToLoc(part_object, src)
+		user.put_in_hands(installed_part)
+		installed_part = part_object
+		installed_part_efficiency = part_object.part_efficiency
+		calculate_parts_limits()
+		balloon_alert(user, "replaced part with a better one")
+		return
+
+	balloon_alert(user, "a better part is installed")
+
+/obj/machinery/power/turbine/proc/calculate_parts_limits()
+	return
+
 /obj/machinery/power/turbine/inlet_compressor
 	name = "inlet compressor"
 	desc = "The input side of a turbine generator, contains the compressor."
@@ -119,6 +168,8 @@
 
 	part_path = /obj/item/turbine_parts/compressor
 
+	has_gasmix = TRUE
+
 	///Reference to the core part
 	var/obj/machinery/power/turbine/core_rotor/core
 
@@ -126,37 +177,6 @@
 	if(core)
 		core = null
 	return ..()
-
-/obj/machinery/power/turbine/inlet_compressor/attackby(obj/item/object, mob/user, params)
-	if(!panel_open)
-		balloon_alert(user, "open the maintenance hatch first")
-		return ..()
-
-	if(!istype(object, part_path))
-		return ..()
-	var/obj/item/turbine_parts/compressor/compressor_part = object
-	if(!installed_part)
-		if(!do_after(user, 2 SECONDS, src))
-			return
-		user.transferItemToLoc(compressor_part, src)
-		installed_part = compressor_part
-		if(core)
-			core.calculate_parts_limits()
-		balloon_alert(user, "installed new part")
-		return
-	if(installed_part.part_efficiency < compressor_part.part_efficiency)
-		if(!do_after(user, 2 SECONDS, src))
-			return
-		user.transferItemToLoc(compressor_part, src)
-		user.put_in_hands(installed_part)
-		installed_part = compressor_part
-		if(core)
-			core.calculate_parts_limits()
-		balloon_alert(user, "replaced part with a better one")
-		return
-
-	balloon_alert(user, "already installed")
-	return
 
 /obj/machinery/power/turbine/turbine_outlet
 	name = "turbine outlet"
@@ -170,6 +190,8 @@
 
 	part_path = /obj/item/turbine_parts/stator
 
+	has_gasmix = TRUE
+
 	///Reference to the core part
 	var/obj/machinery/power/turbine/core_rotor/core
 
@@ -177,37 +199,6 @@
 	if(core)
 		core = null
 	return ..()
-
-/obj/machinery/power/turbine/turbine_outlet/attackby(obj/item/object, mob/user, params)
-	if(!panel_open)
-		balloon_alert(user, "open the maintenance hatch first")
-		return ..()
-
-	if(!istype(object, part_path))
-		return ..()
-	var/obj/item/turbine_parts/stator/stator_part = object
-	if(!installed_part)
-		if(!do_after(user, 2 SECONDS, src))
-			return
-		user.transferItemToLoc(stator_part, src)
-		installed_part = stator_part
-		if(core)
-			core.calculate_parts_limits()
-		balloon_alert(user, "installed new part")
-		return
-	if(installed_part.part_efficiency < stator_part.part_efficiency)
-		if(!do_after(user, 2 SECONDS, src))
-			return
-		user.transferItemToLoc(stator_part, src)
-		user.put_in_hands(installed_part)
-		installed_part = stator_part
-		if(core)
-			core.calculate_parts_limits()
-		balloon_alert(user, "replaced part with a better one")
-		return
-
-	balloon_alert(user, "already installed")
-	return
 
 /obj/machinery/power/turbine/core_rotor
 	name = "core rotor"
@@ -220,6 +211,8 @@
 	gas_theoretical_volume = 3000
 
 	part_path = /obj/item/turbine_parts/rotor
+
+	has_gasmix = TRUE
 
 	///ID to easily connect the main part of the turbine to the computer
 	var/mapping_id
@@ -234,24 +227,10 @@
 	///Reference to the output turf
 	var/turf/open/output_turf
 
-	///Efficiency of the part installed in the compressor (from 0.25 to 0.85)
-	var/compressor_part_efficiency = 0.25
-	///Efficiency of the part installed in the rotor (from 0.25 to 0.85)
-	var/rotor_part_efficiency = 0.25
-	///Efficiency of the part installed in the turbine (from 0.85 to 0.895) - don't go higher than that, it can cause #nan errors
-	var/stator_part_efficiency = 0.85
-
 	///Rotation per minute the machine is doing
 	var/rpm
 	///Amount of power the machine is producing
 	var/produced_energy
-
-	///First stage of the moving gasmix - compression from 2500 L to 1000 L - heat up
-	var/datum/gas_mixture/compressor_mixture
-	///Second stage of the moving gasmix - expansion from 1000 L to 3000 L - first cool down
-	var/datum/gas_mixture/rotor_mixture
-	///Third stage of the moving gasmix - expansion from 3000 L to 6000 L - second cool down
-	var/datum/gas_mixture/turbine_mixture
 
 	///Check to see if all parts are connected to the core
 	var/all_parts_connected = FALSE
@@ -288,8 +267,8 @@
 	. = ..()
 	activate_parts()
 
-/obj/machinery/power/turbine/core_rotor/Destroy(mob/user)
-	deactivate_parts(user)
+/obj/machinery/power/turbine/core_rotor/Destroy()
+	disable_parts()
 	QDEL_NULL(radio)
 	return ..()
 
@@ -323,11 +302,12 @@
 	compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, turn(dir, 180))
 	turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, dir)
 
-	var/parts_present = TRUE
 	if(!compressor || !turbine)
 		if(user)
 			balloon_alert(user, "missing parts detected")
-		parts_present = FALSE
+		return FALSE
+
+	var/parts_present = TRUE
 	if(compressor.dir != dir || !compressor.can_connect)
 		if(user)
 			balloon_alert(user, "wrong compressor direction")
@@ -347,17 +327,6 @@
 	input_turf = get_step(compressor.loc, turn(dir, 180))
 	output_turf = get_step(turbine.loc, dir)
 
-	compressor_mixture = new
-	rotor_mixture = new
-	turbine_mixture = new
-	compressor_mixture.volume = compressor.gas_theoretical_volume
-	rotor_mixture.volume = gas_theoretical_volume
-	turbine_mixture.volume = turbine.gas_theoretical_volume
-
-	compressor_part_efficiency = compressor.installed_part.part_efficiency
-	stator_part_efficiency = turbine.installed_part.part_efficiency
-	rotor_part_efficiency = installed_part.part_efficiency
-
 	all_parts_connected = TRUE
 
 	calculate_parts_limits()
@@ -372,103 +341,15 @@
 	turbine = null
 	input_turf = null
 	output_turf = null
-	compressor_mixture = null
-	rotor_mixture = null
-	turbine_mixture = null
 	all_parts_connected = FALSE
 	SSair.stop_processing_machine(src)
-
-/obj/machinery/power/turbine/core_rotor/attackby(obj/item/object, mob/user, params)
-	if(!panel_open)
-		balloon_alert(user, "open the maintenance hatch first")
-		return ..()
-	if(all_parts_connected)
-		if(istype(object, compressor.part_path))
-			var/obj/item/turbine_parts/compressor/compressor_part = object
-			if(!compressor.installed_part)
-				if(!do_after(user, 2 SECONDS, src))
-					return
-				user.transferItemToLoc(compressor_part, src)
-				compressor.installed_part = compressor_part
-				compressor_part_efficiency = compressor_part.part_efficiency
-				calculate_parts_limits()
-				balloon_alert(user, "installed new part")
-				return
-			if(compressor.installed_part.part_efficiency < compressor_part.part_efficiency)
-				if(!do_after(user, 2 SECONDS, src))
-					return
-				user.transferItemToLoc(compressor_part, src)
-				user.put_in_hands(compressor.installed_part)
-				compressor.installed_part = compressor_part
-				compressor_part_efficiency = compressor_part.part_efficiency
-				calculate_parts_limits()
-				balloon_alert(user, "replaced part with a better one")
-				return
-
-			balloon_alert(user, "already installed")
-			return
-
-		if(istype(object, turbine.part_path))
-			var/obj/item/turbine_parts/stator/stator_part = object
-			if(!turbine.installed_part)
-				if(!do_after(user, 2 SECONDS, src))
-					return
-				user.transferItemToLoc(stator_part, src)
-				turbine.installed_part = stator_part
-				stator_part_efficiency = stator_part.part_efficiency
-				calculate_parts_limits()
-				balloon_alert(user, "installed new part")
-				return
-			if(turbine.installed_part.part_efficiency < stator_part.part_efficiency)
-				if(!do_after(user, 2 SECONDS, src))
-					return
-				user.transferItemToLoc(stator_part, src)
-				user.put_in_hands(turbine.installed_part)
-				turbine.installed_part = stator_part
-				stator_part_efficiency = stator_part.part_efficiency
-				calculate_parts_limits()
-				balloon_alert(user, "replaced part with a better one")
-				return
-
-			balloon_alert(user, "already installed")
-			return
-
-	if(istype(object, part_path))
-		var/obj/item/turbine_parts/rotor/rotor_part = object
-		if(!installed_part)
-			if(!do_after(user, 2 SECONDS, src))
-				return
-			user.transferItemToLoc(rotor_part, src)
-			installed_part = rotor_part
-			rotor_part_efficiency = rotor_part.part_efficiency
-			calculate_parts_limits()
-			balloon_alert(user, "installed new part")
-			return
-		if(installed_part.part_efficiency < rotor_part.part_efficiency)
-			if(!do_after(user, 2 SECONDS, src))
-				return
-			user.transferItemToLoc(rotor_part, src)
-			user.put_in_hands(installed_part)
-			installed_part = rotor_part
-			rotor_part_efficiency = rotor_part.part_efficiency
-			calculate_parts_limits()
-			balloon_alert(user, "replaced part with a better one")
-			return
-
-		balloon_alert(user, "already installed")
-
-	return ..()
 
 /obj/machinery/power/turbine/core_rotor/on_deconstruction()
 	if(all_parts_connected)
 		deactivate_parts()
 	return ..()
 
-/obj/machinery/power/turbine/core_rotor/proc/calculate_parts_limits()
-	compressor_part_efficiency = compressor.installed_part.part_efficiency
-	stator_part_efficiency = turbine.installed_part.part_efficiency
-	rotor_part_efficiency = installed_part.part_efficiency
-
+/obj/machinery/power/turbine/core_rotor/calculate_parts_limits()
 	max_allowed_rpm = (compressor.installed_part.max_rpm + turbine.installed_part.max_rpm + installed_part.max_rpm) / 3
 	max_allowed_temperature = (compressor.installed_part.max_temperature + turbine.installed_part.max_temperature + installed_part.max_temperature) / 3
 
@@ -488,14 +369,18 @@
 /obj/machinery/power/turbine/core_rotor/proc/damage_alert(damage_done)
 	COOLDOWN_START(src, turbine_damage_alert, max(round(TURBINE_DAMAGE_ALARM_START - damage_done), 5) SECONDS)
 
-	var/integrity = damage / 500
-	integrity = max(round(100 - integrity * 100, 0.01), 0)
+	var/integrity = get_turbine_integrity()
 
 	if(integrity <= 0)
 		failure()
 		return
 
 	radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
+
+/obj/machinery/power/turbine/core_rotor/proc/get_turbine_integrity()
+	var/integrity = damage / 500
+	integrity = max(round(100 - integrity * 100, 0.01), 0)
+	return integrity
 
 /obj/machinery/power/turbine/core_rotor/proc/failure()
 	deactivate_parts()
@@ -516,42 +401,44 @@
 	if(!active || !all_parts_connected)
 		return
 
-	var/datum/gas_mixture/input_turf_mixture = input_turf.air
+	var/datum/gas_mixture/input_turf_mixture = input_turf.return_air()
 
-	if(!input_turf_mixture || !input_turf_mixture.gases)
+	if(!input_turf_mixture)
 		return
 
 	calculate_damage_done(input_turf_mixture.temperature)
 
-	var/compressor_work = input_turf_mixture.total_moles() * R_IDEAL_GAS_EQUATION * input_turf_mixture.temperature * log(input_turf_mixture.volume / compressor_mixture.volume) * TURBINE_WORK_CONVERSION_MULTIPLIER
-	input_turf.air.pump_gas_to(compressor_mixture, input_turf.air.return_pressure())
+	var/compressor_work = do_calculations(input_turf_mixture, compressor.machine_gasmix)
 	input_turf.air_update_turf(TRUE)
-	compressor_mixture.temperature = max((compressor_mixture.temperature * compressor_mixture.heat_capacity() + compressor_work * compressor_mixture.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / compressor_mixture.heat_capacity(), TCMB)
+	var/compressor_pressure = max(compressor.machine_gasmix.return_pressure(), 0.01)
 
-	var/compressor_pressure = compressor_mixture.return_pressure()
+	var/rotor_work = do_calculations(compressor.machine_gasmix, machine_gasmix, compressor_work)
 
-	var/rotor_work = compressor_mixture.total_moles() * R_IDEAL_GAS_EQUATION * compressor_mixture.temperature * log(compressor_mixture.volume / rotor_mixture.volume) * TURBINE_WORK_CONVERSION_MULTIPLIER
-	rotor_work = rotor_work - compressor_work
-	compressor_mixture.pump_gas_to(rotor_mixture, compressor_mixture.return_pressure())
-	rotor_mixture.temperature = max((rotor_mixture.temperature * rotor_mixture.heat_capacity() + rotor_work * rotor_mixture.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / rotor_mixture.heat_capacity(), TCMB)
+	var/turbine_work = do_calculations(machine_gasmix, turbine.machine_gasmix, abs(rotor_work))
 
-	var/turbine_work = rotor_mixture.total_moles() * R_IDEAL_GAS_EQUATION * rotor_mixture.temperature * log(rotor_mixture.volume / turbine_mixture.volume) * TURBINE_WORK_CONVERSION_MULTIPLIER
-	turbine_work = turbine_work - abs(rotor_work)
-	rotor_mixture.pump_gas_to(turbine_mixture, rotor_mixture.return_pressure())
-	turbine_mixture.temperature = max((turbine_mixture.temperature * turbine_mixture.heat_capacity() + turbine_work * turbine_mixture.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / turbine_mixture.heat_capacity(), TCMB)
+	var/turbine_pressure = max(turbine.machine_gasmix.return_pressure(), 0.01)
 
-	var/turbine_pressure = turbine_mixture.return_pressure()
-
-	var/work_done = turbine_mixture.total_moles() * R_IDEAL_GAS_EQUATION * turbine_mixture.temperature * log(compressor_pressure / turbine_pressure)
+	var/work_done = turbine.machine_gasmix.total_moles() * R_IDEAL_GAS_EQUATION * turbine.machine_gasmix.temperature * log(compressor_pressure / turbine_pressure)
 
 	work_done = max(work_done - compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 
-	rpm = ((work_done * compressor_part_efficiency) ** stator_part_efficiency) * rotor_part_efficiency / TURBINE_RPM_CONVERSION
+	rpm = ((work_done * compressor.installed_part_efficiency) ** turbine.installed_part_efficiency) * installed_part_efficiency / TURBINE_RPM_CONVERSION
 	rpm = min(rpm, max_allowed_rpm)
 
 	produced_energy = rpm * TURBINE_ENERGY_RECTIFICATION_MULTIPLIER * TURBINE_RPM_CONVERSION
 
 	add_avail(produced_energy)
 
-	turbine_mixture.pump_gas_to(output_turf.air, turbine_mixture.return_pressure())
+	turbine.machine_gasmix.pump_gas_to(output_turf.air, turbine.machine_gasmix.return_pressure())
 	output_turf.air_update_turf(TRUE)
+
+/obj/machinery/power/turbine/core_rotor/proc/do_calculations(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove)
+	var/work_done = input_mix.total_moles() * R_IDEAL_GAS_EQUATION * input_mix.temperature * log((input_mix.volume * max(input_mix.return_pressure(), 0.01)) / (output_mix.volume * max(output_mix.return_pressure(), 0.01))) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	if(work_amount_to_remove)
+		work_done = work_done - work_amount_to_remove
+	input_mix.pump_gas_to(output_mix, input_mix.return_pressure())
+	var/output_mix_heat_capacity = output_mix.heat_capacity()
+	if(!output_mix_heat_capacity)
+		return 0
+	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * output_mix.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
+	return work_done

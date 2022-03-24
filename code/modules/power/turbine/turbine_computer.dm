@@ -65,8 +65,9 @@
 	data["active"] = main_control?.active
 	data["rpm"] = main_control?.rpm ? main_control?.rpm : 0
 	data["power"] = main_control?.produced_energy ? main_control?.produced_energy : 0
-	data["temp"] = main_control?.input_turf.air.temperature
-	data["damage"] = main_control?.damage
+	data["temp"] = main_control?.input_turf?.air.temperature
+	data["integrity"] = main_control?.get_turbine_integrity()
+	data["parts_linked"] = main_control?.all_parts_connected
 
 	data["can_turn_off"] = main_control?.rpm < 1000
 
