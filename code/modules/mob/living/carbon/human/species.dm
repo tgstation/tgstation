@@ -1867,12 +1867,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					continue
 				humi.apply_status_effect(/datum/status_effect/gas_fog, gas_id)
 
-			if(/datum/gas/nitryl)
+			if(/datum/gas/nitrium)
 				if(ispodperson(humi))
 					humi.adjustToxLoss(- gas_amount * 0.5 * delta_time)
 					humi.adjustBruteLoss(- gas_amount * 0.5 * delta_time)
-					var/current_reagent = humi.reagents.get_reagent_amount(/datum/reagent/nitryl)
-					humi.reagents.add_reagent(/datum/reagent/nitryl, max(0, 1 - current_reagent))
+					var/current_reagent = humi.reagents.get_reagent_amount(/datum/reagent/nitrium_low_metabolization)
+					humi.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 1 - current_reagent))
 					continue
 				if(gas_amount > 5 && gas_amount < 10 && COOLDOWN_FINISHED(humi, gas_skin_timer))
 					to_chat(humi, span_warning(pick("Your skin feels itchy.", "You feel like burning.")))
