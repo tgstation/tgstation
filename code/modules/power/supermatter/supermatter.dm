@@ -1125,15 +1125,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	. |= FALL_STOP_INTERCEPTING | FALL_INTERCEPTED
 
 /obj/machinery/power/supermatter_crystal/proc/Consume(atom/movable/consumed_object)
+	var/object_size
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
+		object_size = consumed_mob.mob_size
 		if(consumed_mob.status_flags & GODMODE)
 			return
 		message_admins("[src] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(src)].")
 		investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_SUPERMATTER)
 		consumed_mob.dust(force = TRUE)
 		if(power_changes)
-			matter_power += 200
+			matter_power += 100 * object_size
 		if(takes_damage && is_clown_job(consumed_mob.mind?.assigned_role))
 			damage += rand(-300, 300) // HONK
 			damage = max(damage, 0)
@@ -1147,8 +1149,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				message_admins("[src] has consumed [consumed_object], [suspicion] [ADMIN_JMP(src)].")
 			investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_SUPERMATTER)
 		qdel(consumed_object)
-	if(!iseffect(consumed_object) && power_changes)
-		matter_power += 200
+	if(!iseffect(consumed_object) && isitem(consumed_object) && power_changes)
+		var/obj/item/consumed_item = consumed_object
+		object_size = consumed_item.w_class
+		matter_power += 70 * object_size
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, max_range = 6, threshold = 0.3, chance = 30)
