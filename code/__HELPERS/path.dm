@@ -338,6 +338,18 @@
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
 */
 /turf/proc/LinkBlockedWithAccess(turf/destination_turf, caller, ID)
+	if(destination_turf.x != x && destination_turf.y != y) //diagonal
+		var/in_dir = get_dir(destination_turf,src) // eg. northwest (1+8) = 9 (00001001)
+		var/first_step_direction_a = in_dir & 3      // eg. north   (1+8)&3 (0000 0011) = 1 (0000 0001)
+		var/first_step_direction_b = in_dir & 12  // eg. west   (1+8)&12 (0000 1100) = 8 (0000 1000)
+
+		for(var/first_step_direction in list(first_step_direction_a,first_step_direction_b))
+			var/turf/midstep_turf = get_step(destination_turf,first_step_direction)
+			var/way_blocked = LinkBlockedWithAccess(midstep_turf,caller,ID) || midstep_turf.LinkBlockedWithAccess(destination_turf,caller,ID)
+			if(!way_blocked)
+				return FALSE
+		return TRUE
+
 	var/actual_dir = get_dir(src, destination_turf)
 
 	for(var/obj/structure/window/iter_window in src)
