@@ -246,6 +246,8 @@
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
+	new/obj/item/paper/guides/jobs/atmos/turbine(loc)
+
 /obj/machinery/power/turbine/core_rotor/LateInitialize()
 	. = ..()
 	activate_parts()
@@ -425,3 +427,14 @@
 		return 0
 	output_mix.temperature = max((output_mix.temperature * output_mix_heat_capacity + work_done * output_mix.total_moles() * TURBINE_HEAT_CONVERSION_MULTIPLIER) / output_mix_heat_capacity, TCMB)
 	return work_done
+
+/obj/item/paper/guides/jobs/atmos/turbine
+	name = "paper- 'Quick guide on the new and improved turbine!'"
+	info = "<B>How to operate the turbine</B><BR>\
+	-The new turbine is not much different from the old one, just put gases in the chamber, light them up and activate the machine from the nearby computer.\
+	-As you will see there is a new parameter in the computer UI, damage. Yes this machine can be damaged when the heat gets too high, so ensure proper burning temperature in the chamber.\
+	-You can avoid a critial failure by upgrading the parts of the machine, but not stock parts, we implemented 3 new and improved items.<BR>\
+	-These items are: the compressor part, the rotor part and the stator part. All of them can be printed in any engi lathes (both proto and auto).\
+	-There are 4 tiers for these items, only the first one can be printed, the rest must be crafted by hand using the materials shown when examining the part.\
+	-Each tier increases the efficiency (more power) the max reachable RPM and the max temperature that the machine can held (up to fusion temperatures at the last tier!).\
+	-A note of warning, the machine is very inefficient regarding gas consumption and many unburnt gases will pass through. If you want to be cheap you can either pre-burn the gases or add a filtering system to collect them and reuse them."

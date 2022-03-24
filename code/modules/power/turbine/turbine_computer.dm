@@ -69,6 +69,9 @@
 	data["integrity"] = main_control?.get_turbine_integrity()
 	data["parts_linked"] = main_control?.all_parts_connected
 
+	data["max_rpm"] = main_control?.max_allowed_rpm
+	data["max_temperature"] = main_control?.max_allowed_temperature
+
 	data["can_turn_off"] = main_control?.rpm < 1000
 
 	return data

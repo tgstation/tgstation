@@ -39,8 +39,14 @@ export const TurbineComputer = (props, context) => {
             <LabeledList.Item label="Turbine Speed">
               {data.rpm} RPM
             </LabeledList.Item>
+            <LabeledList.Item label="Max Turbine Speed">
+              {data.max_rpm} RPM
+            </LabeledList.Item>
             <LabeledList.Item label="Input Temperature">
               {data.temp} K
+            </LabeledList.Item>
+            <LabeledList.Item label="Max Temperature">
+              {data.max_temperature} K
             </LabeledList.Item>
             <LabeledList.Item label="Generated Power">
               {data.power * 4 * 0.001} kW
