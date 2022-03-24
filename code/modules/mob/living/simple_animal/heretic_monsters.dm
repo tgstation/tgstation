@@ -178,7 +178,7 @@
  */
 /mob/living/simple_animal/hostile/heretic_summon/armsy/Initialize(mapload, spawn_bodyparts = TRUE, worm_length = 6)
 	. = ..()
-	AddElement(/datum/element/blood_walk)
+	AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/tracks)
 	if(worm_length < 3)
 		stack_trace("[type] created with invalid len ([worm_length]). Reverting to 3.")
 		worm_length = 3 //code breaks below 3, let's just not allow it.
