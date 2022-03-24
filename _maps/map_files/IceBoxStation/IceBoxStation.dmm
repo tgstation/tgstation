@@ -11165,6 +11165,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
+"cWZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "cXc" = (
 /obj/machinery/button/door/directional/north{
 	id = "heads_meeting";
@@ -31637,6 +31645,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/cargo/office)
+"nmP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "nmW" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -32196,6 +32211,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/binary/pump{
 	name = "Fuel Pipe to Incinerator"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/maintenance/disposal/incinerator)
@@ -37708,12 +37726,12 @@
 /turf/open/floor/plating,
 /area/maintenance/aft/greater)
 "qiM" = (
-/obj/effect/decal/cleanable/dirt,
 /obj/machinery/computer/turbine_computer{
 	dir = 1;
 	mapping_id = "main_turbine"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "qiP" = (
@@ -40154,7 +40172,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/port)
 "rBn" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input{
 	dir = 8
 	},
 /turf/open/floor/engine,
@@ -43348,7 +43366,10 @@
 /obj/machinery/light/directional/east,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
+/obj/machinery/computer/atmos_control/nocontrol/incinerator{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/maintenance/disposal/incinerator)
 "sZW" = (
 /obj/machinery/firealarm/directional/south,
@@ -47815,6 +47836,7 @@
 "vfb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible/layer2,
+/obj/machinery/air_sensor/incinerator_tank,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "vft" = (
@@ -50253,6 +50275,12 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/dark,
 /area/science/robotics/lab)
+"wsK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/iron,
+/area/maintenance/disposal/incinerator)
 "wsO" = (
 /obj/structure/chair{
 	dir = 8
@@ -92430,9 +92458,9 @@ tQo
 kTd
 rax
 nIs
-vWb
+wsK
 nAe
-vWb
+cWZ
 vWb
 cme
 pJy
@@ -92687,9 +92715,9 @@ tQo
 rbT
 aTx
 oMw
-cjr
+xXS
 sZT
-cjr
+nmP
 cjr
 wLl
 xRH

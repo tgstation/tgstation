@@ -7519,7 +7519,7 @@
 /turf/open/floor/iron/dark,
 /area/security/detectives_office)
 "bRf" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/on{
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input{
 	dir = 4
 	},
 /turf/open/floor/engine,
@@ -30719,6 +30719,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
+/obj/machinery/air_sensor/incinerator_tank,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "gDP" = (
@@ -34256,6 +34257,17 @@
 	},
 /turf/open/floor/iron,
 /area/security/courtroom)
+"hDK" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/atmos_control/nocontrol/incinerator{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/corner,
+/area/maintenance/disposal/incinerator)
 "hDR" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/components/unary/outlet_injector/on,
@@ -110687,7 +110699,7 @@ wbz
 oyD
 bzy
 aOL
-tGP
+hDK
 aFr
 aaa
 vFd
