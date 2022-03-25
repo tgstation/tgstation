@@ -26,7 +26,8 @@
 	if(!sample || !istype(A, /obj/structure/sink))
 		return FALSE
 	to_chat(user, span_notice("You wash the sample out of [src]."))
-	sample = null
+	QDEL_NULL(sample)
+	update_appearance()
 
 /obj/item/petri_dish/update_overlays()
 	. = ..()
