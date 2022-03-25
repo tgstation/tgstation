@@ -43,7 +43,7 @@
 			"<span class='hear'>You hear organic matter ripping \
 			and tearing!</span>")
 		user.emote("scream")
-		user.regenerate_limbs(0, list(BODY_ZONE_HEAD))
+		user.regenerate_limbs(list(BODY_ZONE_HEAD))
 	user.regenerate_organs()
 
 /datum/action/changeling/fakedeath/proc/ready_to_regenerate(mob/user)

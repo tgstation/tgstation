@@ -423,21 +423,21 @@
 	carbon_owner.dna.species.bodytype = all_limb_flags
 
 //Regenerates all limbs. Returns amount of limbs regenerated
-/mob/living/proc/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())
-	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, noheal, excluded_zones)
+/mob/living/proc/regenerate_limbs(list/excluded_zones = list())
+	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, excluded_zones)
 
-/mob/living/carbon/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())
-	. = ..()
+/mob/living/carbon/regenerate_limbs(list/excluded_zones = list())
+	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, excluded_zones)
 	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	if(length(excluded_zones))
 		zone_list -= excluded_zones
 	for(var/limb_zone in zone_list)
-		. += regenerate_limb(limb_zone, noheal)
+		regenerate_limb(limb_zone)
 
-/mob/living/proc/regenerate_limb(limb_zone, noheal)
+/mob/living/proc/regenerate_limb(limb_zone)
 	return
 
-/mob/living/carbon/regenerate_limb(limb_zone, noheal)
+/mob/living/carbon/regenerate_limb(limb_zone)
 	var/obj/item/bodypart/limb
 	if(get_bodypart(limb_zone))
 		return FALSE
@@ -446,7 +446,21 @@
 		if(!limb.attach_limb(src, 1))
 			qdel(limb)
 			return FALSE
+		limb.update_limb(is_creating = TRUE)
 		var/datum/scar/scaries = new
 		var/datum/wound/loss/phantom_loss = new // stolen valor, really
 		scaries.generate(limb, phantom_loss)
+
+		//Copied from /datum/species/proc/on_species_gain()
+		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
+			//Load a persons preferences from DNA
+			var/zone = initial(organ_path.zone)
+			if(zone != limb_zone)
+				continue
+			var/feature_key_name = dna.features[initial(organ_path.feature_key)]
+			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
+			new_organ.set_sprite(feature_key_name)
+			new_organ.Insert(src)
+
+		update_body_parts()
 		return TRUE
