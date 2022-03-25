@@ -151,7 +151,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "aF" = (
-/obj/machinery/door/window/left/directional/east,
+/obj/machinery/door/window/eastleft,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aG" = (
@@ -216,7 +216,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "aS" = (
-/obj/machinery/door/window/right/directional/east,
+/obj/machinery/door/window/eastright,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "aT" = (

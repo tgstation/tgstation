@@ -136,7 +136,7 @@
 /turf/open/indestructible/hoteltile,
 /area/hilbertshotel)
 "aF" = (
-/obj/machinery/door/window/left/directional/north,
+/obj/machinery/door/window/northleft,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "aG" = (

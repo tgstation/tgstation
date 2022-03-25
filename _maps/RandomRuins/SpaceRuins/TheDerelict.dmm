@@ -36,6 +36,12 @@
 	dir = 1
 	},
 /area/ruin/space/derelict/medical/chapel)
+"ao" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("ks13" = "Air Supply")
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
 "ap" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -910,7 +916,7 @@
 	},
 /area/ruin/space/derelict/singularity_engine)
 "eB" = (
-/obj/machinery/door/window/left/directional/east{
+/obj/machinery/door/window/eastleft{
 	name = "Heads of Staff";
 	req_access_txt = "19"
 	},
@@ -2124,12 +2130,12 @@
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
 "jN" = (
-/obj/machinery/door/window/left/directional/south,
+/obj/machinery/door/window/southleft,
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "jO" = (
-/obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/window/southright,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "jQ" = (
@@ -2528,14 +2534,16 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
 "lN" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber,
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "ks13"
+	},
 /turf/open/floor/engine/air{
 	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
 	},
 /area/ruin/space/derelict/atmospherics)
 "lO" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	name = "engine outlet injector"
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "ks13"
 	},
 /turf/open/floor/engine/air{
 	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
@@ -3164,7 +3172,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
 "pZ" = (
-/obj/machinery/air_sensor/atmos/air_tank,
+/obj/machinery/air_sensor{
+	chamber_id = "ks13"
+	},
 /turf/open/floor/engine/air{
 	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
 	},
@@ -8023,7 +8033,7 @@ gk
 lv
 lv
 lv
-lt
+ao
 ls
 lt
 lt

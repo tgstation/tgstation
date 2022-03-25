@@ -198,7 +198,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "F" = (
-/obj/machinery/door/window/left/directional/east,
+/obj/machinery/door/window/eastleft,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "G" = (

@@ -5385,7 +5385,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/secpost)
 "oA" = (
-/obj/machinery/door/window/brigdoor/left/directional/west,
+/obj/machinery/door/window/brigdoor/westleft,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/secpost)
@@ -6282,12 +6282,9 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "qX" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1442;
-	name = "Toxins Supply Control";
-	output_tag = "snowdin_toxins_out";
-	sensors = list("snowdin_toxins" = "Tank")
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("snowdinmix" = "Mix Chamber");
+	dir = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"
@@ -6309,30 +6306,24 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "ra" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1442;
-	name = "Oxygen Supply Control";
-	output_tag = "snowdin_oxygen_out";
-	sensors = list("snowdin_oxygen" = "Tank")
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("snowdino2" = "Oxygen Supply");
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
 "rb" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 1;
-	frequency = 1442;
-	name = "Nitrogen Supply Control";
-	output_tag = "snowdin_nitrogen_out";
-	sensors = list("snowdin_nitrogen" = "Tank")
-	},
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
+	},
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("snowdinn2" = "Nitrogen Supply");
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/engineering)
@@ -6486,7 +6477,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post)
 "rI" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
 	dir = 1;
 	piping_layer = 4;
 	pixel_x = 5;
@@ -6515,53 +6506,44 @@
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "rM" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	frequency = 1442;
-	id_tag = "snowdin_toxins_out";
-	name = "toxin out"
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "snowdinmix";
+	dir = 1
 	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "rN" = (
-/obj/machinery/air_sensor{
-	frequency = 1442;
-	id_tag = "snowdin_toxins";
-	name = "gas sensor (toxins)"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "snowdinmix";
+	dir = 1
 	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "rO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	frequency = 1442;
-	id_tag = "snowdin_oxygen_out";
-	name = "oxygen out"
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "snowdino2";
+	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "rP" = (
-/obj/machinery/air_sensor{
-	frequency = 1442;
-	id_tag = "snowdin_oxygen";
-	name = "gas sensor (oxygen)"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "snowdino2";
+	dir = 1
 	},
 /turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "rQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	frequency = 1442;
-	id_tag = "snowdin_nitrogen_out";
-	name = "nitrogen out"
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "snowdinn2";
+	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
 "rR" = (
-/obj/machinery/air_sensor{
-	frequency = 1442;
-	id_tag = "snowdin_nitrogen";
-	name = "gas sensor (nitrogen)"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "snowdinn2";
+	dir = 1
 	},
 /turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
@@ -6640,12 +6622,21 @@
 /turf/open/floor/engine,
 /area/awaymission/snowdin/post/engineering)
 "sh" = (
+/obj/machinery/air_sensor{
+	chamber_id = "snowdinmix"
+	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "sj" = (
+/obj/machinery/air_sensor{
+	chamber_id = "snowdino2"
+	},
 /turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "sk" = (
+/obj/machinery/air_sensor{
+	chamber_id = "snowdinn2"
+	},
 /turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
 "sl" = (
@@ -6715,6 +6706,9 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/post/engineering)
 "sA" = (
+/obj/machinery/air_sensor{
+	chamber_id = "snowdinincin"
+	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/post/engineering)
 "sB" = (
@@ -6725,9 +6719,9 @@
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/post/engineering)
 "sC" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 1;
-	id = "snowdin_incin_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "snowdinincin";
+	dir = 1
 	},
 /turf/open/floor/engine/vacuum,
 /area/awaymission/snowdin/post/engineering)
@@ -7330,9 +7324,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/awaymission/snowdin/post/cavern1)
 "vG" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 1;
-	id = "snowdin_incin_in"
+/obj/machinery/atmospherics/components/unary/outlet_injector{
+	dir = 1
 	},
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/post/cavern1)
@@ -7933,9 +7926,7 @@
 "yu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
-	frequency = 1442;
-	id_tag = "snowdin_toxins_mine_1";
-	name = "toxin out"
+	name = "plasma vent"
 	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/cave)
@@ -8122,9 +8113,7 @@
 "za" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 4;
-	frequency = 1442;
-	id_tag = "snowdin_toxins_mine_1";
-	name = "toxin out"
+	name = "plasma vent"
 	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/cave)
@@ -9992,9 +9981,7 @@
 "Hp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 1;
-	frequency = 1442;
-	id_tag = "snowdin_toxins_mine_1";
-	name = "toxin out"
+	name = "plasma vent"
 	},
 /turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/outside)
@@ -12549,6 +12536,10 @@
 /obj/machinery/button/door/directional/south{
 	id = "snowdinturbinegas";
 	name = "Turbine Gas Release"
+	},
+/obj/machinery/computer/atmos_control/fixed{
+	atmos_chambers = list("snowdinincin" = "Incinerator Chamber");
+	dir = 1
 	},
 /turf/open/floor/plating{
 	icon_state = "platingdmg1"

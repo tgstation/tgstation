@@ -490,7 +490,7 @@
 /area/shuttle/escape)
 "gL" = (
 /obj/machinery/light/small/directional/east,
-/obj/machinery/door/window/right/directional/north{
+/obj/machinery/door/window/northright{
 	dir = 2;
 	name = "Curator Desk Door";
 	req_access_txt = "37"
@@ -1028,7 +1028,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "nO" = (
-/obj/machinery/door/window/left/directional/east{
+/obj/machinery/door/window/eastleft{
 	dir = 1;
 	name = "Coffin Storage";
 	req_one_access_txt = "22"
@@ -1603,7 +1603,7 @@
 /area/shuttle/escape)
 "wz" = (
 /obj/machinery/mass_driver/chapelgun,
-/obj/machinery/door/window/left/directional/east{
+/obj/machinery/door/window/eastleft{
 	dir = 8;
 	name = "Mass Driver"
 	},
@@ -1820,7 +1820,7 @@
 /area/shuttle/escape)
 "zj" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/door/window/right/directional/north{
+/obj/machinery/door/window/northright{
 	base_state = "left";
 	dir = 2;
 	icon_state = "left";
@@ -2723,7 +2723,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "Kw" = (
-/obj/machinery/door/window/left/directional/east{
+/obj/machinery/door/window/eastleft{
 	base_state = "right";
 	dir = 1;
 	icon_state = "right";
@@ -2834,7 +2834,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "Mc" = (
-/obj/machinery/door/window/right/directional/north{
+/obj/machinery/door/window/northright{
 	name = "Secure Art Exhibit";
 	req_access_txt = "37"
 	},
@@ -3997,7 +3997,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "ZP" = (
-/obj/machinery/door/window/right/directional/north{
+/obj/machinery/door/window/northright{
 	base_state = "left";
 	icon_state = "left";
 	name = "Secure Art Exhibit";

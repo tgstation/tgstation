@@ -2565,7 +2565,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "vb" = (
-/obj/machinery/door/window/left/directional/south,
+/obj/machinery/door/window/southleft,
 /obj/machinery/shower{
 	pixel_y = 22
 	},
@@ -3190,7 +3190,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Es" = (
-/obj/machinery/door/window/right/directional/south,
+/obj/machinery/door/window/southright,
 /obj/machinery/shower{
 	pixel_y = 22
 	},
