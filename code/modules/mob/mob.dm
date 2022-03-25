@@ -1164,10 +1164,7 @@
 
 /// Can this mob write
 /mob/proc/can_write(obj/writing_instrument)
-	var/obj/item/pen/pen = istype(writing_instrument, /obj/item/pen) && writing_instrument
-	var/obj/toy/crayon/crayon = istype(writing_instrument, /obj/item/toy/crayon) && writing_instrument
-
-	if(!pen || !crayon)
+	if(!istype(writing_instrument, /obj/item/pen) && !istype(writing_instrument, /obj/item/toy/crayon))
 		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 
 	if(is_blind())
@@ -1186,7 +1183,13 @@
 		to_chat(src, span_warning("It's too dark in here to write anything!"))
 		return FALSE
 
-	var/writing_instrument_requires_gravity = crayon || (pen && pen.requires_gravity)
+	var/obj/item/pen/pen = writing_instrument
+	var/writing_instrument_requires_gravity
+
+	if(istype(pen))
+		writing_instrument_requires_gravity = pen.requires_gravity
+	else if(istype(writing_instrument, /obj/item/toy/crayon))
+		writing_instrument_requires_gravity = FALSE
 
 	if(!has_gravity() && writing_instrument_requires_gravity)
 		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
