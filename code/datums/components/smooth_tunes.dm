@@ -31,7 +31,7 @@
 	if(particle_holder)
 		QDEL_NULL(particle_holder)
 	qdel(linked_songtuner_rite)
-	. = ..()
+	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_SONG_START,.proc/start_singing)

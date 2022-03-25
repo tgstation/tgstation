@@ -33,7 +33,7 @@
 	if(additional_attached)
 		additional_attached.vis_contents -= src
 	QDEL_NULL(particles)
-	. = ..()
+	return ..()
 
 ///signal called when parent is moved
 /obj/effect/abstract/particle_holder/proc/on_move(atom/movable/attached, atom/oldloc, direction)

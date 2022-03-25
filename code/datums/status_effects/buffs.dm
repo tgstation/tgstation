@@ -354,7 +354,7 @@
 
 /datum/status_effect/antimagic/on_creation(mob/living/new_owner, duration = 10 SECONDS)
 	src.duration = duration
-	. = ..()
+	return ..()
 
 /datum/status_effect/antimagic/refresh(effect, duration = 10 SECONDS)
 	if(duration == -1)

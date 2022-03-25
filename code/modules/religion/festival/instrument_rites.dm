@@ -125,7 +125,7 @@
 
 /datum/religion_rites/song_tuner/lullaby/Destroy()
 	QDEL_NULL(listener_counter)
-	. = ..()
+	return ..()
 
 /datum/religion_rites/song_tuner/lullaby/song_effect(atom/song_player, datum/song/song_datum)
 	if(!song_datum)
