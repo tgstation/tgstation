@@ -5,7 +5,6 @@
  */
 
 #define VIEW_SENSOR_RANGE 5
-#define VIEW_SENSOR_COOLDOWN 1 SECONDS
 
 /obj/item/circuit_component/view_sensor
 	display_name = "View Sensor"
@@ -20,16 +19,19 @@
 	var/datum/port/output/result
 	var/datum/port/output/cooldown
 
-	COOLDOWN_DECLARE(use_cooldown)
-
 	var/see_invisible = SEE_INVISIBLE_LIVING
+	var/view_cooldown = 1 SECONDS
 
 /obj/item/circuit_component/view_sensor/populate_ports()
 	result = add_output_port("Result", PORT_TYPE_LIST(PORT_TYPE_ATOM))
 	cooldown = add_output_port("Scan On Cooldown", PORT_TYPE_SIGNAL)
 
+/obj/item/circuit_component/view_sensor/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Scan Cooldown: [DisplayTimeText(view_cooldown)]", "orange", "stopwatch")
+
 /obj/item/circuit_component/view_sensor/input_received(datum/port/input/port)
-	if(!COOLDOWN_FINISHED(src, use_cooldown))
+	if(TIMER_COOLDOWN_CHECK(parent, COOLDOWN_CIRCUIT_VIEW_SENSOR))
 		result.set_output(null)
 		cooldown.set_output(COMPONENT_SIGNAL)
 		return
@@ -57,7 +59,6 @@
 		object_list += target
 
 	result.set_output(object_list)
-	COOLDOWN_START(src, use_cooldown, VIEW_SENSOR_COOLDOWN)
+	TIMER_COOLDOWN_START(parent, COOLDOWN_CIRCUIT_VIEW_SENSOR, view_cooldown)
 
 #undef VIEW_SENSOR_RANGE
-#undef VIEW_SENSOR_COOLDOWN
