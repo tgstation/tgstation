@@ -84,7 +84,7 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		add_fibers(H)
-		var/obj/item/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+		var/obj/item/gloves = H.gloves
 		if(gloves) //Check if the gloves (if any) hide fingerprints
 			if(!(gloves.body_parts_covered & HANDS))
 				ignoregloves = TRUE
