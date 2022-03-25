@@ -74,6 +74,10 @@
 
 	check_atmos()
 
+	if(prob(0.1) && icon == 'icons/obj/doors/Doorfireglass.dmi')
+		base_icon_state = "sus"
+		desc += " This one looks a bit sus..."
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
@@ -456,9 +460,9 @@
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("door_opening", src)
+			flick("[base_icon_state]_opening", src)
 		if("closing")
-			flick("door_closing", src)
+			flick("[base_icon_state]_closing", src)
 
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
