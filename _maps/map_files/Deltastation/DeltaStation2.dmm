@@ -10843,7 +10843,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "cAl" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
