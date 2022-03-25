@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes: 
+  - bugfix: "GPSes don't start deactivated anymore, which also brings back most space ruin GPS signals. Sorry about that."
