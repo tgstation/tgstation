@@ -10651,10 +10651,10 @@
 "cxr" = (
 /obj/structure/bed/dogbed/mcgriff,
 /obj/item/radio/intercom/directional/east,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/iron,
 /area/security/warden)
 "cxG" = (
@@ -11853,21 +11853,12 @@
 /turf/open/floor/circuit/green,
 /area/science/xenobiology)
 "cOO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	external_pressure_bound = 140;
-	name = "server vent";
-	pressure_checks = 0
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cOP" = (
-/turf/open/floor/circuit/telecomms,
-/area/science/xenobiology)
-"cOQ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	external_pressure_bound = 120;
-	name = "server vent"
-	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
 "cOR" = (
@@ -18704,10 +18695,8 @@
 /turf/open/floor/plating/airless,
 /area/science/test_area)
 "dIF" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	external_pressure_bound = 140;
-	name = "server vent";
-	pressure_checks = 0
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "server vent"
 	},
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/server)
@@ -18717,8 +18706,7 @@
 	name = "science camera";
 	network = list("ss13","rd")
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	external_pressure_bound = 120;
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	name = "server vent"
 	},
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -20431,10 +20419,10 @@
 /area/medical/virology)
 "dVD" = (
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 1
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dVE" = (
@@ -20452,10 +20440,10 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/mob/living/carbon/human/species/monkey,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
+/mob/living/carbon/human/species/monkey,
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "dVH" = (
@@ -22949,7 +22937,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Engineering - Supermatter Foyer";
 	name = "engineering camera";
-	network = list("ss13", "engine")
+	network = list("ss13","engine")
 	},
 /obj/structure/rack,
 /obj/item/analyzer,
@@ -27078,10 +27066,10 @@
 /obj/machinery/light/directional/west,
 /obj/machinery/airalarm/directional/west,
 /obj/structure/disposalpipe/segment,
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
 "fCE" = (
@@ -34045,7 +34033,7 @@
 /obj/machinery/camera/directional/west{
 	c_tag = "Engineering - Supermatter Room Port";
 	name = "engineering camera";
-	network = list("ss13", "engine")
+	network = list("ss13","engine")
 	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -41012,14 +41000,14 @@
 	location = "QM #4"
 	},
 /obj/effect/turf_decal/delivery,
+/obj/machinery/button/door/directional/west{
+	id = "warehouse_shutters";
+	name = "warehouse shutters control"
+	},
 /mob/living/simple_animal/bot/mulebot{
 	beacon_freq = 1400;
 	home_destination = "QM #1";
 	suffix = "#1"
-	},
-/obj/machinery/button/door/directional/west{
-	id = "warehouse_shutters";
-	name = "warehouse shutters control"
 	},
 /turf/open/floor/iron,
 /area/cargo/storage)
@@ -42680,7 +42668,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering - Supermatter Emitters";
 	name = "engineering camera";
-	network = list("ss13", "engine")
+	network = list("ss13","engine")
 	},
 /obj/effect/landmark/event_spawn,
 /obj/machinery/power/emitter{
@@ -43626,8 +43614,8 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/carbon/human/species/monkey/punpun,
 /obj/effect/landmark/event_spawn,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/carpet/green,
 /area/commons/lounge)
 "kqG" = (
@@ -53732,7 +53720,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Engineering - Supermatter";
 	name = "engineering camera";
-	network = list("ss13", "engine")
+	network = list("ss13","engine")
 	},
 /obj/structure/sign/warning/radiation{
 	pixel_x = 32
@@ -56386,10 +56374,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/mob/living/basic/cockroach,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 4
 	},
+/mob/living/basic/cockroach,
 /turf/open/floor/iron,
 /area/maintenance/starboard/aft)
 "ofs" = (
@@ -57079,7 +57067,8 @@
 /area/hallway/primary/fore)
 "ooT" = (
 /obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 4
+	dir = 4;
+	name = "killroom vent"
 	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
@@ -65358,10 +65347,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
 /mob/living/simple_animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "qQF" = (
@@ -66310,7 +66299,7 @@
 /obj/machinery/camera/directional/south{
 	c_tag = "Engineering - Supermatter Room Aft";
 	name = "engineering camera";
-	network = list("ss13", "engine")
+	network = list("ss13","engine")
 	},
 /turf/open/floor/iron,
 /area/engineering/supermatter/room)
@@ -77268,7 +77257,7 @@
 /obj/machinery/camera/directional/east{
 	c_tag = "Engineering - Supermatter Room Starboard";
 	name = "engineering camera";
-	network = list("ss13", "engine")
+	network = list("ss13","engine")
 	},
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
@@ -86232,7 +86221,7 @@
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering - Freezers";
 	name = "engineering camera";
-	network = list("ss13", "engine")
+	network = list("ss13","engine")
 	},
 /turf/open/floor/iron,
 /area/engineering/supermatter/room)
@@ -121983,7 +121972,7 @@ bcq
 nbP
 bzr
 qtV
-cOQ
+cOO
 gun
 cSh
 saS

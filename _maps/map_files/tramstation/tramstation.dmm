@@ -4931,8 +4931,8 @@
 /area/hallway/secondary/entry)
 "aGO" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/machinery/light/directional/north,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "aGQ" = (
@@ -18639,15 +18639,13 @@
 /turf/open/floor/iron/dark,
 /area/command/gateway)
 "fpi" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	external_pressure_bound = 140;
-	name = "killroom vent";
-	pressure_checks = 0
-	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Science - Xenobiology Kill Room Lower";
 	network = list("ss13","rd","xeno")
+	},
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4;
+	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -25167,12 +25165,11 @@
 /turf/open/floor/iron/white,
 /area/science/lab)
 "hEC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/effect/landmark/event_spawn,
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1;
-	external_pressure_bound = 120;
 	name = "server vent"
 	},
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
 "hET" = (
@@ -38314,9 +38311,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/service/kitchen/coldroom)
 "mrd" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4;
-	external_pressure_bound = 120;
 	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
@@ -42316,8 +42312,8 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard)
 "nTD" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	name = "Server Vent"
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "server vent"
 	},
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
@@ -58798,15 +58794,13 @@
 /turf/open/floor/iron/white,
 /area/command/heads_quarters/rd)
 "tVO" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	external_pressure_bound = 140;
-	name = "killroom vent";
-	pressure_checks = 0
-	},
 /obj/machinery/camera/directional/south{
 	c_tag = "Science - Xenobiology Kill Room Upper";
 	network = list("ss13","rd","xeno")
+	},
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4;
+	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)

@@ -10640,14 +10640,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
-"cJW" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1;
-	external_pressure_bound = 120;
-	name = "server vent"
-	},
-/turf/open/floor/circuit/telecomms/server,
-/area/science/server)
 "cJY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -11414,9 +11406,8 @@
 /turf/open/floor/engine,
 /area/science/xenobiology)
 "cSv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1;
-	external_pressure_bound = 120;
 	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
@@ -17602,10 +17593,10 @@
 /turf/open/floor/engine,
 /area/engineering/supermatter/room)
 "eUP" = (
-/mob/living/simple_animal/bot/medbot/autopatrol,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 4
 	},
+/mob/living/simple_animal/bot/medbot/autopatrol,
 /turf/open/floor/iron/white/corner{
 	dir = 8
 	},
@@ -45087,9 +45078,9 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ped" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1;
-	name = "Server Vent"
+	name = "server vent"
 	},
 /turf/open/floor/circuit/telecomms/server,
 /area/science/server)
@@ -57503,7 +57494,7 @@
 /turf/open/floor/wood,
 /area/service/library)
 "tTT" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 4;
 	name = "killroom vent"
 	},
@@ -104371,7 +104362,7 @@ lqi
 vNF
 lpg
 vRa
-cJW
+ped
 hzW
 pot
 bIj

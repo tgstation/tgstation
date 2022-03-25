@@ -7380,10 +7380,10 @@
 	id = "captain_escape";
 	name = "Tactical Relocation Toggle"
 	},
-/mob/living/simple_animal/pet/fox/renault,
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
+/mob/living/simple_animal/pet/fox/renault,
 /turf/open/floor/wood,
 /area/command/heads_quarters/captain)
 "aQT" = (
@@ -9540,7 +9540,9 @@
 /turf/open/floor/iron/dark,
 /area/science/mixing)
 "baP" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "server vent"
+	},
 /turf/open/floor/circuit/green/telecomms/mainframe,
 /area/science/server)
 "baQ" = (
@@ -9612,9 +9614,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	external_pressure_bound = 120;
-	name = "server vent"
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -9941,9 +9942,8 @@
 /turf/open/floor/iron/showroomfloor,
 /area/science/lab)
 "bcH" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1;
-	external_pressure_bound = 120;
 	name = "server vent"
 	},
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -31200,16 +31200,16 @@
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "fYn" = (
-/mob/living/simple_animal/bot/cleanbot/medbay{
-	maints_access_required = list(22);
-	name = "Deacon Scrubsy"
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/mob/living/simple_animal/bot/cleanbot/medbay{
+	maints_access_required = list(22);
+	name = "Deacon Scrubsy"
+	},
 /turf/open/floor/iron/smooth_large,
 /area/maintenance/department/chapel/monastery)
 "fYy" = (
@@ -45655,8 +45655,8 @@
 /turf/open/floor/iron/grimy,
 /area/security/prison)
 "kJN" = (
-/mob/living/simple_animal/chicken,
 /obj/machinery/light/small/directional/west,
+/mob/living/simple_animal/chicken,
 /turf/open/misc/sandy_dirt,
 /area/service/hydroponics/garden)
 "kJP" = (
@@ -45683,8 +45683,8 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/decal/cleanable/vomit/old,
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /obj/structure/sign/poster/contraband/random/directional/north,
+/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -50981,10 +50981,10 @@
 /area/engineering/supermatter/room)
 "muK" = (
 /obj/structure/chair,
-/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
 	},
+/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /turf/open/floor/iron/dark,
 /area/security/office)
 "muL" = (
@@ -61565,13 +61565,12 @@
 	dir = 10
 	},
 /obj/machinery/light/small/directional/south,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4;
-	external_pressure_bound = 140;
-	pressure_checks = 0
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 5
+	},
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4;
+	name = "killroom vent"
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
@@ -67634,10 +67633,10 @@
 /obj/structure/cable,
 /obj/structure/bed/dogbed/ian,
 /obj/machinery/power/apc/auto_name/directional/north,
-/mob/living/simple_animal/pet/dog/corgi/ian{
+/obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
-/obj/effect/turf_decal/siding/wood{
+/mob/living/simple_animal/pet/dog/corgi/ian{
 	dir = 8
 	},
 /turf/open/floor/wood,
@@ -70517,8 +70516,8 @@
 /turf/closed/wall,
 /area/security/medical)
 "sLx" = (
-/mob/living/basic/cow,
 /obj/machinery/light/small/directional/east,
+/mob/living/basic/cow,
 /turf/open/misc/sandy_dirt,
 /area/service/hydroponics/garden)
 "sLz" = (
