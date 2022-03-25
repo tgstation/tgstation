@@ -766,10 +766,10 @@
 "fo" = (
 /obj/machinery/door/firedoor,
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	name = "Chemistry"
 	},
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	dir = 1;
 	name = "Chemistry";
 	req_access_txt = "150"
@@ -1576,7 +1576,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/main)
 "iQ" = (
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	dir = 1;
 	icon_state = "right";
