@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes: 
-  - bugfix: "Bot's modes have been fixed, Medibots will no longer be on 'arrest' mode."
