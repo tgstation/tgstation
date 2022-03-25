@@ -490,7 +490,7 @@
 /turf/open/floor/holofloor/beach/water,
 /area/shuttle/escape/luxury)
 "bG" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 8
 	},
@@ -529,7 +529,7 @@
 /area/shuttle/escape/luxury)
 "bM" = (
 /obj/structure/window/reinforced,
-/obj/machinery/door/window/eastright,
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/holofloor/beach/coast_t{
 	dir = 8
 	},

@@ -277,7 +277,7 @@
 	},
 /area/awaymission/cabin)
 "aR" = (
-/obj/machinery/door/window/westright{
+/obj/machinery/door/window/right/directional/west{
 	name = "fireplace"
 	},
 /obj/structure/fireplace,
@@ -298,7 +298,7 @@
 /turf/open/floor/plating,
 /area/awaymission/cabin)
 "aT" = (
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	name = "fireplace"
 	},
 /obj/structure/fireplace,
@@ -307,7 +307,7 @@
 /area/awaymission/cabin)
 "aU" = (
 /obj/structure/fireplace,
-/obj/machinery/door/window/westright{
+/obj/machinery/door/window/right/directional/west{
 	name = "fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -319,7 +319,7 @@
 /area/awaymission/cabin)
 "aW" = (
 /obj/structure/fireplace,
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	name = "fireplace"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -371,7 +371,7 @@
 /turf/open/floor/carpet,
 /area/awaymission/cabin)
 "bg" = (
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	name = "manager's desk"
 	},
 /turf/open/floor/carpet,
@@ -741,7 +741,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cB" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cC" = (
@@ -755,7 +755,7 @@
 	pixel_y = -32;
 	req_access = null
 	},
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	name = "Bar"
 	},
 /turf/open/floor/wood,
