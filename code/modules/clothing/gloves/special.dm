@@ -54,6 +54,7 @@
 	desc = "Just looking at these fills you with an urge to beat the shit out of people."
 	icon_state = "rapid"
 	inhand_icon_state = "rapid"
+	item_flags = FINGERPRINT_PASSTHROUGH
 
 /obj/item/clothing/gloves/rapid/ComponentInitialize()
 	. = ..()

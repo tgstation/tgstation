@@ -94,6 +94,7 @@
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
+	item_flags = FINGERPRINT_PASSTHROUGH
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
@@ -121,6 +122,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	custom_price = PAYCHECK_ASSISTANT * 1.5
 	undyeable = TRUE
+	item_flags = FINGERPRINT_PASSTHROUGH
 
 /obj/item/clothing/gloves/color/orange
 	name = "orange gloves"
@@ -219,6 +221,7 @@
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
 	clothing_traits = list(TRAIT_QUICK_CARRY)
+	item_flags = FINGERPRINT_PASSTHROUGH
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex/nitrile
@@ -227,6 +230,7 @@
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
+	item_flags = NONE
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"

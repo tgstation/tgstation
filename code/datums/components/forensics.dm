@@ -86,7 +86,7 @@
 		add_fibers(H)
 		var/obj/item/gloves = H.gloves
 		if(gloves) //Check if the gloves (if any) hide fingerprints
-			if(!(gloves.body_parts_covered & HANDS))
+			if(!(gloves.body_parts_covered & HANDS) || (gloves.item_flags & FINGERPRINT_PASSTHROUGH))
 				ignoregloves = TRUE
 			if(!ignoregloves)
 				H.gloves.add_fingerprint(H, TRUE) //ignoregloves = 1 to avoid infinite loop.
