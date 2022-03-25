@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the size of plaques on the painting UI. They were awfully thin."
-  - bugfix: "Fixed 24x24 paintings not being centered inside their frames."

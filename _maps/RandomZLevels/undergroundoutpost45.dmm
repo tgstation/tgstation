@@ -1326,13 +1326,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /turf/closed/wall,
 /area/awaymission/undergroundoutpost45/central)
-"dt" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45mix";
-	dir = 8
-	},
-/turf/open/floor/engine/vacuum,
-/area/awaymission/undergroundoutpost45/engineering)
 "dv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/closed/wall/r_wall,
@@ -1897,25 +1890,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"ex" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
-/obj/machinery/door/window/southleft{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Security Checkpoint";
-	req_access_txt = "201"
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
 "ey" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -2016,19 +1990,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"eM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/folder/red,
-/obj/machinery/door/window/southleft{
-	dir = 8;
-	name = "Security Checkpoint";
-	req_access_txt = "201"
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
 "eN" = (
 /obj/structure/chair{
 	dir = 4
@@ -2051,18 +2012,6 @@
 "eP" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
-"eQ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
-	dir = 4;
-	name = "Hydroponics Desk";
-	req_access_txt = "201"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2182,20 +2131,6 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
-"fd" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/southleft{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Hydroponics Desk";
-	req_access_txt = "201"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2502,18 +2437,6 @@
 "fL" = (
 /obj/machinery/smartfridge,
 /turf/closed/wall,
-/area/awaymission/undergroundoutpost45/crew_quarters)
-"fM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/eastleft{
-	dir = 1;
-	name = "Hydroponics Desk";
-	req_access_txt = "201"
-	},
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "fN" = (
 /turf/closed/wall/rust,
@@ -2994,6 +2917,19 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"hh" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/folder/red,
+/obj/machinery/door/window/left/directional/south{
+	dir = 8;
+	name = "Security Checkpoint";
+	req_access_txt = "201"
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "hi" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/bar,
@@ -3391,6 +3327,20 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
+"hZ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Hydroponics Desk";
+	req_access_txt = "201"
+	},
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -4099,20 +4049,6 @@
 "jx" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
-"jy" = (
-/obj/machinery/door/window/southright{
-	name = "Bar Door";
-	req_access_txt = "201"
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -7244,6 +7180,12 @@
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
+"pa" = (
+/obj/machinery/air_sensor{
+	chamber_id = "uo45air"
+	},
+/turf/open/floor/engine/air,
+/area/awaymission/undergroundoutpost45/engineering)
 "pb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -7506,6 +7448,18 @@
 /turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
+/area/awaymission/undergroundoutpost45/engineering)
+"pE" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "uo45air"
+	},
+/turf/open/floor/engine/air,
+/area/awaymission/undergroundoutpost45/engineering)
+"pF" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "uo45air"
+	},
+/turf/open/floor/engine/air,
 /area/awaymission/undergroundoutpost45/engineering)
 "pG" = (
 /obj/structure/disposalpipe/segment,
@@ -7999,6 +7953,22 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"qK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("uo45air" = "Air Supply")
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "qL" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix{
 	dir = 1
@@ -8312,6 +8282,15 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
+"rq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/obj/machinery/meter/monitored{
+	chamber_id = "uo45distro"
+	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -8759,30 +8738,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"sc" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "UO45_EngineeringOffice";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/window/southleft{
-	dir = 4;
-	name = "Engineering Reception";
-	req_access_txt = "201"
-	},
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "sd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
@@ -8921,6 +8876,26 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"sp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("uo45mix" = "Mix Chamber");
+	dir = 8
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "sq" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible{
@@ -8932,6 +8907,13 @@
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
+/area/awaymission/undergroundoutpost45/engineering)
+"sr" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "uo45mix";
+	dir = 8
+	},
+/turf/open/floor/engine/vacuum,
 /area/awaymission/undergroundoutpost45/engineering)
 "ss" = (
 /obj/machinery/light/small/directional/east,
@@ -9142,28 +9124,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"sP" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "UO45_EngineeringOffice";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/window/southleft{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Engineering Reception";
-	req_access_txt = "201"
-	},
-/obj/item/folder/red,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "sQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	dir = 4
@@ -9287,6 +9247,22 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"tc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "td" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
@@ -9298,6 +9274,19 @@
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
 	},
+/area/awaymission/undergroundoutpost45/engineering)
+"te" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "uo45mix";
+	dir = 8
+	},
+/turf/open/floor/engine/vacuum,
+/area/awaymission/undergroundoutpost45/engineering)
+"tf" = (
+/obj/machinery/air_sensor{
+	chamber_id = "uo45mix"
+	},
+/turf/open/floor/engine/vacuum,
 /area/awaymission/undergroundoutpost45/engineering)
 "tg" = (
 /obj/structure/disposalpipe/segment{
@@ -9555,6 +9544,17 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "tE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
+"tF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
+	dir = 8
+	},
+/obj/machinery/meter/monitored{
+	chamber_id = "uo45waste"
+	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -9880,6 +9880,26 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"un" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("uo45n2" = "Nitrogen Supply");
+	dir = 1
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "uo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
 	dir = 4
@@ -9900,6 +9920,26 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
+"uq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("uo45o2" = "Oxygen Supply");
+	dir = 1
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -9976,6 +10016,24 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"uA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/computer/atmos_control/fixed{
+	atmos_chambers = list("uo45air" = "Air Supply", "uo45mix" = "Mix Chamber", "uo45n2" = "Nitrogen Supply", "uo45o2" = "Oxygen Supply");
+	dir = 4;
+	name = "Chamber Atmospherics Monitoring"
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "uB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron{
@@ -10138,6 +10196,21 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"uU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/machinery/computer/atmos_control/fixed{
+	atmos_chambers = list("uo45waste", "uo45distro");
+	dir = 4;
+	name = "Distribution and Waste Monitoring"
+	},
+/turf/open/floor/iron/dark/corner{
+	dir = 1;
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "uV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
 	dir = 5
@@ -10243,6 +10316,34 @@
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
+/area/awaymission/undergroundoutpost45/engineering)
+"vd" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "uo45n2";
+	dir = 1
+	},
+/turf/open/floor/engine/n2,
+/area/awaymission/undergroundoutpost45/engineering)
+"ve" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "uo45n2";
+	dir = 1
+	},
+/turf/open/floor/engine/n2,
+/area/awaymission/undergroundoutpost45/engineering)
+"vf" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "uo45o2";
+	dir = 1
+	},
+/turf/open/floor/engine/o2,
+/area/awaymission/undergroundoutpost45/engineering)
+"vg" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "uo45o2";
+	dir = 1
+	},
+/turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vh" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -10437,9 +10538,23 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"vD" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/air_sensor{
+	chamber_id = "uo45n2"
+	},
+/turf/open/floor/engine/n2,
+/area/awaymission/undergroundoutpost45/engineering)
 "vE" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine/n2,
+/area/awaymission/undergroundoutpost45/engineering)
+"vF" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/air_sensor{
+	chamber_id = "uo45o2"
+	},
+/turf/open/floor/engine/o2,
 /area/awaymission/undergroundoutpost45/engineering)
 "vG" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -11418,33 +11533,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"ze" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45o2" = "Oxygen Supply");
-	dir = 1
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
-"zo" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45mix";
-	dir = 8
-	},
-/turf/open/floor/engine/vacuum,
-/area/awaymission/undergroundoutpost45/engineering)
 "zq" = (
 /turf/open/misc/asteroid{
 	heat_capacity = 1e+006;
@@ -11453,13 +11541,26 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"zA" = (
-/obj/machinery/light/small/directional/south,
-/obj/machinery/air_sensor{
-	chamber_id = "uo45n2"
+"zG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
 	},
-/turf/open/floor/engine/n2,
-/area/awaymission/undergroundoutpost45/engineering)
+/obj/machinery/newscaster{
+	pixel_x = -30
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "zK" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -11498,12 +11599,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"AL" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45air"
-	},
-/turf/open/floor/engine/air,
-/area/awaymission/undergroundoutpost45/engineering)
 "Bh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -11673,13 +11768,18 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"Ej" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45n2";
-	dir = 1
+"Ed" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/south{
+	dir = 4;
+	name = "Hydroponics Desk";
+	req_access_txt = "201"
 	},
-/turf/open/floor/engine/n2,
-/area/awaymission/undergroundoutpost45/engineering)
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "Fd" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/command/glass{
@@ -11715,26 +11815,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"FM" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45mix" = "Mix Chamber");
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "FS" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -11777,42 +11857,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"GX" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
-	dir = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
-"HP" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45n2" = "Nitrogen Supply");
-	dir = 1
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "HW" = (
 /obj/structure/alien/weeds,
 /obj/structure/glowshroom/single,
@@ -11823,13 +11867,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"HY" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45n2";
-	dir = 1
-	},
-/turf/open/floor/engine/n2,
-/area/awaymission/undergroundoutpost45/engineering)
 "Ic" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/cable,
@@ -11850,21 +11887,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"IR" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/computer/atmos_control/fixed{
-	atmos_chambers = list("uo45waste", "uo45distro");
-	dir = 4;
-	name = "Distribution and Waste Monitoring"
-	},
-/turf/open/floor/iron/dark/corner{
-	dir = 1;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "IT" = (
 /obj/structure/alien/weeds,
 /obj/effect/mob_spawn/corpse/human,
@@ -11875,12 +11897,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"Jc" = (
-/obj/machinery/air_sensor{
-	chamber_id = "uo45air"
-	},
-/turf/open/floor/engine/air,
-/area/awaymission/undergroundoutpost45/engineering)
 "Km" = (
 /obj/structure/table,
 /obj/item/storage/medkit/toxin{
@@ -11971,13 +11987,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
-"Ma" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45o2";
-	dir = 1
-	},
-/turf/open/floor/engine/o2,
-/area/awaymission/undergroundoutpost45/engineering)
 "Mk" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/misc/asteroid{
@@ -11987,6 +11996,20 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/gateway)
+"Mu" = (
+/obj/machinery/door/window/right/directional/south{
+	name = "Bar Door";
+	req_access_txt = "201"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/crew_quarters)
 "Mx" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid{
@@ -12024,41 +12047,24 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "NA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_y = 4
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
 	},
-/obj/machinery/newscaster{
-	pixel_x = -30
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
+/obj/item/pen,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "Security Checkpoint";
+	req_access_txt = "201"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"NB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("uo45air" = "Air Supply")
-	},
-/turf/open/floor/iron/white/corner{
-	dir = 1;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "NK" = (
 /obj/structure/bookcase/manuals/engineering,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -12161,6 +12167,30 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
+"Qm" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "UO45_EngineeringOffice";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/door/window/left/directional/south{
+	dir = 4;
+	name = "Engineering Reception";
+	req_access_txt = "201"
+	},
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/pen,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "Qo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -12186,20 +12216,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"QB" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "uo45o2";
-	dir = 1
-	},
-/turf/open/floor/engine/o2,
-/area/awaymission/undergroundoutpost45/engineering)
-"QQ" = (
-/obj/machinery/light/small/directional/south,
-/obj/machinery/air_sensor{
-	chamber_id = "uo45o2"
-	},
-/turf/open/floor/engine/o2,
-/area/awaymission/undergroundoutpost45/engineering)
 "QX" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular,
@@ -12219,12 +12235,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"Rw" = (
-/obj/machinery/air_sensor{
-	chamber_id = "uo45mix"
-	},
-/turf/open/floor/engine/vacuum,
-/area/awaymission/undergroundoutpost45/engineering)
 "Rx" = (
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -12307,17 +12317,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"TK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible{
-	dir = 8
-	},
-/obj/machinery/meter/monitored{
-	chamber_id = "uo45waste"
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "UG" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/misc/asteroid{
@@ -12358,12 +12357,18 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"Wr" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "uo45air"
+"Wo" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/east{
+	dir = 1;
+	name = "Hydroponics Desk";
+	req_access_txt = "201"
 	},
-/turf/open/floor/engine/air,
-/area/awaymission/undergroundoutpost45/engineering)
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/crew_quarters)
 "WE" = (
 /obj/structure/glowshroom/single,
 /turf/open/misc/asteroid{
@@ -12373,15 +12378,6 @@
 	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"Xw" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
-/obj/machinery/meter/monitored{
-	chamber_id = "uo45distro"
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "XF" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid{
@@ -12391,6 +12387,28 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"XJ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "UO45_EngineeringOffice";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Engineering Reception";
+	req_access_txt = "201"
+	},
+/obj/item/folder/red,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "XQ" = (
 /obj/structure/glowshroom/single,
 /turf/open/misc/asteroid{
@@ -12430,24 +12448,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
-"YT" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/obj/machinery/computer/atmos_control/fixed{
-	atmos_chambers = list("uo45air" = "Air Supply", "uo45mix" = "Mix Chamber", "uo45n2" = "Nitrogen Supply", "uo45o2" = "Oxygen Supply");
-	dir = 4;
-	name = "Chamber Atmospherics Monitoring"
-	},
-/turf/open/floor/iron/dark/corner{
-	dir = 1;
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "YV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
@@ -41391,7 +41391,7 @@ ae
 bf
 eg
 cz
-NA
+zG
 eW
 fo
 fA
@@ -42161,8 +42161,8 @@ br
 an
 dR
 aP
-ex
-eM
+NA
+hh
 aP
 ae
 fD
@@ -45246,8 +45246,8 @@ bd
 dZ
 aS
 aP
-eQ
-fd
+Ed
+hZ
 ae
 ad
 ad
@@ -46803,7 +46803,7 @@ hO
 hK
 hK
 hK
-jy
+Mu
 hK
 kr
 li
@@ -47819,7 +47819,7 @@ eD
 en
 fk
 Bh
-fM
+Wo
 fZ
 fZ
 fZ
@@ -50676,8 +50676,8 @@ rY
 sM
 tv
 uc
-YT
-IR
+uA
+uU
 vs
 vP
 ni
@@ -51700,8 +51700,8 @@ Ai
 zq
 ni
 ni
-sc
-sP
+Qm
+XJ
 ln
 ln
 uE
@@ -53499,7 +53499,7 @@ pB
 qc
 qG
 pj
-Xw
+rq
 sW
 tE
 uk
@@ -53758,7 +53758,7 @@ mw
 mZ
 sk
 sX
-TK
+tF
 ul
 ln
 ln
@@ -54018,8 +54018,8 @@ sY
 tG
 um
 uI
-Ej
-zA
+vd
+vD
 ln
 ad
 ad
@@ -54273,9 +54273,9 @@ ru
 sm
 sZ
 tH
-HP
+un
 uJ
-HY
+ve
 vE
 ln
 ad
@@ -54523,9 +54523,9 @@ ad
 ad
 ln
 oZ
-Wr
+pE
 qd
-NB
+qK
 rv
 sn
 rt
@@ -54779,8 +54779,8 @@ ad
 ad
 ad
 ln
-Jc
-AL
+pa
+pF
 qe
 qL
 rw
@@ -54789,8 +54789,8 @@ ta
 rj
 up
 uI
-QB
-QQ
+vf
+vF
 ln
 ad
 ad
@@ -55044,9 +55044,9 @@ rx
 so
 tb
 tI
-ze
+uq
 uJ
-Ma
+vg
 vG
 ln
 ad
@@ -55298,8 +55298,8 @@ ad
 ln
 qN
 qN
-FM
-GX
+sp
+tc
 tJ
 ur
 ni
@@ -55812,8 +55812,8 @@ ad
 ad
 ad
 ln
-dt
-zo
+sr
+te
 ln
 ad
 ad
@@ -56070,7 +56070,7 @@ ad
 ad
 ni
 ss
-Rw
+tf
 ni
 ad
 ad

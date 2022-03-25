@@ -928,10 +928,10 @@
 /area/ruin/pizzeria)
 "EU" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/southright{
+/obj/machinery/door/window/right/directional/south{
 	name = "Drive Thru"
 	},
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	name = "Drive Thru"
 	},
 /turf/open/floor/iron/smooth_large,
