@@ -1146,7 +1146,7 @@
 	return FALSE
 
 /** Can this mob see in the dark
-  * 
+  *
   * This checks all traits, glasses, and robotic eyeball implants to see if the mob can see in the dark
   * this does NOT check if the mob is missing it's eyeballs. Also see_in_dark is a BYOND mob var (that defaults to 2)
 **/
@@ -1154,20 +1154,26 @@
 	return see_in_dark >= NIGHTVISION_FOV_RANGE
 
 /** Checks if there is enough light where the mob is located
-  * 
+  *
   * Args:
   *  light_amount (optional) - A decimal amount between 1.0 through 0.0 (default is 0.2)
-**/ 
+**/
 /mob/proc/has_light_nearby(light_amount = LIGHTING_TILE_IS_DARK)
 	var/turf/mob_location = get_turf(src)
 	return mob_location.get_lumcount() > light_amount
 
 /// Can this mob write
-/mob/proc/can_write(obj/O)
+/mob/proc/can_write(obj/writing_instrument)
+	var/obj/item/pen = istype(writing_instrument, /obj/item/pen) && writing_instrument
+	var/obj/toy/crayon = istype(writing_instrument, /obj/item/toy/crayon) && writing_instrument
+
+	if(!pen || !crayon)
+		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
+
 	if(is_blind())
 		to_chat(src, span_warning("You are blind and can't write anything!"))
 		return FALSE
-		
+
 	if(is_nearsighted())
 		to_chat(src, span_warning("Your vision is too blurry to write anything!"))
 		return FALSE
@@ -1179,7 +1185,13 @@
 	if(!has_light_nearby() && !has_nightvision())
 		to_chat(src, span_warning("It's too dark in here to write anything!"))
 		return FALSE
-	
+
+	var/writing_instrument_requires_gravity = crayon || pen && pen.requires_gravity)
+
+	if(!has_gravity() && writing_instrument_needs_gravity)
+		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
+		return FALSE
+
 	return TRUE
 
 /// Can this mob read
@@ -1187,7 +1199,7 @@
 	if(is_blind())
 		to_chat(src, span_warning("You are blind and can't read anything!"))
 		return FALSE
-		
+
 	if(is_nearsighted())
 		to_chat(src, span_warning("Your vision is too blurry to read anything!"))
 		return FALSE
@@ -1195,11 +1207,11 @@
 	if(!is_literate())
 		to_chat(src, span_warning("You try to read [O], but can't comprehend anything!"))
 		return FALSE
-	
+
 	if(!has_light_nearby() && !has_nightvision())
 		to_chat(src, span_warning("It's too dark in here to read anything!"))
 		return FALSE
-	
+
 	return TRUE
 
 /**
