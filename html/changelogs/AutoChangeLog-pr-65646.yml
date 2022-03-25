@@ -1,0 +1,4 @@
+author: "OperativeLyn"
+delete-after: True
+changes: 
+  - bugfix: "Fixed double firelocks in Deltastation's fore customs area."
