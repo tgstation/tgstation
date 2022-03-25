@@ -1156,7 +1156,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(src, max_range = 2 * object_size, threshold = 0.6 / object_size, chance = 10 * object_size)
-	for(var/mob/living/near_mob in range(10))
+	for(var/mob/living/near_mob in range(2 * object_size))
 		investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_SUPERMATTER)
 		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
 			continue
