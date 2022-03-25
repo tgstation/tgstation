@@ -396,6 +396,11 @@
 	id = "comp_set_variable_trigger"
 	build_path = /obj/item/circuit_component/variable/setter/trigger
 
+/datum/design/component/view_sensor
+	name = "View Sensor Component"
+	id = "comp_view_sensor"
+	build_path = /obj/item/circuit_component/view_sensor
+
 /datum/design/component/access_checker
 	name = "Access Checker Component"
 	id = "comp_access_checker"
