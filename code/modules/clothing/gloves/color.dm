@@ -94,7 +94,6 @@
 	name = "fingerless insulated gloves"
 	icon_state = "yellowcut"
 	inhand_icon_state = "ygloves"
-	transfer_prints = TRUE
 
 /obj/item/clothing/gloves/cut/heirloom
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
@@ -116,7 +115,6 @@
 	desc = "Plain black gloves without fingertips for the hard working."
 	icon_state = "fingerless"
 	inhand_icon_state = "fingerless"
-	transfer_prints = TRUE
 	strip_delay = 40
 	equip_delay_other = 20
 	cold_protection = HANDS
@@ -221,7 +219,6 @@
 	siemens_coefficient = 0.3
 	permeability_coefficient = 0.01
 	clothing_traits = list(TRAIT_QUICK_CARRY)
-	transfer_prints = TRUE
 	resistance_flags = NONE
 
 /obj/item/clothing/gloves/color/latex/nitrile
@@ -230,7 +227,6 @@
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
-	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
@@ -241,7 +237,6 @@
 	permeability_coefficient = 0.3
 	clothing_traits = list(TRAIT_QUICKER_CARRY)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	transfer_prints = FALSE
 
 /obj/item/clothing/gloves/color/latex/engineering
 	name = "tinker's gloves"

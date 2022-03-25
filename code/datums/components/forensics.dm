@@ -84,9 +84,9 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		add_fibers(H)
-		if(H.gloves) //Check if the gloves (if any) hide fingerprints
-			var/obj/item/clothing/gloves/G = H.gloves
-			if(G.transfer_prints)
+		var/obj/item/gloves = H.get_item_by_slot(ITEM_SLOT_GLOVES)
+		if(gloves) //Check if the gloves (if any) hide fingerprints
+			if(!(gloves.body_parts_covered & HANDS))
 				ignoregloves = TRUE
 			if(!ignoregloves)
 				H.gloves.add_fingerprint(H, TRUE) //ignoregloves = 1 to avoid infinite loop.
