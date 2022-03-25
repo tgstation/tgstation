@@ -366,8 +366,8 @@
 	height = 24
 	pixel_x = 2
 	pixel_y = 1
-	framed_offset_x = 2
-	framed_offset_y = 2
+	framed_offset_x = 4
+	framed_offset_y = 4
 
 /obj/item/wallframe/painting
 	name = "painting frame"

@@ -21,7 +21,7 @@
 	///check what mode the machine should be (WORKING, STANDBY)
 	var/mode = ELECTROLYZER_MODE_STANDBY
 	///Increase the amount of moles worked on, changed by upgrading the manipulator tier
-	var/workingPower = 1
+	var/working_power = 1
 	///Decrease the amount of power usage, changed by upgrading the capacitor tier
 	var/efficiency = 0.5
 
@@ -32,6 +32,7 @@
 	. = ..()
 	if(ispath(cell))
 		cell = new cell(src)
+	SSair.start_processing_machine(src)
 	update_appearance()
 
 /obj/machinery/electrolyzer/Destroy()
@@ -63,47 +64,58 @@
 	if(panel_open)
 		. += "electrolyzer-open"
 
-/obj/machinery/electrolyzer/process(delta_time)
+/obj/machinery/electrolyzer/process_atmos()
+
 	if(!is_operational && on)
 		on = FALSE
 	if(!on)
 		return PROCESS_KILL
 
-	if(!cell || cell.charge <= 0)
+	if((!cell || cell.charge <= 0) && !anchored)
 		on = FALSE
 		update_appearance()
 		return PROCESS_KILL
 
-	var/turf/L = loc
-	if(!istype(L))
+	var/turf/our_turf = loc
+	if(!istype(our_turf))
 		if(mode != ELECTROLYZER_MODE_STANDBY)
 			mode = ELECTROLYZER_MODE_STANDBY
 			update_appearance()
 		return
 
-	var/newMode = on ? ELECTROLYZER_MODE_WORKING : ELECTROLYZER_MODE_STANDBY //change the mode to working if the machine is on
+	var/new_mode = on ? ELECTROLYZER_MODE_WORKING : ELECTROLYZER_MODE_STANDBY //change the mode to working if the machine is on
 
-	if(mode != newMode) //check if the mode is set correctly
-		mode = newMode
+	if(mode != new_mode) //check if the mode is set correctly
+		mode = new_mode
 		update_appearance()
 
 	if(mode == ELECTROLYZER_MODE_STANDBY)
 		return
 
-	var/datum/gas_mixture/env = L.return_air() //get air from the turf
-	var/datum/gas_mixture/removed = env.remove_ratio(0.1)
+	var/datum/gas_mixture/env = our_turf.return_air() //get air from the turf
 
-	if(!removed)
+	if(!env)
 		return
 
-	removed.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
-	var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], (1.5 * delta_time * workingPower))//Works to max 12 moles at a time.
-	removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
-	removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
-	removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
-	env.merge(removed) //put back the new gases in the turf
+	call_reactions(env)
+
 	air_update_turf(FALSE, FALSE)
-	cell.use((5 * proportion * workingPower) / (efficiency + workingPower))
+
+	if(anchored)
+		return
+
+	cell.use((5 * (3 * working_power) * working_power) / (efficiency + working_power))
+
+/obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
+	for(var/reaction in GLOB.electrolyzer_reactions)
+		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
+
+		if(!current_reaction.reaction_check(env))
+			continue
+
+		current_reaction.react(loc, env, working_power)
+
+	env.garbage_collect()
 
 /obj/machinery/electrolyzer/RefreshParts()
 	var/manipulator = 0
@@ -113,7 +125,7 @@
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
 		cap += M.rating
 
-	workingPower = manipulator //used in the amount of moles processed
+	working_power = manipulator //used in the amount of moles processed
 
 	efficiency = (cap + 1) * 0.5 //used in the amount of charge in power cell uses
 
@@ -126,6 +138,13 @@
 
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/electrolyzer/default_unfasten_wrench(mob/user, obj/item/wrench, time)
+	. = ..()
+	if(anchored)
+		update_use_power(ACTIVE_POWER_USE)
+	else
+		update_use_power(NO_POWER_USE)
 
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -163,6 +182,7 @@
 	data["open"] = panel_open
 	data["on"] = on
 	data["hasPowercell"] = !isnull(cell)
+	data["anchored"] = anchored
 	if(cell)
 		data["powerLevel"] = round(cell.percent(), 1)
 	return data
@@ -178,7 +198,7 @@
 			usr.visible_message(span_notice("[usr] switches [on ? "on" : "off"] \the [src]."), span_notice("You switch [on ? "on" : "off"] \the [src]."))
 			update_appearance()
 			if (on)
-				START_PROCESSING(SSmachines, src)
+				SSair.start_processing_machine(src)
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)

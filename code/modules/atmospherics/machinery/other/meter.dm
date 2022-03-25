@@ -12,29 +12,10 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 40, ACID = 0)
 	greyscale_config = /datum/greyscale_config/meter
 	greyscale_colors = COLOR_GRAY
-	///To connect to the ntnet
-	var/frequency = 0
 	///The pipe we are attaching to
 	var/atom/target
 	///The piping layer of the target
 	var/target_layer = PIPING_LAYER_DEFAULT
-
-/obj/machinery/meter/atmos
-	frequency = FREQ_ATMOS_STORAGE
-
-/obj/machinery/meter/atmos/layer2
-	target_layer = 2
-
-/obj/machinery/meter/atmos/layer4
-	target_layer = 4
-
-/obj/machinery/meter/atmos/atmos_waste_loop
-	name = "waste loop gas flow meter"
-	id_tag = ATMOS_GAS_MONITOR_LOOP_ATMOS_WASTE
-
-/obj/machinery/meter/atmos/distro_loop
-	name = "distribution loop gas flow meter"
-	id_tag = ATMOS_GAS_MONITOR_LOOP_DISTRIBUTION
 
 /obj/machinery/meter/Destroy()
 	SSair.stop_processing_machine(src)
@@ -117,20 +98,6 @@
 				greyscale_colors = COLOR_VIOLET
 	set_greyscale(colors=greyscale_colors)
 
-	if(frequency)
-		var/datum/radio_frequency/radio_connection = SSradio.return_frequency(frequency)
-
-		if(!radio_connection)
-			return
-
-		var/datum/signal/signal = new(list(
-			"id_tag" = id_tag,
-			"device" = "AM",
-			"pressure" = round(env_pressure),
-			"sigtype" = "status"
-		))
-		radio_connection.post_signal(src, signal)
-
 /obj/machinery/meter/proc/status()
 	if (target)
 		var/datum/gas_mixture/environment = target.return_air()
@@ -159,7 +126,7 @@
 /obj/machinery/meter/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		new /obj/item/pipe_meter(loc)
-	qdel(src)
+	. = ..()
 
 /obj/machinery/meter/interact(mob/user)
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -216,3 +183,9 @@
 
 /obj/machinery/meter/turf/reattach_to_layer()
 	target = loc
+
+/obj/machinery/meter/layer2
+	target_layer = 2
+
+/obj/machinery/meter/layer4
+	target_layer = 4

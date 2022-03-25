@@ -853,3 +853,9 @@
       red, and really bad is bold red.
   - bugfix: Fixed icebox plasma facility mood event color not working.
   - code_imp: Improved mood events descriptions to be simpler to write.
+2022-03-24:
+  Ghilker:
+  - refactor: refactored the electrolyzer to use datumized reactions instead of hardcode
+      them in process
+  - expansion: added the hypernoblium to antinoblium conversion, when hypernoblium
+      is exposed to the electrolyzer it will be converted to antinoblium
