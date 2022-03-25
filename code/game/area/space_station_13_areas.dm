@@ -1419,7 +1419,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/cargo/miningdock
 	name = "\improper Mining Dock"
-	icon_state = "mining"
+	icon_state = "mining_dock"
+
+/area/cargo/miningdock/cafeteria
+	name = "\improper Mining Cafeteria"
+	icon_state = "mining_cafe"
+
+/area/cargo/miningdock/oresilo
+	name = "\improper Mining Ore Silo Storage"
+	icon_state = "mining_silo"
 
 /area/cargo/miningoffice
 	name = "\improper Mining Office"
