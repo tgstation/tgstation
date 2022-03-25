@@ -4290,6 +4290,7 @@
 #include "code\modules\wiremod\components\ntnet\ntnet_send.dm"
 #include "code\modules\wiremod\components\sensors\pressuresensor.dm"
 #include "code\modules\wiremod\components\sensors\tempsensor.dm"
+#include "code\modules\wiremod\components\sensors\view_sensor.dm"
 #include "code\modules\wiremod\components\string\concat.dm"
 #include "code\modules\wiremod\components\string\contains.dm"
 #include "code\modules\wiremod\components\string\textcase.dm"
