@@ -777,15 +777,20 @@
  *
  * Shows charge and other important info
  */
-/mob/proc/get_spells_for_statpanel()
+/mob/proc/get_actions_for_statpanel()
 	var/list/data = list()
 	var/index = 1
-	for(var/datum/action/cooldown/spell/spell in actions)
-		var/list/spell_data = spell.set_statpanel_format()
-		if(!spell_data)
+	for(var/datum/action/cooldown/action in actions)
+		var/list/action_data = action.set_statpanel_format()
+		if(!action_data)
 			return
 
-		data[index++] = spell_data
+		data[index++] = list(
+			action_data[PANEL_DISPLAY_PANEL],
+			action_data[PANEL_DISPLAY_COOLDOWN],
+			action_data[PANEL_DISPLAY_NAME],
+			REF(action),
+		)
 
 	return data
 

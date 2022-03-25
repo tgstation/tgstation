@@ -124,8 +124,6 @@
 	name = "Revenant Transmit"
 	panel = "Revenant Abilities"
 	background_icon_state = "bg_revenant"
-	icon_icon = 'icons/mob/actions/actions_revenant.dmi'
-	button_icon_state = "r_transmit"
 
 	telepathy_span = "revennotice"
 	bold_telepathy_span = "revenboldnotice"
@@ -167,6 +165,7 @@
 	if(!.)
 		return FALSE
 	if(!istype(owner, /mob/living/simple_animal/revenant))
+		stack_trace("[type] was owned by a non-revenant mob, please don't.")
 		return FALSE
 
 	var/mob/living/simple_animal/revenant/ghost = owner
@@ -215,11 +214,9 @@
 	name = "Overload Lights"
 	desc = "Directs a large amount of essence into nearby electrical lights, causing lights to shock those nearby."
 	button_icon_state = "overload_lights"
-
 	cooldown_time = 20 SECONDS
 
 	outer_radius = 5
-
 	unlock_amount = 25
 	cast_amount = 40
 	stun_duration = 3 SECONDS
@@ -264,7 +261,6 @@
 	cooldown_time = 15 SECONDS
 
 	outer_radius = 4
-
 	unlock_amount = 10
 	cast_amount = 30
 	reveal_duration = 4 SECONDS
@@ -317,7 +313,6 @@
 	cooldown_time = 20 SECONDS
 
 	outer_radius = 4
-
 	cast_amount = 60
 	unlock_amount = 125
 
@@ -363,7 +358,6 @@
 	cooldown_time = 20 SECONDS
 
 	outer_radius = 3
-
 	cast_amount = 50
 	unlock_amount = 75
 

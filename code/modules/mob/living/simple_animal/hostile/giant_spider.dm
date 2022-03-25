@@ -371,16 +371,17 @@
 	if(!.)
 		return
 
-	button_icon_state = "wrap_0"
 	to_chat(on_who, span_notice("You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B>"))
+	button_icon_state = "wrap_0"
 
 /datum/action/cooldown/wrap/unset_click_ability(mob/on_who)
 	. = ..()
 	if(!.)
 		return
 
-	button_icon_state = "wrap_1"
 	to_chat(on_who, span_notice("You no longer prepare to wrap something in a cocoon."))
+	button_icon_state = "wrap_1"
+	UpdateButtonIcon()
 
 /datum/action/cooldown/wrap/Activate(atom/to_wrap)
 	if(!owner.Adjacent(to_wrap))

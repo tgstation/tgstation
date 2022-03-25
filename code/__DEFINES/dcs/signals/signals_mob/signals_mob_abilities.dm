@@ -5,6 +5,8 @@
 	#define COMPONENT_BLOCK_ABILITY_START (1<<0)
 /// from base of /datum/action/cooldown/proc/PreActivate(): (datum/action/cooldown/finished)
 #define COMSIG_ABILITY_FINISHED "mob_ability_base_finished"
+// TODO DOC
+#define COMSIG_ABILITY_SET_STATPANEL "ability_set_statpanel"
 
 /// from base of /datum/action/cooldown/mob_cooldown/blood_warp/proc/blood_warp(): ()
 #define COMSIG_BLOOD_WARP "mob_ability_blood_warp"

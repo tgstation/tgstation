@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	if(ranged_mousepointer)
 		on_who.client?.mouse_pointer_icon = initial(owner.client?.mouse_pointer_icon)
 
-/datum/action/innate/ai/ranged/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
+/datum/action/innate/ai/ranged/proc/InterceptClickOn(mob/living/caller, params, atom/clicked_on)
 	if(!IsAvailable())
 		return FALSE
 	if(!clicked_on)

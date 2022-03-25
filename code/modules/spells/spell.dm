@@ -52,9 +52,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	background_icon_state = "bg_spell"
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "spell_default"
+	panel = "Spells"
 
-	/// The stat panel this action shows up in the stat panel in. If null, will not show up.
-	var/panel = "Spells"
 	/// The sound played on cast.
 	var/sound = null
 	/// The school of magic the spell belongs to.
@@ -117,7 +116,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	UpdateButtonIcon()
-	return Activate()
+
+	// Calling parent here is the same as calling Activate(),
+	// but with two added action related signals before and after.
+	// If, at some point, the ability start and finish signals cause issues,
+	// this can probably be safely changed to not call parent (call Actiavte() directly)
+	return ..()
 
 /datum/action/cooldown/spell/IsAvailable()
 	return ..() && can_cast_spell()
@@ -399,27 +403,3 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			spell_title = "Ludicrous "
 
 	name = "[spell_title][initial(name)]"
-
-/// Formats the spell to be returned to the stat panel.
-/datum/action/cooldown/spell/proc/set_statpanel_format()
-	if(!panel)
-		return null
-
-	var/time_remaining = max(next_use_time - world.time, 0)
-	var/time_remaining_in_seconds = round(time_remaining / 10, 0.1)
-	var/cooldown_time_in_seconds =  round(cooldown_time / 10, 0.1)
-
-	var/list/stat_panel_data = list(
-		PANEL_DISPLAY_PANEL = panel,
-		PANEL_DISPLAY_COOLDOWN = "[time_remaining_in_seconds]/[cooldown_time_in_seconds]",
-		PANEL_DISPLAY_NAME = name,
-	)
-
-	SEND_SIGNAL(src, COMSIG_SPELL_SET_STATPANEL, stat_panel_data)
-
-	return list(
-		stat_panel_data[PANEL_DISPLAY_PANEL],
-		stat_panel_data[PANEL_DISPLAY_COOLDOWN],
-		stat_panel_data[PANEL_DISPLAY_NAME],
-		REF(src),
-	)

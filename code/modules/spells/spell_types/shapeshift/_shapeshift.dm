@@ -125,7 +125,7 @@
 
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
-	return new_shape
+	return new_shape_holder
 
 /datum/action/cooldown/spell/shapeshift/proc/restore_form(mob/living/caster)
 	var/obj/shapeshift_holder/current_shift = is_shifted(caster)

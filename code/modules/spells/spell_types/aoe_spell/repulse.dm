@@ -79,6 +79,7 @@
 	background_icon_state = "bg_alien"
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "tailsweep"
+	panel = "Alien"
 	sound = 'sound/magic/tail_swing.ogg'
 
 	cooldown_time = 15 SECONDS

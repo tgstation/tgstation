@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(statpanels)
 			var/mob/target_mob = target.mob
 			if((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs) && (length(target_mob.actions)))
 				if(num_fires % default_wait == 0)
-					set_spells_tab(target, target_mob)
+					set_action_tabs(target, target_mob)
 
 			if(target_mob?.listed_turf && num_fires % default_wait == 0)
 				if(!target_mob.TurfAdjacent(target_mob.listed_turf))
@@ -145,16 +145,16 @@ SUBSYSTEM_DEF(statpanels)
 	sdql2A += sdql2B
 	target << output(url_encode(json_encode(sdql2A)), "statbrowser:update_sdql2")
 
-/datum/controller/subsystem/statpanels/proc/set_spells_tab(client/target, mob/target_mob)
-	var/list/spells = target_mob.get_spells_for_statpanel()
+/datum/controller/subsystem/statpanels/proc/set_action_tabs(client/target, mob/target_mob)
+	var/list/actions = target_mob.get_actions_for_statpanel()
 	target.spell_tabs.Cut()
 
-	for(var/spell_list as anything in spells)
-		target.spell_tabs |= spell_list[1]
+	for(var/action_list as anything in actions)
+		target.spell_tabs |= action_list[1]
 
 	var/spells_encoded = ""
-	if(length(spells))
-		spells_encoded = url_encode(json_encode(spells))
+	if(length(actions))
+		spells_encoded = url_encode(json_encode(actions))
 
 	target << output("[url_encode(json_encode(target.spell_tabs))];[spells_encoded]", "statbrowser:update_spells")
 
@@ -224,8 +224,8 @@ SUBSYSTEM_DEF(statpanels)
 
 	var/mob/target_mob = target.mob
 
-	if(((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs)) && (locate(/datum/action/cooldown/spell) in target_mob.actions))
-		set_spells_tab(target, target_mob)
+	if(((target.stat_tab in target.spell_tabs) || !length(target.spell_tabs)) && (locate(/datum/action/cooldown) in target_mob.actions))
+		set_action_tabs(target, target_mob)
 		return TRUE
 
 	if(target_mob?.listed_turf)

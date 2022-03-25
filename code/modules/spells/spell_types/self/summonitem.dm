@@ -62,9 +62,9 @@
 
 	var/link_message = ""
 	if(potential_mark.item_flags & ABSTRACT)
-		continue
+		return FALSE
 	if(SEND_SIGNAL(potential_mark, COMSIG_ITEM_MARK_RETRIEVAL) & COMPONENT_BLOCK_MARK_RETRIEVAL)
-		continue
+		return FALSE
 	if(HAS_TRAIT(potential_mark, TRAIT_NODROP))
 		link_message += "Though it feels redundant... "
 

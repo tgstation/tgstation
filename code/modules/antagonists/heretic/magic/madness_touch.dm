@@ -11,7 +11,7 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 
-/datum/action/cooldown/spell/touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+/datum/action/cooldown/spell/touch/mad_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	if(!ishuman(victim))
 		return FALSE
 

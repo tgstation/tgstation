@@ -4,11 +4,11 @@
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
 
-	// Internal use
 	/// The actual next time this ability can be used
 	var/next_use_time = 0
 
-	// Public use
+	/// The stat panel this action shows up in the stat panel in. If null, will not show up.
+	var/panel
 	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
 	/// Whether or not you want the cooldown for the ability to display in text form
@@ -170,3 +170,27 @@
 		UpdateButtonIcon()
 		if(next_use_time > world.time)
 			START_PROCESSING(SSfastprocess, src)
+
+/// Formats the action to be returned to the stat panel.
+/datum/action/cooldown/proc/set_statpanel_format()
+	if(!panel)
+		return null
+
+	var/time_remaining = max(next_use_time - world.time, 0)
+	var/time_remaining_in_seconds = round(time_remaining / 10, 0.1)
+	var/cooldown_time_in_seconds =  round(cooldown_time / 10, 0.1)
+
+	var/list/stat_panel_data = list(
+		PANEL_DISPLAY_PANEL = panel,
+		PANEL_DISPLAY_COOLDOWN = "[time_remaining_in_seconds]/[cooldown_time_in_seconds]",
+		PANEL_DISPLAY_NAME = name,
+	)
+
+	SEND_SIGNAL(src, COMSIG_ABILITY_SET_STATPANEL, stat_panel_data)
+
+	return list(
+		stat_panel_data[PANEL_DISPLAY_PANEL],
+		stat_panel_data[PANEL_DISPLAY_COOLDOWN],
+		stat_panel_data[PANEL_DISPLAY_NAME],
+		REF(src),
+	)

@@ -26,14 +26,14 @@
 	RegisterSignal(parent, COMSIG_SPELL_BEFORE_CAST, .proc/on_before_cast)
 	RegisterSignal(parent, COMSIG_SPELL_AFTER_CAST, .proc/on_after_cast)
 	RegisterSignal(parent, COMSIG_SPELL_CAST_REVERTED, .proc/on_cast_revert)
-	RegisterSignal(parent, COMSIG_SPELL_SET_STATPANEL, .proc/on_statpanel_set)
+	RegisterSignal(parent, COMSIG_ABILITY_SET_STATPANEL, .proc/on_statpanel_set)
 
 /datum/component/charge_based_spell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_SPELL_BEFORE_CAST,
 		COMSIG_SPELL_AFTER_CAST,
 		COMSIG_SPELL_CAST_REVERTED,
-		COMSIG_SPELL_SET_STATPANEL,
+		COMSIG_ABILITY_SET_STATPANEL,
 	))
 
 /**
@@ -74,7 +74,7 @@
 
 
 /**
- * Signal proc for [COMSIG_SPELL_SET_STATPANEL]
+ * Signal proc for [COMSIG_ABILITY_SET_STATPANEL]
  *
  * Overrides PANEL_DISPLAY_COOLDOWN to show the number of charges remaining instead of a cooldown
  */

@@ -278,7 +278,6 @@ Burning extracts:
 /obj/item/slimecross/burning/black/do_effect(mob/user)
 	if(!isliving(user))
 		return
-	var/mob/living/living_user = user
 	user.visible_message(span_danger("[src] absorbs [user], transforming [user.p_them()] into a slime!"))
 	var/datum/action/cooldown/spell/shapeshift/slime_form/transform = new(user.mind || user)
 	transform.remove_on_restore = TRUE
