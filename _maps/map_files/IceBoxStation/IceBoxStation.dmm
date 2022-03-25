@@ -19822,6 +19822,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
+"heU" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall,
+/area/medical/cryo)
 "hfi" = (
 /turf/open/floor/iron,
 /area/science/misc_lab)
@@ -52180,7 +52184,7 @@
 /obj/structure/sign/warning/coldtemp{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/components/unary/passive_vent,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark/textured,
 /area/medical/cryo)
 "xqj" = (
@@ -94704,7 +94708,7 @@ vEU
 oNo
 fyM
 jYV
-wvq
+heU
 xpX
 cSv
 jcE

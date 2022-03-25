@@ -42885,6 +42885,10 @@
 	},
 /turf/open/floor/iron,
 /area/security/brig)
+"ooi" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall,
+/area/maintenance/port)
 "ooC" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -50537,6 +50541,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/security/prison)
+"rjp" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "rjs" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -65549,7 +65558,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/light/directional/north,
-/obj/machinery/atmospherics/components/unary/passive_vent,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark/textured,
 /area/medical/cryo)
 "xcj" = (
@@ -89710,8 +89719,8 @@ eMW
 eMW
 alK
 uKD
-aqK
-alK
+rjp
+ooi
 xcd
 hIT
 qxJ

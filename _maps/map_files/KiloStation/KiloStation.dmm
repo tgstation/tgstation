@@ -7932,9 +7932,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/paramedic,
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "aSB" = (

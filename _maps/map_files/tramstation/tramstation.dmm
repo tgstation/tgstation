@@ -45981,9 +45981,7 @@
 	c_tag = "Medical - Cryo Treatment";
 	network = list("ss13","medbay")
 	},
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "pji" = (
@@ -47219,6 +47217,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "pFQ" = (
@@ -52554,9 +52553,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen/diner)
 "rDd" = (
-/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
-	dir = 6
-	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "rDl" = (
@@ -62378,6 +62375,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/medbay/central)
 "vmO" = (
@@ -167159,7 +167157,7 @@ xrE
 dJe
 jtM
 uht
-uht
+iQI
 uht
 uht
 iZV
