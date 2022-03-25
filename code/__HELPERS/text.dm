@@ -837,7 +837,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			return string + carried_string
 		string += "and"
 
-    //if number is more than 19, divide it
+	//if number is more than 19, divide it
 	if(number > 19)
 		var/temp_num = tens[number / 10]
 		if(number % 10)
@@ -875,7 +875,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	number = round(number)
 
 	if(number > 999999999)
-		return number
+		return negative ? -number : number
 
 	if(number == 0)
 		return capitalise ? "Zero" : "zero"
