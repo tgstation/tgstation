@@ -6,11 +6,10 @@ GLOBAL_LIST_EMPTY(GPS_list)
 	var/tracking = TRUE
 	var/emped = FALSE
 
-/datum/component/gps/Initialize(_gpstag = "COM0", _tracking = TRUE)
+/datum/component/gps/Initialize(_gpstag = "COM0")
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	gpstag = _gpstag
-	tracking = _tracking
 	GLOB.GPS_list += src
 
 /datum/component/gps/Destroy()

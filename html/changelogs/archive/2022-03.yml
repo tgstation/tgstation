@@ -853,3 +853,36 @@
       red, and really bad is bold red.
   - bugfix: Fixed icebox plasma facility mood event color not working.
   - code_imp: Improved mood events descriptions to be simpler to write.
+2022-03-24:
+  Ghilker:
+  - refactor: refactored the electrolyzer to use datumized reactions instead of hardcode
+      them in process
+  - expansion: added the hypernoblium to antinoblium conversion, when hypernoblium
+      is exposed to the electrolyzer it will be converted to antinoblium
+2022-03-25:
+  Fikou:
+  - balance: xray lasers now have 100 armor penetration
+  Ghommie:
+  - bugfix: Fixed the size of plaques on the painting UI. They were awfully thin.
+  - bugfix: Fixed 24x24 paintings not being centered inside their frames.
+  JohnFulpWillard:
+  - bugfix: Bot's modes have been fixed, Medibots will no longer be on 'arrest' mode.
+  san7890:
+  - imageadd: Nanotrasen has upgraded "that machine that prints all of those decals
+      on our station tiles" to now print two corners that face opposite each other
+      at the same time. Very cool!
+  tnekohue:
+  - bugfix: Fixed Departmental Techfab machine board for service being named oddly
+      compared to the other ones.
+  vincentiusvin:
+  - refactor: Refactored the atmos control console devices. The ones that hook to
+      the big turf chambers.
+  - qol: Distro meter now broadcast the whole gasmix info instead of just pressure
+      to the monitors.
+  - bugfix: Lavaland syndie's atmos chamber vents are now actually configurable. Moved
+      a few things around to accomodate this.
+  - bugfix: Lavalannd syndie chambers hooked to distro and moved distro pipe to layer2
+  - qol: atmos monitors can detect reactions now.
+  - code_imp: Some minor code changes to how anomaly refinery and implosion compressor
+      show the gas info. No changes expected, report if bug.
+  - code_imp: recoded checks for atmos chamber abnormalities in debug verbs.
