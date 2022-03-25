@@ -5,6 +5,7 @@
  * @license MIT
  */
 
+import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useSharedState, useLocalState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
@@ -126,11 +127,11 @@ const NewscasterChannelCreation = (props, context) => {
                 <Button
                   selected={!lockedmode}
                   content="Public"
-                  onClick={() => act(setLockedmode(false))} />
+                  onClick={() => setLockedmode(false)} />
                 <Button
                   selected={!!lockedmode}
                   content="Private"
-                  onClick={() => act(setLockedmode(true))} />
+                  onClick={() => setLockedmode(true)} />
               </Box>
             </Section>
           </Stack.Item>
@@ -371,7 +372,7 @@ const NewscasterChannelBox = (_, context) => {
             : (
               <Section fill scrollable>
                 <BlockQuote italic fontSize={1.2} wrap>
-                  {deconvertHtmlString(channelDesc)}
+                  {decodeHtmlEntities(channelDesc)}
                 </BlockQuote>
               </Section>
             )}
@@ -537,7 +538,6 @@ const NewscasterChannelMessages = (_, context) => {
                     tooltip="Censor Story"
                     disabled={!security_mode}
                     onClick={() => act('storyCensor', {
-                      secure: security_mode,
                       messageID: message.ID,
                     })} />
                 )}
@@ -547,7 +547,6 @@ const NewscasterChannelMessages = (_, context) => {
                     tooltip="Censor Author"
                     disabled={!security_mode}
                     onClick={() => act('authorCensor', {
-                      secure: security_mode,
                       messageID: message.ID,
                     })} />
                 )}
@@ -606,10 +605,4 @@ const NewscasterChannelMessages = (_, context) => {
       )}
     </Section>
   );
-};
-
-export const deconvertHtmlString = (text) => {
-  return text.replace(/&#(\d+);/g, (_, dec) => {
-    return String.fromCharCode(dec);
-  });
 };

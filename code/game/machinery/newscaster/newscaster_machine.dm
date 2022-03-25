@@ -316,7 +316,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 					iterated_feed_message.toggle_censor_body()
 					break
 
-		if("author_censor")
+		if("authorCensor")
 			var/obj/item/card/id/id_card
 			if(isliving(usr))
 				var/mob/living/living_user = usr
