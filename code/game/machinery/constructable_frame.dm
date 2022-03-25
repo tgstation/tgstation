@@ -30,17 +30,28 @@
 
 /obj/structure/frame/machine/examine(user)
 	. = ..()
-	if(state == 3 && req_components && req_component_names)
-		var/list/nice_list = list()
-		for(var/atom/component as anything in req_components)
-			if(!ispath(component))
-				continue
-			if(!req_components[component])
-				continue
+	if(state != 3)
+		return
 
-			var/s = abs(req_components[component]) > 1 ? "s" : ""
-			nice_list += list("[numtotext(req_components[component])] [req_component_names[component]][s]")
-		. += span_info("It requires [english_list(nice_list, "no more components.")].")
+	if(!length(req_components))
+		. += span_info("It requires no components.")
+		return .
+
+	if(!req_component_names)
+		stack_trace("[src]'s req_components list has items but its req_component_names list is null!")
+		return
+
+	var/list/nice_list = list()
+	for(var/atom/component as anything in req_components)
+		if(!ispath(component))
+			stack_trace("An item in [src]'s req_components list is not a path!")
+			continue
+		if(!req_components[component])
+			continue
+
+		nice_list += list("[req_components[component]] [req_component_names[component]]\s")
+	. += span_info("It requires [english_list(nice_list, "no more components")].")
+
 
 /obj/structure/frame/machine/proc/update_namelist()
 	if(!req_components)

@@ -94,25 +94,28 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 /obj/item/circuitboard/machine/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(req_components))
-		var/list/nice_list = list()
-		for(var/atom/component_path as anything in req_components)
-			if(!ispath(component_path))
-				continue
+	if(!LAZYLEN(req_components))
+		. += span_info("It requires no components.")
+		return .
 
-			var/component_name = initial(component_path.name)
-			var/component_amount = req_components[component_path]
+	var/list/nice_list = list()
+	for(var/atom/component_path as anything in req_components)
+		if(!ispath(component_path))
+			continue
 
-			if(ispath(component_path, /obj/item/stack))
-				var/obj/item/stack/stack_path = component_path
-				if(initial(stack_path.singular_name))
-					component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
+		var/component_name = initial(component_path.name)
+		var/component_amount = req_components[component_path]
 
-			else if(ispath(component_path, /obj/item/stock_parts))
-				var/obj/item/stock_parts/stock_part = component_path
-				if(initial(stock_part.base_name))
-					component_name = initial(stock_part.base_name)
+		if(ispath(component_path, /obj/item/stack))
+			var/obj/item/stack/stack_path = component_path
+			if(initial(stack_path.singular_name))
+				component_name = initial(stack_path.singular_name) //e.g. "glass sheet" vs. "glass"
 
-			var/s = abs(component_amount) > 1 ? "s" : ""
-			nice_list += list("[numtotext(component_amount)] [component_name][s]")
-		. += span_info("It requires [english_list(nice_list, "no more components.")].")
+		else if(ispath(component_path, /obj/item/stock_parts))
+			var/obj/item/stock_parts/stock_part = component_path
+			if(initial(stock_part.base_name))
+				component_name = initial(stock_part.base_name)
+
+		nice_list += list("[component_amount] [component_name]\s")
+
+	. += span_info("It requires [english_list(nice_list)].")
