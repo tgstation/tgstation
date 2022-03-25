@@ -6057,6 +6057,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "aHL" = (
@@ -7930,8 +7931,10 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/paramedic,
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "aSB" = (
@@ -49159,6 +49162,7 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/showroomfloor,
 /area/medical/medbay/central)
 "lSR" = (
@@ -60358,7 +60362,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/medical/medbay/central)
 "pBr" = (

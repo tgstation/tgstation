@@ -24881,7 +24881,9 @@
 /area/construction/storage_wing)
 "hIT" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured,
 /area/medical/cryo)
 "hIU" = (
@@ -25536,6 +25538,7 @@
 	},
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "hZm" = (
@@ -54748,6 +54751,26 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/storage/pill_bottle/mannitol,
+/obj/item/reagent_containers/dropper{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "sUm" = (
@@ -65521,32 +65544,12 @@
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
 "xcd" = (
-/obj/structure/table/glass,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -6;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/storage/pill_bottle/mannitol,
-/obj/item/reagent_containers/dropper{
-	pixel_y = 6
-	},
 /obj/structure/sign/warning/coldtemp{
 	name = "\improper CRYOGENICS";
 	pixel_y = 32
 	},
 /obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/iron/dark/textured,
 /area/medical/cryo)
 "xcj" = (

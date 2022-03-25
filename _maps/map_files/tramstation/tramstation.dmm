@@ -34863,6 +34863,7 @@
 /obj/item/reagent_containers/dropper{
 	pixel_y = 6
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "lef" = (
@@ -45980,6 +45981,9 @@
 	c_tag = "Medical - Cryo Treatment";
 	network = list("ss13","medbay")
 	},
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/medical/treatment_center)
 "pji" = (
@@ -52549,6 +52553,12 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen/diner)
+"rDd" = (
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/medical/treatment_center)
 "rDl" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -167663,7 +167673,7 @@ orR
 qVt
 kMo
 atS
-atS
+rDd
 atS
 uel
 pDg
@@ -167919,7 +167929,7 @@ cdb
 pdt
 ePh
 kMo
-kMo
+atS
 atS
 ldZ
 uel

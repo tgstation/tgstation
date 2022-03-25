@@ -11011,8 +11011,8 @@
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "cRa" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/machinery/newscaster/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "cRN" = (
@@ -11045,7 +11045,9 @@
 /turf/open/floor/iron,
 /area/security/brig)
 "cSv" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "cSE" = (
@@ -11638,10 +11640,10 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dfW" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 8
-	},
 /obj/machinery/portable_atmospherics/canister/anesthetic_mix,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "dgf" = (
@@ -16463,9 +16465,7 @@
 /turf/open/floor/iron,
 /area/service/janitor)
 "fFj" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "fFp" = (
@@ -16669,8 +16669,10 @@
 /turf/open/floor/iron/white,
 /area/medical/medbay/lobby)
 "fJQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/machinery/atmospherics/components/binary/thermomachine/freezer{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "fJX" = (
@@ -23821,7 +23823,7 @@
 "jcE" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
 /turf/closed/wall,
-/area/medical/cryo)
+/area/medical/surgery/fore)
 "jcR" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -25730,6 +25732,7 @@
 	color = "#52B4E9"
 	},
 /obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/surgery/fore)
 "kaZ" = (
@@ -26498,6 +26501,7 @@
 /area/security/prison/safe)
 "kub" = (
 /obj/effect/landmark/start/medical_doctor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "kuy" = (
@@ -32861,12 +32865,14 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "nRH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -10
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "nRY" = (
@@ -40005,7 +40011,6 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "rxm" = (
-/obj/structure/table/glass,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 6;
 	pixel_y = 10
@@ -40026,6 +40031,7 @@
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = 32
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "rxq" = (
@@ -40499,11 +40505,12 @@
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
 "rHE" = (
-/obj/structure/table/glass,
 /obj/item/stack/medical/mesh,
 /obj/item/wrench/medical,
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/obj/structure/table/glass,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "rHF" = (
@@ -46540,6 +46547,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/surgery/fore)
 "uyf" = (
@@ -52163,7 +52171,6 @@
 /turf/closed/wall/r_wall,
 /area/ai_monitored/command/nuke_storage)
 "xpX" = (
-/obj/machinery/atmospherics/components/binary/thermomachine/freezer,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/camera{
 	c_tag = "Cryogenics";
@@ -52173,6 +52180,7 @@
 /obj/structure/sign/warning/coldtemp{
 	pixel_y = 32
 	},
+/obj/machinery/atmospherics/components/unary/passive_vent,
 /turf/open/floor/iron/dark/textured,
 /area/medical/cryo)
 "xqj" = (
@@ -52428,13 +52436,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/brig)
-"xwV" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible{
-	dir = 4
-	},
-/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
-/turf/open/floor/iron/white,
-/area/medical/cryo)
 "xwY" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
@@ -94444,10 +94445,10 @@ fyM
 mmh
 wvq
 mkm
-cSv
+fFj
 kub
 fFj
-xwV
+dfW
 bde
 afi
 bix
@@ -94699,13 +94700,13 @@ vEU
 oNo
 fyM
 jYV
-jcE
+wvq
 xpX
 cSv
-cSv
-cSv
+kfT
+fFj
 fJQ
-bde
+jcE
 uxW
 kaR
 iGC
