@@ -110,7 +110,7 @@ export const GasmixParser = (props: GasmixParserProps, context) => {
                     onClick={() => reactionOnClick(reaction[0])}
                   />
                 </Box>
-              ) : (<p>reaction[1]</p>)
+              ) : (<p>{reaction[1]}</p>)
             )
             : 'No reactions detected'}
         </LabeledList.Item>
