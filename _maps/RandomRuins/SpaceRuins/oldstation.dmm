@@ -409,7 +409,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/door/window/brigdoor/eastright,
+/obj/machinery/door/window/brigdoor/right/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/delta/ai)
 "bi" = (
@@ -464,7 +464,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/delta/ai)
 "bp" = (
-/obj/machinery/door/window/brigdoor/westleft,
+/obj/machinery/door/window/brigdoor/left/directional/west,
 /obj/effect/decal/cleanable/robot_debris,
 /obj/structure/alien/weeds/node,
 /turf/open/floor/iron/dark,
@@ -883,7 +883,7 @@
 	},
 /obj/structure/window/reinforced,
 /obj/structure/table,
-/obj/machinery/door/window/brigdoor/eastright,
+/obj/machinery/door/window/brigdoor/right/directional/east,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/ancientstation/delta/ai)
 "cA" = (
@@ -3848,7 +3848,7 @@
 /obj/machinery/door/poddoor{
 	id = "proto"
 	},
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "jO" = (
@@ -4003,7 +4003,7 @@
 /obj/machinery/door/poddoor{
 	id = "proto"
 	},
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "kf" = (
@@ -4619,14 +4619,14 @@
 /obj/machinery/door/poddoor{
 	id = "proto"
 	},
-/obj/machinery/door/window/eastright,
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "lP" = (
 /obj/machinery/door/poddoor{
 	id = "proto"
 	},
-/obj/machinery/door/window/westleft,
+/obj/machinery/door/window/left/directional/west,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/ancientstation/delta/proto)
 "lQ" = (
@@ -7109,7 +7109,7 @@
 /area/ruin/space/has_grav/ancientstation/charlie/hall)
 "Qp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /obj/machinery/shower{
 	dir = 8
 	},
@@ -7398,7 +7398,7 @@
 /area/ruin/space/has_grav/ancientstation/charlie/engie)
 "Ym" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/westleft,
+/obj/machinery/door/window/left/directional/west,
 /obj/machinery/shower{
 	dir = 8
 	},
