@@ -1,0 +1,4 @@
+author: "Tastyfish"
+delete-after: True
+changes: 
+  - qol: "The supply and supply request consoles now have a search bar."

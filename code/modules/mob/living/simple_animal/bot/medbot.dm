@@ -338,12 +338,12 @@
 	if(!.)
 		return
 
-	if(mode == BOT_TIPPED)
-		handle_panic()
-		return
-
-	if(mode == BOT_HEALING)
-		return
+	switch(mode)
+		if(BOT_TIPPED)
+			handle_panic()
+			return
+		if(BOT_HEALING)
+			return
 
 	if(IsStun() || IsParalyzed())
 		oldpatient = patient
@@ -405,11 +405,11 @@
 		frustration++
 
 	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !(medical_mode_flags & MEDBOT_STATIONARY_MODE) && !patient)
-		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-			start_patrol()
-
-		if(mode == BOT_PATROL)
-			bot_patrol()
+		switch(mode)
+			if(BOT_IDLE, BOT_START_PATROL)
+				start_patrol()
+			if(BOT_PATROL)
+				bot_patrol()
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	. = FALSE
