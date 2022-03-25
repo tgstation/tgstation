@@ -15,6 +15,17 @@ export const TurbineComputer = (props, context) => {
       </Box>
     </Modal>
   );
+  const parts_not_ready = data.parts_linked && !data.parts_ready && (
+    <Modal>
+      <Box
+        style={{ margin: 'auto' }}
+        width="200px"
+        textAlign="center"
+        minHeight="39px">
+        {"Some parts have open maintenance hatchet, please close them before starting"}
+      </Box>
+    </Modal>
+  );
   return (
     <Window
       width={310}
@@ -31,6 +42,7 @@ export const TurbineComputer = (props, context) => {
               onClick={() => act('toggle_power')} />
           )}>
           {parts_not_connected}
+          {parts_not_ready}
           <LabeledList>
             <LabeledList.Item label="Intake Regulator">
               <NumberInput

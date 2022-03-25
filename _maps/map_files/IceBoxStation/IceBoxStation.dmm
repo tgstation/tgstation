@@ -53332,8 +53332,7 @@
 /area/medical/medbay/lobby)
 "xQL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "xQR" = (
 /obj/effect/spawner/random/vending/snackvend,
@@ -90920,7 +90919,7 @@ bBT
 bxo
 bxo
 cmd
-cmd
+bBT
 cmd
 cwi
 cwi
@@ -91181,9 +91180,9 @@ ufy
 xQL
 lid
 lid
+lid
+lid
 snI
-gXW
-gXW
 gXW
 gXW
 gXW

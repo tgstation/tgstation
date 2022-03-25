@@ -104,6 +104,10 @@
 		new_turf.thermal_conductivity = 0
 
 /obj/machinery/power/turbine/attackby(obj/item/object, mob/user, params)
+	if(active)
+		balloon_alert(user, "turn off the machine first")
+		return ..()
+
 	if(!panel_open)
 		balloon_alert(user, "open the maintenance hatch first")
 		return ..()
@@ -284,7 +288,7 @@
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
-/obj/machinery/power/turbine/core_rotor/proc/activate_parts(mob/user)
+/obj/machinery/power/turbine/core_rotor/proc/activate_parts(mob/user, check_only = FALSE)
 
 	compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, turn(dir, 180))
 	turbine = locate(/obj/machinery/power/turbine/turbine_outlet) in get_step(src, dir)
@@ -307,6 +311,9 @@
 	if(!parts_present)
 		all_parts_connected = FALSE
 		return FALSE
+
+	if(check_only)
+		return TRUE
 
 	compressor.core = src
 	turbine.core = src
@@ -337,8 +344,9 @@
 	return ..()
 
 /obj/machinery/power/turbine/core_rotor/calculate_parts_limits()
-	max_allowed_rpm = (compressor.installed_part.max_rpm + turbine.installed_part.max_rpm + installed_part.max_rpm) / 3
-	max_allowed_temperature = (compressor.installed_part.max_temperature + turbine.installed_part.max_temperature + installed_part.max_temperature) / 3
+	if(activate_parts(check_only = TRUE))
+		max_allowed_rpm = (compressor.installed_part.max_rpm + turbine.installed_part.max_rpm + installed_part.max_rpm) / 3
+		max_allowed_temperature = (compressor.installed_part.max_temperature + turbine.installed_part.max_temperature + installed_part.max_temperature) / 3
 
 /obj/machinery/power/turbine/core_rotor/proc/calculate_damage_done(temperature)
 	damage_archived = damage
@@ -352,6 +360,25 @@
 
 	if((damage - damage_archived >= 2 || damage > TURBINE_DAMAGE_ALARM_START) && COOLDOWN_FINISHED(src, turbine_damage_alert))
 		damage_alert(damage_done)
+
+/obj/machinery/power/turbine/core_rotor/proc/toggle_power()
+	if(active)
+		power_off()
+		return
+	power_on()
+
+/obj/machinery/power/turbine/core_rotor/proc/power_on()
+	active = TRUE
+	compressor.active = TRUE
+	turbine.active = TRUE
+
+/obj/machinery/power/turbine/core_rotor/proc/power_off()
+	active = FALSE
+	compressor.active = FALSE
+	turbine.active = FALSE
+
+/obj/machinery/power/turbine/core_rotor/proc/all_parts_ready()
+	return !panel_open && !compressor.panel_open && !turbine.panel_open
 
 /obj/machinery/power/turbine/core_rotor/proc/damage_alert(damage_done)
 	COOLDOWN_START(src, turbine_damage_alert, max(round(TURBINE_DAMAGE_ALARM_START - damage_done), 5) SECONDS)

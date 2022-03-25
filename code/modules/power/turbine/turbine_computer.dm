@@ -68,6 +68,7 @@
 	data["temp"] = main_control?.input_turf?.air.temperature
 	data["integrity"] = main_control?.get_turbine_integrity()
 	data["parts_linked"] = main_control?.all_parts_connected
+	data["parts_ready"] = main_control?.all_parts_ready()
 
 	data["max_rpm"] = main_control?.max_allowed_rpm
 	data["max_temperature"] = main_control?.max_allowed_temperature
@@ -88,7 +89,7 @@
 			if(main_control?.all_parts_connected && main_control?.rpm < 1000)
 				if(!main_control.activate_parts(usr))
 					return TRUE
-				main_control.active = !main_control.active
+				main_control.toggle_power()
 				main_control.rpm = 0
 				main_control.produced_energy = 0
 				. = TRUE
