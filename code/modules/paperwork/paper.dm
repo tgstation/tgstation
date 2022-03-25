@@ -174,7 +174,7 @@
 	. += span_warning("You cannot read it!")
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
-		// Are we on fire?  Hard ot read if so
+	// Are we on fire?  Hard to read if so
 	if(resistance_flags & ON_FIRE)
 		return UI_CLOSE
 	if(!in_range(user, src) && !isobserver(user))
@@ -189,13 +189,10 @@
 		return UI_INTERACTIVE
 	return ..()
 
-
-
 /obj/item/paper/can_interact(mob/user)
 	if(in_contents_of(/obj/machinery/door/airlock))
 		return TRUE
 	return ..()
-
 
 /obj/item/proc/burn_paper_product_attackby_check(obj/item/I, mob/living/user, bypass_clumsy)
 	var/ignition_message = I.ignition_effect(src, user)
@@ -264,7 +261,6 @@
 
 	return ..()
 
-
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if(.)
@@ -306,7 +302,6 @@
 	.["paper_color"] = !color || color == "white" ? "#FFFFFF" : color // color might not be set
 	.["paper_state"] = icon_state /// TODO: show the sheet will bloodied or crinkling?
 	.["stamps"] = stamps
-
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -477,6 +472,22 @@
 /obj/item/paper/natural/Initialize(mapload)
 	. = ..()
 	color = "#FFF5ED"
+
+/obj/item/paper/attack_hand_secondary(mob/living/user, list/modifiers)
+	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(istype(src, /obj/item/paper/carbon))
+		var/obj/item/paper/carbon/Carbon = src
+		if(!Carbon.copied)
+			to_chat(user, span_notice("Take off the carbon copy first."))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	user.temporarilyRemoveItemFromInventory(src)
+	user.put_in_hands(src)
+
+	to_chat(user, span_notice("You crumple the [src]."))
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/paper/crumpled
 	name = "paper scrap"
