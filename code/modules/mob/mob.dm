@@ -1123,8 +1123,8 @@
 
 /// Can this mob write
 /mob/proc/can_write(obj/writing_instrument)
-	var/obj/item/pen = istype(writing_instrument, /obj/item/pen) && writing_instrument
-	var/obj/toy/crayon = istype(writing_instrument, /obj/item/toy/crayon) && writing_instrument
+	var/obj/item/pen/pen = istype(writing_instrument, /obj/item/pen) && writing_instrument
+	var/obj/toy/crayon/crayon = istype(writing_instrument, /obj/item/toy/crayon) && writing_instrument
 
 	if(!pen || !crayon)
 		to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
