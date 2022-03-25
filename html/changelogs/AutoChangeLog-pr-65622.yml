@@ -1,0 +1,4 @@
+author: "Colovorat"
+delete-after: True
+changes: 
+  - bugfix: "Clicking on airlock with ID Scan wire cut, should not open airlock."
