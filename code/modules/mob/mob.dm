@@ -1160,9 +1160,9 @@
 		to_chat(M, span_warning("It's too dark in here to read!"))
 		return FALSE
 
-	var/writing_instrument_requires_gravity = crayon || pen && pen.requires_gravity)
+	var/writing_instrument_requires_gravity = crayon || (pen && pen.requires_gravity)
 
-	if(!has_gravity() && writing_instrument_needs_gravity)
+	if(!has_gravity() && writing_instrument_requires_gravity)
 		to_chat(src, span_warning("You try to write, but the [writing_instrument] doesn't work in zero gravity!"))
 		return FALSE
 
