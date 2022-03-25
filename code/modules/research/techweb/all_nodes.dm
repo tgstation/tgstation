@@ -750,9 +750,11 @@
 		"bci_shell",
 		"comp_bar_overlay",
 		"comp_bci_action",
-		"comp_target_intercept",
 		"comp_counter_overlay",
 		"comp_object_overlay",
+		"comp_target_intercept",
+		"comp_thought_listener",
+		"comp_vox",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 500)
 
