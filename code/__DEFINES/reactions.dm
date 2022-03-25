@@ -186,11 +186,11 @@
 
 // Halon:
 /// The minimum temperature required for halon to form from tritium and BZ.
-#define HALON_FORMATION_MIN_TEMPERATURE 30
+#define HALON_FORMATION_MIN_TEMPERATURE 9
 /// The maximum temperature required for halon to form from tritium and BZ.
 #define HALON_FORMATION_MAX_TEMPERATURE 55
 /// The amount of energy 4.25 moles of halon forming from tritium and BZ releases.
-#define HALON_FORMATION_ENERGY 300
+#define HALON_FORMATION_ENERGY 30000
 
 /// How much energy a mole of halon combusting consumes.
 #define HALON_COMBUSTION_ENERGY 2500
