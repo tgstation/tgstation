@@ -23821,9 +23821,26 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "jcE" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall,
-/area/medical/surgery/fore)
+/obj/structure/table/glass,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/storage/pill_bottle/mannitol,
+/turf/open/floor/iron/white,
+/area/medical/cryo)
 "jcR" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -40011,23 +40028,6 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "rxm" = (
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -6;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/storage/pill_bottle/mannitol,
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = 32
 	},
@@ -52436,6 +52436,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/security/brig)
+"xwV" = (
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
+/turf/closed/wall,
+/area/medical/surgery/fore)
 "xwY" = (
 /obj/structure/closet/crate,
 /obj/item/reagent_containers/glass/bowl,
@@ -94703,10 +94707,10 @@ jYV
 wvq
 xpX
 cSv
-kfT
+jcE
 fFj
 fJQ
-jcE
+xwV
 uxW
 kaR
 iGC

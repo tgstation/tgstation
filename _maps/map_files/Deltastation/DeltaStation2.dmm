@@ -2993,9 +2993,12 @@
 /obj/item/folder/white,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/reagent_containers/dropper,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/airalarm/directional/south,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/storage/pill_bottle/mannitol,
+/obj/item/reagent_containers/dropper,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "aMQ" = (
@@ -48776,7 +48779,6 @@
 /area/cargo/office)
 "lPd" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
-/obj/structure/table,
 /turf/open/floor/iron/white,
 /area/medical/cryo)
 "lPk" = (
@@ -65512,15 +65514,6 @@
 /turf/open/floor/iron,
 /area/maintenance/port/fore)
 "qSC" = (
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/storage/pill_bottle/mannitol,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
