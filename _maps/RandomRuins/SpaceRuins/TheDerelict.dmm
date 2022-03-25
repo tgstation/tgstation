@@ -36,6 +36,12 @@
 	dir = 1
 	},
 /area/ruin/space/derelict/medical/chapel)
+"ao" = (
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("ks13" = "Air Supply")
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
 "ap" = (
 /obj/machinery/power/solar{
 	id = "derelictsolar";
@@ -904,13 +910,6 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/singularity_engine)
-"eB" = (
-/obj/machinery/door/window/eastleft{
-	name = "Heads of Staff";
-	req_access_txt = "19"
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
 "eC" = (
 /obj/structure/table,
 /obj/item/paicard,
@@ -2118,15 +2117,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
-"jN" = (
-/obj/machinery/door/window/southleft,
-/obj/structure/cable,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/derelict/medical)
-"jO" = (
-/obj/machinery/door/window/southright,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/derelict/medical)
 "jQ" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
@@ -2521,6 +2511,22 @@
 	dir = 8
 	},
 /turf/open/floor/plating/airless,
+/area/ruin/space/derelict/atmospherics)
+"lN" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "ks13"
+	},
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
+/area/ruin/space/derelict/atmospherics)
+"lO" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "ks13"
+	},
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
 /area/ruin/space/derelict/atmospherics)
 "lP" = (
 /obj/machinery/door/airlock/maintenance{
@@ -3144,11 +3150,13 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
-"pR" = (
-/obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("ks13" = "Air Supply")
+"pZ" = (
+/obj/machinery/air_sensor{
+	chamber_id = "ks13"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/air{
+	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
+	},
 /area/ruin/space/derelict/atmospherics)
 "rC" = (
 /obj/structure/closet/crate,
@@ -3160,6 +3168,10 @@
 /area/ruin/space/derelict/bridge/ai_upload)
 "rK" = (
 /turf/template_noop,
+/area/ruin/space/derelict/medical)
+"rW" = (
+/obj/machinery/door/window/right/directional/south,
+/turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "sd" = (
 /obj/structure/chair/stool/directional/south,
@@ -3251,6 +3263,11 @@
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
+"yg" = (
+/obj/machinery/door/window/left/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/derelict/medical)
 "yE" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -3378,6 +3395,13 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
+"Ga" = (
+/obj/machinery/door/window/left/directional/east{
+	name = "Heads of Staff";
+	req_access_txt = "19"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/bridge/access)
 "Gu" = (
 /obj/structure/grille,
 /turf/template_noop,
@@ -3655,14 +3679,6 @@
 "Tm" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/hallway/primary/port)
-"TE" = (
-/obj/machinery/air_sensor{
-	chamber_id = "ks13"
-	},
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
-	},
-/area/ruin/space/derelict/atmospherics)
 "TJ" = (
 /obj/machinery/light/directional/west,
 /obj/item/storage/box/lights/mixed,
@@ -3678,14 +3694,6 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/solar_control)
-"Ue" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
-	chamber_id = "ks13"
-	},
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
-	},
-/area/ruin/space/derelict/atmospherics)
 "Uz" = (
 /turf/open/floor/plating/airless,
 /area/template_noop)
@@ -3708,14 +3716,6 @@
 "VV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/open/floor/iron/airless,
-/area/ruin/space/derelict/atmospherics)
-"Wm" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
-	chamber_id = "ks13"
-	},
-/turf/open/floor/engine/air{
-	initial_gas_mix = "o2=20000;n2=80000;TEMP=293.15"
-	},
 /area/ruin/space/derelict/atmospherics)
 "Xq" = (
 /obj/item/stack/cable_coil/cut,
@@ -6990,7 +6990,7 @@ hY
 hX
 hX
 jD
-jN
+yg
 gc
 gc
 gc
@@ -7103,7 +7103,7 @@ hz
 hY
 hY
 jE
-jO
+rW
 go
 go
 go
@@ -8018,7 +8018,7 @@ gk
 lv
 lv
 lv
-pR
+ao
 ls
 lt
 lt
@@ -8129,7 +8129,7 @@ go
 go
 gk
 lw
-Ue
+lN
 Qt
 PR
 MS
@@ -8241,8 +8241,8 @@ gc
 go
 go
 gk
-TE
-Wm
+pZ
+lO
 ES
 VV
 mk
@@ -11145,7 +11145,7 @@ cs
 dF
 dF
 eq
-eB
+Ga
 eJ
 eO
 dF
