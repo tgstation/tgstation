@@ -163,7 +163,6 @@
 	if(!.)
 		return
 	var/obj/item/grenade/mirage/grenade = .
-	grenade.thrower = mod.wearer
 	grenade.arm_grenade(mod.wearer)
 
 /obj/item/grenade/mirage
@@ -173,6 +172,10 @@
 	inhand_icon_state = "flashbang"
 	det_time = 3 SECONDS
 	var/mob/living/thrower
+
+/obj/item/grenade/mirage/arm_grenade(mob/user, delayoverride, msg, volume)
+	. = ..()
+	thrower = user
 
 /obj/item/grenade/mirage/detonate(mob/living/lanced_by)
 	. = ..()
@@ -233,3 +236,33 @@
 	projectile.damage /= damage_multiplier
 	projectile.speed /= speed_multiplier
 	projectile.cut_overlay(projectile_effect)
+
+///Espionage -
+/obj/item/mod/module/espionage
+	name = "MOD espionage module"
+	desc = "Based off typical storage compartments, this system allows the suit to holster a \
+		standard firearm across its surface and allow for extremely quick retrieval. \
+		While some users prefer the chest, others the forearm for quick deployment, \
+		some law enforcement prefer the holster to extend from the thigh."
+	icon_state = "espionage"
+	module_type = MODULE_USABLE
+	complexity = 2
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
+	incompatible_modules = list(/obj/item/mod/module/holster)
+	cooldown_time = 0.5 SECONDS
+	/// Gun we have holstered.
+	var/obj/item/gun/holstered
+
+/obj/item/mod/module/holster/on_use()
+	. = ..()
+	if(!.)
+		return
+
+/obj/item/mod/module/holster/on_uninstall()
+	if(holstered)
+		holstered.forceMove(drop_location())
+		holstered = null
+
+/obj/item/mod/module/holster/Destroy()
+	QDEL_NULL(holstered)
+	return ..()
