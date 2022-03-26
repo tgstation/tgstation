@@ -48,15 +48,15 @@
 /obj/effect/fire_ring/Initialize(mapload, ring_radus)
 	. = ..()
 	src.ring_radius = ring_radius
-	START_PROCESSING(SSprocessing, src)
+	START_PROCESSING(SSfastprocess, src)
 
 /obj/effect/fire_ring/Destroy(force)
-	STOP_PROCESSING(SSprocessing, src)
+	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /obj/effect/fire_ring/process(delta_time)
 	var/mob/living/owner = loc
-	if(QDELETED(owner) || owner.stat == DEAD)
+	if(QDELETED(owner) || !istype(owner) || owner.stat == DEAD)
 		qdel(src)
 		return PROCESS_KILL
 	if(!isturf(owner.loc))

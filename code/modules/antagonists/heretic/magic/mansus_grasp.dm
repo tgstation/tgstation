@@ -33,7 +33,7 @@
 	if(SEND_SIGNAL(caster, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, victim) & COMPONENT_BLOCK_HAND_USE)
 		return FALSE
 
-	living_hit.apply_damage(10, BRUTE)
+	living_hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_hit = victim
 		carbon_hit.AdjustKnockdown(5 SECONDS)
@@ -77,6 +77,7 @@
 /obj/item/melee/touch_attack/mansus_fist/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] covers [user.p_their()] face with [user.p_their()] sickly-looking hand! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/mob/living/carbon/carbon_user = user //iscarbon already used in spell's parent
+	var/datum/action/cooldown/spell/touch/mansus_grasp/source = locate() in user.actions
 	if(!IS_HERETIC(user))
 		return
 
@@ -94,7 +95,7 @@
 				carbon_user.emote("scream")
 				carbon_user.stuttering += 13
 
-		// melbert todo removed fist effects on suicide
+		source?.cast_on_hand_hit(src, user, user)
 
 		escape_our_torment++
 		stoplag(0.4 SECONDS)

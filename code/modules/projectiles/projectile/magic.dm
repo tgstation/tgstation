@@ -391,23 +391,19 @@
 
 /obj/projectile/magic/necropotence/on_hit(target)
 	. = ..()
-	if(isliving(target))
-		var/mob/living/L = target
-		if(L.anti_magic_check() || !L.mind)
-			L.visible_message(span_warning("[src] vanishes on contact with [target]!"))
-			return BULLET_ACT_BLOCK
-		to_chat(L, span_danger("Your body feels drained and there is a burning pain in your chest."))
-		L.maxHealth -= 20
-		L.health = min(L.health, L.maxHealth)
-		if(L.maxHealth <= 0)
-			to_chat(L, span_userdanger("Your weakened soul is completely consumed by the [src]!"))
-			return
-		/* MELBER TODO this is just a soul tap
-		for(var/obj/effect/proc_holder/spell/spell in L.mind.spell_list)
-			spell.charge_counter = spell.charge_max
-			spell.recharging = FALSE
-			spell.update_appearance()
-		*/
+	if(!isliving(target))
+		return
+
+	var/mob/living/living_hit = target
+	if(living_hit.anti_magic_check() || !living_hit.mind)
+		living_hit.visible_message(span_warning("[src] vanishes on contact with [living_hit]!"))
+		return BULLET_ACT_BLOCK
+
+	// Performs a soul tap on the target - takes away max health but refreshes their spell cooldowns (if any)
+	var/datum/action/cooldown/spell/tap/tap = new(src)
+	tap.cast(living_hit)
+	qdel(tap)
+
 /obj/projectile/magic/wipe
 	name = "bolt of possession"
 	icon_state = "wipe"

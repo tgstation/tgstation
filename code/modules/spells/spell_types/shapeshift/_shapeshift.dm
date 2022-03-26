@@ -13,7 +13,7 @@
 
 	/// Our chosen type
 	var/mob/living/shapeshift_type
-	/// All possible types we can become // MELBERT TODO unit test this
+	/// All possible types we can become
 	var/list/atom/possible_shapes
 
 /datum/action/cooldown/spell/shapeshift/is_valid_target(atom/cast_on)

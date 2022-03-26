@@ -282,10 +282,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		playsound(get_turf(owner), sound, 50, TRUE)
 
 /datum/action/cooldown/spell/proc/invocation()
-	/* MELBERT TODO Unit test this
-	if(!invocation || invocation_type == INVOCATION_NONE)
-		return
-	*/
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
 			//Auto-mute? Fuck that noise
@@ -353,14 +349,13 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	qdel(dummy)
 	return TRUE
 
-// MELBERT TODO unit test this (ensure upgradable spells have cooldown_reduction_per_rank etc)
 /**
  * Levels the spell up a single level, reducing the cooldown.
  * If bypass_cap is TRUE, will level the spell up past it's set cap.
  */
 /datum/action/cooldown/spell/proc/level_spell(bypass_cap = FALSE)
-	// Spell cannot be levelled or gains no benefit from  being levelled
-	if(spell_max_level <= 1 || !cooldown_time || !cooldown_reduction_per_rank)
+	// Spell cannot be levelled
+	if(spell_max_level <= 1)
 		return FALSE
 
 	// Spell is at cap, and we will not bypass it

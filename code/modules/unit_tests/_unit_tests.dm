@@ -109,6 +109,7 @@
 #include "spawn_mobs.dm"
 #include "species_config_sanity.dm"
 #include "species_whitelists.dm"
+#include "spells.dm"
 #include "stomach.dm"
 #include "strippable.dm"
 #include "subsystem_init.dm"

@@ -59,7 +59,7 @@
 	name = "Spacetime Distortion"
 	desc = "Entangle the strings of space-time in an area around you, \
 		randomizing the layout and making proper movement impossible. The strings vibrate..."
-	spell_type = /datum/action/cooldown/spell/spacetime_dist // MELBERT TODO
+	spell_type = /datum/action/cooldown/spell/spacetime_dist
 	category = "Defensive"
 	cost = 1
 

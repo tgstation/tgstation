@@ -16,6 +16,8 @@
 	deactive_msg = "You dispel mind swap."
 	cast_range = 1
 
+	/// If TRUE, we cannot mindswap into mobs with minds if they do not currently have a key / player.
+	var/target_requires_key = TRUE
 	/// For how long is the caster stunned for after the spell
 	var/unconscious_amount_caster = 40 SECONDS
 	/// For how long is the victim stunned for after the spell
@@ -59,7 +61,9 @@
 	if(living_target.stat == DEAD)
 		to_chat(owner, span_warning("You don't particularly want to be dead!"))
 		return FALSE
-	if(!living_target.key || !living_target.mind)
+	if(!living_target.mind)
+		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] doesn't appear to have a mind to swap into!."))
+	if(!living_target.key && target_requires_key)
 		to_chat(owner, span_warning("[living_target.p_theyve(TRUE)] appear[living_target.p_s()] to be catatonic! \
 			Not even magic can affect [living_target.p_their()] vacant mind."))
 		return FALSE

@@ -137,7 +137,7 @@
 
 	var/mob/living/ridden_creature = parent
 
-	// MELBERT TODO make this work with nuactions
+	// MELBERT TODO test
 	for(var/datum/action/ability as anything in ridden_creature.actions)
 		ability.share_action(rider)
 

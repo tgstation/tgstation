@@ -202,7 +202,7 @@
 /datum/action/cooldown/spell/touch/proc/on_hand_dropped(datum/source, mob/living/dropper)
 	SIGNAL_HANDLER
 
-	remove_hand(dropper, revert_after = TRUE) // MELBER TODO check if arm removed
+	remove_hand(dropper, revert_after = TRUE) // MELBERT TODO check if arm removed
 
 /obj/item/melee/touch_attack
 	name = "\improper outstretched hand"

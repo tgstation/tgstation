@@ -1,5 +1,3 @@
-/// The amount of health taken per tap.
-#define HEALTH_LOST_PER_SOUL_TAP 20
 
 /**
  * SOUL TAP!
@@ -22,6 +20,9 @@
 	invocation = "AT ANY COST!"
 	invocation_type = INVOCATION_SHOUT
 
+	/// The amount of health we take on tap
+	var/tap_health_taken = 20
+
 /datum/action/cooldown/spell/tap/is_valid_target(atom/cast_on)
 	if(HAS_TRAIT(cast_on, TRAIT_NO_SOUL))
 		to_chat(cast_on, span_warning("You have no soul to tap into!"))
@@ -31,23 +32,25 @@
 
 /datum/action/cooldown/spell/tap/cast(mob/living/cast_on)
 	. = ..()
-	cast_on.maxHealth -= HEALTH_LOST_PER_SOUL_TAP
+	cast_on.maxHealth -= tap_health_taken
 	cast_on.health = min(cast_on.health, cast_on.maxHealth)
-
-	// If the next tap will kill us, give us a heads-up
-	if(cast_on.health - HEALTH_LOST_PER_SOUL_TAP <= 0)
-		to_chat(cast_on, span_danger("Your body feels incredibly drained, and the burning is hard to ignore!"))
-	else
-		to_chat(cast_on, span_danger("Your body feels drained and there is a burning pain in your chest."))
-
-	if(cast_on.maxHealth <= 0)
-		to_chat(cast_on, span_userdanger("Your weakened soul is completely consumed by the tap!"))
-		ADD_TRAIT(cast_on, TRAIT_NO_SOUL, MAGIC_TRAIT)
-		cast_on.death()
-		return
 
 	for(var/datum/action/cooldown/spell/spell in cast_on.actions)
 		spell.next_use_time = world.time
 		spell.UpdateButtonIcon()
 
-#undef HEALTH_LOST_PER_SOUL_TAP
+	// If the tap took all of our life, we die and lose our soul!
+	if(cast_on.maxHealth <= 0)
+		to_chat(cast_on, span_userdanger("Your weakened soul is completely consumed by the tap!"))
+		ADD_TRAIT(cast_on, TRAIT_NO_SOUL, MAGIC_TRAIT)
+
+		cast_on.visible_message(span_danger("[cast_on] suddenly dies!"), ignored_mobs = cast_on)
+		cast_on.death()
+
+	// If the next tap will kill us, give us a heads-up
+	else if(cast_on.maxHealth - tap_health_taken <= 0)
+		to_chat(cast_on, span_bolddanger("Your body feels incredibly drained, and the burning is hard to ignore!"))
+
+	// Otherwise just give them some feedback
+	else
+		to_chat(cast_on, span_danger("Your body feels drained and there is a burning pain in your chest."))
