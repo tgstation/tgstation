@@ -473,22 +473,6 @@
 	. = ..()
 	color = "#FFF5ED"
 
-/obj/item/paper/attack_hand_secondary(mob/living/user, list/modifiers)
-	if(!user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY, FALSE, TRUE))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(istype(src, /obj/item/paper/carbon))
-		var/obj/item/paper/carbon/Carbon = src
-		if(!Carbon.copied)
-			to_chat(user, span_notice("Take off the carbon copy first."))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	user.temporarilyRemoveItemFromInventory(src)
-	user.put_in_hands(src)
-
-	to_chat(user, span_notice("You crumple the [src]."))
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/paper/crumpled
 	name = "paper scrap"
 	icon_state = "scrap"
