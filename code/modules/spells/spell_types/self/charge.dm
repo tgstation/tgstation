@@ -15,7 +15,7 @@
 /datum/action/cooldown/spell/charge/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/charge/cast(mob/living/cast_on)
+/datum/action/cooldown/spell/charge/cast(mob/living/cast_on) // MELBERT TODO TEST AND CL
 	. = ..()
 
 	// Charge people we're pulling first and foremost

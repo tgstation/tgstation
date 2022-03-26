@@ -135,12 +135,14 @@
 	on_who.click_intercept = src
 	if(ranged_mousepointer)
 		on_who.client?.mouse_pointer_icon = ranged_mousepointer
+	UpdateButtonIcon()
 	return TRUE
 
 /datum/action/cooldown/proc/unset_click_ability(mob/on_who)
 	on_who.click_intercept = null
 	if(ranged_mousepointer)
 		on_who.client?.mouse_pointer_icon = initial(on_who.client?.mouse_pointer_icon)
+	UpdateButtonIcon()
 	return TRUE
 
 /datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)

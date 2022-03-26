@@ -123,9 +123,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	// this can probably be safely changed to not call parent (call Actiavte() directly)
 	return ..()
 
-/datum/action/cooldown/spell/IsAvailable()
-	return ..() && can_cast_spell()
-
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
 /datum/action/cooldown/spell/proc/can_cast_spell()
@@ -164,14 +161,14 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
-			if(!HAS_TRAIT(human_owner.wear_suit, TRAIT_WIZARD_ROBES))
+			if(!HAS_TRAIT(owner, TRAIT_WIZARD_ROBES))
 				to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your robes!"))
 				return FALSE
-			if(!HAS_TRAIT(human_owner.head, TRAIT_WIZARD_HAT))
+			if(!HAS_TRAIT(owner, TRAIT_WIZARD_HAT))
 				to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your hat!"))
 				return FALSE
+
 	else
 		if(spell_requirements & (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_HUMAN))
 			to_chat(owner, span_warning("[src] can only be cast by humans!"))
@@ -255,7 +252,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
 
 	if(smoke_type)
-		var/smoke_type
 		switch(smoke_type)
 			if(SMOKE_HARMLESS)
 				smoke_type = /datum/effect_system/smoke_spread

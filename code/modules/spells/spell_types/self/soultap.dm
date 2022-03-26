@@ -31,12 +31,19 @@
 
 /datum/action/cooldown/spell/tap/cast(mob/living/cast_on)
 	. = ..()
-	to_chat(cast_on, span_danger("Your body feels drained and there is a burning pain in your chest."))
 	cast_on.maxHealth -= HEALTH_LOST_PER_SOUL_TAP
 	cast_on.health = min(cast_on.health, cast_on.maxHealth)
+
+	// If the next tap will kill us, give us a heads-up
+	if(cast_on.health - HEALTH_LOST_PER_SOUL_TAP <= 0)
+		to_chat(cast_on, span_danger("Your body feels incredibly drained, and the burning is hard to ignore!"))
+	else
+		to_chat(cast_on, span_danger("Your body feels drained and there is a burning pain in your chest."))
+
 	if(cast_on.maxHealth <= 0)
 		to_chat(cast_on, span_userdanger("Your weakened soul is completely consumed by the tap!"))
 		ADD_TRAIT(cast_on, TRAIT_NO_SOUL, MAGIC_TRAIT)
+		cast_on.death()
 		return
 
 	for(var/datum/action/cooldown/spell/spell in cast_on.actions)

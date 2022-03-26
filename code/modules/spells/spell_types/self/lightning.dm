@@ -102,4 +102,7 @@
 			continue
 		possibles += to_check
 
+	if(!length(possibles))
+		return null
+
 	return pick(possibles)

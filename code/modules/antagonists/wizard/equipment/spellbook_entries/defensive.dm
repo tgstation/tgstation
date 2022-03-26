@@ -15,7 +15,7 @@
 /datum/spellbook_entry/repulse
 	name = "Repulse"
 	desc = "Throws everything around the user away."
-	spell_type = /datum/action/cooldown/spell/aoe/repulse
+	spell_type = /datum/action/cooldown/spell/aoe/repulse/wizard
 	category = "Defensive"
 
 /datum/spellbook_entry/lightning_packet
