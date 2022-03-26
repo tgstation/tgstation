@@ -34,6 +34,10 @@
 		"weaponry" = 2500,
 		"sec_basic" = 1250, 
 		"explosive_weapons" = 1250,
+		"electronic_weapons" = 1250,
+		"radioactive_weapons" = 1250,
+		"beam_weapons" = 1250,
+		"explosive_weapons" = 1250,
 	)
 
 /datum/scientific_partner/medical
