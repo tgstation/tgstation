@@ -14928,6 +14928,7 @@
 /area/cargo/miningdock)
 "glK" = (
 /obj/machinery/computer/secure_data,
+/obj/machinery/light_switch/directional/north,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -22327,6 +22328,7 @@
 "jPy" = (
 /obj/structure/rack,
 /obj/item/electropack,
+/obj/machinery/light_switch/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/security/interrogation)
 "jPz" = (
