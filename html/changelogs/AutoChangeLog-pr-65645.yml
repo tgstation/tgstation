@@ -1,4 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - bugfix: "Picking a high priority role in character creation no longer breaks assistant selection behind the scenes."

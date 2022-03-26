@@ -1,4 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "Fix an overlooked crystallizer issue where gases wouldn't get consumed because of a fixed rate of removal instead of an percentage based one."
