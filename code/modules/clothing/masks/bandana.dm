@@ -21,23 +21,18 @@
 	if(slot_flags & ITEM_SLOT_HEAD)
 		to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
 	else
-		if(user.is_holding(src))
-			var/obj/item/clothing/neck/neckerchief/nk = new(src)
-			nk.name = "[name] neckerchief"
-			nk.desc = "[desc] It's tied up like a neckerchief."
-			nk.icon_state = icon_state
-			nk.worn_icon_state = worn_icon_state
-			nk.greyscale_config = greyscale_config
-			nk.greyscale_config_worn = greyscale_config_worn
-			nk.greyscale_colors = greyscale_colors
-			nk.item_flags = item_flags
-			nk.sourceBandanaType = src.type
-			var/currentHandIndex = user.get_held_index_of_item(src)
-			user.transferItemToLoc(src, null)
-			user.put_in_hand(nk, currentHandIndex)
+		if(src.slot_flags == ITEM_SLOT_NECK)
+			src.name = initial(src.name)
+			src.desc = initial(src.desc)
+			src.slot_flags = initial(src.slot_flags)
+			var/oldName = src.name
+			var/newName = initial(src.name)
+			user.visible_message(span_notice("[user] unties [oldName] back into a [newName]."), span_notice("You untie [oldName] back into a [newName]."))
+		else if(user.is_holding(src))
+			src.name = "[name] neckerchief"
+			src.desc = "[desc] It's tied up like a neckerchief."
+			src.slot_flags = ITEM_SLOT_NECK
 			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
-			qdel(src)
-			update_appearance()
 		else
 			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 
@@ -59,7 +54,10 @@
 
 /obj/item/clothing/mask/bandana/color/attack_self(mob/user)
 	adjustmask(user)
-	if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
+	if(src.slot_flags == ITEM_SLOT_NECK)
+		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
+		return
+	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
 		src.worn_icon_state += "_up"
 		src.set_greyscale(
 			new_config = /datum/greyscale_config/bandana_up,
@@ -68,8 +66,8 @@
 	else
 		src.worn_icon_state = initial(worn_icon_state)
 		src.set_greyscale(
-			new_config = /datum/greyscale_config/bandana,
-			new_worn_config = /datum/greyscale_config/bandana/worn
+			new_config = initial(greyscale_config),
+			new_worn_config = initial(greyscale_config_worn)
 		)
 
 /obj/item/clothing/mask/bandana/color/red
@@ -131,7 +129,10 @@
 
 /obj/item/clothing/mask/bandana/color/striped/attack_self(mob/user)
 	adjustmask(user)
-	if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
+	if(src.slot_flags == ITEM_SLOT_NECK)
+		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
+		return
+	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
 		src.worn_icon_state += "_up"
 		src.set_greyscale(
 			new_config = /datum/greyscale_config/bandstriped_up,
@@ -140,8 +141,8 @@
 	else
 		src.worn_icon_state = initial(worn_icon_state)
 		src.set_greyscale(
-			new_config = /datum/greyscale_config/bandstriped,
-			new_worn_config = /datum/greyscale_config/bandstriped/worn
+			new_config = initial(greyscale_config),
+			new_worn_config = initial(greyscale_config_worn)
 		)
 
 /obj/item/clothing/mask/bandana/color/striped/black
@@ -167,7 +168,10 @@
 
 /obj/item/clothing/mask/bandana/color/skull/attack_self(mob/user)
 	adjustmask(user)
-	if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
+	if(src.slot_flags == ITEM_SLOT_NECK)
+		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
+		return
+	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
 		src.worn_icon_state += "_up"
 		src.set_greyscale(
 			new_config = /datum/greyscale_config/bandskull_up,
@@ -176,8 +180,8 @@
 	else
 		src.worn_icon_state = initial(worn_icon_state)
 		src.set_greyscale(
-			new_config = /datum/greyscale_config/bandskull,
-			new_worn_config = /datum/greyscale_config/bandskull/worn
+			new_config = initial(greyscale_config),
+			new_worn_config = initial(greyscale_config_worn)
 		)
 
 /obj/item/clothing/mask/bandana/color/skull/black
