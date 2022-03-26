@@ -1,0 +1,4 @@
+author: "maxspells"
+delete-after: True
+changes: 
+  - expansion: "Surgery steps play sound effects appropriate to the step"
