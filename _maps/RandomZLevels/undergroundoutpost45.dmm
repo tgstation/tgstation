@@ -1890,25 +1890,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"ex" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "Security Checkpoint";
-	req_access_txt = "201"
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
 "ey" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1997,26 +1978,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"eK" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_y = 4
-	},
-/obj/machinery/newscaster/security_unit{
-	pixel_x = -30
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
 "eL" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -2024,19 +1985,6 @@
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
-"eM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/folder/red,
-/obj/machinery/door/window/left/directional/south{
-	dir = 8;
-	name = "Security Checkpoint";
-	req_access_txt = "201"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2064,18 +2012,6 @@
 "eP" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
-"eQ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	dir = 4;
-	name = "Hydroponics Desk";
-	req_access_txt = "201"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2195,20 +2131,6 @@
 	},
 /obj/effect/turf_decal/tile/green{
 	dir = 8
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
-"fd" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Hydroponics Desk";
-	req_access_txt = "201"
 	},
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
@@ -2515,18 +2437,6 @@
 "fL" = (
 /obj/machinery/smartfridge,
 /turf/closed/wall,
-/area/awaymission/undergroundoutpost45/crew_quarters)
-"fM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/east{
-	dir = 1;
-	name = "Hydroponics Desk";
-	req_access_txt = "201"
-	},
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "fN" = (
 /turf/closed/wall/rust,
@@ -3007,6 +2917,19 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
+"hh" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/folder/red,
+/obj/machinery/door/window/left/directional/south{
+	dir = 8;
+	name = "Security Checkpoint";
+	req_access_txt = "201"
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "hi" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/bar,
@@ -3404,6 +3327,20 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/plating{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
+"hZ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Hydroponics Desk";
+	req_access_txt = "201"
+	},
+/turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -4112,20 +4049,6 @@
 "jx" = (
 /obj/structure/table/reinforced,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
-"jy" = (
-/obj/machinery/door/window/right/directional/south{
-	name = "Bar Door";
-	req_access_txt = "201"
-	},
-/obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -8815,30 +8738,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"sc" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "UO45_EngineeringOffice";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/window/left/directional/south{
-	dir = 4;
-	name = "Engineering Reception";
-	req_access_txt = "201"
-	},
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen,
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
 "sd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 1
@@ -9221,28 +9120,6 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/engineering)
-"sP" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "UO45_EngineeringOffice";
-	name = "Privacy Shutters"
-	},
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "Engineering Reception";
-	req_access_txt = "201"
-	},
-/obj/item/folder/red,
 /turf/open/floor/iron{
 	heat_capacity = 1e+006
 	},
@@ -11664,6 +11541,26 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"zG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/structure/table,
+/obj/machinery/recharger{
+	pixel_y = 4
+	},
+/obj/machinery/newscaster{
+	pixel_x = -30
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "zK" = (
 /obj/structure/alien/weeds,
 /obj/structure/bed/nest,
@@ -11871,6 +11768,18 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"Ed" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/south{
+	dir = 4;
+	name = "Hydroponics Desk";
+	req_access_txt = "201"
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "Fd" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/airlock/command/glass{
@@ -12087,6 +11996,20 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/gateway)
+"Mu" = (
+/obj/machinery/door/window/right/directional/south{
+	name = "Bar Door";
+	req_access_txt = "201"
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/crew_quarters)
 "Mx" = (
 /obj/machinery/light/small/directional/east,
 /turf/open/misc/asteroid{
@@ -12121,6 +12044,25 @@
 	initial_gas_mix = "co2=173.4;n2=135.1;plasma=229.8;TEMP=351.9";
 	name = "Cave Floor";
 	temperature = 363.9
+	},
+/area/awaymission/undergroundoutpost45/central)
+"NA" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/pen,
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	dir = 8;
+	icon_state = "right";
+	name = "Security Checkpoint";
+	req_access_txt = "201"
+	},
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
 "NK" = (
@@ -12225,6 +12167,30 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
+"Qm" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "UO45_EngineeringOffice";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/door/window/left/directional/south{
+	dir = 4;
+	name = "Engineering Reception";
+	req_access_txt = "201"
+	},
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/item/pen,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "Qo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -12391,6 +12357,18 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"Wo" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/east{
+	dir = 1;
+	name = "Hydroponics Desk";
+	req_access_txt = "201"
+	},
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/crew_quarters)
 "WE" = (
 /obj/structure/glowshroom/single,
 /turf/open/misc/asteroid{
@@ -12409,6 +12387,28 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"XJ" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "UO45_EngineeringOffice";
+	name = "Privacy Shutters"
+	},
+/obj/machinery/door/window/left/directional/south{
+	base_state = "right";
+	dir = 4;
+	icon_state = "right";
+	name = "Engineering Reception";
+	req_access_txt = "201"
+	},
+/obj/item/folder/red,
+/turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/engineering)
 "XQ" = (
 /obj/structure/glowshroom/single,
 /turf/open/misc/asteroid{
@@ -41391,7 +41391,7 @@ ae
 bf
 eg
 cz
-eK
+zG
 eW
 fo
 fA
@@ -42161,8 +42161,8 @@ br
 an
 dR
 aP
-ex
-eM
+NA
+hh
 aP
 ae
 fD
@@ -45246,8 +45246,8 @@ bd
 dZ
 aS
 aP
-eQ
-fd
+Ed
+hZ
 ae
 ad
 ad
@@ -46803,7 +46803,7 @@ hO
 hK
 hK
 hK
-jy
+Mu
 hK
 kr
 li
@@ -47819,7 +47819,7 @@ eD
 en
 fk
 Bh
-fM
+Wo
 fZ
 fZ
 fZ
@@ -51700,8 +51700,8 @@ Ai
 zq
 ni
 ni
-sc
-sP
+Qm
+XJ
 ln
 ln
 uE

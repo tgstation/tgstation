@@ -362,13 +362,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
-"bo" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/machinery/newscaster/security_unit/directional/south,
-/turf/open/floor/iron/dark,
-/area/security/courtroom)
 "bp" = (
 /obj/machinery/atmospherics/pipe/multiz/scrubbers/visible/layer2,
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
@@ -4046,6 +4039,7 @@
 /obj/structure/table/wood,
 /obj/machinery/computer/security/wooden_tv,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "lA" = (
@@ -6106,16 +6100,6 @@
 	dir = 1
 	},
 /area/service/chapel)
-"rs" = (
-/obj/structure/table,
-/obj/machinery/door/poddoor/shutters{
-	id = "visitation";
-	name = "Visitation Shutters"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/newscaster/security_unit/directional/west,
-/turf/open/floor/iron,
-/area/security/prison/visit)
 "rt" = (
 /obj/machinery/biogenerator,
 /obj/effect/turf_decal/tile/blue{
@@ -6433,7 +6417,6 @@
 /area/science/xenobiology)
 "sj" = (
 /obj/structure/closet/secure_closet/evidence,
-/obj/machinery/newscaster/security_unit/directional/east,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 1
 	},
@@ -6497,7 +6480,6 @@
 "sv" = (
 /obj/machinery/vending/wardrobe/det_wardrobe,
 /obj/machinery/light/directional/east,
-/obj/machinery/newscaster/security_unit/directional/north,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "sx" = (
@@ -9904,14 +9886,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
-"CD" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/newscaster/security_unit/directional/west,
-/turf/open/floor/iron,
-/area/hallway/primary/central/fore)
 "CE" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
@@ -10189,6 +10163,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/machinery/newscaster/directional/west,
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "Dt" = (
@@ -11147,10 +11122,10 @@
 	name = "Judge";
 	dir = 8
 	},
-/obj/machinery/newscaster/security_unit/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Courtroom"
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/security/courtroom)
 "FZ" = (
@@ -12782,7 +12757,7 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "Ko" = (
-/obj/machinery/newscaster/security_unit/directional/north,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/textured,
 /area/security/brig)
 "Kp" = (
@@ -17538,6 +17513,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "Xt" = (
@@ -42450,7 +42426,7 @@ Da
 dr
 cW
 nZ
-rs
+mo
 zD
 HN
 nU
@@ -42459,7 +42435,7 @@ Pe
 nm
 nm
 kN
-CD
+ti
 ti
 vr
 FQ
@@ -43499,7 +43475,7 @@ au
 WF
 WF
 qZ
-bo
+WF
 zh
 nm
 Jv
