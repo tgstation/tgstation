@@ -5,7 +5,15 @@
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
 	greet = "<span class='boldannounce'>You've mastered the basics of CQC.</span>"
 	icon_state = "cqcmanual"
-	remarks = list("Kick... Slam...", "Lock... Kick...", "Strike their abdomen, neck and back for critical damage...", "Slam... Lock...", "I could probably combine this with some other martial arts!", "Words that kill...", "The last and final moment is yours...")
+	remarks = list(
+		"Kick... Slam...",
+		"Lock... Kick...",
+		"Strike their abdomen, neck and back for critical damage...",
+		"Slam... Lock...",
+		"I could probably combine this with some other martial arts!",
+		"Words that kill...",
+		"The last and final moment is yours...",
+	)
 
 /obj/item/book/granter/martial/cqc/on_reading_finished(mob/living/carbon/user)
 	. = ..()

@@ -33,7 +33,7 @@
 		if(HAS_TRAIT(to_check, TRAIT_TIME_STOP_IMMUNE))
 			immune[to_check] = TRUE
 	for(var/mob/living/simple_animal/hostile/guardian/stand in GLOB.parasites)
-		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense tt a person's stand would also be immune.
+		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense that a person's stand would also be immune.
 			immune[stand] = TRUE
 	if(start)
 		INVOKE_ASYNC(src, .proc/timestop)

@@ -9,7 +9,15 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 	worn_icon_state = "scroll"
-	remarks = list("Wait, a high protein diet is really all it takes to become stabproof...?", "Overwhelming force, immovable object...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Become one with the carp...", "Glub...")
+	remarks = list(
+		"Wait, a high protein diet is really all it takes to become stabproof...?",
+		"Overwhelming force, immovable object...",
+		"Focus... And you'll be able to incapacitate any foe in seconds...",
+		"I must pierce armor for maximum damage...",
+		"I don't think this would combine with other martial arts...",
+		"Become one with the carp...",
+		"Glub...",
+	)
 
 /obj/item/book/granter/martial/carp/on_reading_finished(mob/living/carbon/user)
 	. = ..()

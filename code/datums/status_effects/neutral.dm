@@ -107,7 +107,8 @@
 		playsound(owner, 'sound/weapons/gun/shotgun/shot.ogg', 75, FALSE)
 		to_chat(rewarded, span_greentext("You feel a surge of mana flow into you!"))
 		for(var/datum/action/cooldown/spell/spell in rewarded.actions)
-			spell.revert_cast()
+			spell.next_use_time = world.time
+			spell.UpdateButtonIcon()
 
 		rewarded.adjustBruteLoss(-25)
 		rewarded.adjustFireLoss(-25)

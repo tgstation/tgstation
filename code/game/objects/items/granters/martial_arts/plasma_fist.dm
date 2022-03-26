@@ -7,7 +7,14 @@
 		the plasma fist, which when pulled off will make someone violently explode.</span>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state ="scroll2"
-	remarks = list("Balance...", "Power...", "Control...", "Mastery...", "Vigilance...", "Skill...")
+	remarks = list(
+		"Balance...",
+		"Power...",
+		"Control...",
+		"Mastery...",
+		"Vigilance...",
+		"Skill...",
+	)
 
 /obj/item/book/granter/martial/plasma_fist/on_reading_finished(mob/living/carbon/user)
 	. = ..()

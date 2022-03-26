@@ -4,10 +4,6 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
 
-/obj/item/book/granter/action/spell/Destroy(force)
-	UnregisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED)
-	return ..()
-
 /**
  * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
  *
@@ -65,9 +61,8 @@
 /obj/item/book/granter/action/spell/random/Initialize(mapload)
 	. = ..()
 	var/static/list/banned_spells = list(
-		/obj/item/book/granter/action/spell/mime/mimery_blockade,
-		/obj/item/book/granter/action/spell/mime/mimery_guns,
-	)
+		/obj/item/book/granter/action/spell/true_random,
+	) + typesof(/obj/item/book/granter/action/spell/mime)
 
 	var/real_type = pick(subtypesof(/obj/item/book/granter/action/spell) - banned_spells)
 	new real_type(loc)

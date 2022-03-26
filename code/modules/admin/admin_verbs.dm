@@ -655,7 +655,10 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	var/list/spell_list = list()
 	for(var/datum/action/cooldown/spell/to_add as anything in GLOB.spells)
-		spell_list[initial(to_add.name)] = to_add
+		var/spell_name = initial(to_add.name)
+		if(spell_name == "Spell" || findtext(spell_name, "SDQL"))
+			continue
+		spell_list[spell_name] = to_add
 
 	var/chosen_spell = tgui_input_list(usr, "Choose the spell to give to [spell_recipient]", "ABRAKADABRA", sort_list(spell_list))
 	if(isnull(chosen_spell))

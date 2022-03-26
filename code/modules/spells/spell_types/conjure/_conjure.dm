@@ -2,6 +2,7 @@
 	sound = 'sound/items/welder.ogg'
 	school = SCHOOL_CONJURATION
 
+	/// The radius around the caster the items will appear. 0 = spawns beneath the caster
 	var/summon_radius = 7
 	/// A list of types that will be created on summon.
 	/// The type is picked from this list, not all provided are guaranteed.
@@ -45,5 +46,6 @@
 
 			post_summon(summoned_object, cast_on)
 
+/// Called on atoms summoned after they are created, allows extra variable editing and such of created objects
 /datum/action/cooldown/spell/conjure/proc/post_summon(atom/summoned_object, atom/cast_on)
 	return
