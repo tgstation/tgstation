@@ -469,10 +469,10 @@
 	cached_gases[/datum/gas/nitrous_oxide][MOLES] += heat_efficency
 
 	SET_REACTION_RESULTS(heat_efficency)
-	var/energy_used = heat_efficency * N2O_FORMATION_ENERGY
+	var/energy_released = heat_efficency * N2O_FORMATION_ENERGY
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((air.temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB) // The air cools down when reacting.
+		air.temperature = max(((air.temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB) // The air cools down when reacting.
 	return REACTING
 
 
@@ -703,10 +703,10 @@
 	cached_gases[/datum/gas/nitrogen][MOLES] += heat_efficency
 
 	SET_REACTION_RESULTS(heat_efficency)
-	var/energy_produced = heat_efficency * NITRIUM_DECOMPOSITION_ENERGY
+	var/energy_released = heat_efficency * NITRIUM_DECOMPOSITION_ENERGY
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((temperature * old_heat_capacity + energy_produced) / new_heat_capacity), TCMB) //the air heats up when reacting
+		air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB) //the air heats up when reacting
 	return REACTING
 
 
@@ -788,10 +788,10 @@
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
 
 	SET_REACTION_RESULTS(nob_formed)
-	var/energy_produced = nob_formed * (NOBLIUM_FORMATION_ENERGY / (max(cached_gases[/datum/gas/bz][MOLES], 1)))
+	var/energy_released = nob_formed * (NOBLIUM_FORMATION_ENERGY / (max(cached_gases[/datum/gas/bz][MOLES], 1)))
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((air.temperature * old_heat_capacity + energy_produced) / new_heat_capacity), TCMB)
+		air.temperature = max(((air.temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
 	return REACTING
 
 
@@ -830,10 +830,10 @@
 	cached_gases[/datum/gas/halon][MOLES] += heat_efficency * 4.25
 
 	SET_REACTION_RESULTS(heat_efficency * 4.25)
-	var/energy_used = heat_efficency * HALON_FORMATION_ENERGY
+	var/energy_released = heat_efficency * HALON_FORMATION_ENERGY
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
+		air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
 	return REACTING
 
 
@@ -914,10 +914,10 @@
 	cached_gases[/datum/gas/healium][MOLES] += heat_efficency * 3
 
 	SET_REACTION_RESULTS(heat_efficency * 3)
-	var/energy_used = heat_efficency * HEALIUM_FORMATION_ENERGY
+	var/energy_released = heat_efficency * HEALIUM_FORMATION_ENERGY
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
+		air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
 	return REACTING
 
 /**
@@ -1037,10 +1037,10 @@
 	cached_gases[/datum/gas/proto_nitrate][MOLES] += heat_efficency * 2.2
 
 	SET_REACTION_RESULTS(heat_efficency * 2.2)
-	var/energy_used = heat_efficency * PN_FORMATION_ENERGY
+	var/energy_released = heat_efficency * PN_FORMATION_ENERGY
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)
+		air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
 	return REACTING
 
 /**
@@ -1072,10 +1072,10 @@
 	cached_gases[/datum/gas/proto_nitrate][MOLES] += produced_amount * 0.5
 
 	SET_REACTION_RESULTS(produced_amount * 0.5)
-	var/energy_released = produced_amount * PN_HYDROGEN_CONVERSION_ENERGY
+	var/energy_used = produced_amount * PN_HYDROGEN_CONVERSION_ENERGY
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max((air.temperature * old_heat_capacity - energy_released) / new_heat_capacity, TCMB)
+		air.temperature = max((air.temperature * old_heat_capacity - energy_used) / new_heat_capacity, TCMB)
 	return REACTING
 
 /**

@@ -108,7 +108,7 @@
 	factor = list(
 		/datum/gas/oxygen = "[MINIMUM_MOLE_COUNT] moles of oxygen need to be present for the reaction to occur. Not consumed.",
 		/datum/gas/nitrium = "Nitrium is consumed at 1 reaction rate",
-		/datum/gas/tritium = "Tritium is produced at 1 reaction rate",
+		/datum/gas/hydrogen = "Tritium is produced at 1 reaction rate",
 		/datum/gas/nitrogen = "Nitrogen is produced at 1 reaction rate",
 		"Temperature" = " Can only occur below [NITRIUM_DECOMPOSITION_MAX_TEMP]. Higher temperature increases the reaction rate.",
 		"Energy" = "[NITRIUM_DECOMPOSITION_ENERGY] joules of energy is released per reaction rate",
@@ -139,7 +139,7 @@
 		/datum/gas/bz = "BZ is consumed at 0.25 reaction rate",
 		/datum/gas/tritium = "Tritium is consumed at 4 reaction rate",
 		/datum/gas/halon = "Halon is produced at 4.25 reaction rate",
-		"Energy" = "[HALON_FORMATION_ENERGY] joules of energy is absorbed per reaction rate",
+		"Energy" = "[HALON_FORMATION_ENERGY] joules of energy is released per reaction rate",
 		"Temperature" = "Can only occur between [HALON_FORMATION_MIN_TEMPERATURE] - [HALON_FORMATION_MAX_TEMPERATURE] kelvin",
 	)
 
@@ -191,7 +191,7 @@
 	factor = list(
 		/datum/gas/hydrogen = "[PN_HYDROGEN_CONVERSION_THRESHOLD] moles of hydrogen needs to be present for the reaction to occur. Hydrogen is consumed at 1 reaction rate.",
 		/datum/gas/proto_nitrate = "[MINIMUM_MOLE_COUNT] moles of proto-nitrate needs to be present for the reaction to occur. Proto nitrate is produced at 0.5 reaction rate.",
-		"Energy" = "[PN_HYDROGEN_CONVERSION_ENERGY] joules of energy is released per reaction rate",
+		"Energy" = "[PN_HYDROGEN_CONVERSION_ENERGY] joules of energy is absorbed per reaction rate",
 	)
 
 /datum/gas_reaction/proto_nitrate_tritium_response/init_factors() // Fixed reaction rate
