@@ -21,6 +21,7 @@
 
 	var/datum/port/input/image_pixel_x
 	var/datum/port/input/image_pixel_y
+	var/datum/port/input/image_rotation
 
 	/// On/Off signals
 	var/datum/port/input/signal_on
@@ -38,6 +39,7 @@
 
 	image_pixel_x = add_input_port("X-Axis Shift", PORT_TYPE_NUMBER)
 	image_pixel_y = add_input_port("Y-Axis Shift", PORT_TYPE_NUMBER)
+	image_rotation = add_input_port("Overlay Rotation", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/object_overlay/Destroy()
 	for(var/active_overlay in active_overlays)
@@ -105,6 +107,11 @@
 
 	if(image_pixel_y.value != null)
 		cool_overlay.pixel_y = image_pixel_y.value
+
+	if(image_rotation.value != null)
+		var/matrix/turn_matrix = cool_overlay.transform
+		turn_matrix.Turn(image_rotation.value)
+		cool_overlay.transform = turn_matrix
 
 	var/datum/atom_hud/alternate_appearance/basic/one_person/alt_appearance = target_atom.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
