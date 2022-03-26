@@ -62,7 +62,7 @@
 	accepted_experiments=list(
 		/datum/experiment/ordnance/gaseous/noblium,
 		/datum/experiment/ordnance/explosive/nobliumbomb,
-		/datum/experiment/ordnance/explosive/halon,
+		/datum/experiment/ordnance/gaseous/halon,
 	)
 	boosted_nodes=list(
 		"engineering" = 5000,
