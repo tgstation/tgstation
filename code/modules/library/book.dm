@@ -57,15 +57,10 @@
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
-		if(user.is_blind())
-			to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
+		if(!user.can_write(I))
 			return
 		if(unique)
 			to_chat(user, span_warning("These pages don't seem to take the ink well! Looks like you can't modify it."))
-			return
-		var/literate = user.is_literate()
-		if(!literate)
-			to_chat(user, span_notice("You scribble illegibly on the cover of [src]!"))
 			return
 		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
 		if(isnull(choice))

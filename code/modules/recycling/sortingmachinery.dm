@@ -60,8 +60,7 @@
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
+		if(!user.can_write(W))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
@@ -255,8 +254,7 @@
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 
 	else if(istype(W, /obj/item/pen))
-		if(!user.is_literate())
-			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
+		if(!user.can_write(W))
 			return
 		var/str = tgui_input_text(user, "Label text?", "Set label", max_length = MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))

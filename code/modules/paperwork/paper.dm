@@ -239,9 +239,12 @@
 		P.attackby(src, user)
 		return
 	else if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
+		if(!user.can_write(P))
+			return
 		if(get_info_length() >= MAX_PAPER_LENGTH) // Sheet must have less than 5000 charaters
 			to_chat(user, span_warning("This sheet of paper is full!"))
 			return
+
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
@@ -355,6 +358,53 @@
 
 	return data
 
+/obj/item/paper/ui_act(action, params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("stamp")
+			var/stamp_x = text2num(params["x"])
+			var/stamp_y = text2num(params["y"])
+			var/stamp_r = text2num(params["r"]) // rotation in degrees
+			var/stamp_icon_state = params["stamp_icon_state"]
+			var/stamp_class = params["stamp_class"]
+			if(stamp(stamp_x, stamp_y, stamp_r, stamp_icon_state, stamp_class))
+				update_static_data(usr, ui)
+				var/obj/stamp = ui.user.get_active_held_item()
+				ui.user.visible_message(span_notice("[ui.user] stamps [src] with \the [stamp.name]!"), span_notice("You stamp [src] with \the [stamp.name]!"))
+			. = TRUE
+
+		if("save")
+			var/in_paper = params["text"]
+			var/paper_len = length(in_paper)
+			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
+
+			if(paper_len > MAX_PAPER_LENGTH)
+				// Side note, the only way we should get here is if
+				// the javascript was modified, somehow, outside of
+				// byond.  but right now we are logging it as
+				// the generated html might get beyond this limit
+				log_paper("[key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH]")
+			if(paper_len == 0)
+				to_chat(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
+			else
+				log_paper("[key_name(ui.user)] writing to paper [name]")
+				if(info != in_paper)
+					to_chat(ui.user, "You have added to your paper masterpiece!");
+					info = in_paper
+					add_info = null
+					add_info_style = null
+					update_static_data(usr,ui)
+
+			update_appearance()
+			. = TRUE
+
+/obj/item/paper/ui_host(mob/user)
+	if(istype(loc, /obj/structure/noticeboard))
+		return loc
+	return ..()
+
 /**
  * ##stamp
  *
@@ -409,53 +459,6 @@
  */
 /obj/item/paper/proc/is_denied()
 	return stamped && ("stamp-deny" in stamped)
-
-/obj/item/paper/ui_act(action, params, datum/tgui/ui)
-	. = ..()
-	if(.)
-		return
-	switch(action)
-		if("stamp")
-			var/stamp_x = text2num(params["x"])
-			var/stamp_y = text2num(params["y"])
-			var/stamp_r = text2num(params["r"]) // rotation in degrees
-			var/stamp_icon_state = params["stamp_icon_state"]
-			var/stamp_class = params["stamp_class"]
-			if(stamp(stamp_x, stamp_y, stamp_r, stamp_icon_state, stamp_class))
-				update_static_data(usr, ui)
-				var/obj/stamp = ui.user.get_active_held_item()
-				ui.user.visible_message(span_notice("[ui.user] stamps [src] with \the [stamp.name]!"), span_notice("You stamp [src] with \the [stamp.name]!"))
-			. = TRUE
-
-		if("save")
-			var/in_paper = params["text"]
-			var/paper_len = length(in_paper)
-			field_counter = params["field_counter"] ? text2num(params["field_counter"]) : field_counter
-
-			if(paper_len > MAX_PAPER_LENGTH)
-				// Side note, the only way we should get here is if
-				// the javascript was modified, somehow, outside of
-				// byond.  but right now we are logging it as
-				// the generated html might get beyond this limit
-				log_paper("[key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-MAX_PAPER_LENGTH]")
-			if(paper_len == 0)
-				to_chat(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
-			else
-				log_paper("[key_name(ui.user)] writing to paper [name]")
-				if(info != in_paper)
-					to_chat(ui.user, "You have added to your paper masterpiece!");
-					info = in_paper
-					add_info = null
-					add_info_style = null
-					update_static_data(usr,ui)
-
-			update_appearance()
-			. = TRUE
-
-/obj/item/paper/ui_host(mob/user)
-	if(istype(loc, /obj/structure/noticeboard))
-		return loc
-	return ..()
 
 /**
  * Construction paper
