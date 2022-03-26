@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "Nanotrasen will no longer stop placing two chairs on the same spot in IceBoxStation Departures."
