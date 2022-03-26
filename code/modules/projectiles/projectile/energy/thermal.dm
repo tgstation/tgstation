@@ -3,7 +3,7 @@
 	icon_state = "infernoshot"
 	damage = 20
 	damage_type = BURN
-	flag = ENERGY
+	armor_flag = ENERGY
 	armour_penetration = 10
 	reflectable = NONE
 	wound_bonus = 0
@@ -29,7 +29,7 @@
 	damage = 20
 	damage_type = BRUTE
 	armour_penetration = 10
-	flag = ENERGY
+	armor_flag = ENERGY
 	sharpness = SHARP_POINTY //it's a big ol' shard of ice
 	reflectable = NONE
 	wound_bonus = 0
