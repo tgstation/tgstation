@@ -43,7 +43,7 @@ export const AtmosControlConsole = (props, context) => {
       : chambers.find((chamber) => chamber.id === chamberId);
   const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
   return (
-    <Window width={500} height={315}>
+    <Window width={550} height={350}>
       <Window.Content scrollable>
         {chambers.length > 1 && (
           <Section title="Chamber Selection">
@@ -171,7 +171,7 @@ export const AtmosControlConsole = (props, context) => {
             </Stack>
           </Section>
         )}
-        <AtmosHandbookContent vertical />
+        <AtmosHandbookContent />
       </Window.Content>
     </Window>
   );
