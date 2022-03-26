@@ -248,21 +248,10 @@
 	module_type = MODULE_USABLE
 	complexity = 2
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	incompatible_modules = list(/obj/item/mod/module/holster)
+	incompatible_modules = list(/obj/item/mod/module/espionage)
 	cooldown_time = 0.5 SECONDS
-	/// Gun we have holstered.
-	var/obj/item/gun/holstered
 
 /obj/item/mod/module/holster/on_use()
 	. = ..()
 	if(!.)
 		return
-
-/obj/item/mod/module/holster/on_uninstall()
-	if(holstered)
-		holstered.forceMove(drop_location())
-		holstered = null
-
-/obj/item/mod/module/holster/Destroy()
-	QDEL_NULL(holstered)
-	return ..()
