@@ -87,7 +87,7 @@
 
 	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
 		to_chat(user, span_warning("You start mashing buttons at random!"))
-		if(do_after(user, 100, target = src))
+		if(do_after(user, 10 SECONDS, target = src))
 			ui_act("move", modifiers)
 		return
 	. = ..()
