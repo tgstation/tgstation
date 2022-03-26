@@ -1,6 +1,8 @@
 #define MODPAINT_MAX_COLOR_VALUE 1.5
 #define MODPAINT_MIN_COLOR_VALUE 0
-#define MODPAINT_MAX_OVERALL_COLORS 3
+#define MODPAINT_MAX_SECTION_COLORS 2
+#define MODPAINT_MIN_SECTION_COLORS 0.25
+#define MODPAINT_MAX_OVERALL_COLORS 4
 #define MODPAINT_MIN_OVERALL_COLORS 1.5
 
 /obj/item/mod/paint
@@ -54,7 +56,7 @@
 /obj/item/mod/paint/ui_close(mob/user)
 	. = ..()
 	editing_mod = null
-	qdel(proxy_view)
+	QDEL_NULL(proxy_view)
 	current_color = color_matrix_identity()
 
 /obj/item/mod/paint/ui_status(mob/user)
@@ -82,20 +84,41 @@
 			animate(proxy_view, time = 0.5 SECONDS, color = current_color)
 		if("confirm")
 			var/total_color_value = 0
-			var/list/formatted_color = current_color.Copy()
-			formatted_color.Cut(13, length(formatted_color))
-			for(var/color_value in formatted_color)
+			var/list/total_colors = current_color.Copy()
+			total_colors.Cut(13, length(total_colors))
+			var/red_value = current_color[1] + current_color[5] + current_color[9]
+			var/green_value = current_color[2] + current_color[6] + current_color[10]
+			var/blue_value = current_color[3] + current_color[7] + current_color[11]
+			if(red_value > MODPAINT_MAX_SECTION_COLORS)
+				balloon_alert(usr, "total red too high! ([red_value*100]%/[MODPAINT_MAX_SECTION_COLORS*100]%)")
+				return
+			else if(red_value < MODPAINT_MIN_SECTION_COLORS)
+				balloon_alert(usr, "total red too low! ([red_value*100]%/[MODPAINT_MIN_SECTION_COLORS*100]%)")
+				return
+			if(green_value > MODPAINT_MAX_SECTION_COLORS)
+				balloon_alert(usr, "total green too high! ([green_value*100]%/[MODPAINT_MAX_SECTION_COLORS*100]%)")
+				return
+			else if(green_value < MODPAINT_MIN_SECTION_COLORS)
+				balloon_alert(usr, "total green too low! ([green_value*100]%/[MODPAINT_MIN_SECTION_COLORS*100]%)")
+				return
+			if(blue_value > MODPAINT_MAX_SECTION_COLORS)
+				balloon_alert(usr, "total blue too high! ([blue_value*100]%/[MODPAINT_MAX_SECTION_COLORS*100]%)")
+				return
+			else if(blue_value < MODPAINT_MIN_SECTION_COLORS)
+				balloon_alert(usr, "total blue too low! ([blue_value*100]%/[MODPAINT_MIN_SECTION_COLORS*100]%)")
+				return
+			for(var/color_value in total_colors)
 				total_color_value += color_value
 				if(color_value > MODPAINT_MAX_COLOR_VALUE)
 					balloon_alert(usr, "one of colors too high! ([color_value*100]%/[MODPAINT_MAX_COLOR_VALUE*100]%")
 					return
-				if(color_value < MODPAINT_MIN_COLOR_VALUE)
+				else if(color_value < MODPAINT_MIN_COLOR_VALUE)
 					balloon_alert(usr, "one of colors too low! ([color_value*100]%/[MODPAINT_MIN_COLOR_VALUE*100]%")
 					return
 			if(total_color_value > MODPAINT_MAX_OVERALL_COLORS)
 				balloon_alert(usr, "total colors too high! ([total_color_value*100]%/[MODPAINT_MAX_OVERALL_COLORS*100]%)")
 				return
-			if(total_color_value < MODPAINT_MIN_OVERALL_COLORS)
+			else if(total_color_value < MODPAINT_MIN_OVERALL_COLORS)
 				balloon_alert(usr, "total colors too low! ([total_color_value*100]%/[MODPAINT_MIN_OVERALL_COLORS*100]%)")
 				return
 			editing_mod.set_mod_color(current_color)
@@ -121,6 +144,8 @@
 
 #undef MODPAINT_MAX_COLOR_VALUE
 #undef MODPAINT_MIN_COLOR_VALUE
+#undef MODPAINT_MAX_SECTION_COLORS
+#undef MODPAINT_MIN_SECTION_COLORS
 #undef MODPAINT_MAX_OVERALL_COLORS
 #undef MODPAINT_MIN_OVERALL_COLORS
 
