@@ -97,7 +97,7 @@
 /obj/item/analyzer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "GasAnalyzer")
+		ui = new(user, src, "GasAnalyzer", "Gas Analyzer")
 		ui.open()
 
 /obj/item/analyzer/ui_static_data(mob/user)
