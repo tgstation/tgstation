@@ -1,5 +1,3 @@
-//slime scanner
-
 /obj/item/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."

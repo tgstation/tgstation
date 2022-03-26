@@ -1,4 +1,3 @@
-
 /obj/item/sequence_scanner
 	name = "genetic sequence scanner"
 	icon = 'icons/obj/device.dmi'
