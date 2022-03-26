@@ -100,9 +100,6 @@
 	new_data["frame_type"] = frame_type
 	return new_data
 
-/// Only returns paintings with 23x23 or 24x24 sizes fitting AI display icon.
-#define PAINTINGS_FILTER_AI_PORTRAIT 1
-
 SUBSYSTEM_DEF(persistent_paintings)
 	name = "Persistent Paintings"
 	init_order = INIT_ORDER_PERSISTENT_PAINTINGS
@@ -147,18 +144,33 @@ SUBSYSTEM_DEF(persistent_paintings)
 
 	return ..()
 
-/// Generates painting data ready to be consumed by ui
-/datum/controller/subsystem/persistent_paintings/proc/painting_ui_data(filter=NONE,admin=FALSE)
+/**
+ * Generates painting data ready to be consumed by ui.
+ * Args:
+ * * filter: a bitfield argument is used to filter out paintings that don't match certain requisites.
+ * * admin : whether all the json data of the painting is added to the return value or only the more IC details
+ * * search_text : text to search for if the PAINTINGS_FILTER_SEARCH_TITLE or PAINTINGS_FILTER_SEARCH_CREATOR filters are enabled.
+ */
+/datum/controller/subsystem/persistent_paintings/proc/painting_ui_data(filter=NONE, admin=FALSE, search_text)
 	. = list()
+	var/searching = filter & (PAINTINGS_FILTER_SEARCH_TITLE|PAINTINGS_FILTER_SEARCH_CREATOR) && search_text
 	for(var/datum/painting/painting as anything in paintings)
 		if(filter & PAINTINGS_FILTER_AI_PORTRAIT && ((painting.width != 24 && painting.width != 23) || (painting.height != 24 && painting.height != 23)))
 			continue
+		if(searching)
+			var/haystack_text = ""
+			if(filter & PAINTINGS_FILTER_SEARCH_TITLE)
+				haystack_text = painting.title
+			else if(filter & PAINTINGS_FILTER_SEARCH_CREATOR)
+				haystack_text = painting.creator_name
+			if(!findtext(haystack_text, search_text))
+				continue
 		if(admin)
 			var/list/pdata = painting.to_json()
 			pdata["ref"] = REF(painting)
 			. += list(pdata)
 		else
-			. += list(list("title" = painting.title,"md5" = painting.md5,"ref" = REF(painting)))
+			. += list(list("title" = painting.title, "creator" = painting.creator_name, "md5" = painting.md5,"ref" = REF(painting)))
 
 /// Returns paintings with given tag.
 /datum/controller/subsystem/persistent_paintings/proc/get_paintings_with_tag(tag_name)

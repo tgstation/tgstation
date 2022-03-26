@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = ENERGY
+	armor_flag = ENERGY
 
 /obj/projectile/energy/floramut/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -34,7 +34,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = ENERGY
+	armor_flag = ENERGY
 
 /obj/projectile/energy/florayield/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -49,7 +49,7 @@
 	damage = 0
 	damage_type = TOX
 	nodamage = TRUE
-	flag = ENERGY
+	armor_flag = ENERGY
 
 /obj/projectile/energy/florarevolution/on_hit(atom/target, blocked = FALSE)
 	. = ..()

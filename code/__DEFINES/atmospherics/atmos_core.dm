@@ -151,6 +151,11 @@
 /// liters in a cell
 #define CELL_VOLUME 2500
 
+///O2 value for anesthetic canister
+#define O2_ANESTHETIC 0.65
+///N2O value for anesthetic canister
+#define N2O_ANESTHETIC 0.35
+
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1
 #define ATMOS_PASS_NO 0
