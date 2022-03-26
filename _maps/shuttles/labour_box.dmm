@@ -95,20 +95,17 @@
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "q" = (
-/obj/machinery/door/airlock/titanium{
-	id_tag = "prisonshuttle";
-	name = "Labor Shuttle Airlock"
-	},
 /obj/docking_port/mobile{
 	dir = 8;
 	dwidth = 2;
 	height = 5;
 	id = "laborcamp";
 	name = "labor camp shuttle";
-	port_direction = 4;
-	width = 9
+	width = 9;
+	port_direction = "4"
 	},
-/turf/open/floor/mineral/titanium,
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
 /area/shuttle/labor)
 "r" = (
 /obj/structure/shuttle/engine/heater,
@@ -136,7 +133,7 @@ a
 i
 a
 a
-a
+b
 W
 a
 a
@@ -177,7 +174,7 @@ s
 (5,1,1) = {"
 a
 a
-i
+b
 a
 a
 a

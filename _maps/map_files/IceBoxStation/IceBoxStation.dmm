@@ -1579,6 +1579,13 @@
 /obj/item/restraints/handcuffs,
 /obj/item/radio/off,
 /obj/structure/cable,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	req_one_access_txt = "1";
+	name = "Brig Reception"
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Brig Reception"
+	},
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/auxiliary)
 "aFZ" = (
@@ -2381,7 +2388,6 @@
 "aTk" = (
 /obj/machinery/vending/wardrobe/sec_wardrobe,
 /obj/machinery/light/directional/north,
-/obj/item/radio/intercom/prison/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_edge,
 /area/security/lockers)
@@ -3290,7 +3296,7 @@
 "blo" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor{
-	name = "Armory Desk";
+	name = "Warden Desk";
 	req_access_txt = "3"
 	},
 /obj/item/paper_bin{
@@ -3302,6 +3308,9 @@
 	pixel_y = 4
 	},
 /obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/window/left/directional/north{
+	name = "Warden Desk"
+	},
 /turf/open/floor/iron,
 /area/security/warden)
 "blv" = (
@@ -4782,6 +4791,12 @@
 /obj/structure/table,
 /obj/machinery/recharger{
 	pixel_x = -6
+	},
+/obj/machinery/button/door{
+	id = "BrigLock";
+	name = "Cell Shutters";
+	pixel_y = 9;
+	pixel_x = 7
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
@@ -6388,6 +6403,10 @@
 "coi" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = "Interrogation";
+	name = "Interrogation Shutters"
+	},
 /turf/open/floor/plating,
 /area/security/interrogation)
 "cop" = (
@@ -8607,7 +8626,7 @@
 /obj/effect/landmark/secequipment,
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/camera/directional/north{
-	c_tag = "Brig Office"
+	c_tag = "Security - Office"
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/security/office)
@@ -9002,7 +9021,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/smooth_half,
-/area/security/warden)
+/area/security/brig/upper)
 "dkQ" = (
 /obj/machinery/door/airlock/atmos{
 	name = "Atmospherics Maintenance";
@@ -9050,7 +9069,7 @@
 /obj/structure/bed/dogbed/lia,
 /mob/living/simple_animal/hostile/carp/lia,
 /obj/machinery/camera/directional/west{
-	c_tag = "Brig HOS Office"
+	c_tag = "Security - HoS Office"
 	},
 /turf/open/floor/carpet/royalblue,
 /area/command/heads_quarters/hos)
@@ -15268,7 +15287,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/maintenance/fore/greater)
+/area/ai_monitored/command/storage/eva)
 "gzQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -15401,7 +15420,7 @@
 	},
 /obj/effect/turf_decal/weather/snow/corner,
 /turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/area/security/lockers)
 "gDf" = (
 /obj/machinery/atmospherics/components/binary/pump/on{
 	dir = 1
@@ -16955,6 +16974,7 @@
 /area/command/heads_quarters/hos)
 "hkV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth_edge{
 	dir = 1
 	},
@@ -17591,7 +17611,7 @@
 "hAc" = (
 /obj/structure/cable,
 /turf/open/floor/iron/smooth_half,
-/area/security/warden)
+/area/security/brig/upper)
 "hAl" = (
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Checkpoint";
@@ -18880,6 +18900,7 @@
 	id = "armory";
 	name = "Armoury Shutter"
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory/upper)
 "ifB" = (
@@ -19146,7 +19167,7 @@
 /area/maintenance/starboard/fore)
 "ilZ" = (
 /obj/machinery/camera/directional/west{
-	c_tag = "Brig Infirmary"
+	c_tag = "Security - Infirmary"
 	},
 /obj/machinery/light_switch/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -21726,7 +21747,9 @@
 "jzN" = (
 /obj/machinery/disposal/bin,
 /obj/item/radio/intercom/prison/directional/north,
-/obj/machinery/camera/autoname/directional/north,
+/obj/machinery/camera/autoname/directional/north{
+	c_tag = "Security - Warden's Office"
+	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
@@ -21812,6 +21835,7 @@
 /area/engineering/supermatter)
 "jCh" = (
 /obj/effect/turf_decal/tile/red/half,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured,
 /area/ai_monitored/security/armory/upper)
 "jCx" = (
@@ -23054,7 +23078,7 @@
 /area/maintenance/starboard/aft)
 "khZ" = (
 /obj/machinery/camera/directional/west{
-	c_tag = "Brig Equipment Room"
+	c_tag = "Security - Equipment Room"
 	},
 /turf/open/floor/glass/reinforced,
 /area/security/lockers)
@@ -24400,7 +24424,7 @@
 "kSg" = (
 /obj/machinery/suit_storage_unit/security,
 /obj/machinery/camera/directional/north{
-	c_tag = "Brig EVA"
+	c_tag = "Security - EVA"
 	},
 /turf/open/floor/iron/smooth,
 /area/security/brig/upper)
@@ -25396,7 +25420,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/south{
-	c_tag = "Brig Transport Parlor"
+	c_tag = "Security - Vestibule"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -25553,7 +25577,7 @@
 	dir = 1
 	},
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Brig South Upper"
+	c_tag = "Security - Upper Hallway South"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -25700,7 +25724,7 @@
 /area/service/kitchen/diner)
 "lDK" = (
 /turf/open/floor/iron/smooth_half,
-/area/security/warden)
+/area/security/brig/upper)
 "lDL" = (
 /obj/item/radio/intercom/directional/north,
 /obj/structure/table/glass,
@@ -25751,6 +25775,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/storage/box/deputy{
+	pixel_y = 20;
+	pixel_x = 9
+	},
 /turf/open/floor/wood/large,
 /area/command/heads_quarters/hos)
 "lFx" = (
@@ -29733,6 +29761,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
+/obj/item/radio/intercom/prison/directional/north,
 /turf/open/floor/iron/smooth_edge,
 /area/security/lockers)
 "nJt" = (
@@ -30569,7 +30598,8 @@
 /obj/machinery/flasher/portable,
 /obj/machinery/door/window/brigdoor{
 	req_access_txt = "2";
-	dir = 1
+	dir = 1;
+	name = "Flash Storage"s
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -31587,7 +31617,7 @@
 	},
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/camera/directional/south{
-	c_tag = "Brig Holding Cells"
+	c_tag = "Security - Holding Cells"
 	},
 /turf/open/floor/iron/smooth,
 /area/security/brig/upper)
@@ -31989,10 +32019,6 @@
 /obj/item/storage/box/seccarts{
 	pixel_x = 9;
 	pixel_y = 9
-	},
-/obj/item/storage/box/deputy{
-	pixel_y = 20;
-	pixel_x = 9
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/wood/large,
@@ -35892,6 +35918,13 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
+/obj/machinery/door/window/brigdoor/right/directional/west{
+	name = "Brig Reception";
+	req_one_access_txt = "1"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Brig Reception"
+	},
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/auxiliary)
 "qPs" = (
@@ -36210,7 +36243,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/south{
-	c_tag = "Brig Vestibule"
+	c_tag = "Security - Transport Parlor"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -39285,6 +39318,11 @@
 /area/maintenance/starboard/aft)
 "swb" = (
 /obj/machinery/vending/cigarette,
+/obj/machinery/button/door{
+	id = "Secure Gate";
+	name = "Cell Shutters";
+	pixel_x = -22
+	},
 /turf/open/floor/iron/dark/textured,
 /area/security/interrogation)
 "swc" = (
@@ -39317,7 +39355,7 @@
 /obj/structure/closet/firecloset,
 /obj/item/radio/intercom/prison/directional/north,
 /obj/machinery/camera/motion/directional/north{
-	c_tag = "Brig Entrance"
+	c_tag = "Security - Entrance"
 	},
 /turf/open/floor/iron/smooth_half,
 /area/security/brig/upper)
@@ -40683,7 +40721,7 @@
 "tgc" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/machinery/camera/directional/north{
-	c_tag = "Brig Transport"
+	c_tag = "Security - Transport"
 	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/processing)
@@ -41763,6 +41801,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
+"tIC" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/r_wall,
+/area/security/brig/upper)
 "tIQ" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
@@ -43532,7 +43574,7 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/east{
-	c_tag = "Brig Interrogation";
+	c_tag = "Security - Interrogation";
 	network = list("interrogation")
 	},
 /turf/open/floor/iron/dark/textured,
@@ -45169,6 +45211,10 @@
 /area/hallway/primary/fore)
 "vpq" = (
 /obj/machinery/flasher/portable,
+/obj/machinery/door/window/brigdoor/right/directional/north{
+	name = "Flash Storage";
+	req_access_txt = "3"
+	},
 /turf/open/floor/iron/smooth,
 /area/security/brig/upper)
 "vpz" = (
@@ -46575,6 +46621,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	name = "Security Medpost"
+	},
 /turf/open/floor/iron/white/textured,
 /area/security/medical)
 "vZd" = (
@@ -47852,7 +47901,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/directional/west{
-	c_tag = "Brig North Upper"
+	c_tag = "Security - Upper Hallway North"
 	},
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
@@ -48076,7 +48125,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/smooth_half,
-/area/security/warden)
+/area/security/brig/upper)
 "wNZ" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -48291,8 +48340,14 @@
 /area/commons/dorms)
 "wUR" = (
 /obj/structure/table/reinforced,
-/obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor{
+	name = "Armory Desk";
+	req_access_txt = "3"
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Armory Desk"
+	},
 /turf/open/floor/iron,
 /area/ai_monitored/security/armory/upper)
 "wVe" = (
@@ -75921,17 +75976,17 @@ gXW
 lYO
 lYO
 lYO
-uhx
-uhx
+suH
+suH
 gzF
-uhx
-uhx
-uhx
-uhx
-bkS
-bkS
-bkS
-bkS
+suH
+suH
+suH
+suH
+sgN
+sgN
+sgN
+sgN
 fBJ
 jIu
 aJq
@@ -76178,7 +76233,7 @@ lYO
 lYO
 sfo
 wxM
-uhx
+suH
 gJM
 uDP
 mpO
@@ -76435,7 +76490,7 @@ wxM
 jTb
 tXg
 hUq
-uhx
+suH
 dhx
 uDP
 jOa
@@ -76663,7 +76718,7 @@ efc
 dtA
 uUw
 wUR
-lgJ
+hRr
 oPS
 wpU
 bit
@@ -76692,7 +76747,7 @@ wxM
 jTb
 anw
 nxl
-uhx
+suH
 lTy
 uDP
 mkd
@@ -76920,7 +76975,7 @@ efc
 dtA
 hkV
 ifl
-hRr
+lgJ
 jCh
 wpU
 iPa
@@ -76949,7 +77004,7 @@ wxM
 jTb
 qHn
 wyT
-uhx
+suH
 nJf
 uDP
 dEj
@@ -77192,7 +77247,7 @@ hNu
 hHU
 agn
 dkF
-dEd
+tIC
 sfW
 vVQ
 kry
@@ -77206,7 +77261,7 @@ wxM
 jTb
 qHn
 voz
-uhx
+suH
 tHi
 uDP
 mkd
@@ -77449,7 +77504,7 @@ teO
 nNi
 aIF
 lDK
-aIF
+gqJ
 kry
 kry
 kry
@@ -77463,7 +77518,7 @@ wxM
 jTb
 qHn
 nxl
-uhx
+suH
 dJT
 uDP
 pdt
@@ -77706,7 +77761,7 @@ lHh
 vOR
 aIF
 hAc
-aIF
+gqJ
 kry
 kry
 kry
@@ -77720,7 +77775,7 @@ wxM
 jTb
 qHn
 kKp
-uhx
+suH
 sjb
 uDP
 gTH
@@ -77963,7 +78018,7 @@ vVR
 agn
 agn
 wNY
-agn
+gKo
 kry
 kry
 kry
@@ -77977,7 +78032,7 @@ wxM
 jTb
 rXU
 eyr
-uhx
+suH
 iFo
 xCJ
 vOZ
@@ -78234,7 +78289,7 @@ wOf
 lYO
 sLU
 aov
-bkS
+sgN
 oJX
 fmJ
 gvP
@@ -78491,7 +78546,7 @@ uVg
 pHz
 rXU
 nxl
-bkS
+sgN
 bWc
 xkN
 mkd
@@ -78748,7 +78803,7 @@ emB
 oXI
 hBb
 pKv
-bkS
+sgN
 mkd
 kmh
 mkd
@@ -79005,7 +79060,7 @@ uVg
 toh
 hBb
 aov
-bkS
+sgN
 hDo
 kEF
 mkd
@@ -79262,7 +79317,7 @@ wOf
 qIG
 fxK
 aov
-bkS
+sgN
 sgN
 sgN
 dxt
@@ -82826,11 +82881,11 @@ gQb
 gQb
 gQb
 gQb
-gQb
-gQb
-gQb
-gQb
-gQb
+gXW
+gXW
+gXW
+gXW
+gXW
 iDc
 iDc
 iDc
@@ -83083,11 +83138,11 @@ gQb
 gQb
 gQb
 gQb
-gQb
-gQb
-gQb
-gQb
-gQb
+gXW
+gXW
+gXW
+gXW
+gXW
 coi
 swb
 jcC
@@ -83340,11 +83395,11 @@ gQb
 gQb
 gQb
 gQb
-gQb
-gQb
-gQb
-gQb
-gQb
+gXW
+gXW
+gXW
+gXW
+gXW
 coi
 uxL
 uxL
@@ -83597,11 +83652,11 @@ gQb
 gQb
 gQb
 gQb
-gQb
-gQb
-gQb
-gQb
-gQb
+gXW
+gXW
+gXW
+gXW
+gXW
 coi
 goK
 pvf
@@ -83854,11 +83909,11 @@ gQb
 gQb
 gQb
 gQb
-gQb
-gQb
-gQb
-gQb
-gQb
+gXW
+gXW
+gXW
+gXW
+gXW
 coi
 xzg
 qqg
@@ -84111,10 +84166,10 @@ gQb
 gQb
 gQb
 gQb
-gQb
-gQb
-gQb
-gQb
+gXW
+gXW
+gXW
+gXW
 aiV
 iDc
 jHp

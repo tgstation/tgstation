@@ -62,9 +62,6 @@
 /obj/item/bikehorn/rubberducky/plasticducky,
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
-"bp" = (
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/lavaland/surface/outdoors/explored)
 "bs" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/flasher/directional/west{
@@ -721,17 +718,6 @@
 /obj/structure/flora/tree/pine,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"lQ" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 2;
-	height = 5;
-	id = "laborcamp_away";
-	name = "labor camp";
-	width = 9
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/lavaland/surface/outdoors/explored)
 "lX" = (
 /obj/structure/fence{
 	dir = 1
@@ -751,8 +737,16 @@
 /turf/open/floor/plating,
 /area/mine/eva)
 "mg" = (
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 2;
+	height = 5;
+	id = "laborcamp_away";
+	name = "labor camp";
+	width = 9
+	},
 /turf/open/misc/asteroid/snow/icemoon,
-/area/lavaland/surface/outdoors/explored)
+/area/icemoon/underground/explored)
 "mo" = (
 /obj/structure/table,
 /obj/item/reagent_containers/food/condiment/saltshaker{
@@ -864,7 +858,8 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock"
+	name = "Labor Camp Shuttle Prisoner Airlock";
+	req_access_txt = "2"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1073,8 +1068,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Security Airlock";
-	req_access_txt = "2"
+	name = "Labor Camp Shuttle Security Airlock"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
@@ -1972,7 +1966,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Prisoner Airlock"
+	name = "Labor Camp Shuttle Prisoner Airlock";
+	req_access_txt = "2"
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -2323,8 +2318,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/security/glass{
-	name = "Labor Camp Shuttle Security Airlock";
-	req_access_txt = "2"
+	name = "Labor Camp Shuttle Security Airlock"
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp)
@@ -33316,21 +33310,21 @@ wR
 wR
 ut
 ut
-mg
-mg
-bp
-mg
-bp
-bp
-mg
-bp
-bp
-bp
-mg
-bp
-bp
-mg
-mg
+ut
+ut
+wk
+ut
+wk
+wk
+ut
+wk
+wk
+wk
+ut
+wk
+wk
+ut
+ut
 zt
 zt
 zt
@@ -33573,21 +33567,21 @@ wR
 ut
 ut
 ut
-bp
-bp
-bp
-bp
-bp
-bp
-mg
-bp
-bp
-bp
-bp
-bp
-bp
-bp
-mg
+wk
+wk
+wk
+wk
+wk
+wk
+ut
+wk
+wk
+wk
+wk
+wk
+wk
+wk
+ut
 zt
 zt
 zt
@@ -33830,21 +33824,21 @@ wR
 ut
 ut
 ut
-bp
-bp
-bp
-mg
-bp
-mg
-mg
-mg
-bp
-mg
-mg
-mg
-mg
-mg
-bp
+wk
+wk
+wk
+ut
+wk
+ut
+ut
+ut
+wk
+ut
+ut
+ut
+ut
+ut
+wk
 zt
 zt
 zt
@@ -34087,21 +34081,21 @@ ut
 ut
 ut
 ut
-bp
-mg
-bp
-bp
-mg
-mg
-bp
-bp
-mg
-mg
-bp
-bp
-bp
-bp
-mg
+wk
+ut
+wk
+wk
+ut
+ut
+wk
+wk
+ut
+ut
+wk
+wk
+wk
+wk
+ut
 zt
 zt
 zt
@@ -34344,21 +34338,21 @@ ut
 ut
 ut
 ut
-mg
-mg
-bp
-mg
-mg
-bp
-mg
-bp
-bp
-mg
-bp
-bp
-bp
-mg
-mg
+ut
+ut
+wk
+ut
+ut
+wk
+ut
+wk
+wk
+ut
+wk
+wk
+wk
+ut
+ut
 zt
 zt
 zt
@@ -34601,20 +34595,20 @@ ut
 ut
 ut
 ut
-bp
+wk
+ut
+wk
+ut
+wk
+wk
 mg
-bp
-mg
-bp
-bp
-mg
-mg
-mg
-bp
-bp
-bp
-bp
-mg
+ut
+ut
+wk
+wk
+wk
+wk
+ut
 zt
 zt
 zt
@@ -34858,20 +34852,20 @@ ut
 ut
 ut
 ut
-mg
-mg
-bp
-bp
-bp
-mg
-mg
-bp
-bp
-bp
-bp
-bp
-mg
-bp
+ut
+ut
+wk
+wk
+wk
+ut
+ut
+wk
+wk
+wk
+wk
+wk
+ut
+wk
 zt
 zt
 zt
@@ -35115,19 +35109,19 @@ ut
 ut
 ut
 ut
-bp
-mg
-bp
-bp
-bp
-bp
-mg
-bp
-bp
-bp
-bp
-mg
-mg
+wk
+ut
+wk
+wk
+wk
+wk
+ut
+wk
+wk
+wk
+wk
+ut
+ut
 zt
 zt
 zt
@@ -35372,19 +35366,19 @@ ut
 ut
 ut
 ut
-bp
-bp
-mg
-mg
-bp
-mg
-bp
-bp
-bp
-bp
-bp
-bp
-mg
+wk
+wk
+ut
+ut
+wk
+ut
+wk
+wk
+wk
+wk
+wk
+wk
+ut
 zt
 zt
 zt
@@ -35629,19 +35623,19 @@ ut
 ut
 ut
 ut
-mg
-bp
-mg
-bp
-mg
-mg
-mg
-bp
-bp
-bp
-lQ
-bp
-mg
+ut
+wk
+ut
+wk
+ut
+ut
+ut
+wk
+wk
+wk
+wk
+wk
+ut
 zt
 zt
 zt
