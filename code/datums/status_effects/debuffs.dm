@@ -180,10 +180,29 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	tick_interval = initial(tick_interval)
 
+#define HEALING_SLEEP_DEFAULT -0.2
+
 /datum/status_effect/incapacitating/sleeping/tick()
 	if(owner.maxHealth)
 		var/health_ratio = owner.health / owner.maxHealth
-		var/healing = -0.2
+		var/healing = HEALING_SLEEP_DEFAULT
+
+		var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
+		if(mood != null)
+			switch(mood.sanity_level)
+				if(SANITY_LEVEL_GREAT)
+					healing = -0.2
+				if(SANITY_LEVEL_NEUTRAL)
+					healing = -0.1
+				if(SANITY_LEVEL_DISTURBED)
+					healing = 0
+				if(SANITY_LEVEL_UNSTABLE)
+					healing = 0
+				if(SANITY_LEVEL_CRAZY)
+					healing = 0.1
+				if(SANITY_LEVEL_INSANE)
+					healing = 0.2
+
 		if((locate(/obj/structure/bed) in owner.loc))
 			healing -= 0.3
 		else if((locate(/obj/structure/table) in owner.loc))
@@ -193,17 +212,21 @@
 				continue
 			healing -= 0.1
 			break //Only count the first bedsheet
-		if(health_ratio > 0.8)
-			owner.adjustBruteLoss(healing)
-			owner.adjustFireLoss(healing)
-			owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
-		owner.adjustStaminaLoss(healing)
+
+		if(healing < 0)
+			if(health_ratio > 0.8)
+				owner.adjustBruteLoss(healing)
+				owner.adjustFireLoss(healing)
+				owner.adjustToxLoss(healing * 0.5, TRUE, TRUE)
+		owner.adjustStaminaLoss(min(healing, HEALING_SLEEP_DEFAULT))
 	if(human_owner?.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(carbon_owner)
 		carbon_owner.handle_dreams()
 	if(prob(2) && owner.health > owner.crit_threshold)
 		owner.emote("snore")
+
+#undef HEALING_SLEEP_DEFAULT
 
 /atom/movable/screen/alert/status_effect/asleep
 	name = "Asleep"
