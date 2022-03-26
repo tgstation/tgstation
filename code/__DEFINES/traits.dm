@@ -781,6 +781,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define EXPIRED_LIFE_TRAIT "expired_life"
 /// Trait given to an atom/movable when they orbit something.
 #define ORBITING_TRAIT "orbiting"
+/// From the item_scaling element
+#define ITEM_SCALING_TRAIT "item_scaling"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
