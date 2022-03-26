@@ -249,6 +249,9 @@ GLOBAL_LIST_EMPTY(PDAs)
 		explode(user, from_message_menu = TRUE)
 		return
 
+	if(!user.can_read(src))
+		return
+
 	..()
 
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/pda)
@@ -480,7 +483,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	var/mob/living/U = usr
 	//Looking for master was kind of pointless since PDAs don't appear to have one.
 
-	if(!href_list["close"] && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(!href_list["close"] && usr.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && usr.can_read(src))
 		add_fingerprint(U)
 		U.set_machine(src)
 
