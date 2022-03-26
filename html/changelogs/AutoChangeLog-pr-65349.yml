@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - balance: "Airlocks will now autoclose in 8 seconds rather then 15"
