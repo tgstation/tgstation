@@ -2746,7 +2746,7 @@
 	var/list/uplink_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
-		if(item.purchasable_from & UPLINK_TRAITORS)
+		if(item.purchasable_from & UPLINK_TRAITORS && item.item)
 			uplink_items += item
 
 	while(crate_value)
