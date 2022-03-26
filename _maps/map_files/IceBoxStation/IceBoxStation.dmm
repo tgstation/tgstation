@@ -410,6 +410,9 @@
 	dir = 4
 	},
 /obj/machinery/bluespace_vendor/directional/west,
+/obj/machinery/camera/directional/west{
+	c_tag = "Fore Primary Hallway"
+	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "ane" = (
@@ -18745,7 +18748,6 @@
 /area/engineering/supermatter/room)
 "icR" = (
 /obj/effect/turf_decal/tile/blue,
-/obj/item/radio/intercom/prison/directional/east,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -19302,9 +19304,6 @@
 "ire" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
-	},
-/obj/machinery/camera/directional/west{
-	c_tag = "Fore Primary Hallway"
 	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
@@ -20854,7 +20853,7 @@
 	dir = 4
 	},
 /obj/machinery/camera/motion/directional/west{
-	c_tag = "Brig Checkpoint"
+	c_tag = "Security - Checkpoint"
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark/textured_edge{
@@ -30599,7 +30598,7 @@
 /obj/machinery/door/window/brigdoor{
 	req_access_txt = "2";
 	dir = 1;
-	name = "Flash Storage"s
+	name = "Flash Storage"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -46837,6 +46836,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
+/obj/item/radio/intercom/prison/directional/east,
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
 "wfC" = (

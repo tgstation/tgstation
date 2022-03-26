@@ -4092,7 +4092,6 @@
 /area/maintenance/department/chapel)
 "lJ" = (
 /obj/structure/railing,
-/obj/machinery/firealarm/directional/east,
 /turf/open/floor/plating/icemoon,
 /area/security/execution/education)
 "lK" = (
@@ -12591,6 +12590,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/security/execution/education)
 "JS" = (
