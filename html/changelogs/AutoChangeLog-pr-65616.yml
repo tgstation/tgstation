@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes: 
+  - expansion: "Added VOX and Thought Listener BCI components"
+  - expansion: "Object Overlay component overlays can now be rotated"

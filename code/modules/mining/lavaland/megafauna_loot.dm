@@ -603,7 +603,7 @@
 /obj/projectile/soulscythe
 	name = "soulslash"
 	icon_state = "soulslash"
-	flag = MELEE //jokair
+	armor_flag = MELEE //jokair
 	damage = 15
 	light_range = 1
 	light_power = 1

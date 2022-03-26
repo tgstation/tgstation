@@ -42,13 +42,17 @@
 	/// A list of TOTAL how many high value sacrifices completed.
 	var/high_value_sacrifices = 0
 	/// Lazy assoc list of [weakrefs to humans] to [image previews of the human]. Humans that we have as sacrifice targets.
-	var/list/datum/weakref/sac_targets
+	var/list/mob/living/carbon/human/sac_targets
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
 	/// A static typecache of all tools we can scribe with.
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+
+/datum/antagonist/heretic/Destroy()
+	LAZYNULL(sac_targets)
+	return ..()
 
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list()
@@ -356,7 +360,29 @@
 	var/image/target_image = image(icon = target.icon, icon_state = target.icon_state)
 	target_image.overlays = target.overlays
 
-	LAZYSET(sac_targets, WEAKREF(target), target_image)
+	LAZYSET(sac_targets, target, target_image)
+	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/on_target_deleted)
+
+/**
+ * Removes [target] from the heretic's sacrifice list.
+ * Returns FALSE if no one was removed, TRUE otherwise
+ */
+/datum/antagonist/heretic/proc/remove_sacrifice_target(mob/living/carbon/human/target)
+	if(!(target in sac_targets))
+		return FALSE
+
+	LAZYREMOVE(sac_targets, target)
+	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	return TRUE
+
+/**
+ * Signal proc for [COMSIG_PARENT_QDELETING] registered on sac targets
+ * if sacrifice targets are deleted (gibbed, dusted, whatever), free their slot and reference
+ */
+/datum/antagonist/heretic/proc/on_target_deleted(mob/living/carbon/human/source)
+	SIGNAL_HANDLER
+
+	remove_sacrifice_target(source)
 
 /**
  * Increments knowledge by one.
@@ -462,10 +488,8 @@
 		return
 
 	var/list/removable = list()
-	for(var/datum/weakref/ref as anything in sac_targets)
-		var/mob/living/carbon/human/old_target = ref.resolve()
-		if(!QDELETED(old_target))
-			removable[old_target.name] = old_target
+	for(var/mob/living/carbon/human/old_target as anything in sac_targets)
+		removable[old_target.name] = old_target
 
 	var/name_of_removed = tgui_input_list(admin, "Choose a human to remove", "Who to Spare", removable)
 	if(QDELETED(src) || !admin.client?.holder || isnull(name_of_removed))
@@ -473,10 +497,10 @@
 	var/mob/living/carbon/human/chosen_target = removable[name_of_removed]
 	if(QDELETED(chosen_target) || !ishuman(chosen_target))
 		return
-	if(!(WEAKREF(chosen_target) in sac_targets))
-		return
 
-	LAZYREMOVE(sac_targets, WEAKREF(chosen_target))
+	if(!remove_sacrifice_target(chosen_target))
+		to_chat(admin, span_warning("Failed to remove [name_of_removed] from [owner]'s sacrifice list. Perhaps they're no longer in the list anyways."))
+		return
 
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger("The Mansus has modified your targets."))
@@ -513,11 +537,9 @@
 	. += "<br>"
 	. += "<i><b>Current Targets:</b></i><br>"
 	if(LAZYLEN(sac_targets))
-		for(var/datum/weakref/ref as anything in sac_targets)
-			var/mob/living/carbon/human/actual_target = ref.resolve()
-			if(QDELETED(actual_target))
-				continue
-			. += " - <b>[actual_target.real_name]</b>, the [actual_target.mind?.assigned_role?.title || "human"].<br>"
+		for(var/mob/living/carbon/human/target as anything in sac_targets)
+			. += " - <b>[target.real_name]</b>, the [target.mind?.assigned_role?.title || "human"].<br>"
+
 	else
 		. += "<i>None!</i><br>"
 	. += "<br>"
@@ -679,21 +701,11 @@
 	name = "summon monsters"
 	target_amount = 2
 	explanation_text = "Summon 2 monsters from the Mansus into this realm."
+	/// The total number of summons the objective owner has done
+	var/num_summoned = 0
 
 /datum/objective/heretic_summon/check_completion()
-
-	var/num_we_have = 0
-	for(var/datum/antagonist/heretic_monster/monster in GLOB.antagonists)
-		if(!monster.master)
-			continue
-		if(ishuman(monster.owner.current))
-			continue
-		if(monster.master != owner)
-			continue
-
-		num_we_have++
-
-	return completed || (num_we_have >= target_amount)
+	return completed || (num_summoned >= target_amount)
 
 /datum/outfit/heretic
 	name = "Heretic (Preview only)"

@@ -247,6 +247,8 @@
 				item = SStraitor.uplink_items_by_type[item_path]
 			uplink_handler.purchase_item(ui.user, item)
 		if("lock")
+			if(!lockable)
+				return TRUE
 			active = FALSE
 			locked = TRUE
 			SStgui.close_uis(src)
