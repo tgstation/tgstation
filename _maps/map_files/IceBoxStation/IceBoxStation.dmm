@@ -23724,9 +23724,6 @@
 "kBb" = (
 /obj/structure/table,
 /obj/item/storage/box/prisoner,
-/obj/machinery/camera/directional/north{
-	c_tag = "Labor Shuttle Dock North"
-	},
 /turf/open/floor/iron/showroomfloor,
 /area/security/processing)
 "kBw" = (

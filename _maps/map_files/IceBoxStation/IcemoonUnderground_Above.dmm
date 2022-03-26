@@ -4071,8 +4071,6 @@
 "lF" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/machinery/light/directional/north,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/security/prison)
 "lH" = (
@@ -5392,6 +5390,13 @@
 /obj/structure/table/wood,
 /turf/open/floor/iron,
 /area/service/bar)
+"pv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/smooth,
+/area/security/prison)
 "pw" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
@@ -5515,6 +5520,13 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron/dark/textured,
+/area/security/prison)
+"pR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/iron/smooth,
 /area/security/prison)
 "pT" = (
 /obj/machinery/door/airlock/external{
@@ -7690,10 +7702,10 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "vU" = (
-/obj/machinery/firealarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/iron/smooth,
 /area/security/prison)
 "vW" = (
@@ -11333,7 +11345,7 @@
 	pixel_x = 6
 	},
 /obj/machinery/camera/directional/east{
-	c_tag = "Prison Isolation Cell";
+	c_tag = "Security - Permabrig Prep";
 	network = list("ss13","prison");
 	view_range = 5
 	},
@@ -13035,6 +13047,11 @@
 	desc = "What is this? Is this a dog?"
 	},
 /obj/structure/cable,
+/obj/machinery/camera/directional/east{
+	c_tag = "Security - Isolation Cell";
+	network = list("ss13","prison","Isolation");
+	view_range = 5
+	},
 /turf/open/floor/iron/smooth_half{
 	dir = 1
 	},
@@ -45229,7 +45246,7 @@ sq
 lT
 dz
 NN
-Ki
+Td
 PM
 NN
 qM
@@ -45487,7 +45504,7 @@ Ko
 dz
 NN
 lF
-PM
+pR
 NN
 mD
 sn
@@ -45743,7 +45760,7 @@ sq
 lZ
 vJ
 NN
-Td
+Ki
 Mr
 NN
 Fn
@@ -47029,7 +47046,7 @@ WZ
 xO
 pQ
 fH
-PM
+pv
 sW
 Is
 Is

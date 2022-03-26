@@ -102,8 +102,7 @@
 	id = "laborcamp";
 	name = "labor camp shuttle";
 	width = 9;
-	port_direction = 2;
-	preferred_direction = 8
+	port_direction = 4
 	},
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /turf/open/floor/plating,
