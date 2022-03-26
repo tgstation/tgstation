@@ -99,6 +99,7 @@
 	user.mind.add_antag_datum(/datum/antagonist/space_dragon)
 	user.change_mob_type(/mob/living/simple_animal/hostile/space_dragon, location = loc, delete_old_mob = TRUE)
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+	qdel(src)
 
 #undef CARP_MIX_DNA_TIMER
 
