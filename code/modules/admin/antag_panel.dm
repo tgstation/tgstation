@@ -50,7 +50,7 @@ GLOBAL_VAR(antag_prototypes)
 				<a href='?src=[REF(owner)];obj_edit=[REF(objective)]'>Edit</a> \
 				<a href='?src=[REF(owner)];obj_delete=[REF(objective)]'>Delete</a> \
 				<a href='?src=[REF(owner)];obj_completed=[REF(objective)]'><font color=[objective.completed ? "green" : "red"]>[objective.completed ? "Mark as incomplete" : "Mark as complete"]</font></a> \
-				<a href='?src=[REF(owner)];is_obj_completed=[REF(objective)]'>Check completion</a> \
+				<a href='?src=[REF(owner)];is_obj_completed=[REF(objective)]'>Check Completion</a> \
 				<br>"
 			obj_count++
 	result += "<a href='?src=[REF(owner)];obj_add=1;target_antag=[REF(src)]'>Add objective</a><br>"
