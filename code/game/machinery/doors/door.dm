@@ -266,7 +266,7 @@
 		return TRUE
 	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
 		return ..()
-	else if(&& try_to_activate_door(user))
+	else if(try_to_activate_door(user))
 		return TRUE
 	return ..()
 
