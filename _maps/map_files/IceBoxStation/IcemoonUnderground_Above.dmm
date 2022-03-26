@@ -11956,6 +11956,10 @@
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
+"Ia" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "Ib" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/tank/air{
@@ -41436,7 +41440,7 @@ eN
 AX
 PK
 kK
-kK
+Ia
 pr
 RZ
 pr
@@ -41694,8 +41698,8 @@ pD
 PK
 kK
 kK
-kC
-PG
+kK
+kK
 pr
 yU
 AH
