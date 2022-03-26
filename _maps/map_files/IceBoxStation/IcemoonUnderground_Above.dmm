@@ -1393,6 +1393,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"er" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk,
+/turf/open/floor/wood,
+/area/service/lawoffice)
 "es" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -3640,9 +3647,15 @@
 	},
 /area/maintenance/department/medical/morgue)
 "kx" = (
-/obj/machinery/computer/warrant,
-/obj/machinery/power/apc/auto_name/directional/north,
-/obj/structure/cable,
+/obj/structure/rack,
+/obj/item/clothing/glasses/sunglasses/big{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/sunglasses/big{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "ky" = (
@@ -5817,12 +5830,8 @@
 /turf/open/floor/iron/dark/textured,
 /area/security/prison)
 "qG" = (
-/obj/structure/table/wood,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/book/manual/wiki/security_space_law,
-/obj/item/pen/red,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "qH" = (
@@ -6632,6 +6641,16 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/service/theater)
+"sQ" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/book/manual/wiki/security_space_law,
+/obj/item/pen/red,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
+/area/service/lawoffice)
 "sR" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Service-Hallway Bottom 2"
@@ -7362,6 +7381,9 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "uN" = (
@@ -8392,6 +8414,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "ye" = (
@@ -8538,6 +8561,7 @@
 	id = "kanyewest";
 	name = "privacy shutters"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "yB" = (
@@ -9715,11 +9739,6 @@
 	dir = 1
 	},
 /area/hallway/primary/central/fore)
-"Cg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/service/lawoffice)
 "Ch" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
@@ -10535,13 +10554,11 @@
 /turf/open/floor/iron/edge,
 /area/security/prison)
 "Es" = (
-/obj/machinery/disposal/bin,
-/obj/structure/disposalpipe/trunk{
-	dir = 4
+/obj/structure/chair/office{
+	dir = 8
 	},
-/obj/machinery/airalarm/directional/south,
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/light/directional/south,
+/obj/effect/landmark/start/lawyer,
+/obj/item/radio/intercom/directional/south,
 /turf/open/floor/wood,
 /area/service/lawoffice)
 "Et" = (
@@ -10921,13 +10938,25 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "Fw" = (
-/obj/structure/chair/office{
-	dir = 8
+/obj/structure/table/wood,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/folder/blue,
+/obj/item/stamp/law,
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Law Office"
 	},
-/obj/effect/landmark/start/lawyer,
-/obj/item/radio/intercom/directional/south,
+/obj/item/flashlight/lamp/green{
+	pixel_x = 1;
+	pixel_y = 17
+	},
+/obj/machinery/requests_console/directional/south{
+	department = "Law Office";
+	name = "Law Office Requests Console"
+	},
 /obj/structure/disposalpipe/segment{
-	dir = 4
+	dir = 5
 	},
 /turf/open/floor/wood,
 /area/service/lawoffice)
@@ -14721,6 +14750,7 @@
 /area/icemoon/underground/explored)
 "PH" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "PI" = (
@@ -15173,6 +15203,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"QK" = (
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/computer/warrant{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/service/lawoffice)
 "QL" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15780,6 +15818,7 @@
 /area/mine/production)
 "SB" = (
 /obj/structure/closet/secure_closet/detective,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "SC" = (
@@ -16454,11 +16493,11 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/medical/virology)
 "Ur" = (
-/obj/effect/spawner/structure/window,
 /obj/machinery/door/poddoor/preopen{
 	id = "lawyer_blast";
 	name = "privacy door"
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/service/lawoffice)
 "Ut" = (
@@ -17488,25 +17527,12 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "Xs" = (
-/obj/structure/table/wood,
-/obj/item/folder/blue,
-/obj/item/folder/blue,
-/obj/item/folder/blue,
-/obj/item/folder/blue,
-/obj/item/stamp/law,
-/obj/machinery/camera/directional/south{
-	c_tag = "Service - Law Office"
-	},
-/obj/item/flashlight/lamp/green{
-	pixel_x = 1;
-	pixel_y = 17
-	},
-/obj/machinery/requests_console/directional/south{
-	department = "Law Office";
-	name = "Law Office Requests Console"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/obj/structure/chair/office{
+	dir = 8
 	},
 /turf/open/floor/wood,
 /area/service/lawoffice)
@@ -18003,6 +18029,12 @@
 /obj/structure/closet/wardrobe/mixed,
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
+"YU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/wood,
+/area/service/lawoffice)
 "YV" = (
 /obj/structure/grille/broken,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -40620,13 +40652,13 @@ mO
 mO
 mO
 mO
+Dr
+Dr
+Dr
+kn
+kn
 mO
-mO
-mO
-mO
-mO
-mO
-PH
+PK
 PH
 tE
 SB
@@ -40876,14 +40908,14 @@ mO
 mO
 mO
 mO
-mO
 Dr
 Dr
-Dr
+XC
+dp
+QK
 kn
-kn
 mO
-PH
+PK
 lz
 fB
 yd
@@ -41134,9 +41166,9 @@ mO
 mO
 kK
 Dr
-Dr
-XC
-dp
+Oa
+Xf
+Ex
 Es
 kn
 mO
@@ -41390,10 +41422,10 @@ kK
 rm
 kK
 dJ
-Dr
-Oa
-Xf
-Ex
+kn
+er
+YU
+sQ
 Fw
 kn
 mO
@@ -41649,7 +41681,7 @@ kK
 kK
 kn
 kx
-Cg
+Ex
 qG
 Xs
 kn
