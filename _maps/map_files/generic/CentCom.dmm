@@ -10034,7 +10034,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/centcom/evacuation/ship)
 "Lr" = (
-/obj/machinery/door/window/northright{
+/obj/machinery/door/window/right/directional/north{
 	dir = 4;
 	name = "Security Desk";
 	req_access_txt = "103"
@@ -12130,7 +12130,7 @@
 	pixel_y = 16
 	},
 /obj/structure/curtain,
-/obj/machinery/door/window/brigdoor/southleft{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Shower"
 	},
 /obj/item/soap/deluxe,
