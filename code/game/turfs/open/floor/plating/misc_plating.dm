@@ -71,6 +71,10 @@
 /turf/open/floor/plating/snowed/temperatre
 	temperature = 255.37
 
+//Used in SnowCabin.dm
+/turf/open/floor/plating/snowed/snow_cabin
+	temperature = 180
+
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
