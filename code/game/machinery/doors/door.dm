@@ -264,8 +264,7 @@
 		try_to_crowbar(I, user, FALSE)
 		return TRUE
 	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
-		return FALSE
-
+		return ..()
 	else if(try_to_activate_door(user))
 		return TRUE
 	return ..()

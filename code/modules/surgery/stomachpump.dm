@@ -28,6 +28,7 @@
 	accept_hand = TRUE
 	repeatable = TRUE
 	time = 20
+	success_sound = 'sound/surgery/organ2.ogg'
 
 /datum/surgery_step/stomach_pump/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, span_notice("You begin pumping [target]'s stomach..."),

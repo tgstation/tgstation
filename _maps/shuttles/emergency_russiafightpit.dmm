@@ -110,9 +110,9 @@
 /area/shuttle/escape)
 "at" = (
 /obj/machinery/door/airlock/public/glass{
-	name = "Glorious Leaders";
-	req_access_txt = "19"
+	name = "Glorious Leaders"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
 "au" = (
@@ -179,9 +179,9 @@
 /area/shuttle/escape/brig)
 "aI" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Emergency Shuttle Brig";
-	req_access_txt = "2"
+	name = "Emergency Shuttle Brig"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/escape/brig)
 "aJ" = (
@@ -213,9 +213,9 @@
 /area/shuttle/escape)
 "aO" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Emergency Shuttle Airlock";
-	req_access_txt = "2"
+	name = "Emergency Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
 "aP" = (
