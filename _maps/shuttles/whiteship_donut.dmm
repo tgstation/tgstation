@@ -205,7 +205,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/structure/window/reinforced/tinted,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)

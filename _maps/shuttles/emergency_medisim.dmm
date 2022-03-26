@@ -583,9 +583,9 @@
 /area/shuttle/escape/simulation)
 "Aw" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Engine Maintenance Access";
-	req_access_txt = "19"
+	name = "Engine Maintenance Access"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "Bd" = (
@@ -968,9 +968,9 @@
 /area/shuttle/escape/simulation)
 "NN" = (
 /obj/machinery/door/airlock/command/glass{
-	name = "Cockpit";
-	req_access_txt = "19"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/escape)
 "NR" = (
@@ -1082,9 +1082,9 @@
 /area/shuttle/escape/simulation)
 "RK" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Brig";
-	req_access_txt = "2"
+	name = "Brig"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/mineral/plastitanium/red/brig,
 /area/shuttle/escape/brig)
 "RV" = (

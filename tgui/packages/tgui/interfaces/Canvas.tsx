@@ -255,6 +255,7 @@ export const Canvas = (props, context) => {
             )}
             {!!data.finalized && !!data.show_plaque && (
               <Flex.Item
+                basis="content"
                 p={2}
                 width="60%"
                 textColor="black"

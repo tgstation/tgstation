@@ -104,28 +104,6 @@
 	var/beacon_freq = FREQ_NAV_BEACON
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
-	//This holds text for what the bot is mode doing, reported on the remote bot control interface.
-	var/list/mode_name = list(
-		"In Pursuit",
-		"Preparing to Arrest",
-		"Arresting",
-		"Beginning Patrol",
-		"Patrolling",
-		"Summoned by PDA",
-		"Cleaning",
-		"Repairing",
-		"Proceeding to work site",
-		"Healing",
-		"Proceeding to AI waypoint",
-		"Navigating to Delivery Location",
-		"Navigating to Home",
-		"Waiting for clear path",
-		"Calculating navigation path",
-		"Pinging beacon network",
-		"Unable to reach destination",
-		"Chasing filth",
-		"No Route",
-	)
 	var/datum/atom_hud/data/bot_path/path_hud = new /datum/atom_hud/data/bot_path()
 	var/path_image_icon = 'icons/mob/aibots.dmi'
 	var/path_image_icon_state = "path_indicator"
@@ -141,10 +119,8 @@
 			return "<b>Autonomous</b>"
 	else if(!(bot_mode_flags & BOT_MODE_ON))
 		return "<span class='bad'>Inactive</span>"
-	else if(!mode)
-		return "<span class='good'>Idle</span>"
 	else
-		return "<span class='average'>[mode_name[mode]]</span>"
+		return "<span class='average'>[mode]</span>"
 
 /**
  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
@@ -154,10 +130,8 @@
 		return paicard ? "pAI Controlled" : "Autonomous"
 	else if(!(bot_mode_flags & BOT_MODE_ON))
 		return "Inactive"
-	else if(!mode)
-		return "Idle"
 	else
-		return "[mode_name[mode]]"
+		return "[mode]"
 
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
