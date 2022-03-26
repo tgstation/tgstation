@@ -40,8 +40,8 @@
 	. = ..()
 	if(charging)
 		return FALSE
-	default_unfasten_wrench(user, tool)
-	update_appearance()
+	if(default_unfasten_wrench(user, tool))
+		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)

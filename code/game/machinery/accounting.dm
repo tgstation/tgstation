@@ -17,8 +17,8 @@
 	. = ..()
 	if(inserted_id)
 		return FALSE
-	default_unfasten_wrench(user, tool)
-	update_appearance()
+	if(default_unfasten_wrench(user, tool))
+		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/accounting/attackby(obj/item/I, mob/living/user, params)

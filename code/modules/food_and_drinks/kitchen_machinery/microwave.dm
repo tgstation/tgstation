@@ -111,8 +111,8 @@
 	. = ..()
 	if(dirty >= 100)
 		return FALSE
-	default_unfasten_wrench(user, tool)
-	update_appearance()
+	if(default_unfasten_wrench(user, tool))
+		update_appearance()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/microwave/attackby(obj/item/O, mob/living/user, params)

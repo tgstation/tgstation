@@ -42,8 +42,8 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 
 /obj/machinery/monkey_recycler/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
-	power_change()
+	if(default_unfasten_wrench(user, tool))
+		power_change()
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
