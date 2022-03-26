@@ -34,10 +34,10 @@
 	return ..()
 
 /datum/component/smooth_tunes/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_SONG_START,.proc/start_singing)
+	RegisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT,.proc/start_singing)
 
 /datum/component/smooth_tunes/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_SONG_START)
+	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
 
 ///Initiates the effect when the song begins playing.
 /datum/component/smooth_tunes/proc/start_singing(datum/source, datum/song/starting_song)
@@ -57,11 +57,11 @@
 		starting_song.parent.visible_message(linked_songtuner_rite.song_start_message)
 
 	///prevent more songs from being blessed concurrently
-	UnregisterSignal(parent, COMSIG_SONG_START)
+	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
 	///and hook into the song datum this time, preventing other weird exploity stuff.
-	RegisterSignal(starting_song.parent, COMSIG_SONG_END, .proc/stop_singing)
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, .proc/stop_singing)
 	if(!allow_repeats)
-		RegisterSignal(starting_song.parent, COMSIG_SONG_REPEAT, .proc/stop_singing)
+		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
 
 	linked_song = starting_song
 
@@ -82,8 +82,8 @@
 			linked_songtuner_rite.finish_effect(parent, linked_song)
 	linked_song.parent?.remove_filter("smooth_tunes_outline")
 	UnregisterSignal(linked_song.parent, list(
-		COMSIG_SONG_END,
-		COMSIG_SONG_REPEAT,
+		COMSIG_INSTRUMENT_END,
+		COMSIG_INSTRUMENT_REPEAT,
 	))
 	linked_song = null
 	qdel(src)

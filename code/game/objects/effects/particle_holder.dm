@@ -6,8 +6,9 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	///typepath of the last location we're in, if it's different when moved then we need to update vis contents
 	var/last_attached_location_type
+	///the main item we're attached to at the moment, particle holders hold particles for something
 	var/datum/weakref/weak_attached
-	///besides the item we're also sometimes attached to other stuff (items held emitting particles on mob)
+	///besides the item we're also sometimes attached to other stuff! (items held emitting particles on a mob)
 	var/datum/weakref/weak_additional
 
 /obj/effect/abstract/particle_holder/Initialize(mapload, particle_path = /particles/smoke)

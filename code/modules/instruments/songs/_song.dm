@@ -211,8 +211,8 @@
 	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
 	//wrap the rest of the stuff to ensure stop_playing() is called.
 	do_hearcheck()
-	SEND_SIGNAL(parent, COMSIG_SONG_START, src)
-	SEND_SIGNAL(user, COMSIG_SONG_START, src)
+	SEND_SIGNAL(parent, COMSIG_INSTRUMENT_START, src)
+	SEND_SIGNAL(user, COMSIG_ATOM_STARTING_INSTRUMENT, src)
 	elapsed_delay = 0
 	delay_by = 0
 	current_chord = 1
@@ -234,8 +234,7 @@
 	if(!debug_mode)
 		compiled_chords = null
 	STOP_PROCESSING(SSinstruments, src)
-	SEND_SIGNAL(parent, COMSIG_SONG_END, finished)
-	SEND_SIGNAL(music_player, COMSIG_SONG_END, finished)
+	SEND_SIGNAL(parent, COMSIG_INSTRUMENT_END, finished)
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
 	music_player = null
@@ -264,8 +263,7 @@
 		return
 	repeat--
 	current_chord = 1
-	SEND_SIGNAL(parent, COMSIG_SONG_REPEAT, TRUE)
-	SEND_SIGNAL(music_player, COMSIG_SONG_REPEAT, TRUE)
+	SEND_SIGNAL(parent, COMSIG_INSTRUMENT_REPEAT, TRUE)
 
 /**
  * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
@@ -295,7 +293,7 @@
 /datum/song/proc/should_stop_playing(atom/player)
 	if(QDELETED(player) || !using_instrument || !playing)
 		return STOP_PLAYING
-	return SEND_SIGNAL(parent, COMSIG_SONG_SHOULD_STOP_PLAYING, player)
+	return SEND_SIGNAL(parent, COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING, player)
 
 /// Sets and sanitizes the repeats variable.
 /datum/song/proc/set_repeats(new_repeats_value)
