@@ -291,7 +291,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_GUNFLIP "gunflip"
 /// Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
-#define TRAIT_BLOODCRAWL_EAT "bloodcrawl_eat"
 #define TRAIT_SPACEWALK "spacewalk"
 /// Gets double arcade prizes
 #define TRAIT_GAMERGOD "gamer-god"

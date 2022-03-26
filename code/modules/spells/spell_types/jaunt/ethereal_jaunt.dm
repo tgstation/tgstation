@@ -8,6 +8,7 @@
 	cooldown_reduction_per_rank = 5 SECONDS
 
 	spell_requirements = (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
+	jaunt_type = /obj/effect/dummy/phased_mob/spell_jaunt
 
 	var/exit_jaunt_sound = 'sound/magic/ethereal_exit.ogg'
 	/// For how long are we jaunting?
@@ -23,13 +24,23 @@
 	/// List of valid exit points
 	var/list/exit_point_list
 
+/datum/action/cooldown/spell/jaunt/ethereal_jaunt/enter_jaunt(mob/living/jaunter)
+	. = ..()
+	if(!.)
+		return
+
+	var/turf/cast_turf = get_turf(.)
+	new jaunt_out_type(cast_turf, jaunter.dir)
+	jaunter.extinguish_mob()
+	do_steam_effects(cast_turf)
+
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/cast(mob/living/cast_on)
 	. = ..()
 	do_jaunt(cast_on)
 
 /**
  * Begin the jaunt, and the entire jaunt chain.
- * Put cast_on in a phased mob holder.
+ * Puts cast_on in the phased mob holder here.
  *
  * Calls do_jaunt_out:
  * - if jaunt_out_time is set to more than 0,
@@ -37,36 +48,32 @@
  * - if jaunt_out_time = 0
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt(mob/living/cast_on)
-	// Make sure they don't die or get jostled or something
+	// Makes sure they don't die or get jostled or something during the jaunt entry
+	// Honestly probably not necessary anymore, but better safe than sorry
 	cast_on.notransform = TRUE
-
-	var/turf/cast_turf = get_turf(cast_on)
-	var/obj/effect/dummy/phased_mob/spell_jaunt/holder = new /obj/effect/dummy/phased_mob/spell_jaunt(cast_turf)
-	new jaunt_out_type(cast_turf, cast_on.dir)
-
-	cast_on.extinguish_mob()
-	cast_on.forceMove(holder)
-	cast_on.reset_perspective(holder)
-
-	// They're in the holder safely, disable this again
+	var/obj/effect/dummy/phased_mob/holder = enter_jaunt(cast_on)
 	cast_on.notransform = FALSE
 
-	do_steam_effects(cast_turf)
+	if(!holder)
+		CRASH("[type] attempted do_jaunt but failed to create a jaunt holder via enter_jaunt.")
 
 	if(jaunt_out_time > 0)
-		ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, type)
+		ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
 		addtimer(CALLBACK(src, .proc/do_jaunt_out, cast_on, holder), jaunt_out_time)
 	else
 		start_jaunt(cast_on, holder)
 
 /**
  * The wind-up to the jaunt.
- * Optional, not always called.
+ * Optional, only called if jaunt_out_time is set.
  *
  * Calls start_jaunt.
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt_out(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
-	REMOVE_TRAIT(cast_on, TRAIT_IMMOBILIZED, type)
+	if(QDELETED(cast_on) || QDELETED(holder) || QDELETED(src))
+		return
+
+	REMOVE_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
 	start_jaunt(cast_on, holder)
 
 /**
@@ -77,6 +84,9 @@
  * Calls stop_jaunt after the jaunt runs out.
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/start_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder)
+	if(QDELETED(cast_on) || QDELETED(holder) || QDELETED(src))
+		return
+
 	LAZYINITLIST(exit_point_list)
 	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
 	addtimer(CALLBACK(src, .proc/stop_jaunt, cast_on, holder, get_turf(holder)), jaunt_duration)
@@ -87,11 +97,13 @@
  * the jaunter on the turf they will exit at.
  *
  * Calls do_jaunt_in:
- * - if jaunt_in_time is less than 2.5 seconds,
- * Or immediately calls end_jaunt:
- * - if jaunt_in_time >= 2.5 seconds
+ * - immediately, if jaunt_in_time >= 2.5 seconds
+ * - 2.5 seconds - jaunt_in_time seconds otherwise
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/stop_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/start_point)
+	if(QDELETED(cast_on) || QDELETED(holder) || QDELETED(src))
+		return
+
 	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)
 	// Caster escaped our holder somehow
 	if(cast_on.loc != holder)
@@ -115,24 +127,30 @@
 	holder.reappearing = TRUE
 	playsound(found_exit, exit_jaunt_sound, 50, TRUE)
 
-	ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, type)
+	ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
 
 	if(2.5 SECONDS - jaunt_in_time <= 0)
-		end_jaunt(cast_on, holder, found_exit)
+		do_jaunt_in(cast_on, holder, found_exit)
 	else
 		addtimer(CALLBACK(src, .proc/do_jaunt_in, cast_on, holder, found_exit), 2.5 SECONDS - jaunt_in_time)
 
 /**
  * The wind-up (wind-out?) of exiting the jaunt.
- * Optional, not always called.
+ * Optional, only called if jaunt_in_time is above 2.5 seconds.
  *
  * Calls end_jaunt.
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_jaunt_in(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/final_point)
+	if(QDELETED(cast_on) || QDELETED(holder) || QDELETED(src))
+		return
+
 	new jaunt_in_type(final_point, holder.dir)
 	cast_on.setDir(holder.dir)
 
-	addtimer(CALLBACK(src, .proc/end_jaunt, cast_on, holder, final_point), jaunt_in_time)
+	if(jaunt_in_time > 0)
+		addtimer(CALLBACK(src, .proc/end_jaunt, cast_on, holder, final_point), jaunt_in_time)
+	else
+		end_jaunt(cast_on, holder, final_point)
 
 /**
  * Finally, the actual veritable end of the jaunt chains.
@@ -142,12 +160,18 @@
  * tries to put the caster in an adjacent turf.
  */
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/end_jaunt(mob/living/cast_on, obj/effect/dummy/phased_mob/spell_jaunt/holder, turf/final_point)
-	qdel(holder)
-	if(!QDELETED(cast_on) && final_point.density)
+	if(QDELETED(cast_on) || QDELETED(holder) || QDELETED(src))
+		return
+	cast_on.notransform = TRUE
+	exit_jaunt(cast_on)
+	cast_on.notransform = FALSE
+
+	REMOVE_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
+
+	if(final_point.density)
 		var/list/aside_turfs = get_adjacent_open_turfs(final_point)
 		if(length(aside_turfs))
 			cast_on.forceMove(pick(aside_turfs))
-		REMOVE_TRAIT(cast_on, TRAIT_IMMOBILIZED, type)
 
 /**
  * Updates the exit point of the jaunt
@@ -210,6 +234,7 @@
 /// The dummy that holds people jaunting. Maybe one day we can replace it.
 /obj/effect/dummy/phased_mob/spell_jaunt
 	movespeed = 2 //quite slow.
+	/// Whether we're currently reappearing - we can't move if so
 	var/reappearing = FALSE
 
 /obj/effect/dummy/phased_mob/spell_jaunt/phased_check(mob/living/user, direction)

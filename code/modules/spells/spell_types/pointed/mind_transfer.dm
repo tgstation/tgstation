@@ -22,7 +22,7 @@
 	var/unconscious_amount_caster = 40 SECONDS
 	/// For how long is the victim stunned for after the spell
 	var/unconscious_amount_victim = 40 SECONDS
-
+	/// List of mobs we cannot mindswap into.
 	var/static/list/mob/living/blacklisted_mobs = typecacheof(list(
 		/mob/living/simple_animal/hostile/imp/slaughter,
 		/mob/living/simple_animal/hostile/megafauna,

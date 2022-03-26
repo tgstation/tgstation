@@ -1,8 +1,24 @@
+/**
+ * ## Jaunt spells
+ *
+ * A basic subtype for jaunt related spells.
+ * Jaunt spells put their caster in a dummy
+ * phased_mob effect that allows them to float
+ * around incorporeally.
+ *
+ * Doesn't actually implement any behavior on cast to
+ * enter or exit the jaunt - that must be done via subtypes.
+ *
+ * Use enter_jaunt() and exit_jaunt() as wrappers.
+ */
 /datum/action/cooldown/spell/jaunt
 	school = SCHOOL_TRANSMUTATION
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
+
+	/// What dummy mob type do we put jaunters in on jaunt?
+	var/jaunt_type = /obj/effect/dummy/phased_mob
 
 /datum/action/cooldown/spell/jaunt/can_cast_spell(feedback = TRUE)
 	. = ..()
@@ -16,11 +32,45 @@
 
 	return isliving(owner)
 
-/datum/action/cooldown/spell/jaunt/proc/is_jaunting(mob/living/cast_on)
-	return istype(cast_on.loc, /obj/effect/dummy)
+
+/**
+ * Places the [jaunter] in a jaunt holder mob
+ * If [loc_override] is supplied,
+ * the jaunt will be moved to that turf to start at
+ *
+ * Returns the holder mob that was created
+ */
+/datum/action/cooldown/spell/jaunt/proc/enter_jaunt(mob/living/jaunter, turf/loc_override)
+	var/obj/effect/dummy/phased_mob/jaunt = new(loc_override || get_turf(jaunter), jaunter)
+	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, jaunt, src)
+	return jaunt
+
+/**
+ * Ejects the [unjaunter] from jaunt
+ * If [loc_override] is supplied,
+ * the jaunt will be moved to that turf
+ * before ejecting the unjaunter
+ *
+ * Returns TRUE on successful exit, FALSE otherwise
+ */
+/datum/action/cooldown/spell/jaunt/proc/exit_jaunt(mob/living/unjaunter, turf/loc_override)
+	var/obj/effect/dummy/phased_mob/jaunt = unjaunter.loc
+	if(!istype(jaunt))
+		return FALSE
+
+	if(jaunt.jaunter != unjaunter)
+		CRASH("Jaunt spell attempted to exit_jaunt with an invalid jaunter, somehow.")
+
+	if(loc_override)
+		jaunt.forceMove(loc_override)
+	jaunt.eject_jaunter()
+	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
+	return TRUE
+
+/// Simple helper to check if the passed mob is currently jaunting or not
+/datum/action/cooldown/spell/jaunt/proc/is_jaunting(mob/living/user)
+	return istype(user.loc, /obj/effect/dummy/phased_mob)
 
 /datum/action/cooldown/spell/jaunt/Remove(mob/living/user)
-	// MELBERT TODO jaunting dummies are dumb and eject their contents on Destroy()
-	if(is_jaunting(user))
-		qdel(user.loc)
+	exit_jaunt(user)
 	return ..()

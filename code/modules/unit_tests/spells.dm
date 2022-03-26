@@ -111,7 +111,7 @@
 	TEST_ASSERT(result, "[mind_swap] spell: Mind swap returned \"false\" from InterceptClickOn / cast, despite having valid conditions.")
 
 	TEST_ASSERT_EQUAL(swapper.mind, to_swap_mind, "[mind_swap] spell: Despite returning \"true\" on cast, swap failed to relocate the minds of the caster and the target.")
-	TEST_ASSERT_EQUAL(to_swap_mind.mind, swapper_mind, "[mind_swap] spell: Despite returning \"true\" on cast, swap failed to relocate the minds of the target and the caster.")
+	TEST_ASSERT_EQUAL(to_swap.mind, swapper_mind, "[mind_swap] spell: Despite returning \"true\" on cast, swap failed to relocate the minds of the target and the caster.")
 
 	var/datum/action/cooldown/spell/pointed/mind_transfer/should_be_null = locate() in swapper.actions
 	var/datum/action/cooldown/spell/pointed/mind_transfer/should_not_be_null = locate() in to_swap.actions

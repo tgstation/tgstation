@@ -63,8 +63,8 @@
 				/obj/effect/decal/cleanable/blood/innards, \
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
-	///Sound played when consuming a body
-	var/feast_sound = 'sound/magic/demon_consume.ogg'
+
+	var/crawl_type = /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon
 	/// How long it takes for the alt-click slam attack to come off cooldown
 	var/slam_cooldown_time = 45 SECONDS
 	/// The actual instance var for the cooldown
@@ -76,12 +76,26 @@
 	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
 	var/wound_bonus_hitstreak_max = 12
 
-/mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload, obj/effect/dummy/phased_mob/bloodpool)//Bloodpool is the blood pool we spawn in
+/mob/living/simple_animal/hostile/imp/slaughter/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_BLOODCRAWL_EAT, "innate")
-	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(src)
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/crawl = new crawl_type(src)
 	crawl.Grant(src)
-	bloodpool?.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN, COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
+	RegisterSignal(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/on_crawl)
+
+/// Whenever we enter or exit blood crawl, reset our bonus and hitstreaks.
+/mob/living/simple_animal/hostile/imp/slaughter/proc/on_crawl(datum/source)
+	SIGNAL_HANDLER
+
+	// Grant us a speed boost if we're on the mortal plane
+	if(isturf(loc))
+		add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
+		addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+	// Reset our streaks
+	current_hitstreak = 0
+	wound_bonus = initial(wound_bonus)
+	bare_wound_bonus = initial(bare_wound_bonus)
+
 
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/simple_animal/hostile/imp/slaughter/proc/bodyslam(atom/attack_target)
@@ -123,22 +137,6 @@
 
 	return ..()
 
-/mob/living/simple_animal/hostile/imp/slaughter/phasein(atom/target, forced = FALSE)
-	. = ..()
-	if(!.)
-		return
-	current_hitstreak = 0
-	wound_bonus = initial(wound_bonus)
-	bare_wound_bonus = initial(bare_wound_bonus)
-
-/mob/living/simple_animal/hostile/imp/slaughter/phaseout(obj/effect/decal/cleanable/to_blood)
-	. = ..()
-	if(!.)
-		return
-	current_hitstreak = 0
-	wound_bonus = initial(wound_bonus)
-	bare_wound_bonus = initial(bare_wound_bonus)
-
 /obj/effect/decal/cleanable/blood/innards
 	name = "pile of viscera"
 	desc = "A repulsive pile of guts and gore."
@@ -146,11 +144,6 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "innards"
 	random_icon_states = null
-
-/mob/living/simple_animal/hostile/imp/slaughter/phasein()
-	. = ..()
-	add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
-	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
 /obj/item/organ/heart/demon
@@ -187,7 +180,8 @@
 
 /obj/item/organ/heart/demon/Insert(mob/living/carbon/M, special = 0)
 	..()
-	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(M.mind || M)
+	// Gives a non-eat-people crawl to the new owner
+	var/datum/action/cooldown/spell/jaunt/bloodcrawl/crawl = new(M)
 	crawl.Grant(M)
 
 /obj/item/organ/heart/demon/Remove(mob/living/carbon/M, special = 0)
@@ -212,7 +206,6 @@
 
 	attack_sound = 'sound/items/bikehorn.ogg'
 	attack_vis_effect = null
-	feast_sound = 'sound/misc/scary_horn.ogg'
 	deathsound = 'sound/misc/sadtrombone.ogg'
 
 	icon_state = "bowmon"
@@ -221,6 +214,7 @@
 		prison of hugs."
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
+	crawl_type = /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny
 	// Keep the people we hug!
 	var/list/consumed_mobs = list()
 
@@ -228,10 +222,6 @@
 	. = ..()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		icon_state = "honkmon"
-
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/Destroy()
-	release_friends()
-	. = ..()
 
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/ex_act(severity)
 	switch(severity)
@@ -241,48 +231,6 @@
 			adjustBruteLoss(60)
 		if(EXPLODE_LIGHT)
 			adjustBruteLoss(30)
-
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/release_friends()
-	if(!consumed_mobs)
-		return
-
-	var/turf/T = get_turf(src)
-
-	for(var/mob/living/M in consumed_mobs)
-		if(!M)
-			continue
-
-		// Unregister the signal first, otherwise it'll trigger the "ling revived inside us" code
-		UnregisterSignal(M, COMSIG_MOB_STATCHANGE)
-
-		M.forceMove(T)
-		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
-			M.grab_ghost(force = TRUE)
-			playsound(T, feast_sound, 50, TRUE, -1)
-			to_chat(M, span_clown("You leave [src]'s warm embrace, and feel ready to take on the world."))
-
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/bloodcrawl_swallow(mob/living/victim)
-	// Keep their corpse so rescue is possible
-	consumed_mobs += victim
-	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
-
-/* Handle signal from a consumed mob changing stat.
- *
- * A signal handler for if one of the laughter demon's consumed mobs has
- * changed stat. If they're no longer dead (because they were dead when
- * swallowed), eject them so they can't rip their way out from the inside.
- */
-/mob/living/simple_animal/hostile/imp/slaughter/laughter/proc/on_victim_statchange(mob/living/victim, new_stat)
-	SIGNAL_HANDLER
-
-	if(new_stat == DEAD)
-		return
-	// Someone we've eaten has spontaneously revived; maybe regen coma, maybe a changeling
-	victim.forceMove(get_turf(src))
-	victim.exit_blood_effect()
-	victim.visible_message(span_warning("[victim] falls out of the air, covered in blood, with a confused look on their face."))
-	consumed_mobs -= victim
-	UnregisterSignal(victim, COMSIG_MOB_STATCHANGE)
 
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"

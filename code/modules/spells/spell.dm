@@ -155,7 +155,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 					to_chat(owner, span_warning("Magic seems to flee from you - You can't gather enough power to cast [src]."))
 			return FALSE
 
-	if((spell_requirements & SPELL_REQUIRES_UNPHASED) && istype(owner.loc, /obj/effect/dummy))
+	if((spell_requirements & SPELL_REQUIRES_UNPHASED) && istype(owner.loc, /obj/effect/dummy/phased_mob))
 		if(feedback)
 			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE

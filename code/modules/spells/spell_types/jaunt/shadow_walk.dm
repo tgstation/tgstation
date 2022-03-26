@@ -1,5 +1,3 @@
-#define SHADOW_REGEN_RATE 1.5
-
 /datum/action/cooldown/spell/jaunt/shadow_walk
 	name = "Shadow Walk"
 	desc = "Grants unlimited movement in darkness."
@@ -9,47 +7,50 @@
 
 	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED|SPELL_REQUIRES_NO_ANTIMAGIC)
 
+	jaunt_type = /obj/effect/dummy/phased_mob/shadow
+
 /datum/action/cooldown/spell/jaunt/shadow_walk/cast(mob/living/cast_on)
 	. = ..()
 	if(is_jaunting(cast_on))
-		var/obj/effect/dummy/phased_mob/shadow/jaunt_holder = cast_on.loc
-		jaunt_holder.end_jaunt(FALSE)
+		exit_jaunt(cast_on)
 		return
 
 	var/turf/cast_turf = get_turf(cast_on)
-	if(cast_turf.get_lumcount() < SHADOW_SPECIES_LIGHT_THRESHOLD)
-		playsound(cast_turf, 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
-		cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
-		cast_on.SetAllImmobility(0)
-		cast_on.setStaminaLoss(0, FALSE)
-		var/obj/effect/dummy/phased_mob/shadow/jaunt_holder = new(cast_turf)
-		cast_on.forceMove(jaunt_holder)
-		jaunt_holder.jaunter = cast_on
-
-	else
+	if(cast_turf.get_lumcount() >= SHADOW_SPECIES_LIGHT_THRESHOLD)
 		to_chat(cast_on, span_warning("It isn't dark enough here!"))
+		return
+
+	playsound(cast_turf, 'sound/magic/ethereal_enter.ogg', 50, TRUE, -1)
+	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
+	cast_on.SetAllImmobility(0)
+	cast_on.setStaminaLoss(0, FALSE)
+	enter_jaunt(cast_on)
 
 /obj/effect/dummy/phased_mob/shadow
-	var/mob/living/jaunter
+	name = "shadows"
+	/// The amount that shadow heals us per SSobj tick (times delta_time)
+	var/healing_rate = 1.5
 
 /obj/effect/dummy/phased_mob/shadow/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/dummy/phased_mob/shadow/Destroy()
-	jaunter = null
 	STOP_PROCESSING(SSobj, src)
-	. = ..()
+	return ..()
 
 /obj/effect/dummy/phased_mob/shadow/process(delta_time)
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
 	if(!jaunter || jaunter.loc != src)
 		qdel(src)
-	if (light_amount < 0.2 && (!QDELETED(jaunter))) //heal in the dark
-		jaunter.heal_overall_damage((SHADOW_REGEN_RATE * delta_time), (SHADOW_REGEN_RATE * delta_time), 0, BODYPART_ORGANIC)
-	check_light_level()
+		return
 
+	if(light_amount < 0.2 && !QDELETED(jaunter) && isliving(jaunter)) //heal in the dark
+		var/mob/living/living_jaunter = jaunter
+		living_jaunter.heal_overall_damage((healing_rate * delta_time), (healing_rate * delta_time), 0, BODYPART_ORGANIC)
+
+	check_light_level()
 
 /obj/effect/dummy/phased_mob/shadow/relaymove(mob/living/user, direction)
 	var/turf/oldloc = loc
@@ -67,16 +68,16 @@
 	var/turf/T = get_turf(src)
 	var/light_amount = T.get_lumcount()
 	if(light_amount > 0.2) // jaunt ends
-		end_jaunt(TRUE)
+		eject_jaunter(TRUE)
 
-/obj/effect/dummy/phased_mob/shadow/proc/end_jaunt(forced = FALSE)
-	if(jaunter)
-		if(forced)
-			visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
+/obj/effect/dummy/phased_mob/shadow/eject_jaunter(forced_out = FALSE)
+	var/turf/reveal_turf = get_turf(src)
+
+	if(istype(reveal_turf))
+		if(forced_out)
+			reveal_turf.visible_message(span_boldwarning("[jaunter] is revealed by the light!"))
 		else
-			visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
-		playsound(loc, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
-	qdel(src)
+			reveal_turf.visible_message(span_boldwarning("[jaunter] emerges from the darkness!"))
+		playsound(reveal_turf, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
-
-#undef SHADOW_REGEN_RATE
+	return ..()
