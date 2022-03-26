@@ -26,7 +26,7 @@
 // -------------------- Req Any (Only requires ONE of the given accesses to open)
 // -------------------- Command access helpers
 /obj/effect/mapping_helpers/airlock/access/any/command
-	icon_state = "access_helper_com"
+	color = "#0077ff"
 
 /obj/effect/mapping_helpers/airlock/access/any/command/general/Initialize()
 	. = ..()
@@ -58,7 +58,7 @@
 
 // -------------------- Engineering access helpers
 /obj/effect/mapping_helpers/airlock/access/any/engineering
-	icon_state = "access_helper_eng"
+	color = "#ffb300"
 
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general/Initialize()
 	. = ..()
@@ -98,7 +98,7 @@
 
 // -------------------- Medical access helpers
 /obj/effect/mapping_helpers/airlock/access/any/medical
-	icon_state = "access_helper_med"
+	color = "#33ebff"
 
 /obj/effect/mapping_helpers/airlock/access/any/medical/general/Initialize()
 	. = ..()
@@ -134,7 +134,7 @@
 
 // -------------------- Science access helpers
 /obj/effect/mapping_helpers/airlock/access/any/science
-	icon_state = "access_helper_sci"
+	color = "#a333ff"
 
 /obj/effect/mapping_helpers/airlock/access/any/science/general/Initialize()
 	. = ..()
@@ -174,7 +174,7 @@
 
 // -------------------- Security access helpers
 /obj/effect/mapping_helpers/airlock/access/any/security
-	icon_state = "access_helper_sec"
+	color = "#db1919"
 
 /obj/effect/mapping_helpers/airlock/access/any/security/general/Initialize()
 	. = ..()
@@ -202,7 +202,7 @@
 
 // -------------------- Service access helpers
 /obj/effect/mapping_helpers/airlock/access/any/service
-	icon_state = "access_helper_serv"
+	color = "#00be30"
 
 /obj/effect/mapping_helpers/airlock/access/any/service/general/Initialize()
 	. = ..()
@@ -240,7 +240,7 @@
 	. = ..()
 	access_list += ACCESS_LIBRARY
 
-/obj/effect/mapping_helpers/airlock/access/any/service/library/Initialize()
+/obj/effect/mapping_helpers/airlock/access/any/service/theatre/Initialize()
 	. = ..()
 	access_list += ACCESS_THEATRE
 
@@ -250,7 +250,7 @@
 
 // -------------------- Supply access helpers
 /obj/effect/mapping_helpers/airlock/access/any/supply
-	icon_state = "access_helper_sup"
+	color = "#8f5614"
 
 /obj/effect/mapping_helpers/airlock/access/any/supply/general/Initialize()
 	. = ..()
@@ -280,10 +280,102 @@
 	. = ..()
 	access_list += ACCESS_VAULT
 
+// -------------------- CentCom access helpers
+/obj/effect/mapping_helpers/airlock/access/any/centcom
+	color = "#00ff00"
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/general/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_GENERAL
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/thunderdome/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_THUNDER
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/specialops/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_SPECOPS
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/medical/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_MEDICAL
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/living/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_LIVING
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/storage/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_STORAGE
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/teleporter/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_TELEPORTER // What's that? This is irrelevant because of the noteleport flags? Uhh... Look, an airplane!
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/captain/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_CAPTAIN
+
+/obj/effect/mapping_helpers/airlock/access/any/centcom/bar/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_BAR
+
+// -------------------- Syndicate access helpers
+/obj/effect/mapping_helpers/airlock/access/any/syndicate
+	color = "#ff0000"
+
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/general/Initialize()
+	. = ..()
+	access_list += ACCESS_SYNDICATE
+
+/obj/effect/mapping_helpers/airlock/access/any/syndicate/leader/Initialize()
+	. = ..()
+	access_list += ACCESS_SYNDICATE_LEADER
+
+// -------------------- Off-Station access helpers
+/obj/effect/mapping_helpers/airlock/access/any/offstation
+	color = "#ff00ff" // Clown colors - because only clowns leave the safety of the all knowing, all loving Nanotrasen
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/general/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERAL
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/maintenance/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_MAINT
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/medical/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_MED
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/security/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_SEC
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/engineering/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_ENGINE
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/generic1/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC1
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/generic2/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC2
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/generic3/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC3
+
+/obj/effect/mapping_helpers/airlock/access/any/offstation/generic4/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC4
+
 // -------------------- Req All (Requires ALL of the given accesses to open)
 // -------------------- Command access helpers
 /obj/effect/mapping_helpers/airlock/access/all/command
-	icon_state = "access_helper_com"
+	color = "#0077ff"
 
 /obj/effect/mapping_helpers/airlock/access/all/command/general/Initialize()
 	. = ..()
@@ -315,7 +407,7 @@
 
 // -------------------- Engineering access helpers
 /obj/effect/mapping_helpers/airlock/access/all/engineering
-	icon_state = "access_helper_eng"
+	color = "#ffb300"
 
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general/Initialize()
 	. = ..()
@@ -355,7 +447,7 @@
 
 // -------------------- Medical access helpers
 /obj/effect/mapping_helpers/airlock/access/all/medical
-	icon_state = "access_helper_med"
+	color = "#33ebff"
 
 /obj/effect/mapping_helpers/airlock/access/all/medical/general/Initialize()
 	. = ..()
@@ -391,7 +483,7 @@
 
 // -------------------- Science access helpers
 /obj/effect/mapping_helpers/airlock/access/all/science
-	icon_state = "access_helper_sci"
+	color = "#a333ff"
 
 /obj/effect/mapping_helpers/airlock/access/all/science/general/Initialize()
 	. = ..()
@@ -431,7 +523,7 @@
 
 // -------------------- Security access helpers
 /obj/effect/mapping_helpers/airlock/access/all/security
-	icon_state = "access_helper_sec"
+	color = "#db1919"
 
 /obj/effect/mapping_helpers/airlock/access/all/security/general/Initialize()
 	. = ..()
@@ -459,7 +551,7 @@
 
 // -------------------- Service access helpers
 /obj/effect/mapping_helpers/airlock/access/all/service
-	icon_state = "access_helper_serv"
+	color = "#00be30"
 
 /obj/effect/mapping_helpers/airlock/access/all/service/general/Initialize()
 	. = ..()
@@ -507,7 +599,7 @@
 
 // -------------------- Supply access helpers
 /obj/effect/mapping_helpers/airlock/access/all/supply
-	icon_state = "access_helper_sup"
+	color = "#8f5614"
 
 /obj/effect/mapping_helpers/airlock/access/all/supply/general/Initialize()
 	. = ..()
@@ -536,3 +628,95 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/vault/Initialize()
 	. = ..()
 	access_list += ACCESS_VAULT
+
+// -------------------- CentCom access helpers
+/obj/effect/mapping_helpers/airlock/access/all/centcom
+	color = "#00ff00"
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/general/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_GENERAL
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/thunderdome/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_THUNDER
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/specialops/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_SPECOPS
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/medical/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_MEDICAL
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/living/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_LIVING
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/storage/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_STORAGE
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/teleporter/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_TELEPORTER
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/captain/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_CAPTAIN
+
+/obj/effect/mapping_helpers/airlock/access/all/centcom/bar/Initialize()
+	. = ..()
+	access_list += ACCESS_CENT_BAR
+
+// -------------------- Syndicate access helpers
+/obj/effect/mapping_helpers/airlock/access/all/syndicate
+	color = "#ff0000"
+
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general/Initialize()
+	. = ..()
+	access_list += ACCESS_SYNDICATE
+
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/leader/Initialize()
+	. = ..()
+	access_list += ACCESS_SYNDICATE_LEADER
+
+// -------------------- Off-Station access helpers
+/obj/effect/mapping_helpers/airlock/access/all/offstation
+	color = "#ff00ff"
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/general/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERAL
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/maintenance/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_MAINT
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/medical/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_MED
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/security/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_SEC
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/engineering/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_ENGINE
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/generic1/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC1
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/generic2/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC2
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/generic3/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC3
+
+/obj/effect/mapping_helpers/airlock/access/all/offstation/generic4/Initialize()
+	. = ..()
+	access_list += ACCESS_AWAY_GENERIC4
