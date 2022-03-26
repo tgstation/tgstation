@@ -249,7 +249,7 @@
 	data["on"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
-	data["mode"] = mode ? mode_name[mode] : "Ready"
+	data["mode"] = mode ? "[mode]" : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
 		if(BOT_IDLE, BOT_DELIVER, BOT_GO_HOME)
@@ -302,7 +302,7 @@
 
 	switch(command)
 		if("stop")
-			if(mode >= BOT_DELIVER)
+			if(mode != BOT_IDLE)
 				bot_reset()
 		if("go")
 			if(mode == BOT_IDLE)
