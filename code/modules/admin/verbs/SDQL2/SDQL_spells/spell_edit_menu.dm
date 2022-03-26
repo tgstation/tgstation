@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
+GLOBAL_LIST_INIT_TYPED(sdql_spells, /datum/action/cooldown/spell, list())
 
 /client/proc/cmd_sdql_spell_menu(target in GLOB.mob_list)
 	set name = "Give/Edit SDQL spell"
@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 /datum/give_sdql_spell
 	var/client/user
 	var/mob/living/target_mob
-	var/obj/effect/proc_holder/spell/target_spell
+	var/datum/action/cooldown/spell/target_spell
 	var/spell_type
 	var/list/saved_vars = list("query" = "", "suppress_message_admins" = FALSE)
 	var/list/list_vars = list()
@@ -21,59 +21,63 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 
 	//This list contains all the vars that it should be okay to edit from the menu
 	var/static/list/editable_spell_vars = list(
-		"action_background_icon_state",
-		"action_icon_state",
-		"action_icon",
-		"active_msg",
-		"aim_assist",
-		//"requires_no_antimagic",
-		"base_icon_state",
-		"can_cast_on_centcom",
-		"charge_max",
-		"charge_type",
-		//"requires_wizard_garb",
-		"cone_level",
-		"deactive_msg",
+		// General vars
+		"name",
 		"desc",
+		"background_icon_state",
+		"icon_icon",
+		"button_icon_state",
+		"sound",
+		"cooldown_time",
+
+		"invocation",
+		"invocation_type",
+		"invocation_self_message",
+
+		"sparks_amt",
+		"smoke_type",
+		"smoke_amt",
+
+		// Pointed
+		"base_icon_state",
+		"ranged_mousepointer",
+		"active_msg",
+		"deactive_msg",
+		"aim_assist",
+		"cast_range",
+		// Pointed/projectile
+		"projectile_type",
+		"projectile_amount",
+		"projectiles_per_fire",
+
+		// Cone
+		"cone_level",
+		"respect_density",
+
+		// Touch
 		"draw_message",
 		"drop_message",
 		"hand_path",
 		"hand_var_overrides",
-		"holder_var_amount",
-		"holder_var_type",
-		//"requires_human",
-		"inner_radius",
-		"invocation_self_message",
-		"invocation_type",
-		"invocation",
+
+		// AoE
 		"max_targets",
-		"message",
-		"name",
+		"inner_radius",
+		"outer_radius",
+
+		//"requires_human",
 		//"requires_non_abstract",
-		"overlay_icon_state",
-		"overlay_icon",
-		"overlay_lifespan",
-		"overlay",
 		//"requires_unphased",
-		"projectile_type",
-		"projectile_amount",
-		"projectiles_per_fire",
-		"random_target_priority",
-		"random_target",
-		"range",
-		"ranged_mousepointer",
-		"respect_density",
-		"selection_type",
-		"smoke_amt",
-		"smoke_type",
-		"sound",
-		"sparks_amt",
-		"sparks_spread",
-		"requires_conscious",
-		"target_ignore_prev",
+		//"requires_no_antimagic",
+		//"can_cast_on_centcom",
+		//"requires_wizard_garb",
+		//"requires_conscious",
+
 	)
 
-	//If a spell creates a datum with vars it overrides, this list should contain an association with the variable containing the path of the created datum.
+	// If a spell creates a datum with vars it overrides,
+	/// this list should contain an association
+	/// with the variable containing the path of the created datum.
 	var/static/list/special_list_vars = list(
 		"hand_var_overrides" = "hand_path",
 	)
@@ -101,21 +105,23 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		return
 	src.user = CLIENT_FROM_VAR(user)
 
-	if(istype(target, /obj/effect/proc_holder/spell))
+	if(istype(target, /datum/action/cooldown/spell))
 		target_spell = target
-		var/mob/living/spell_owner = target_spell.owner.resolve()
-		if(spell_owner)
-			target_mob = spell_owner
+		if(target_spell.owner)
+			target_mob = target_spell.owner
 		else
 			to_chat(user, span_warning("[target_spell] does not have an owner, or its owner was qdelled. This REALLY shouldn't happen."))
 			qdel(src)
 			return
+
 	else if(isliving(target))
 		target_mob = target
+
 	else
 		to_chat(user, span_warning("Invalid target."))
 		qdel(src)
 		return
+
 	if(target_spell)
 		load_vars_from(target_spell)
 
@@ -171,8 +177,9 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 
 /datum/give_sdql_spell/ui_static_data(mob/user)
 	return list(
-		"types" = list("aimed", "aoe_turf", "cone", "cone/staggered", "pointed", "self", "targeted", "targeted/touch"),
+		"types" = list("pointed", "pointed/projectile", "cone", "cone/staggered", "aoe", "self", "touch"),
 		"tooltips" = list(
+			// General tooltips
 			"query" = "The SDQL query that is executed. Certain keywords are specific to SDQL spell queries.\n\
 				$type\n\
 				USER is replaced with a reference to the user of the spell.\n\
@@ -180,69 +187,56 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 				SOURCE is replaced with a reference to this spell, allowing you to refer to and edit variables within it.\n\
 				SCRATCHPAD is a list used to store variables between individual queries within the same cast or between multiple casts.\n\
 				NOTE: The SDQL keywords usr and marked do not work.",
-			"query_aimed" = "TARGETS is replaced with a list containing a reference to the atom hit by the fired projectile.",
-			"query_aoe_turf" = "TARGETS is replaced with a list containing references to every atom in the spell's area of effect.",
-			"query_cone" = "TARGETS is replaced with a list containing references to every atom in the cone produced by the spell.",
+
+			"query_projectile" = "TARGETS is replaced with a list with the atom hit by the fired projectile.",
+			"query_aoe" = "TARGETS is replaced with a list with every atom in the spell's area of effect.",
+			"query_cone" = "TARGETS is replaced with a list with every atom in the cone produced by the spell.",
 			"query_cone/staggered" = "The query will be executed once for every level of the cone produced by the spell.\n\
-				TARGETS is replaced with a list containing references to every atom in the given level of the cone.",
-			"query_pointed" = "TARGETS is replaced with a list containing a reference to the targeted atom.",
-			"query_self" = "TARGETS is null.",
-			"query_targeted" = "TARGETS is replaced with a list containing a reference(s) to the targeted mob(s).",
-			"query_targeted_touch" = "TARGETS is replaced with a list containing a reference to the atom hit with the touch attack.",
+				TARGETS is replaced with a list containing with every atom in the given level of the cone.",
+			"query_pointed" = "TARGETS is replaced with a list with the targeted atom.",
+			"query_self" = "TARGETS is is replaced with a list containing only the caster.",
+			"query_targeted_touch" = "TARGETS is replaced with a list containing a the atom hit with the touch attack.",
+
 			"suppress_message_admins" = "If this is true, the spell will not print out its query to admins' chat panels.\n\
 				The query will still be output to the game log.",
-			"charge_type" = "How the spell's charge works. This affects how charge_max is used.\n\
-				When set to \"recharge\", charge_max is the time in deciseconds between casts of the spell.\n\
-				When set to \"charges\", the user can only use the spell a number of times equal to charge_max.\n\
-				When set to \"holder_var\", charge_max is not used. holder_var_type and holder_var_amount are used instead.\n",
-			"holder_var_type" = "When charge_type is set to \"holder_var\", this is the name of the var that is modified each time the spell is cast.\n\
-				If this is set to \"bruteloss\", \"fireloss\", \"toxloss\", or \"oxyloss\", the user will take the corresponding damage.\n\
-				If this is set to \"stun\", \"knockdown\", \"paralyze\", \"immobilize\", or \"unconscious\", the user will suffer the corresponding status effect.\n\
-				If this is set to anything else, the variable with the appropriate name will be modified.",
-			"holder_var_amount" = "The amount of damage taken, the duration of status effect inflicted, or the change made to any other variable.",
-			"requires_wizard_garb" = "Whether the user has to be wearing wizard robes to cast the spell.",
-			"requires_human" = "Whether the user has to be a human to cast the spell. Redundant when requires_wizard_garb is true.",
-			"requires_non_abstract" = "If this is true, the spell cannot be cast by brains and pAIs.",
-			"requires_conscious" = "Whether the spell can be cast if the user is unconscious or dead.",
-			"requires_unphased" = "Whether the spell can be cast while the user is jaunting or bloodcrawling.",
-			"requires_no_antimagic" = "Whether the spell can be cast while the user is affected by anti-magic effects.",
+
+			// Spell vars
 			"invocation_type" = "How the spell is invoked.\n\
 				When set to \"none\", the user will not state anything when invocating.\n\
 				When set to \"whisper\", the user whispers the invocation, as if with the whisper verb.\n\
 				When set to \"shout\", the user says the invocation, as if with the say verb.\n\
 				When set to \"emote\", a visible message is produced.",
 			"invocation" = "What the user says, whispers, or emotes when using the spell.",
-			"invocation_self_message" = "What the user sees in their own chat when they use the spell.",
-			"selection_type" = "Whether the spell can target any mob in range, or only visible mobs in range.",
-			"range" = "The spell's range, in tiles.",
-			"message" = "What mobs affected by the spell see in their chat.\n\
-				Keep in mind, just because a mob is affected by the spell doesn't mean the query will have any effect on them.",
-			"player_lock" = "If false, simple mobs can use the spell.",
-			"overlay" = "Whether an overlay is drawn atop atoms affectecd by the spell.\n\
-				Keep in mind, just because an atom is affected by the spell doesn't mean the query will have any effect on it.",
-			"overlay_lifetime" = "The amount of time in deciseconds the overlay will persist.",
-			"sparks_spread" = "Whether the spell produces sparks when cast.",
+			"invocation_self_message" = "What the user sees in their own chat when they use the spell. Requires emote invocation.",
+			"sparks_amt" = "Whether the spell produces sparks when cast.",
 			"smoke_type" = "The kind of smoke, if any, the spell produces when cast.",
-			"can_cast_on_centcom" = "If true, the spell can be cast on the centcom Z-level.",
+
+			// Aoe spell vars
 			"max_targets" = "The maximum number of mobs the spell can target.",
-			"target_ignore_prev" = "If false, the same mob can be targeted multiple times.",
-			"include_user" = "If true, the user can target themselves with the spell.",
-			"random_target" = "If true, the spell will target a random mob(s) in range.",
-			"random_target_priority" = "Whether the spell will target random mobs in range or the closest mobs in range.",
-			"inner_radius" = "If this is a non-negative number, the spell will not affect atoms within that many tiles of the user.",
+			"outer_radius" = "The radius around the user affected by the spell.",
+			"inner_radius" = "The radius around the user not affected by the spell.",
+
+			// Pointed spell vars
 			"ranged_mousepointer" = "The icon used for the mouse when aiming the spell.",
-			"deactive_mesg" = "The message the user sees when canceling the spell.",
 			"active_msg" = "The message the user sees when activating the spell.",
+			"deactive_mesg" = "The message the user sees when canceling the spell.",
+			"aim_assist" = "If true, the spell has turf-based aim assist.",
+			// Pointed/projectile spell vars
 			"projectile_amount" = "The maximum number of projectiles the user can fire with each cast of the spell.",
 			"projectiles_per_fire" = "The amount of projectiles fired with each click of the mouse.",
+
+			// Cone spell stuff
 			"cone_level" = "How many tiles out the cone will extend.",
 			"respect_density" = "If true, the cone produced by the spell is blocked by walls.",
-			"aim_assist" = "If true, the spell has turf-based aim assist.",
+
+			// Touch spells
 			"draw_message" = "The message the user sees when activating the spell.",
 			"drop_message" = "The message the user sees when canceling the spell.",
 			"hand_var_overrides" = "The touch attack will have the appropriate variables overridden by the corresponding values in this associative list.\n\
 				You should probably set \"name\", \"desc\", \"catchphrase\", \"on_use_sound\" \"icon\", \"icon_state\", and \"inhand_icon_state\".\n\
 				Refer to code/modules/spells/spell_types/godhand.dm to see what other vars you can override.",
+
+			// Extra
 			"scratchpad" = "This list can be used to store variables between individual queries within the same cast or between casts.\n\
 				You can declare variables from this menu for convenience. To access this list in a query, use the identifier \"SOURCE.scratchpad\".\n\
 				Refer to the _list procs defined in code/modules/admin/verbs/SDQL2/SDQL_2_wrappers.dm for information on how to modify and edit list vars from within a query.",
@@ -252,8 +246,8 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 #define LIST_VAR_FLAGS_TYPED 1
 #define LIST_VAR_FLAGS_NAMED 2
 
-/datum/give_sdql_spell/proc/load_vars_from(obj/effect/proc_holder/spell/sample)
-	var/datum/component/sdql_executor/executor = sample.GetComponent(/datum/component/sdql_executor)
+/datum/give_sdql_spell/proc/load_vars_from(datum/action/cooldown/spell/sample)
+	var/datum/component/sdql_spell_executor/executor = sample.GetComponent(/datum/component/sdql_spell_executor)
 	if(!executor)
 		CRASH("[sample]'s SDQL executor component went missing!")
 	saved_vars["query"] = executor.query
@@ -391,7 +385,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		if("confirm")
 			if(target_spell)
 				reassign_vars(target_spell)
-				target_spell.action.UpdateButtonIcon()
+				target_spell.UpdateButtonIcon()
 				log_admin("[key_name(user)] edited the SDQL spell \"[target_spell]\" owned by [key_name(target_mob)].")
 			else
 				var/new_spell = give_spell()
@@ -399,7 +393,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			ui.close()
 
 /datum/give_sdql_spell/proc/load_sample()
-	var/path = text2path("/obj/effect/proc_holder/spell/[spell_type]/sdql")
+	var/path = text2path("/datum/action/cooldown/spell/[spell_type]/sdql")
 	var/datum/sample = new path
 	if(spell_type)
 		load_vars_from(sample)
@@ -445,7 +439,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 		parse_errors += "The \"type\" property is missing from the json file"
 		return
 	var/temp_type = json["type"]
-	var/datum/D = text2path("/obj/effect/proc_holder/spell/[temp_type]/sdql")
+	var/datum/D = text2path("/datum/action/cooldown/spell/[temp_type]/sdql")
 	if(!ispath(D))
 		parse_errors += "[temp_type] is not a valid SDQL spell type"
 		return
@@ -857,22 +851,20 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 	return ret
 
 /datum/give_sdql_spell/proc/give_spell()
-	var/path = text2path("/obj/effect/proc_holder/spell/[spell_type]/sdql")
-	var/obj/effect/proc_holder/spell/new_spell = new path(null, target_mob, user.ckey)
+	var/path = text2path("/odatum/action/cooldown/spell/[spell_type]/sdql")
+	var/datum/action/cooldown/spell/new_spell = new path(target_mob.mind || target_mob, user.ckey)
+
 	GLOB.sdql_spells += new_spell
-	reassign_vars(new_spell)
-	new_spell.action.UpdateButtonIcon()
+	new_spell.Grant(target_mob)
 	if(target_mob.mind)
-		target_mob.mind.AddSpell(new_spell)
-	else
-		target_mob.AddSpell(new_spell)
-		to_chat(user, span_danger("Spells given to mindless mobs will not be transferred in mindswap or cloning!"))
+		to_chat(user, span_bolddanger("Spells given to mindless mobs will not be transferred in mindswap or cloning!"))
+
 	return new_spell
 
-/datum/give_sdql_spell/proc/reassign_vars(obj/effect/proc_holder/spell/target)
+/datum/give_sdql_spell/proc/reassign_vars(datum/action/cooldown/spell/target)
 	if(!target)
 		CRASH("edit_spell must be called with a non_null target")
-	var/datum/component/sdql_executor/executor = target.GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_spell_executor/executor = target.GetComponent(/datum/component/sdql_spell_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	for(var/V in saved_vars+list_vars)

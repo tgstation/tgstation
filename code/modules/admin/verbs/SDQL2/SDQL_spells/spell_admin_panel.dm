@@ -13,18 +13,17 @@
 	var/list/data = list()
 	data["spells"] = list()
 
-	for (var/obj/effect/proc_holder/spell/spell as anything in GLOB.sdql_spells)
-		var/mob/living/owner = spell.owner.resolve()
-		var/datum/component/sdql_executor/executor = spell.GetComponent(/datum/component/sdql_executor)
+	for (var/datum/action/cooldown/spell/spell as anything in GLOB.sdql_spells)
+		var/datum/component/sdql_spell_executor/executor = spell.GetComponent(/datum/component/sdql_spell_executor)
 		if(!executor)
 			continue
 
 		data["spells"] += list(list(
 			"ref" = REF(spell),
 			"name" = "[spell]",
-			"owner" = owner,
-			"ownerRef" = REF(owner),
-			"creator" = executor.giver
+			"owner" = spell.owner,
+			"ownerRef" = REF(spell.owner,),
+			"creator" = executor.giver,
 		))
 
 	return data
@@ -36,11 +35,11 @@
 
 	switch(action)
 		if("edit_spell")
-			var/obj/effect/proc_holder/spell/spell = locate(params["spell"])
+			var/datum/action/cooldown/spell/spell = locate(params["spell"])
 			if(!spell)
 				to_chat(usr, span_warning("That spell no longer exists!"))
 				return
-			var/datum/component/sdql_executor/executor = spell.GetComponent(/datum/component/sdql_executor)
+			var/datum/component/sdql_spell_executor/executor = spell.GetComponent(/datum/component/sdql_spell_executor)
 			if(!executor)
 				to_chat(usr, span_warning("[spell][spell.p_s()] SDQL executor component is gone!"))
 				return
@@ -53,7 +52,7 @@
 				return
 			usr.client?.admin_follow(owner)
 		if("vv_spell")
-			var/obj/effect/proc_holder/spell/spell = locate(params["spell"])
+			var/datum/action/cooldown/spell/spell = locate(params["spell"])
 			if(!spell)
 				to_chat(usr, span_warning("That spell no longer exists!"))
 				return

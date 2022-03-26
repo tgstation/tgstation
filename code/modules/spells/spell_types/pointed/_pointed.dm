@@ -125,3 +125,11 @@
 	to_fire.firer = owner
 	to_fire.fired_from = get_turf(owner)
 	to_fire.preparePixelProjectile(target, owner)
+	RegisterSignal(to_fire, COMSIG_PROJECTILE_ON_HIT, .proc/on_cast_hit)
+
+/// Signal proc for whenever the projectile we fire hits someone.
+/// Pretty much relays to the spell when the projectile actually hits something.
+/datum/action/cooldown/spell/pointed/projectile/proc/on_cast_hit(atom/source, mob/firer, atom/target, angle)
+	SIGNAL_HANDLER
+
+	SEND_SIGNAL(src, COMSIG_SPELL_PROJECTILE_HIT, target, firer, source)

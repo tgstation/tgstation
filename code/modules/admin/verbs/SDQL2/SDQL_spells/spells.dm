@@ -1,148 +1,105 @@
-/obj/effect/proc_holder/spell/aimed/sdql
+/datum/action/cooldown/spell/pointed/projectile/sdql
 	name = "Aimed SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
 	projectile_type = /obj/projectile
 
-/obj/effect/proc_holder/spell/aimed/sdql/Initialize(mapload, new_owner, giver)
+/datum/action/cooldown/spell/pointed/projectile/New(Target, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
-	RegisterSignal(src, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
+	var/static/list/executor_signals = list(
+		COMSIG_SPELL_PROJECTILE_HIT,
+	)
 
-/obj/effect/proc_holder/spell/aimed/sdql/proc/on_projectile_hit(source, firer, target)
-	SIGNAL_HANDLER
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	INVOKE_ASYNC(executor, /datum/component/sdql_executor/proc/execute, list(target), owner.resolve())
+	AddComponent(/datum/component/sdql_spell_executor, giver, executor_signals)
 
-/obj/effect/proc_holder/spell/aoe_turf/sdql
+/datum/action/cooldown/spell/aoe/sdql
 	name = "AoE SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
 
-/obj/effect/proc_holder/spell/aoe_turf/sdql/Initialize(mapload, new_owner, giver)
+/datum/action/cooldown/spell/aoe/sdql/New(Target, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	var/static/list/executor_signals = list(
+		COMSIG_SPELL_AOE_ON_CAST,
+	)
 
-/obj/effect/proc_holder/spell/aoe_turf/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	executor.execute(targets, user)
+	AddComponent(/datum/component/sdql_spell_executor, giver, executor_signals)
 
-/obj/effect/proc_holder/spell/cone/sdql
+/datum/action/cooldown/spell/cone/sdql
 	name = "Cone SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
-	var/list/targets = list()
 
-/obj/effect/proc_holder/spell/cone/sdql/Initialize(mapload, new_owner, giver)
+/datum/action/cooldown/spell/cone/sdql/New(Target, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	var/static/list/executor_signals = list(
+		COMSIG_SPELL_CONE_ON_CAST,
+	)
 
-/obj/effect/proc_holder/spell/cone/sdql/do_mob_cone_effect(mob/living/target_mob, level)
-	targets |= target_mob
+	AddComponent(/datum/component/sdql_spell_executor, giver, executor_signals)
 
-/obj/effect/proc_holder/spell/cone/sdql/do_obj_cone_effect(obj/target_obj, level)
-	targets |= target_obj
-
-/obj/effect/proc_holder/spell/cone/sdql/do_turf_cone_effect(turf/target_turf, level)
-	targets |= target_turf
-
-/obj/effect/proc_holder/spell/cone/sdql/cast(list/targets, mob/user)
-	. = ..()
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	executor.execute(targets, user)
-	targets = list()
-
-/obj/effect/proc_holder/spell/cone/staggered/sdql
+/datum/action/cooldown/spell/cone/staggered/sdql
 	name = "Staggered Cone SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
-	var/list/targets = list()
 
-/obj/effect/proc_holder/spell/cone/staggered/sdql/Initialize(mapload, new_owner, giver)
+/datum/action/cooldown/spell/cone/staggered/sdql/New(Target, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	var/static/list/executor_signals = list(
+		COMSIG_SPELL_CONE_ON_LAYER_EFFECT,
+	)
 
-/obj/effect/proc_holder/spell/cone/staggered/sdql/do_mob_cone_effect(mob/living/target_mob, level)
-	targets |= target_mob
+	AddComponent(/datum/component/sdql_spell_executor, giver, executor_signals)
 
-/obj/effect/proc_holder/spell/cone/staggered/sdql/do_obj_cone_effect(obj/target_obj, level)
-	targets |= target_obj
 
-/obj/effect/proc_holder/spell/cone/staggered/sdql/do_turf_cone_effect(turf/target_turf, level)
-	targets |= target_turf
-
-/obj/effect/proc_holder/spell/cone/staggered/sdql/do_cone_effects(list/target_turf_list, level)
-	. = ..()
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	executor.execute(target_turf_list, owner.resolve())
-	targets = list()
-
-/obj/effect/proc_holder/spell/pointed/sdql
+/datum/action/cooldown/spell/pointed/sdql
 	name = "Pointed SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
 
-/obj/effect/proc_holder/spell/pointed/sdql/Initialize(mapload, new_owner, giver)
+/datum/action/cooldown/spell/pointed/sdql/New(Target, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	var/static/list/executor_signals = list(
+		COMSIG_SPELL_CAST,
+	)
 
-/obj/effect/proc_holder/spell/pointed/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	executor.execute(targets, user)
+	AddComponent(/datum/component/sdql_spell_executor, giver, executor_signals)
 
-/obj/effect/proc_holder/spell/self/sdql
+
+/// Dummy self spell !!for sdql spells only!!
+/// All spells are, by default, self spells so this is only for readability
+/// Don't use this for subtypes of other spells!
+/// Just subtype off of spell/ for your self cast spell!
+/datum/action/cooldown/spell/self
+
+/datum/action/cooldown/spell/self/sdql
 	name = "Self SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
 
-/obj/effect/proc_holder/spell/self/sdql/Initialize(mapload, new_owner, giver)
+/datum/action/cooldown/spell/self/sdql/New(Target, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	var/static/list/executor_signals = list(
+		COMSIG_SPELL_CAST,
+	)
 
-/obj/effect/proc_holder/spell/self/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	executor.execute(targets, user)
+	AddComponent(/datum/component/sdql_spell_executor, giver, executor_signals)
 
-/obj/effect/proc_holder/spell/targeted/sdql
-	name = "Targeted SDQL Spell"
-	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
-
-/obj/effect/proc_holder/spell/targeted/sdql/Initialize(mapload, new_owner, giver)
-	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
-
-/obj/effect/proc_holder/spell/targeted/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	executor.execute(targets, user)
-
-/obj/effect/proc_holder/spell/targeted/touch/sdql
+/datum/action/cooldown/spell/touch/sdql
 	name = "Touch SDQL Spell"
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
-	var/list/hand_var_overrides = list() //The touch attack has its vars changed to the ones put in this list.
+	/// Vars to edit on the created hand.
+	var/list/hand_var_overrides = list()
 
-/obj/effect/proc_holder/spell/targeted/touch/sdql/Initialize(mapload, new_owner, giver)
+/datum/action/cooldown/spell/touch/sdql/New(Target, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	var/static/list/executor_signals = list(
+		COMSIG_SPELL_TOUCH_HAND_HIT,
+	)
 
-/obj/effect/proc_holder/spell/targeted/touch/sdql/ChargeHand(mob/living/carbon/user)
-	if(..())
-		for(var/V in hand_var_overrides)
-			if(attached_hand.vars[V])
-				attached_hand.vv_edit_var(V, hand_var_overrides[V])
-		RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_touch_attack)
-		user.update_inv_hands()
+	AddComponent(/datum/component/sdql_spell_executor, giver, executor_signals)
 
-/obj/effect/proc_holder/spell/targeted/touch/sdql/proc/on_touch_attack(source, target, user)
-	SIGNAL_HANDLER
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
-	if(!executor)
-		CRASH("[src]'s SDQL executor component went missing!")
-	INVOKE_ASYNC(executor, /datum/component/sdql_executor/proc/execute, list(target), user)
+/datum/action/cooldown/spell/touch/sdql/create_hand(mob/living/carbon/cast_on)
+	. = ..()
+	if(!attached_hand)
+		return
+
+	for(var/var_to_edit in hand_var_overrides)
+		if(attached_hand.vars[var_to_edit])
+			attached_hand.vv_edit_var(var_to_edit, hand_var_overrides[var_to_edit])
+
+	cast_on.update_inv_hands()

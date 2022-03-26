@@ -431,7 +431,7 @@ const varCondition = (entry, saved_vars) => {
     case 'overlay_lifespan':
       return !!saved_vars['overlay'];
     case 'sparks_amt':
-      return !!saved_vars['sparks_spread'];
+      return !!saved_vars['sparks_amt'];
     case 'smoke_amt':
       return !!saved_vars['smoke_type'];
     case 'random_target_priority':

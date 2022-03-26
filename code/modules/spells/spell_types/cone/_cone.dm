@@ -12,6 +12,7 @@
 /datum/action/cooldown/spell/cone/cast(atom/cast_on)
 	. = ..()
 	var/list/cone_turfs = get_cone_turfs(get_turf(cast_on), cast_on.dir, cone_levels)
+	SEND_SIGNAL(src, COMSIG_SPELL_CONE_ON_CAST, cone_turfs, cast_on)
 	make_cone(cone_turfs, cast_on)
 
 /datum/action/cooldown/spell/cone/proc/make_cone(list/cone_turfs, atom/caster)
@@ -20,6 +21,7 @@
 
 /// This proc does obj, mob and turf cone effects on all targets in the passed list.
 /datum/action/cooldown/spell/cone/proc/do_cone_effects(list/target_turf_list, atom/caster, level = 1)
+	SEND_SIGNAL(src, COMSIG_SPELL_CONE_ON_LAYER_EFFECT, target_turf_list, caster, level)
 	for(var/turf/target_turf as anything in target_turf_list)
 		if(QDELETED(target_turf)) //if turf is no longer there
 			continue

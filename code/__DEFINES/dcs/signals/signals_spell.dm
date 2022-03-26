@@ -23,6 +23,17 @@
 // TODO DOC
 #define COMSIG_SPELL_SET_STATPANEL "spell_set_statpanel"
 
+// TODO DOC
+#define COMSIG_SPELL_PROJECTILE_HIT "spell_projectile_hit"
+// TODO DOC
+#define COMSIG_SPELL_AOE_ON_CAST "spell_aoe_cast"
+// TODO DOC
+#define COMSIG_SPELL_CONE_ON_CAST "spell_cone_cast"
+
+#define COMSIG_SPELL_CONE_ON_LAYER_EFFECT "spell_cone_cast_effect"
+// TODO DOC
+#define COMSIG_SPELL_TOUCH_HAND_HIT "spell_touch_hand_cast"
+
 /// From /datum/action/cooldown/spell/lichdom/cast(), sent to the item being imbued: (datum/action/cooldown/spell, mob/user)
 #define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
 	/// Return to stop the cast and prevent the soul imbue

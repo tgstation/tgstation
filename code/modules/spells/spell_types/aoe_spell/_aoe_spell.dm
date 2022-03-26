@@ -26,6 +26,8 @@
 	if(max_targets > 0)
 		things_to_cast_on = shuffle(things_to_cast_on)
 
+	SEND_SIGNAL(src, COMSIG_SPELL_AOE_ON_CAST, things_to_cast_on, cast_on)
+
 	// Now go through and cast our spell where applicable
 	var/num_targets = 0
 	for(var/atom/thing_to_target as anything in things_to_cast_on)

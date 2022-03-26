@@ -130,6 +130,7 @@
  * Calls cast_on_hand_hit() from the caster onto the victim.
  */
 /datum/action/cooldown/spell/touch/proc/do_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
+	SEND_SIGNAL(src, COMSIG_SPELL_TOUCH_HAND_HIT, victim, caster, hand)
 	if(!cast_on_hand_hit(hand, victim, caster))
 		return
 
