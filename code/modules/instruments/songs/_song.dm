@@ -311,6 +311,7 @@
  */
 /datum/song/proc/sanitize_tempo(new_tempo)
 	new_tempo = abs(new_tempo)
+	SEND_SIGNAL(parent, COMSIG_INSTRUMENT_TEMPO_CHANGED, src)
 	return clamp(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
 
 /**
