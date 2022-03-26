@@ -1,6 +1,3 @@
-// Todo:
-// Add proper garbage collection
-// Cry yourself to sleep over the existence of hud code
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "default"
 
 /atom/movable/screen/movable/action_button
