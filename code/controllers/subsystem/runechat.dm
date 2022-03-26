@@ -152,10 +152,16 @@ SUBSYSTEM_DEF(runechat)
 	if(append_insert)
 		if(bucket_to_use["[end_time]"])
 			bucket_to_use["[end_time]"] += timer_to_insert //add to that inner list if our end_time already exists in the outer list
+		else
+			bucket_to_use["[end_time]"] = list(timer_to_insert)
+
+		timers_by_hash[timer_to_insert.timer_hash] = timer_to_insert
 		return TRUE
 
 	if(!length(bucket_to_use))//if theres nothing in the bucket list then we can just append to it anyways
 		bucket_to_use["[end_time]"] = list(timer_to_insert)
+
+		timers_by_hash[timer_to_insert.timer_hash] = timer_to_insert
 		return TRUE
 
 	//otherwise, do a binary insert
@@ -209,7 +215,7 @@ SUBSYSTEM_DEF(runechat)
 	if(!length(timer_list))
 		bucket_to_use -= bucket_index//remove the world.time index if there are no more timers set to be invoked at that time
 
-	timers_by_hash[timer_to_remove.timer_hash] -= timer_to_remove
+	timers_by_hash -= timer_to_remove
 
 	return TRUE
 
