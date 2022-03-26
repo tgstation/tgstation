@@ -108,7 +108,7 @@
 	port_direction = 4;
 	width = 9
 	},
-/turf/open/floor/plating,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "r" = (
 /obj/structure/shuttle/engine/heater,
@@ -122,15 +122,22 @@
 /obj/structure/shuttle/engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/labor)
+"W" = (
+/obj/machinery/door/airlock/titanium{
+	name = "Labor Shuttle Airlock";
+	req_access_txt = "2"
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/labor)
 
 (1,1,1) = {"
 a
 a
-b
+i
 a
 a
-b
 a
+W
 a
 a
 "}
@@ -140,8 +147,8 @@ c
 f
 j
 l
-l
 p
+l
 r
 s
 "}
