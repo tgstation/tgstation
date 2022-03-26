@@ -1826,6 +1826,13 @@
 	},
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"lN" = (
+/obj/machinery/door/window/right/directional/south,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
+/turf/open/floor/iron/freezer,
+/area/mine/living_quarters)
 "lO" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 4
@@ -2279,16 +2286,6 @@
 	},
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
-"pH" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/machinery/bounty_board/directional/west,
-/turf/open/floor/iron,
-/area/mine/production)
 "pR" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2564,13 +2561,6 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"vb" = (
-/obj/machinery/door/window/left/directional/south,
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/turf/open/floor/iron/freezer,
-/area/mine/living_quarters)
 "vg" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/decal/cleanable/dirt,
@@ -3189,13 +3179,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
-"Es" = (
-/obj/machinery/door/window/right/directional/south,
-/obj/machinery/shower{
-	pixel_y = 22
-	},
-/turf/open/floor/iron/freezer,
-/area/mine/living_quarters)
 "EB" = (
 /obj/structure/stone_tile/cracked,
 /obj/structure/stone_tile/cracked{
@@ -3561,6 +3544,16 @@
 	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
+"Ja" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
+/area/mine/production)
 "Jd" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -3831,6 +3824,13 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/mine/living_quarters)
+"Po" = (
+/obj/machinery/door/window/left/directional/south,
+/obj/machinery/shower{
+	pixel_y = 22
+	},
+/turf/open/floor/iron/freezer,
 /area/mine/living_quarters)
 "Pr" = (
 /obj/structure/chair/stool/directional/west,
@@ -15127,7 +15127,7 @@ fk
 Pt
 fI
 cM
-vb
+Po
 Zr
 cM
 ai
@@ -15384,7 +15384,7 @@ fk
 TL
 fk
 cM
-Es
+lN
 uC
 cM
 Hm
@@ -19741,7 +19741,7 @@ cl
 cH
 cO
 Qj
-pH
+Ja
 dJ
 ia
 cn

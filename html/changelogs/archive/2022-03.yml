@@ -886,3 +886,34 @@
   - code_imp: Some minor code changes to how anomaly refinery and implosion compressor
       show the gas info. No changes expected, report if bug.
   - code_imp: recoded checks for atmos chamber abnormalities in debug verbs.
+2022-03-26:
+  Colovorat:
+  - bugfix: Clicking on airlock with ID Scan wire cut, should not open airlock.
+  Ghilker:
+  - bugfix: Fix an overlooked crystallizer issue where gases wouldn't get consumed
+      because of a fixed rate of removal instead of an percentage based one.
+  OperativeLyn:
+  - bugfix: Fixed double firelocks in Deltastation's fore customs area.
+  SmArtKar:
+  - expansion: Added VOX and Thought Listener BCI components
+  - expansion: Object Overlay component overlays can now be rotated
+  - expansion: Added new view sensor component.
+  Tastyfish:
+  - qol: The supply and supply request consoles now have a search bar.
+  - bugfix: Picking a high priority role in character creation no longer breaks assistant
+      selection behind the scenes.
+  Wallem:
+  - bugfix: GPSes don't start deactivated anymore, which also brings back most space
+      ruin GPS signals. Sorry about that.
+  dragomagol:
+  - bugfix: Kiosk wands can no longer be put into storage containers
+  - qol: Windoors now use directional variants
+  maxspells:
+  - expansion: Surgery steps play sound effects appropriate to the step
+  san7890:
+  - rscadd: Nanotrasen has refurbished the Recreation Deck on DeltaStation. Feel free
+      to "ooh" and "aah" at all of the new features that have been added.
+  unit0016:
+  - qol: Mappers now have access to an autoname helper for airlocks! One less field
+      to punch in means a few seconds extra YOU can use placing down lizard plushies,
+      wondering where it all went wrong, and adding lattices on the CentCom Z-level.
