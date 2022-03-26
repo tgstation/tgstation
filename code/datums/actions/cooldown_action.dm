@@ -27,7 +27,7 @@
 /datum/action/cooldown/New(Target)
 	..()
 	button.maptext = ""
-	button.maptext_x = 8
+	button.maptext_x = 2
 	button.maptext_y = 0
 	button.maptext_width = 24
 	button.maptext_height = 12
@@ -122,10 +122,10 @@
 
 /// For signal calling
 /datum/action/cooldown/proc/PreActivate(atom/target)
-	if(SEND_SIGNAL(owner, COMSIG_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
+	if(SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return
 	. = Activate(target)
-	SEND_SIGNAL(owner, COMSIG_ABILITY_FINISHED, src)
+	SEND_SIGNAL(owner, COMSIG_MOB_ABILITY_FINISHED, src)
 
 /// To be implemented by subtypes
 /datum/action/cooldown/proc/Activate(atom/target)
@@ -188,7 +188,7 @@
 		PANEL_DISPLAY_NAME = name,
 	)
 
-	SEND_SIGNAL(src, COMSIG_ABILITY_SET_STATPANEL, stat_panel_data)
+	SEND_SIGNAL(src, COMSIG_ACTION_SET_STATPANEL, stat_panel_data)
 
 	return list(
 		stat_panel_data[PANEL_DISPLAY_PANEL],

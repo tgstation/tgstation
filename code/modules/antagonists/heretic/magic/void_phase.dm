@@ -39,12 +39,12 @@
 	for(var/mob/living/living_mob in range(damage_radius, source_turf))
 		if(IS_HERETIC_OR_MONSTER(living_mob))
 			continue
-		living_mob.apply_damage(40, BRUTE)
+		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 
 	for(var/mob/living/living_mob in range(damage_radius, targeted_turf))
 		if(IS_HERETIC_OR_MONSTER(living_mob))
 			continue
-		living_mob.apply_damage(40, BRUTE)
+		living_mob.apply_damage(40, BRUTE, wound_bonus = CANT_WOUND)
 
 	do_teleport(
 		owner,

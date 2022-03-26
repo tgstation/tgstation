@@ -50,7 +50,7 @@
 		var/obj/item/bodypart/bodypart = pick(victim.bodyparts)
 		var/datum/wound/slash/critical/crit_wound = new()
 		crit_wound.apply_wound(bodypart)
-		victim.apply_damage(20, BURN)
+		victim.apply_damage(20, BURN, wound_bonus = CANT_WOUND)
 
 		new /obj/effect/temp_visual/cleave(victim.drop_location())
 

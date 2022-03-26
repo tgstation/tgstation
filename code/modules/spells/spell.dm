@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	background_icon_state = "bg_spell"
 	icon_icon = 'icons/mob/actions/actions_spells.dmi'
 	button_icon_state = "spell_default"
+	check_flags = AB_CHECK_CONSCIOUS
 	panel = "Spells"
 
 	/// The sound played on cast.
@@ -109,6 +110,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	UpdateButtonIcon()
 
+/datum/action/cooldown/spell/IsAvailable()
+	return ..() && can_cast_spell(feedback = FALSE)
+
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(!can_cast_spell())
 		return FALSE
@@ -125,57 +129,60 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
-/datum/action/cooldown/spell/proc/can_cast_spell()
+/datum/action/cooldown/spell/proc/can_cast_spell(feedback = TRUE)
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
 	if((spell_requirements & SPELL_REQUIRES_OFF_CENTCOM) && is_centcom_level(caster_turf.z))
-		to_chat(owner, span_warning("You can't cast [src] here!"))
+		if(feedback)
+			to_chat(owner, span_warning("You can't cast [src] here!"))
 		return FALSE
-
-	/*
-	if(!charge_check(user))
-		return FALSE
-	*/
 
 	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
 		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_CONSCIOUS) && owner.stat > CONSCIOUS)
-		to_chat(owner, span_warning("You need to be conscious to cast [src]!"))
+		if(feedback)
+			to_chat(owner, span_warning("You need to be conscious to cast [src]!"))
 		return FALSE
 
 	if(!(spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC))
 		var/antimagic = owner.anti_magic_check(TRUE, FALSE, FALSE, 0, TRUE)
 		if(antimagic)
-			if(isitem(antimagic))
-				to_chat(owner, span_notice("[antimagic] is interfering with your ability to cast [src]."))
-			else
-				to_chat(owner, span_warning("Magic seems to flee from you - You can't gather enough power to cast [src]."))
+			if(feedback)
+				if(isitem(antimagic))
+					to_chat(owner, span_notice("[antimagic] is interfering with your ability to cast [src]."))
+				else
+					to_chat(owner, span_warning("Magic seems to flee from you - You can't gather enough power to cast [src]."))
 			return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_UNPHASED) && istype(owner.loc, /obj/effect/dummy))
-		to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
+		if(feedback)
+			to_chat(owner, span_warning("[src] cannot be cast unless you are completely manifested in the material plane!"))
 		return FALSE
 
-	if(!can_invoke())
+	if(!can_invoke(feedback = feedback))
 		return FALSE
 
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
 			if(!HAS_TRAIT(owner, TRAIT_WIZARD_ROBES))
-				to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your robes!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your robes!"))
 				return FALSE
 			if(!HAS_TRAIT(owner, TRAIT_WIZARD_HAT))
-				to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your hat!"))
+				if(feedback)
+					to_chat(owner, span_warning("You don't feel strong enough to cast [src] without your hat!"))
 				return FALSE
 
 	else
 		if(spell_requirements & (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_HUMAN))
-			to_chat(owner, span_warning("[src] can only be cast by humans!"))
+			if(feedback)
+				to_chat(owner, span_warning("[src] can only be cast by humans!"))
 			return FALSE
 
 		if((spell_requirements & SPELL_REQUIRES_NON_ABSTRACT) && (isbrain(owner) || ispAI(owner)))
-			to_chat(owner, span_warning("[src] can only be cast by physical beings!"))
+			if(feedback)
+				to_chat(owner, span_warning("[src] can only be cast by physical beings!"))
 			return FALSE
 
 	return TRUE
@@ -220,7 +227,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST) | SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src)
+	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on) | SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src, cast_on)
 	if(sig_return & COMPONENT_CANCEL_SPELL)
 		return FALSE
 
@@ -245,8 +252,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
-	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src)
-	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST)
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
+	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
 
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
@@ -294,7 +301,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		if(INVOCATION_EMOTE)
 			owner.visible_message(invocation, invocation_self_message)
 
-/datum/action/cooldown/spell/proc/can_invoke()
+/datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
 	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_INVOKE) & COMPONENT_CANCEL_INVOKE)
 		return FALSE
 

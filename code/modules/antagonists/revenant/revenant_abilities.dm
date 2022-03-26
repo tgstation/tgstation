@@ -160,7 +160,7 @@
 	else
 		name = "[initial(name)] ([cast_amount]E)"
 
-/datum/action/cooldown/spell/aoe/revenant/can_cast_spell()
+/datum/action/cooldown/spell/aoe/revenant/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE

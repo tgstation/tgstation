@@ -15,7 +15,7 @@
 
 	hand_path = /obj/item/melee/touch_attack/mansus_fist
 
-/datum/action/cooldown/spell/touch/mansus_grasp/can_cast_spell()
+/datum/action/cooldown/spell/touch/mansus_grasp/can_cast_spell(feedback = TRUE)
 	return ..() && !!IS_HERETIC(owner)
 
 /datum/action/cooldown/spell/touch/mansus_grasp/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)

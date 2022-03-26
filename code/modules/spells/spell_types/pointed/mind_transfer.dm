@@ -26,14 +26,15 @@
 		/mob/living/simple_animal/hostile/megafauna,
 	))
 
-/datum/action/cooldown/spell/pointed/mind_transfer/can_cast_spell()
+/datum/action/cooldown/spell/pointed/mind_transfer/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(!isliving(owner))
 		return FALSE
 	if(owner.suiciding)
-		to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
+		if(feedback)
+			to_chat(owner, span_warning("You're killing yourself! You can't concentrate enough to do this!"))
 		return FALSE
 	return TRUE
 

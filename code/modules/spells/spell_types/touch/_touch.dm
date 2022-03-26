@@ -1,4 +1,5 @@
 /datum/action/cooldown/spell/touch
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
 	// Touch spells don't after_cast:
 	// Sound and invocation is handled when the touch ACTUALLY hits a target
 	sound = 'sound/items/welder.ogg'
@@ -18,7 +19,7 @@
 	remove_hand()
 	return ..()
 
-/datum/action/cooldown/spell/touch/can_cast_spell()
+/datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -104,7 +105,7 @@
 		return
 	if(victim == caster)
 		return
-	if(!can_cast_spell())
+	if(!can_cast_spell(feedback = FALSE))
 		return
 
 	INVOKE_ASYNC(src, .proc/do_hand_hit, source, victim, caster)
@@ -121,7 +122,7 @@
 		return
 	if(victim == caster)
 		return
-	if(!can_cast_spell())
+	if(!can_cast_spell(feedback = FALSE))
 		return
 
 	INVOKE_ASYNC(src, .proc/do_secondary_hand_hit, source, victim, caster)

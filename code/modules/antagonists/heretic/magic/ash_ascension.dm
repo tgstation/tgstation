@@ -41,7 +41,7 @@
 
 // An effect that puts a ring of fire around the mob it's located in.
 // Moved off of the fire_sworn spell due to cooldown actions processing on their own.
-/obj/effect/fire_ring // MELBERT TODO TEST THIS
+/obj/effect/fire_ring // MELBERT TODO TEST THIS // MELBERT TODO PUT BACK ON SPELL IT FAST PROCESS
 	/// Radius of the fire ring.
 	var/ring_radius = 1
 

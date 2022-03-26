@@ -36,7 +36,7 @@
 	QDEL_NULL(lockon_component)
 	return ..()
 
-/datum/action/cooldown/spell/pointed/projectile/spell_cards/on_activation()
+/datum/action/cooldown/spell/pointed/projectile/spell_cards/on_activation(mob/on_who)
 	QDEL_NULL(lockon_component)
 	lockon_component = owner.AddComponent( \
 		/datum/component/lockon_aiming, \
@@ -54,7 +54,7 @@
 	if(real_target)
 		owner.face_atom(real_target)
 
-/datum/action/cooldown/spell/pointed/projectile/spell_cards/on_deactivation(mob/M)
+/datum/action/cooldown/spell/pointed/projectile/spell_cards/on_deactivation(mob/on_who)
 	QDEL_NULL(lockon_component)
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)

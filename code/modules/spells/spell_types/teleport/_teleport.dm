@@ -105,7 +105,7 @@
 	else
 		target_area = tgui_input_list(cast_on, "Chose an area to teleport to.", "Teleport", GLOB.teleportlocs)
 
-	if(QDELETED(src) || QDELETED(cast_on) || !IsAvailable() || !can_cast_spell())
+	if(QDELETED(src) || QDELETED(cast_on) || !IsAvailable() || !can_cast_spell(feedback = FALSE))
 		return FALSE
 	if(!target_area || isnull(GLOB.teleportlocs[target_area]))
 		return FALSE

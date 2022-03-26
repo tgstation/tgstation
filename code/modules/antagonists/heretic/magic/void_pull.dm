@@ -30,7 +30,7 @@
 	for(var/mob/living/nearby_living in range(damage_radius, cast_on))
 		if(!is_affected_by_aoe(nearby_living))
 			continue
-		nearby_living.apply_damage(30, BRUTE)
+		nearby_living.apply_damage(30, BRUTE, wound_bonus = CANT_WOUND)
 
 /datum/action/cooldown/spell/aoe/void_pull/get_things_to_cast_on(atom/center)
 	return view(outer_radius, center)

@@ -655,9 +655,9 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	var/list/spell_list = list()
 	for(var/datum/action/cooldown/spell/to_add as anything in GLOB.spells)
-		spell_list[to_add.name] = to_add.type
+		spell_list[initial(to_add.name)] = to_add
 
-	var/chosen_spell = tgui_input_list(usr, "Choose the spell to give to []spell_recipient", "ABRAKADABRA", sort_list(spell_list))
+	var/chosen_spell = tgui_input_list(usr, "Choose the spell to give to [spell_recipient]", "ABRAKADABRA", sort_list(spell_list))
 	if(isnull(chosen_spell))
 		return
 	var/datum/action/cooldown/spell/spell_path = spell_list[chosen_spell]
@@ -683,7 +683,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	if(!spell_recipient.mind)
 		to_chat(usr, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
-			and as such will not be transferred on their mind changing (mindswap)."))
+			and as such will not be transferred if their mind changes body (IE, mindswap)."))
 
 /client/proc/remove_spell(mob/removal_target in GLOB.mob_list)
 	set category = "Admin.Fun"

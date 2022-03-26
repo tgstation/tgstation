@@ -65,7 +65,7 @@
 /mob/living/simple_animal/hostile/wizard/handle_automated_action()
 	. = ..()
 	if(target && next_cast < world.time)
-		if((get_dir(src, target) in list(SOUTH, EAST, WEST, NORTH)) && fireball.can_cast_spell())
+		if((get_dir(src, target) in list(SOUTH, EAST, WEST, NORTH)) && fireball.can_cast_spell(feedback = FALSE))
 			setDir(get_dir(src, target))
 			fireball.Trigger(null, target)
 			next_cast = world.time + 1 SECONDS

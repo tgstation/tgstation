@@ -22,12 +22,13 @@
 	/// Quote: "the only way i can think of to stop a sound, thank MSO for the idea."
 	var/sound/charge_sound
 
-/datum/action/cooldown/spell/tesla/can_cast_spell()
+/datum/action/cooldown/spell/tesla/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(currently_channeling)
-		to_chat(owner, span_warning("You're already channeling [src]!"))
+		if(feedback)
+			to_chat(owner, span_warning("You're already channeling [src]!"))
 		return FALSE
 
 	return TRUE

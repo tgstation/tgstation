@@ -65,12 +65,13 @@
 		you're suddenly stopped by a vision of a massive tinfoil wall \
 		that streches beyond visible range. It seems you've been foiled.")
 
-/datum/action/cooldown/spell/pointed/mindread/can_cast_spell()
+/datum/action/cooldown/spell/pointed/mindread/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(owner.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		to_chat(owner, antimagic_block_text)
+		if(feedback)
+			to_chat(owner, antimagic_block_text)
 		return FALSE
 
 	return TRUE

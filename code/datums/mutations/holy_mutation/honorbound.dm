@@ -259,7 +259,7 @@
 
 	qdel(src)
 
-/datum/action/cooldown/spell/pointed/declare_evil/can_cast_spell()
+/datum/action/cooldown/spell/pointed/declare_evil/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -268,7 +268,8 @@
 	if(!honor_mutation)
 		return FALSE
 	if(GLOB.religious_sect.favor < required_favor)
-		to_chat(owner, span_warning("You need at least 150 favor to declare someone evil!"))
+		if(feedback)
+			to_chat(owner, span_warning("You need at least 150 favor to declare someone evil!"))
 		return FALSE
 
 	return TRUE

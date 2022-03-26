@@ -18,7 +18,7 @@
 /datum/action/cooldown/spell/aoe/rust_conversion/is_affected_by_aoe(atom/thing)
 	return isturf(thing)
 
-/datum/action/cooldown/spell/aoe/rust_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster)
+/datum/action/cooldown/spell/aoe/rust_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster) // MELBERT TODO seems big
 	// We have less chance of rusting stuff that's further
 	// Probability of rusting = 100 * (distance - 1) / (radius + 1)
 	var/distance_to_caster = get_dist(victim, caster)

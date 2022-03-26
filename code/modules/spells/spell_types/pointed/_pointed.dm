@@ -23,24 +23,24 @@
 	active_msg = "You prepare to use [src] on a target..."
 	deactive_msg = "You dispel [src]."
 
-/datum/action/cooldown/spell/pointed/set_click_ability()
-	if(!can_cast_spell())
+/datum/action/cooldown/spell/pointed/set_click_ability(mob/on_who)
+	if(!can_cast_spell(feedback = FALSE))
 		return FALSE
 
-	on_activation()
+	on_activation(on_who)
 	return ..()
 
-/datum/action/cooldown/spell/pointed/unset_click_ability()
-	on_deactivation()
+/datum/action/cooldown/spell/pointed/unset_click_ability(mob/on_who)
+	on_deactivation(on_who)
 	return ..()
 
-/datum/action/cooldown/spell/pointed/proc/on_activation()
-	to_chat(owner, span_notice("[active_msg] <B>Left-click to activate the spell on a target!</B>"))
+/datum/action/cooldown/spell/pointed/proc/on_activation(mob/on_who)
+	to_chat(on_who, span_notice("[active_msg] <B>Left-click to activate the spell on a target!</B>"))
 	if(base_icon_state)
 		button_icon_state = "[base_icon_state]1"
 
-/datum/action/cooldown/spell/pointed/proc/on_deactivation()
-	to_chat(owner, span_notice("[deactive_msg]"))
+/datum/action/cooldown/spell/pointed/proc/on_deactivation(mob/on_who)
+	to_chat(on_who, span_notice("[deactive_msg]"))
 	if(base_icon_state)
 		button_icon_state = "[base_icon_state]0"
 
@@ -74,7 +74,6 @@
  * will instead fire a projectile pointed at the target's direction.
  */
 /datum/action/cooldown/spell/pointed/projectile
-	unset_after_click = FALSE
 	/// What projectile we create when we shoot our spell.
 	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
 	/// How many projectiles we can fire per cast. Not all at once, per click
@@ -85,14 +84,19 @@
 	/// Unwise to change without overriding or extending ready_projectile.
 	var/projectiles_per_fire = 1
 
+/datum/action/cooldown/spell/pointed/projectile/New(Target)
+	. = ..()
+	if(projectiles_per_fire > 1)
+		unset_after_click = FALSE
+
 /datum/action/cooldown/spell/pointed/projectile/is_valid_target(atom/cast_on)
 	return TRUE
 
-/datum/action/cooldown/spell/pointed/projectile/on_activation()
+/datum/action/cooldown/spell/pointed/projectile/on_activation(mob/on_who)
 	. = ..()
 	current_amount = projectile_amount
 
-/datum/action/cooldown/spell/pointed/projectile/on_deactivation()
+/datum/action/cooldown/spell/pointed/projectile/on_deactivation(mob/on_who)
 	. = ..()
 	StartCooldown(cooldown_time * (current_amount / projectile_amount))
 
@@ -109,7 +113,7 @@
 	fire_projectile(cast_on)
 	owner.newtonian_move(get_dir(caster_front_turf, caster_turf))
 	if(current_amount <= 0)
-		on_deactivation()
+		unset_click_ability(owner)
 
 	return TRUE
 
@@ -129,7 +133,7 @@
 
 /// Signal proc for whenever the projectile we fire hits someone.
 /// Pretty much relays to the spell when the projectile actually hits something.
-/datum/action/cooldown/spell/pointed/projectile/proc/on_cast_hit(atom/source, mob/firer, atom/target, angle)
+/datum/action/cooldown/spell/pointed/projectile/proc/on_cast_hit(atom/source, mob/firer, atom/hit, angle)
 	SIGNAL_HANDLER
 
-	SEND_SIGNAL(src, COMSIG_SPELL_PROJECTILE_HIT, target, firer, source)
+	SEND_SIGNAL(src, COMSIG_SPELL_PROJECTILE_HIT, hit, firer, source)
