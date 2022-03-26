@@ -107,7 +107,7 @@
 		return
 
 	our_hud.hide_landings()
-	if(istype(over_object, /atom/movable/screen/button_palette))
+	if(istype(over_object, /atom/movable/screen/button_palette) || istype(over_object, /atom/movable/screen/palette_scroll))
 		our_hud.position_action(src, SCRN_OBJ_IN_PALETTE)
 		save_position()
 		return
@@ -356,7 +356,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 	icon_state = "scroll_down"
 	scroll_direction = 1
 
-/atom/movable/screen/button_palette/down/Destroy()
+/atom/movable/screen/palette_scroll/down/Destroy()
 	if(our_hud)
 		our_hud.mymob?.client?.screen -= src
 		our_hud.palette_down = null
@@ -369,7 +369,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 	icon_state = "scroll_up"
 	scroll_direction = -1
 
-/atom/movable/screen/button_palette/up/Destroy()
+/atom/movable/screen/palette_scroll/up/Destroy()
 	if(our_hud)
 		our_hud.mymob?.client?.screen -= src
 		our_hud.palette_up = null
