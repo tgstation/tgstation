@@ -1,5 +1,37 @@
 /obj/item/book/granter/action/spell
 
+/obj/item/book/granter/action/spell/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, .proc/on_magic_charge)
+
+/obj/item/book/granter/action/spell/Destroy(force)
+	UnregisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED)
+	return ..()
+
+/**
+ * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
+ *
+ * Refreshes uses on our spell granter, or make it quicker to read if it's already infinite use
+ */
+/obj/item/book/granter/action/spell/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	// What're the odds someone uses 2000 uses of an infinite use book?
+	if(uses >= INFINITY - 2000)
+		to_chat(caster, span_notice("This book is infinite use and can't be recharged, yet the magic has improved the book somehow..."))
+		pages_to_mastery--
+		return (COMPONENT_ITEM_CHARGED|COMPONENT_ITEM_BURNT_OUT)
+
+	if(prob(80))
+		caster.dropItemToGround(src, TRUE)
+		visible_message(span_warning("[src] catches fire and burns to ash!"))
+		new /obj/effect/decal/cleanable/ash(drop_location())
+		qdel(src)
+		return COMPONENT_ITEM_BURNT_OUT
+
+	uses++
+	return COMPONENT_ITEM_CHARGED
+
 /obj/item/book/granter/action/spell/can_learn(mob/living/user)
 	if(!granted_action)
 		CRASH("Someone attempted to learn [type], which did not have an spell set.")

@@ -116,12 +116,6 @@
 #define COMSIG_ITEM_PICKUP "item_pickup"
 ///from base of mob/living/carbon/attacked_by(): (mob/living/carbon/target, mob/living/user, hit_zone)
 #define COMSIG_ITEM_ATTACK_ZONE "item_attack_zone"
-///return a truthy value to prevent ensouling, checked in /datum/action/cooldown/spell/lichdom/cast(): (mob/user)
-#define COMSIG_ITEM_IMBUE_SOUL "item_imbue_soul"
-	#define COMPONENT_BLOCK_IMBUE (1 << 0)
-///called before marking an object for retrieval, checked in /datum/action/cooldown/spell/summonitem/cast() : (mob/user)
-#define COMSIG_ITEM_MARK_RETRIEVAL "item_mark_retrieval"
-	#define COMPONENT_BLOCK_MARK_RETRIEVAL (1<<0)
 ///from base of obj/item/hit_reaction(): (list/args)
 #define COMSIG_ITEM_HIT_REACT "item_hit_react"
 	#define COMPONENT_HIT_REACTION_BLOCK (1<<0)
@@ -291,31 +285,6 @@
 #define COMSIG_GUN_CHAMBER_PROCESSED "gun_chamber_processed"
 ///called in /obj/item/gun/ballistic/process_chamber (casing)
 #define COMSIG_CASING_EJECTED "casing_ejected"
-
-// /datum/action/cooldown/spell signals
-
-// TODO DOC
-#define COMSIG_MOB_BEFORE_SPELL_CAST "mob_spell__pre_cast"
-// TODO DOC
-#define COMSIG_SPELL_BEFORE_CAST "spell_pre_cast"
-	/// Return from COMSIG_MOB_BEFORE_SPELL_CAST or COMSIG_SPELL_BEFORE_CAST to cease the cast
-	#define COMPONENT_CANCEL_SPELL (1<<0)
-// TODO DOC
-#define COMSIG_MOB_CAST_SPELL "mob_cast_spell"
-// TODO DOC
-#define COMSIG_SPELL_CAST "spell_cast"
-// TODO DOC
-#define COMSIG_MOB_AFTER_SPELL_CAST "mob_after_spell_cast"
-// TODO DOC
-#define COMSIG_SPELL_AFTER_CAST "spell_after_cast"
-// TODO DOC
-#define COMSIG_SPELL_CAN_INVOKE "spell_can_invoke"
-	// TODO DOC
-	#define COMPONENT_CANCEL_INVOKE (1<<0)
-// TODO DOC
-#define COMSIG_SPELL_CAST_REVERTED "spell_cast_revert"
-// TODO DOC
-#define COMSIG_SPELL_SET_STATPANEL "spell_set_statpanel"
 
 // /obj/item/camera signals
 

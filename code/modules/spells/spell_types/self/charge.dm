@@ -17,8 +17,8 @@
 
 /datum/action/cooldown/spell/charge/cast(mob/living/cast_on)
 	. = ..()
-	var/atom/charged_item
-	var/burnt_out = TRUE
+
+	// Charge people we're pulling first and foremost
 	if(isliving(cast_on.pulling))
 		var/mob/living/pulled_living = cast_on.pulling
 		var/pulled_has_spells = FALSE
@@ -30,85 +30,31 @@
 
 		if(pulled_has_spells)
 			to_chat(pulled_living, span_notice("You feel raw magic flowing through you. It feels good!"))
-		else
-			to_chat(pulled_living, span_notice("You feel very strange for a moment, but then it passes."))
-			burnt_out = TRUE
-		charged_item = pulled_living
+			to_chat(cast_on, span_notice("[pulled_living] suddenly feels very warm!"))
+			return
 
-	if(!charged_item)
-		for(var/obj/item in cast_on.held_items)
-			if(istype(item, /obj/item/spellbook))
-				to_chat(cast_on, span_danger("Glowing red letters appear on the front cover..."))
-				to_chat(cast_on, span_warning("[pick(
-					"NICE TRY BUT NO!",
-					"CLEVER BUT NOT CLEVER ENOUGH!",
-					"SUCH FLAGRANT CHEESING IS WHY WE ACCEPTED YOUR APPLICATION!",
-					"CUTE! VERY CUTE!",
-					"YOU DIDN'T THINK IT'D BE THAT EASY, DID YOU?"
-				)]"))
-				burnt_out = TRUE
-				break
+		to_chat(pulled_living, span_notice("You feel very strange for a moment, but then it passes."))
 
-			else if(istype(item, /obj/item/book/granter/action/spell))
-				var/obj/item/book/granter/action/spell/spell_granter = item
-				if(spell_granter.uses >= INFINITY - 2000) // What're the odds someone uses 2000 uses of an infinite use book?
-					to_chat(cast_on, span_notice("This book is infinite use and can't be recharged, \
-						yet the magic has improved the book somehow..."))
-					burnt_out = TRUE
-					spell_granter.pages_to_mastery--
-					break
+	// Then charge their main hand item, then charge their offhand item
+	var/obj/item/to_charge = cast_on.get_active_held_item() || cast_on.get_inactive_held_item()
+	if(!to_charge)
+		to_chat(cast_on, span_notice("You feel magical power surging through your hands, but the feeling rapidly fades."))
+		return
 
-				if(prob(80))
-					cast_on.dropItemToGround(spell_granter, TRUE)
-					spell_granter.visible_message(span_warning("[spell_granter] catches fire and burns to ash!"))
-					new /obj/effect/decal/cleanable/ash(spell_granter.drop_location())
-					qdel(spell_granter)
+	var/charge_return = SEND_SIGNAL(to_charge, COMSIG_ITEM_MAGICALLY_CHARGED, src, cast_on)
 
-				else
-					spell_granter.uses++
-					charged_item = spell_granter
+	if(QDELETED(to_charge))
+		to_chat(cast_on, span_warning("[src] seems to react adversely with [to_charge]!"))
+		return
 
-				break
+	if(charge_return & COMPONENT_ITEM_BURNT_OUT)
+		to_chat(cast_on, span_warning("[to_charge] seems to react negatively to [src], becoming uncomfortably warm!"))
 
-			else if(istype(item, /obj/item/gun/magic))
-				var/obj/item/gun/magic/staff = item
-				if(prob(80) && !staff.can_charge)
-					staff.max_charges--
-				if(staff.max_charges <= 0)
-					staff.max_charges = 0
-					burnt_out = TRUE
-				staff.charges = staff.max_charges
+	else if(charge_return & COMPONENT_ITEM_CHARGED)
+		to_chat(cast_on, span_notice("[to_charge] suddenly feels very warm!"))
 
-				if(istype(item, /obj/item/gun/magic/wand) && staff.max_charges != 0)
-					var/obj/item/gun/magic/wand = item
-					wand.icon_state = initial(wand.icon_state)
-
-				staff.recharge_newshot()
-				charged_item = staff
-				break
-
-			else if(istype(item, /obj/item/stock_parts/cell))
-				burnt_out = charge_cell(item)
-				charged_item = item
-				break
-
-			else if(item.contents)
-				for(var/obj/thing in item.contents)
-					if(istype(thing, /obj/item/stock_parts/cell))
-						burnt_out = charge_cell(thing)
-						if(istype(thing.loc, /obj/item/gun))
-							var/obj/item/gun/gun_loc = thing.loc
-							gun_loc.process_chamber()
-						thing.update_appearance()
-						charged_item = item
-						break
-
-	if(QDELETED(charged_item))
-		to_chat(cast_on, span_notice("You feel magical power surging through your hands, but the feeling rapidly fades..."))
-	else if(burnt_out)
-		to_chat(cast_on, span_warning("[charged_item] doesn't seem to be reacting to the spell!"))
 	else
-		to_chat(cast_on, span_notice("[charged_item] suddenly feels very warm!"))
+		to_chat(cast_on, span_notice("[to_charge] doesn't seem to be react to [src]."))
 
 /// Returns TRUE if the charge burnt the cell out, FALSE otherwise
 /datum/action/cooldown/spell/charge/proc/charge_cell(obj/item/stock_parts/cell/to_charge)

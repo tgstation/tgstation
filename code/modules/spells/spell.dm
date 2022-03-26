@@ -238,8 +238,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/proc/cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
-	SEND_SIGNAL(src, COMSIG_SPELL_CAST)
-	SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src)
+	SEND_SIGNAL(src, COMSIG_SPELL_CAST, cast_on)
+	SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src, cast_on)
 
 	if(owner?.ckey)
 		owner.log_message("cast the spell [name][cast_on != owner ? " on [cast_on]":""].", LOG_ATTACK)

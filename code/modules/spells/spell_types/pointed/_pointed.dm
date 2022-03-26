@@ -18,7 +18,7 @@
 	/// Variable dictating if the spell will use turf based aim assist
 	var/aim_assist = TRUE
 
-/datum/action/cooldown/spell/pointed/New()
+/datum/action/cooldown/spell/pointed/New(Target)
 	. = ..()
 	active_msg = "You prepare to use [src] on a target..."
 	deactive_msg = "You dispel [src]."

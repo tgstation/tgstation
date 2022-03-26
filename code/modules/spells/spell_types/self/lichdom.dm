@@ -33,7 +33,7 @@
 	// I ensouled the nuke disk once.
 	// But it's a really mean tactic,
 	// so we probably should disallow it.
-	if(SEND_SIGNAL(marked_item, COMSIG_ITEM_IMBUE_SOUL, cast_on) & COMPONENT_BLOCK_IMBUE)
+	if(SEND_SIGNAL(marked_item, COMSIG_ITEM_IMBUE_SOUL, src, cast_on) & COMPONENT_BLOCK_IMBUE)
 		to_chat(cast_on, span_warning("[marked_item] is not suitable for emplacement of your fragile soul."))
 		return
 

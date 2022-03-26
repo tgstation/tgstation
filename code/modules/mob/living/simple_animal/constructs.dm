@@ -50,29 +50,22 @@
 	AddElement(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CULT_PYLONS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
-	var/spellnum = 1
 	for(var/spell in construct_spells)
 		var/datum/action/new_spell = new spell(src)
 		new_spell.Grant(src)
 
-		/* MELBERT TODO reimplement
-		var/obj/effect/proc_holder/spell/S = mob_spell_list[spellnum]
-		var/pos = 2+spellnum*31
+	var/spellnum = 1
+	for(var/datum/action/spell as anything in actions)
+		if(!istype(spell, /datum/action/cooldown/spell) || !istype(spell, /datum/action/innate/cult/create_rune))
+			continue
+
+		var/pos = 2 + spellnum * 31
 		if(construct_spells.len >= 4)
-			pos -= 31*(construct_spells.len - 4)
-		S.action.button.screen_loc = "6:[pos],4:-2"
-		S.action.button.moved = "6:[pos],4:-2"
-		*/
+			pos -= 31 * (construct_spells.len - 4)
+		spell.button.screen_loc = "6:[pos],4:-2"
+		spell.button.moved = "6:[pos],4:-2"
 		spellnum++
 
-	/* MELBERT TODO probably no longer needed
-	if(runetype)
-		our_rune = new runetype(src)
-		our_rune.Grant(src)
-		var/pos = 2+spellnum*31
-		our_rune.button.screen_loc = "6:[pos],4:-2"
-		our_rune.button.moved = "6:[pos],4:-2"
-	*/
 	if(icon_state)
 		add_overlay("glow_[icon_state]_[theme]")
 
