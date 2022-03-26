@@ -264,7 +264,7 @@
 	if(!user.combat_mode && istype(I, /obj/item/fireaxe))
 		try_to_crowbar(I, user, FALSE)
 		return TRUE
-	else if(I.item_flags & NOBLUDGEON) || user.combat_mode)
+	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
 		return ..()
 	else if(&& try_to_activate_door(user))
 		return TRUE
