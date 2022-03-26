@@ -13,28 +13,26 @@
 
 /obj/item/clothing/mask/bandana/AltClick(mob/user)
 	. = ..()
-	if(iscarbon(user))
+	if(iscarbon(user) && user.is_holding(src))
 		var/mob/living/carbon/C = user
 		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
 			to_chat(user, span_warning("You can't tie [src] while wearing it!"))
 			return
-	if(slot_flags & ITEM_SLOT_HEAD)
-		to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
-	else
-		if(src.slot_flags == ITEM_SLOT_NECK)
-			src.name = initial(src.name)
-			src.desc = initial(src.desc)
-			src.slot_flags = initial(src.slot_flags)
-			var/oldName = src.name
-			var/newName = initial(src.name)
-			user.visible_message(span_notice("[user] unties [oldName] back into a [newName]."), span_notice("You untie [oldName] back into a [newName]."))
-		else if(user.is_holding(src))
-			src.name = "[name] neckerchief"
-			src.desc = "[desc] It's tied up like a neckerchief."
-			src.slot_flags = ITEM_SLOT_NECK
-			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
+		if(slot_flags & ITEM_SLOT_HEAD)
+			to_chat(user, span_warning("You must undo [src] before you can tie it into a neckerchief!"))
+			return
+		if(slot_flags & ITEM_SLOT_NECK)
+			name = initial(name)
+			desc = initial(desc)
+			slot_flags = initial(slot_flags)
+			user.visible_message(span_notice("[user] unties the neckercheif back into a [name]."), span_notice("You untie the neckercheif back into a [name]."))
 		else
-			to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
+			name = "[name] neckerchief"
+			desc = "[desc] It's tied up like a neckerchief."
+			slot_flags = ITEM_SLOT_NECK
+			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
+	else
+		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 
 /obj/item/clothing/mask/bandana/durathread
 	name = "durathread bandana"
@@ -54,18 +52,18 @@
 
 /obj/item/clothing/mask/bandana/color/attack_self(mob/user)
 	adjustmask(user)
-	if(src.slot_flags == ITEM_SLOT_NECK)
+	if(slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
-	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
-		src.worn_icon_state += "_up"
-		src.set_greyscale(
+	else if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
+		worn_icon_state += "_up"
+		set_greyscale(
 			new_config = /datum/greyscale_config/bandana_up,
 			new_worn_config = /datum/greyscale_config/bandana_up/worn
 		)
 	else
-		src.worn_icon_state = initial(worn_icon_state)
-		src.set_greyscale(
+		worn_icon_state = initial(worn_icon_state)
+		set_greyscale(
 			new_config = initial(greyscale_config),
 			new_worn_config = initial(greyscale_config_worn)
 		)
@@ -129,7 +127,7 @@
 
 /obj/item/clothing/mask/bandana/color/striped/attack_self(mob/user)
 	adjustmask(user)
-	if(src.slot_flags == ITEM_SLOT_NECK)
+	if(src.slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
 	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
@@ -168,7 +166,7 @@
 
 /obj/item/clothing/mask/bandana/color/skull/attack_self(mob/user)
 	adjustmask(user)
-	if(src.slot_flags == ITEM_SLOT_NECK)
+	if(src.slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
 	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
