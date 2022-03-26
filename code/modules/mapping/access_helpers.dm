@@ -589,7 +589,7 @@
 	. = ..()
 	access_list += ACCESS_LIBRARY
 
-/obj/effect/mapping_helpers/airlock/access/all/service/library/Initialize()
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre/Initialize()
 	. = ..()
 	access_list += ACCESS_THEATRE
 
