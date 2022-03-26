@@ -3,7 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Hairstyle"
-	should_generate_icons = FALSE
+	should_generate_icons = TRUE
 
 /datum/preference/choiced/pod_hair/init_possible_values()
 	return GLOB.pod_hair_list
