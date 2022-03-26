@@ -114,7 +114,7 @@
 			var/mob/living/hitmob = m
 			hitmob.bullet_act(Proj) //If the sides are open, the occupant can be hit
 		return BULLET_ACT_HIT
-	log_message("Hit by projectile. Type: [Proj.name]([Proj.flag]).", LOG_MECHA, color="red")
+	log_message("Hit by projectile. Type: [Proj.name]([Proj.armor_flag]).", LOG_MECHA, color="red")
 	. = ..()
 
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
@@ -363,10 +363,10 @@
 				AI = crew
 		var/obj/structure/mecha_wreckage/WR = new wreckage(loc, AI)
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-			if(E.salvageable && prob(30))
+			if(E.detachable && prob(30))
 				WR.crowbar_salvage += E
 				E.detach(WR) //detaches from src into WR
-				E.equip_ready = 1
+				E.activated = TRUE
 			else
 				E.detach(loc)
 				qdel(E)

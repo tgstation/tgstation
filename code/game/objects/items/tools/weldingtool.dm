@@ -13,7 +13,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 3
 	throwforce = 5
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	drop_sound = 'sound/items/handling/weldingtool_drop.ogg'
 	pickup_sound = 'sound/items/handling/weldingtool_pickup.ogg'
@@ -248,7 +248,7 @@
 
 	force = 3
 	damtype = BRUTE
-	hitsound = "swing_hit"
+	hitsound = SFX_SWING_HIT
 	update_appearance()
 
 

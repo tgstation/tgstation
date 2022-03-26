@@ -755,7 +755,7 @@
 	required_candidates = 0
 	weight = 0 //admin only (and for good reason)
 	cost = 0
-	flags = LONE_RULESET
+	flags = LONE_RULESET | ONLY_RULESET
 
 /datum/dynamic_ruleset/roundstart/nations/execute()
 	. = ..()

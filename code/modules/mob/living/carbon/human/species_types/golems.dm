@@ -435,7 +435,7 @@
 
 /datum/species/golem/sand/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H))
-		if(P.flag == BULLET || P.flag == BOMB)
+		if(P.armor_flag == BULLET || P.armor_flag == BOMB)
 			playsound(H, 'sound/effects/shovel_dig.ogg', 70, TRUE)
 			H.visible_message(span_danger("The [P.name] sinks harmlessly in [H]'s sandy body!"), \
 			span_userdanger("The [P.name] sinks harmlessly in [H]'s sandy body!"))
@@ -457,7 +457,7 @@
 	special_names = list("Lens", "Prism", "Fiber", "Bead")
 
 /datum/species/golem/glass/spec_death(gibbed, mob/living/carbon/human/H)
-	playsound(H, "shatter", 70, TRUE)
+	playsound(H, SFX_SHATTER, 70, TRUE)
 	H.visible_message(span_danger("[H] shatters!"))
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
@@ -467,7 +467,7 @@
 
 /datum/species/golem/glass/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(P.original == H && P.firer == H)) //self-shots don't reflect
-		if(P.flag == LASER || P.flag == ENERGY)
+		if(P.armor_flag == LASER || P.armor_flag == ENERGY)
 			H.visible_message(span_danger("The [P.name] gets reflected by [H]'s glass skin!"), \
 			span_userdanger("The [P.name] gets reflected by [H]'s glass skin!"))
 			if(P.starting)
@@ -498,7 +498,7 @@
 /datum/species/golem/bluespace/proc/reactive_teleport(mob/living/carbon/human/H)
 	H.visible_message(span_warning("[H] teleports!"), span_danger("You destabilize and teleport!"))
 	new /obj/effect/particle_effect/sparks(get_turf(H))
-	playsound(get_turf(H), "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(get_turf(H), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	do_teleport(H, get_turf(H), 6, asoundin = 'sound/weapons/emitter2.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 	last_teleport = world.time
 
@@ -958,7 +958,7 @@
 /datum/species/golem/bronze/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	if(!(world.time > last_gong_time + gong_cooldown))
 		return ..()
-	if(P.flag == BULLET || P.flag == BOMB)
+	if(P.armor_flag == BULLET || P.armor_flag == BOMB)
 		gong(H)
 		return ..()
 
@@ -1190,7 +1190,7 @@
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 				var/obj/item/bodypart/bp = H.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bp)
-					playsound(H, get_sfx("desecration"), 50, TRUE, -1) //You just want to socialize
+					playsound(H, get_sfx(SFX_DESECRATION), 50, TRUE, -1) //You just want to socialize
 					H.visible_message(span_warning("[H] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
 					H.say("OOF!!", forced=/datum/reagent/toxin/bonehurtingjuice)
 					bp.receive_damage(200, 0, 0) //But I don't think we should

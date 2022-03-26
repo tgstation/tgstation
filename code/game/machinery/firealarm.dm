@@ -145,7 +145,7 @@
 	if(user)
 		user.visible_message(span_warning("Sparks fly out of [src]!"),
 							span_notice("You override [src], disabling the speaker."))
-	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	set_status()
 
 /**

@@ -201,7 +201,7 @@
 		bot_cover_flags ^= BOT_COVER_LOCKED
 		to_chat(user, span_notice("You [bot_cover_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] [src]'s controls!"))
 	flick("[base_icon]-emagged", src)
-	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
@@ -249,7 +249,7 @@
 	data["on"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
-	data["mode"] = mode ? mode_name[mode] : "Ready"
+	data["mode"] = mode ? "[mode]" : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
 		if(BOT_IDLE, BOT_DELIVER, BOT_GO_HOME)
@@ -302,7 +302,7 @@
 
 	switch(command)
 		if("stop")
-			if(mode >= BOT_DELIVER)
+			if(mode != BOT_IDLE)
 				bot_reset()
 		if("go")
 			if(mode == BOT_IDLE)

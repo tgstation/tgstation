@@ -47,7 +47,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance/two,
-/obj/effect/spawner/random/medical/firstaid,
+/obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/iron/smooth,
 /area/maintenance/department/medical)
 "n" = (

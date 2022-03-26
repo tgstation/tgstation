@@ -365,6 +365,8 @@
 		return
 	//Propagation through pulling, fireman carry
 	if(!(flags & SHOCK_ILLUSION))
+		if(undergoing_cardiac_arrest())
+			set_heartattack(FALSE)
 		var/list/shocking_queue = list()
 		if(iscarbon(pulling) && source != pulling)
 			shocking_queue += pulling
@@ -412,8 +414,7 @@
 						null, span_hear("You hear the rustling of clothes."), DEFAULT_MESSAGE_RANGE, list(M, src))
 		to_chat(M, span_notice("You shake [src] trying to pick [p_them()] up!"))
 		to_chat(src, span_notice("[M] shakes you to get you up!"))
-
-	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD) //Headpats!
+	else if(check_zone(M.zone_selected) == BODY_ZONE_HEAD && get_bodypart(BODY_ZONE_HEAD)) //Headpats!
 		SEND_SIGNAL(src, COMSIG_CARBON_HEADPAT, M)
 		M.visible_message(span_notice("[M] gives [src] a pat on the head to make [p_them()] feel better!"), \
 					null, span_hear("You hear a soft patter."), DEFAULT_MESSAGE_RANGE, list(M, src))

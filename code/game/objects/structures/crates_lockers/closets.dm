@@ -654,7 +654,7 @@
 			user.visible_message(span_warning("Sparks fly from [src]!"),
 							span_warning("You scramble [src]'s lock, breaking it open!"),
 							span_hear("You hear a faint electrical spark."))
-		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
 		update_appearance()

@@ -118,7 +118,7 @@
 	. = ..()
 	if(bot_cover_flags & BOT_COVER_EMAGGED) //emagged honkbots will spam short and memorable sounds.
 		if(!limiting_spam)
-			playsound(src, "honkbot_e", 50, FALSE)
+			playsound(src, SFX_HONKBOT_E, 50, FALSE)
 			icon_state = "honkbot-e"
 	else if(!limiting_spam)
 		playsound(src, honksound, 50, TRUE, -1)

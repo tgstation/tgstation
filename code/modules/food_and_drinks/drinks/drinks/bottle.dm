@@ -49,7 +49,7 @@
 		if(prob(33))
 			var/obj/item/shard/S = new(drop_location())
 			target.Bumped(S)
-		playsound(src, "shatter", 70, TRUE)
+		playsound(src, SFX_SHATTER, 70, TRUE)
 	else
 		B.force = 0
 		B.throwforce = 0
@@ -748,10 +748,3 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
-
-/obj/item/reagent_containers/food/drinks/colocup/lean
-	name = "lean"
-	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
-	icon_state = "lean"
-	list_reagents = list(/datum/reagent/consumable/lean = 20)
-	random_sprite = FALSE

@@ -37,7 +37,7 @@
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 	else
 		to_chat(user,span_warning("You shatter [src]."))
-	playsound(src, "shatter", 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
+	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)

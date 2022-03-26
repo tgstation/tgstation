@@ -40,6 +40,13 @@
 #define GENETIC_DAMAGE_PULSE_UNIQUE_IDENTITY "ui"
 #define GENETIC_DAMAGE_PULSE_UNIQUE_FEATURES "uf"
 
+/// Input from tgui interface. X the gene out.
+#define CLEAR_GENE 0
+/// Input from tgui interface. Progress to the next gene.
+#define NEXT_GENE 1
+/// Input from tgui interface. Progress to previous gene.
+#define PREV_GENE 2
+
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
 	desc = "Scan DNA."
@@ -372,6 +379,9 @@
 	return data
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
+	var/static/list/gene_letters = list("A", "T", "C", "G");
+	var/static/gene_letter_count = length(gene_letters)
+
 	. = ..()
 	if(.)
 		return
@@ -474,9 +484,9 @@
 		// ---------------------------------------------------------------------- //
 		// params["alias"] - Alias of a mutation. The alias is the "hidden" name of
 		//  the mutation, for example "Mutation 5" or "Mutation 33"
-		// params["gene"] - The letter of the new gene
+		// params["pulseAction"] - The action to perform on this gene.
 		// params["pos"] - The BYOND index of the letter in the gene sequence to be
-		//  changed. Expects a text string from TGUI and will convert to a number
+		//  changed.
 		if("pulse_gene")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
@@ -505,27 +515,39 @@
 			// Resolve BYOND path to genome sequence of scanner occupant
 			var/sequence = GET_GENE_STRING(path, scanner_occupant.dna)
 
-			var/newgene = params["gene"]
+			var/newgene
+			var/pulse_action = params["pulseAction"]
 			var/genepos = text2num(params["pos"])
 
-			// If the new gene is J, this means we're dealing with a JOKER
-			// GUARD CHECK - Is JOKER actually ready?
-			if((newgene == "J") && (jokerready < world.time))
-				var/truegenes = GET_SEQUENCE(path)
-				newgene = truegenes[genepos]
-				jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+			if(genepos > length(sequence))
+				CRASH("Unexpected input for \[\"pos\"\] param sent to [type] tgui interface. Consult tgui logs for error.")
 
-			// If the gene is an X, we want to update the default genes with the new
-			//  X to allow highlighting logic to work on the tgui interface.
-			if(newgene == "X")
-				var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
-				defaultseq = copytext(defaultseq, 1, genepos) + newgene + copytext(defaultseq, genepos + 1)
-				scanner_occupant.dna.default_mutation_genes[path] = defaultseq
+			switch(pulse_action)
+				// X out the gene.
+				if(CLEAR_GENE)
+					newgene = "X"
+					var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
+					scanner_occupant.dna.default_mutation_genes[path] = copytext(defaultseq, 1, genepos) + "X" + copytext(defaultseq, genepos + 1)
+				// Either try to apply a joker if selected in the interface, or iterate the next gene.
+				if(NEXT_GENE)
+					if((tgui_view_state["jokerActive"]) && (jokerready < world.time))
+						var/truegenes = GET_SEQUENCE(path)
+						newgene = truegenes[genepos]
+						jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+					else
+						var/current_letter = gene_letters.Find(sequence[genepos])
+						newgene = (current_letter == gene_letter_count) ? gene_letters[1] : gene_letters[current_letter + 1]
+				// Iterate previous gene.
+				if(PREV_GENE)
+					var/current_letter = gene_letters.Find(sequence[genepos]) || 1
+					newgene = (current_letter == 1) ? gene_letters[gene_letter_count] : gene_letters[current_letter - 1]
+				// Unknown input.
+				else
+					CRASH("Unexpected input for \[\"pulseAction\"\] param sent to [type] tgui interface. Consult tgui logs for error.")
 
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant genetic damage
-			sequence = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
-			scanner_occupant.dna.mutation_index[path] = sequence
+			scanner_occupant.dna.mutation_index[path] = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
 			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff)
 			scanner_occupant.domutcheck()
 
@@ -2255,3 +2277,7 @@
 #undef SEARCH_STORED
 #undef SEARCH_DISKETTE
 #undef SEARCH_ADV_INJ
+
+#undef CLEAR_GENE
+#undef NEXT_GENE
+#undef PREV_GENE

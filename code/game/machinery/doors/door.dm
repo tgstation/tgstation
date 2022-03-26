@@ -210,8 +210,7 @@
 	add_fingerprint(user)
 	if(operating || (obj_flags & EMAGGED))
 		return
-	access_bypass |= !requiresID()
-	if(access_bypass || allowed(user))
+	if(access_bypass || (requiresID() && allowed(user)))
 		if(density)
 			open()
 		else
@@ -265,8 +264,7 @@
 		try_to_crowbar(I, user, FALSE)
 		return TRUE
 	else if(I.item_flags & NOBLUDGEON || user.combat_mode)
-		return FALSE
-
+		return ..()
 	else if(try_to_activate_door(user))
 		return TRUE
 	return ..()

@@ -11,8 +11,7 @@
 	permeability_coefficient = 0.01
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 100, FIRE = 80, ACID = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	dynamic_hair_suffix = ""
-	dynamic_fhair_suffix = ""
+
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
@@ -219,7 +218,7 @@
 		obj_flags |= EMAGGED
 		user.visible_message(span_warning("You emag [src], overwriting thermal regulator restrictions."))
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
-	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

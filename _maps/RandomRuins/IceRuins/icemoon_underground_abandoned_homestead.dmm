@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "bf" = (
 /obj/machinery/hydroponics/soil,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "cP" = (
 /mob/living/simple_animal/hostile/asteroid/polarbear,
@@ -16,7 +16,7 @@
 /obj/item/hatchet/wooden{
 	pixel_y = -19
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "fd" = (
 /obj/structure/table/bronze{
@@ -32,7 +32,7 @@
 /area/ruin/powered/shuttle)
 "ht" = (
 /obj/structure/flora/tree/dead,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "hM" = (
 /obj/structure/barricade/wooden/crude/snow,
@@ -46,7 +46,7 @@
 	color = "#8a7453";
 	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "mq" = (
 /obj/structure/railing{
@@ -68,7 +68,7 @@
 /obj/item/grown/log{
 	pixel_y = 6
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "ol" = (
 /turf/closed/wall/mineral/wood,
@@ -83,14 +83,14 @@
 /area/ruin/powered/shuttle)
 "qd" = (
 /mob/living/simple_animal/hostile/tree,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "sF" = (
 /turf/open/openspace/icemoon/keep_below,
 /area/icemoon/underground/explored)
 "tD" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uc" = (
 /obj/structure/table/bronze{
@@ -118,7 +118,7 @@
 /obj/item/grown/log{
 	pixel_y = 13
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uH" = (
 /obj/structure/closet/cabinet,
@@ -182,7 +182,7 @@
 	name = "Homestead Sign";
 	pixel_y = 7
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "zd" = (
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -233,16 +233,16 @@
 /area/icemoon/underground/explored)
 "Fg" = (
 /obj/structure/flora/rock/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "FS" = (
 /obj/structure/railing{
 	color = "#8a7453"
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Ht" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Hv" = (
 /obj/structure/chair/wood{
@@ -288,7 +288,7 @@
 	color = "#8a7453"
 	},
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Nz" = (
 /obj/structure/bed,
@@ -326,7 +326,7 @@
 	dir = 1
 	},
 /obj/item/reagent_containers/glass/bucket/wooden,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "RO" = (
 /obj/effect/turf_decal/siding/wood,
@@ -348,14 +348,14 @@
 	dir = 8
 	},
 /obj/machinery/hydroponics/soil,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Tf" = (
 /obj/structure/railing{
 	color = "#8a7453"
 	},
 /obj/machinery/hydroponics/soil,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "TP" = (
 /obj/machinery/hydroponics/soil,
@@ -377,7 +377,7 @@
 /area/ruin/powered/shuttle)
 "VV" = (
 /obj/structure/bonfire,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "XZ" = (
 /obj/structure/toilet{
