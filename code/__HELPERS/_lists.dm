@@ -52,7 +52,7 @@
 #define SANITIZE_LIST(L) ( islist(L) ? L : list() )
 #define reverseList(L) reverse_range(L.Copy())
 /// inserts the given Key Value pair as a list association in L at the given index.
-#define INSERT_ASSOCIATIVE_KV_PAIR(L, K, V, _index) (L.insert(_index, K); L[K] = V)
+#define INSERT_ASSOCIATIVE_KV_PAIR(L, K, V, _index) L.Insert(_index, K); L[K] = V;
 
 /// Performs an insertion on the given lazy list with the given key and value. If the value already exists, a new one will not be made.
 #define LAZYORASSOCLIST(lazy_list, key, value) \

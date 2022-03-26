@@ -37,19 +37,16 @@
 	/// associative lazy list of the form: list(hearer with different message removal time  = whether that hearers message is in the fading stage yet)
 	var/list/override_is_fading
 
-	///one of the three final determiners of whether a client gets a new or reused message
-	///associative list of the form: list(maptext = list(all images using that exact maptext))
-	var/list/images_by_maptext = list()
-	///one of the three final determiners of whether a client gets a new or reused message
-	///associative list of the form: list(mheight = list(all images using that exact mheight))
-	var/list/images_by_mheight = list()
-	///one of the three final determiners of whether a client gets a new or reused message
-	///associative list of the form: list(maptext_x = list(all images using that exact maptext_x))
-	var/list/images_by_maptext_x = list()
 	///concatenated string of parameters given to us at creation
 	var/creation_parameters = ""
 	///if TRUE, then this datum was dropped from its spot in SSrunechat.messages_by_creation_string and thus wont remove that spot of the list.
 	var/dropped_hash = FALSE
+	///how long the main stage of this message lasts (maptext fully visible) by default.
+	var/lifespan = 0
+	///associative list of the form: list(message image = world.time that image is set to fade out)
+	var/list/fade_times_by_image = list()
+
+	var/creation_time = 0
 
 /**
  * Constructs a chat message overlay
@@ -76,10 +73,14 @@
 
 	message_loc = isturf(target) ? target : get_atom_on_turf(target)
 
+	creation_time = world.time
+	src.lifespan = lifespan
+	///how long this datum will actually exist for. its how long the default message animations take + 1 second buffer
+	var/total_existence_time = CHAT_MESSAGE_SPAWN_TIME + lifespan + CHAT_MESSAGE_EOL_FADE + 1 SECONDS
 	// Register with the runechat SS to handle EOL and destruction
-	fadertimer = addtimer(CALLBACK(src, .proc/end_of_life), lifespan - CHAT_MESSAGE_EOL_FADE, TIMER_STOPPABLE|TIMER_DELETE_ME, SSrunechat)
+	fadertimer = SSrunechat.schedule_message(CALLBACK(src, .proc/end_of_life), total_existence_time)
 
-	//in the case of a hash collision this WILL drop the older chatmessage datum from this list. this is fine however
+	//in the case of a hash collision this will drop the older chatmessage datum from this list. this is fine however
 	//since the dropped datum will still properly handle itself including deletion etc.
 	//all this means is that you cant create message A on x listeners in some synchronous code execution loop,
 	//then later on start a message B with the exact same parameters (so theres a hash collision) on y listeners
@@ -99,7 +100,7 @@
 			hearer.images -= hearers[hearer]
 
 	if(!dropped_hash)
-		SSrunechat.messages_by_speaker -= creation_string
+		SSrunechat.messages_by_creation_string -= creation_parameters
 
 	message_loc = null
 
@@ -107,24 +108,11 @@
 	hearers = null
 	approx_lines = null
 
-	images_by_maptext = null
-	images_by_maptext_x = null
-	images_by_mheight = null
 	return ..()
 
-/**
- * Applies final animations to overlay CHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion,
- * sets timer for scheduling deletion
- *
- * Arguments:
- * * fadetime - The amount of time to animate the message's fadeout for
- */
-/datum/chatmessage/proc/end_of_life(fadetime = CHAT_MESSAGE_EOL_FADE)
+/datum/chatmessage/proc/end_of_life()
 	is_fading = TRUE
-	for(var/image/message as anything in messages)
-		animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
-
-	addtimer(CALLBACK(GLOBAL_PROC, /proc/qdel, src), fadetime, TIMER_DELETE_ME, SSrunechat)
+	qdel(src)
 
 /datum/chatmessage/proc/on_hearer_qdel(datum/source)
 	SIGNAL_HANDLER
@@ -135,17 +123,9 @@
 	LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
 	if(istype(hearers[hearer], /image))
 		var/image/seen_image = hearers[hearer]
-		hearer.images -= seen_image
 		messages[seen_image] -= hearer
 
 	hearers -= hearer
-
-///preset /mutable_appearance subtype just to prefill some constant runechat image vars
-/mutable_appearance/runechat_template
-	plane = RUNECHAT_PLANE
-	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
-	alpha = 0
-	maptext_width = CHAT_MESSAGE_WIDTH
 
 /**
  * actually generates the runechat image for the message spoken by target and heard by owner.
@@ -236,46 +216,40 @@
 			animate(other_message_image, pixel_y = other_message_image.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
 			combined_height += preexisting_message.approx_lines[other_message_image]
 
-			// When choosing to update the remaining time we have to be careful not to update the
-			// scheduled time once the EOL has been executed.
-			if (!preexisting_message.is_fading && !preexisting_message.override_is_fading?[owned_by])
-				var/their_timer_hash = preexisting_message.fadertimers_by_hearer?[owned_by] || preexisting_message.fadertimer
+			var/sched_remaining = preexisting_message.fade_times_by_image[other_message_image] - world.time
 
-				var/sched_remaining = SSrunechat.get_time_remaining(their_timer_hash)
+			var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
+			remaining_time = max(remaining_time, 0)
 
-				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
+			if(other_message_image.alpha < 255) //either fading in or fading out
+				if(preexisting_message.fade_times_by_image[other_message_image] > world.time)//must be fading in not out
+					var/remaining_spawn_time = CHAT_MESSAGE_SPAWN_TIME + (world.time - preexisting_message.creation_time)
 
-				preexisting_message.split_canon_event(owned_by, remaining_time)//make the image that client uses different
+					animate(other_message_image, alpha = 255, time = remaining_spawn_time, flags = ANIMATION_PARALLEL)
+					animate(alpha = 255, time = remaining_time)
+					animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+			//the message is in the main lifespan stage
+			else
+				animate(other_message_image, alpha = 255, time = remaining_time, flags = ANIMATION_PARALLEL)
+				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
 
-
-				/*if (round(DS2TICKS(remaining_time))//check if more than one tick is left at the end because reinsertion is expensive
-
-				else
-					preexisting_message.end_of_life()//cant actually happen without floating point rounding
-					*/
+			LAZYSET(preexisting_message.fade_times_by_image, other_message_image, remaining_time + world.time)
 
 	var/maptext_used = MAPTEXT(complete_text)
 	var/maptext_x_used = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
 
-	// these are the only three parameters that define a unique image, if any of these are different then a new entry must be made in all of them
-	//TODOKYLER: check what happens if a hit is returned for these parameters but 1 client sees a different previous message that has to be animated separately
-	//from the image another client sees
-	var/list/preexisting_images = images_by_maptext[maptext_used] & images_by_maptext_x["[maptext_x_used]"] & images_by_mheight["[mheight]"]
-
-	if(length(preexisting_images))
-		//there should only be one remaining image by this point but it doesnt really matter
-		var/image/existing_image = preexisting_images[1]
-		handle_new_image_association(existing_image, owned_by, our_approx_lines, FALSE)
-		return
-
 	var/image/message = create_new_image(target, maptext_used, mheight, maptext_x_used)
 
-	handle_new_image_association(message, owned_by, our_approx_lines, new_image = TRUE)
+	handle_new_image_association(message, owned_by, our_approx_lines)
 
+	//handle the client side animations for the image
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
+	animate(alpha = 255, time = lifespan)
+	animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+
 
 /datum/chatmessage/proc/create_new_image(atom/target, maptext, mheight, maptext_x)
-	var/static/mutable_appearance/runechat_template/template = new()
+	var/static/mutable_appearance/template = new()
 	template.layer = CHAT_LAYER + CHAT_LAYER_Z_STEP * current_z_idx
 	template.maptext_width = CHAT_MESSAGE_WIDTH
 	template.maptext_height = mheight
@@ -284,24 +258,27 @@
 	template.maptext_x = maptext_x
 	template.maptext = maptext
 
+	template.plane = RUNECHAT_PLANE
+	template.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
+	template.alpha = 0
+	template.maptext_width = CHAT_MESSAGE_WIDTH
+
 	// Build message image
 	var/image/message = image(loc = message_loc)
-	message.appearance = template
+	message.appearance = template.appearance
 
 	return message
 
 
-/datum/chatmessage/proc/handle_new_image_association(image/message_image, client/associated_client, approximate_lines, new_image = TRUE)
+/datum/chatmessage/proc/handle_new_image_association(image/message_image, client/associated_client, approximate_lines, set_time = TRUE)
 	associated_client.images |= message_image
 
-	if(new_image)//branch new image that isnt reused
-		LAZYADDASSOCLIST(images_by_maptext, message_image.maptext, message_image)
-		LAZYADDASSOCLIST(images_by_maptext_x, "[message_image.maptext_x]", message_image)
-		LAZYADDASSOCLIST(images_by_mheight, "[message_image.maptext_height]", message_image)
-		approx_lines[message_image] = approximate_lines
+	approx_lines[message_image] = approximate_lines
+	if(set_time)
+		fade_times_by_image[message_image] = world.time + lifespan + CHAT_MESSAGE_SPAWN_TIME
 
 	LAZYADDASSOCLIST(associated_client.seen_messages, message_loc, src)
-	LAZYADDASSOCLIST(messages, message_image, associated_client)
+	LAZYADDASSOC(messages, message_image, associated_client)
 	LAZYADDASSOC(hearers, associated_client, message_image)
 
 
@@ -309,30 +286,10 @@
 ///if temporary = TRUE, then we assume that this message is doing something else with the client and thus dont remove them from everything
 /datum/chatmessage/proc/unassociate_client_from_image(image/old_image, client/client_hearer, temporary = FALSE)
 
-	var/list/clients_seeing_image = messages[old_image]
-	clients_seeing_image.images -= client_hearer
+	client_hearer.images -= old_image
 	hearers -= client_hearer
-
-	if(!length(clients_seeing_image))//no other client sees this image, so remove the image from everything
-		messages -= old_image
-
-		var/maptext = "[old_image.maptext]"
-		var/maptext_x = "[old_image.maptext_x]"
-		var/mheight = "[old_image.maptext_height]"
-
-		images_by_maptext[maptext] -= old_image
-		if(!length(images_by_maptext[maptext]))
-			images_by_maptext -= maptext
-
-		images_by_maptext_x[maptext_x] -= old_image
-		if(!length(images_by_maptext_x[maptext_x]))
-			images_by_maptext_x -= maptext_x
-
-		images_by_mheight[mheight] -= old_image
-		if(!length(images_by_mheight[mheight]))
-			images_by_mheight -= mheight
-
-		approx_lines -= old_image
+	messages -= old_image
+	approx_lines -= old_image
 
 	if(temporary)
 		return TRUE
@@ -343,47 +300,11 @@
 	return TRUE
 
 
-
-//override_is_fading = list(hearer = is_fading)
-//fadertimers_by_hearer = list(hearer = timer_hash)
-
-/**
- * called on an already existing message when a client sees both the old message and a new message from the same target.
- * handles a few things for the old images. animates the old image upwards for the apostate, as well as adjusting the time it has until it starts fading
- * since it animates the old images upwards it has to clone the image for other clients and correctly change client-image associations
- * because otherwise clients 1 and 2 can see image A and then see different images B and C from a new message, which changes how much each client sees
- * the old message A being moved up by. thus A has to be split into two otherwise identical images.
- * Because of network delay from querying clients directly, we have to assume that even identical y_transform's on a shared image require a clone.
- *
- * Arguments:
- * * existing_image - the old image that gets cloned for apostate and effects applied to it
- * * apostate - the client associated with existing_image already
- * * y_transform - how much to move the new cloned image upwards in the animation.
- */
-/datum/chatmessage/proc/handle_canon_partition(image/existing_image, client/apostate, y_transform)
-	var/image/clone = new(loc = existing_image.loc)
-	clone.appearance = existing_image.appearance
-	unassociate_client_from_image(existing_image, apostate, temporary = TRUE)
-	handle_new_image_association(clone, apostate)
-
-
-/datum/chatmessage/proc/split_canon_event(client/canon_splitter, new_time_remaining)
-	if(new_time_remaining <= 0)
-		split_canon_eol(canon_splitter)
-		return
-
-
-
-
-
-/datum/chatmessage/proc/split_canon_eol(client/canon_splitter)
-
-/datum/chatmessage/proc/schedule_split_canon_del(client/canon_splitter)
-
-
 #define BENCHMARK_LOOP while(world.timeofday < end_time)
 #define BENCHMARK_RESET iterations = 0; end_time = world.timeofday + duration
 #define BENCHMARK_MESSAGE(message) message_admins("[message] got [iterations] iterations in [seconds] seconds!"); BENCHMARK_RESET
+/*
+/mob/living/hearer
 
 /world
 	loop_checks = FALSE
@@ -420,6 +341,8 @@
 
 		BENCHMARK_MESSAGE("creating a chat message the new way with [num_hearers + 1] mobs hearing the same message from one source")
 
+*/
+
 /**
  * Creates a message overlay at a defined location for a given speaker. assumes that this mob has a client
  *
@@ -444,7 +367,6 @@
 	if (originalSpeaker != src && speaker == src)
 		return
 
-	var/atom/message_speaker = isturf(speaker) ? speaker : get_atom_on_turf(speaker)
 	var/datum/chatmessage/message_to_use
 	var/text_to_use
 
@@ -455,7 +377,7 @@
 		text_to_use = lang_treat(speaker, message_language, raw_message, spans, null, TRUE)
 		spans = spans ? spans.Copy() : list()
 
-	var/datum/chatmessage/message_to_use = SSrunechat.messages_by_creation_string["[text_to_use]-[REF(speaker)]-[message_language]-[list2params(spans)]-[CHAT_MESSAGE_LIFESPAN]-[world.time]"]
+	message_to_use = SSrunechat.messages_by_creation_string["[text_to_use]-[REF(speaker)]-[message_language]-[list2params(spans)]-[CHAT_MESSAGE_LIFESPAN]-[world.time]"]
 	//if an already existing message already has processed us as a hearer then we have to assume that this is from a new, identical message sent in the same tick
 	//as the already existing one. thats the only time this can happen. if this is the case then null out message_to_use and create a new one
 	if(message_to_use && (src in message_to_use.hearers))

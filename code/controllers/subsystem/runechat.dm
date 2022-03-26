@@ -1,9 +1,9 @@
 ///SSrunechat, essentially acts as a hyper specialized SStimer that only works for [/datum/chatmessage] instances to schedule events in the future
 ///without the overhead of more general timing systems.
-/datum/controller/subsystem/runechat
+SUBSYSTEM_DEF(runechat)
 	name = "Runechat"
 	wait = 1
-	flags = SS_TICKER
+	flags = SS_TICKER|SS_NO_INIT
 	priority = FIRE_PRIORITY_RUNECHAT
 
 	///list that keeps track of all runechat message datums by their creation_string. used to keep track of runechat messages.
@@ -11,9 +11,7 @@
 	var/list/messages_by_creation_string = list()
 
 	///anything going into message_lifespan_bucket must be offset from world.time by exactly this amount, otherwise it goes in non_default_bucket
-	var/lifespan_bucket_time = CHAT_MESSAGE_LIFESPAN - CHAT_MESSAGE_EOL_FADE
-	///anything going into message_eol_bucket must be offset from world.time by exactly this amount, otherwise it goes in non_default_bucket
-	var/eol_bucket_time = CHAT_MESSAGE_EOL_FADE
+	var/lifespan_bucket_time = CHAT_MESSAGE_LIFESPAN + CHAT_MESSAGE_EOL_FADE + CHAT_MESSAGE_SPAWN_TIME + 1 SECONDS
 
 	/**
 	 * the default timer bucket for chat messages that are fully visible until their time in this list is over.
@@ -23,39 +21,26 @@
 	 * insertion time: O(1) - appends the end of this list
 	 *
 	 * associative list of the form: list("[world.time that messages are set to start fading at]" = list(all [/datum/message_timer] set to fade at that time))
-	 * e.g. list("1024.5" = list(event, event), "1025" = list(event), "1029.5" = list(event, event, event))
+	 * e.g. list("1024.5" = list(event, event), "1025" = list(event), "1029.5" = list(event, event, event)) <- ascending order
 	 */
-	var/list/message_lifespan_bucket = list() //FIRST BUCKET - MESSAGES ARE FULLY VISIBLE
+	var/list/message_lifespan_bucket = list()
 
 	/**
-	 * timer bucket for handling chat messages that are fading from players views and will be deleted - very short duration.
-	 * like [message_lifespan_bucket] this bucket is only filled with events scheduled a set time after they enter this bucket: [eol_bucket_time]
-	 *
-	 * insertion time: O(1) - appends the end of this list
-	 *
-	 * associative list of the form: list("[world.time these messages are set to start fading at]" = list(all [/datum/message_timer] set to fade at that time))
-	 * e.g. list("1024.5" = list(event, event), "1025" = list(event), "1029.5" = list(event, event, event))
-	 */
-	var/list/message_eol_bucket = list() //SECOND AND LAST BUCKET - MESSAGES FADING UNTIL THEY GET DELETED
-
-	/**
-	 * both of the default buckets only accept a single duration for incoming events - this is because those durations are by far the most common ones
-	 * for each stage of the messages life, and using only those durations allows us to simply append to the bucket when inserting a new event.
-	 * if a message event uses a different duration than the ones for its bucket then it goes in here and all the existing times have to be binary searched
-	 * to find the correct placement for the new time.
+	 * the default bucket only accepts a single duration for incoming events - this is because that duration is by far the most common one
+	 * only using the single predefined message duration allows us to simply append events to the end of the default bucket.
+	 * however if for any reason an event comes in with another duration we cant have to search through this list to find its place
+	 * so that takes longer.
 	 *
 	 * insertion time: O(log(n)) - must be binary inserted
+	 *
+	 * associative list of the form: list("[world.time that messages are set to be deleted at]" = list(all [/datum/message_timer] set to fade at that time))
+	 * e.g. list("1024.5" = list(event, event), "1025" = list(event), "1029.5" = list(event, event, event)) <- ascending order
 	 */
 	var/list/non_default_bucket = list()
 
 	///list used to find timers by their hash id. the timers hold any further information needed to find them
 	///associative list of the form: list(timer hash = [/datum/message_timer] instance with that timer)
 	var/list/timers_by_hash = list()
-
-
-/datum/controller/subsystem/runechat/Initialize(start_timeofday)
-	. = ..()
-
 
 /datum/controller/subsystem/runechat/fire(resumed)
 	var/current_time = world.time
@@ -66,16 +51,6 @@
 
 		for(var/datum/message_timer/timer_to_invoke as anything in message_lifespan_bucket[timer_end])
 			end_timer(timer_to_invoke, message_lifespan_bucket, timer_end)
-
-		if(MC_TICK_CHECK)
-			return
-
-	for(var/timer_end in message_eol_bucket)
-		if(text2num(timer_end) > current_time)
-			break
-
-		for(var/datum/message_timer/timer_to_invoke as anything in message_eol_bucket[timer_end])
-			end_timer(timer_to_invoke, message_eol_bucket, timer_end)
 
 		if(MC_TICK_CHECK)
 			return
@@ -96,12 +71,10 @@
  * Arguments:
  * * callback_to_schedule - callback to be invoked after duration deciseconds have elapsed. must contain a [/datum/chatmessage] datum as its object
  * * duration - how many deciseconds the event will last for. will take more cpu if it doesnt match the default value depending on the given event
- * * event - text string define describing what part of the message's life is being scheduled. determines which internal list the message_timer is put into
  */
-/datum/controller/subsystem/runechat/proc/schedule_message(datum/callback/callback_to_schedule, duration, event)
-	PRIVATE_PROC(FALSE)
+/datum/controller/subsystem/runechat/proc/schedule_message(datum/callback/callback_to_schedule, duration)
 
-	if(!event || !callback_to_schedule || duration <= 0)
+	if(!callback_to_schedule || duration <= 0)
 		return FALSE
 
 	var/end_time = CEILING(world.time + duration, world.tick_lag)
@@ -112,31 +85,12 @@
 		stack_trace("something tried to use SSrunechat as a timer for something other than a /datum/chatmessage created callback!")
 		return FALSE
 
-	switch(event)
-		if(RUNECHAT_SCHEDULE_LIFESPAN)
-			if(duration == lifespan_bucket_time)
-				bucket_insert(new_timer, message_lifespan_bucket, end_time, append_insert = TRUE)
-			else
-				bucket_insert(new_timer, non_default_bucket, end_time, append_insert = FALSE)
-				//the duration isnt what we expect so we have to binary insert the timer instead of appending the list
-				//we use non_default_bucket here because there are less things in there usually, so n is lower and thus so is O(log(n))
+	if(duration == lifespan_bucket_time)
+		bucket_insert(new_timer, message_lifespan_bucket, end_time, append_insert = TRUE)
+	else
+		bucket_insert(new_timer, non_default_bucket, end_time, append_insert = FALSE)
 
-		if(RUNECHAT_SCHEDULE_DELETION)
-			if(duration == eol_bucket_time)
-				bucket_insert(new_timer, message_eol_bucket, end_time, append_insert = TRUE)
-			else
-				bucket_insert(new_timer, non_default_bucket, end_time, append_insert = FALSE)
-
-		if(RUNECHAT_SCHEDULE_SPLIT_CANON_EVENT)
-			bucket_insert(new_timer, non_default_bucket, end_time, append_insert = FALSE)
-
-		else
-			stack_trace("incompatible event passed into schedule_message()! [event]")
-			timers_by_hash -= new_timer.hash
-			qdel(new_timer)
-			return FALSE
-
-	return new_timer.hash
+	return new_timer.timer_hash
 
 /datum/controller/subsystem/runechat/proc/adjust_timer_by_hash(timer_hash, new_duration)
 	if(new_duration <= 0)
@@ -151,7 +105,7 @@
 	var/list/old_bucket = retrieved_timer.bucket_house
 	var/old_end_time = retrieved_timer.scheduled_time
 
-	bucket_pop(retrieved_timer, bucket_house, old_end_time)
+	bucket_pop(retrieved_timer, old_bucket, old_end_time)
 	bucket_insert(retrieved_timer, non_default_bucket, new_end_time, append_insert = FALSE)
 
 	return TRUE
@@ -215,7 +169,7 @@
 	var/target_index = (left_index + right_index) >> 1
 	var/compared_time = text2num(bucket_to_use[target_index])//i wish we could associate numbers as keys without wrapping them in text
 
-	while(left_index <= right_index)
+	while(left_index <= right_index)//binary insert algorithm.
 		if(end_time > compared_time)
 			left_index = target_index + 1
 
@@ -227,7 +181,7 @@
 			break
 
 		target_index = (left_index + right_index) >> 1
-		compared_time = text2num(bucket_to_use[middle_index])
+		compared_time = text2num(bucket_to_use[target_index])
 
 	if(existing_list)
 		//append our timer to the inner list
@@ -236,7 +190,7 @@
 		//insert the key at that index and then associate that with a list containing timer
 		INSERT_ASSOCIATIVE_KV_PAIR(bucket_to_use, "[end_time]", list(timer_to_insert), max(target_index, 1))
 
-	timers_by_hash[hash] = timer_to_insert
+	timers_by_hash[timer_to_insert.timer_hash] = timer_to_insert
 
 	return TRUE
 
@@ -244,13 +198,13 @@
 	PRIVATE_PROC(TRUE)
 
 	timer_to_end.invoke()
-	bucket_pop(timer_to_remove, bucket_to_use, bucket_index)
+	bucket_pop(timer_to_end, bucket_to_use, bucket_index)
 
 /datum/controller/subsystem/runechat/proc/bucket_pop(datum/message_timer/timer_to_remove, list/bucket_to_use, bucket_index)
 	PRIVATE_PROC(TRUE)
 
 	var/list/timer_list = bucket_to_use[bucket_index]
-	timer_list -= callback_to_remove
+	timer_list -= timer_to_remove
 
 	if(!length(timer_list))
 		bucket_to_use -= bucket_index//remove the world.time index if there are no more timers set to be invoked at that time

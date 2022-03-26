@@ -25,10 +25,3 @@
 #define CHAT_LAYER_Z_STEP 0.0001
 /// The number of z-layer 'slices' usable by the chat message layering
 #define CHAT_LAYER_MAX_Z (CHAT_LAYER_MAX - CHAT_LAYER) / CHAT_LAYER_Z_STEP
-
-///the chatmessage datum was just created and is scheduling the point in time where it starts fading
-#define RUNECHAT_SCHEDULE_LIFESPAN "runechat_schedule_lifespan"
-///the chatmessage datum has started to fade and is scheduling the point in time where it gets deleted
-#define RUNECHAT_SCHEDULE_DELETION "runechat_schedule_lifespan"
-///the runechat datum must split off the images for part of its clients into a new canon timeline
-#define RUNECHAT_SCHEDULE_SPLIT_CANON_EVENT "runechat_schedule_split_canon_event"
