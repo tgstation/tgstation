@@ -88,7 +88,26 @@
 	if(HAS_TRAIT(user, TRAIT_ILLITERATE))
 		to_chat(user, span_warning("You start mashing buttons at random!"))
 		if(do_after(user, 10 SECONDS, target = src))
-			ui_act("move", modifiers)
+			var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
+			if(no_destination_swap)
+				if(M.mode == SHUTTLE_RECHARGING)
+					to_chat(usr, span_warning("Shuttle engines are not ready for use."))
+					return
+				if(M.mode != SHUTTLE_IDLE)
+					to_chat(usr, span_warning("Shuttle already in transit."))
+					return
+			var/list/options = params2list(possible_destinations)
+			var/random_destionation = pick(options)
+			switch(SSshuttle.moveShuttle(shuttleId, random_destionation, 1))
+				if(0)
+					say("Shuttle departing. Please stand away from the doors.")
+					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[dock_id]\", using [src].")
+					return TRUE
+				if(1)
+					to_chat(usr, span_warning("Invalid shuttle requested."))
+				else
+					to_chat(usr, span_warning("Unable to comply."))
+
 		return
 	. = ..()
 
