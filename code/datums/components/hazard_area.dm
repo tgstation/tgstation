@@ -55,7 +55,7 @@
 
 	vehicle.balloon_alert(parent, "you slip and fall off!")
 	var/mob/living/parent_living = parent
-	parent.Stun(0.5 SECONDS)
+	parent_living.Stun(0.5 SECONDS)
 	return EJECT_FROM_VEHICLE
 
 /**
