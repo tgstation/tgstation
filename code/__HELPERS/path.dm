@@ -357,10 +357,6 @@
 		if(!iter_window.CanAStarPass(ID, actual_dir))
 			return TRUE
 
-	for(var/obj/structure/window/iter_window in src)
-		if(!iter_window.CanAStarPass(ID, actual_dir))
-			return TRUE
-
 	for(var/obj/machinery/door/window/iter_windoor in src)
 		if(!iter_windoor.CanAStarPass(ID, actual_dir))
 			return TRUE
