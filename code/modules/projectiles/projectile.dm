@@ -808,6 +808,10 @@
 	for(var/i in 1 to SSprojectiles.global_iterations_per_move)
 		if(QDELETED(src))
 			return
+		var/atom/location = loc
+		if(!isturf(location) && !CanPass(location)) // Can we leave without ramming into the container wall?
+			Bump(location)
+			return
 		trajectory.increment(trajectory_multiplier)
 		var/turf/T = trajectory.return_turf()
 		if(!istype(T))
