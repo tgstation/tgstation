@@ -101,7 +101,7 @@
 			switch(SSshuttle.moveShuttle(shuttleId, random_destionation, 1))
 				if(0)
 					say("Shuttle departing. Please stand away from the doors.")
-					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[dock_id]\", using [src].")
+					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[random_destionation]\", using [src].")
 					return TRUE
 				if(1)
 					to_chat(usr, span_warning("Invalid shuttle requested."))
