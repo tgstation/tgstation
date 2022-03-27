@@ -1,5 +1,5 @@
 /**
- * This is a relatively simple component that attempts to deterr the parent of the component away
+ * This is a relatively simple component that attempts to deter the parent of the component away
  * from a specific area or areas. By default it simply applies a penalty where all movement is
  * four times slower than usual and any action that would affect your 'next move' has a penalty
  * multiplier of 4 attached.
