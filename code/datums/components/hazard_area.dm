@@ -23,10 +23,35 @@
 	src.area_whitelist = area_whitelist
 
 /datum/component/hazard_area/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_MOVED, .proc/handle_parent_move)
+	var/mob/parent_mob = parent
+	parent_mob.become_area_sensitive(src.type)
+	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
+	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
+	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
 
 /datum/component/hazard_area/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOB_CLIENT_MOVED)
+	var/mob/parent_mob = parent
+	UnregisterSignal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL))
+	parent_mob.lose_area_sensitivity(src.type)
+
+/**
+ * This signal handler checks the area the target ladder is in and if hazardous prevents them from using it
+ */
+/datum/component/hazard_area/proc/reject_ladder_movement(mob/source, entrance_ladder, exit_ladder, going_up)
+	SIGNAL_HANDLER
+
+	if(check_area_hazardous(get_area(exit_ladder)))
+		to_chat(parent, span_warning("Something appears to resist your usage of [entrace_ladder]"))
+		return LADDER_TRAVEL_BLOCK
+
+/**
+ * A simple signal handler that informs the parent they cannot ride a vehicle and ejects them
+ */
+/datum/component/hazard_area/proc/reject_vehicle(mob/source, obj/vehicle/vehicle)
+	SIGNAL_HANDLER
+
+	to_chat(parent, span_warning("You attempt to ride [vehicle] but you slip and fall off!"))
+	return EJECT_FROM_VEHICLE
 
 /**
  * Checks if the area being checked is considered hazardous
@@ -62,13 +87,12 @@
 /**
  * This signal should be called whenever our parent moves.
  */
-/datum/component/hazard_area/proc/handle_parent_move()
+/datum/component/hazard_area/proc/handle_parent_area_change(mob/source, area/new_area)
 	SIGNAL_HANDLER
 
-	var/area/current_area = get_area(parent)
-	if(current_area.type == last_parent_area)
+	if(new_area.type == last_parent_area)
 		return
-	last_parent_area = current_area.type
+	last_parent_area = new_area.type
 
 	INVOKE_ASYNC(src, .proc/update_parent_status_effect)
 
