@@ -32,7 +32,7 @@
 /datum/component/hazard_area/UnregisterFromParent()
 	var/mob/parent_mob = parent
 	UnregisterSignal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL, COMSIG_VEHICLE_RIDDEN))
-	parent_mob.lose_area_sensitivity(src.type)
+	parent_mob.lose_area_sensitivity(type)
 
 /**
  * This signal handler checks the area the target ladder is in and if hazardous prevents them from using it
