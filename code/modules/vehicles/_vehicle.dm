@@ -105,12 +105,6 @@
 	if(!istype(M) || is_occupant(M))
 		return FALSE
 
-	var/response = SEND_SIGNAL(M, COMSIG_VEHICLE_RIDDEN, src)
-	if(response & EJECT_FROM_VEHICLE)
-		if(M.buckled == src)
-			src.unbuckle_mob(M, TRUE)
-		return FALSE
-
 	LAZYSET(occupants, M, NONE)
 	add_control_flags(M, control_flags)
 	after_add_occupant(M)
