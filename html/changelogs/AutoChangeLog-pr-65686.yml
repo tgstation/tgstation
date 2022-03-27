@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "TGUI and Tooltip windows now work with high-dpi web browsers"

@@ -1,4 +1,0 @@
-author: "OperativeLyn"
-delete-after: True
-changes: 
-  - bugfix: "IceBox had two washing machines on the same tile, as well as a bit brighter than usual decals. That tile is back to normal."

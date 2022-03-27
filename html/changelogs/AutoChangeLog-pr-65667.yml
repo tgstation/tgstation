@@ -1,4 +1,0 @@
-author: "GoblinBackwards"
-delete-after: True
-changes: 
-  - bugfix: "Fixed stray syndicate supply pods not containing any items."
