@@ -71,3 +71,28 @@
 	last_parent_area = current_area.type
 
 	INVOKE_ASYNC(src, .proc/update_parent_status_effect)
+
+/// The dedicated status effect for the hazard_area component - use with caution and know what it does!
+/datum/status_effect/hazard_area
+	id = "hazard_area"
+	examine_text = "SUBJECTPRONOUN appears to be largely immobilized through unknown means."
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = /atom/movable/screen/alert/status_effect/hazard_area
+
+/datum/status_effect/hazard_area/nextmove_modifier()
+	return 4
+
+/datum/status_effect/hazard_area/on_apply()
+	. = ..()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, TRUE)
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, TRUE)
+
+/datum/status_effect/hazard_area/on_remove()
+	. = ..()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, TRUE)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, TRUE)
+
+/atom/movable/screen/alert/status_effect/hazard_area
+	name = "Hazardous Area"
+	desc = "The area you are currently within is incredibly hazardous to you. Check your surroudings and vacate as soon as possible."
+	icon_state = "hazard_area"
