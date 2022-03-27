@@ -154,7 +154,7 @@
 /mob/living/carbon/throw_item(atom/target)
 	. = ..()
 	throw_mode_off(THROW_MODE_TOGGLE)
-	if(!target || !isturf(loc))
+	if(!target)
 		return
 	if(istype(target, /atom/movable/screen))
 		return
