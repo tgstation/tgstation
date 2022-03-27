@@ -244,8 +244,11 @@
 
 
 /proc/tkMaxRangeCheck(mob/user, atom/target)
-	var/d = get_dist(user, target)
-	if(d > TK_MAXRANGE)
+	var/turf/user_turf = get_turf(user)
+	var/turf/target_turf = get_turf(target)
+	to_chat(user, span_info("user, _turf, .z: [user], [user_turf || "NULL"], [user_turf?.z]; target, _turf, .z: [target], [target_turf || "NULL"], [target_turf?.z]"))
+	to_chat(user, span_info("too far: [get_dist(user, target) > TK_MAXRANGE]; missing turf: [!(user_turf && target_turf)]; diff z: [user_turf.z != target_turf.z]"))
+	if((get_dist(user, target) > TK_MAXRANGE) || !(user_turf && target_turf) || (user_turf.z != target_turf.z))
 		user.balloon_alert(user, "can't TK, too far!")
 		return
 	return TRUE
