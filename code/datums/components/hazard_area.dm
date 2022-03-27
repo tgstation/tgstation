@@ -24,7 +24,7 @@
 
 /datum/component/hazard_area/RegisterWithParent()
 	var/mob/parent_mob = parent
-	parent_mob.become_area_sensitive(src.type)
+	parent_mob.become_area_sensitive(type)
 	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
 	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
 	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
