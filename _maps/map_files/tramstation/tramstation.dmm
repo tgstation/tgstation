@@ -376,11 +376,6 @@
 /obj/item/pipe_dispenser,
 /turf/open/floor/iron,
 /area/construction/mining/aux_base)
-"adj" = (
-/obj/effect/spawner/structure/window,
-/obj/machinery/pinpointer_dispenser,
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "adk" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -56365,10 +56360,6 @@
 	},
 /turf/closed/wall,
 /area/science/test_area)
-"tcn" = (
-/obj/machinery/pinpointer_dispenser,
-/turf/closed/wall,
-/area/cargo/lobby)
 "tcF" = (
 /obj/machinery/door/airlock{
 	name = "Water Closet";
@@ -63834,10 +63825,6 @@
 "vUA" = (
 /obj/structure/fluff/tram_rail,
 /turf/open/openspace,
-/area/hallway/primary/tram/left)
-"vUF" = (
-/obj/machinery/pinpointer_dispenser,
-/turf/closed/wall,
 /area/hallway/primary/tram/left)
 "vUM" = (
 /obj/effect/turf_decal/stripes/line{
@@ -149392,7 +149379,7 @@ axp
 axp
 axp
 axp
-adj
+axp
 ijz
 asu
 axp
@@ -158122,7 +158109,7 @@ asl
 asl
 iCz
 aLX
-vUF
+anG
 ceJ
 hdD
 mGm
@@ -180995,7 +180982,7 @@ gTd
 bFK
 gQD
 dom
-tcn
+cKR
 auh
 uIJ
 aod

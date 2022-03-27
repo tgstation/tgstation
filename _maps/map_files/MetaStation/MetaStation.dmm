@@ -61729,10 +61729,6 @@
 "vEJ" = (
 /turf/closed/wall/r_wall,
 /area/engineering/storage/tech)
-"vEN" = (
-/obj/machinery/pinpointer_dispenser,
-/turf/closed/wall,
-/area/cargo/qm)
 "vFb" = (
 /obj/structure/lattice/catwalk,
 /obj/item/binoculars,
@@ -86600,7 +86596,7 @@ rNr
 jbh
 lLi
 ozo
-vEN
+ozo
 qxd
 sQf
 nJQ

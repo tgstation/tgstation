@@ -18,7 +18,7 @@
 		return
 	var/list/beacon_list = list()
 	for(var/obj/machinery/navbeacon/beacon in GLOB.wayfindingbeacons)
-		if(get_dist(beacon, src) > MAX_NAVIGATE_RANGE)
+		if(beacon.z != z || get_dist(beacon, src) > MAX_NAVIGATE_RANGE)
 			continue
 		beacon_list[beacon.location] = beacon
 	if(!length(beacon_list))
@@ -37,7 +37,7 @@
 		return
 	path |= get_turf(navigate_target)
 	for(var/i in 1 to length(path))
-		var/image/path_image = image(icon = 'icons/obj/power_cond/pipe_cleaner.dmi', layer = HIGH_PIPE_LAYER, loc = path[i])
+		var/image/path_image = image(icon = 'icons/effects/navigation.dmi', layer = HIGH_PIPE_LAYER, loc = path[i])
 		path_image.plane = GAME_PLANE
 		path_image.color = COLOR_CYAN
 		path_image.alpha = 0
@@ -61,8 +61,10 @@
 	balloon_alert(src, "navigation path created")
 
 /mob/living/proc/cut_navigation()
+	SIGNAL_HANDLER
 	for(var/image/navigation_path in client.navigation_images)
 		client.images -= navigation_path
 	client.navigation_images.Cut()
+	UnregisterSignal(src, COMSIG_LIVING_DEATH)
 
 #undef MAX_NAVIGATE_RANGE
