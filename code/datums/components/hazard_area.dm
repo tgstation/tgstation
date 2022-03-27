@@ -50,6 +50,9 @@
 /datum/component/hazard_area/proc/reject_vehicle(mob/source, obj/vehicle/vehicle)
 	SIGNAL_HANDLER
 
+	if(!check_area_hazardous(last_parent_area))
+		return
+
 	to_chat(parent, span_warning("You attempt to ride [vehicle] but you slip and fall off!"))
 	return EJECT_FROM_VEHICLE
 
@@ -79,6 +82,9 @@
 
 	if(should_have_status_effect && !effect) // Should have the status - and doesnt
 		parent_living.apply_status_effect(/datum/status_effect/hazard_area)
+		if(parent_living.buckled)
+			to_chat(parent_living, span_warning("You fall off of [parent_living.buckled]!"))
+			parent_living.buckled.unbuckle_mob(parent_living, TRUE)
 		return
 
 	if(!should_have_status_effect && effect) // Shouldn't have the status - and does
