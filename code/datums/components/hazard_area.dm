@@ -37,11 +37,11 @@
 /**
  * This signal handler checks the area the target ladder is in and if hazardous prevents them from using it
  */
-/datum/component/hazard_area/proc/reject_ladder_movement(mob/source, entrance_ladder, exit_ladder, going_up)
+/datum/component/hazard_area/proc/reject_ladder_movement(mob/source, obj/entrance_ladder, exit_ladder, going_up)
 	SIGNAL_HANDLER
 
 	if(check_area_hazardous(get_area(exit_ladder)))
-		to_chat(parent, span_warning("Something appears to resist your usage of [entrance_ladder]"))
+		entrance_ladder.balloon_alert(parent, "the path is too dangerous for you!")
 		return LADDER_TRAVEL_BLOCK
 
 /**
