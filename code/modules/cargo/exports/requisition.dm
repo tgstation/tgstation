@@ -9,7 +9,7 @@
 	if(!..() || !istype(paperwork))
 		return FALSE
 
-	for(var/obj/item/stamp/stamp in paperwork.authorization_stamps)
-		if(paperwork.is_approved(stamp.icon_state))
+	for(var/stamp_icon in paperwork.authorization_stamps)
+		if(paperwork.is_approved(stamp_icon))
 			return TRUE
 	return FALSE

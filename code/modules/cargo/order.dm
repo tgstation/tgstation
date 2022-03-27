@@ -63,8 +63,8 @@
 	var/obj/item/paper/fluff/jobs/cargo/requisition/P = new(T, pack.authorization_stamps)
 
 	var/jobs_that_can_approve = list()
-	for(var/obj/item/stamp/stamp in pack.authorization_stamps)
-		jobs_that_can_approve += stamp.job_title
+	for(var/stamp in pack.authorization_stamps)
+		jobs_that_can_approve += pack.authorization_stamps[stamp]
 	jobs_that_can_approve = english_list(jobs_that_can_approve, and_text = " or")
 
 	P.name = "requisition form - #[id] ([pack.name])"
