@@ -74,7 +74,7 @@
 
 	check_atmos()
 
-	if(prob(0.04) && icon == 'icons/obj/doors/doorfireglass.dmi')
+	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
 		base_icon_state = "sus"
 		desc += " This one looks a bit sus..."
 
