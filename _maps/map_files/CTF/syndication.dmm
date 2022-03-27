@@ -16,10 +16,21 @@
 /obj/machinery/power/emitter/ctf,
 /turf/open/floor/iron/dark,
 /area/ctf)
+"cU" = (
+/obj/structure/bookcase/random/nonfiction,
+/turf/open/floor/wood,
+/area/ctf)
+"dq" = (
+/obj/structure/barricade/security/ctf,
+/turf/open/floor/wood,
+/area/ctf)
 "dC" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/item/ctf/blue,
 /turf/open/floor/plating,
+/area/ctf)
+"dK" = (
+/turf/open/floor/stone,
 /area/ctf)
 "eg" = (
 /obj/machinery/conveyor/auto{
@@ -32,6 +43,10 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/ctf)
+"eB" = (
+/obj/structure/table/reinforced/ctf,
+/turf/open/floor/iron,
 /area/ctf)
 "eH" = (
 /obj/structure/disposalpipe/segment,
@@ -75,12 +90,14 @@
 "gQ" = (
 /turf/open/floor/iron,
 /area/ctf)
-"iz" = (
-/obj/structure/sign/departments/mait{
-	pixel_y = 32;
-	resistance_flags = 64
+"gU" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
 	},
-/turf/closed/indestructible/reinforced,
+/turf/open/floor/stone,
+/area/ctf)
+"iz" = (
+/turf/open/floor/wood,
 /area/ctf)
 "iC" = (
 /obj/structure/lattice,
@@ -167,6 +184,12 @@
 	},
 /turf/open/floor/plating,
 /area/ctf)
+"qA" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ctf)
 "qM" = (
 /turf/open/floor/iron/stairs/right{
 	dir = 8
@@ -243,9 +266,17 @@
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plating,
 /area/ctf)
+"uZ" = (
+/obj/structure/table/reinforced/ctf,
+/obj/item/clothing/head/collectable/police,
+/turf/open/floor/iron,
+/area/ctf)
 "vb" = (
 /obj/structure/girder/reinforced{
 	resistance_flags = 64
+	},
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 5
 	},
 /turf/open/floor/plating,
 /area/ctf)
@@ -253,6 +284,10 @@
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
+/area/ctf)
+"vJ" = (
+/obj/structure/bookcase/random/fiction,
+/turf/open/floor/wood,
 /area/ctf)
 "wv" = (
 /obj/effect/decal/cleanable/dirt,
@@ -262,6 +297,12 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"ww" = (
+/obj/structure/table/wood{
+	resistance_flags = 64
+	},
+/turf/open/floor/stone,
 /area/ctf)
 "wC" = (
 /obj/structure/window/reinforced{
@@ -312,6 +353,9 @@
 "yD" = (
 /obj/structure/girder{
 	resistance_flags = 64
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
 	},
 /turf/open/floor/plating,
 /area/ctf)
@@ -387,6 +431,15 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
+/area/ctf)
+"DT" = (
+/obj/structure/fluff/divine/convertaltar{
+	resistance_flags = 64
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/stone,
 /area/ctf)
 "Fa" = (
 /obj/effect/turf_decal/sand/plating,
@@ -475,6 +528,12 @@
 /obj/structure/trap/ctf/blue,
 /turf/open/floor/iron,
 /area/ctf)
+"MD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "MU" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -533,6 +592,13 @@
 "PK" = (
 /turf/closed/wall/mineral/titanium/interior,
 /area/ctf)
+"PY" = (
+/obj/effect/decal/cleanable/glitter/pink,
+/obj/structure/window/reinforced{
+	resistance_flags = 64
+	},
+/turf/open/floor/plating,
+/area/ctf)
 "QA" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 4
@@ -545,6 +611,13 @@
 	},
 /turf/open/floor/plating,
 /area/ctf)
+"Rq" = (
+/obj/structure/sign/departments/mait{
+	pixel_y = 32;
+	resistance_flags = 64
+	},
+/turf/open/floor/iron,
+/area/ctf)
 "RE" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -553,6 +626,12 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/iron/dark,
+/area/ctf)
+"RQ" = (
+/obj/structure/chair/comfy/brown{
+	resistance_flags = 64
+	},
+/turf/open/floor/wood,
 /area/ctf)
 "Sy" = (
 /obj/structure/railing{
@@ -611,6 +690,12 @@
 	},
 /turf/open/floor/plating,
 /area/ctf)
+"VW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ctf)
 "Wc" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron,
@@ -632,6 +717,16 @@
 	resistance_flags = 64
 	},
 /turf/open/floor/iron,
+/area/ctf)
+"Yh" = (
+/obj/machinery/door/airlock/command{
+	name = "BLUE";
+	resistance_flags = 64
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/ctf)
 "YE" = (
 /obj/effect/turf_decal/stripes/box,
@@ -890,9 +985,9 @@ rt
 PK
 PK
 rt
-gQ
-gQ
-gQ
+uZ
+eB
+eB
 rt
 PK
 PK
@@ -2172,8 +2267,8 @@ Dp
 WT
 rt
 rt
-gQ
-gQ
+vJ
+vJ
 rt
 ON
 ON
@@ -2217,9 +2312,9 @@ rt
 Pf
 rt
 rt
-gQ
-gQ
-gQ
+cU
+iz
+iz
 rt
 gQ
 gQ
@@ -2262,10 +2357,10 @@ rt
 gQ
 gQ
 gQ
-gQ
-gQ
-gQ
-gQ
+rt
+cU
+iz
+iz
 Xb
 gQ
 gQ
@@ -2308,10 +2403,10 @@ gQ
 gQ
 gQ
 gQ
-gQ
-gQ
-gQ
-gQ
+Yh
+iz
+iz
+iz
 Xb
 gQ
 gQ
@@ -2351,13 +2446,13 @@ sP
 SJ
 rt
 gQ
-gQ
+Vx
 Vx
 gQ
 rt
-gQ
-gQ
-gQ
+RQ
+iz
+iz
 Xb
 gQ
 gQ
@@ -2391,8 +2486,8 @@ gH
 gH
 rt
 rt
-Od
-Od
+IE
+IE
 YE
 Od
 As
@@ -2401,9 +2496,9 @@ gQ
 gQ
 gQ
 rt
-Vx
-Vx
-gQ
+dq
+dq
+iz
 rt
 gQ
 gQ
@@ -2447,9 +2542,9 @@ gQ
 gQ
 gQ
 rt
-gQ
-gQ
-gQ
+MD
+MD
+MD
 rt
 MU
 gQ
@@ -2480,7 +2575,7 @@ Gu
 "}
 (41,1,1) = {"
 rt
-Od
+PY
 YE
 Od
 YE
@@ -2492,10 +2587,10 @@ gQ
 gQ
 gQ
 gQ
-gQ
-gQ
-gQ
-gQ
+MU
+ON
+ON
+ON
 Ye
 gQ
 gQ
@@ -2526,7 +2621,7 @@ Gu
 "}
 (42,1,1) = {"
 rt
-Od
+PY
 Od
 uQ
 Od
@@ -2534,8 +2629,8 @@ Sy
 rt
 rt
 rt
-iz
-Vx
+rt
+Rq
 Vx
 Vx
 gQ
@@ -2572,7 +2667,7 @@ Gu
 "}
 (43,1,1) = {"
 rt
-Od
+PY
 YE
 Od
 YE
@@ -2584,10 +2679,10 @@ gQ
 gQ
 gQ
 gQ
-gQ
-gQ
-gQ
-gQ
+JN
+qA
+qA
+qA
 Ye
 gQ
 gQ
@@ -2631,9 +2726,9 @@ gQ
 gQ
 gQ
 rt
-gQ
-gQ
-gQ
+VW
+VW
+VW
 rt
 JN
 gQ
@@ -2667,8 +2762,8 @@ gH
 gH
 rt
 rt
-Od
-Od
+IE
+IE
 YE
 Od
 As
@@ -2677,9 +2772,9 @@ gQ
 gQ
 gQ
 rt
-Vx
-Vx
-gQ
+dq
+dq
+iz
 rt
 gQ
 gQ
@@ -2719,13 +2814,13 @@ wC
 Ge
 rt
 gQ
-gQ
+Vx
 Vx
 gQ
 rt
-gQ
-gQ
-gQ
+iz
+iz
+iz
 Xb
 gQ
 gQ
@@ -2768,10 +2863,10 @@ gQ
 gQ
 gQ
 gQ
-gQ
-gQ
-gQ
-gQ
+Yh
+iz
+iz
+iz
 Xb
 gQ
 gQ
@@ -2814,10 +2909,10 @@ rt
 gQ
 gQ
 gQ
-gQ
-gQ
-gQ
-gQ
+rt
+gU
+DT
+gU
 Xb
 gQ
 gQ
@@ -2861,9 +2956,9 @@ rt
 Pf
 rt
 rt
-gQ
-gQ
-gQ
+dK
+dK
+dK
 rt
 gQ
 gQ
@@ -2908,8 +3003,8 @@ gH
 gH
 rt
 rt
-gQ
-gQ
+ww
+ww
 rt
 JN
 JN
