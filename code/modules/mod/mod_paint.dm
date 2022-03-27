@@ -90,7 +90,7 @@
 			current_color = params["color"]
 			animate(proxy_view, time = 0.5 SECONDS, color = current_color)
 		if("confirm")
-			if(length(current_color) != 20)
+			if(length(current_color) != 20) //20 is the length of a matrix identity list
 				return
 			for(var/color_value in current_color)
 				if(isnum(color_value))
@@ -98,10 +98,10 @@
 				return
 			var/total_color_value = 0
 			var/list/total_colors = current_color.Copy()
-			total_colors.Cut(13, length(total_colors))
-			var/red_value = current_color[1] + current_color[5] + current_color[9]
-			var/green_value = current_color[2] + current_color[6] + current_color[10]
-			var/blue_value = current_color[3] + current_color[7] + current_color[11]
+			total_colors.Cut(13, length(total_colors)) // 13 to 20 are just a and c, dont want to count them
+			var/red_value = current_color[1] + current_color[5] + current_color[9] //rr + gr + br
+			var/green_value = current_color[2] + current_color[6] + current_color[10] //rg + gg + bg
+			var/blue_value = current_color[3] + current_color[7] + current_color[11] //rb + gb + bb
 			if(red_value > MODPAINT_MAX_SECTION_COLORS)
 				balloon_alert(usr, "total red too high! ([red_value*100]%/[MODPAINT_MAX_SECTION_COLORS*100]%)")
 				return
