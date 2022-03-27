@@ -28,10 +28,6 @@
 	},
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
-"gf" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
 "hh" = (
 /obj/structure/table/abductor,
 /obj/item/gun/energy/alien,
@@ -47,7 +43,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
+/area/shuttle/escape)
 "jJ" = (
 /obj/machinery/door/airlock/abductor{
 	name = "Command Center"
@@ -55,12 +51,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
-"jV" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
 "lK" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/plating/abductor,
@@ -85,22 +75,15 @@
 	desc = "Even aliens can see the use of a good old-fashioned beating stick."
 	},
 /turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
+/area/shuttle/escape)
 "sG" = (
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
-"tb" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
 "ue" = (
 /obj/machinery/fat_sucker,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
-"ui" = (
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
 "uW" = (
 /obj/structure/chair/office,
 /obj/machinery/light/directional/east,
@@ -189,13 +172,7 @@
 /obj/item/storage/box/alienhandcuffs,
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
-"IL" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 8
-	},
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
+/area/shuttle/escape)
 "IM" = (
 /obj/structure/table/abductor,
 /obj/item/organ/heart/gland/access{
@@ -210,10 +187,6 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
-"Km" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating/abductor,
-/area/shuttle/escape/brig)
 "Lo" = (
 /obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light/directional/west,
@@ -564,7 +537,7 @@ Um
 Um
 Um
 xd
-Km
+jj
 an
 Um
 Um
@@ -672,11 +645,11 @@ nH
 nH
 nH
 qD
-ui
-gf
-jV
-jV
-jV
+Um
+lK
+Sg
+Sg
+Sg
 jj
 Um
 Um
@@ -695,11 +668,11 @@ nH
 Cv
 nH
 nH
-tb
-ui
-ui
-ui
-ui
+an
+Um
+Um
+Um
+Um
 jj
 Um
 Um
@@ -719,10 +692,10 @@ Cv
 Cv
 nH
 nH
-tb
-ui
-ui
-ui
+an
+Um
+Um
+Um
 jI
 Um
 Um
@@ -743,9 +716,9 @@ Cv
 Cv
 nH
 nH
-IL
-ui
-ui
+CT
+Um
+Um
 jj
 Um
 Um
@@ -767,7 +740,7 @@ Cv
 Cv
 nH
 nH
-IL
+CT
 HK
 jj
 CT
