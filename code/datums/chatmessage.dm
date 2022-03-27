@@ -213,40 +213,37 @@
 		for(var/datum/chatmessage/preexisting_message as anything in owned_by.seen_messages[message_loc])
 
 			var/image/other_message_image = preexisting_message.hearers[owned_by]
-			animate(other_message_image, pixel_y = other_message_image.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
+
 			combined_height += preexisting_message.approx_lines[other_message_image]
 
-			var/sched_remaining = preexisting_message.fade_times_by_image[other_message_image] - world.time
+			var/current_stage_2_time_left = preexisting_message.fade_times_by_image[other_message_image] - (world.time + CHAT_MESSAGE_SPAWN_TIME)
 
-			var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
-			remaining_time = max(remaining_time, 0)
+			//how much time remains in the "fully visible" stage of animation, after we adjust it
+			var/new_stage_2_time_left = (current_stage_2_time_left) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
 
-			if(other_message_image.alpha < 255) //either fading in or fading out
-				if(preexisting_message.fade_times_by_image[other_message_image] > world.time)//must be fading in not out
-					var/remaining_spawn_time = CHAT_MESSAGE_SPAWN_TIME + (world.time - preexisting_message.creation_time)
+			new_stage_2_time_left = max(new_stage_2_time_left, 0)
 
-					animate(other_message_image, alpha = 255, time = remaining_spawn_time, flags = ANIMATION_PARALLEL)
-					animate(alpha = 255, time = remaining_time)
-					animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
-			//the message is in the main lifespan stage
-			else
-				animate(other_message_image, alpha = 255, time = remaining_time, flags = ANIMATION_PARALLEL)
+			//if the message isnt in stage 3 of the animation, adjust the length of stage 2. assume that stage 1 is over since its short
+			//and taking that into account is harder than its worth.
+			if(preexisting_message.fade_times_by_image[other_message_image] < world.time && new_stage_2_time_left > world.tick_lag)
+				animate(other_message_image, alpha = 255, time = new_stage_2_time_left, flags = ANIMATION_END_NOW)
 				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
 
-			LAZYSET(preexisting_message.fade_times_by_image, other_message_image, remaining_time + world.time)
+				LAZYSET(preexisting_message.fade_times_by_image, other_message_image, new_stage_2_time_left + world.time)
+
+			animate(other_message_image, pixel_y = other_message_image.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
 
 	var/maptext_used = MAPTEXT(complete_text)
 	var/maptext_x_used = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
 
 	var/image/message = create_new_image(target, maptext_used, mheight, maptext_x_used)
 
-	handle_new_image_association(message, owned_by, our_approx_lines)
-
 	//handle the client side animations for the image
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
 	animate(alpha = 255, time = lifespan)
 	animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
 
+	handle_new_image_association(message, owned_by, our_approx_lines)
 
 /datum/chatmessage/proc/create_new_image(atom/target, maptext, mheight, maptext_x)
 	var/static/mutable_appearance/template = new()
