@@ -27018,9 +27018,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/bot,
 /obj/effect/spawner/random/maintenance,
-/obj/item/stock_parts/cell{
-	maxcharge = 2000
-	},
+/obj/item/stock_parts/cell,
 /turf/open/floor/iron,
 /area/cargo/warehouse)
 "hrf" = (

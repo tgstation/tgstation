@@ -1165,10 +1165,7 @@
 /area/ruin/space/derelict/bridge/access)
 "fB" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell{
-	charge = 100;
-	maxcharge = 15000
-	},
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fC" = (
