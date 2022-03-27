@@ -135,8 +135,10 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-		piece.icon = theme.icon_override
-		piece.worn_icon = theme.worn_icon_override
+		if(skin[MOD_ICON_OVERRIDE])
+			piece.icon = skin[MOD_ICON_OVERRIDE]
+		if(skin[MOD_WORN_ICON_OVERRIDE])
+			piece.worn_icon = skin[MOD_WORN_ICON_OVERRIDE]
 	update_flags()
 	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
@@ -527,7 +529,12 @@
 		return FALSE
 	skin = pick
 	var/list/skin_updating = mod_parts.Copy() + src
+	var/list/skin_selected = skins[mod_skin]
 	for(var/obj/item/piece as anything in skin_updating)
+		if(skin_selected[MOD_ICON_OVERRIDE])
+			piece.icon = skin_selected[MOD_ICON_OVERRIDE]
+		if(skin_selected[MOD_WORN_ICON_OVERRIDE])
+			piece.worn_icon = skin_selected[MOD_WORN_ICON_OVERRIDE]
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
 	update_flags()
 	wearer?.regenerate_icons()
