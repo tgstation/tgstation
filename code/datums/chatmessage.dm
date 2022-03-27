@@ -1,3 +1,12 @@
+///the layer value given to the message image in the last animation step after the image has faded.
+///used for either the initialization animation sequence or the edited stage 2 duration animation sequence.
+///to the server the images layer is set instantly to this value, but the client cant see it because its only adjusted for them
+/// after the message is inivisible. so this is used to mark what animation is being used for the server.
+#define MESSAGE_ANIMATION_DEFAULT_LAYER_MARK 1020
+///the layer value given to the message image for the animation sequence where the image is forced into fading.
+///used so that the server doesnt force the image to fade twice.
+#define MESSAGE_ANIMATION_FORCE_FADE_LAYER_MARK 1021
+
 /**
  * # Chat Message Overlay
  *
@@ -16,26 +25,15 @@
 	var/template_message = ""
 	/// what language the message is spoken in.
 	var/datum/language/message_language
-	/// Contains the scheduled destruction time, used for scheduling EOL
-	var/scheduled_destruction
-	/// Contains the time that the EOL for the message will be complete, used for qdel scheduling
-	var/eol_complete
 	/// Contains the approximate amount of lines for height decay for each message image.
 	/// associative list of the form: list(message image = approximate lines for that image)
 	var/list/approx_lines = list()
 
 	/// The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones
 	var/static/current_z_idx = 0
-	/// Contains the hash of our main assigned timer for the end_of_life fading event
+	/// Contains the hash of our main assigned timer for the end_of_life fading event. by the time this timer executes all clients should have
+	///already seen the end of the maptext animation sequence and cant see their message anymore. so this will remove all message images from all clients
 	var/fadertimer = null
-	/// lazy list version of fadertimer filled with timer hashes for hearers that get their messages removed at a different time than the default time.
-	/// associative lazy list of the form: list(hearer client with different message removal time = fadertimer set to that hearer)
-	var/list/fadertimers_by_hearer
-	/// States if end_of_life is being executed
-	var/is_fading = FALSE
-	/// lazy list version of is_fading that gets filled with hearers that get their message images removed at a different time than the default EOL time.
-	/// associative lazy list of the form: list(hearer with different message removal time  = whether that hearers message is in the fading stage yet)
-	var/list/override_is_fading
 
 	///concatenated string of parameters given to us at creation
 	var/creation_parameters = ""
@@ -77,8 +75,7 @@
 	src.lifespan = lifespan
 	///how long this datum will actually exist for. its how long the default message animations take + 1 second buffer
 	var/total_existence_time = CHAT_MESSAGE_SPAWN_TIME + lifespan + CHAT_MESSAGE_EOL_FADE + 1 SECONDS
-	// Register with the runechat SS to handle EOL and destruction
-	fadertimer = SSrunechat.schedule_message(CALLBACK(src, .proc/end_of_life), total_existence_time)
+	fadertimer = addtimer(CALLBACK(src, .proc/end_of_life), total_existence_time, TIMER_STOPPABLE|TIMER_DELETE_ME)
 
 	//in the case of a hash collision this will drop the older chatmessage datum from this list. this is fine however
 	//since the dropped datum will still properly handle itself including deletion etc.
@@ -111,7 +108,6 @@
 	return ..()
 
 /datum/chatmessage/proc/end_of_life()
-	is_fading = TRUE
 	qdel(src)
 
 /datum/chatmessage/proc/on_hearer_qdel(datum/source)
@@ -218,19 +214,36 @@
 
 			var/current_stage_2_time_left = preexisting_message.fade_times_by_image[other_message_image] - (world.time + CHAT_MESSAGE_SPAWN_TIME)
 
-			//how much time remains in the "fully visible" stage of animation, after we adjust it
-			var/new_stage_2_time_left = (current_stage_2_time_left) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
+			//how much time remains in the "fully visible" stage of animation, after we adjust it. round it down to the nearest tick
+			var/real_stage_2_time_left = round((current_stage_2_time_left) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height), world.tick_lag)
 
-			new_stage_2_time_left = max(new_stage_2_time_left, 0)
+			///used to take away time from CHAT_MESSAGE_SPAWN_TIME's addition to the fading time
+			var/non_abs_stage_2_time_left = real_stage_2_time_left
+			real_stage_2_time_left = max(real_stage_2_time_left, 0)
 
 			//if the message isnt in stage 3 of the animation, adjust the length of stage 2. assume that stage 1 is over since its short
-			//and taking that into account is harder than its worth.
-			if(preexisting_message.fade_times_by_image[other_message_image] < world.time && new_stage_2_time_left > world.tick_lag)
-				animate(other_message_image, alpha = 255, time = new_stage_2_time_left, flags = ANIMATION_END_NOW)
+			//and taking that into account is harder than its worth. also check if theres enough time left after adjusting to bother
+			if(preexisting_message.fade_times_by_image[other_message_image] > world.time && real_stage_2_time_left > 1)
+				animate(other_message_image, alpha = 255, time = 0)
+				animate(time = real_stage_2_time_left)
 				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+				animate(layer = MESSAGE_ANIMATION_DEFAULT_LAYER_MARK, time = 0)
 
-				LAZYSET(preexisting_message.fade_times_by_image, other_message_image, new_stage_2_time_left + world.time)
+				preexisting_message.fade_times_by_image[other_message_image] = world.time + non_abs_stage_2_time_left + CHAT_MESSAGE_SPAWN_TIME
 
+			//just start the fading early if theres no real time left. layer is only MESSAGE_ANIMATION_DEFAULT_LAYER_MARK to the server if this hasnt already happened to the image
+			else if(real_stage_2_time_left <= 1 && other_message_image.layer == MESSAGE_ANIMATION_DEFAULT_LAYER_MARK)
+
+				//to the server, animations complete their edits instantly, jumping to the last stage of the animation. so we need this step if the client
+				//was still in the second stage of animation. if the time was wrong and the client was in the third stage of animation when the updated step
+				//arrives, then this will look weird.
+				animate(other_message_image, alpha = 255, time = 0)
+				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+				animate(layer = MESSAGE_ANIMATION_FORCE_FADE_LAYER_MARK, time = 0)
+
+				preexisting_message.fade_times_by_image[other_message_image] = world.time //make sure we can tell afterwards if its already fading
+
+			//make it move upwards
 			animate(other_message_image, pixel_y = other_message_image.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
 
 	var/maptext_used = MAPTEXT(complete_text)
@@ -242,6 +255,8 @@
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
 	animate(alpha = 255, time = lifespan)
 	animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+	animate(layer = MESSAGE_ANIMATION_DEFAULT_LAYER_MARK, time = 0)
+	//client wont see the results of this last step since it wont be visible. its just used to mark to the server whether the last animation stage was forced
 
 	handle_new_image_association(message, owned_by, our_approx_lines)
 
@@ -272,30 +287,11 @@
 
 	approx_lines[message_image] = approximate_lines
 	if(set_time)
-		fade_times_by_image[message_image] = world.time + lifespan + CHAT_MESSAGE_SPAWN_TIME
+		fade_times_by_image[message_image] = world.time  + lifespan + CHAT_MESSAGE_SPAWN_TIME
 
 	LAZYADDASSOCLIST(associated_client.seen_messages, message_loc, src)
 	LAZYADDASSOC(messages, message_image, associated_client)
 	LAZYADDASSOC(hearers, associated_client, message_image)
-
-
-///unsets any links between the client and old_image for this chat message.
-///if temporary = TRUE, then we assume that this message is doing something else with the client and thus dont remove them from everything
-/datum/chatmessage/proc/unassociate_client_from_image(image/old_image, client/client_hearer, temporary = FALSE)
-
-	client_hearer.images -= old_image
-	hearers -= client_hearer
-	messages -= old_image
-	approx_lines -= old_image
-
-	if(temporary)
-		return TRUE
-
-	UnregisterSignal(client_hearer, COMSIG_PARENT_QDELETING)
-	LAZYREMOVEASSOC(client_hearer.seen_messages, message_loc, src)
-
-	return TRUE
-
 
 #define BENCHMARK_LOOP while(world.timeofday < end_time)
 #define BENCHMARK_RESET iterations = 0; end_time = world.timeofday + duration
@@ -441,13 +437,5 @@
 		if(5)
 			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
 
-#undef CHAT_MESSAGE_SPAWN_TIME
-#undef CHAT_MESSAGE_LIFESPAN
-#undef CHAT_MESSAGE_EOL_FADE
-#undef CHAT_MESSAGE_EXP_DECAY
-#undef CHAT_MESSAGE_HEIGHT_DECAY
-#undef CHAT_MESSAGE_APPROX_LHEIGHT
-#undef CHAT_MESSAGE_WIDTH
-#undef CHAT_LAYER_Z_STEP
-#undef CHAT_LAYER_MAX_Z
-#undef CHAT_MESSAGE_ICON_SIZE
+#undef MESSAGE_ANIMATION_DEFAULT_LAYER_MARK
+#undef MESSAGE_ANIMATION_FORCE_FADE_LAYER_MARK
