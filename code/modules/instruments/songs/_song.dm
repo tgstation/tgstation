@@ -370,7 +370,7 @@
  * Setter for setting linear falloff duration.
  */
 /datum/song/proc/set_linear_falloff_duration(duration)
-	sustain_linear_duration = clamp(round(duration * 10, world.tick_lag), 0.1, INSTRUMENT_MAX_TOTAL_SUSTAIN)
+	sustain_linear_duration = clamp(round(duration * 10, world.tick_lag), world.tick_lag, INSTRUMENT_MAX_TOTAL_SUSTAIN)
 	update_sustain()
 	updateDialog()
 

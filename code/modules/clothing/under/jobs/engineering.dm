@@ -20,7 +20,7 @@
 	inhand_icon_state = "gy_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians. Made from fire resistant materials."
@@ -35,7 +35,7 @@
 	inhand_icon_state = "atmos_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/engineering/engineer
 	desc = "It's an orange high visibility jumpsuit worn by engineers. Made from fire resistant materials."
@@ -58,4 +58,4 @@
 	inhand_icon_state = "engi_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
-	fitted = FEMALE_UNIFORM_TOP
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY

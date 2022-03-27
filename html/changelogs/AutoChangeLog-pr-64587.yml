@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes: 
-  - spellcheck: "Add a message when infinite pizza is generated."

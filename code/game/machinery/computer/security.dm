@@ -28,6 +28,7 @@
 
 #define COMP_STATE_ARREST "*Arrest*"
 #define COMP_STATE_PRISONER "Incarcerated"
+#define COMP_STATE_SUSPECTED "Suspected"
 #define COMP_STATE_PAROL "Paroled"
 #define COMP_STATE_DISCHARGED "Discharged"
 #define COMP_STATE_NONE "None"
@@ -134,6 +135,7 @@
 	var/static/list/component_options = list(
 		COMP_STATE_ARREST,
 		COMP_STATE_PRISONER,
+		COMP_STATE_SUSPECTED,
 		COMP_STATE_PAROL,
 		COMP_STATE_DISCHARGED,
 		COMP_STATE_NONE,
@@ -181,6 +183,7 @@
 
 #undef COMP_STATE_ARREST
 #undef COMP_STATE_PRISONER
+#undef COMP_STATE_SUSPECTED
 #undef COMP_STATE_PAROL
 #undef COMP_STATE_DISCHARGED
 #undef COMP_STATE_NONE
@@ -296,6 +299,8 @@
 								if("*Arrest*")
 									background = "'background-color:#990000;'"
 								if("Incarcerated")
+									background = "'background-color:#CD6500;'"
+								if("Suspected")
 									background = "'background-color:#CD6500;'"
 								if("Paroled")
 									background = "'background-color:#CD6500;'"
@@ -534,7 +539,7 @@ What a mess.*/
 									to_chat(usr, span_notice("The fine has been paid in full."))
 								SSblackbox.ReportCitation(text2num(href_list["cdataid"]),"","","","", 0, pay)
 								qdel(C)
-								playsound(src, "terminal_type", 25, FALSE)
+								playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
 						else
 							to_chat(usr, span_warning("Fines can only be paid with holochips!"))
 
@@ -894,6 +899,7 @@ What a mess.*/
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=none'>None</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
+							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=suspected'>Suspected</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>"
 							temp += "<li><a href='?src=[REF(src)];choice=Change Criminal Status;criminal2=released'>Discharged</a></li>"
 							temp += "</ul>"
@@ -945,6 +951,8 @@ What a mess.*/
 									active2.fields["criminal"] = "*Arrest*"
 								if("incarcerated")
 									active2.fields["criminal"] = "Incarcerated"
+								if("suspected")
+									active2.fields["criminal"] = "Suspected"
 								if("paroled")
 									active2.fields["criminal"] = "Paroled"
 								if("released")
@@ -1021,7 +1029,7 @@ What a mess.*/
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Discharged")
+					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Suspected", "Paroled", "Discharged")
 				if(5)
 					R.fields["p_stat"] = pick("*Unconscious*", "Active", "Physically Unfit")
 				if(6)

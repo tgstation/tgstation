@@ -315,12 +315,15 @@
 	LoseTarget()
 	return 0
 
-/mob/living/simple_animal/hostile/proc/Goto(target, delay, minimum_distance)
+/mob/living/simple_animal/hostile/Goto(target, delay, minimum_distance)
+	if(prevent_goto_movement)
+		return FALSE
 	if(target == src.target)
 		approaching_target = TRUE
 	else
 		approaching_target = FALSE
 	SSmove_manager.move_to(src, target, minimum_distance, delay, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
+	return TRUE
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()

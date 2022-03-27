@@ -38,6 +38,7 @@
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	custom_materials = list(/datum/material/iron = 5000, /datum/material/silver = 2500, /datum/material/plasma = 1000, /datum/material/titanium = 2000, /datum/material/diamond = 2000)
 	icon_state = "crowbar"
+	belt_icon_state = "crowbar_alien"
 	toolspeed = 0.1
 
 
@@ -131,7 +132,7 @@
 			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)
 			if(target_bodypart)
 				target_bodypart.drop_limb()
-				playsound(loc, "desecration", 50, TRUE, -1)
+				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/crowbar/power/attack(mob/living/carbon/attacked_carbon, mob/user)

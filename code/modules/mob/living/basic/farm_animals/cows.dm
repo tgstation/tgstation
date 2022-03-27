@@ -93,6 +93,7 @@
 	name = "wisdom cow"
 	desc = "Known for its wisdom, shares it with all."
 	gold_core_spawnable = FALSE
+	ai_controller = /datum/ai_controller/basic_controller/cow/wisdom
 
 /mob/living/basic/cow/wisdom/make_tameable()
 	return //cannot tame me!

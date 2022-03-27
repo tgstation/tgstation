@@ -51,6 +51,9 @@
 			to_chat(user, span_warning("[src] is already in good condition!"))
 		return
 
+/obj/structure/railing/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
+
 /obj/structure/railing/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(!anchored)

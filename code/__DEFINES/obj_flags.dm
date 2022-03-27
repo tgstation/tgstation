@@ -39,6 +39,8 @@
 #define NO_PIXEL_RANDOM_DROP (1<<17) //if dropped, it wont have a randomized pixel_x/pixel_y
 ///Can be equipped on digitigrade legs.
 #define IGNORE_DIGITIGRADE (1<<18)
+/// Has contextual screentips when HOVERING OVER OTHER objects
+#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

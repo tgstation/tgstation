@@ -65,7 +65,7 @@
 	charge_max = 120
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	cooldown_min = 20 //25 deciseconds reduction per rank
@@ -84,7 +84,7 @@
 	charge_max = 360
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 
@@ -116,7 +116,7 @@
 	charge_max = 20
 	clothes_req = TRUE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = -1
 	include_user = TRUE
 	cooldown_min = 5 //4 deciseconds reduction per rank
@@ -202,7 +202,7 @@
 	charge_max = 600
 	clothes_req = FALSE
 	invocation = "none"
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	range = 0
 	summon_type = list(/obj/structure/constructshell)
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
@@ -306,7 +306,7 @@
 	antimagic_allowed = TRUE
 	range = 2
 	cooldown_min = 150
-	invocation_type = "none"
+	invocation_type = INVOCATION_NONE
 	sparkle_path = /obj/effect/temp_visual/dir_setting/tailsweep
 	action_icon = 'icons/mob/actions/actions_xeno.dmi'
 	action_icon_state = "tailsweep"

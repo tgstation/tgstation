@@ -84,6 +84,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "gate_blocker"
 	layer = EDGED_TURF_LAYER
+	plane = GAME_PLANE_UPPER
 	pixel_x = -32
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

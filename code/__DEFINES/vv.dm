@@ -28,6 +28,7 @@
 #define VV_WEAKREF "Weak Reference Datum"
 
 #define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
+#define VV_MSG_TAGGED(num) "<br><font size='1' color='red'><b>Tagged Datum #[num]</b></font>"
 #define VV_MSG_EDITED "<br><font size='1' color='red'><b>Var Edited</b></font>"
 #define VV_MSG_DELETED "<br><font size='1' color='red'><b>Deleted</b></font>"
 

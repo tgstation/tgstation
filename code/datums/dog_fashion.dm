@@ -112,6 +112,11 @@
 	emote_see = list("drools.","looks for donuts.")
 	desc = "Stop right there criminal scum!"
 
+/datum/dog_fashion/head/warden_red
+	name = "Officer REAL_NAME"
+	emote_see = list("drools.","looks for donuts.")
+	desc = "Stop right there criminal scum!"
+
 /datum/dog_fashion/head/blue_wizard
 	name = "Grandwizard REAL_NAME"
 	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "EI NATH!")

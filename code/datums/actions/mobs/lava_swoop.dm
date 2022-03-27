@@ -152,7 +152,7 @@
 		if(istype(T, /turf/open/indestructible))
 			continue
 		if(!istype(T, /turf/closed/indestructible))
-			T.ChangeTurf(/turf/open/floor/plating/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
+			T.ChangeTurf(/turf/open/misc/asteroid/basalt/lava_land_surface, flags = CHANGETURF_INHERIT_AIR)
 		else
 			indestructible_turfs += T
 	SLEEP_CHECK_DEATH(1 SECONDS, owner) // give them a bit of time to realize what attack is actually happening
@@ -194,6 +194,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "landing"
 	layer = BELOW_MOB_LAYER
+	plane = GAME_PLANE
 	pixel_x = -32
 	pixel_y = -32
 	color = "#FF0000"
@@ -203,6 +204,7 @@
 	icon = 'icons/mob/lavaland/64x64megafauna.dmi'
 	icon_state = "dragon"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pixel_x = -16
 	duration = 10
 	randomdir = FALSE

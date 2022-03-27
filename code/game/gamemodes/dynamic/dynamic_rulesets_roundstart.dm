@@ -207,7 +207,7 @@
 
 //////////////////////////////////////////////
 //                                          //
-//              ELDRITCH CULT               //
+//                 HERETICS                 //
 //                                          //
 //////////////////////////////////////////////
 
@@ -723,10 +723,11 @@
 	)
 	required_candidates = 1
 	weight = 3
-	cost = 6 //very cheap cost for the round
-	scaling_cost = 9
+	cost = 4 //very cheap cost for the round
+	scaling_cost = 0
 	requirements = list(8,8,8,8,8,8,8,8,8,8)
-	antag_cap = list("denominator" = 24)
+	antag_cap = list("denominator" = 24, "offset" = 2)
+	flags = LONE_RULESET
 
 /datum/dynamic_ruleset/roundstart/thieves/pre_execute(population)
 	. = ..()
@@ -754,7 +755,7 @@
 	required_candidates = 0
 	weight = 0 //admin only (and for good reason)
 	cost = 0
-	flags = LONE_RULESET
+	flags = LONE_RULESET | ONLY_RULESET
 
 /datum/dynamic_ruleset/roundstart/nations/execute()
 	. = ..()

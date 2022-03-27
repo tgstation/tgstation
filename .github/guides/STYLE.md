@@ -367,6 +367,38 @@ This is good:
 
 Setting `is_red` in args is simple, and directly names the variable the argument sets.
 
+### Prefer named arguments when the meaning is not obvious.
+
+Pop-quiz, what does this do?
+
+```dm
+give_pizza(TRUE, 2)
+```
+
+Well, obviously the `TRUE` makes the pizza hot, and `2` is the number of toppings. 
+
+Code like this can be very difficult to read, especially since our LSP does not show argument names at this time. Because of this, you should prefer to use named arguments where the meaning is not otherwise obvious.
+
+```dm
+give_pizza(hot = TRUE, toppings = 2)
+```
+
+What is "obvious" is subjective--for instance, `give_pizza(PIZZA_HOT, toppings = 2)` is completely acceptable.
+
+Other examples:
+
+```dm
+deal_damage(10) // Fine! The proc name makes it obvious `10` is the damage...at least it better be.
+deal_damage(10, FIRE) // Also fine! `FIRE` makes it obvious the second parameter is damage type.
+deal_damage(damage = 10) // Redundant, but not prohibited.
+
+use_power(30) // Fine! `30` is obviously something like watts.
+turn_on(30) // Not fine!
+turn_on(power_usage = 30) // Fine!
+
+set_invincible(FALSE) // Fine! Boolean parameters don't always need to be named. In this case, it is obvious what it means.
+```
+
 ## Things that do not matter
 The following coding styles are not only not enforced at all, but are generally frowned upon to change for little to no reason:
 
