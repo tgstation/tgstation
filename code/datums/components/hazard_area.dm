@@ -21,10 +21,11 @@
 		return COMPONENT_INCOMPATIBLE
 	src.area_blacklist = area_blacklist
 	src.area_whitelist = area_whitelist
+
+/datum/component/hazard_area/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOB_CLIENT_MOVED, .proc/handle_parent_move)
 
-/datum/component/hazard_area/Destroy(force, silent)
-	. = ..()
+/datum/component/hazard_area/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_CLIENT_MOVED)
 
 /**
