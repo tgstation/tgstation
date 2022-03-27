@@ -8848,6 +8848,11 @@
 /obj/machinery/gibber,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
+"djG" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/security/brig/upper)
 "djH" = (
 /obj/structure/closet/lasertag/red,
 /obj/effect/turf_decal/tile/neutral{
@@ -20297,14 +20302,13 @@
 /area/maintenance/starboard/fore)
 "iQv" = (
 /obj/machinery/door/airlock/security/glass{
-	name = "Security EVA"
+	name = "Security Vestibule"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
 /area/security/processing)
@@ -30413,10 +30417,6 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
-"oeG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/security/brig/upper)
 "oeK" = (
 /obj/structure/chair/stool/directional/south,
 /obj/machinery/computer/pod/old/mass_driver_controller/trash{
@@ -81893,8 +81893,8 @@ gZE
 iQv
 esF
 nIp
-ykS
-oeG
+djG
+mXq
 jnk
 jnk
 jnk
@@ -82151,7 +82151,7 @@ aiT
 hGK
 ufV
 wFn
-oeG
+mXq
 jnk
 jnk
 jnk
