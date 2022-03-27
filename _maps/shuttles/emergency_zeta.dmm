@@ -210,6 +210,10 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/plating/abductor,
 /area/shuttle/escape)
+"Km" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating/abductor,
+/area/shuttle/escape/brig)
 "Lo" = (
 /obj/item/kirbyplants/photosynthetic,
 /obj/machinery/light/directional/west,
@@ -560,7 +564,7 @@ Um
 Um
 Um
 xd
-jj
+Km
 an
 Um
 Um
