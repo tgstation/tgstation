@@ -269,3 +269,29 @@
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_NORMAL
+
+/obj/item/food/butterbiscuit
+	name = "butter biscuit"
+	desc = "Well butter my biscuit!"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butterbiscuit"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("butter" = 1, "biscuit" = 1)
+	foodtypes = GRAIN | BREAKFAST
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
+
+/obj/item/food/butterdog
+	name = "butterdog"
+	desc = "Made from exotic butters."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "butterdog"
+	bite_consumption = 1
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
+	tastes = list("butter" = 1, "exotic butter" = 1)
+	foodtypes = GRAIN | DAIRY
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/food/butterdog/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 80)
