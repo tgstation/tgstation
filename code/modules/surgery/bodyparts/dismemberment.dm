@@ -302,7 +302,7 @@
 		return
 	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
 	if(old_limb)
-		drop_limb(TRUE)
+		old_limb.drop_limb(TRUE)
 
 	. = attach_limb(limb_owner, special)
 	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
@@ -372,6 +372,7 @@
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
+	return .
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
