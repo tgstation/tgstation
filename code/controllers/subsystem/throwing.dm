@@ -128,12 +128,15 @@ SUBSYSTEM_DEF(throwing)
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
-	if (!isturf(AM.loc) || !AM.throwing)
+	if(!AM.throwing)
 		finalize()
 		return
-
 	if(paused)
 		delayed_time += world.time - last_move
+		return
+
+	if(!isturf(AM.loc))
+		finalize(hit = TRUE, target = AM.loc)
 		return
 
 	var/atom/movable/actual_target = initial_target?.resolve()
