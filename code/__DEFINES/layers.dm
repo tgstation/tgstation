@@ -213,3 +213,4 @@
 
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
+#define PLANE_MASTERS_COLORBLIND "plane_masters_colorblind"

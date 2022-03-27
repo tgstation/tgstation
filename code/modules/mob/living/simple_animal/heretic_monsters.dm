@@ -29,6 +29,7 @@
 	pressure_resistance = 100
 	del_on_death = TRUE
 	deathmessage = "implodes into itself."
+	loot = list(/obj/effect/gibspawner/human)
 	faction = list(FACTION_HERETIC)
 	simple_mob_flags = SILENCE_RANGED_MESSAGE
 	/// Innate spells that are added when a beast is created.
@@ -56,78 +57,79 @@
 	status_flags = CANPUSH
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	maxHealth = 50
-	health = 50
+	maxHealth = 65
+	health = 65
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
+	loot = list(/obj/effect/gibspawner/human, /obj/item/bodypart/l_arm, /obj/item/organ/eyes)
 	spells_to_add = list(
 		/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,
-		/obj/effect/proc_holder/spell/pointed/manse_link,
 		/obj/effect/proc_holder/spell/targeted/telepathy/eldritch,
 		/obj/effect/proc_holder/spell/pointed/trigger/blind/eldritch,
 	)
-
-	/// A assoc list of [mob/living ref] to [datum/action ref] - all the mobs linked to our mansus network.
-	var/list/mob/living/linked_mobs = list()
+	/// A weakref to the last target we smacked. Hitting targets consecutively does more damage.
+	var/datum/weakref/last_target
 
 /mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Initialize(mapload)
 	. = ..()
-	link_mob(src)
+	var/on_link_message = "You feel something new enter your sphere of mind... \
+		You hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link."
 
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Login()
-	. = ..()
-	client?.view_size.setTo(10)
+	var/on_unlink_message = "Your mind shatters as [src]'s Mansus Link leaves your mind."
 
-/**
- * Link [linked_mob] to our mansus link, if possible.
- * Creates a mansus speech action and grants it to the linked mob,
- * storing it in our linked_mobs list.
- */
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/proc/link_mob(mob/living/mob_linked)
-	if(QDELETED(mob_linked) || mob_linked.stat == DEAD)
-		return FALSE
-	if(HAS_TRAIT(mob_linked, TRAIT_MINDSHIELD)) //mindshield implant, no dice
-		return FALSE
-	if(mob_linked.anti_magic_check(FALSE, FALSE, TRUE, 0))
-		return FALSE
-	if(linked_mobs[mob_linked])
-		return FALSE
+	AddComponent(/datum/component/mind_linker, \
+		network_name = "Mansus Link", \
+		chat_color = "#568b00", \
+		linker_action_path = /datum/action/cooldown/manse_link, \
+		link_message = on_link_message, \
+		unlink_message = on_unlink_message, \
+		post_unlink_callback = CALLBACK(src, .proc/after_unlink), \
+		speech_action_background_icon_state = "bg_ecult", \
+	)
 
-	to_chat(mob_linked, span_notice("You feel something new enter your sphere of mind... \
-		You hear whispers of people far away, screeches of horror and a huming of welcome to [src]'s Mansus Link."))
+	var/datum/action/innate/expand_sight/sight_seer = new(src)
+	sight_seer.Grant(src)
 
-	var/datum/action/innate/mansus_speech/action = new(src)
-	linked_mobs[mob_linked] = action
-	action.Grant(mob_linked)
-
-	RegisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)), .proc/unlink_mob)
-
-	return TRUE
-
-/**
- * Signal proc that handles removing mobs from our mansus link.
- *
- * Remove the [mob_linked] from our list of linked mobs, and delete the associated action.
- */
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/proc/unlink_mob(mob/living/mob_linked)
-	SIGNAL_HANDLER
-
-	if(QDELETED(linked_mobs[mob_linked]))
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/attack_animal(mob/living/simple_animal/user, list/modifiers)
+	if(user == src) // Easy to hit yourself + very fragile = accidental suicide, prevent that
 		return
-	UnregisterSignal(mob_linked, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, SIGNAL_ADDTRAIT(TRAIT_MINDSHIELD)))
-	var/datum/action/innate/mansus_speech/action = linked_mobs[mob_linked]
-	action.Remove(mob_linked)
-	qdel(action)
 
-	to_chat(mob_linked, span_notice("Your mind shatters as [src]'s Mansus Link leaves your mind."))
-	INVOKE_ASYNC(mob_linked, /mob.proc/emote, "scream")
-	mob_linked.AdjustParalyzed(0.5 SECONDS) //micro stun
-
-	linked_mobs -= mob_linked
-
-/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Destroy()
-	for(var/linked_mob in linked_mobs)
-		unlink_mob(linked_mob)
 	return ..()
+
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/AttackingTarget(atom/attacked_target)
+	if(WEAKREF(attacked_target) == last_target)
+		melee_damage_lower = min(melee_damage_lower + 5, 30)
+		melee_damage_upper = min(melee_damage_upper + 5, 35)
+	else
+		melee_damage_lower = initial(melee_damage_lower)
+		melee_damage_upper = initial(melee_damage_upper)
+
+	. = ..()
+	if(!.)
+		return
+
+	SpinAnimation(5, 1)
+	last_target = WEAKREF(attacked_target)
+
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/Moved(atom/old_loc, movement_dir, forced = FALSE, list/old_locs)
+	. = ..()
+	var/rotation_degree = (360 / 3)
+	if(movement_dir & WEST || movement_dir & SOUTH)
+		rotation_degree *= -1
+
+	var/matrix/to_turn = matrix(transform)
+	to_turn = turn(transform, rotation_degree)
+	animate(src, transform = to_turn, time = 0.1 SECONDS)
+
+/*
+ * Callback for the mind_linker component.
+ * Stuns people who are ejected from the network.
+ */
+/mob/living/simple_animal/hostile/heretic_summon/raw_prophet/proc/after_unlink(mob/living/unlinked_mob)
+	if(QDELETED(unlinked_mob) || unlinked_mob.stat == DEAD)
+		return
+
+	INVOKE_ASYNC(unlinked_mob, /mob.proc/emote, "scream")
+	unlinked_mob.AdjustParalyzed(0.5 SECONDS) //micro stun
 
 // What if we took a linked list... But made it a mob?
 /// The "Terror of the Night" / Armsy, a large worm made of multiple bodyparts that occupies multiple tiles
@@ -184,6 +186,8 @@
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/update_chain_links)
 	if(!spawn_bodyparts)
 		return
+
+	AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/tracks, target_dir_change = TRUE)
 
 	allow_pulling = TRUE
 	// Sets the hp of the head to be exactly the (length * hp), so the head is de facto the hardest to destroy.
@@ -249,7 +253,6 @@
 	if(!follow)
 		return
 
-	gib_trail()
 	if(back && back.loc != oldloc)
 		back.Move(oldloc)
 
@@ -258,14 +261,6 @@
 		forceMove(front.oldloc)
 
 	oldloc = loc
-
-/// Creates a tail of blood / gibs as we move.
-/mob/living/simple_animal/hostile/heretic_summon/armsy/proc/gib_trail()
-	if(front) // head makes gibs
-		return
-	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/tracks))
-	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
-	decal.setDir(dir)
 
 /mob/living/simple_animal/hostile/heretic_summon/armsy/Destroy()
 	if(front)

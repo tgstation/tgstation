@@ -616,7 +616,7 @@
 	return COMSIG_BLOCK_EYECONTACT
 
 /datum/mood_event/anxiety_eyecontact
-	description = "<span class='warning'>Sometimes eye contact makes me so nervous...</span>\n"
+	description = "Sometimes eye contact makes me so nervous..."
 	mood_change = -5
 	timeout = 3 MINUTES
 
@@ -856,7 +856,7 @@
 
 /datum/quirk/claustrophobia
 	name = "Claustrophobia"
-	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breath."
+	desc = "You are terrified of small spaces and certain jolly figures. If you are placed inside any container, locker, or machinery, a panic attack sets in and you struggle to breathe."
 	icon = "box-open"
 	value = -4
 	medical_record_text = "Patient demonstrates a fear of tight spaces."
@@ -887,7 +887,7 @@
 		if(nick_spotted)
 			to_chat(quirk_holder, span_warning("Santa Claus is here! I gotta get out of here!"))
 		else
-			to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breath..."))
+			to_chat(quirk_holder, span_warning("You feel trapped!  Must escape... can't breathe..."))
 
 ///investigates whether possible_saint_nick possesses a high level of christmas cheer
 /datum/quirk/claustrophobia/proc/evaluate_jolly_levels(mob/living/carbon/human/possible_saint_nick)

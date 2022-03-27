@@ -2,7 +2,7 @@
 "as" = (
 /obj/machinery/door/airlock/public,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "ax" = (
 /obj/effect/turf_decal/stripes/white/line{
 	color = "#236F26";
@@ -19,7 +19,7 @@
 "bu" = (
 /obj/effect/spawner/random/food_or_drink/snack,
 /mob/living/basic/cockroach,
-/turf/open/floor/grass/snow/basalt/safe,
+/turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
 "bQ" = (
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -29,7 +29,9 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "cK" = (
-/mob/living/simple_animal/ant,
+/mob/living/simple_animal/hostile/ant{
+	environment_smash = 0
+	},
 /turf/open/floor/grass,
 /area/ruin/bughabitat)
 "eM" = (
@@ -58,7 +60,7 @@
 /turf/open/floor/iron,
 /area/ruin/bughabitat)
 "fO" = (
-/turf/open/floor/grass/snow,
+/turf/open/misc/snow,
 /area/ruin/bughabitat)
 "fP" = (
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
@@ -71,7 +73,7 @@
 /area/ruin/bughabitat)
 "hk" = (
 /obj/structure/window/reinforced/spawner/east,
-/turf/open/floor/grass/snow,
+/turf/open/misc/snow,
 /area/ruin/bughabitat)
 "hy" = (
 /obj/effect/decal/remains/human,
@@ -97,7 +99,7 @@
 "kv" = (
 /obj/structure/window/reinforced/spawner/east,
 /obj/item/shovel,
-/turf/open/floor/grass/snow,
+/turf/open/misc/snow,
 /area/ruin/bughabitat)
 "lj" = (
 /obj/structure/cable,
@@ -119,8 +121,8 @@
 /area/ruin/bughabitat)
 "ma" = (
 /obj/structure/statue/snow/snowman,
-/turf/open/floor/grass/snow,
-/area/icemoon/surface)
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
 "mM" = (
 /obj/machinery/light/warm/directional/west,
 /obj/structure/tank_holder/oxygen,
@@ -139,7 +141,7 @@
 "ot" = (
 /mob/living/basic/cockroach,
 /obj/item/seeds/soya,
-/turf/open/floor/grass/snow/basalt/safe,
+/turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
 "oZ" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -216,7 +218,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "yC" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 4
@@ -249,7 +251,7 @@
 "Cv" = (
 /obj/machinery/light/warm/directional/east,
 /obj/structure/closet,
-/obj/item/food/cheese,
+/obj/item/food/cheese/wedge,
 /obj/item/stack/rods/ten,
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
@@ -258,7 +260,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Ea" = (
-/obj/machinery/door/window/northright,
+/obj/machinery/door/window/right/directional/north,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 1
@@ -340,7 +342,7 @@
 /area/ruin/bughabitat)
 "Pt" = (
 /obj/machinery/light/warm/directional/west,
-/obj/machinery/door/window/northright,
+/obj/machinery/door/window/right/directional/north,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 9
@@ -348,8 +350,8 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Qd" = (
-/turf/open/floor/grass/snow,
-/area/icemoon/surface)
+/turf/open/misc/snow,
+/area/icemoon/surface/outdoors/nospawn)
 "Qp" = (
 /obj/effect/turf_decal/siding/wideplating/dark/corner{
 	dir = 8
@@ -369,7 +371,7 @@
 "RJ" = (
 /obj/structure/window/reinforced/spawner/east,
 /mob/living/basic/cockroach,
-/turf/open/floor/grass/snow/basalt/safe,
+/turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
 "RR" = (
 /turf/open/floor/carpet/neon/simple/lime,
@@ -401,10 +403,10 @@
 /area/ruin/bughabitat)
 "Xn" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface)
+/area/icemoon/surface/outdoors/nospawn)
 "Xt" = (
 /obj/structure/window/reinforced/spawner/east,
-/turf/open/floor/grass/snow/basalt/safe,
+/turf/open/floor/fakebasalt,
 /area/ruin/bughabitat)
 "ZT" = (
 /obj/effect/spawner/structure/window/hollow/directional{

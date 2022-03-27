@@ -27,9 +27,6 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
 	)
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = .proc/on_entered,
-	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
 /datum/ai_controller/monkey/angry
@@ -45,6 +42,7 @@ have ways of interacting with a specific mob and control it.
 		return AI_CONTROLLER_INCOMPATIBLE
 
 	var/mob/living/living_pawn = new_pawn
+	RegisterSignal(new_pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 	RegisterSignal(new_pawn, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_paw)
@@ -58,25 +56,36 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, .proc/on_attempt_cuff)
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, .proc/update_movespeed)
 
-	AddComponent(/datum/component/connect_loc_behalf, new_pawn, loc_connections)
 	movement_delay = living_pawn.cached_multiplicative_slowdown
 	return ..() //Run parent at end
 
 /datum/ai_controller/monkey/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_BULLET_ACT, COMSIG_ATOM_HITBY, COMSIG_LIVING_START_PULL,\
-	COMSIG_LIVING_TRY_SYRINGE, COMSIG_ATOM_HULK_ATTACK, COMSIG_CARBON_CUFF_ATTEMPTED, COMSIG_MOB_MOVESPEED_UPDATED, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_MOB_ATTACK_ALIEN))
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	UnregisterSignal(pawn, list(
+		COMSIG_MOVABLE_CROSS,
+		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACK_HAND,
+		COMSIG_ATOM_ATTACK_PAW,
+		COMSIG_ATOM_BULLET_ACT,
+		COMSIG_ATOM_HITBY,
+		COMSIG_LIVING_START_PULL,
+		COMSIG_LIVING_TRY_SYRINGE,
+		COMSIG_ATOM_HULK_ATTACK,
+		COMSIG_CARBON_CUFF_ATTEMPTED,
+		COMSIG_MOB_MOVESPEED_UPDATED,
+		COMSIG_ATOM_ATTACK_ANIMAL,
+		COMSIG_MOB_ATTACK_ALIEN,
+	))
 
 	return ..() //Run parent at end
 
 // Stops sentient monkeys from being knocked over like weak dunces.
 /datum/ai_controller/monkey/on_sentience_gained()
 	. = ..()
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	UnregisterSignal(pawn, COMSIG_MOVABLE_CROSS)
 
 /datum/ai_controller/monkey/on_sentience_lost()
 	. = ..()
-	AddComponent(/datum/component/connect_loc_behalf, pawn, loc_connections)
+	RegisterSignal(pawn, COMSIG_MOVABLE_CROSS, .proc/on_crossed)
 
 /datum/ai_controller/monkey/able_to_run()
 	. = ..()
@@ -170,11 +179,11 @@ have ways of interacting with a specific mob and control it.
 			var/mob/living/carbon/human/H = thrown_by
 			retaliate(H)
 
-/datum/ai_controller/monkey/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/datum/ai_controller/monkey/proc/on_crossed(datum/source, atom/movable/crossed)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(arrived))
-		var/mob/living/in_the_way_mob = arrived
+	if(!IS_DEAD_OR_INCAP(living_pawn) && isliving(crossed))
+		var/mob/living/in_the_way_mob = crossed
 		in_the_way_mob.knockOver(living_pawn)
 		return
 

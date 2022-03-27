@@ -30,21 +30,21 @@
 	icon_state = "skull-half"
 
 //***Wasteland floor and rock turfs here.
-/turf/open/floor/plating/asteroid/basalt/wasteland //Like a more fun version of living in Arizona.
+/turf/open/misc/asteroid/basalt/wasteland //Like a more fun version of living in Arizona.
 	name = "cracked earth"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "wasteland"
 	base_icon_state = "wasteland"
-	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
+	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
 	digResult = /obj/item/stack/ore/glass/basalt
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	slowdown = 0.5
 	floor_variance = 30
 
-/turf/open/floor/plating/asteroid/basalt/wasteland/setup_broken_states()
-	return list("wasteland")
+/turf/open/misc/asteroid/basalt/wasteland/break_tile()
+	return
 
-/turf/open/floor/plating/asteroid/basalt/wasteland/Initialize(mapload)
+/turf/open/misc/asteroid/basalt/wasteland/Initialize(mapload)
 	.=..()
 	if(prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,6)]"
@@ -52,9 +52,8 @@
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
 	color = "#B5651D"
-	environment_type = "wasteland"
-	turf_type = /turf/open/floor/plating/asteroid/basalt/wasteland
-	baseturfs = /turf/open/floor/plating/asteroid/basalt/wasteland
+	turf_type = /turf/open/misc/asteroid/basalt/wasteland
+	baseturfs = /turf/open/misc/asteroid/basalt/wasteland
 	smooth_icon = 'icons/turf/walls/rock_wall.dmi'
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
@@ -87,7 +86,7 @@
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
-	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1&NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
+	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1 & NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()

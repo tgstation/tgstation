@@ -4,6 +4,8 @@
 	prefix = "_maps/RandomRuins/IceRuins/"
 	allow_duplicates = FALSE
 	cost = 5
+	ruin_type = ZTRAIT_ICE_RUINS
+	default_area = /area/icemoon/surface/outdoors/unexplored
 
 // above ground only
 
@@ -71,6 +73,8 @@
 
 /datum/map_template/ruin/icemoon/underground
 	name = "underground ruin"
+	ruin_type = ZTRAIT_ICE_RUINS_UNDERGROUND
+	default_area = /area/icemoon/underground/unexplored
 
 /datum/map_template/ruin/icemoon/underground/abandonedvillage
 	name = "Abandoned Village"
