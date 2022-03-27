@@ -53,7 +53,7 @@
 	required_atoms = list(
 		/obj/item/gun/ballistic = 1,
 		/obj/item/stack/sheet/animalhide = 1,
-		/obj/item/stack/wood = 1,
+		/obj/item/stack/sheet/mineral/wood = 1,
 		/obj/item/camera = 1,
 	)
 	result_atoms = list(/obj/item/gun/ballistic/rifle/lionhunter)

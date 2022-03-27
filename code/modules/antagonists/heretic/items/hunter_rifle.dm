@@ -72,7 +72,7 @@
 	for(var/mob/viewer as anything in viewers)
 		viewer.client?.images |= reticle
 
-	// Animate the fade in // MELBERT TODO make sure this works
+	// Animate the fade in
 	animate(reticle, fire_time * 0.5, alpha = 255)
 	animate(fire_time * 0.25, transform = turn(reticle.transform, 180))
 	animate(fire_time * 0.25, transform = turn(reticle.transform, 180))
