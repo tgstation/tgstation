@@ -268,6 +268,9 @@
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = /atom/movable/screen/alert/status_effect/hazard_area
 
+/datum/status_effect/hazard_area/nextmove_modifier()
+	return 4
+
 /datum/status_effect/hazard_area/on_apply()
 	. = ..()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, TRUE)
