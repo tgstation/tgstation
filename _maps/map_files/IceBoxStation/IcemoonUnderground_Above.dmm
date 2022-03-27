@@ -386,6 +386,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "bt" = (
@@ -1180,6 +1181,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "dR" = (
@@ -1527,10 +1529,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/dark/smooth_half,
 /area/service/chapel)
-"eE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/security/prison/safe)
 "eH" = (
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
@@ -2673,6 +2671,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/prison/safe)
 "hJ" = (
@@ -3599,6 +3598,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/prison/safe)
 "kt" = (
@@ -3914,6 +3914,7 @@
 /turf/open/floor/iron/dark,
 /area/security/prison)
 "lk" = (
+/obj/machinery/space_heater,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -4514,6 +4515,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/grimy,
 /area/service/chapel/office)
+"mW" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "mX" = (
 /obj/structure/table,
 /obj/item/stock_parts/micro_laser{
@@ -4789,6 +4795,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "nO" = (
@@ -6586,6 +6593,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "sJ" = (
@@ -7176,6 +7184,11 @@
 	},
 /turf/open/floor/iron/freezer,
 /area/science/xenobiology)
+"us" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/fore)
 "ut" = (
 /obj/machinery/button/door/directional/north{
 	id = "permainner";
@@ -7609,6 +7622,10 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"vB" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "vC" = (
 /turf/closed/wall/r_wall,
 /area/mine/production)
@@ -8989,6 +9006,7 @@
 "zQ" = (
 /obj/item/instrument/harmonica,
 /obj/structure/flora/ausbushes/fullgrass,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/grass,
 /area/security/prison/safe)
 "zR" = (
@@ -9923,6 +9941,10 @@
 	dir = 8
 	},
 /area/mine/living_quarters)
+"CM" = (
+/obj/structure/flora/grass/green,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
 "CN" = (
 /obj/structure/table,
 /obj/effect/landmark/event_spawn,
@@ -10075,6 +10097,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison/safe)
 "Dg" = (
@@ -10374,6 +10397,10 @@
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
+"DX" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/underground/unexplored)
 "DY" = (
 /obj/machinery/door/airlock{
 	name = "Permabrig Showers"
@@ -11931,10 +11958,6 @@
 /obj/structure/chair/stool/directional/north,
 /turf/open/floor/iron,
 /area/security/prison)
-"Ia" = (
-/obj/structure/marker_beacon/burgundy,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "Ib" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/tank/air{
@@ -16704,6 +16727,10 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
+"Vb" = (
+/obj/item/food/fried_chicken,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/maintenance/fore)
 "Vc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -17076,6 +17103,14 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/iron/dark,
 /area/mine/eva)
+"Wh" = (
+/obj/effect/turf_decal/stripes/red/line{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/maintenance/fore)
 "Wi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -40391,13 +40426,13 @@ mO
 kK
 RF
 PV
-PV
+Wh
 XM
+pr
 RF
 RF
-mO
-mO
-wS
+RF
+pr
 wS
 wS
 wS
@@ -40650,11 +40685,11 @@ pr
 lk
 BO
 mU
+mW
 mU
+mU
+us
 pr
-mO
-mO
-wS
 wS
 wS
 wS
@@ -40904,14 +40939,14 @@ PH
 kK
 kK
 pr
-EW
+pr
 pr
 Zv
 Wp
+mU
 pr
-kK
-ak
-ak
+EW
+pr
 wS
 wS
 wS
@@ -41160,16 +41195,16 @@ PR
 PK
 kK
 kK
-RF
-mU
+pr
+Vb
 pr
 bp
 Og
-pr
-pr
-kK
-ak
-ak
+vB
+RF
+mU
+RF
+Kb
 ak
 ak
 ak
@@ -41386,11 +41421,11 @@ ak
 ak
 FJ
 kK
-eE
+vR
 hI
 kr
 nN
-lj
+Ff
 Ff
 NN
 Zp
@@ -41416,22 +41451,22 @@ eN
 AX
 PK
 kK
-Ia
+rm
 pr
-RZ
+pr
 pr
 kJ
 QD
 gD
 pr
-kK
+RZ
+pr
+CM
 ak
-ak
-ak
-ak
-ak
-ak
-ak
+Kb
+Kb
+Kb
+DX
 Kb
 Kb
 Kb
@@ -41643,7 +41678,7 @@ ak
 ak
 FJ
 kK
-eE
+vR
 FB
 sy
 iY
@@ -41681,14 +41716,14 @@ yU
 AH
 St
 pr
-ak
-ak
-ak
-ak
-ak
-ak
-ak
-ak
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
+Kb
 Kb
 Kb
 Kb
@@ -41938,12 +41973,12 @@ pr
 xb
 tw
 pr
-ak
-ak
-ak
-ak
-ak
-ak
+Kb
+Kb
+DX
+Kb
+Kb
+CM
 ak
 ak
 ak
@@ -42157,11 +42192,11 @@ ak
 ak
 FJ
 kK
-eE
+vR
 hI
 kr
 Df
-lj
+Ff
 Ff
 fM
 cf
@@ -42195,7 +42230,7 @@ Gb
 lo
 Mc
 wP
-ak
+Kb
 ak
 ak
 ak
@@ -42414,7 +42449,7 @@ ak
 ak
 FJ
 kK
-eE
+vR
 FB
 sy
 iY
@@ -42928,11 +42963,11 @@ ak
 ak
 FJ
 kK
-eE
+vR
 hI
 kr
 dQ
-lj
+Ff
 Ff
 Cr
 ES
@@ -43185,7 +43220,7 @@ ak
 ak
 FJ
 kK
-eE
+vR
 FB
 sy
 iY
@@ -43699,11 +43734,11 @@ ak
 ak
 FJ
 kK
-eE
+vR
 hI
 kr
 bs
-lj
+Ff
 Ff
 vn
 vn
@@ -43956,7 +43991,7 @@ ak
 ak
 FJ
 kK
-eE
+vR
 FB
 sy
 iY
@@ -44470,11 +44505,11 @@ ak
 ak
 FJ
 kK
-eE
+vR
 hI
 kr
 sI
-lj
+Ff
 Ff
 TG
 sq
@@ -44727,7 +44762,7 @@ ak
 ak
 FJ
 kK
-eE
+vR
 FB
 sy
 iY
