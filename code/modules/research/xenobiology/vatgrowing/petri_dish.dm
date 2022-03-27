@@ -12,6 +12,17 @@
 	. = ..()
 	QDEL_NULL(sample)
 
+/obj/item/petri_dish/handle_atom_del(atom/deleting_atom)
+	if(deleting_atom == sample)
+		sample = null
+		update_appearance()
+	return ..()
+
+/obj/item/petri_dish/vv_edit_var(vname, vval)
+	. = ..()
+	if(vname == NAMEOF(src, sample))
+		update_appearance()
+
 /obj/item/petri_dish/examine(mob/user)
 	. = ..()
 	if(!sample)
@@ -27,7 +38,6 @@
 		return FALSE
 	to_chat(user, span_notice("You wash the sample out of [src]."))
 	QDEL_NULL(sample)
-	update_appearance()
 
 /obj/item/petri_dish/update_overlays()
 	. = ..()
