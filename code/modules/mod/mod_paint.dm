@@ -90,6 +90,8 @@
 			current_color = params["color"]
 			animate(proxy_view, time = 0.5 SECONDS, color = current_color)
 		if("confirm")
+			if(length(current_color) != 20)
+				return
 			for(var/color_value in current_color)
 				if(isnum(color_value))
 					continue
