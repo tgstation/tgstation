@@ -16245,7 +16245,7 @@
 /area/hallway/primary/aft)
 "cbU" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/science/test_area)
 "cbX" = (
 /obj/item/target/clown,
