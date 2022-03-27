@@ -241,6 +241,7 @@ SUBSYSTEM_DEF(job)
 
 		if((job.current_positions >= job.spawn_positions) && job.spawn_positions != -1)
 			JobDebug("GRJ job lacks spawn positions to be eligible, Player: [player], Job: [job]")
+			continue
 
 		if(istype(job, GetJobType(overflow_role))) // We don't want to give him assistant, that's boring!
 			JobDebug("GRJ skipping overflow role, Player: [player], Job: [job]")

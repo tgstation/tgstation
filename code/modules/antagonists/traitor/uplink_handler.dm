@@ -179,7 +179,7 @@
 /datum/uplink_handler/proc/update_objectives()
 	var/list/objectives_copy = potential_objectives + active_objectives
 	for(var/datum/traitor_objective/objective as anything in objectives_copy)
-		if(progression_points > objective.progression_maximum && !objective.forced)
+		if(progression_points > objective.progression_maximum && !objective.forced && objective.objective_state != OBJECTIVE_STATE_ACTIVE)
 			objective.fail_objective(trigger_update = FALSE)
 			continue
 		objective.update_progression_reward()

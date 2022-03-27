@@ -57,7 +57,7 @@
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
-		throw_alert("alien_fire", /atom/movable/screen/alert/alien_fire)
+		throw_alert(ALERT_XENO_FIRE, /atom/movable/screen/alert/alien_fire)
 		switch(bodytemperature)
 			if(360 to 400)
 				apply_damage(HEAT_DAMAGE_LEVEL_1 * delta_time, BURN)
@@ -69,7 +69,7 @@
 				else
 					apply_damage(HEAT_DAMAGE_LEVEL_2 * delta_time, BURN)
 	else
-		clear_alert("alien_fire")
+		clear_alert(ALERT_XENO_FIRE)
 
 /mob/living/carbon/alien/reagent_check(datum/reagent/R, delta_time, times_fired) //can metabolize all reagents
 	return FALSE

@@ -2,6 +2,7 @@
 /datum/id_trim/syndicom
 	assignment = "Syndicate Overlord"
 	trim_state = "trim_syndicate"
+	sechud_icon_state = SECHUD_SYNDICATE
 	access = list(ACCESS_SYNDICATE)
 
 /// Trim for Syndicate mobs, outfits and corpses.

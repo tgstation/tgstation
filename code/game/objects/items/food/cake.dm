@@ -104,7 +104,7 @@
 	icon_state = "orangecake"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
-	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR | ORANGES
 	venue_value = FOOD_PRICE_CHEAP
 
 /obj/item/food/cake/orange/MakeProcessable()
@@ -115,7 +115,7 @@
 	desc = "Just a slice of cake, it is enough for everyone."
 	icon_state = "orangecake_slice"
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
-	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR
+	foodtypes = GRAIN | DAIRY | FRUIT | SUGAR | ORANGES
 
 /obj/item/food/cake/lime
 	name = "lime cake"

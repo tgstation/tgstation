@@ -3,7 +3,7 @@
 /turf/open/space/basic,
 /area/template_noop)
 "b" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "c" = (
 /turf/closed/wall/r_wall/rust,
@@ -198,7 +198,7 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "F" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/hilbertresearchfacility)
 "G" = (

@@ -55,24 +55,22 @@
 
 		if(uplink_handler.progression_points < SStraitor.current_global_progression)
 			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
+
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-			if(item.item && (!length(item.restricted_roles) || (uplink_handler.assigned_role in item.restricted_roles)) \
-				&& !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
-				uplink_items += item
-			if(item.item && (!length(item.restricted_species) || (uplink_handler.assigned_species in item.restricted_species)) \
-				&& !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
-				uplink_items += item
+			if(item.item && !item.cant_discount && (item.purchasable_from & uplink_handler.uplink_flag) && item.cost > 1)
+				if(!length(item.restricted_roles) && !length(item.restricted_species))
+					uplink_items += item
+					continue
+				if((uplink_handler.assigned_role in item.restricted_roles) || (uplink_handler.assigned_species in item.restricted_species))
+					uplink_items += item
+					continue
 		uplink_handler.extra_purchasable += create_uplink_sales(uplink_sale_count, /datum/uplink_category/discounts, -1, uplink_items)
 
 	if(give_objectives)
 		forge_traitor_objectives()
 
-	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
-
-	pick_employer(faction)
-
-	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
+	pick_employer()
 
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
@@ -135,8 +133,10 @@
 	owner.special_role = null
 	return ..()
 
-/datum/antagonist/traitor/proc/pick_employer(faction)
+/datum/antagonist/traitor/proc/pick_employer()
+	var/faction = prob(75) ? FACTION_SYNDICATE : FACTION_NANOTRASEN
 	var/list/possible_employers = list()
+
 	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
 	switch(faction)
@@ -145,6 +145,7 @@
 		if(FACTION_NANOTRASEN)
 			possible_employers -= GLOB.syndicate_employers
 	employer = pick(possible_employers)
+	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
 /datum/objective/traitor_progression
 	name = "traitor progression"

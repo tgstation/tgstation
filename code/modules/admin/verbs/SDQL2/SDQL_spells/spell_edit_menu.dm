@@ -90,7 +90,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 	)
 
 	var/static/list/enum_vars = list(
-		"invocation_type" = list("none", "whisper", "shout", "emote"),
+		"invocation_type" = list(INVOCATION_NONE, INVOCATION_WHISPER, INVOCATION_SHOUT, INVOCATION_EMOTE),
 		"selection_type" = list("view", "range"),
 		"smoke_spread" = list(0, 1, 2, 3),
 		"random_target_priority" = list(0, 1),
@@ -216,6 +216,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 			"phase_allowed" = "Whether the spell can be cast while the user is jaunting or bloodcrawling.",
 			"antimagic_allowed" = "Whether the spell can be cast while the user is affected by anti-magic effects.",
 			"invocation_type" = "How the spell is invoked.\n\
+				When set to \"none\", the user will not state anything when invocating.\n\
 				When set to \"whisper\", the user whispers the invocation, as if with the whisper verb.\n\
 				When set to \"shout\", the user says the invocation, as if with the say verb.\n\
 				When set to \"emote\", a visible message is produced.",

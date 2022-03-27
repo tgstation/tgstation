@@ -54,7 +54,7 @@
 /obj/machinery/telecomms/relay/preset/ruskie{
 	use_power = 0
 	},
-/obj/machinery/door/window/brigdoor/southleft{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	req_access_txt = "150"
 	},
 /obj/effect/turf_decal/siding/thinplating/dark,

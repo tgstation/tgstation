@@ -11,20 +11,24 @@ at the cost of risking a vicious bite.**/
 	var/obj/item/hidden_item
 	///This var determines if there is a chance to recieve a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
-	var/list/loot = list(
-					/obj/item/food/meat/slab/human/mutant/skeleton = 35,
-					/obj/item/food/meat/slab/human/mutant/zombie = 15,
-					/obj/item/trash/can = 15,
-					/obj/item/clothing/head/helmet/skull = 10,
-					/obj/item/restraints/handcuffs = 4,
-					/obj/item/restraints/handcuffs/cable/red = 1,
-					/obj/item/restraints/handcuffs/cable/blue = 1,
-					/obj/item/restraints/handcuffs/cable/green = 1,
-					/obj/item/restraints/handcuffs/cable/pink = 1,
-					/obj/item/restraints/handcuffs/alien = 2,
-					/obj/item/coin/bananium = 9,
-					/obj/item/knife/butcher = 5,
-					/obj/item/coin/mythril = 1) //the loot table isn't that great and should probably be improved and expanded later.
+	///weighted loot table for what loot you can find inside the moisture trap.
+	///the actual loot isn't that great and should probably be improved and expanded later.
+	var/static/list/loot_table = list(
+		/obj/item/food/meat/slab/human/mutant/skeleton = 35,
+		/obj/item/food/meat/slab/human/mutant/zombie = 15,
+		/obj/item/trash/can = 15,
+		/obj/item/clothing/head/helmet/skull = 10,
+		/obj/item/restraints/handcuffs = 4,
+		/obj/item/restraints/handcuffs/cable/red = 1,
+		/obj/item/restraints/handcuffs/cable/blue = 1,
+		/obj/item/restraints/handcuffs/cable/green = 1,
+		/obj/item/restraints/handcuffs/cable/pink = 1,
+		/obj/item/restraints/handcuffs/alien = 2,
+		/obj/item/coin/bananium = 9,
+		/datum/aquarium_behaviour/fish/ratfish = 10,
+		/obj/item/knife/butcher = 5,
+		/obj/item/coin/mythril = 1,
+	)
 
 
 /obj/structure/moisture_trap/Initialize(mapload)
@@ -32,10 +36,13 @@ at the cost of risking a vicious bite.**/
 	if(prob(40))
 		critter_infested = FALSE
 	if(prob(75))
-		var/picked_item = pick_weight(loot)
-		hidden_item = new picked_item(src)
-	loot = null
+		var/picked_item = pick_weight(loot_table)
+		if(ispath(picked_item, /datum/aquarium_behaviour/fish))
+			hidden_item = generate_fish(src, picked_item)
+		else
+			hidden_item = new picked_item(src)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 20)
+	ADD_TRAIT(src, TRAIT_FISH_SAFE_STORAGE, TRAIT_GENERIC)
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)
@@ -71,9 +78,8 @@ at the cost of risking a vicious bite.**/
 	if(critter_infested && prob(50) && iscarbon(user))
 		var/mob/living/carbon/bite_victim = user
 		var/obj/item/bodypart/affecting = bite_victim.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks it's [pick("fangs", "beak", "proboscis")] into your arm!"))
 		if(affecting?.receive_damage(30))
-
-			to_chat(user, span_danger("You feel a sharp as an unseen creature sinks it's [pick("fangs", "beak", "proboscis")] into your arm!"))
 			bite_victim.update_damage_overlays()
 			playsound(src,'sound/weapons/bite.ogg', 70, TRUE)
 			return

@@ -111,6 +111,49 @@
 	eyes_toggle_perspective_action?.Trigger()
 	owner_first_client_connection_handled = TRUE
 
+
+/datum/species/dullahan/get_species_description()
+	return "An angry spirit, hanging onto the land of the living for \
+		unfinished business. Or that's what the books say. They're quite nice \
+		when you get to know them."
+
+/datum/species/dullahan/get_species_lore()
+	return list(
+		"\"No wonder they're all so grumpy! Their hands are always full! I used to think, \
+		\"Wouldn't this be cool?\" but after watching these creatures suffer from their head \
+		getting dunked down disposals for the nth time, I think I'm good.\" - Captain Larry Dodd"
+	)
+
+/datum/species/dullahan/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "horse-head",
+		SPECIES_PERK_NAME = "Headless and Horseless",
+		SPECIES_PERK_DESC = "Dullahans must lug their head around in their arms. While \
+			many creative uses can come out of your head being independent of your \
+			body, Dullahans will find it mostly a pain.",
+	))
+
+	return to_add
+
+// There isn't a "Minor Undead" biotype, so we have to explain it in an override (see: vampires)
+/datum/species/dullahan/create_pref_biotypes_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "skull",
+		SPECIES_PERK_NAME = "Minor Undead",
+		SPECIES_PERK_DESC = "[name] are minor undead. \
+			Minor undead enjoy some of the perks of being dead, like \
+			not needing to breathe or eat, but do not get many of the \
+			environmental immunities involved with being fully undead.",
+	))
+
+	return to_add
+
 /obj/item/organ/brain/dullahan
 	decoy_override = TRUE
 	organ_flags = 0

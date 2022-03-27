@@ -119,7 +119,7 @@
 		return FALSE
 	if(module_type == MODULE_ACTIVE)
 		if(mod.selected_module && !mod.selected_module.on_deactivation(display_message = FALSE))
-			return
+			return FALSE
 		mod.selected_module = src
 		if(device)
 			if(mod.wearer.put_in_hands(device))
@@ -129,7 +129,7 @@
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
-				return
+				return FALSE
 		else
 			var/used_button = mod.wearer.client?.prefs.read_preference(/datum/preference/choiced/mod_select) || MIDDLE_CLICK
 			update_signal(used_button)
@@ -274,6 +274,7 @@
 	else
 		return
 	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/clothing/mod.dmi', used_overlay, layer = standing.layer + 0.1)
+	module_icon.appearance_flags |= RESET_COLOR
 	. += module_icon
 
 /// Updates the signal used by active modules to be activated
@@ -301,6 +302,7 @@
 	if(user.get_active_held_item() != device)
 		return
 	on_deactivation()
+	return COMSIG_KB_ACTIVATED
 
 ///Anomaly Locked - Causes the module to not function without an anomaly.
 /obj/item/mod/module/anomaly_locked

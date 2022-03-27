@@ -36,9 +36,8 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "hD" = (
-/obj/machinery/door/airlock/gold/glass{
-	req_access_txt = "19"
-	},
+/obj/machinery/door/airlock/gold/glass,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "hF" = (

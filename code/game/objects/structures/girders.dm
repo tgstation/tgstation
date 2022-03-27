@@ -25,6 +25,8 @@
 			. += span_notice("The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.")
 		if(GIRDER_DISASSEMBLED)
 			. += span_notice("[src] is disassembled! You probably shouldn't be able to see this examine message.")
+		if(GIRDER_TRAM)
+			. += span_notice("[src] is designed for tram usage. Deconstructed with a screwdriver!")
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	var/platingmodifier = 1
@@ -49,38 +51,42 @@
 		if(iswallturf(loc))
 			to_chat(user, span_warning("There is already a wall present!"))
 			return
-		if(!isfloorturf(src.loc))
-			to_chat(user, span_warning("A floor must be present to build a false wall!"))
+		if(!isfloorturf(src.loc) && state != GIRDER_TRAM)
+			to_chat(user, span_warning("A floor must be present to build a wall!"))
 			return
+		if(state == GIRDER_TRAM)
+			if(!locate(/obj/structure/industrial_lift/tram) in src.loc.contents)
+				to_chat(user, span_warning("Tram walls can only be built on tram floors!"))
+				return
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
 			to_chat(user, span_warning("There is already a false wall present!"))
 			return
 
 		if(istype(W, /obj/item/stack/rods))
-			var/obj/item/stack/rods/S = W
+			var/obj/item/stack/rods/rod = W
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 5)
+				if(rod.get_amount() < 5)
 					to_chat(user, span_warning("You need at least five rods to create a false wall!"))
 					return
 				to_chat(user, span_notice("You start building a false wall..."))
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 5)
+					if(rod.get_amount() < 5)
 						return
-					S.use(5)
+					rod.use(5)
 					to_chat(user, span_notice("You create a false wall. Push on it to open or close the passage."))
 					var/obj/structure/falsewall/iron/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
 					return
 			else
-				if(S.get_amount() < 5)
+				if(rod.get_amount() < 5)
 					to_chat(user, span_warning("You need at least five rods to add plating!"))
 					return
 				to_chat(user, span_notice("You start adding plating..."))
 				if(do_after(user, 40, target = src))
-					if(S.get_amount() < 5)
+					if(rod.get_amount() < 5)
 						return
-					S.use(5)
+					rod.use(5)
 					to_chat(user, span_notice("You add the plating."))
 					var/turf/T = get_turf(src)
 					T.PlaceOnTop(/turf/closed/wall/mineral/iron)
@@ -91,17 +97,17 @@
 		if(!istype(W, /obj/item/stack/sheet))
 			return
 
-		var/obj/item/stack/sheet/S = W
-		if(istype(S, /obj/item/stack/sheet/iron))
+		var/obj/item/stack/sheet/sheets = W
+		if(istype(sheets, /obj/item/stack/sheet/iron))
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 2)
+				if(sheets.get_amount() < 2)
 					to_chat(user, span_warning("You need two sheets of iron to create a false wall!"))
 					return
 				to_chat(user, span_notice("You start building a false wall..."))
 				if(do_after(user, 20*platingmodifier, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < 2)
 						return
-					S.use(2)
+					sheets.use(2)
 					to_chat(user, span_notice("You create a false wall. Push on it to open or close the passage."))
 					var/obj/structure/falsewall/F = new (loc)
 					transfer_fingerprints_to(F)
@@ -110,15 +116,29 @@
 			else if(state == GIRDER_REINF)
 				to_chat(user, span_warning("You can't finish a reinforced girder with regular iron. You need a plasteel sheet for that."))
 				return
+			else if(state == GIRDER_TRAM)
+				if(sheets.get_amount() < 2)
+					to_chat(user, span_warning("You need at least two sheets to add plating!"))
+					return
+				to_chat(user, span_notice("You start adding plating..."))
+				if (do_after(user, 4 SECONDS, target = src))
+					if(sheets.get_amount() < 2)
+						return
+					sheets.use(2)
+					to_chat(user, span_notice("You add the plating."))
+					var/obj/structure/tramwall/tram_wall = new sheets.tram_wall_type(loc)
+					transfer_fingerprints_to(tram_wall)
+					qdel(src)
+				return
 			else
-				if(S.get_amount() < 2)
+				if(sheets.get_amount() < 2)
 					to_chat(user, span_warning("You need two sheets of iron to finish a wall!"))
 					return
 				to_chat(user, span_notice("You start adding plating..."))
 				if (do_after(user, 40*platingmodifier, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < 2)
 						return
-					S.use(2)
+					sheets.use(2)
 					to_chat(user, span_notice("You add the plating."))
 					var/turf/T = get_turf(src)
 					T.PlaceOnTop(/turf/closed/wall)
@@ -126,29 +146,29 @@
 					qdel(src)
 				return
 
-		if(istype(S, /obj/item/stack/sheet/plasteel))
+		if(istype(sheets, /obj/item/stack/sheet/plasteel))
 			if(state == GIRDER_DISPLACED)
-				if(S.get_amount() < 2)
+				if(sheets.get_amount() < 2)
 					to_chat(user, span_warning("You need at least two sheets to create a false wall!"))
 					return
 				to_chat(user, span_notice("You start building a reinforced false wall..."))
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < 2)
 						return
-					S.use(2)
+					sheets.use(2)
 					to_chat(user, span_notice("You create a reinforced false wall. Push on it to open or close the passage."))
 					var/obj/structure/falsewall/reinforced/FW = new (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
 					return
 			else if(state == GIRDER_REINF)
-				if(S.get_amount() < 1)
+				if(sheets.get_amount() < 1)
 					return
 				to_chat(user, span_notice("You start finalizing the reinforced wall..."))
 				if(do_after(user, 50*platingmodifier, target = src))
-					if(S.get_amount() < 1)
+					if(sheets.get_amount() < 1)
 						return
-					S.use(1)
+					sheets.use(1)
 					to_chat(user, span_notice("You fully reinforce the wall."))
 					var/turf/T = get_turf(src)
 					T.PlaceOnTop(/turf/closed/wall/r_wall)
@@ -156,56 +176,72 @@
 					qdel(src)
 				return
 			else
-				if(S.get_amount() < 1)
+				if(sheets.get_amount() < 1)
 					return
 				to_chat(user, span_notice("You start reinforcing the girder..."))
 				if(do_after(user, 60*platingmodifier, target = src))
-					if(S.get_amount() < 1)
+					if(sheets.get_amount() < 1)
 						return
-					S.use(1)
+					sheets.use(1)
 					to_chat(user, span_notice("You reinforce the girder."))
 					var/obj/structure/girder/reinforced/R = new (loc)
 					transfer_fingerprints_to(R)
 					qdel(src)
 				return
 
-		if(!S.has_unique_girder)
-			var/M = S.sheettype
+		if(!sheets.has_unique_girder && sheets.material_type)
+			var/M = sheets.sheettype
+			if(state == GIRDER_TRAM)
+				if(!sheets.tram_wall_type)
+					to_chat(user, span_warning("This tram girder only works with Titanium, Plastitanium, or Iron!"))
+					return
+				if(sheets.get_amount() < 2)
+					to_chat(user, span_warning("You need at least two sheets to add plating!"))
+					return
+				to_chat(user, span_notice("You start adding plating..."))
+				if (do_after(user, 4 SECONDS, target = src))
+					if(sheets.get_amount() < 2)
+						return
+					sheets.use(2)
+					to_chat(user, span_notice("You add the plating."))
+					var/obj/structure/tramwall/tram_wall = new sheets.tram_wall_type(loc)
+					transfer_fingerprints_to(tram_wall)
+					qdel(src)
+				return
 			if(state == GIRDER_DISPLACED)
 				var/falsewall_type = text2path("/obj/structure/falsewall/[M]")
 				if(!falsewall_type)
-					to_chat(user, span_warning("You can't seem to figure out how to make a false wall with [S]!"))
+					to_chat(user, span_warning("You can't seem to figure out how to make a false wall with [sheets]!"))
 					return
-				if(S.get_amount() < 2)
+				if(sheets.get_amount() < 2)
 					to_chat(user, span_warning("You need at least two sheets to create a false wall!"))
 					return
 				if(do_after(user, 20, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < 2)
 						return
-					S.use(2)
+					sheets.use(2)
 					to_chat(user, span_notice("You create a false wall. Push on it to open or close the passage."))
 					var/obj/structure/falsewall/FW = new falsewall_type (loc)
 					transfer_fingerprints_to(FW)
 					qdel(src)
 					return
 			else
-				if(S.get_amount() < 2)
+				if(sheets.get_amount() < 2)
 					to_chat(user, span_warning("You need at least two sheets to add plating!"))
 					return
 				to_chat(user, span_notice("You start adding plating..."))
 				if (do_after(user, 40, target = src))
-					if(S.get_amount() < 2)
+					if(sheets.get_amount() < 2)
 						return
-					S.use(2)
+					sheets.use(2)
 					to_chat(user, span_notice("You add the plating."))
 					var/turf/T = get_turf(src)
-					if(S.walltype)
-						T.PlaceOnTop(S.walltype)
+					if(sheets.walltype)
+						T.PlaceOnTop(sheets.walltype)
 					else
 						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
 						var/list/material_list = list()
-						if(S.material_type)
-							material_list[GET_MATERIAL_REF(S.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
+						material_list[GET_MATERIAL_REF(sheets.material_type)] = MINERAL_MATERIAL_AMOUNT * 2
 						if(material_list)
 							newturf.set_custom_materials(material_list)
 
@@ -230,6 +266,21 @@
 		return TRUE
 
 	. = FALSE
+	if(state == GIRDER_TRAM)
+		user.visible_message(span_warning("[user] disassembles the girder."),
+			span_notice("You start to disassemble the girder..."),
+			span_hear("You hear clanking and banging noises."))
+		if(tool.use_tool(src, user, 4 SECONDS, volume=100))
+			if(state != GIRDER_TRAM)
+				return
+			state = GIRDER_DISASSEMBLED
+			to_chat(user, span_notice("You disassemble the girder."))
+			var/obj/item/stack/sheet/iron/M = new (loc, 2)
+			if (!QDELETED(M))
+				M.add_fingerprint(user)
+			qdel(src)
+		return TRUE
+
 	if(state == GIRDER_DISPLACED)
 		user.visible_message(span_warning("[user] disassembles the girder."),
 			span_notice("You start to disassemble the girder..."),
@@ -332,6 +383,10 @@
 	state = GIRDER_REINF
 	girderpasschance = 0
 	max_integrity = 350
+
+/obj/structure/girder/tram
+	name = "tram girder"
+	state = GIRDER_TRAM
 
 
 
