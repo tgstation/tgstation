@@ -733,9 +733,9 @@
 	build_path = /obj/item/assembly/timer
 	category = list("initial", "Misc")
 
-/datum/design/voice_analyser
-	name = "Voice Analyser"
-	id = "voice_analyser"
+/datum/design/voice_analyzer
+	name = "Voice Analyzer"
+	id = "voice_analyzer"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
 	build_path = /obj/item/assembly/voice
