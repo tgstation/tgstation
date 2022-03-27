@@ -15,7 +15,7 @@
 	school = SCHOOL_TRANSMUTATION
 
 	invocation_type = INVOCATION_NONE
-	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
+	spell_requirements = SPELL_REQUIRES_NON_ABSTRACT
 
 	/// What dummy mob type do we put jaunters in on jaunt?
 	var/jaunt_type = /obj/effect/dummy/phased_mob
@@ -41,7 +41,7 @@
  * Returns the holder mob that was created
  */
 /datum/action/cooldown/spell/jaunt/proc/enter_jaunt(mob/living/jaunter, turf/loc_override)
-	var/obj/effect/dummy/phased_mob/jaunt = new(loc_override || get_turf(jaunter), jaunter)
+	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(loc_override || get_turf(jaunter), jaunter)
 	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, jaunt, src)
 	return jaunt
 

@@ -8,8 +8,10 @@
 	sound = 'sound/weapons/zapbang.ogg'
 
 	school = SCHOOL_TRANSLOCATION
-	spell_requirements = (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT)
+	spell_requirements = (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
 
+	/// Whether we force the teleport to happen (ie, it cannot be blocked by noteleport areas or blessings or whatever)
+	var/force_teleport = FALSE
 	/// A list of flags related to determining if our destination target is valid or not.
 	var/destination_flags = NONE
 	/// The sound played on arrival, after the teleport.
@@ -19,9 +21,9 @@
 	. = ..()
 	var/turf/destination = get_destination(cast_on)
 	if(!destination)
-		return
+		CRASH("[type] failed to find a teleport destination.")
 
-	do_teleport(cast_on, destination, asoundout = post_teleport_sound, channel = TELEPORT_CHANNEL_MAGIC)
+	do_teleport(cast_on, destination, asoundout = post_teleport_sound, channel = TELEPORT_CHANNEL_MAGIC, forced = force_teleport)
 
 /datum/action/cooldown/spell/teleport/proc/get_destination(atom/center)
 	CRASH("[type] did not implement get_destination and either has no effects or implemented the spell incorrectly.")
@@ -66,20 +68,18 @@
 	return picked_turf
 
 /datum/action/cooldown/spell/teleport/area_teleport
+	force_teleport = TRUE
 	destination_flags = TELEPORT_SPELL_SKIP_BLOCKED
 	/// The last area we chose to teleport / where we're currently teleporting to, if mid-cast
-	var/area/last_chosen_area_type
+	var/last_chosen_area_name
 	/// If TRUE, the caster can select the destination area. Otherwise, random selection.
 	var/randomise_selection = FALSE
 	/// If the invocation appends the selected area when said. Requires invocation mode shout or whisper.
 	var/invocation_says_area = TRUE
 
 /datum/action/cooldown/spell/teleport/area_teleport/get_destination(atom/center)
-	if(!ispath(last_chosen_area_type))
-		CRASH("[type] made it to get_destination without an area selected.")
-
 	var/list/valid_turfs = list()
-	for(var/turf/possible_destination as anything in get_area_turfs(last_chosen_area_type))
+	for(var/turf/possible_destination as anything in get_area_turfs(GLOB.teleportlocs[last_chosen_area_name]))
 		if(isspaceturf(possible_destination) && (destination_flags & TELEPORT_SPELL_SKIP_SPACE))
 			continue
 		if(possible_destination.density && (destination_flags & TELEPORT_SPELL_SKIP_DENSE))
@@ -105,12 +105,12 @@
 	else
 		target_area = tgui_input_list(cast_on, "Chose an area to teleport to.", "Teleport", GLOB.teleportlocs)
 
-	if(QDELETED(src) || QDELETED(cast_on) || !IsAvailable() || !can_cast_spell(feedback = FALSE))
+	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell(feedback = FALSE))
 		return FALSE
 	if(!target_area || isnull(GLOB.teleportlocs[target_area]))
 		return FALSE
 
-	last_chosen_area_type = target_area
+	last_chosen_area_name = target_area
 	return TRUE
 
 /datum/action/cooldown/spell/teleport/area_teleport/cast(atom/cast_on)
@@ -120,13 +120,13 @@
 	return ..()
 
 /datum/action/cooldown/spell/teleport/area_teleport/invocation()
-	var/area/last_chosen_area = GLOB.teleportlocs[last_chosen_area_type]
+	var/area/last_chosen_area = GLOB.teleportlocs[last_chosen_area_name]
 
 	if(!invocation_says_area || isnull(last_chosen_area))
 		return ..()
 
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
-			owner.say("[invocation] [uppertext(last_chosen_area.name)]", forced = "spell ([src])")
+			owner.say("[invocation], [uppertext(last_chosen_area.name)]!", forced = "spell ([src])")
 		if(INVOCATION_WHISPER)
-			owner.whisper("[invocation] [uppertext(last_chosen_area.name)]")
+			owner.whisper("[invocation], [uppertext(last_chosen_area.name)].")

@@ -96,6 +96,7 @@
 		set_spell_info()
 		log_spellbook("[key_name(user)] improved their knowledge of [initial(existing.name)] to level [existing.spell_level] for [cost] points")
 		SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[existing.spell_level]"))
+		log_purchase(user.key)
 		return TRUE
 
 	//No same spell found - just learn it
@@ -105,9 +106,23 @@
 
 	log_spellbook("[key_name(user)] learned [new_spell] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
-
+	log_purchase(user.key)
 	return TRUE
 
+/datum/spellbook_entry/proc/log_purchase(key)
+	if(!islist(GLOB.wizard_spellbook_purchases_by_key[key]))
+		GLOB.wizard_spellbook_purchases_by_key[key] = list()
+
+	for(var/list/log as anything in GLOB.wizard_spellbook_purchases_by_key[key])
+		if(log[LOG_SPELL_TYPE] == type)
+			log[LOG_SPELL_AMOUNT]++
+			return
+
+	var/list/to_log = list(
+		LOG_SPELL_TYPE = type,
+		LOG_SPELL_AMOUNT = 1,
+	)
+	GLOB.wizard_spellbook_purchases_by_key[key] += list(to_log)
 
 /**
  * Checks if the user, with the supplied spellbook, can refund the entry
@@ -184,6 +199,7 @@
 	log_spellbook("[key_name(user)] bought [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 	try_equip_item(user, spawned_path)
+	log_purchase(user.key)
 	return spawned_path
 
 /// Attempts to give the item to the buyer on purchase.
@@ -201,6 +217,7 @@
 /datum/spellbook_entry/summon/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book)
 	log_spellbook("[key_name(user)] cast [src] for [cost] points")
 	SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
+	log_purchase(user.key)
 	return TRUE
 
 /// Non-purchasable flavor spells to populate the spell book with, for style.

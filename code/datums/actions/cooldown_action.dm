@@ -155,7 +155,11 @@
 /datum/action/cooldown/proc/update_button_text()
 	var/time_left = max(next_use_time - world.time, 0)
 	if(text_cooldown && time_left >= 0)
-		button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
+		var/formatted_time_left = round(time_left/10, 0.1)
+		if(formatted_time_left == 0)
+			button.maptext = ""
+		else
+			button.maptext = MAPTEXT("<b>[formatted_time_left]</b>")
 	else
 		button.maptext = ""
 
@@ -190,9 +194,4 @@
 
 	SEND_SIGNAL(src, COMSIG_ACTION_SET_STATPANEL, stat_panel_data)
 
-	return list(
-		stat_panel_data[PANEL_DISPLAY_PANEL],
-		stat_panel_data[PANEL_DISPLAY_COOLDOWN],
-		stat_panel_data[PANEL_DISPLAY_NAME],
-		REF(src),
-	)
+	return stat_panel_data

@@ -1,3 +1,6 @@
+/// Global assoc list. [ckey] = [spellbook entry type]
+GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
+
 /datum/antagonist/wizard
 	name = "\improper Space Wizard"
 	roundend_category = "wizards/witches"
@@ -363,14 +366,19 @@
 	else
 		parts += span_redtext("The wizard has failed!")
 
-	/* MELBERT TODO: make this log spellbook purchases more comprehensively
-	if(owner.spell_list.len>0)
-		parts += "<B>[owner.name] used the following spells: </B>"
-		var/list/spell_names = list()
-		for(var/obj/effect/proc_holder/spell/S in owner.spell_list)
-			spell_names += S.name
-		parts += spell_names.Join(", ")
-	*/
+	var/list/purchases = list()
+	for(var/list/log as anything in GLOB.wizard_spellbook_purchases_by_key[owner.key])
+		var/datum/spellbook_entry/bought = log[LOG_SPELL_TYPE]
+		var/amount = log[LOG_SPELL_AMOUNT]
+
+		purchases += "[amount > 1 ? "[amount]x ":""][initial(bought.name)]"
+
+	if(length(purchases))
+		parts += span_bold("[owner.name] used the following spells:")
+		parts += purchases.Join(", ")
+	else
+		parts += span_bold("[owner.name] didn't buy any spells!")
+
 	return parts.Join("<br>")
 
 //Wizard with apprentices report

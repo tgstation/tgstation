@@ -96,11 +96,19 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		RegisterSignal(grant_to, COMSIG_MOB_STATCHANGE, .proc/update_icon_on_signal)
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
 		RegisterSignal(grant_to, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
+	if(spell_requirements & SPELL_REQUIRES_UNPHASED)
+		RegisterSignal(grant_to, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
 
 	return ..()
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
-	UnregisterSignal(remove_from, list(COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_STATCHANGE, COMSIG_MOB_EQUIPPED_ITEM))
+	UnregisterSignal(remove_from, list(
+		COMSIG_MOVABLE_Z_CHANGED,
+		COMSIG_MOB_STATCHANGE,
+		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOB_ENTER_JAUNT,
+		COMSIG_MOB_AFTER_EXIT_JAUNT,
+	))
 	return ..()
 
 /// A simple helper signal proc that calls UpdateButtonIcon
@@ -130,6 +138,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
 /datum/action/cooldown/spell/proc/can_cast_spell(feedback = TRUE)
+	if(!owner)
+		CRASH("Spell can_cast_spell called on a spell without an owner!")
+
 	// Certain spells are not allowed on the centcom zlevel
 	var/turf/caster_turf = get_turf(owner)
 	if((spell_requirements & SPELL_REQUIRES_OFF_CENTCOM) && is_centcom_level(caster_turf.z))
@@ -196,13 +207,20 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/Activate(atom/target)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	// First, start a short "buffer" cooldown to prevent them spamming the button
+	// We start a "buffer cooldown" to prevent spam clicks
 	StartCooldown(cooldown_time / 4)
+	// Then we stop processing, becuase if before_cast sleeps,
+	// such as due to an input, we should prevent cooldown from progressing
+	STOP_PROCESSING(SSfastprocess, src)
 	// Pre-casting of the spell
 	// Pre-cast is the very last chance for a spell to cancel
 	// Stuff like target input would go here.
 	if(!before_cast(target))
+		START_PROCESSING(SSfastprocess, src)
+
 		return FALSE
+	// Start processing again
+	START_PROCESSING(SSfastprocess, src)
 
 	// Spell is officially being cast
 	// We do invocation and sound effects here, before cast
@@ -211,13 +229,14 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	// Actually cast the spell. Main effects go here
 	cast(target)
-	// And then proceed with the aftermath of the cast
-	// Final effects that happen after all the casting is done can go here
-	after_cast(target)
 
 	// The entire spell is done, start the cooldown at its set duration
 	// and update the icon so it looks disabled
 	StartCooldown()
+
+	// And then proceed with the aftermath of the cast
+	// Final effects that happen after all the casting is done can go here
+	after_cast(target)
 	UpdateButtonIcon()
 
 	return TRUE

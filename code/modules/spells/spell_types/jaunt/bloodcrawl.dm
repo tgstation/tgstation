@@ -58,8 +58,8 @@
 
 		var/obj/item/bloodcrawl/left_hand = new(jaunter)
 		var/obj/item/bloodcrawl/right_hand = new(jaunter)
-		left_hand.icon_state = "bloodhand_left"
-		right_hand.icon_state = "bloodhand_right"
+		left_hand.icon_state = "bloodhand_right" // Swapped intentionall
+		right_hand.icon_state = "bloodhand_left" // ..because perspective or something
 		jaunter.put_in_hands(left_hand)
 		jaunter.put_in_hands(right_hand)
 
@@ -73,7 +73,7 @@
 		jaunter.notransform = FALSE
 		return FALSE
 
-	blood.visible_message(span_warning("[src] sinks into [blood]!"))
+	blood.visible_message(span_warning("[jaunter] sinks into [blood]!"))
 	playsound(jaunt_turf, 'sound/magic/enter_blood.ogg', 50, TRUE, -1)
 	jaunter.extinguish_mob()
 
@@ -250,7 +250,8 @@
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(grant_to, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
+	if(owner)
+		RegisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/removed_from)
 	UnregisterSignal(removed_from, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))

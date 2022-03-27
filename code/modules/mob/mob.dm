@@ -779,18 +779,17 @@
  */
 /mob/proc/get_actions_for_statpanel()
 	var/list/data = list()
-	var/index = 1
 	for(var/datum/action/cooldown/action in actions)
 		var/list/action_data = action.set_statpanel_format()
-		if(!action_data)
+		if(!length(action_data))
 			return
 
-		data[index++] = list(
+		data += list(list(
 			action_data[PANEL_DISPLAY_PANEL],
 			action_data[PANEL_DISPLAY_COOLDOWN],
 			action_data[PANEL_DISPLAY_NAME],
 			REF(action),
-		)
+		))
 
 	return data
 

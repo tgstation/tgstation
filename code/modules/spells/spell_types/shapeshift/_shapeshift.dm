@@ -57,6 +57,9 @@
 		return FALSE
 
 	shapeshift_type = shift_type || pick(possible_shapes)
+	if(QDELETED(src) || QDELETED(owner) || !can_cast_spell(feedback = FALSE))
+		return FALSE
+
 	return TRUE
 
 /datum/action/cooldown/spell/shapeshift/cast(mob/living/cast_on)
@@ -139,7 +142,8 @@
 
 	return restored_player
 
-// MELBERT TODO refactor this to be a component or something
+// Maybe one day, this can be a component or something
+// Until then, this is what holds data between wizard and shapeshift form whenever shapeshift is cast.
 /obj/shapeshift_holder
 	name = "Shapeshift holder"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF

@@ -37,11 +37,11 @@
 		return FALSE
 
 	var/mob/living/chosen_mob = tgui_input_list(cast_on, "Choose a target to whisper to.", "[src]", sort_names(mobs_to_chose))
-	if(QDELETED(src) || QDELETED(cast_on) || QDELETED(chosen_mob))
+	if(QDELETED(src) || QDELETED(cast_on) || QDELETED(chosen_mob) || !can_cast_spell(feedback = FALSE))
 		return FALSE
 
 	message = tgui_input_text(cast_on, "What do you wish to whisper to [chosen_mob]?", "[src]")
-	if(QDELETED(src) || QDELETED(cast_on) || !message)
+	if(QDELETED(src) || QDELETED(cast_on) || !message || !can_cast_spell(feedback = FALSE))
 		return FALSE
 
 	to_telepath_to = chosen_mob

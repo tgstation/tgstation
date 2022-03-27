@@ -72,6 +72,7 @@
 		if(hand_owner)
 			to_chat(hand_owner, drop_message)
 		revert_cast()
+	START_PROCESSING(SSfastprocess, src)
 
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)
 	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
@@ -81,13 +82,10 @@
 	create_hand(cast_on)
 	return ..()
 
-	/* TODO need a way to pause cooldown for this
-	for(var/mob/living/carbon/C in targets)
-		if(!attached_hand)
-			if(ChargeHand(C))
-				recharging = FALSE
-				return
-	*/
+/datum/action/cooldown/spell/touch/after_cast(atom/cast_on)
+	. = ..()
+	// MELBERT TODO need a way to pause cooldown for this
+	STOP_PROCESSING(SSfastprocess, src)
 
 // Overrides spell_feedback, as invocation / sounds are done when the hand hits someone
 /datum/action/cooldown/spell/touch/spell_feedback()

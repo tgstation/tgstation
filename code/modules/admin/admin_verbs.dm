@@ -653,17 +653,28 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Give Spell"
 	set desc = "Gives a spell to a mob."
 
+	var/which = tgui_alert(usr, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
+	if(!which)
+		return
+	if(QDELETED(spell_recipient))
+		to_chat(usr, span_warning("The intended spell recipient no longer exists."))
+		return
+
 	var/list/spell_list = list()
 	for(var/datum/action/cooldown/spell/to_add as anything in GLOB.spells)
 		var/spell_name = initial(to_add.name)
 		if(spell_name == "Spell" || findtext(spell_name, "SDQL"))
 			continue
-		spell_list[spell_name] = to_add
+
+		if(which == "Name")
+			spell_list[spell_name] = to_add
+		else
+			spell_list += to_add
 
 	var/chosen_spell = tgui_input_list(usr, "Choose the spell to give to [spell_recipient]", "ABRAKADABRA", sort_list(spell_list))
 	if(isnull(chosen_spell))
 		return
-	var/datum/action/cooldown/spell/spell_path = spell_list[chosen_spell]
+	var/datum/action/cooldown/spell/spell_path = which == "Typepath" ? chosen_spell : spell_list[chosen_spell]
 	if(!ispath(spell_path))
 		return
 
