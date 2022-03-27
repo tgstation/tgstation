@@ -52,6 +52,10 @@
 		if (policy)
 			to_chat(new_spawn, policy)
 		to_chat(new_spawn, "Build golem shells in the autolathe, and feed refined mineral sheets to the shells to bring them to life! You are generally a peaceful group unless provoked.")
+		var/static/list/allowed_areas
+		if(!allowed_areas)
+			allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin/powered/golem_ship))
+		new_spawn.AddComponent(/datum/component/hazard_area, null, allowed_areas)
 	else
 		new_spawn.mind.enslave_mind_to_creator(owner)
 		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")
