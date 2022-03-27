@@ -22249,13 +22249,10 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/south,
-/obj/structure/sign/poster{
-	icon_state = "poster22_legit";
-	pixel_y = -32
-	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/sign/poster/random/directional/south,
 /turf/open/floor/iron,
 /area/security/checkpoint/escape)
 "ego" = (
