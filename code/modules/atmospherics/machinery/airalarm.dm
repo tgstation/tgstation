@@ -67,7 +67,7 @@
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarm0"
+	icon_state = "alarmp"
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
 	active_power_usage = 8
@@ -583,7 +583,7 @@
 /obj/machinery/airalarm/update_overlays()
 	. = ..()
 
-	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
 	var/area/our_area = get_area(src)
@@ -817,7 +817,7 @@
 		return
 	obj_flags |= EMAGGED
 	visible_message(span_warning("Sparks fly out of [src]!"), span_notice("You emag [src], disabling its safeties."))
-	playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/machinery/airalarm/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

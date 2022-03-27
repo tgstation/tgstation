@@ -107,8 +107,8 @@
 	var/generic_bleedstacks
 	/// If we have a gauze wrapping currently applied (not including splints)
 	var/obj/item/stack/current_gauze
-	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/self_grasp])
-	var/obj/item/self_grasp/grasped_by
+	/// If something is currently grasping this bodypart and trying to staunch bleeding (see [/obj/item/hand_item/self_grasp])
+	var/obj/item/hand_item/self_grasp/grasped_by
 
 	///A list of all the external organs we've got stored to draw horns, wings and stuff with (special because we are actually in the limbs unlike normal organs :/ )
 	var/list/obj/item/organ/external/external_organs = list()
@@ -812,7 +812,7 @@
 //to update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
 	cut_overlays()
-	var/list/standing = get_limb_icon(1)
+	var/list/standing = get_limb_icon(TRUE)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
@@ -928,6 +928,10 @@
 			continue
 		//Some externals have multiple layers for background, foreground and between
 		for(var/external_layer in external_organ.all_layers)
+			if(istype(external_organ, /obj/item/organ/external/pod_hair))
+				var/rgb_list = rgb2num(draw_color, COLORSPACE_RGB)
+				// Invert the colour of the pod hair's flower
+				draw_color = rgb(255 - rgb_list[1], 255 - rgb_list[2], 255 - rgb_list[3])
 			if(external_organ.layers & external_layer)
 				external_organ.get_overlays(., image_dir, external_organ.bitflag_to_layer(external_layer), icon_gender, draw_color)
 

@@ -422,6 +422,7 @@
 	if(!..())
 		return FALSE
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [A].</span>", span_notice("You point at [A]."))
+	log_message("points at [A]", LOG_EMOTE)
 	return TRUE
 
 
@@ -743,7 +744,7 @@
 		if(admin_revive)
 			get_up(TRUE)
 		update_sight()
-		clear_alert("not_enough_oxy")
+		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		reload_fullscreen()
 		. = TRUE
 		if(mind)
@@ -1066,11 +1067,11 @@
 	. = ..()
 	if(!SSticker.HasRoundStarted())
 		return
-	var/was_weightless = alerts["gravity"] && istype(alerts["gravity"], /atom/movable/screen/alert/weightless)
-	var/was_negative = alerts["gravity"] && istype(alerts["gravity"], /atom/movable/screen/alert/negative)
+	var/was_weightless = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/weightless)
+	var/was_negative = alerts[ALERT_GRAVITY] && istype(alerts[ALERT_GRAVITY], /atom/movable/screen/alert/negative)
 	switch(gravity)
 		if(NEGATIVE_GRAVITY_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/negative)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/negative)
 			if(!was_negative)
 				var/matrix/flipped_matrix = transform
 				flipped_matrix.b = -flipped_matrix.b
@@ -1078,15 +1079,15 @@
 				animate(src, transform = flipped_matrix, pixel_y = pixel_y+4, time = 0.5 SECONDS, easing = EASE_OUT)
 				base_pixel_y += 4
 		if(WEIGHTLESS_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/weightless)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/weightless)
 			if(!was_weightless)
 				ADD_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 		if(STANDRARD_GRAVITY_RANGE)
-			clear_alert("gravity")
+			clear_alert(ALERT_GRAVITY)
 		if(HIGH_GRAVITY_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/highgravity)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/highgravity)
 		if(CRUSHING_GRAVITY_RANGE)
-			throw_alert("gravity", /atom/movable/screen/alert/veryhighgravity)
+			throw_alert(ALERT_GRAVITY, /atom/movable/screen/alert/veryhighgravity)
 	if(!(gravity in WEIGHTLESS_RANGE) && was_weightless)
 		REMOVE_TRAIT(src, TRAIT_MOVE_FLOATING, NO_GRAVITY_TRAIT)
 	if(!(gravity in NEGATIVE_GRAVITY_RANGE) && was_negative)
@@ -1396,7 +1397,7 @@
 		src.visible_message(span_warning("[src] catches fire!"), \
 						span_userdanger("You're set on fire!"))
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
-		throw_alert("fire", /atom/movable/screen/alert/fire)
+		throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire)
 		update_fire()
 		SEND_SIGNAL(src, COMSIG_LIVING_IGNITED,src)
 		return TRUE
@@ -1415,7 +1416,7 @@
 	fire_stacks = min(0, fire_stacks) //Makes sure we don't get rid of negative firestacks.
 	for(var/obj/effect/dummy/lighting_obj/moblight/fire/F in src)
 		qdel(F)
-	clear_alert("fire")
+	clear_alert(ALERT_FIRE)
 	SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "on_fire")
 	SEND_SIGNAL(src, COMSIG_LIVING_EXTINGUISHED, src)
 	update_fire()
@@ -2069,7 +2070,7 @@
 /mob/living/proc/set_safe_hunger_level()
 	// Nutrition reset and alert clearing.
 	nutrition = NUTRITION_LEVEL_FED
-	clear_alert("nutrition")
+	clear_alert(ALERT_NUTRITION)
 	satiety = 0
 
 	// Trait removal if obese

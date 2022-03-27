@@ -194,6 +194,10 @@
 	desc = "A shower frame, that needs a water recycler to finish construction."
 	anchored = FALSE
 
+/obj/structure/showerframe/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation)
+
 /obj/structure/showerframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))
 		qdel(I)
@@ -203,9 +207,8 @@
 		return
 	return ..()
 
-/obj/structure/showerframe/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+/obj/structure/showerframe/AltClick(mob/user)
+	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/effect/mist
 	name = "mist"

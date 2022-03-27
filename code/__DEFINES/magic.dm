@@ -29,8 +29,3 @@
 #define INVOCATION_EMOTE "emote"
 ///Forces the wizard to whisper (and be able to) to cast the spell.
 #define INVOCATION_WHISPER "whisper"
-
-///Spawns random guns near players and gives some players antag objectives
-#define SUMMON_GUNS "guns"
-///Spawns random wands and spellbooks near players and gives some players antag objectives
-#define SUMMON_MAGIC "magic"

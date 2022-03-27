@@ -3,7 +3,7 @@
 /turf/closed/mineral/volcanic/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ab" = (
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/closed/wall/r_wall,
@@ -495,13 +495,13 @@
 /obj/structure/disposaloutlet,
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/light/directional/north,
-/turf/open/floor/plating/grass/lavaland,
+/turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bn" = (
 /obj/structure/window/spawner/east,
 /obj/structure/flora/ausbushes/palebush,
 /obj/structure/flora/ausbushes/ppflowers,
-/turf/open/floor/plating/grass/lavaland,
+/turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bo" = (
 /obj/machinery/chem_master/condimaster,
@@ -538,19 +538,19 @@
 "br" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /obj/structure/flora/grass/jungle/b,
-/turf/open/floor/plating/grass/lavaland,
+/turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bs" = (
 /obj/structure/window/spawner/east,
 /obj/structure/flora/ausbushes/sparsegrass,
-/turf/open/floor/plating/grass/lavaland,
+/turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bt" = (
 /obj/structure/window/spawner,
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/genericbush,
 /obj/structure/flora/ausbushes/brflowers,
-/turf/open/floor/plating/grass/lavaland,
+/turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bu" = (
 /obj/structure/window/spawner/east,
@@ -558,7 +558,7 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/grass/lavaland,
+/turf/open/misc/grass/lavaland,
 /area/ruin/powered/seedvault)
 "bv" = (
 /obj/machinery/light/directional/south,
@@ -583,7 +583,7 @@
 /area/ruin/powered/seedvault)
 "bx" = (
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "by" = (
 /obj/structure/disposalpipe/segment{

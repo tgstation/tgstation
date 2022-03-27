@@ -1,8 +1,8 @@
 //In this file: Summon Magic/Summon Guns/Summon Events
 //and corresponding datum controller for them
 
-GLOBAL_DATUM(summon_guns, /datum/summon_guns_controller)
-GLOBAL_DATUM(summon_magic, /datum/summon_magic_controller)
+GLOBAL_DATUM(summon_guns, /datum/summon_things_controller)
+GLOBAL_DATUM(summon_magic, /datum/summon_things_controller)
 
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
@@ -100,142 +100,196 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/storage/belt/wands/full,
 	/obj/item/warpwhistle))
 
-/proc/give_guns(mob/living/carbon/human/H)
-	if(H.stat == DEAD || !(H.client))
+/*
+ * Gives [to_equip] a random gun from a list.
+ */
+/proc/give_guns(mob/living/carbon/human/to_equip)
+	if(!GLOB.summon_guns)
+		CRASH("give_guns() was called without a summon guns global datum!")
+	if(to_equip.stat == DEAD || !to_equip.client || !to_equip.mind)
 		return
-	if(H.mind)
-		if(IS_WIZARD(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
-			return
-	var/datum/summon_guns_controller/controller = GLOB.summon_guns
-	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
-		H.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
-		H.log_message("was made into a survivalist, and trusts no one!", LOG_ATTACK, color="red")
+	if(IS_WIZARD(to_equip) || to_equip.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
+		return
+
+	if(!length(to_equip.mind.antag_datums) && prob(GLOB.summon_guns.survivor_probability))
+		to_equip.mind.add_antag_datum(/datum/antagonist/survivalist/guns)
+		to_equip.log_message("was made into a survivalist by summon guns, and trusts no one!", LOG_ATTACK, color = "red")
 
 	var/gun_type = pick(GLOB.summoned_guns)
-	var/obj/item/gun/G = new gun_type(get_turf(H))
-	if (istype(G)) // The list may contain some non-gun type guns which do not have this proc
-		G.unlock()
-	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, TRUE)
+	var/obj/item/gun/spawned_gun = new gun_type(get_turf(to_equip))
+	if (istype(spawned_gun)) // The list may contain some non-gun type guns which do not have this proc
+		spawned_gun.unlock()
+	playsound(get_turf(to_equip), 'sound/magic/summon_guns.ogg', 50, TRUE)
 
-	var/in_hand = H.put_in_hands(G) // not always successful
+	var/in_hand = to_equip.put_in_hands(spawned_gun) // not always successful
 
-	to_chat(H, span_warning("\A [G] appears [in_hand ? "in your hand" : "at your feet"]!"))
+	to_chat(to_equip, span_warning("\A [spawned_gun] appears [in_hand ? "in your hand" : "at your feet"]!"))
 
-/proc/give_magic(mob/living/carbon/human/H)
-	if(H.stat == DEAD || !(H.client))
-		return
-	if(H.mind)
-		if(IS_WIZARD(H) || H.mind.has_antag_datum(/datum/antagonist/survivalist/magic))
-			return
+/*
+ * Gives [to_equip] a random magical spell from a list.
+ */
+/proc/give_magic(mob/living/carbon/human/to_equip)
 	if(!GLOB.summon_magic)
+		CRASH("give_magic() was called without a summon magic global datum!")
+	if(to_equip.stat == DEAD || !to_equip.client || !to_equip.mind)
 		return
-	var/datum/summon_magic_controller/controller = GLOB.summon_magic
-	if(prob(controller.survivor_probability) && !(H.mind.has_antag_datum(/datum/antagonist)))
-		H.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
-		H.log_message("was made into a survivalist, and trusts no one!</font>", LOG_ATTACK, color="red")
+	if(IS_WIZARD(to_equip) || to_equip.mind.has_antag_datum(/datum/antagonist/survivalist/guns))
+		return
 
-	var/magic_type = pick(GLOB.summoned_magic)
-	var/lucky = FALSE
-	if(prob(SPECIALIST_MAGIC_PROB))
-		magic_type = pick(GLOB.summoned_special_magic)
-		lucky = TRUE
+	if(!length(to_equip.mind.antag_datums) && prob(GLOB.summon_magic.survivor_probability))
+		to_equip.mind.add_antag_datum(/datum/antagonist/survivalist/magic)
+		to_equip.log_message("was made into a survivalist by summon magic, and trusts no one!", LOG_ATTACK, color = "red")
 
-	var/obj/item/M = new magic_type(get_turf(H))
-	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, TRUE)
+	var/magic_type = prob(SPECIALIST_MAGIC_PROB) ? pick(GLOB.summoned_special_magic) : pick(GLOB.summoned_magic)
 
-	var/in_hand = H.put_in_hands(M)
+	var/obj/item/spawned_magic = new magic_type(get_turf(to_equip))
+	playsound(get_turf(to_equip), 'sound/magic/summon_magic.ogg', 50, TRUE)
 
-	to_chat(H, span_warning("\A [M] appears [in_hand ? "in your hand" : "at your feet"]!"))
-	if(lucky)
-		to_chat(H, span_notice("You feel incredibly lucky."))
+	var/in_hand = to_equip.put_in_hands(spawned_magic)
 
+	to_chat(to_equip, span_warning("\A [spawned_magic] appears [in_hand ? "in your hand" : "at your feet"]!"))
+	if(magic_type in GLOB.summoned_special_magic)
+		to_chat(to_equip, span_notice("You feel incredibly lucky."))
 
-/proc/rightandwrong(summon_type, mob/user, survivor_probability)
-	if(user) //in this case either someone holding a spellbook or a badmin
-		to_chat(user, span_warning("You summoned [summon_type]!"))
-		message_admins("[ADMIN_LOOKUPFLW(user)] summoned [summon_type]!")
-		log_game("[key_name(user)] summoned [summon_type]!")
+/*
+ * Triggers Summon Ghosts from [user].
+ */
+/proc/summon_ghosts(mob/user)
 
-	if(summon_type == SUMMON_MAGIC)
-		GLOB.summon_magic = new /datum/summon_magic_controller(survivor_probability)
-	else if(summon_type == SUMMON_GUNS)
-		GLOB.summon_guns = new /datum/summon_guns_controller(survivor_probability)
+	var/datum/round_event_control/wizard/ghost/ghost_event = locate() in SSevents.control
+	if(ghost_event)
+		if(user)
+			to_chat(user, span_warning("You summoned ghosts!"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] summoned ghosts!")
+			log_game("[key_name(user)] summoned ghosts!")
+		else
+			message_admins("Summon Ghosts was triggered!")
+			log_game("Summon Ghosts was triggered!")
+		ghost_event.runEvent()
 	else
-		CRASH("Bad summon_type given: [summon_type]")
+		stack_trace("Unable to run summon ghosts, due to being unable to locate the associated event.")
+		if(user)
+			to_chat(user, span_warning("You... try to summon ghosts, but nothing seems to happen. Shame."))
 
-/proc/summonevents()
-	if(!SSevents.wizardmode)
-		SSevents.frequency_lower = 600 //1 minute lower bound
-		SSevents.frequency_upper = 3000 //5 minutes upper bound
-		SSevents.toggleWizardmode()
-		SSevents.reschedule()
+/*
+ * Triggers Summon Magic from [user].
+ * Can optionally be passed [survivor_probability], to set the chance of creating survivalists.
+ * If Summon Magic has already been triggered, gives out magic to everyone again.
+ */
+/proc/summon_magic(mob/user, survivor_probability = 0)
+	if(user)
+		to_chat(user, span_warning("You summoned magic!"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] summoned magic!")
+		log_game("[key_name(user)] summoned magic!")
+	else
+		message_admins("Summon Magic was triggered!")
+		log_game("Summon Magic was triggered!")
 
-	else //Speed it up
-		SSevents.frequency_upper -= 600 //The upper bound falls a minute each time, making the AVERAGE time between events lessen
+	if(GLOB.summon_magic)
+		GLOB.summon_magic.survivor_probability = survivor_probability
+	else
+		GLOB.summon_magic = new /datum/summon_things_controller(/proc/give_magic, survivor_probability)
+	GLOB.summon_magic.give_out_gear()
+
+/*
+ * Triggers Summon Guns from [user].
+ * Can optionally be passed [survivor_probability], to set the chance of creating survivalists.
+ * If Summon Guns has already been triggered, gives out guns to everyone again.
+ */
+/proc/summon_guns(mob/user, survivor_probability = 0)
+	if(user)
+		to_chat(user, span_warning("You summoned guns!"))
+		message_admins("[ADMIN_LOOKUPFLW(user)] summoned guns!")
+		log_game("[key_name(user)] summoned guns!")
+	else
+		message_admins("Summon Guns was triggered!")
+		log_game("Summon Guns was triggered!")
+
+	if(GLOB.summon_guns)
+		GLOB.summon_guns.survivor_probability = survivor_probability
+	else
+		GLOB.summon_guns = new /datum/summon_things_controller(/proc/give_guns, survivor_probability)
+	GLOB.summon_guns.give_out_gear()
+
+/*
+ * Triggers Summon Events from [user].
+ * If Summon Events has already been triggered, speeds up the event timer.
+ */
+/proc/summon_events(mob/user)
+	// Already in wiz-mode? Speed er up
+	if(SSevents.wizardmode)
+		SSevents.frequency_upper -= 1 MINUTES //The upper bound falls a minute each time, making the AVERAGE time between events lessen
 		if(SSevents.frequency_upper < SSevents.frequency_lower) //Sanity
 			SSevents.frequency_upper = SSevents.frequency_lower
 
 		SSevents.reschedule()
+		if(user)
+			to_chat(user, span_warning("You have intensified summon events, causing them to occur more often!"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] intensified summon events!")
+			log_game("[key_name(user)] intensified events!")
+		else
+			log_game("Summon Events was intensified!")
+
 		message_admins("Summon Events intensifies, events will now occur every [SSevents.frequency_lower / 600] to [SSevents.frequency_upper / 600] minutes.")
-		log_game("Summon Events was increased!")
+
+	// Not in wiz-mode?  Get this show on the road
+	else
+		SSevents.frequency_lower = 1 MINUTES //1 minute lower bound
+		SSevents.frequency_upper = 5 MINUTES //5 minutes upper bound
+		SSevents.toggleWizardmode()
+		SSevents.reschedule()
+		if(user)
+			to_chat(user, span_warning("You have cast summon events!"))
+			message_admins("[ADMIN_LOOKUPFLW(user)] summoned events!")
+			log_game("[key_name(user)] summoned events!")
+		else
+			message_admins("Summon Events was triggered!")
+			log_game("Summon Events was triggered!")
 
 #undef SPECIALIST_MAGIC_PROB
 
 /**
- * The magic controller handles the summon magic event.
- * It is first created when summon magic event is triggered, and it can be referenced from GLOB.summon_magic
+ * The "Give everyone in the crew and also latejoins a buncha stuff" controller.
+ * Used for summon magic and summon guns.
  */
-/datum/summon_magic_controller
-	///chances someone who is given magic will be an antagonist
+/datum/summon_things_controller
+	/// Prob. chance someone who is given things will be made a survivalist antagonist.
 	var/survivor_probability = 0
+	/// The proc path we call on someone to equip them with stuff. Cannot function without it.
+	var/give_proc_path
+	/// The number of equipment we give to latejoiners, to make sure they catch up if it was casted multiple times.
+	var/num_to_give_to_latejoiners = 0
 
-/datum/summon_magic_controller/New(survivor_probability)
+/datum/summon_things_controller/New(give_proc_path, survivor_probability = 0)
 	. = ..()
+	if(isnull(give_proc_path))
+		CRASH("[type] was created without a give_proc_path (the proc that gives people stuff)!")
+
 	src.survivor_probability = survivor_probability
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/magic_up_new_crew)
+	src.give_proc_path = give_proc_path
 
-	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
-		var/turf/turf_check = get_turf(unarmed_human)
-		if(turf_check && is_away_level(turf_check.z))
-			continue
-		give_magic(unarmed_human)
+	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/gear_up_new_crew)
 
-/datum/summon_magic_controller/Destroy(force, ...)
+/datum/summon_things_controller/Destroy(force, ...)
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
-///signal proc to give magic to new crewmembers
-/datum/summon_magic_controller/proc/magic_up_new_crew(datum/source, mob/living/new_crewmember, rank)
-	SIGNAL_HANDLER
-	if(ishuman(new_crewmember))
-		INVOKE_ASYNC(GLOB.summon_magic, .proc/give_magic, new_crewmember)
-
-/**
- * The guns controller handles the summon guns event.
- * It is first created when summon guns event is triggered, and it can be referenced from GLOB.summon_guns
- */
-/datum/summon_guns_controller
-	///chances someone who is given guns will be an antagonist
-	var/survivor_probability = 0
-
-/datum/summon_guns_controller/New(survivor_probability)
-	. = ..()
-	src.survivor_probability = survivor_probability
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/arm_up_new_crew)
-
-	for(var/mob/living/carbon/human/unarmed_human in GLOB.player_list)
-		var/turf/turf_check = get_turf(unarmed_human)
+/// Calls our give_proc_path on all humans in the player list.
+/datum/summon_things_controller/proc/give_out_gear()
+	num_to_give_to_latejoiners++
+	for(var/mob/living/carbon/human/to_equip in GLOB.player_list)
+		var/turf/turf_check = get_turf(to_equip)
 		if(turf_check && is_away_level(turf_check.z))
 			continue
-		give_guns(unarmed_human)
+		INVOKE_ASYNC(GLOBAL_PROC, give_proc_path, to_equip)
 
-/datum/summon_guns_controller/Destroy(force, ...)
-	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
-
-///signal proc to give guns to new crewmembers
-/datum/summon_guns_controller/proc/arm_up_new_crew(datum/source, mob/living/new_crewmember, rank)
+/// Signal proc from [COMSIG_GLOB_CREWMEMBER_JOINED].
+/// Calls give_proc_path on latejoiners a number of times (based on num_to_give_to_latejoiners)
+/datum/summon_things_controller/proc/gear_up_new_crew(datum/source, mob/living/new_crewmember, rank)
 	SIGNAL_HANDLER
-	if(ishuman(new_crewmember))
-		INVOKE_ASYNC(GLOB.summon_guns, .proc/give_guns, new_crewmember)
 
+	if(!ishuman(new_crewmember))
+		return
+
+	for(var/i in 1 to num_to_give_to_latejoiners)
+		INVOKE_ASYNC(GLOBAL_PROC, give_proc_path, new_crewmember)

@@ -1,5 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - rscadd: "On MetaStation, DeltaStation, and TramStation, the area colloquially known as the \"Science Lobby\" now has a proper definition and it's own APC to boot. Please enjoy."
-  - rscadd: "MetaStation and Deltastation now have their Medbay Lobbies officially defined."

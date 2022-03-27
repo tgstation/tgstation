@@ -110,7 +110,7 @@
 /turf/open/indestructible/hoteltile,
 /area/hilbertshotel)
 "y" = (
-/obj/machinery/door/window/northleft,
+/obj/machinery/door/window/left/directional/north,
 /turf/open/indestructible/hotelwood,
 /area/hilbertshotel)
 "z" = (

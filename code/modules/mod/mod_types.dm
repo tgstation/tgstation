@@ -54,7 +54,6 @@
 
 /obj/item/mod/control/pre_equipped/loader
 	theme = /datum/mod_theme/loader
-	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage/large_capacity,
 		/obj/item/mod/module/flashlight,
@@ -105,7 +104,6 @@
 
 /obj/item/mod/control/pre_equipped/security
 	theme = /datum/mod_theme/security
-	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/flashlight,
@@ -199,7 +197,6 @@
 
 /obj/item/mod/control/pre_equipped/prototype
 	theme = /datum/mod_theme/prototype
-	applied_cell = /obj/item/stock_parts/cell/high/plus
 	initial_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/welding,

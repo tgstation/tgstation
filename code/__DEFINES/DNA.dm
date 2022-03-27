@@ -35,7 +35,9 @@
 #define DNA_SKIN_TONE_BLOCK 3
 #define DNA_UNI_IDENTITY_BLOCKS 7
 
-#define DNA_FEATURE_BLOCKS 15
+/// This number needs to equal the total number of DNA blocks
+#define DNA_FEATURE_BLOCKS 16
+
 #define DNA_MUTANT_COLOR_BLOCK 1
 #define DNA_ETHEREAL_COLOR_BLOCK 2
 #define DNA_LIZARD_MARKINGS_BLOCK 3
@@ -51,6 +53,7 @@
 #define DNA_MOTH_MARKINGS_BLOCK 13
 #define DNA_MUSHROOM_CAPS_BLOCK 14
 #define DNA_MONKEY_TAIL_BLOCK 15
+#define DNA_POD_HAIR_BLOCK 16
 
 #define DNA_SEQUENCE_LENGTH 4
 #define DNA_MUTATION_BLOCKS 8
@@ -125,6 +128,7 @@
 #define ORGAN_SLOT_EXTERNAL_WINGS "wings"
 #define ORGAN_SLOT_EXTERNAL_ANTENNAE "antennae"
 #define ORGAN_SLOT_EXTERNAL_BODYMARKINGS "bodymarkings"
+#define ORGAN_SLOT_EXTERNAL_POD_HAIR "pod_hair"
 
 /// Xenomorph organ slots
 #define ORGAN_SLOT_XENO_ACIDGLAND "acid_gland"
@@ -242,3 +246,19 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_GOLEM_BONE "bone_golem"
 #define SPECIES_GOLEM_SNOW "snow_golem"
 #define SPECIES_GOLEM_HYDROGEN "metallic_hydrogen_golem"
+
+// Defines for used in creating "perks" for the species preference pages.
+/// A key that designates UI icon displayed on the perk.
+#define SPECIES_PERK_ICON "ui_icon"
+/// A key that designates the name of the perk.
+#define SPECIES_PERK_NAME "name"
+/// A key that designates the description of the perk.
+#define SPECIES_PERK_DESC "description"
+/// A key that designates what type of perk it is (see below).
+#define SPECIES_PERK_TYPE "perk_type"
+
+// The possible types each perk can be.
+// Positive perks are shown in green, negative in red, and neutral in grey.
+#define SPECIES_POSITIVE_PERK "positive"
+#define SPECIES_NEGATIVE_PERK "negative"
+#define SPECIES_NEUTRAL_PERK "neutral"

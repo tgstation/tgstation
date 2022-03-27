@@ -123,6 +123,16 @@
 /proc/_pick(...)
 	return pick(arglist(args))
 
+/// Allow me to explain
+/// for some reason, if pick() is passed arglist(args) directly and args contains only one list
+/// it considers it to be a list of lists
+/// this means something like _pick(list) would fail
+/// need to do this instead
+///
+/// I hate this timeline
+/proc/_pick_list(list/pick_from)
+	return pick(pick_from)
+
 /proc/_prob(P)
 	return prob(P)
 
@@ -229,12 +239,18 @@
 /proc/_step_away(ref, trg, max)
 	step_away(ref, trg, max)
 
-/proc/_has_trait(datum/thing,trait)
-	return HAS_TRAIT(thing,trait)
+/proc/_has_trait(datum/thing, trait)
+	return HAS_TRAIT(thing, trait)
 
-/proc/_add_trait(datum/thing,trait,source)
-	ADD_TRAIT(thing,trait,source)
+/proc/_add_trait(datum/thing, trait, source)
+	ADD_TRAIT(thing, trait, source)
 
-/proc/_remove_trait(datum/thing,trait,source)
-	REMOVE_TRAIT(thing,trait,source)
+/proc/_remove_trait(datum/thing, trait, source)
+	REMOVE_TRAIT(thing, trait, source)
+
+/proc/_winset(player, control_id, params)
+	winset(player, control_id, params)
+	
+/proc/_winget(player, control_id, params)
+	winget(player, control_id, params)
 

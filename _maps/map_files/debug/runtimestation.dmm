@@ -26,10 +26,6 @@
 "ah" = (
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
-"ai" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/engineering/main)
 "aj" = (
 /turf/closed/wall/r_wall,
 /area/engineering/main)
@@ -115,10 +111,6 @@
 "aA" = (
 /turf/open/floor/iron,
 /area/engineering/main)
-"aB" = (
-/obj/machinery/newscaster/security_unit,
-/turf/closed/wall/r_wall,
-/area/engineering/main)
 "aC" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -152,22 +144,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
+"aH" = (
+/obj/machinery/light/directional/east,
+/obj/machinery/recharge_station,
+/turf/open/floor/iron,
+/area/engineering/main)
 "aI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/engineering/gravity_generator)
-"aJ" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/engineering/gravity_generator)
 "aK" = (
 /obj/structure/table,
@@ -299,20 +283,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/engineering/gravity_generator)
-"bi" = (
-/obj/machinery/gravity_generator/main/station,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/engineering/gravity_generator)
 "bk" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
@@ -459,6 +429,12 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/turf/open/floor/iron,
+/area/command/bridge)
+"bK" = (
+/obj/structure/table,
+/obj/item/storage/backpack/holding,
+/obj/item/storage/part_replacer/bluespace/tier4,
 /turf/open/floor/iron,
 /area/command/bridge)
 "bL" = (
@@ -1071,13 +1047,6 @@
 /area/construction)
 "dN" = (
 /obj/structure/table,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-"dO" = (
-/obj/structure/table,
-/obj/machinery/light/directional/south,
-/obj/item/storage/firstaid/regular,
-/obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "dP" = (
@@ -1799,10 +1768,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science)
-"ge" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/hallway/secondary/entry)
 "gf" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -2084,11 +2049,6 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating,
 /area/engineering/atmos)
-"oK" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/recharge_station,
-/turf/open/floor/iron,
-/area/engineering/main)
 "oV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
@@ -2136,6 +2096,10 @@
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
 /area/construction)
+"sA" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "sE" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
@@ -2144,6 +2108,13 @@
 "sH" = (
 /obj/structure/table,
 /obj/item/storage/box/shipping,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
+"tt" = (
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/obj/item/storage/medkit/regular,
+/obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "tE" = (
@@ -2381,6 +2352,11 @@
 	},
 /turf/open/floor/iron,
 /area/medical/chemistry)
+"Ia" = (
+/obj/machinery/gravity_generator/main/station,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/iron,
@@ -2490,6 +2466,10 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/science)
+"PJ" = (
+/obj/machinery/newscaster,
+/turf/closed/wall/r_wall,
+/area/engineering/main)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -2538,12 +2518,6 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
-"Tf" = (
-/obj/structure/table,
-/obj/item/storage/backpack/holding,
-/obj/item/storage/part_replacer/bluespace/tier4,
-/turf/open/floor/iron,
-/area/command/bridge)
 "Tj" = (
 /obj/machinery/door/poddoor,
 /turf/open/floor/engine,
@@ -5865,7 +5839,7 @@ eh
 rn
 eh
 eh
-ge
+dY
 aa
 aa
 aa
@@ -5957,7 +5931,7 @@ cN
 LH
 en
 dY
-ge
+dY
 dY
 aa
 aa
@@ -6945,7 +6919,7 @@ ab
 ab
 ac
 bv
-Tf
+bK
 cf
 Iy
 bu
@@ -7120,7 +7094,7 @@ aa
 aa
 aa
 aa
-ai
+aj
 aj
 aj
 aj
@@ -7215,7 +7189,7 @@ aa
 aj
 al
 aA
-aB
+PJ
 WT
 aj
 aj
@@ -7491,7 +7465,7 @@ aa
 aj
 ar
 aA
-oK
+aH
 aF
 lg
 bf
@@ -7608,7 +7582,7 @@ dJ
 dJ
 dJ
 dJ
-dO
+tt
 cS
 gz
 fO
@@ -8044,9 +8018,9 @@ ad
 af
 ak
 av
-aJ
-aJ
-aJ
+sA
+sA
+sA
 av
 by
 bU
@@ -8136,9 +8110,9 @@ ad
 af
 ak
 dT
-aJ
+sA
 av
-bi
+Ia
 av
 by
 bV
@@ -8228,9 +8202,9 @@ ad
 af
 ak
 av
-aJ
-aJ
-aJ
+sA
+sA
+sA
 av
 by
 bW

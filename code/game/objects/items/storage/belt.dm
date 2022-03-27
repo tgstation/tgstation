@@ -530,6 +530,7 @@
 	icon_state = "belt"
 	inhand_icon_state = "security"
 	worn_icon_state = "security"
+	content_overlays = TRUE
 
 /obj/item/storage/belt/military/abductor/full/PopulateContents()
 	new /obj/item/screwdriver/abductor(src)

@@ -213,11 +213,12 @@
 	icon_state = "green"
 
 
-//Ruin of ancient Space Station
+//Ruin of ancient Space Station (OldStation)
 
 /area/ruin/space/has_grav/ancientstation
-	name = "Charlie Station Main Corridor"
-	icon_state = "green"
+	icon_state = "oldstation"
+	has_gravity = TRUE
+
 
 /area/ruin/space/has_grav/ancientstation/powered
 	name = "Powered Tile"
@@ -229,69 +230,93 @@
 	icon_state = "teleporter"
 	has_gravity = FALSE
 
-/area/ruin/space/has_grav/ancientstation/atmo
+/area/ruin/space/has_grav/ancientstation/beta
+	icon_state = "betastation"
+
+/area/ruin/space/has_grav/ancientstation/beta/atmos
 	name = "Beta Station Atmospherics"
-	icon_state = "red"
+	icon_state = "os_beta_atmos"
 	ambience_index = AMBIENCE_ENGI
-	has_gravity = TRUE
 
-/area/ruin/space/has_grav/ancientstation/betacorridor
+/area/ruin/space/has_grav/ancientstation/beta/hall
 	name = "Beta Station Main Corridor"
-	icon_state = "bluenew"
+	icon_state = "os_beta_hall"
 
-/area/ruin/space/has_grav/ancientstation/engi
+/area/ruin/space/has_grav/ancientstation/beta/mining
+	name = "Beta Station Mining Equipment"
+	icon_state = "os_beta_mining"
+
+/area/ruin/space/has_grav/ancientstation/beta/medbay
+	name = "Beta Station Medbay"
+	icon_state = "os_beta_medbay"
+
+/area/ruin/space/has_grav/ancientstation/beta/storage
+	name = "\improper Beta Station Storage"
+	icon_state = "os_beta_storage"
+
+/area/ruin/space/has_grav/ancientstation/charlie
+	icon_state = "charliestation"
+
+/area/ruin/space/has_grav/ancientstation/charlie/hall
+	name = "Charlie Station Main Corridor"
+	icon_state = "os_charlie_hall"
+
+/area/ruin/space/has_grav/ancientstation/charlie/engie
 	name = "Charlie Station Engineering"
-	icon_state = "engine"
+	icon_state = "os_charlie_engine"
 	ambience_index = AMBIENCE_ENGI
 
-/area/ruin/space/has_grav/ancientstation/comm
+/area/ruin/space/has_grav/ancientstation/charlie/bridge
 	name = "Charlie Station Command"
-	icon_state = "captain"
+	icon_state = "os_charlie_bridge"
 
-/area/ruin/space/has_grav/ancientstation/hydroponics
+/area/ruin/space/has_grav/ancientstation/charlie/hydro
 	name = "Charlie Station Hydroponics"
-	icon_state = "garden"
+	icon_state = "os_charlie_hydro"
 
-/area/ruin/space/has_grav/ancientstation/kitchen
+/area/ruin/space/has_grav/ancientstation/charlie/kitchen
 	name = "\improper Charlie Station Kitchen"
-	icon_state = "kitchen"
+	icon_state = "os_charlie_kitchen"
 
-/area/ruin/space/has_grav/ancientstation/sec
+/area/ruin/space/has_grav/ancientstation/charlie/sec
 	name = "Charlie Station Security"
-	icon_state = "red"
+	icon_state = "os_charlie_sec"
 
-/area/ruin/space/has_grav/ancientstation/deltacorridor
+/area/ruin/space/has_grav/ancientstation/charlie/dorms
+	name = "Charlie Station Dorms"
+	icon_state = "os_charlie_dorms"
+
+/area/solars/ancientstation/charlie/solars
+	name = "\improper Charlie Station Solar Array"
+	icon_state = "os_charlie_solars"
+
+/area/ruin/space/has_grav/ancientstation/charlie/storage
+	name = "Charlie Station Storage"
+	icon_state = "os_charlie_storage"
+
+/area/ruin/space/has_grav/ancientstation/delta
+	icon_state = "deltastation"
+
+/area/ruin/space/has_grav/ancientstation/delta/hall
 	name = "Delta Station Main Corridor"
-	icon_state = "green"
+	icon_state = "os_delta_hall"
 
-/area/ruin/space/has_grav/ancientstation/proto
+/area/ruin/space/has_grav/ancientstation/delta/proto
 	name = "\improper Delta Station Prototype Lab"
-	icon_state = "ordlab"
+	icon_state = "os_delta_protolab"
 
-/area/ruin/space/has_grav/ancientstation/rnd
+/area/ruin/space/has_grav/ancientstation/delta/rnd
 	name = "Delta Station Research and Development"
-	icon_state = "ordlab"
+	icon_state = "os_delta_rnd"
 
-/area/ruin/space/has_grav/ancientstation/deltaai
+/area/ruin/space/has_grav/ancientstation/delta/ai
 	name = "\improper Delta Station AI Core"
-	icon_state = "ai"
+	icon_state = "os_delta_ai"
 	ambientsounds = list('sound/ambience/ambimalf.ogg', 'sound/ambience/ambitech.ogg', 'sound/ambience/ambitech2.ogg', 'sound/ambience/ambiatmos.ogg', 'sound/ambience/ambiatmos2.ogg')
 
-/area/ruin/space/has_grav/ancientstation/mining
-	name = "Beta Station Mining Equipment"
-	icon_state = "mining"
-
-/area/ruin/space/has_grav/ancientstation/medbay
-	name = "Beta Station Medbay"
-	icon_state = "medbay"
-
-/area/ruin/space/has_grav/ancientstation/betastorage
-	name = "\improper Beta Station Storage"
-	icon_state = "storage"
-
-/area/solars/ancientstation
-	name = "\improper Charlie Station Solar Array"
-	icon_state = "panelsP"
+/area/ruin/space/has_grav/ancientstation/delta/storage
+	name = "\improper Delta Station Storage"
+	icon_state = "os_delta_storage"
 
 //DERELICT
 

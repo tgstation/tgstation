@@ -65,6 +65,11 @@
 	name = "Hunter Shuttle"
 	static_lighting = FALSE
 
+/area/shuttle/hunter/russian
+	name = "Russian Cargo Hauler"
+	requires_power = TRUE
+	static_lighting = TRUE
+
 ////////////////////////////White Ship////////////////////////////
 
 /area/shuttle/abandoned

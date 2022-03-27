@@ -440,6 +440,7 @@
 
 		if (require_human)
 			set_species(/datum/species/human)
+			dna.species.roundstart_changed = TRUE
 
 		if(GLOB.current_anonymous_theme)
 			fully_replace_character_name(null, GLOB.current_anonymous_theme.anonymous_name(src))
@@ -450,6 +451,7 @@
 		player_client.prefs.safe_transfer_prefs_to(src, TRUE, is_antag)
 		if (require_human && !ishumanbasic(src))
 			set_species(/datum/species/human)
+			dna.species.roundstart_changed = TRUE
 			apply_pref_name(/datum/preference/name/backup_human, player_client)
 		if(CONFIG_GET(flag/force_random_names))
 			var/species_type = player_client.prefs.read_preference(/datum/preference/choiced/species)
