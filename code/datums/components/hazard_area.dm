@@ -83,7 +83,7 @@
 	if(should_have_status_effect && !effect) // Should have the status - and doesnt
 		parent_living.apply_status_effect(/datum/status_effect/hazard_area)
 		if(parent_living.buckled)
-			to_chat(parent_living, span_warning("You fall off of [parent_living.buckled]!"))
+			parent_living.buckled.balloon_alert(parent, "you fall off!")
 			parent_living.buckled.unbuckle_mob(parent_living, TRUE)
 		return
 
