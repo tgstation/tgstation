@@ -31,11 +31,12 @@
 
 /obj/item/paper/fluff/jobs/cargo/requisition
 	var/authorization_stamps
+	var/order_id = 0
 
-/obj/item/paper/fluff/jobs/cargo/requisition/Initialize(mapload, authorization_stamps)
+/obj/item/paper/fluff/jobs/cargo/requisition/Initialize(mapload, id, authorization_stamps)
 	. = ..()
 	src.authorization_stamps = authorization_stamps
-
+	order_id = id
 
 /datum/supply_order
 	var/id
@@ -63,7 +64,7 @@
 	src.applied_coupon = coupon
 
 /datum/supply_order/proc/generateRequisition(turf/T)
-	var/obj/item/paper/fluff/jobs/cargo/requisition/P = new(T, pack.authorization_stamps)
+	var/obj/item/paper/fluff/jobs/cargo/requisition/P = new(T, id, pack.authorization_stamps)
 
 	var/jobs_that_can_approve = list()
 	for(var/stamp in pack.authorization_stamps)
