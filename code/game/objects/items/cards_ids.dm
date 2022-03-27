@@ -681,6 +681,9 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
+	if(!user.can_read(src))
+		return
+
 	if(registered_account)
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
@@ -1165,6 +1168,9 @@
 
 /obj/item/card/id/advanced/prisoner/examine(mob/user)
 	. = ..()
+	if(!user.can_read(src))
+		return
+
 	if(timed)
 		if(time_left <= 0)
 			. += span_notice("The digital timer on the card has zero seconds remaining. You leave a changed man, but a free man nonetheless.")
