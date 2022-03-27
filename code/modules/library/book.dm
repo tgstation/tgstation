@@ -37,7 +37,8 @@
 			var/mob/living/carbon/human/reader = user
 			LAZYINITLIST(reader.book_titles_read)
 			var/has_not_read_book = isnull(reader.book_titles_read[title])
-			var/is_book_manual = unique
+			var/is_book_manual = istype(src, /obj/item/book/manual)
+
 			if(has_not_read_book || !is_book_manual) // any new books give bonus mood except for boring manuals zzzzz
 				if(HAS_TRAIT(reader, TRAIT_BOOKWORM))
 					SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "reading_excited", /datum/mood_event/reading_excited)
