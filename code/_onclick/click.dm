@@ -239,7 +239,7 @@
 	return ..() + get_all_contents()
 
 /atom/proc/AllowClick()
-	return FALSE
+	return TRUE
 
 /turf/AllowClick()
 	return TRUE
