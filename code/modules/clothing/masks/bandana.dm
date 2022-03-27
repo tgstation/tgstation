@@ -51,11 +51,11 @@
 	greyscale_colors = "#2e2e2e"
 
 /obj/item/clothing/mask/bandana/color/attack_self(mob/user)
-	adjustmask(user)
 	if(slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
-	else if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
+	adjustmask(user)
+	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
 		worn_icon_state += "_up"
 		set_greyscale(
 			new_config = /datum/greyscale_config/bandana_up,
@@ -126,19 +126,19 @@
 	greyscale_colors = "#3F3F3F#C6C6C6"
 
 /obj/item/clothing/mask/bandana/color/striped/attack_self(mob/user)
-	adjustmask(user)
-	if(src.slot_flags & ITEM_SLOT_NECK)
+	if(slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
-	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
-		src.worn_icon_state += "_up"
-		src.set_greyscale(
+	adjustmask(user)
+	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
+		worn_icon_state += "_up"
+		set_greyscale(
 			new_config = /datum/greyscale_config/bandstriped_up,
 			new_worn_config = /datum/greyscale_config/bandstriped_up/worn
 		)
 	else
-		src.worn_icon_state = initial(worn_icon_state)
-		src.set_greyscale(
+		worn_icon_state = initial(worn_icon_state)
+		set_greyscale(
 			new_config = initial(greyscale_config),
 			new_worn_config = initial(greyscale_config_worn)
 		)
@@ -165,19 +165,19 @@
 	greyscale_colors = "#2e2e2e#C6C6C6"
 
 /obj/item/clothing/mask/bandana/color/skull/attack_self(mob/user)
-	adjustmask(user)
-	if(src.slot_flags & ITEM_SLOT_NECK)
+	if(slot_flags & ITEM_SLOT_NECK)
 		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
 		return
-	else if(src.greyscale_config == initial(src.greyscale_config) && src.greyscale_config_worn == initial(src.greyscale_config_worn))
-		src.worn_icon_state += "_up"
-		src.set_greyscale(
+	adjustmask(user)
+	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
+		worn_icon_state += "_up"
+		set_greyscale(
 			new_config = /datum/greyscale_config/bandskull_up,
 			new_worn_config = /datum/greyscale_config/bandskull_up/worn
 		)
 	else
-		src.worn_icon_state = initial(worn_icon_state)
-		src.set_greyscale(
+		worn_icon_state = initial(worn_icon_state)
+		set_greyscale(
 			new_config = initial(greyscale_config),
 			new_worn_config = initial(greyscale_config_worn)
 		)
