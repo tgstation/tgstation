@@ -270,13 +270,13 @@
 
 /datum/status_effect/hazard_area/on_apply()
 	. = ..()
-	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area)
-	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area)
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, TRUE)
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, TRUE)
 
 /datum/status_effect/hazard_area/on_remove()
 	. = ..()
-	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area)
-	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area)
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/hazard_area, TRUE)
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/hazard_area, TRUE)
 
 /atom/movable/screen/alert/status_effect/hazard_area
 	name = "Hazardous Area"
