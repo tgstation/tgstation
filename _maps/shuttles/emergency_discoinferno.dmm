@@ -80,9 +80,8 @@
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "p" = (
-/obj/machinery/door/airlock/gold{
-	req_access_txt = "19"
-	},
+/obj/machinery/door/airlock/gold,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/gold,
 /area/shuttle/escape)
 "q" = (

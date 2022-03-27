@@ -781,14 +781,6 @@
 	build_path = /obj/item/wallframe/status_display
 	category = list("initial", "Construction")
 
-/datum/design/bounty_board_frame
-	name = "Bounty Board Frame"
-	id = "bountyboard_frame"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
-	build_path = /obj/item/wallframe/bounty_board
-	category = list("initial", "Construction")
-
 /datum/design/syringe
 	name = "Syringe"
 	id = "syringe"

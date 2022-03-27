@@ -43,10 +43,11 @@
 	if(!(bot_mode_flags & BOT_MODE_AUTOPATROL))
 		return
 
-	if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-		start_patrol()
-	if(mode == BOT_PATROL)
-		bot_patrol()
+	switch(mode)
+		if(BOT_IDLE, BOT_START_PATROL)
+			start_patrol()
+		if(BOT_PATROL)
+			bot_patrol()
 
 /mob/living/simple_animal/bot/vibebot/turn_off()
 	vibe_ability.remove_colors()
