@@ -31,7 +31,7 @@
 
 /datum/component/hazard_area/UnregisterFromParent()
 	var/mob/parent_mob = parent
-	UnregisterSignal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL))
+	UnregisterSignal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL, COMSIG_VEHICLE_RIDDEN))
 	parent_mob.lose_area_sensitivity(src.type)
 
 /**
@@ -41,7 +41,7 @@
 	SIGNAL_HANDLER
 
 	if(check_area_hazardous(get_area(exit_ladder)))
-		to_chat(parent, span_warning("Something appears to resist your usage of [entrace_ladder]"))
+		to_chat(parent, span_warning("Something appears to resist your usage of [entrance_ladder]"))
 		return LADDER_TRAVEL_BLOCK
 
 /**
