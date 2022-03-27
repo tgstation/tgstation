@@ -53,7 +53,7 @@
 	if(!check_area_hazardous(last_parent_area))
 		return
 
-	to_chat(parent, span_warning("You attempt to ride [vehicle] but you slip and fall off!"))
+	vehicle.balloon_alert(parent, "you slip and fall off!")
 	return EJECT_FROM_VEHICLE
 
 /**
