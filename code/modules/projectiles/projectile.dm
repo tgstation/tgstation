@@ -875,8 +875,9 @@
 		stack_trace("WARNING: Projectile [type] fired with non-list modifiers, likely was passed click params.")
 		modifiers = null
 
-	var/turf/source_loc = get_turf(source)
-	var/turf/target_loc = get_turf(target)
+	var/atom/source_loc = drop_location(source)
+	var/turf/source_turf = get_turf(source)
+	var/turf/target_turf = get_turf(target)
 	if(isnull(source_loc))
 		stack_trace("WARNING: Projectile [type] fired from nullspace.")
 		qdel(src)
@@ -886,22 +887,22 @@
 	forceMove(source_loc)
 	trajectory_ignore_forcemove = FALSE
 
-	starting = source_loc
+	starting = source_turf
 	pixel_x = source.pixel_x
 	pixel_y = source.pixel_y
 	original = target
 	if(length(modifiers))
-		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_loc && target, modifiers)
+		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(source, target_turf && target, modifiers)
 
 		p_x = calculated[2]
 		p_y = calculated[3]
 		set_angle(calculated[1] + deviation)
 		return TRUE
 
-	if(target_loc)
-		yo = target_loc.y - source_loc.y
-		xo = target_loc.x - source_loc.x
-		set_angle(get_angle(src, target_loc) + deviation)
+	if(target_turf)
+		yo = target_turf.y - source_turf.y
+		xo = target_turf.x - source_turf.x
+		set_angle(get_angle(src, target_turf) + deviation)
 		return TRUE
 
 	stack_trace("WARNING: Projectile [type] fired without a target or mouse parameters to aim with.")
