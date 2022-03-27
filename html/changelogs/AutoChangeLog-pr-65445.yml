@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "Right-click with a MOD paint now lets you paint the suit's color!"
