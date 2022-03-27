@@ -714,6 +714,7 @@
 #include "code\datums\components\gps.dm"
 #include "code\datums\components\grillable.dm"
 #include "code\datums\components\gunpoint.dm"
+#include "code\datums\components\hazard_area.dm"
 #include "code\datums\components\heirloom.dm"
 #include "code\datums\components\holderloving.dm"
 #include "code\datums\components\igniter.dm"
