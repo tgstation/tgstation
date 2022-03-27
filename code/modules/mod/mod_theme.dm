@@ -49,6 +49,10 @@
 	var/list/inbuilt_modules = list()
 	/// Modules blacklisted from the MOD.
 	var/list/module_blacklist = list()
+	/// Icon file override for if the mod clothing uses another icon file.
+	var/icon_override = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
+	/// Worn Icon file override for if the mod clothing uses another worn icon file.
+	var/worn_icon_override = 'icons/mob/clothing/mod.dmi'
 	/// List of skins with their appropriate clothing flags.
 	var/list/skins = list(
 		"standard" = list(

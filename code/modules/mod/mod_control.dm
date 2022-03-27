@@ -135,6 +135,8 @@
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
 		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+		piece.icon = theme.icon_override
+		piece.worn_icon = theme.worn_icon_override
 	update_flags()
 	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
