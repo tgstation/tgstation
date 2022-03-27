@@ -65,7 +65,7 @@
 	var/jobs_that_can_approve = list()
 	for(var/stamp in pack.authorization_stamps)
 		jobs_that_can_approve += pack.authorization_stamps[stamp]
-	jobs_that_can_approve = english_list(jobs_that_can_approve, and_text = " or")
+	jobs_that_can_approve = english_list(jobs_that_can_approve, and_text = " or ")
 
 	P.name = "requisition form - #[id] ([pack.name])"
 	P.info += "<h2>[station_name()] Supply Requisition</h2>"
