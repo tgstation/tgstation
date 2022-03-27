@@ -6,23 +6,53 @@ import { capitalize } from 'common/string';
 const colorToMatrix = param => {
   switch (param) {
     case 'red':
-      return [1, 0, 0, 0, 0.25, 0.5, 0, 0, 0.25, 0, 0.5, 0,
-        0, 0, 0, 1, 0, 0, 0, 0];
+      return [
+        1, 0, 0, 0,
+        0.25, 0.5, 0, 0,
+        0.25, 0, 0.5, 0,
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+      ];
     case 'yellow':
-      return [0.5, 0.5, 0, 0, 0.5, 0.5, 0, 0, 0.25, 0.25, 0.5, 0,
-        0, 0, 0, 1, 0, 0, 0, 0];
+      return [
+        0.5, 0.5, 0, 0,
+        0.5, 0.5, 0, 0,
+        0.25, 0.25, 0.5, 0,
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+      ];
     case 'green':
-      return [0.5, 0.25, 0, 0, 0, 1, 0, 0, 0, 0.25, 0.5, 0,
-        0, 0, 0, 1, 0, 0, 0, 0];
+      return [
+        0.5, 0.25, 0, 0,
+        0, 1, 0, 0,
+        0, 0.25, 0.5, 0,
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+      ];
     case 'teal':
-      return [0.25, 0.25, 0.25, 0, 0, 0.5, 0.5, 0, 0, 0.5, 0.5, 0,
-        0, 0, 0, 1, 0, 0, 0, 0];
+      return [
+        0.25, 0.25, 0.25, 0,
+        0, 0.5, 0.5, 0,
+        0, 0.5, 0.5, 0,
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+      ];
     case 'blue':
-      return [0.25, 0, 0.25, 0, 0, 0.5, 0.25, 0, 0, 0, 1, 0,
-        0, 0, 0, 1, 0, 0, 0, 0];
+      return [
+        0.25, 0, 0.25, 0,
+        0, 0.5, 0.25, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+      ];
     case 'purple':
-      return [0.5, 0, 0.5, 0, 0.25, 0.5, 0.25, 0, 0.5, 0, 0.5, 0,
-        0, 0, 0, 1, 0, 0, 0, 0];
+      return [
+        0.5, 0, 0.5, 0,
+        0.25, 0.5, 0.25, 0,
+        0.5, 0, 0.5, 0,
+        0, 0, 0, 1,
+        0, 0, 0, 0,
+      ];
   }
 };
 
@@ -56,7 +86,7 @@ export const MODpaint = (props, context) => {
       <Window.Content>
         <Stack fill>
           <Stack.Item fill width="30%">
-            {[0, 1, 2].map((row, key) => (
+            {[0, 1, 2].map((row) => (
               <Section key={key}
                 title={`${displayText(prefixes[row])} turns to:`}>
                 {[0, 1, 2].map((col, key) => (
@@ -75,7 +105,7 @@ export const MODpaint = (props, context) => {
                         textAlign="right"
                         value={currentColor[row*4+col]*100}
                         minValue={0}
-                        maxValue={150}
+                        maxValue={125}
                         step={1}
                         stepPixelSize={0.75}
                         format={value => `${value}%`}

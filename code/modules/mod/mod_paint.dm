@@ -1,4 +1,4 @@
-#define MODPAINT_MAX_COLOR_VALUE 1.5
+#define MODPAINT_MAX_COLOR_VALUE 1.25
 #define MODPAINT_MIN_COLOR_VALUE 0
 #define MODPAINT_MAX_SECTION_COLORS 2
 #define MODPAINT_MIN_SECTION_COLORS 0.25
@@ -30,16 +30,23 @@
 	if(mod.active || mod.activating)
 		balloon_alert(user, "suit is active!")
 		return TRUE
-	var/secondary_attack = LAZYACCESS(params2list(params), RIGHT_CLICK)
-	if(secondary_attack && !editing_mod)
-		editing_mod = mod
-		proxy_view = new()
-		proxy_view.appearance = editing_mod.appearance
-		proxy_view.color = null
-		proxy_view.register_to_client(user.client)
-		ui_interact(user)
-	else
-		paint_skin(mod, user)
+	paint_skin(mod, user)
+
+/obj/item/mod/paint/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
+	if(!istype(attacked_atom, /obj/item/mod/control))
+		return ..()
+	var/obj/item/mod/control/mod = attacked_atom
+	if(mod.active || mod.activating)
+		balloon_alert(user, "suit is active!")
+		return TRUE
+	if(editing_mod)
+		return TRUE
+	editing_mod = mod
+	proxy_view = new()
+	proxy_view.appearance = editing_mod.appearance
+	proxy_view.color = null
+	proxy_view.register_to_client(user.client)
+	ui_interact(user)
 	return TRUE
 
 /obj/item/mod/paint/ui_interact(mob/user, datum/tgui/ui)
@@ -83,6 +90,10 @@
 			current_color = params["color"]
 			animate(proxy_view, time = 0.5 SECONDS, color = current_color)
 		if("confirm")
+			for(var/color_value in current_color)
+				if(isnum(color_value))
+					continue
+				return
 			var/total_color_value = 0
 			var/list/total_colors = current_color.Copy()
 			total_colors.Cut(13, length(total_colors))
@@ -138,7 +149,7 @@
 	mod.set_mod_skin(pick)
 
 /obj/item/mod/paint/proc/check_menu(obj/item/mod/control/mod, mob/user)
-	if(user.incapacitated() || !user.is_holding(src) || mod.active || mod.activating)
+	if(user.incapacitated() || !user.is_holding(src) || !mod || mod.active || mod.activating)
 		return FALSE
 	return TRUE
 
