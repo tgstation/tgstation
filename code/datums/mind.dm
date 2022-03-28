@@ -605,7 +605,6 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
-		to_chat(usr, "You have toggled the win state for [current]'s objective, \"[objective]\". Note that not all objectives will take this into account.")
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
