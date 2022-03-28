@@ -36,7 +36,7 @@
 		cell = new cell(src)
 
 	create_modularInterface()
-	ai_lockdown = TRUE
+	SetLockdown(TRUE)
 	model = new /obj/item/robot_model(src)
 	model.rebuild_modules()
 
