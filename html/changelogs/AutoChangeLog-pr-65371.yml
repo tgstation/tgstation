@@ -1,0 +1,7 @@
+author: "Ryll/Shaps and MrDoomBringer"
+delete-after: True
+changes: 
+  - imageadd: "Added new bleeding overlays for humans! People who are losing blood will now have overlays displayed on them that show which bodyparts are bleeding, and how much blood they're losing from that bodypart."
+  - bugfix: "Slash wounds now properly retain their bleed rate when being demoted to lower severities, meaning critical slashes will no longer be fully healed after using one suture."
+  - balance: "Critical slash wounds have had their initial bloodflow reduced, and existing slash wounds gain less bloodloss when hit with further slash attacks. The cap for how much blood a slash can lose per tick has been raised slightly."
+  - balance: "Grabbing your own bleeding limb to staunch the bleeding is quicker and slows you down less"
