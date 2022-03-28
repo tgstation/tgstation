@@ -22252,7 +22252,9 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
-/obj/structure/sign/poster/random/directional/south,
+/obj/structure/sign/poster/official/report_crimes{
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/security/checkpoint/escape)
 "ego" = (
