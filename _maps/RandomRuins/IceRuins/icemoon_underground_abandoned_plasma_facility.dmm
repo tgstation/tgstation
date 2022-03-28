@@ -309,7 +309,7 @@
 /turf/open/floor/iron/smooth_large{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/ruin/plasma_facility/operations)
+/area/ruin/plasma_facility/commons)
 "dY" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -1049,7 +1049,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/recharge_station,
 /turf/open/floor/plating/icemoon,
-/area/ruin/plasma_facility/operations)
+/area/ruin/plasma_facility/commons)
 "pf" = (
 /obj/structure/flora/grass/both,
 /obj/structure/railing{
@@ -1983,7 +1983,7 @@
 	pixel_y = 4
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/plasma_facility/operations)
+/area/ruin/plasma_facility/commons)
 "Hz" = (
 /mob/living/simple_animal/hostile/asteroid/wolf,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
@@ -2777,6 +2777,11 @@
 	name = "Bunk B"
 	},
 /turf/open/floor/stone,
+/area/ruin/plasma_facility/commons)
+"SR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/icemoon,
 /area/ruin/plasma_facility/commons)
 "SV" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
@@ -3866,8 +3871,8 @@ dY
 aM
 VS
 WC
-vt
-hR
+qW
+XI
 cn
 vt
 hR
@@ -3901,9 +3906,9 @@ TK
 bv
 vt
 pd
-hR
+XI
 Hv
-WC
+SR
 Ak
 hR
 oc
@@ -3972,7 +3977,7 @@ bv
 hR
 vt
 hR
-vt
+qW
 EZ
 jb
 QY
