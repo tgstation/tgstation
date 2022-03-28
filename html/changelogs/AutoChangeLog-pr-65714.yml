@@ -1,0 +1,4 @@
+author: "capsaicinz"
+delete-after: True
+changes: 
+  - bugfix: "charlie station dorms now only has one APC, as god intended"
