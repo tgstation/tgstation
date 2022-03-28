@@ -154,14 +154,8 @@
 	dir = 4
 	},
 /obj/item/card/id/away/old/apc,
-/obj/item/stock_parts/cell{
-	charge = 100;
-	maxcharge = 15000
-	},
-/obj/item/stock_parts/cell{
-	charge = 100;
-	maxcharge = 15000
-	},
+/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/ancientstation/charlie/engie)
 "az" = (
