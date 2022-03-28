@@ -28,6 +28,8 @@
 	cached_designs = list()
 	update_designs()
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload, mat_container_flags=BREAKDOWN_FLAGS_LATHE)
+	if(is_station_level(z))
+		AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(payment_department), PAYMENT_CLINICAL, TRUE)
 	RefreshParts()
 	update_icon(UPDATE_OVERLAYS)
 
@@ -169,6 +171,8 @@
 		if(!reagents.has_reagent(R, D.reagents_list[R]*amount/coeff))
 			say("Not enough reagents to complete prototype[amount > 1? "s" : ""].")
 			return FALSE
+	if(attempt_charge(src, usr, (LATHE_TAX * amount) * SSeconomy.inflation_value()) & COMPONENT_OBJ_CANCEL_CHARGE)
+		return FALSE
 	materials.mat_container.use_materials(efficient_mats, amount)
 	materials.silo_log(src, "built", -amount, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)

@@ -17,12 +17,15 @@
 	var/transaction_style = "Clinical"
 	///Who's getting paid?
 	var/datum/bank_account/target_acc
+	///Does this payment component respect same-department-discount?
+	var/department_discount = FALSE
 
-/datum/component/payment/Initialize(_cost, _target, _style)
+/datum/component/payment/Initialize(_cost, _target, _style, _discount)
 	target_acc = _target
 	if(!target_acc)
 		target_acc = SSeconomy.get_dep_account(ACCOUNT_CIV)
-
+	if(_discount)
+		department_discount = _discount
 	cost = _cost
 	transaction_style = _style
 	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
@@ -31,7 +34,7 @@
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER
 
-	if(!cost) //In case a free variant of anything is made it'll skip charging anyone.
+	if(!cost && !extra_fees) //In case a free variant of anything is made it'll skip charging anyone.
 		return
 	if(!ismob(target))
 		return COMPONENT_OBJ_CANCEL_CHARGE
@@ -57,7 +60,12 @@
 			if(PAYMENT_CLINICAL)
 				to_chat(user, span_warning("ID Card lacks a bank account. Aborting."))
 		return COMPONENT_OBJ_CANCEL_CHARGE
-	if(!(card.registered_account.has_money(cost + extra_fees)))
+	var/total_cost = cost + extra_fees
+	if(department_discount)
+		if(card.registered_account.account_job && (SSeconomy.get_dep_account(card.registered_account.account_job.paycheck_department) == target_acc)) //Todo: This is an awful looking check
+			total_cost = max(round(total_cost * VENDING_DISCOUNT), 1)
+
+	if(!(card.registered_account.has_money(total_cost)))
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
 				to_chat(user, span_warning("I'm so sorry... You don't seem to have enough money."))
@@ -65,9 +73,10 @@
 				to_chat(user, span_warning("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR."))
 			if(PAYMENT_CLINICAL)
 				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
+		user.balloon_alert(user, "Cost: [total_cost] credits.")
 		return COMPONENT_OBJ_CANCEL_CHARGE
-	target_acc.transfer_money(card.registered_account, cost + extra_fees)
-	card.registered_account.bank_card_talk("[cost + extra_fees] credits deducted from your account.")
+	target_acc.transfer_money(card.registered_account, total_cost)
+	card.registered_account.bank_card_talk("[total_cost] credits deducted from your account.")
 	playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 
 /datum/component/payment/proc/change_cost(datum/source, new_cost)
