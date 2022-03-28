@@ -7,6 +7,7 @@
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	custom_premium_price = PAYCHECK_HARD * 3.5
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]
@@ -21,10 +22,6 @@
 	var/tackle_speed = 1
 	/// See: [/datum/component/tackler/var/skill_mod]
 	var/skill_mod = 0
-
-/obj/item/clothing/gloves/tackler/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_FINGERPRINT_PASSTHROUGH, src)
 
 /obj/item/clothing/gloves/tackler/Destroy()
 	tackler = null
