@@ -96,7 +96,7 @@
 // Path of the Blade's... blade
 // Opting for /dark (darkened blade) instead of /blade to avoid "sickly_blade/blade".
 /obj/item/melee/sickly_blade/dark
-	name = "\improper darkened blade" // MELBERT TODO sprite
+	name = "\improper darkened blade"
 	desc = "A blade made of brilliant silver that shines gloriously. Unknown rage is bottled within."
 	icon_state = "dark_blade"
 	inhand_icon_state = "dark_blade"
