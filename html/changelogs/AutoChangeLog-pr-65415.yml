@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Bots blowing up can now be sorted under Info."
+  - bugfix: "Gunpowder's reaction can now be sorted under Info."
+  - code_imp: "boldnotice messages are now sorted under Info."
