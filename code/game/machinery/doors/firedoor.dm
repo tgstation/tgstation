@@ -37,8 +37,10 @@
 	var/list/affecting_areas
 	///For the few times we affect only the area we're actually in. Set during Init. If we get moved, we don't update, but this is consistant with fire alarms and also kinda funny so call it intentional.
 	var/area/my_area
-	///List of watched turfs in 4 cardinal directions to monitor for atmos changes to auto open firelocks
+	///List of watched turfs to monitor for atmos changes
 	var/list/turf/watched_turfs
+	///List of problem turfs with bad temperature
+	var/list/turf/issue_turfs
 	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
 	var/being_held_open = FALSE
 	///Type of alarm when active. See code/defines/firealarm.dm for the list. This var being null means there is no alarm.
@@ -66,14 +68,13 @@
 	my_area = get_area(src)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
-	CalculateWatchedTurfs()
-
+	refresh_shared_turfs()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = merger_typecache)
-	RegisterSignal(src, COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
+	RegisterSignal(GetMergeGroup(merger_id, allowed_types = merger_typecache), COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
 /**
  * Sets the offset for the warning lights.
  *
@@ -182,17 +183,29 @@
 		for(var/obj/machinery/firealarm/fire_panel in place.firealarms)
 			fire_panel.set_status()
 
-/obj/machinery/door/firedoor/proc/CalculateWatchedTurfs()
-	watched_turfs = list()
+/obj/machinery/door/firedoor/proc/refresh_shared_turfs(datum/source, list/leaving_members, list/joining_members)
+	SIGNAL_HANDLER
+	
+	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+		firelock.check_adjacent_turfs()
+
+/obj/machinery/door/firedoor/proc/check_adjacent_turfs()
+	var/list/turfs_to_return = list()
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(src),dir)
-		if(checked_turf)
-			watched_turfs |= checked_turf
-			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/check_atmos)
-	watched_turfs |= get_turf(src)
-	check_atmos()
+		if(checked_turf && !checked_turf.density && (!watched_turfs || !watched_turfs.Find(checked_turf)))
+			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results, override = TRUE)
 
-/obj/machinery/door/firedoor/proc/check_atmos(datum/source)
+/obj/machinery/door/firedoor/proc/check_atmos(var/turf/checked_turf)
+	var/result
+	var/datum/gas_mixture/environment = checked_turf.return_air()
+	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST && my_area.active_alarms[ALARM_ATMOS])
+		result = FIRELOCK_ALARM_TYPE_HOT
+	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT && my_area.active_alarms[ALARM_ATMOS])
+		result = FIRELOCK_ALARM_TYPE_COLD
+	return result
+
+/obj/machinery/door/firedoor/proc/process_results(datum/source)
 	SIGNAL_HANDLER
 
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
@@ -203,23 +216,19 @@
 	for(var/area/place in affecting_areas)
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
-
+	
 	var/result
+	var/turf/checked_turf = source
+	result = check_atmos(checked_turf)
 
-	for (var/turf/checked_turf in watched_turfs)
-		if(!checked_turf.density)
-			var/datum/gas_mixture/environment = checked_turf.return_air()
-			if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST && my_area.active_alarms[ALARM_ATMOS])
-				result = FIRELOCK_ALARM_TYPE_HOT
-			if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT && my_area.active_alarms[ALARM_ATMOS])
-				result = FIRELOCK_ALARM_TYPE_COLD
-
-	if(result && alarm_type)
-		return
-	else if(!result && alarm_type)
+	if(result)
+		issue_turfs |= checked_turf
+	else if(!result)
+		issue_turfs.Remove(checked_turf)
+	if(!issue_turfs.len && alarm_type)
 		start_deactivation_process()
 		return
-	else if(result && !alarm_type)
+	else if(issue_turfs.len && !alarm_type)
 		start_activation_process(result)
 		return
 
@@ -545,7 +554,7 @@
 	. = ..()
 	for(var/turf/checked_turf in watched_turfs)
 		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
-	CalculateWatchedTurfs()
+	refresh_shared_turfs()
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
