@@ -78,7 +78,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	for(var/port in all_components)
 		var/obj/item/computer_hardware/component = all_components[port]
 		qdel(component)
-	all_components.Cut() //Die demon die
+	if(all_components)
+		all_components.Cut()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	Remove_Messenger()
