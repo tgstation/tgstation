@@ -1,0 +1,4 @@
+author: "dragomagol"
+delete-after: True
+changes: 
+  - bugfix: "The Zeta emergency shuttle's brig now travels with the rest of the shuttle"
