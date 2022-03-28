@@ -293,49 +293,6 @@
 	LAZYADDASSOC(messages, message_image, associated_client)
 	LAZYADDASSOC(hearers, associated_client, message_image)
 
-#define BENCHMARK_LOOP while(world.timeofday < end_time)
-#define BENCHMARK_RESET iterations = 0; end_time = world.timeofday + duration
-#define BENCHMARK_MESSAGE(message) message_admins("[message] got [iterations] iterations in [seconds] seconds!"); BENCHMARK_RESET
-/*
-/mob/living/hearer
-
-/world
-	loop_checks = FALSE
-
-/mob/proc/benchmark_chat(seconds = 5, hearers = 40)
-	var/iterations = 0
-	var/duration = seconds SECONDS
-	var/end_time = world.timeofday + duration
-
-	var/list/hearers_list = list()
-	var/list/hearers_in_view = list()
-	var/list/turfs_in_view = list()
-	for(var/turf/viewed_turf in view(6))
-		turfs_in_view += viewed_turf
-
-	for(var/i in 1 to hearers)
-		hearers_list += new/mob/living/hearer()
-
-	for(var/num_hearers in 0 to hearers step 5)
-		for(var/mob/living/hearer as anything in hearers_list)
-			hearer.abstract_move(null)
-
-		if(num_hearers)
-			for(var/viewed_hearers in 1 to num_hearers)
-				var/mob/living/hearer/hearer = hearers_list[viewed_hearers]
-				hearer.abstract_move(pick(turfs_in_view))
-
-		hearers_in_view = get_hearers_in_view(6, src)
-
-		BENCHMARK_RESET
-		BENCHMARK_LOOP
-			create_chat_message(src, hearers_in_view, /datum/language/common, "blearg", list(), NONE)
-			iterations++
-
-		BENCHMARK_MESSAGE("creating a chat message the new way with [num_hearers + 1] mobs hearing the same message from one source")
-
-*/
-
 /**
  * Creates a message overlay at a defined location for a given speaker. assumes that this mob has a client
  *
