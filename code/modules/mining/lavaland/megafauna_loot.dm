@@ -587,6 +587,7 @@
 	gender = NEUTER
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
+	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
 	/// Blood level, used for movement and abilities in a soulscythe
 	var/blood_level = MAX_BLOOD_LEVEL
 
@@ -602,7 +603,7 @@
 /obj/projectile/soulscythe
 	name = "soulslash"
 	icon_state = "soulslash"
-	flag = MELEE //jokair
+	armor_flag = MELEE //jokair
 	damage = 15
 	light_range = 1
 	light_power = 1
