@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GLOB.PDAs (used primarily with ntmessenger.dm)
+
 // This is the base type that does all the hardware stuff.
 // Other types expand it - tablets use a direct subtypes, and
 // consoles and laptops use "procssor" item that is held inside machinery piece
@@ -46,6 +48,9 @@
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
 
+	var/current_identification = null // name on the ID currently inserted
+	var/current_job = null // job on the ID currently inserted
+
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
 	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
@@ -62,6 +67,7 @@
 	if(looping_sound)
 		soundloop = new(src, enabled)
 	update_appearance()
+	Add_Messenger()
 
 /obj/item/modular_computer/Destroy()
 	wipe_program(forced = TRUE)
@@ -75,6 +81,7 @@
 	all_components.Cut() //Die demon die
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
+	Remove_Messenger()
 	physical = null
 	return ..()
 
@@ -103,7 +110,11 @@
 	if(user.canUseTopic(src, BE_CLOSE))
 		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
-		return (card_slot2?.try_eject(user) || card_slot?.try_eject(user)) //Try the secondary one first.
+		if(card_slot2?.try_eject(user) || card_slot?.try_eject(user))
+			current_identification = null
+			current_job = null
+			return TRUE
+		return FALSE
 
 // Gets IDs/access levels from card slot. Would be useful when/if PDAs would become modular PCs.
 /obj/item/modular_computer/GetAccess()
@@ -188,8 +199,11 @@
 			var/mob/living/carbon/human/human_wearer = loc
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
+		var/obj/item/card/id/fixed_id = inserting_id // you WILL typecast or ELSE
+		current_identification = fixed_id.registered_name
+		current_job = fixed_id.assignment
 		update_slot_icon()
-		return TRUE
+		return fixed_id // returns the ID that actually got inserted
 
 	return FALSE
 
@@ -574,3 +588,10 @@
 	if(physical && physical != src)
 		return physical.Adjacent(neighbor)
 	return ..()
+
+/obj/item/modular_computer/proc/Add_Messenger()
+	GLOB.MMessengers += src
+
+/obj/item/modular_computer/proc/Remove_Messenger()
+	GLOB.MMessengers -= src
+

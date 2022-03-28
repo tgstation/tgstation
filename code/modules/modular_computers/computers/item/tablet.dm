@@ -154,3 +154,85 @@
 /obj/item/modular_computer/tablet/integrated/syndicate/Initialize(mapload)
 	. = ..()
 	borgo.lamp_color = COLOR_RED //Syndicate likes it red
+
+/////////////////////////
+// PDA
+/////////////////////////
+/*
+/obj/item/modular_computer/tablet/pda
+	name = "\improper standard PDA"
+	desc = "A new and improved personal digital assistant from Thinktronic Systems, LTD. Comes preinstalled with the NtOS system, and is capable of receiving IDs."
+	icon = 'icons/obj/modular_tablet.dmi'
+	icon_state = "pda"
+	icon_state_menu = ""
+	base_icon_state = ""
+	worn_icon_state = "pda"
+	hardware_flag = PROGRAM_PDA
+	max_hardware_size = 1
+	w_class = WEIGHT_CLASS_SMALL
+	max_bays = 5
+	steel_sheet_cost = 1
+	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
+	looping_sound = FALSE
+	has_variants = TRUE
+	finish_color = null
+
+	greyscale_config = /datum/greyscale_config/pda
+	greyscale_colors = "#999875#a92323"
+
+	var/id_inserted = FALSE // if an ID is inserted or not
+
+/obj/item/modular_computer/tablet/pda/Initialize(mapload)
+	. = ..()
+	install_component(new /obj/item/computer_hardware/processor_unit/small)
+	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
+	install_component(new /obj/item/computer_hardware/hard_drive/small/pda)
+	install_component(new /obj/item/computer_hardware/network_card)
+	install_component(new /obj/item/computer_hardware/card_slot)
+
+/obj/item/modular_computer/tablet/pda/update_overlays()
+	. = ..()
+	var/init_icon = initial(icon)
+	if(!init_icon)
+		return
+	if(id_inserted)
+		. += mutable_appearance(init_icon, "id_overlay")
+
+/obj/item/modular_computer/tablet/pda/update_icon_state()
+	. = ..()
+	icon_state = "pda"
+
+/obj/item/modular_computer/tablet/pda/proc/update_id_name(obj/item/card/id/ID)
+	if(id_inserted)
+		name = "PDA-[ID.registered_name] ([ID.assignment])"
+		return TRUE
+	name = "PDA- ()"
+	return
+
+/obj/item/modular_computer/tablet/pda/InsertID(obj/item/inserting_item)
+	. = ..()
+	var/obj/item/card/id/inserting_id = .
+	if(inserting_id)
+		update_overlays()
+		update_id_name(inserting_id)
+
+/obj/item/modular_computer/tablet/pda/AltClick(mob/user)
+	. = ..()
+	if(.)
+		update_overlays()
+		update_id_name()
+
+/obj/item/modular_computer/tablet/pda/emag_act(mob/user)
+	. = ..()
+
+	hardware_flag = PROGRAM_ALL // it's called we do a little bit of trolling
+
+///////////////////////////
+// PDA TYPES
+///////////////////////////
+
+/obj/item/modular_computer/tablet/pda/captain
+	name = "captain PDA"
+	greyscale_config = /datum/greyscale_config/pda/captain
+	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#F5D67B"
+*/

@@ -244,7 +244,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
-	belt = /obj/item/pda
+	belt = /obj/item/modular_computer/tablet/preset/advanced
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
@@ -311,13 +311,13 @@
 			C.registered_account = B
 			B.bank_cards += C
 		H.sec_hud_set_ID()
-
+/*
 	var/obj/item/pda/PDA = H.get_item_by_slot(pda_slot)
 	if(istype(PDA))
 		PDA.owner = H.real_name
 		PDA.ownjob = J.title
 		PDA.update_label()
-
+*/
 
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()

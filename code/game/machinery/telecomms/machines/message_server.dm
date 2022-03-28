@@ -83,6 +83,7 @@
 	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
+	var/list/datum/data_modular_msg/modular_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey = "password"
 	var/calibrating = 15 MINUTES //Init reads this and adds world.time, then becomes 0 when that time has passed and the machine works
@@ -126,10 +127,12 @@
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/messaging/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-message signals
 	if(!istype(signal) || !signal.data["message"] || !on || calibrating)
+		message_admins("Signal received, but didn't pass the first check.")
 		return
 
 	// log the signal
 	if(istype(signal, /datum/signal/subspace/messaging/pda))
+		message_admins("Signal received. Contents: [signal.data["message"]]")
 		var/datum/signal/subspace/messaging/pda/PDAsignal = signal
 		var/datum/data_pda_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
 		pda_msgs += M
@@ -179,11 +182,11 @@
 	return data["targets"][1]
 
 /datum/signal/subspace/messaging/pda/proc/format_message()
-	if (logged && data["photo"])
-		return "\"[data["message"]]\" (<a href='byond://?src=[REF(logged)];photo=1'>Photo</a>)"
-	return "\"[data["message"]]\""
+	if (logged)
+		return data["message"]
 
 /datum/signal/subspace/messaging/pda/broadcast()
+	message_admins("Signal broadcasted from PDA.")
 	if (!logged)  // Can only go through if a message server logs it
 		return
 	for (var/obj/item/pda/P in GLOB.PDAs)
@@ -198,6 +201,20 @@
 	for (var/obj/machinery/requests_console/Console in GLOB.allConsoles)
 		if(ckey(Console.department) == rec_dpt || (data["ore_update"] && Console.receive_ore_updates))
 			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
+
+// The datum used by modular devices for the NTMessenger, stored on the message server.
+/datum/data_modular_msg
+	var/sender = "Unspecified"
+	var/recipient = "Unspecified"
+	var/message = "Blank"
+
+/datum/data_modular_msg/New(param_rec, param_sender, param_message)
+	if(param_rec)
+		recipient = param_rec
+	if(param_sender)
+		sender = param_sender
+	if(param_message)
+		message = param_message
 
 // Log datums stored by the message server.
 /datum/data_pda_msg
