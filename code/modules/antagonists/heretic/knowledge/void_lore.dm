@@ -56,7 +56,7 @@
 
 /datum/heretic_knowledge/void_grasp
 	name = "Grasp of Void"
-	desc = "Your Masus Grasp will temporarily mute and chill the victim."
+	desc = "Your Mansus Grasp will temporarily mute and chill the victim."
 	gain_text = "I saw the cold watcher who observes me. The chill mounts within me. \
 		They are quiet. This isn't the end of the mystery."
 	next_knowledge = list(/datum/heretic_knowledge/cold_snap)

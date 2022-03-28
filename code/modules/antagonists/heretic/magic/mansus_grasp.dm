@@ -87,7 +87,7 @@
 	if(SEND_SIGNAL(heretic, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, hit) & COMPONENT_BLOCK_CHARGE_USE)
 		return FALSE
 
-	hit.apply_damage(10, BRUTE)
+	hit.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	if(iscarbon(hit))
 		var/mob/living/carbon/carbon_hit = hit
 		carbon_hit.AdjustKnockdown(5 SECONDS)

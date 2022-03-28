@@ -42,7 +42,7 @@
 
 /datum/heretic_knowledge/blade_grasp
 	name = "Grasp of the Blade"
-	desc = "Your Masus Grasp will cause a short stun when used on someone lying down or facing away from you."
+	desc = "Your Mansus Grasp will cause a short stun when used on someone lying down or facing away from you."
 	gain_text = "The story of the footsoldier has been told since antiquity. It is one of blood and valor, \
 		and is championed by sword, steel and silver."
 	next_knowledge = list(/datum/heretic_knowledge/blade_dance)
@@ -87,7 +87,7 @@
 
 	// We're officially behind them, apply effects
 	target.AdjustParalyzed(1.5 SECONDS)
-	target.apply_damage(10, BRUTE)
+	target.apply_damage(10, BRUTE, wound_bonus = CANT_WOUND)
 	target.balloon_alert(source, "backstab!")
 	playsound(get_turf(target), 'sound/weapons/guillotine.ogg', 100, TRUE)
 
@@ -391,5 +391,6 @@
 		attack_direction = get_dir(source, target),
 	)
 
-	// And! Get some free healing for a portion of the bonus damage dealt.
-	source.heal_overall_damage(bonus_damage / 2, bonus_damage / 2)
+	if(target.stat != DEAD)
+		// And! Get some free healing for a portion of the bonus damage dealt.
+		source.heal_overall_damage(bonus_damage / 2, bonus_damage / 2)

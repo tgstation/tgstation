@@ -156,7 +156,7 @@
 	name = "Silver and Steel"
 	desc = "You've become the master of all duellists - the paragon of blades."
 	database_id = MEDAL_BLADE_ASCENSION
-	icon = "voidascend" // MELBERT TODO icon
+	icon = "bladeascend"
 
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
