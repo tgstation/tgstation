@@ -1,0 +1,4 @@
+author: "capsaicinz"
+delete-after: True
+changes: 
+  - bugfix: "removes duplicate dorm airlock on tramstation."
