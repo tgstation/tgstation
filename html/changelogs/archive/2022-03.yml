@@ -981,3 +981,14 @@
       to be newlined.
   willox:
   - bugfix: TGUI and Tooltip windows now work with high-dpi web browsers
+2022-03-28:
+  CocaColaTastesGood:
+  - bugfix: Fixes an exploit that allowed players to send unsanitized text to admins.
+  Fikou:
+  - rscadd: Right-click with a MOD paint now lets you paint the suit's color!
+  LemonInTheDark:
+  - bugfix: Bartenders can throw drinks again, rejoice!
+  YakumoChen:
+  - qol: Added a 50 count bamboo stack to base stack types
+  vincentiusvin:
+  - bugfix: fixed lavaland syndie base's pipes popping up.

@@ -1,4 +1,0 @@
-author: "CocaColaTastesGood"
-delete-after: True
-changes: 
-  - bugfix: "Fixes an exploit that allowed players to send unsanitized text to admins."
