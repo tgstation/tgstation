@@ -180,7 +180,7 @@
 	return data["targets"][1]
 
 /datum/signal/subspace/messaging/pda/proc/format_message()
-	return "\"[data["message"]]\""
+	return html_decode("\"[data["message"]]\"")
 
 /datum/signal/subspace/messaging/pda/broadcast()
 	if (!logged)  // Can only go through if a message server logs it

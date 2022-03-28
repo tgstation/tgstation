@@ -32,8 +32,8 @@
 			data["appended_name"] = "[messenger.current_identification] ([messenger.current_job])"
 			data["ref"] = REF(messenger)
 
-			if(data["ref"] != REF(computer)) // you cannot message yourself (despite all my rage)
-				dictionary += list(data)
+			//if(data["ref"] != REF(computer)) // you cannot message yourself (despite all my rage)
+			dictionary += list(data)
 
 	return dictionary
 
@@ -70,6 +70,8 @@
 			var/obj/item/modular_computer/target = locate(params["ref"])
 			if(!target)
 				return // we don't want tommy sending his messages to nullspace
+
+			message_admins(target.name)
 
 			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
 
@@ -197,5 +199,39 @@
 	message_data["ref"] = signal.data["ref"]
 	messages += list(message_data)
 
+	var/mob/living/L = null
+	if(computer.loc && isliving(computer.loc))
+		L = computer.loc
+	//Maybe they are a pAI!
+	else
+		L = get(computer, /mob/living/silicon)
+
+	if(L && (L.stat == CONSCIOUS || L.stat == SOFT_CRIT))
+		var/reply = "(<a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];skiprefresh=1;target=[signal.data["ref"]]'>Reply</a>)"
+		var/hrefstart
+		var/hrefend
+		if (isAI(L))
+			hrefstart = "<a href='?src=[REF(L)];track=[html_encode(signal.data["name"])]'>"
+			hrefend = "</a>"
+
+		if(signal.data["automated"])
+			reply = "\[Automated Message\]"
+
+		var/inbound_message = signal.format_message()
+		if(signal.data["emojis"] == TRUE)//so will not parse emojis as such from pdas that don't send emojis
+			inbound_message = emoji_parse(inbound_message)
+
+		to_chat(L, "<span class='infoplain'>[icon2html(src)] <b>PDA message from [hrefstart][signal.data["name"]] ([signal.data["job"]])[hrefend], </b>[inbound_message] [reply]</span>")
+
+
 	if (ringerStatus)
 		computer.ring(tTone)
+
+/datum/computer_file/program/messenger/Topic(href, href_list)
+	..()
+
+	if(!href_list["close"] && usr.canUseTopic(computer, BE_CLOSE, FALSE, NO_TK))
+		var/choice = text2num(href_list["choice"]) || href_list["choice"]
+		switch(choice)
+			if("Message")
+				send_message(usr, list(locate(href_list["target"])))
