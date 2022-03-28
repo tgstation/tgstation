@@ -1,0 +1,4 @@
+author: "capsaicinz"
+delete-after: True
+changes: 
+  - bugfix: "cleans up some force-feeding code indentation, and adds some headless flavor"
