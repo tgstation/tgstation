@@ -1,8 +1,0 @@
-author: "ArcaneMusic ft. sprites by Kryson"
-delete-after: True
-changes: 
-  - rscadd: "Newscasters have been moved over to TGUI, and with them several new features."
-  - expansion: "Newscaster channels can now be given channel descriptions!"
-  - expansion: "Messages can now be censored by crew with brig access from any console."
-  - rscdel: "Standalone bounty boards have been replaced with newscasters, as the two have been merged."
-  - refactor: "Bounty boards and newscaster code have been refactored in order to merge the two pieces of content."
