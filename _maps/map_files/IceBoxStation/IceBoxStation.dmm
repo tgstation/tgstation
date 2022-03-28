@@ -139,10 +139,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/maintenance/fore/lesser)
-"agW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/security/warden)
 "ahx" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -2104,8 +2100,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/junction{
-	dir = 2
+/obj/structure/disposalpipe/junction/flip{
+	dir = 1
 	},
 /turf/open/floor/iron,
 /area/security/brig/upper)
@@ -9521,6 +9517,11 @@
 /obj/item/restraints/handcuffs,
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
+"dzs" = (
+/obj/effect/turf_decal/tile/red/full,
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark/textured_large,
+/area/security/checkpoint/auxiliary)
 "dzt" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 10
@@ -10162,6 +10163,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/security/brig/upper)
 "dQi" = (
@@ -13111,7 +13115,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured,
 /area/security/warden)
 "fuK" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -14964,11 +14968,11 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/machinery/camera/motion/directional/north{
-	c_tag = "Security - Upper Hallway South"
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 10
+	},
+/obj/machinery/camera/directional/north{
+	c_tag = "Security - Upper Brig South"
 	},
 /turf/open/floor/iron,
 /area/security/brig/upper)
@@ -16144,7 +16148,7 @@
 	name = "Brig Control"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured,
 /area/security/warden)
 "gPW" = (
 /obj/effect/turf_decal/siding/yellow/corner,
@@ -18157,7 +18161,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
-/turf/open/floor/iron/showroomfloor,
+/turf/open/floor/iron/dark/textured,
 /area/security/warden)
 "hMF" = (
 /obj/structure/table,
@@ -19764,10 +19768,10 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central)
 "iCF" = (
-/obj/machinery/computer/security{
+/obj/machinery/light/directional/south,
+/obj/machinery/computer/secure_data{
 	dir = 1
 	},
-/obj/machinery/light/directional/south,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "iCG" = (
@@ -23480,7 +23484,7 @@
 	name = "Brig Control"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured,
 /area/ai_monitored/security/armory/upper)
 "ktT" = (
 /obj/effect/turf_decal/tile/blue{
@@ -23862,6 +23866,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/fore/greater)
+"kEa" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/holopad,
+/turf/open/floor/iron,
+/area/hallway/primary/fore)
 "kEd" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24338,6 +24352,9 @@
 "kPs" = (
 /obj/effect/turf_decal/tile/red/half,
 /obj/structure/closet/emcloset,
+/obj/machinery/camera/directional/north{
+	c_tag = "Security Entrance"
+	},
 /turf/open/floor/iron/smooth_half,
 /area/security/brig/upper)
 "kPE" = (
@@ -33319,9 +33336,6 @@
 /obj/effect/turf_decal/tile/red/half,
 /obj/structure/closet/firecloset,
 /obj/item/radio/intercom/prison/directional/north,
-/obj/machinery/camera/motion/directional/north{
-	c_tag = "Security - Entrance"
-	},
 /turf/open/floor/iron/smooth_half,
 /area/security/brig/upper)
 "pAk" = (
@@ -36797,6 +36811,7 @@
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron,
 /area/security/warden)
 "rtG" = (
@@ -40651,6 +40666,7 @@
 	req_access_txt = "2";
 	pixel_x = 7
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "tkJ" = (
@@ -44480,7 +44496,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/textured,
 /area/security/warden)
 "uZM" = (
 /obj/structure/closet/secure_closet/brig,
@@ -75740,10 +75756,10 @@ jnk
 jnk
 jnk
 jnk
-oBX
-oBX
-oBX
-uhx
+bkS
+bkS
+bkS
+bkS
 oVy
 wCC
 uyT
@@ -75997,7 +76013,7 @@ jnk
 jnk
 jnk
 jnk
-oBX
+gfA
 ipv
 ipv
 suH
@@ -76489,10 +76505,10 @@ upV
 iQP
 iQP
 iQP
-upV
-upV
-agW
-agW
+uim
+uim
+aIF
+aIF
 mcy
 mXP
 hJG
@@ -76751,10 +76767,10 @@ upV
 gYh
 gCE
 svk
-agW
-agW
-agW
-agW
+aIF
+aIF
+aIF
+aIF
 agn
 jnk
 jnk
@@ -78825,7 +78841,7 @@ tik
 tik
 cCm
 pqY
-jEj
+kEa
 pTI
 sgN
 mkd
@@ -79849,7 +79865,7 @@ udX
 udX
 hND
 ksX
-ksX
+dzs
 ksX
 hND
 anz

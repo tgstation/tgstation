@@ -790,6 +790,10 @@
 "cM" = (
 /turf/closed/wall,
 /area/mine/living_quarters)
+"cN" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/iron/textured,
+/area/security/brig)
 "cO" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -2249,7 +2253,6 @@
 /turf/open/floor/iron/cafeteria,
 /area/commons/dorms/laundry)
 "gG" = (
-/obj/effect/turf_decal/tile/red,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
 	},
@@ -3033,7 +3036,6 @@
 	},
 /area/service/hydroponics)
 "iE" = (
-/obj/structure/extinguisher_cabinet/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Security - Lower Brig Hallway"
 	},
@@ -4778,9 +4780,8 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/smooth_half{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "nL" = (
 /obj/machinery/telecomms/relay/preset/mining,
@@ -5878,7 +5879,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -7941,6 +7941,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"wA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/hallway/primary/central/fore)
 "wB" = (
 /obj/item/stack/rods/ten,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -8216,7 +8222,6 @@
 /turf/open/floor/iron,
 /area/science/xenobiology)
 "xs" = (
-/obj/effect/turf_decal/tile/red,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
@@ -9735,9 +9740,8 @@
 /obj/machinery/light/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/smooth_half{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "Ch" = (
 /obj/machinery/light/small/directional/west,
@@ -9778,9 +9782,8 @@
 "Cm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/smooth_half{
-	dir = 1
-	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "Cn" = (
 /obj/effect/turf_decal/tile/bar,
@@ -10359,7 +10362,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/security/prison/safe)
 "DR" = (
 /obj/machinery/light/directional/north,
@@ -15980,11 +15983,6 @@
 	dir = 1
 	},
 /area/service/hydroponics)
-"Td" = (
-/obj/structure/closet/secure_closet/brig,
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/smooth,
-/area/security/prison)
 "Te" = (
 /obj/machinery/door/airlock{
 	name = "Kitchen";
@@ -17860,7 +17858,7 @@
 /obj/machinery/door/airlock{
 	name = "Cleaning Closet"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/security/prison/safe)
 "Yr" = (
 /obj/effect/decal/cleanable/ants,
@@ -41433,8 +41431,8 @@ iY
 iY
 iY
 yN
-kK
-rm
+mO
+mO
 kK
 dJ
 kn
@@ -41949,7 +41947,7 @@ DM
 Is
 kK
 kK
-kK
+rm
 dJ
 kn
 uM
@@ -42726,7 +42724,7 @@ Qw
 xs
 xs
 xs
-tH
+wA
 xs
 gG
 xs
@@ -45291,9 +45289,9 @@ Be
 Uo
 sq
 lT
-dz
+cN
 NN
-Td
+Ki
 PM
 NN
 qM
@@ -46046,7 +46044,7 @@ mO
 mO
 mO
 mO
-kK
+mO
 GX
 YH
 HI
