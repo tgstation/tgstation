@@ -86,7 +86,7 @@ export const MODpaint = (props, context) => {
       <Window.Content>
         <Stack fill>
           <Stack.Item fill width="30%">
-            {[0, 1, 2].map((row) => (
+            {[0, 1, 2].map((row, key) => (
               <Section key={key}
                 title={`${displayText(prefixes[row])} turns to:`}>
                 {[0, 1, 2].map((col, key) => (
