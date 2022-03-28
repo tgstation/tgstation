@@ -73,13 +73,12 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	wipe_program(forced = TRUE)
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		idle.kill_program(TRUE)
-	idle_threads.Cut()
+	idle_threads?.Cut()
 	STOP_PROCESSING(SSobj, src)
 	for(var/port in all_components)
 		var/obj/item/computer_hardware/component = all_components[port]
 		qdel(component)
-	if(all_components)
-		all_components.Cut()
+	all_components?.Cut()
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	Remove_Messenger()

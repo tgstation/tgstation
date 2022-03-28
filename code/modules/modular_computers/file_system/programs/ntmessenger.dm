@@ -32,7 +32,8 @@
 			data["appended_name"] = "[messenger.current_identification] ([messenger.current_job])"
 			data["ref"] = REF(messenger)
 
-			dictionary += list(data)
+			if(data["ref"] != REF(computer)) // you cannot message yourself (despite all my rage)
+				dictionary += list(data)
 
 	return dictionary
 
@@ -62,6 +63,9 @@
 		if("PDA_viewMessages")
 			viewingMessages = !viewingMessages
 			return(UI_UPDATE)
+		if("PDA_clearMessages")
+			messages = list()
+			return(UI_UPDATE)
 		if("PDA_sendMessage")
 			var/obj/item/modular_computer/target = locate(params["ref"])
 			if(!target)
@@ -71,6 +75,7 @@
 
 			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
 				send_message(usr, list(target))
+				return(UI_UPDATE)
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -144,9 +149,11 @@
 		"name" = computer.current_identification,
 		"job" = computer.current_job,
 		"message" = message,
+		"ref" = REF(computer),
 		"targets" = string_targets,
 		"emojis" = allow_emojis,
 		"rigged" = rigged,
+		"photo" = null,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
 		signal.data["rigged_user"] = REF(user) // Used for bomb logging
@@ -161,17 +168,17 @@
 		//if(!silent)
 			//playsound(src, 'sound/machines/terminal_error.ogg', 15, TRUE)
 		return FALSE
-	var/target_text = signal.format_target()
+
 	if(allow_emojis)
 		message = emoji_parse(message)//already sent- this just shows the sent emoji as one to the sender in the to_chat
 		signal.data["message"] = emoji_parse(signal.data["message"])
 
 	// Log it in our logs
 	var/list/message_data = list()
-	message_data["name"] = target_text
+	message_data["name"] = "[signal.data["name"]] ([signal.data["job"]])"
 	message_data["contents"] = signal.format_message()
 	message_data["outgoing"] = TRUE
-	message_data["ref"] = REF(computer)
+	message_data["ref"] = signal.data["ref"]
 	messages += list(message_data)
 
 	if (!ringerStatus)

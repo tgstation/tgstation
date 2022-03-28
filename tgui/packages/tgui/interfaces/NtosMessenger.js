@@ -47,11 +47,16 @@ export const NtosMessenger = (props, context) => {
       <NtosWindow width={600} height={800}>
         <NtosWindow.Content>
           <Stack vertical>
-            <Section fill textAlign="left">
+            <Section fill>
               <Button
                 icon="arrow-left"
                 content="Back"
                 onClick={() => act('PDA_viewMessages')}
+              />
+              <Button
+                icon="trash"
+                content="Clear Messages"
+                onClick={() => act('PDA_clearMessages')}
               />
             </Section>
             {messages.map(message => (
