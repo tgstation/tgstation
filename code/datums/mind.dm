@@ -605,15 +605,7 @@
 			return
 		objective.completed = !objective.completed
 		log_admin("[key_name(usr)] toggled the win state for [current]'s objective: [objective.explanation_text]")
-
-
-	else if(href_list["is_obj_completed"])
-		var/datum/objective/objective = locate(href_list["is_obj_completed"]) in get_all_objectives()
-		if(!objective)
-			to_chat(usr, "Invalid objective.")
-			return
-
-		to_chat(usr, span_boldnotice("[current]'s objective, [objective], is currently [objective.check_completion() ? "completed":"not completed"]."))
+		to_chat(usr, "You have toggled the win state for [current]'s objective, \"[objective]\". Note that not all objectives will take this into account.")
 
 	else if (href_list["silicon"])
 		switch(href_list["silicon"])
