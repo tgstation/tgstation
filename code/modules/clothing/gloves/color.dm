@@ -229,7 +229,6 @@
 	icon_state = "nitrile"
 	inhand_icon_state = "nitrilegloves"
 	clothing_traits = list(TRAIT_QUICKER_CARRY, TRAIT_FASTMED)
-	item_flags = NONE
 
 /obj/item/clothing/gloves/color/infiltrator
 	name = "infiltrator gloves"
