@@ -151,6 +151,18 @@
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	flags_1 = NONE
 
+/obj/item/clothing/mask/bandana/color/striped/security
+	name = "striped security bandana"
+	desc = "A fine bandana with nanotech lining, a stripe across and security colors."
+	greyscale_colors = "#A02525#2e2e2e"
+	flags_1 = NONE
+
+/obj/item/clothing/mask/bandana/color/striped/science
+	name = "striped science bandana"
+	desc = "A fine bandana with nanotech lining, a stripe across and science colors."
+	greyscale_colors = "#DCDCDC5#8019a0"
+	flags_1 = NONE
+
 /obj/item/clothing/mask/bandana/color/striped/botany
 	name = "striped botany bandana"
 	desc = "A fine bandana with nanotech lining, a stripe across and botany colors."
