@@ -167,10 +167,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_MEDIUM * 2
 
-/obj/item/computer_hardware/hard_drive/small/install_default_programs()
-	. = ..()
-	store_file(new/datum/computer_file/program/messenger(src))
-
 // For borg integrated tablets. No downloader.
 /obj/item/computer_hardware/hard_drive/small/integrated/install_default_programs()
 	store_file(new /datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar

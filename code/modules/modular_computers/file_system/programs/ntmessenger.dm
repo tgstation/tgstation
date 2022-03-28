@@ -23,8 +23,6 @@
 	var/allow_emojis = FALSE // whether or not we allow emojis
 	var/viewingMessages = FALSE // whether or not we're looking at messages atm
 
-/datum/computer_file/program/messenger
-
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
 
@@ -65,8 +63,14 @@
 			viewingMessages = !viewingMessages
 			return(UI_UPDATE)
 		if("PDA_sendMessage")
-			var/target = list(locate(params["ref"]))
-			send_message(usr, target)
+			var/obj/item/modular_computer/target = locate(params["ref"])
+			if(!target)
+				return // we don't want tommy sending his messages to nullspace
+
+			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
+
+			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+				send_message(usr, list(target))
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -165,11 +169,26 @@
 	// Log it in our logs
 	var/list/message_data = list()
 	message_data["name"] = target_text
-	message_data["contents"] = signal.data["message"]
+	message_data["contents"] = signal.format_message()
 	message_data["outgoing"] = TRUE
+	message_data["ref"] = REF(computer)
 	messages += list(message_data)
+
+	if (!ringerStatus)
+		computer.send_sound()
 
 	last_text = world.time
 	if (everyone)
 		last_text_everyone = world.time
 	return TRUE
+
+/datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
+	var/list/message_data = list()
+	message_data["name"] = signal.data["name"]
+	message_data["contents"] = signal.format_message()
+	message_data["outgoing"] = FALSE
+	message_data["ref"] = signal.data["ref"]
+	messages += list(message_data)
+
+	if (ringerStatus)
+		computer.ring(tTone)

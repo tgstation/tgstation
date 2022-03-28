@@ -127,12 +127,10 @@
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/messaging/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-message signals
 	if(!istype(signal) || !signal.data["message"] || !on || calibrating)
-		message_admins("Signal received, but didn't pass the first check.")
 		return
 
 	// log the signal
 	if(istype(signal, /datum/signal/subspace/messaging/pda))
-		message_admins("Signal received. Contents: [signal.data["message"]]")
 		var/datum/signal/subspace/messaging/pda/PDAsignal = signal
 		var/datum/data_pda_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
 		pda_msgs += M
@@ -186,12 +184,13 @@
 		return data["message"]
 
 /datum/signal/subspace/messaging/pda/broadcast()
-	message_admins("Signal broadcasted from PDA.")
 	if (!logged)  // Can only go through if a message server logs it
 		return
-	for (var/obj/item/pda/P in GLOB.PDAs)
-		if ("[P.owner] ([P.ownjob])" in data["targets"])
-			P.receive_message(src)
+	for (var/obj/item/modular_computer/comp in GLOB.MMessengers)
+		if ("[comp.current_identification] ([comp.current_job])" in data["targets"])
+			var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
+			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+				app.receive_message(src)
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()

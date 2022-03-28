@@ -51,7 +51,7 @@ export const NtosMessenger = (props, context) => {
               <Button
                 icon="arrow-left"
                 content="Back"
-                onClick={() => act('PDA_viewmessages')}
+                onClick={() => act('PDA_viewMessages')}
               />
             </Section>
             {messages.map(message => (
@@ -72,7 +72,7 @@ export const NtosMessenger = (props, context) => {
                     <Button transparent
                       content={message.name}
                       onClick={() => act('PDA_sendMessage', {
-                        ref: messenger.ref,
+                        ref: message.ref,
                       })}
                     />
                   )}
@@ -154,7 +154,7 @@ export const NtosMessenger = (props, context) => {
       </NtosWindow.Content>
       {!owner && (
         <NoIDDimmer />
-      )};
+      )}
     </NtosWindow>
   );
 };
