@@ -73,7 +73,7 @@
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = merger_typecache)
-
+	RegisterSignal(src, COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
 /**
  * Sets the offset for the warning lights.
  *
@@ -194,7 +194,6 @@
 
 /obj/machinery/door/firedoor/proc/check_atmos(datum/source)
 	SIGNAL_HANDLER
-	var/found_turf = FALSE
 
 	if(!COOLDOWN_FINISHED(src, detect_cooldown))
 		return
@@ -205,14 +204,10 @@
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
 
-	for(var/turf/checked_turf in watched_turfs)
-		if(source == checked_turf)
-			found_turf = TRUE
-
 	var/result
 
 	for (var/turf/checked_turf in watched_turfs)
-		if(!checked_turf.density && found_turf)
+		if(!checked_turf.density)
 			var/datum/gas_mixture/environment = checked_turf.return_air()
 			if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST && my_area.active_alarms[ALARM_ATMOS])
 				result = FIRELOCK_ALARM_TYPE_HOT
@@ -589,7 +584,6 @@
 /obj/machinery/door/firedoor/border_only/Moved()
 	. = ..()
 	adjust_lights_starting_offset()
-	watched_turfs = list()
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
