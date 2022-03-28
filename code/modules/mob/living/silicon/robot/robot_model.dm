@@ -191,6 +191,7 @@
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
 	INVOKE_ASYNC(new_model, .proc/do_transform_animation)
+	cyborg.ai_lockdown = FALSE
 	qdel(src)
 	return new_model
 
