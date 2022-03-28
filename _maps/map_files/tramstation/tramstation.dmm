@@ -2189,10 +2189,6 @@
 	id_tag = "private_c";
 	name = "Private Quarters C"
 	},
-/obj/machinery/door/airlock{
-	id_tag = "private_d";
-	name = "Private Quarters D"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
