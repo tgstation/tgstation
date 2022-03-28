@@ -122,7 +122,6 @@
 	boots.mod = src
 	mod_parts += boots
 	var/list/all_parts = mod_parts.Copy() + src
-	var/list/selected_skin = theme.skins[skin]
 	for(var/obj/item/piece as anything in all_parts)
 		piece.name = "[theme.name] [piece.name]"
 		piece.desc = "[piece.desc] [theme.desc]"
@@ -135,12 +134,7 @@
 		piece.min_cold_protection_temperature = theme.min_cold_protection_temperature
 		piece.permeability_coefficient = theme.permeability_coefficient
 		piece.siemens_coefficient = theme.siemens_coefficient
-		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-		if(selected_skin[MOD_ICON_OVERRIDE])
-			piece.icon = selected_skin[MOD_ICON_OVERRIDE]
-		if(selected_skin[MOD_WORN_ICON_OVERRIDE])
-			piece.worn_icon = selected_skin[MOD_WORN_ICON_OVERRIDE]
-	update_flags()
+	set_mod_skin(skin)
 	update_speed()
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
