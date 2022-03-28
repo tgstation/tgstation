@@ -98,7 +98,7 @@
 	name = "Reactionless Explosives"
 	description = "Gases with high specific heat can heat up those with a low one and produce a lot of pressure. Perform research and publish papers on this field. No gas reactions are allowed."
 	gain = list(10,50,100)
-	target_amount = list(20,75,200)
+	target_amount = list(20,50,100)
 	experiment_proper = TRUE
 	sanitized_misc = FALSE
 	sanitized_reactions = TRUE
