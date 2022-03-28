@@ -36,6 +36,9 @@
 	return view(outer_radius, center)
 
 /datum/action/cooldown/spell/aoe/void_pull/is_affected_by_aoe(atom/thing)
+	if(!isturf(thing.loc))
+		return FALSE
+
 	if(!isliving(thing) || thing == owner)
 		return FALSE
 
