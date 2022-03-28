@@ -1,0 +1,4 @@
+author: "RandomGamer123"
+delete-after: True
+changes: 
+  - bugfix: "The 0.7% charge high capacity power cell (which actually also stored 50% more charge than a regular high capacity power cell, didn't notice that right?) in Metastation engineering has been replaced with a regular high capacity power cell."
