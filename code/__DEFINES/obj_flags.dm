@@ -41,7 +41,6 @@
 #define IGNORE_DIGITIGRADE (1<<18)
 /// Has contextual screentips when HOVERING OVER OTHER objects
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
-#define FINGERPRINT_PASSTHROUGH (1<<20) //Ignores body_parts_covered during the add_fingerprint() proc. 
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
