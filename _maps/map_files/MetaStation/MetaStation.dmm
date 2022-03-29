@@ -25830,8 +25830,12 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ifA" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/medical{
+	dir = 4
+	},
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white,
@@ -27145,7 +27149,9 @@
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
 "iGI" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/glasses/blindfold,
 /obj/item/clothing/mask/muzzle,
@@ -30522,8 +30528,12 @@
 /turf/open/floor/iron/dark,
 /area/commons/fitness/recreation)
 "jTj" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/medical{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -32157,6 +32167,17 @@
 	},
 /turf/open/floor/iron,
 /area/science/lab)
+"kzP" = (
+/obj/effect/turf_decal/tile/blue/fourcorners,
+/obj/machinery/defibrillator_mount/directional/south,
+/obj/machinery/light/directional/south,
+/obj/structure/bed/pod{
+	desc = "An old medical bed, just waiting for replacement with something up to date.";
+	name = "medical bed";
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/medical/treatment_center)
 "kzV" = (
 /obj/structure/table,
 /obj/item/stock_parts/subspace/treatment,
@@ -88975,7 +88996,7 @@ vTJ
 nUM
 hNP
 fBL
-uxv
+kzP
 bXK
 vTp
 cto

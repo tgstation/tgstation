@@ -200,15 +200,11 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/turf/open/floor/mineral/bananium,
-/area/shuttle/escape)
-"aP" = (
-/obj/structure/bed,
-/obj/item/bedsheet/random,
-/obj/structure/window/reinforced{
-	dir = 8
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
 	},
 /turf/open/floor/mineral/bananium,
 /area/shuttle/escape)
@@ -311,6 +307,15 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/bluespace,
 /area/shuttle/escape)
+"An" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/escape)
 "RX" = (
 /obj/item/toy/snappop/phoenix,
 /obj/machinery/vending/wallmed/directional/north{
@@ -359,11 +364,11 @@ au
 au
 ab
 aJ
-aM
-aM
-aM
-aM
-aM
+An
+An
+An
+An
+An
 aR
 ab
 aV
@@ -503,7 +508,7 @@ ak
 aE
 aH
 ak
-aP
+aO
 aO
 aO
 aO

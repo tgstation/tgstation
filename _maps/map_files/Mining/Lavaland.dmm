@@ -1144,8 +1144,12 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "fe" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/carpet,
 /area/mine/living_quarters)

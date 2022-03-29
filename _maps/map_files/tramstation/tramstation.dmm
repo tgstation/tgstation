@@ -7951,7 +7951,9 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit)
 "bxJ" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -9297,7 +9299,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 9
 	},
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/landmark/start/virologist,
 /turf/open/floor/iron/dark,
 /area/medical/virology)
@@ -28476,7 +28480,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/medical/virology)
@@ -41140,8 +41146,12 @@
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "nvj" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/cargo/miningdock)
 "nvp" = (
@@ -55236,8 +55246,12 @@
 /turf/open/floor/circuit/green,
 /area/ai_monitored/command/nuke_storage)
 "sFC" = (
-/obj/structure/bed,
-/obj/item/bedsheet/captain,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/captain{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
@@ -62354,7 +62368,9 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 4
 	},
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
@@ -65734,7 +65750,9 @@
 /area/science/mixing/launch)
 "wCW" = (
 /obj/machinery/light/directional/west,
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/textured_large,
 /area/security/execution/education)
 "wDe" = (

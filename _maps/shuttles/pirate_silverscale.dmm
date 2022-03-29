@@ -464,6 +464,15 @@
 /obj/machinery/meter,
 /turf/open/floor/pod/dark,
 /area/shuttle/pirate)
+"yK" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
 "zB" = (
 /obj/structure/table/glass,
 /obj/machinery/chem_dispenser/drinks/beer{
@@ -1293,7 +1302,7 @@ Sh
 rB
 fN
 Sv
-uP
+yK
 rB
 "}
 (16,1,1) = {"

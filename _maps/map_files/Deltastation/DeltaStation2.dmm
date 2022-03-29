@@ -3479,16 +3479,6 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/white,
 /area/commons/fitness/recreation)
-"aSC" = (
-/obj/structure/bed,
-/obj/item/clothing/suit/straight_jacket,
-/obj/item/clothing/mask/muzzle,
-/obj/item/clothing/glasses/blindfold,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/security/prison)
 "aSD" = (
 /turf/open/floor/iron/white,
 /area/security/prison)
@@ -14697,12 +14687,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron,
 /area/command/heads_quarters/cmo)
-"deH" = (
-/obj/structure/bed,
-/obj/item/bedsheet/black,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/service/chapel/office)
 "deM" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -17557,6 +17541,19 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/hallway/primary/central/aft)
+"dAa" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/machinery/light/directional/south,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/sign/poster/official/report_crimes{
+	pixel_y = -32
+	},
+/turf/open/floor/iron,
+/area/security/checkpoint/escape)
 "dAg" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/item/radio/intercom/directional/east,
@@ -21038,6 +21035,16 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"dZJ" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/hop{
+	dir = 4
+	},
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron/grimy,
+/area/command/heads_quarters/hop)
 "dZS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/storage/bag/bio,
@@ -21127,16 +21134,6 @@
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron,
 /area/maintenance/port/aft)
-"eav" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
-/obj/machinery/iv_drip,
-/obj/machinery/firealarm/directional/south,
-/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
-/area/medical/surgery/aft)
 "eaw" = (
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
@@ -21169,14 +21166,6 @@
 "eaL" = (
 /obj/structure/sign/warning/vacuum,
 /turf/closed/wall/r_wall,
-/area/medical/virology)
-"eaM" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
-/obj/effect/turf_decal/tile/green/anticorner/contrasted{
-	dir = 1
-	},
-/turf/open/floor/iron/white,
 /area/medical/virology)
 "eaO" = (
 /obj/structure/sign/nanotrasen,
@@ -22240,19 +22229,6 @@
 /obj/machinery/light/directional/south,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/turf/open/floor/iron,
-/area/security/checkpoint/escape)
-"egn" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/light/directional/south,
-/obj/effect/turf_decal/tile/red/anticorner/contrasted{
-	dir = 8
-	},
-/obj/structure/sign/poster/official/report_crimes{
-	pixel_y = -32
-	},
 /turf/open/floor/iron,
 /area/security/checkpoint/escape)
 "ego" = (
@@ -28808,6 +28784,17 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/fore)
+"gdp" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/camera/directional/north{
+	c_tag = "Permabrig - Isolation";
+	network = list("ss13","prison")
+	},
+/turf/open/floor/plating,
+/area/security/prison/safe)
 "gdu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/effect/decal/cleanable/dirt,
@@ -36028,6 +36015,18 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/engineering/atmos)
+"ifx" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/clothing/suit/straight_jacket,
+/obj/item/clothing/mask/muzzle,
+/obj/item/clothing/glasses/blindfold,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/security/prison)
 "ifF" = (
 /obj/structure/bed/roller,
 /turf/open/floor/iron/white,
@@ -37963,6 +37962,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/grimy,
 /area/command/heads_quarters/hos)
+"iIo" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/medical{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green/anticorner/contrasted{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/medical/virology)
 "iIt" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -41386,15 +41397,6 @@
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/iron/dark,
 /area/ai_monitored/turret_protected/ai)
-"jIP" = (
-/obj/structure/bed,
-/obj/effect/decal/cleanable/cobweb,
-/obj/machinery/camera/directional/north{
-	c_tag = "Permabrig - Isolation";
-	network = list("ss13","prison")
-	},
-/turf/open/floor/plating,
-/area/security/prison/safe)
 "jIU" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -57756,12 +57758,6 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron,
 /area/security/checkpoint/medical)
-"oCs" = (
-/obj/structure/bed,
-/obj/item/bedsheet/hop,
-/obj/machinery/newscaster/directional/west,
-/turf/open/floor/iron/grimy,
-/area/command/heads_quarters/hop)
 "oCI" = (
 /obj/structure/cable,
 /turf/open/floor/iron{
@@ -80400,6 +80396,16 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/lobby)
+"vqa" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/service/chapel/office)
 "vqp" = (
 /turf/closed/wall/r_wall,
 /area/engineering/storage/tech)
@@ -80645,6 +80651,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai_upload)
+"vtA" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/medical{
+	dir = 4
+	},
+/obj/machinery/iv_drip,
+/obj/machinery/firealarm/directional/south,
+/obj/effect/turf_decal/tile/blue/anticorner/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/medical/surgery/aft)
 "vtG" = (
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm/directional/south,
@@ -122783,7 +122803,7 @@ nPB
 jXl
 nPB
 xxi
-deH
+vqa
 gBi
 nPB
 qYo
@@ -124763,7 +124783,7 @@ mEu
 fiS
 wpW
 cgY
-oCs
+dZJ
 lvY
 wpW
 oaS
@@ -128438,7 +128458,7 @@ iQq
 eeb
 eeN
 efB
-egn
+dAa
 egE
 qYo
 xTK
@@ -136633,7 +136653,7 @@ lVw
 cKQ
 heV
 heV
-eav
+vtA
 cHU
 dLm
 tir
@@ -138709,7 +138729,7 @@ dYe
 eJl
 dZC
 dPr
-eaM
+iIo
 ebv
 eci
 dPq
@@ -139626,7 +139646,7 @@ xjZ
 xjZ
 xjZ
 aQW
-aSC
+ifx
 kbv
 mRz
 aFn
@@ -139879,7 +139899,7 @@ aad
 qYo
 qYo
 xjZ
-jIP
+gdp
 rDI
 xjZ
 aQX

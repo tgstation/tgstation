@@ -5964,8 +5964,12 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "na" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -7561,8 +7565,12 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},
@@ -10991,8 +10999,12 @@
 /area/awaymission/undergroundoutpost45/mining)
 "wV" = (
 /obj/machinery/light/small/directional/south,
-/obj/structure/bed,
-/obj/item/bedsheet,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
 /turf/open/floor/carpet{
 	heat_capacity = 1e+006
 	},

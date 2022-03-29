@@ -2219,8 +2219,12 @@
 	color = "#2e2e2e";
 	dir = 10
 	},
-/obj/structure/bed,
-/obj/item/bedsheet/syndie,
+/obj/item/bedsheet/syndie{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/textured_half{
 	dir = 1
 	},
@@ -8394,6 +8398,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/evacuation)
+"Ch" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/centcom/evacuation/ship)
 "Ci" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine/cult,
@@ -9946,8 +9956,10 @@
 /turf/open/floor/plating,
 /area/centcom/evacuation/ship)
 "Lx" = (
-/obj/structure/bed,
 /obj/machinery/light/directional/west,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/blue,
 /area/centcom/evacuation/ship)
 "Ly" = (
@@ -39810,11 +39822,11 @@ Lj
 Ln
 Lq
 KH
-Lv
-Lv
+Ch
+Ch
 Lx
-Lv
-Lv
+Ch
+Ch
 KH
 KH
 aa

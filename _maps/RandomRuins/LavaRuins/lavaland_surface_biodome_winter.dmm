@@ -244,6 +244,15 @@
 /obj/machinery/light/directional/south,
 /turf/open/misc/ice,
 /area/ruin/powered/snow_biodome)
+"di" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered/snow_biodome)
 "dS" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/pod/dark,
@@ -278,6 +287,15 @@
 /turf/open/floor/pod/dark{
 	initial_gas_mix = "LAVALAND_ATMOS"
 	},
+/area/ruin/powered/snow_biodome)
+"mZ" = (
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
 /area/ruin/powered/snow_biodome)
 "og" = (
 /turf/open/floor/iron/stairs{
@@ -782,8 +800,8 @@ ac
 am
 aq
 aq
-au
-au
+mZ
+di
 aq
 aq
 aq

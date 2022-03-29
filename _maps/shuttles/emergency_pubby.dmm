@@ -696,6 +696,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating,
 /area/shuttle/escape/brig)
+"nl" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red/brig,
+/area/shuttle/escape/brig)
 "xt" = (
 /obj/structure/window/reinforced{
 	dir = 8;
@@ -805,7 +811,7 @@ bw
 bw
 Lu
 ax
-bD
+nl
 bE
 bc
 "}

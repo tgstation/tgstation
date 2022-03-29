@@ -2088,9 +2088,13 @@
 /turf/open/misc/asteroid/snow,
 /area/awaymission/snowdin/cave)
 "gg" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/landmark/awaystart,
-/obj/item/bedsheet/nanotrasen,
+/obj/item/bedsheet/nanotrasen{
+	dir = 4
+	},
 /turf/open/floor/carpet,
 /area/awaymission/snowdin/post/dorm)
 "gh" = (
@@ -5626,7 +5630,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/awaymission/snowdin/post/cavern2)
 "pi" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/secpost)
@@ -6945,6 +6951,16 @@
 /mob/living/simple_animal/hostile/skeleton/ice,
 /turf/open/floor/plating/snowed/cavern,
 /area/awaymission/snowdin/cave/cavern)
+"tB" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow{
+	floor_variance = 0;
+	icon_state = "snow_dug";
+	slowdown = 1
+	},
+/area/awaymission/snowdin/cave)
 "tE" = (
 /turf/closed/indestructible/rock/snow,
 /area/awaymission/snowdin/cave)
@@ -6966,7 +6982,9 @@
 /turf/closed/wall/rust,
 /area/awaymission/snowdin/post/cavern1)
 "ub" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/wood{
 	icon_state = "wood-broken"
 	},
@@ -10287,8 +10305,12 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Iq" = (
-/obj/structure/bed,
-/obj/item/bedsheet/grey,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/grey{
+	dir = 4
+	},
 /turf/open/floor/iron/grimy,
 /area/awaymission/snowdin/post/mining_main)
 "Ir" = (
@@ -12359,7 +12381,9 @@
 /turf/open/misc/asteroid/snow/ice,
 /area/awaymission/snowdin/cave/cavern)
 "Ri" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /mob/living/simple_animal/hostile/skeleton/ice{
 	name = "Privateer Jones"
 	},
@@ -44537,9 +44561,9 @@ ae
 ae
 ae
 aj
-SF
+tB
 RP
-SF
+tB
 aj
 aj
 aj

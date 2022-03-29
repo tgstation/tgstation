@@ -725,8 +725,12 @@
 /turf/open/space,
 /area/space/nearstation)
 "dp" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "dq" = (
@@ -1729,6 +1733,12 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/wildwest/refine)
+"Tj" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/awaymission/wildwest/mines)
 "Ua" = (
 /obj/machinery/door/airlock/sandstone,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -39141,7 +39151,7 @@ bj
 bj
 aT
 bu
-bB
+Tj
 bj
 bj
 bu

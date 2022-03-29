@@ -19,6 +19,15 @@
 /obj/item/bedsheet/random,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
+"o" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/random{
+	dir = 4
+	},
+/turf/open/floor/iron/grimy,
+/area/ruin/space/djstation)
 "p" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Rest Room"
@@ -103,7 +112,7 @@ W
 a
 a
 i
-k
+o
 Z
 u
 i

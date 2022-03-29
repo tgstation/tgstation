@@ -2067,7 +2067,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "jB" = (
@@ -2310,7 +2312,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "kN" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kO" = (
@@ -3658,6 +3662,12 @@
 	dir = 8
 	},
 /area/ruin/space/derelict/medical/chapel)
+"Ru" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary/port)
 "Rw" = (
 /obj/structure/plaque/static_plaque/golden/commission/ks13,
 /turf/open/floor/iron/airless,
@@ -9949,8 +9959,8 @@ fZ
 KN
 Vz
 Vz
-lE
-lE
+Ru
+Ru
 Vz
 OT
 Vz
