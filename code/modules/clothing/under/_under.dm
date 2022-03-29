@@ -34,10 +34,6 @@
 			SENSOR_OFF = 1,
 		))
 
-/obj/item/clothing/under/Destroy()
-	dump_attachment()
-	return ..()
-
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
 	if(isinhands)
