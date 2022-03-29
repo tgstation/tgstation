@@ -1851,6 +1851,25 @@
 "fu" = (
 /turf/closed/wall,
 /area/icemoon/underground/explored)
+"fv" = (
+/obj/structure/toilet/greyscale{
+	dir = 4;
+	cistern = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/security/prison/safe)
 "fw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42310,7 +42329,7 @@ ak
 Et
 kK
 MG
-hz
+fv
 Mc
 Xf
 BF
@@ -43081,7 +43100,7 @@ ak
 Et
 kK
 MG
-hz
+fv
 Mc
 Ur
 BF
@@ -44623,7 +44642,7 @@ ak
 Et
 kK
 MG
-hz
+fv
 Mc
 wc
 BF
