@@ -96,7 +96,7 @@
 				if(M.mode != SHUTTLE_IDLE)
 					to_chat(usr, span_warning("Shuttle already in transit."))
 					return
-			var/list/options = params2list(possible_destinations)
+			var/list/options = ("mining_home", "mining_away") //params2list(possible_destinations)
 			var/random_destionation = pick(options)
 			switch(SSshuttle.moveShuttle(shuttleId, random_destionation, 1))
 				if(0)
