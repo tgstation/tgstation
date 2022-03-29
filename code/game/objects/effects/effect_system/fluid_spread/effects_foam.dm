@@ -179,7 +179,7 @@
 /datum/effect_system/fluid_spread/foam/start()
 	var/obj/effect/particle_effect/fluid/foam/foam = new effect_type(location, new /datum/fluid_group(amount))
 	var/foamcolor = mix_color_from_reagents(chemholder.reagent_list)
-	chemholder.copy_to(foam, chemholder.total_volume, reagent_scale * MINIMUM_FOAM_DILUTION) // Scale up the reagents because the foam dilutes them and we want that to balance out.
+	chemholder.copy_to(foam, chemholder.total_volume, reagent_scale) // Scale up the reagents because the foam dilutes them and we want that to balance out.
 	foam.add_atom_colour(foamcolor, FIXED_COLOUR_PRIORITY)
 	if(!isnull(result_type))
 		foam.result_type = result_type
