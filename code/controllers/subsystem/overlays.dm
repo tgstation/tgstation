@@ -41,18 +41,19 @@ SUBSYSTEM_DEF(overlays)
 
 	for (var/atom/atom_to_compile as anything in queue)
 		count++
-		if(atom_to_compile)
-			if(length(atom_to_compile.overlays) >= MAX_ATOM_OVERLAYS)
-				//Break it real GOOD
-				stack_trace("Too many overlays on [atom_to_compile.type] - [length(atom_to_compile.overlays)], refusing to update and cutting")
-				atom_to_compile.overlays.Cut()
-				continue
-			STAT_START_STOPWATCH
-			COMPILE_OVERLAYS(atom_to_compile)
-			UNSETEMPTY(atom_to_compile.add_overlays)
-			UNSETEMPTY(atom_to_compile.remove_overlays)
-			STAT_STOP_STOPWATCH
-			STAT_LOG_ENTRY(stats, atom_to_compile.type)
+		if(!atom_to_compile)
+			continue
+		if(length(atom_to_compile.overlays) >= MAX_ATOM_OVERLAYS)
+			//Break it real GOOD
+			stack_trace("Too many overlays on [atom_to_compile.type] - [length(atom_to_compile.overlays)], refusing to update and cutting")
+			atom_to_compile.overlays.Cut()
+			continue
+		STAT_START_STOPWATCH
+		COMPILE_OVERLAYS(atom_to_compile)
+		UNSETEMPTY(atom_to_compile.add_overlays)
+		UNSETEMPTY(atom_to_compile.remove_overlays)
+		STAT_STOP_STOPWATCH
+		STAT_LOG_ENTRY(stats, atom_to_compile.type)
 		if(mc_check)
 			if(MC_TICK_CHECK)
 				break
