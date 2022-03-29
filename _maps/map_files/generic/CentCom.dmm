@@ -2,56 +2,9 @@
 "aa" = (
 /turf/open/space/basic,
 /area/space)
-"ab" = (
-/turf/closed/indestructible/riveted,
-/area/space)
-"ac" = (
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "ad" = (
 /turf/open/space,
 /area/space)
-"ae" = (
-/obj/effect/turf_decal/bot,
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"af" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"ah" = (
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"ai" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"aj" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"ak" = (
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "al" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -61,40 +14,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
-"am" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"an" = (
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"ao" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"ap" = (
-/obj/effect/turf_decal/tile/green,
-/turf/open/floor/iron,
-/area/tdome/arena_source)
-"aq" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/red,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/clothing/head/helmet/swat,
-/obj/item/gun/energy/laser,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "ar" = (
 /obj/structure/chair/office{
 	dir = 8
@@ -261,17 +180,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/briefing)
-"aW" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdomehea";
-	name = "Heavy Supply"
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena_source)
-"aX" = (
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "ba" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -984,13 +892,6 @@
 /obj/machinery/seed_extractor,
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
-"dn" = (
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "do" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -1095,13 +996,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tdome/administration)
-"dK" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdomegen";
-	name = "General Supply"
-	},
-/turf/open/floor/iron/dark,
-/area/tdome/arena_source)
 "dL" = (
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/iron,
@@ -1324,16 +1218,6 @@
 	dir = 4
 	},
 /area/centcom/holding)
-"ey" = (
-/obj/machinery/flasher{
-	id = "tdomeflash";
-	name = "Thunderdome Flash"
-	},
-/turf/open/floor/circuit/green,
-/area/tdome/arena_source)
-"ez" = (
-/turf/open/floor/circuit/green,
-/area/tdome/arena_source)
 "eB" = (
 /obj/structure/bookcase/random,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1472,18 +1356,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
-"eX" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/green,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/vest,
-/obj/item/clothing/head/helmet/swat,
-/obj/item/gun/energy/laser,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "eY" = (
 /obj/machinery/airalarm/directional/east,
 /obj/structure/filingcabinet/filingcabinet,
@@ -1649,11 +1521,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/centcom/ferry)
-"fx" = (
-/obj/machinery/igniter/on,
-/obj/effect/turf_decal/delivery,
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "fy" = (
 /obj/structure/signpost/salvation{
 	icon = 'icons/obj/structures.dmi';
@@ -5829,10 +5696,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/admin)
-"tE" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "tF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Thunderdome Locker Room";
@@ -9360,13 +9223,6 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/observation)
-"Hk" = (
-/obj/machinery/door/poddoor{
-	id = "thunderdome";
-	name = "Thunderdome Blast Door"
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "Hm" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -13184,19 +13040,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
-"Wr" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/green,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/tdome/green,
-/obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/security/loaded,
-/obj/item/melee/energy/sword/saber/green,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "Ws" = (
 /obj/docking_port/stationary{
 	dwidth = 25;
@@ -13455,19 +13298,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/centcom/admin)
-"WV" = (
-/obj/structure/rack,
-/obj/item/clothing/under/color/red,
-/obj/item/clothing/shoes/sneakers/brown,
-/obj/item/clothing/suit/armor/tdome/red,
-/obj/item/clothing/head/helmet/thunderdome,
-/obj/item/melee/baton/security/loaded,
-/obj/item/melee/energy/sword/saber/red,
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/tdome/arena_source)
 "WX" = (
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/grimy,
@@ -71352,14 +71182,14 @@ aa
 aa
 "}
 (223,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -71609,14 +71439,14 @@ aa
 aa
 "}
 (224,1,1) = {"
-ab
-WV
-WV
-WV
-WV
-WV
-WV
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -71866,16 +71696,16 @@ aa
 aa
 "}
 (225,1,1) = {"
-ab
-dK
-dK
-dK
-dK
-dK
-dK
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72123,16 +71953,16 @@ aa
 aa
 "}
 (226,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-aq
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72380,16 +72210,16 @@ aa
 aa
 "}
 (227,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-aq
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72637,16 +72467,16 @@ aa
 aa
 "}
 (228,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-aq
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -72894,16 +72724,16 @@ aa
 aa
 "}
 (229,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-aq
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -73151,16 +72981,16 @@ aa
 aa
 "}
 (230,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-aq
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -73408,16 +73238,16 @@ aa
 aa
 "}
 (231,1,1) = {"
-ab
-Hk
-Hk
-Hk
-Hk
-Hk
-Hk
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -73665,15 +73495,15 @@ aa
 aa
 "}
 (232,1,1) = {"
-fx
-af
-aj
-am
-am
-ao
-af
-fx
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -73922,15 +73752,15 @@ aa
 aa
 "}
 (233,1,1) = {"
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -74179,15 +74009,15 @@ aa
 aa
 "}
 (234,1,1) = {"
-ae
-aX
-aX
-aX
-aX
-aX
-aX
-ae
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -74436,15 +74266,15 @@ aa
 aa
 "}
 (235,1,1) = {"
-ac
-ah
-ah
-ah
-ah
-ah
-ah
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -74693,15 +74523,15 @@ aa
 aa
 "}
 (236,1,1) = {"
-ac
-tE
-tE
-tE
-tE
-tE
-tE
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -74950,15 +74780,15 @@ aa
 aa
 "}
 (237,1,1) = {"
-ac
-tE
-tE
-tE
-tE
-tE
-tE
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -75207,15 +75037,15 @@ aa
 aa
 "}
 (238,1,1) = {"
-ac
-tE
-tE
-ez
-ez
-tE
-tE
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -75464,15 +75294,15 @@ aa
 aa
 "}
 (239,1,1) = {"
-ac
-tE
-tE
-ey
-ez
-tE
-tE
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -75721,15 +75551,15 @@ aa
 aa
 "}
 (240,1,1) = {"
-ac
-tE
-tE
-ez
-ez
-tE
-tE
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -75978,15 +75808,15 @@ aa
 aa
 "}
 (241,1,1) = {"
-ac
-tE
-tE
-tE
-tE
-tE
-tE
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -76235,15 +76065,15 @@ aa
 aa
 "}
 (242,1,1) = {"
-ac
-tE
-tE
-tE
-tE
-tE
-tE
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -76492,15 +76322,15 @@ aa
 aa
 "}
 (243,1,1) = {"
-ac
-ai
-ai
-ai
-ai
-ai
-ai
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -76749,15 +76579,15 @@ aa
 aa
 "}
 (244,1,1) = {"
-ae
-aX
-aX
-aX
-aX
-aX
-aX
-ae
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -77006,15 +76836,15 @@ aa
 aa
 "}
 (245,1,1) = {"
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ac
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -77263,15 +77093,15 @@ aa
 aa
 "}
 (246,1,1) = {"
-fx
-dn
-ak
-an
-an
-ap
-dn
-fx
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -77520,16 +77350,16 @@ aa
 aa
 "}
 (247,1,1) = {"
-ab
-Hk
-Hk
-Hk
-Hk
-Hk
-Hk
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -77777,16 +77607,16 @@ aa
 aa
 "}
 (248,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-eX
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -78034,16 +77864,16 @@ aa
 aa
 "}
 (249,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-eX
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -78291,16 +78121,16 @@ aa
 aa
 "}
 (250,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-eX
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -78548,16 +78378,16 @@ aa
 aa
 "}
 (251,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-eX
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -78805,16 +78635,16 @@ aa
 aa
 "}
 (252,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-aW
-eX
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -79062,16 +78892,16 @@ aa
 aa
 "}
 (253,1,1) = {"
-ab
-dK
-dK
-dK
-dK
-dK
-dK
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -79319,14 +79149,14 @@ aa
 aa
 "}
 (254,1,1) = {"
-ab
-Wr
-Wr
-Wr
-Wr
-Wr
-Wr
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -79576,14 +79406,14 @@ aa
 aa
 "}
 (255,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa

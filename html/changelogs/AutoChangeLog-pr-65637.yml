@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - rscadd: "Added command encryption keys to the cargo order console"

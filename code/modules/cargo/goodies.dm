@@ -29,7 +29,7 @@
 	name = "Colt Detective Special Single-Pack"
 	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
 	cost = PAYCHECK_HARD * 40 //they really mean a premium here
-	access_view = ACCESS_FORENSICS_LOCKERS
+	access_view = ACCESS_FORENSICS
 	contains = list(/obj/item/gun/ballistic/revolver/detective)
 
 /datum/supply_pack/goody/stingbang
