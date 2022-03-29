@@ -177,10 +177,10 @@
 /datum/signal/subspace/messaging/pda/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
-	return sanitize(data["targets"][1])
+	return data["targets"][1]
 
 /datum/signal/subspace/messaging/pda/proc/format_message()
-	return sanitize("\"[data["message"]]\"")
+	return "\"[data["message"]]\""
 
 /datum/signal/subspace/messaging/pda/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
