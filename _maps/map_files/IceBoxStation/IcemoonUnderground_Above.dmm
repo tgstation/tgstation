@@ -325,6 +325,13 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
+"aY" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/brig)
 "aZ" = (
 /obj/structure/flora/grass/both,
 /obj/structure/railing,
@@ -980,6 +987,7 @@
 "de" = (
 /obj/machinery/vending/sustenance,
 /obj/machinery/light/directional/north,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)
 "df" = (
@@ -1919,6 +1927,16 @@
 	dir = 4
 	},
 /area/security/prison)
+"fH" = (
+/obj/structure/table,
+/obj/item/folder,
+/obj/item/pen,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/storage/photo_album/prison,
+/obj/item/camera,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/security/prison)
 "fI" = (
 /obj/structure/railing/corner{
 	dir = 8
@@ -2545,6 +2563,7 @@
 /obj/item/food/grown/onion,
 /obj/item/food/grown/onion,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "hm" = (
@@ -2610,6 +2629,12 @@
 /obj/structure/ore_box,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
+"hv" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "hx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/green/filled/warning{
@@ -3637,7 +3662,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "kn" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/prison/safe)
@@ -3831,6 +3858,13 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva)
+"kN" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/execution/education)
 "kO" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -4713,6 +4747,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/virology)
+"nq" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/brig)
 "ns" = (
 /turf/closed/wall/r_wall,
 /area/cargo/storage)
@@ -4851,6 +4892,7 @@
 "nN" = (
 /obj/structure/table,
 /obj/machinery/microwave,
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "nO" = (
@@ -5084,6 +5126,13 @@
 /obj/structure/closet/crate,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
+"ox" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/icemoon/underground/explored)
 "oy" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -5188,6 +5237,9 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/stone,
 /area/commons/lounge)
+"oM" = (
+/turf/closed/wall/r_wall,
+/area/icemoon/underground/explored)
 "oN" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 5
@@ -6463,15 +6515,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"sj" = (
-/obj/structure/table,
-/obj/item/folder,
-/obj/item/pen,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/storage/photo_album/prison,
-/obj/item/camera,
-/turf/open/floor/iron,
-/area/security/prison)
 "sk" = (
 /obj/structure/fireplace,
 /turf/open/floor/plating,
@@ -6731,6 +6774,7 @@
 	pixel_x = 9;
 	pixel_y = 3
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/security/prison)
 "sX" = (
@@ -6988,6 +7032,13 @@
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
+"tM" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/prison/visit)
 "tN" = (
 /obj/structure/chair{
 	dir = 8
@@ -7051,7 +7102,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/service/kitchen)
 "tV" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
 /area/service/lawoffice)
 "tW" = (
@@ -7181,6 +7234,7 @@
 /obj/item/wrench,
 /obj/item/clothing/head/helmet,
 /obj/item/assembly/signaler,
+/obj/structure/cable,
 /turf/open/floor/plating/icemoon,
 /area/security/execution/education)
 "uo" = (
@@ -7694,7 +7748,9 @@
 /turf/open/floor/iron/dark,
 /area/mine/eva)
 "vL" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "vN" = (
@@ -7912,7 +7968,9 @@
 /turf/closed/wall/ice,
 /area/mine/living_quarters)
 "wr" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/detectives_office)
@@ -8097,6 +8155,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison/visit)
+"wP" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/prison)
 "wQ" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/xeno_mining{
@@ -8174,6 +8239,13 @@
 /obj/effect/turf_decal/tile/neutral/full,
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
+"xb" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/icemoon/underground/explored)
 "xc" = (
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
@@ -8624,7 +8696,6 @@
 /obj/machinery/computer/bookmanagement,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)
 "yC" = (
@@ -8899,6 +8970,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/prison/safe)
+"zr" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plating,
+/area/service/lawoffice)
 "zs" = (
 /obj/structure/window/reinforced,
 /obj/machinery/light/directional/west,
@@ -9157,6 +9234,13 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"Ag" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/prison)
 "Ah" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
@@ -9308,7 +9392,9 @@
 /turf/open/floor/plating,
 /area/cargo/warehouse)
 "AC" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
 /turf/open/floor/plating,
 /area/hallway/primary/central/fore)
 "AD" = (
@@ -9953,6 +10039,13 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
+"CH" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/east,
+/turf/open/floor/plating,
+/area/security/courtroom)
 "CI" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -10114,6 +10207,7 @@
 /area/ai_monitored/security/armory)
 "Db" = (
 /obj/machinery/light/small/directional/east,
+/obj/structure/cable,
 /turf/open/floor/plating/icemoon,
 /area/security/execution/education)
 "Dc" = (
@@ -11864,6 +11958,7 @@
 /turf/open/floor/iron/smooth,
 /area/security/brig)
 "HO" = (
+/obj/structure/cable,
 /turf/open/floor/plating/icemoon,
 /area/security/execution/education)
 "HP" = (
@@ -12079,6 +12174,10 @@
 /obj/structure/girder,
 /turf/open/floor/plating,
 /area/maintenance/aft/lesser)
+"Iq" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/iron,
+/area/security/prison)
 "Ir" = (
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
@@ -13199,6 +13298,13 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"Lo" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/east,
+/obj/structure/window/reinforced/spawner/west,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/detectives_office)
 "Lp" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -13258,11 +13364,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
-"Lx" = (
-/obj/effect/spawner/random/entertainment/arcade,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/security/prison)
 "Ly" = (
 /obj/structure/closet/secure_closet/brig,
 /obj/machinery/light/directional/north,
@@ -13683,6 +13784,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"MG" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/security/prison/safe)
 "MH" = (
 /turf/closed/wall,
 /area/medical/virology)
@@ -14001,6 +14109,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/security/courtroom)
+"NE" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
+/obj/structure/window/reinforced/spawner/west,
+/turf/open/floor/plating,
+/area/security/courtroom)
 "NF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14014,6 +14129,7 @@
 /area/mine/production)
 "NH" = (
 /obj/structure/railing,
+/obj/structure/cable,
 /turf/open/floor/plating/icemoon,
 /area/security/execution/education)
 "NJ" = (
@@ -15476,7 +15592,9 @@
 /turf/open/floor/iron,
 /area/mine/eva)
 "RF" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/window/reinforced/spawner,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "RG" = (
@@ -15597,6 +15715,7 @@
 /area/medical/virology)
 "RX" = (
 /obj/machinery/vending/cola/red,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/security/prison)
 "RY" = (
@@ -16579,6 +16698,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/virology)
+"UI" = (
+/obj/structure/window/reinforced/spawner/north,
+/obj/structure/grille,
+/obj/structure/window/reinforced/spawner,
+/turf/open/floor/plating,
+/area/maintenance/fore)
 "UK" = (
 /turf/closed/wall,
 /area/maintenance/department/chapel)
@@ -17036,11 +17161,6 @@
 /obj/structure/window/reinforced/spawner/north,
 /turf/open/floor/plating,
 /area/medical/chemistry)
-"VU" = (
-/obj/structure/chair/stool/directional/north,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/security/prison)
 "VV" = (
 /obj/structure/chair{
 	dir = 4
@@ -39105,10 +39225,10 @@ ak
 ak
 Et
 kK
-kK
-kK
-NB
-NB
+oM
+xb
+wP
+wP
 lh
 Cf
 Cf
@@ -39362,18 +39482,18 @@ ak
 ak
 Et
 kK
-kK
-NB
-NB
-Lx
-VU
+ox
+fH
+Wp
+Fj
+Fj
 Fj
 Si
 Fp
 Ir
 yY
 lT
-NB
+Ag
 mO
 mO
 mO
@@ -39619,9 +39739,9 @@ ak
 ak
 Et
 kK
-NB
-NB
-sj
+Ag
+Iq
+Wp
 EL
 NN
 XL
@@ -39630,7 +39750,7 @@ iW
 FC
 po
 po
-NB
+Ag
 mO
 mO
 mO
@@ -39876,7 +39996,7 @@ ak
 ak
 Et
 kK
-NB
+Ag
 yB
 Wp
 mo
@@ -39887,7 +40007,7 @@ QQ
 FC
 uo
 Cr
-NB
+Ag
 mO
 mO
 mO
@@ -39907,11 +40027,11 @@ mO
 mO
 mO
 mO
-RF
-RF
-RF
-RF
-RF
+pr
+hv
+hv
+hv
+pr
 mO
 mO
 wS
@@ -40144,7 +40264,7 @@ yN
 FC
 po
 po
-NB
+Ag
 mO
 mO
 mO
@@ -40401,7 +40521,7 @@ UQ
 FC
 po
 po
-NB
+Ag
 mO
 mO
 mO
@@ -40414,21 +40534,21 @@ mO
 mO
 mO
 mO
-wr
-wr
-wr
-wr
+re
+Lo
+Lo
+re
 mO
 mO
 kK
-RF
+UI
 PV
 OH
 XM
 pr
-RF
-RF
-RF
+hv
+hv
+hv
 pr
 wS
 wS
@@ -40658,24 +40778,24 @@ Dp
 Pq
 FH
 Cr
-NB
+Ag
 mO
 mO
 mO
 mO
 mO
-tV
+Wi
 tV
 tV
 Wi
 Wi
 mO
 re
-wr
+re
 Nm
 AE
-wr
-wr
+re
+re
 kK
 kK
 pr
@@ -40915,13 +41035,13 @@ Np
 FJ
 Cg
 Cg
-NB
+Ag
 mO
 mO
 mO
 mO
-tV
-tV
+Wi
+Wi
 aP
 wn
 Dw
@@ -41172,12 +41292,12 @@ qr
 lc
 Cr
 Cr
-NB
+Ag
 mO
 mO
 mO
 kK
-tV
+zr
 eE
 gj
 ks
@@ -41418,7 +41538,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 hz
 Mc
 xi
@@ -41675,7 +41795,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 FB
 kG
 Py
@@ -42189,7 +42309,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 hz
 Mc
 Xf
@@ -42203,8 +42323,8 @@ Py
 CD
 xx
 xx
-Sp
-Sp
+tM
+tM
 Xe
 NX
 NX
@@ -42446,7 +42566,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 FB
 kG
 Py
@@ -42960,7 +43080,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 hz
 Mc
 Ur
@@ -43217,7 +43337,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 FB
 kG
 Py
@@ -43731,7 +43851,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 hz
 Mc
 FK
@@ -43988,7 +44108,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 FB
 kG
 Py
@@ -44502,7 +44622,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 hz
 Mc
 wc
@@ -44759,7 +44879,7 @@ ak
 ak
 Et
 kK
-kn
+MG
 FB
 kG
 Py
@@ -44783,12 +44903,12 @@ Ts
 Uv
 Ts
 Kr
-Ts
+aY
 Kr
 mO
 mO
 mO
-vL
+CH
 rx
 Au
 Jp
@@ -45296,13 +45416,13 @@ Si
 sy
 eU
 Ks
-Ts
+nq
 mO
 mO
 mO
 mO
 mO
-vL
+NE
 GP
 PQ
 Im
@@ -45553,7 +45673,7 @@ Si
 PM
 DY
 Ij
-Ts
+nq
 mO
 mO
 mO
@@ -45810,7 +45930,7 @@ Si
 Fl
 AS
 VW
-Ts
+nq
 mO
 mO
 mO
@@ -46301,7 +46421,7 @@ mO
 mO
 mO
 mO
-NB
+Ag
 JD
 va
 PR
@@ -46558,7 +46678,7 @@ mO
 mO
 mO
 mO
-NB
+Ag
 fM
 pG
 pG
@@ -46815,7 +46935,7 @@ mO
 mO
 mO
 mO
-NB
+Ag
 qA
 HJ
 fG
@@ -48109,7 +48229,7 @@ ak
 ak
 ak
 Cf
-Cf
+wP
 Cf
 Cf
 Cf
@@ -49145,9 +49265,9 @@ ak
 ak
 ak
 tW
+kN
 tW
-tW
-tW
+kN
 tW
 tW
 tW
