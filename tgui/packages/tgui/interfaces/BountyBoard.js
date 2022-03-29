@@ -1,21 +1,22 @@
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Flex, LabeledList, NumberInput, Section, Stack, TextArea } from '../components';
+import { UserDetails } from './Vending';
+import { BlockQuote, Box, Button, Collapsible, Flex, NumberInput, Section, Stack, TextArea } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-export const RequestKiosk = (props, context) => {
+export const BountyBoard = (props, context) => {
   return (
     <Window
       width={550}
       height={600}>
       <Window.Content scrollable>
-        <RequestKioskContent />
+        <BountyBoardContent />
       </Window.Content>
     </Window>
   );
 };
 
-export const RequestKioskContent = (props, context) => {
+export const BountyBoardContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     accountName,
@@ -23,27 +24,27 @@ export const RequestKioskContent = (props, context) => {
     applicants = [],
     bountyValue,
     bountyText,
+    user,
   } = data;
   const color = 'rgba(13, 13, 213, 0.7)';
-  const backColor = 'rgba(0, 0, 69, 0.5)';
+  const backColor = 'rgba(50, 50, 170, 0.5)';
   return (
     <>
-      <Section>
-        <LabeledList>
-          <LabeledList.Item
-            label="Current Account"
-            buttons={(
-              <Button
-                icon="power-off"
-                content="Log out"
-                onClick={() => act('clear')} />
-            )}>
-            {accountName || 'N/A'}
-          </LabeledList.Item>
-        </LabeledList>
+      <Section
+        title={"User Details"}
+        buttons={(
+          <Button
+            icon="power-off"
+            content="Reset Account"
+            onClick={() => act('clear')} />
+        )}>
+        <UserDetails />
       </Section>
-      <Flex mb={1}>
-        <Flex.Item grow={1} basis={0}>
+      <Flex
+        mb={1}>
+        <Flex.Item
+          grow={1}
+          basis={0}>
           {requests?.map(request => (
             <Collapsible
               key={request.name}
@@ -64,6 +65,9 @@ export const RequestKioskContent = (props, context) => {
                       fluid
                       icon="pen-fancy"
                       content="Apply"
+                      disabled={
+                        request.owner === user.name
+                      }
                       onClick={() => act('apply', {
                         request: request.acc_number,
                       })} />
@@ -77,9 +81,11 @@ export const RequestKioskContent = (props, context) => {
                       })} />
                   </Stack.Item>
                 </Stack>
-                <Section align="center">
+                <BlockQuote
+                  pt={1}
+                  align="center">
                   <i>&quot;{request.description}&quot;</i>
-                </Section>
+                </BlockQuote>
                 <Section
                   title="Request Applicants">
                   {applicants?.map(applicant => (
@@ -89,7 +95,8 @@ export const RequestKioskContent = (props, context) => {
                           grow={1}
                           p={0.5}
                           backgroundColor={backColor}
-                          width="510px"
+                          width="500px"
+                          textAlign="center"
                           style={{
                             border: `2px solid ${color}`,
                           }}>
@@ -99,7 +106,9 @@ export const RequestKioskContent = (props, context) => {
                           align="end">
                           <Button
                             fluid
+                            p={1}
                             icon="cash-register"
+                            tooltip="Pay out to this applicant."
                             onClick={() => act('payApplicant', {
                               applicant: applicant.requestee_id,
                               request: request.acc_number,
@@ -121,7 +130,7 @@ export const RequestKioskContent = (props, context) => {
             <Section>
               <TextArea
                 fluid
-                height="250px"
+                height="150px"
                 width="200px"
                 backgroundColor="black"
                 textColor="white"
@@ -139,11 +148,12 @@ export const RequestKioskContent = (props, context) => {
                   onChange={(e, value) => act('bountyVal', {
                     bountyval: value,
                   })} />
+                <Button
+                  icon="print"
+                  content="Submit bounty"
+                  disabled={user.name === "Unknown"}
+                  onClick={() => act('createBounty')} />
               </Box>
-              <Button
-                icon="print"
-                content="Submit bounty"
-                onClick={() => act('createBounty')} />
             </Section>
           </Collapsible>
         </Flex.Item>

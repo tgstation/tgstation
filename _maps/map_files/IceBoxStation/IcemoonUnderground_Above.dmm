@@ -2321,7 +2321,7 @@
 	id = "publicElevator";
 	pixel_y = -25
 	},
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
@@ -2405,7 +2405,7 @@
 	},
 /area/mine/eva)
 "hB" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 8";
 	req_access_txt = "55"
@@ -3175,7 +3175,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
 "jX" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -3424,6 +3424,17 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
+"kS" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/machinery/washing_machine,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "kT" = (
 /obj/structure/sink/kitchen{
 	dir = 8;
@@ -3699,7 +3710,7 @@
 "lL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/extinguisher_cabinet/directional/north,
-/obj/machinery/door/window/brigdoor/northright{
+/obj/machinery/door/window/brigdoor/right/directional/north{
 	dir = 8;
 	name = "Medbay Access";
 	req_access_txt = "5"
@@ -5301,7 +5312,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 5";
 	req_access_txt = "55"
@@ -5473,7 +5484,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
 "rd" = (
-/obj/machinery/door/window/westright{
+/obj/machinery/door/window/right/directional/west{
 	name = "Apiary";
 	req_access_txt = "35"
 	},
@@ -6168,7 +6179,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	dir = 2;
 	name = "Kitchen Window";
 	req_access_txt = "28"
@@ -6573,7 +6584,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uz" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 7";
 	req_access_txt = "55"
@@ -7320,7 +7331,7 @@
 	id = "xenobio5";
 	name = "Xenobio Pen 5 Blast Door"
 	},
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -7660,7 +7671,7 @@
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
 "yt" = (
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	name = "Coffin Storage";
 	req_access_txt = "22"
 	},
@@ -7881,6 +7892,18 @@
 	dir = 1
 	},
 /area/service/hydroponics)
+"zh" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/structure/table,
+/obj/item/rcl/pre_loaded,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "zi" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -8004,7 +8027,7 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "zA" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -9046,7 +9069,7 @@
 /turf/open/floor/iron/dark,
 /area/service/hydroponics)
 "CV" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 10";
 	req_access_txt = "55"
@@ -9184,7 +9207,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
 "Dt" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 3";
 	req_access_txt = "55"
@@ -9472,6 +9495,17 @@
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/wood,
 /area/hallway/secondary/service)
+"En" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/structure/chair/stool/directional/west,
+/obj/machinery/camera/emp_proof/directional/south,
+/turf/open/floor/iron/cafeteria,
+/area/commons/dorms/laundry)
 "Eo" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 8
@@ -9714,7 +9748,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/machinery/door/window/westright{
+/obj/machinery/door/window/right/directional/west{
 	dir = 1;
 	name = "Exterior Access";
 	req_access_txt = "35"
@@ -10105,7 +10139,7 @@
 /turf/open/floor/wood/parquet,
 /area/commons/lounge)
 "Gs" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 6";
 	req_access_txt = "55"
@@ -10145,7 +10179,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "Gz" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -10222,19 +10256,6 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
-"GM" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/structure/table,
-/obj/structure/table,
-/obj/machinery/camera/emp_proof/directional/south,
-/obj/item/rcl/pre_loaded,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "GN" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "73"
@@ -10256,7 +10277,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "GR" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -10725,7 +10746,7 @@
 /turf/open/floor/iron/white/side,
 /area/mine/living_quarters)
 "Id" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -11128,7 +11149,7 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "Jw" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 9";
 	req_access_txt = "55"
@@ -11514,7 +11535,7 @@
 	id = "misclab";
 	name = "test chamber blast door"
 	},
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	dir = 8;
 	name = "Test Chamber";
 	req_access_txt = "55"
@@ -12181,7 +12202,7 @@
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "MK" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 4";
 	req_access_txt = "55"
@@ -12262,7 +12283,7 @@
 /turf/open/floor/iron/dark,
 /area/medical/morgue)
 "MZ" = (
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	dir = 4;
 	name = "Test Chamber";
 	req_access_txt = "55"
@@ -12642,7 +12663,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Os" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 1";
 	req_access_txt = "55"
@@ -12707,7 +12728,7 @@
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
 "OF" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 11";
 	req_access_txt = "55"
@@ -13046,7 +13067,7 @@
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "PB" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -13964,7 +13985,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/hallway/secondary/service)
 "Sg" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -14270,7 +14291,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	dir = 1;
 	name = "Exterior Access";
 	req_access_txt = "35"
@@ -15090,7 +15111,7 @@
 /turf/open/floor/iron/white,
 /area/science/xenobiology)
 "VA" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -15309,7 +15330,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	name = "Drone Bay Access";
 	req_access_txt = "31"
 	},
@@ -15580,7 +15601,7 @@
 	},
 /area/medical/chemistry)
 "Xd" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -15837,7 +15858,7 @@
 /turf/closed/wall/r_wall,
 /area/mine/mechbay)
 "XW" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	base_state = "right";
 	dir = 8;
 	icon_state = "right";
@@ -15910,7 +15931,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/mine/eva)
 "Ye" = (
-/obj/machinery/door/window/eastleft{
+/obj/machinery/door/window/left/directional/east{
 	dir = 8;
 	name = "graveyard access";
 	req_one_access_txt = "22"
@@ -16010,24 +16031,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/eva)
-"Yy" = (
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/washing_machine,
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/machinery/washing_machine,
-/obj/structure/sign/poster/official/random/directional/north,
-/turf/open/floor/iron/cafeteria,
-/area/commons/dorms/laundry)
 "Yz" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -16271,7 +16274,7 @@
 	},
 /area/maintenance/department/cargo)
 "Zo" = (
-/obj/machinery/door/window/northleft{
+/obj/machinery/door/window/left/directional/north{
 	dir = 4;
 	name = "Containment Pen 2";
 	req_access_txt = "55"
@@ -34171,7 +34174,7 @@ iK
 dj
 To
 cP
-aT
+En
 iK
 kK
 kK
@@ -34685,7 +34688,7 @@ cs
 fn
 cP
 vc
-GM
+zh
 GK
 kK
 kK
@@ -35710,7 +35713,7 @@ ak
 ak
 ak
 iK
-Yy
+kS
 vc
 Nu
 cP

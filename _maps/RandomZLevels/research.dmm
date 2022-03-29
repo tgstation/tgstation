@@ -599,7 +599,7 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/research/interior/gateway)
 "ck" = (
-/obj/machinery/door/window/eastright{
+/obj/machinery/door/window/right/directional/east{
 	dir = 2
 	},
 /obj/effect/landmark/awaystart,
@@ -1212,7 +1212,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "eQ" = (
-/obj/machinery/door/window/northright{
+/obj/machinery/door/window/right/directional/north{
 	name = "Cell Door";
 	req_access_txt = "63"
 	},
@@ -1966,7 +1966,7 @@
 /turf/open/floor/plating,
 /area/awaymission/research/interior/maint)
 "hE" = (
-/obj/machinery/door/window/southright{
+/obj/machinery/door/window/right/directional/south{
 	name = "Cell Door";
 	req_access_txt = "63"
 	},
@@ -3844,7 +3844,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/medbay)
 "vX" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
@@ -4017,7 +4017,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "Cs" = (
-/obj/machinery/door/window/westleft,
+/obj/machinery/door/window/left/directional/west,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
@@ -4227,7 +4227,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/dorm)
 "IT" = (
-/obj/machinery/door/window/westright,
+/obj/machinery/door/window/right/directional/west,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
@@ -4449,7 +4449,7 @@
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)
 "Qi" = (
-/obj/machinery/door/window/eastright,
+/obj/machinery/door/window/right/directional/east,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/research/interior/genetics)

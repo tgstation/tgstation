@@ -1005,7 +1005,7 @@
 	name = "50 Empty License Plates"
 	desc = "Create a bunch of boxes."
 	cost = CARGO_CRATE_VALUE * 2  // 50 * 25 + 700 - 1000 = 950 credits profit
-	access_view = ACCESS_SEC_DOORS
+	access_view = ACCESS_BRIG_ENTRANCE
 	contains = list(/obj/item/stack/license_plates/empty/fifty)
 	crate_name = "empty license plate crate"
 
@@ -2578,6 +2578,18 @@
 					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
 
+/datum/supply_pack/misc/commandkeys
+	name = "Command Encryption Key Crate"
+	desc = "A pack of encryption keys that give access to the command radio network. Nanotrasen reminds unauthorized employees not to eavesdrop in on secure communications channels, or at least to keep heckling of the command staff to a minimum."
+	access_view = ACCESS_HEADS
+	access = ACCESS_HEADS
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/encryptionkey/headset_com,
+					/obj/item/encryptionkey/headset_com,
+					/obj/item/encryptionkey/headset_com)
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "command encryption key crate"
+
 /datum/supply_pack/misc/exploration_drone
 	name = "Exploration Drone"
 	desc = "A replacement long-range exploration drone."
@@ -2734,7 +2746,7 @@
 	var/list/uplink_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
-		if(item.purchasable_from & UPLINK_TRAITORS)
+		if(item.purchasable_from & UPLINK_TRAITORS && item.item)
 			uplink_items += item
 
 	while(crate_value)
