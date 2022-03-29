@@ -1,13 +1,13 @@
-import { RequestKioskContent } from './RequestKiosk';
+import { BountyBoardContent } from './BountyBoard';
 import { NtosWindow } from '../layouts';
 
-export const NtosRequestKiosk = (props, context) => {
+export const NtosBountyBoard = (props, context) => {
   return (
     <NtosWindow
       width={550}
       height={600}>
       <NtosWindow.Content scrollable>
-        <RequestKioskContent />
+        <BountyBoardContent />
       </NtosWindow.Content>
     </NtosWindow>
   );

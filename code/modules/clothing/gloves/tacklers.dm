@@ -3,11 +3,11 @@
 	desc = "Special gloves that manipulate the blood vessels in the wearer's hands, granting them the ability to launch headfirst into walls."
 	icon_state = "tackle"
 	inhand_icon_state = "tackle"
-	transfer_prints = TRUE
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	resistance_flags = NONE
 	custom_premium_price = PAYCHECK_HARD * 3.5
+	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 	/// For storing our tackler datum so we can remove it after
 	var/datum/component/tackler
 	/// See: [/datum/component/tackler/var/stamina_cost]

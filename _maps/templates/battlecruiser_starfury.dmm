@@ -933,7 +933,7 @@
 	},
 /area/shuttle/sbc_starfury)
 "dk" = (
-/obj/machinery/door/window/brigdoor/northleft{
+/obj/machinery/door/window/brigdoor/left/directional/north{
 	name = "command desk";
 	req_access_txt = "151"
 	},
@@ -2591,7 +2591,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "if" = (
-/obj/machinery/door/window/northright{
+/obj/machinery/door/window/right/directional/north{
 	name = "Bar Access"
 	},
 /obj/machinery/light/small/directional/east,
@@ -3381,7 +3381,7 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "kq" = (
-/obj/machinery/door/window/brigdoor/eastright{
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Medbay Storage";
 	req_access_txt = "150"
 	},
@@ -4967,7 +4967,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/sbc_starfury)
 "LN" = (
-/obj/machinery/door/window/brigdoor/eastleft{
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Medbay Storage";
 	req_access_txt = "150"
 	},

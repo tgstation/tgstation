@@ -2066,10 +2066,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
 "fC" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
-	dir = 8;
-	id_tag = "o2_out_bunker";
-	name = "oxygen out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "deepo2";
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2115,14 +2114,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fJ" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	input_tag = "o2_in_bunker";
-	name = "Oxygen Supply Control";
-	output_tag = "o2_out_bunker";
-	sensors = list("o2_sensor_bunker" = "Tank")
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("deepo2" = "Oxygen Supply");
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "fK" = (
@@ -2132,7 +2128,7 @@
 /area/ruin/space/has_grav/deepstorage/power)
 "fL" = (
 /obj/machinery/air_sensor{
-	id_tag = "o2_sensor_bunker"
+	chamber_id = "deepo2"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2272,13 +2268,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/deepstorage/power)
-"gd" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "n2_in_bunker"
-	},
-/turf/open/floor/plating/airless,
-/area/ruin/space/has_grav/deepstorage/power)
 "ge" = (
 /obj/machinery/door/airlock{
 	name = "Personal Dorm"
@@ -2373,10 +2362,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos{
-	dir = 8;
-	id_tag = "n2_out_bunker";
-	name = "nitrogen out"
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "deepn2";
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2429,19 +2417,16 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gC" = (
-/obj/machinery/computer/atmos_control/tank{
-	dir = 8;
-	input_tag = "n2_in_bunker";
-	name = "Nitrogen Supply Control";
-	output_tag = "n2_out_bunker";
-	sensors = list("n2_sensor_bunker" = "Tank")
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("deepn2" = "Nitrogen Supply");
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gD" = (
 /obj/machinery/air_sensor{
-	id_tag = "n2_sensor_bunker"
+	chamber_id = "deepn2"
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2495,9 +2480,9 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/deepstorage/power)
 "gP" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos{
-	dir = 8;
-	id = "o2_in_bunker"
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "deepn2";
+	dir = 8
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/deepstorage/power)
@@ -2727,6 +2712,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/deepstorage/armory)
+"qm" = (
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "deepo2";
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/ruin/space/has_grav/deepstorage/power)
 "rz" = (
 /obj/machinery/conveyor{
 	dir = 6;
@@ -4545,7 +4537,7 @@ fb
 fp
 fC
 fL
-gd
+qm
 fp
 gv
 gD
