@@ -558,7 +558,7 @@
 /area/security/prison)
 "bR" = (
 /obj/structure/stairs/east,
-/turf/open/floor/iron,
+/turf/open/floor/plating,
 /area/security/brig)
 "bS" = (
 /obj/structure/rack,
@@ -1913,7 +1913,7 @@
 "fG" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Sec - Permabrig Exercise";
-	network = list("ss13","prison")
+	network = ssssssssssssss
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -4652,10 +4652,6 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/service/chapel/office)
-"nj" = (
-/obj/structure/stairs/east,
-/turf/open/genturf,
-/area/security/brig)
 "nk" = (
 /obj/machinery/light/directional/west,
 /turf/open/floor/engine,
@@ -4669,7 +4665,7 @@
 "nm" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Security - Visitation South";
-	network = sssssss
+	network = list("ss13","prison")
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -14740,7 +14736,8 @@
 	pixel_x = 32
 	},
 /obj/machinery/camera/directional/east{
-	c_tag = "Security - Brig Lower Hallway North"
+	c_tag = "Security - Brig Lower Hallway North";
+	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -14909,16 +14906,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/storage/box/rubbershot{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot,
-/obj/item/storage/box/rubbershot{
-	pixel_x = 3;
-	pixel_y = -3
-	},
 /obj/item/storage/box/rubbershot{
 	pixel_x = 3;
 	pixel_y = -3
@@ -17896,7 +17884,8 @@
 /area/service/kitchen)
 "Ys" = (
 /obj/machinery/camera/directional/east{
-	c_tag = "Security - Lower Brig Cells"
+	c_tag = "Security - Lower Brig Cells";
+	network = list("ss13","prison")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -45812,7 +45801,7 @@ as
 as
 as
 as
-nj
+bR
 bR
 Si
 Nk
