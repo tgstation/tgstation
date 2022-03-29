@@ -199,7 +199,7 @@
 			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results, override = TRUE)
 	return turfs_to_return
 
-/obj/machinery/door/firedoor/proc/check_atmos(var/turf/checked_turf)
+/obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/result
 	var/datum/gas_mixture/environment = checked_turf.return_air()
 	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST && my_area.active_alarms[ALARM_ATMOS])
