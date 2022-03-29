@@ -66,6 +66,7 @@ SUBSYSTEM_DEF(input)
 		return TRUE
 
 	queued_clicks += VERB_CALLBACK(src, .proc/wrap_Click, clicked_atom, location, control, params)
+	return TRUE
 
 ///stupid workaround for byond not recognizing the /atom.proc/Click typepath for the queued click callbacks
 /datum/controller/subsystem/input/proc/wrap_Click(atom/clicked_atom, location, control, params)
