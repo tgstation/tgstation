@@ -178,7 +178,7 @@
 	// Log it in our logs
 	var/list/message_data = list()
 	message_data["name"] = "[signal.data["name"]] ([signal.data["job"]])"
-	message_data["contents"] = signal.format_message()
+	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
 	messages += list(message_data)
@@ -194,7 +194,7 @@
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
 	var/list/message_data = list()
 	message_data["name"] = "[signal.data["name"]] ([signal.data["job"]])"
-	message_data["contents"] = signal.format_message()
+	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
 	messages += list(message_data)
