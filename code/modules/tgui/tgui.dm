@@ -308,7 +308,9 @@
 			window = window,
 			src_object = src_object)
 		process_status()
-		TRY_QUEUE_VERB(src, .proc/check_ui_act, act_type, payload, state)
+		if(TRY_QUEUE_VERB(src, .proc/check_ui_act, act_type, payload, state))
+			return FALSE
+		check_ui_act(act_type, payload, state)
 		return FALSE
 	switch(type)
 		if("ready")
