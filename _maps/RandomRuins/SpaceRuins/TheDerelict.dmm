@@ -910,6 +910,13 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/singularity_engine)
+"eB" = (
+/obj/machinery/door/window/left/directional/east{
+	name = "Heads of Staff";
+	req_access_txt = "19"
+	},
+/turf/open/floor/iron,
+/area/ruin/space/derelict/bridge/access)
 "eC" = (
 /obj/structure/table,
 /obj/item/paicard,
@@ -1155,14 +1162,6 @@
 	pixel_y = -7
 	},
 /obj/item/stock_parts/matter_bin,
-/turf/open/floor/iron/airless,
-/area/ruin/space/derelict/bridge/access)
-"fB" = (
-/obj/structure/table,
-/obj/item/stock_parts/cell{
-	charge = 100;
-	maxcharge = 15000
-	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
 "fC" = (
@@ -2117,6 +2116,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/medical/chapel)
+"jN" = (
+/obj/machinery/door/window/left/directional/south,
+/obj/structure/cable,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/derelict/medical)
+"jO" = (
+/obj/machinery/door/window/right/directional/south,
+/turf/open/floor/iron/white/airless,
+/area/ruin/space/derelict/medical)
 "jQ" = (
 /obj/machinery/door/airlock/research{
 	name = "Toxins Research";
@@ -3169,10 +3177,6 @@
 "rK" = (
 /turf/template_noop,
 /area/ruin/space/derelict/medical)
-"rW" = (
-/obj/machinery/door/window/right/directional/south,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/derelict/medical)
 "sd" = (
 /obj/structure/chair/stool/directional/south,
 /turf/open/floor/iron/airless,
@@ -3263,11 +3267,6 @@
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/bridge/access)
-"yg" = (
-/obj/machinery/door/window/left/directional/south,
-/obj/structure/cable,
-/turf/open/floor/iron/white/airless,
-/area/ruin/space/derelict/medical)
 "yE" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -3395,13 +3394,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/iron,
 /area/ruin/space/derelict/bridge)
-"Ga" = (
-/obj/machinery/door/window/left/directional/east{
-	name = "Heads of Staff";
-	req_access_txt = "19"
-	},
-/turf/open/floor/iron,
-/area/ruin/space/derelict/bridge/access)
 "Gu" = (
 /obj/structure/grille,
 /turf/template_noop,
@@ -3602,6 +3594,11 @@
 	icon_state = "damaged2"
 	},
 /area/ruin/space/derelict/medical)
+"PG" = (
+/obj/structure/table,
+/obj/item/stock_parts/cell/high,
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/bridge/access)
 "PR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible,
 /turf/open/floor/iron/airless,
@@ -6990,7 +6987,7 @@ hY
 hX
 hX
 jD
-yg
+jN
 gc
 gc
 gc
@@ -7103,7 +7100,7 @@ hz
 hY
 hY
 jE
-rW
+jO
 go
 go
 go
@@ -10359,7 +10356,7 @@ ZB
 ZB
 ZB
 cs
-fB
+PG
 fx
 fx
 fS
@@ -11145,7 +11142,7 @@ cs
 dF
 dF
 eq
-Ga
+eB
 eJ
 eO
 dF
