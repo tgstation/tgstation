@@ -155,7 +155,7 @@ export const NtosMessenger = (props, context) => {
                 <Button
                   key={messenger.ref}
                   fluid
-                  content={message.name + " (" + message.job + ")"}
+                  content={messenger.name + " (" + messenger.job + ")"}
                   onClick={() => act('PDA_sendMessage', {
                     name: messenger.name,
                     job: messenger.job,
