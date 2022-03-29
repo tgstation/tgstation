@@ -2604,18 +2604,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"gk" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet{
-	dir = 4
-	},
-/turf/open/floor/carpet{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/mining)
 "gl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /turf/open/floor/iron{
@@ -11548,6 +11536,22 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"zX" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "hydro";
+	locked = 0;
+	name = "botanist's locker";
+	req_access_txt = "201"
+	},
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/plant_analyzer,
+/obj/item/clothing/mask/bandana/color/striped/botany,
+/obj/item/hatchet,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
 "Ae" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/dirt,
@@ -11681,22 +11685,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"De" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "hydro";
-	locked = 0;
-	name = "botanist's locker";
-	req_access_txt = "201"
-	},
-/obj/item/storage/bag/plants/portaseeder,
-/obj/item/plant_analyzer,
-/obj/item/clothing/mask/bandana/color/striped/botany,
-/obj/item/hatchet,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
 "Dm" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -11761,6 +11749,22 @@
 	req_access_txt = "201"
 	},
 /turf/open/floor/iron{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/central)
+"EP" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "hydro";
+	locked = 0;
+	name = "botanist's locker";
+	req_access_txt = "201"
+	},
+/obj/item/clothing/suit/apron,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/clothing/mask/bandana/color/striped/botany,
+/obj/item/cultivator,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark{
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
@@ -11841,6 +11845,18 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
+"HM" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
+/turf/open/floor/carpet{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/crew_quarters)
 "HW" = (
 /obj/structure/alien/weeds,
 /obj/structure/glowshroom/single,
@@ -11858,18 +11874,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/engineering)
-"Il" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet{
-	dir = 4
-	},
-/turf/open/floor/carpet{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
 "IK" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
@@ -11893,20 +11897,6 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
-"Jo" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet{
-	dir = 4
-	},
-/turf/open/floor/carpet{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/crew_quarters)
 "Km" = (
 /obj/structure/table,
 /obj/item/storage/medkit/toxin{
@@ -12110,6 +12100,18 @@
 	temperature = 363.9
 	},
 /area/awaymission/undergroundoutpost45/gateway)
+"Oq" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
+/turf/open/floor/carpet{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/mining)
 "Ot" = (
 /obj/machinery/computer/station_alert{
 	dir = 1
@@ -12278,22 +12280,6 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/gateway)
-"Tn" = (
-/obj/structure/closet/secure_closet{
-	icon_state = "hydro";
-	locked = 0;
-	name = "botanist's locker";
-	req_access_txt = "201"
-	},
-/obj/item/clothing/suit/apron,
-/obj/item/storage/bag/plants/portaseeder,
-/obj/item/clothing/mask/bandana/color/striped/botany,
-/obj/item/cultivator,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/central)
 "Tr" = (
 /obj/structure/alien/resin/membrane,
 /turf/open/misc/asteroid{
@@ -12372,6 +12358,20 @@
 	temperature = 351.9
 	},
 /area/awaymission/undergroundoutpost45/caves)
+"WQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet{
+	dir = 4
+	},
+/turf/open/floor/carpet{
+	heat_capacity = 1e+006
+	},
+/area/awaymission/undergroundoutpost45/crew_quarters)
 "XF" = (
 /obj/structure/ore_box,
 /turf/open/misc/asteroid{
@@ -45009,7 +45009,7 @@ fN
 oh
 oL
 fN
-Jo
+WQ
 qu
 mu
 fO
@@ -45261,7 +45261,7 @@ hK
 hK
 fN
 mu
-Il
+HM
 pS
 oi
 oI
@@ -46309,7 +46309,7 @@ wc
 wp
 vL
 wp
-gk
+Oq
 vJ
 ad
 ad
@@ -48320,8 +48320,8 @@ an
 cS
 ce
 aC
-De
-Tn
+zX
+EP
 TC
 NQ
 ZZ

@@ -114,6 +114,15 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
+"ff" = (
+/obj/structure/bed/pod{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/shuttle/pirate)
 "fj" = (
 /obj/machinery/computer/shuttle/pirate{
 	dir = 8
@@ -463,15 +472,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/meter,
 /turf/open/floor/pod/dark,
-/area/shuttle/pirate)
-"yZ" = (
-/obj/structure/bed/pod{
-	dir = 4
-	},
-/obj/item/bedsheet/black{
-	dir = 4
-	},
-/turf/open/floor/carpet/royalblack,
 /area/shuttle/pirate)
 "zB" = (
 /obj/structure/table/glass,
@@ -1302,7 +1302,7 @@ Sh
 rB
 fN
 Sv
-yZ
+ff
 rB
 "}
 (16,1,1) = {"

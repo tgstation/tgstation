@@ -37,14 +37,7 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
-"B" = (
-/obj/machinery/door/airlock/public/glass{
-	name = "Rest Room"
-	},
-/obj/modular_map_connector,
-/turf/template_noop,
-/area/template_noop)
-"C" = (
+"A" = (
 /obj/structure/bed{
 	dir = 4
 	},
@@ -53,6 +46,13 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/ruin/space/djstation)
+"B" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Rest Room"
+	},
+/obj/modular_map_connector,
+/turf/template_noop,
+/area/template_noop)
 "F" = (
 /obj/structure/curtain,
 /obj/machinery/shower{
@@ -112,7 +112,7 @@ W
 a
 a
 i
-C
+A
 Z
 u
 i
