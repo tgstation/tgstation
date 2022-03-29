@@ -7786,8 +7786,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/security/entrance,
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
-/obj/effect/mapping_helpers/airlock/access/any/security/doors,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/fore/lesser)
@@ -11270,13 +11270,13 @@
 	name = "Security Checkpoint";
 	id_tag = "outerbrig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigoutpost"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -11338,13 +11338,13 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Walkway"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigentrance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
 /area/security/brig/upper)
 "etZ" = (
@@ -13027,13 +13027,13 @@
 	name = "Brig Walkway";
 	id_tag = "innerbrig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigoutpost"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -18292,13 +18292,13 @@
 /turf/open/floor/plating,
 /area/engineering/storage/tech)
 "hQV" = (
-/obj/machinery/door/airlock/security/glass{
-	req_one_access_txt = "1;4"
-	},
+/obj/machinery/door/airlock/security/glass,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
 /turf/open/floor/iron/dark/textured,
 /area/security/interrogation)
 "hRf" = (
@@ -19955,13 +19955,13 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Entrance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigentrance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
 /area/security/brig/upper)
 "iHp" = (
@@ -21445,13 +21445,13 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Walkway"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigentrance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
 /area/security/brig/upper)
 "jrE" = (
@@ -24270,13 +24270,13 @@
 	name = "Brig Walkway";
 	id_tag = "innerbrig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigoutpost"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -42743,13 +42743,13 @@
 	name = "Security Checkpoint";
 	id_tag = "outerbrig"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigoutpost"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
@@ -44581,13 +44581,13 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Brig Entrance"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/doors,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	id_tag = "brigentrance"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/security/entrance,
 /turf/open/floor/iron,
 /area/security/brig/upper)
 "uYT" = (
@@ -45785,12 +45785,13 @@
 /obj/machinery/door/airlock/security/glass{
 	name = "Security Vestibule"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
 /turf/open/floor/iron/smooth,
 /area/security/processing)
 "vHm" = (

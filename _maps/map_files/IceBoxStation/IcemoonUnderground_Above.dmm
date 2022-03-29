@@ -14763,13 +14763,13 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/security{
-	name = "Detective's Office";
-	req_access_txt = "4"
+	name = "Detective's Office"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/security/detective,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "PJ" = (
