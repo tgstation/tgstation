@@ -27,12 +27,7 @@
 	. = ..()
 	if(random_sensor)
 		//make the sensor mode favor higher levels, except coords.
-		sensor_mode = pick_weight(list(
-			SENSOR_VITALS = 3,
-			SENSOR_LIVING = 2,
-			SENSOR_COORDS = 2,
-			SENSOR_OFF = 1,
-		))
+		sensor_mode = pick_weight(list(SENSOR_VITALS = 3, SENSOR_LIVING = 2, SENSOR_COORDS = 2, SENSOR_OFF = 1))
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
