@@ -25,13 +25,13 @@
 			name = initial(name)
 			desc = initial(desc)
 			slot_flags = initial(slot_flags)
-			//worn_y_offset = initial(worn_y_offset)
+			worn_y_offset = initial(worn_y_offset)
 			user.visible_message(span_notice("[user] unties the neckercheif back into a [name]."), span_notice("You untie the neckercheif back into a [name]."))
 		else
 			name = "[name] neckerchief"
 			desc = "[desc] It's tied up like a neckerchief."
 			slot_flags = ITEM_SLOT_NECK
-			//worn_y_offset = -3
+			worn_y_offset = -3
 			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
 	else
 		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
