@@ -63,6 +63,8 @@
 
 /// Granst the action to the passed mob, making it the owner
 /datum/action/proc/Grant(mob/M)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(M)
 		if(owner)
 			if(owner == M)
@@ -107,6 +109,8 @@
 
 /// Remove the passed mob from being owner of our action
 /datum/action/proc/Remove(mob/M)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(M)
 		if(M.client)
 			M.client.screen -= button

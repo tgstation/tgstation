@@ -9,16 +9,17 @@
 	throw_speed = 3
 	throw_range = 7
 	resistance_flags = FLAMMABLE
+	actions_types = list(/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll)
 	/// Number of uses the scroll gets.
 	var/uses = 4
 
 /obj/item/teleportation_scroll/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = new(src)
-	teleport.name = name
-	teleport.icon_icon = icon
-	teleport.button_icon_state = icon_state
-	LAZYADD(actions, teleport)
+	var/datum/action/cooldown/spell/teleport/area_teleport/wizard/scroll/teleport = locate() in actions
+	if(teleport)
+		teleport.name = name
+		teleport.icon_icon = icon
+		teleport.button_icon_state = icon_state
 
 /obj/item/teleportation_scroll/item_action_slot_check(slot, mob/user)
 	return (slot == ITEM_SLOT_HANDS)

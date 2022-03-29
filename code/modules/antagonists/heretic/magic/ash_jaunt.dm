@@ -13,6 +13,7 @@
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
 
+	exit_jaunt_sound = null
 	jaunt_duration = 1 SECONDS
 	jaunt_in_time = 1.3 SECONDS
 	jaunt_out_time = 0.6 SECONDS

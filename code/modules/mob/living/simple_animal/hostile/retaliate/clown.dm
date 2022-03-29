@@ -484,12 +484,13 @@
 	to_chat(on_who, span_notice("Your throat muscles tense up. <B>Left-click to regurgitate a funny morsel!</B>"))
 	on_who.icon_state = "glutton_tongue"
 
-/datum/action/cooldown/regurgitate/unset_click_ability(mob/on_who)
+/datum/action/cooldown/regurgitate/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("Your throat muscles relax."))
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("Your throat muscles relax."))
 	on_who.icon_state = initial(on_who.icon_state)
 
 /datum/action/cooldown/regurgitate/IsAvailable()

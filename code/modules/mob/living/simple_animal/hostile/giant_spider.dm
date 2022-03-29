@@ -374,12 +374,13 @@
 	to_chat(on_who, span_notice("You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B>"))
 	button_icon_state = "wrap_0"
 
-/datum/action/cooldown/wrap/unset_click_ability(mob/on_who)
+/datum/action/cooldown/wrap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You no longer prepare to wrap something in a cocoon."))
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("You no longer prepare to wrap something in a cocoon."))
 	button_icon_state = "wrap_1"
 	UpdateButtonIcon()
 

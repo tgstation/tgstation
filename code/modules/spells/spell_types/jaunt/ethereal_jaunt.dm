@@ -125,7 +125,8 @@
 	holder.forceMove(found_exit)
 	do_steam_effects(found_exit)
 	holder.reappearing = TRUE
-	playsound(found_exit, exit_jaunt_sound, 50, TRUE)
+	if(exit_jaunt_sound)
+		playsound(found_exit, exit_jaunt_sound, 50, TRUE)
 
 	ADD_TRAIT(cast_on, TRAIT_IMMOBILIZED, REF(src))
 

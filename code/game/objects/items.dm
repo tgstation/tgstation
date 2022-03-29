@@ -221,8 +221,13 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		species_exception = string_list(species_exception)
 
 	. = ..()
+
+	// Handle adding item associated actions
 	for(var/path in actions_types)
-		new path(src)
+		var/datum/action/action = new path(src)
+		LAZYADD(actions, action)
+		RegisterSignal(action, COMSIG_PARENT_QDELETING, .proc/on_action_deleted)
+
 	actions_types = null
 
 	if(force_string)
@@ -249,9 +254,23 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
-	for(var/X in actions)
-		qdel(X)
+
+	// Handle cleaning up our actions list
+	for(var/datum/action/action as anything in actions)
+		UnregisterSignal(action, COMSIG_PARENT_QDELETING)
+		LAZYREMOVE(actions, action)
+		qdel(action)
+
 	return ..()
+
+/// Called when an action associated with our item is deleted
+/obj/item/proc/on_action_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	if(!(source in actions))
+		CRASH("An action ([source.type]) was deleted that was associated with an item ([src]), but was not found in the item's actions list.")
+
+	LAZYREMOVE(actions, source)
 
 /// Called if this item is supposed to be a steal objective item objective. Only done at mapload
 /obj/item/proc/add_stealing_item_objective()

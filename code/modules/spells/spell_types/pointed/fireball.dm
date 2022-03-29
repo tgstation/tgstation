@@ -8,7 +8,7 @@
 	cooldown_time = 6 SECONDS
 	cooldown_reduction_per_rank = 1 SECONDS // 1 second reduction per rank
 
-	invocation = "ONI SOMA"
+	invocation = "ONI SOMA!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

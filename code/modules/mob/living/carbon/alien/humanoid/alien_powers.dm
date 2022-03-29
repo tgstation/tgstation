@@ -34,6 +34,10 @@ Doesn't work on other aliens/AI.*/
 	. = ..()
 	if(!.)
 		return FALSE
+	// Xeno actions like "evolve" may result in our action being deleted
+	// In that case, we can just exit now as a "success"
+	if(QDELETED(src))
+		return TRUE
 
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.adjustPlasma(-plasma_cost)
@@ -197,12 +201,13 @@ Doesn't work on other aliens/AI.*/
 		alien.drooling = TRUE
 		alien.update_icons()
 
-/datum/action/cooldown/alien/acid/unset_click_ability(mob/on_who)
+/datum/action/cooldown/alien/acid/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(on_who, span_noticealien("You empty your corrosive acid glands."))
+	if(refund_cooldown)
+		to_chat(on_who, span_noticealien("You empty your corrosive acid glands."))
 
 	if(isalienadult(on_who))
 		var/mob/living/carbon/alien/humanoid/alien = on_who // MELBERT TODO cl
@@ -242,7 +247,8 @@ Doesn't work on other aliens/AI.*/
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You empty your neurotoxin gland."))
+	to_chat(on_who, span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>"))
+
 	button_icon_state = "alien_neurotoxin_1"
 	UpdateButtonIcon()
 
@@ -251,12 +257,14 @@ Doesn't work on other aliens/AI.*/
 		alien.drooling = TRUE
 		alien.update_icons()
 
-/datum/action/cooldown/alien/neurotoxin/unset_click_ability(mob/on_who)
+/datum/action/cooldown/alien/neurotoxin/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>"))
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("You empty your neurotoxin gland."))
+
 	button_icon_state = "alien_neurotoxin_0"
 	UpdateButtonIcon()
 
@@ -268,7 +276,7 @@ Doesn't work on other aliens/AI.*/
 /datum/action/cooldown/alien/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
 	. = ..()
 	if(!.)
-		unset_click_ability(caller)
+		unset_click_ability(caller, refund_cooldown = FALSE)
 		return FALSE
 
 	// We do this in InterceptClickOn() instead of Activate()

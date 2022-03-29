@@ -82,12 +82,13 @@
 
 	to_chat(on_who, span_notice("You prepare your [target == type ? "steed's ":""]pimp-tentacle. <b>Left-click to slap a target!</b>"))
 
-/datum/action/cooldown/tentacle_slap/unset_click_ability(mob/on_who)
+/datum/action/cooldown/tentacle_slap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You stop preparing your [target == type ? "steed's ":""]pimp-tentacle."))
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("You stop preparing your [target == type ? "steed's ":""]pimp-tentacle."))
 
 /datum/action/cooldown/tentacle_slap/Activate(atom/to_slap)
 	if(to_slap == owner)

@@ -8,7 +8,7 @@
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS
 
-	invocation = "P'WAH, UNLIM'TED P'WAH"
+	invocation = "P'WAH, UNLIM'TED P'WAH!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 

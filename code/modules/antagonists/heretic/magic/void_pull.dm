@@ -5,7 +5,6 @@
 	background_icon_state = "bg_ecult"
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "voidpull"
-	sound = 'sound/magic/voidblink.ogg'
 
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 40 SECONDS

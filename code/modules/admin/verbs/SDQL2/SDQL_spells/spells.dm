@@ -3,7 +3,7 @@
 	desc = "If you are reading this outside of the \"Give SDQL Spell\" menu, tell the admin that gave this spell to you to use said menu."
 	projectile_type = /obj/projectile
 
-/datum/action/cooldown/spell/pointed/projectile/New(Target, giver)
+/datum/action/cooldown/spell/pointed/projectile/sdql/New(Target, giver)
 	. = ..()
 	var/static/list/executor_signals = list(
 		COMSIG_SPELL_PROJECTILE_HIT,

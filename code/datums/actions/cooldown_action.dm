@@ -37,7 +37,7 @@
 
 /datum/action/cooldown/Remove(mob/living/user)
 	if(click_to_activate && user.click_intercept == src)
-		unset_click_ability()
+		unset_click_ability(user, refund_cooldown = FALSE)
 	return ..()
 
 /// Starts a cooldown time to be shared with similar abilities
@@ -90,11 +90,11 @@
 		var/datum/action/cooldown/already_set = owner.click_intercept
 		if(already_set == src)
 			// if we clicked ourself and we're already set, unset and return
-			return unset_click_ability(owner)
+			return unset_click_ability(owner, refund_cooldown = TRUE)
 
 		else if (istype(already_set))
 			// if we have an active set already, unset it before we set our's
-			already_set.unset_click_ability(owner)
+			already_set.unset_click_ability(owner, refund_cooldown = TRUE)
 
 		return set_click_ability(owner)
 
@@ -109,13 +109,14 @@
 		return FALSE
 	if(!target)
 		return FALSE
-	// The actual spell begins here
+	// The actual action begins here
 	if(!PreActivate(target))
 		return FALSE
 
-	// And if we reach here, the spell was cast successfully
+	// And if we reach here, the action was complete successfully
 	if(unset_after_click)
-		unset_click_ability(caller)
+		StartCooldown()
+		unset_click_ability(caller, refund_cooldown = FALSE)
 	caller.next_click = world.time + click_cd_override
 
 	return TRUE
@@ -131,14 +132,27 @@
 /datum/action/cooldown/proc/Activate(atom/target)
 	return
 
+/**
+ * Set our action as the click override on the passed mob.
+ */
 /datum/action/cooldown/proc/set_click_ability(mob/on_who)
+	SHOULD_CALL_PARENT(TRUE)
+
 	on_who.click_intercept = src
 	if(ranged_mousepointer)
 		on_who.client?.mouse_pointer_icon = ranged_mousepointer
 	UpdateButtonIcon()
 	return TRUE
 
-/datum/action/cooldown/proc/unset_click_ability(mob/on_who)
+/**
+ * Unset our action as the click override of the passed mob.
+ *
+ * if refund_cooldown is TRUE, we are being unset by the user clicking the action off
+ * if refund_cooldown is FALSE, we are being forcefully unset, likely by someone actually using the action
+ */
+/datum/action/cooldown/proc/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
 	on_who.click_intercept = null
 	if(ranged_mousepointer)
 		on_who.client?.mouse_pointer_icon = initial(on_who.client?.mouse_pointer_icon)
@@ -152,6 +166,7 @@
 		if(IsAvailable() && owner.click_intercept == src)
 			button.color = COLOR_GREEN
 
+/// Updates the cooldown text overtop the action button.
 /datum/action/cooldown/proc/update_button_text()
 	var/time_left = max(next_use_time - world.time, 0)
 	if(text_cooldown && time_left >= 0)

@@ -313,14 +313,15 @@
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You stop preparing your mending globules."))
+	to_chat(on_who, span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>"))
 
-/datum/action/cooldown/globules/unset_click_ability(mob/on_who)
+/datum/action/cooldown/globules/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You prepare to launch a mending globule. <B>Left-click to fire at a target!</B>"))
+	if(refund_cooldown)
+		to_chat(on_who, span_notice("You stop preparing your mending globules."))
 
 /datum/action/cooldown/globules/Activate(atom/target)
 	. = ..()

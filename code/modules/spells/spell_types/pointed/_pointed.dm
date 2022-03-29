@@ -3,6 +3,9 @@
  *
  * These spells override the caster's click,
  * allowing them to cast the spell on whatever is clicked on.
+ *
+ * To add effects on cast, override "cast(atom/cast_on)".
+ * The cast_on atom is the person who was clicked on.
  */
 /datum/action/cooldown/spell/pointed
 	click_to_activate = TRUE
@@ -30,17 +33,25 @@
 	on_activation(on_who)
 	return ..()
 
-/datum/action/cooldown/spell/pointed/unset_click_ability(mob/on_who)
-	on_deactivation(on_who)
+/datum/action/cooldown/spell/pointed/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
+	on_deactivation(on_who, refund_cooldown = refund_cooldown)
 	return ..()
 
+/// Called when the spell is activated / the click ability is set to our spell
 /datum/action/cooldown/spell/pointed/proc/on_activation(mob/on_who)
+	SHOULD_CALL_PARENT(TRUE)
+
 	to_chat(on_who, span_notice("[active_msg] <B>Left-click to activate the spell on a target!</B>"))
 	if(base_icon_state)
 		button_icon_state = "[base_icon_state]1"
 
-/datum/action/cooldown/spell/pointed/proc/on_deactivation(mob/on_who)
-	to_chat(on_who, span_notice("[deactive_msg]"))
+/// Called when the spell is deactivated / the click ability is unset from our spell
+/datum/action/cooldown/spell/pointed/proc/on_deactivation(mob/on_who, refund_cooldown = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(refund_cooldown)
+		// Only send the "deactivation" message if they're willingly disabling the ability
+		to_chat(on_who, span_notice("[deactive_msg]"))
 	if(base_icon_state)
 		button_icon_state = "[base_icon_state]0"
 
@@ -96,9 +107,10 @@
 	. = ..()
 	current_amount = projectile_amount
 
-/datum/action/cooldown/spell/pointed/projectile/on_deactivation(mob/on_who)
+/datum/action/cooldown/spell/pointed/projectile/on_deactivation(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
-	StartCooldown(cooldown_time * (current_amount / projectile_amount))
+	if(projectile_amount > 1 && current_amount)
+		StartCooldown(cooldown_time * (current_amount / projectile_amount))
 
 // cast_on is a turf, or atom target, that we clicked on to fire at.
 /datum/action/cooldown/spell/pointed/projectile/cast(atom/cast_on)
@@ -113,9 +125,16 @@
 	fire_projectile(cast_on)
 	owner.newtonian_move(get_dir(caster_front_turf, caster_turf))
 	if(current_amount <= 0)
-		unset_click_ability(owner)
+		unset_click_ability(owner, refund_cooldown = FALSE)
 
 	return TRUE
+
+/datum/action/cooldown/spell/pointed/projectile/after_cast(atom/cast_on)
+	. = ..()
+	if(current_amount > 0)
+		// We can still cast projectiles! Reset our cooldown
+		next_use_time = world.time
+		UpdateButtonIcon()
 
 /datum/action/cooldown/spell/pointed/projectile/proc/fire_projectile(atom/target)
 	current_amount--
