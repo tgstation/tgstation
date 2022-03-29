@@ -56,7 +56,7 @@ export const NtosMain = (props, context) => {
                   icon="dna"
                   content="Imprint ID"
                   // eslint-disable-next-line max-len
-                  disabled={proposed_login.IDName || (proposed_login.IDName === login.IDName)}
+                  disabled={!proposed_login.IDName || (proposed_login.IDName === login.IDName)}
                   onClick={() => act('PC_Imprint_ID', { name: "ID" })}
                 />
               </Box>
