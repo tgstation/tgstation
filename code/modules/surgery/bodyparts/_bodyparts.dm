@@ -1030,7 +1030,7 @@
 /obj/item/bodypart/proc/update_part_wound_overlay()
 	if(!owner)
 		return FALSE
-	if(!(NOBLEED in species_flags_list) || !IS_ORGANIC_LIMB(src))
+	if(HAS_TRAIT(owner, TRAIT_NOBLEED) || !IS_ORGANIC_LIMB(src) || (NOBLOOD in species_flags_list))
 		if(bleed_overlay_icon)
 			bleed_overlay_icon = null
 			owner.update_wound_overlays()
