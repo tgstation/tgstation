@@ -42517,6 +42517,7 @@
 	name = "Brig Control"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/security/warden)
 "ube" = (
@@ -43954,6 +43955,7 @@
 	name = "Brig Control"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark/textured,
 /area/ai_monitored/security/armory/upper)
 "uHl" = (
