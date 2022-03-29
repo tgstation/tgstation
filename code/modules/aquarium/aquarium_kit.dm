@@ -54,9 +54,8 @@
 /obj/item/storage/fish_case/tiziran
 	name = "imported fish case"
 
-/obj/item/storage/fish_case/tiziran/PopulateContents()
-	. = ..()
-	generate_fish(src, pick(/datum/aquarium_behaviour/fish/dwarf_moonfish, /datum/aquarium_behaviour/fish/gunner_jellyfish, /datum/aquarium_behaviour/fish/needlefish, /datum/aquarium_behaviour/fish/armorfish))
+/obj/item/storage/fish_case/tiziran/select_fish_type()
+	return pick(/obj/item/fish/dwarf_moonfish, /obj/item/fish/gunner_jellyfish, /obj/item/fish/needlefish, /obj/item/fish/armorfish)
 
 ///Book detailing where to get the fish and their properties.
 /obj/item/book/fish_catalog
