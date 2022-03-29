@@ -14,7 +14,7 @@
  */
 /datum/chatmessage
 	/// list of images generated for the message sent to each hearing client.
-	/// associative list of the form: list(message image = list(clients using that image))
+	/// associative list of the form: list(message image = client using that image)
 	var/list/image/messages = list()
 	/// The clients who heard this message.
 	/// associative list of the form: list(client who hears this message = chat message image that client uses)
@@ -43,7 +43,7 @@
 	var/lifespan = 0
 	///associative list of the form: list(message image = world.time that image is set to fade out)
 	var/list/fade_times_by_image = list()
-
+	///what world.time this message datum was created.
 	var/creation_time = 0
 
 /**
