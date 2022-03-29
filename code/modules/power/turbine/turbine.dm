@@ -27,6 +27,8 @@
 	var/has_gasmix = FALSE
 	var/datum/gas_mixture/machine_gasmix
 
+	var/mapped = TRUE
+
 /obj/machinery/power/turbine/Initialize(mapload)
 	. = ..()
 
@@ -34,7 +36,7 @@
 		machine_gasmix = new
 		machine_gasmix.volume = gas_theoretical_volume
 
-	if(part_path)
+	if(part_path && mapped)
 		installed_part = new part_path(src)
 		installed_part_efficiency = installed_part.part_efficiency
 
@@ -186,6 +188,9 @@
 	///Reference to the core part
 	var/obj/machinery/power/turbine/core_rotor/core
 
+/obj/machinery/power/turbine/inlet_compressor/constructed
+	mapped = FALSE
+
 /obj/machinery/power/turbine/inlet_compressor/Destroy()
 	if(core)
 		core = null
@@ -207,6 +212,9 @@
 
 	///Reference to the core part
 	var/obj/machinery/power/turbine/core_rotor/core
+
+/obj/machinery/power/turbine/turbine_outlet/constructed
+	mapped = FALSE
 
 /obj/machinery/power/turbine/turbine_outlet/Destroy()
 	if(core)
@@ -270,6 +278,9 @@
 	var/intake_regulator = 0.5
 
 	COOLDOWN_DECLARE(turbine_damage_alert)
+
+/obj/machinery/power/turbine/core_rotor/constructed
+	mapped = FALSE
 
 /obj/machinery/power/turbine/core_rotor/Initialize(mapload)
 	. = ..()

@@ -201,7 +201,7 @@
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/inlet_compressor
+	build_path = /obj/machinery/power/turbine/inlet_compressor/constructed
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -209,7 +209,7 @@
 /obj/item/circuitboard/machine/turbine_rotor
 	name = "Turbine - Core Rotor (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/core_rotor
+	build_path = /obj/machinery/power/turbine/core_rotor/constructed
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -217,7 +217,7 @@
 /obj/item/circuitboard/machine/turbine_stator
 	name = "Turbine - Turbine Outlet (Machine Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/turbine_outlet
+	build_path = /obj/machinery/power/turbine/turbine_outlet/constructed
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
