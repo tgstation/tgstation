@@ -39,6 +39,8 @@
 	if(!ismob(target))
 		return COMPONENT_OBJ_CANCEL_CHARGE
 	var/mob/living/user = target
+	if(issilicon(user)) //They have evolved beyond the need for mere credits
+		return
 	var/obj/item/card/id/card
 	if(istype(user))
 		card = user.get_idcard(TRUE)

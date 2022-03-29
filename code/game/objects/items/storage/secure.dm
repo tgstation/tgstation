@@ -156,7 +156,8 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	new /obj/item/stack/spacecash/c500(src)
+	for var/iterator in 5
+		new /obj/item/stack/spacecash/c1000(src)
 
 ///Secure Safe
 /obj/item/storage/secure/safe
