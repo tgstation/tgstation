@@ -6,6 +6,8 @@
 ///the layer value given to the message image for the animation sequence where the image is forced into fading.
 ///used so that the server doesnt force the image to fade twice.
 #define MESSAGE_ANIMATION_FORCE_FADE_LAYER_MARK 1021
+///the layer mark given to the last stage of the animation sequence after it has been edited but not forced into the fading animation.
+#define MESSAGE_ANIMATION_EDIT_FADE_LAYER_MARK 1022
 
 /**
  * # Chat Message Overlay
@@ -221,27 +223,27 @@
 			var/non_abs_stage_2_time_left = real_stage_2_time_left
 			real_stage_2_time_left = max(real_stage_2_time_left, 0)
 
-			//if the message isnt in stage 3 of the animation, adjust the length of stage 2. assume that stage 1 is over since its short
-			//and taking that into account is harder than its worth. also check if theres enough time left after adjusting to bother
-			if(preexisting_message.fade_times_by_image[other_message_image] > world.time && real_stage_2_time_left > 1)
-				animate(other_message_image, alpha = 255, time = 0)
-				animate(time = real_stage_2_time_left)
-				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
-				animate(layer = MESSAGE_ANIMATION_DEFAULT_LAYER_MARK, time = 0)
+			if(other_message_image.layer != MESSAGE_ANIMATION_FORCE_FADE_LAYER_MARK)
+				//if the message isnt in stage 3 of the animation, adjust the length of stage 2. assume that stage 1 is over since its short
+				//and taking that into account is harder than its worth. also check if theres enough time left after adjusting to bother
+				if(preexisting_message.fade_times_by_image[other_message_image] > world.time && real_stage_2_time_left > 1 && other_message_image.layer != MESSAGE_ANIMATION_EDIT_FADE_LAYER_MARK)
+					animate(other_message_image, alpha = 255, time = 0)
+					animate(time = real_stage_2_time_left)
+					animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+					animate(layer = MESSAGE_ANIMATION_EDIT_FADE_LAYER_MARK, time = 0)
 
-				preexisting_message.fade_times_by_image[other_message_image] = world.time + non_abs_stage_2_time_left + CHAT_MESSAGE_SPAWN_TIME
+					preexisting_message.fade_times_by_image[other_message_image] = world.time + non_abs_stage_2_time_left + CHAT_MESSAGE_SPAWN_TIME
 
-			//just start the fading early if theres no real time left. layer is only MESSAGE_ANIMATION_DEFAULT_LAYER_MARK to the server if this hasnt already happened to the image
-			else if(real_stage_2_time_left <= 1 && other_message_image.layer == MESSAGE_ANIMATION_DEFAULT_LAYER_MARK)
+				//just start the fading early if theres no real time left. layer is only MESSAGE_ANIMATION_DEFAULT_LAYER_MARK to the server if this hasnt already happened to the image
+				else if(real_stage_2_time_left <= 1)
 
-				//to the server, animations complete their edits instantly, jumping to the last stage of the animation. so we need this step if the client
-				//was still in the second stage of animation. if the time was wrong and the client was in the third stage of animation when the updated step
-				//arrives, then this will look weird.
-				animate(other_message_image, alpha = 255, time = 0)
-				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
-				animate(layer = MESSAGE_ANIMATION_FORCE_FADE_LAYER_MARK, time = 0)
+					//to the server, animations complete their edits instantly, jumping to the last stage of the animation. so we need this step if the client
+					//was still in the second stage of animation. if the time was wrong and the client was in the third stage of animation when the updated step
+					//arrives, then this will look weird.
+					animate(other_message_image, alpha = 0, time = CHAT_MESSAGE_EOL_FADE, flags = ANIMATION_PARALLEL)
+					animate(layer = MESSAGE_ANIMATION_FORCE_FADE_LAYER_MARK, time = 0)
 
-				preexisting_message.fade_times_by_image[other_message_image] = world.time //make sure we can tell afterwards if its already fading
+					preexisting_message.fade_times_by_image[other_message_image] = world.time //make sure we can tell afterwards if its already fading
 
 			//make it move upwards
 			animate(other_message_image, pixel_y = other_message_image.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
