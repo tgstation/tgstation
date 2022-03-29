@@ -187,6 +187,7 @@
 		var/health_ratio = owner.health / owner.maxHealth
 		var/healing = HEALING_SLEEP_DEFAULT
 
+		// having high spirits helps us recover
 		var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
 		if(mood != null)
 			switch(mood.sanity_level)
@@ -203,10 +204,24 @@
 				if(SANITY_LEVEL_INSANE)
 					healing = 0.2
 
+		var/turf/rest_turf = get_turf(owner)
+		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= 0.2 // switch 0.2 to the LIGHTING_IS_DARK define when Paper DLC gets merged
+		
+		// sleeping with a blindfold or in the dark helps us rest
+		if(HAS_TRAIT_FROM(owner, TRAIT_BLIND, BLINDFOLD_TRAIT) || is_sleeping_in_darkness)
+			healing -= 0.1
+			
+		// sleeping with earmuffs helps blockout the noise as well
+		if(HAS_TRAIT_FROM(src, TRAIT_DEAF, CLOTHING_TRAIT))
+			healing -= 0.1
+		
+		// check for beds
 		if((locate(/obj/structure/bed) in owner.loc))
-			healing -= 0.3
+			healing -= 0.2
 		else if((locate(/obj/structure/table) in owner.loc))
 			healing -= 0.1
+			
+		// don't forget the bedsheet
 		for(var/obj/item/bedsheet/bedsheet in range(owner.loc,0))
 			if(bedsheet.loc != owner.loc) //bedsheets in your backpack/neck don't give you comfort
 				continue
