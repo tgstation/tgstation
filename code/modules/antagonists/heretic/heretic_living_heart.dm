@@ -118,13 +118,9 @@
 
 	var/list/targets_to_choose = list()
 	var/list/mob/living/carbon/human/human_targets = list()
-	for(var/datum/weakref/target_ref as anything in heretic_datum.sac_targets)
-		var/mob/living/carbon/human/real_target = target_ref.resolve()
-		if(QDELETED(real_target))
-			continue
-
-		human_targets[real_target.real_name] = real_target
-		targets_to_choose[real_target.real_name] = heretic_datum.sac_targets[target_ref]
+	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
+		human_targets[sac_target.real_name] = sac_target
+		targets_to_choose[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.

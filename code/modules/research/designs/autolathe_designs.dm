@@ -781,14 +781,6 @@
 	build_path = /obj/item/wallframe/status_display
 	category = list("initial", "Construction")
 
-/datum/design/bounty_board_frame
-	name = "Bounty Board Frame"
-	id = "bountyboard_frame"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = 14000, /datum/material/glass = 8000)
-	build_path = /obj/item/wallframe/bounty_board
-	category = list("initial", "Construction")
-
 /datum/design/syringe
 	name = "Syringe"
 	id = "syringe"
@@ -1238,3 +1230,29 @@
 	build_path = /obj/item/razor
 	category = list("initial","Medical")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/paperroll
+	name = "Hand Labeler Paper Roll"
+	id = "roll"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 25)
+	build_path = /obj/item/hand_labeler_refill
+	category = list("initial", "Misc", "Equipment")
+
+/datum/design/toner
+	name = "Toner Cartridge"
+	id = "toner"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 10, /datum/material/glass = 10)
+	build_path = /obj/item/toner
+	category = list("initial", "Misc", "Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/toner/large
+	name = "Large Toner Cartridge"
+	id = "toner_large"
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = 35, /datum/material/glass = 35)
+	build_path = /obj/item/toner/large
+	category = list("initial", "Misc", "Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE

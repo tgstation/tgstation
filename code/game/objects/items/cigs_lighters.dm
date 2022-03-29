@@ -271,7 +271,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	reagents.flags |= NO_REACT
 	lit = FALSE
 	update_icon()
-	
+
 	if(ismob(loc))
 		var/mob/living/M = loc
 		to_chat(M, span_notice("Your [name] goes out."))
@@ -726,7 +726,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb_simple = string_list(list("burn", "singe"))
 		START_PROCESSING(SSobj, src)
 	else
-		hitsound = "swing_hit"
+		hitsound = SFX_SWING_HIT
 		force = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it
 		attack_verb_simple = null

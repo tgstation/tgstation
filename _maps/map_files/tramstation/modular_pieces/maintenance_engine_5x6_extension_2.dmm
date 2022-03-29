@@ -7,10 +7,10 @@
 /area/template_noop)
 "e" = (
 /obj/effect/spawner/random/structure/girder,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/starboard/lesser)
 "h" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/starboard/lesser)
 "o" = (
 /obj/effect/turf_decal/sand/plating,
@@ -18,7 +18,7 @@
 /area/maintenance/starboard/lesser)
 "t" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/starboard/lesser)
 "x" = (
 /obj/effect/decal/cleanable/dirt,

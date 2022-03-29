@@ -224,8 +224,13 @@
 
 				$wrap.width($wrap.width() + 2); //Dumb hack to fix a bizarre sizing bug
 
-				var docWidth	= $wrap.outerWidth(),
-					docHeight	= $wrap.outerHeight();
+				var pixelRatio = 1;
+				if (window.devicePixelRatio) {
+					pixelRatio = window.devicePixelRatio;
+				}
+
+				var docWidth	= Math.floor($wrap.outerWidth() * pixelRatio),
+					docHeight	= Math.floor($wrap.outerHeight() * pixelRatio);
 
 				if (posY + docHeight > map.size.y) { //Is the bottom edge below the window? Snap it up if so
 					posY = (posY - docHeight) - realIconSizeY - tooltip.padding;

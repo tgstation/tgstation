@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered/no_grav)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "d" = (
 /turf/closed/wall,
@@ -19,7 +19,7 @@
 	amount = 2
 	},
 /obj/item/shard,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "g" = (
 /obj/structure/grille,
@@ -43,7 +43,7 @@
 /area/ruin/unpowered/no_grav)
 "k" = (
 /obj/item/ectoplasm,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "l" = (
 /obj/structure/closet/crate/coffin,
@@ -174,7 +174,7 @@
 /area/ruin/unpowered/no_grav)
 "N" = (
 /mob/living/simple_animal/hostile/construct/proteon,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "O" = (
 /obj/structure/grille,
@@ -185,7 +185,7 @@
 "Q" = (
 /obj/item/storage/book/bible,
 /obj/effect/decal/cleanable/blood,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "R" = (
 /obj/structure/closet/crate/coffin,
@@ -194,12 +194,12 @@
 /area/ruin/unpowered/no_grav)
 "S" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 "U" = (
 /obj/effect/decal/remains/human,
 /obj/item/paper/fluff/ruins/clericsden/warning,
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"

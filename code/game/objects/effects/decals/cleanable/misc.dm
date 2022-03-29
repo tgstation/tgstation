@@ -12,10 +12,11 @@
 	icon_state = "ash"
 	mergeable_decal = FALSE
 	beauty = -50
+	decal_reagent = /datum/reagent/ash
+	reagent_amount = 30
 
 /obj/effect/decal/cleanable/ash/Initialize(mapload)
 	. = ..()
-	reagents.add_reagent(/datum/reagent/ash, 30)
 	pixel_x = base_pixel_x + rand(-5, 5)
 	pixel_y = base_pixel_y + rand(-5, 5)
 
@@ -27,10 +28,8 @@
 	name = "large pile of ashes"
 	icon_state = "big_ash"
 	beauty = -100
-
-/obj/effect/decal/cleanable/ash/large/Initialize(mapload)
-	. = ..()
-	reagents.add_reagent(/datum/reagent/ash, 30) //double the amount of ash.
+	decal_reagent = /datum/reagent/ash
+	reagent_amount = 60
 
 /obj/effect/decal/cleanable/glass
 	name = "tiny shards"
@@ -91,9 +90,13 @@
 /obj/effect/decal/cleanable/greenglow/ex_act()
 	return FALSE
 
+/obj/effect/decal/cleanable/greenglow/filled
+	decal_reagent = /datum/reagent/uranium
+	reagent_amount = 5
+
 /obj/effect/decal/cleanable/greenglow/filled/Initialize(mapload)
+	decal_reagent = pick(/datum/reagent/uranium, /datum/reagent/uranium/radium)
 	. = ..()
-	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
 
 /obj/effect/decal/cleanable/greenglow/ecto
 	name = "ectoplasmic puddle"
@@ -268,22 +271,23 @@
 	beauty = -150
 	plane = GAME_PLANE
 	layer = LOW_OBJ_LAYER
-	/// The damage the ants will do when you step on them
-	var/ant_bite_damage = 0.1
-	/// The amount of ant reagent inside the ant cluster
-	var/ant_volume
+	decal_reagent = /datum/reagent/ants
+	reagent_amount = 5
 	/// Sound the ants make when biting
 	var/bite_sound = 'sound/weapons/bite.ogg'
 
 /obj/effect/decal/cleanable/ants/Initialize(mapload)
+	reagent_amount = rand(3, 5)
 	. = ..()
-	ant_volume = rand(3, 5)
-	reagents.add_reagent(/datum/reagent/ants, ant_volume)
 	update_ant_damage()
 
-/obj/effect/decal/cleanable/ants/proc/update_ant_damage(spilled_ants)
-	ant_volume += spilled_ants
-	ant_bite_damage = min(10, round((ant_volume * 0.1),0.1)) // 100u ants = 10 max_damage
+/obj/effect/decal/cleanable/ants/handle_merge_decal(obj/effect/decal/cleanable/merger)
+	. = ..()
+	var/obj/effect/decal/cleanable/ants/ants = merger
+	ants.update_ant_damage()
+
+/obj/effect/decal/cleanable/ants/proc/update_ant_damage()
+	var/ant_bite_damage = min(10, round((reagents.get_reagent_amount(/datum/reagent/ants) * 0.1),0.1)) // 100u ants = 10 max_damage
 
 	var/ant_flags = (CALTROP_NOCRAWL | CALTROP_NOSTUN) /// Small amounts of ants won't be able to bite through shoes.
 	if(ant_bite_damage > 1)

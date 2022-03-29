@@ -287,7 +287,7 @@
 	response_harm_simple = "take a bite out of"
 	attacked_sound = 'sound/items/eatfood.ogg'
 	deathmessage = "loses her false life and collapses!"
-	deathsound = "bodyfall"
+	deathsound = SFX_BODYFALL
 	held_state = "cak"
 
 /mob/living/simple_animal/pet/cat/cak/add_cell_sample()

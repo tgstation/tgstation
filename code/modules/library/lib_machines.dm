@@ -441,13 +441,13 @@
 		if(!GLOB.news_network)
 			tgui_alert(usr,"No news network found on station. Aborting.")
 		var/channelexists = 0
-		for(var/datum/newscaster/feed_channel/FC in GLOB.news_network.network_channels)
+		for(var/datum/feed_channel/FC in GLOB.news_network.network_channels)
 			if(FC.channel_name == "Nanotrasen Book Club")
 				channelexists = 1
 				break
 		if(!channelexists)
-			GLOB.news_network.CreateFeedChannel("Nanotrasen Book Club", "Library", null)
-		GLOB.news_network.SubmitArticle(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
+			GLOB.news_network.create_feed_channel("Nanotrasen Book Club", "Library", "The official station book club!" , null)
+		GLOB.news_network.submit_article(scanner.cache.dat, "[scanner.cache.name]", "Nanotrasen Book Club", null)
 		tgui_alert(usr,"Upload complete. Your uploaded title is now available on station newscasters.")
 	if(href_list["orderbyid"])
 		if(printer_cooldown > world.time)
@@ -484,7 +484,7 @@
 					B.title = title
 					B.author = author
 					B.dat = content
-					B.icon_state = "book[rand(1,8)]"
+					B.icon_state = "book[rand(1,B.maximum_book_state)]"
 					visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 				break
 			qdel(query_library_print)
@@ -603,7 +603,7 @@
 			var/obj/item/book/B = new(src.loc)
 			B.dat = P.info
 			B.name = "Print Job #" + "[rand(100, 999)]"
-			B.icon_state = "book[rand(1,7)]"
+			B.icon_state = "book[rand(1,B.maximum_book_state)]"
 			qdel(P)
 		else
 			P.forceMove(drop_location())
