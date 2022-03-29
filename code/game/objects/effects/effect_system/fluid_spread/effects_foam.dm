@@ -40,7 +40,7 @@
 
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload)
 	. = ..()
-	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
+	create_reagents(1000)
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -159,7 +159,7 @@
 
 /datum/effect_system/fluid_spread/foam/New()
 	..()
-	chemholder = new(1000, REAGENT_HOLDER_INSTANT_REACT)
+	chemholder = new(1000, NO_REACT)
 
 /datum/effect_system/fluid_spread/foam/Destroy()
 	QDEL_NULL(chemholder)

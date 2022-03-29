@@ -18,7 +18,7 @@
 
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
-	create_reagents(500)
+	create_reagents(1000)
 	START_PROCESSING(SSobj, src)
 	setDir(pick(GLOB.cardinals))
 
@@ -377,8 +377,7 @@
 
 /datum/effect_system/fluid_spread/smoke/chem/New()
 	..()
-	//This is a safety for now to prevent smoke generating more smoke as the smoke reagents react in the smoke. This is prevented naturally from happening even if this is off, but I want to be sure that any edge cases are prevented before I get a chance to rework smoke reactions (specifically adding water or reacting away stabilizing agent in the middle of it).
-	chemholder = new(500, REAGENT_HOLDER_INSTANT_REACT)
+	chemholder = new(1000, NO_REACT)
 
 /datum/effect_system/fluid_spread/smoke/chem/Destroy()
 	QDEL_NULL(chemholder)

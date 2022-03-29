@@ -1,4 +1,0 @@
-author: "magatsuchi"
-delete-after: True
-changes: 
-  - bugfix: "fixes a bug that causes podpeople hair to crash the pref menu"
