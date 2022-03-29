@@ -54,18 +54,21 @@
 	data["cardholder"] = FALSE
 	if(cardholder)
 		data["cardholder"] = TRUE
-		var/obj/item/card/id/stored_card = cardholder.GetID()
-		if(stored_card)
-			var/stored_name = stored_card.registered_name
-			var/stored_title = stored_card.assignment
-			if(!stored_name)
-				stored_name = "Unknown"
-			if(!stored_title)
-				stored_title = "Unknown"
-			data["login"] = list(
-				IDName = stored_name,
-				IDJob = stored_title,
-			)
+
+		var/stored_name = src.saved_identification
+		var/stored_title = src.saved_job
+		if(!stored_name)
+			stored_name = "Unknown"
+		if(!stored_title)
+			stored_title = "Unknown"
+		data["login"] = list(
+			IDName = src.saved_identification,
+			IDJob = src.saved_job,
+		)
+		data["proposed_login"] = list(
+			IDName = cardholder.current_identification,
+			IDJob = cardholder.current_job,
+		)
 
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
@@ -214,7 +217,14 @@
 					if(!cardholder)
 						return
 					cardholder.try_eject(user)
+		if("PC_Imprint_ID")
+			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+			if(!cardholder)
+				return
 
+			src.saved_identification = cardholder.current_identification
+			src.saved_job = cardholder.current_job
+			playsound(src, 'sound/machines/terminal_processing.ogg', 15, TRUE)
 
 		else
 			return

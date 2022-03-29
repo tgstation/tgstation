@@ -186,7 +186,7 @@
 	if (!logged)  // Can only go through if a message server logs it
 		return
 	for (var/obj/item/modular_computer/comp in GLOB.MMessengers)
-		if ("[comp.current_identification] ([comp.current_job])" in data["targets"])
+		if ("[comp.saved_identification] ([comp.saved_job])" in data["targets"])
 			var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
 			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
 				app.receive_message(src)

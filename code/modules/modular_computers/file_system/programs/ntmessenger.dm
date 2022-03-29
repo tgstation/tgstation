@@ -27,9 +27,9 @@
 	var/list/dictionary = list()
 
 	for(var/obj/item/modular_computer/messenger in GLOB.MMessengers)
-		if(messenger.current_identification && messenger.current_job)
+		if(messenger.saved_identification && messenger.saved_job)
 			var/list/data = list()
-			data["appended_name"] = "[messenger.current_identification] ([messenger.current_job])"
+			data["appended_name"] = "[messenger.saved_identification] ([messenger.saved_job])"
 			data["ref"] = REF(messenger)
 
 			//if(data["ref"] != REF(computer)) // you cannot message yourself (despite all my rage)
@@ -38,7 +38,7 @@
 	return dictionary
 
 /datum/computer_file/program/messenger/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
-	return "[messenger.current_identification] ([messenger.current_job])"
+	return "[messenger.saved_identification] ([messenger.saved_job])"
 
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
@@ -82,7 +82,7 @@
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
 
-	data["owner"] = computer.current_identification
+	data["owner"] = computer.saved_identification
 	data["messages"] = messages
 	data["ringerStatus"] = ringerStatus
 	data["sAndR"] = sAndR
@@ -135,8 +135,8 @@
 	// Send the signal
 	var/list/string_targets = list()
 	for (var/obj/item/modular_computer/comp in targets)
-		if (comp.current_identification && comp.current_job)  // != src is checked by the UI
-			string_targets += STRINGIFY_PDA_TARGET(comp.current_identification, comp.current_job)
+		if (comp.saved_identification && comp.saved_job)  // != src is checked by the UI
+			string_targets += STRINGIFY_PDA_TARGET(comp.saved_identification, comp.saved_job)
 
 	for (var/obj/machinery/computer/message_monitor/M in targets)
 		// In case of "Reply" to a message from a console, this will make the
@@ -148,8 +148,8 @@
 		return FALSE
 
 	var/datum/signal/subspace/messaging/pda/signal = new(computer, list(
-		"name" = computer.current_identification,
-		"job" = computer.current_job,
+		"name" = computer.saved_identification,
+		"job" = computer.saved_job,
 		"message" = message,
 		"ref" = REF(computer),
 		"targets" = string_targets,
@@ -193,7 +193,7 @@
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
 	var/list/message_data = list()
-	message_data["name"] = signal.data["name"]
+	message_data["name"] = "[signal.data["name"]] ([signal.data["job"]])"
 	message_data["contents"] = signal.format_message()
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]

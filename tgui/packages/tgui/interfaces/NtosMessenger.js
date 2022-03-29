@@ -23,7 +23,7 @@ const NoIDDimmer = (props, context) => {
               </Stack>
             </Stack.Item>
             <Stack.Item fontSize="18px">
-              Please insert an ID to continue.
+              Please imprint an ID to continue.
             </Stack.Item>
           </Stack>
         </Dimmer>
@@ -156,10 +156,10 @@ export const NtosMessenger = (props, context) => {
             </Stack>
           </Section>
         </Stack>
+        {!owner && (
+          <NoIDDimmer />
+        )}
       </NtosWindow.Content>
-      {!owner && (
-        <NoIDDimmer />
-      )}
     </NtosWindow>
   );
 };

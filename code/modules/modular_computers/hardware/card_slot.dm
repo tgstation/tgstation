@@ -7,6 +7,8 @@
 	device_type = MC_CARD
 
 	var/obj/item/card/id/stored_card
+	var/current_identification = null
+	var/current_job = null
 
 ///What happens when the ID card is removed (or deleted) from the module, through try_eject() or not.
 /obj/item/computer_hardware/card_slot/Exited(atom/movable/gone, direction)
@@ -77,6 +79,9 @@
 	to_chat(user, span_notice("You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
+	current_identification = stored_card.registered_name
+	current_job = stored_card.assignment
+
 	var/holder_loc = holder.loc
 	if(ishuman(holder_loc))
 		var/mob/living/carbon/human/human_wearer = holder_loc
@@ -99,6 +104,9 @@
 
 	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
+	current_identification = null
+	current_job = null
 
 	return TRUE
 

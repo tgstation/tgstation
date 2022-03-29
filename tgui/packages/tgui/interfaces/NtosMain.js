@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, ColorBox, Section, Table } from '../components';
+import { Button, ColorBox, Section, Table, Box } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosMain = (props, context) => {
@@ -13,6 +13,7 @@ export const NtosMain = (props, context) => {
     removable_media = [],
     cardholder,
     login = [],
+    proposed_login = [],
   } = data;
   return (
     <NtosWindow
@@ -44,19 +45,28 @@ export const NtosMain = (props, context) => {
           <Section
             title="User Login"
             buttons={(
-              <Button
-                icon="eject"
-                content="Eject ID"
-                disabled={!login.IDName}
-                onClick={() => act('PC_Eject_Disk', { name: "ID" })}
-              />
+              <Box>
+                <Button
+                  icon="eject"
+                  content="Eject ID"
+                  disabled={!proposed_login.IDName}
+                  onClick={() => act('PC_Eject_Disk', { name: "ID" })}
+                />
+                <Button
+                  icon="dna"
+                  content="Imprint ID"
+                  // eslint-disable-next-line max-len
+                  disabled={proposed_login.IDName || (proposed_login.IDName === login.IDName)}
+                  onClick={() => act('PC_Imprint_ID', { name: "ID" })}
+                />
+              </Box>
             )}>
             <Table>
               <Table.Row>
-                ID Name: {login.IDName}
+                ID Name: {login.IDName} ({proposed_login.IDName})
               </Table.Row>
               <Table.Row>
-                Assignment: {login.IDJob}
+                Assignment: {login.IDJob} ({proposed_login.IDJob})
               </Table.Row>
             </Table>
           </Section>

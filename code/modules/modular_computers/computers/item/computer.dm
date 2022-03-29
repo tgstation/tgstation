@@ -48,8 +48,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
 
-	var/current_identification = null // name on the ID currently inserted
-	var/current_job = null // job on the ID currently inserted
+	var/saved_identification = null // next two valures are the currently imprinted id and job values
+	var/saved_job = null
 
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
 	var/obj/physical = null // Object that represents our computer. It's used for Adjacent() and UI visibility checks.
@@ -111,8 +111,6 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 		var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
 		var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 		if(card_slot2?.try_eject(user) || card_slot?.try_eject(user))
-			current_identification = null
-			current_job = null
 			return TRUE
 		return FALSE
 
@@ -200,8 +198,6 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
 		var/obj/item/card/id/fixed_id = inserting_id // you WILL typecast or ELSE
-		current_identification = fixed_id.registered_name
-		current_job = fixed_id.assignment
 		update_slot_icon()
 		return fixed_id // returns the ID that actually got inserted
 
