@@ -137,11 +137,11 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/heat_calculations()
 	if(	(internal.temperature >= (selected_recipe.min_temp * MIN_DEVIATION_RATE) && internal.temperature <= selected_recipe.min_temp) || \
 		(internal.temperature >= selected_recipe.max_temp && internal.temperature <= (selected_recipe.max_temp * MAX_DEVIATION_RATE)))
-		quality_loss = min(quality_loss + 1.5, 100)
+		quality_loss = min(quality_loss + (MIN_PROGRESS_AMOUNT * 3.5 / (round(log(10, total_recipe_moles * 0.1), 0.01))), 100)
 
 	var/median_temperature = (selected_recipe.max_temp + selected_recipe.min_temp) / 2
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
-		quality_loss = max(quality_loss - 5.5, -85)
+		quality_loss = max(quality_loss - (MIN_PROGRESS_AMOUNT * 3.5 / (round(log(10, total_recipe_moles * 0.1), 0.01))), -85)
 
 	internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
 	update_parents()
