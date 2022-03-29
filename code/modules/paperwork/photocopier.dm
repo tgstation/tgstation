@@ -187,7 +187,7 @@
 				return FALSE
 			do_copy_loop(CALLBACK(src, .proc/make_blank_print), usr)
 			var/obj/item/paper/printblank = new /obj/item/paper (loc)
-			var/printname = params["name"]
+			var/printname = html_encode(params["name"])
 			var/list/printinfo
 			for(var/infoline as anything in params["info"])
 				printinfo += infoline
