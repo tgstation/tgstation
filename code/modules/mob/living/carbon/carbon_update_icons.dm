@@ -94,16 +94,26 @@
 	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		if(BP.dmg_overlay_type)
-			if(BP.brutestate)
-				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0") //we're adding icon_states of the base image as overlays
-			if(BP.burnstate)
-				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_0[BP.burnstate]")
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		if(iter_part.dmg_overlay_type)
+			if(iter_part.brutestate)
+				damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0") //we're adding icon_states of the base image as overlays
+			if(iter_part.burnstate)
+				damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
 
 	apply_overlay(DAMAGE_LAYER)
 
+/mob/living/carbon/update_wound_overlays()
+	remove_overlay(WOUND_LAYER)
+
+	var/mutable_appearance/wound_overlay = mutable_appearance('icons/mob/bleed_overlays.dmi', "blank", -WOUND_LAYER)
+	overlays_standing[WOUND_LAYER] = wound_overlay
+
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		if(iter_part.bleed_overlay_icon)
+			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
+
+	apply_overlay(WOUND_LAYER)
 
 /mob/living/carbon/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
@@ -224,6 +234,7 @@
 ///Checks to see if any bodyparts need to be redrawn, then does so. update_limb_data = TRUE redraws the limbs to conform to the owner.
 /mob/living/carbon/proc/update_body_parts(update_limb_data)
 	update_damage_overlays()
+	update_wound_overlays()
 	var/list/needs_update = list()
 	var/limb_count_update = FALSE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
