@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - qol: "The beach away mission has a light yellow tint"
+  - bugfix: "Some areas that were once pitch black are no longer"
