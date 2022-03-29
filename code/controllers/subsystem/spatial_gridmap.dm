@@ -351,7 +351,7 @@ SUBSYSTEM_DEF(spatial_grid)
 /datum/controller/subsystem/spatial_grid/proc/enter_cell(atom/movable/new_target, turf/target_turf)
 	if(!initialized)
 		return
-	if(!target_turf || QDELETING(new_target) || !new_target?.important_recursive_contents)
+	if(!target_turf || QDELING(new_target) || !new_target?.important_recursive_contents)
 		CRASH("/datum/controller/subsystem/spatial_grid/proc/enter_cell() was given null arguments or a new_target without important_recursive_contents!")
 
 	var/x_index = ROUND_UP(target_turf.x / SPATIAL_GRID_CELLSIZE)
