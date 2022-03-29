@@ -162,9 +162,9 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 		partners += partner.real_name
 
 	if (partners.len)
-		for (var/obj/item/pda/pda as anything in GLOB.PDAs)
-			if (pda.owner in partners)
-				targets += STRINGIFY_PDA_TARGET(pda.owner, pda.ownjob)
+		for (var/obj/item/modular_computer/pda as anything in GLOB.MMessengers)
+			if (pda.saved_identification in partners)
+				targets += pda
 
 	if (!targets.len)
 		return

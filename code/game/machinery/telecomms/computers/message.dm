@@ -35,7 +35,7 @@
 	var/optioncount = 7
 	// Custom Message Properties
 	var/customsender = "System Administrator"
-	var/obj/item/pda/customrecepient = null
+	var/obj/item/modular_computer/customrecepient = null
 	var/customjob = "Admin"
 	var/custommessage = "This is a test, please ignore."
 
@@ -143,7 +143,7 @@
 					break
 				// Del - Sender   - Recepient - Message
 				// X   - Al Green - Your Mom  - WHAT UP!?
-				dat += "<tr><td width = '5%'><center><A href='?src=[REF(src)];delete_logs=[REF(pda)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.recipient]</td><td width='300px'>[pda.message][pda.picture ? " <a href='byond://?src=[REF(pda)];photo=1'>(Photo)</a>":""]</td></tr>"
+				dat += "<tr><td width = '5%'><center><A href='?src=[REF(src)];delete_logs=[REF(pda)]' style='color: rgb(255,0,0)'>X</a></center></td><td width='15%'>[pda.sender]</td><td width='15%'>[pda.name]</td><td width='300px'>[pda.message][pda.picture ? " <a href='byond://?src=[REF(pda)];photo=1'>(Photo)</a>":""]</td></tr>"
 			dat += "</table>"
 		//Hacking screen.
 		if(MSG_MON_SCREEN_HACKED)
@@ -187,24 +187,6 @@
 				10010000001100100011101010111001001101001011011100110011<br>
 				10010000001110100011010000110000101110100001000000111010<br>
 				001101001011011010110010100101110"}
-
-		//Fake messages
-		if(MSG_MON_SCREEN_CUSTOM_MSG)
-			dat += "<center><A href='?src=[REF(src)];back=1'>Back</a> - <A href='?src=[REF(src)];Reset=1'>Reset</a></center><hr>"
-
-			dat += {"<table border='1' width='100%'>
-					<tr><td width='20%'><A href='?src=[REF(src)];select=Sender'>Sender</a></td>
-					<td width='20%'><A href='?src=[REF(src)];select=RecJob'>Sender's Job</a></td>
-					<td width='20%'><A href='?src=[REF(src)];select=Recepient'>Recipient</a></td>
-					<td width='300px' word-wrap: break-word><A href='?src=[REF(src)];select=Message'>Message</a></td></tr>"}
-				//Sender  - Sender's Job  - Recepient - Message
-				//Al Green- Your Dad   - Your Mom  - WHAT UP!?
-
-			dat += {"<tr><td width='20%'>[customsender]</td>
-			<td width='20%'>[customjob]</td>
-			<td width='20%'>[customrecepient ? customrecepient.owner : "NONE"]</td>
-			<td width='300px'>[custommessage]</td></tr>"}
-			dat += "</table><br><center><A href='?src=[REF(src)];select=Send'>Send</a>"
 
 		//Request Console Logs
 		if(MSG_MON_SCREEN_REQUEST_LOGS)
@@ -362,68 +344,6 @@
 				else //if(istype(href_list["delete_logs"], /datum/data_pda_msg))
 					linkedServer.rc_msgs -= locate(href_list["delete_requests"]) in linkedServer.rc_msgs
 					message = span_notice("NOTICE: Log Deleted!")
-		//Create a custom message
-		if (href_list["msg"])
-			if(LINKED_SERVER_NONRESPONSIVE)
-				message = noserver
-			else if(auth)
-				screen = MSG_MON_SCREEN_CUSTOM_MSG
-		//Fake messaging selection - KEY REQUIRED
-		if (href_list["select"])
-			if(LINKED_SERVER_NONRESPONSIVE)
-				message = noserver
-				screen = MSG_MON_SCREEN_MAIN
-			else
-				switch(href_list["select"])
-
-					//Reset
-					if("Reset")
-						ResetMessage()
-
-					//Select Your Name
-					if("Sender")
-						customsender = tgui_input_text(usr, "Please enter the sender's name.", "Sender") || customsender
-
-					//Select Receiver
-					if("Recepient")
-						//Get out list of viable PDAs
-						var/list/obj/item/pda/sendPDAs = get_viewable_pdas()
-						if(GLOB.PDAs && length(GLOB.PDAs) > 0)
-							customrecepient = tgui_input_list(usr, "Select a PDA from the list", "PDA Selection", sendPDAs)
-						else
-							customrecepient = null
-
-					//Enter custom job
-					if("RecJob")
-						customjob = tgui_input_text(usr, "Please enter the sender's job.", "Job") || customjob
-
-					//Enter message
-					if("Message")
-						custommessage = tgui_input_text(usr, "Please enter your message.", "Message") || custommessage
-
-					//Send message
-					if("Send")
-						if(isnull(customsender) || customsender == "")
-							customsender = "UNKNOWN"
-
-						if(isnull(customrecepient))
-							message = span_notice("NOTICE: No recepient selected!")
-							return attack_hand(usr)
-
-						if(isnull(custommessage) || custommessage == "")
-							message = span_notice("NOTICE: No message entered!")
-							return attack_hand(usr)
-
-						var/datum/signal/subspace/messaging/pda/signal = new(src, list(
-							"name" = "[customsender]",
-							"job" = "[customjob]",
-							"message" = custommessage,
-							"targets" = list(STRINGIFY_PDA_TARGET(customrecepient.owner, customrecepient.ownjob))
-						))
-						// this will log the signal and transmit it to the target
-						linkedServer.receive_information(signal, null)
-						usr.log_message("(PDA: [name] | [usr.real_name]) sent \"[custommessage]\" to [signal.format_target()]", LOG_PDA)
-
 
 		//Request Console Logs - KEY REQUIRED
 		if(href_list["view_requests"])

@@ -22,18 +22,41 @@
 	var/datum/picture/picture // scanned photo
 	var/allow_emojis = FALSE // whether or not we allow emojis
 	var/viewingMessages = FALSE // whether or not we're looking at messages atm
+	var/monitor_hidden = FALSE // whether or not this device is currently hidden from the message monitor
+	var/sort = TRUE // whether or not we're sorting by job
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
 
-	for(var/obj/item/modular_computer/messenger in GLOB.MMessengers)
+	for(var/obj/item/modular_computer/messenger in GetViewableDevices(sort))
 		if(messenger.saved_identification && messenger.saved_job)
 			var/list/data = list()
-			data["appended_name"] = "[messenger.saved_identification] ([messenger.saved_job])"
+			data["name"] = messenger.saved_identification
+			data["job"] = messenger.saved_job
 			data["ref"] = REF(messenger)
 
 			//if(data["ref"] != REF(computer)) // you cannot message yourself (despite all my rage)
 			dictionary += list(data)
+
+	return dictionary
+
+/proc/GetViewableDevices(sort_by_job = FALSE)
+	var/list/dictionary = list()
+
+	var/sortmode
+	if(sort_by_job)
+		sortmode = /proc/cmp_pdajob_asc
+	else
+		sortmode = /proc/cmp_pdaname_asc
+
+	for(var/obj/item/modular_computer/P in sort_list(GLOB.MMessengers, sortmode))
+		var/obj/item/computer_hardware/hard_drive/drive = P.all_components[MC_HDD]
+		if(!drive)
+			continue
+		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			if(!P.saved_identification || !P.saved_job || !app.sAndR || app.monitor_hidden)
+				continue
+			dictionary += P
 
 	return dictionary
 
@@ -66,16 +89,28 @@
 		if("PDA_clearMessages")
 			messages = list()
 			return(UI_UPDATE)
+		if("PDA_changeSortStyle")
+			sort = !sort
+			return(UI_UPDATE)
 		if("PDA_sendMessage")
+			if(!sAndR)
+				to_chat(usr, span_notice("ERROR: Deice has sending disabled."))
+				return
 			var/obj/item/modular_computer/target = locate(params["ref"])
 			if(!target)
 				return // we don't want tommy sending his messages to nullspace
-
-			message_admins(target.name)
+			if(!(target.saved_identification == params["name"] && target.saved_job == params["job"]))
+				message_admins("[target.saved_identification] vs [params["name"]]")
+				message_admins("[target.saved_job] vs [params["job"]]")
+				to_chat(usr, span_notice("ERROR: User no longer exists."))
+				return
 
 			var/obj/item/computer_hardware/hard_drive/drive = target.all_components[MC_HDD]
 
 			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+				if(!app.sAndR)
+					to_chat(usr, span_notice("ERROR: Device has receiving disabled."))
+					return
 				send_message(usr, list(target))
 				return(UI_UPDATE)
 
@@ -88,6 +123,7 @@
 	data["sAndR"] = sAndR
 	data["messengers"] = ScrubMessengerList()
 	data["viewingMessages"] = viewingMessages
+	data["sortByJob"] = sort
 
 	return data
 
@@ -152,10 +188,11 @@
 		"job" = computer.saved_job,
 		"message" = message,
 		"ref" = REF(computer),
-		"targets" = string_targets,
+		"targets" = targets,
 		"emojis" = allow_emojis,
 		"rigged" = rigged,
 		"photo" = null,
+		"automated" = FALSE,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
 		signal.data["rigged_user"] = REF(user) // Used for bomb logging
@@ -177,7 +214,8 @@
 
 	// Log it in our logs
 	var/list/message_data = list()
-	message_data["name"] = "[signal.data["name"]] ([signal.data["job"]])"
+	message_data["name"] = signal.data["name"]
+	message_data["job"] = signal.data["job"]
 	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
@@ -193,10 +231,12 @@
 
 /datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
 	var/list/message_data = list()
-	message_data["name"] = "[signal.data["name"]] ([signal.data["job"]])"
+	message_data["name"] = signal.data["name"]
+	message_data["job"] = signal.data["job"]
 	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
+	message_data["automated"] = signal.data["automated"]
 	messages += list(message_data)
 
 	var/mob/living/L = null

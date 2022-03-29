@@ -41,6 +41,7 @@ export const NtosMessenger = (props, context) => {
     sAndR,
     messengers = [],
     viewingMessages,
+    sortByJob,
   } = data;
   if (viewingMessages) {
     return (
@@ -71,12 +72,14 @@ export const NtosMessenger = (props, context) => {
                   </Box>
                   {message.outgoing ? (
                     <Box bold>
-                      {message.name}
+                      {message.name + " (" + message.job + ")"}
                     </Box>
                   ) : (
                     <Button transparent
-                      content={message.name}
+                      content={message.name + " (" + message.job + ")"}
                       onClick={() => act('PDA_sendMessage', {
+                        name: message.name,
+                        job: message.job,
                         ref: message.ref,
                       })}
                     />
@@ -131,6 +134,11 @@ export const NtosMessenger = (props, context) => {
                 content="View Messages"
                 onClick={() => act('PDA_viewMessages')}
               />
+              <Button
+                icon="sort"
+                content={sortByJob ? "Sort by: Job" : "Sort by: Name"}
+                onClick={() => act('PDA_changeSortStyle')}
+              />
             </Box>
           </Section>
         </Stack>
@@ -147,8 +155,10 @@ export const NtosMessenger = (props, context) => {
                 <Button
                   key={messenger.ref}
                   fluid
-                  content={messenger.appended_name}
+                  content={message.name + " (" + message.job + ")"}
                   onClick={() => act('PDA_sendMessage', {
+                    name: messenger.name,
+                    job: messenger.job,
                     ref: messenger.ref,
                   })}
                 />

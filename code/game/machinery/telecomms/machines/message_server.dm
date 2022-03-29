@@ -177,7 +177,7 @@
 /datum/signal/subspace/messaging/pda/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
-	return data["targets"][1]
+	return "[data["targets"][1].saved_identification] ([data["targets"][1].saved_job])"
 
 /datum/signal/subspace/messaging/pda/proc/format_message()
 	return "\"[data["message"]]\""
@@ -185,11 +185,10 @@
 /datum/signal/subspace/messaging/pda/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
-	for (var/obj/item/modular_computer/comp in GLOB.MMessengers)
-		if ("[comp.saved_identification] ([comp.saved_job])" in data["targets"])
-			var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
-			for(var/datum/computer_file/program/messenger/app in drive.stored_files)
-				app.receive_message(src)
+	for (var/obj/item/modular_computer/comp in data["targets"])
+		var/obj/item/computer_hardware/hard_drive/drive = comp.all_components[MC_HDD]
+		for(var/datum/computer_file/program/messenger/app in drive.stored_files)
+			app.receive_message(src)
 
 // Request Console signal datum
 /datum/signal/subspace/messaging/rc/broadcast()
