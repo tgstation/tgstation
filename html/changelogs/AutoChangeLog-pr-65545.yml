@@ -1,5 +1,0 @@
-author: "SuperNovaa41"
-delete-after: True
-changes: 
-  - bugfix: "The thunderdome side rooms will now properly reset."
-  - admin: "The thunderdome is now a placeable map template."

@@ -992,3 +992,63 @@
   - qol: Added a 50 count bamboo stack to base stack types
   vincentiusvin:
   - bugfix: fixed lavaland syndie base's pipes popping up.
+2022-03-29:
+  ArcaneMusic:
+  - bugfix: You can no longer create money out of thin air using bounty boards.
+  JohnFulpWillard:
+  - bugfix: Bots blowing up can now be sorted under Info.
+  - bugfix: Gunpowder's reaction can now be sorted under Info.
+  - code_imp: boldnotice messages are now sorted under Info.
+  Jolly:
+  - bugfix: Lavaland agents rejoice! Theres no longer a missing tile that leads to
+      space! ..Wait, what?
+  RandomGamer123:
+  - bugfix: The 0.7% charge high capacity power cell (which actually also stored 50%
+      more charge than a regular high capacity power cell, didn't notice that right?)
+      in Metastation engineering has been replaced with a regular high capacity power
+      cell.
+  Ryll/Shaps and MrDoomBringer:
+  - imageadd: Added new bleeding overlays for humans! People who are losing blood
+      will now have overlays displayed on them that show which bodyparts are bleeding,
+      and how much blood they're losing from that bodypart.
+  - bugfix: Slash wounds now properly retain their bleed rate when being demoted to
+      lower severities, meaning critical slashes will no longer be fully healed after
+      using one suture.
+  - balance: Critical slash wounds have had their initial bloodflow reduced, and existing
+      slash wounds gain less bloodloss when hit with further slash attacks. The cap
+      for how much blood a slash can lose per tick has been raised slightly.
+  - balance: Grabbing your own bleeding limb to staunch the bleeding is quicker and
+      slows you down less
+  Son-of-Space:
+  - qol: Contractors lost some appliances in kitchen maintenance on MetaStation, BoxStation,
+      and DeltaStation
+  SuperNovaa41:
+  - bugfix: The thunderdome side rooms will now properly reset.
+  - admin: The thunderdome is now a placeable map template.
+  TiviPlus:
+  - refactor: The mech UI(s) now use TGUI
+  - rscadd: Mechs no longer have RNG chances to completely ignore attacks
+  - rscadd: Mech armor will now directly add armor instead increasing deflection chance
+  - rscadd: Mechs now have slots for equipping "power", "utility" and "armor" modules
+  - rscadd: Mechs now use left and right click to use the left and right weapons respectively
+  - rscadd: Mech internal damage no longer requires low HP and instead now requires
+      a minimum damage in an attack to consider it
+  - rscdel: hidden mech bay has (at least for now) been removed
+  - rscdel: Some ballistic weapons reloading with energy has been removed so they
+      have infinite ammo
+  - rscdel: tesla power module has been removed
+  - rscdel: Honker no longer has snowflake UI that plays sounds
+  - bugfix: admin uis now work on mech equipment properly
+  ZephyrTFA:
+  - balance: Free Golems are now penalized for leaving their natural habitat
+  capsaicinz:
+  - bugfix: cleans up some force-feeding code indentation, and adds some headless
+      flavor
+  - bugfix: removes duplicate dorm airlock on tramstation.
+  - bugfix: charlie station dorms now only has one APC, as god intended
+  dragomagol:
+  - qol: the gulag item reclaimer now requires brig access to use instead of general
+      security access
+  - bugfix: The Zeta emergency shuttle's brig now travels with the rest of the shuttle
+  magatsuchi:
+  - bugfix: fixes a bug that causes podpeople hair to crash the pref menu
