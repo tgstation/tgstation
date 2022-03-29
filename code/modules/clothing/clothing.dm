@@ -341,7 +341,7 @@
 				things_blocked += "pepperspray"
 			if(length(things_blocked))
 				readout += "\n<b>COVERAGE</b>"
-				readout += "\nIt blocks [english_list(things_blocked)]."
+				readout += "\nIt will block [english_list(things_blocked)]."
 
 		readout += "</span>"
 
