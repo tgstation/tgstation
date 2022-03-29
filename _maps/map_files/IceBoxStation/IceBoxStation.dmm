@@ -41679,7 +41679,7 @@
 	c_tag = "Armory - External"
 	},
 /obj/effect/turf_decal/weather/snow/corner,
-/turf/open/floor/plating/snowed/icemoon,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tBZ" = (
 /obj/structure/chair/wood/wings,
@@ -76300,7 +76300,7 @@ nbj
 yik
 kwS
 jEM
-lit
+jnk
 fYn
 oQJ
 oQJ
