@@ -20,7 +20,7 @@
 	///Reference to our turbine part
 	var/obj/item/turbine_parts/installed_part
 	///Path of the turbine part we can install
-	var/part_path
+	var/obj/item/turbine_parts/part_path
 
 	var/installed_part_efficiency
 
@@ -56,12 +56,26 @@
 
 	return ..()
 
+/obj/machinery/power/turbine/examine(mob/user)
+	. = ..()
+	if(installed_part)
+		. += "Currently at tier [installed_part.current_tier]."
+		if(installed_part.current_tier + 1 < installed_part.max_tier)
+			. += "Can be upgraded by using a tier [installed_part.current_tier + 1] part."
+		. += "The [installed_part.name] can be removed by right-click with a crowbar tool."
+	else
+		. += "Is missing a [initial(part_path.name)]."
+
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
 		to_chat(user, "You can't open [src] while it's on!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!anchored)
 		to_chat(user, span_notice("Anchor [src] first!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+	if(panel_open && !installed_part)
+		to_chat(user, "You need to install [initial(part_path.name)] first!")
 		return TOOL_ACT_TOOLTYPE_SUCCESS
 
 	tool.play_tool_sound(src, 50)
@@ -87,6 +101,18 @@
 
 /obj/machinery/power/turbine/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
+
+/obj/machinery/power/turbine/on_deconstruction()
+	if(installed_part)
+		installed_part.forceMove(loc)
+		installed_part = null
+	return ..()
+
+/obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(!installed_part)
+		return
+	user.put_in_hands(installed_part)
+	installed_part = null
 
 /obj/machinery/power/turbine/proc/enable_parts(mob/user)
 	can_connect = TRUE
@@ -299,13 +325,13 @@
 		return FALSE
 
 	var/parts_present = TRUE
-	if(compressor.dir != dir || !compressor.can_connect)
+	if(compressor.dir != dir || !compressor.can_connect || !compressor.installed_part)
 		if(user)
-			balloon_alert(user, "wrong compressor direction")
+			balloon_alert(user, "error while activating the compressor")
 		parts_present = FALSE
-	if(turbine.dir != dir || !turbine.can_connect)
+	if(turbine.dir != dir || !turbine.can_connect || !turbine.installed_part)
 		if(user)
-			balloon_alert(user, "wrong turbine direction")
+			balloon_alert(user, "error while activating the turbine")
 		parts_present = FALSE
 
 	if(!parts_present)
