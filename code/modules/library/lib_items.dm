@@ -449,7 +449,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	/// A weakref to our associated computer - Modes 1 to 3 use this
 	var/datum/weakref/computer_ref
- 	/// Currently scanned book
+	/// Currently scanned book
 	var/datum/book_info/book_data
 	/// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 	var/mode = 0
