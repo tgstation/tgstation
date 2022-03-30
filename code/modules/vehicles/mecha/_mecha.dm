@@ -1322,4 +1322,4 @@
 /obj/vehicle/sealed/mecha/setDir(newdir)
 	. = ..()
 	for(var/mob/living/occupant as anything in occupants)
-		occupant.setDir(new_dir)
+		occupant.setDir(newdir)
