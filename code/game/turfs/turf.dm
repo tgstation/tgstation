@@ -76,7 +76,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/rcd_memory
 
 /turf/vv_edit_var(var_name, new_value)
-	var/static/list/banned_edits = list("x", "y", "z")
+	var/static/list/banned_edits = list(NAMEOF(src, x), NAMEOF(src, y), NAMEOF(src, z))
 	if(var_name in banned_edits)
 		return FALSE
 	. = ..()
