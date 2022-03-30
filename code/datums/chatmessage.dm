@@ -135,7 +135,7 @@
  * * lanugage - the language typepath this message is spoken in
  * * extra_classes - the spans used for this message
  */
-/datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes)
+/datum/chatmessage/proc/prepare_text(text, atom/target, mob/owner, datum/language/language, list/extra_classes)
 	set waitfor = FALSE //because this waits on client input
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
@@ -201,6 +201,20 @@
 	// Approximate text height
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH))
+	SSrunechat.message_queue += CALLBACK(src, .proc/generate_image, target, owner, complete_text, mheight)
+
+/**
+ * actually generates the runechat image for the message spoken by target and heard by owner.
+ *
+ * Arguments:
+ * * target - the atom creating the message being heard by others. the image we create will have its loc assigned to this atom
+ * * owner - the mob hearing the message from target, must have a client
+ * * complete_text - the complete text used to create the images maptext
+ * * mheight - height of the complete text returned by MeasureText() in pixels i think idfk
+ */
+/datum/chatmessage/proc/generate_image(atom/target, mob/owner, complete_text, mheight)
+	var/client/owned_by = owner.client
+
 	var/our_approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
 	// Translate any existing messages upwards, apply exponential decay factors to timers
@@ -345,7 +359,7 @@
 		else
 			message_to_use = new /datum/chatmessage(text_to_use, speaker, message_language, spans)
 
-	message_to_use.generate_image(text_to_use, speaker, src, message_language, spans)
+	message_to_use.prepare_text(text_to_use, speaker, src, message_language, spans)
 
 
 // Tweak these defines to change the available color ranges
