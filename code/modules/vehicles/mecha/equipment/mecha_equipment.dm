@@ -116,6 +116,7 @@
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_mecha(atom/target, mob/user, delay)
 	return do_after(user, delay, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target))
 
+/// do after checks for the mecha equipment do afters
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_checks(atom/target)
 	return chassis && (get_dir(chassis, target) & chassis.dir)
 
