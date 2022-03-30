@@ -69,7 +69,8 @@
 		var/mob/living/carbon/carbon_user = user
 		if (!istype(carbon_user) || carbon_user.should_electrocute(src))
 			return FALSE
-
+	if(A.isSecure())
+		return FALSE
 	if(A.panel_open)
 		return TRUE
 
