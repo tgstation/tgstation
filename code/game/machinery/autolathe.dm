@@ -214,7 +214,7 @@
 				materials_used[used_material] = amount_needed
 
 			if(materials.has_materials(materials_used))
-				if(attempt_charge(src, usr, (LATHE_TAX * multiplier) * SSeconomy.inflation_value()) & COMPONENT_OBJ_CANCEL_CHARGE)
+				if(attempt_charge(src, usr, (LATHE_TAX * multiplier)) & COMPONENT_OBJ_CANCEL_CHARGE)
 					return FALSE
 				busy = TRUE
 				to_chat(usr, span_notice("You print [multiplier] item(s) from the [src]"))
