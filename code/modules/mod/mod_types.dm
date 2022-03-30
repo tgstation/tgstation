@@ -309,6 +309,7 @@
 		/obj/item/mod/module/timeline_jumper,
 		/obj/item/mod/module/timestopper,
 		/obj/item/mod/module/rewinder,
+		/obj/item/mod/module/anomaly_locked/kinesis/chrono,
 		/obj/item/mod/module/tem,
 	)
 

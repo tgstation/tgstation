@@ -18,6 +18,8 @@
 	var/grab_range = 5
 	var/hit_cooldown_time = 1 SECONDS
 	var/movement_animation
+	var/mobs_allowed = FALSE
+	var/living_stun_length = 100
 	var/atom/movable/grabbed_atom
 	var/datum/beam/kinesis_beam
 	var/mutable_appearance/kinesis_icon
@@ -55,6 +57,9 @@
 		return
 	drain_power(use_power_cost)
 	grabbed_atom = target
+	if(isliving(target))
+		var/mob/living/rdmhobo = target
+		rdmhobo.Stun(living_stun_length) //Be aware they CAN move after this, though they'll be snapped back to your grip unless they leave your range
 	playsound(grabbed_atom, 'sound/effects/contractorbatonhit.ogg', 75, TRUE)
 	START_PROCESSING(SSfastprocess, src)
 	kinesis_icon = mutable_appearance(icon='icons/effects/effects.dmi', icon_state="kinesis", layer=grabbed_atom.layer-0.1)
@@ -142,7 +147,7 @@
 		if(!isliving(movable_target))
 			return FALSE
 		var/mob/living/living_target = movable_target
-		if(living_target.stat != DEAD)
+		if(living_target.stat != DEAD && mobs_allowed == FALSE)
 			return FALSE
 	else if(isitem(movable_target))
 		var/obj/item/item_target = movable_target
@@ -248,3 +253,13 @@
 	given_turf = locate(mob_x+our_x-round(view[1]/2),mob_y+our_y-round(view[2]/2),mob_z)
 	given_x = round(icon_x - world.icon_size * our_x)
 	given_y = round(icon_y - world.icon_size * our_y)
+
+/obj/item/mod/module/anomaly_locked/kinesis/chrono
+	name = "MOD kinesis+ module" //Chrono Legionarrie variant. You know why, deep in your heart.
+	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
+	The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user to \
+	manipulate the world around them. Like it's older counterpart, it's capable of manipulating structures, \
+	machinery, vehicles, and, thanks to the fruitful efforts of it's creators - living beings. They can, however, \
+	still struggle after an initial burst of inertia."
+	prebuilt = TRUE
+	mobs_allowed = TRUE
