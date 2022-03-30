@@ -18314,7 +18314,7 @@
 /area/science/xenobiology)
 "Zp" = (
 /obj/structure/stairs/east,
-/turf/open/genturf,
+/turf/open/floor/iron/dark/textured,
 /area/ai_monitored/security/armory)
 "Zq" = (
 /obj/structure/window/reinforced/spawner/north,
