@@ -6,7 +6,7 @@
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "blood_siphon"
 
-	school = SCHOOL_EVOCATION
+	school = SCHOOL_FORBIDDEN
 	cooldown_time = 15 SECONDS
 
 	invocation = "FL'MS O'ET'RN'ITY"

@@ -13,6 +13,7 @@
 	spell_requirements = (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN)
 	spell_max_level = 1
 
+	invocation = "" // Set by get_invocation_content()
 	invocation_type = INVOCATION_EMOTE
 	invocation_self_message = span_danger("You fire your finger gun!")
 
@@ -25,10 +26,7 @@
 
 /datum/action/cooldown/spell/pointed/projectile/finger_guns/New()
 	. = ..()
-	AddComponent(/datum/component/mime_spell, CALLBACK(src, .proc/get_invocation_content))
-
-/datum/action/cooldown/spell/pointed/projectile/finger_guns/proc/get_invocation_content(mob/living/carbon/human/caster)
-	return "<b>[caster.real_name]</b> fires [caster.p_their()] finger gun!"
+	AddElement(/datum/element/mime_spell)
 
 /datum/action/cooldown/spell/pointed/projectile/finger_guns/can_invoke(feedback = TRUE)
 	if(invocation_type == INVOCATION_EMOTE)
@@ -46,3 +44,7 @@
 			return FALSE
 
 	return ..()
+
+/datum/action/cooldown/spell/pointed/projectile/finger_guns/before_cast(atom/cast_on)
+	. = ..()
+	invocation = span_notice("<b>[cast_on]</b> fires [cast_on.p_their()] finger gun!")

@@ -111,13 +111,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	))
 	return ..()
 
-/// A simple helper signal proc that calls UpdateButtonIcon
-/// when a signal relevant to our spell requirements has been caught.
-/datum/action/cooldown/spell/proc/update_icon_on_signal(datum/source)
-	SIGNAL_HANDLER
-
-	UpdateButtonIcon()
-
 /datum/action/cooldown/spell/IsAvailable()
 	return ..() && can_cast_spell(feedback = FALSE)
 
@@ -312,7 +305,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			owner.visible_message(invocation, invocation_self_message)
 
 /datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
-	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_INVOKE) & COMPONENT_CANCEL_INVOKE)
+	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_INVOKE, feedback) & COMPONENT_CANCEL_INVOKE)
 		return FALSE
 
 	if(invocation_type == INVOCATION_NONE)

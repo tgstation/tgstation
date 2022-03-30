@@ -55,14 +55,15 @@
 
 	invocation = "" // Set via get_invocation_content().
 	invocation_type = INVOCATION_EMOTE
-	invocation_self_message = "<span class='notice'>You form a blockade in front of yourself.</span>"
+	invocation_self_message = span_notice("You form a blockade in front of yourself.")
 	spell_max_level = 1
 
 	wall_type = /obj/effect/forcefield/mime/advanced
 
 /datum/action/cooldown/spell/forcewall/mime/New()
 	. = ..()
-	AddComponent(/datum/component/mime_spell, CALLBACK(src, .proc/get_invocation_content))
+	AddElement(/datum/element/mime_spell)
 
-/datum/action/cooldown/spell/forcewall/mime/proc/get_invocation_content(mob/living/carbon/human/caster)
-	return "<b>[caster.real_name]</b> looks as if a blockade is in front of [caster.p_them()]."
+/datum/action/cooldown/spell/forcewall/mime/before_cast(atom/cast_on)
+	. = ..()
+	invocation = span_notice("<b>[cast_on]</b> looks as if a blockade is in front of [cast_on.p_them()].")

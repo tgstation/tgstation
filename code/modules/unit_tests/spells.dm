@@ -45,18 +45,15 @@
 		switch(invoke_type)
 			if(INVOCATION_EMOTE)
 				if(isnull(initial(spell_type.invocation_self_message)))
-					Fail("Spell: [spell_name] ([spell_type]) has used emote invocation type but did not set a self message.")
+					Fail("Spell: [spell_name] ([spell_type]) set emote invocation type but did not set a self message.")
 				if(isnull(initial(spell_type.invocation)))
-					Fail("Spell: [spell_name] ([spell_type]) has used emote invocation type but did not set an invocation message.")
+					Fail("Spell: [spell_name] ([spell_type]) set emote invocation type but did not set an invocation message.")
 
 			if(INVOCATION_SHOUT, INVOCATION_WHISPER)
 				if(isnull(initial(spell_type.invocation)))
-					Fail("Spell: [spell_name] ([spell_type]) has used a speaking invocation type but did not set an invocation message.")
+					Fail("Spell: [spell_name] ([spell_type]) set a speaking invocation type but did not set an invocation message.")
 
-			if(INVOCATION_NONE)
-				if(!isnull(initial(spell_type.invocation)))
-					Fail("Spell: [spell_name] ([spell_type]) set invocation type to none but had an invocation set.")
-
+			// INVOCATION_NONE doesn't really matter what they have set for invocation text
 /**
  * Validates that all shapeshift type spells
  * have a valid possible_shapes setup.

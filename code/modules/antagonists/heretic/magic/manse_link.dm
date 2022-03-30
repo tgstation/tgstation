@@ -6,6 +6,7 @@
 	icon_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "mansus_link"
 
+	school = SCHOOL_FORBIDDEN
 	cooldown_time = 20 SECONDS
 
 	invocation = "PI'RC' TH' M'ND."

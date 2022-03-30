@@ -88,19 +88,23 @@
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/cult) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/changeling) \
 		|| mind_to_swap.has_antag_datum(/datum/antagonist/rev) \
-		|| mind_to_swap.key[1] == "@" \
+		|| mind_to_swap.key?[1] == "@" \
 	)
 		to_chat(caster, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE
 
 	// MIND TRANSFER BEGIN
+	// Put the swappee's mind in a ghost temorarily
 	var/mob/dead/observer/to_swap_ghost = to_swap.ghostize()
+	// Do the swap
 	caster.mind.transfer_to(to_swap)
 	to_swap_ghost.mind.transfer_to(caster)
 
+	// Manually transfer the swappee's key back into the swapper's body,
+	// as the mind of the swappee was "not active" during transfer
 	if(to_swap_ghost.key)
-		// Have to transfer the key, since the mind was "not active"
 		caster.key = to_swap_ghost.key
+	// Clean up the ghost
 	qdel(to_swap_ghost)
 	// MIND TRANSFER END
 
