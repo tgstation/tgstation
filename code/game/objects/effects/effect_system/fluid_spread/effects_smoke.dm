@@ -112,17 +112,8 @@
 		return FALSE
 
 	smoker.smoke_delay = TRUE
-	addtimer(CALLBACK(src, .proc/remove_smoke_delay, smoker), 1 SECONDS)
+	addtimer(VARSET_CALLBACK(smoker, smoke_delay, FALSE), 1 SECONDS)
 	return TRUE
-
-/**
- * Removes the cooldown for smoke effects from the given mob.
- *
- * Arguments:
- * - [smoker][/mob/living/carbon]: The mob that has been smoked and should be able to be smoked again.
- */
-/obj/effect/particle_effect/fluid/smoke/proc/remove_smoke_delay(mob/living/carbon/smoker)
-	smoker?.smoke_delay = FALSE
 
 /// A factory which produces clouds of smoke.
 /datum/effect_system/fluid_spread/smoke
