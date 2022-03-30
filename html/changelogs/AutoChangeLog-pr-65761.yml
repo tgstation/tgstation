@@ -1,0 +1,4 @@
+author: "timothymtorres, lewcc"
+delete-after: True
+changes: 
+  - bugfix: "Fix attack messages appearing when using tools on blast doors"

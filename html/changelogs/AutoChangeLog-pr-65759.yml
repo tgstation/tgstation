@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fix plants to not hurt user while using telekinesis"
