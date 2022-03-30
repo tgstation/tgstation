@@ -106,6 +106,10 @@
  * Arguments:
  * - [foaming][/mob/living]: The mob that this foam is acting on.
  * - delta_time: The amount of time that this foam is acting on them over.
+ *
+ * Returns:
+ * - [TRUE]: If the foam was successfully applied to the mob. Used to scale how quickly foam dissipates according to the number of mobs it is applied to.
+ * - [FALSE]: Otherwise.
  */
 /obj/effect/particle_effect/fluid/foam/proc/foam_mob(mob/living/foaming, delta_time)
 	if(lifetime <= 0)
