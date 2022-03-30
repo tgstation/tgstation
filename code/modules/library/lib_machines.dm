@@ -10,25 +10,7 @@
  */
 
 #define DEFAULT_UPLOAD_CATAGORY "Fiction"
-GLOBAL_LIST_INIT(book_categories, list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
-GLOBAL_LIST_INIT(upload_categories, list("Fiction", "Non-Fiction", "Adult", "Reference", "Religion"))
-GLOBAL_VAR_INIT(default_book_category, "Any")
-GLOBAL_LIST_INIT(printable_posters, prepare_official_posters())
-GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
-
-
-/proc/prepare_official_posters()
-	var/list/name_to_poster = list()
-	for(var/obj/structure/sign/poster/official/poster_type as anything in subtypesof(/obj/structure/sign/poster/official))
-		name_to_poster[initial(poster_type.name)] = poster_type
-	return name_to_poster
-
-/proc/prepare_library_areas()
-	var/list/library_areas = typesof(/area/service/library) - /area/service/library/abandoned
-	var/list/additional_areas = SSmapping.config.library_areas
-	if(additional_areas)
-		library_areas += additional_areas
-	return library_areas
+#define DEFAULT_SEARCH_CATAGORY "Any"
 
 ///How many books should we load per page?
 #define BOOKS_PER_PAGE 18
@@ -71,7 +53,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 
 /obj/machinery/computer/libraryconsole/Initialize(mapload)
 	. = ..()
-	category = GLOB.default_book_category
+	category = DEFAULT_SEARCH_CATAGORY
 	INVOKE_ASYNC(src, .proc/update_db_info)
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user, datum/tgui/ui)
@@ -83,7 +65,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 /obj/machinery/computer/libraryconsole/ui_data(mob/user)
 	var/list/data = list()
 	data["can_db_request"] = can_db_request()
-	data["book_categories"] = GLOB.book_categories
+	data["search_categories"] = SSlibrary.search_categories
 	data["category"] = category
 	data["author"] = author
 	data["title"] = title
@@ -108,8 +90,8 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 			return TRUE
 		if("set_search_category")
 			var/newcategory = params["category"]
-			if(!(newcategory in GLOB.book_categories)) //Nice try
-				newcategory = GLOB.default_book_category
+			if(!(newcategory in SSlibrary.search_categories)) //Nice try
+				newcategory = DEFAULT_SEARCH_CATAGORY
 			newcategory = sanitize(newcategory)
 			if(newcategory != category)
 				params_changed = TRUE
@@ -141,7 +123,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 				return
 			title = initial(title)
 			author = initial(author)
-			category = GLOB.default_book_category
+			category = DEFAULT_SEARCH_CATAGORY
 			search_page = 0
 			INVOKE_ASYNC(src, .proc/update_db_info)
 			return TRUE
@@ -390,7 +372,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 			data |= ..() //I am so sorry
 
 		if(LIBRARY_UPLOAD)
-			data["upload_categories"] = GLOB.upload_categories
+			data["upload_categories"] = SSlibrary.upload_categories
 			data["default_category"] = DEFAULT_UPLOAD_CATAGORY
 			var/obj/machinery/libraryscanner/scan = get_scanner()
 			data["has_scanner"] = !!(scan)
@@ -410,7 +392,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 			data["bible_name"] = bible_name
 			data["bible_sprite"] = "display-[GLOB.bible_icon_state || "bible"]"
 			data["posters"] = list()
-			for(var/poster_name in GLOB.printable_posters)
+			for(var/poster_name in SSlibrary.printable_posters)
 				data["posters"] += poster_name
 
 	return data
@@ -419,16 +401,9 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 	return list(get_asset_datum(/datum/asset/spritesheet/bibles))
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/load_nearby_books()
-	var/area/current_area = get_area(src)
-	var/list/areas = list(current_area.type)
-	if(length(areas & GLOB.library_areas))
-		areas |= GLOB.library_areas
-
-	for(var/area_type in areas)
-		for(var/datum/book_info/book as anything in GLOB.roundstart_books_by_area[area_type])
-			var/datum/book_info/our_copy = book.return_copy()
-			inventory[ref(our_copy)] = our_copy
-			inventory_update()
+	for(var/datum/book_info/book as anything in SSlibrary.get_area_books(get_area(src)))
+		inventory[ref(book)] = book
+	inventory_update()
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/get_scanner(viewrange)
 	if(scanner)
@@ -502,7 +477,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 				say("Database cables refreshing. Please wait a moment.")
 				return
 			var/upload_category = params["category"]
-			if(!(upload_category in GLOB.upload_categories)) //Nice try
+			if(!(upload_category in SSlibrary.upload_categories)) //Nice try
 				upload_category = DEFAULT_UPLOAD_CATAGORY
 			upload_category = sanitize(upload_category)
 
@@ -552,9 +527,33 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 	if(!istype(W, /obj/item/barcodescanner))
 		return ..()
 	var/obj/item/barcodescanner/scanner = W
-	scanner.computer = src
+	scanner.computer_ref = WEAKREF(src)
 	to_chat(user, span_notice("[scanner]'s associated machine has been set to [src]."))
 	audible_message(span_hear("[src] lets out a low, short blip."))
+
+	if(!scanner.book_data)
+		return
+
+	var/datum/book_info/scanner_book = scanner.book_data.return_copy()
+	switch(scanner.mode)
+		if(1)
+			buffer_book = scanner_book
+			to_chat(user, span_notice("[scanner]'s screen flashes: 'Book title stored in computer buffer.'"))
+		if(2)
+			for(var/checkout_ref in checkouts)
+				var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
+				if(!scanner_book.compare(maybe_ours.book_data))
+					continue
+				checkouts -= checkout_ref
+				checkout_update()
+				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book has been checked in.'"))
+				return
+
+			to_chat(user, span_notice("[scanner]'s screen flashes: 'No active check-out record found for current title.'"))
+		if(3)
+			inventory[ref(scanner_book)] = scanner_book
+			inventory_update()
+			to_chat(user, span_notice("[scanner]'s screen flashes: 'Title added to general inventory.'"))
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
 	if(!density)
@@ -650,7 +649,7 @@ GLOBAL_LIST_INIT(library_areas, prepare_library_areas())
 	holy_book.deity_name = GLOB.deity
 
 /obj/machinery/computer/libraryconsole/bookmanagement/proc/print_poster(poster_name)
-	var/poster_type = GLOB.printable_posters[poster_name]
+	var/poster_type = SSlibrary.printable_posters[poster_name]
 	if(!poster_type)
 		return
 

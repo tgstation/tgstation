@@ -403,7 +403,7 @@ export const Archive = (props, context) => {
 export const SearchAndDisplay = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    book_categories = [],
+    search_categories = [],
     title,
     category,
     author,
@@ -426,7 +426,7 @@ export const SearchAndDisplay = (props, context) => {
           <Stack>
             <Stack.Item>
               <Dropdown
-                options={book_categories}
+                options={search_categories}
                 selected={category}
                 onSelected={(value) => act('set_search_category', {
                   category: value,

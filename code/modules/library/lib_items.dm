@@ -2,8 +2,6 @@
 #define BOOKCASE_ANCHORED 1
 #define BOOKCASE_FINISHED 2
 
-GLOBAL_LIST_EMPTY(roundstart_books_by_area)
-
 /* Library Items
  *
  * Contains:
@@ -59,11 +57,11 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 	var/area/our_area = get_area(src)
 	var/area_type = our_area.type //Save me from the dark
 
-	if(!GLOB.roundstart_books_by_area[area_type])
-		GLOB.roundstart_books_by_area[area_type] = list()
+	if(!SSlibrary.books_by_area[area_type])
+		SSlibrary.books_by_area[area_type] = list()
 
 	//Time to populate that list
-	var/list/books_in_area = GLOB.roundstart_books_by_area[area_type]
+	var/list/books_in_area = SSlibrary.books_by_area[area_type]
 	for(var/obj/item/book/book in contents)
 		var/datum/book_info/info = book.book_data
 		books_in_area += info.return_copy()
@@ -382,34 +380,35 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 
 	else if(istype(I, /obj/item/barcodescanner))
 		var/obj/item/barcodescanner/scanner = I
-		if(!scanner.computer)
+		var/obj/machinery/computer/libraryconsole/bookmanagement/computer = scanner.computer_ref?.resolve()
+		if(!computer)
 			to_chat(user, span_alert("[scanner]'s screen flashes: 'No associated computer found!'"))
-		else
-			switch(scanner.mode)
-				if(0)
-					scanner.book = src
-					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer.'"))
-				if(1)
-					scanner.book = src
-					scanner.computer.buffer_book = book_data.return_copy()
-					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"))
-				if(2)
-					scanner.book = src
-					var/list/checkouts = scanner.computer.checkouts
-					for(var/checkout_ref in checkouts)
-						var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
-						if(book_data.compare(maybe_ours.book_data))
-							checkouts -= checkout_ref
-							scanner.computer.checkout_update()
-							to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
-							return
-					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
-				if(3)
-					scanner.book = src
-					var/datum/book_info/our_copy = book_data.return_copy()
-					scanner.computer.inventory[ref(our_copy)] = our_copy
-					scanner.computer.inventory_update()
-					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
+			return ..()
+
+		scanner.book_data = book_data.return_copy()
+		switch(scanner.mode)
+			if(0)
+				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer.'"))
+			if(1)
+				computer.buffer_book = book_data.return_copy()
+				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book title stored in associated computer buffer.'"))
+			if(2)
+				var/list/checkouts = computer.checkouts
+				for(var/checkout_ref in checkouts)
+					var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
+					if(!book_data.compare(maybe_ours.book_data))
+						continue
+					checkouts -= checkout_ref
+					computer.checkout_update()
+					to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Book has been checked in.'"))
+					return
+
+				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. No active check-out record found for current title.'"))
+			if(3)
+				var/datum/book_info/our_copy = book_data.return_copy()
+				computer.inventory[ref(our_copy)] = our_copy
+				computer.inventory_update()
+				to_chat(user, span_notice("[scanner]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'"))
 
 	else if((istype(I, /obj/item/knife) || I.tool_behaviour == TOOL_WIRECUTTER) && !(flags_1 & HOLOGRAM_1))
 		to_chat(user, span_notice("You begin to carve out [book_data.title]..."))
@@ -443,9 +442,12 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/obj/machinery/computer/libraryconsole/bookmanagement/computer //Associated computer - Modes 1 to 3 use this
-	var/obj/item/book/book //Currently scanned book
-	var/mode = 0 //0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	/// A weakref to our associated computer - Modes 1 to 3 use this
+	var/datum/weakref/computer_ref
+ 	/// Currently scanned book
+	var/datum/book_info/book_data
+	/// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	var/mode = 0
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	mode += 1
@@ -465,7 +467,7 @@ GLOBAL_LIST_EMPTY(roundstart_books_by_area)
 		else
 			modedesc = "ERROR"
 	to_chat(user, " - Mode [mode] : [modedesc]")
-	if(computer)
+	if(computer_ref?.resolve())
 		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
 	else
 		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
