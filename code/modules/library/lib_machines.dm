@@ -683,7 +683,7 @@
 			fill.set_title(title, trusted = TRUE)
 			fill.set_author(author, trusted = TRUE)
 			fill.set_content(content, trusted = TRUE)
-			printed_book.icon_state = "book[rand(1, printed_book.maximum_book_state)]"
+			printed_book.gen_random_icon_state()
 			visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 		break
 	qdel(query_library_print)
@@ -802,5 +802,5 @@
 	var/obj/item/book/bound_book = new(loc)
 	bound_book.book_data.set_content(draw_from.info)
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
-	bound_book.icon_state = "book[rand(1, bound_book.maximum_book_state)]"
+	bound_book.gen_random_icon_state()
 	qdel(draw_from)
