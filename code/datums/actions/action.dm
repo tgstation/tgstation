@@ -48,7 +48,7 @@
 	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 	if(isatom(target))
-		RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/on_target_update_icon)
+		RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/update_icon_on_signal)
 
 	if(istype(target, /datum/mind))
 		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_target_mind_swapped)
@@ -73,6 +73,17 @@
 		SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, M)
 		owner = M
 		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
+
+		// Register some signals based on our check_flags
+		// so that our button icon updates when relevant
+		if(check_flags & AB_CHECK_CONSCIOUS)
+			RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/update_icon_on_signal)
+		if(check_flags & AB_CHECK_IMMOBILE)
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), .proc/update_icon_on_signal)
+		if(check_flags & AB_CHECK_HANDS_BLOCKED)
+			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), .proc/update_icon_on_signal)
+		if(check_flags & AB_CHECK_LYING)
+			RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/update_icon_on_signal)
 
 		//button id generation
 		var/counter = 0
@@ -119,6 +130,15 @@
 	if(owner)
 		SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
 		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+
+		// Clean up our check_flag signals
+		UnregisterSignal(owner, list(
+			COMSIG_LIVING_SET_BODY_POSITION,
+			COMSIG_MOB_STATCHANGE,
+			SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
+			SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
+		))
+
 		if(target == owner)
 			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
 		owner = null
@@ -185,8 +205,8 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
-/// Signal proc for COMSIG_ATOM_UPDATED_ICON - for atoms, also updates our button icon on icon updates
-/datum/action/proc/on_target_update_icon(datum/source)
+/// A general use signal proc that reacts to an event and updates our button icon in accordance
+/datum/action/proc/update_icon_on_signal(datum/source)
 	SIGNAL_HANDLER
 
 	UpdateButtonIcon()
@@ -195,7 +215,7 @@
 /datum/action/proc/on_target_mind_swapped(datum/mind/source, mob/old_current)
 	SIGNAL_HANDLER
 
-	// MELBERT TODO removed the remove() since it shouldn't be needed, also check what happens with ghosts
+	// Grant() calls Remove() from the existing owner so we're covered on that
 	Grant(source.current)
 
 /**

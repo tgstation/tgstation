@@ -85,29 +85,29 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	var/smoke_amt = 0
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
+	// If our spell is mind-bound, we only wanna grant it to our mind
 	if(istype(target, /datum/mind))
 		var/datum/mind/mind_target = target
 		if(mind_target.current != grant_to)
 			return
 
-	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
-		RegisterSignal(grant_to, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
-	if(spell_requirements & SPELL_REQUIRES_CONSCIOUS)
-		RegisterSignal(grant_to, COMSIG_MOB_STATCHANGE, .proc/update_icon_on_signal)
-	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
-		RegisterSignal(grant_to, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
-	if(spell_requirements & SPELL_REQUIRES_UNPHASED)
-		RegisterSignal(grant_to, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
+	. = ..()
+	if(!owner)
+		return
 
-	return ..()
+	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
+		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
+	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
+		RegisterSignal(owner, COMSIG_MOB_EQUIPPED_ITEM, .proc/update_icon_on_signal)
+	if(spell_requirements & SPELL_REQUIRES_UNPHASED)
+		RegisterSignal(owner, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), .proc/update_icon_on_signal)
 
 /datum/action/cooldown/spell/Remove(mob/living/remove_from)
 	UnregisterSignal(remove_from, list(
-		COMSIG_MOVABLE_Z_CHANGED,
-		COMSIG_MOB_STATCHANGE,
-		COMSIG_MOB_EQUIPPED_ITEM,
-		COMSIG_MOB_ENTER_JAUNT,
 		COMSIG_MOB_AFTER_EXIT_JAUNT,
+		COMSIG_MOB_ENTER_JAUNT,
+		COMSIG_MOB_EQUIPPED_ITEM,
+		COMSIG_MOVABLE_Z_CHANGED,
 	))
 	return ..()
 
@@ -149,11 +149,6 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		return FALSE
 
 	if((spell_requirements & SPELL_REQUIRES_MIND) && !owner.mind)
-		return FALSE
-
-	if((spell_requirements & SPELL_REQUIRES_CONSCIOUS) && owner.stat > CONSCIOUS)
-		if(feedback)
-			to_chat(owner, span_warning("You need to be conscious to cast [src]!"))
 		return FALSE
 
 	if(!(spell_requirements & SPELL_REQUIRES_NO_ANTIMAGIC))

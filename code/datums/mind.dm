@@ -168,8 +168,6 @@
 	if(iscarbon(new_character))
 		var/mob/living/carbon/C = new_character
 		C.last_mind = src
-	// MELBERT TODO: Remvoed transfer_actions as it didn't seem to do anything
-	// In the future test if this actually mattered or not
 	transfer_martial_arts(new_character)
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, .proc/set_death_time)
 	if(active || force_key_move)

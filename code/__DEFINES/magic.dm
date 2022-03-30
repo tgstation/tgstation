@@ -54,19 +54,16 @@
 #define SPELL_REQUIRES_HUMAN (1 << 1)
 /// Whether the spell can only be cast by mobs that are physical entities
 #define SPELL_REQUIRES_NON_ABSTRACT (1 << 2)
-/// Whether the spell must check for the caster being conscious/alive. Need to set to TRUE for ghost spells.
-#define SPELL_REQUIRES_CONSCIOUS (1 << 3)
 /// Whether the spell can be cast while phased, such as blood crawling or ethereal jaunting
-#define SPELL_REQUIRES_UNPHASED (1 << 4)
+#define SPELL_REQUIRES_UNPHASED (1 << 3)
 /// Whether the spell can be cast while the user has antimagic on them
-#define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 5)
+#define SPELL_REQUIRES_NO_ANTIMAGIC (1 << 4)
 /// Whether the spell can be cast on centcom level
-#define SPELL_REQUIRES_OFF_CENTCOM (1 << 6)
+#define SPELL_REQUIRES_OFF_CENTCOM (1 << 5)
 /// Whether the spell must be cast by someone with a mind
-#define SPELL_REQUIRES_MIND (1 << 7)
+#define SPELL_REQUIRES_MIND (1 << 6)
 
 DEFINE_BITFIELD(spell_requirements, list(
-	"SPELL_REQUIRES_CONSCIOUS" = SPELL_REQUIRES_CONSCIOUS,
 	"SPELL_REQUIRES_HUMAN" = SPELL_REQUIRES_HUMAN,
 	"SPELL_REQUIRES_NO_ANTIMAGIC" = SPELL_REQUIRES_NO_ANTIMAGIC,
 	"SPELL_REQUIRES_NON_ABSTRACT" = SPELL_REQUIRES_NON_ABSTRACT,

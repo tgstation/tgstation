@@ -1,3 +1,4 @@
+/// Creates a constant Ring of Fire around the caster for a set duration of time, which follows them.
 /datum/action/cooldown/spell/fire_sworn
 	name = "Oath of Flame"
 	desc = "For a minute, you will passively create a ring of fire around you."
@@ -26,36 +27,37 @@
 
 /datum/action/cooldown/spell/fire_sworn/cast(atom/cast_on)
 	. = ..()
-	new /obj/effect/fire_ring(owner, fire_radius)
+	cast_on.AddComponent(/datum/component/fire_ring, fire_radius)
 
 /datum/action/cooldown/spell/fire_sworn/after_cast(atom/cast_on)
 	. = ..()
 	if(current_timer)
 		deltimer(current_timer)
-	current_timer = addtimer(CALLBACK(src, .proc/end_cast, owner), duration, TIMER_UNIQUE|TIMER_STOPPABLE)
+	current_timer = addtimer(CALLBACK(src, .proc/end_cast, cast_on), duration, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/action/cooldown/spell/fire_sworn/proc/end_cast(atom/remove_from)
-	var/obj/effect/fire_ring/to_delete = locate() in remove_from
-	qdel(to_delete)
+	qdel(remove_from.GetComponent(/datum/component/fire_ring))
 	current_timer = null
 
-// An effect that puts a ring of fire around the mob it's located in.
-// Moved off of the fire_sworn spell due to cooldown actions processing on their own.
-/obj/effect/fire_ring // MELBERT TODO TEST THIS // MELBERT TODO PUT BACK ON SPELL IT FAST PROCESS
-	/// Radius of the fire ring.
+/// Simple component for adding a ring of fire around a mob
+/// Separate from the fire_sworn action, as actions process on fastprocessing on their own.
+/datum/component/fire_ring
+	/// The radius of the ring around us
 	var/ring_radius = 1
 
-/obj/effect/fire_ring/Initialize(mapload, ring_radus)
-	. = ..()
+/datum/component/fire_ring/Initialize(ring_radus = 1)
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+
 	src.ring_radius = ring_radius
 	START_PROCESSING(SSfastprocess, src)
 
-/obj/effect/fire_ring/Destroy(force)
+/datum/component/fire_ring/Destroy(force, silent)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
-/obj/effect/fire_ring/process(delta_time)
-	var/mob/living/owner = loc
+/datum/component/fire_ring/process(delta_time)
+	var/mob/living/owner = parent
 	if(QDELETED(owner) || !istype(owner) || owner.stat == DEAD)
 		qdel(src)
 		return PROCESS_KILL
@@ -68,6 +70,7 @@
 		for(var/mob/living/fried_living in nearby_turf.contents - owner)
 			fried_living.apply_damage(2.5 * delta_time, BURN)
 
+/// Creates one, large, expanding ring of fire around the caster, which does not follow them.
 /datum/action/cooldown/spell/fire_cascade
 	name = "Fire Cascade"
 	desc = "Heats the air around you."
