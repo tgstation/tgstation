@@ -26,12 +26,9 @@
 
 	var/obj/item/organ/ears/fox/fox_ears = human.getorgan(/obj/item/organ/ears/fox)
 	if (fox_ears)
-		fox_ears.color = human.hair_color
 		human.update_body()
 
 /datum/species/human/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
-	if(ishuman(C))
-		var/mob/living/carbon/human/H = C
 		// Force everyone to have at least fox features. I am evil and fucked up. We don't want to
 		// override cat ears, so I'll do it like this. If you don't like it sue me.
 		if(H.dna.features["tail_human"] == "None")
