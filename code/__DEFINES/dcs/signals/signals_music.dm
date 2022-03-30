@@ -4,8 +4,6 @@
 #define COMSIG_INSTRUMENT_START "instrument_start"
 ///sent to the instrument when a song stops playing
 #define COMSIG_INSTRUMENT_END "instrument_end"
-///sent to the instrument when a song's tempo changes. This is at a few key points like when a song is loaded as well as player edits (datum/song)
-#define COMSIG_INSTRUMENT_TEMPO_CHANGED "instrument_tempo_changed"
 ///sent to the instrument on /should_stop_playing(): (atom/player). Return values can be found in DEFINES/song.dm
 #define COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING "instrument_should_stop_playing"
 ///sent to the instrument (and player if available) when a song repeats (datum/song)

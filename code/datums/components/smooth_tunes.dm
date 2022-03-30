@@ -62,7 +62,6 @@
 	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, .proc/stop_singing)
 	if(!allow_repeats)
 		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
-	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGED, .proc/invalidate_final)
 
 	linked_song = starting_song
 
@@ -85,16 +84,9 @@
 	UnregisterSignal(linked_song.parent, list(
 		COMSIG_INSTRUMENT_END,
 		COMSIG_INSTRUMENT_REPEAT,
-		COMSIG_INSTRUMENT_TEMPO_CHANGED,
 	))
 	linked_song = null
 	qdel(src)
-
-/datum/component/smooth_tunes/proc/invalidate_final(datum/source, datum/song/temposwapped_song)
-	SIGNAL_HANDLER
-	if(temposwapped_song.playing && viable_for_final_effect)
-		to_chat(parent, span_warning("The song's tempo has changed, you cannot activate the finishing ability!"))
-		viable_for_final_effect = FALSE
 
 /datum/component/smooth_tunes/process(delta_time = SSOBJ_DT)
 	if(linked_songtuner_rite)
