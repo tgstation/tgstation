@@ -8,6 +8,7 @@
 	max_temperature = 15000
 	max_integrity = 120
 	wreckage = /obj/structure/mecha_wreckage/odysseus
+	mech_type = EXOSUIT_MODULE_ODYSSEUS
 	step_energy_drain = 6
 	internals_req_access = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_MEDICAL)
 
