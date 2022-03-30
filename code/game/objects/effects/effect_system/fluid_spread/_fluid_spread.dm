@@ -32,6 +32,10 @@
  *
  * Arguments:
  * - [node][/obj/effect/particle_effect/fluid]: The fluid node that is going to be added to this group.
+ *
+ * Returns:
+ * - [TRUE]: If the node to be added is in this group by the end of the proc.
+ * - [FALSE]: Otherwise.
  */
 /datum/fluid_group/proc/add_node(obj/effect/particle_effect/fluid/node)
 	if(!istype(node))
@@ -48,6 +52,7 @@
 	nodes += node
 	node.group = src
 	total_size++
+	return TRUE
 
 
 /**
@@ -59,6 +64,9 @@
  *
  * Arguments:
  * - [node][/obj/effect/particle_effect/fluid]: The fluid node that is going to be removed from this group.
+ *
+ * Returns:
+ * - [TRUE]: If the node to be removed is not in the group by the end of the proc.
  */
 /datum/fluid_group/proc/remove_node(obj/effect/particle_effect/fluid/node)
 	if(node.group != src)
