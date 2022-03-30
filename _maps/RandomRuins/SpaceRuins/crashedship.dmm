@@ -55,7 +55,7 @@
 /area/awaymission/bmpship/midship)
 "cR" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/southright,
+/obj/machinery/door/window/right,
 /turf/open/floor/iron/dark,
 /area/awaymission/bmpship/aft)
 "cY" = (
