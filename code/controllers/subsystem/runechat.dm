@@ -1,5 +1,3 @@
-///SSrunechat, essentially acts as a hyper specialized SStimer that only works for [/datum/chatmessage] instances to schedule events in the future
-///without the overhead of more general timing systems.
 TIMER_SUBSYSTEM_DEF(runechat)
 	name = "Runechat"
 	priority = FIRE_PRIORITY_RUNECHAT
