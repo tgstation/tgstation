@@ -707,8 +707,8 @@
 "Xu" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate/medical,
-/obj/item/storage/firstaid/ancient,
-/obj/item/storage/firstaid/ancient,
+/obj/item/storage/medkit/ancient,
+/obj/item/storage/medkit/ancient,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter/russian)

@@ -34,19 +34,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/shuttle/caravan/syndicate3)
-"cB" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/caravan/syndicate3)
 "dZ" = (
 /obj/structure/shuttle/engine/propulsion/burst{
 	dir = 8
@@ -104,6 +91,11 @@
 /obj/machinery/light/small/directional/west,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
+/area/shuttle/caravan/syndicate3)
+"kY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "mJ" = (
 /obj/structure/shuttle/engine/propulsion/burst/left{
@@ -219,20 +211,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
-"vw" = (
-/obj/structure/table/reinforced,
-/obj/item/storage/firstaid/regular,
-/obj/item/assembly/flash/handheld,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/caravan/syndicate3)
 "vQ" = (
 /obj/structure/shuttle/engine/propulsion/burst/right{
 	dir = 8
@@ -274,6 +252,17 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/pod/dark,
 /area/shuttle/caravan/syndicate3)
+"Da" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Ready Room";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/shuttle/caravan/syndicate3)
 "Dt" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -287,20 +276,6 @@
 /obj/item/storage/box/syndie_kit/chameleon,
 /obj/item/crowbar/red,
 /turf/open/floor/mineral/plastitanium,
-/area/shuttle/caravan/syndicate3)
-"Dx" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "EO" = (
 /obj/structure/chair/comfy/shuttle,
@@ -356,6 +331,20 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
+"Ia" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular,
+/obj/item/assembly/flash/handheld,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/caravan/syndicate3)
 "Ij" = (
 /obj/machinery/turretid{
 	ailock = 1;
@@ -372,28 +361,6 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/caravan/syndicate3)
-"IR" = (
-/obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/door/airlock/hatch{
-	id_tag = "caravansyndicate3_bolt_bridge";
-	name = "Bridge";
-	req_access_txt = "150"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
@@ -425,6 +392,19 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/clothing/shoes/sneakers/black,
 /turf/open/floor/mineral/plastitanium,
+/area/shuttle/caravan/syndicate3)
+"MR" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/hatch{
+	id_tag = "caravansyndicate3_bolt_bridge";
+	name = "Bridge";
+	req_access_txt = "150"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "NH" = (
 /obj/effect/turf_decal/stripes/line{
@@ -511,24 +491,8 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
-"Vf" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Ready Room";
-	req_access_txt = "150"
-	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
+"Vr" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/shuttle/caravan/syndicate3)
 "Wr" = (
@@ -628,7 +592,7 @@ Tn
 Tn
 EO
 ss
-cB
+Vr
 BQ
 Cm
 Tn
@@ -637,7 +601,7 @@ Tn
 Tn
 sn
 ss
-cB
+Vr
 UD
 rV
 Tn
@@ -646,7 +610,7 @@ Tn
 Tn
 NH
 Fa
-cB
+Vr
 qE
 Dt
 Tn
@@ -655,7 +619,7 @@ Tn
 Rj
 Tn
 Tn
-Vf
+Da
 Tn
 Tn
 PL
@@ -664,7 +628,7 @@ PL
 gl
 xC
 al
-cB
+Vr
 bo
 bB
 KS
@@ -673,7 +637,7 @@ KS
 Tn
 Lq
 YU
-Dx
+kY
 ZI
 HJ
 Tn
@@ -682,7 +646,7 @@ Tn
 Tn
 Tn
 Tn
-IR
+MR
 Tn
 Tn
 Tn
@@ -691,7 +655,7 @@ Tn
 Tn
 uy
 Gx
-cB
+Vr
 ZZ
 Sl
 Tn
@@ -702,7 +666,7 @@ ns
 Ij
 HM
 Wr
-vw
+Ia
 rU
 "}
 (14,1,1) = {"

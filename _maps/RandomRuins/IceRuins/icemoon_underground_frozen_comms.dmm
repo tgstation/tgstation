@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aD" = (
 /obj/structure/fence/cut/medium,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "aU" = (
 /turf/open/genturf,
@@ -13,7 +13,7 @@
 "cv" = (
 /obj/structure/flora/rock/pile/icy,
 /obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/ruin/powered/shuttle)
 "cH" = (
 /obj/structure/table/reinforced/rglass,
@@ -28,11 +28,11 @@
 "dq" = (
 /obj/structure/flora/tree/dead,
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "el" = (
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "eC" = (
 /obj/effect/turf_decal/stripes/line{
@@ -53,7 +53,7 @@
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/underground/explored)
 "hY" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/unexplored/rivers)
 "kr" = (
 /turf/open/floor/iron/smooth{
@@ -80,7 +80,7 @@
 	},
 /area/ruin/powered/shuttle)
 "qS" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "rd" = (
 /obj/structure/table/reinforced/rglass,
@@ -105,7 +105,7 @@
 "rS" = (
 /obj/structure/flora/tree/pine,
 /obj/structure/flora/grass/green,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "st" = (
 /obj/machinery/door/airlock/public,
@@ -127,7 +127,7 @@
 /obj/structure/fence/end{
 	dir = 8
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "uz" = (
 /obj/structure/tank_dispenser,
@@ -160,7 +160,7 @@
 /area/icemoon/underground/explored)
 "yl" = (
 /obj/structure/flora/tree/pine,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "yF" = (
 /obj/structure/closet/wardrobe/grey,
@@ -225,7 +225,7 @@
 /area/ruin/powered/shuttle)
 "Cu" = (
 /obj/structure/fence/cut/large,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "CH" = (
 /obj/structure/window/reinforced/spawner,
@@ -295,7 +295,7 @@
 /area/icemoon/underground/explored)
 "Js" = (
 /obj/structure/fence,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Jt" = (
 /obj/structure/grille,
@@ -321,7 +321,7 @@
 /obj/structure/fence/end{
 	dir = 1
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "MS" = (
 /obj/effect/turf_decal/siding/wood{
@@ -388,11 +388,11 @@
 /area/ruin/powered/shuttle)
 "Tz" = (
 /obj/structure/flora/tree/dead,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "TG" = (
 /obj/structure/flora/rock/pile/icy,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "Ux" = (
 /obj/structure/grille,

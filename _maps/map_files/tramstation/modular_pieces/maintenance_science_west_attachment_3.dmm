@@ -52,7 +52,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical)
 "A" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "B" = (
 /obj/effect/turf_decal/sand,
@@ -62,7 +62,7 @@
 /area/maintenance/department/medical)
 "C" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "N" = (
 /obj/item/relic,
@@ -71,7 +71,7 @@
 	pixel_x = -9;
 	pixel_y = 11
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/department/medical)
 "R" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,

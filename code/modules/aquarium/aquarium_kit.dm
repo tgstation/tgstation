@@ -39,12 +39,22 @@
 /obj/item/storage/fish_case/random/freshwater/select_fish_type()
 	return random_fish_type(required_fluid=AQUARIUM_FLUID_FRESHWATER)
 
+/obj/item/storage/fish_case/random/saltwater/select_fish_type()
+	return random_fish_type(required_fluid=AQUARIUM_FLUID_SALTWATER)
+
 /obj/item/storage/fish_case/syndicate
 	name = "ominous fish case"
 
 /obj/item/storage/fish_case/syndicate/PopulateContents()
 	. = ..()
 	generate_fish(src, pick(/datum/aquarium_behaviour/fish/donkfish, /datum/aquarium_behaviour/fish/emulsijack))
+
+/obj/item/storage/fish_case/tiziran
+	name = "imported fish case"
+
+/obj/item/storage/fish_case/tiziran/PopulateContents()
+	. = ..()
+	generate_fish(src, pick(/datum/aquarium_behaviour/fish/dwarf_moonfish, /datum/aquarium_behaviour/fish/gunner_jellyfish, /datum/aquarium_behaviour/fish/needlefish, /datum/aquarium_behaviour/fish/armorfish))
 
 ///Book detailing where to get the fish and their properties.
 /obj/item/book/fish_catalog

@@ -6,7 +6,7 @@
 /turf/closed/mineral/random,
 /area/ruin/unpowered)
 "c" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/ruin/unpowered)
 "d" = (
 /turf/closed/mineral/random/high_chance,

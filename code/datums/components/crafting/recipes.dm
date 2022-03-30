@@ -378,11 +378,11 @@
 	name = "Medbot"
 	result = /mob/living/simple_animal/bot/medbot
 	reqs = list(/obj/item/healthanalyzer = 1,
-				/obj/item/storage/firstaid = 1,
+				/obj/item/storage/medkit = 1,
 				/obj/item/assembly/prox_sensor = 1,
 				/obj/item/bodypart/r_arm/robot = 1)
 	parts = list(
-		/obj/item/storage/firstaid = 1,
+		/obj/item/storage/medkit = 1,
 		/obj/item/healthanalyzer = 1,
 		)
 	time = 40
@@ -390,22 +390,22 @@
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
 	var/mob/living/simple_animal/bot/medbot/bot = result
-	var/obj/item/storage/firstaid/first_aid = bot.contents[3]
-	bot.firstaid = first_aid
+	var/obj/item/storage/medkit/medkit = bot.contents[3]
+	bot.medkit_type = medkit
 	bot.healthanalyzer = bot.contents[4]
 
-	if (istype(first_aid, /obj/item/storage/firstaid/fire))
+	if (istype(medkit, /obj/item/storage/medkit/fire))
 		bot.skin = "ointment"
-	else if (istype(first_aid, /obj/item/storage/firstaid/toxin))
+	else if (istype(medkit, /obj/item/storage/medkit/toxin))
 		bot.skin = "tox"
-	else if (istype(first_aid, /obj/item/storage/firstaid/o2))
+	else if (istype(medkit, /obj/item/storage/medkit/o2))
 		bot.skin = "o2"
-	else if (istype(first_aid, /obj/item/storage/firstaid/brute))
+	else if (istype(medkit, /obj/item/storage/medkit/brute))
 		bot.skin = "brute"
-	else if (istype(first_aid, /obj/item/storage/firstaid/advanced))
+	else if (istype(medkit, /obj/item/storage/medkit/advanced))
 		bot.skin = "advanced"
 
-	bot.damagetype_healer = initial(first_aid.damagetype_healed) ? initial(first_aid.damagetype_healed) : BRUTE
+	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
@@ -1197,7 +1197,7 @@
 	if(!HAS_TRAIT(user,TRAIT_UNDERWATER_BASKETWEAVING_KNOWLEDGE))
 		return FALSE
 	var/turf/T = get_turf(user)
-	if(istype(T,/turf/open/water) || istype(T,/turf/open/floor/plating/beach/water))
+	if(istype(T, /turf/open/water))
 		return TRUE
 	var/obj/machinery/shower/S = locate() in T
 	if(S?.on)

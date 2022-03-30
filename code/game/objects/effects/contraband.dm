@@ -189,6 +189,8 @@
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."
@@ -199,6 +201,8 @@
 	icon_state = "random_contraband"
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/contraband
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 
 /obj/structure/sign/poster/contraband/free_tonto
 	name = "Free Tonto"
@@ -530,6 +534,8 @@
 	random_basetype = /obj/structure/sign/poster/official
 	icon_state = "random_official"
 	never_random = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 
 /obj/structure/sign/poster/official/here_for_your_safety
 	name = "Here For Your Safety"

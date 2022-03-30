@@ -116,25 +116,36 @@
 	var/mob/living/living_user = user
 
 	if (isnull(held_item))
-		if (density)
-			// This should be LMB/RMB one day
-			if (living_user.combat_mode)
-				context[SCREENTIP_CONTEXT_LMB] = "Knock"
+		if(density)
+			if(isalienadult(living_user) || issilicon(living_user))
+				context[SCREENTIP_CONTEXT_LMB] = "Open"
+				return CONTEXTUAL_SCREENTIP_SET
+			if(!living_user.combat_mode)
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Knock"
+					return CONTEXTUAL_SCREENTIP_SET
 			else
-				context[SCREENTIP_CONTEXT_LMB] = "Bash"
-
+				if(ismonkey(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Attack"
+					return CONTEXTUAL_SCREENTIP_SET
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Bash"
+					return CONTEXTUAL_SCREENTIP_SET
+		else if(issilicon(living_user))
+			context[SCREENTIP_CONTEXT_LMB] = "Close"
 			return CONTEXTUAL_SCREENTIP_SET
-		else
-			return .
+		return .
+
+	if(!Adjacent(src, living_user))
+		return .
 
 	switch (held_item.tool_behaviour)
 		if (TOOL_CROWBAR)
-			if (density)
+			if (!density)
 				context[SCREENTIP_CONTEXT_LMB] = "Close"
 			else if (!welded)
 				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
 				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
-
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"

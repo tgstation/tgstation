@@ -110,7 +110,7 @@
 	if(contact_poison && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/gloves/G = H.gloves
-		if(!istype(G) || G.transfer_prints)
+		if(!istype(G) || !(G.body_parts_covered & HANDS) || HAS_TRAIT(G, TRAIT_FINGERPRINT_PASSTHROUGH) || HAS_TRAIT(H, TRAIT_FINGERPRINT_PASSTHROUGH))
 			H.reagents.add_reagent(contact_poison,contact_poison_volume)
 			contact_poison = null
 	. = ..()

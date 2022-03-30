@@ -509,6 +509,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/burn_tile()
 	return
 
+/turf/proc/break_tile()
+	return
+
 /turf/proc/is_shielded()
 	return
 
@@ -580,6 +583,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return
 
 /turf/rust_heretic_act()
+	if(turf_flags & NO_RUST)
+		return
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
 

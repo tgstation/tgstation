@@ -17,7 +17,7 @@
 
 /obj/item/book/random/Initialize(mapload)
 	. = ..()
-	icon_state = "book[rand(1,8)]"
+	icon_state = "book[rand(1,maximum_book_state)]"
 
 /obj/item/book/random/attack_self()
 	if(!random_loaded)
@@ -65,7 +65,7 @@
 			data.set_content(book_deets[3], trusted = TRUE)
 			to_randomize.name = "Book: [to_randomize.book_data.title]"
 			if(!existing_book)
-				to_randomize.icon_state= "book[rand(1,8)]"
+				to_randomize.icon_state= "book[rand(1,to_randomize.maximum_book_state)]"
 	qdel(query_get_random_books)
 
 /obj/structure/bookcase/random/fiction

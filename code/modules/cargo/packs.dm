@@ -1005,7 +1005,7 @@
 	name = "50 Empty License Plates"
 	desc = "Create a bunch of boxes."
 	cost = CARGO_CRATE_VALUE * 2  // 50 * 25 + 700 - 1000 = 950 credits profit
-	access_view = ACCESS_SEC_DOORS
+	access_view = ACCESS_BRIG_ENTRANCE
 	contains = list(/obj/item/stack/license_plates/empty/fifty)
 	crate_name = "empty license plate crate"
 
@@ -1230,11 +1230,11 @@
 					/obj/item/storage/box/medigels,
 					/obj/item/storage/box/syringes,
 					/obj/item/storage/box/bodybags,
-					/obj/item/storage/firstaid/regular,
-					/obj/item/storage/firstaid/o2,
-					/obj/item/storage/firstaid/toxin,
-					/obj/item/storage/firstaid/brute,
-					/obj/item/storage/firstaid/fire,
+					/obj/item/storage/medkit/regular,
+					/obj/item/storage/medkit/o2,
+					/obj/item/storage/medkit/toxin,
+					/obj/item/storage/medkit/brute,
+					/obj/item/storage/medkit/fire,
 					/obj/item/defibrillator/loaded,
 					/obj/item/reagent_containers/blood/o_minus,
 					/obj/item/storage/pill_bottle/mining,
@@ -1389,8 +1389,8 @@
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
 					/obj/item/assembly/prox_sensor,
-					/obj/item/storage/firstaid,
-					/obj/item/storage/firstaid,
+					/obj/item/storage/medkit,
+					/obj/item/storage/medkit,
 					/obj/item/healthanalyzer,
 					/obj/item/healthanalyzer,
 					/obj/item/clothing/head/hardhat/red,
@@ -2509,11 +2509,36 @@
 
 /datum/supply_pack/misc/aquarium_fish
 	name = "Aquarium Fish Case"
-	desc = "An aquarium fish handpicked by monkeys from our collection."
+	desc = "An aquarium fish bundle handpicked by monkeys from our collection."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/fish_case/random,
+					/obj/item/storage/fish_case/random,
 					/obj/item/storage/fish_case/random)
 	crate_name = "aquarium fish crate"
+
+/datum/supply_pack/misc/freshwater_fish
+	name = "Freshwater Fish Case"
+	desc = "Aquarium fish that have had most of their mud cleaned off."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/freshwater,
+					/obj/item/storage/fish_case/random/freshwater)
+	crate_name = "freshwater fish crate"
+
+/datum/supply_pack/misc/saltwater_fish
+	name = "Saltwater Fish Case"
+	desc = "Aquarium fish that fill the room with the smell of salt."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/random/saltwater,
+					/obj/item/storage/fish_case/random/saltwater)
+	crate_name = "saltwater fish crate"
+
+/datum/supply_pack/misc/tiziran_fish
+	name = "Tirizan Fish Case"
+	desc = "Tiziran saltwater fish imported from the Zagos Sea."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/fish_case/tiziran,
+					/obj/item/storage/fish_case/tiziran)
+	crate_name = "tiziran fish crate"
 
 /datum/supply_pack/misc/bicycle
 	name = "Bicycle"
@@ -2552,6 +2577,18 @@
 					/obj/item/book/random,
 					/obj/item/book/random)
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/misc/commandkeys
+	name = "Command Encryption Key Crate"
+	desc = "A pack of encryption keys that give access to the command radio network. Nanotrasen reminds unauthorized employees not to eavesdrop in on secure communications channels, or at least to keep heckling of the command staff to a minimum."
+	access_view = ACCESS_HEADS
+	access = ACCESS_HEADS
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/encryptionkey/headset_com,
+					/obj/item/encryptionkey/headset_com,
+					/obj/item/encryptionkey/headset_com)
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "command encryption key crate"
 
 /datum/supply_pack/misc/exploration_drone
 	name = "Exploration Drone"
@@ -2709,7 +2746,7 @@
 	var/list/uplink_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/item = SStraitor.uplink_items_by_type[item_path]
-		if(item.purchasable_from & UPLINK_TRAITORS)
+		if(item.purchasable_from & UPLINK_TRAITORS && item.item)
 			uplink_items += item
 
 	while(crate_value)

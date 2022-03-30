@@ -309,6 +309,8 @@
 	var/starting_content
 	///The packet of information that describes this book
 	var/datum/book_info/book_data
+	///Maximum icon state number
+	var/maximum_book_state = 8
 
 /obj/item/book/Initialize()
 	. = ..()

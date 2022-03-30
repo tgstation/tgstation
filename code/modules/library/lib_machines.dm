@@ -487,18 +487,18 @@
 			if(!GLOB.news_network)
 				say("No news network found on station. Aborting.")
 			var/channelexists = FALSE
-			for(var/datum/newscaster/feed_channel/feed in GLOB.news_network.network_channels)
+			for(var/datum/feed_channel/feed in GLOB.news_network.network_channels)
 				if(feed.channel_name == LIBRARY_NEWSFEED)
 					channelexists = TRUE
 					break
 			if(!channelexists)
-				GLOB.news_network.CreateFeedChannel(LIBRARY_NEWSFEED, "Library", null)
+				GLOB.news_network.create_feed_channel(LIBRARY_NEWSFEED, "Library", "The official station book club!", null)
 
 			var/obj/machinery/libraryscanner/scan = get_scanner()
 			if(!scan)
 				say("No nearby scanner detected. Aborting.")
 				return
-			GLOB.news_network.SubmitArticle(scan.cache.content, "[scan.cache.author]: [scan.cache.title]", LIBRARY_NEWSFEED, null)
+			GLOB.news_network.submit_article(scan.cache.content, "[scan.cache.author]: [scan.cache.title]", LIBRARY_NEWSFEED, null)
 			say("Upload complete. Your uploaded title is now available on station newscasters.")
 			return TRUE
 		if("print_book")
@@ -683,7 +683,7 @@
 			fill.set_title(title, trusted = TRUE)
 			fill.set_author(author, trusted = TRUE)
 			fill.set_content(content, trusted = TRUE)
-			printed_book.icon_state = "book[rand(1,8)]"
+			printed_book.icon_state = "book[rand(1, printed_book.maximum_book_state)]"
 			visible_message(span_notice("[src]'s printer hums as it produces a completely bound book. How did it do that?"))
 		break
 	qdel(query_library_print)
@@ -802,5 +802,5 @@
 	var/obj/item/book/bound_book = new(loc)
 	bound_book.book_data.set_content(draw_from.info)
 	bound_book.name = "Print Job #" + "[rand(100, 999)]"
-	bound_book.icon_state = "book[rand(1,7)]"
+	bound_book.icon_state = "book[rand(1, bound_book.maximum_book_state)]"
 	qdel(draw_from)

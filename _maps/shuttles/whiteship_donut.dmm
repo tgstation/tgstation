@@ -205,7 +205,7 @@
 /obj/structure/toilet{
 	dir = 4
 	},
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/structure/window/reinforced/tinted,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
@@ -499,7 +499,7 @@
 "pe" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/shreds,
-/obj/item/storage/firstaid/ancient,
+/obj/item/storage/medkit/ancient,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "tT" = (

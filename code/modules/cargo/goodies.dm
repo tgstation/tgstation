@@ -29,7 +29,7 @@
 	name = "Colt Detective Special Single-Pack"
 	desc = "The HoS took your gun and your badge? No problem! Just pay the absurd taxation fee and you too can be reunited with the lethal power of a .38!"
 	cost = PAYCHECK_HARD * 40 //they really mean a premium here
-	access_view = ACCESS_FORENSICS_LOCKERS
+	access_view = ACCESS_FORENSICS
 	contains = list(/obj/item/gun/ballistic/revolver/detective)
 
 /datum/supply_pack/goody/stingbang
@@ -87,33 +87,33 @@
 
 /datum/supply_pack/goody/firstaidbruises_single
 	name = "Bruise Treatment Kit Single-Pack"
-	desc = "A single brute first-aid kit, perfect for recovering from being crushed in an airlock. Did you know people get crushed in airlocks all the time? Interesting..."
+	desc = "A single brute medkit, perfect for recovering from being crushed in an airlock. Did you know people get crushed in airlocks all the time? Interesting..."
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/brute)
+	contains = list(/obj/item/storage/medkit/brute)
 
 /datum/supply_pack/goody/firstaidburns_single
 	name = "Burn Treatment Kit Single-Pack"
-	desc = "A single burn first-aid kit. The advertisement displays a winking atmospheric technician giving a thumbs up, saying \"Mistakes happen!\""
+	desc = "A single burn medkit. The advertisement displays a winking atmospheric technician giving a thumbs up, saying \"Mistakes happen!\""
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/fire)
+	contains = list(/obj/item/storage/medkit/fire)
 
 /datum/supply_pack/goody/firstaid_single
 	name = "First Aid Kit Single-Pack"
-	desc = "A single first-aid kit, fit for healing most types of bodily harm."
+	desc = "A single medkit, fit for healing most types of bodily harm."
 	cost = PAYCHECK_MEDIUM * 3
-	contains = list(/obj/item/storage/firstaid/regular)
+	contains = list(/obj/item/storage/medkit/regular)
 
 /datum/supply_pack/goody/firstaidoxygen_single
 	name = "Oxygen Deprivation Kit Single-Pack"
-	desc = "A single oxygen deprivation first-aid kit, marketed heavily to those with crippling fears of asphyxiation."
+	desc = "A single oxygen deprivation medkit, marketed heavily to those with crippling fears of asphyxiation."
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/o2)
+	contains = list(/obj/item/storage/medkit/o2)
 
 /datum/supply_pack/goody/firstaidtoxins_single
 	name = "Toxin Treatment Kit Single-Pack"
 	desc = "A single first aid kit focused on healing damage dealt by heavy toxins."
 	cost = PAYCHECK_MEDIUM * 4
-	contains = list(/obj/item/storage/firstaid/toxin)
+	contains = list(/obj/item/storage/medkit/toxin)
 
 /datum/supply_pack/goody/toolbox // mostly just to water down coupon probability
 	name = "Mechanical Toolbox"
@@ -152,7 +152,7 @@
 
 /datum/supply_pack/goody/medipen_twopak
 	name = "Medipen Two-Pak"
-	desc = "Contains one standard epinephrine medipen and one standard emergency first-aid kit medipen. For when you want to prepare for the worst."
+	desc = "Contains one standard epinephrine medipen and one standard emergency medkit medipen. For when you want to prepare for the worst."
 	cost = PAYCHECK_MEDIUM * 2
 	contains = list(/obj/item/reagent_containers/hypospray/medipen, /obj/item/reagent_containers/hypospray/medipen/ekit)
 
