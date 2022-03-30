@@ -14,7 +14,7 @@ export const ChunkViewModal = (props, context) => {
         buttons={
           <Button
             color="red"
-            icon="xmark"
+            icon="window-close"
             onClick={() => {
               setViewedChunk(null);
               setModal(null);

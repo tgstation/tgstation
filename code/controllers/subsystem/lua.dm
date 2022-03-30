@@ -10,8 +10,8 @@ SUBSYSTEM_DEF(lua)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	wait = 0.1 SECONDS
 
-	/// A list of all lua contexts
-	var/list/datum/lua_context/contexts = list()
+	/// A list of all lua states
+	var/list/datum/lua_state/states = list()
 
 	/// A list of open editors, with each key in the list associated with a list of editors
 	var/list/editors
@@ -30,7 +30,18 @@ SUBSYSTEM_DEF(lua)
 		__lua_set_set_var_wrapper("/proc/wrap_lua_set_var")
 		__lua_set_datum_proc_call_wrapper("/proc/wrap_lua_datum_proc_call")
 		__lua_set_global_proc_call_wrapper("/proc/wrap_lua_global_proc_call")
-		__lua_set_require_wrapper("/proc/wrap_lua_require")
+		var/here = world.shelleo(world.system_type == MS_WINDOWS ? "cd" : "pwd")[SHELLEO_STDOUT]
+		here = replacetext(here, "\n", "")
+		var/last_char = copytext_char(here, -1)
+		if(last_char != "/" && last_char != "\\")
+			here += "/"
+		var/list/lua_path = list()
+		var/list/config_paths = CONFIG_GET(str_list/lua_path)
+		for(var/path in config_paths)
+			if(path[1] != "/")
+				path = here + path
+			lua_path += path
+		world.SetConfig("env", "LUAU_PATH", jointext(lua_path, ";"))
 		return ..()
 	catch(var/exception/e)
 		initialized = SSLUA_INIT_FAILED
@@ -44,19 +55,19 @@ SUBSYSTEM_DEF(lua)
 /datum/controller/subsystem/lua/Shutdown()
 	AUXTOOLS_SHUTDOWN(AUXLUA)
 
-/datum/controller/subsystem/lua/proc/queue_resume(datum/lua_context/context, index, arguments)
+/datum/controller/subsystem/lua/proc/queue_resume(datum/lua_state/state, index, arguments)
 	if(initialized != TRUE)
 		return
-	if(!istype(context))
+	if(!istype(state))
 		return
 	if(!arguments)
 		arguments = list()
 	else if(!islist(arguments))
 		arguments = list(arguments)
-	resumes += list(list("context" = context, "index" = index, "arguments" = arguments))
+	resumes += list(list("state" = state, "index" = index, "arguments" = arguments))
 
-/datum/controller/subsystem/lua/proc/kill_task(datum/lua_context/context, list/task_info)
-	if(!istype(context))
+/datum/controller/subsystem/lua/proc/kill_task(datum/lua_state/state, list/task_info)
+	if(!istype(state))
 		return
 	if(!islist(task_info))
 		return
@@ -65,21 +76,21 @@ SUBSYSTEM_DEF(lua)
 	switch(task_info["status"])
 		if("sleep")
 			var/task_index = task_info["index"]
-			var/context_index = 1
+			var/state_index = 1
 			for(var/i in 1 to length(sleeps))
-				var/datum/lua_context/sleeping_context = sleeps[i]
-				if(sleeping_context == context)
-					if(context_index == task_index)
+				var/datum/lua_state/sleeping_state = sleeps[i]
+				if(sleeping_state == state)
+					if(state_index == task_index)
 						sleeps.Cut(i, i+1)
 						break
-					context_index++
+					state_index++
 		if("yield")
 			for(var/i in 1 to length(resumes))
 				var/resume = resumes[i]
-				if(resume["context"] == context && resume["index"] == task_info["index"])
+				if(resume["state"] == state && resume["index"] == task_info["index"])
 					resumes.Cut(i, i+1)
 					break
-	context.kill_task(task_info)
+	state.kill_task(task_info)
 
 /datum/controller/subsystem/lua/fire(resumed)
 	if(!resumed)
@@ -88,14 +99,14 @@ SUBSYSTEM_DEF(lua)
 		resumes.Cut()
 
 	var/list/current_sleeps = current_run["sleeps"]
-	var/list/affected_contexts = list()
+	var/list/affected_states = list()
 	while(length(current_sleeps))
-		var/datum/lua_context/context = current_sleeps[1]
+		var/datum/lua_state/state = current_sleeps[1]
 		current_sleeps.Cut(1,2)
-		if(!istype(context))
+		if(!istype(state))
 			continue
-		affected_contexts |= context
-		context.awaken()
+		affected_states |= state
+		state.awaken()
 
 		if(MC_TICK_CHECK)
 			break
@@ -105,23 +116,23 @@ SUBSYSTEM_DEF(lua)
 		while(length(current_resumes))
 			var/list/resume_params = current_resumes[1]
 			current_resumes.Cut(1,2)
-			var/datum/lua_context/context = resume_params["context"]
-			if(!istype(context))
+			var/datum/lua_state/state = resume_params["state"]
+			if(!istype(state))
 				continue
 			var/index = resume_params["index"]
-			if(!index || !isnum(index))
+			if(isnull(index) || !isnum(index))
 				continue
 			var/arguments = resume_params["arguments"]
 			if(!islist(arguments))
 				continue
-			affected_contexts |= context
-			context.resume(arglist(list(index) + arguments))
+			affected_states |= state
+			state.resume(arglist(list(index) + arguments))
 
 			if(MC_TICK_CHECK)
 				break
 
-	for(var/context in affected_contexts)
-		var/list/editor_list = editors["\ref[context]"]
+	for(var/state in affected_states)
+		var/list/editor_list = editors["\ref[state]"]
 		if(editor_list)
 			for(var/datum/lua_editor/editor in editor_list)
 				SStgui.update_uis(editor)

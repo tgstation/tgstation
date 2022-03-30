@@ -1,5 +1,5 @@
 /datum/lua_editor
-	var/datum/lua_context/current_context
+	var/datum/lua_state/current_state
 
 	/// Code imported from the user's system
 	var/imported_code
@@ -16,8 +16,8 @@
 
 /datum/lua_editor/Destroy(force, ...)
 	. = ..()
-	if(current_context)
-		LAZYREMOVEASSOC(SSlua.editors, "\ref[current_context]", src)
+	if(current_state)
+		LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
 
 /datum/lua_editor/ui_state(mob/user)
 	return GLOB.debug_state
@@ -78,20 +78,25 @@
 	usr.client.mod_list_add(target_list, null, "a lua editor", "arguments")
 	SStgui.update_uis(src)
 
+/datum/lua_editor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["documentation"] = parsemarkdown_basic(file2text("code/modules/admin/verbs/lua/README.md"))
+	return data
+
 /datum/lua_editor/ui_data(mob/user)
 	var/list/data = list()
-	data["noContextYet"] = !current_context
-	if(current_context)
-		current_context.get_globals()
-		if(current_context.log)
-			data["contextLog"] = kvpify_list(refify_list(current_context.log))
-		data["tasks"] = current_context.get_tasks()
-		if(current_context.globals)
-			data["globals"] = kvpify_list(refify_list(current_context.globals))
+	data["noStateYet"] = !current_state
+	if(current_state)
+		current_state.get_globals()
+		if(current_state.log)
+			data["stateLog"] = kvpify_list(refify_list(current_state.log))
+		data["tasks"] = current_state.get_tasks()
+		if(current_state.globals)
+			data["globals"] = kvpify_list(refify_list(current_state.globals))
 	if(imported_code)
 		data["importedCode"] = imported_code
 		imported_code = null
-	data["contexts"] = SSlua.contexts
+	data["states"] = SSlua.states
 	data["callArguments"] = kvpify_list(refify_list(arguments))
 	return data
 
@@ -102,23 +107,23 @@
 	if(!check_rights_for(usr.client, R_DEBUG))
 		return
 	switch(action)
-		if("newContext")
-			var/context_name = params["name"]
-			var/datum/lua_context/new_context = new(context_name)
-			SSlua.contexts += new_context
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_context]", src)
-			current_context = new_context
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_context]", src)
+		if("newState")
+			var/state_name = params["name"]
+			var/datum/lua_state/new_state = new(state_name)
+			SSlua.states += new_state
+			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			current_state = new_state
+			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
 			return TRUE
-		if("switchContext")
-			var/context_index = params["index"]
-			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_context]", src)
-			current_context = SSlua.contexts[context_index]
-			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_context]", src)
+		if("switchState")
+			var/state_index = params["index"]
+			LAZYREMOVEASSOC(SSlua.editors, "\ref[current_state]", src)
+			current_state = SSlua.states[state_index]
+			LAZYADDASSOCLIST(SSlua.editors, "\ref[current_state]", src)
 			return TRUE
 		if("runCode")
 			var/code = params["code"]
-			current_context.load_script(code)
+			current_state.load_script(code)
 			return TRUE
 		if("moveArgUp")
 			var/list/recursive_indices = params["path"]
@@ -221,7 +226,7 @@
 			return
 		if("callFunction")
 			var/list/recursive_indices = params["indices"]
-			var/list/current_list = kvpify_list(current_context.globals)
+			var/list/current_list = kvpify_list(current_state.globals)
 			var/function = list()
 			while(LAZYLEN(recursive_indices))
 				var/index = popleft(recursive_indices)
@@ -234,26 +239,27 @@
 				function += key
 				if(islist(value))
 					current_list = value
-				else if(value == "__lua_function")
-					break
 				else
-					to_chat(usr, span_warning("invalid path element \[[value]] for function call (expected list or \"__lua_function\")"))
+					var/regex/function_regex = regex("^function: 0x\[0-9a-fA-F]+$")
+					if(function_regex.Find(value))
+						break
+					to_chat(usr, span_warning("invalid path element \[[value]] for function call (expected list or text matching [function_regex])"))
 					return
-			current_context.call_function(arglist(list(function) + arguments))
+			current_state.call_function(arglist(list(function) + arguments))
 			arguments.Cut()
 			return TRUE
 		if("resumeTask")
 			var/task_index = params["index"]
-			SSlua.queue_resume(current_context, task_index, arguments)
+			SSlua.queue_resume(current_state, task_index, arguments)
 			arguments.Cut()
 			return TRUE
 		if("killTask")
 			var/task_info = params["info"]
-			SSlua.kill_task(current_context, task_info)
+			SSlua.kill_task(current_state, task_info)
 			return TRUE
 		if("vvReturnValue")
 			var/log_entry_index = params["entryIndex"]
-			var/list/log_entry = current_context.log[log_entry_index]
+			var/list/log_entry = current_state.log[log_entry_index]
 			var/list/return_values = log_entry["param"]
 			var/list/recursive_indices = params["tableIndices"]
 			var/thing_to_debug = kvpify_list(return_values)
@@ -277,7 +283,7 @@
 			return
 		if("vvGlobal")
 			var/list/recursive_indices = params["indices"]
-			var/thing_to_debug = kvpify_list(current_context.globals)
+			var/thing_to_debug = kvpify_list(current_state.globals)
 			while(LAZYLEN(recursive_indices))
 				var/path_element = popleft(recursive_indices)
 				var/index = path_element["index"]

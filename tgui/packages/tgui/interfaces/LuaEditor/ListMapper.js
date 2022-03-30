@@ -1,7 +1,10 @@
 import { useBackend, useLocalState } from "../../backend";
-import { Button, Collapsible, LabeledList, Section } from "../../components";
+import { Box, Button, Collapsible, LabeledList, Section } from "../../components";
 
 const RefRegex = RegExp("\\[0x[0-9a-fA-F]+]$");
+const FunctionRegex = RegExp("^function: 0x[0-9a-fA-F]+$");
+const UnconvertibleLuaValueRegex
+  = RegExp("^(table|function|thread): 0x[0-9a-fA-F]+$");
 
 export const ListMapper = (props, context) => {
 
@@ -34,7 +37,7 @@ export const ListMapper = (props, context) => {
         />
       );
     } else if (typeof(thing) === "string") {
-      if (thing === "__lua_function" && callType) {
+      if (FunctionRegex.test(thing) && callType) {
         return (
           <Button
             tooltip="Click to call"
@@ -45,12 +48,12 @@ export const ListMapper = (props, context) => {
               });
               setModal("call");
             }}>
-            Function
+            {thing.charAt(0).toUpperCase() + thing.substring(1)}
           </Button>);
-      } else if (thing.startsWith("__lua_") && thing.length > 6) {
+      } else if (UnconvertibleLuaValueRegex.test(thing)) {
         return (
           <b>
-            {thing.charAt(6).toUpperCase() + thing.substring(7)}
+            {thing.charAt(0).toUpperCase() + thing.substring(1)}
           </b>
         );
       } else if (RefRegex.test(thing)) {
@@ -61,11 +64,13 @@ export const ListMapper = (props, context) => {
             {thing}
           </Button>
         );
+      } else if (thing === null) {
+        return <b>Nil</b>;
       } else {
         return thing;
       }
     } else {
-      return thing;
+      return <Box>{thing}</Box>;
     }
   };
 
@@ -87,12 +92,12 @@ export const ListMapper = (props, context) => {
     let keyNode = ThingNode(key, keyPath, { callType: null });
 
     /*
-     * Likewise, since table and userdata equality is tested by reference
-     * rather than value, we can't find functions whose keys within the
-     * table are tables or userdata
+     * Likewise, since table, thread, and userdata equality is tested by
+     * reference rather than value, we can't find functions whose keys
+     * within the table are tables, threads, or userdata
      */
     const uniquelyIndexable = (typeof(key) === "string" && (
-      !(key.startsWith("__lua_") || RefRegex.test(key))
+      !(UnconvertibleLuaValueRegex.test(key) || RefRegex.test(key))
     )) || typeof(key) === "number";
     let valueNode = ThingNode(value, valuePath, {
       callType: uniquelyIndexable && callType,
@@ -103,17 +108,17 @@ export const ListMapper = (props, context) => {
         buttons={editable && (
           <>
             <Button
-              icon="circle-arrow-up"
+              icon="arrow-up"
               disabled={i===0}
               tooltip="Move Up"
               onClick={() => act("moveArgUp", { path: entryPath })} />
             <Button
-              icon="circle-arrow-down"
+              icon="arrow-down"
               disabled={i===list.length-1}
               tooltip="Move Down"
               onClick={() => act("moveArgDown", { path: entryPath })} />
             <Button
-              icon="xmark"
+              icon="window-close"
               color="red"
               tooltip="Remove"
               onClick={() => act("removeArg", { path: entryPath })}
@@ -135,28 +140,24 @@ export const ListMapper = (props, context) => {
     </>
   );
 
+  const buttons = (vvAct && list?.length > 0) && (
+    <Button
+      icon="search"
+      tooltip="VV List"
+      onClick={() => vvAct(path)}
+    />
+  );
+
   return collapsible ? (
     <Collapsible
       title={name}
-      buttons={vvAct && (
-        <Button
-          icon="magnifying-glass"
-          tooltip="VV List"
-          onClick={() => vvAct(path)}
-        />
-      )} >
+      buttons={buttons} >
       {inner}
     </Collapsible>
   ) : (
     <Section
       title={name}
-      buttons={vvAct && (
-        <Button
-          icon="magnifying-glass"
-          tooltip="VV List"
-          onClick={() => vvAct(path)}
-        />
-      )} >
+      buttons={buttons} >
       {inner}
     </Section>
   );

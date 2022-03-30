@@ -5,11 +5,11 @@ import { ListMapper } from "./ListMapper";
 
 export const Log = (props, context) => {
   const { act, data } = useBackend(context);
-  const { contextLog } = data;
+  const { stateLog } = data;
   const [, setViewedChunk] = useLocalState(context, "viewedChunk");
   const [, setModal] = useLocalState(context, "modal");
   // We only kvpify logs so that the return values are kvpified.
-  const mappedLog = contextLog.map(({ value }) => value);
+  const mappedLog = stateLog.map(({ value }) => value);
   return (
     mappedLog.map((element, i) => {
       const { name, status, param, chunk } = element;
@@ -53,7 +53,7 @@ export const Log = (props, context) => {
                 name="Return Value"
                 collapsible
                 vvAct={(path) => act("vvReturnValue", {
-                  entryIndex: i,
+                  entryIndex: i+1,
                   tableIndices: path,
                 })} />
             </>

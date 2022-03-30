@@ -55,23 +55,23 @@
 	CRASH("auxlua not loaded")
 
 /**
- * Creates a new lua context.
+ * Creates a new lua state.
  *
- * return text a pointer to the created context.
+ * return text a pointer to the created state.
  */
-/proc/__lua_new_context()
+/proc/__lua_new_state()
 	CRASH("auxlua not loaded")
 
 /**
  * Loads a chunk of lua source code and executes it
  *
- * required context text a pointer to the context
+ * required state text a pointer to the state
  * in which to execute the code
  * required script text the lua source code to execute
  * optional name text a name to give to the chunk
  *
  * return list|text a list of lua return information
- * or an error message if the context was corrupted
+ * or an error message if the state was corrupted
  *
  * Lua return information is formatted as followed:
  * - ["status"]: How the chunk or function stopped code execution
@@ -94,19 +94,19 @@
  *   chunk or function is located, for calls to __lua_resume
  * - ["name"]: The name of the chunk or function, for logging
  */
-/proc/__lua_load(context, script, name)
+/proc/__lua_load(state, script, name)
 	CRASH("auxlua not loaded")
 
 /**
  * Calls a lua function
  *
- * required context text a pointer to the context
+ * required state text a pointer to the state
  * in which to call the function
  * required function text the name of the function to call
  * optional arguments list arguments to pass to the function
  *
  * return list|text a list of lua return information
- * or an error message if the context was corrupted
+ * or an error message if the state was corrupted
  *
  * Lua return information is formatted as followed:
  * - ["status"]: How the chunk or function stopped code execution
@@ -129,17 +129,17 @@
  *   chunk or function is located, for calls to __lua_resume
  * - ["name"]: The name of the chunk or function, for logging
  */
-/proc/__lua_call(context, function, arguments)
+/proc/__lua_call(state, function, arguments)
 	CRASH("auxlua not loaded")
 
 /**
  * Dequeues the task at the front of the sleep queue and resumes it
  *
- * required context text a pointer to the context in which
+ * required state text a pointer to the state in which
  * to resume a task
  *
  * return list|text|null a list of lua return information,
- * an error message if the context is corrupted,
+ * an error message if the state is corrupted,
  * or null if the sleep queue is empty
  *
  * Lua return information is formatted as followed:
@@ -163,21 +163,21 @@
  *   chunk or function is located, for calls to __lua_resume
  * - ["name"]: The name of the chunk or function, for logging
  */
-/proc/__lua_awaken(context)
+/proc/__lua_awaken(state)
 	CRASH("auxlua not loaded")
 
 /**
  * Removes the task at the specified index from the yield table
  * and resumes it
  *
- * required context text a pointer to the context in which to
+ * required state text a pointer to the state in which to
  * resume a task
  * required index number the index in the yield table of the
  * task to resume
  * optional arguments list the arguments to resume the task with
  *
  * return list|text|null a list of lua return information,
- * an error message if the context is corrupted,
+ * an error message if the state is corrupted,
  * or null if there is no task at the specified index
  *
  * Lua return information is formatted as followed:
@@ -201,43 +201,43 @@
  *   chunk or function is located, for calls to __lua_resume
  * - ["name"]: The name of the chunk or function, for logging
  */
-/proc/__lua_resume(context, index, arguments)
+/proc/__lua_resume(state, index, arguments)
 	CRASH("auxlua not loaded")
 
 /**
- * Get the variables within a context's environment.
+ * Get the variables within a state's environment.
  * Values not convertible to DM values are substituted
  * for their types as text
  *
- * required context text a pointer to the context
+ * required state text a pointer to the state
  * to get the variables from
  *
- * return list the variables of the context's environment
+ * return list the variables of the state's environment
  */
-/proc/__lua_get_globals(context)
+/proc/__lua_get_globals(state)
 	CRASH("auxlua not loaded")
 
 /**
- * Get a list of all tasks currently in progress within a context
+ * Get a list of all tasks currently in progress within a state
  *
- * required context text a pointer to the context
+ * required state text a pointer to the state
  * to get the tasks from
  *
- * return list a list of the context's tasks, formatted as follows:
+ * return list a list of the state's tasks, formatted as follows:
  * - name: The name of the task
  * - status: Whether the task is sleeping or yielding
  * - index: The index of the task in the sleep queue
  *   or yield table, whichever is applicable
  */
-/proc/__lua_get_tasks(context)
+/proc/__lua_get_tasks(state)
 	CRASH("auxlua not loaded")
 
 /**
  * Kills a task in progress
  *
- * required context text a pointer to the context
+ * required state text a pointer to the state
  * in which to kill a task
  * required info list the task info
  */
-/proc/__lua_kill_task(context, info)
+/proc/__lua_kill_task(state, info)
 	CRASH("auxlua not loaded")

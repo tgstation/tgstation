@@ -18,7 +18,7 @@ export const CallModal = (props, context) => {
         buttons={(
           <Button
             color="red"
-            icon="xmark"
+            icon="window-close"
             onClick={() => {
               setModal(null);
               setToCall(null);

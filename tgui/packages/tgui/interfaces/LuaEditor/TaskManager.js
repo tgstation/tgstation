@@ -6,7 +6,7 @@ export const TaskManager = (props, context) => {
   const [, setToCall] = useLocalState(context, "toCallTaskInfo");
   const [, setModal] = useLocalState(context, "modal");
   let { tasks } = data;
-  tasks.sort((a, b) => {
+  tasks?.sort((a, b) => {
     if (a.status < b.status) {
       return -1;
     } else if (a.status > b.status) {
@@ -18,7 +18,7 @@ export const TaskManager = (props, context) => {
   const sleeps = tasks.filter((info) => info.status === 'sleep');
   const yields = tasks.filter((info) => info.status === 'yield');
   return (
-    <Stack fill width="100%" justify="space-evenly">
+    <Stack fill width="100%" justify="space-around">
       <Stack.Item>
         <Section title="Sleeps" fill>
           <LabeledList>
@@ -26,7 +26,7 @@ export const TaskManager = (props, context) => {
               <LabeledList.Item key={i} label={info.name}>
                 <Button
                   color="red"
-                  icon="xmark"
+                  icon="window-close"
                   onClick={() => act("killTask", { info: info })}>
                   Kill
                 </Button>
@@ -40,18 +40,16 @@ export const TaskManager = (props, context) => {
           <LabeledList>
             {yields.map((info, i) => (
               <LabeledList.Item key={i} label={info.name}>
-                {toCallTaskInfo && (
-                  <Button
-                    onClick={() => {
-                      setToCall({ type: "resume", params: { index: info.index } });
-                      setModal("call");
-                    }}>
-                    Call
-                  </Button>
-                )}
+                <Button
+                  onClick={() => {
+                    setToCall({ type: "resume", params: { index: info.index } });
+                    setModal("call");
+                  }}>
+                  Call
+                </Button>
                 <Button
                   color="red"
-                  icon="xmark"
+                  icon="window-close"
                   onClick={() => {
                     act("killTask", { taskInfo: info });
                   }}>
