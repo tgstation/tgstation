@@ -10,7 +10,7 @@
 	/// The machine required to do this recipe
 	var/required_machine = /obj/machinery/processor
 	/// Multiplied additional food made when processed
-	var/food_multiplier = 0
+	var/food_multiplier = 1
 	/// Whether to copy the materials from the input to the output
 	var/preserve_materials = TRUE
 
