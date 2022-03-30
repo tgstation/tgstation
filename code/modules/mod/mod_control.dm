@@ -100,7 +100,6 @@
 	slowdown_inactive = theme.slowdown_inactive
 	slowdown_active = theme.slowdown_active
 	complexity_max = theme.complexity_max
-	skin = new_skin || theme.default_skin
 	ui_theme = theme.ui_theme
 	charge_drain = theme.charge_drain
 	initial_modules += theme.inbuilt_modules
