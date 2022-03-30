@@ -74,12 +74,13 @@
 	return (!allow_duplicate_results && (locate(result_type) in location)) || (new result_type(location))
 
 /obj/effect/particle_effect/fluid/foam/process(delta_time)
-	lifetime -= delta_time SECONDS
+	var/ds_delta_time = delta_time SECONDS
+	lifetime -= ds_delta_time
 	if(lifetime <= 0)
 		kill_foam()
 		return
 
-	var/fraction = ((delta_time SECONDS) * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
+	var/fraction = (ds_delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 	var/turf/location = loc
 	for(var/obj/object as anything in location)
 		if(object == src)
@@ -89,15 +90,15 @@
 		reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
-	for(var/mob/living/L in location)
-		hit += foam_mob(L, delta_time)
+	for(var/mob/living/foamer in location)
+		hit += foam_mob(foamer, delta_time)
 	if(hit)
-		lifetime += delta_time SECONDS //this is so the decrease from mobs hit and the natural decrease don't cumulate.
+		lifetime += ds_delta_time //this is so the decrease from mobs hit and the natural decrease don't cumulate.
 
 	reagents.expose(location, VAPOR, fraction)
 
 	if(group.target_size > group.total_size)
-		spread()
+		spread(delta_time)
 
 /**
  * Applies the effect of this foam to a mob.
@@ -118,12 +119,11 @@
 	lifetime -= delta_time
 	return TRUE
 
-/obj/effect/particle_effect/fluid/foam/spread()
+/obj/effect/particle_effect/fluid/foam/spread(delta_time = SSfastprocess.wait / (1 SECONDS))
 	var/turf/location = get_turf(src)
 	if(!istype(location))
 		return FALSE
 
-	var/effective_dt = SSfastprocess.wait / (1 SECONDS) // The amount of time this spread is happening over, basically.
 	for(var/turf/spread_turf as anything in location.reachableAdjacentTurfs())
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
 		if(foundfoam)
@@ -132,7 +132,7 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
-			foam_mob(foaming, effective_dt)
+			foam_mob(foaming, delta_time)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
 		reagents.copy_to(spread_foam, (reagents.total_volume))

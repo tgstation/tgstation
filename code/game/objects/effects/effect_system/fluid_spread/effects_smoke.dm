@@ -61,7 +61,7 @@
 	animate(src, time = frames, alpha = 0)
 
 
-/obj/effect/particle_effect/fluid/smoke/spread()
+/obj/effect/particle_effect/fluid/smoke/spread(delta_time = 0.1 SECONDS)
 	if(group.total_size > group.target_size)
 		return
 	var/turf/t_loc = get_turf(src)
@@ -74,7 +74,7 @@
 		if(locate(type) in spread_turf)
 			continue // Don't spread smoke where there's already smoke!
 		for(var/mob/living/smoker in spread_turf)
-			smoke_mob(smoker, SSOBJ_DT)
+			smoke_mob(smoker, delta_time)
 
 		var/obj/effect/particle_effect/fluid/smoke/spread_smoke = new type(spread_turf, group)
 		reagents.copy_to(spread_smoke, reagents.total_volume)
@@ -82,7 +82,7 @@
 		spread_smoke.lifetime = lifetime
 
 		// the smoke spreads rapidly, but not instantly
-		addtimer(CALLBACK(spread_smoke, /obj/effect/particle_effect/fluid.proc/spread), 1)
+		addtimer(CALLBACK(spread_smoke, /obj/effect/particle_effect/fluid.proc/spread, delta_time), delta_time SECONDS)
 
 
 /obj/effect/particle_effect/fluid/smoke/process(delta_time)
@@ -90,7 +90,7 @@
 	if(lifetime <= 0)
 		kill_smoke()
 		return FALSE
-	for(var/mob/living/smoker in range(0,src))
+	for(var/mob/living/smoker in loc) // In case smoke somehow winds up in a locker or something this should still behave sanely.
 		smoke_mob(smoker, delta_time)
 	return TRUE
 
@@ -355,7 +355,7 @@
 		return FALSE
 
 	var/fraction = (delta_time SECONDS) / initial(lifetime)
-	reagents.copy_to(smoker, fraction * reagents.total_volume)
+	reagents.copy_to(smoker, reagents.total_volume, fraction)
 	reagents.expose(smoker, INGEST, fraction)
 	return TRUE
 
