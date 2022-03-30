@@ -1524,6 +1524,22 @@
 	REMOVE_TRAIT(L, TRAIT_RESISTHEAT, type)
 	return ..()
 
+/datum/reagent/zauker
+	name = "Zauker"
+	description = "An unstable gas that is toxic to all living beings"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "bitter"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/zauker/on_mob_metabolize(mob/living/L)
+	. = ..()
+	L.adjustBruteLoss(25)
+	L.adjustOxyLoss(5)
+	L.adjustFireLoss(8)
+	L.adjustToxLoss(8)
+
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
 
