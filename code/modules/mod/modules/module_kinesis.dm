@@ -263,5 +263,6 @@
 		to manipulate the world around them. Like it's older counterpart, it's capable of manipulating \
 		structures, machinery, vehicles, and, thanks to the fruitful efforts of it's creators - living  \
 		beings. They can, however, still struggle after an initial burst of inertia."
+	complexity = 0 // As with other admin modules.
 	prebuilt = TRUE
 	mobs_allowed = TRUE
