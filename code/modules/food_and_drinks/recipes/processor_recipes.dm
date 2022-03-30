@@ -9,7 +9,7 @@
 	var/time = 40
 	/// The machine required to do this recipe
 	var/required_machine = /obj/machinery/processor
-	/// The additional amount of food made on process.
+	/// Multiplied additional food made when processed
 	var/food_multiplier = 0
 	/// Whether to copy the materials from the input to the output
 	var/preserve_materials = TRUE
@@ -22,7 +22,7 @@
 		/obj/item/food/meat/slab/xeno,
 		/obj/item/food/meat/slab/bear,
 		/obj/item/food/meat/slab/chicken)
-	food_multiplier = 2
+	food_multiplier = 3
 
 /datum/food_processor_process/cutlet
 	input = /obj/item/food/meat/cutlet/plain
@@ -70,7 +70,7 @@
 /datum/food_processor_process/meat/chicken
 	input = /obj/item/food/meat/slab/chicken
 	output = /obj/item/food/raw_meatball/chicken
-	food_multiplier = 2
+	food_multiplier = 3
 	blacklist = null
 
 /datum/food_processor_process/cutlet/chicken
@@ -131,5 +131,5 @@
 /datum/food_processor_process/towercap
 	input = /obj/item/grown/log
 	output = /obj/item/popsicle_stick
-	food_multiplier = 2
+	food_multiplier = 3
 	preserve_materials = FALSE
