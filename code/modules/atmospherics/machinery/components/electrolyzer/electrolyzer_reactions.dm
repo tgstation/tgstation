@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	air_mixture.assert_gases(/datum/gas/hypernoblium, /datum/gas/antinoblium)
 	var/proportion = min(air_mixture.gases[/datum/gas/hypernoblium][MOLES], (1.5 * (working_power ** 2)))
 	air_mixture.gases[/datum/gas/hypernoblium][MOLES] -= proportion
-	air_mixture.gases[/datum/gas/antinoblium][MOLES] += proportion * 0.05
+	air_mixture.gases[/datum/gas/antinoblium][MOLES] += proportion * 0.5
 
 /datum/electrolyzer_reaction/halon_generation
 	name = "Halon generation"
