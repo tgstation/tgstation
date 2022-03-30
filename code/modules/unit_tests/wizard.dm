@@ -3,6 +3,8 @@
 // May this never happen again.
 
 /// Test loadouts for crashes, runtimes, stack traces and infinite loops. No ASSERTs necessary.
+/datum/unit_test/wizard_loadout
+
 /datum/unit_test/wizard_loadout/Run()
 	for(var/loadout in ALL_WIZARD_LOADOUTS)
 		var/obj/item/spellbook/wizard_book = allocate(/obj/item/spellbook)

@@ -94,6 +94,8 @@
 		return FALSE
 
 	// MIND TRANSFER BEGIN
+
+	/*
 	// Put the swappee's mind in a ghost temorarily
 	var/mob/dead/observer/to_swap_ghost = to_swap.ghostize()
 	// Do the swap
@@ -106,6 +108,21 @@
 		caster.key = to_swap_ghost.key
 	// Clean up the ghost
 	qdel(to_swap_ghost)
+	*/
+
+	var/datum/mind/caster_mind = caster.mind
+	var/datum/mind/to_swap_mind = to_swap.mind
+
+	var/to_swap_key = to_swap.key
+
+	caster_mind.transfer_to(to_swap)
+	to_swap_mind.transfer_to(caster)
+
+	// Just in case the swappee's key
+	// wasn't grabbed by transfer_fo
+	if(to_swap_key)
+		caster.key = to_swap_key
+
 	// MIND TRANSFER END
 
 	// Here we knock both mobs out for a time.

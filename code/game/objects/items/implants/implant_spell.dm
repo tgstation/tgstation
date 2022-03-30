@@ -12,10 +12,11 @@
 
 /obj/item/implant/spell/Initialize(mapload)
 	. = ..()
-	spell_to_give = new spell_type(src)
+	if(spell_type)
+		spell_to_give = new spell_type(src)
 
-	if(make_robeless && (spell_to_give.spell_requirements & SPELL_REQUIRES_WIZARD_GARB))
-		spell_to_give.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
+		if(make_robeless && (spell_to_give.spell_requirements & SPELL_REQUIRES_WIZARD_GARB))
+			spell_to_give.spell_requirements &= ~SPELL_REQUIRES_WIZARD_GARB
 
 /obj/item/implant/spell/Destroy()
 	QDEL_NULL(spell_to_give)
@@ -45,9 +46,10 @@
 	if (!.)
 		return FALSE
 
-	spell_to_give.Remove(source)
-	if(source.stat != DEAD && !silent)
-		to_chat(source, span_boldnotice("The knowledge of how to cast [spell_to_give] slips out from your mind."))
+	if(spell_to_give)
+		spell_to_give.Remove(source)
+		if(source.stat != DEAD && !silent)
+			to_chat(source, span_boldnotice("The knowledge of how to cast [spell_to_give] slips out from your mind."))
 	return TRUE
 
 /obj/item/implanter/spell

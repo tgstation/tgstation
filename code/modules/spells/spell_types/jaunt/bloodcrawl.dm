@@ -188,7 +188,7 @@
  * and calling on_victim_consumed if successful.
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/consume_victim(mob/living/victim, mob/living/jaunter)
-	to_chat(jaunter, span_danger("You begin to feast on [victim]... You can not move while you are doing this."))
+	on_victim_start_consume(victim, jaunter)
 
 	for(var/i in 1 to 3)
 		playsound(get_turf(src), consume_sound, 50, TRUE)
@@ -225,6 +225,12 @@
 	on_victim_consumed(victim)
 
 /**
+ * Called when a victim starts to be consumed.
+ */
+/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/on_victim_start_consume(mob/living/victim, mob/living/jaunter)
+	to_chat(jaunter, span_danger("You begin to feast on [victim]... You can not move while you are doing this."))
+
+/**
  * Called when a victim is successfully consumed.
  */
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/proc/on_victim_consumed(mob/living/victim, mob/living/jaunter)
@@ -251,14 +257,20 @@
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Grant(mob/grant_to)
 	. = ..()
 	if(owner)
-		RegisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
+		// Registering this on preqdeleted, instead of qdeleted
+		// because qdeleted is already registered on owner from
+		// From Grant() earlier, and I don't wanna deal with it
+		RegisterSignal(owner, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_PREQDELETED), .proc/on_death)
 
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/Remove(mob/living/removed_from)
-	UnregisterSignal(removed_from, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(removed_from, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_PREQDELETED))
 	return ..()
 
+/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_start_consume(mob/living/victim, mob/living/jaunter)
+	to_chat(jaunter, span_clown("You invite [victim] to your party! You can not move while you are doing this."))
+
 /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/funny/on_victim_consumed(mob/living/victim, mob/living/jaunter)
-	to_chat(jaunter, span_clown("You invite [victim] to your party! Your health is fully restored."))
+	to_chat(jaunter, span_clown("[victim] joins your party! Your health is fully restored."))
 	consumed_mobs += victim
 	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
 	RegisterSignal(victim, COMSIG_PARENT_QDELETING, .proc/on_victim_deleted)

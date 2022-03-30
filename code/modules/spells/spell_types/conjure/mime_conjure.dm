@@ -5,7 +5,8 @@
 
 	school = SCHOOL_MIME
 
-	invocation = "" // Set by get_invocation_content()
+	invocation = "Someone does a weird gesture."
+	invocation_self_message = "You do a weird gesture."
 	invocation_type = INVOCATION_EMOTE
 
 	spell_requirements = (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN)

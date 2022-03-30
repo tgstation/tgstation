@@ -245,63 +245,66 @@
 
 /// Purchases a wizard loadout [loadout] for [wizard].
 /obj/item/spellbook/proc/wizard_loadout(mob/living/carbon/human/wizard, loadout)
-	var/list/wanted_spell_names
+	var/list/wanted_spells
 	switch(loadout)
 		if(WIZARD_LOADOUT_CLASSIC) //(Fireball>2, MM>2, Smite>2, Jauntx2>4) = 10
-			wanted_spell_names = list(
-				"Fireball" = 1,
-				"Magic Missile" = 1,
-				"Smite" = 1,
-				"Ethereal Jaunt" = 2,
+			wanted_spells = list(
+				/datum/spellbook_entry/fireball = 1,
+				/datum/spellbook_entry/magicm = 1,
+				/datum/spellbook_entry/disintegrate = 1,
+				/datum/spellbook_entry/jaunt = 2,
 			)
-		if(WIZARD_LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx3>3, Mutate>2, Force Wall>1, Blink>2) = 10
-			wanted_spell_names = list(
-				"Mjolnir" = 1,
-				"Summon Item" = 3,
-				"Mutate" = 1,
-				"Force Wall" = 1,
-				"Blink" = 1,
+		if(WIZARD_LOADOUT_MJOLNIR) //(Mjolnir>2, Summon Itemx1>1, Mutate>2, Force Wall>1, Blink>2, tesla>2) = 10
+			wanted_spells = list(
+				/datum/spellbook_entry/item/mjolnir = 1,
+				/datum/spellbook_entry/summonitem = 1,
+				/datum/spellbook_entry/mutate = 1,
+				/datum/spellbook_entry/forcewall = 1,
+				/datum/spellbook_entry/blink = 1,
+				/datum/spellbook_entry/teslablast = 1, // MELBERT TODO CL
 			)
 		if(WIZARD_LOADOUT_WIZARMY) //(Soulstones>2, Staff of Change>2, A Necromantic Stone>2, Teleport>2, Ethereal Jaunt>2) = 10
-			wanted_spell_names = list(
-				"Soulstone Shard Kit" = 1,
-				"Staff of Change" = 1,
-				"A Necromantic Stone" = 1,
-				"Teleport" = 1,
-				"Ethereal Jaunt" = 1,
+			wanted_spells = list(
+				/datum/spellbook_entry/item/soulstones = 1,
+				/datum/spellbook_entry/item/staffchange = 1,
+				/datum/spellbook_entry/item/necrostone = 1,
+				/datum/spellbook_entry/teleport = 1,
+				/datum/spellbook_entry/jaunt = 1,
 			)
 		if(WIZARD_LOADOUT_SOULTAP) //(Soul Tap>1, Smite>2, Flesh to Stone>2, Mindswap>2, Knock>1, Teleport>2) = 10
-			wanted_spell_names = list(
-				"Soul Tap" = 1,
-				"Smite" = 1,
-				"Flesh to Stone" = 1,
-				"Mindswap" = 1,
-				"Knock" = 1,
-				"Teleport" = 1,
+			wanted_spells = list(
+				/datum/spellbook_entry/tap = 1,
+				/datum/spellbook_entry/disintegrate = 1,
+				/datum/spellbook_entry/fleshtostone = 1,
+				/datum/spellbook_entry/mindswap = 1,
+				/datum/spellbook_entry/knock = 1,
+				/datum/spellbook_entry/teleport = 1,
 			)
 
-	if(!length(wanted_spell_names))
+	if(!length(wanted_spells))
 		stack_trace("Wizard Loadout \"[loadout]\" did not find a loadout that existed.")
 		return
 
-	for(var/datum/spellbook_entry/entry as anything in entries)
-		if(!(entry.name in wanted_spell_names))
+	for(var/entry in wanted_spells)
+		if(!ispath(entry, /datum/spellbook_entry))
+			stack_trace("Wizard Loadout \"[loadout]\" had an non-spellbook_entry type in its wanted spells list. ([entry])")
 			continue
-		if(entry.can_buy(wizard, src))
-			var/purchase_count = wanted_spell_names[entry.name]
-			wanted_spell_names -= entry.name
-			for(var/i in 1 to purchase_count)
-				purchase_entry(entry, wizard)
-		if(!length(wanted_spell_names))
-			break
+
+		var/datum/spellbook_entry/to_buy = locate(entry) in entries
+		if(!istype(to_buy))
+			stack_trace("Wizard Loadout \"[loadout]\" had an invalid entry in its wanted spells list. ([entry])")
+			continue
+
+		for(var/i in 1 to wanted_spells[entry])
+			if(!purchase_entry(to_buy, wizard))
+				stack_trace("Wizard Loadout \"[loadout]\" was unable to buy a spell for [wizard]. ([entry])")
+				message_admins("Wizard [wizard] purchased Loadout \"[loadout]\" but was unable to purchase one of the entries ([to_buy]) for some reason.")
+				break
 
 	refunds_allowed = FALSE
 
-	if(length(wanted_spell_names))
-		stack_trace("Wizard Loadout \"[loadout]\" could not find valid spells to buy in the spellbook.")
-
 	if(uses > 0)
-		stack_trace("Wizard Loadout \"[loadout]\" does not use 10 wizard spell slots. Stop scamming players out.")
+		stack_trace("Wizard Loadout \"[loadout]\" does not use 10 wizard spell slots (used: [initial(uses) - uses]). Stop scamming players out.")
 
 /// Purchases a semi-random wizard loadout for [wizard]
 /// If passed a number [bonus_to_give], the wizard is given additional uses on their spellbook, used in randomization.
