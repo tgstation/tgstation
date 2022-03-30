@@ -82,7 +82,7 @@
 
 	var/fraction = (ds_delta_time * MINIMUM_FOAM_DILUTION) / (initial(lifetime) * max(MINIMUM_FOAM_DILUTION, group.total_size))
 	var/turf/location = loc
-	for(var/obj/object as anything in location)
+	for(var/obj/object in location)
 		if(object == src)
 			continue
 		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
