@@ -540,6 +540,10 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	if(istype(W, /obj/item/card/id) && InsertID(W))
 		return
 
+	var/obj/item/computer_hardware/cartridge_slot/cart_slot = all_components[MC_CARD]
+	if(istype(W, /obj/item/cartridge) && cart_slot?.try_insert(W, user))
+		return
+
 	// Insert items into the components
 	for(var/h in all_components)
 		var/obj/item/computer_hardware/H = all_components[h]

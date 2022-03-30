@@ -105,6 +105,7 @@
 	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
+	stored_card = null
 	current_identification = null
 	current_job = null
 
