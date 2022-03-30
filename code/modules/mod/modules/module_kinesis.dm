@@ -18,8 +18,10 @@
 	var/grab_range = 5
 	var/hit_cooldown_time = 1 SECONDS
 	var/movement_animation
+	//Are living mobs allowed as targets?
 	var/mobs_allowed = FALSE
-	var/living_stun_length = 100
+	//How long do we want living mobs to be stunned?
+	var/living_stun_length = 5 SECONDS
 	var/atom/movable/grabbed_atom
 	var/datum/beam/kinesis_beam
 	var/mutable_appearance/kinesis_icon
