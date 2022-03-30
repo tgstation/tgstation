@@ -363,8 +363,9 @@
 	anchored = TRUE
 
 /obj/effect/resin_container/proc/Smoke()
-	var/obj/effect/particle_effect/fluid/foam/metal/resin/foam = new /obj/effect/particle_effect/fluid/foam/metal/resin(get_turf(loc))
-	foam.group.target_size = DIAMOND_AREA(4)
+	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
+	foaming.set_up(4, location = src)
+	foaming.start()
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 

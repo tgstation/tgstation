@@ -371,6 +371,9 @@
 			return ..()
 	return null
 
+/datum/effect_system/fluid_spread/foam/metal/resin
+	effect_type = /obj/effect/particle_effect/fluid/foam/metal/resin
+
 /// A foam variant which produces atmos resin walls.
 /obj/effect/particle_effect/fluid/foam/metal/resin
 	name = "resin foam"
