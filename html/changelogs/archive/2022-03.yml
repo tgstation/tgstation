@@ -1052,3 +1052,27 @@
   - bugfix: The Zeta emergency shuttle's brig now travels with the rest of the shuttle
   magatsuchi:
   - bugfix: fixes a bug that causes podpeople hair to crash the pref menu
+2022-03-30:
+  Fikou:
+  - bugfix: you can no longer push ash drake corpses into doors
+  - bugfix: modsuit painting is fixed
+  FlamingCheese:
+  - bugfix: Reality has downloaded CS Source which fixed the missing texture of a
+      poster in departures security checkpoint
+  LemonInTheDark:
+  - qol: The beach away mission has a light yellow tint
+  - bugfix: Some areas that were once pitch black are no longer
+  - bugfix: I've replaced the pumps in server rooms/slime kill rooms with passive
+      vents. It's faster ok don't worry about it
+  Son-of-Space:
+  - rscadd: IceBox Station has a new Security Department
+  TemporalOroboros:
+  - balance: Improvements in the smoke powder formula have resulted in a doubling
+      of the maximum possible carry density for the resulting clouds. This brings
+      it to par with the fluorosurfactant formula in this area.
+  - balance: Fluorosurfactant no longer acts as an arbitrarily powerful accelerating
+      catalyst in an emulsified state. Research into foam based thermobaric weaponry
+      has begun.
+  san7890:
+  - bugfix: On IceBoxStation, hopefully all (if not a good chunk) of the cameras have
+      been moved to no longer be on windows, and on walls instead.

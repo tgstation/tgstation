@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - bugfix: "On IceBoxStation, hopefully all (if not a good chunk) of the cameras have been moved to no longer be on windows, and on walls instead."
