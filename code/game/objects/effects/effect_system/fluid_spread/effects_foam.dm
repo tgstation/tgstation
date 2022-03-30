@@ -166,12 +166,7 @@
 	return ..()
 
 /datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location, datum/reagents/carry = null, result_type = null)
-	if(isturf(location))
-		src.location = location
-	else
-		src.location = get_turf(location)
-
-	src.amount = amount
+	. = ..()
 	carry.copy_to(chemholder, carry.total_volume)
 	if(!isnull(result_type))
 		src.result_type = result_type
