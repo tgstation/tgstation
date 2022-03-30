@@ -743,7 +743,7 @@
 /obj/structure/sign/painting/large/library_private
 	name = "\improper Private Painting Exhibit mounting"
 	desc = "For the privier and less tasteful compositions that oughtn't to be shown in a parlor nor to the masses."
-	desc = "A painting that oughn't to be shown to the less open-minded commoners."
+	desc_with_canvas = "A painting that oughn't to be shown to the less open-minded commoners."
 	persistence_id = "library_large_private"
 
 

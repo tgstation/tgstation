@@ -5494,11 +5494,11 @@
 /area/tcommsat/computer)
 "bVP" = (
 /obj/structure/bed/dogbed/lia,
-/mob/living/simple_animal/hostile/carp/lia,
 /obj/machinery/camera/directional/west{
 	c_tag = "Security - HoS Office"
 	},
 /obj/machinery/newscaster/directional/west,
+/mob/living/simple_animal/hostile/carp/lia,
 /turf/open/floor/carpet/royalblue,
 /area/command/heads_quarters/hos)
 "bVW" = (
@@ -6501,6 +6501,9 @@
 "cnF" = (
 /obj/structure/bookcase{
 	name = "Forbidden Knowledge"
+	},
+/obj/structure/sign/painting/large/library_private{
+	dir = 1
 	},
 /turf/open/floor/engine/cult,
 /area/service/library)
@@ -13260,9 +13263,9 @@
 /area/engineering/atmos)
 "fyd" = (
 /obj/structure/bed/dogbed/mcgriff,
-/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /obj/item/food/beef_wellington_slice,
 /obj/structure/cable,
+/mob/living/simple_animal/pet/dog/pug/mcgriff,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "fyi" = (
@@ -13411,6 +13414,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/west,
+/obj/item/radio/intercom/directional/north,
 /turf/open/floor/wood,
 /area/service/library)
 "fBN" = (
@@ -22035,10 +22039,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/duct,
 /mob/living/simple_animal/hostile/retaliate/goat{
 	name = "Pete"
 	},
-/obj/machinery/duct,
 /turf/open/floor/iron/freezer,
 /area/service/kitchen/coldroom)
 "jJP" = (
@@ -35261,6 +35265,9 @@
 /obj/item/camera,
 /obj/item/taperecorder,
 /obj/item/radio/intercom/directional/east,
+/obj/structure/sign/painting/library_private{
+	pixel_y = 32
+	},
 /turf/open/floor/engine/cult,
 /area/service/library)
 "qqu" = (
@@ -42251,9 +42258,6 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
 	},
-/obj/structure/window/reinforced{
-	dir = 1
-	},
 /obj/machinery/door/window{
 	dir = 8;
 	name = "Secure Art Exhibition";
@@ -44330,10 +44334,16 @@
 /turf/open/floor/iron,
 /area/science/misc_lab)
 "uOl" = (
-/obj/item/radio/intercom/directional/east,
-/obj/machinery/light/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Library Art Gallery"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/machinery/light/blacklight/directional/north,
+/obj/structure/sign/painting/large/library{
+	dir = 4
 	},
 /turf/open/floor/wood,
 /area/service/library)
@@ -44528,9 +44538,9 @@
 /area/medical/medbay/aft)
 "uTm" = (
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
 /obj/item/toy/cattoy,
 /obj/machinery/newscaster/directional/north,
+/mob/living/simple_animal/pet/cat/runtime,
 /turf/open/floor/iron/dark,
 /area/command/heads_quarters/cmo)
 "uTA" = (
@@ -49072,9 +49082,6 @@
 /turf/open/floor/iron,
 /area/hallway/secondary/exit/departure_lounge)
 "xkb" = (
-/obj/structure/sign/painting/library_private{
-	pixel_y = 32
-	},
 /obj/structure/table/wood,
 /obj/item/clothing/under/suit/red,
 /obj/item/candle{
