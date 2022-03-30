@@ -475,7 +475,7 @@
 	else
 		return FALSE
 
-/obj/machinery/door/airlock/proc/isSecure()
+/obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
 /obj/machinery/door/airlock/update_icon(updates=ALL, state=0, override=FALSE)
