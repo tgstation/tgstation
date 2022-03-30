@@ -263,25 +263,29 @@
 	handle_new_image_association(message, owned_by, our_approx_lines)
 
 /datum/chatmessage/proc/create_new_image(atom/target, maptext, mheight, maptext_x)
-	var/static/mutable_appearance/template = new()
+	var/static/mutable_appearance/template = create_runechat_template()
 	template.layer = CHAT_LAYER + CHAT_LAYER_Z_STEP * current_z_idx
-	template.maptext_width = CHAT_MESSAGE_WIDTH
 	template.maptext_height = mheight
 	template.pixel_y = target.maptext_height
 	template.pixel_x = (target.maptext_width * 0.5) - 16
 	template.maptext_x = maptext_x
 	template.maptext = maptext
 
-	template.plane = RUNECHAT_PLANE
-	template.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
-	template.alpha = 0
-	template.maptext_width = CHAT_MESSAGE_WIDTH
-
 	// Build message image
 	var/image/message = image(loc = message_loc)
 	message.appearance = template.appearance
 
 	return message
+
+/proc/create_runechat_template()
+	var/mutable_appearance/template = new()
+	template.maptext_width = CHAT_MESSAGE_WIDTH
+	template.plane = RUNECHAT_PLANE
+	template.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
+	template.alpha = 0
+	template.maptext_width = CHAT_MESSAGE_WIDTH
+
+	return template
 
 
 /datum/chatmessage/proc/handle_new_image_association(image/message_image, client/associated_client, approximate_lines, set_time = TRUE)
