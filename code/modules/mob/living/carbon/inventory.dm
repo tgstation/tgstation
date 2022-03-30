@@ -164,7 +164,7 @@
  */
 /mob/living/carbon/proc/give(mob/living/carbon/offered)
 	if(has_status_effect(/datum/status_effect/offering))
-		to_chat(src, span_warning("You're already offering up something!"))
+		to_chat(src, span_warning("You're already offering something!"))
 		return
 
 	if(IS_DEAD_OR_INCAP(src))
@@ -173,20 +173,31 @@
 
 	var/obj/item/offered_item = get_active_held_item()
 	if(!offered_item)
-		to_chat(src, span_warning("You're not holding anything to give!"))
+		to_chat(src, span_warning("You're not holding anything to offer!"))
 		return
 
 	if(offered)
+		if(offered == src)
+			if(!swap_hand(get_inactive_hand_index())) //have to swap hands first to take something
+				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
+				return
+			if(!put_in_active_hand(offered_item))
+				to_chat(src, span_warning("You try to take [offered_item] from yourself, but fail."))
+				return
+			else
+				to_chat(src, span_notice("You take [offered_item] from yourself."))
+				return
+
 		if(IS_DEAD_OR_INCAP(offered))
-			to_chat(src, span_warning("They're unable to take anything in their current state!"))
+			to_chat(src, span_warning("[offered.p_theyre(TRUE)] unable to take anything in [offered.p_their()] current state!"))
 			return
 
 		if(!CanReach(offered))
-			to_chat(src, span_warning("You have to be adjacent to offer things!"))
+			to_chat(src, span_warning("You have to be beside [offered.p_them()]!"))
 			return
 	else
 		if(!(locate(/mob/living/carbon) in orange(1, src)))
-			to_chat(src, span_warning("There's nobody adjacent to offer it to!"))
+			to_chat(src, span_warning("There's nobody beside you to take it!"))
 			return
 
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior

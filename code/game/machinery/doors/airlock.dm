@@ -121,6 +121,7 @@
 	var/detonated = FALSE
 	var/abandoned = FALSE
 	var/cutAiWire = FALSE
+	var/autoname = FALSE
 	var/doorOpen = 'sound/machines/airlock.ogg'
 	var/doorClose = 'sound/machines/airlockclose.ogg'
 	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
@@ -204,6 +205,8 @@
 				panel_open = TRUE
 	if(cutAiWire)
 		wires.cut(WIRE_AI)
+	if(autoname)
+		name = get_area_name(src, TRUE)
 	update_appearance()
 
 
@@ -1164,7 +1167,6 @@
 				return
 		INVOKE_ASYNC(src, (density ? .proc/open : .proc/close), 2)
 
-
 /obj/machinery/door/airlock/open(forced=0)
 	if( operating || welded || locked || seal )
 		return FALSE
@@ -1180,7 +1182,7 @@
 		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
 
 	if(autoclose)
-		autoclose_in(normalspeed ? 150 : 15)
+		autoclose_in(normalspeed ? 8 SECONDS : 1.5 SECONDS)
 
 	if(!density)
 		return TRUE

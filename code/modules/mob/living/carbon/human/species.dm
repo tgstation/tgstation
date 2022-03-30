@@ -223,6 +223,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
 
+	///Was the species changed from its original type at the start of the round?
+	var/roundstart_changed = FALSE
+
 ///////////
 // PROCS //
 ///////////

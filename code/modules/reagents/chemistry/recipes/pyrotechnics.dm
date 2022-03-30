@@ -153,7 +153,7 @@
 	required_temp = 474
 	strengthdiv = 10
 	modifier = 5
-	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
+	mix_message = "<span class='boldnotice'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	addtimer(CALLBACK(src, .proc/default_explode, holder, created_volume, modifier, strengthdiv), rand(5,10) SECONDS)
