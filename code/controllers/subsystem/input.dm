@@ -59,7 +59,11 @@ SUBSYSTEM_DEF(input)
 
 	//high priority because clicks should be as low latency as possible, deferring to the beginning of the next SSinput run should rarely delay
 	//a click by more than a few milliseconds, but since the MC almost always resumes after every other sleeping proc this isnt guaranteed
-	if(!TICK_CHECK_HIGH_PRIORITY || average_click_delay >= MAXIMUM_CLICK_LATENCY || FOR_ADMINS_IF_CLICKS_BROKE_immediately_execute_all_clicks)
+	if(!TICK_CHECK_HIGH_PRIORITY \
+		|| average_click_delay >= MAXIMUM_CLICK_LATENCY \
+		|| FOR_ADMINS_IF_CLICKS_BROKE_immediately_execute_all_clicks \
+		|| !initialized)
+
 		clicked_atom.Click(location, control, params)//this is why it works via usr and not a passed in mob arg. atom/Click() assumes usr is correct
 		current_clicks++
 		average_click_delay = MC_AVERAGE(average_click_delay, 0)//non delayed clicks count as a 0
