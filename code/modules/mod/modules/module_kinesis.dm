@@ -259,9 +259,9 @@
 /obj/item/mod/module/anomaly_locked/kinesis/plus
 	name = "MOD kinesis+ module"
 	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
-	The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user to \
-	manipulate the world around them. Like it's older counterpart, it's capable of manipulating structures, \
-	machinery, vehicles, and, thanks to the fruitful efforts of it's creators - living beings. They can, however, \
-	still struggle after an initial burst of inertia."
+	The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user \
+	to manipulate the world around them. Like it's older counterpart, it's capable of manipulating \
+	structures, machinery, vehicles, and, thanks to the fruitful efforts of it's creators - living  \
+	beings. They can, however, still struggle after an initial burst of inertia."
 	prebuilt = TRUE
 	mobs_allowed = TRUE
