@@ -284,7 +284,7 @@
 		potential_tinder.extinguish()
 
 /datum/effect_system/fluid_spread/smoke/freezing/set_up(range = 5, amount = DIAMOND_AREA(range), atom/location, blast_radius = 0)
-	..()
+	. = ..()
 	blast = blast_radius
 
 /datum/effect_system/fluid_spread/smoke/freezing/start()
