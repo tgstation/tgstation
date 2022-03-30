@@ -22,8 +22,5 @@
 		"captain": {
 			"special_charter": "asteroid"
 		}
-	},
-	"library_areas": [
-		"/area/service/bar"
-	]
+	}
 }
