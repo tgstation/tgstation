@@ -96,12 +96,11 @@
 				if(M.mode != SHUTTLE_IDLE)
 					to_chat(usr, span_warning("Shuttle already in transit."))
 					return
-			var/options = list("mining_home", "mining_away") //params2list(possible_destinations)
-			var/random_destionation = pick(options)
-			switch(SSshuttle.moveShuttle(shuttleId, random_destionation, 1))
+			var/destionation = M.getDockedId() == "mining_home" ? "mining_away" : "mining_home"
+			switch(SSshuttle.moveShuttle(shuttleId, destionation, 1))
 				if(0)
 					say("Shuttle departing. Please stand away from the doors.")
-					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[random_destionation]\", using [src].")
+					log_shuttle("[key_name(usr)] has sent shuttle \"[M]\" towards \"[destionation]\", using [src].")
 					return TRUE
 				if(1)
 					to_chat(usr, span_warning("Invalid shuttle requested."))
