@@ -123,20 +123,24 @@
  * Internal proc to handle behaviour when being removed from a parent
  */
 /datum/component/proc/_RemoveFromParent()
-	var/datum/P = parent
-	var/list/dc = P.datum_components
+	var/datum/parent = src.parent
+	var/list/parents_components = parent.datum_components
 	for(var/I in _GetInverseTypeList())
-		var/list/components_of_type = dc[I]
+		var/list/components_of_type = parents_components[I]
+
 		if(length(components_of_type)) //
 			var/list/subtracted = components_of_type - src
+
 			if(subtracted.len == 1) //only 1 guy left
-				dc[I] = subtracted[1] //make him special
+				parents_components[I] = subtracted[1] //make him special
 			else
-				dc[I] = subtracted
+				parents_components[I] = subtracted
+
 		else //just us
-			dc -= I
-	if(!dc.len)
-		P.datum_components = null
+			parents_components -= I
+
+	if(!parents_components.len)
+		parent.datum_components = null
 
 	UnregisterFromParent()
 
