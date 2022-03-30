@@ -24884,6 +24884,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/atmos/flipped/co2{
 	dir = 8
 	},
+/obj/item/wrench/medical,
 /turf/open/floor/iron/dark/textured,
 /area/medical/cryo)
 "hIU" = (
