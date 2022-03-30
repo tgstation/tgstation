@@ -186,18 +186,18 @@
 	if(locked)
 		if(!cast_on.unlock(unlock_amount))
 			to_chat(cast_on, span_revenwarning("You don't have enough essence to unlock [initial(name)]!"))
-			revert_cast()
+			reset_spell_cooldown()
 			return FALSE
 
 		name = "[initial(name)] ([cast_amount]E)"
 		to_chat(cast_on, span_revennotice("You have unlocked [initial(name)]!"))
 		panel = "Revenant Abilities"
 		locked = FALSE
-		revert_cast()
+		reset_spell_cooldown()
 		return FALSE
 
 	if(!cast_on.castcheck(-cast_amount))
-		revert_cast()
+		reset_spell_cooldown()
 		return FALSE
 
 	return TRUE

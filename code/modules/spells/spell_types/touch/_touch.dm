@@ -42,7 +42,7 @@
 /datum/action/cooldown/spell/touch/proc/create_hand(mob/living/carbon/cast_on)
 	var/obj/item/melee/touch_attack/new_hand = new hand_path(cast_on)
 	if(!cast_on.put_in_hands(new_hand, del_on_fail = TRUE))
-		revert_cast()
+		reset_spell_cooldown()
 		if (cast_on.usable_hands == 0)
 			to_chat(cast_on, span_warning("You dont have any usable hands!"))
 		else
@@ -71,7 +71,7 @@
 	if(revert_after)
 		if(hand_owner)
 			to_chat(hand_owner, drop_message)
-		revert_cast()
+		reset_spell_cooldown()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)

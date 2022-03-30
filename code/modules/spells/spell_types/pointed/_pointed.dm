@@ -132,9 +132,9 @@
 /datum/action/cooldown/spell/pointed/projectile/after_cast(atom/cast_on)
 	. = ..()
 	if(current_amount > 0)
-		// We can still cast projectiles! Reset our cooldown
-		next_use_time = world.time
-		UpdateButtonIcon()
+		// We still have projectiles to cast!
+		// Reset our cooldown and let them fire away
+		reset_spell_cooldown()
 
 /datum/action/cooldown/spell/pointed/projectile/proc/fire_projectile(atom/target)
 	current_amount--

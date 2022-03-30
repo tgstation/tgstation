@@ -36,8 +36,7 @@
 	cast_on.health = min(cast_on.health, cast_on.maxHealth)
 
 	for(var/datum/action/cooldown/spell/spell in cast_on.actions)
-		spell.next_use_time = world.time
-		spell.UpdateButtonIcon()
+		spell.reset_spell_cooldown()
 
 	// If the tap took all of our life, we die and lose our soul!
 	if(cast_on.maxHealth <= 0)

@@ -51,7 +51,7 @@
 
 	return TRUE
 
-/datum/action/cooldown/spell/tesla/revert_cast()
+/datum/action/cooldown/spell/tesla/reset_spell_cooldown()
 	reset_tesla(owner)
 	return ..()
 
@@ -70,7 +70,7 @@
 	var/mob/living/carbon/to_zap_first = get_target(cast_on)
 	if(QDELETED(to_zap_first))
 		to_chat(cast_on, span_warning("No targets nearby!"))
-		revert_cast()
+		reset_spell_cooldown()
 		return
 
 	zap_target(cast_on, to_zap_first)

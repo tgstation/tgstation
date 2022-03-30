@@ -28,7 +28,7 @@
 	if(QDELETED(src) || QDELETED(cast_on) || !can_cast_spell(feedback = FALSE))
 		return FALSE
 	if(!command)
-		revert_cast()
+		reset_spell_cooldown()
 		return FALSE
 
 	return TRUE

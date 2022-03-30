@@ -134,7 +134,7 @@
 
 	mark.on_effect()
 
-	// Also refunds 75% of charge!
+	// Also refunds 75% of cooldown!
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in user.actions
 	if(grasp)
 		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)

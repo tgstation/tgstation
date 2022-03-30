@@ -36,7 +36,7 @@
 	var/turf/web_spot = cast_on.loc
 	if(!isturf(web_spot) || (locate(web_path) in web_spot))
 		to_chat(cast_on, span_warning("You can't lay webs here!"))
-		revert_cast()
+		reset_spell_cooldown()
 		return FALSE
 
 	cast_on.visible_message(

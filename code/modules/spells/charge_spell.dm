@@ -25,14 +25,14 @@
 /datum/component/charge_based_spell/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_SPELL_BEFORE_CAST, .proc/on_before_cast)
 	RegisterSignal(parent, COMSIG_SPELL_AFTER_CAST, .proc/on_after_cast)
-	RegisterSignal(parent, COMSIG_SPELL_CAST_REVERTED, .proc/on_cast_revert)
+	RegisterSignal(parent, COMSIG_SPELL_CAST_RESET, .proc/on_cast_revert)
 	RegisterSignal(parent, COMSIG_ACTION_SET_STATPANEL, .proc/on_statpanel_set)
 
 /datum/component/charge_based_spell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_SPELL_BEFORE_CAST,
 		COMSIG_SPELL_AFTER_CAST,
-		COMSIG_SPELL_CAST_REVERTED,
+		COMSIG_SPELL_CAST_RESET,
 		COMSIG_ACTION_SET_STATPANEL,
 	))
 
@@ -59,7 +59,7 @@
 	addtimer(CALLBACK(src, .proc/recharge), charge_regeneration_rate)
 
 /**
- * Signal proc for [COMSIG_SPELL_CAST_REVERTED]
+ * Signal proc for [COMSIG_SPELL_CAST_RESET]
  *
  * Recharges the spell if a cast is reverted.
  */

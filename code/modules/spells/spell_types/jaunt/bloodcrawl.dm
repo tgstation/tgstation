@@ -25,7 +25,7 @@
 		if(blood_nearby.can_bloodcrawl_in())
 			return do_bloodcrawl(blood_nearby, cast_on)
 
-	revert_cast()
+	reset_spell_cooldown()
 	to_chat(cast_on, span_warning("There must be a nearby source of blood!"))
 
 /**
@@ -39,7 +39,7 @@
 		. = try_enter_jaunt(blood, jaunter)
 
 	if(!.)
-		revert_cast()
+		reset_spell_cooldown()
 		to_chat(jaunter, span_warning("You are unable to blood crawl!"))
 
 /**

@@ -37,7 +37,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
  * ## Other procs called / may be called within the chain:
  * - [invocation][/datum/action/cooldown/spell/invocation] handles saying any vocal invocations the spell
  * may have, and can be overriden or extended. Called by spell_feedback().
- * - [revert_cast][/datum/action/cooldown/spell/revert_cast] is a way to handle reverting a spell's
+ * - [reset_spell_cooldown][/datum/action/cooldown/spell/reset_spell_cooldown] is a way to handle reverting a spell's
  * cooldown and making it ready again if it fails to go off during cast. Not called anywhere by default.
  *
  * ## Other procs of note:
@@ -327,9 +327,11 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	return TRUE
 
-/datum/action/cooldown/spell/proc/revert_cast()
-	SEND_SIGNAL(src, COMSIG_SPELL_CAST_REVERTED)
-	next_use_time = world.time // Basically, ensures that the ability can be used now
+/// Resets the cooldown of the spell, sending COMSIG_SPELL_CAST_RESET
+/// and allowing it to be used immediately (+ updating button icon accordingly)
+/datum/action/cooldown/spell/proc/reset_spell_cooldown()
+	SEND_SIGNAL(src, COMSIG_SPELL_CAST_RESET)
+	next_use_time -= cooldown_time // Basically, ensures that the ability can be used now
 	UpdateButtonIcon()
 
 /// TODO: This is ugly, and should be replaced

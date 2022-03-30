@@ -93,7 +93,7 @@
 		to_chat(caster, span_warning("[to_swap.p_their(TRUE)] mind is resisting your spell!"))
 		return FALSE
 
-	// MIND TRANSFER BEGIN
+	// MIND TRANSFER BEGIN // MELBERT TODO TEST THIS NEW FORM OF MIND SWAP PLS
 
 	/*
 	// Put the swappee's mind in a ghost temorarily

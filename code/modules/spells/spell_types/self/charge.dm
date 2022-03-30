@@ -24,8 +24,7 @@
 		var/pulled_has_spells = FALSE
 
 		for(var/datum/action/cooldown/spell/spell in pulled_living.actions)
-			spell.next_use_time = world.time
-			spell.UpdateButtonIcon()
+			spell.reset_spell_cooldown()
 			pulled_has_spells = TRUE
 
 		if(pulled_has_spells)

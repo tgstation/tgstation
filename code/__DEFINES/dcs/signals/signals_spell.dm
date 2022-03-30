@@ -20,8 +20,8 @@
 #define COMSIG_SPELL_CAN_INVOKE "spell_can_invoke"
 	/// Return to stop and return FALSE from can_invoke(), which prevents the user from invoking / casting the spell
 	#define COMPONENT_CANCEL_INVOKE (1<<0)
-/// Sent from /datum/action/cooldown/spell/revert_cast() to the spell: ()
-#define COMSIG_SPELL_CAST_REVERTED "spell_cast_revert"
+/// Sent from /datum/action/cooldown/spell/reset_spell_cooldown() to the spell: ()
+#define COMSIG_SPELL_CAST_RESET "spell_cast_reset"
 
 // Spell type signals
 
