@@ -146,3 +146,8 @@
 		tail_owner.dna.species.mutant_bodyparts -= "tail_human"
 		color = tail_owner.hair_color
 		tail_owner.update_body()
+
+/obj/item/organ/tail/fox/alt
+	name = "fox tail"
+	desc = "A severed fox tail. Sad."
+	tail_type = "Fox 2"
