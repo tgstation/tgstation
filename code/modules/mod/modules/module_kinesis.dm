@@ -254,8 +254,8 @@
 	given_x = round(icon_x - world.icon_size * our_x)
 	given_y = round(icon_y - world.icon_size * our_y)
 
-/obj/item/mod/module/anomaly_locked/kinesis/chrono
-	name = "MOD kinesis+ module" //Chrono Legionarrie variant. You know why, deep in your heart.
+/obj/item/mod/module/anomaly_locked/kinesis/plus
+	name = "MOD kinesis+ module"
 	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
 	The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user to \
 	manipulate the world around them. Like it's older counterpart, it's capable of manipulating structures, \
