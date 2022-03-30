@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			cargo.adjust_money(price - spawning_order.pack.get_cost()) //Cargo gets the handling fee
 		value += spawning_order.pack.get_cost()
 		SSshuttle.shopping_list -= spawning_order
-		SSshuttle.order_history[spawning_order.id] = spawning_order
+		SSshuttle.order_history[spawning_order.id] = TRUE
 		QDEL_NULL(spawning_order.applied_coupon)
 
 		if(!spawning_order.pack.goody) //we handle goody crates below
