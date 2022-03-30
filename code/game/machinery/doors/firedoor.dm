@@ -195,8 +195,9 @@
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(src),dir)
 		if(checked_turf && !checked_turf.density && (!watched_turfs || !watched_turfs.Find(checked_turf)))
-			turfs_to_return |= checked_turf
+			turfs_to_return.Add(checked_turf)
 			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results, override = TRUE)
+			RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results, override = TRUE)
 	return turfs_to_return
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
@@ -220,26 +221,29 @@
 		if(!place.fire_detect) //if any area is set to disable detection
 			return
 
-	var/result
 	var/turf/checked_turf = source
+	
+	var/result
+	
 	result = check_atmos(checked_turf)
+	
+	if(result && TURF_SHARES(checked_turf))
+		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+			if(!firelock.issue_turfs.Find(checked_turf))
+				firelock.issue_turfs.Add(checked_turf)
+	else if(!result && issue_turfs.len || !TURF_SHARES(checked_turf))
+		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
+			firelock.issue_turfs.Remove(checked_turf)
 	
 	if(!issue_turfs.len && alarm_type)
 		start_deactivation_process()
 		return
 	else if(issue_turfs.len && !alarm_type)
-		for(var/turf/issue_turf in issue_turfs)
-			result = check_atmos(issue_turf)
-			if(result)
-				start_activation_process(result)
-				return
-	if(result)
-		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-			if(!firelock.issue_turfs.Find(checked_turf))
-				firelock.issue_turfs.Add(checked_turf)
-	else if(!result && issue_turfs.len)
-		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-			firelock.issue_turfs.Remove(checked_turf)
+		result = check_atmos(issue_turfs[1])
+		if(result)
+			start_activation_process(result)
+			return
+	
 
 /**
  * Begins activation process of us and our neighbors.
@@ -563,6 +567,7 @@
 	. = ..()
 	for(var/turf/checked_turf in watched_turfs)
 		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
+		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 	refresh_shared_turfs()
 
 /obj/machinery/door/firedoor/closed
