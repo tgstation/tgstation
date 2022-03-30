@@ -1,5 +1,6 @@
 /datum/species/human
-	name = "Human"
+	name = "Kitsune"
+	say_mod = "geckers"
 	id = SPECIES_HUMAN
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,HAS_FLESH,HAS_BONE)
@@ -8,7 +9,7 @@
 		TRAIT_CAN_STRIP,
 		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
-	mutant_bodyparts = list("wings" = "None")
+	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_human" = "Fox")
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW | CLOTH
@@ -20,6 +21,25 @@
 	human.hairstyle = "Business Hair"
 	human.hair_color = "#bb9966" // brown
 	human.update_hair()
+
+/datum/species/human/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		// Force everyone to have at least fox features. I am evil and fucked up. We don't want to
+		// override cat ears, so I'll do it like this. If you don't like it sue me.
+		if(H.dna.features["tail_human"] == "None")
+			H.dna.features["tail_human"] = "Fox"
+		if(H.dna.features["ears"] == "None")
+			H.dna.features["ears"] = "Fox"
+
+		if(H.dna.features["ears"] == "Fox")
+			var/obj/item/organ/ears/fox/ears = new
+			ears.Insert(H, drop_if_replaced = FALSE)
+			mutantears = /obj/item/organ/ears/fox
+		if(H.dna.features["tail_human"] == "Fox")
+			var/obj/item/organ/tail/fox/tail = new
+			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
+	return ..()
 
 /datum/species/human/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender == MALE)
@@ -44,7 +64,8 @@
 
 /datum/species/human/get_species_description()
 	return "Humans are the dominant species in the known galaxy. \
-		Their kind extend from old Earth to the edges of known space."
+		Their kind extend from old Earth to the edges of known space. \
+		Hold on, something isn't right..."
 
 /datum/species/human/get_species_lore()
 	return list(
