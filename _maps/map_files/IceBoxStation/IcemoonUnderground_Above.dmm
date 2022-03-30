@@ -2910,15 +2910,13 @@
 /area/mine/storage)
 "id" = (
 /obj/structure/table,
-/obj/structure/window/reinforced/tinted{
-	dir = 4
-	},
 /obj/machinery/door/poddoor/shutters{
 	id = "visitation";
 	name = "Visitation Shutters"
 	},
-/obj/structure/window/reinforced,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/right/directional/north,
+/obj/machinery/door/window/right/directional/south,
 /turf/open/floor/iron,
 /area/security/prison/visit)
 "if" = (
@@ -2958,6 +2956,8 @@
 	name = "Visitation Shutters"
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/left/directional/north,
+/obj/machinery/door/window/left/directional/south,
 /turf/open/floor/iron,
 /area/security/prison/visit)
 "ij" = (
@@ -17555,19 +17555,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
-"Xb" = (
-/obj/structure/table,
-/obj/structure/window/reinforced/tinted{
-	dir = 8
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "visitation";
-	name = "Visitation Shutters"
-	},
-/obj/structure/window/reinforced,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/security/prison/visit)
 "Xc" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/line{
@@ -43368,7 +43355,7 @@ YH
 Ym
 XA
 Es
-Xb
+ii
 xL
 AP
 nm
@@ -43625,7 +43612,7 @@ Ex
 dZ
 WS
 Es
-ii
+id
 xL
 wO
 qP
