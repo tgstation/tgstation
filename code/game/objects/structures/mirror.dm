@@ -216,7 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return TRUE
 					amazed_human.gender = FEMALE
-					amazed_human.body_type = FEMALE
+					amazed_human.physique = FEMALE
 					to_chat(amazed_human, span_notice("Man, you feel like a woman!"))
 				else
 					return TRUE
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 					if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 						return TRUE
 					amazed_human.gender = MALE
-					amazed_human.body_type = MALE
+					amazed_human.physique = MALE
 					to_chat(amazed_human, span_notice("Whoa man, you feel like a man!"))
 				else
 					return TRUE

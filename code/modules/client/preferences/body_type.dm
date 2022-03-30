@@ -14,9 +14,9 @@
 
 /datum/preference/choiced/body_type/apply_to_human(mob/living/carbon/human/target, value)
 	if (value == USE_GENDER)
-		target.body_type = target.gender
+		target.physique = target.gender
 	else
-		target.body_type = value
+		target.physique = value
 
 /datum/preference/choiced/body_type/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

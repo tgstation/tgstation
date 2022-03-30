@@ -246,7 +246,7 @@
 
 
 	var/list/missing_bodyparts = get_missing_limbs()
-	if(((dna ? dna.species.max_bodypart_count : 6) - icon_render_keys.len) != missing_bodyparts.len) //Checks to see if the target gained or lost any limbs.
+	if(((dna ? dna.species.max_bodypart_count : BODYPARTS_DEFAULT_MAXIMUM) - icon_render_keys.len) != missing_bodyparts.len) //Checks to see if the target gained or lost any limbs.
 		limb_count_update = TRUE
 		for(var/missing_limb in missing_bodyparts)
 			icon_render_keys -= missing_limb //Removes dismembered limbs from the key list
@@ -276,16 +276,16 @@
 /////////////////////////
 // Limb Icon Cache 2.0 //
 /////////////////////////
-/*
-	Called from update_body_parts() these procs handle the limb icon cache.
-	the limb icon cache adds an icon_render_key to a human mob, it represents:
-	- Gender, if applicable
-	- The ID of the limb
-	- Draw color, if applicable
-	These procs only store limbs as to increase the number of matching icon_render_keys
-	This cache exists because drawing 6/7 icons for humans constantly is quite a waste
-	See RemieRichards on irc.rizon.net #coderbus (RIP remie :sob:)
-*/
+/**
+ * Called from update_body_parts() these procs handle the limb icon cache.
+ * the limb icon cache adds an icon_render_key to a human mob, it represents:
+ * - Gender, if applicable
+ * - The ID of the limb
+ * - Draw color, if applicable
+ * These procs only store limbs as to increase the number of matching icon_render_keys
+ * This cache exists because drawing 6/7 icons for humans constantly is quite a waste
+ * See RemieRichards on irc.rizon.net #coderbus (RIP remie :sob:)
+**/
 /obj/item/bodypart/proc/generate_icon_key()
 	RETURN_TYPE(/list)
 	. = list()

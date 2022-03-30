@@ -1,5 +1,5 @@
 /datum/species/moth
-	name = "Mothman"
+	name = "\improper Mothman"
 	plural_form = "Mothmen"
 	id = SPECIES_MOTH
 	say_mod = "flutters"

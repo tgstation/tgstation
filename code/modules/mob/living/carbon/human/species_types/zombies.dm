@@ -143,7 +143,7 @@
 // Your skin falls off
 /datum/species/human/krokodil_addict
 	name = "\improper Human"
-	id = SPECIES_ZOMBIE_SHITCODE
+	id = SPECIES_ZOMBIE_KROKODIL
 	examine_limb_id = SPECIES_HUMAN
 	sexes = 0
 	mutanttongue = /obj/item/organ/tongue/zombie

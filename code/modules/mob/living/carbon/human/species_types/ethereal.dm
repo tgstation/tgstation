@@ -1,5 +1,5 @@
 /datum/species/ethereal
-	name = "Ethereal"
+	name = "\improper Ethereal"
 	id = SPECIES_ETHEREAL
 	attack_verb = "burn"
 	attack_sound = 'sound/weapons/etherealhit.ogg'

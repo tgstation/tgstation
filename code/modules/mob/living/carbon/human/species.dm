@@ -37,7 +37,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 
-	///This is used for children, it will determine their default limb ID for use of examine. See examine.dm.
+	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
 	var/examine_limb_id
 	///Never, Optional, or Forced digi legs?
 	var/digitigrade_customization = DIGITIGRADE_NEVER
@@ -618,7 +618,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				if(species_human.dna.species.sexes && species_human.body_type == FEMALE && (underwear.gender == MALE))
+				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
@@ -629,7 +629,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(species_human.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
-				if(species_human.dna.species.sexes && species_human.body_type == FEMALE)
+				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
 					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
@@ -709,7 +709,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!bodyparts_to_add)
 		return
 
-	var/g = (source.body_type == FEMALE) ? "f" : "m"
+	var/g = (source.physique == FEMALE) ? "f" : "m"
 
 	for(var/layer in relevent_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
@@ -1879,7 +1879,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else
 		wings_icon = wings_icons[1]
 
-	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.body_type)
+	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.physique)
 	wings.Insert(H)
 	handle_mutant_bodyparts(H)
 
@@ -2332,6 +2332,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	return to_add
 
+///Handles replacing all of the bodyparts with their species version during set_species()
 /datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement

@@ -110,8 +110,6 @@ There are several things that need to be remembered:
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_ICLOTHING) + 1]
 		inv.update_icon()
 
-	if(!w_uniform)
-		return
 	if(istype(w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = w_uniform
 		update_hud_uniform(U)
@@ -136,7 +134,7 @@ There are several things that need to be remembered:
 				icon_file = DIGITIGRADE_UNIFORM_FILE
 
 			//Female sprites have lower priority than digitigrade sprites
-			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && body_type == "female" && U.adjusted != NO_FEMALE_UNIFORM) //Agggggggghhhhh
+			else if(dna.species.sexes && (dna.species.bodytype & BODYTYPE_HUMANOID) && physique == FEMALE && U.adjusted != NO_FEMALE_UNIFORM) //Agggggggghhhhh
 				woman = TRUE
 
 			if(!icon_exists(icon_file, RESOLVE_ICON_STATE(U)))

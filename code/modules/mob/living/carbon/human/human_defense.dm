@@ -478,7 +478,7 @@
 		for(var/X in bodyparts)
 			var/obj/item/bodypart/BP = X
 			if(prob(probability) && !prob(getarmor(BP, BOMB)) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
-				BP.receive_damage(INFINITY) //Capped by proc
+				BP.receive_damage(INFINITY, wound_bonus = CANT_WOUND) //Capped by proc
 				BP.dismember()
 				max_limb_loss--
 				if(!max_limb_loss)

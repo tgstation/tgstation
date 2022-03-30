@@ -672,6 +672,9 @@
  * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
  */
 /atom/proc/examine_more(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+
 	. = list()
 	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
 

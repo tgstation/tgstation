@@ -1,5 +1,5 @@
 /datum/species/plasmaman
-	name = "Plasmaman"
+	name = "\improper Plasmaman"
 	plural_form = "Plasmamen"
 	id = SPECIES_PLASMAMAN
 	say_mod = "rattles"

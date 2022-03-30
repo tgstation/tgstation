@@ -1,6 +1,6 @@
 /datum/species/jelly
 	// Entirely alien beings that seem to be made entirely out of gel. They have three eyes and a skeleton visible within them.
-	name = "Jellyperson"
+	name = "\improper Jellyperson"
 	plural_form = "Jellypeople"
 	id = SPECIES_JELLYPERSON
 	default_color = "00FF90"
@@ -145,7 +145,7 @@
 //Slime people are able to split like slimes, retaining a single mind that can swap between bodies at will, even after death.
 
 /datum/species/jelly/slime
-	name = "Slimeperson"
+	name = "\improper Slimeperson"
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
 	default_color = "00FFFF"
@@ -625,7 +625,7 @@
 //Stargazers are the telepathic branch of jellypeople, able to project psychic messages and to link minds with willing participants.
 
 /datum/species/jelly/stargazer
-	name = "Stargazer"
+	name = "\improper Stargazer"
 	plural_form = null
 	id = SPECIES_STARGAZER
 	examine_limb_id = SPECIES_JELLYPERSON

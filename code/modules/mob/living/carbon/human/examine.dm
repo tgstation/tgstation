@@ -185,10 +185,6 @@
 	else if(l_limbs_missing >= 2 && r_limbs_missing >= 2)
 		msg += "[t_He] [p_do()]n't seem all there.\n"
 
-	for(var/obj/item/bodypart/part as anything in bodyparts)
-		if(part.limb_id != (dna.species.examine_limb_id ? dna.species.examine_limb_id : dna.species.id))
-			msg += "[span_info("[t_He] [t_has] \an [part.name].")]\n"
-
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		var/temp
 		if(user == src && src.hal_screwyhud == SCREWYHUD_CRIT)//fake damage
