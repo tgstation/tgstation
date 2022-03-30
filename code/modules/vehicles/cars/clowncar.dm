@@ -168,7 +168,7 @@
 			funnychems.my_atom = src
 			funnychems.add_reagent(/datum/reagent/consumable/superlaughter, 50)
 			var/datum/effect_system/fluid_spread/smoke/chem/smoke = new()
-			smoke.set_up(DIAMOND_AREA(4), src, funnychems)
+			smoke.set_up(4, location = src, carry = funnychems)
 			smoke.attach(src)
 			smoke.start()
 		if(5)

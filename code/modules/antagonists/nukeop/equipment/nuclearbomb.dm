@@ -590,7 +590,7 @@ GLOBAL_VAR(station_nuke_source)
 	R.add_reagent(/datum/reagent/consumable/ethanol/beer, 100)
 
 	var/datum/effect_system/fluid_spread/foam/foam = new
-	foam.set_up(DIAMOND_AREA(10), get_turf(src), R)
+	foam.set_up(200, location = get_turf(src), carry = R)
 	foam.start()
 	disarm()
 

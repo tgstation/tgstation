@@ -51,7 +51,7 @@
 	var/area/thearea = GLOB.teleportlocs[jump_target]
 
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(DIAMOND_AREA(2), user.loc)
+	smoke.set_up(2, location = user.loc)
 	smoke.attach(user)
 	smoke.start()
 	var/list/possible_locations = list()

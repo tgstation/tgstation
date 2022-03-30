@@ -58,7 +58,7 @@
 
 /datum/effect_system/explosion/smoke/proc/create_smoke()
 	var/datum/effect_system/fluid_spread/smoke/S = new
-	S.set_up(DIAMOND_AREA(2), location)
+	S.set_up(2, location = location)
 	S.start()
 
 /datum/effect_system/explosion/smoke/start()

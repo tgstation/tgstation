@@ -87,7 +87,7 @@
 	if(on && !smoke_test)
 		update_appearance()
 		var/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/smoke = new()
-		smoke.set_up(DIAMOND_AREA(setting * 3), location, reagents, efficiency)
+		smoke.set_up(setting * 3, location = location, carry = reagents, efficiency = efficiency)
 		smoke.start()
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)
