@@ -10017,22 +10017,6 @@
 /obj/structure/filingcabinet/chestdrawer,
 /turf/open/floor/iron,
 /area/tcommsat/computer)
-"dNz" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher/directional/west{
-	id = "Cell 2"
-	},
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/surface/outdoors/nospawn)
 "dND" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
@@ -15285,28 +15269,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"gtA" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/nospawn)
 "gum" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
@@ -18157,28 +18119,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/medical/treatment_center)
-"hLk" = (
-/obj/structure/railing{
-	dir = 4
-	},
-/obj/effect/turf_decal/weather/snow/corner{
-	dir = 8
-	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/flasher/directional/west{
-	id = "Cell 1"
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "hLW" = (
 /obj/structure/chair,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -23688,23 +23628,6 @@
 /obj/item/stack/pipe_cleaner_coil/random,
 /turf/open/floor/iron,
 /area/commons/storage/art)
-"kzl" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/bedsheet{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/hangover,
-/obj/machinery/flasher/directional/west{
-	id = "Cell 3"
-	},
-/turf/open/openspace/icemoon/keep_below,
-/area/icemoon/surface/outdoors/nospawn)
 "kzp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/structure/chair{
@@ -27429,30 +27352,6 @@
 	},
 /turf/open/floor/iron,
 /area/hallway/primary/aft)
-"mzM" = (
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/contraband/prison,
-/obj/item/bedsheet/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/misc/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
 "mzO" = (
 /obj/structure/extinguisher_cabinet/directional/west,
 /obj/effect/turf_decal/tile/yellow{
@@ -45723,18 +45622,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/bed{
-	dir = 4
-	},
-/obj/item/clothing/suit/straight_jacket,
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/cable,
 /turf/open/floor/iron/showroomfloor,
 /area/security/warden)
 "vAX" = (
@@ -72299,10 +72186,10 @@ qLO
 qLO
 qLO
 qLO
-gtA
+qLO
 jnk
 jnk
-mzM
+jnk
 vxr
 jnk
 qLO
@@ -77461,7 +77348,7 @@ fbC
 agn
 hvk
 gzw
-hLk
+jFt
 oWZ
 eGS
 eGS
@@ -78489,7 +78376,7 @@ aIF
 utQ
 gmK
 pqV
-dNz
+eGS
 eGS
 eGS
 eGS
@@ -79517,7 +79404,7 @@ lyi
 fQy
 gDY
 lyi
-kzl
+eGS
 eGS
 eGS
 eGS
