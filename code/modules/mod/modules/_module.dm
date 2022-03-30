@@ -274,6 +274,7 @@
 	else
 		return
 	var/mutable_appearance/module_icon = mutable_appearance('icons/mob/clothing/mod.dmi', used_overlay, layer = standing.layer + 0.1)
+	module_icon.appearance_flags |= RESET_COLOR
 	. += module_icon
 
 /// Updates the signal used by active modules to be activated
