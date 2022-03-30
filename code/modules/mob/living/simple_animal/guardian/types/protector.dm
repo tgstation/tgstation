@@ -37,7 +37,6 @@
 	cooldown = world.time + 10
 	if(toggle)
 		cut_overlay(shield_overlay)
-		shield_overlay = null
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		speed = initial(speed)
@@ -45,9 +44,10 @@
 		to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
 		toggle = FALSE
 	else
-		shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
-		if(guardiancolor)
-			shield_overlay.color = guardiancolor
+		if(!shield_overlay)
+			shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
+			if(guardiancolor)
+				shield_overlay.color = guardiancolor
 		add_overlay(shield_overlay)
 		melee_damage_lower = 2
 		melee_damage_upper = 2
