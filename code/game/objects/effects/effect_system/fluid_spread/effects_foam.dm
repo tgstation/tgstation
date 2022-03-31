@@ -1,4 +1,7 @@
 // Foam
+FLUID_SUBSYSTEM_DEF(foam)
+	name = "Foam"
+	effect_processing_cooldown = 0.2 SECONDS
 
 /// The minimum foam range required to start diluting the reagents past the minimum dilution rate.
 #define MINIMUM_FOAM_DILUTION_RANGE 3
@@ -41,9 +44,9 @@
 /obj/effect/particle_effect/fluid/foam/Initialize(mapload)
 	. = ..()
 	create_reagents(1000)
-	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	queue_spread(0.2 SECONDS)
 
 /obj/effect/particle_effect/fluid/foam/ComponentInitialize()
 	. = ..()
@@ -51,14 +54,26 @@
 		AddComponent(/datum/component/slippery, 100)
 
 /obj/effect/particle_effect/fluid/foam/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
+	return ..()
+
+/obj/effect/particle_effect/fluid/foam/start_processing(datum/controller/subsystem/processing/subsystem = SSfoam)
+	return ..()
+
+/obj/effect/particle_effect/fluid/foam/stop_processing(datum/controller/subsystem/processing/subsystem = SSfoam)
+	return ..()
+
+/obj/effect/particle_effect/fluid/foam/queue_spread(delay = 0.2 SECONDS, datum/controller/subsystem/processing/subsystem = SSfoam)
+	return ..()
+
+/obj/effect/particle_effect/fluid/foam/cancel_spread(datum/controller/subsystem/processing/subsystem = SSfoam)
 	return ..()
 
 /**
  * Makes the foam dissipate and create whatever remnants it must.
  */
 /obj/effect/particle_effect/fluid/foam/proc/kill_foam()
-	STOP_PROCESSING(SSfastprocess, src)
+	stop_processing()
+	cancel_spread()
 	make_result()
 	flick("[icon_state]-disolve", src)
 	QDEL_IN(src, 0.5 SECONDS)
@@ -97,9 +112,6 @@
 
 	reagents.expose(location, VAPOR, fraction)
 
-	if(group.target_size > group.total_size)
-		spread(delta_time)
-
 /**
  * Applies the effect of this foam to a mob.
  *
@@ -123,7 +135,9 @@
 	lifetime -= delta_time
 	return TRUE
 
-/obj/effect/particle_effect/fluid/foam/spread(delta_time = SSfastprocess.wait / (1 SECONDS))
+/obj/effect/particle_effect/fluid/foam/spread(delta_time = 0.2 SECONDS)
+	if(group.total_size > group.target_size)
+		return
 	var/turf/location = get_turf(src)
 	if(!istype(location))
 		return FALSE
@@ -142,6 +156,7 @@
 		reagents.copy_to(spread_foam, (reagents.total_volume))
 		spread_foam.add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 		spread_foam.result_type = result_type
+		spread_foam.queue_spread(0.2 SECONDS)
 
 /obj/effect/particle_effect/fluid/foam/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return exposed_temperature > 475
@@ -169,9 +184,9 @@
 	QDEL_NULL(chemholder)
 	return ..()
 
-/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location, datum/reagents/carry = null, result_type = null)
+/datum/effect_system/fluid_spread/foam/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, result_type = null)
 	. = ..()
-	carry.copy_to(chemholder, carry.total_volume)
+	carry?.copy_to(chemholder, carry.total_volume)
 	if(!isnull(result_type))
 		src.result_type = result_type
 

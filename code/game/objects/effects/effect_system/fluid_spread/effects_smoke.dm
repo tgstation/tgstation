@@ -1,3 +1,7 @@
+FLUID_SUBSYSTEM_DEF(smoke)
+	name = "Smoke"
+	effect_processing_wait = 2 SECONDS
+
 /**
  * A fluid which spreads through the air affecting every mob it engulfs.
  */
@@ -19,11 +23,23 @@
 /obj/effect/particle_effect/fluid/smoke/Initialize(mapload, datum/fluid_group/group, ...)
 	. = ..()
 	create_reagents(1000)
-	START_PROCESSING(SSobj, src)
+	start_processing(SSsmoke)
 	setDir(pick(GLOB.cardinals))
 
 /obj/effect/particle_effect/fluid/smoke/Destroy()
-	STOP_PROCESSING(SSobj, src)
+	stop_processing(SSsmoke)
+	return ..()
+
+/obj/effect/particle_effect/fluid/smoke/start_processing(datum/controller/subsystem/processing/subsystem = SSsmoke)
+	return ..()
+
+/obj/effect/particle_effect/fluid/smoke/stop_processing(datum/controller/subsystem/processing/subsystem = SSsmoke)
+	return ..()
+
+/obj/effect/particle_effect/fluid/smoke/queue_spread(delay = 0.1 SECONDS, datum/controller/subsystem/processing/subsystem = SSsmoke)
+	return ..()
+
+/obj/effect/particle_effect/fluid/smoke/cancel_spread(datum/controller/subsystem/processing/subsystem = SSsmoke)
 	return ..()
 
 
@@ -31,7 +47,7 @@
  * Makes the smoke fade out and then deletes it.
  */
 /obj/effect/particle_effect/fluid/smoke/proc/kill_smoke()
-	STOP_PROCESSING(SSobj, src)
+	stop_processing(SSsmoke)
 	INVOKE_ASYNC(src, .proc/fade_out)
 	QDEL_IN(src, 1 SECONDS)
 
@@ -82,7 +98,7 @@
 		spread_smoke.lifetime = lifetime
 
 		// the smoke spreads rapidly, but not instantly
-		addtimer(CALLBACK(spread_smoke, /obj/effect/particle_effect/fluid.proc/spread, delta_time), delta_time SECONDS)
+		spread_smoke.queue_spread(0.1 SECONDS)
 
 
 /obj/effect/particle_effect/fluid/smoke/process(delta_time)
@@ -375,9 +391,9 @@
 	return ..()
 
 
-/datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location, datum/reagents/carry = null, silent = FALSE)
+/datum/effect_system/fluid_spread/smoke/chem/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, silent = FALSE)
 	. = ..()
-	carry.copy_to(chemholder, carry.total_volume)
+	carry?.copy_to(chemholder, carry.total_volume)
 
 	if(silent)
 		return

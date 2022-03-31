@@ -83,7 +83,7 @@
 	var/location = get_turf(my_atom)
 
 	var/datum/effect_system/fluid_spread/foam/foam = new foamtype()
-	foam.set_up(foam_volume, location, src, result_type)
+	foam.set_up(amount = foam_volume, location = location, carry = src, result_type = result_type)
 	foam.start()
 
 	clear_reagents()
