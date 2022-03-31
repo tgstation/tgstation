@@ -75,7 +75,7 @@
 	. = ..()
 
 	if(!can_open_with_hands)
-		return NONE
+		return .
 
 	if(isaicamera(user) || issilicon(user))
 		return .
