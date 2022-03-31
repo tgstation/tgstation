@@ -72,7 +72,7 @@
 		if(H.dna.features["tail_human"] == "Cat")
 			var/obj/item/organ/tail/cat/tail = new
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
-		else
+		else // Felinids with fox tails won't get a mood debuff, too lazy to fix
 			mutant_organs = list()
 	return ..()
 
