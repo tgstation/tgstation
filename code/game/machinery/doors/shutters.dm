@@ -10,9 +10,6 @@
 	max_integrity = 100
 	recipe_type = /datum/crafting_recipe/shutters
 
-/obj/machinery/door/poddoor/shutters/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	return NONE
-
 /obj/machinery/door/poddoor/shutters/preopen
 	icon_state = "open"
 	density = FALSE
