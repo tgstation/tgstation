@@ -1,5 +1,0 @@
-author: "interestingusernam3"
-delete-after: True
-changes: 
-  - bugfix: "Cheese wheels and royal cheese no longer count as cheese wedges for recipes."
-  - code_imp: "Cheese wedges are no longer the superclass for all cheese."

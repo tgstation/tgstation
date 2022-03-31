@@ -6,7 +6,7 @@
 /obj/machinery/door/firedoor
 	name = "firelock"
 	desc = "Apply crowbar."
-	icon = 'icons/obj/doors/Doorfireglass.dmi'
+	icon = 'icons/obj/doors/doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = FALSE
 	density = FALSE
@@ -68,6 +68,11 @@
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 	refresh_shared_turfs()
 	issue_turfs = list()
+
+	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
+		base_icon_state = "sus"
+		desc += " This one looks a bit sus..."
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
@@ -110,25 +115,36 @@
 	var/mob/living/living_user = user
 
 	if (isnull(held_item))
-		if (density)
-			// This should be LMB/RMB one day
-			if (living_user.combat_mode)
-				context[SCREENTIP_CONTEXT_LMB] = "Knock"
+		if(density)
+			if(isalienadult(living_user) || issilicon(living_user))
+				context[SCREENTIP_CONTEXT_LMB] = "Open"
+				return CONTEXTUAL_SCREENTIP_SET
+			if(!living_user.combat_mode)
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Knock"
+					return CONTEXTUAL_SCREENTIP_SET
 			else
-				context[SCREENTIP_CONTEXT_LMB] = "Bash"
-
+				if(ismonkey(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Attack"
+					return CONTEXTUAL_SCREENTIP_SET
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Bash"
+					return CONTEXTUAL_SCREENTIP_SET
+		else if(issilicon(living_user))
+			context[SCREENTIP_CONTEXT_LMB] = "Close"
 			return CONTEXTUAL_SCREENTIP_SET
-		else
-			return .
+		return .
+
+	if(!Adjacent(src, living_user))
+		return .
 
 	switch (held_item.tool_behaviour)
 		if (TOOL_CROWBAR)
-			if (density)
+			if (!density)
 				context[SCREENTIP_CONTEXT_LMB] = "Close"
 			else if (!welded)
 				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
 				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
-
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
@@ -482,9 +498,9 @@
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("door_opening", src)
+			flick("[base_icon_state]_opening", src)
 		if("closing")
-			flick("door_closing", src)
+			flick("[base_icon_state]_closing", src)
 
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
@@ -600,6 +616,9 @@
 	. = ..()
 	if(!(border_dir == dir)) //Make sure looking at appropriate border
 		return TRUE
+
+/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir)
+	return !density || (dir != to_dir)
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER
