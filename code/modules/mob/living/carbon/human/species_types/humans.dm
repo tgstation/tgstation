@@ -10,6 +10,7 @@
 		TRAIT_CAN_USE_FLIGHT_POTION,
 	)
 	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_human" = "Fox")
+	mutantears = /obj/item/organ/ears/fox
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW | CLOTH
@@ -40,7 +41,8 @@
 		if(H.dna.features["ears"] == "Fox")
 			var/obj/item/organ/ears/fox/ears = new
 			ears.Insert(H, drop_if_replaced = FALSE)
-			mutantears = /obj/item/organ/ears/fox
+		else
+			mutantears = /obj/item/organ/ears
 		if(H.dna.features["tail_human"] == "Fox")
 			var/obj/item/organ/tail/fox/tail = new
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
