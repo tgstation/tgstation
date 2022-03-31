@@ -330,7 +330,7 @@
 
 	var/energy_released = FIRE_TRITIUM_ENERGY_RELEASED * burned_fuel * effect_scale
 	if(location && burned_fuel > TRITIUM_RADIATION_MINIMUM_MOLES && energy_released > TRITIUM_RADIATION_RELEASE_THRESHOLD * (air.volume / CELL_VOLUME) ** ATMOS_RADIATION_VOLUME_EXP && prob(10))
-		radiation_pulse(location, max_range = min(TRITIUM_MINIMUM_RADIATION_RANGE + sqrt(burned_fuel * effect_scale) / TRITIUM_RADIATION_RANGE_DIVISOR, 20), threshold = TRITIUM_RADIATION_THRESHOLD_BASE * INVERSE(TRITIUM_RADIATION_THRESHOLD_BASE + (burned_fuel * effect_scale)), chance = 100 * (1 - 0.5 ** (energy_released / TRITIUM_RADIATION_CHANCE_ENERGY_THRESHOLD_BASE)))
+		radiation_pulse(location, max_range = min(TRITIUM_MINIMUM_RADIATION_RANGE + sqrt(burned_fuel * effect_scale / TRITIUM_OXYBURN_MULTIPLIER) / TRITIUM_RADIATION_RANGE_DIVISOR, 20), threshold = TRITIUM_RADIATION_THRESHOLD_BASE * INVERSE(TRITIUM_RADIATION_THRESHOLD_BASE + (burned_fuel * effect_scale / TRITIUM_OXYBURN_MULTIPLIER)), chance = 100 * (1 - 0.5 ** (energy_released / TRITIUM_RADIATION_CHANCE_ENERGY_THRESHOLD_BASE)))
 
 	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
@@ -747,10 +747,9 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	air.assert_gases(/datum/gas/hypernoblium, /datum/gas/bz)
-	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed
+	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed 
 	cached_gases[/datum/gas/nitrogen][MOLES] -= 10 * nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
-
 	SET_REACTION_RESULTS(nob_formed)
 	var/energy_produced = nob_formed * (NOBLIUM_FORMATION_ENERGY / (max(cached_gases[/datum/gas/bz][MOLES], 1)))
 	var/new_heat_capacity = air.heat_capacity()

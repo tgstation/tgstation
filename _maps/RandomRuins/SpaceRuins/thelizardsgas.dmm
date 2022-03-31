@@ -114,8 +114,8 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/thelizardsgas)
 "kS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/atmos/plasma_output{
-	internal_pressure_bound = 750
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored{
+	chamber_id = "lizardgas"
 	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=35000;TEMP=293.15"
@@ -312,9 +312,9 @@
 	},
 /area/ruin/space/has_grav/thelizardsgas)
 "FJ" = (
-/obj/machinery/computer/atmos_control/tank/plasma_tank{
-	dir = 8;
-	output_info = null
+/obj/machinery/computer/atmos_control/noreconnect{
+	atmos_chambers = list("lizardgas" = "Plasma Supply");
+	dir = 8
 	},
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 4
@@ -491,7 +491,8 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/thelizardsgas)
 "Uh" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/atmos/plasma_input{
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored{
+	chamber_id = "lizardgas";
 	dir = 4
 	},
 /turf/open/floor/engine/plasma{
@@ -541,7 +542,9 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/thelizardsgas)
 "WY" = (
-/obj/machinery/air_sensor/atmos/plasma_tank,
+/obj/machinery/air_sensor{
+	chamber_id = "lizardgas"
+	},
 /turf/open/floor/engine/plasma{
 	initial_gas_mix = "plasma=35000;TEMP=293.15"
 	},

@@ -3,6 +3,7 @@
 /turf/open/misc/asteroid //floor piece
 	gender = PLURAL
 	name = "asteroid sand"
+	desc = "It's coarse and rough and gets everywhere."
 	baseturfs = /turf/open/misc/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"
@@ -215,6 +216,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/snow/temperatre
 	initial_gas_mix = "o2=22;n2=82;TEMP=255.37"
+
+//Used in SnowCabin.dm
+/turf/open/misc/asteroid/snow/snow_cabin
+	temperature = 180
 
 /turf/open/misc/asteroid/snow/atmosphere
 	initial_gas_mix = FROZEN_ATMOS

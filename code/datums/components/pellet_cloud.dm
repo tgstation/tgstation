@@ -125,10 +125,10 @@
 		shell.loaded_projectile.wound_bonus = original_wb
 		shell.loaded_projectile.bare_wound_bonus = original_bwb
 		pellets += shell.loaded_projectile
-		var/turf/current_loc = get_turf(user)
+		var/turf/current_loc = get_turf(fired_from)
 		if (!istype(target_loc) || !istype(current_loc) || !(shell.loaded_projectile))
 			return
-		INVOKE_ASYNC(shell, /obj/item/ammo_casing.proc/throw_proj, target, target_loc, shooter, params, spread)
+		INVOKE_ASYNC(shell, /obj/item/ammo_casing.proc/throw_proj, target, target_loc, shooter, params, spread, fired_from)
 
 		if(i != num_pellets)
 			shell.newshot()

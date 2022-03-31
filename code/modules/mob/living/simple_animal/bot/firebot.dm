@@ -239,11 +239,11 @@
 		frustration++
 
 	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !target_fire)
-		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-			start_patrol()
-
-		if(mode == BOT_PATROL)
-			bot_patrol()
+		switch(mode)
+			if(BOT_IDLE, BOT_START_PATROL)
+				start_patrol()
+			if(BOT_PATROL)
+				bot_patrol()
 
 
 //Look for burning people or turfs around the bot
@@ -289,9 +289,6 @@
 
 
 /mob/living/simple_animal/bot/firebot/explode()
-	bot_mode_flags &= ~BOT_MODE_ON
-	visible_message(span_boldannounce("[src] blows apart!"))
-
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -302,9 +299,7 @@
 	if(isopenturf(T))
 		var/turf/open/theturf = T
 		theturf.MakeSlippery(TURF_WET_WATER, min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
-
-	do_sparks(3, TRUE, src)
-	..()
+	return ..()
 
 #undef SPEECH_INTERVAL
 #undef DETECTED_VOICE_INTERVAL
