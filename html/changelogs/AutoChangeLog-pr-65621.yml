@@ -1,4 +1,0 @@
-author: "ErdinyoBarboza"
-delete-after: True
-changes: 
-  - bugfix: "Makes cyborg lollipop dispenser use the cyborg (non-omnizine) variant for consistency."
