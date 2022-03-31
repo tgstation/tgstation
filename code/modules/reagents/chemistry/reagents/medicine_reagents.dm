@@ -1185,6 +1185,7 @@
 	metabolization_rate = 0.4 * REAGENTS_METABOLISM
 	ph = 4.3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	harmful = TRUE
 
 /datum/reagent/medicine/haloperidol/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	for(var/datum/reagent/drug/R in M.reagents.reagent_list)
