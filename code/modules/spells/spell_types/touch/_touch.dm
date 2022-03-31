@@ -16,7 +16,13 @@
 	var/drop_message = span_notice("You draw the power out of your hand.")
 
 /datum/action/cooldown/spell/touch/Destroy()
-	remove_hand()
+	// If we have an owner, the hand is hand..led in Remove()
+	if(!owner)
+		QDEL_NULL(attached_hand)
+	return ..()
+
+/datum/action/cooldown/spell/touch/Remove(mob/living/remove_from)
+	remove_hand(remove_from)
 	return ..()
 
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
@@ -60,36 +66,42 @@
 /**
  * Unregisters any signals and deletes the hand currently summoned by the spell.
  *
- * If revert_after is TRUE, we will additionally refund the cooldown of the spell.
+ * If reset_cooldown_after is TRUE, we will additionally refund the cooldown of the spell.
+ * If reset_cooldown_after is FALSE, we will instead just start the spell's cooldown
  */
-/datum/action/cooldown/spell/touch/proc/remove_hand(mob/living/hand_owner, revert_after = FALSE)
+/datum/action/cooldown/spell/touch/proc/remove_hand(mob/living/hand_owner, reset_cooldown_after = FALSE)
 	if(!QDELETED(attached_hand))
 		UnregisterSignal(attached_hand, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_AFTERATTACK_SECONDARY, COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED))
 		hand_owner?.temporarilyRemoveItemFromInventory(attached_hand)
 		QDEL_NULL(attached_hand)
 
-	if(revert_after)
+	if(reset_cooldown_after)
 		if(hand_owner)
 			to_chat(hand_owner, drop_message)
 		reset_spell_cooldown()
-	START_PROCESSING(SSfastprocess, src)
+	else
+		StartCooldown()
 
 /datum/action/cooldown/spell/touch/cast(mob/living/carbon/cast_on)
 	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
-		remove_hand(cast_on, revert_after = TRUE)
+		remove_hand(cast_on, reset_cooldown_after = TRUE)
 		return
 
+	// MELBERT TODO need a way to pause cooldown for this
 	create_hand(cast_on)
 	return ..()
-
-/datum/action/cooldown/spell/touch/after_cast(atom/cast_on)
-	. = ..()
-	// MELBERT TODO need a way to pause cooldown for this
-	STOP_PROCESSING(SSfastprocess, src)
 
 // Overrides spell_feedback, as invocation / sounds are done when the hand hits someone
 /datum/action/cooldown/spell/touch/spell_feedback()
 	return
+
+/datum/action/cooldown/spell/touch/after_cast(atom/cast_on)
+	. = ..()
+	// Soft resets our cooldown post "cast"-
+	// Our *actual* cooldown only begins
+	// when our touch hand hits someone
+	// (see: remove_hand() where it's done)
+	next_use_time = world.time
 
 /**
  * Signal proc for [COMSIG_ITEM_AFTERATTACK] from our attached hand.
@@ -189,7 +201,7 @@
 /datum/action/cooldown/spell/touch/proc/on_hand_deleted(datum/source)
 	SIGNAL_HANDLER
 
-	remove_hand(revert_after = TRUE)
+	remove_hand(reset_cooldown_after = TRUE)
 
 /**
  * Signal proc for [COMSIG_ITEM_DROPPED] from our attached hand.
@@ -200,7 +212,7 @@
 /datum/action/cooldown/spell/touch/proc/on_hand_dropped(datum/source, mob/living/dropper)
 	SIGNAL_HANDLER
 
-	remove_hand(dropper, revert_after = TRUE) // MELBERT TODO check if arm removed
+	remove_hand(dropper, reset_cooldown_after = TRUE) // MELBERT TODO check if arm removed
 
 /obj/item/melee/touch_attack
 	name = "\improper outstretched hand"

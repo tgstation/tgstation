@@ -58,8 +58,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	/// The sound played on cast.
 	var/sound = null
 	/// The school of magic the spell belongs to.
-	/// Checked by some holy sects to punish the caster
-	/// for casting things that do not align
+	/// Checked by some holy sects to punish the
+	/// caster for casting things that do not align
 	/// with their sect's alignment - see magic.dm in defines to learn more
 	var/school = SCHOOL_UNSET
 	/// If the spell uses the wizard spell rank system, the cooldown reduction per rank of the spell
@@ -95,6 +95,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if(!owner)
 		return
 
+	// Register some signals so our button's icon stays up to date
 	if(spell_requirements & SPELL_REQUIRES_OFF_CENTCOM)
 		RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, .proc/update_icon_on_signal)
 	if(spell_requirements & (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_WIZARD_GARB))
@@ -114,13 +115,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/IsAvailable()
 	return ..() && can_cast_spell(feedback = FALSE)
 
+// Where the cast chain is called from, via the parent call
 /datum/action/cooldown/spell/PreActivate(atom/target)
 	if(!can_cast_spell())
 		return FALSE
 	if(!is_valid_target(target))
 		return FALSE
-
-	UpdateButtonIcon()
 
 	// Calling parent here is the same as calling Activate(),
 	// but with two added action related signals before and after.
@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		if(antimagic)
 			if(feedback)
 				if(isitem(antimagic))
-					to_chat(owner, span_notice("[antimagic] is interfering with your ability to cast [src]."))
+					to_chat(owner, span_warning("[antimagic] is interfering with your ability to cast [src]."))
 				else
 					to_chat(owner, span_warning("Magic seems to flee from you - You can't gather enough power to cast [src]."))
 			return FALSE
@@ -186,29 +186,31 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	return TRUE
 
-/// Check if the target we're casting on is a valid target.
-/// For spells with click_to_activate = TRUE, cast_on will be whatever is clicked
-/// For all other spells, cast_on will be the caster of the spell
+/**
+ * Check if the target we're casting on is a valid target.
+ *
+ * For spells with click_to_activate = TRUE, cast_on will be whatever is clicked
+ * For all other spells, cast_on will be the caster of the spell
+ *
+ * Return TRUE if cast_on is valid, FALSE otherwise
+ */
 /datum/action/cooldown/spell/proc/is_valid_target(atom/cast_on)
 	return TRUE
 
-/datum/action/cooldown/spell/Activate(atom/target)
+// The actual cast chain occurs here, in Activate().
+// You should not be overriding or extending Activate() for spells -
+// defer to any of the cast chain procs instead.
+/datum/action/cooldown/spell/Activate(atom/cast_on)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	// We start a "buffer cooldown" to prevent spam clicks
 	StartCooldown(cooldown_time / 4)
-	// Then we stop processing, becuase if before_cast sleeps,
-	// such as due to an input, we should prevent cooldown from progressing
-	STOP_PROCESSING(SSfastprocess, src)
+
 	// Pre-casting of the spell
 	// Pre-cast is the very last chance for a spell to cancel
 	// Stuff like target input would go here.
-	if(!before_cast(target))
-		START_PROCESSING(SSfastprocess, src)
-
+	if(!before_cast(cast_on))
 		return FALSE
-	// Start processing again
-	START_PROCESSING(SSfastprocess, src)
 
 	// Spell is officially being cast
 	// We do invocation and sound effects here, before cast
@@ -216,21 +218,26 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	spell_feedback()
 
 	// Actually cast the spell. Main effects go here
-	cast(target)
+	cast(cast_on)
 
-	// The entire spell is done, start the cooldown at its set duration
-	// and update the icon so it looks disabled
+	// The entire spell is done, start the actual cooldown at its set duration
 	StartCooldown()
 
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
-	after_cast(target)
+	after_cast(cast_on)
 	UpdateButtonIcon()
 
 	return TRUE
 
-/// Actions done before the actual cast() is called.
-/// Return FALSE to cancel the spell casat before it occurs, TRUE to let it happen
+/**
+ * Actions done before the actual cast is called.
+ * This is the last chance to cancel the spell from being cast.
+ *
+ * Can be used for target selection or to validate checks on the caster (cast_on).
+ *
+ * Return FALSE to cancel the spell casat before it occurs, TRUE to let it happen.
+ */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -255,7 +262,14 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	if(owner?.ckey)
 		owner.log_message("cast the spell [name][cast_on != owner ? " on [cast_on]":""].", LOG_ATTACK)
 
-/// Actions done after the main cast is finished.
+/**
+ * Actions done after the main cast is finished.
+ * This is called after the cooldown's already begun.
+ *
+ * It can be used to apply late spell effects where order matters
+ * (for example, causing smoke *after* a teleport occurs in cast())
+ * or to clean up variables or references post-cast.
+ */
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -281,13 +295,14 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		else
 			stack_trace("Invalid smoke type for spell [type]. Got: [smoke_type || "null"].")
 
-
+/// Provides feedback after a spell cast occurs, in the form of a cast sound or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()
 	if(invocation_type != INVOCATION_NONE)
 		invocation()
 	if(sound)
 		playsound(get_turf(owner), sound, 50, TRUE)
 
+/// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation()
 	switch(invocation_type)
 		if(INVOCATION_SHOUT)
@@ -304,6 +319,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 		if(INVOCATION_EMOTE)
 			owner.visible_message(invocation, invocation_self_message)
 
+/// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
 	if(SEND_SIGNAL(src, COMSIG_SPELL_CAN_INVOKE, feedback) & COMPONENT_CANCEL_INVOKE)
 		return FALSE
@@ -334,7 +350,8 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	next_use_time -= cooldown_time // Basically, ensures that the ability can be used now
 	UpdateButtonIcon()
 
-/// TODO: This is ugly, and should be replaced
+/// TODO: This is ugly, and should be replaced. Only tesla blast uses it.
+/// Checks if the from_atom has line of sight to the to_atom
 /datum/action/cooldown/spell/proc/los_check(atom/from_atom, atom/to_atom)
 	//Checks for obstacles from A to B
 	var/obj/dummy = new(from_atom.loc)
@@ -381,7 +398,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
  */
 /datum/action/cooldown/spell/proc/delevel_spell()
 	// Spell cannot be levelled
-	if(spell_max_level <= 1 || !cooldown_reduction_per_rank)
+	if(spell_max_level <= 1)
 		return FALSE
 
 	if(spell_level <= 1)
