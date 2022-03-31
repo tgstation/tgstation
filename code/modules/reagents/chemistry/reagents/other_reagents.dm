@@ -1533,12 +1533,12 @@
 	taste_description = "bitter"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
-/datum/reagent/zauker/on_mob_metabolize(mob/living/L)
+/datum/reagent/zauker/on_mob_life(mob/living/L, delta_time, times_fired)
 	. = ..()
-	L.adjustBruteLoss(25)
-	L.adjustOxyLoss(5)
-	L.adjustFireLoss(8)
-	L.adjustToxLoss(8)
+	L.adjustBruteLoss(25 * REM * delta_time, FALSE)
+	L.adjustOxyLoss(5 * REM * delta_time, FALSE)
+	L.adjustFireLoss(8 * REM * delta_time, FALSE)
+	L.adjustToxLoss(8 * REM * delta_time, FALSE)
 
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
