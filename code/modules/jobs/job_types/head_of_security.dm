@@ -77,6 +77,13 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
+/datum/outfit/job/hos/post_equip(mob/living/carbon/human/target, visualsOnly)
+	. = ..()
+
+	if(!visualsOnly && istype(target))
+		target.remove_language(/datum/language/common, FALSE, TRUE)
+		target.grant_language(/datum/language/tencodes, TRUE, TRUE, LANGUAGE_JOB)
+
 /datum/outfit/job/hos/mod
 	name = "Head of Security (MODsuit)"
 

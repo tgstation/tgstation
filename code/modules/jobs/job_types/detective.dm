@@ -73,11 +73,12 @@
 		)
 	implants = list(/obj/item/implant/mindshield)
 
-/datum/outfit/job/detective/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/detective/post_equip(mob/living/carbon/human/target, visualsOnly = FALSE)
 	..()
-	var/obj/item/clothing/mask/cigarette/cig = H.wear_mask
+	var/obj/item/clothing/mask/cigarette/cig = target.wear_mask
 	if(istype(cig)) //Some species specfic changes can mess this up (plasmamen)
 		cig.light("")
 
-	if(visualsOnly)
-		return
+	if(!visualsOnly && istype(target))
+		target.remove_language(/datum/language/common, FALSE, TRUE)
+		target.grant_language(/datum/language/tencodes, TRUE, TRUE, LANGUAGE_JOB)

@@ -30,7 +30,8 @@
 		/datum/language/sylvan,
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
-		/datum/language/nekomimetic
+		/datum/language/nekomimetic,
+		/datum/language/tencodes,
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -204,7 +205,8 @@
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
-		/datum/language/buzzwords
+		/datum/language/buzzwords,
+		/datum/language/tencodes,
 	))
 
 /obj/item/organ/tongue/fly/modify_speech(datum/source, list/speech_args)
@@ -345,7 +347,8 @@
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
-		/datum/language/calcic
+		/datum/language/calcic,
+		/datum/language/tencodes,
 	))
 
 /obj/item/organ/tongue/bone/Initialize(mapload)
@@ -424,7 +427,8 @@
 		/datum/language/shadowtongue,
 		/datum/language/terrum,
 		/datum/language/nekomimetic,
-		/datum/language/voltaic
+		/datum/language/voltaic,
+		/datum/language/tencodes,
 	))
 
 /obj/item/organ/tongue/ethereal/Initialize(mapload)

@@ -2999,6 +2999,7 @@
 #include "code\modules\language\shadowtongue.dm"
 #include "code\modules\language\slime.dm"
 #include "code\modules\language\sylvan.dm"
+#include "code\modules\language\ten_sixtynine.dm"
 #include "code\modules\language\terrum.dm"
 #include "code\modules\language\uncommon.dm"
 #include "code\modules\language\voltaic.dm"
