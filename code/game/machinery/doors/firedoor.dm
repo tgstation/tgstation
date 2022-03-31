@@ -37,8 +37,6 @@
 	var/list/affecting_areas
 	///For the few times we affect only the area we're actually in. Set during Init. If we get moved, we don't update, but this is consistant with fire alarms and also kinda funny so call it intentional.
 	var/area/my_area
-	///List of watched turfs to monitor for atmos changes
-	var/list/turf/watched_turfs
 	///List of problem turfs with bad temperature
 	var/list/turf/issue_turfs
 	///Tracks if the firelock is being held open by a crowbar. If so, we don't close until they walk away
@@ -188,26 +186,22 @@
 	SIGNAL_HANDLER
 	
 	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-		firelock.watched_turfs = firelock.check_adjacent_turfs()
+		firelock.check_adjacent_turfs()
 
 /obj/machinery/door/firedoor/proc/check_adjacent_turfs()
-	var/list/turfs_to_return = list()
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(src),dir)
-		if(checked_turf && !checked_turf.density && (!watched_turfs || !watched_turfs.Find(checked_turf)))
-			turfs_to_return.Add(checked_turf)
+		if(checked_turf && !checked_turf.density)
 			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results, override = TRUE)
 			RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results, override = TRUE)
-	return turfs_to_return
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
-	var/result
 	var/datum/gas_mixture/environment = checked_turf.return_air()
 	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST && my_area.active_alarms[ALARM_ATMOS])
-		result = FIRELOCK_ALARM_TYPE_HOT
+		return FIRELOCK_ALARM_TYPE_HOT
 	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT && my_area.active_alarms[ALARM_ATMOS])
-		result = FIRELOCK_ALARM_TYPE_COLD
-	return result
+		return FIRELOCK_ALARM_TYPE_COLD
+	return
 
 /obj/machinery/door/firedoor/proc/process_results(datum/source)
 	SIGNAL_HANDLER
@@ -222,27 +216,24 @@
 			return
 
 	var/turf/checked_turf = source
+	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	var/result = check_atmos(checked_turf)
 	
-	var/result
-	
-	result = check_atmos(checked_turf)
-	
-	if(result && TURF_SHARES(checked_turf))
-		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-			if(!firelock.issue_turfs.Find(checked_turf))
-				firelock.issue_turfs.Add(checked_turf)
-	else if(!result && issue_turfs.len || !TURF_SHARES(checked_turf))
-		for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-			firelock.issue_turfs.Remove(checked_turf)
-	
-	if(!issue_turfs.len && alarm_type)
+	if(!issue_turfs?.len && alarm_type)
 		start_deactivation_process()
 		return
-	else if(issue_turfs.len && !alarm_type)
+	else if(issue_turfs?.len && !alarm_type)
 		result = check_atmos(issue_turfs[1])
 		if(result)
 			start_activation_process(result)
 			return
+	if(result && TURF_SHARES(checked_turf))
+		for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
+			if(!firelock.issue_turfs.Find(checked_turf))
+				firelock.issue_turfs |= checked_turf
+	else if(!result && issue_turfs?.len || !TURF_SHARES(checked_turf))
+		for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
+			firelock.issue_turfs.Remove(checked_turf)
 	
 
 /**
@@ -565,9 +556,6 @@
 
 /obj/machinery/door/firedoor/Moved()
 	. = ..()
-	for(var/turf/checked_turf in watched_turfs)
-		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
-		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 	refresh_shared_turfs()
 
 /obj/machinery/door/firedoor/closed
