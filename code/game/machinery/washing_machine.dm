@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		DYE_PURPLE = /obj/item/clothing/mask/bandana/color/purple,
 		DYE_BLACK = /obj/item/clothing/mask/bandana/color/black,
 		DYE_WHITE = /obj/item/clothing/mask/bandana/color/white,
-		DYE_MIME = /obj/item/clothing/mask/bandana/color/striped/black,
+		//DYE_MIME = /obj/item/clothing/mask/bandana/color/striped/black,
 		DYE_SYNDICATE = /obj/item/clothing/mask/bandana/color/skull/black
 	),
 	DYE_REGISTRY_SNEAKERS = list(
