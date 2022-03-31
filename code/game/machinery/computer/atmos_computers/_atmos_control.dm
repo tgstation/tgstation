@@ -133,6 +133,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	data["maxOutput"] = MAX_OUTPUT_PRESSURE
 	data["control"] = control
 	data["reconnecting"] = reconnecting
+	data += return_atmos_handbooks()
 	return data
 
 /obj/machinery/computer/atmos_control/ui_data(mob/user)

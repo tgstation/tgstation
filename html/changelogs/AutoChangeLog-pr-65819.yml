@@ -1,0 +1,5 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - bugfix: "Humans no longer \"enter\" mechs twice"
+  - qol: "as a side effect mech entering will cancel immediately instead of failing at the end only"
