@@ -11,6 +11,7 @@
 	)
 	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_human" = "Fox")
 	mutantears = /obj/item/organ/ears/fox
+	mutant_organs = list(/obj/item/organ/tail/fox)
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW | CLOTH
