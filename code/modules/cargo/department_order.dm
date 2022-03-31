@@ -119,6 +119,8 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	if(!pack)
 		say("Something went wrong!")
 		CRASH("requested supply pack id \"[id]\" not found!")
+	if(pack.hidden || pack.DropPodOnly || pack.special)
+		return
 	var/name = "*None Provided*"
 	var/rank = "*None Provided*"
 	var/ckey = usr.ckey
