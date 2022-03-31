@@ -11,7 +11,6 @@
 /obj/item/clothing/mask/bandana/attack_self(mob/user)
 	adjustmask(user)
 
-/*
 /obj/item/clothing/mask/bandana/AltClick(mob/user)
 	. = ..()
 	if(iscarbon(user) && user.is_holding(src))
@@ -36,7 +35,6 @@
 			user.visible_message(span_notice("[user] ties [src] up like a neckerchief."), span_notice("You tie [src] up like a neckerchief."))
 	else
 		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
-*/
 
 /obj/item/clothing/mask/bandana/durathread
 	name = "durathread bandana"
