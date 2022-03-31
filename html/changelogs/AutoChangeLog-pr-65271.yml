@@ -1,0 +1,5 @@
+author: "vincentiusvin"
+delete-after: True
+changes: 
+  - rscadd: "Added an ic atmos reaction guide. Available in your atmos control consoles/monitors, ntosatmos app, and analyzer."
+  - code_imp: "Some changes to how gas canister descriptions are generated."
