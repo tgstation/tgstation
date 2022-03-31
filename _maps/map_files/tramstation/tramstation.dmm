@@ -51847,6 +51847,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/science/research)
+"roH" = (
+/obj/item/toy/plush/space_lizard_plushie{
+	name = "Bold-And-Brash"
+	},
+/turf/open/misc/asteroid/airless,
+/area/mine/explored)
 "roS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/closed/wall/r_wall,
@@ -117480,11 +117486,11 @@ rdD
 juL
 iWV
 dDG
+dhe
+dhe
+dhe
+dhe
 dDG
-dDG
-dhe
-dhe
-dhe
 bBA
 jwD
 adS
@@ -117738,10 +117744,10 @@ iWV
 iWV
 dDG
 dDG
+dhe
 dDG
 dDG
-dhe
-dhe
+roH
 bBA
 jwD
 adS
