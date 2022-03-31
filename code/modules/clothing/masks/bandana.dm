@@ -118,6 +118,7 @@
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE
 
+/*
 /obj/item/clothing/mask/bandana/color/striped
 	name = "striped bandana"
 	desc = "A fine bandana with nanotech lining and a stripe across."
@@ -168,6 +169,7 @@
 	desc = "A fine bandana with nanotech lining, a stripe across and botany colors."
 	greyscale_colors = "#3D9829#294A98"
 	flags_1 = NONE
+*/
 
 /obj/item/clothing/mask/bandana/color/skull
 	name = "skull bandana"
