@@ -1,0 +1,5 @@
+author: "cacogen"
+delete-after: True
+changes: 
+  - bugfix: "Machine frames and circuit boards no longer call manipulators micro-manipulators when examined"
+  - code_imp: "Improves code in constructable_frame.dm and circuitboard.dm"
