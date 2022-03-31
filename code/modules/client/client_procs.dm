@@ -1123,6 +1123,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				if (verbpath.name[1] != "@")
 					new child(src)
 
+	// Place Help back at the end.
+	winset(src, "help-menu", "index=1000")
+
 /client/proc/open_filter_editor(atom/in_atom)
 	if(holder)
 		holder.filteriffic = new /datum/filter_editor(in_atom)
