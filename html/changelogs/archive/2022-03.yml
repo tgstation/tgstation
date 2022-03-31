@@ -1076,3 +1076,27 @@
   san7890:
   - bugfix: On IceBoxStation, hopefully all (if not a good chunk) of the cameras have
       been moved to no longer be on windows, and on walls instead.
+2022-03-31:
+  ArcaneMusic:
+  - bugfix: Fixed 2 newscasters that were accidently mapped next to each other on
+      tram.
+  Capsandi:
+  - expansion: The crashed ship ruin has been remapped
+  ErdinyoBarboza:
+  - bugfix: Makes cyborg lollipop dispenser use the cyborg (non-omnizine) variant
+      for consistency.
+  Kylerace:
+  - balance: scrubbers now remove small amounts of gas faster than they used to, without
+      affecting how fast they scrub gases in high concentrations.
+  Watermelon914:
+  - admin: Admins can now see the number of players when someone sends an urgent ahelp.
+  - admin: Added an option to config send non-urgent ahelps to a channel (where there
+      are no available admins on).
+  - admin: Added a response that is sent by the server when an ahelp is responded
+      to in any way by an admin.
+  timothymtorres:
+  - bugfix: Fix jumpsuits to drop accessories when destroyed
+  - bugfix: Fix welders wasting fuel when clicking on tiles
+  - bugfix: Fix plants to not hurt user while using telekinesis
+  timothymtorres, lewcc:
+  - bugfix: Fix attack messages appearing when using tools on blast doors

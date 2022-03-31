@@ -1,4 +1,0 @@
-author: "Kylerace"
-delete-after: True
-changes: 
-  - balance: "scrubbers now remove small amounts of gas faster than they used to, without affecting how fast they scrub gases in high concentrations."
