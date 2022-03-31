@@ -27,7 +27,7 @@
 	static_inventory += using
 
 	using = new owner.toggle_button_type()
-	using.screen_loc = ui_storage1
+	using.screen_loc = ui_storage1(0, 0)
 	using.hud = src
 	static_inventory += using
 
@@ -37,7 +37,7 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/guardian/communicate()
-	using.screen_loc = ui_back
+	using.screen_loc = ui_back(0, 0)
 	using.hud = src
 	static_inventory += using
 
@@ -51,7 +51,7 @@
 		inv_box.name = "internal storage"
 		inv_box.icon = ui_style
 		inv_box.icon_state = "suit_storage"
-		inv_box.screen_loc = ui_id
+		inv_box.screen_loc = ui_id(0,0)
 		inv_box.slot_id = ITEM_SLOT_DEX_STORAGE
 		inv_box.hud = src
 		static_inventory += inv_box
@@ -64,7 +64,7 @@
 	else
 
 		using = new /atom/movable/screen/guardian/communicate()
-		using.screen_loc = ui_id
+		using.screen_loc = ui_id(0,0)
 		using.hud = src
 		static_inventory += using
 
@@ -80,17 +80,17 @@
 	infodisplay += healths
 
 	using = new /atom/movable/screen/guardian/manifest()
-	using.screen_loc = ui_belt
+	using.screen_loc = ui_belt(0, 0)
 	using.hud = src
 	static_inventory += using
 
 	using = new /atom/movable/screen/guardian/recall()
-	using.screen_loc = ui_back
+	using.screen_loc = ui_back(0, 0)
 	using.hud = src
 	static_inventory += using
 
 	using = new owner.toggle_button_type()
-	using.screen_loc = ui_storage2
+	using.screen_loc = ui_storage2(0, 0)
 	using.hud = src
 	static_inventory += using
 
@@ -107,7 +107,7 @@
 
 		if(hud_shown)
 			if(D.internal_storage)
-				D.internal_storage.screen_loc = ui_id
+				D.internal_storage.screen_loc = ui_id(0,0)
 				D.client.screen += D.internal_storage
 		else
 			if(D.internal_storage)

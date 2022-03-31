@@ -1259,11 +1259,11 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		if(!H.belt)
-			slots_free += ui_belt
+			slots_free += ui_belt(0, 0)
 		if(!H.l_store)
-			slots_free += ui_storage1
+			slots_free += ui_storage1(0, 0)
 		if(!H.r_store)
-			slots_free += ui_storage2
+			slots_free += ui_storage2(0, 0)
 	if(slots_free.len)
 		halitem.screen_loc = pick(slots_free)
 		halitem.plane = ABOVE_HUD_PLANE

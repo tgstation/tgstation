@@ -187,12 +187,12 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/blobbernaut()
-	using.screen_loc = ui_belt
+	using.screen_loc = ui_belt(0, 0)
 	using.hud = src
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/resource_blob()
-	using.screen_loc = ui_back
+	using.screen_loc = ui_back(0, 0)
 	using.hud = src
 	static_inventory += using
 
@@ -207,11 +207,11 @@
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/readapt_strain()
-	using.screen_loc = ui_storage1
+	using.screen_loc = ui_storage1(0, 0)
 	using.hud = src
 	static_inventory += using
 
 	using = new /atom/movable/screen/blob/relocate_core()
-	using.screen_loc = ui_storage2
+	using.screen_loc = ui_storage2(0, 0)
 	using.hud = src
 	static_inventory += using

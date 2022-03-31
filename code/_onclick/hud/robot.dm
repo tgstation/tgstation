@@ -91,21 +91,21 @@
 	if(!robit.inv1)
 		robit.inv1 = new /atom/movable/screen/robot/module1()
 
-	robit.inv1.screen_loc = ui_inv1
+	robit.inv1.screen_loc = ui_inv1(0, 0)
 	robit.inv1.hud = src
 	static_inventory += robit.inv1
 
 	if(!robit.inv2)
 		robit.inv2 = new /atom/movable/screen/robot/module2()
 
-	robit.inv2.screen_loc = ui_inv2
+	robit.inv2.screen_loc = ui_inv2(0, 0)
 	robit.inv2.hud = src
 	static_inventory += robit.inv2
 
 	if(!robit.inv3)
 		robit.inv3 = new /atom/movable/screen/robot/module3()
 
-	robit.inv3.screen_loc = ui_inv3
+	robit.inv3.screen_loc = ui_inv3(0, 0)
 	robit.inv3.hud = src
 	static_inventory += robit.inv3
 
@@ -257,11 +257,11 @@
 				if(I)
 					switch(i)
 						if(BORG_CHOOSE_MODULE_ONE)
-							I.screen_loc = ui_inv1
+							I.screen_loc = ui_inv1(I.base_pixel_x, I.base_pixel_y)
 						if(BORG_CHOOSE_MODULE_TWO)
-							I.screen_loc = ui_inv2
+							I.screen_loc = ui_inv2(I.base_pixel_x, I.base_pixel_y)
 						if(BORG_CHOOSE_MODULE_THREE)
-							I.screen_loc = ui_inv3
+							I.screen_loc = ui_inv3(I.base_pixel_x, I.base_pixel_y)
 						else
 							return
 					screenmob.client.screen += I

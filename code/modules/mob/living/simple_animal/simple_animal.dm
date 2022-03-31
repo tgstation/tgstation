@@ -618,11 +618,11 @@
 
 /mob/living/simple_animal/update_inv_hands()
 	if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
-		for(var/obj/item/I in held_items)
-			var/index = get_held_index_of_item(I)
-			I.plane = ABOVE_HUD_PLANE
-			I.screen_loc = ui_hand_position(index)
-			client.screen |= I
+		for(var/obj/item/item in held_items)
+			var/index = get_held_index_of_item(item)
+			item.plane = ABOVE_HUD_PLANE
+			item.screen_loc = ui_hand_position(index, item)
+			client.screen |= item
 
 //ANIMAL RIDING
 

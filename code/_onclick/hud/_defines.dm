@@ -17,10 +17,19 @@
 	Therefore, the top right corner (except during admin shenanigans) is at "15,15"
 */
 
-/proc/ui_hand_position(i) //values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
-	var/x_off = -(!(i % 2))
-	var/y_off = round((i-1) / 2)
-	return"CENTER+[x_off]:16,SOUTH+[y_off]:5"
+/**
+ * values based on old hand ui positions (CENTER:-/+16,SOUTH:5)
+ * If item arg is set, its base_pixel_x and base_pixel_y will be added to the pixel offsets of the return value.
+ */
+/proc/ui_hand_position(index, obj/item/item)
+	var/x_off = -(!(index % 2))
+	var/y_off = round((index-1) / 2)
+	var/x_px_off = 16
+	var/y_px_off = 5
+	if(item)
+		x_px_off += item.base_pixel_x
+		y_px_off += item.base_pixel_y
+	return"CENTER+[x_off]:[x_px_off],SOUTH+[y_off]:[y_px_off]"
 
 /proc/ui_equip_position(mob/M)
 	var/y_off = round((M.held_items.len-1) / 2) //values based on old equip ui position (CENTER: +/-16,SOUTH+1:5)
@@ -40,11 +49,11 @@
 
 //Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"
-#define ui_id "CENTER-4:12,SOUTH:5"
-#define ui_belt "CENTER-3:14,SOUTH:5"
-#define ui_back "CENTER-2:14,SOUTH:5"
-#define ui_storage1 "CENTER+1:18,SOUTH:5"
-#define ui_storage2 "CENTER+2:20,SOUTH:5"
+#define ui_id(x_px, y_px) "CENTER-4:[12+x_px],SOUTH:[5+y_px]"
+#define ui_belt(x_px, y_px) "CENTER-3:[14+x_px],SOUTH:[5+y_px]"
+#define ui_back(x_px, y_px) "CENTER-2:[14+x_px],SOUTH:[5+y_px]"
+#define ui_storage1(x_px, y_px) "CENTER+1:[18+x_px],SOUTH:[5+y_px]"
+#define ui_storage2(x_px, y_px) "CENTER+2:[20+x_px],SOUTH:[5+y_px]"
 #define ui_combo "CENTER+4:24,SOUTH+1:7" //combo meter for martial arts
 
 //Lower right, persistent menu
@@ -77,31 +86,25 @@
 #define ui_stamina "EAST-1:28,CENTER-3:10"
 
 //Pop-up inventory
-#define ui_shoes "WEST+1:8,SOUTH:5"
-#define ui_iclothing "WEST:6,SOUTH+1:7"
-#define ui_oclothing "WEST+1:8,SOUTH+1:7"
-#define ui_gloves "WEST+2:10,SOUTH+1:7"
-#define ui_glasses "WEST:6,SOUTH+3:11"
-#define ui_mask "WEST+1:8,SOUTH+2:9"
-#define ui_ears "WEST+2:10,SOUTH+2:9"
-#define ui_neck "WEST:6,SOUTH+2:9"
-#define ui_head "WEST+1:8,SOUTH+3:11"
+#define ui_shoes(x_px, y_px) "WEST+1:[8+x_px],SOUTH:[5+y_px]"
+#define ui_iclothing(x_px, y_px) "WEST:[6+x_px],SOUTH+1:[7+y_px]"
+#define ui_oclothing(x_px, y_px) "WEST+1:[8+x_px],SOUTH+1:[7+y_px]"
+#define ui_gloves(x_px, y_px) "WEST+2:[10+x_px],SOUTH+1:[7+y_px]"
+#define ui_glasses(x_px, y_px) "WEST:[6+x_px],SOUTH+3:[11+y_px]"
+#define ui_mask(x_px, y_px) "WEST+1:[8+x_px],SOUTH+2:[9+y_px]"
+#define ui_ears(x_px, y_px) "WEST+2:[10+x_px],SOUTH+2:[9+y_px]"
+#define ui_neck(x_px, y_px) "WEST:[6+x_px],SOUTH+2:[9+y_px]"
+#define ui_head(x_px, y_px) "WEST+1:[8+x_px],SOUTH+3:[11+y_px]"
 
 //Generic living
 #define ui_living_pull "EAST-1:28,CENTER-3:15"
 #define ui_living_healthdoll "EAST-1:28,CENTER-1:15"
 
-//Monkeys
-#define ui_monkey_head "CENTER-5:13,SOUTH:5"
-#define ui_monkey_mask "CENTER-4:14,SOUTH:5"
-#define ui_monkey_neck "CENTER-3:15,SOUTH:5"
-#define ui_monkey_back "CENTER-2:16,SOUTH:5"
-
 //Drones
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"
 #define ui_drone_pull "CENTER+2:2,SOUTH:5"
-#define ui_drone_storage "CENTER-2:14,SOUTH:5"
-#define ui_drone_head "CENTER-3:14,SOUTH:5"
+#define ui_drone_storage(x_px, y_px) "CENTER-2:[14+x_px],SOUTH:[5+y_px]"
+#define ui_drone_head(x_px, y_px) "CENTER-3:[14+x_px],SOUTH:[5+y_px]"
 
 //Cyborgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"
@@ -110,9 +113,9 @@
 #define ui_borg_intents "EAST-2:26,SOUTH:5"
 #define ui_borg_lamp "CENTER-3:16, SOUTH:5"
 #define ui_borg_tablet "CENTER-4:16, SOUTH:5"
-#define ui_inv1 "CENTER-2:16,SOUTH:5"
-#define ui_inv2 "CENTER-1  :16,SOUTH:5"
-#define ui_inv3 "CENTER  :16,SOUTH:5"
+#define ui_inv1(x_px, y_px) "CENTER-2:[16+y_px],SOUTH:[5+y_px]"
+#define ui_inv2(x_px, y_px) "CENTER-1:[16+y_px],SOUTH:[5+y_px]"
+#define ui_inv3(x_px, y_px) "CENTER:[16+y_px],SOUTH:[5+y_px]"
 #define ui_borg_module "CENTER+1:16,SOUTH:5"
 #define ui_borg_store "CENTER+2:16,SOUTH:5"
 #define ui_borg_camera "CENTER+3:21,SOUTH:5"
