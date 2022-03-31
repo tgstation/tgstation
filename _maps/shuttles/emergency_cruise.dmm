@@ -489,7 +489,7 @@
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "wF" = (
-/obj/machinery/door/window/westleft{
+/obj/machinery/door/window/left/directional/west{
 	name = "bar door"
 	},
 /turf/open/floor/wood,
@@ -767,9 +767,9 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/door/airlock/command/glass{
-	name = "Cockpit";
-	req_access_txt = "19"
+	name = "Cockpit"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/white,
 /area/shuttle/escape)
 "Gv" = (
