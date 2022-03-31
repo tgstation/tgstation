@@ -138,7 +138,9 @@
 	data["messengers"] = ScrubMessengerList()
 	data["viewingMessages"] = viewingMessages
 	data["sortByJob"] = sort
-	data["canSpam"] = computer?.all_components[MC_CART].CanSpam()
+
+	if(computer.all_components[MC_CART])
+		data["canSpam"] = computer.all_components[MC_CART].CanSpam()
 
 	return data
 
@@ -234,7 +236,6 @@
 	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
-	messages += list(message_data)
 
 	if (!ringerStatus)
 		computer.send_sound()

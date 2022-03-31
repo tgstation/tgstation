@@ -230,8 +230,12 @@
 					cartholder.try_eject(user)
 		if("PC_Imprint_ID")
 			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+			var/obj/item/computer_hardware/identifier/id_hardware = all_components[MC_IDENTIFY]
 			if(!cardholder)
 				return
+
+			if(id_hardware)
+				name = "[cardholder.current_identification] ([cardholder.current_job])"
 
 			src.saved_identification = cardholder.current_identification
 			src.saved_job = cardholder.current_job

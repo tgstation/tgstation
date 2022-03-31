@@ -10,6 +10,12 @@
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/network_card)
 
+/obj/item/modular_computer/tablet/preset/micro
+	name = "microcomputer"
+	desc = "A slightly smaller version of the standard modular tablet, issued to all personnel upon arrival.x"
+	deconstructable = FALSE
+	upgradable = FALSE
+
 /obj/item/modular_computer/tablet/preset/micro/Initialize(mapload)
 	. = ..()
 	install_component(new /obj/item/computer_hardware/hard_drive/micro)
@@ -18,6 +24,7 @@
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
 	install_component(new /obj/item/computer_hardware/cartridge_slot)
+	install_component(new /obj/item/computer_hardware/identifier)
 
 // Alternative version, an average one, for higher ranked positions mostly
 /obj/item/modular_computer/tablet/preset/advanced/Initialize(mapload)

@@ -14,6 +14,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	armor = list(MELEE = 0, BULLET = 20, LASER = 20, ENERGY = 100, BOMB = 0, BIO = 100, FIRE = 0, ACID = 0)
 
 	var/enabled = 0 // Whether the computer is turned on.
+	var/upgradable = TRUE // whether or not the computer can be upgraded
+	var/deconstructable = TRUE // whether or not the computer can be deconstructed
 	var/screen_on = 1 // Whether the computer is active/opened/it's screen is on.
 	var/device_theme = "ntos" // Sets the theme for the main menu, hardware config, and file browser apps. Overridden by certain non-NT devices.
 	var/datum/computer_file/program/active_program = null // A currently active program running on the computer.
@@ -56,6 +58,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
 	var/comp_light_luminosity = 3 //The brightness of that light
 	var/comp_light_color //The color of that light
+
+	var/stored_name // used for the identifier hardware
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
@@ -178,6 +182,7 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
 		update_slot_icon()
+
 		return removed_id
 
 	return ..()
@@ -185,10 +190,11 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 /obj/item/modular_computer/InsertID(obj/item/inserting_item)
 	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
 	var/obj/item/computer_hardware/card_slot/card_slot2 = all_components[MC_CARD2]
+
 	if(!(card_slot || card_slot2))
 		return FALSE
 
-	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	var/obj/item/card/inserting_id = inserting_item.GetID()
 	if(!inserting_id)
 		return FALSE
 
@@ -197,9 +203,7 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 			var/mob/living/carbon/human/human_wearer = loc
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
-		var/obj/item/card/id/fixed_id = inserting_id // you WILL typecast or ELSE
 		update_slot_icon()
-		return fixed_id // returns the ID that actually got inserted
 
 	return FALSE
 
@@ -509,6 +513,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	return TRUE
 
 /obj/item/modular_computer/screwdriver_act(mob/user, obj/item/tool)
+	if(!deconstructable)
+		return
 	if(!length(all_components))
 		balloon_alert(user, "no components installed!")
 		return
@@ -551,7 +557,7 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 			return
 
 	// Insert new hardware
-	if(istype(W, /obj/item/computer_hardware))
+	if(istype(W, /obj/item/computer_hardware) && upgradable)
 		if(install_component(W, user))
 			return
 
