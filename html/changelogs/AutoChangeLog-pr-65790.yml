@@ -1,0 +1,4 @@
+author: "Spookuni"
+delete-after: True
+changes: 
+  - bugfix: "Haloperidol has been properly labelled in medical cyborg hyposprays after several instances of mediborg induced brain damage were found in human patients."
