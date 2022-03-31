@@ -301,15 +301,8 @@
 		var/obj/item/toy/crayon/crayon = painting_implement
 		return crayon.paint_color
 	else if(istype(painting_implement, /obj/item/pen))
-		var/obj/item/pen/P = painting_implement
-		switch(P.colour)
-			if("black")
-				return "#000000"
-			if("blue")
-				return "#0000ff"
-			if("red")
-				return "#ff0000"
-		return P.colour
+		var/obj/item/pen/pen = painting_implement
+		return pen.colour
 	else if(istype(painting_implement, /obj/item/soap) || istype(painting_implement, /obj/item/reagent_containers/glass/rag))
 		return canvas_color
 
