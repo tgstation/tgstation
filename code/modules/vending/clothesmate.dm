@@ -26,7 +26,7 @@
 		/obj/item/clothing/head/kippah = 3,
 		/obj/item/clothing/head/taqiyahred = 3,
 		/obj/item/clothing/mask/bandana/color = 3,
-		//obj/item/clothing/mask/bandana/color/striped = 3,
+		/obj/item/clothing/mask/bandana/color/striped = 3,
 		/obj/item/clothing/mask/bandana/color/skull = 3,
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/neck/scarf/pink = 3,

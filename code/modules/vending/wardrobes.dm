@@ -23,7 +23,7 @@
 					/obj/item/clothing/shoes/jackboots = 3,
 					/obj/item/clothing/head/beret/sec = 3,
 					/obj/item/clothing/head/soft/sec = 3,
-					//obj/item/clothing/mask/bandana/color/striped/security = 3,
+					/obj/item/clothing/mask/bandana/color/striped/security = 3,
 					/obj/item/clothing/gloves/color/black = 3,
 					/obj/item/clothing/under/rank/security/officer/skirt = 3,
 					/obj/item/clothing/under/rank/security/officer/grey = 3,
@@ -186,7 +186,7 @@
 					/obj/item/storage/backpack/duffelbag/science = 3,
 					/obj/item/clothing/head/beret/science = 3,
 					/obj/item/clothing/head/beret/science/fancy = 3,
-					//obj/item/clothing/mask/bandana/color/striped/science = 3,
+					/obj/item/clothing/mask/bandana/color/striped/science = 3,
 					/obj/item/clothing/suit/hooded/wintercoat/science = 3,
 					/obj/item/clothing/under/rank/rnd/scientist = 3,
 					/obj/item/clothing/under/rank/rnd/scientist/skirt = 3,
@@ -214,7 +214,7 @@
 					/obj/item/clothing/suit/apron/waders = 3,
 					/obj/item/clothing/under/rank/civilian/hydroponics = 3,
 					/obj/item/clothing/under/rank/civilian/hydroponics/skirt = 3,
-					//obj/item/clothing/mask/bandana/color/striped/botany = 3,
+					/obj/item/clothing/mask/bandana/color/striped/botany = 3,
 					/obj/item/clothing/accessory/armband/hydro = 3)
 	refill_canister = /obj/item/vending_refill/wardrobe/hydro_wardrobe
 	payment_department = ACCOUNT_SRV
