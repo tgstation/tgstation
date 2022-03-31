@@ -22,6 +22,11 @@
 	human.hair_color = "#bb9966" // brown
 	human.update_hair()
 
+	var/obj/item/organ/ears/fox/fox_ears = human.getorgan(/obj/item/organ/ears/fox)
+	if (fox_ears)
+		fox_ears.color = human.hair_color
+		human.update_body()
+
 /datum/species/human/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
