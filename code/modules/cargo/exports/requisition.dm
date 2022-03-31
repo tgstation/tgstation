@@ -9,7 +9,7 @@
 	if(!..() || !istype(paperwork))
 		return FALSE
 
-	var/crate_not_ordered = !SSshuttle.order_history[paperwork.order_id]
+	var/crate_not_ordered = !SSshuttle.order_history_by_id[paperwork.order_id]
 	// we don't want to give points unless the crate order was approved
 	if(crate_not_ordered)
 		return FALSE
