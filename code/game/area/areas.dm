@@ -25,6 +25,8 @@
 	var/list/active_firelocks
 	///A list of all fire alarms in this area. Used by fire locks and burglar alarms to tell the fire alarm to change its icon.
 	var/list/firealarms
+	///A list of all air alarms in our area. Used by firelocks to prevent issues with areas that are supposed to be cold
+	var/list/airalarms
 	///Alarm type to count of sources. Not usable for ^ because we handle fires differently
 	var/list/active_alarms = list()
 	///We use this just for fire alarms, because they're area based right now so one alarm going poof shouldn't prevent you from clearing your alarms listing. Fire alarms and fire locks will set and clear alarms.

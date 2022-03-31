@@ -219,10 +219,19 @@
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
-	if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST && my_area.active_alarms[ALARM_ATMOS])
-		return FIRELOCK_ALARM_TYPE_HOT
-	if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT && my_area.active_alarms[ALARM_ATMOS])
-		return FIRELOCK_ALARM_TYPE_COLD
+	var/obj/machinery/airalarm/air_alarm = LAZYACCESS(my_area.airalarms,1)
+	
+	if(air_alarm)
+		var/datum/tlv/selected_temperature = air_alarm.TLV["temperature"]
+		if(environment?.temperature >= selected_temperature?.hazard_max)
+			return FIRELOCK_ALARM_TYPE_HOT
+		if(environment?.temperature <= selected_temperature?.hazard_min)
+			return FIRELOCK_ALARM_TYPE_COLD
+	else
+		if(environment?.temperature >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			return FIRELOCK_ALARM_TYPE_HOT
+		if(environment?.temperature <= BODYTEMP_COLD_DAMAGE_LIMIT)
+			return FIRELOCK_ALARM_TYPE_COLD
 	return
 
 /obj/machinery/door/firedoor/proc/process_results(datum/source)
@@ -278,7 +287,6 @@
  * in the merge group datum. sets our alarm type to null, signifying no alarm.
  */
 /obj/machinery/door/firedoor/proc/start_deactivation_process()
-	alarm_type = null
 	soundloop.stop()
 	is_playing_alarm = FALSE
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
@@ -328,8 +336,6 @@
 				place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 			place.unset_fire_alarm_effects()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
-	soundloop.stop()
-	is_playing_alarm = FALSE
 	update_icon() //Sets the door lights even if the door doesn't move.
 	correct_state()
 
