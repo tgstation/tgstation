@@ -41927,7 +41927,7 @@
 /area/commons/dorms)
 "tHJ" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
+//obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/status_display/evac/directional/east,
 /turf/open/floor/wood,
