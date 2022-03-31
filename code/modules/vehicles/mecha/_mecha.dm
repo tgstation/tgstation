@@ -1272,7 +1272,7 @@
 			else
 				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
 			playsound(get_turf(user),A.load_audio,50,TRUE)
-			to_chat(user, span_notice("You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]"))
+			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
 			A.rounds = A.rounds - ammo_needed
 			if(A.custom_materials)
 				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
@@ -1284,7 +1284,7 @@
 		else
 			gun.projectiles_cache = gun.projectiles_cache + A.rounds
 		playsound(get_turf(user),A.load_audio,50,TRUE)
-		to_chat(user, span_notice("You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]"))
+		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
 		A.rounds = 0
 		A.set_custom_materials(list(/datum/material/iron=2000))
 		A.update_name()
