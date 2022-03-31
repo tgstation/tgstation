@@ -19436,7 +19436,6 @@
 /area/security/brig)
 "fBL" = (
 /obj/machinery/computer/rdservercontrol,
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/science/server)
@@ -32628,6 +32627,10 @@
 /area/maintenance/tram/right)
 "kok" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/airalarm/server{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/open/floor/iron/dark,
 /area/science/server)
 "kol" = (

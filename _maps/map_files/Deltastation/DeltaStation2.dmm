@@ -55652,8 +55652,11 @@
 /obj/item/clipboard,
 /obj/item/wrench,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/airalarm/directional/west,
 /obj/structure/extinguisher_cabinet/directional/north,
+/obj/machinery/airalarm/server{
+	dir = 8;
+	pixel_x = -22
+	},
 /turf/open/floor/iron/dark,
 /area/science/server)
 "nXk" = (
