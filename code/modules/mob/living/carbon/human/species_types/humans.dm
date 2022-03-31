@@ -46,6 +46,12 @@
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 	return ..()
 
+/datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
+	return mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
+
+/datum/species/human/felinid/is_wagging_tail(mob/living/carbon/human/H)
+	return mutant_bodyparts["waggingtail_human"]
+
 /datum/species/human/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender == MALE)
 		if(prob(1))
