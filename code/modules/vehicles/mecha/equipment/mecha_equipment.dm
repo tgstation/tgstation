@@ -152,23 +152,27 @@
 	forceMove(M)
 	log_message("[src] initialized.", LOG_MECHA)
 
+/**
+ * called to detach this equipment
+ * Args:
+ * * moveto: optional target to move this equipment to
+ */
 /obj/item/mecha_parts/mecha_equipment/proc/detach(atom/moveto)
 	moveto = moveto || get_turf(chassis)
-	if(src.Move(moveto))
-		LAZYREMOVE(chassis.flat_equipment, src)
-		var/to_unequip_slot = equipment_slot
-		if(equipment_slot == MECHA_WEAPON)
-			if(chassis.equip_by_category[MECHA_R_ARM] == src)
-				to_unequip_slot = MECHA_R_ARM
-			else
-				to_unequip_slot = MECHA_L_ARM
-		if(islist(chassis.equip_by_category[to_unequip_slot]))
-			chassis.equip_by_category[to_unequip_slot] -= src
+	forceMove(moveto)
+	LAZYREMOVE(chassis.flat_equipment, src)
+	var/to_unequip_slot = equipment_slot
+	if(equipment_slot == MECHA_WEAPON)
+		if(chassis.equip_by_category[MECHA_R_ARM] == src)
+			to_unequip_slot = MECHA_R_ARM
 		else
-			chassis.equip_by_category[to_unequip_slot] = null
-		log_message("[src] removed from equipment.", LOG_MECHA)
-		chassis = null
-	return
+			to_unequip_slot = MECHA_L_ARM
+	if(islist(chassis.equip_by_category[to_unequip_slot]))
+		chassis.equip_by_category[to_unequip_slot] -= src
+	else
+		chassis.equip_by_category[to_unequip_slot] = null
+	log_message("[src] removed from equipment.", LOG_MECHA)
+	chassis = null
 
 /obj/item/mecha_parts/mecha_equipment/log_message(message, message_type=LOG_GAME, color=null, log_globally)
 	if(chassis)

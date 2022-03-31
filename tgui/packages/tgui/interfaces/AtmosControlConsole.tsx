@@ -9,6 +9,10 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
+import {
+  AtmosHandbookContent,
+  atmosHandbookHooks,
+} from './common/AtmosHandbook';
 import { Gasmix, GasmixParser } from './common/GasmixParser';
 
 type Chamber = {
@@ -37,8 +41,9 @@ export const AtmosControlConsole = (props, context) => {
     = chambers.length === 1
       ? chambers[0]
       : chambers.find((chamber) => chamber.id === chamberId);
+  const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
   return (
-    <Window width={500} height={315}>
+    <Window width={550} height={350}>
       <Window.Content scrollable>
         {chambers.length > 1 && (
           <Section title="Chamber Selection">
@@ -64,7 +69,11 @@ export const AtmosControlConsole = (props, context) => {
               />)
           }>
           {!!selectedChamber && !!selectedChamber.gasmix ? (
-            <GasmixParser gasmix={selectedChamber.gasmix} />
+            <GasmixParser
+              gasmix={selectedChamber.gasmix}
+              gasesOnClick={setActiveGasId}
+              reactionOnClick={setActiveReactionId}
+            />
           ) : (
             <Box italic> {'No Sensors Detected!'}</Box>
           )}
@@ -162,6 +171,7 @@ export const AtmosControlConsole = (props, context) => {
             </Stack>
           </Section>
         )}
+        <AtmosHandbookContent />
       </Window.Content>
     </Window>
   );

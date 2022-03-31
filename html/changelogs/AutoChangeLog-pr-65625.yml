@@ -1,6 +1,0 @@
-author: "Watermelon914"
-delete-after: True
-changes: 
-  - admin: "Admins can now see the number of players when someone sends an urgent ahelp."
-  - admin: "Added an option to config send non-urgent ahelps to a channel (where there are no available admins on)."
-  - admin: "Added a response that is sent by the server when an ahelp is responded to in any way by an admin."
