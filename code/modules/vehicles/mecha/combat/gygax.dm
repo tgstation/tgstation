@@ -44,7 +44,7 @@
 		chassis.movedelay = initial(chassis.movedelay)
 		chassis.step_energy_drain = chassis.normal_step_energy_drain
 		chassis.balloon_alert(owner, "you disable the overload")
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /obj/vehicle/sealed/mecha/combat/gygax/dark
 	desc = "A lightweight exosuit, painted in a dark scheme. This model appears to have some modifications."

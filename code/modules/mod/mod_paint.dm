@@ -38,16 +38,16 @@
 	var/obj/item/mod/control/mod = attacked_atom
 	if(mod.active || mod.activating)
 		balloon_alert(user, "suit is active!")
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(editing_mod)
-		return TRUE
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	editing_mod = mod
 	proxy_view = new()
 	proxy_view.appearance = editing_mod.appearance
 	proxy_view.color = null
 	proxy_view.register_to_client(user.client)
 	ui_interact(user)
-	return TRUE
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/mod/paint/ui_interact(mob/user, datum/tgui/ui)
 	if(!editing_mod)

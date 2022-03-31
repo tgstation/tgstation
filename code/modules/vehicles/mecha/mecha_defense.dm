@@ -367,8 +367,4 @@
 			cell.forceMove(WR)
 			cell.charge = rand(0, cell.charge)
 			cell = null
-		if(internal_tank)
-			WR.crowbar_salvage += internal_tank
-			internal_tank.forceMove(WR)
-			cell = null
 	. = ..()

@@ -34,7 +34,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/turf/T = get_turf(mob)
 	if(!isturf(T))
 		return
-	atmosanalyzer_scan(usr, T, TRUE)
+	atmos_scan(user=usr, target=T, tool=null, silent=TRUE)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
