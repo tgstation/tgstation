@@ -79,6 +79,7 @@
 			chosen_painting.patron_name = ""
 			chosen_painting.patron_ckey = ""
 			chosen_painting.credit_value = 0
+			chosen_painting.frame_type = initial(chosen_painting.frame_type)
 			log_admin("[key_name(user)] has reset patronage data on a persistent painting made by [chosen_painting.creator_ckey] with id [chosen_painting.md5].")
 			return TRUE
 		if("remove_tag")
