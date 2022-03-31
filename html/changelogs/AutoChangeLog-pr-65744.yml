@@ -1,0 +1,4 @@
+author: "TheBonded, timothymtorres"
+delete-after: True
+changes: 
+  - bugfix: "Fixed mulebot movement animation to be smoother"
