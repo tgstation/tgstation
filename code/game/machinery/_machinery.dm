@@ -971,7 +971,7 @@
 	take_damage(500, BRUTE, MELEE, 1)
 
 /obj/machinery/vv_edit_var(vname, vval)
-	if(vname == "occupant")
+	if(vname == NAMEOF(src, occupant))
 		set_occupant(vval)
 		datum_flags |= DF_VAR_EDITED
 		return TRUE

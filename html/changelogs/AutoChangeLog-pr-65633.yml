@@ -1,4 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes: 
-  - bugfix: "The engineering console on Icebox is once again connected to the station's grid and can see APC status and available power."

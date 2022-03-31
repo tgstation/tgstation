@@ -391,7 +391,7 @@
 	var/obj/item/food_item
 	switch(mode)
 		if(DISPENSE_LOLLIPOP_MODE)
-			food_item = new /obj/item/food/lollipop(T)
+			food_item = new /obj/item/food/lollipop/cyborg(T)
 		if(DISPENSE_ICECREAM_MODE)
 			food_item = new /obj/item/food/icecream(T, list(ICE_CREAM_VANILLA))
 			food_item.desc = "Eat the ice cream."
