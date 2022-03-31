@@ -49,11 +49,32 @@
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 	return ..()
 
-/datum/species/human/felinid/can_wag_tail(mob/living/carbon/human/H)
+/datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
+	if(H)
+		stop_wagging_tail(H)
+
+/datum/species/human/spec_stun(mob/living/carbon/human/H,amount)
+	if(H)
+		stop_wagging_tail(H)
+	. = ..()
+
+/datum/species/human/can_wag_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["tail_human"] || mutant_bodyparts["waggingtail_human"]
 
-/datum/species/human/felinid/is_wagging_tail(mob/living/carbon/human/H)
+/datum/species/human/is_wagging_tail(mob/living/carbon/human/H)
 	return mutant_bodyparts["waggingtail_human"]
+
+/datum/species/human/start_wagging_tail(mob/living/carbon/human/H)
+	if(mutant_bodyparts["tail_human"])
+		mutant_bodyparts["waggingtail_human"] = mutant_bodyparts["tail_human"]
+		mutant_bodyparts -= "tail_human"
+	H.update_body()
+
+/datum/species/human/stop_wagging_tail(mob/living/carbon/human/H)
+	if(mutant_bodyparts["waggingtail_human"])
+		mutant_bodyparts["tail_human"] = mutant_bodyparts["waggingtail_human"]
+		mutant_bodyparts -= "waggingtail_human"
+	H.update_body()
 
 /datum/species/human/get_scream_sound(mob/living/carbon/human/human)
 	if(human.gender == MALE)
