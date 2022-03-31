@@ -1973,7 +1973,7 @@
 /area/mine/laborcamp)
 "GX" = (
 /obj/structure/table,
-/obj/machinery/computer/bookmanagement,
+//obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/mine/laborcamp)
