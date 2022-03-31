@@ -12304,6 +12304,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/service/hydroponics/garden)
+"eYZ" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/wood,
+/area/service/library)
 "eZe" = (
 /obj/machinery/door/window/right/directional/north{
 	dir = 8;
@@ -96419,7 +96426,7 @@ qqn
 oPd
 iGZ
 pXx
-vMz
+eYZ
 dCx
 pXx
 byR
