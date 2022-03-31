@@ -91,8 +91,8 @@
 	* Deletes itself if it is ever not in your hand, or if you should have no access to TK.
 */
 /obj/item/tk_grab
-	name = "Telekinetic Grab"
-	desc = "Magic"
+	name = "telekinetic grab"
+	desc = "i can be the mind controller"
 	icon = 'icons/obj/magic.dmi'//Needs sprites
 	icon_state = "2"
 	item_flags = NOBLUDGEON | ABSTRACT | DROPDEL
@@ -132,11 +132,11 @@
 	qdel(src)
 
 /obj/item/tk_grab/examine(user)
-	if (focus)
-		return focus.examine(user)
-	else
-		return ..()
-
+	. = ..()
+	if(focus)
+		. += span_info("<b>Left-click</b> to primary attack with [focus].")
+		. += span_info("<b>Right-click</b> to secondary attack with [focus].")
+		. += span_info("Use <b>throw mode</b> to throw [focus].")
 
 /obj/item/tk_grab/attack_self(mob/user)
 	if(!focus)
@@ -257,7 +257,7 @@
 	if(!check_if_focusable(target))
 		return
 	focus = target
-	update_appearance()
+	update_appearance(updates=ALL)
 	apply_focus_overlay()
 	return TRUE
 

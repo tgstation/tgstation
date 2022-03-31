@@ -99,13 +99,16 @@
 
 /mob/living/carbon/human/can_use_guns(obj/item/G)
 	. = ..()
-	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
-			balloon_alert(src, "fingers are too big!")
-			return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
+	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
+		var/obj/item/tk_grab/grabber = is_holding_item_of_type(/obj/item/tk_grab) //can fire with tk even if our fingers are fat
+		if(grabber && grabber.focus == G)
+			return TRUE
+		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
+			balloon_alert(src, "fingers are too big!")
+			return FALSE
 
 /mob/living/carbon/human/get_policy_keywords()
 	. = ..()

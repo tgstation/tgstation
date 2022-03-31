@@ -2,6 +2,7 @@
 	distro += variance
 	var/targloc = get_turf(target)
 	ready_proj(target, user, quiet, zone_override, fired_from)
+	var/tk_recoil = calculate_tk_recoil(fired_from)
 	if(pellets == 1)
 		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
@@ -21,18 +22,35 @@
 		next_delay = round(next_delay * 0.5)
 
 	user.changeNext_move(next_delay)
-	if(!tk_firing(user, fired_from))
-		user.newtonian_move(get_dir(target, user))
-	else if(ismovable(fired_from))
-		var/atom/movable/firer = fired_from
-		if(!firer.newtonian_move(get_dir(target, fired_from), instant = TRUE))
-			var/throwtarget = get_step(fired_from, get_dir(target, fired_from))
-			firer.safe_throw_at(throwtarget, 1, 2)
 	update_appearance()
+
+	//user thrown backwards in microgravity
+	if(!tk_firing(fired_from))
+		user.newtonian_move(get_dir(target, user))
+		return TRUE
+
+	if(!ismovable(fired_from))
+		return TRUE
+
+	//gun thrown backwards
+	var/throwtarget = get_edge_target_turf(firer, get_dir(target, firer))
+	firer.safe_throw_at(throwtarget, tk_recoil, 2)
 	return TRUE
 
-/obj/item/ammo_casing/proc/tk_firing(mob/living/user, atom/fired_from)
-	return fired_from.loc != user ? TRUE : FALSE
+/obj/item/ammo_casing/proc/tk_firing(atom/fired_from)
+	return !get(fired_from, /mob)
+
+/obj/item/ammo_casing/proc/calculate_tk_recoil(atom/firer)
+	var/recoil = 1
+	if(isgun(firer))
+		var/obj/item/gun/the_gun = firer
+		if(the_gun.recoil)
+			recoil = max(the_gun.recoil, recoil)
+
+	if(loaded_projectile)
+		recoil = max(round(loaded_projectile.damage / 10), recoil)
+
+	return recoil
 
 /obj/item/ammo_casing/proc/ready_proj(atom/target, mob/living/user, quiet, zone_override = "", atom/fired_from)
 	if (!loaded_projectile)
@@ -52,7 +70,7 @@
 		loaded_projectile.damage *= G.projectile_damage_multiplier
 		loaded_projectile.stamina *= G.projectile_damage_multiplier
 
-	if(tk_firing(user, fired_from))
+	if(tk_firing(fired_from))
 		loaded_projectile.ignore_source_check = TRUE
 
 	if(reagents && loaded_projectile.reagents)
@@ -67,7 +85,7 @@
 	var/firing_dir
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
-	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))
+	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(fired_from))
 		new firing_effect_type(get_turf(src), firing_dir)
 
 	var/direct_target

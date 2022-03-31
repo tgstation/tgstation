@@ -164,8 +164,8 @@
 /obj/item/gun/proc/can_shoot()
 	return TRUE
 
-/obj/item/gun/proc/tk_firing(mob/living/user)
-	return loc != user ? TRUE : FALSE
+/obj/item/gun/proc/tk_firing()
+	return !get(src, /mob)
 
 /obj/item/gun/proc/shoot_with_empty_chamber(mob/living/user as mob|obj)
 	visible_message(span_warning("*click*"), vision_distance = COMBAT_MESSAGE_RANGE)
@@ -173,7 +173,7 @@
 
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
-	if(recoil && !tk_firing(user))
+	if(recoil && !tk_firing())
 		shake_camera(user, recoil + 1, recoil)
 
 	if(suppressed)
@@ -181,23 +181,29 @@
 	else
 		playsound(src, fire_sound, fire_sound_volume, vary_fire_sound)
 		if(message)
-			if(tk_firing(user))
-				visible_message(span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"), \
-								blind_message = span_hear("You hear a gunshot!"), \
-								vision_distance = COMBAT_MESSAGE_RANGE)
-			else if(pointblank)
-				user.visible_message(span_danger("[user] fires [src] point blank at [pbtarget]!"), \
-								span_danger("You fire [src] point blank at [pbtarget]!"), \
-								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget)
-				to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
+			if(pointblank)
+				if(tk_firing())
+					visible_message(span_danger("[src] fires point blank at [pbtarget]!"), \
+									null, \
+									span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget)
+					to_chat(pbtarget, span_userdanger("[src] fires point blank at you!"))
+				else
+					user.visible_message(span_danger("[user] fires [src] point blank at [pbtarget]!"), \
+										span_danger("You fire [src] point blank at [pbtarget]!"), \
+										span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget)
+					to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
 				if(pb_knockback > 0 && ismob(pbtarget))
 					var/mob/PBT = pbtarget
 					var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
 					PBT.throw_at(throw_target, pb_knockback, 2)
-			else if(!tk_firing(user))
-				user.visible_message(span_danger("[user] fires [src]!"), \
-								span_danger("You fire [src]!"), \
+			else if(tk_firing())
+				visible_message(span_danger("[src] fires by itself!"), \
+								null, \
 								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE)
+			else
+				user.visible_message(span_danger("[user] fires [src]!"), \
+									span_danger("You fire [src]!"), \
+									span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE)
 
 /obj/item/gun/emp_act(severity)
 	. = ..()
