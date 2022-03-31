@@ -19,8 +19,8 @@
 	payday_modifier = 1
 
 /datum/species/human/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.hairstyle = "Business Hair"
-	human.hair_color = "#bb9966" // brown
+	human.hairstyle = "Unkept"
+	human.hair_color = "#f08e33" // brown
 	human.update_hair()
 
 	var/obj/item/organ/ears/fox/fox_ears = human.getorgan(/obj/item/organ/ears/fox)
