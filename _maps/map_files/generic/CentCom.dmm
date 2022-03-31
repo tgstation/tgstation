@@ -322,16 +322,6 @@
 	desc = "This is a plaque commemorating the thunderdome and all those who have died at its pearly blast doors."
 	},
 /area/tdome/observation)
-"by" = (
-/obj/structure/chair/comfy/brown{
-	color = "#596479";
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8
-	},
-/turf/open/floor/iron/grimy,
-/area/centcom/admin)
 "bA" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular{
@@ -1193,11 +1183,6 @@
 "ev" = (
 /obj/machinery/photocopier,
 /turf/open/floor/catwalk_floor,
-/area/centcom/holding)
-"ew" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/bookmanagement,
-/turf/open/floor/carpet/black,
 /area/centcom/holding)
 "ex" = (
 /obj/effect/turf_decal/tile/yellow/half,
@@ -4986,13 +4971,6 @@
 	},
 /turf/open/floor/iron,
 /area/syndicate_mothership/control)
-"ri" = (
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8
-	},
-/turf/open/floor/iron/grimy,
-/area/centcom/admin)
 "rj" = (
 /obj/structure/mirror/directional/east,
 /obj/structure/sink{
@@ -8672,6 +8650,11 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
+"DF" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/carpet/black,
+/area/centcom/holding)
 "DG" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -8765,6 +8748,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/wizard_station)
+"DU" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/centcom/admin)
 "DV" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -9659,6 +9649,12 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/centcom/holding)
+"Kb" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/admin)
 "Kd" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -12908,13 +12904,6 @@
 /obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
-"VV" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/admin/storage)
 "VW" = (
 /obj/machinery/computer/prisoner/management{
 	dir = 1
@@ -13298,6 +13287,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/centcom/admin)
+"WV" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/admin/storage)
 "WX" = (
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/grimy,
@@ -13574,12 +13570,6 @@
 	},
 /turf/open/floor/wood/tile,
 /area/centcom/holding)
-"XS" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom/admin)
 "XT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -13718,6 +13708,16 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
+"YE" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/centcom/admin)
 "YF" = (
 /obj/machinery/gibber,
 /turf/open/floor/catwalk_floor,
@@ -36427,7 +36427,7 @@ fO
 OT
 bX
 Sd
-ew
+DF
 Rv
 YC
 YC
@@ -37455,7 +37455,7 @@ fO
 Vo
 ba
 Sd
-ew
+DF
 Rv
 YC
 YC
@@ -51041,7 +51041,7 @@ aa
 On
 AF
 Xq
-XS
+Kb
 Xq
 cw
 On
@@ -52841,7 +52841,7 @@ On
 yO
 To
 ye
-ri
+DU
 oV
 On
 Wq
@@ -53610,7 +53610,7 @@ nl
 pd
 On
 eO
-by
+YE
 QV
 QV
 Mo
@@ -54644,7 +54644,7 @@ nm
 XA
 Sx
 Nn
-VV
+WV
 cL
 YU
 vb
