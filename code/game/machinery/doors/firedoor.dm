@@ -336,6 +336,8 @@
 				place.alarm_manager.clear_alarm(ALARM_FIRE, place)
 			place.unset_fire_alarm_effects()
 	COOLDOWN_START(src, detect_cooldown, DETECT_COOLDOWN_STEP_TIME)
+	soundloop.stop()
+	is_playing_alarm = FALSE
 	update_icon() //Sets the door lights even if the door doesn't move.
 	correct_state()
 
