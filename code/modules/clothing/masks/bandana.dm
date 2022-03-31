@@ -160,7 +160,7 @@
 /obj/item/clothing/mask/bandana/color/striped/science
 	name = "striped science bandana"
 	desc = "A fine bandana with nanotech lining, a stripe across and science colors."
-	greyscale_colors = "#DCDCDC5#8019a0"
+	greyscale_colors = "#DCDCDC#8019a0"
 	flags_1 = NONE
 
 /obj/item/clothing/mask/bandana/color/striped/botany
