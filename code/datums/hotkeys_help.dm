@@ -24,7 +24,10 @@
 		var/list/binding_names = list()
 		for(var/kb_name in key_bindings_by_key[key])
 			var/datum/keybinding/binding = GLOB.keybindings_by_name[kb_name]
-			binding_names += binding.full_name
+			binding_names += list(list(
+				"name" = binding.full_name,
+				"desc" = binding.description
+			))
 
 		// Add to list
 		keys_list += list(list(

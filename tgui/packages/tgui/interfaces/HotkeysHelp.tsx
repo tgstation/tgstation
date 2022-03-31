@@ -3,12 +3,18 @@ import {
   Box,
   Section,
   Table,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
+type BindingInfo = {
+  name: string;
+  desc: string;
+}
+
 type HotkeyInfo = {
   key: string;
-  bindings: string[];
+  bindings: BindingInfo[];
 }
 
 type HotkeysHelpData = {
@@ -103,11 +109,20 @@ export const HotkeysHelp = (_, context) => {
                 <Table.Cell bold textAlign="right" p={1}>
                   <KeyBinding keycode={hotkey.key} />
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell style={{ position: "relative" }}>
                   {hotkey.bindings.map(binding => (
-                    <Box key={binding} p={1} m={1} inline className="HotkeysHelp__pill">
-                      {binding}
-                    </Box>
+                    binding.desc
+                      ? (
+                        <Tooltip key={binding.name} content={binding.desc} position="bottom">
+                          <Box p={1} m={1} inline className="HotkeysHelp__pill">
+                            {binding.name}
+                          </Box>
+                        </Tooltip>
+                      ) : (
+                        <Box p={1} m={1} inline className="HotkeysHelp__pill">
+                          {binding.name}
+                        </Box>
+                      )
                   ))}
                 </Table.Cell>
               </Table.Row>
