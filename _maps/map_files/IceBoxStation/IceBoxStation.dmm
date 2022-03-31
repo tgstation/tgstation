@@ -8683,10 +8683,7 @@
 	network = list("ss13","rd");
 	pixel_x = 22
 	},
-/obj/machinery/airalarm/server{
-	dir = 4;
-	pixel_x = 22
-	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/science/server)
 "dbF" = (

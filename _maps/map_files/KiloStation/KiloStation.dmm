@@ -46689,15 +46689,12 @@
 "kYm" = (
 /obj/effect/landmark/blobstart,
 /obj/machinery/light/small/directional/east,
-/obj/machinery/airalarm/server{
-	dir = 4;
-	pixel_x = 22
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark/telecomms,
 /area/science/server)
 "kYM" = (

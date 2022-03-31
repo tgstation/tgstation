@@ -15290,10 +15290,7 @@
 /obj/item/wrench,
 /obj/machinery/light_switch/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/airalarm/server{
-	dir = 8;
-	pixel_x = -22
-	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/science/server)
 "ehn" = (
