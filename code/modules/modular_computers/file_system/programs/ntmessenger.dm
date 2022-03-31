@@ -141,7 +141,7 @@
 
 	var/obj/item/computer_hardware/cartridge_slot = computer.all_components[MC_CART]
 
-	if(computer.all_components[MC_CART])
+	if(cartridge_slot)
 		data["canSpam"] = cartridge_slot.CanSpam()
 
 	return data
