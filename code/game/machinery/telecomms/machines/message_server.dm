@@ -177,7 +177,8 @@
 /datum/signal/subspace/messaging/modular/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
-	return "[data["targets"][1].saved_identification] ([data["targets"][1].saved_job])"
+	var/obj/item/modular_computer/target = data["targets"][1]
+	return "[target.saved_identification] ([target.saved_job])"
 
 /datum/signal/subspace/messaging/modular/proc/format_message()
 	return "\"[data["message"]]\""
