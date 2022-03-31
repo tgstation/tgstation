@@ -138,7 +138,7 @@
 	id = "foxtail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
-	build_path = /obj/item/organ/tail/fox
+	build_path = /obj/item/organ/external/tail/fox
 	category = list(SPECIES_HUMAN)
 
 /datum/design/cat_ears

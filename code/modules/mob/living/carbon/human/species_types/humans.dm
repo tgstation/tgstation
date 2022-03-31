@@ -11,6 +11,7 @@
 	)
 	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_human" = "Fox")
 	mutantears = /obj/item/organ/internal/ears/fox
+	mutant_organs = list(/obj/item/organ/external/tail/fox)
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW | CLOTH | BUGS
@@ -44,7 +45,7 @@
 		else if (H.dna.features["ears"] == "Cat")
 			mutantears = /obj/item/organ/ears/cat
 		if(H.dna.features["tail_human"] == "Fox")
-			var/obj/item/organ/tail/fox/tail = new
+			var/obj/item/organ/external/tail/fox/tail = new
 			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
 	return ..()
 
