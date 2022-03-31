@@ -12014,11 +12014,6 @@
 /area/commons/vacant_room/office)
 "eOO" = (
 /obj/structure/table/wood,
-//obj/machinery/status_display/evac/directional/east,
-/obj{
-	name = "---Merge conflict marker---"
-	},
-/obj/structure/table/wood,
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /obj/machinery/light_switch/directional/north,
 /obj/machinery/status_display/evac/directional/east,
