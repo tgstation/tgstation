@@ -17,12 +17,45 @@
 	max_integrity = 200
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0, ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 0)
 	var/state = BOOKCASE_UNANCHORED
-	/// When enabled, books_to_load number of random books will be generated for this bookcase when first interacted with.
+	/// When enabled, books_to_load number of random books will be generated for this bookcase
 	var/load_random_books = FALSE
 	/// The category of books to pick from when populating random books.
 	var/random_category = null
 	/// How many random books to generate.
 	var/books_to_load = 0
+
+/obj/structure/bookcase/Initialize(mapload)
+	. = ..()
+	if(!mapload || QDELETED(src))
+		return
+	set_anchored(TRUE)
+	state = BOOKCASE_FINISHED
+	for(var/obj/item/I in loc)
+		if(!isbook(I))
+			continue
+		I.forceMove(src)
+	update_appearance()
+	SSlibrary.shelves_to_load += src
+
+///Loads the shelf, both by allowing it to generate random items, and by adding its contents to a list used by library machines
+/obj/structure/bookcase/proc/load_shelf()
+	//Loads a random selection of books in from the db, adds a copy of their info to a global list
+	//To send to library consoles as a starting inventory
+	if(load_random_books)
+		create_random_books(books_to_load, src, FALSE, random_category)
+		update_appearance() //Make sure you look proper
+
+	var/area/our_area = get_area(src)
+	var/area_type = our_area.type //Save me from the dark
+
+	if(!SSlibrary.books_by_area[area_type])
+		SSlibrary.books_by_area[area_type] = list()
+
+	//Time to populate that list
+	var/list/books_in_area = SSlibrary.books_by_area[area_type]
+	for(var/obj/item/book/book in contents)
+		var/datum/book_info/info = book.book_data
+		books_in_area += info.return_copy()
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()
@@ -37,18 +70,6 @@
 			. += span_notice("There's space inside for a <i>wooden</i> shelf.")
 		if(BOOKCASE_FINISHED)
 			. += span_notice("There's a <b>small crack</b> visible on the shelf.")
-
-/obj/structure/bookcase/Initialize(mapload)
-	. = ..()
-	if(!mapload)
-		return
-	set_anchored(TRUE)
-	state = BOOKCASE_FINISHED
-	for(var/obj/item/I in loc)
-		if(!isbook(I))
-			continue
-		I.forceMove(src)
-	update_appearance()
 
 /obj/structure/bookcase/set_anchored(anchorvalue)
 	. = ..()
@@ -101,10 +122,10 @@
 				to_chat(user, span_notice("You empty \the [I] into \the [src]."))
 				update_appearance()
 			else if(istype(I, /obj/item/pen))
-				if(!user.can_write(I))
+				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
 					return
 				var/newname = tgui_input_text(user, "What would you like to title this bookshelf?", "Bookshelf Renaming", max_length = MAX_NAME_LEN)
-				if(!user.canUseTopic(src, BE_CLOSE))
+				if(!user.canUseTopic(src, BE_CLOSE) || !user.can_write(I))
 					return
 				if(!newname)
 					return
@@ -122,16 +143,12 @@
 			else
 				return ..()
 
-
 /obj/structure/bookcase/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(!istype(user))
 		return
-	if(load_random_books)
-		create_random_books(books_to_load, src, FALSE, random_category)
-		load_random_books = FALSE
 	if(!length(contents))
 		return
 	var/obj/item/book/choice = tgui_input_list(user, "Book to remove from the shelf", "Remove Book", sort_names(contents.Copy()))
@@ -146,27 +163,22 @@
 		choice.forceMove(drop_location())
 	update_appearance()
 
-
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	var/atom/Tsec = drop_location()
 	new /obj/item/stack/sheet/mineral/wood(Tsec, 4)
 	for(var/obj/item/I in contents)
-		if(!isbook(I))
+		if(!isbook(I)) //Wake me up inside
 			continue
 		I.forceMove(Tsec)
 	return ..()
-
 
 /obj/structure/bookcase/update_icon_state()
 	if(state == BOOKCASE_UNANCHORED || state == BOOKCASE_ANCHORED)
 		icon_state = "bookempty"
 		return ..()
 	var/amount = length(contents)
-	if(load_random_books)
-		amount += books_to_load
 	icon_state = "book-[clamp(amount, 0, 5)]"
 	return ..()
-
 
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
@@ -178,7 +190,6 @@
 	new /obj/item/book/manual/wiki/engineering_guide(src)
 	new /obj/item/book/manual/wiki/robotics_cyborgs(src)
 	update_appearance()
-
 
 /obj/structure/bookcase/manuals/research_and_development
 	name = "\improper R&D manuals bookcase"

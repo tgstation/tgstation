@@ -9,9 +9,12 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/obj/machinery/computer/bookmanagement/computer //Associated computer - Modes 1 to 3 use this
-	var/obj/item/book/book //Currently scanned book
-	var/mode = 0 //0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	/// A weakref to our associated computer - Modes 1 to 3 use this
+	var/datum/weakref/computer_ref
+	/// Currently scanned book
+	var/datum/book_info/book_data
+	/// 0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
+	var/mode = 0
 
 /obj/item/barcodescanner/attack_self(mob/user)
 	mode += 1
@@ -31,7 +34,7 @@
 		else
 			modedesc = "ERROR"
 	to_chat(user, " - Mode [mode] : [modedesc]")
-	if(computer)
+	if(computer_ref?.resolve())
 		to_chat(user, "<font color=green>Computer has been associated with this unit.</font>")
 	else
 		to_chat(user, "<font color=red>No associated computer found. Only local scans will function properly.</font>")
