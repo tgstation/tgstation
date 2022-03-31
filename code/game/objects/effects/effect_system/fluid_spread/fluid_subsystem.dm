@@ -189,6 +189,10 @@ SUBSYSTEM_DEF(fluids)
 		return
 
 	var/list/cached_heap = spread_heap
-	cached_heap.Swap(cached_heap.Find(spread_time), cached_heap.len)
+	var/index = cached_heap.Find(spread_time)
+	if(!index)
+		return
+
+	cached_heap.Swap(index, cached_heap.len)
 	if (--cached_heap.len)
-		HEAPIFY(cached_heap, 1, __CMP_SPREAD_HEAP_QUEUES)
+		HEAPIFY(cached_heap, index, __CMP_SPREAD_HEAP_QUEUES)
