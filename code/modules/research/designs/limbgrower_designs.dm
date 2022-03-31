@@ -154,7 +154,7 @@
 	id = "foxears"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
-	build_path = /obj/item/organ/ears/fox
+	build_path = /obj/item/organ/internal/ears/fox
 	category = list(SPECIES_HUMAN)
 
 /datum/design/plasmaman_lungs

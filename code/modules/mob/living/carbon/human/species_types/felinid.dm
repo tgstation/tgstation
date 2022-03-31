@@ -39,8 +39,16 @@
 		if(H.dna.features["ears"] == "Cat")
 			var/obj/item/organ/internal/ears/cat/ears = new
 			ears.Insert(H, drop_if_replaced = FALSE)
+		else if (H.dna.features["ears"] == "Fox")
+			mutantears = /obj/item/organ/internal/ears/fox
 		else
+			// You *could* dodge any and all ears with playing a felinid, but you'd be playing a felinid so I guess it's fair.
 			mutantears = /obj/item/organ/internal/ears
+		if(H.dna.features["tail_human"] == "Cat")
+			var/obj/item/organ/tail/cat/tail = new
+			tail.Insert(H, special = TRUE, drop_if_replaced = FALSE)
+		else
+			mutant_organs = list()
 	return ..()
 
 /proc/mass_purrbation()

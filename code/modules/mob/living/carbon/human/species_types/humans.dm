@@ -10,7 +10,7 @@
 		TRAIT_LITERATE,
 	)
 	mutant_bodyparts = list("wings" = "None", "ears" = "Fox", "tail_human" = "Fox")
-	mutantears = /obj/item/organ/ears/fox
+	mutantears = /obj/item/organ/internal/ears/fox
 	use_skintones = 1
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	disliked_food = GROSS | RAW | CLOTH | BUGS
@@ -23,7 +23,7 @@
 	human.hair_color = "#bb9966" // brown
 	human.update_hair()
 
-	var/obj/item/organ/ears/fox/fox_ears = human.getorgan(/obj/item/organ/ears/fox)
+	var/obj/item/organ/internal/ears/fox/fox_ears = human.getorgan(/obj/item/organ/internal/ears/fox)
 	if (fox_ears)
 		fox_ears.color = human.hair_color
 		human.update_body()
@@ -39,7 +39,7 @@
 			H.dna.features["ears"] = "Fox"
 
 		if(H.dna.features["ears"] == "Fox")
-			var/obj/item/organ/ears/fox/ears = new
+			var/obj/item/organ/internal/ears/fox/ears = new
 			ears.Insert(H, drop_if_replaced = FALSE)
 		else if (H.dna.features["ears"] == "Cat")
 			mutantears = /obj/item/organ/ears/cat
