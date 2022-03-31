@@ -46,6 +46,8 @@
 	///The merger_id and merger_typecache variables are used to make rows of firelocks activate at the same time.
 	var/merger_id = "firelocks"
 	var/static/list/merger_typecache
+	///The merge group which contains adjacent firelocks
+	var/datum/merger/merge_group
 	///Overlay object for the warning lights. This and some plane settings allows the lights to glow in the dark.
 	var/mutable_appearance/warn_lights
 
@@ -66,8 +68,6 @@
 	my_area = get_area(src)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
-	refresh_shared_turfs()
-	issue_turfs = list()
 
 	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
 		base_icon_state = "sus"
@@ -78,7 +78,10 @@
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
 	GetMergeGroup(merger_id, allowed_types = merger_typecache)
-	RegisterSignal(GetMergeGroup(merger_id, allowed_types = merger_typecache), COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
+	merge_group = GetMergeGroup(merger_id, merger_typecache)
+	refresh_shared_turfs(merge_group)
+	check_adjacent_turfs()
+	RegisterSignal(merge_group, COMSIG_MERGER_REFRESH_COMPLETE, .proc/refresh_shared_turfs)
 /**
  * Sets the offset for the warning lights.
  *
@@ -200,14 +203,17 @@
 
 /obj/machinery/door/firedoor/proc/refresh_shared_turfs(datum/source, list/leaving_members, list/joining_members)
 	SIGNAL_HANDLER
-	
-	for(var/obj/machinery/door/firedoor/firelock in my_area.firedoors)
-		firelock.check_adjacent_turfs()
+	var/datum/merger/temp_group = source
+	if(temp_group.origin != src)
+		return
+	var/list/shared_problems = list() // We only want to do this once, this is a nice way of pulling that off
+	for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
+		firelock.issue_turfs = shared_problems
 
 /obj/machinery/door/firedoor/proc/check_adjacent_turfs()
 	for(var/dir in GLOB.cardinals)
 		var/turf/checked_turf = get_step(get_turf(src),dir)
-		if(checked_turf && !checked_turf.density)
+		if(checked_turf)
 			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results, override = TRUE)
 			RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results, override = TRUE)
 
@@ -232,7 +238,6 @@
 			return
 
 	var/turf/checked_turf = source
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	var/result = check_atmos(checked_turf)
 	
 	if(!issue_turfs?.len && alarm_type)
@@ -244,12 +249,9 @@
 			start_activation_process(result)
 			return
 	if(result && TURF_SHARES(checked_turf))
-		for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
-			if(!firelock.issue_turfs.Find(checked_turf))
-				firelock.issue_turfs |= checked_turf
-	else if(!result && issue_turfs?.len || !TURF_SHARES(checked_turf))
-		for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
-			firelock.issue_turfs.Remove(checked_turf)
+		issue_turfs |= checked_turf
+	else if((!result && issue_turfs?.len || !TURF_SHARES(checked_turf)) && issue_turfs)
+		issue_turfs.Remove(checked_turf)
 	
 
 /**
@@ -267,7 +269,6 @@
 		return //We're already active
 	soundloop.start()
 	is_playing_alarm = TRUE
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.activate(code)
 /**
@@ -280,7 +281,6 @@
 	alarm_type = null
 	soundloop.stop()
 	is_playing_alarm = FALSE
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
 	for(var/obj/machinery/door/firedoor/buddylock as anything in merge_group.members)
 		buddylock.reset()
 
@@ -572,7 +572,7 @@
 
 /obj/machinery/door/firedoor/Moved()
 	. = ..()
-	refresh_shared_turfs()
+	check_adjacent_turfs()
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
