@@ -52,6 +52,9 @@ SUBSYSTEM_DEF(air)
 	var/list/queued_for_activation
 	var/display_all_groups = FALSE
 
+	var/list/reaction_handbook
+	var/list/gas_handbook
+
 
 /datum/controller/subsystem/air/stat_entry(msg)
 	msg += "C:{"
@@ -91,6 +94,7 @@ SUBSYSTEM_DEF(air)
 	setup_pipenets()
 	setup_turf_visuals()
 	process_adjacent_rebuild()
+	atmos_handbooks_init()
 	return ..()
 
 
