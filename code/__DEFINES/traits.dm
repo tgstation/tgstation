@@ -852,3 +852,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Ignore Crew monitor Z levels
 #define TRAIT_MULTIZ_SUIT_SENSORS "multiz_suit_sensors"
+
+/// Ignores body_parts_covered during the add_fingerprint() proc. Works both on the person and the item in the glove slot.
+#define TRAIT_FINGERPRINT_PASSTHROUGH "fingerprint_passthrough"

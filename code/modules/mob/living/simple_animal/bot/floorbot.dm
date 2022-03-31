@@ -220,11 +220,11 @@
 	if(!target)
 
 		if(bot_mode_flags & BOT_MODE_AUTOPATROL)
-			if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-				start_patrol()
-
-			if(mode == BOT_PATROL)
-				bot_patrol()
+			switch(mode)
+				if(BOT_IDLE, BOT_START_PATROL)
+					start_patrol()
+				if(BOT_PATROL)
+					bot_patrol()
 
 	if(target)
 		if(loc == target || loc == get_turf(target))
@@ -389,9 +389,7 @@
 	icon_state = "[toolbox_color]floorbot[get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 
 /mob/living/simple_animal/bot/floorbot/explode()
-	bot_mode_flags &= ~BOT_MODE_ON
 	target = null
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	drop_part(toolbox, Tsec)
@@ -402,9 +400,7 @@
 		tilestack.forceMove(drop_location())
 
 	new /obj/item/stack/tile/iron/base(Tsec, 1)
-
-	do_sparks(3, TRUE, src)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/floorbot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
