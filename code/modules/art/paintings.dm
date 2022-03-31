@@ -398,9 +398,9 @@
 	width = 36
 	height = 24
 	pixel_x = -5
-	pixel_y = 1
+	pixel_y = 0
 	base_pixel_x = -5
-	base_pixel_y = 1
+	base_pixel_y = 0
 	framed_offset_x = 14
 	framed_offset_y = 4
 	pixels_per_unit = 20
@@ -420,9 +420,9 @@
 	icon_state = "24x24" //Ditto
 	width = 45
 	height = 27
-	pixel_x = -9
+	pixel_x = -10
 	pixel_y = -2
-	base_pixel_x = -9
+	base_pixel_x = -10
 	base_pixel_y = -2
 	framed_offset_x = 9
 	framed_offset_y = 4
