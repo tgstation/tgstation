@@ -1,7 +1,7 @@
 // Foam
 FLUID_SUBSYSTEM_DEF(foam)
 	name = "Foam"
-	effect_processing_cooldown = 0.2 SECONDS
+	effect_processing_wait = 0.2 SECONDS
 
 /// The minimum foam range required to start diluting the reagents past the minimum dilution rate.
 #define MINIMUM_FOAM_DILUTION_RANGE 3
