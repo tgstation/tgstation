@@ -8678,7 +8678,9 @@
 /area/service/hydroponics)
 "dby" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/airalarm/directional/north{
+	TLV = list("pressure" = new /datum/tlv(20, 50, 325, 550), "temperature" = new /datum/tlv(40.15, 280.15, 313.15, 340.15), /datum/gas/oxygen = new /datum/tlv(16, 19, 135, 140), /datum/gas/nitrogen = new /datum/tlv(-1, -1, 1000, 1000), /datum/gas/carbon_dioxide = new /datum/tlv(-1, -1, 5, 10), /datum/gas/miasma = new /datum/tlv(-1, -1, 15, 30), /datum/gas/plasma = new /datum/tlv/dangerous, /datum/gas/nitrous_oxide = new /datum/tlv/dangerous, /datum/gas/bz = new /datum/tlv/dangerous, /datum/gas/hypernoblium = new /datum/tlv(-1, -1, 1000, 1000), /datum/gas/water_vapor = new /datum/tlv/dangerous, /datum/gas/tritium = new /datum/tlv/dangerous, /datum/gas/nitrium = new /datum/tlv/dangerous, /datum/gas/pluoxium = new /datum/tlv(-1, -1, 1000, 1000), /datum/gas/freon = new /datum/tlv/dangerous, /datum/gas/hydrogen = new /datum/tlv/dangerous, /datum/gas/healium = new /datum/tlv/dangerous, /datum/gas/proto_nitrate = new /datum/tlv/dangerous, /datum/gas/zauker = new /datum/tlv/dangerous, /datum/gas/helium = new /datum/tlv/dangerous, /datum/gas/antinoblium = new /datum/tlv/dangerous, /datum/gas/halon = new /datum/tlv/dangerous)
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/camera/directional/north{
 	c_tag = "Server Room";
