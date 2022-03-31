@@ -95,6 +95,10 @@ SUBSYSTEM_DEF(fluids)
 				STOP_PROCESSING(src, processing_node)
 
 			processing_node.last_process = now
+			if(!isnull(processing_node.next_spread) && processing_node.next_spread < now)
+				cancel_spread(processing_node, processing_node.next_spread) // We don't want to spread them twice.
+				processing_node.spread((now - processing_node.last_spread))
+
 			if (MC_TICK_CHECK)
 				return
 
@@ -153,6 +157,7 @@ SUBSYSTEM_DEF(fluids)
 	if(!isnull(node.next_spread))
 		cancel_spread(node, node.next_spread)
 
+	node.last_spread = world.time
 	node.next_spread = spread_time
 	var/list/cached_queue = spread_queues["[spread_time]"]
 	if (cached_queue)
@@ -176,5 +181,14 @@ SUBSYSTEM_DEF(fluids)
  */
 /datum/controller/subsystem/fluids/proc/cancel_spread(obj/effect/particle_effect/fluid/node, spread_time)
 	var/list/cached_queue = spread_queues["[spread_time]"]
-	if (cached_queue)
-		cached_queue -= node
+	if(!cached_queue)
+		return
+
+	cached_queue -= node
+	if(cached_queue.len)
+		return
+
+	var/list/cached_heap = spread_heap
+	cached_heap.Swap(cached_heap.Find(spread_time), cached_heap.len)
+	if (--cached_heap.len)
+		HEAPIFY(cached_heap, 1, __CMP_SPREAD_HEAP_QUEUES)
