@@ -82,7 +82,7 @@
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/machine/telecomms/message_server
 
-	var/list/datum/data_pda_msg/pda_msgs = list()
+	var/list/datum/data_modular_msg/pda_msgs = list()
 	var/list/datum/data_modular_msg/modular_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/decryptkey = "password"
@@ -96,9 +96,9 @@
 	if (calibrating)
 		calibrating += world.time
 		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
-		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()]")
+		pda_msgs += new /datum/data_modular_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()]")
 	else
-		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
+		pda_msgs += new /datum/data_modular_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/Destroy()
 	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
@@ -122,7 +122,7 @@
 	. = ..()
 	if(calibrating && calibrating <= world.time)
 		calibrating = 0
-		pda_msgs += new /datum/data_pda_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
+		pda_msgs += new /datum/data_modular_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/receive_information(datum/signal/subspace/messaging/signal, obj/machinery/telecomms/machine_from)
 	// can't log non-message signals
@@ -130,9 +130,9 @@
 		return
 
 	// log the signal
-	if(istype(signal, /datum/signal/subspace/messaging/pda))
-		var/datum/signal/subspace/messaging/pda/PDAsignal = signal
-		var/datum/data_pda_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
+	if(istype(signal, /datum/signal/subspace/messaging/modular))
+		var/datum/signal/subspace/messaging/modular/PDAsignal = signal
+		var/datum/data_modular_msg/M = new(PDAsignal.format_target(), "[PDAsignal.data["name"]] ([PDAsignal.data["job"]])", PDAsignal.data["message"], PDAsignal.data["photo"])
 		pda_msgs += M
 		signal.logged = M
 	else if(istype(signal, /datum/signal/subspace/messaging/rc))
@@ -173,16 +173,16 @@
 	copy.levels = levels
 	return copy
 
-// PDA signal datum
-/datum/signal/subspace/messaging/pda/proc/format_target()
+// Modular signal datum
+/datum/signal/subspace/messaging/modular/proc/format_target()
 	if (length(data["targets"]) > 1)
 		return "Everyone"
 	return "[data["targets"][1].saved_identification] ([data["targets"][1].saved_job])"
 
-/datum/signal/subspace/messaging/pda/proc/format_message()
+/datum/signal/subspace/messaging/modular/proc/format_message()
 	return "\"[data["message"]]\""
 
-/datum/signal/subspace/messaging/pda/broadcast()
+/datum/signal/subspace/messaging/modular/broadcast()
 	if (!logged)  // Can only go through if a message server logs it
 		return
 	for (var/obj/item/modular_computer/comp in data["targets"])
@@ -199,29 +199,15 @@
 		if(ckey(Console.department) == rec_dpt || (data["ore_update"] && Console.receive_ore_updates))
 			Console.createmessage(data["sender"], data["send_dpt"], data["message"], data["verified"], data["stamped"], data["priority"], data["notify_freq"])
 
-// The datum used by modular devices for the NTMessenger, stored on the message server.
-/datum/data_modular_msg
-	var/sender = "Unspecified"
-	var/recipient = "Unspecified"
-	var/message = "Blank"
-
-/datum/data_modular_msg/New(param_rec, param_sender, param_message)
-	if(param_rec)
-		recipient = param_rec
-	if(param_sender)
-		sender = param_sender
-	if(param_message)
-		message = param_message
-
 // Log datums stored by the message server.
-/datum/data_pda_msg
+/datum/data_modular_msg
 	var/sender = "Unspecified"
 	var/recipient = "Unspecified"
 	var/message = "Blank"  // transferred message
 	var/datum/picture/picture  // attached photo
 	var/automated = 0 //automated message
 
-/datum/data_pda_msg/New(param_rec, param_sender, param_message, param_photo)
+/datum/data_modular_msg/New(param_rec, param_sender, param_message, param_photo)
 	if(param_rec)
 		recipient = param_rec
 	if(param_sender)
@@ -231,7 +217,7 @@
 	if(param_photo)
 		picture = param_photo
 
-/datum/data_pda_msg/Topic(href,href_list)
+/datum/data_modular_msg/Topic(href,href_list)
 	..()
 	if(href_list["photo"])
 		var/mob/M = usr

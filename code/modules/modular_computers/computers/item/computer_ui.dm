@@ -51,7 +51,9 @@
 
 	data["login"] = list()
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
+	var/obj/item/computer_hardware/cartridge_slot/cartholder = all_components[MC_CART]
 	data["cardholder"] = FALSE
+	data["cartholder"] = FALSE
 	if(cardholder)
 		data["cardholder"] = TRUE
 
@@ -69,6 +71,10 @@
 			IDName = cardholder.current_identification,
 			IDJob = cardholder.current_job,
 		)
+
+	if(cartholder)
+		data["cartholder"] = TRUE
+		data["cartridge"] = cartholder.stored_cart?.name
 
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
@@ -217,6 +223,11 @@
 					if(!cardholder)
 						return
 					cardholder.try_eject(user)
+				if("cart")
+					var/obj/item/computer_hardware/card_slot/cartholder = all_components[MC_CART]
+					if(!cartholder)
+						return
+					cartholder.try_eject(user)
 		if("PC_Imprint_ID")
 			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 			if(!cardholder)

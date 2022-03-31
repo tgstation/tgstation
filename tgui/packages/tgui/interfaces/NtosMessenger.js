@@ -42,6 +42,7 @@ export const NtosMessenger = (props, context) => {
     messengers = [],
     viewingMessages,
     sortByJob,
+    canSpam,
   } = data;
   if (viewingMessages) {
     return (
@@ -164,6 +165,13 @@ export const NtosMessenger = (props, context) => {
                 />
               ))}
             </Stack>
+            {!!canSpam && (
+              <Button
+                fluid
+                content="Send to all..."
+                onClick={() => act('PDA_sendEveryone')}
+              />
+            )}
           </Section>
         </Stack>
         {!owner && (

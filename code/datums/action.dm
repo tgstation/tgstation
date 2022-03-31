@@ -233,6 +233,10 @@
 		var/obj/item/pda/P = target
 		P.toggle_light(owner)
 		return
+	if(istype(target, /obj/item/modular_computer))
+		var/obj/item/modular_computer/mc = target
+		mc.toggle_flashlight()
+		return
 	..()
 
 /datum/action/item_action/toggle_hood

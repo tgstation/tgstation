@@ -167,11 +167,24 @@
 	w_class = WEIGHT_CLASS_TINY
 	custom_price = PAYCHECK_MEDIUM * 2
 
+// For microtablets
+/obj/item/computer_hardware/hard_drive/micro
+	name = "microtablet hard drive"
+	desc = "A read-only hard drive for microtablets. Not totally read-only. You get the idea."
+	power_usage = 0
+	max_capacity = 32
+	icon_state = "ssd_mini"
+	w_class = WEIGHT_CLASS_TINY
+
+/obj/item/computer_hardware/hard_drive/micro/install_default_programs()
+	store_file(new /datum/computer_file/program/messenger(src))
+
 // For borg integrated tablets. No downloader.
 /obj/item/computer_hardware/hard_drive/small/integrated/install_default_programs()
 	store_file(new /datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
 	store_file(new /datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
 	store_file(new /datum/computer_file/program/robotact(src))
+	store_file(new /datum/computer_file/program/messenger(src))
 
 
 // Syndicate variant - very slight better

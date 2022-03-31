@@ -14,6 +14,8 @@ export const NtosMain = (props, context) => {
     cardholder,
     login = [],
     proposed_login = [],
+    cartholder,
+    cartridge,
   } = data;
   return (
     <NtosWindow
@@ -39,6 +41,20 @@ export const NtosMain = (props, context) => {
               Color:
               <ColorBox ml={1} color={comp_light_color} />
             </Button>
+          </Section>
+        )}
+        {!!cartholder && (
+          <Section
+            title="Cartridge"
+            buttons={(
+              <Button
+                icon="eject"
+                content="Eject Cartridge"
+                disabled={!cartridge}
+                onClick={() => act('PC_Eject_Disk', { name: "cart" })}
+              />
+            )}>
+            Installed Cartridge: {cartridge || "None"}
           </Section>
         )}
         {!!cardholder && (

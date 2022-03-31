@@ -10,16 +10,14 @@
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/network_card)
 
-/obj/item/modular_computer/tablet/preset/pda/Initialize(mapload)
+/obj/item/modular_computer/tablet/preset/micro/Initialize(mapload)
 	. = ..()
-	var/obj/item/computer_hardware/hard_drive/small/hard_drive = new
+	install_component(new /obj/item/computer_hardware/hard_drive/micro)
 	install_component(new /obj/item/computer_hardware/processor_unit/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
-	install_component(hard_drive)
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/card_slot)
-	install_component(new /obj/item/computer_hardware/printer/mini)
-	hard_drive.store_file(new /datum/computer_file/program/messenger)
+	install_component(new /obj/item/computer_hardware/cartridge_slot)
 
 // Alternative version, an average one, for higher ranked positions mostly
 /obj/item/modular_computer/tablet/preset/advanced/Initialize(mapload)

@@ -824,7 +824,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if (!string_targets.len)
 		return FALSE
 
-	var/datum/signal/subspace/messaging/pda/signal = new(src, list(
+	var/datum/signal/subspace/messaging/modular/signal = new(src, list(
 		"name" = "[fakename || owner]",
 		"job" = "[fakejob || ownjob]",
 		"message" = message,
@@ -873,7 +873,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		last_everyone = world.time
 	return TRUE
 
-/obj/item/pda/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
+/obj/item/pda/proc/receive_message(datum/signal/subspace/messaging/modular/signal)
 	var/ref_target = signal.data["rigged"] ? signal.data["rigged_user"] : REF(signal.source)
 	tnote += "<i><b>&larr; From <a href='byond://?src=[REF(src)];choice=[signal.data["rigged"] ? "Mess_us_up" : "Message"];target=[ref_target]'>[signal.data["name"]]</a> ([signal.data["job"]]):</b></i><br>[signal.format_message()]<br>"
 

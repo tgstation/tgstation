@@ -169,7 +169,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	if (!targets.len)
 		return
 
-	var/datum/signal/subspace/messaging/pda/signal = new(announcement_system, list(
+	var/datum/signal/subspace/messaging/modular/signal = new(announcement_system, list(
 		"name" = "Security Department Update",
 		"job" = "Automated Announcement System",
 		"message" = "Officer [officer.real_name] has been assigned to your department, [department].",

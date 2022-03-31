@@ -25,6 +25,8 @@
 	var/monitor_hidden = FALSE // whether or not this device is currently hidden from the message monitor
 	var/sort = TRUE // whether or not we're sorting by job
 
+	var/is_silicon = FALSE // basically easy mode (no ID needed, cant disable message receiving (fuck you), etc.)
+
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
 
@@ -92,16 +94,28 @@
 		if("PDA_changeSortStyle")
 			sort = !sort
 			return(UI_UPDATE)
+		if("PDA_sendEveryone")
+			if(!sAndR)
+				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
+				return
+
+			var/list/targets = list()
+
+			for(var/obj/item/modular_computer/mc in GetViewableDevices())
+				targets += mc
+
+			if(targets.len > 0)
+				send_message(usr, targets, TRUE)
+
+			return(UI_UPDATE)
 		if("PDA_sendMessage")
 			if(!sAndR)
-				to_chat(usr, span_notice("ERROR: Deice has sending disabled."))
+				to_chat(usr, span_notice("ERROR: Device has sending disabled."))
 				return
 			var/obj/item/modular_computer/target = locate(params["ref"])
 			if(!target)
 				return // we don't want tommy sending his messages to nullspace
 			if(!(target.saved_identification == params["name"] && target.saved_job == params["job"]))
-				message_admins("[target.saved_identification] vs [params["name"]]")
-				message_admins("[target.saved_job] vs [params["job"]]")
 				to_chat(usr, span_notice("ERROR: User no longer exists."))
 				return
 
@@ -124,6 +138,7 @@
 	data["messengers"] = ScrubMessengerList()
 	data["viewingMessages"] = viewingMessages
 	data["sortByJob"] = sort
+	data["canSpam"] = computer?.all_components[MC_CART].CanSpam()
 
 	return data
 
@@ -183,7 +198,7 @@
 	if (!string_targets.len)
 		return FALSE
 
-	var/datum/signal/subspace/messaging/pda/signal = new(computer, list(
+	var/datum/signal/subspace/messaging/modular/signal = new(computer, list(
 		"name" = computer.saved_identification,
 		"job" = computer.saved_job,
 		"message" = message,
@@ -226,10 +241,14 @@
 
 	last_text = world.time
 	if (everyone)
+		message_data["name"] = "Everyone"
+		message_data["job"] = ""
 		last_text_everyone = world.time
+
+	messages += list(message_data)
 	return TRUE
 
-/datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/pda/signal)
+/datum/computer_file/program/messenger/proc/receive_message(datum/signal/subspace/messaging/modular/signal)
 	var/list/message_data = list()
 	message_data["name"] = signal.data["name"]
 	message_data["job"] = signal.data["job"]
