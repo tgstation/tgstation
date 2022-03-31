@@ -284,8 +284,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())
-	else
-		return ..()
+	
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user, list/modifiers)
