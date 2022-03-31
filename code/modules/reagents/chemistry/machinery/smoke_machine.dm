@@ -10,7 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/smoke_machine
 	processing_flags = NONE
 
-	var/efficiency = 10
+	var/efficiency = 20
 	var/on = FALSE
 	var/cooldown = 0
 	var/screen = "home"
@@ -18,11 +18,11 @@
 	var/setting = 1 // displayed range is 3 * setting
 	var/max_range = 3 // displayed max range is 3 * max range
 
-/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(setting = 1, atom/location = null, datum/reagents/carry = null, efficiency = 10, silent=FALSE)
-	amount = setting
-	carry.copy_to(chemholder, 20)
-	carry.remove_any(amount * 16 / efficiency)
-	src.location = location
+/datum/effect_system/fluid_spread/smoke/chem/smoke_machine/set_up(range = 1, amount = DIAMOND_AREA(range), atom/location = null, datum/reagents/carry = null, efficiency = 10, silent=FALSE)
+	src.location = get_turf(location)
+	src.amount = amount
+	carry?.copy_to(chemholder, 20)
+	carry?.remove_any(amount / efficiency)
 
 /// A factory which produces clouds of smoke for the smoke machine.
 /datum/effect_system/fluid_spread/smoke/chem/smoke_machine
@@ -60,9 +60,9 @@
 	if(new_volume < reagents.total_volume)
 		reagents.expose(loc, TOUCH) // if someone manages to downgrade it without deconstructing
 		reagents.clear_reagents()
-	efficiency = 9
+	efficiency = 18
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		efficiency += C.rating
+		efficiency += 2 * C.rating
 	max_range = 1
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
 		max_range += M.rating
