@@ -9917,7 +9917,6 @@
 /turf/open/floor/iron,
 /area/engineering/atmos)
 "bcx" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Access";
 	req_access_txt = "30"

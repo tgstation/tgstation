@@ -4291,7 +4291,6 @@
 /turf/open/floor/iron/dark,
 /area/science/server)
 "bAB" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Room";
 	req_access_txt = "30"

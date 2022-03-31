@@ -58923,7 +58923,6 @@
 /turf/open/floor/wood,
 /area/service/library)
 "oXI" = (
-/obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
 	name = "Server Access";
 	req_access_txt = "30"
