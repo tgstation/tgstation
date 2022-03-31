@@ -67,7 +67,7 @@
 		else if (H.dna.features["ears"] == "Fox")
 			mutantears = /obj/item/organ/ears/fox
 		else
-			// You *could* dodge any and all ears with playing a felinid, but you'd be playing a felinid so I guess it's fair.
+			// You *could* dodge any and all ears by playing a felinid, but you'd be playing a felinid so I guess it's fair.
 			mutantears = /obj/item/organ/ears
 		if(H.dna.features["tail_human"] == "Cat")
 			var/obj/item/organ/tail/cat/tail = new
