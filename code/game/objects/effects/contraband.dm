@@ -530,7 +530,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 	poster_item_icon_state = "rolled_legit"
 
 /obj/structure/sign/poster/official/random
-	name = "random official poster"
+	name = "Random Official Poster (ROP)"
 	random_basetype = /obj/structure/sign/poster/official
 	icon_state = "random_official"
 	never_random = TRUE
