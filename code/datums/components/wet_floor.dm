@@ -94,7 +94,7 @@
 			qdel(parent.get_component(/datum/component/slippery))
 			return
 
-	parent.LoadComponent(/datum/component/slippery, intensity, lube_flags, CALLBACK(src, .proc/AfterSlip))
+	parent.load_component(/datum/component/slippery, intensity, lube_flags, CALLBACK(src, .proc/AfterSlip))
 
 /datum/component/wet_floor/proc/dry(datum/source, strength = TURF_WET_WATER, immediate = FALSE, duration_decrease = INFINITY)
 	SIGNAL_HANDLER
@@ -157,7 +157,7 @@
 		return COMPONENT_INCOMPATIBLE
 	var/turf/T = parent
 	T.add_overlay(current_overlay)
-	//Make sure to add/update any slippery component on the new turf (update_flags calls LoadComponent)
+	//Make sure to add/update any slippery component on the new turf (update_flags calls load_component)
 	update_flags()
 
 	//NB it's possible we get deleted after this, due to inherit
