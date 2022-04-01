@@ -1,4 +1,4 @@
-#define EPIC_PRANK_CHANCE 5
+#define EPIC_PRANK_CHANCE 10
 GLOBAL_DATUM(colored_assistant, /datum/colored_assistant)
 
 /*

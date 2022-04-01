@@ -58,6 +58,7 @@
 	desc = "A neckpiece for a maid costume, it smells faintly of nasty magics."
 
 /obj/item/clothing/neck/maid/stuck/Initialize()
+	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/neck/stethoscope

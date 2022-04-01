@@ -124,6 +124,7 @@
 	desc = "Maid in China. Cursed in Florida."
 
 /obj/item/clothing/under/costume/maid/stuck/Initialize()
+	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/under/costume/geisha

@@ -54,6 +54,7 @@
 	desc = "Attatches itself to the wearer's head, just like real chinese cartoon headwear!"
 
 /obj/item/clothing/head/maidheadband/stuck/Initialize()
+	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
 
 /obj/item/clothing/head/chicken

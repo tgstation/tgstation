@@ -274,4 +274,5 @@
 	desc = "Cylindrical looking tubes that go over your arm, very weird."
 
 /obj/item/clothing/gloves/maid/stuck/Initialize()
+	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
