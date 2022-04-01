@@ -12,7 +12,7 @@
 	var/permanent = FALSE
 	var/last_process = 0
 
-/datum/component/wet_floor/InheritComponent(datum/newcomp, orig, strength, duration_minimum, duration_add, duration_maximum, _permanent)
+/datum/component/wet_floor/inherit_component(datum/newcomp, orig, strength, duration_minimum, duration_add, duration_maximum, _permanent)
 	if(!newcomp) //We are getting passed the arguments of a would-be new component, but not a new component
 		add_wet(arglist(args.Copy(3)))
 	else //We are being passed in a full blown component
@@ -145,14 +145,14 @@
 	for(var/i in time_left_list)
 		. |= text2num(i)
 
-/datum/component/wet_floor/PreTransfer()
+/datum/component/wet_floor/pre_transfer()
 	var/turf/O = parent
 	O.cut_overlay(current_overlay)
 	//That turf is no longer slippery, we're out of here
 	//Slippery components don't transfer due to callbacks
 	qdel(O.get_component(/datum/component/slippery))
 
-/datum/component/wet_floor/PostTransfer()
+/datum/component/wet_floor/post_transfer()
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/turf/T = parent

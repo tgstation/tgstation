@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		var/datum/component/wet_floor/slip = get_component(/datum/component/wet_floor)
 		if(slip)
 			var/datum/component/wet_floor/WF = T.AddComponent(/datum/component/wet_floor)
-			WF.InheritComponent(slip)
+			WF.inherit_component(slip)
 		if (copy_air)
 			var/turf/open/openTurf = T
 			openTurf.air.copy_from(air)

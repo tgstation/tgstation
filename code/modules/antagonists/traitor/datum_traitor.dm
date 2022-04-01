@@ -227,7 +227,7 @@
 	var/mob/living/datum_owner = mob_override || owner.current
 	handle_clown_mutation(datum_owner, removing = FALSE)
 
-	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
+	for(var/datum/component/codeword_hearing/component as anything in datum_owner.get_components(/datum/component/codeword_hearing))
 		component.delete_if_from_source(src)
 
 /datum/antagonist/traitor/ui_static_data(mob/user)

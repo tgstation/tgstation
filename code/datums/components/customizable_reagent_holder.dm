@@ -71,7 +71,7 @@
 	))
 	REMOVE_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
 
-/datum/component/customizable_reagent_holder/PostTransfer()
+/datum/component/customizable_reagent_holder/post_transfer()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/atom/atom_parent = parent
@@ -127,7 +127,7 @@
 		var/atom/replacement_parent = new replacement(atom_parent.drop_location())
 		ingredient.forceMove(replacement_parent)
 		replacement = null
-		replacement_parent.TakeComponent(src)
+		replacement_parent.take_component(src)
 		handle_reagents(atom_parent)
 		qdel(atom_parent)
 	handle_reagents(ingredient)

@@ -117,7 +117,7 @@ Behavior that's still missing from this component that original food items had t
 		else
 			owner.reagents.add_reagent(rid, amount)
 
-/datum/component/edible/InheritComponent(
+/datum/component/edible/inherit_component(
 	datum/component/C,
 	i_am_original,
 	list/initial_reagents,

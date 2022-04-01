@@ -41,7 +41,7 @@
 	orbiter_list = null
 	return ..()
 
-/datum/component/orbiter/InheritComponent(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+/datum/component/orbiter/inherit_component(datum/component/orbiter/newcomp, original, atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(!newcomp)
 		begin_orbit(arglist(args.Copy(3)))
 		return
@@ -56,7 +56,7 @@
 	orbiter_list += newcomp.orbiter_list
 	newcomp.orbiter_list = null
 
-/datum/component/orbiter/PostTransfer()
+/datum/component/orbiter/post_transfer()
 	if(!isatom(parent) || isarea(parent) || !get_turf(parent))
 		return COMPONENT_INCOMPATIBLE
 	move_react(parent)
@@ -178,4 +178,4 @@
 /atom/proc/transfer_observers_to(atom/target)
 	if(!orbiters || !istype(target) || !get_turf(target) || target == src)
 		return
-	target.TakeComponent(orbiters)
+	target.take_component(orbiters)

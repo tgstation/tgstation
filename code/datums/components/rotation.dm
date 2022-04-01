@@ -63,7 +63,7 @@
 	AddSignals()
 	. = ..()
 
-/datum/component/simple_rotation/PostTransfer()
+/datum/component/simple_rotation/post_transfer()
 	//Because of the callbacks which we don't track cleanly we can't transfer this
 	//item cleanly, better to let the new of the new item create a new rotation datum
 	//instead (there's no real state worth transferring)
@@ -79,7 +79,7 @@
 	//Signals + verbs removed via UnRegister
 	. = ..()
 
-/datum/component/simple_rotation/ClearFromParent()
+/datum/component/simple_rotation/clear_from_parent()
 	RemoveVerbs()
 	return ..()
 

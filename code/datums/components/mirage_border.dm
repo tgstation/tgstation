@@ -28,10 +28,10 @@
 	QDEL_NULL(holder)
 	return ..()
 
-/datum/component/mirage_border/PreTransfer()
+/datum/component/mirage_border/pre_transfer()
 	holder.moveToNullspace()
 
-/datum/component/mirage_border/PostTransfer()
+/datum/component/mirage_border/post_transfer()
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	holder.forceMove(parent)

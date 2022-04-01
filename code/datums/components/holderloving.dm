@@ -48,11 +48,11 @@
 		COMSIG_STORAGE_EXITED,
 	))
 
-/datum/component/holderloving/PostTransfer()
+/datum/component/holderloving/post_transfer()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/holderloving/InheritComponent(datum/component/holderloving/friend, i_am_original, list/arguments)
+/datum/component/holderloving/inherit_component(datum/component/holderloving/friend, i_am_original, list/arguments)
 	if(i_am_original)
 		holder = friend.holder
 
