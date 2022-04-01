@@ -963,7 +963,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 		switch(word[1])
 			if("@")
-				var/stripped_word = lowertext(copytext(word, 2))
+				var/stripped_word = ckey(copytext(word, 2))
 
 				// first we check if it's a ckey of an admin
 				var/client/client_check = GLOB.directory[stripped_word]
