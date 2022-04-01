@@ -118,7 +118,10 @@
 /obj/effect/mapping_helpers/airlock/LateInitialize()
 	. = ..()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
-	if(airlock.cyclelinkeddir && !airlock.cyclelinkedairlock)
+	if(!airlock)
+		qdel(src)
+		return
+	if(airlock.cyclelinkeddir)
 		airlock.cyclelinkairlock()
 	if(airlock.closeOtherId)
 		airlock.update_other_id()
