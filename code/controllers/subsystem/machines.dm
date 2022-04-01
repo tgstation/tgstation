@@ -35,11 +35,12 @@ SUBSYSTEM_DEF(machines)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
+	var/delta_time = (world.time - last_fire) / ( 1 SECONDS)
 
 	while(currentrun.len)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(QDELETED(thing) || thing.process(wait * 0.1) == PROCESS_KILL)
+		if(QDELETED(thing) || thing.process(delta_time) == PROCESS_KILL)
 			processing -= thing
 			thing.datum_flags &= ~DF_ISPROCESSING
 		if (MC_TICK_CHECK)
