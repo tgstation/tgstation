@@ -64,7 +64,8 @@
 		return COMPONENT_OBJ_CANCEL_CHARGE
 	var/total_cost = cost + extra_fees
 	if(department_discount)
-		if(card.registered_account.account_job && (SSeconomy.get_dep_account(card.registered_account.account_job.paycheck_department) == target_acc)) //Todo: This is an awful looking check
+		var/datum/job/our_job = card.registered_account.account_job
+        if(our_job && SSeconomy.get_dep_account(our_job) == target_acc)
 			total_cost = max(round(total_cost * DEPARTMENT_DISCOUNT), 1)
 
 	if(!(card.registered_account.has_money(total_cost)))
