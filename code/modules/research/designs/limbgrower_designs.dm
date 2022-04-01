@@ -149,13 +149,21 @@
 	build_path = /obj/item/organ/tail/cat
 	category = list(SPECIES_HUMAN)
 
-/datum/design/cat_tail
+/datum/design/fox_tail
 	name = "Fox Tail"
 	id = "foxtail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/tail/fox
-	category = list(SPECIES_HUMAN)
+	category = list("initial",SPECIES_HUMAN
+
+/datum/design/shark_tail
+	name = "Shark Tail"
+	id = "sharktail"
+	build_type = LIMBGROWER
+	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
+	build_path = /obj/item/organ/tail/shark
+	category = list("initial",SPECIES_HUMAN
 
 /datum/design/cat_ears
 	name = "Cat Ears"
