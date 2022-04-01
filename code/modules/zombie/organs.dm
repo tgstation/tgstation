@@ -92,7 +92,7 @@
 	playsound(target.loc, 'sound/hallucinations/far_noise.ogg', 50, 1)
 	target.do_jitter_animation(living_transformation_time)
 	target.Stun(living_transformation_time)
-	to_chat(target, span_alertalien("You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence.</span>"))
+	to_chat(target, span_alertalien("You are now a zombie! Do not seek to be cured, do not help any non-zombies in any way, do not harm your zombie brethren and spread the disease by killing others. You are a creature of hunger and violence."))
 
 /obj/item/organ/zombie_infection/nodamage
 	causes_damage = FALSE
