@@ -140,7 +140,9 @@
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")
 
-	if(tool)
+	var/valid_analyzer = FALSE
+	if(istype(tool))
+		valid_analyzer = TRUE
 		tool.last_gasmix_data = list()
 
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
@@ -169,7 +171,7 @@
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
 		
-		if(tool)
+		if(valid_analyzer)
 			tool.last_gasmix_data += list(gas_mixture_parser(air, mix_name))
 
 	// we let the join apply newlines so we do need handholding
