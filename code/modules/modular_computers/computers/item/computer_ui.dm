@@ -74,7 +74,15 @@
 
 	if(cartholder)
 		data["cartholder"] = TRUE
-		data["cartridge"] = cartholder.stored_cart?.name
+		data["cart_programs"] = list()
+		data["cart_name"] = cartholder.stored_cart.name
+
+		for(var/datum/computer_file/program/prog in cartholder.stored_programs)
+			var/running = FALSE
+			if(prog in idle_threads)
+				running = TRUE
+
+			data["cart_programs"] += list(list("name" = prog.filename, "desc" = prog.filedesc, "running" = running, "icon" = prog.program_icon, "alert" = prog.alert_pending))
 
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
@@ -143,8 +151,12 @@
 
 		if("PC_runprogram")
 			var/prog = params["name"]
+			var/is_cart = params["is_cart"]
 			var/datum/computer_file/program/P = null
+			var/obj/item/computer_hardware/cartridge_slot/cartholder = all_components[MC_CART]
 			var/mob/user = usr
+			if(is_cart && cartholder)
+				P = cartholder.find_file_by_name(prog)
 			if(hard_drive)
 				P = hard_drive.find_file_by_name(prog)
 

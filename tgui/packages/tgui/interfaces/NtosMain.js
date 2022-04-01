@@ -15,7 +15,8 @@ export const NtosMain = (props, context) => {
     login = [],
     proposed_login = [],
     cartholder,
-    cartridge,
+    cart_name,
+    cart_programs = [],
   } = data;
   return (
     <NtosWindow
@@ -74,17 +75,48 @@ export const NtosMain = (props, context) => {
           </Section>
         )}
         {!!cartholder && (
-          <Section
-            title="Cartridge"
-            buttons={(
-              <Button
-                icon="eject"
-                content="Eject Cartridge"
-                disabled={!cartridge}
-                onClick={() => act('PC_Eject_Disk', { name: "cart" })}
-              />
-            )}>
-            Installed Cartridge: {cartridge || "None"}
+          <Section>
+            <Section
+              title="Cartridge"
+              buttons={(
+                <Button
+                  icon="eject"
+                  content="Eject Cartridge"
+                  disabled={!cartridge}
+                  onClick={() => act('PC_Eject_Disk', { name: "cart" })}
+                />
+              )}>
+              Installed Cartridge: {cart_name || "None"}
+            </Section>
+            <Table>
+              {cart_programs.map(program => (
+                <Table.Row key={program.name}>
+                  <Table.Cell>
+                    <Button
+                      fluid
+                      color={program.alert ? 'yellow' : 'transparent'}
+                      icon={program.icon}
+                      content={program.desc}
+                      onClick={() => act('PC_runprogram', {
+                        name: program.name,
+                      })} />
+                  </Table.Cell>
+                  <Table.Cell collapsing width="18px">
+                    {!!program.running && (
+                      <Button
+                        color="transparent"
+                        icon="times"
+                        tooltip="Close program"
+                        tooltipPosition="left"
+                        onClick={() => act('PC_killprogram', {
+                          name: program.name,
+                          is_cart: true,
+                        })} />
+                    )}
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table>
           </Section>
         )}
         {!!removable_media.length && (
