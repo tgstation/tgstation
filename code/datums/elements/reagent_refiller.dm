@@ -13,9 +13,9 @@
 
 /datum/element/reagent_refiller/Attach(
 	datum/target,
-	time_to_refill = 5 SECONDS,
+	time_to_refill = 60 SECONDS,
 	obj/item/stock_parts/cell/cell,
-	power_to_draw = 1000,
+	power_to_draw = 30,
 	whitelisted_reagents = list(/datum/reagent/consumable)
 )
 	. = ..()
