@@ -342,7 +342,7 @@ Behavior that's still missing from this component that original food items had t
 			return
 		if(IsFoodGone(owner, feeder))
 			return
-		log_combat(feeder, eater, "fed", owner.reagents.log_list())
+		log_combat(feeder, eater, "fed", owner.reagents.get_reagent_log_string())
 		eater.visible_message(
 			span_danger("[feeder] forces [eater] to eat [parent]!"),
 			span_userdanger("[feeder] forces you to eat [parent]!")
