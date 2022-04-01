@@ -26,13 +26,13 @@
 	if (!isnull(cell))
 		src.cell_to_use = WEAKREF(cell)
 	src.power_to_draw = power_to_draw
+	src.whitelisted_reagents = whitelisted_reagents
 
 	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/refill)
 
 /datum/element/reagent_refiller/Detach(datum/source, ...)
-	. = ..()
-
 	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
+	return ..()
 
 /datum/element/reagent_refiller/proc/refill(obj/item/reagent_containers/target)
 	SIGNAL_HANDLER

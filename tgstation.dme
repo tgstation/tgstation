@@ -1594,7 +1594,6 @@
 #include "code\game\objects\items\melee\energy.dm"
 #include "code\game\objects\items\melee\misc.dm"
 #include "code\game\objects\items\robot\ai_upgrades.dm"
-#include "code\game\objects\items\robot\robot_items.dm"
 #include "code\game\objects\items\robot\robot_parts.dm"
 #include "code\game\objects\items\robot\robot_upgrades.dm"
 #include "code\game\objects\items\robot\robot_items\food.dm"
