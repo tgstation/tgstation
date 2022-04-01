@@ -3,7 +3,7 @@
 /// Scan and set buffer
 #define SET_BUFFER 1
 /// Scan and attempt to check in
-#define CHECK_IN CHECK_IN
+#define CHECK_IN 2
 /// Scan and attempt to add to inventory
 #define ADD_INVENTORY 3
 
