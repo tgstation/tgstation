@@ -26,7 +26,7 @@
 	///List of all Plant DNA scanned with this sampler.
 	var/list/stored_dna_plants = list()
 	///List of all Human DNA scanned with this sampler.
-	var/list/stored_dna_dna = list()
+	var/list/stored_dna_human = list()
 
 /obj/item/dna_probe/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -43,7 +43,7 @@
 		if(hydro_tray.plant_status != HYDROTRAY_PLANT_HARVESTABLE) // So it's bit harder.
 			to_chat(user, span_alert("Plant needs to be ready to harvest to perform full data scan.")) //Because space dna is actually magic
 			return
-		stored_dna_plants[hydro_tray.myseed.type] = 1
+		stored_dna_plants[hydro_tray.myseed.type] = TRUE
 		to_chat(user, span_notice("Plant data added to local storage."))
 
 	if(allowed_scans & DNA_PROBE_SCAN_ANIMALS)
@@ -58,18 +58,18 @@
 			if(!(living_target.mob_biotypes & MOB_ORGANIC))
 				to_chat(user, span_alert("No compatible DNA detected."))
 				return
-			stored_dna_animal[living_target.type] = 1
+			stored_dna_animal[living_target.type] = TRUE
 			to_chat(user, span_notice("Animal data added to local storage."))
 
 	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(stored_dna_dna[human_target.dna.unique_identity])
+		if(stored_dna_human[human_target.dna.unique_identity])
 			to_chat(user, span_notice("Humanoid data already present in local storage."))
 			return
 		if(!(human_target.mob_biotypes & MOB_ORGANIC))
 			to_chat(user, span_alert("No compatible DNA detected."))
 			return
-		stored_dna_dna[human_target.dna.unique_identity] = 1
+		stored_dna_human[human_target.dna.unique_identity] = TRUE
 		to_chat(user, span_notice("Humanoid data added to local storage."))
 
 

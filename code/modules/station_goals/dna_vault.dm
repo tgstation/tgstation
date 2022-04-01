@@ -177,7 +177,7 @@
 			if(!animals[animal])
 				uploaded++
 				animals[animal] = 1
-		for(var/ui in P.stored_dna_dna)
+		for(var/ui in P.stored_dna_human)
 			if(!dna[ui])
 				uploaded++
 				dna[ui] = 1
