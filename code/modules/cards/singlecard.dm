@@ -130,7 +130,7 @@
 	if(!istype(user))
 		return
 	var/is_marked_with_visible_color = (marked_color && marked_color != "invisible")
-	if(is_marked_with_visible_color || (marked_color == "invisible" && istype(user.glasses, /obj/item/clothing/glasses/science)))
+	if(is_marked_with_visible_color || (marked_color == "invisible" && HAS_TRAIT(user, TRAIT_REAGENT_SCANNER)))
 		return marked_color
 
 /obj/item/toy/singlecard/update_icon_state()
