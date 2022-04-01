@@ -75,7 +75,7 @@ SUBSYSTEM_DEF(economy)
 
 /datum/controller/subsystem/economy/fire(resumed = 0)
 	var/temporary_total = 0
-	var/delta_time = wait / (5 MINUTES)
+	var/delta_time = (world.time - last_fire) / (1 SECONDS)
 	departmental_payouts()
 	station_total = 0
 	station_target_buffer += STATION_TARGET_BUFFER
@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(economy)
 	if(!HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING))
 		price_update()
 	var/effective_mailcount = round(living_player_count()/(inflation_value - 0.5)) //More mail at low inflation, and vis versa.
-	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time)
+	mail_waiting += clamp(effective_mailcount, 1, MAX_MAIL_PER_MINUTE * delta_time / ((5 MINUTES) / (1 SECONDS)))
 
 /**
  * Handy proc for obtaining a department's bank account, given the department ID, AKA the define assigned for what department they're under.
