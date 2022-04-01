@@ -153,8 +153,8 @@
 	tail_type = "Fox 2"
 
 /obj/item/organ/tail/shark
-	name = "fox tail"
-	desc = "A severed fox tail. Sad."
+	name = "shark tail"
+	desc = "A severed shark tail. How did it get here?"
 	tail_type = "Shark"
 
 /obj/item/organ/tail/shark/Insert(mob/living/carbon/human/tail_owner, special = FALSE, drop_if_replaced = TRUE)
