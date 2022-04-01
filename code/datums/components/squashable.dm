@@ -70,6 +70,6 @@
 	else
 		target.adjustBruteLoss(squash_damage)
 
-/datum/component/squashable/UnregisterFromParent()
+/datum/component/squashable/unregister_from_parent()
 	. = ..()
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	qdel(get_component(/datum/component/connect_loc_behalf))

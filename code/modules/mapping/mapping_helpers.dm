@@ -631,7 +631,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(!circuit_shell)
 		return
 	circuit_shell = new(loc)
-	var/datum/component/shell/shell_component = circuit_shell.GetComponent(/datum/component/shell)
+	var/datum/component/shell/shell_component = circuit_shell.get_component(/datum/component/shell)
 	if(shell_component)
 		shell_component.shell_flags |= SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE
 		shell_component.attach_circuit(new_circuit)

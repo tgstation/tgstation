@@ -15,11 +15,11 @@ See _component.dm for detailed explanations
 	if(myargtwo)
 		send_to_playing_players(myargtwo)
 
-/datum/component/mycomponent/RegisterWithParent()
+/datum/component/mycomponent/register_with_parent()
 	register_signal(parent, COMSIG_NOT_REAL, ./proc/signalproc)                                    // register_signal can take a signal name by itself,
 	register_signal(parent, list(COMSIG_NOT_REAL_EITHER, COMSIG_ALMOST_REAL), ./proc/otherproc)    // or a list of them to assign to the same proc
 
-/datum/component/mycomponent/UnregisterFromParent()
+/datum/component/mycomponent/unregister_from_parent()
 	unregister_signal(parent, COMSIG_NOT_REAL)          // unregister_signal has similar behavior
 	unregister_signal(parent, list(                     // But you can just include all registered signals in one call
 		COMSIG_NOT_REAL,

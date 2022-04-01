@@ -23,11 +23,11 @@
 	fibers = new_fibers
 	check_blood()
 
-/datum/component/forensics/RegisterWithParent()
+/datum/component/forensics/register_with_parent()
 	check_blood()
 	register_signal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
 
-/datum/component/forensics/UnregisterFromParent()
+/datum/component/forensics/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_COMPONENT_CLEAN_ACT))
 
 /datum/component/forensics/PostTransfer()

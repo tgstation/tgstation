@@ -165,7 +165,7 @@
 		to_chat(usr, span_notice("\The [src] is full."))
 		return FALSE
 
-	var/datum/component/storage/STR = O.loc.GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = O.loc.get_component(/datum/component/storage)
 	if(STR)
 		if(!STR.remove_from_storage(O,src))
 			return FALSE

@@ -17,7 +17,7 @@
 
 /datum/material/meat/on_removed(atom/source, amount, material_flags)
 	. = ..()
-	qdel(source.GetComponent(/datum/component/edible))
+	qdel(source.get_component(/datum/component/edible))
 
 /datum/material/meat/on_applied_obj(obj/O, amount, material_flags)
 	. = ..()

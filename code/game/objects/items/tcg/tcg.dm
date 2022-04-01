@@ -396,7 +396,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/storage/card_binder/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/tcgcard))
 	STR.max_combined_w_class = 120
 	STR.max_items = 60

@@ -26,7 +26,7 @@
 		return COMPONENT_INCOMPATIBLE
 	src.add_dropdel = add_dropdel
 
-/datum/component/curse_of_hunger/RegisterWithParent()
+/datum/component/curse_of_hunger/register_with_parent()
 	. = ..()
 	var/obj/item/cursed_item = parent
 	register_signal(cursed_item, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -37,7 +37,7 @@
 	else
 		register_signal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 
-/datum/component/curse_of_hunger/UnregisterFromParent()
+/datum/component/curse_of_hunger/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_POST_UNEQUIP, COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 

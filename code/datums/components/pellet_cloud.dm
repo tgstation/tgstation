@@ -77,7 +77,7 @@
 	bodies = null
 	return ..()
 
-/datum/component/pellet_cloud/RegisterWithParent()
+/datum/component/pellet_cloud/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_PREQDELETED, .proc/nullspace_parent)
 	if(isammocasing(parent))
 		register_signal(parent, COMSIG_PELLET_CLOUD_INIT, .proc/create_casing_pellets)
@@ -89,7 +89,7 @@
 	else if(issupplypod(parent))
 		register_signal(parent, COMSIG_SUPPLYPOD_LANDED, .proc/create_blast_pellets)
 
-/datum/component/pellet_cloud/UnregisterFromParent()
+/datum/component/pellet_cloud/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_DETONATE, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
 
 /**

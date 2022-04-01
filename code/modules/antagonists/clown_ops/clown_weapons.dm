@@ -41,12 +41,12 @@
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
 	. = ..()
-	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/bananium = get_component(/datum/component/material_container)
 	bananium.insert_amount_mat(BANANA_SHOES_MAX_CHARGE, /datum/material/bananium)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/process(delta_time)
-	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/bananium = get_component(/datum/component/material_container)
 	var/bananium_amount = bananium.get_material_amount(/datum/material/bananium)
 	if(bananium_amount < BANANA_SHOES_MAX_CHARGE)
 		bananium.insert_amount_mat(min(BANANA_SHOES_RECHARGE_RATE * delta_time, BANANA_SHOES_MAX_CHARGE - bananium_amount), /datum/material/bananium)
@@ -93,18 +93,18 @@
 	if(blade_active)
 		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	else
-		qdel(GetComponent(/datum/component/slippery))
+		qdel(get_component(/datum/component/slippery))
 
 /obj/item/melee/energy/sword/bananium/attack(mob/living/M, mob/living/user)
 	. = ..()
 	if(blade_active)
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+		var/datum/component/slippery/slipper = get_component(/datum/component/slippery)
 		slipper.Slip(src, M)
 
 /obj/item/melee/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
 	. = ..()
 	if(blade_active)
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+		var/datum/component/slippery/slipper = get_component(/datum/component/slippery)
 		slipper.Slip(src, hit_atom)
 
 /obj/item/melee/energy/sword/bananium/attackby(obj/item/weapon, mob/living/user, params)
@@ -119,7 +119,7 @@
 	if(!blade_active)
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!"))
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+	var/datum/component/slippery/slipper = get_component(/datum/component/slippery)
 	slipper.Slip(src, user)
 	return SHAME
 
@@ -151,14 +151,14 @@
 		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 		AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 	else
-		qdel(GetComponent(/datum/component/slippery))
-		qdel(GetComponent(/datum/component/boomerang))
+		qdel(get_component(/datum/component/slippery))
+		qdel(get_component(/datum/component/boomerang))
 
 /obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(enabled)
 		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
 		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
-			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
+			var/datum/component/slippery/slipper = get_component(/datum/component/slippery)
 			slipper.Slip(src, hit_atom)
 	else
 		return ..()

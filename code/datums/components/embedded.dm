@@ -112,13 +112,13 @@
 	limb = null
 	return ..()
 
-/datum/component/embedded/RegisterWithParent()
+/datum/component/embedded/register_with_parent()
 	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
 	register_signal(parent, COMSIG_CARBON_EMBED_RIP, .proc/ripOut)
 	register_signal(parent, COMSIG_CARBON_EMBED_REMOVAL, .proc/safeRemove)
 	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/checkTweeze)
 
-/datum/component/embedded/UnregisterFromParent()
+/datum/component/embedded/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY))
 
 /datum/component/embedded/process(delta_time)

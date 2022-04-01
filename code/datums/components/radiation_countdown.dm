@@ -33,10 +33,10 @@
 
 	qdel(src)
 
-/datum/component/radiation_countdown/RegisterWithParent()
+/datum/component/radiation_countdown/register_with_parent()
 	register_signal(parent, COMSIG_IN_THRESHOLD_OF_IRRADIATION, .proc/on_pre_potential_irradiation_within_range)
 
-/datum/component/radiation_countdown/UnregisterFromParent()
+/datum/component/radiation_countdown/unregister_from_parent()
 	unregister_signal(parent, COMSIG_IN_THRESHOLD_OF_IRRADIATION)
 
 /datum/component/radiation_countdown/proc/on_pre_potential_irradiation_within_range(datum/source, datum/radiation_pulse_information/pulse_information)

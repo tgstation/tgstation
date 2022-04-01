@@ -1,27 +1,27 @@
 //CONTAINS: Suit fibers and Detective's Scanning Computer
 
 /atom/proc/return_fingerprints()
-	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	var/datum/component/forensics/D = get_component(/datum/component/forensics)
 	if(D)
 		. = D.fingerprints
 
 /atom/proc/return_hiddenprints()
-	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	var/datum/component/forensics/D = get_component(/datum/component/forensics)
 	if(D)
 		. = D.hiddenprints
 
 /atom/proc/return_blood_DNA()
-	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	var/datum/component/forensics/D = get_component(/datum/component/forensics)
 	if(D)
 		. = D.blood_DNA
 
 /atom/proc/blood_DNA_length()
-	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	var/datum/component/forensics/D = get_component(/datum/component/forensics)
 	if(D)
 		. = length(D.blood_DNA)
 
 /atom/proc/return_fibers()
-	var/datum/component/forensics/D = GetComponent(/datum/component/forensics)
+	var/datum/component/forensics/D = get_component(/datum/component/forensics)
 	if(D)
 		. = D.fibers
 

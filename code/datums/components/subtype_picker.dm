@@ -22,11 +22,11 @@
 	src.on_picked_callback = on_picked_callback
 	build_radial_list()
 
-/datum/component/subtype_picker/RegisterWithParent()
+/datum/component/subtype_picker/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 
-/datum/component/subtype_picker/UnregisterFromParent()
+/datum/component/subtype_picker/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, COMSIG_ITEM_ATTACK_SELF)
 

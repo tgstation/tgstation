@@ -50,7 +50,7 @@
 	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
 	register_signal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
 
-/datum/component/thermite/UnregisterFromParent()
+/datum/component/thermite/unregister_from_parent()
 	unregister_signal(parent, COMSIG_COMPONENT_CLEAN_ACT)
 	unregister_signal(parent, COMSIG_PARENT_ATTACKBY)
 	unregister_signal(parent, COMSIG_ATOM_FIRE_ACT)
@@ -84,7 +84,7 @@
 	playsound(master, 'sound/items/welder.ogg', 100, TRUE)
 	fakefire = new(master)
 	burn_timer = addtimer(CALLBACK(src, .proc/burn_parent, user), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
-	UnregisterFromParent()
+	unregister_from_parent()
 	register_signal(parent, COMSIG_PARENT_QDELETING, .proc/delete_fire) //in case parent gets deleted, get ready to delete the fire
 
 /**

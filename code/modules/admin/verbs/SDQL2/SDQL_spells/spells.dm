@@ -10,7 +10,7 @@
 
 /obj/effect/proc_holder/spell/aimed/sdql/proc/on_projectile_hit(source, firer, target)
 	SIGNAL_HANDLER
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	INVOKE_ASYNC(executor, /datum/component/sdql_executor/proc/execute, list(target), owner.resolve())
@@ -24,7 +24,7 @@
 	AddComponent(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/aoe_turf/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	executor.execute(targets, user)
@@ -49,7 +49,7 @@
 
 /obj/effect/proc_holder/spell/cone/sdql/cast(list/targets, mob/user)
 	. = ..()
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	executor.execute(targets, user)
@@ -75,7 +75,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/sdql/do_cone_effects(list/target_turf_list, level)
 	. = ..()
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	executor.execute(target_turf_list, owner.resolve())
@@ -90,7 +90,7 @@
 	AddComponent(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/pointed/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	executor.execute(targets, user)
@@ -104,7 +104,7 @@
 	AddComponent(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/self/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	executor.execute(targets, user)
@@ -118,7 +118,7 @@
 	AddComponent(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/targeted/sdql/cast(list/targets, mob/user)
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	executor.execute(targets, user)
@@ -142,7 +142,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/sdql/proc/on_touch_attack(source, target, user)
 	SIGNAL_HANDLER
-	var/datum/component/sdql_executor/executor = GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	INVOKE_ASYNC(executor, /datum/component/sdql_executor/proc/execute, list(target), user)

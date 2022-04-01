@@ -32,10 +32,10 @@
 		clear_tatted_owner(tatted_limb.owner)
 	parent.RemoveElement(/datum/element/art/commoner)
 
-/datum/component/tattoo/RegisterWithParent()
+/datum/component/tattoo/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-/datum/component/tattoo/UnregisterFromParent()
+/datum/component/tattoo/unregister_from_parent()
 	unregister_signal(parent, COMSIG_PARENT_EXAMINE)
 
 /datum/component/tattoo/proc/on_examine(datum/source, mob/user, list/examine_list)

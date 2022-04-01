@@ -62,13 +62,13 @@
 	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	return ..()
 
-/datum/component/gunpoint/RegisterWithParent()
+/datum/component/gunpoint/register_with_parent()
 	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
 	register_signal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
 	register_signal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
 	register_signal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
 
-/datum/component/gunpoint/UnregisterFromParent()
+/datum/component/gunpoint/unregister_from_parent()
 	unregister_signal(parent, COMSIG_MOVABLE_MOVED)
 	unregister_signal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	unregister_signal(parent, COMSIG_MOB_ATTACK_HAND)

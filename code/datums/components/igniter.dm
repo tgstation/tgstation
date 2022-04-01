@@ -7,7 +7,7 @@
 
 	src.fire_stacks = fire_stacks
 
-/datum/component/igniter/RegisterWithParent()
+/datum/component/igniter/register_with_parent()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
 		register_signal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(parent))
@@ -15,7 +15,7 @@
 	else if(ishostile(parent))
 		register_signal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
-/datum/component/igniter/UnregisterFromParent()
+/datum/component/igniter/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/igniter/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)

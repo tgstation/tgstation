@@ -13,10 +13,10 @@
 	if(message)
 		src.message = message
 
-/datum/component/itempicky/RegisterWithParent()
+/datum/component/itempicky/register_with_parent()
 	register_signal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, .proc/particularly)
 
-/datum/component/itempicky/UnregisterFromParent()
+/datum/component/itempicky/unregister_from_parent()
 	unregister_signal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND)
 
 /datum/component/itempicky/PostTransfer()

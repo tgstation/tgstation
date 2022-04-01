@@ -17,7 +17,7 @@
 
 	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
-/datum/component/orbiter/RegisterWithParent()
+/datum/component/orbiter/register_with_parent()
 	var/atom/target = parent
 
 	target.orbiters = src
@@ -26,7 +26,7 @@
 
 	register_signal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
 
-/datum/component/orbiter/UnregisterFromParent()
+/datum/component/orbiter/unregister_from_parent()
 	unregister_signal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 	var/atom/target = parent
 	target.orbiters = null

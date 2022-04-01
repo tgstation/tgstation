@@ -71,7 +71,7 @@
 		src.icon_wielded = icon_wielded
 
 // register signals withthe parent item
-/datum/component/two_handed/RegisterWithParent()
+/datum/component/two_handed/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
@@ -81,7 +81,7 @@
 	register_signal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
 // Remove all siginals registered to the parent item
-/datum/component/two_handed/UnregisterFromParent()
+/datum/component/two_handed/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED,
 								COMSIG_ITEM_DROPPED,
 								COMSIG_ITEM_ATTACK_SELF,

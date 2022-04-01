@@ -60,7 +60,7 @@
 	obj_parent.name = initial(obj_parent.name)
 	obj_parent.remove_atom_colour(ADMIN_COLOUR_PRIORITY, phylactery_color)
 	// Stationloving items should really never be made a phylactery so I feel safe in doing this
-	qdel(obj_parent.GetComponent(/datum/component/stationloving))
+	qdel(obj_parent.get_component(/datum/component/stationloving))
 
 	unregister_signal(obj_parent, COMSIG_PARENT_EXAMINE)
 	unregister_signal(SSdcs, COMSIG_GLOB_MOB_DEATH)

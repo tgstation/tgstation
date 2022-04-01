@@ -32,8 +32,8 @@
  *
  * * input_requirements - bitflag that defines how the component is supposed to act, see __DEFINES/electrified_buckle.dm for the options. sets usage_flags
  * * input_item - if set to an item and input_requirements has SHOCK_REQUIREMENT_ITEM, moves that item inside parent and the component will delete itself if input_item no longer exists/moves out of parent. sets required_object
- * * overlays_to_add - pass in a list of images and the component will add them to parent as well as remove them in UnregisterFromParent(). sets requested_overlays
- * * override_buckle - if TRUE, sets parent.can_buckle = TRUE and resets it on UnregisterFromParent(), usually objects that have need to be overridden will look janky on buckle
+ * * overlays_to_add - pass in a list of images and the component will add them to parent as well as remove them in unregister_from_parent(). sets requested_overlays
+ * * override_buckle - if TRUE, sets parent.can_buckle = TRUE and resets it on unregister_from_parent(), usually objects that have need to be overridden will look janky on buckle
  * * damage_on_shock - if SHOCK_REQUIREMENT_LIVE_CABLE is not set in input_requirements, then this is how much damage each shock does. sets shock_damage
  * * signal_to_register_from_parent - if set, the component registers to listen for this signal targeting parent to manually shock. sets requested_signal_parent_emits
 */
@@ -95,7 +95,7 @@
 			if(on_buckle(src, possible_guinea_pig))
 				break
 
-/datum/component/electrified_buckle/UnregisterFromParent()
+/datum/component/electrified_buckle/unregister_from_parent()
 	var/atom/movable/parent_as_movable = parent
 
 	parent_as_movable.cut_overlay(requested_overlays)

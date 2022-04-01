@@ -35,7 +35,7 @@
 	register_signal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
 /obj/item/mod/module/storage/on_uninstall()
-	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
+	var/datum/component/storage/modstorage = mod.get_component(/datum/component/storage)
 	storage.slaves -= modstorage
 	qdel(modstorage)
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())

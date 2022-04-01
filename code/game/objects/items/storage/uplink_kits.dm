@@ -385,7 +385,7 @@
 
 /obj/item/storage/box/syndie_kit/space/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(/obj/item/clothing/suit/space/syndicate, /obj/item/clothing/head/helmet/space/syndicate))
 
@@ -411,7 +411,7 @@
 
 /obj/item/storage/box/syndie_kit/chemical/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 14
 
 /obj/item/storage/box/syndie_kit/chemical/PopulateContents()

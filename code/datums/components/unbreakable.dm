@@ -10,10 +10,10 @@
 	REMOVE_TRAIT(parent, TRAIT_UNBREAKABLE, INNATE_TRAIT)
 	return ..()
 
-/datum/component/unbreakable/RegisterWithParent()
+/datum/component/unbreakable/register_with_parent()
 	register_signal(parent, COMSIG_MOB_STATCHANGE, .proc/surge)
 
-/datum/component/unbreakable/UnregisterFromParent()
+/datum/component/unbreakable/unregister_from_parent()
 	unregister_signal(parent, COMSIG_MOB_STATCHANGE)
 
 /datum/component/unbreakable/proc/surge(mob/living/carbon/human/surged, new_stat)

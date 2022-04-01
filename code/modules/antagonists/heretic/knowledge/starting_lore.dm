@@ -92,7 +92,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/datum/antagonist/heretic/our_heretic = IS_HERETIC(user)
 	var/obj/item/organ/our_living_heart = user.getorganslot(our_heretic.living_heart_organ_slot)
 	if(our_living_heart)
-		qdel(our_living_heart.GetComponent(/datum/component/living_heart))
+		qdel(our_living_heart.get_component(/datum/component/living_heart))
 
 // Don't bother letting them invoke this ritual if they have a Living Heart already in their chest
 /datum/heretic_knowledge/living_heart/can_be_invoked(datum/antagonist/heretic/invoker)

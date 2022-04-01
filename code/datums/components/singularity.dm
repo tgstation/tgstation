@@ -68,7 +68,7 @@
 	src.roaming = roaming
 	src.singularity_size = singularity_size
 
-/datum/component/singularity/RegisterWithParent()
+/datum/component/singularity/register_with_parent()
 	START_PROCESSING(SSsinguloprocess, src)
 
 	// The singularity stops drifting for no man!
@@ -107,7 +107,7 @@
 
 	return ..()
 
-/datum/component/singularity/UnregisterFromParent()
+/datum/component/singularity/unregister_from_parent()
 	STOP_PROCESSING(SSsinguloprocess, src)
 
 	parent.RemoveElement(/datum/element/bsa_blocker)

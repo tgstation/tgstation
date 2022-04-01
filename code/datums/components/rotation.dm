@@ -58,7 +58,7 @@
 /datum/component/simple_rotation/proc/RemoveSignals()
 	unregister_signal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
 
-/datum/component/simple_rotation/RegisterWithParent()
+/datum/component/simple_rotation/register_with_parent()
 	AddVerbs()
 	AddSignals()
 	. = ..()
@@ -69,7 +69,7 @@
 	//instead (there's no real state worth transferring)
 	return COMPONENT_NOTRANSFER
 
-/datum/component/simple_rotation/UnregisterFromParent()
+/datum/component/simple_rotation/unregister_from_parent()
 	RemoveVerbs()
 	RemoveSignals()
 	. = ..()
@@ -155,7 +155,7 @@
 	set name = "Rotate Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
+	var/datum/component/simple_rotation/rotcomp = get_component(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.Rotate(usr, ROTATION_CLOCKWISE)
 
@@ -163,7 +163,7 @@
 	set name = "Rotate Counter-Clockwise"
 	set category = "Object"
 	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
+	var/datum/component/simple_rotation/rotcomp = get_component(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.Rotate(usr, ROTATION_COUNTERCLOCKWISE)
 
@@ -171,6 +171,6 @@
 	set name = "Flip"
 	set category = "Object"
 	set src in oview(1)
-	var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
+	var/datum/component/simple_rotation/rotcomp = get_component(/datum/component/simple_rotation)
 	if(rotcomp)
 		rotcomp.Rotate(usr, ROTATION_FLIP)

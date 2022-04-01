@@ -33,7 +33,7 @@
 
 /obj/item/uplink/debug/Initialize(mapload, owner, tc_amount = 9000)
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = get_component(/datum/component/uplink)
 	hidden_uplink.name = "debug uplink"
 	hidden_uplink.uplink_handler.debug_mode = TRUE
 
@@ -46,7 +46,7 @@
 
 /obj/item/uplink/nuclear/debug/Initialize(mapload, owner, tc_amount = 9000)
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = get_component(/datum/component/uplink)
 	hidden_uplink.name = "debug nuclear uplink"
 	hidden_uplink.uplink_handler.debug_mode = TRUE
 
@@ -55,7 +55,7 @@
 
 /obj/item/uplink/nuclear_restricted/Initialize(mapload)
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = get_component(/datum/component/uplink)
 	hidden_uplink.allow_restricted = FALSE
 
 /obj/item/uplink/clownop
@@ -67,7 +67,7 @@
 
 /obj/item/uplink/old/Initialize(mapload, owner, tc_amount = 10)
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = GetComponent(/datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = get_component(/datum/component/uplink)
 	hidden_uplink.name = "dusty radio"
 
 // Multitool uplink

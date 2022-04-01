@@ -467,7 +467,7 @@
 			to_chat(M, span_warning("It feels like [src] is freezing as you hug [p_them()]."))
 
 		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-			var/datum/component/mood/hugger_mood = M.GetComponent(/datum/component/mood)
+			var/datum/component/mood/hugger_mood = M.get_component(/datum/component/mood)
 			if (hugger_mood.sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)

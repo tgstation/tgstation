@@ -357,7 +357,7 @@
 /datum/mind/proc/remove_antag_equip()
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
-		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink) //Todo make this reset signal
+		var/datum/component/uplink/O = I.get_component(/datum/component/uplink) //Todo make this reset signal
 		if(O)
 			O.unlock_code = null
 
@@ -735,7 +735,7 @@
 	var/list/L = current.get_all_contents()
 	for (var/i in L)
 		var/atom/movable/I = i
-		var/datum/component/uplink/found_uplink = I.GetComponent(/datum/component/uplink)
+		var/datum/component/uplink/found_uplink = I.get_component(/datum/component/uplink)
 		if(!found_uplink || (check_unlocked && found_uplink.locked))
 			continue
 		return found_uplink

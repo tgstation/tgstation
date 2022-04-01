@@ -115,7 +115,7 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/component/fov_handler/RegisterWithParent()
+/datum/component/fov_handler/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/on_dir_change)
 	register_signal(parent, COMSIG_LIVING_DEATH, .proc/update_mask)
@@ -124,6 +124,6 @@
 	register_signal(parent, COMSIG_MOB_RESET_PERSPECTIVE, .proc/update_mask)
 	register_signal(parent, COMSIG_MOB_LOGOUT, .proc/mob_logout)
 
-/datum/component/fov_handler/UnregisterFromParent()
+/datum/component/fov_handler/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, list(COMSIG_MOB_RESET_PERSPECTIVE, COMSIG_ATOM_DIR_CHANGE, COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE, COMSIG_MOB_LOGOUT))

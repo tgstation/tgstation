@@ -13,11 +13,11 @@
 	if(message)
 		src.message = message
 
-/datum/component/technointrovert/RegisterWithParent()
+/datum/component/technointrovert/register_with_parent()
 	register_signal(parent, COMSIG_TRY_USE_MACHINE, .proc/on_try_use_machine)
 	register_signal(parent, COMSIG_TRY_WIRES_INTERACT, .proc/on_try_wires_interact)
 
-/datum/component/technointrovert/UnregisterFromParent()
+/datum/component/technointrovert/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /datum/component/technointrovert/PostTransfer()

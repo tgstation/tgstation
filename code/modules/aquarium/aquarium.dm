@@ -125,7 +125,7 @@
 				update_appearance()
 			return TRUE
 	else
-		var/datum/component/aquarium_content/content_component = I.GetComponent(/datum/component/aquarium_content)
+		var/datum/component/aquarium_content/content_component = I.get_component(/datum/component/aquarium_content)
 		if(content_component && content_component.is_ready_to_insert(src))
 			if(user.transferItemToLoc(I,src))
 				update_appearance()
@@ -143,7 +143,7 @@
 /obj/structure/aquarium/interact(mob/user)
 	if(!broken && user.pulling && isliving(user.pulling))
 		var/mob/living/living_pulled = user.pulling
-		var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
+		var/datum/component/aquarium_content/content_component = living_pulled.get_component(/datum/component/aquarium_content)
 		if(content_component && content_component.is_ready_to_insert(src))
 			try_to_put_mob_in(user)
 	else if(panel_open)
@@ -162,7 +162,7 @@
 		if(do_after(user, 10 SECONDS, target = src))
 			if(QDELETED(living_pulled) || user.pulling != living_pulled || living_pulled.buckled || living_pulled.has_buckled_mobs())
 				return
-			var/datum/component/aquarium_content/content_component = living_pulled.GetComponent(/datum/component/aquarium_content)
+			var/datum/component/aquarium_content/content_component = living_pulled.get_component(/datum/component/aquarium_content)
 			if(content_component || content_component.is_ready_to_insert(src))
 				return
 			user.visible_message(span_danger("[user] stuffs [living_pulled] into [src]!"))

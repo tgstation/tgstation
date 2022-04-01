@@ -39,7 +39,7 @@ handles linking back and forth.
 	silo = GLOB.ore_silo_default
 	if (silo)
 		silo.connected += src
-		mat_container = silo.GetComponent(/datum/component/material_container)
+		mat_container = silo.get_component(/datum/component/material_container)
 	else
 		_MakeLocal()
 
@@ -114,7 +114,7 @@ handles linking back and forth.
 		silo = M.buffer
 		silo.connected += src
 		silo.updateUsrDialog()
-		mat_container = silo.GetComponent(/datum/component/material_container)
+		mat_container = silo.get_component(/datum/component/material_container)
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return COMPONENT_BLOCK_TOOL_ATTACK
 

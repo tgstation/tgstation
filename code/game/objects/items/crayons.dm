@@ -599,7 +599,7 @@
 
 /obj/item/storage/crayons/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 7
 	STR.set_holdable(list(/obj/item/toy/crayon))
 

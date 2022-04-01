@@ -39,7 +39,7 @@
 	if(assembly && assembly.stored_decals.len)
 		reapply_all_decals()
 
-/datum/component/trapdoor/RegisterWithParent()
+/datum/component/trapdoor/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_TURF_CHANGE, .proc/turf_changed_pre)
 	if(!src.assembly)
@@ -47,7 +47,7 @@
 	else
 		register_signal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
 
-/datum/component/trapdoor/UnregisterFromParent()
+/datum/component/trapdoor/unregister_from_parent()
 	. = ..()
 	unregister_signal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
 	unregister_signal(assembly, COMSIG_ASSEMBLY_PULSED)

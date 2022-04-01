@@ -18,7 +18,7 @@
 	if(isturf(parent))
 		register_signal(parent, COMSIG_TURF_EXPOSE, .proc/hotspots_react)
 
-/datum/component/combustible_flooder/UnregisterFromParent()
+/datum/component/combustible_flooder/unregister_from_parent()
 	unregister_signal(parent, COMSIG_PARENT_ATTACKBY)
 	unregister_signal(parent, COMSIG_ATOM_FIRE_ACT)
 	unregister_signal(parent, COMSIG_ATOM_BULLET_ACT)

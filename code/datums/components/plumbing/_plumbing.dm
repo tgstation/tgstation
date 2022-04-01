@@ -49,14 +49,14 @@
 		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
 		register_signal(parent, list(COMSIG_COMPONENT_ADDED), .proc/enable)
 
-/datum/component/plumbing/RegisterWithParent()
+/datum/component/plumbing/register_with_parent()
 	register_signal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	register_signal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 	register_signal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
 	register_signal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
 	register_signal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
 
-/datum/component/plumbing/UnregisterFromParent()
+/datum/component/plumbing/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,COMSIG_OBJ_HIDE, \
 	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
 

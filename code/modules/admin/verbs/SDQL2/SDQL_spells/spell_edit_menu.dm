@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 #define LIST_VAR_FLAGS_NAMED 2
 
 /datum/give_sdql_spell/proc/load_vars_from(obj/effect/proc_holder/spell/sample)
-	var/datum/component/sdql_executor/executor = sample.GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = sample.get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[sample]'s SDQL executor component went missing!")
 	saved_vars["query"] = executor.query
@@ -906,7 +906,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /obj/effect/proc_holder/spell, list())
 /datum/give_sdql_spell/proc/reassign_vars(obj/effect/proc_holder/spell/target)
 	if(!target)
 		CRASH("edit_spell must be called with a non_null target")
-	var/datum/component/sdql_executor/executor = target.GetComponent(/datum/component/sdql_executor)
+	var/datum/component/sdql_executor/executor = target.get_component(/datum/component/sdql_executor)
 	if(!executor)
 		CRASH("[src]'s SDQL executor component went missing!")
 	for(var/V in saved_vars+list_vars)

@@ -52,12 +52,12 @@
 	to_chat(P, span_notice("You can no longer tackle."))
 	return ..()
 
-/datum/component/tackler/RegisterWithParent()
+/datum/component/tackler/register_with_parent()
 	register_signal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)
 	register_signal(parent, COMSIG_MOVABLE_IMPACT, .proc/sack)
 	register_signal(parent, COMSIG_MOVABLE_POST_THROW, .proc/registerTackle)
 
-/datum/component/tackler/UnregisterFromParent()
+/datum/component/tackler/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
 
 ///Store the thrownthing datum for later use

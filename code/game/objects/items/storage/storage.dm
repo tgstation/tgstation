@@ -37,7 +37,7 @@
 
 /obj/item/storage/doStrip(mob/who)
 	if(HAS_TRAIT(src, TRAIT_NODROP) && rummage_if_nodrop)
-		var/datum/component/storage/CP = GetComponent(/datum/component/storage)
+		var/datum/component/storage/CP = get_component(/datum/component/storage)
 		CP.do_quick_empty()
 		return TRUE
 	return ..()
@@ -48,7 +48,7 @@
 /obj/item/storage/proc/PopulateContents()
 
 /obj/item/storage/proc/emptyStorage()
-	var/datum/component/storage/ST = GetComponent(/datum/component/storage)
+	var/datum/component/storage/ST = get_component(/datum/component/storage)
 	ST.do_quick_empty()
 
 /obj/item/storage/Destroy()

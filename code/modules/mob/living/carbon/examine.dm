@@ -135,7 +135,7 @@
 	if (!isnull(trait_exam))
 		. += trait_exam
 
-	var/datum/component/mood/mood = src.GetComponent(/datum/component/mood)
+	var/datum/component/mood/mood = src.get_component(/datum/component/mood)
 	if(mood)
 		switch(mood.shown_mood)
 			if(-INFINITY to MOOD_LEVEL_SAD4)

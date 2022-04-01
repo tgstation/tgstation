@@ -8,7 +8,7 @@
 
 /obj/item/storage/dice/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage = get_component(/datum/component/storage)
 	storage.allow_quick_gather = TRUE
 	storage.click_gather = TRUE
 	storage.set_holdable(list(/obj/item/dice))

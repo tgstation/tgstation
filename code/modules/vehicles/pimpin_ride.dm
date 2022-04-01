@@ -164,4 +164,4 @@
 	installee.AddComponent(/datum/component/vacuum, installee.trash_bag)
 
 /obj/item/janicart_upgrade/vacuum/uninstall(obj/vehicle/ridden/janicart/installee)
-	qdel(installee.GetComponent(/datum/component/vacuum))
+	qdel(installee.get_component(/datum/component/vacuum))

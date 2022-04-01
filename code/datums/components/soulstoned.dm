@@ -24,7 +24,7 @@
 	if(S.loc != container)
 		qdel(src)
 
-/datum/component/soulstoned/UnregisterFromParent()
+/datum/component/soulstoned/unregister_from_parent()
 	var/mob/living/simple_animal/S = parent
 	S.status_flags &= ~GODMODE
 	REMOVE_TRAIT(S, TRAIT_IMMOBILIZED, SOULSTONE_TRAIT)

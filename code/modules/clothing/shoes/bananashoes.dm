@@ -24,7 +24,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/wearer = loc
-	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/bananium = get_component(/datum/component/material_container)
 	if(on && istype(wearer))
 		if(bananium.get_material_amount(/datum/material/bananium) < 100)
 			on = !on
@@ -37,7 +37,7 @@
 			bananium.use_amount_mat(100, /datum/material/bananium)
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/attack_self(mob/user)
-	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/bananium = get_component(/datum/component/material_container)
 	var/sheet_amount = bananium.retrieve_all()
 	if(sheet_amount)
 		to_chat(user, span_notice("You retrieve [sheet_amount] sheets of bananium from the prototype shoes."))
@@ -49,7 +49,7 @@
 	. += span_notice("The shoes are [on ? "enabled" : "disabled"].")
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/ui_action_click(mob/user)
-	var/datum/component/material_container/bananium = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/bananium = get_component(/datum/component/material_container)
 	if(bananium.get_material_amount(/datum/material/bananium))
 		on = !on
 		update_appearance()

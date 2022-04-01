@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	return FALSE
 
 /datum/component/storage/proc/get_dumping_location(atom/dest_object)
-	var/datum/component/storage/storage = dest_object.GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage = dest_object.get_component(/datum/component/storage)
 	if(storage)
 		return storage.real_location()
 	return dest_object.get_dumping_location()
@@ -672,7 +672,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		if(!stop_messages)
 			to_chat(M, span_warning("[I] is too big for [host]!"))
 		return FALSE
-	var/datum/component/storage/biggerfish = real_location.loc.GetComponent(/datum/component/storage)
+	var/datum/component/storage/biggerfish = real_location.loc.get_component(/datum/component/storage)
 	if(biggerfish && biggerfish.max_w_class < max_w_class) //return false if we are inside of another container, and that container has a smaller max_w_class than us (like if we're a bag in a box)
 		if(!stop_messages)
 			to_chat(M, span_warning("[I] can't fit in [host] while [real_location.loc] is in the way!"))
@@ -686,7 +686,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 	if(isitem(host))
 		var/obj/item/IP = host
-		var/datum/component/storage/STR_I = I.GetComponent(/datum/component/storage)
+		var/datum/component/storage/STR_I = I.get_component(/datum/component/storage)
 		if((I.w_class >= IP.w_class) && STR_I && !allow_big_nesting)
 			if(!stop_messages)
 				to_chat(M, span_warning("[IP] cannot hold [I] as it's a storage item of the same size!"))

@@ -17,10 +17,10 @@
 
 	return ..()
 
-/datum/component/surgery_initiator/RegisterWithParent()
+/datum/component/surgery_initiator/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
 
-/datum/component/surgery_initiator/UnregisterFromParent()
+/datum/component/surgery_initiator/unregister_from_parent()
 	unregister_signal(parent, COMSIG_ITEM_ATTACK)
 	unregister_signals()
 

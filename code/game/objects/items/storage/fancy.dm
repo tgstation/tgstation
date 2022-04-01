@@ -29,7 +29,7 @@
 /obj/item/storage/fancy/PopulateContents()
 	if(!spawn_type)
 		return
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	for(var/i = 1 to STR.max_items)
 		new spawn_type(src)
 
@@ -87,7 +87,7 @@
 
 /obj/item/storage/fancy/donut_box/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/food/donut))
 
@@ -135,7 +135,7 @@
 
 /obj/item/storage/fancy/egg_box/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 12
 	STR.set_holdable(list(/obj/item/food/egg))
 
@@ -159,7 +159,7 @@
 
 /obj/item/storage/fancy/candle_box/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 5
 
 /obj/item/storage/fancy/candle_box/attack_self(mob/user)
@@ -208,13 +208,13 @@
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
 	desc = "An old cigarette packet with the back torn off, worth less than nothing now."
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 0
 	return
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette, /obj/item/lighter))
 
@@ -390,7 +390,7 @@
 
 /obj/item/storage/fancy/rollingpapers/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 10
 	STR.set_holdable(list(/obj/item/rollingpaper))
 
@@ -422,7 +422,7 @@
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 5
 	STR.set_holdable(list(/obj/item/clothing/mask/cigarette/cigar))
 
@@ -472,7 +472,7 @@
 
 /obj/item/storage/fancy/heart_box/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 8
 	STR.set_holdable(list(/obj/item/food/tinychocolate))
 
@@ -488,6 +488,6 @@
 
 /obj/item/storage/fancy/nugget_box/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 6
 	STR.set_holdable(list(/obj/item/food/nugget))

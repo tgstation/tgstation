@@ -27,7 +27,7 @@
 		to_chat(user, span_warning("There doesn't seem to be anywhere to put [src]..."))
 
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/U, user)
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage = get_component(/datum/component/storage)
 	if(storage)
 		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE

@@ -117,6 +117,6 @@
 		return
 	playsound(H, soundfile, 15, TRUE, -3)
 
-/datum/component/caltrop/UnregisterFromParent()
+/datum/component/caltrop/unregister_from_parent()
 	if(ismovable(parent))
-		qdel(GetComponent(/datum/component/connect_loc_behalf))
+		qdel(get_component(/datum/component/connect_loc_behalf))

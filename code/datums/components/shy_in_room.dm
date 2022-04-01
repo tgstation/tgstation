@@ -14,7 +14,7 @@
 	if(message)
 		src.message = message
 
-/datum/component/shy_in_room/RegisterWithParent()
+/datum/component/shy_in_room/register_with_parent()
 	register_signal(parent, COMSIG_MOB_CLICKON, .proc/on_clickon)
 	register_signal(parent, COMSIG_LIVING_TRY_PULL, .proc/on_try_pull)
 	register_signal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK), .proc/on_unarmed_attack)
@@ -22,7 +22,7 @@
 	register_signal(parent, COMSIG_TRY_ALT_ACTION, .proc/on_try_alt_action)
 
 
-/datum/component/shy_in_room/UnregisterFromParent()
+/datum/component/shy_in_room/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_MOB_CLICKON,
 		COMSIG_LIVING_TRY_PULL,

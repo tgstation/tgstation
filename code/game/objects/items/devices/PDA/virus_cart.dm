@@ -106,7 +106,7 @@
 		charges--
 		var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
 		to_chat(U, span_notice("Virus Sent! The unlock code to the target is: [lock_code]"))
-		var/datum/component/uplink/hidden_uplink = target.GetComponent(/datum/component/uplink)
+		var/datum/component/uplink/hidden_uplink = target.get_component(/datum/component/uplink)
 		if(!hidden_uplink)
 			var/datum/mind/target_mind
 			var/list/backup_players = list()

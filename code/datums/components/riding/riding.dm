@@ -56,7 +56,7 @@
 		vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 0.85, 0.01)
 
 
-/datum/component/riding/RegisterWithParent()
+/datum/component/riding/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
 	register_signal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
@@ -68,7 +68,7 @@
 /**
  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation
  *
- * The original riding component had these procs all called from the ridden object itself through the use of GetComponent() and LoadComponent()
+ * The original riding component had these procs all called from the ridden object itself through the use of get_component() and LoadComponent()
  * This was obviously problematic for componentization, but while lots of the variables being set were able to be moved to component variables,
  * the proc calls couldn't be. Thus, anything that has to do an initial proc call should be handled here.
  */

@@ -16,14 +16,14 @@
 	RemoveCracks(parent, length(applied_cracks))
 	return ..()
 
-/datum/component/cracked/RegisterWithParent()
+/datum/component/cracked/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/IntegrityChanged)
 	var/obj/master = parent
 	var/integrity = master.get_integrity()
 	IntegrityChanged(parent, integrity, integrity)
 
-/datum/component/cracked/UnregisterFromParent()
+/datum/component/cracked/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, COMSIG_ATOM_INTEGRITY_CHANGED)
 

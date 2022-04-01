@@ -21,14 +21,14 @@
 	src.fail_signals = fail_signals
 	src.penalty = penalty
 
-/datum/component/traitor_objective_register/RegisterWithParent()
+/datum/component/traitor_objective_register/register_with_parent()
 	if(succeed_signals)
 		register_signal(target, succeed_signals, .proc/on_success)
 	if(fail_signals)
 		register_signal(target, fail_signals, .proc/on_fail)
 	register_signal(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
 
-/datum/component/traitor_objective_register/UnregisterFromParent()
+/datum/component/traitor_objective_register/unregister_from_parent()
 	if(target)
 		if(succeed_signals)
 			unregister_signal(target, succeed_signals)

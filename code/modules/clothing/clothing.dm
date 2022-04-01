@@ -287,7 +287,7 @@
 			if(30 to 59)
 				. += span_danger("The [zone_name] is partially shredded.")
 
-	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
+	var/datum/component/storage/pockets = get_component(/datum/component/storage)
 	if(pockets)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
 		if(pockets.attack_hand_interact)

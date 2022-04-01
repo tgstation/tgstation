@@ -42,7 +42,7 @@
 /obj/machinery/sheetifier/proc/finish_processing()
 	busy_processing = FALSE
 	update_appearance()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 	materials.retrieve_all() //Returns all as sheets
 
 /obj/machinery/sheetifier/attackby(obj/item/I, mob/user, params)

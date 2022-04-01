@@ -1390,7 +1390,7 @@
 	M.dizziness = max(M.dizziness - (6 * REM * delta_time), 0)
 	M.set_confusion(max(M.get_confusion() - (6 * REM * delta_time), 0))
 	M.disgust = max(M.disgust - (6 * REM * delta_time), 0)
-	var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
+	var/datum/component/mood/mood = M.get_component(/datum/component/mood)
 	if(mood != null && mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
 		mood.setSanity(min(mood.sanity + (5 * REM * delta_time), SANITY_NEUTRAL)) // set minimum to prevent unwanted spiking over neutral
 	..()

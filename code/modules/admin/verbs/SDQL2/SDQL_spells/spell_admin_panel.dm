@@ -15,7 +15,7 @@
 
 	for (var/obj/effect/proc_holder/spell/spell as anything in GLOB.sdql_spells)
 		var/mob/living/owner = spell.owner.resolve()
-		var/datum/component/sdql_executor/executor = spell.GetComponent(/datum/component/sdql_executor)
+		var/datum/component/sdql_executor/executor = spell.get_component(/datum/component/sdql_executor)
 		if(!executor)
 			continue
 
@@ -40,7 +40,7 @@
 			if(!spell)
 				to_chat(usr, span_warning("That spell no longer exists!"))
 				return
-			var/datum/component/sdql_executor/executor = spell.GetComponent(/datum/component/sdql_executor)
+			var/datum/component/sdql_executor/executor = spell.get_component(/datum/component/sdql_executor)
 			if(!executor)
 				to_chat(usr, span_warning("[spell][spell.p_s()] SDQL executor component is gone!"))
 				return

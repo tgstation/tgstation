@@ -28,11 +28,11 @@
 	if(override_catalyst_type)
 		catalyst_type = override_catalyst_type
 
-/datum/component/religious_tool/RegisterWithParent()
+/datum/component/religious_tool/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_ATTACKBY,.proc/AttemptActions)
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-/datum/component/religious_tool/UnregisterFromParent()
+/datum/component/religious_tool/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /**

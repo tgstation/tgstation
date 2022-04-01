@@ -32,7 +32,7 @@
 	/**
 	  * Only set to true if you are able to properly transfer this component
 	  *
-	  * At a minimum [RegisterWithParent][/datum/component/proc/RegisterWithParent] and [UnregisterFromParent][/datum/component/proc/UnregisterFromParent] should be used
+	  * At a minimum [register_with_parent][/datum/component/proc/register_with_parent] and [unregister_from_parent][/datum/component/proc/unregister_from_parent] should be used
 	  *
 	  * Make sure you also implement [PostTransfer][/datum/component/proc/PostTransfer] for any post transfer handling
 	  */
@@ -117,7 +117,7 @@
 		else //only component of this type, no list
 			dc[I] = src
 
-	RegisterWithParent()
+	register_with_parent()
 
 /**
  * Internal proc to handle behaviour when being removed from a parent
@@ -142,7 +142,7 @@
 	if(!parents_components.len)
 		parent.datum_components = null
 
-	UnregisterFromParent()
+	unregister_from_parent()
 
 /**
  * Register the component with the parent object
@@ -151,7 +151,7 @@
  *
  * Overridable proc that's called when added to a new parent
  */
-/datum/component/proc/RegisterWithParent()
+/datum/component/proc/register_with_parent()
 	return
 
 /**
@@ -162,7 +162,7 @@
  * Overridable proc that's called when removed from a parent
  * *
  */
-/datum/component/proc/UnregisterFromParent()
+/datum/component/proc/unregister_from_parent()
 	return
 
 /**
@@ -339,10 +339,10 @@
  * Arguments:
  * * datum/component/c_type The typepath of the component you want to get a reference to
  */
-/datum/proc/GetComponent(datum/component/c_type)
+/datum/proc/get_component(datum/component/c_type)
 	RETURN_TYPE(c_type)
 	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
-		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
+		stack_trace("get_component was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
 		return null
@@ -362,7 +362,7 @@
 /datum/proc/GetExactComponent(datum/component/c_type)
 	RETURN_TYPE(c_type)
 	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
-		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
+		stack_trace("get_component was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
 		return null
@@ -423,7 +423,7 @@
 		if(!dt)
 			old_comp = GetExactComponent(nt)
 		else
-			old_comp = GetComponent(dt)
+			old_comp = get_component(dt)
 		if(old_comp)
 			switch(dm)
 				if(COMPONENT_DUPE_UNIQUE)
@@ -476,7 +476,7 @@
  * * ... additional arguments to be passed when creating the component if it does not exist
  */
 /datum/proc/_LoadComponent(list/arguments)
-	. = GetComponent(arguments[1])
+	. = get_component(arguments[1])
 	if(!.)
 		return _AddComponent(arguments)
 

@@ -51,7 +51,7 @@
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	qdel(get_component(/datum/component/connect_loc_behalf))
 
 /obj/item/assembly/mousetrap/proc/triggered(mob/target, type = "feet")
 	if(!armed)

@@ -283,7 +283,7 @@
 		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
 			owner.dropItemToGround(head_item, force = TRUE)
 
-	qdel(owner.GetComponent(/datum/component/creamed)) //clean creampie overlay flushed emoji
+	qdel(owner.get_component(/datum/component/creamed)) //clean creampie overlay flushed emoji
 
 	//Handle dental implants
 	for(var/datum/action/item_action/hands_free/activate_pill/pill_action in owner.actions)

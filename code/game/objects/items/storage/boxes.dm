@@ -462,7 +462,7 @@
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/food/donkpocket))
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
@@ -504,7 +504,7 @@
 
 /obj/item/storage/box/monkeycubes/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 7
 	STR.set_holdable(list(/obj/item/food/monkeycube))
 
@@ -524,7 +524,7 @@
 
 /obj/item/storage/box/gorillacubes/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 3
 	STR.set_holdable(list(/obj/item/food/monkeycube))
 
@@ -691,7 +691,7 @@
 
 /obj/item/storage/box/snappops/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/toy/snappop))
 	STR.max_items = 8
 
@@ -715,7 +715,7 @@
 
 /obj/item/storage/box/matches/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 10
 	STR.set_holdable(list(/obj/item/match))
 
@@ -750,7 +750,7 @@
 
 /obj/item/storage/box/lights/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 21
 	STR.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
 	STR.max_combined_w_class = 21
@@ -1228,7 +1228,7 @@
 
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/food/bubblegum))
 	STR.max_items = 4
 

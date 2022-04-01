@@ -34,7 +34,7 @@
 
 /mob/living/simple_animal/drone/syndrone/Initialize(mapload)
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = internal_storage.get_component(/datum/component/uplink)
 	hidden_uplink.set_telecrystals(10)
 
 /mob/living/simple_animal/drone/syndrone/badass
@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/drone/syndrone/badass/Initialize(mapload)
 	. = ..()
-	var/datum/component/uplink/hidden_uplink = internal_storage.GetComponent(/datum/component/uplink)
+	var/datum/component/uplink/hidden_uplink = internal_storage.get_component(/datum/component/uplink)
 	hidden_uplink.set_telecrystals(30)
 	var/obj/item/implant/weapons_auth/W = new/obj/item/implant/weapons_auth(src)
 	W.implant(src, force = TRUE)

@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(hoarder_targets, list(
 			continue
 		var/list/all_items = owner.current.get_all_contents() //this should get things in cheesewheels, books, etc.
 		for(var/obj/possible_heirloom in all_items)
-			var/datum/component/heirloom/found = possible_heirloom.GetComponent(/datum/component/heirloom)
+			var/datum/component/heirloom/found = possible_heirloom.get_component(/datum/component/heirloom)
 			if(found && !(found.owner in owners))
 				return TRUE
 	return FALSE

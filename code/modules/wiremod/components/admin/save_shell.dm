@@ -28,7 +28,7 @@
 
 /obj/item/circuit_component/save_shell/proc/on_post_load(datum/source)
 	SIGNAL_HANDLER
-	var/datum/component/shell/shell_component = loaded_shell.GetComponent(/datum/component/shell)
+	var/datum/component/shell/shell_component = loaded_shell.get_component(/datum/component/shell)
 	if(!istype(shell_component))
 		loaded_shell.AddComponent(/datum/component/shell, starting_circuit = parent)
 	else

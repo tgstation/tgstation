@@ -39,7 +39,7 @@
 	if(starting_circuit)
 		attach_circuit(starting_circuit)
 
-/datum/component/shell/RegisterWithParent()
+/datum/component/shell/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	register_signal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/on_attack_ghost)
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
@@ -86,7 +86,7 @@
 	attach_circuit(circuit)
 
 
-/datum/component/shell/UnregisterFromParent()
+/datum/component/shell/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),

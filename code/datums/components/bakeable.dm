@@ -32,11 +32,11 @@
 	if(positive_result)
 		src.positive_result = positive_result
 
-/datum/component/bakeable/RegisterWithParent()
+/datum/component/bakeable/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_BAKED, .proc/OnBake)
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
-/datum/component/bakeable/UnregisterFromParent()
+/datum/component/bakeable/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, list(COMSIG_ITEM_BAKED, COMSIG_PARENT_EXAMINE))
 

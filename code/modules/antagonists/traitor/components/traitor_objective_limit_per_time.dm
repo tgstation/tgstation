@@ -19,10 +19,10 @@
 	if(!typepath)
 		src.typepath = parent.type
 
-/datum/component/traitor_objective_limit_per_time/RegisterWithParent()
+/datum/component/traitor_objective_limit_per_time/register_with_parent()
 	register_signal(parent, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE, .proc/handle_generate)
 
-/datum/component/traitor_objective_limit_per_time/UnregisterFromParent()
+/datum/component/traitor_objective_limit_per_time/unregister_from_parent()
 	unregister_signal(parent, COMSIG_TRAITOR_OBJECTIVE_PRE_GENERATE)
 
 

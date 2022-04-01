@@ -139,7 +139,7 @@
 	if (human.nutrition > 0 && human.stat != DEAD)
 		// THEY HUNGER
 		var/hunger_rate = HUNGER_FACTOR
-		var/datum/component/mood/mood = human.GetComponent(/datum/component/mood)
+		var/datum/component/mood/mood = human.get_component(/datum/component/mood)
 		if(mood && mood.sanity > SANITY_DISTURBED)
 			hunger_rate *= max(1 - 0.002 * mood.sanity, 0.5) //0.85 to 0.75
 		// Whether we cap off our satiety or move it towards 0

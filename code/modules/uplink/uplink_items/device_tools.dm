@@ -125,7 +125,7 @@
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/device_tools/failsafe/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	var/datum/component/uplink/uplink = source.GetComponent(/datum/component/uplink)
+	var/datum/component/uplink/uplink = source.get_component(/datum/component/uplink)
 	if(!uplink)
 		return
 	uplink.failsafe_code = uplink.generate_code()

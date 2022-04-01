@@ -10,13 +10,13 @@
 
 	set_recipient_reagents_holder(null)
 
-/datum/component/plumbing/iv_drip/RegisterWithParent()
+/datum/component/plumbing/iv_drip/register_with_parent()
 	. = ..()
 
 	register_signal(parent, list(COMSIG_IV_ATTACH), .proc/update_attached)
 	register_signal(parent, list(COMSIG_IV_DETACH), .proc/clear_attached)
 
-/datum/component/plumbing/iv_drip/UnregisterFromParent()
+/datum/component/plumbing/iv_drip/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_IV_ATTACH))
 	unregister_signal(parent, list(COMSIG_IV_DETACH))
 

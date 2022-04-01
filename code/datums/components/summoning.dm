@@ -22,7 +22,7 @@
 	src.spawn_sound = spawn_sound
 	src.faction = faction
 
-/datum/component/summoning/RegisterWithParent()
+/datum/component/summoning/register_with_parent()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
 		register_signal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(parent))
@@ -30,7 +30,7 @@
 	else if(ishostile(parent))
 		register_signal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 
-/datum/component/summoning/UnregisterFromParent()
+/datum/component/summoning/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/summoning/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)

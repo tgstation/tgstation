@@ -16,13 +16,13 @@
 	src.target = target
 	src.signals = signals
 
-/datum/component/traitor_objective_mind_tracker/RegisterWithParent()
+/datum/component/traitor_objective_mind_tracker/register_with_parent()
 	register_signal(target, COMSIG_MIND_TRANSFERRED, .proc/handle_mind_transferred)
 	register_signal(target, COMSIG_PARENT_QDELETING, .proc/delete_self)
 	register_signal(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
 	handle_mind_transferred(target)
 
-/datum/component/traitor_objective_mind_tracker/UnregisterFromParent()
+/datum/component/traitor_objective_mind_tracker/unregister_from_parent()
 	unregister_signal(target, COMSIG_MIND_TRANSFERRED)
 	if(target.current)
 		parent.unregister_signal(target.current, signals)

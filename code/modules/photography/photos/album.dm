@@ -16,7 +16,7 @@
 
 /obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.set_holdable(list(/obj/item/photo))
 	STR.max_combined_w_class = 42
 	STR.max_items = 21

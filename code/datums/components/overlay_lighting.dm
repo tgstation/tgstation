@@ -107,7 +107,7 @@
 		movable_parent.set_light_on(starts_on)
 
 
-/datum/component/overlay_lighting/RegisterWithParent()
+/datum/component/overlay_lighting/register_with_parent()
 	. = ..()
 	if(directional)
 		register_signal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/on_parent_dir_change)
@@ -128,7 +128,7 @@
 		turn_on()
 
 
-/datum/component/overlay_lighting/UnregisterFromParent()
+/datum/component/overlay_lighting/unregister_from_parent()
 	overlay_lighting_flags &= ~LIGHTING_ATTACHED
 	set_parent_attached_to(null)
 	set_holder(null)

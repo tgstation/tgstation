@@ -5,7 +5,7 @@
 		return COMPONENT_INCOMPATIBLE
 	return ..()
 
-/datum/component/riding/vehicle/RegisterWithParent()
+/datum/component/riding/vehicle/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_RIDDEN_DRIVER_MOVE, .proc/driver_move)
 

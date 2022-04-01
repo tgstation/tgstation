@@ -113,7 +113,7 @@
 	register_signal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 
 /obj/item/mod/module/energy_shield/on_suit_deactivation()
-	var/datum/component/shielded/shield = mod.GetComponent(/datum/component/shielded)
+	var/datum/component/shielded/shield = mod.get_component(/datum/component/shielded)
 	charges = shield.current_charges
 	qdel(shield)
 	unregister_signal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS)

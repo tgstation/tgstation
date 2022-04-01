@@ -14,11 +14,11 @@
 	if(isgrenade(parent))
 		parent.AddComponent(/datum/component/pellet_cloud, projectile_type=projectile_type)
 
-/datum/component/mirv/RegisterWithParent()
+/datum/component/mirv/register_with_parent()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
 		register_signal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 
-/datum/component/mirv/UnregisterFromParent()
+/datum/component/mirv/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/mirv/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)

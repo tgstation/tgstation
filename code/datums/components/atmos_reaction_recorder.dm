@@ -53,7 +53,7 @@
 	SIGNAL_HANDLER
 	copied_reaction_results.Cut()
 
-/datum/component/atmos_reaction_recorder/UnregisterFromParent()
+/datum/component/atmos_reaction_recorder/unregister_from_parent()
 	. = ..()
 	for(var/signal in registered_signals)
 		unregister_signal(registered_signals[signal], signal)

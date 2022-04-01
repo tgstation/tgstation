@@ -167,7 +167,7 @@
 				to_chat(user, span_notice("You changed [O] to... well... [O]."))
 			else
 				O.AddComponent(/datum/component/rename, input, O.desc)
-				var/datum/component/label/label = O.GetComponent(/datum/component/label)
+				var/datum/component/label/label = O.get_component(/datum/component/label)
 				if(label)
 					label.remove_label()
 					label.apply_label()
@@ -190,10 +190,10 @@
 			if(QDELETED(O) || !user.canUseTopic(O, BE_CLOSE))
 				return
 
-			qdel(O.GetComponent(/datum/component/rename))
+			qdel(O.get_component(/datum/component/rename))
 
 			//reapply any label to name
-			var/datum/component/label/label = O.GetComponent(/datum/component/label)
+			var/datum/component/label/label = O.get_component(/datum/component/label)
 			if(label)
 				label.remove_label()
 				label.apply_label()

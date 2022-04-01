@@ -14,12 +14,12 @@
 
 	src.lives_left = lives_left
 
-/datum/component/multiple_lives/RegisterWithParent()
+/datum/component/multiple_lives/register_with_parent()
 	register_signal(parent, COMSIG_LIVING_DEATH, .proc/respawn)
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	register_signal(parent, COMSIG_LIVING_WRITE_MEMORY, .proc/on_write_memory)
 
-/datum/component/multiple_lives/UnregisterFromParent()
+/datum/component/multiple_lives/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_EXAMINE, COMSIG_LIVING_WRITE_MEMORY))
 
 /// Stops a dying station pet from overriding persistence data before we respawn it and thus causing issues.

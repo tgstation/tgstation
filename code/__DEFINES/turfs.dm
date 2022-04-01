@@ -45,7 +45,7 @@
 #define TURF_WET_SUPERLUBE (1<<4)
 
 /// Checks if a turf is wet
-#define IS_WET_OPEN_TURF(O) O.GetComponent(/datum/component/wet_floor)
+#define IS_WET_OPEN_TURF(O) O.get_component(/datum/component/wet_floor)
 
 /// Maximum amount of time, (in deciseconds) a tile can be wet for.
 #define MAXIMUM_WET_TIME 5 MINUTES

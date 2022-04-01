@@ -35,7 +35,7 @@
 
 /obj/item/storage/secure/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_combined_w_class = 14
 
@@ -146,7 +146,7 @@
 
 /obj/item/storage/secure/briefcase/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_combined_w_class = 21
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 
@@ -156,7 +156,7 @@
 
 /obj/item/storage/secure/briefcase/syndie/PopulateContents()
 	..()
-	var/datum/component/storage/storage_space = GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage_space = get_component(/datum/component/storage)
 	for(var/i in 1 to storage_space.max_items - 2)
 		new /obj/item/stack/spacecash/c1000(src)
 
@@ -177,7 +177,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/secure/safe, 32)
 
 /obj/item/storage/secure/safe/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.set_holdable(null, list(/obj/item/storage/secure/briefcase))
 	STR.max_w_class = 8 //??
 

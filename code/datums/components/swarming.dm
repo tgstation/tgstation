@@ -29,7 +29,7 @@
 /datum/component/swarming/proc/join_swarm(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	var/datum/component/swarming/other_swarm = arrived.GetComponent(/datum/component/swarming)
+	var/datum/component/swarming/other_swarm = arrived.get_component(/datum/component/swarming)
 	if(!other_swarm)
 		return
 	swarm()
@@ -40,7 +40,7 @@
 /datum/component/swarming/proc/leave_swarm(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	var/datum/component/swarming/other_swarm = gone.GetComponent(/datum/component/swarming)
+	var/datum/component/swarming/other_swarm = gone.get_component(/datum/component/swarming)
 	if(!other_swarm || !(other_swarm in swarm_members))
 		return
 	swarm_members -= other_swarm

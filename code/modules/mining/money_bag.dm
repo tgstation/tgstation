@@ -14,7 +14,7 @@
 	. = ..()
 	if(prob(20))
 		icon_state = "moneybagalt"
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 40
 	STR.max_combined_w_class = 40

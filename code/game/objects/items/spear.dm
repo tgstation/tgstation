@@ -92,7 +92,7 @@
 	var/obj/item/grenade/G = locate() in parts_list
 	if(G)
 		var/obj/item/spear/lancePart = locate() in parts_list
-		var/datum/component/two_handed/comp_twohand = lancePart.GetComponent(/datum/component/two_handed)
+		var/datum/component/two_handed/comp_twohand = lancePart.get_component(/datum/component/two_handed)
 		if(comp_twohand)
 			var/lance_wielded = comp_twohand.force_wielded
 			var/lance_unwielded = comp_twohand.force_unwielded

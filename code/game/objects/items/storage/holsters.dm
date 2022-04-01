@@ -19,7 +19,7 @@
 
 /obj/item/storage/belt/holster/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 1
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
@@ -38,7 +38,7 @@
 
 /obj/item/storage/belt/holster/thermal/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 2
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
@@ -62,7 +62,7 @@
 
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 3
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
@@ -120,7 +120,7 @@
 
 /obj/item/storage/belt/holster/chameleon/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.silent = TRUE
 
 /obj/item/storage/belt/holster/chameleon/emp_act(severity)
@@ -135,7 +135,7 @@
 
 /obj/item/storage/belt/holster/chameleon/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 2
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
@@ -165,7 +165,7 @@
 
 /obj/item/storage/belt/holster/nukie/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 2
 	STR.max_w_class = WEIGHT_CLASS_BULKY
 	STR.set_holdable(list(

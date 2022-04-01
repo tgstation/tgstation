@@ -56,7 +56,7 @@
 	handle_movement()
 
 
-/datum/component/decomposition/UnregisterFromParent()
+/datum/component/decomposition/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_ITEM_PICKUP,
 		COMSIG_STORAGE_ENTERED,

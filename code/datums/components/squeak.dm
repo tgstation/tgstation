@@ -66,9 +66,9 @@
 	if(isnum(fallof_distance))
 		sound_falloff_distance = fallof_distance
 
-/datum/component/squeak/UnregisterFromParent()
+/datum/component/squeak/unregister_from_parent()
 	. = ..()
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	qdel(get_component(/datum/component/connect_loc_behalf))
 
 /datum/component/squeak/proc/play_squeak()
 	SIGNAL_HANDLER

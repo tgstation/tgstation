@@ -59,10 +59,10 @@
 
 	start_up(NONE) //If nothing's blocking it, start
 
-/datum/component/rot/UnregisterFromParent()
+/datum/component/rot/unregister_from_parent()
 	. = ..()
 	if(ismovable(parent))
-		qdel(GetComponent(/datum/component/connect_loc_behalf))
+		qdel(get_component(/datum/component/connect_loc_behalf))
 
 ///One of two procs that modifies blockers, this one handles removing a blocker and potentially restarting the rot
 /datum/component/rot/proc/start_up(blocker_type)

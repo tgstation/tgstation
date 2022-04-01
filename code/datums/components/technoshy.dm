@@ -19,11 +19,11 @@
 		whitelist = typecacheof(parent.type)
 	src.whitelist = whitelist
 
-/datum/component/technoshy/RegisterWithParent()
+/datum/component/technoshy/register_with_parent()
 	register_signal(parent, COMSIG_TRY_USE_MACHINE, .proc/on_try_use_machine)
 	register_signal(parent, COMSIG_TRY_WIRES_INTERACT, .proc/on_try_wires_interact)
 
-/datum/component/technoshy/UnregisterFromParent()
+/datum/component/technoshy/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /datum/component/technoshy/PostTransfer()

@@ -74,7 +74,7 @@
 	if(on_wrist && far_from_home)
 		return
 	balloon_alert(user, "GPS de-activated")
-	qdel(GetComponent(/datum/component/gps))
+	qdel(get_component(/datum/component/gps))
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
 	gps_enabled = FALSE
 

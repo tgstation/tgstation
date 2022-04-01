@@ -42,14 +42,14 @@
 		extra_info[DETAIL_WHERE] = get_area(victim)
 
 	if(!(memory_flags & MEMORY_FLAG_NOMOOD))
-		var/datum/component/mood/victim_mood_component = current.GetComponent(/datum/component/mood)
+		var/datum/component/mood/victim_mood_component = current.get_component(/datum/component/mood)
 		if(victim_mood_component)
 			victim_mood = victim_mood_component.mood_level
 
 		if(victim == current)
 			story_mood = victim_mood
 		else
-			var/datum/component/mood/memorizer_mood_component = current.GetComponent(/datum/component/mood)
+			var/datum/component/mood/memorizer_mood_component = current.get_component(/datum/component/mood)
 			if(memorizer_mood_component)
 				story_mood = memorizer_mood_component.mood_level
 

@@ -162,7 +162,7 @@
 
 /obj/item/storage/toolbox/syndicate/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.silent = TRUE
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
@@ -200,7 +200,7 @@
 
 /obj/item/storage/toolbox/artistic/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_combined_w_class = 20
 	STR.max_items = 10
 
@@ -267,7 +267,7 @@
 
 /obj/item/storage/toolbox/infiltrator/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 10
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(

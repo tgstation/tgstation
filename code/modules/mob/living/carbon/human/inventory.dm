@@ -317,7 +317,7 @@
 		if(equip_to_slot_if_possible(thing, slot_type))
 			update_inv_hands()
 		return
-	var/datum/component/storage/storage = equipped_item.GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage = equipped_item.get_component(/datum/component/storage)
 	if(!storage)
 		if(!thing)
 			equipped_item.attack_hand(src)

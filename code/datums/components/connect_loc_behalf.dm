@@ -19,12 +19,12 @@
 	src.connections = connections
 	src.tracked = tracked
 
-/datum/component/connect_loc_behalf/RegisterWithParent()
+/datum/component/connect_loc_behalf/register_with_parent()
 	register_signal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	register_signal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
 	update_signals()
 
-/datum/component/connect_loc_behalf/UnregisterFromParent()
+/datum/component/connect_loc_behalf/unregister_from_parent()
 	unregister_signals()
 	unregister_signal(tracked, list(
 		COMSIG_MOVABLE_MOVED,

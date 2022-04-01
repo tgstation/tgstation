@@ -62,7 +62,7 @@
 	if (scanning)
 		AddComponent(/datum/component/geiger_sound)
 	else
-		qdel(GetComponent(/datum/component/geiger_sound))
+		qdel(get_component(/datum/component/geiger_sound))
 
 	update_appearance(UPDATE_ICON)
 	to_chat(user, span_notice("[icon2html(src, user)] You switch [scanning ? "on" : "off"] [src]."))

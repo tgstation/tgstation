@@ -16,11 +16,11 @@
 	udder = new udder_type(null, parent, on_generate_callback, reagent_produced_typepath)
 	src.on_milk_callback = on_milk_callback
 
-/datum/component/udder/RegisterWithParent()
+/datum/component/udder/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 
-/datum/component/udder/UnregisterFromParent()
+/datum/component/udder/unregister_from_parent()
 	QDEL_NULL(udder)
 	unregister_signal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_PARENT_ATTACKBY))
 

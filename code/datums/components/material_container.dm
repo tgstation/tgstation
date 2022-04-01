@@ -74,7 +74,7 @@
 	return ..()
 
 
-/datum/component/material_container/RegisterWithParent()
+/datum/component/material_container/register_with_parent()
 	. = ..()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))

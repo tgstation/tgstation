@@ -39,11 +39,11 @@
 
 	START_PROCESSING(SSobj, src)
 
-/datum/component/egg_layer/RegisterWithParent()
+/datum/component/egg_layer/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/feed_food)
 
-/datum/component/egg_layer/UnregisterFromParent()
+/datum/component/egg_layer/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, COMSIG_PARENT_ATTACKBY)
 

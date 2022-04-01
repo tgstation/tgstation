@@ -15,7 +15,7 @@ Basically, the items they pull cannot be pulled (except by the puller)
 		lose_strong_grip()
 	return ..()
 
-/datum/component/strong_pull/RegisterWithParent()
+/datum/component/strong_pull/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_LIVING_START_PULL, .proc/on_pull)
 

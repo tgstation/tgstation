@@ -41,7 +41,7 @@
 	QDEL_NULL(on_clear_callback)
 	return ..()
 
-/datum/component/effect_remover/RegisterWithParent()
+/datum/component/effect_remover/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_remove_effect)
 
 	if(tip_text)
@@ -49,7 +49,7 @@
 		item_parent.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
 		register_signal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/add_item_context)
 
-/datum/component/effect_remover/UnregisterFromParent()
+/datum/component/effect_remover/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_ATTACK_EFFECT, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 
 /*

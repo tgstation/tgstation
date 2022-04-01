@@ -28,10 +28,10 @@
 
 	START_PROCESSING(SSprocessing, src)
 
-/datum/component/genetic_damage/RegisterWithParent()
+/datum/component/genetic_damage/register_with_parent()
 	register_signal(parent, COMSIG_LIVING_HEALTHSCAN, .proc/on_healthscan)
 
-/datum/component/genetic_damage/UnregisterFromParent()
+/datum/component/genetic_damage/unregister_from_parent()
 	unregister_signal(parent, COMSIG_LIVING_HEALTHSCAN)
 
 /datum/component/genetic_damage/Destroy(force, silent)

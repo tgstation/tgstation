@@ -28,14 +28,14 @@
 	to_chat(parent, span_notice("You revert back to automatic blinking."))
 	return ..()
 
-/datum/component/manual_blinking/RegisterWithParent()
+/datum/component/manual_blinking/register_with_parent()
 	register_signal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 	register_signal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
 	register_signal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
 	register_signal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
 	register_signal(parent, COMSIG_LIVING_DEATH, .proc/pause)
 
-/datum/component/manual_blinking/UnregisterFromParent()
+/datum/component/manual_blinking/unregister_from_parent()
 	unregister_signal(parent, COMSIG_MOB_EMOTE)
 	unregister_signal(parent, COMSIG_CARBON_GAIN_ORGAN)
 	unregister_signal(parent, COMSIG_CARBON_LOSE_ORGAN)

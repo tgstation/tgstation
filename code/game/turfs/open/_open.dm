@@ -264,7 +264,7 @@
 	return src
 
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
-	qdel(GetComponent(/datum/component/wet_floor))
+	qdel(get_component(/datum/component/wet_floor))
 
 /// Builds with rods. This doesn't exist to be overriden, just to remove duplicate logic for turfs that want
 /// To support floor tile creation

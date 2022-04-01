@@ -93,7 +93,7 @@
 
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
-		qdel(GetComponent(/datum/component/connect_loc_behalf))
+		qdel(get_component(/datum/component/connect_loc_behalf))
 		AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
 		register_signal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
@@ -122,7 +122,7 @@
 
 	unregister_signal(user, COMSIG_PARENT_PREQDELETED)
 
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	qdel(get_component(/datum/component/connect_loc_behalf))
 	add_connect_loc_behalf_to_parent()
 
 	holder = null
@@ -140,9 +140,9 @@
 	if(holder.body_position == LYING_DOWN && !holder.buckled)
 		Slip(source, arrived)
 
-/datum/component/slippery/UnregisterFromParent()
+/datum/component/slippery/unregister_from_parent()
 	. = ..()
-	qdel(GetComponent(/datum/component/connect_loc_behalf))
+	qdel(get_component(/datum/component/connect_loc_behalf))
 
 /// Used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
 /datum/component/slippery/clowning

@@ -62,7 +62,7 @@
 	QDEL_NULL(on_hit_effects)
 	return ..()
 
-/datum/component/shielded/RegisterWithParent()
+/datum/component/shielded/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
 	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/lost_wearer)
 	register_signal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_react)
@@ -74,7 +74,7 @@
 			return
 		set_wearer(holder)
 
-/datum/component/shielded/UnregisterFromParent()
+/datum/component/shielded/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_HIT_REACT, COMSIG_PARENT_ATTACKBY))
 	var/atom/shield = parent
 	if(shield.loc == wearer)

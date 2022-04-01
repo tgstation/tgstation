@@ -18,12 +18,12 @@
 	if(bound_spirit)
 		QDEL_NULL(bound_spirit)
 
-/datum/component/spirit_holding/RegisterWithParent()
+/datum/component/spirit_holding/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	register_signal(parent, COMSIG_PARENT_QDELETING, .proc/on_destroy)
 
-/datum/component/spirit_holding/UnregisterFromParent()
+/datum/component/spirit_holding/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_QDELETING))
 
 ///signal fired on examining the parent

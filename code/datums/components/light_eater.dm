@@ -30,12 +30,12 @@
 	eaten_lights = null
 	return ..()
 
-/datum/component/light_eater/RegisterWithParent()
+/datum/component/light_eater/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_LIGHT_EATER_DEVOUR, .proc/on_devour)
 	parent.AddElement(/datum/element/light_eater)
 
-/datum/component/light_eater/UnregisterFromParent()
+/datum/component/light_eater/unregister_from_parent()
 	. = ..()
 	parent.RemoveElement(/datum/element/light_eater)
 	unregister_signal(parent, COMSIG_LIGHT_EATER_DEVOUR)

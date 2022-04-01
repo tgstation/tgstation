@@ -312,14 +312,14 @@
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	register_signal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	var/datum/component/butchering/butchering = get_component(/datum/component/butchering)
 	butchering.butchering_enabled = TRUE
 	to_chat(user, span_notice("You feel a bloodlust. You can now butcher corpses with your bare arms."))
 
 /obj/item/clothing/head/hooded/hostile_environment/dropped(mob/user, silent = FALSE)
 	. = ..()
 	unregister_signal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
+	var/datum/component/butchering/butchering = get_component(/datum/component/butchering)
 	butchering.butchering_enabled = FALSE
 	to_chat(user, span_notice("You lose your bloodlust."))
 

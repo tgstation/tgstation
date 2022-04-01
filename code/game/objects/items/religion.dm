@@ -201,7 +201,7 @@
 	inspiration_available = FALSE
 
 /obj/item/banner/engineering/special_inspiration(mob/living/carbon/human/H)
-	qdel(H.GetComponent(/datum/component/irradiated))
+	qdel(H.get_component(/datum/component/irradiated))
 
 /datum/crafting_recipe/engineering_banner
 	name = "Engitopia Banner"
@@ -254,7 +254,7 @@
 
 /obj/item/storage/backpack/bannerpack/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_combined_w_class = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
 
 /obj/item/storage/backpack/bannerpack/red

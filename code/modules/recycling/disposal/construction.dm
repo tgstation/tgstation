@@ -37,7 +37,7 @@
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 	if(flip)
-		var/datum/component/simple_rotation/rotcomp = GetComponent(/datum/component/simple_rotation)
+		var/datum/component/simple_rotation/rotcomp = get_component(/datum/component/simple_rotation)
 		rotcomp.Rotate(usr, ROTATION_FLIP) // this only gets used by pipes created by RPDs or pipe dispensers
 
 	update_appearance()

@@ -36,12 +36,12 @@
 		vessel = null
 	return ..()
 
-/datum/component/omen/RegisterWithParent()
+/datum/component/omen/register_with_parent()
 	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/check_accident)
 	register_signal(parent, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/check_slip)
 	register_signal(parent, COMSIG_ADD_MOOD_EVENT, .proc/check_bless)
 
-/datum/component/omen/UnregisterFromParent()
+/datum/component/omen/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_LIVING_STATUS_KNOCKDOWN, COMSIG_MOVABLE_MOVED, COMSIG_ADD_MOOD_EVENT))
 
 /**

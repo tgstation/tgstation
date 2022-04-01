@@ -119,7 +119,7 @@
 				set_anchored(FALSE)
 
 		if(BOOKCASE_FINISHED)
-			var/datum/component/storage/STR = I.GetComponent(/datum/component/storage)
+			var/datum/component/storage/STR = I.get_component(/datum/component/storage)
 			if(isbook(I))
 				if(!user.transferItemToLoc(I, src))
 					return

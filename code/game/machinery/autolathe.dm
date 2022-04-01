@@ -70,7 +70,7 @@
 /obj/machinery/autolathe/ui_data(mob/user)
 	var/list/data = list()
 	data["materials"] = list()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 	data["materialtotal"] = materials.total_amount
 	data["materialsmax"] = materials.max_amount
 	data["categories"] = categories
@@ -111,7 +111,7 @@
 		if(ispath(D.build_path, /obj/item/stack))
 			sheets = TRUE
 			if(!unbuildable)
-				var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
+				var/datum/component/material_container/mats = get_component(/datum/component/material_container)
 				for(var/datum/material/mat in D.materials)
 					max_multiplier = min(D.maxstack, round(mats.get_material_amount(mat)/D.materials[mat]))
 				if (max_multiplier>10 && !disabled)
@@ -124,7 +124,7 @@
 					m5 = TRUE
 				if(!disabled && can_build(D, 10))
 					m10 = TRUE
-				var/datum/component/material_container/mats = GetComponent(/datum/component/material_container)
+				var/datum/component/material_container/mats = get_component(/datum/component/material_container)
 				for(var/datum/material/mat in D.materials)
 					max_multiplier = min(50, round(mats.get_material_amount(mat)/(D.materials[mat] * creation_efficiency)))
 
@@ -192,7 +192,7 @@
 
 			var/power = max(2000, (total_amount)*multiplier/5) //Change this to use all materials
 
-			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+			var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 
 			var/list/materials_used = list()
 			var/list/custom_materials = list() //These will apply their material effect, This should usually only be one.
@@ -227,7 +227,7 @@
 			to_chat(usr, span_alert("The autolathe is busy. Please wait for completion of previous operation."))
 
 /obj/machinery/autolathe/on_deconstruction()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 	materials.retrieve_all()
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
@@ -310,7 +310,7 @@
 		use_power(min(1000, amount_inserted / 100))
 
 /obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack, mob/user)
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
 
@@ -340,7 +340,7 @@
 	var/mat_capacity = 0
 	for(var/obj/item/stock_parts/matter_bin/new_matter_bin in component_parts)
 		mat_capacity += new_matter_bin.rating*75000
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 	materials.max_amount = mat_capacity
 
 	var/efficiency=1.8
@@ -350,7 +350,7 @@
 
 /obj/machinery/autolathe/examine(mob/user)
 	. += ..()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
 
@@ -365,7 +365,7 @@
 	for(var/i in D.materials)
 		required_materials[i] = D.materials[i] * coeff * amount
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 
 	return materials.has_materials(required_materials)
 

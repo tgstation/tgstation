@@ -32,7 +32,7 @@
 		simple_parent.stop_automated_movement = FALSE
 	return ..()
 
-/datum/component/riding/creature/RegisterWithParent()
+/datum/component/riding/creature/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 	if(can_be_driven)
@@ -189,7 +189,7 @@
 	else if(ride_check_flags & CARRIER_NEEDS_ARM) // fireman
 		human_parent.buckle_lying = 90
 
-/datum/component/riding/creature/human/RegisterWithParent()
+/datum/component/riding/creature/human/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 	register_signal(parent, COMSIG_LIVING_SET_BODY_POSITION, .proc/check_carrier_fall_over)

@@ -11,7 +11,7 @@
 
 /datum/preference/numeric/fov_darkness/apply_to_client_updated(client/client, value)
 	if(client.mob)
-		var/datum/component/fov_handler/fov_component = client.mob.GetComponent(/datum/component/fov_handler)
+		var/datum/component/fov_handler/fov_component = client.mob.get_component(/datum/component/fov_handler)
 		if(!fov_component)
 			return
 		fov_component.visual_shadow.alpha = value

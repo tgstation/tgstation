@@ -43,7 +43,7 @@
 		QDEL_NULL(linked_action)
 	return ..()
 
-/datum/component/cult_ritual_item/RegisterWithParent()
+/datum/component/cult_ritual_item/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/try_scribe_rune)
 	register_signal(parent, COMSIG_ITEM_ATTACK, .proc/try_purge_holywater)
 	register_signal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/try_hit_object)
@@ -52,7 +52,7 @@
 	if(examine_message)
 		register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-/datum/component/cult_ritual_item/UnregisterFromParent()
+/datum/component/cult_ritual_item/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_ITEM_ATTACK_SELF,
 		COMSIG_ITEM_ATTACK,

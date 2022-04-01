@@ -15,12 +15,12 @@
 	src.fov_angle = fov_angle
 	src.visor_up = clothing_parent.up //Initial values could vary, so we need to get it.
 
-/datum/component/clothing_fov_visor/RegisterWithParent()
+/datum/component/clothing_fov_visor/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	register_signal(parent, COMSIG_CLOTHING_VISOR_TOGGLE, .proc/on_visor_toggle)
 
-/datum/component/clothing_fov_visor/UnregisterFromParent()
+/datum/component/clothing_fov_visor/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_VISOR_TOGGLE))
 	return ..()
 

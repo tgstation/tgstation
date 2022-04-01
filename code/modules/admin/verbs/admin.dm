@@ -265,7 +265,7 @@
 	var/list/immersion_components = list(/datum/component/manual_breathing, /datum/component/manual_blinking)
 
 	for(var/immersies in immersion_components)
-		var/has_component = target.GetComponent(immersies)
+		var/has_component = target.get_component(immersies)
 
 		if(has_component && (toggle || remove))
 			qdel(has_component)

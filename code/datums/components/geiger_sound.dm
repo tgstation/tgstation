@@ -18,7 +18,7 @@
 
 	return ..()
 
-/datum/component/geiger_sound/RegisterWithParent()
+/datum/component/geiger_sound/register_with_parent()
 	sound = new(parent)
 
 	register_signal(parent, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
@@ -30,7 +30,7 @@
 		register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 		register_to_loc(atom_parent.loc)
 
-/datum/component/geiger_sound/UnregisterFromParent()
+/datum/component/geiger_sound/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_IN_RANGE_OF_IRRADIATION,

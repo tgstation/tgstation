@@ -28,14 +28,14 @@
 	to_chat(parent, span_notice("You revert back to automatic breathing."))
 	return ..()
 
-/datum/component/manual_breathing/RegisterWithParent()
+/datum/component/manual_breathing/register_with_parent()
 	register_signal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
 	register_signal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
 	register_signal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
 	register_signal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
 	register_signal(parent, COMSIG_LIVING_DEATH, .proc/pause)
 
-/datum/component/manual_breathing/UnregisterFromParent()
+/datum/component/manual_breathing/unregister_from_parent()
 	unregister_signal(parent, COMSIG_MOB_EMOTE)
 	unregister_signal(parent, COMSIG_CARBON_GAIN_ORGAN)
 	unregister_signal(parent, COMSIG_CARBON_LOSE_ORGAN)

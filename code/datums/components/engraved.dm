@@ -59,13 +59,13 @@
 		var/atom/parent_atom = parent
 		parent_atom.update_appearance()
 
-/datum/component/engraved/RegisterWithParent()
+/datum/component/engraved/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	//supporting component transfer means putting these here instead of initialize
 	SSpersistence.wall_engravings += src
 	ADD_TRAIT(parent, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC)
 
-/datum/component/engraved/UnregisterFromParent()
+/datum/component/engraved/unregister_from_parent()
 	unregister_signal(parent, COMSIG_PARENT_EXAMINE)
 	//supporting component transfer means putting these here instead of destroy
 	SSpersistence.wall_engravings -= src

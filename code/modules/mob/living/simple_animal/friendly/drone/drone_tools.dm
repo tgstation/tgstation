@@ -19,7 +19,7 @@
 		/obj/item/weldingtool/drone,
 		/obj/item/wirecutters/drone,
 	)
-	var/datum/component/storage/storage_component = GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage_component = get_component(/datum/component/storage)
 	storage_component.max_combined_w_class = 40
 	storage_component.max_w_class = WEIGHT_CLASS_NORMAL
 	storage_component.max_items = 5

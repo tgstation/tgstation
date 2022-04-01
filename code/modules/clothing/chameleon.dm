@@ -659,7 +659,7 @@
 
 /obj/item/storage/belt/chameleon/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.silent = TRUE
 
 /obj/item/storage/belt/chameleon/emp_act(severity)

@@ -326,7 +326,7 @@
 		data["subjectUF"] = scanner_occupant.dna.unique_features
 		data["storage"]["occupant"] = tgui_occupant_mutations
 
-		var/datum/component/genetic_damage/genetic_damage = scanner_occupant.GetComponent(/datum/component/genetic_damage)
+		var/datum/component/genetic_damage/genetic_damage = scanner_occupant.get_component(/datum/component/genetic_damage)
 		data["subjectDamage"] = genetic_damage ? round((genetic_damage.total_damage / genetic_damage.minimum_before_damage) * 100, 0.1) : 0
 	else
 		data["subjectName"] = null

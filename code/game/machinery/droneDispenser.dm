@@ -133,7 +133,7 @@
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 	if(!materials.has_materials(using_materials))
 		return // We require more minerals
 
@@ -201,7 +201,7 @@
 
 /obj/machinery/drone_dispenser/attackby(obj/item/I, mob/living/user)
 	if(I.tool_behaviour == TOOL_CROWBAR)
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+		var/datum/component/material_container/materials = get_component(/datum/component/material_container)
 		materials.retrieve_all()
 		I.play_tool_sound(src)
 		to_chat(user, span_notice("You retrieve the materials from [src]."))

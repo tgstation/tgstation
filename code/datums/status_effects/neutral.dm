@@ -449,7 +449,7 @@
 			//new you new stuff
 			SSquirks.randomise_quirks(owner)
 			owner.reagents.remove_all(1000)
-			var/datum/component/mood/mood = owner.GetComponent(/datum/component/mood)
+			var/datum/component/mood/mood = owner.get_component(/datum/component/mood)
 			mood.remove_temp_moods() //New you, new moods.
 			var/mob/living/carbon/human/human_mob = owner
 			SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "Eigentrip", /datum/mood_event/eigentrip)

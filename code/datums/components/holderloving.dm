@@ -29,7 +29,7 @@
 	if(del_parent_with_holder)
 		src.del_parent_with_holder = del_parent_with_holder
 
-/datum/component/holderloving/RegisterWithParent()
+/datum/component/holderloving/register_with_parent()
 	register_signal(holder, COMSIG_MOVABLE_MOVED, .proc/check_my_loc)
 	register_signal(holder, COMSIG_PARENT_QDELETING, .proc/holder_deleting)
 	register_signal(parent, list(
@@ -39,7 +39,7 @@
 		COMSIG_STORAGE_EXITED,
 	), .proc/check_my_loc)
 
-/datum/component/holderloving/UnregisterFromParent()
+/datum/component/holderloving/unregister_from_parent()
 	unregister_signal(holder, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	unregister_signal(parent, list(
 		COMSIG_ITEM_DROPPED,

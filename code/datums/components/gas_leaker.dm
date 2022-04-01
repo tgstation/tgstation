@@ -34,11 +34,11 @@
 	SSair.stop_processing_machine(src)
 	return ..()
 
-/datum/component/gas_leaker/RegisterWithParent()
+/datum/component/gas_leaker/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_ATOM_TAKE_DAMAGE, .proc/start_processing)
 
-/datum/component/gas_leaker/UnregisterFromParent()
+/datum/component/gas_leaker/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, COMSIG_ATOM_TAKE_DAMAGE)
 

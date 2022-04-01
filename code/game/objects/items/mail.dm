@@ -270,7 +270,7 @@
 
 /obj/item/storage/bag/mail/ComponentInitialize()
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage = get_component(/datum/component/storage)
 	storage.max_w_class = WEIGHT_CLASS_NORMAL
 	storage.max_combined_w_class = 42
 	storage.max_items = 21

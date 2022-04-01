@@ -346,10 +346,10 @@
 		register_signal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
-		qdel(GetComponent(/datum/component/shy))
-		qdel(GetComponent(/datum/component/shy_in_room))
-		qdel(GetComponent(/datum/component/technoshy))
-		qdel(GetComponent(/datum/component/itempicky))
+		qdel(get_component(/datum/component/shy))
+		qdel(get_component(/datum/component/shy_in_room))
+		qdel(get_component(/datum/component/technoshy))
+		qdel(get_component(/datum/component/itempicky))
 		unregister_signal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()

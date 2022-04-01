@@ -257,12 +257,12 @@
 	hardcore_value = 3
 
 /datum/quirk/hypersensitive/add()
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+	var/datum/component/mood/mood = quirk_holder.get_component(/datum/component/mood)
 	if(mood)
 		mood.mood_modifier += 0.5
 
 /datum/quirk/hypersensitive/remove()
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+	var/datum/component/mood/mood = quirk_holder.get_component(/datum/component/mood)
 	if(mood)
 		mood.mood_modifier -= 0.5
 
@@ -519,7 +519,7 @@
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
 
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+	var/datum/component/mood/mood = quirk_holder.get_component(/datum/component/mood)
 	var/moodmod
 	if(mood)
 		moodmod = (1+0.02*(50-(max(50, mood.mood_level*(7-mood.sanity_level))))) //low sanity levels are better, they max at 6
@@ -848,7 +848,7 @@
 		return
 
 	new /obj/effect/temp_visual/annoyed(quirk_holder.loc)
-	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
+	var/datum/component/mood/mood = quirk_holder.get_component(/datum/component/mood)
 	if(mood.sanity <= SANITY_NEUTRAL)
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_touch", /datum/mood_event/very_bad_touch)
 	else

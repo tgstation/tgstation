@@ -20,7 +20,7 @@
 	pool.forceMove(run_loc_floor_bottom_left)
 	blood_master.forceMove(run_loc_floor_bottom_left)
 
-	var/datum/component/bloodysoles/soles = holds_blood.GetComponent(/datum/component/bloodysoles)
+	var/datum/component/bloodysoles/soles = holds_blood.get_component(/datum/component/bloodysoles)
 	var/blood_type = pool.blood_state
 
 	TEST_ASSERT(soles.bloody_shoes[blood_type], "Shoes didn't become stained after stepping in a pool of [blood_type]")

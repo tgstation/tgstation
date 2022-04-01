@@ -29,7 +29,7 @@
 /datum/component/usb_port/proc/set_circuit_components(list/components)
 	var/should_register = FALSE
 	if(length(circuit_components))
-		UnregisterFromParent()
+		unregister_from_parent()
 		should_register = TRUE
 		QDEL_LIST(circuit_components)
 
@@ -41,9 +41,9 @@
 		circuit_components += component
 
 	if(should_register)
-		RegisterWithParent()
+		register_with_parent()
 
-/datum/component/usb_port/RegisterWithParent()
+/datum/component/usb_port/register_with_parent()
 	register_signal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -52,7 +52,7 @@
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
 
-/datum/component/usb_port/UnregisterFromParent()
+/datum/component/usb_port/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 		COMSIG_MOVABLE_MOVED,

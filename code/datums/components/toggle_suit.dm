@@ -19,11 +19,11 @@
 	src.toggle_noun = toggle_noun
 	src.base_icon_state = atom_parent.base_icon_state || atom_parent.icon_state
 
-/datum/component/toggle_icon/RegisterWithParent()
+/datum/component/toggle_icon/register_with_parent()
 	register_signal(parent, COMSIG_CLICK_ALT, .proc/on_alt_click)
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
-/datum/component/toggle_icon/UnregisterFromParent()
+/datum/component/toggle_icon/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_CLICK_ALT, COMSIG_PARENT_EXAMINE))
 
 /*

@@ -83,11 +83,11 @@
 	QDEL_NULL(post_unlink_callback)
 	return ..()
 
-/datum/component/mind_linker/RegisterWithParent()
+/datum/component/mind_linker/register_with_parent()
 	if(signals_which_destroy_us)
 		register_signal(parent, signals_which_destroy_us, .proc/destroy_link)
 
-/datum/component/mind_linker/UnregisterFromParent()
+/datum/component/mind_linker/unregister_from_parent()
 	if(signals_which_destroy_us)
 		unregister_signal(parent, signals_which_destroy_us)
 

@@ -63,7 +63,7 @@
 ///Modifier of reagents you get when crafting food from the parts used
 #define CRAFTED_FOOD_INGREDIENT_REAGENT_MODIFIER  0.5
 
-#define IS_EDIBLE(O) (O.GetComponent(/datum/component/edible))
+#define IS_EDIBLE(O) (O.get_component(/datum/component/edible))
 
 
 ///Food trash flags

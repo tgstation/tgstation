@@ -29,14 +29,14 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/spill/RegisterWithParent()
+/datum/component/spill/register_with_parent()
 	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/equip_react)
 	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/drop_react)
 	var/obj/item/master = parent
 	preexisting_slot_flags = master.slot_flags
 	master.slot_flags |= ITEM_SLOT_POCKETS
 
-/datum/component/spill/UnregisterFromParent()
+/datum/component/spill/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	var/obj/item/master = parent
 	if(!(preexisting_slot_flags & ITEM_SLOT_POCKETS))

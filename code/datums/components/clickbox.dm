@@ -46,7 +46,7 @@
 			clickbox_icon_state = dead_state
 	update_underlay(clickbox_icon_state)
 
-/datum/component/clickbox/UnregisterFromParent()
+/datum/component/clickbox/unregister_from_parent()
 	var/atom/movable/mov_parent = parent
 	unregister_signal(mov_parent, list(COMSIG_ATOM_VV_MODIFY_TRANSFORM, COMSIG_LIVING_POST_UPDATE_TRANSFORM, COMSIG_LIVING_DEATH, COMSIG_LIVING_REVIVE))
 	mov_parent.underlays -= clickbox_undelay

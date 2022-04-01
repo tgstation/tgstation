@@ -144,8 +144,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
 	source.RemoveElement(/datum/element/firestacker, amount=1)
-	qdel(source.GetComponent(/datum/component/combustible_flooder))
-	qdel(source.GetComponent(/datum/component/explodable))
+	qdel(source.get_component(/datum/component/combustible_flooder))
+	qdel(source.get_component(/datum/component/explodable))
 
 /datum/material/plasma/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/toxin/plasma, rand(6, 8))
@@ -188,8 +188,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
 	. = ..()
-	qdel(source.GetComponent(/datum/component/slippery))
-	qdel(source.GetComponent(/datum/component/squeak))
+	qdel(source.get_component(/datum/component/slippery))
+	qdel(source.get_component(/datum/component/squeak))
 
 /datum/material/bananium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/consumable/banana, rand(8, 12))
@@ -326,7 +326,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/mythril/on_removed_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(istype(source, /obj/item))
-		qdel(source.GetComponent(/datum/component/fantasy))
+		qdel(source.get_component(/datum/component/fantasy))
 
 /datum/material/mythril/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.apply_damage(20, BRUTE, BODY_ZONE_HEAD, wound_bonus = 10)
@@ -349,7 +349,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*1.5, amount*0.2+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
-	qdel(source.GetComponent(/datum/component/combustible_flooder))
+	qdel(source.get_component(/datum/component/combustible_flooder))
 	return ..()
 
 /datum/material/hot_ice/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)

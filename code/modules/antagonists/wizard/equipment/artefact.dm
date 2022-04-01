@@ -139,7 +139,7 @@
 		return
 	. = COMPONENT_CANCEL_ATTACK_CHAIN
 	var/mob/living/carbon/jedi = user
-	var/datum/component/mood/insaneinthemembrane = jedi.GetComponent(/datum/component/mood)
+	var/datum/component/mood/insaneinthemembrane = jedi.get_component(/datum/component/mood)
 	if(insaneinthemembrane.sanity < 15)
 		return //they've already seen it and are about to die, or are just too insane to care
 	to_chat(jedi, span_userdanger("OH GOD! NONE OF IT IS REAL! NONE OF IT IS REEEEEEEEEEEEEEEEEEEEEEEEAL!"))

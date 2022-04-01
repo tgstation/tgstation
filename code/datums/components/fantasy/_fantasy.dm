@@ -33,12 +33,12 @@
 	affixes = null
 	return ..()
 
-/datum/component/fantasy/RegisterWithParent()
+/datum/component/fantasy/register_with_parent()
 	var/obj/item/master = parent
 	originalName = master.name
 	modify()
 
-/datum/component/fantasy/UnregisterFromParent()
+/datum/component/fantasy/unregister_from_parent()
 	unmodify()
 
 /datum/component/fantasy/InheritComponent(datum/component/fantasy/newComp, original, quality, list/affixes, canFail, announce)

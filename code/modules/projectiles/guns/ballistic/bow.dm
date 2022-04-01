@@ -103,7 +103,7 @@
 
 /obj/item/storage/bag/quiver/Initialize(mapload)
 	. = ..()
-	var/datum/component/storage/storage = GetComponent(/datum/component/storage)
+	var/datum/component/storage/storage = get_component(/datum/component/storage)
 	storage.max_w_class = WEIGHT_CLASS_TINY
 	storage.max_items = 40
 	storage.max_combined_w_class = 100

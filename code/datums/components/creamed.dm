@@ -48,13 +48,13 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 		SEND_SIGNAL(A, COMSIG_CLEAR_MOOD_EVENT, "creampie")
 	return ..()
 
-/datum/component/creamed/RegisterWithParent()
+/datum/component/creamed/register_with_parent()
 	register_signal(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT),
 		.proc/clean_up)
 
-/datum/component/creamed/UnregisterFromParent()
+/datum/component/creamed/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT))

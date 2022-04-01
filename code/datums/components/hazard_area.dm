@@ -22,14 +22,14 @@
 	src.area_blacklist = area_blacklist
 	src.area_whitelist = area_whitelist
 
-/datum/component/hazard_area/RegisterWithParent()
+/datum/component/hazard_area/register_with_parent()
 	var/mob/parent_mob = parent
 	parent_mob.become_area_sensitive(type)
 	register_signal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
 	register_signal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
 	register_signal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
 
-/datum/component/hazard_area/UnregisterFromParent()
+/datum/component/hazard_area/unregister_from_parent()
 	var/mob/parent_mob = parent
 	unregister_signal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL, COMSIG_VEHICLE_RIDDEN))
 	parent_mob.lose_area_sensitivity(type)

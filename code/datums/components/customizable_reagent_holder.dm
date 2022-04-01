@@ -54,7 +54,7 @@
 	return ..()
 
 
-/datum/component/customizable_reagent_holder/RegisterWithParent()
+/datum/component/customizable_reagent_holder/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/customizable_attack)
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
@@ -62,7 +62,7 @@
 	ADD_TRAIT(parent, TRAIT_CUSTOMIZABLE_REAGENT_HOLDER, src)
 
 
-/datum/component/customizable_reagent_holder/UnregisterFromParent()
+/datum/component/customizable_reagent_holder/unregister_from_parent()
 	. = ..()
 	unregister_signal(parent, list(
 		COMSIG_PARENT_ATTACKBY,

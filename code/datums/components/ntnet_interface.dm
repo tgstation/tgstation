@@ -21,7 +21,7 @@
 		data = new(packet_data)
 		data.receiver_id = target_id
 		data.passkey = passkey
-	var/datum/component/ntnet_interface/NIC = GetComponent(/datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/NIC = get_component(/datum/component/ntnet_interface)
 	if(!NIC)
 		return NETWORK_ERROR_NOT_ON_NETWORK
 	data.sender_id = NIC.hardware_id

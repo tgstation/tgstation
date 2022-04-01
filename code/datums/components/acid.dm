@@ -64,7 +64,7 @@
 		parent_atom.update_appearance()
 	return ..()
 
-/datum/component/acid/RegisterWithParent()
+/datum/component/acid/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	register_signal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
 	register_signal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
@@ -72,7 +72,7 @@
 	if(isturf(parent))
 		register_signal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
-/datum/component/acid/UnregisterFromParent()
+/datum/component/acid/unregister_from_parent()
 	unregister_signal(parent, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_COMPONENT_CLEAN_ACT,

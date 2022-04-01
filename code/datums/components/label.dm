@@ -21,11 +21,11 @@
 	label_name = _label_name
 	apply_label()
 
-/datum/component/label/RegisterWithParent()
+/datum/component/label/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackby)
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/Examine)
 
-/datum/component/label/UnregisterFromParent()
+/datum/component/label/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /**

@@ -77,14 +77,14 @@
 	if(start_transformed)
 		toggle_active(parent)
 
-/datum/component/transforming/RegisterWithParent()
+/datum/component/transforming/register_with_parent()
 	var/obj/item/item_parent = parent
 
 	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	if(item_parent.sharpness || sharpness_on)
 		register_signal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
-/datum/component/transforming/UnregisterFromParent()
+/datum/component/transforming/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
 
 /*

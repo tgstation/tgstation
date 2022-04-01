@@ -286,7 +286,7 @@
 /obj/machinery/disposal/bin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/T = I
-		var/datum/component/storage/STR = T.GetComponent(/datum/component/storage)
+		var/datum/component/storage/STR = T.get_component(/datum/component/storage)
 		to_chat(user, span_warning("You empty the bag."))
 		for(var/obj/item/O in T.contents)
 			STR.remove_from_storage(O,src)

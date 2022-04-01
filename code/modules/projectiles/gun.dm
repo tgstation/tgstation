@@ -206,7 +206,7 @@
 			O.emp_act(severity)
 
 /obj/item/gun/attack_secondary(mob/living/victim, mob/living/user, params)
-	if (user.GetComponent(/datum/component/gunpoint))
+	if (user.get_component(/datum/component/gunpoint))
 		to_chat(user, span_warning("You are already holding someone up!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if (user == victim)

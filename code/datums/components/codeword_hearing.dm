@@ -27,10 +27,10 @@
 	source = component_source
 	return ..()
 
-/datum/component/codeword_hearing/RegisterWithParent()
+/datum/component/codeword_hearing/register_with_parent()
 	register_signal(parent, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
-/datum/component/codeword_hearing/UnregisterFromParent()
+/datum/component/codeword_hearing/unregister_from_parent()
 	unregister_signal(parent, COMSIG_MOVABLE_HEAR)
 
 /// Callback for COMSIG_MOVABLE_HEAR which highlights syndicate code phrases in chat.
