@@ -69,7 +69,7 @@
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
 	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
-	var/datum/merger/merge_group = GetMergeGroup(merger_id, merger_typecache)
+	GetMergeGroup(merger_id, merger_typecache)
 
 	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
 		base_icon_state = "sus"
@@ -79,7 +79,7 @@
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
-	register_adjacent_turfs()
+	register_adjacent_turfs(src)
 /**
  * Sets the offset for the warning lights.
  *
@@ -221,17 +221,17 @@
 	for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
 		firelock.issue_turfs = shared_problems
 
-/obj/machinery/door/firedoor/proc/register_adjacent_turfs()
+/obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(src),dir)
+		var/turf/checked_turf = get_step(get_turf(loc),dir)
 		if(checked_turf)
 			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
 			RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 
 
-/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs()
+/obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(src),dir)
+		var/turf/checked_turf = get_step(get_turf(loc),dir)
 		if(checked_turf)
 			UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
 			UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
@@ -599,9 +599,9 @@
 			new /obj/item/electronics/firelock (targetloc)
 	qdel(src)
 
-/obj/machinery/door/firedoor/Moved()
+/obj/machinery/door/firedoor/Moved(atom/oldloc)
 	. = ..()
-	unregister_adjacent_turfs()
+	unregister_adjacent_turfs(oldloc)
 
 /obj/machinery/door/firedoor/closed
 	icon_state = "door_closed"
