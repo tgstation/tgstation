@@ -9607,6 +9607,17 @@
 /area/hallway/primary/aft)
 "cyx" = (
 /obj/machinery/light/directional/north,
+/obj/machinery/door/window{
+	name = "Secure Art Exhibition";
+	req_access_txt = "37"
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy/royalblue,
+/obj/structure/sign/painting/large/library{
+	dir = 1
+	},
 /turf/open/floor/wood,
 /area/service/library)
 "cyK" = (
@@ -36652,11 +36663,6 @@
 /area/hallway/primary/port)
 "mhh" = (
 /obj/structure/table/wood/fancy/royalblue,
-/obj/machinery/door/window{
-	dir = 8;
-	name = "Secure Art Exhibition";
-	req_access_txt = "37"
-	},
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
 	},
@@ -42447,6 +42453,10 @@
 "ofl" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/library,
+/obj/structure/sign/painting/large/library_private{
+	dir = 8;
+	pixel_x = -29
+	},
 /turf/open/floor/engine/cult,
 /area/service/library)
 "ofp" = (
