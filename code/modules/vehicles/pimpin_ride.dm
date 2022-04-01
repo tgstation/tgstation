@@ -153,7 +153,7 @@
 	installee.add_element(/datum/element/cleaning)
 
 /obj/item/janicart_upgrade/buffer/uninstall(obj/vehicle/ridden/janicart/installee)
-	installee.RemoveElement(/datum/element/cleaning)
+	installee.remove_element(/datum/element/cleaning)
 
 /obj/item/janicart_upgrade/vacuum
 	name = "vacuum upgrade"

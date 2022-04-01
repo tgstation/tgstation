@@ -127,7 +127,7 @@
 	QDEL_NULL(module.mod.ai_controller)
 	module.mod.interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 	REMOVE_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
-	module.mod.RemoveElement(/datum/element/movetype_handler)
+	module.mod.remove_element(/datum/element/movetype_handler)
 	module.mod.cut_overlay(jet_icon)
 	module.mod.transform = matrix()
 	unregister_signal(module.mod, COMSIG_MOVABLE_MOVED)

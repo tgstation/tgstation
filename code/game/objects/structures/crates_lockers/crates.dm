@@ -67,12 +67,12 @@
 
 /obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
-	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	remove_element(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	add_element(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 
 /obj/structure/closet/crate/after_close(mob/living/user, force)
 	. = ..()
-	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	remove_element(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 	add_element(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 
 

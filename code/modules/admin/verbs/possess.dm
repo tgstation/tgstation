@@ -41,7 +41,7 @@
 			var/mob/living/carbon/human/H = usr
 			H.name = H.get_visible_name()
 
-	usr.control_object.RemoveElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	usr.control_object.remove_element(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
 	usr.forceMove(get_turf(usr.control_object))
 	usr.reset_perspective()
 	usr.control_object = null

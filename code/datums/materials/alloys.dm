@@ -162,7 +162,7 @@
 /datum/material/alloy/alien/on_removed_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
 
-	target_item.RemoveElement(/datum/element/obj_regen, _rate=0.02)
+	target_item.remove_element(/datum/element/obj_regen, _rate=0.02)
 	if(!istype(target_item))
 		return
 

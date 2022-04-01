@@ -71,7 +71,7 @@
 	if(opacity)
 		add_element(/datum/element/light_blocking)
 	else
-		RemoveElement(/datum/element/light_blocking)
+		remove_element(/datum/element/light_blocking)
 
 
 /turf/set_opacity(new_opacity)

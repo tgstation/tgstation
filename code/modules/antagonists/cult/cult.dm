@@ -163,9 +163,9 @@
 	magic.Remove(current)
 	current.clear_alert("bloodsense")
 	if (HAS_TRAIT(current, TRAIT_UNNATURAL_RED_GLOWY_EYES))
-		current.RemoveElement(/datum/element/cult_eyes)
+		current.remove_element(/datum/element/cult_eyes)
 	if (HAS_TRAIT(current, TRAIT_CULT_HALO))
-		current.RemoveElement(/datum/element/cult_halo)
+		current.remove_element(/datum/element/cult_halo)
 
 /datum/antagonist/cult/on_mindshield(mob/implanter)
 	if(!silent)

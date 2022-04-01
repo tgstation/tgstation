@@ -83,7 +83,7 @@
 /datum/fantasy_affix/bane/remove(datum/component/fantasy/comp)
 	var/picked_mobtype = target_types_by_comp[comp]
 	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/bane, picked_mobtype)
+	master.remove_element(/datum/element/bane, picked_mobtype)
 	target_types_by_comp -= comp
 
 /datum/fantasy_affix/summoning
@@ -171,7 +171,7 @@
 
 /datum/fantasy_affix/strength/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
+	master.remove_element(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
 
 //////////// Bad suffixes
 
@@ -209,4 +209,4 @@
 
 /datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/curse_announcement) //just in case
+	master.remove_element(/datum/element/curse_announcement) //just in case

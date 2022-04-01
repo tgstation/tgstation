@@ -113,7 +113,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if (isitem(source))
 		return
 
-	source.RemoveElement(/datum/element/radioactive)
+	source.remove_element(/datum/element/radioactive)
 
 /datum/material/uranium/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	victim.reagents.add_reagent(/datum/reagent/uranium, rand(4, 6))
@@ -143,7 +143,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
-	source.RemoveElement(/datum/element/firestacker, amount=1)
+	source.remove_element(/datum/element/firestacker, amount=1)
 	qdel(source.get_component(/datum/component/combustible_flooder))
 	qdel(source.get_component(/datum/component/explodable))
 

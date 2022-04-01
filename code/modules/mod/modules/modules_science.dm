@@ -81,7 +81,7 @@
 	. = ..()
 	if(!.)
 		return
-	mod.wearer.RemoveElement(/datum/element/forced_gravity, 0)
+	mod.wearer.remove_element(/datum/element/forced_gravity, 0)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	if(mod.wearer.has_gravity())
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))

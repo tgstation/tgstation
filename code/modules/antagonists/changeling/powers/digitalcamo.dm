@@ -11,7 +11,7 @@
 	..()
 	if(active)
 		to_chat(user, span_notice("We return to normal."))
-		user.RemoveElement(/datum/element/digitalcamo)
+		user.remove_element(/datum/element/digitalcamo)
 	else
 		to_chat(user, span_notice("We distort our form to hide from the AI."))
 		user.add_element(/datum/element/digitalcamo)
@@ -19,5 +19,5 @@
 	return TRUE
 
 /datum/action/changeling/digitalcamo/Remove(mob/user)
-	user.RemoveElement(/datum/element/digitalcamo)
+	user.remove_element(/datum/element/digitalcamo)
 	..()

@@ -66,7 +66,7 @@
 	if(isnull(gravito_targets[target]))
 		return
 	unregister_signal(target, COMSIG_MOVABLE_MOVED)
-	target.RemoveElement(/datum/element/forced_gravity, gravito_targets[target])
+	target.remove_element(/datum/element/forced_gravity, gravito_targets[target])
 	gravito_targets -= target
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/__distance_check(atom/movable/AM, OldLoc, Dir, Forced)

@@ -110,8 +110,8 @@
 /datum/component/singularity/unregister_from_parent()
 	STOP_PROCESSING(SSsinguloprocess, src)
 
-	parent.RemoveElement(/datum/element/bsa_blocker)
-	parent.RemoveElement(/datum/element/forced_gravity)
+	parent.remove_element(/datum/element/bsa_blocker)
+	parent.remove_element(/datum/element/forced_gravity)
 
 	unregister_signal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,

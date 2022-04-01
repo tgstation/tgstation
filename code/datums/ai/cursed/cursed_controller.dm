@@ -69,4 +69,4 @@
 ///proc called when the cursed object successfully attaches itself to someone, removing the cursed element and by extension the ai itself
 /datum/ai_controller/cursed/proc/what_a_horrible_night_to_have_a_curse()
 	var/obj/item/item_pawn = pawn
-	item_pawn.RemoveElement(/datum/element/cursed)
+	item_pawn.remove_element(/datum/element/cursed)

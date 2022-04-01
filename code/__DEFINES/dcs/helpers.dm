@@ -13,7 +13,7 @@
 /// A wrapper for _add_element that allows us to pretend we're using normal named arguments
 #define add_element(arguments...) _add_element(list(##arguments))
 /// A wrapper for _remove_element that allows us to pretend we're using normal named arguments
-#define RemoveElement(arguments...) _remove_element(list(##arguments))
+#define remove_element(arguments...) _remove_element(list(##arguments))
 
 /// A wrapper for _add_component that allows us to pretend we're using normal named arguments
 #define add_component(arguments...) _add_component(list(##arguments))

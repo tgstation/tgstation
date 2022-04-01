@@ -190,7 +190,7 @@
 		name = "[initial(name)] ([R.name])"
 		real_name = name
 		//clear the old since this one is going to have some new value
-		RemoveElement(/datum/element/venomous)
+		remove_element(/datum/element/venomous)
 		add_element(/datum/element/venomous, beegent.type, list(1, 5))
 		generate_bee_visuals()
 

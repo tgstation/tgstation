@@ -41,5 +41,5 @@
 
 /datum/element/weather_listener/proc/handle_logout(datum/source)
 	SIGNAL_HANDLER
-	source.RemoveElement(/datum/element/weather_listener, weather_type, weather_trait, playlist)
+	source.remove_element(/datum/element/weather_listener, weather_type, weather_trait, playlist)
 

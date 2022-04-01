@@ -22,4 +22,4 @@
 	var/obj/item/master = source
 	QDEL_NULL(master.ai_controller)
 	REMOVE_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
-	master.RemoveElement(/datum/element/movetype_handler)
+	master.remove_element(/datum/element/movetype_handler)

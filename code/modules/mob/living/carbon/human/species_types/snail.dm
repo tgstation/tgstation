@@ -41,7 +41,7 @@
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	C.RemoveElement(/datum/element/snailcrawl)
+	C.remove_element(/datum/element/snailcrawl)
 	var/obj/item/storage/backpack/bag = C.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()

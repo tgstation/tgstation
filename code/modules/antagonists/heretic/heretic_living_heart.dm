@@ -50,7 +50,7 @@
 	REMOVE_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
 	unregister_signal(parent, COMSIG_ORGAN_REMOVED)
 
-	parent.RemoveElement(/datum/element/update_icon_blocker)
+	parent.remove_element(/datum/element/update_icon_blocker)
 	var/obj/item/organ/organ_parent = parent
 	organ_parent.icon = old_icon
 	organ_parent.icon_state = old_icon_state

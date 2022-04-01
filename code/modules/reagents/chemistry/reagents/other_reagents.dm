@@ -2653,7 +2653,7 @@
 	return ..()
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)
-	L.RemoveElement(/datum/element/forced_gravity, 0)
+	L.remove_element(/datum/element/forced_gravity, 0)
 
 /datum/reagent/cellulose
 	name = "Cellulose Fibers"

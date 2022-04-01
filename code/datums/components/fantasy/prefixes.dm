@@ -76,7 +76,7 @@
 
 /datum/fantasy_affix/vampiric/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/lifesteal, comp.quality)
+	master.remove_element(/datum/element/lifesteal, comp.quality)
 
 /datum/fantasy_affix/beautiful
 	name = "beautiful"
@@ -90,7 +90,7 @@
 
 /datum/fantasy_affix/beautiful/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/beauty, max(comp.quality, 1) * 250)
+	master.remove_element(/datum/element/beauty, max(comp.quality, 1) * 250)
 
 /datum/fantasy_affix/ugly
 	name = "ugly"
@@ -104,7 +104,7 @@
 
 /datum/fantasy_affix/ugly/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/beauty, min(comp.quality, -1) * 250)
+	master.remove_element(/datum/element/beauty, min(comp.quality, -1) * 250)
 
 /datum/fantasy_affix/venomous
 	name = "<poisonname>-laced (picked from small pool of toxins)"
@@ -143,4 +143,4 @@
 
 /datum/fantasy_affix/venomous/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/venomous)
+	master.remove_element(/datum/element/venomous)

@@ -120,7 +120,7 @@
 		loc.handle_atom_del(src)
 
 	if(opacity)
-		RemoveElement(/datum/element/light_blocking)
+		remove_element(/datum/element/light_blocking)
 
 	invisibility = INVISIBILITY_ABSTRACT
 

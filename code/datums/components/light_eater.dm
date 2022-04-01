@@ -25,7 +25,7 @@
 /datum/component/light_eater/Destroy(force, silent)
 	for(var/light in eaten_lights)
 		var/atom/eaten_light = light
-		eaten_light.RemoveElement(/datum/element/light_eaten)
+		eaten_light.remove_element(/datum/element/light_eaten)
 		unregister_signal(eaten_light, COMSIG_PARENT_QDELETING)
 	eaten_lights = null
 	return ..()
@@ -37,7 +37,7 @@
 
 /datum/component/light_eater/unregister_from_parent()
 	. = ..()
-	parent.RemoveElement(/datum/element/light_eater)
+	parent.remove_element(/datum/element/light_eater)
 	unregister_signal(parent, COMSIG_LIGHT_EATER_DEVOUR)
 
 /datum/component/light_eater/inherit_component(datum/component/C, i_am_original, list/_eaten)

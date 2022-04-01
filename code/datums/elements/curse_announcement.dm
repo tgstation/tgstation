@@ -60,5 +60,5 @@
 	//this is from rpgloot, readd the quality suffix
 	if(quality_suffix_text)
 		cursed_item.name += quality_suffix_text
-	cursed_item.RemoveElement(/datum/element/curse_announcement)
+	cursed_item.remove_element(/datum/element/curse_announcement)
 

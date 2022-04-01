@@ -24,7 +24,7 @@
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
-	user.RemoveElement(/datum/element/waddling)
+	user.remove_element(/datum/element/waddling)
 	if(is_clown_job(user.mind?.assigned_role))
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
 

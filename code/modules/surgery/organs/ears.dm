@@ -96,7 +96,7 @@
 	. = ..()
 	if(istype(ear_owner))
 		to_chat(ear_owner, span_notice("Your sense of balance comes back to you."))
-		ear_owner.RemoveElement(/datum/element/waddling)
+		ear_owner.remove_element(/datum/element/waddling)
 
 /obj/item/organ/ears/bronze
 	name = "tin ears"

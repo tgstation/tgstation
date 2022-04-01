@@ -35,7 +35,7 @@
 
 /obj/effect/particle_effect/foam/firefighting/Initialize(mapload)
 	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive)
+	remove_element(/datum/element/atmos_sensitive)
 
 /obj/effect/particle_effect/foam/firefighting/process()
 	..()

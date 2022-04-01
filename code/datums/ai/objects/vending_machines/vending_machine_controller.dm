@@ -22,9 +22,9 @@
 /datum/ai_controller/vending_machine/UnpossessPawn(destroy)
 	var/obj/machinery/vending/vendor_pawn = pawn
 	vendor_pawn.tiltable = TRUE
-	vendor_pawn.RemoveElement(/datum/element/waddling)
+	vendor_pawn.remove_element(/datum/element/waddling)
 	vendor_pawn.squish_damage = initial(vendor_pawn.squish_damage)
-	RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, sound_vary = TRUE)
+	remove_element(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, sound_vary = TRUE)
 	return ..() //Run parent at end
 
 /datum/ai_controller/vending_machine/SelectBehaviors(delta_time)

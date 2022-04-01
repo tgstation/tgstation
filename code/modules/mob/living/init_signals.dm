@@ -212,4 +212,4 @@
 /// Called when [TRAIT_SKITTISH] is removed from the mob.
 /mob/living/proc/on_skittish_trait_loss(datum/source)
 	SIGNAL_HANDLER
-	RemoveElement(/datum/element/skittish)
+	remove_element(/datum/element/skittish)

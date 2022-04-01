@@ -20,4 +20,4 @@
 /datum/material/hauntium/on_removed_obj(obj/o, amount, material_flags)
 	. = ..()
 	if(isitem(o))
-		o.RemoveElement(/datum/element/haunted)
+		o.remove_element(/datum/element/haunted)

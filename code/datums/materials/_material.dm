@@ -176,7 +176,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = initial(source.name)
 
 	if(beauty_modifier)
-		source.RemoveElement(/datum/element/beauty, beauty_modifier * amount)
+		source.remove_element(/datum/element/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_removed_obj(source, amount, material_flags)
@@ -202,7 +202,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 
 /datum/material/proc/on_removed_turf(turf/T, amount, material_flags)
 	if(alpha < 255)
-		T.RemoveElement(/datum/element/turf_z_transparency)
+		T.remove_element(/datum/element/turf_z_transparency)
 
 /**
  * This proc is called when the mat is found in an item that's consumed by accident. see /obj/item/proc/on_accidental_consumption.

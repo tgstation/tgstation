@@ -81,7 +81,7 @@
 	add_element(/datum/element/projectile_shield)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
-	RemoveElement(/datum/element/projectile_shield)
+	remove_element(/datum/element/projectile_shield)
 	QDEL_NULL(spiral_shots)
 	QDEL_NULL(random_shots)
 	QDEL_NULL(shotgun_blast)

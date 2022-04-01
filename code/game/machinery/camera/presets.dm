@@ -94,7 +94,7 @@
 /obj/machinery/camera/proc/removeEmpProof(ignore_malf_upgrades)
 	if(ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		return
-	RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
+	remove_element(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES | EMP_PROTECT_CONTENTS)
 	upgrades &= ~CAMERA_UPGRADE_EMP_PROOF
 
 

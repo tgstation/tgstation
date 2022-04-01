@@ -521,7 +521,7 @@
 
 /obj/structure/window/plasma/Initialize(mapload, direct)
 	. = ..()
-	RemoveElement(/datum/element/atmos_sensitive)
+	remove_element(/datum/element/atmos_sensitive)
 
 /obj/structure/window/plasma/spawnDebris(location)
 	. = list()

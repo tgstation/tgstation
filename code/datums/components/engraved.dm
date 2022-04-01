@@ -52,7 +52,7 @@
 
 /datum/component/engraved/Destroy(force, silent)
 	. = ..()
-	parent.RemoveElement(/datum/element/art)
+	parent.remove_element(/datum/element/art)
 	//must be here to allow overlays to be updated
 	unregister_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	if(parent && !QDELING(parent))

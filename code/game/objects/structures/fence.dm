@@ -83,7 +83,7 @@
 					if(LARGE_HOLE)
 						visible_message(span_notice("\The [user] completely cuts through \the [src]."))
 						to_chat(user, span_info("The hole in \the [src] is now big enough to walk through."))
-						RemoveElement(/datum/element/climbable)
+						remove_element(/datum/element/climbable)
 
 				update_cut_status()
 

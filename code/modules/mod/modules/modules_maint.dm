@@ -294,7 +294,7 @@
 	if(!.)
 		return
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
-	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
+	qdel(mod.wearer.remove_element(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	unregister_signal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	step_count = 0
 	mod.wearer.update_gravity(mod.wearer.has_gravity())

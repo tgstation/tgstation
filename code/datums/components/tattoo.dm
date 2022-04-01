@@ -30,7 +30,7 @@
 	var/obj/item/bodypart/tatted_limb = parent
 	if(tatted_limb.owner)
 		clear_tatted_owner(tatted_limb.owner)
-	parent.RemoveElement(/datum/element/art/commoner)
+	parent.remove_element(/datum/element/art/commoner)
 
 /datum/component/tattoo/register_with_parent()
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)

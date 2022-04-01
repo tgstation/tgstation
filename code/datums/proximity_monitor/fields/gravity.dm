@@ -17,5 +17,5 @@
 	. = ..()
 	if(isnull(modified_turfs[T]))
 		return
-	T.RemoveElement(/datum/element/forced_gravity, modified_turfs[T])
+	T.remove_element(/datum/element/forced_gravity, modified_turfs[T])
 	modified_turfs -= T

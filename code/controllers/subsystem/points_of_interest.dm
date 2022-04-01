@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(points_of_interest)
  * Stops old_poi from being a point of interest by removing the /datum/element/point_of_interest element from it.
  */
 /datum/controller/subsystem/points_of_interest/proc/remove_point_of_interest(atom/old_poi)
-	old_poi.RemoveElement(/datum/element/point_of_interest)
+	old_poi.remove_element(/datum/element/point_of_interest)
 
 /**
  * Called by [/datum/element/point_of_interest] when it gets removed from old_poi.
