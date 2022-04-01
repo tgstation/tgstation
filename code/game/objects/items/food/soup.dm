@@ -306,3 +306,4 @@
 	food_reagents = list (/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/consumable/nutriment/protein = 2)
 	tastes = list("creamy vegetables"= 2, "sausage" = 1)
 	foodtypes = VEGETABLES | MEAT | GRAIN | BREAKFAST
+	
