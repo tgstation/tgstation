@@ -71,8 +71,7 @@
 	equipper.update_action_buttons()
 
 	// Check to see if we have any spells that are blocked due to antimagic
-	for(var/datum/action/spell_action/spell/magic_action in equipper.actions)
-		var/obj/effect/proc_holder/spell/magic_spell = magic_action.target
+	for(var/obj/effect/proc_holder/spell/magic_spell in equipper.mind?.spell_list)
 		if(antimagic_flags & magic_spell.antimagic_flags)
 			to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
 			break
