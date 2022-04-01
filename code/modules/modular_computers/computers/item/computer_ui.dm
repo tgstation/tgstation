@@ -75,7 +75,7 @@
 	if(cartholder)
 		data["cartholder"] = TRUE
 		data["cart_programs"] = list()
-		data["cart_name"] = cartholder.stored_cart.name
+		data["cart_name"] = cartholder.stored_cart?.name || null
 
 		for(var/datum/computer_file/program/prog in cartholder.stored_programs)
 			var/running = FALSE
@@ -155,9 +155,10 @@
 			var/datum/computer_file/program/P = null
 			var/obj/item/computer_hardware/cartridge_slot/cartholder = all_components[MC_CART]
 			var/mob/user = usr
+
 			if(is_cart && cartholder)
 				P = cartholder.find_file_by_name(prog)
-			if(hard_drive)
+			if(hard_drive && !is_cart)
 				P = hard_drive.find_file_by_name(prog)
 
 			if(!P || !istype(P)) // Program not found or it's not executable program.

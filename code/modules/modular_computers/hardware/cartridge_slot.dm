@@ -70,6 +70,7 @@
 
 	if(istype(cart, /obj/item/cartridge/engineering))
 		var/datum/computer_file/program/power_monitor/pm = new(src)
+		pm.usage_flags = PROGRAM_ALL
 		stored_programs += pm
 
 /obj/item/computer_hardware/cartridge_slot/proc/find_file_by_name(filename)
@@ -79,7 +80,7 @@
 	if(!stored_programs)
 		return null
 
-	for(var/datum/computer_file/F in stored_programs)
+	for(var/datum/computer_file/program/F in stored_programs)
 		if(F.filename == filename)
 			return F
 	return null

@@ -82,7 +82,7 @@ export const NtosMain = (props, context) => {
                 <Button
                   icon="eject"
                   content="Eject Cartridge"
-                  disabled={!cartridge}
+                  disabled={!cart_name}
                   onClick={() => act('PC_Eject_Disk', { name: "cart" })}
                 />
               )}>
@@ -99,6 +99,7 @@ export const NtosMain = (props, context) => {
                       content={program.desc}
                       onClick={() => act('PC_runprogram', {
                         name: program.name,
+                        is_cart: true,
                       })} />
                   </Table.Cell>
                   <Table.Cell collapsing width="18px">
@@ -110,7 +111,6 @@ export const NtosMain = (props, context) => {
                         tooltipPosition="left"
                         onClick={() => act('PC_killprogram', {
                           name: program.name,
-                          is_cart: true,
                         })} />
                     )}
                   </Table.Cell>
@@ -150,6 +150,7 @@ export const NtosMain = (props, context) => {
                     content={program.desc}
                     onClick={() => act('PC_runprogram', {
                       name: program.name,
+                      is_cart: false,
                     })} />
                 </Table.Cell>
                 <Table.Cell collapsing width="18px">
