@@ -13,6 +13,7 @@
 	loseBackupPower - handles the effect of backup power going offline.
 	regainBackupPower - handles the effect of main power coming back on.
 	shock - has a chance of electrocuting its target.
+	isSecure - 1 if there some form of shielding in front of the airlock wires.
 */
 
 /// Overlay cache.  Why isn't this just in /obj/machinery/door/airlock?  Because its used just a
@@ -473,6 +474,9 @@
 		return TRUE
 	else
 		return FALSE
+
+/obj/machinery/door/airlock/proc/is_secure()
+	return (security_level > 0)
 
 /obj/machinery/door/airlock/update_icon(updates=ALL, state=0, override=FALSE)
 	if(operating && !override)
