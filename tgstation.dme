@@ -2987,6 +2987,7 @@
 #include "code\modules\language\drone.dm"
 #include "code\modules\language\language.dm"
 #include "code\modules\language\language_holder.dm"
+#include "code\modules\language\language_holder_z.dm"
 #include "code\modules\language\language_manuals.dm"
 #include "code\modules\language\language_menu.dm"
 #include "code\modules\language\machine.dm"
