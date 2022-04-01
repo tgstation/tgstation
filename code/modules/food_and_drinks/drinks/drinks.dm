@@ -43,7 +43,7 @@
 			return // The drink might be empty after the delay, such as by spam-feeding
 		M.visible_message(span_danger("[user] fed [M] the contents of [src]."), \
 			span_userdanger("[user] fed you the contents of [src]."))
-		log_combat(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.get_reagent_log_string())
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
@@ -137,8 +137,7 @@
 /obj/item/reagent_containers/food/drinks/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		SplashReagents(hit_atom, override_spillable = TRUE)
-		smash(hit_atom)
+		smash(hit_atom, throwingdatum?.thrower, TRUE)
 
 
 /obj/item/reagent_containers/food/drinks/proc/smash(atom/target, mob/thrower, ranged = FALSE)
@@ -148,18 +147,9 @@
 		return
 	if(bartender_check(target) && ranged)
 		return
+	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
-	B.icon_state = icon_state
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
-	B.name = "broken [name]"
-	if(prob(33))
-		var/obj/item/shard/S = new(drop_location())
-		target.Bumped(S)
-	playsound(src, SFX_SHATTER, 70, TRUE)
-	transfer_fingerprints_to(B)
+	B.mimic_broken(src, target)
 	qdel(src)
 	target.Bumped(B)
 
@@ -546,17 +536,9 @@
 /obj/item/reagent_containers/food/drinks/sillycup/smallcarton/smash(atom/target, mob/thrower, ranged = FALSE)
 	if(bartender_check(target) && ranged)
 		return
+	SplashReagents(target, ranged, override_spillable = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
-	B.icon_state = icon_state
-	var/icon/I = new('icons/obj/drinks.dmi', src.icon_state)
-	I.Blend(B.broken_outline, ICON_OVERLAY, rand(5), 1)
-	I.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-	B.icon = I
-	B.name = "broken [name]"
-	B.force = 0
-	B.throwforce = 0
-	B.desc = "A carton with the bottom half burst open. Might give you a papercut."
-	transfer_fingerprints_to(B)
+	B.mimic_broken(src, target)
 	qdel(src)
 	target.Bumped(B)
 

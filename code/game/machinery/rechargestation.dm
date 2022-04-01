@@ -22,6 +22,17 @@
 	if(is_operational)
 		begin_processing()
 
+	if(!mapload)
+		return
+
+	var/area/my_area = get_area(src)
+	if(!(my_area.type in GLOB.the_station_areas))
+		return
+
+	var/area_name = get_area_name(src, format_text = TRUE)
+	if(area_name in GLOB.roundstart_station_borgcharger_areas)
+		return
+	GLOB.roundstart_station_borgcharger_areas += area_name
 
 /obj/machinery/recharge_station/RefreshParts()
 	recharge_speed = 0

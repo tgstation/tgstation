@@ -8,7 +8,6 @@
 	slot_flags = ITEM_SLOT_GLOVES
 	attack_verb_continuous = list("challenges")
 	attack_verb_simple = list("challenge")
-	var/transfer_prints = FALSE
 	strip_delay = 20
 	equip_delay_other = 40
 	// Path variable. If defined, will produced the type through interaction with wirecutters.

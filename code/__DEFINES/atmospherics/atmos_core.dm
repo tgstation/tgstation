@@ -20,6 +20,8 @@
 #define META_GAS_ID 6
 ///Power of the gas when used in the current iteration of fusion
 #define META_GAS_FUSION_POWER 7
+///Short description of the gas.
+#define META_GAS_DESC 8
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)
@@ -150,6 +152,11 @@
 #define MOLES_N2STANDARD (MOLES_CELLSTANDARD*N2STANDARD)
 /// liters in a cell
 #define CELL_VOLUME 2500
+
+///O2 value for anesthetic canister
+#define O2_ANESTHETIC 0.65
+///N2O value for anesthetic canister
+#define N2O_ANESTHETIC 0.35
 
 //CANATMOSPASS
 #define ATMOS_PASS_YES 1

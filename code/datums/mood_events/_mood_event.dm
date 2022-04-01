@@ -1,5 +1,5 @@
 /datum/mood_event
-	var/description ///For descriptions, use the span classes bold nicegreen, nicegreen, none, warning and boldwarning in order from great to horrible.
+	var/description
 	var/mood_change = 0
 	var/timeout = 0
 	var/hidden = FALSE//Not shown on examine

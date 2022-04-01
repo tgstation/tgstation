@@ -52,7 +52,7 @@
 	msg += span_notice("My current sanity: ") //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
-			msg += "[span_nicegreen("My mind feels like a temple!")]\n"
+			msg += "[span_boldnicegreen("My mind feels like a temple!")]\n"
 		if(SANITY_NEUTRAL to SANITY_GREAT)
 			msg += "[span_nicegreen("I have been feeling great lately!")]\n"
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
@@ -60,7 +60,7 @@
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			msg += "[span_warning("I'm feeling a little bit unhinged...")]\n"
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			msg += "[span_boldwarning("I'm freaking out!!")]\n"
+			msg += "[span_warning("I'm freaking out!!")]\n"
 		if(SANITY_INSANE to SANITY_CRAZY)
 			msg += "[span_boldwarning("AHAHAHAHAHAHAHAHAHAH!!")]\n"
 
@@ -73,25 +73,35 @@
 		if(3)
 			msg += "[span_boldwarning("I feel very upset.")]\n"
 		if(4)
-			msg += "[span_boldwarning("I'm a bit sad.")]\n"
+			msg += "[span_warning("I'm a bit sad.")]\n"
 		if(5)
-			msg += "[span_nicegreen("I'm alright.")]\n"
+			msg += "[span_grey("I'm alright.")]\n"
 		if(6)
 			msg += "[span_nicegreen("I feel pretty okay.")]\n"
 		if(7)
-			msg += "[span_nicegreen("I feel pretty good.")]\n"
+			msg += "[span_boldnicegreen("I feel pretty good.")]\n"
 		if(8)
-			msg += "[span_nicegreen("I feel amazing!")]\n"
+			msg += "[span_boldnicegreen("I feel amazing!")]\n"
 		if(9)
-			msg += "[span_nicegreen("I love life!")]\n"
+			msg += "[span_boldnicegreen("I love life!")]\n"
 
 	msg += "[span_notice("Moodlets:")]\n"//All moodlets
 	if(mood_events.len)
 		for(var/i in mood_events)
 			var/datum/mood_event/event = mood_events[i]
-			msg += event.description
+			switch(event.mood_change)
+				if(-INFINITY to MOOD_LEVEL_SAD2)
+					msg += span_boldwarning(event.description + "\n")
+				if(MOOD_LEVEL_SAD2 to MOOD_LEVEL_SAD1)
+					msg += span_warning(event.description + "\n")
+				if(MOOD_LEVEL_SAD1 to MOOD_LEVEL_HAPPY1)
+					msg += span_grey(event.description + "\n")
+				if(MOOD_LEVEL_HAPPY1 to MOOD_LEVEL_HAPPY2)
+					msg += span_nicegreen(event.description + "\n")
+				if(MOOD_LEVEL_HAPPY2 to INFINITY)
+					msg += span_boldnicegreen(event.description + "\n")
 	else
-		msg += "[span_nicegreen("I don't have much of a reaction to anything right now.")]\n"
+		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
 	to_chat(user, msg)
 
 ///Called after moodevent/s have been added/removed.
@@ -126,7 +136,6 @@
 		if(MOOD_LEVEL_HAPPY4 to INFINITY)
 			mood_level = 9
 	update_mood_icon()
-
 
 /datum/component/mood/proc/update_mood_icon()
 	var/mob/living/owner = parent
@@ -206,9 +215,6 @@
 
 	if(HAS_TRAIT(parent, TRAIT_JOLLY) && DT_PROB(0.416, delta_time))
 		add_event(null, "jolly", /datum/mood_event/jolly)
-
-
-
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
@@ -312,7 +318,6 @@
 		qdel(moodlet)
 	update_mood()
 
-
 /datum/component/mood/proc/modify_hud(datum/source)
 	SIGNAL_HANDLER
 
@@ -414,7 +419,6 @@
 	SIGNAL_HANDLER
 
 	add_event(null, "slipped", /datum/mood_event/slipped)
-
 
 /datum/component/mood/proc/HandleAddictions()
 	if(!iscarbon(parent))
