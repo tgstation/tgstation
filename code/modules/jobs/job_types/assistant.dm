@@ -40,32 +40,8 @@ Assistant
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
 
-/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
-	..()
-	give_jumpsuit(target)
-
-/datum/outfit/job/assistant/proc/give_jumpsuit(mob/living/carbon/human/target)
-	var/static/jumpsuit_number = 0
-	jumpsuit_number += 1
-
-	if (isnull(GLOB.colored_assistant))
-		var/configured_type = get_configured_colored_assistant_type()
-		GLOB.colored_assistant = new configured_type
-
-	var/index = (jumpsuit_number % GLOB.colored_assistant.jumpsuits.len) + 1
-
-	//We don't cache these, because they can delete on init
-	//Too fragile, better to just eat the cost
-	if (target.jumpsuit_style == PREF_SUIT)
-		uniform = GLOB.colored_assistant.jumpsuits[index]
-	else
-		uniform = GLOB.colored_assistant.jumpskirts[index]
-
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
-
-/datum/outfit/job/assistant/consistent/give_jumpsuit(mob/living/carbon/human/target)
-	uniform = /obj/item/clothing/under/color/grey
 
 /datum/outfit/job/assistant/consistent/post_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
