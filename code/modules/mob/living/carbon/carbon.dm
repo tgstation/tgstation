@@ -85,6 +85,12 @@
 
 	return ..()
 
+/mob/living/carbon/CtrlShiftClick(mob/user)
+	..()
+	if(iscarbon(user))
+		var/mob/living/carbon/carbon_user = user
+		carbon_user.give(src)
+
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	var/hurt = TRUE
@@ -342,7 +348,7 @@
 		return FALSE
 	visible_message(span_danger("[src] manages to [cuff_break ? "break" : "remove"] [I]!"))
 	to_chat(src, span_notice("You successfully [cuff_break ? "break" : "remove"] [I]."))
-
+	
 	if(cuff_break)
 		. = !((I == handcuffed) || (I == legcuffed))
 		qdel(I)
@@ -1210,7 +1216,7 @@
 /mob/living/carbon/proc/is_bleeding()
 	for(var/i in bodyparts)
 		var/obj/item/bodypart/BP = i
-		if(BP.get_bleed_rate())
+		if(BP.get_part_bleed_rate())
 			return TRUE
 
 /// get our total bleedrate
@@ -1218,7 +1224,7 @@
 	var/total_bleed_rate = 0
 	for(var/i in bodyparts)
 		var/obj/item/bodypart/BP = i
-		total_bleed_rate += BP.get_bleed_rate()
+		total_bleed_rate += BP.get_part_bleed_rate()
 
 	return total_bleed_rate
 

@@ -71,7 +71,7 @@
 		/obj/item/food/cheese_curds = 1,
 		/obj/item/food/soup/vegetarian_chili = 1,
 		/obj/item/food/onion_slice = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/fries = 1
 	)
 	result = /obj/item/food/loaded_curds
@@ -126,7 +126,7 @@
 		/obj/item/food/grown/chili = 2,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/onion_slice = 2,
-		/obj/item/food/cheese = 1
+		/obj/item/food/cheese/wedge = 1
 	)
 	result = /obj/item/food/fiesta_corn_skillet
 	subcategory = CAT_MOTH
@@ -201,7 +201,7 @@
 /datum/crafting_recipe/food/moth_cheese_soup
 	name = "Ælosterrmæsch (Cheese soup)"
 	reqs = list(
-		/obj/item/food/cheese = 2,
+		/obj/item/food/cheese/wedge = 2,
 		/obj/item/food/butter = 1,
 		/obj/item/food/grown/potato/sweet = 1,
 		/datum/reagent/consumable/flour = 5,
@@ -408,7 +408,7 @@
 		/obj/item/food/mothic_pizza_dough = 1,
 		/obj/item/food/tomato_sauce = 1,
 		/obj/item/food/firm_cheese_slice = 1,
-		/obj/item/food/cheese = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/mozzarella = 1,
 		/obj/item/food/herby_cheese = 1,
 		/obj/item/food/cheese_curds = 1
@@ -483,4 +483,16 @@
 		/datum/reagent/consumable/sugar = 5
 	)
 	result = /obj/item/food/soup/red_porridge
+	subcategory = CAT_MOTH
+
+/datum/crafting_recipe/food/chili_sin_carne
+	name = "Chili sin carne (vegetarian chili)"
+	reqs = list(
+		/obj/item/reagent_containers/glass/bowl = 1,
+		/datum/reagent/water = 10,
+		/datum/reagent/consumable/salt = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/tomato = 1
+	)
+	result = /obj/item/food/soup/vegetarian_chili
 	subcategory = CAT_MOTH

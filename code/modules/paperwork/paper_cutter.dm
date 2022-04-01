@@ -26,7 +26,7 @@
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc, "desecration" ,50, TRUE, -1)
+				playsound(loc, SFX_DESECRATION ,50, TRUE, -1)
 		return (BRUTELOSS)
 	else
 		user.visible_message(span_suicide("[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -56,7 +56,7 @@
 	if(istype(P, /obj/item/paper) && !storedpaper)
 		if(!user.transferItemToLoc(P, src))
 			return
-		playsound(loc, "pageturn", 60, TRUE)
+		playsound(loc, SFX_PAGE_TURN, 60, TRUE)
 		to_chat(user, span_notice("You place [P] in [src]."))
 		storedpaper = P
 		update_appearance()

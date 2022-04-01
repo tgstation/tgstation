@@ -532,3 +532,9 @@
 ///Can this mob hold items
 /mob/proc/can_hold_items(obj/item/I)
 	return length(held_items)
+
+/// Returns this mob's default lighting alpha
+/mob/proc/default_lighting_alpha()
+	if(client?.combo_hud_enabled && client?.prefs?.toggles & COMBOHUD_LIGHTING)
+		return LIGHTING_PLANE_ALPHA_INVISIBLE
+	return initial(lighting_alpha)

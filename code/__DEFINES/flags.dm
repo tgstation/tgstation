@@ -88,6 +88,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_LAVA_GEN (1<<3)
 /// Blocks ruins spawning on the turf.
 #define NO_RUINS (1<<4)
+/// Blocks this turf from being rusted
+#define NO_RUST (1<<5)
+/// Is this turf is "solid". Space and lava aren't for instance
+#define IS_SOLID (1<<6)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn

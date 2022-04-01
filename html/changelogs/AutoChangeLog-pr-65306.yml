@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - qol: "Attacking a machine as a monkey will now say if it did damage or not"

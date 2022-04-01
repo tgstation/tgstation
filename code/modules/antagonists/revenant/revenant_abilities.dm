@@ -38,6 +38,7 @@
 		if(prob(10))
 			to_chat(target, span_revennotice("You feel as if you are being watched."))
 		return
+	log_combat(span_warning("has started to harvest [key_name(target)]."), LOG_ATTACK)
 	face_atom(target)
 	draining = TRUE
 	essence_drained += rand(15, 20)
@@ -189,7 +190,7 @@
 	user.reveal(reveal)
 	user.stun(stun)
 	if(action)
-		action.UpdateButtonIcon()
+		action.UpdateButtons()
 	return TRUE
 
 //Overload Light: Breaks a light that's online and sends out lightning bolts to all nearby people.

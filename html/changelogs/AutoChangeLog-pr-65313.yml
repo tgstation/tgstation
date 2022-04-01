@@ -1,4 +1,0 @@
-author: "Ebb-Real"
-delete-after: True
-changes: 
-  - bugfix: "Ollieing onto empty space makes you fall like it should."
