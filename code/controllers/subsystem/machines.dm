@@ -35,7 +35,7 @@ SUBSYSTEM_DEF(machines)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-	var/delta_time = (world.time - last_fire) / ( 1 SECONDS)
+	var/delta_time = (world.time - last_fire) / (1 SECONDS)
 
 	while(currentrun.len)
 		var/obj/machinery/thing = currentrun[currentrun.len]
