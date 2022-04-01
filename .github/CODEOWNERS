@@ -109,6 +109,11 @@
 /code/modules/mob/living/simple_animal/bot/ @JohnFulpWillard
 /goon/ @JohnFulpWillard
 
+# Kapu1178
+
+/code/modules/surgery/bodyparts
+/code/modules/mob/living/carbon/carbon_update_icons.dm
+
 # MrStonedOne
 
 /SQL/database_changelog.txt @MrStonedOne
