@@ -155,7 +155,7 @@
 				balloon_alert(user, "you have hit vendor component limit!")
 				return
 			var/obj/item/circuit_component/vendor_component/vendor_component = new(parent)
-			parent.add_component(vendor_component, user)
+			parent.add_circuit_component(vendor_component, user)
 			vendor_components += vendor_component
 			register_signal(vendor_component, list(
 				COMSIG_PARENT_QDELETING,

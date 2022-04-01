@@ -312,7 +312,7 @@
 	register_signal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
-		attached_circuit.add_component(to_add)
+		attached_circuit.add_circuit_component(to_add)
 	register_signal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
 	if(attached_circuit.display_name != "")
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"

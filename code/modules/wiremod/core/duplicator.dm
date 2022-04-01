@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 
 /obj/item/integrated_circuit/proc/load_component(type)
 	var/obj/item/circuit_component/component = new type(src)
-	add_component(component)
+	add_circuit_component(component)
 	return component
 
 /// Saves data to a list. Shouldn't be used unless you are quite literally saving the data of a component to a list. Input value is the list to save the data to

@@ -219,7 +219,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  *
  * Once the component is added, the ports can be attached to other components
  */
-/obj/item/integrated_circuit/proc/add_component(obj/item/circuit_component/to_add, mob/living/user)
+/obj/item/integrated_circuit/proc/add_circuit_component(obj/item/circuit_component/to_add, mob/living/user)
 	if(to_add.parent)
 		return
 
@@ -257,7 +257,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
 		return
 
-	return add_component(to_add, user)
+	return add_circuit_component(to_add, user)
 
 /obj/item/integrated_circuit/proc/component_move_handler(obj/item/circuit_component/source)
 	SIGNAL_HANDLER
@@ -597,7 +597,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			if(params["is_setter"])
 				designated_type = /obj/item/circuit_component/variable/setter
 			var/obj/item/circuit_component/variable/component = new designated_type(src)
-			if(!add_component(component, usr))
+			if(!add_circuit_component(component, usr))
 				qdel(component)
 				return
 			component.variable_name.set_input(params["variable"])
@@ -632,7 +632,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 					return
 				component = new component_path(drop_location())
 				component.datum_flags |= DF_VAR_EDITED
-			if(!add_component(component))
+			if(!add_circuit_component(component))
 				return
 			component.rel_x = text2num(params["rel_x"])
 			component.rel_y = text2num(params["rel_y"])

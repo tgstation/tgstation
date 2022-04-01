@@ -117,7 +117,7 @@
 
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
-		circuitboard.add_component(component)
+		circuitboard.add_circuit_component(component)
 		register_signal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
 
 /datum/component/usb_port/proc/on_examine(datum/source, mob/user, list/examine_text)

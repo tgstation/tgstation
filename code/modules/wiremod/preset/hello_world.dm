@@ -8,7 +8,7 @@
 /obj/item/integrated_circuit/loaded/hello_world/Initialize(mapload)
 	. = ..()
 	var/obj/item/circuit_component/speech/speech = new()
-	add_component(speech)
+	add_circuit_component(speech)
 
 	speech.message.set_input("Hello World")
 

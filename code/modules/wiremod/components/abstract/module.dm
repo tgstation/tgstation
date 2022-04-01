@@ -47,7 +47,7 @@
 
 	return ..()
 
-/obj/item/integrated_circuit/module/add_component(obj/item/circuit_component/to_add, mob/living/user)
+/obj/item/integrated_circuit/module/add_circuit_component(obj/item/circuit_component/to_add, mob/living/user)
 	if(to_add.circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
 		balloon_alert(user, "doesn't fit into module!")
 		return
@@ -116,13 +116,13 @@
 
 	input_component = new(internal_circuit)
 	input_component.attached_module = src
-	internal_circuit.add_component(input_component)
+	internal_circuit.add_circuit_component(input_component)
 	input_component.rel_x = 0
 	input_component.rel_y = 200
 
 	output_component = new(internal_circuit)
 	output_component.attached_module = src
-	internal_circuit.add_component(output_component)
+	internal_circuit.add_circuit_component(output_component)
 	output_component.rel_x = 400
 	output_component.rel_y = 200
 
