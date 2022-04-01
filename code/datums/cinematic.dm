@@ -36,8 +36,17 @@
 	var/cleanup_time = 300 //How long for the final screen to remain
 	var/stop_ooc = TRUE //Turns off ooc when played globally.
 
+	var/atom/movable/screen/moth_reaction
+
 /datum/cinematic/New()
 	screen = new(src)
+	moth_reaction = new(src)
+	moth_reaction.icon = 'icons/effects/station_explosion.dmi'
+	moth_reaction.icon_state = "live_moth_reaction"
+	moth_reaction.plane = screen.plane + 1
+	moth_reaction.mouse_opacity = screen.mouse_opacity
+	moth_reaction.screen_loc = "BOTTOM,RIGHT"
+	moth_reaction.appearance_flags = screen.appearance_flags
 
 /datum/cinematic/Destroy()
 	for(var/CC in watching)
@@ -46,9 +55,11 @@
 		var/client/C = CC
 		C.mob.clear_fullscreen("cinematic")
 		C.screen -= screen
+		C.screen -= moth_reaction
 	watching = null
 	QDEL_NULL(screen)
 	QDEL_NULL(special_callback)
+	QDEL_NULL(moth_reaction)
 	for(var/MM in locked)
 		if(!MM)
 			continue
@@ -102,6 +113,7 @@
 	watching += C
 	M.overlay_fullscreen("cinematic",/atom/movable/screen/fullscreen/cinematic_backdrop)
 	C.screen += screen
+	C.screen += moth_reaction
 
 //Sound helper
 /datum/cinematic/proc/cinematic_sound(s)
