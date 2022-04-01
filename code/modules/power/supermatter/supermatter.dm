@@ -490,12 +490,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	SIGNAL_HANDLER
 	explode()
 
-/obj/machinery/power/supermatter_crystal/wrench_act(mob/user, obj/item/tool)
-	. = ..()
-	if (moveable)
-		default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
 	for(var/atom/movable/movable_atom in orange(pull_range,center))
