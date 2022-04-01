@@ -32,12 +32,12 @@ SUBSYSTEM_DEF(events)
 
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-
+	var/delta_time = (world.time - last_fire) / (1 SECONDS)
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing)
-			thing.process(wait * 0.1)
+			thing.process(delta_time)
 		else
 			running.Remove(thing)
 		if (MC_TICK_CHECK)
