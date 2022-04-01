@@ -184,7 +184,18 @@
 	store_file(new /datum/computer_file/program/computerconfig(src)) // Computer configuration utility, allows hardware control and displays more info than status bar
 	store_file(new /datum/computer_file/program/filemanager(src)) // File manager, allows text editor functions and basic file manipulation.
 	store_file(new /datum/computer_file/program/robotact(src))
-	store_file(new /datum/computer_file/program/messenger(src))
+	var/datum/computer_file/program/messenger/messenger = new(src)
+	messenger.is_silicon = TRUE
+	store_file(messenger)
+
+/obj/item/computer_hardware/hard_drive/small/integrated/ai
+	name = "AI Integrated Hard-drive"
+
+/obj/item/computer_hardware/hard_drive/small/integrated/ai/install_default_programs()
+	var/datum/computer_file/program/messenger/messenger = new(src)
+	messenger.is_silicon = TRUE
+	messenger.requires_ntnet = FALSE
+	store_file(messenger)
 
 
 // Syndicate variant - very slight better

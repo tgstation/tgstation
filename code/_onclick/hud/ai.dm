@@ -48,6 +48,17 @@
 	var/mob/living/silicon/ai/AI = usr
 	AI.toggle_camera_light()
 
+/atom/movable/screen/ai/modPC
+	name = "Modular Interface"
+	icon_state = "pda_send"
+	var/mob/living/silicon/ai/robot
+
+/atom/movable/screen/ai/modPC/Click()
+	. = ..()
+	if(.)
+		return
+	robot.modularInterface?.interact(robot)
+
 /atom/movable/screen/ai/crew_monitor
 	name = "Crew Monitoring Console"
 	icon_state = "crew_monitor"
@@ -190,6 +201,7 @@
 /datum/hud/ai/New(mob/owner)
 	..()
 	var/atom/movable/screen/using
+	var/mob/living/silicon/robot/ayeye = mymob
 
 // Language menu
 	using = new /atom/movable/screen/language_menu
@@ -256,6 +268,17 @@
 	using.screen_loc = ui_ai_state_laws
 	using.hud = src
 	static_inventory += using
+
+// Modular Interface
+	using = new /atom/movable/screen/ai/modPC
+	using.screen_loc = ui_ai_mod_int
+	using.hud = src
+	static_inventory += using
+	ayeye.interfaceButton = using
+	if(ayeye.modularInterface)
+		using.vis_contents += ayeye.modularInterface
+	var/atom/movable/screen/ai/modPC/tabletbutton = using
+	tabletbutton.robot = ayeye
 
 //PDA message
 	using = new /atom/movable/screen/ai/pda_msg_send()

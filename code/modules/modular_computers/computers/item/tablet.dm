@@ -90,6 +90,32 @@
 		return ..()
 	return FALSE
 
+/obj/item/modular_computer/tablet/ai
+	name = "modular interface"
+	icon_state = "tablet-silicon"
+	icon_state_powered = "tablet-silicon"
+	icon_state_unpowered = "tablet-silicon"
+	base_icon_state = "tablet-silicon"
+	has_light = FALSE //tablet light button actually enables/disables the borg lamp
+	comp_light_luminosity = 0
+	has_variants = FALSE
+	///Ref to the borg we're installed in. Set by the borg during our creation.
+	var/mob/living/silicon/ai/ayeye
+
+/obj/item/modular_computer/tablet/ai/Initialize(mapload)
+	. = ..()
+	vis_flags |= VIS_INHERIT_ID
+	ayeye = loc
+	if(!istype(ayeye))
+		ayeye = null
+		stack_trace("[type] initialized outside of an AI, deleting.")
+		return INITIALIZE_HINT_QDEL
+
+/obj/item/modular_computer/tablet/ai/turn_on(mob/user)
+	if(ayeye?.stat != DEAD)
+		return ..()
+	return FALSE
+
 /**
  * Returns a ref to the RoboTact app, creating the app if need be.
  *

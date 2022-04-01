@@ -50,7 +50,7 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	/// Number of total expansion bays this computer has available.
 	var/max_bays = 0
 
-	var/saved_identification = null // next two valures are the currently imprinted id and job values
+	var/saved_identification = null // next two values are the currently imprinted id and job values
 	var/saved_job = null
 
 	var/list/idle_threads // Idle programs on background. They still receive process calls but can't be interacted with.
@@ -58,8 +58,6 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	var/has_light = FALSE //If the computer has a flashlight/LED light/what-have-you installed
 	var/comp_light_luminosity = 3 //The brightness of that light
 	var/comp_light_color //The color of that light
-
-	var/stored_name // used for the identifier hardware
 
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()

@@ -43,20 +43,6 @@ export const NtosMain = (props, context) => {
             </Button>
           </Section>
         )}
-        {!!cartholder && (
-          <Section
-            title="Cartridge"
-            buttons={(
-              <Button
-                icon="eject"
-                content="Eject Cartridge"
-                disabled={!cartridge}
-                onClick={() => act('PC_Eject_Disk', { name: "cart" })}
-              />
-            )}>
-            Installed Cartridge: {cartridge || "None"}
-          </Section>
-        )}
         {!!cardholder && (
           <Section
             title="User Login"
@@ -85,6 +71,20 @@ export const NtosMain = (props, context) => {
                 Assignment: {login.IDJob} ({proposed_login.IDJob})
               </Table.Row>
             </Table>
+          </Section>
+        )}
+        {!!cartholder && (
+          <Section
+            title="Cartridge"
+            buttons={(
+              <Button
+                icon="eject"
+                content="Eject Cartridge"
+                disabled={!cartridge}
+                onClick={() => act('PC_Eject_Disk', { name: "cart" })}
+              />
+            )}>
+            Installed Cartridge: {cartridge || "None"}
           </Section>
         )}
         {!!removable_media.length && (

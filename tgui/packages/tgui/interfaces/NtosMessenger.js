@@ -43,6 +43,7 @@ export const NtosMessenger = (props, context) => {
     viewingMessages,
     sortByJob,
     canSpam,
+    isSilicon,
   } = data;
   if (viewingMessages) {
     return (
@@ -174,7 +175,7 @@ export const NtosMessenger = (props, context) => {
             )}
           </Section>
         </Stack>
-        {!owner && (
+        {(!owner && !isSilicon) && (
           <NoIDDimmer />
         )}
       </NtosWindow.Content>

@@ -25,7 +25,7 @@
 	var/monitor_hidden = FALSE // whether or not this device is currently hidden from the message monitor
 	var/sort = TRUE // whether or not we're sorting by job
 
-	var/is_silicon = FALSE // basically easy mode (no ID needed, cant disable message receiving (fuck you), etc.)
+	var/is_silicon = FALSE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
 	var/list/dictionary = list()
@@ -138,6 +138,7 @@
 	data["messengers"] = ScrubMessengerList()
 	data["viewingMessages"] = viewingMessages
 	data["sortByJob"] = sort
+	data["isSilicon"] = is_silicon
 
 	var/obj/item/computer_hardware/cartridge_slot/cart = computer.all_components[MC_CART]
 

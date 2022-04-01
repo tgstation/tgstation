@@ -107,6 +107,9 @@
 	var/atom/lastloc
 	interaction_range = null
 
+	var/obj/item/modular_computer/tablet/ai/modularInterface
+	var/atom/movable/screen/ai/modPC/interfaceButton
+
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
 	if(!target_ai) //If there is no player/brain inside.
@@ -162,6 +165,8 @@
 	aiPDA.owner = real_name
 	aiPDA.ownjob = "AI"
 	aiPDA.name = real_name + " (" + aiPDA.ownjob + ")"
+
+	create_modularInterface()
 
 	aiMulti = new(src)
 	aicamera = new/obj/item/camera/siliconcam/ai_camera(src)
@@ -233,6 +238,14 @@
 		ai_voicechanger.owner = null
 		ai_voicechanger = null
 	return ..()
+
+/mob/living/silicon/ai/proc/create_modularInterface()
+	if(!modularInterface)
+		modularInterface = new /obj/item/modular_computer/tablet/ai(src)
+	modularInterface.layer = ABOVE_HUD_PLANE
+	modularInterface.plane = ABOVE_HUD_PLANE
+	modularInterface.saved_identification = real_name
+	modularInterface.saved_job = "AI"
 
 /// Removes all malfunction-related abilities from the AI
 /mob/living/silicon/ai/proc/remove_malf_abilities()
@@ -832,6 +845,7 @@
 	if(oldname != real_name)
 		if(eyeobj)
 			eyeobj.name = "[newname] (AI Eye)"
+			modularInterface.saved_identification = real_name
 
 		// Notify Cyborgs
 		for(var/mob/living/silicon/robot/Slave in connected_robots)
