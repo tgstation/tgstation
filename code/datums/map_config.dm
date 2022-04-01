@@ -13,7 +13,7 @@
 	var/voteweight = 1
 	var/votable = FALSE
 
-	// Config actually from the JSON - should default to Meta
+	// Config actually from the JSON - should default to Meta.
 	var/map_name = "Tramstation"
 	var/map_path = "map_files/tramstation"
 	var/map_file = "tramstation.dmm"
