@@ -1164,7 +1164,7 @@
 
 /obj/item/card/id/advanced/prisoner/examine(mob/user)
 	. = ..()
-	if(!user.can_read(src))
+	if(!.)
 		return
 
 	if(timed)
