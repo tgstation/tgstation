@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(traitor)
 		1 MINUTES
 	), 0.1 MINUTES) * CONFIG_GET(number/traitor_scaling_multiplier)
 
-	var/progression_scaling_delta = (wait / (1 MINUTES)) * current_progression_scaling
+	var/progression_scaling_delta = ((world.time - last_fire) / (1 MINUTES)) * current_progression_scaling
 	var/previous_global_progression = current_global_progression
 
 	current_global_progression += progression_scaling_delta
