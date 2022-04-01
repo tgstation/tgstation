@@ -42,7 +42,7 @@
 		sprite_text = no_icon? "\[NO ICON\]" : "<img src='vv[hash].png'></td><td>"
 	var/list/header = islist(D)? list("<b>/list</b>") : D.vv_get_header()
 
-	var/ref_line = copytext(refid, 2, -1) // get rid of the brackets
+	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
 	var/marked_line
 	if(holder && holder.marked_datum && holder.marked_datum == D)

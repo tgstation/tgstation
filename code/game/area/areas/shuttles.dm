@@ -64,6 +64,7 @@
 /area/shuttle/hunter
 	name = "Hunter Shuttle"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/shuttle/hunter/russian
 	name = "Russian Cargo Hauler"
@@ -103,6 +104,7 @@
 	name = "Hyperspace"
 	desc = "Weeeeee"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 
 /area/shuttle/arrival
@@ -173,6 +175,7 @@
 	icon_state = "shuttlectf"
 	area_flags = NOTELEPORT
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/shuttle/escape/arena
 	name = "The Arena"
