@@ -101,19 +101,19 @@
 		var/self_subject = ismob(parent) ? "you" : "[parent]"
 
 		if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE)
-			user.visible_message(span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"), \
+			user.visible_message(span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"),
 			span_userdanger("An intense magical aura pulses around [self_subject] as it dissipates into the air!"))
 			antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 			antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
 			playsound(user, 'sound/magic/magic_block.ogg', 50, TRUE)
 		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_HOLY)
-			user.visible_message(span_warning("[user] starts to glow as [visible_subject] emits a halo of light!"), \
+			user.visible_message(span_warning("[user] starts to glow as [visible_subject] emits a halo of light!"),
 			span_userdanger("A feeling of warmth washes over [self_subject] as rays of light surround your body and protect you!"))
 			antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			antimagic_color = LIGHT_COLOR_HOLY_MAGIC
 			playsound(user, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
 		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_MIND)
-			user.visible_message(span_warning("[user] forehead shines as [visible_subject] repulses magic from their mind!"), \
+			user.visible_message(span_warning("[user] forehead shines as [visible_subject] repulses magic from their mind!"),
 			span_userdanger("A feeling of cold splashes on [self_subject] as your forehead reflects magic usering your mind!"))
 			antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 			antimagic_color = LIGHT_COLOR_DARK_BLUE
