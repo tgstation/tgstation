@@ -54,3 +54,9 @@ I'd rather there be something than the clockwork ruin be entirely empty though s
 	icon_state = "clockwork_alloy"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+
+/mob/living/simple_animal/hostile/megafauna/clockwork_defender/ainer
+	name = "Ainer 5000"
+	desc = "A construct charged with maintaining the balance of maint."
+	loot = list(/obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers)
+	crusher_loot = list(/obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers, /obj/item/food/cheesiehonkers)

@@ -148,7 +148,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/spacecash/c10 = 1,
 		/obj/item/stack/sticky_tape = 1,
 		/obj/item/tank/internals/emergency_oxygen = 1,
-
+		/mob/living/simple_animal/hostile/megafauna/clockwork_defender/ainer = 10,
 		//light sources
 		/obj/effect/spawner/random/decoration/glowstick = 1,
 		/obj/item/clothing/head/hardhat/red = 1,
