@@ -108,7 +108,7 @@
  */
 /obj/item/mecha_parts/mecha_equipment/proc/do_after_cooldown(atom/target, mob/user, interaction_key)
 	if(!chassis)
-		return
+		return FALSE
 	chassis.use_power(energy_drain)
 	return do_after(user, equip_cooldown, target, extra_checks = CALLBACK(src, .proc/do_after_checks, target), interaction_key = interaction_key)
 
