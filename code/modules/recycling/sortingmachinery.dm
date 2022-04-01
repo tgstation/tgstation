@@ -29,7 +29,7 @@
  * Effects after completing unwrapping
  */
 /obj/item/delivery/proc/post_unwrap_contents(mob/user)
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', 50, TRUE)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	qdel(src)
 
@@ -43,9 +43,9 @@
 			SSexplosions.low_mov_atom += contents
 
 /obj/item/delivery/Destroy()
-	var/turf/T = get_turf(src)
+	var/turf/turf_loc = get_turf(src)
 	for(var/atom/movable/movable_content as anything in contents)
-		movable_content.forceMove(T)
+		movable_content.forceMove(turf_loc)
 	return ..()
 
 /obj/item/delivery/examine(mob/user)
@@ -66,22 +66,22 @@
 	if(!hasmob)
 		disposal_holder.destinationTag = sort_tag
 
-/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/O)
+/obj/item/delivery/relay_container_resist_act(mob/living/user, obj/object)
 	if(ismovable(loc))
-		var/atom/movable/AM = loc //can't unwrap the wrapped container if it's inside something.
-		AM.relay_container_resist_act(user, O)
+		var/atom/movable/movable_loc = loc //can't unwrap the wrapped container if it's inside something.
+		movable_loc.relay_container_resist_act(user, object)
 		return
-	to_chat(user, span_notice("You lean on the back of [O] and start pushing to rip the wrapping around it."))
-	if(do_after(user, 50, target = O))
-		if(!user || user.stat != CONSCIOUS || user.loc != O || O.loc != src )
+	to_chat(user, span_notice("You lean on the back of [object] and start pushing to rip the wrapping around it."))
+	if(do_after(user, 50, target = object))
+		if(!user || user.stat != CONSCIOUS || user.loc != object || object.loc != src)
 			return
-		to_chat(user, span_notice("You successfully removed [O]'s wrapping !"))
-		O.forceMove(loc)
+		to_chat(user, span_notice("You successfully removed [object]'s wrapping !"))
+		object.forceMove(loc)
 		unwrap_contents()
 		post_unwrap_contents(user)
 	else
 		if(user.loc == src) //so we don't get the message if we resisted multiple times and succeeded.
-			to_chat(user, span_warning("You fail to remove [O]'s wrapping!"))
+			to_chat(user, span_warning("You fail to remove [object]'s wrapping!"))
 
 /obj/item/delivery/update_icon_state()
 	. = ..()
@@ -96,18 +96,18 @@
 	if(sticker)
 		. += "[base_icon_state]_tag"
 
-/obj/item/delivery/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/O = W
+/obj/item/delivery/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/dest_tagger))
+		var/obj/item/dest_tagger/dest_tagger = item
 
-		if(sort_tag != O.currTag)
-			var/tag = uppertext(GLOB.TAGGERLOCATIONS[O.currTag])
+		if(sort_tag != dest_tagger.currTag)
+			var/tag = uppertext(GLOB.TAGGERLOCATIONS[dest_tagger.currTag])
 			to_chat(user, span_notice("*[tag]*"))
-			sort_tag = O.currTag
+			sort_tag = dest_tagger.currTag
 			playsound(loc, 'sound/machines/twobeep_high.ogg', 100, TRUE)
 			update_appearance()
 
-	else if(istype(W, /obj/item/pen))
+	else if(istype(item, /obj/item/pen))
 		if(!user.is_literate())
 			to_chat(user, span_notice("You scribble illegibly on the side of [src]!"))
 			return
@@ -120,61 +120,61 @@
 		user.visible_message(span_notice("[user] labels [src] as [str]."))
 		name = "[name] ([str])"
 
-	else if(istype(W, /obj/item/stack/wrapping_paper) && !giftwrapped)
-		var/obj/item/stack/wrapping_paper/WP = W
-		if(WP.use(3))
+	else if(istype(item, /obj/item/stack/wrapping_paper) && !giftwrapped)
+		var/obj/item/stack/wrapping_paper/wrapping_paper = item
+		if(wrapping_paper.use(3))
 			user.visible_message(span_notice("[user] wraps the package in festive paper!"))
 			giftwrapped = TRUE
 			greyscale_config = text2path("/datum/greyscale_config/[icon_state]")
-			set_greyscale(colors = WP.greyscale_colors)
+			set_greyscale(colors = wrapping_paper.greyscale_colors)
 			update_appearance()
 		else
 			to_chat(user, span_warning("You need more paper!"))
 
-	else if(istype(W, /obj/item/paper))
+	else if(istype(item, /obj/item/paper))
 		if(note)
 			to_chat(user, span_warning("This package already has a note attached!"))
 			return
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
+		if(!user.transferItemToLoc(item, src))
+			to_chat(user, span_warning("For some reason, you can't attach [item]!"))
 			return
-		user.visible_message(span_notice("[user] attaches [W] to [src]."), span_notice("You attach [W] to [src]."))
-		note = W
+		user.visible_message(span_notice("[user] attaches [item] to [src]."), span_notice("You attach [item] to [src]."))
+		note = item
 		update_appearance()
 
-	else if(istype(W, /obj/item/sales_tagger))
-		var/obj/item/sales_tagger/tagger = W
+	else if(istype(item, /obj/item/sales_tagger))
+		var/obj/item/sales_tagger/sales_tagger = item
 		if(sticker)
 			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
-		if(!(tagger.payments_acc))
-			to_chat(user, span_warning("Swipe an ID on [tagger] first!"))
+		if(!(sales_tagger.payments_acc))
+			to_chat(user, span_warning("Swipe an ID on [sales_tagger] first!"))
 			return
-		if(tagger.paper_count <= 0)
-			to_chat(user, span_warning("[tagger] is out of paper!"))
+		if(sales_tagger.paper_count <= 0)
+			to_chat(user, span_warning("[sales_tagger] is out of paper!"))
 			return
 		user.visible_message(span_notice("[user] attaches a barcode to [src]."), span_notice("You attach a barcode to [src]."))
-		tagger.paper_count -= 1
+		sales_tagger.paper_count -= 1
 		sticker = new /obj/item/barcode(src)
-		sticker.payments_acc = tagger.payments_acc	//new tag gets the tagger's current account.
-		sticker.cut_multiplier = tagger.cut_multiplier	//same, but for the percentage taken.
+		sticker.payments_acc = sales_tagger.payments_acc	//new tag gets the tagger's current account.
+		sticker.cut_multiplier = sales_tagger.cut_multiplier	//same, but for the percentage taken.
 
 		for(var/obj/wrapped_item in get_all_contents())
 			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
 				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
+			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sales_tagger.cut_multiplier)
 		update_appearance()
 
-	else if(istype(W, /obj/item/barcode))
-		var/obj/item/barcode/stickerA = W
+	else if(istype(item, /obj/item/barcode))
+		var/obj/item/barcode/stickerA = item
 		if(sticker)
 			to_chat(user, span_warning("This package already has a barcode attached!"))
 			return
 		if(!(stickerA.payments_acc))
 			to_chat(user, span_warning("This barcode seems to be invalid. Guess it's trash now."))
 			return
-		if(!user.transferItemToLoc(W, src))
-			to_chat(user, span_warning("For some reason, you can't attach [W]!"))
+		if(!user.transferItemToLoc(item, src))
+			to_chat(user, span_warning("For some reason, you can't attach [item]!"))
 			return
 		sticker = stickerA
 		for(var/obj/wrapped_item in get_all_contents())
@@ -332,10 +332,10 @@
 	if(payments_acc)
 		. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
-/obj/item/sales_tagger/attackby(obj/item/I, mob/living/user, params)
+/obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, params)
 	. = ..()
-	if(istype(I, /obj/item/card/id))
-		var/obj/item/card/id/potential_acc = I
+	if(istype(item, /obj/item/card/id))
+		var/obj/item/card/id/potential_acc = item
 		if(potential_acc.registered_account)
 			if(payments_acc == potential_acc.registered_account)
 				to_chat(user, span_notice("ID card already registered."))
@@ -347,10 +347,10 @@
 		else if(!potential_acc.registered_account)
 			to_chat(user, span_warning("This ID card has no account registered!"))
 			return
-	if(istype(I, /obj/item/paper))
+	if(istype(item, /obj/item/paper))
 		if (!(paper_count >= max_paper_count))
 			paper_count += 10
-			qdel(I)
+			qdel(item)
 			if (paper_count >= max_paper_count)
 				paper_count = max_paper_count
 				to_chat(user, span_notice("[src]'s paper supply is now full."))
