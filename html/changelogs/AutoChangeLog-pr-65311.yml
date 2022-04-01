@@ -1,0 +1,4 @@
+author: "ivanmixo"
+delete-after: True
+changes: 
+  - qol: "space dragon can now make it's sprite smaller"

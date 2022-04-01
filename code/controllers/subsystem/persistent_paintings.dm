@@ -170,7 +170,13 @@ SUBSYSTEM_DEF(persistent_paintings)
 			pdata["ref"] = REF(painting)
 			. += list(pdata)
 		else
-			. += list(list("title" = painting.title, "creator" = painting.creator_name, "md5" = painting.md5,"ref" = REF(painting)))
+			. += list(list(
+				"title" = painting.title,
+				"creator" = painting.creator_name,
+				"md5" = painting.md5,
+				"ref" = REF(painting),
+				"ratio" = painting.width/painting.height,
+				))
 
 /// Returns paintings with given tag.
 /datum/controller/subsystem/persistent_paintings/proc/get_paintings_with_tag(tag_name)

@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "Added a palette component for palettes and spraycans: Right click the item while it's in your active hand to access a radial menu that allows you to store, select or edit up to 14 colors for palettes and 8 for spraycans. Right-Click one of the color to pick a new color value, Left-Click to select it."
-  - qol: "Furthermore, a graphical palette containing the colors of the palette component will show up in the Canvas UI when painting with a tool that has said component, allowing you to select colors without unfocusing from the UI window."
-  - rscdel: "Removed the ctrl-click (color picker) shortcut from spraycans, as I felt it to be too clunky and no longer necessary now (I'm the person that made it btw)."

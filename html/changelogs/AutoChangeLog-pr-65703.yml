@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "Assistant Traitors can now purchase the Ancient Toolbox again."
