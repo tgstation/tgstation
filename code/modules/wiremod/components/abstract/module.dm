@@ -35,7 +35,7 @@
 	attached_module.display_name = new_name
 	attached_module.name = "module ([new_name])"
 
-/obj/item/integrated_circuit/module/load_component(type)
+/obj/item/integrated_circuit/module/load_circuit_component(type)
 	if(!attached_module)
 		return ..()
 

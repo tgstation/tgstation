@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 		if(!ispath(type, /obj/item/circuit_component))
 			LOG_ERROR(errors, "Invalid path for circuit component, expected [/obj/item/circuit_component], got [type]")
 			continue
-		var/obj/item/circuit_component/component = load_component(type)
+		var/obj/item/circuit_component/component = load_circuit_component(type)
 		identifiers_to_circuit[identifier] = component
 		component.load_data_from_list(component_data)
 
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(circuit_dupe_whitelisted_types, list(
 
 	return json_encode(general_data)
 
-/obj/item/integrated_circuit/proc/load_component(type)
+/obj/item/integrated_circuit/proc/load_circuit_component(type)
 	var/obj/item/circuit_component/component = new type(src)
 	add_circuit_component(component)
 	return component
