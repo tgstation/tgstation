@@ -227,7 +227,7 @@
 
 /datum/quirk/item_quirk/bookworm
 	name = "Bookworm"
-	desc = "You have a love for reading books.  Anytime you read a new book you become happy."
+	desc = "You have a love for reading books. Anytime you read a new book you become happy."
 	icon = "book"
 	value = 4
 	mob_trait = TRAIT_BOOKWORM
