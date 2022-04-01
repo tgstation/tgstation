@@ -334,6 +334,7 @@
 	name = "Zurek"
 	reqs = list(
 		/datum/reagent/water = 10,
+		/datum/reagent/consumable/flour = 5,
 		/obj/item/food/boiledegg = 1,
 		/obj/item/food/meat/cutlet = 1,
 		/obj/item/food/grown/carrot = 1,
