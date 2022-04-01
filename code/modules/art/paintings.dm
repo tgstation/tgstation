@@ -658,7 +658,8 @@
 	. = ..()
 	// Necessary so that the painting is framed correctly by the frame overlay when flipped.
 	ADD_KEEP_TOGETHER(src, INNATE_TRAIT)
-	finalize_size()
+	if(mapload)
+		finalize_size()
 
 /**
  * This frame is visually put between two wall turfs and it has an icon that's bigger than 32px, and because
@@ -667,11 +668,6 @@
  * that wall turf.
  */
 /obj/structure/sign/painting/large/proc/finalize_size()
-	// Reset the pixel osffsets and bounds.
-	pixel_x = initial(pixel_x)
-	pixel_y = initial(pixel_y)
-	bound_height = initial(bound_height)
-	bound_width = initial(bound_width)
 	switch(dir)
 		if(SOUTH)
 			pixel_y = -32
