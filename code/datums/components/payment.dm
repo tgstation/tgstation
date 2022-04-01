@@ -65,7 +65,7 @@
 	var/total_cost = cost + extra_fees
 	if(department_discount)
 		var/datum/job/our_job = card.registered_account.account_job
-        if(our_job && SSeconomy.get_dep_account(our_job) == target_acc)
+		if(our_job && SSeconomy.get_dep_account(our_job) == target_acc)
 			total_cost = max(round(total_cost * DEPARTMENT_DISCOUNT), 1)
 
 	if(!(card.registered_account.has_money(total_cost)))
