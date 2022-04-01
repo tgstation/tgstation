@@ -5,7 +5,7 @@
 
 /datum/map_config
 	// Metadata
-	var/config_filename = "_maps/metastation.json"
+	var/config_filename = "_maps/tramstation.json"
 	var/defaulted = TRUE  // set to FALSE by LoadConfig() succeeding
 	// Config from maps.txt
 	var/config_max_users = 0
@@ -14,9 +14,9 @@
 	var/votable = FALSE
 
 	// Config actually from the JSON - should default to Meta
-	var/map_name = "Meta Station"
-	var/map_path = "map_files/MetaStation"
-	var/map_file = "MetaStation.dmm"
+	var/map_name = "Tramstation"
+	var/map_path = "map_files/tramstation"
+	var/map_file = "tramstation.dmm"
 
 	var/traits = null
 	var/space_ruin_levels = 7
@@ -176,7 +176,7 @@
 			log_world("map_config \"job_changes\" field is missing or invalid!")
 			return
 		job_changes = json["job_changes"]
-	
+
 	if("library_areas" in json)
 		if(!islist(json["library_areas"]))
 			log_world("map_config \"library_areas\" field is missing or invalid!")
