@@ -1,5 +1,0 @@
-author: "Tastyfish"
-delete-after: True
-changes: 
-  - rscadd: "Re-added the Hotkeys-Help verb, and linked the Hotkeys menu item to it."
-  - qol: "Move Help menu to the end of the menu bar."

@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - expansion: "Added two additional canvas types: 36x24 and 45x27, as well as a large painting frame meant for them. All three items can be bought from the library vendor."
-  - qol: "paintings shown in the \"Marlowe Treeby's Art Galaxy\" app  will now always have a 1:1 pixel ratio, ergo 23x19, as well as the new canvases, won't appear stretched in its UI anymore."
-  - bugfix: "Fixed the 24x24 canvas not having a wip overlay (the one that shows up on canvases with unfinished paintings)."
