@@ -13,7 +13,7 @@
 	var/revive_time_max = 700
 	var/timer_id
 
-/obj/item/organ/zombie_infection/Initialize()
+/obj/item/organ/zombie_infection/Initialize(mapload)
 	. = ..()
 	if(iscarbon(loc))
 		Insert(loc)
