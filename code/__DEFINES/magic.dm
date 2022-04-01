@@ -35,5 +35,3 @@
 #define MAGIC_RESISTANCE_MIND (1<<1)
 /// Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god)
 #define MAGIC_RESISTANCE_HOLY (1<<2)
-/// All magic resistances combined
-#define MAGIC_RESISTANCE_ALL (MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND|MAGIC_RESISTANCE_HOLY)

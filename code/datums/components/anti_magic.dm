@@ -28,7 +28,6 @@
  * * MAGIC_RESISTANCE - Default magic resistance that blocks normal magic (wizard, spells, staffs)
  * * MAGIC_RESISTANCE_MIND - Tinfoil hat magic resistance that blocks mental magic (telepathy, abductors, jelly people)
  * * MAGIC_RESISTANCE_HOLY - Holy magic resistance that blocks unholy magic (revenant, cult, vampire, voice of god)
- * * MAGIC_RESISTANCE_ALL - All magic resistances combined
 **/
 /datum/component/anti_magic/Initialize(
 		antimagic_flags = MAGIC_RESISTANCE,
