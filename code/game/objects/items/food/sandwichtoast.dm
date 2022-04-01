@@ -34,7 +34,7 @@
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/cheese_sandwich/MakeGrillable()
-	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese_sandwich, rand(30 SECONDS, 60 SECONDS), TRUE)
+	add_component(/datum/component/grillable, /obj/item/food/grilled_cheese_sandwich, rand(30 SECONDS, 60 SECONDS), TRUE)
 
 /obj/item/food/jellysandwich
 	name = "jelly sandwich"

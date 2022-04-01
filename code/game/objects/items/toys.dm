@@ -406,7 +406,7 @@
 
 /obj/item/toy/sword/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		throw_speed_on = throw_speed, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)

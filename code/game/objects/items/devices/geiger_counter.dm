@@ -60,7 +60,7 @@
 	scanning = !scanning
 
 	if (scanning)
-		AddComponent(/datum/component/geiger_sound)
+		add_component(/datum/component/geiger_sound)
 	else
 		qdel(get_component(/datum/component/geiger_sound))
 

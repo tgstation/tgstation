@@ -157,7 +157,7 @@
 	return
 
 /obj/effect/mine/shrapnel/triggermine(atom/movable/AM)
-	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+	add_component(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
 	return ..()
 
 /obj/effect/mine/shrapnel/sting

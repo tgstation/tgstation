@@ -306,7 +306,7 @@
 /obj/item/clothing/head/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	AddComponent(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
+	add_component(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
 	AddElement(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
@@ -642,7 +642,7 @@
 	spirits = list()
 	START_PROCESSING(SSobj, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	AddComponent(/datum/component/butchering, 150, 90)
+	add_component(/datum/component/butchering, 150, 90)
 
 /obj/item/melee/ghost_sword/Destroy()
 	for(var/mob/dead/observer/G in spirits)
@@ -845,7 +845,7 @@
 
 /obj/item/melee/cleaving_saw/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		transform_cooldown_time = (CLICK_CD_MELEE * 0.25), \
 		force_on = open_force, \
 		throwforce_on = open_throwforce, \

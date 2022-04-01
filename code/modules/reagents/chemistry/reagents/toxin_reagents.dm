@@ -547,7 +547,7 @@
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/M, delta_time, times_fired)
 	if (!HAS_TRAIT(M, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(M))
-		M.AddComponent(/datum/component/irradiated)
+		M.add_component(/datum/component/irradiated)
 	else
 		M.adjustToxLoss(1 * REM * delta_time)
 

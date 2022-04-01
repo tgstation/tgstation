@@ -67,7 +67,7 @@ Slimecrossing Items
 		to_chat(target, span_boldnotice("You'll remember this moment forever!"))
 
 		used = TRUE
-		target.AddComponent(/datum/component/dejavu, 2)
+		target.add_component(/datum/component/dejavu, 2)
 	.=..()
 
 

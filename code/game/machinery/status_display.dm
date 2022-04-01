@@ -297,7 +297,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	// register for radio system
 	SSradio.add_object(src, frequency)
 	// Circuit USB
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/status_display,
 	))
 

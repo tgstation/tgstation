@@ -26,7 +26,7 @@ It has a punishment variable that is what happens to the parent when they leave 
 	message = _message
 	stuck_zlevel = L.z
 
-/datum/component/stationstuck/InheritComponent(datum/component/stationstuck/newc, original, _punishment, _message)
+/datum/component/stationstuck/inherit_component(datum/component/stationstuck/newc, original, _punishment, _message)
 	if(newc)
 		punishment = newc.punishment
 		message = newc.message

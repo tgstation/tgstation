@@ -88,7 +88,7 @@
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \

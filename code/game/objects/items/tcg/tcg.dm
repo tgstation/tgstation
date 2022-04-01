@@ -184,7 +184,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcgcard_deck/Initialize(mapload)
 	. = ..()
-	LoadComponent(/datum/component/storage/concrete/tcg)
+	load_component(/datum/component/storage/concrete/tcg)
 
 /obj/item/tcgcard_deck/update_icon_state()
 	if(!flipped)

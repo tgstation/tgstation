@@ -12,7 +12,7 @@
 /obj/machinery/computer/launchpad/Initialize(mapload)
 	launchpads = list()
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/bluespace_launchpad,
 	))
 

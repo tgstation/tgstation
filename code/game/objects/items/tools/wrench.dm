@@ -92,7 +92,7 @@
 
 /obj/item/wrench/combat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		force_on = 6, \
 		throwforce_on = 8, \
 		hitsound_on = hitsound, \

@@ -109,7 +109,7 @@
   Epoc:
   - rscadd: You can now show off your Attorney's Badge
   Garen:
-  - bugfix: Fixed AddComponent(target) not working when an instance is passed rather
+  - bugfix: Fixed add_component(target) not working when an instance is passed rather
       than a path
   JJRcop:
   - bugfix: Fixed some strange string handling in SDQL

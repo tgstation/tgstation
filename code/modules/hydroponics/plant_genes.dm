@@ -262,7 +262,7 @@
 	if(!istype(our_plant, /obj/item/grown/bananapeel) && (!our_plant.reagents || !our_plant.reagents.has_reagent(/datum/reagent/lube)))
 		stun_len /= 3
 
-	our_plant.AddComponent(/datum/component/slippery, min(stun_len, 140), NONE, CALLBACK(src, .proc/handle_slip, our_plant))
+	our_plant.add_component(/datum/component/slippery, min(stun_len, 140), NONE, CALLBACK(src, .proc/handle_slip, our_plant))
 
 /// On slip, sends a signal that our plant was slipped on out.
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/food/grown/our_plant, mob/slipped_target)
@@ -363,7 +363,7 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	our_plant.light_system = MOVABLE_LIGHT
-	our_plant.AddComponent(/datum/component/overlay_lighting, glow_range(our_seed), glow_power(our_seed), glow_color)
+	our_plant.add_component(/datum/component/overlay_lighting, glow_range(our_seed), glow_power(our_seed), glow_color)
 
 /*
  * Makes plant emit darkness. (Purple-ish shadows)

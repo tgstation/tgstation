@@ -6,7 +6,7 @@
 	bite_consumption = 2
 
 /obj/item/food/deepfryholder/MakeEdible()
-	AddComponent(/datum/component/edible,\
+	add_component(/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			food_flags = food_flags,\
 			foodtypes = foodtypes,\

@@ -12,7 +12,7 @@
 
 /obj/machinery/light_switch/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/light_switch,
 	))
 

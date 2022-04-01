@@ -61,7 +61,7 @@
 	master.cut_overlay(overlay)
 	return ..()
 
-/datum/component/thermite/InheritComponent(datum/component/thermite/newC, i_am_original, _amount)
+/datum/component/thermite/inherit_component(datum/component/thermite/newC, i_am_original, _amount)
 	if(!i_am_original)
 		return
 	if(newC)

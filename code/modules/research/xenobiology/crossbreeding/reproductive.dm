@@ -23,7 +23,7 @@ Reproductive extracts:
 
 /obj/item/slimecross/reproductive/Initialize(mapload)
 	. = ..()
-	slimeStorage = AddComponent(/datum/component/storage/concrete/extract_inventory)
+	slimeStorage = add_component(/datum/component/storage/concrete/extract_inventory)
 
 /obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
 	if((last_produce + cooldown) > world.time)

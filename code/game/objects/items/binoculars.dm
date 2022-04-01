@@ -19,7 +19,7 @@
 
 /obj/item/binoculars/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	add_component(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
 /obj/item/binoculars/Destroy()
 	listeningTo = null

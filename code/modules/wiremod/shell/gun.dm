@@ -34,7 +34,7 @@
 
 /obj/item/gun/energy/wiremod_gun/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(
+	add_component(/datum/component/shell, list(
 		new /obj/item/circuit_component/wiremod_gun()
 	), SHELL_CAPACITY_MEDIUM)
 

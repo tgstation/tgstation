@@ -12,7 +12,7 @@
 	src.override_projectile_range = override_projectile_range
 
 	if(isgrenade(parent))
-		parent.AddComponent(/datum/component/pellet_cloud, projectile_type=projectile_type)
+		parent.add_component(/datum/component/pellet_cloud, projectile_type=projectile_type)
 
 /datum/component/mirv/register_with_parent()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc

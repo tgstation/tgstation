@@ -30,7 +30,7 @@
 
 	if(!target)
 		reattach_to_layer()
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/atmos_meter,
 	))
 	return ..()

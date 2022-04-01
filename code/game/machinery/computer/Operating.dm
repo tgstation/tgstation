@@ -24,7 +24,7 @@
 /obj/machinery/computer/operating/LateInitialize()
 	. = ..()
 
-	experiment_handler = AddComponent( \
+	experiment_handler = add_component( \
 		/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/dissection), \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE, \

@@ -242,7 +242,7 @@
 					var/obj/machinery/duct/duct = A
 					duct.attempt_connect()
 				else
-					for(var/datum/component/plumbing/plumber as anything in A.GetComponents(/datum/component/plumbing))
+					for(var/datum/component/plumbing/plumber as anything in A.get_components(/datum/component/plumbing))
 						if(plumber.ducting_layer == ducting_layer)
 							direct_connect(plumber, D)
 

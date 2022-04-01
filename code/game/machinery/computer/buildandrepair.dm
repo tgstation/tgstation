@@ -5,7 +5,7 @@
 
 /obj/structure/frame/computer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	add_component(/datum/component/simple_rotation)
 
 /obj/structure/frame/computer/attackby(obj/item/P, mob/living/user, params)
 	add_fingerprint(user)

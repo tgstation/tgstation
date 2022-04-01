@@ -25,7 +25,7 @@
 
 /obj/item/pushbroom/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_wielded="[base_icon_state]1")
+	add_component(/datum/component/two_handed, force_unwielded=8, force_wielded=12, icon_wielded="[base_icon_state]1")
 
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "[base_icon_state]0"

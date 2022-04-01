@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 
 /obj/structure/spawner/ice_moon/demonic_portal/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/gps, "Netheric Signal")
+	add_component(/datum/component/gps, "Netheric Signal")
 
 /obj/structure/spawner/ice_moon/demonic_portal/clear_rock()
 	for(var/turf/F in RANGE_TURFS(3, src))

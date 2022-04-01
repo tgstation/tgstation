@@ -47,7 +47,7 @@
  * We don't care about the other way around
  * (Don't go from non-deleting to deleting)
  */
-/datum/component/pricetag/InheritComponent(datum/component/pricetag/new_comp, i_am_original, pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
+/datum/component/pricetag/inherit_component(datum/component/pricetag/new_comp, i_am_original, pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
 	if(!isnull(payees[pay_to_account]) && payees[pay_to_account] >= profit_ratio) // They're already getting a better ratio, don't scam them
 		return
 

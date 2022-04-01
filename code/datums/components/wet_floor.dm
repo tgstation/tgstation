@@ -12,7 +12,7 @@
 	var/permanent = FALSE
 	var/last_process = 0
 
-/datum/component/wet_floor/InheritComponent(datum/newcomp, orig, strength, duration_minimum, duration_add, duration_maximum, _permanent)
+/datum/component/wet_floor/inherit_component(datum/newcomp, orig, strength, duration_minimum, duration_add, duration_maximum, _permanent)
 	if(!newcomp) //We are getting passed the arguments of a would-be new component, but not a new component
 		add_wet(arglist(args.Copy(3)))
 	else //We are being passed in a full blown component
@@ -94,7 +94,7 @@
 			qdel(parent.get_component(/datum/component/slippery))
 			return
 
-	parent.LoadComponent(/datum/component/slippery, intensity, lube_flags, CALLBACK(src, .proc/AfterSlip))
+	parent.load_component(/datum/component/slippery, intensity, lube_flags, CALLBACK(src, .proc/AfterSlip))
 
 /datum/component/wet_floor/proc/dry(datum/source, strength = TURF_WET_WATER, immediate = FALSE, duration_decrease = INFINITY)
 	SIGNAL_HANDLER
@@ -145,19 +145,19 @@
 	for(var/i in time_left_list)
 		. |= text2num(i)
 
-/datum/component/wet_floor/PreTransfer()
+/datum/component/wet_floor/pre_transfer()
 	var/turf/O = parent
 	O.cut_overlay(current_overlay)
 	//That turf is no longer slippery, we're out of here
 	//Slippery components don't transfer due to callbacks
 	qdel(O.get_component(/datum/component/slippery))
 
-/datum/component/wet_floor/PostTransfer()
+/datum/component/wet_floor/post_transfer()
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/turf/T = parent
 	T.add_overlay(current_overlay)
-	//Make sure to add/update any slippery component on the new turf (update_flags calls LoadComponent)
+	//Make sure to add/update any slippery component on the new turf (update_flags calls load_component)
 	update_flags()
 
 	//NB it's possible we get deleted after this, due to inherit

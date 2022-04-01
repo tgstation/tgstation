@@ -56,9 +56,9 @@
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(ispath(pocket_storage_component_path))
-		LoadComponent(pocket_storage_component_path)
+		load_component(pocket_storage_component_path)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
-		LoadComponent(/datum/component/bloodysoles)
+		load_component(/datum/component/bloodysoles)
 	if(!icon_state)
 		item_flags |= ABSTRACT
 
@@ -90,7 +90,7 @@
 	var/datum/weakref/clothing
 
 /obj/item/food/clothing/MakeEdible()
-	AddComponent(/datum/component/edible,\
+	add_component(/datum/component/edible,\
 		initial_reagents = food_reagents,\
 		food_flags = food_flags,\
 		foodtypes = foodtypes,\

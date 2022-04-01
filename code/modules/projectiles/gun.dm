@@ -213,7 +213,7 @@
 		to_chat(user,span_warning("You can't hold yourself up!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	user.AddComponent(/datum/component/gunpoint, victim, src)
+	user.add_component(/datum/component/gunpoint, victim, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)

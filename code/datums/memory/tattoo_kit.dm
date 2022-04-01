@@ -61,6 +61,6 @@
 		return
 	if(!tattoo_holder.get_bodypart(selected_zone))
 		return
-	tattoo_target.AddComponent(/datum/component/tattoo, memory_to_tattoo.generate_story(STORY_TATTOO))
+	tattoo_target.add_component(/datum/component/tattoo, memory_to_tattoo.generate_story(STORY_TATTOO))
 	//prevent this memory from being used again this round
 	memory_to_tattoo.memory_flags |= MEMORY_FLAG_ALREADY_USED

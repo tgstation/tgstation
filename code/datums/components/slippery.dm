@@ -47,9 +47,9 @@
 
 /datum/component/slippery/proc/add_connect_loc_behalf_to_parent()
 	if(ismovable(parent))
-		AddComponent(/datum/component/connect_loc_behalf, parent, default_connections)
+		add_component(/datum/component/connect_loc_behalf, parent, default_connections)
 
-/datum/component/slippery/InheritComponent(datum/component/slippery/component, i_am_original, knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
+/datum/component/slippery/inherit_component(datum/component/slippery/component, i_am_original, knockdown, lube_flags = NONE, datum/callback/callback, paralyze, force_drop = FALSE, slot_whitelist)
 	if(component)
 		knockdown = component.knockdown_time
 		lube_flags = component.lube_flags
@@ -94,7 +94,7 @@
 	if((!LAZYLEN(slot_whitelist) || (slot in slot_whitelist)) && isliving(equipper))
 		holder = equipper
 		qdel(get_component(/datum/component/connect_loc_behalf))
-		AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
+		add_component(/datum/component/connect_loc_behalf, holder, holder_connections)
 		register_signal(holder, COMSIG_PARENT_PREQDELETED, .proc/holder_deleted)
 
 /*

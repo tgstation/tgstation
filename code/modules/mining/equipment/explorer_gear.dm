@@ -29,11 +29,11 @@
 
 /obj/item/clothing/suit/hooded/explorer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate)
+	add_component(/datum/component/armor_plate)
 
 /obj/item/clothing/head/hooded/explorer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate)
+	add_component(/datum/component/armor_plate)
 
 /obj/item/clothing/mask/gas/explorer
 	name = "explorer gas mask"

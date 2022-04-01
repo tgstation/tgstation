@@ -39,7 +39,7 @@
 	create_reagents(reagent_capacity)
 	reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/simple_demand)
+	add_component(/datum/component/plumbing/simple_demand)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
@@ -196,7 +196,7 @@
 
 /obj/structure/showerframe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	add_component(/datum/component/simple_rotation)
 
 /obj/structure/showerframe/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/water_recycler))

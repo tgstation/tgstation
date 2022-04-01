@@ -222,7 +222,7 @@
 		ORGAN_SLOT_BRAIN = 1.4,
 	)
 
-	aura_healing = owner.AddComponent( \
+	aura_healing = owner.add_component( \
 		/datum/component/aura_healing, \
 		range = 7, \
 		brute_heal = 1.4, \

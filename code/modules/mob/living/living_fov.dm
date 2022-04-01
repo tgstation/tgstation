@@ -75,7 +75,7 @@
 	var/datum/component/fov_handler/fov_component = get_component(/datum/component/fov_handler)
 	if(fov_view)
 		if(!fov_component)
-			AddComponent(/datum/component/fov_handler, fov_view)
+			add_component(/datum/component/fov_handler, fov_view)
 		else
 			fov_component.set_fov_angle(fov_view)
 	else if(fov_component)

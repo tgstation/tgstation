@@ -153,7 +153,7 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 /obj/item/firelance/Initialize(mapload)
 	. = ..()
 	cell = new /obj/item/stock_parts/cell(src)
-	AddComponent(/datum/component/two_handed)
+	add_component(/datum/component/two_handed)
 
 /obj/item/firelance/attack(mob/living/M, mob/living/user, params)
 	if(!user.combat_mode)

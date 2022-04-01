@@ -294,7 +294,7 @@
 			var/lerp_scale = min(tritium_irradiation_moles_max, trit_pp - tritium_irradiation_moles_min) / (tritium_irradiation_moles_max - tritium_irradiation_moles_min)
 			var/chance = LERP(tritium_irradiation_probability_min, tritium_irradiation_probability_max, lerp_scale)
 			if (prob(chance))
-				breather.AddComponent(/datum/component/irradiated)
+				breather.add_component(/datum/component/irradiated)
 
 		gas_breathed = breath_gases[/datum/gas/tritium][MOLES]
 

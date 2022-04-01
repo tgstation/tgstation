@@ -36,7 +36,7 @@
 	builtintools += new /obj/item/wirecutters/drone(src)
 
 	for(var/obj/item/tool as anything in builtintools)
-		tool.AddComponent(/datum/component/holderloving, src, TRUE)
+		tool.add_component(/datum/component/holderloving, src, TRUE)
 
 
 /obj/item/crowbar/drone

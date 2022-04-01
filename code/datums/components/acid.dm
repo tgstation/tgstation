@@ -83,7 +83,7 @@
 		unregister_signal(parent, COMSIG_ATOM_ENTERED)
 
 /// Averages corrosive power and sums volume.
-/datum/component/acid/InheritComponent(datum/component/C, i_am_original, _acid_power, _acid_volume)
+/datum/component/acid/inherit_component(datum/component/C, i_am_original, _acid_power, _acid_volume)
 	acid_power = ((acid_power * acid_volume) + (_acid_power * _acid_volume)) / (acid_volume + _acid_volume)
 	set_volume(acid_volume + _acid_volume)
 

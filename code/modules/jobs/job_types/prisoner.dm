@@ -48,5 +48,5 @@
 		return
 	var/obj/item/bodypart/tatted_limb = pick(new_prisoner.bodyparts)
 	var/list/tattoo = pick(SSpersistence.prison_tattoos_to_use)
-	tatted_limb.AddComponent(/datum/component/tattoo, tattoo["story"])
+	tatted_limb.add_component(/datum/component/tattoo, tattoo["story"])
 	SSpersistence.prison_tattoos_to_use -= tattoo

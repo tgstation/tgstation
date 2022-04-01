@@ -428,7 +428,7 @@
 			scanner_occupant.dna.generate_dna_blocks()
 			scrambleready = world.time + SCRAMBLE_TIMEOUT
 			to_chat(usr,span_notice("DNA scrambled."))
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
+			scanner_occupant.add_component(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2))
 			return
 
 		// Check whether a specific mutation is eligible for discovery within the
@@ -548,7 +548,7 @@
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant genetic damage
 			scanner_occupant.dna.mutation_index[path] = copytext(sequence, 1, genepos) + newgene + copytext(sequence, genepos + 1)
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff)
+			scanner_occupant.add_component(/datum/component/genetic_damage, GENETIC_DAMAGE_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff)
 			scanner_occupant.domutcheck()
 
 			// GUARD CHECK - Modifying genetics can lead to edge cases where the
@@ -1646,7 +1646,7 @@
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.add_component(/datum/component/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("uf")
@@ -1659,7 +1659,7 @@
 			COOLDOWN_START(src, enzyme_copy_timer, ENZYME_COPY_BASE_COOLDOWN)
 			scanner_occupant.dna.unique_features = buffer_slot["UF"]
 			scanner_occupant.updateappearance(mutcolor_update=1, mutations_overlay_update=1)
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.add_component(/datum/component/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("ue")
@@ -1674,7 +1674,7 @@
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.add_component(/datum/component/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 		if("mixed")
@@ -1692,7 +1692,7 @@
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
-			scanner_occupant.AddComponent(/datum/component/genetic_damage, damage_increase)
+			scanner_occupant.add_component(/datum/component/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
 

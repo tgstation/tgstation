@@ -26,11 +26,11 @@
 /datum/component/technoshy/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
-/datum/component/technoshy/PostTransfer()
+/datum/component/technoshy/post_transfer()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/technoshy/InheritComponent(datum/component/technoshy/friend, i_am_original, list/arguments)
+/datum/component/technoshy/inherit_component(datum/component/technoshy/friend, i_am_original, list/arguments)
 	if(i_am_original)
 		whitelist = friend.whitelist
 		message = friend.message

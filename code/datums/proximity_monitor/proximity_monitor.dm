@@ -34,7 +34,7 @@
 	host = new_host
 	register_signal(new_host, COMSIG_PARENT_QDELETING, .proc/on_host_or_receiver_del)
 	var/static/list/containers_connections = list(COMSIG_MOVABLE_MOVED = .proc/on_moved)
-	AddComponent(/datum/component/connect_containers, host, containers_connections)
+	add_component(/datum/component/connect_containers, host, containers_connections)
 	register_signal(host, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	set_range(current_range, TRUE)
 
@@ -54,7 +54,7 @@
 	current_range = range
 
 	//If the connect_range component exists already, this will just update its range. No errors or duplicates.
-	AddComponent(/datum/component/connect_range, host, loc_connections, range, !ignore_if_not_on_turf)
+	add_component(/datum/component/connect_range, host, loc_connections, range, !ignore_if_not_on_turf)
 
 /datum/proximity_monitor/proc/on_moved(atom/movable/source, atom/old_loc)
 	SIGNAL_HANDLER
@@ -66,7 +66,7 @@
 		return
 	ignore_if_not_on_turf = does_ignore
 	//Update the ignore_if_not_on_turf
-	AddComponent(/datum/component/connect_range, host, loc_connections, current_range, ignore_if_not_on_turf)
+	add_component(/datum/component/connect_range, host, loc_connections, current_range, ignore_if_not_on_turf)
 
 /datum/proximity_monitor/proc/on_uncrossed()
 	SIGNAL_HANDLER

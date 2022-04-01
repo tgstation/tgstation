@@ -101,9 +101,9 @@
 		AddElement(/datum/element/light_blocking)
 	switch(light_system)
 		if(MOVABLE_LIGHT)
-			AddComponent(/datum/component/overlay_lighting)
+			add_component(/datum/component/overlay_lighting)
 		if(MOVABLE_LIGHT_DIRECTIONAL)
-			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
+			add_component(/datum/component/overlay_lighting, is_directional = TRUE)
 
 
 /atom/movable/Destroy(force)
@@ -976,7 +976,7 @@
 		return TRUE
 
 	set_glide_size(MOVEMENT_ADJUSTED_GLIDE_SIZE(inertia_move_delay, SSspacedrift.visual_delay))
-	AddComponent(/datum/component/drift, direction, instant)
+	add_component(/datum/component/drift, direction, instant)
 
 	return TRUE
 
@@ -1329,7 +1329,7 @@
  * * cooldown - The cooldown between command inputs passed to the deadchat_control component. See [/datum/component/deadchat_control] for more info.
  */
 /atom/movable/proc/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
-	return AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown)
+	return add_component(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown)
 
 /atom/movable/vv_get_dropdown()
 	. = ..()

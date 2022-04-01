@@ -19,7 +19,7 @@
 	var/static/list/disease_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/try_infect_crossed,
 	)
-	AddComponent(/datum/component/connect_loc_behalf, parent, disease_connections)
+	add_component(/datum/component/connect_loc_behalf, parent, disease_connections)
 
 	register_signal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean)
 	register_signal(parent, COMSIG_MOVABLE_BUCKLE, .proc/try_infect_buckle)

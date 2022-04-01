@@ -16,7 +16,7 @@
 
 /obj/machinery/plumbing/filter/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/filter, bolt, layer)
+	add_component(/datum/component/plumbing/filter, bolt, layer)
 
 /obj/machinery/plumbing/filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -33,7 +33,7 @@
 
 	pipename = initial(pipe_type.name)
 
-	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
+	add_component(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, .proc/AfterRotation))
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 	if(flip)

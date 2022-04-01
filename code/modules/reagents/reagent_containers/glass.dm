@@ -46,7 +46,7 @@
 					if(malady.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
 						diseases_to_add += malady
 				if(LAZYLEN(diseases_to_add))
-					AddComponent(/datum/component/infective, diseases_to_add)
+					add_component(/datum/component/infective, diseases_to_add)
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/living/user, proximity)
 	. = ..()

@@ -68,7 +68,7 @@
 	var/maximum_players = 0
 	/// Calculated during acceptable(), used in scaling and team sizes.
 	var/indice_pop = 0
-	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._SendSignal(sigtype, list/arguments)
+	/// Base probability used in scaling. The higher it is, the more likely to scale. Kept as a var to allow for config editing._send_signal(sigtype, list/arguments)
 	var/base_prob = 60
 	/// Delay for when execute will get called from the time of post_setup (roundstart) or process (midround/latejoin).
 	/// Make sure your ruleset works with execute being called during the game when using this, and that the clean_up proc reverts it properly in case of faliure.

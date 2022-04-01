@@ -84,7 +84,7 @@
 			make_tameable()
 
 /mob/living/simple_animal/hostile/carp/proc/make_tameable()
-	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
+	add_component(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE

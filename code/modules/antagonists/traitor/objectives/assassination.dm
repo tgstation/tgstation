@@ -88,7 +88,7 @@
 			user.put_in_hands(card)
 			card.balloon_alert(user, "the card materializes in your hand")
 			register_signal(card, COMSIG_ITEM_EQUIPPED, .proc/on_card_planted)
-			AddComponent(/datum/component/traitor_objective_register, card, \
+			add_component(/datum/component/traitor_objective_register, card, \
 				succeed_signals = null, \
 				fail_signals = COMSIG_PARENT_QDELETING, \
 				penalty = TRUE)
@@ -131,7 +131,7 @@
 	. = ..()
 	if(!.) //didn't generate
 		return FALSE
-	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = COMSIG_PARENT_QDELETING)
+	add_component(/datum/component/traitor_objective_register, behead_goal, fail_signals = COMSIG_PARENT_QDELETING)
 	register_signal(kill_target, COMSIG_CARBON_REMOVE_LIMB, .proc/on_target_dismembered)
 
 /datum/traitor_objective/assassinate/behead/ungenerate_objective()
@@ -163,7 +163,7 @@
 
 /datum/traitor_objective/assassinate/New(datum/uplink_handler/handler)
 	. = ..()
-	AddComponent(/datum/component/traitor_objective_limit_per_time, \
+	add_component(/datum/component/traitor_objective_limit_per_time, \
 		/datum/traitor_objective/assassinate, \
 		time_period = objective_period, \
 		maximum_objectives = maximum_objectives_in_period \

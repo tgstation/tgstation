@@ -68,7 +68,7 @@
 
 ///This proc adds the edible component, overwrite this if you for some reason want to change some specific args like callbacks.
 /obj/item/food/proc/MakeEdible()
-	AddComponent(/datum/component/edible,\
+	add_component(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
 				foodtypes = foodtypes,\
@@ -88,13 +88,13 @@
 ///This proc handles grillable components, overwrite if you want different grill results etc.
 /obj/item/food/proc/MakeGrillable()
 	if(burns_on_grill)
-		AddComponent(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
+		add_component(/datum/component/grillable, /obj/item/food/badrecipe, rand(20 SECONDS, 30 SECONDS), FALSE)
 	return
 
 ///This proc handles bakeable components, overwrite if you want different bake results etc.
 /obj/item/food/proc/MakeBakeable()
 	if(burns_in_oven)
-		AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
+		add_component(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
 	return
 
 
@@ -108,4 +108,4 @@
 ///Set decomp_req_handle to TRUE to only make it decompose when someone picks it up.
 /obj/item/food/proc/MakeDecompose(mapload)
 	if(!preserved_food)
-		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)
+		add_component(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time)

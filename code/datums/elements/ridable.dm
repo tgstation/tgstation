@@ -69,7 +69,7 @@
 			span_warning("You can't get a grip on [potential_rider] because your hands are full!"))
 		return COMPONENT_BLOCK_BUCKLE
 
-	target_living.AddComponent(riding_component_type, potential_rider, force, ride_check_flags, potion_boost = potion_boosted)
+	target_living.add_component(riding_component_type, potential_rider, force, ride_check_flags, potion_boost = potion_boosted)
 
 /// Try putting the appropriate number of [riding offhand items][/obj/item/riding_offhand] into the target's hands, return FALSE if we can't
 /datum/element/ridable/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, atom/movable/target_movable, riding_target_override = null)

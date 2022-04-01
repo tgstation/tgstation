@@ -14,7 +14,7 @@
 
 /obj/structure/bot/Initialize(mapload)
 	. = ..()
-	AddComponent( \
+	add_component( \
 		/datum/component/shell, \
 		unremovable_circuit_components = list(new /obj/item/circuit_component/bot), \
 		capacity = SHELL_CAPACITY_LARGE, \

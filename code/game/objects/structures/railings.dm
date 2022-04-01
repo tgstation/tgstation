@@ -32,7 +32,7 @@
 		)
 		AddElement(/datum/element/connect_loc, loc_connections)
 
-	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+	add_component(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
 	..()

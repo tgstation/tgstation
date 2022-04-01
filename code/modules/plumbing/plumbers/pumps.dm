@@ -21,7 +21,7 @@
 
 /obj/machinery/plumbing/liquid_pump/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	add_component(/datum/component/plumbing/simple_supply, bolt, layer)
 
 ///please note that the component has a hook in the parent call, wich handles activating and deactivating
 /obj/machinery/plumbing/liquid_pump/default_unfasten_wrench(mob/user, obj/item/I, time = 20)

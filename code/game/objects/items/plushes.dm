@@ -37,7 +37,7 @@
 
 /obj/item/toy/plush/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/squeak, squeak_override)
+	add_component(/datum/component/squeak, squeak_override)
 	AddElement(/datum/element/bed_tuckable, 6, -5, 90)
 
 	//have we decided if Pinocchio goes in the blue or pink aisle yet?
@@ -581,7 +581,7 @@
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/edit_complainer)
+	add_component(/datum/component/edit_complainer)
 
 /obj/item/toy/plush/beeplushie
 	name = "bee plushie"

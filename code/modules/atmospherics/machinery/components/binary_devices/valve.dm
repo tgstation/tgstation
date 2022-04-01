@@ -84,7 +84,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 
 /obj/machinery/atmospherics/components/binary/valve/digital/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/digital_valve))
+	add_component(/datum/component/usb_port, list(/obj/item/circuit_component/digital_valve))
 
 /obj/item/circuit_component/digital_valve
 	display_name = "Digital Valve"

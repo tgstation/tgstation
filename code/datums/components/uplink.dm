@@ -103,7 +103,7 @@
 /datum/component/uplink/proc/set_telecrystals(new_telecrystal_amount)
 	uplink_handler.telecrystals = new_telecrystal_amount
 
-/datum/component/uplink/InheritComponent(datum/component/uplink/uplink)
+/datum/component/uplink/inherit_component(datum/component/uplink/uplink)
 	lockable |= uplink.lockable
 	active |= uplink.active
 	uplink_handler.uplink_flag |= uplink.uplink_handler.uplink_flag

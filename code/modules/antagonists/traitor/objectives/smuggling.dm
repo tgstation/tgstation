@@ -55,13 +55,13 @@
 			user.put_in_hands(contraband)
 			user.balloon_alert(user, "[contraband] materializes in your hand")
 			register_signal(contraband, COMSIG_ITEM_PICKUP, .proc/on_contraband_pickup)
-			AddComponent(/datum/component/traitor_objective_register, contraband, \
+			add_component(/datum/component/traitor_objective_register, contraband, \
 				succeed_signals = COMSIG_ITEM_EXPORTED, \
 				fail_signals = list(COMSIG_PARENT_QDELETING), \
 				penalty = telecrystal_penalty \
 			)
 			if(contraband.reagents)
-				AddComponent(/datum/component/traitor_objective_register, contraband.reagents, \
+				add_component(/datum/component/traitor_objective_register, contraband.reagents, \
 					fail_signals = list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), \
 					penalty = telecrystal_penalty)
 

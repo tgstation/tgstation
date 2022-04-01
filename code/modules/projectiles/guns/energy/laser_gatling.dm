@@ -119,7 +119,7 @@
 		return INITIALIZE_HINT_QDEL //No pack, no gun
 	ammo_pack = loc
 	AddElement(/datum/element/update_icon_blocker)
-	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
+	add_component(/datum/component/automatic_fire, 0.2 SECONDS)
 	return ..()
 
 /obj/item/gun/energy/minigun/Destroy()

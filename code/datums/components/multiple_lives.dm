@@ -40,7 +40,7 @@
 	lives_left--
 	if(lives_left <= 0)
 		qdel(src)
-	source.TransferComponents(respawned_mob)
+	source.add_component(respawned_mob)
 	SEND_SIGNAL(source, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, respawned_mob, gibbed, lives_left)
 
 /datum/component/multiple_lives/proc/on_examine(mob/living/source, mob/user, list/examine_list)
@@ -48,9 +48,9 @@
 	if(isobserver(user) || source == user)
 		examine_list += "[source.p_theyve(TRUE)] [lives_left] extra lives left."
 
-/datum/component/multiple_lives/InheritComponent(datum/component/multiple_lives/new_comp , lives_left)
+/datum/component/multiple_lives/inherit_component(datum/component/multiple_lives/new_comp , lives_left)
 	src.lives_left += new_comp ? new_comp.lives_left : lives_left
 
-/datum/component/multiple_lives/PostTransfer()
+/datum/component/multiple_lives/post_transfer()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE

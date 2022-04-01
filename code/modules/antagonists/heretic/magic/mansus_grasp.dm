@@ -19,7 +19,7 @@
 
 /obj/item/melee/touch_attack/mansus_fist/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/effect_remover, \
+	add_component(/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \
 		tip_text = "Clear rune", \
 		on_clear_callback = CALLBACK(src, .proc/after_clear_rune), \

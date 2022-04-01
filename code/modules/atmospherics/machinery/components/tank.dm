@@ -77,7 +77,7 @@
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/atmospherics/components/tank)
 
-	AddComponent(/datum/component/gas_leaker, leak_rate = 0.05)
+	add_component(/datum/component/gas_leaker, leak_rate = 0.05)
 	AddElement(/datum/element/volatile_gas_storage)
 	AddElement(/datum/element/crackable, 'icons/obj/atmospherics/stationary_canisters.dmi', crack_states)
 

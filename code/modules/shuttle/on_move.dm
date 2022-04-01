@@ -71,7 +71,7 @@ All ShuttleMove procs go here
 // Called on the new turf after everything has been moved
 /turf/proc/afterShuttleMove(turf/oldT, rotation)
 	//Dealing with the turf we left behind
-	oldT.TransferComponents(src)
+	oldT.add_component(src)
 
 	SSexplosions.wipe_turf(src)
 	var/shuttle_boundary = baseturfs.Find(/turf/baseturf_skipover/shuttle)

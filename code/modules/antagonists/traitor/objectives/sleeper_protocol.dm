@@ -36,7 +36,7 @@
 				return
 			disk = new(user.drop_location())
 			user.put_in_hands(disk)
-			AddComponent(/datum/component/traitor_objective_register, disk, \
+			add_component(/datum/component/traitor_objective_register, disk, \
 				fail_signals = COMSIG_PARENT_QDELETING)
 
 /datum/traitor_objective/sleeper_protocol/proc/on_surgery_success(datum/source, datum/surgery_step/step, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
@@ -48,7 +48,7 @@
 	var/datum/job/job = generating_for.assigned_role
 	if(!(job.title in limited_to))
 		return FALSE
-	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
+	add_component(/datum/component/traitor_objective_mind_tracker, generating_for, \
 		signals = list(COMSIG_MOB_SURGERY_STEP_SUCCESS = .proc/on_surgery_success))
 	return TRUE
 

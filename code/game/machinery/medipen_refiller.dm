@@ -21,7 +21,7 @@
 	create_reagents(100, TRANSPARENT)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += 100 * B.rating
-	AddComponent(/datum/component/plumbing/simple_demand)
+	add_component(/datum/component/plumbing/simple_demand)
 
 
 /obj/machinery/medipen_refiller/RefreshParts()

@@ -6,7 +6,7 @@
 	var/list/blood_DNA //assoc dna = bloodtype
 	var/list/fibers //assoc print = print
 
-/datum/component/forensics/InheritComponent(datum/component/forensics/F, original) //Use of | and |= being different here is INTENTIONAL.
+/datum/component/forensics/inherit_component(datum/component/forensics/F, original) //Use of | and |= being different here is INTENTIONAL.
 	fingerprints = LAZY_LISTS_OR(fingerprints, F.fingerprints)
 	hiddenprints = LAZY_LISTS_OR(hiddenprints, F.hiddenprints)
 	blood_DNA = LAZY_LISTS_OR(blood_DNA, F.blood_DNA)
@@ -30,7 +30,7 @@
 /datum/component/forensics/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_COMPONENT_CLEAN_ACT))
 
-/datum/component/forensics/PostTransfer()
+/datum/component/forensics/post_transfer()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 

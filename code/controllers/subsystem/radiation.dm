@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(radiation)
 			continue
 
 		if (pulse_information.minimum_exposure_time && !(irradiation_result & SKIP_MINIMUM_EXPOSURE_TIME_CHECK))
-			target.AddComponent(/datum/component/radiation_countdown, pulse_information.minimum_exposure_time)
+			target.add_component(/datum/component/radiation_countdown, pulse_information.minimum_exposure_time)
 			continue
 
 		if (!prob(pulse_information.chance))
@@ -85,7 +85,7 @@ SUBSYSTEM_DEF(radiation)
 	if (ishuman(target) && wearing_rad_protected_clothing(target))
 		return FALSE
 
-	target.AddComponent(/datum/component/irradiated)
+	target.add_component(/datum/component/irradiated)
 	return TRUE
 
 /// Returns whether or not the target can be irradiated by any means.
