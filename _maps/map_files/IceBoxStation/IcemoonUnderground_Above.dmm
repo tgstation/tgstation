@@ -465,7 +465,7 @@
 /area/hallway/primary/central/fore)
 "bC" = (
 /obj/machinery/button/door/directional/east{
-	name = "Privacy Shutters"s;
+	name = "Privacy Shutters";
 	id = "kanyewest"
 	},
 /obj/structure/chair/office{
