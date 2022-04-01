@@ -17,11 +17,11 @@
 	x_offset = x
 	y_offset = y
 	rotation_degree = rotation
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_OBJ, .proc/tuck_into_bed)
+	register_signal(target, COMSIG_ITEM_ATTACK_OBJ, .proc/tuck_into_bed)
 
 /datum/element/bed_tuckable/Detach(obj/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_PICKUP))
+	unregister_signal(target, list(COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_PICKUP))
 
 /**
  * Tuck our object into bed.
@@ -44,7 +44,7 @@
 	tucked.pixel_y = y_offset
 	if(rotation_degree)
 		tucked.transform = turn(tucked.transform, rotation_degree)
-		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, .proc/untuck)
+		register_signal(tucked, COMSIG_ITEM_PICKUP, .proc/untuck)
 
 	return COMPONENT_NO_AFTERATTACK
 
@@ -57,4 +57,4 @@
 	SIGNAL_HANDLER
 
 	tucked.transform = turn(tucked.transform, -rotation_degree)
-	UnregisterSignal(tucked, COMSIG_ITEM_PICKUP)
+	unregister_signal(tucked, COMSIG_ITEM_PICKUP)

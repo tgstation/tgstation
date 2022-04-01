@@ -26,8 +26,8 @@ handles linking back and forth.
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/OnMultitool)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+	register_signal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/OnMultitool)
 
 	var/turf/T = get_turf(parent)
 	if (force_connect || (mapload && is_station_level(T.z)))

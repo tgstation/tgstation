@@ -30,14 +30,14 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/spill/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/equip_react)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/drop_react)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/equip_react)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/drop_react)
 	var/obj/item/master = parent
 	preexisting_slot_flags = master.slot_flags
 	master.slot_flags |= ITEM_SLOT_POCKETS
 
 /datum/component/spill/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	var/obj/item/master = parent
 	if(!(preexisting_slot_flags & ITEM_SLOT_POCKETS))
 		master.slot_flags &= ~ITEM_SLOT_POCKETS
@@ -46,14 +46,14 @@
 	SIGNAL_HANDLER
 
 	if(slot == ITEM_SLOT_LPOCKET || slot == ITEM_SLOT_RPOCKET)
-		RegisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/knockdown_react, TRUE)
+		register_signal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/knockdown_react, TRUE)
 	else
-		UnregisterSignal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN)
+		unregister_signal(equipper, COMSIG_LIVING_STATUS_KNOCKDOWN)
 
 /datum/component/spill/proc/drop_react(obj/item/source, mob/dropper)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(dropper, COMSIG_LIVING_STATUS_KNOCKDOWN)
+	unregister_signal(dropper, COMSIG_LIVING_STATUS_KNOCKDOWN)
 
 /datum/component/spill/proc/knockdown_react(mob/living/fool, amount)
 	SIGNAL_HANDLER

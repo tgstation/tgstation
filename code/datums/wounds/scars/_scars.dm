@@ -48,7 +48,7 @@
  */
 /datum/scar/proc/generate(obj/item/bodypart/BP, datum/wound/W, add_to_scars=TRUE)
 	limb = BP
-	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+	register_signal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
 
 	severity = W.severity
 	if(limb.owner)
@@ -92,7 +92,7 @@
 		return
 
 	limb = BP
-	RegisterSignal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
+	register_signal(limb, COMSIG_PARENT_QDELETING, .proc/limb_gone)
 	if(limb.owner)
 		victim = limb.owner
 		if(victim.get_biological_state() != biology)

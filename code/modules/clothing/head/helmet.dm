@@ -461,14 +461,14 @@
 	magnification = user //this polls ghosts
 	visible_message(span_warning("[src] powers up!"))
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	RegisterSignal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
+	register_signal(magnification, COMSIG_SPECIES_LOSS, .proc/make_fall_off)
 	polling = TRUE
 	var/list/candidates = poll_candidates_for_mob("Do you want to play as a mind magnified monkey?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, magnification, POLL_IGNORE_SENTIENCE_POTION)
 	polling = FALSE
 	if(!magnification)
 		return
 	if(!candidates.len)
-		UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
+		unregister_signal(magnification, COMSIG_SPECIES_LOSS)
 		magnification = null
 		visible_message(span_notice("[src] falls silent and drops on the floor. Maybe you should try again later?"))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
@@ -505,7 +505,7 @@
 				if(4) //genetic mass susceptibility (gib)
 					magnification.gib()
 	//either used up correctly or taken off before polling finished (punish this by destroying the helmet)
-	UnregisterSignal(magnification, COMSIG_SPECIES_LOSS)
+	unregister_signal(magnification, COMSIG_SPECIES_LOSS)
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("[src] fizzles and breaks apart!"))

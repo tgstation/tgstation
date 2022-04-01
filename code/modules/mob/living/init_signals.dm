@@ -1,36 +1,36 @@
 /// Called on [/mob/living/Initialize(mapload)], for the mob to register to relevant signals.
 /mob/living/proc/register_init_signals()
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), .proc/on_immobilized_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED), .proc/on_immobilized_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), .proc/on_immobilized_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_IMMOBILIZED), .proc/on_immobilized_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FLOORED), .proc/on_floored_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FLOORED), .proc/on_floored_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_FLOORED), .proc/on_floored_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_FLOORED), .proc/on_floored_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_FORCED_STANDING), .proc/on_forced_standing_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_FORCED_STANDING), .proc/on_forced_standing_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_FORCED_STANDING), .proc/on_forced_standing_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_FORCED_STANDING), .proc/on_forced_standing_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), .proc/on_handsblocked_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_HANDS_BLOCKED), .proc/on_handsblocked_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), .proc/on_handsblocked_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_HANDS_BLOCKED), .proc/on_handsblocked_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UI_BLOCKED), .proc/on_ui_blocked_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_UI_BLOCKED), .proc/on_ui_blocked_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_UI_BLOCKED), .proc/on_ui_blocked_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_UI_BLOCKED), .proc/on_ui_blocked_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_PULL_BLOCKED), .proc/on_pull_blocked_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PULL_BLOCKED), .proc/on_pull_blocked_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_PULL_BLOCKED), .proc/on_pull_blocked_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_PULL_BLOCKED), .proc/on_pull_blocked_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), .proc/on_incapacitated_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED), .proc/on_incapacitated_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED), .proc/on_incapacitated_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_INCAPACITATED), .proc/on_incapacitated_trait_loss)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), .proc/on_restrained_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED), .proc/on_restrained_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_RESTRAINED), .proc/on_restrained_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_RESTRAINED), .proc/on_restrained_trait_loss)
 
-	RegisterSignal(src, list(
+	register_signal(src, list(
 		SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION),
 		SIGNAL_REMOVETRAIT(TRAIT_CRITICAL_CONDITION),
 
@@ -38,11 +38,11 @@
 		SIGNAL_REMOVETRAIT(TRAIT_NODEATH),
 	), .proc/update_succumb_action)
 
-	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_ENABLED, .proc/on_movement_type_flag_enabled)
-	RegisterSignal(src, COMSIG_MOVETYPE_FLAG_DISABLED, .proc/on_movement_type_flag_disabled)
+	register_signal(src, COMSIG_MOVETYPE_FLAG_ENABLED, .proc/on_movement_type_flag_enabled)
+	register_signal(src, COMSIG_MOVETYPE_FLAG_DISABLED, .proc/on_movement_type_flag_disabled)
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_gain)
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_loss)
+	register_signal(src, SIGNAL_ADDTRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_gain)
+	register_signal(src, SIGNAL_REMOVETRAIT(TRAIT_SKITTISH), .proc/on_skittish_trait_loss)
 
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)

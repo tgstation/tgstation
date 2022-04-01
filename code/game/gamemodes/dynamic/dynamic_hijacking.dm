@@ -1,5 +1,5 @@
 /datum/game_mode/dynamic/proc/setup_hijacking()
-	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_RANDOM_EVENT, .proc/on_pre_random_event)
+	register_signal(SSdcs, COMSIG_GLOB_PRE_RANDOM_EVENT, .proc/on_pre_random_event)
 
 /datum/game_mode/dynamic/proc/on_pre_random_event(datum/source, datum/round_event_control/round_event_control)
 	SIGNAL_HANDLER

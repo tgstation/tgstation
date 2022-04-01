@@ -27,11 +27,11 @@
 		src.cold_damage = cold_damage
 	if(heat_damage)
 		src.heat_damage = heat_damage
-	RegisterSignal(target, COMSIG_LIVING_LIFE, .proc/on_life)
+	register_signal(target, COMSIG_LIVING_LIFE, .proc/on_life)
 
 /datum/element/basic_body_temp_sensitive/Detach(datum/source)
 	if(source)
-		UnregisterSignal(source, COMSIG_LIVING_LIFE)
+		unregister_signal(source, COMSIG_LIVING_LIFE)
 	return ..()
 
 

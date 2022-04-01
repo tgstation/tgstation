@@ -30,7 +30,7 @@
 	if(_butcher_callback)
 		butcher_callback = _butcher_callback
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
+		register_signal(parent, COMSIG_ITEM_ATTACK, .proc/onItemAttack)
 
 /datum/component/butchering/proc/onItemAttack(obj/item/source, mob/living/M, mob/living/user)
 	SIGNAL_HANDLER

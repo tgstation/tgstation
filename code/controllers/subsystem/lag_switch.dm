@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(lag_switch)
 	if(auto_switch_pop)
 		auto_switch = TRUE
 		trigger_pop = auto_switch_pop
-		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
+		register_signal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
 	return ..()
 
 /datum/controller/subsystem/lag_switch/proc/client_connected(datum/source, client/connected)
@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(lag_switch)
 		return
 
 	auto_switch = FALSE
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
+	unregister_signal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
 	veto_timer_id = addtimer(CALLBACK(src, .proc/set_all_measures, TRUE, TRUE), 20 SECONDS, TIMER_STOPPABLE)
 	message_admins("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds. (<a href='?_src_=holder;[HrefToken()];change_lag_switch_option=CANCEL'>CANCEL</a>)")
 	log_admin("Lag Switch population threshold reached. Automatic activation of lag mitigation measures occuring in 20 seconds.")
@@ -41,9 +41,9 @@ SUBSYSTEM_DEF(lag_switch)
 /datum/controller/subsystem/lag_switch/proc/toggle_auto_enable()
 	auto_switch = !auto_switch
 	if(auto_switch)
-		RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
+		register_signal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, .proc/client_connected)
 	else
-		UnregisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
+		unregister_signal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT)
 
 /// Called from an admin chat link
 /datum/controller/subsystem/lag_switch/proc/cancel_auto_enable_in_progress()

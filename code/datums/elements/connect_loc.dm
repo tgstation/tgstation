@@ -14,13 +14,13 @@
 
 	src.connections = connections
 
-	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
+	register_signal(listener, COMSIG_MOVABLE_MOVED, .proc/on_moved, override = TRUE)
 	update_signals(listener)
 
 /datum/element/connect_loc/Detach(atom/movable/listener)
 	. = ..()
 	unregister_signals(listener, listener.loc)
-	UnregisterSignal(listener, COMSIG_MOVABLE_MOVED)
+	unregister_signal(listener, COMSIG_MOVABLE_MOVED)
 
 /datum/element/connect_loc/proc/update_signals(atom/movable/listener)
 	var/atom/listener_loc = listener.loc
@@ -29,13 +29,13 @@
 
 	for (var/signal in connections)
 		//override=TRUE because more than one connect_loc element instance tracked object can be on the same loc
-		listener.RegisterSignal(listener_loc, signal, connections[signal], override=TRUE)
+		listener.register_signal(listener_loc, signal, connections[signal], override=TRUE)
 
 /datum/element/connect_loc/proc/unregister_signals(datum/listener, atom/old_loc)
 	if(isnull(old_loc))
 		return
 
-	listener.UnregisterSignal(old_loc, connections)
+	listener.unregister_signal(old_loc, connections)
 
 /datum/element/connect_loc/proc/on_moved(atom/movable/listener, atom/old_loc)
 	SIGNAL_HANDLER

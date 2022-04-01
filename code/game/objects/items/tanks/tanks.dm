@@ -89,9 +89,9 @@
 
 	AddComponent(/datum/component/atmos_reaction_recorder, reset_criteria = list(COMSIG_GASMIX_MERGING = air_contents, COMSIG_GASMIX_REMOVING = air_contents), target_list = reaction_info)
 
-	// This is separate from the reaction recorder. 
+	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
-	RegisterSignal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
+	register_signal(air_contents, COMSIG_GASMIX_MERGED, .proc/merging_information)
 
 	START_PROCESSING(SSobj, src)
 
@@ -104,7 +104,7 @@
 		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/Destroy()
-	UnregisterSignal(air_contents, COMSIG_GASMIX_MERGED)
+	unregister_signal(air_contents, COMSIG_GASMIX_MERGED)
 	air_contents = null
 	STOP_PROCESSING(SSobj, src)
 	return ..()

@@ -331,9 +331,9 @@
 /datum/objective/sacrifice/proc/clear_sacrifice()
 	if(!target)
 		return
-	UnregisterSignal(target, COMSIG_MIND_TRANSFERRED)
+	unregister_signal(target, COMSIG_MIND_TRANSFERRED)
 	if(target.current)
-		UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+		unregister_signal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	target = null
 
 /datum/objective/sacrifice/find_target(dupe_search_range)
@@ -356,9 +356,9 @@
 		update_explanation_text()
 		// Register a bunch of signals to both the target mind and its body
 		// to stop cult from softlocking everytime the target is deleted before being actually sacrificed.
-		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_mind_transfer)
-		RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-		RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+		register_signal(target, COMSIG_MIND_TRANSFERRED, .proc/on_mind_transfer)
+		register_signal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+		register_signal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
 	else
 		message_admins("Cult Sacrifice: Could not find unconvertible or convertible target. WELP!")
 		sacced = TRUE // Prevents another hypothetical softlock. This basically means every PC is a cultist.
@@ -379,13 +379,13 @@
 	if(!isliving(target.current))
 		INVOKE_ASYNC(src, .proc/find_target)
 		return
-	UnregisterSignal(previous_body, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
-	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+	unregister_signal(previous_body, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	register_signal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+	register_signal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
 
 /datum/objective/sacrifice/proc/on_possible_mindswap(mob/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
+	unregister_signal(target.current, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_MIND_TRANSFERRED_INTO))
 	//we check if the mind is bodyless only after mindswap shenanigeans to avoid issues.
 	addtimer(CALLBACK(src, .proc/do_we_have_a_body), 0 SECONDS)
 
@@ -393,8 +393,8 @@
 	if(!target.current) //The player was ghosted and the mind isn't probably going to be transferred to another mob at this point.
 		find_target()
 		return
-	RegisterSignal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
-	RegisterSignal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
+	register_signal(target.current, COMSIG_PARENT_QDELETING, .proc/on_target_body_del)
+	register_signal(target.current, COMSIG_MOB_MIND_TRANSFERRED_INTO, .proc/on_possible_mindswap)
 
 /datum/objective/sacrifice/check_completion()
 	return sacced || completed

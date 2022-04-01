@@ -13,18 +13,18 @@
 
 /obj/item/clothing/shoes/gunboots/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_step)
+	register_signal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_step)
 
 /obj/item/clothing/shoes/gunboots/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_FEET)
-		RegisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/check_kick)
+		register_signal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/check_kick)
 	else
-		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+		unregister_signal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 
 /obj/item/clothing/shoes/gunboots/dropped(mob/user)
 	if(user)
-		UnregisterSignal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+		unregister_signal(user, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 	return ..()
 
 /// After each step, check if we randomly fire a shot

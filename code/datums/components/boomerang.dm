@@ -24,12 +24,12 @@
 		src.thrower_easy_catch_enabled = thrower_easy_catch_enabled
 
 /datum/component/boomerang/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/prepare_throw) //Collect data on current thrower and the throwing datum
-	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, .proc/return_missed_throw)
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/return_hit_throw)
+	register_signal(parent, COMSIG_MOVABLE_POST_THROW, .proc/prepare_throw) //Collect data on current thrower and the throwing datum
+	register_signal(parent, COMSIG_MOVABLE_THROW_LANDED, .proc/return_missed_throw)
+	register_signal(parent, COMSIG_MOVABLE_IMPACT, .proc/return_hit_throw)
 
 /datum/component/boomerang/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT))
+	unregister_signal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED, COMSIG_MOVABLE_IMPACT))
 
 /**
  * Proc'd before the first thrown is performed in order to gather information regarding each throw as well as handle throw_mode as necessary.

@@ -203,16 +203,16 @@
 	return TRUE
 
 /obj/structure/holopay/proc/track(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+	register_signal(thing, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
 	for(var/atom/movable/location in locations)
-		RegisterSignal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+		register_signal(location, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 
 /obj/structure/holopay/proc/untrack(atom/movable/thing)
-	UnregisterSignal(thing, COMSIG_MOVABLE_MOVED)
+	unregister_signal(thing, COMSIG_MOVABLE_MOVED)
 	var/list/locations = get_nested_locs(thing, include_turf = FALSE)
 	for(var/atom/movable/location in locations)
-		UnregisterSignal(location, COMSIG_MOVABLE_MOVED)
+		unregister_signal(location, COMSIG_MOVABLE_MOVED)
 
 /**
  * A periodic check to see if the projecting card is nearby.

@@ -26,12 +26,12 @@
 
 	src.slots_to_check = slots_to_check || target_item.slot_flags
 
-	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_dropped)
-	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+	register_signal(target, COMSIG_ITEM_DROPPED, .proc/on_dropped)
+	register_signal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
 
 /datum/element/chewable/Detach(datum/source, force)
 	processing -= source
-	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED))
+	unregister_signal(source, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED))
 
 /datum/element/chewable/process(delta_time)
 	if (processing.len == 0)

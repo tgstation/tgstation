@@ -220,13 +220,13 @@
 /obj/item/organ/external/antennae/Insert(mob/living/carbon/reciever, special, drop_if_replaced)
 	. = ..()
 
-	RegisterSignal(reciever, COMSIG_HUMAN_BURNING, .proc/try_burn_antennae)
-	RegisterSignal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_antennae)
+	register_signal(reciever, COMSIG_HUMAN_BURNING, .proc/try_burn_antennae)
+	register_signal(reciever, COMSIG_LIVING_POST_FULLY_HEAL, .proc/heal_antennae)
 
 /obj/item/organ/external/antennae/Remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
+	unregister_signal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
 /obj/item/organ/external/antennae/get_global_feature_list()
 	return GLOB.moth_antennae_list

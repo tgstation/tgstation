@@ -29,7 +29,7 @@
 /datum/computer_file/program/scipaper_program/proc/recheck_file_presence()
 	if(selected_file in holder.stored_files)
 		return FALSE
-	UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+	unregister_signal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 	selected_file = null
 	paper_to_be.set_experiment()
 
@@ -178,12 +178,12 @@
 			return TRUE
 		if("select_file") // Selecting new file will necessitate a change in paper type. This will be done on select_experiment and not here.
 			if(selected_file)
-				UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+				unregister_signal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 			paper_to_be.set_experiment() // Clears the paper info.
 			for(var/datum/computer_file/data/ordnance/ordnance_data in holder.stored_files)
 				if(ordnance_data.uid == params["selected_uid"])
 					selected_file = ordnance_data
-					RegisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED, .proc/recheck_file_presence)
+					register_signal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED, .proc/recheck_file_presence)
 					return TRUE
 		if("select_experiment")
 			var/ex_path = text2path(params["selected_expath"])
@@ -218,7 +218,7 @@
 	if(linked_techweb.add_scientific_paper(paper_to_be))
 		computer.say("\"[paper_to_be.title]\" has been published!")
 		paper_to_be = new
-		UnregisterSignal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
+		unregister_signal(selected_file, COMSIG_MODULAR_COMPUTER_FILE_DELETED)
 		selected_file = null
 		SStgui.update_uis(src)
 		playsound(computer, 'sound/machines/ping.ogg', 25)

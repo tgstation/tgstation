@@ -65,7 +65,7 @@
 	//We are now playing this cinematic
 
 	//Handle what happens when a different cinematic tries to play over us
-	RegisterSignal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, .proc/replacement_cinematic)
+	register_signal(SSdcs, COMSIG_GLOB_PLAY_CINEMATIC, .proc/replacement_cinematic)
 
 	//Pause OOC
 	var/ooc_toggled = FALSE
@@ -77,7 +77,7 @@
 	for(var/MM in watchers)
 		var/mob/M = MM
 		show_to(M, M.client)
-		RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
+		register_signal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
 		//Close watcher ui's
 		SStgui.close_user_uis(M)
 

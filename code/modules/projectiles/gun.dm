@@ -732,10 +732,10 @@
 		zoomed = forced_zoom
 
 	if(zoomed)
-		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+		register_signal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
 		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direc)
 	else
-		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
+		unregister_signal(user, COMSIG_ATOM_DIR_CHANGE)
 		user.client.view_size.zoomIn()
 	return zoomed
 

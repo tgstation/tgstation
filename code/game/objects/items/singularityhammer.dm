@@ -22,8 +22,8 @@
 
 /obj/item/singularityhammer/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddElement(/datum/element/kneejerk)
 
 /obj/item/singularityhammer/ComponentInitialize()
@@ -99,8 +99,8 @@
 
 /obj/item/mjollnir/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()

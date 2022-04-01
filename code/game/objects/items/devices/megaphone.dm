@@ -20,13 +20,13 @@
 /obj/item/megaphone/equipped(mob/M, slot)
 	. = ..()
 	if (slot == ITEM_SLOT_HANDS && !HAS_TRAIT(M, TRAIT_SIGN_LANG))
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+		register_signal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
-		UnregisterSignal(M, COMSIG_MOB_SAY)
+		unregister_signal(M, COMSIG_MOB_SAY)
 
 /obj/item/megaphone/dropped(mob/M)
 	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	unregister_signal(M, COMSIG_MOB_SAY)
 
 /obj/item/megaphone/proc/handle_speech(mob/living/carbon/user, list/speech_args)
 	SIGNAL_HANDLER

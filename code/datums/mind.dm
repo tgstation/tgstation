@@ -125,10 +125,10 @@
 	if(new_current && QDELETED(new_current))
 		CRASH("Tried to set a mind's current var to a qdeleted mob, what the fuck")
 	if(current)
-		UnregisterSignal(src, COMSIG_PARENT_QDELETING)
+		unregister_signal(src, COMSIG_PARENT_QDELETING)
 	current = new_current
 	if(current)
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
+		register_signal(src, COMSIG_PARENT_QDELETING, .proc/clear_current)
 
 /datum/mind/proc/clear_current(datum/source)
 	SIGNAL_HANDLER
@@ -143,7 +143,7 @@
 	set_original_character(null)
 	if(current) // remove ourself from our old body's mind variable
 		current.mind = null
-		UnregisterSignal(current, COMSIG_LIVING_DEATH)
+		unregister_signal(current, COMSIG_LIVING_DEATH)
 		SStgui.on_transfer(current, new_character)
 
 	if(key)
@@ -170,7 +170,7 @@
 		C.last_mind = src
 	transfer_actions(new_character)
 	transfer_martial_arts(new_character)
-	RegisterSignal(new_character, COMSIG_LIVING_DEATH, .proc/set_death_time)
+	register_signal(new_character, COMSIG_LIVING_DEATH, .proc/set_death_time)
 	if(active || force_key_move)
 		new_character.key = key //now transfer the key to link the client to our new body
 	if(new_character.client)

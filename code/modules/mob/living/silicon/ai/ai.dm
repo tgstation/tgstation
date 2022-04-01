@@ -187,8 +187,8 @@
 	ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, ROUNDSTART_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	register_signal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	register_signal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
 
 /mob/living/silicon/ai/key_down(_key, client/user)
 	if(findtext(_key, "numpad")) //if it's a numpad number, we can convert it to just the number
@@ -956,7 +956,7 @@
 		return
 
 	else if(mind)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/disconnect_shell)
+		register_signal(target, COMSIG_LIVING_DEATH, .proc/disconnect_shell)
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
@@ -995,7 +995,7 @@
 	if(deployed_shell) //Forcibly call back AI in event of things such as damage, EMP or power loss.
 		to_chat(src, span_danger("Your remote connection has been reset!"))
 		deployed_shell.undeploy()
-		UnregisterSignal(deployed_shell, COMSIG_LIVING_DEATH)
+		unregister_signal(deployed_shell, COMSIG_LIVING_DEATH)
 	diag_hud_set_deployed()
 
 /mob/living/silicon/ai/resist()

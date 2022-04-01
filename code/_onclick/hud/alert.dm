@@ -351,7 +351,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	. = ..()
 	name = "[offerer] is offering a high-five!"
 	desc = "[offerer] is offering a high-five! Click this alert to slap it."
-	RegisterSignal(offerer, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
+	register_signal(offerer, COMSIG_PARENT_EXAMINE_MORE, .proc/check_fake_out)
 
 /atom/movable/screen/alert/give/highfive/handle_transfer()
 	var/mob/living/carbon/taker = owner

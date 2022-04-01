@@ -17,8 +17,8 @@
 	wires = new /datum/wires/robot(src)
 	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
-	RegisterSignal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
-	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+	register_signal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
+	register_signal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -81,10 +81,10 @@
 	logevent("System brought online.")
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
-	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
-	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
+	register_signal(alert_control.listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	register_signal(alert_control.listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	alert_control.listener.register_signal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	alert_control.listener.register_signal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
 /mob/living/silicon/robot/model/syndicate/Initialize(mapload)
 	. = ..()
@@ -783,8 +783,8 @@
 		return FALSE
 	upgrades += new_upgrade
 	new_upgrade.forceMove(src)
-	RegisterSignal(new_upgrade, COMSIG_MOVABLE_MOVED, .proc/remove_from_upgrades)
-	RegisterSignal(new_upgrade, COMSIG_PARENT_QDELETING, .proc/on_upgrade_deleted)
+	register_signal(new_upgrade, COMSIG_MOVABLE_MOVED, .proc/remove_from_upgrades)
+	register_signal(new_upgrade, COMSIG_PARENT_QDELETING, .proc/on_upgrade_deleted)
 	logevent("Hardware [new_upgrade] installed successfully.")
 
 ///Called when an upgrade is moved outside the robot. So don't call this directly, use forceMove etc.
@@ -794,7 +794,7 @@
 		return
 	old_upgrade.deactivate(src)
 	upgrades -= old_upgrade
-	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	unregister_signal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
 ///Called when an applied upgrade is deleted.
 /mob/living/silicon/robot/proc/on_upgrade_deleted(obj/item/borg/upgrade/old_upgrade)
@@ -802,7 +802,7 @@
 	if(!QDELETED(src))
 		old_upgrade.deactivate(src)
 	upgrades -= old_upgrade
-	UnregisterSignal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	unregister_signal(old_upgrade, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 
 /**
  * make_shell: Makes an AI shell out of a cyborg unit

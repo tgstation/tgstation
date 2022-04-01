@@ -34,7 +34,7 @@
 /obj/item/circuit_component/counter_overlay/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/organ/cyberimp/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+		register_signal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null
@@ -45,7 +45,7 @@
 
 	var/datum/atom_hud/overlay = counter_appearance?.resolve()
 	QDEL_NULL(overlay)
-	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
+	unregister_signal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/counter_overlay/input_received(datum/port/input/port)
 	if(!bci)

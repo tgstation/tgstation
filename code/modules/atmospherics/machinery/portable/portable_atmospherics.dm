@@ -133,11 +133,11 @@
 		return FALSE
 	if(holding)
 		user.put_in_hands(holding)
-		UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
+		unregister_signal(holding, COMSIG_PARENT_QDELETING)
 		holding = null
 	if(new_tank)
 		holding = new_tank
-		RegisterSignal(holding, COMSIG_PARENT_QDELETING, .proc/unregister_holding)
+		register_signal(holding, COMSIG_PARENT_QDELETING, .proc/unregister_holding)
 
 	SSair.start_processing_machine(src)
 	update_appearance()
@@ -193,10 +193,10 @@
 	add_fingerprint(user)
 	return ..()
 
-/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change. 
+/// Holding tanks can get to zero integrity and be destroyed without other warnings due to pressure change.
 /// This checks for that case and removes our reference to it.
 /obj/machinery/portable_atmospherics/proc/unregister_holding()
 	SIGNAL_HANDLER
-	
-	UnregisterSignal(holding, COMSIG_PARENT_QDELETING)
+
+	unregister_signal(holding, COMSIG_PARENT_QDELETING)
 	holding = null

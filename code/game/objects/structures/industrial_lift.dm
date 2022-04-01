@@ -29,7 +29,7 @@
 		return
 	new_lift_platform.lift_master_datum = src
 	LAZYADD(lift_platforms, new_lift_platform)
-	RegisterSignal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
+	register_signal(new_lift_platform, COMSIG_PARENT_QDELETING, .proc/remove_lift_platforms)
 
 /datum/lift_master/proc/remove_lift_platforms(obj/structure/industrial_lift/old_lift_platform)
 	SIGNAL_HANDLER
@@ -38,7 +38,7 @@
 		return
 	old_lift_platform.lift_master_datum = null
 	LAZYREMOVE(lift_platforms, old_lift_platform)
-	UnregisterSignal(old_lift_platform, COMSIG_PARENT_QDELETING)
+	unregister_signal(old_lift_platform, COMSIG_PARENT_QDELETING)
 
 ///Collect all bordered platforms
 /datum/lift_master/proc/Rebuild_lift_plaform(obj/structure/industrial_lift/base_lift_platform)
@@ -175,7 +175,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		COMSIG_ATOM_INITIALIZED_ON = .proc/AddItemOnLift,
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	RegisterSignal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
+	register_signal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 
 	if(!lift_master_datum)
 		lift_master_datum = new(src)
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(isliving(potential_rider) && HAS_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED))
 		REMOVE_TRAIT(potential_rider, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYREMOVE(lift_load, potential_rider)
-	UnregisterSignal(potential_rider, COMSIG_PARENT_QDELETING)
+	unregister_signal(potential_rider, COMSIG_PARENT_QDELETING)
 
 /obj/structure/industrial_lift/proc/AddItemOnLift(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(lifts)
 	if(isliving(AM) && !HAS_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED))
 		ADD_TRAIT(AM, TRAIT_CANNOT_BE_UNBUCKLED, BUCKLED_TRAIT)
 	LAZYADD(lift_load, AM)
-	RegisterSignal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
+	register_signal(AM, COMSIG_PARENT_QDELETING, .proc/RemoveItemFromLift)
 
 /**
  * Signal for when the tram runs into a field of which it cannot go through.

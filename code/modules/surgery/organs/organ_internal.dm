@@ -77,7 +77,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	reciever.internal_organs |= src
 	reciever.internal_organs_slot[slot] = src
 	moveToNullspace()
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
+	register_signal(owner, COMSIG_PARENT_EXAMINE, .proc/on_owner_examine)
 	for(var/datum/action/action as anything in actions)
 		action.Grant(reciever)
 	STOP_PROCESSING(SSobj, src)
@@ -90,7 +90,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  */
 /obj/item/organ/proc/Remove(mob/living/carbon/organ_owner, special = FALSE)
 
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	unregister_signal(owner, COMSIG_PARENT_EXAMINE)
 
 	owner = null
 	if(organ_owner)

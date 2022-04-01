@@ -33,12 +33,12 @@
 		src.positive_result = positive_result
 
 /datum/component/bakeable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_BAKED, .proc/OnBake)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	register_signal(parent, COMSIG_ITEM_BAKED, .proc/OnBake)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 /datum/component/bakeable/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, list(COMSIG_ITEM_BAKED, COMSIG_PARENT_EXAMINE))
+	unregister_signal(parent, list(COMSIG_ITEM_BAKED, COMSIG_PARENT_EXAMINE))
 
 ///Ran every time an item is baked by something
 /datum/component/bakeable/proc/OnBake(datum/source, atom/used_oven, delta_time = 1)

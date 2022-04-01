@@ -40,13 +40,13 @@
 /obj/machinery/chem_heater/deconstruct(disassembled)
 	. = ..()
 	if(beaker && disassembled)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		unregister_signal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		beaker.forceMove(drop_location())
 		beaker = null
 
 /obj/machinery/chem_heater/Destroy()
 	if(beaker)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		unregister_signal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		QDEL_NULL(beaker)
 	return ..()
 
@@ -72,11 +72,11 @@
 		return FALSE
 	if(beaker)
 		try_put_in_hand(beaker, user)
-		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		unregister_signal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, .proc/on_reaction_step)
+		register_signal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, .proc/on_reaction_step)
 	update_appearance()
 	return TRUE
 
@@ -212,11 +212,11 @@
 */
 /obj/machinery/chem_heater/proc/add_ui_client_list(new_ui)
 	LAZYADD(ui_client_list, new_ui)
-	RegisterSignal(new_ui, COMSIG_PARENT_QDELETING, .proc/on_ui_deletion)
+	register_signal(new_ui, COMSIG_PARENT_QDELETING, .proc/on_ui_deletion)
 
 ///This removes an open ui instance from the ui list and deregsiters the signal
 /obj/machinery/chem_heater/proc/remove_ui_client_list(old_ui)
-	UnregisterSignal(old_ui, COMSIG_PARENT_QDELETING)
+	unregister_signal(old_ui, COMSIG_PARENT_QDELETING)
 	LAZYREMOVE(ui_client_list, old_ui)
 
 ///This catches a signal and uses it to delete the ui instance from the list

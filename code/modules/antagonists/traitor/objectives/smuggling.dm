@@ -54,7 +54,7 @@
 			contraband = new contraband_type(user.drop_location())
 			user.put_in_hands(contraband)
 			user.balloon_alert(user, "[contraband] materializes in your hand")
-			RegisterSignal(contraband, COMSIG_ITEM_PICKUP, .proc/on_contraband_pickup)
+			register_signal(contraband, COMSIG_ITEM_PICKUP, .proc/on_contraband_pickup)
 			AddComponent(/datum/component/traitor_objective_register, contraband, \
 				succeed_signals = COMSIG_ITEM_EXPORTED, \
 				fail_signals = list(COMSIG_PARENT_QDELETING), \
@@ -96,7 +96,7 @@
 /datum/traitor_objective/smuggle/ungenerate_objective()
 	. = ..()
 	if(contraband)
-		UnregisterSignal(contraband, COMSIG_ITEM_PICKUP)
+		unregister_signal(contraband, COMSIG_ITEM_PICKUP)
 		contraband = null
 
 /datum/traitor_objective/smuggle/proc/on_contraband_pickup(datum/source, mob/taker)

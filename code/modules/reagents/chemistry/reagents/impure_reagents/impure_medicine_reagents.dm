@@ -141,8 +141,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/mob/living/carbon/consumer = L
 	if(!consumer)
 		return
-	RegisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	register_signal(consumer, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	register_signal(consumer, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
@@ -163,8 +163,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/impurity/libitoil/on_mob_delete(mob/living/L)
 	. = ..()
 	var/mob/living/carbon/consumer = L
-	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
-	UnregisterSignal(consumer, COMSIG_CARBON_GAIN_ORGAN)
+	unregister_signal(consumer, COMSIG_CARBON_LOSE_ORGAN)
+	unregister_signal(consumer, COMSIG_CARBON_GAIN_ORGAN)
 	var/obj/item/organ/liver/this_liver = consumer.getorganslot(ORGAN_SLOT_LIVER)
 	if(!this_liver)
 		return
@@ -368,8 +368,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/convermol/on_mob_add(mob/living/owner, amount)
 	. = ..()
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	register_signal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	register_signal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
@@ -415,8 +415,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/healing/convermol/on_mob_delete(mob/living/owner)
 	. = ..()
-	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
-	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
+	unregister_signal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	unregister_signal(owner, COMSIG_CARBON_GAIN_ORGAN)
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		return
@@ -697,8 +697,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	original_heart.organ_flags |= ORGAN_FROZEN //Not actually frozen, but we want to pause decay
 	manual_heart.Insert(carbon_mob, special = TRUE)
 	//these last so instert doesn't call them
-	RegisterSignal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	register_signal(carbon_mob, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	register_signal(carbon_mob, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	to_chat(owner, span_userdanger("You feel your heart suddenly stop beating on it's own - you'll have to manually beat it!"))
 	..()
 
@@ -728,8 +728,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 ///We're done - remove the curse and restore the old one
 /datum/reagent/inverse/corazargh/on_mob_end_metabolize(mob/living/owner)
 	//Do these first so Insert doesn't call them
-	UnregisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN)
-	UnregisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN)
+	unregister_signal(owner, COMSIG_CARBON_LOSE_ORGAN)
+	unregister_signal(owner, COMSIG_CARBON_GAIN_ORGAN)
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_mob = owner
@@ -799,12 +799,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/impurity/inacusiate/on_mob_metabolize(mob/living/owner, delta_time, times_fired)
 	randomSpan = pick(list("clown", "small", "big", "hypnophrase", "alien", "cult", "alert", "danger", "emote", "yell", "brass", "sans", "papyrus", "robot", "his_grace", "phobia"))
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+	register_signal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 	to_chat(owner, span_warning("Your hearing seems to be a bit off!"))
 	..()
 
 /datum/reagent/impurity/inacusiate/on_mob_end_metabolize(mob/living/owner)
-	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	unregister_signal(owner, COMSIG_MOVABLE_HEAR)
 	to_chat(owner, span_notice("You start hearing things normally again."))
 	..()
 

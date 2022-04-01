@@ -29,18 +29,18 @@
 	return ..()
 
 /datum/component/manual_breathing/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
-	RegisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
-	RegisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
-	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, .proc/pause)
+	register_signal(parent, COMSIG_MOB_EMOTE, .proc/check_emote)
+	register_signal(parent, COMSIG_CARBON_GAIN_ORGAN, .proc/check_added_organ)
+	register_signal(parent, COMSIG_CARBON_LOSE_ORGAN, .proc/check_removed_organ)
+	register_signal(parent, COMSIG_LIVING_REVIVE, .proc/restart)
+	register_signal(parent, COMSIG_LIVING_DEATH, .proc/pause)
 
 /datum/component/manual_breathing/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOB_EMOTE)
-	UnregisterSignal(parent, COMSIG_CARBON_GAIN_ORGAN)
-	UnregisterSignal(parent, COMSIG_CARBON_LOSE_ORGAN)
-	UnregisterSignal(parent, COMSIG_LIVING_REVIVE)
-	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
+	unregister_signal(parent, COMSIG_MOB_EMOTE)
+	unregister_signal(parent, COMSIG_CARBON_GAIN_ORGAN)
+	unregister_signal(parent, COMSIG_CARBON_LOSE_ORGAN)
+	unregister_signal(parent, COMSIG_LIVING_REVIVE)
+	unregister_signal(parent, COMSIG_LIVING_DEATH)
 
 /datum/component/manual_breathing/proc/restart()
 	SIGNAL_HANDLER

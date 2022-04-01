@@ -188,10 +188,10 @@
 	ADD_TRAIT(src, TRAIT_NEGATES_GRAVITY, INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
-	RegisterSignal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
-	RegisterSignal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
-	listener.RegisterSignal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
-	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
+	register_signal(listener, COMSIG_ALARM_TRIGGERED, .proc/alarm_triggered)
+	register_signal(listener, COMSIG_ALARM_CLEARED, .proc/alarm_cleared)
+	listener.register_signal(src, COMSIG_LIVING_DEATH, /datum/alarm_listener/proc/prevent_alarm_changes)
+	listener.register_signal(src, COMSIG_LIVING_REVIVE, /datum/alarm_listener/proc/allow_alarm_changes)
 
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
@@ -342,15 +342,15 @@
 		LoadComponent(/datum/component/shy_in_room, drone_bad_areas, "Touching anything in %ROOM could break your laws.")
 		LoadComponent(/datum/component/technoshy, 1 MINUTES, "%TARGET was touched by a being recently, using it could break your laws.")
 		LoadComponent(/datum/component/itempicky, drone_good_items, "Using %TARGET could break your laws.")
-		RegisterSignal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
-		RegisterSignal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
+		register_signal(src, COMSIG_TRY_USE_MACHINE, .proc/blacklist_on_try_use_machine)
+		register_signal(src, COMSIG_TRY_WIRES_INTERACT, .proc/blacklist_on_try_wires_interact)
 	else
 		REMOVE_TRAIT(src, TRAIT_PACIFISM, DRONE_SHY_TRAIT)
 		qdel(GetComponent(/datum/component/shy))
 		qdel(GetComponent(/datum/component/shy_in_room))
 		qdel(GetComponent(/datum/component/technoshy))
 		qdel(GetComponent(/datum/component/itempicky))
-		UnregisterSignal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
+		unregister_signal(src, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
 /mob/living/simple_animal/drone/handle_temperature_damage()
 	return

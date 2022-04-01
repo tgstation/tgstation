@@ -80,12 +80,12 @@
 /datum/component/transforming/RegisterWithParent()
 	var/obj/item/item_parent = parent
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	if(item_parent.sharpness || sharpness_on)
-		RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
+		register_signal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
 /datum/component/transforming/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
+	unregister_signal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_SHARPEN_ACT))
 
 /*
  * Called on [COMSIG_ITEM_ATTACK_SELF].

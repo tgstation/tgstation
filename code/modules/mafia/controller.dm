@@ -575,7 +575,7 @@
 		ADD_TRAIT(H, TRAIT_CANNOT_CRYSTALIZE, MAFIA_TRAIT)
 		H.equipOutfit(player_outfit)
 		H.status_flags |= GODMODE
-		RegisterSignal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
+		register_signal(H,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/display_votes)
 		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
 		mafia_panel.Grant(H)
 		var/client/player_client = GLOB.directory[role.player_key]

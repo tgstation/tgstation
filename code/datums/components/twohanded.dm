@@ -72,17 +72,17 @@
 
 // register signals withthe parent item
 /datum/component/two_handed/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	register_signal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
+	register_signal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/on_update_icon)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(parent, COMSIG_ITEM_SHARPEN_ACT, .proc/on_sharpen)
 
 // Remove all siginals registered to the parent item
 /datum/component/two_handed/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED,
+	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED,
 								COMSIG_ITEM_DROPPED,
 								COMSIG_ITEM_ATTACK_SELF,
 								COMSIG_ITEM_ATTACK,
@@ -159,7 +159,7 @@
 		return // blocked wield from item
 	wielded = TRUE
 	ADD_TRAIT(parent,TRAIT_WIELDED,src)
-	RegisterSignal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	register_signal(user, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
 
 	// update item stats and name
 	var/obj/item/parent_item = parent
@@ -186,8 +186,8 @@
 	offhand_item.name = "[parent_item.name] - offhand"
 	offhand_item.desc = "Your second grip on [parent_item]."
 	offhand_item.wielded = TRUE
-	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(offhand_item, COMSIG_PARENT_QDELETING, .proc/on_destroy)
+	register_signal(offhand_item, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	register_signal(offhand_item, COMSIG_PARENT_QDELETING, .proc/on_destroy)
 	user.put_in_inactive_hand(offhand_item)
 
 /**
@@ -204,7 +204,7 @@
 
 	// wield update status
 	wielded = FALSE
-	UnregisterSignal(user, COMSIG_MOB_SWAP_HANDS)
+	unregister_signal(user, COMSIG_MOB_SWAP_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	REMOVE_TRAIT(parent,TRAIT_WIELDED,src)
 
@@ -252,7 +252,7 @@
 
 	// Remove the object in the offhand
 	if(offhand_item)
-		UnregisterSignal(offhand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
+		unregister_signal(offhand_item, list(COMSIG_ITEM_DROPPED, COMSIG_PARENT_QDELETING))
 		qdel(offhand_item)
 	// Clear any old refrence to an item that should be gone now
 	offhand_item = null

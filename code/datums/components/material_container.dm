@@ -78,9 +78,9 @@
 	. = ..()
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+		register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 
 /datum/component/material_container/vv_edit_var(var_name, var_value)
@@ -88,14 +88,14 @@
 	. = ..()
 	if(var_name == NAMEOF(src, mat_container_flags) && parent)
 		if(!(old_flags & MATCONTAINER_EXAMINE) && mat_container_flags & MATCONTAINER_EXAMINE)
-			RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+			register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 		else if(old_flags & MATCONTAINER_EXAMINE && !(mat_container_flags & MATCONTAINER_EXAMINE))
-			UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+			unregister_signal(parent, COMSIG_PARENT_EXAMINE)
 
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+			register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
-			UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+			unregister_signal(parent, COMSIG_PARENT_ATTACKBY)
 
 
 /datum/component/material_container/proc/on_examine(datum/source, mob/user, list/examine_texts)

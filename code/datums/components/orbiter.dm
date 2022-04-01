@@ -24,10 +24,10 @@
 	if(ismovable(target))
 		tracker = new(target, CALLBACK(src, .proc/move_react))
 
-	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
+	register_signal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, .proc/orbiter_glide_size_update)
 
 /datum/component/orbiter/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
+	unregister_signal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
 	var/atom/target = parent
 	target.orbiters = null
 	QDEL_NULL(tracker)
@@ -50,8 +50,8 @@
 		var/atom/movable/incoming_orbiter = o
 		incoming_orbiter.orbiting = src
 		// It is important to transfer the signals so we don't get locked to the new orbiter component for all time
-		newcomp.UnregisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
-		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+		newcomp.unregister_signal(incoming_orbiter, COMSIG_MOVABLE_MOVED)
+		register_signal(incoming_orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
 
 	orbiter_list += newcomp.orbiter_list
 	newcomp.orbiter_list = null
@@ -71,7 +71,7 @@
 	orbiter.orbiting = src
 
 	ADD_TRAIT(orbiter, TRAIT_NO_FLOATING_ANIM, ORBITING_TRAIT)
-	RegisterSignal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
+	register_signal(orbiter, COMSIG_MOVABLE_MOVED, .proc/orbiter_move_react)
 
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 
@@ -106,7 +106,7 @@
 /datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
 	if(!orbiter_list[orbiter])
 		return
-	UnregisterSignal(orbiter, COMSIG_MOVABLE_MOVED)
+	unregister_signal(orbiter, COMSIG_MOVABLE_MOVED)
 	SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 	orbiter.SpinAnimation(0, 0)
 	if(istype(orbiter_list[orbiter],/matrix)) //This is ugly.

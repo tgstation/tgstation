@@ -58,7 +58,7 @@
 	ReadColorsFromString(starting_colors || target?.greyscale_colors)
 
 	if(target)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/ui_close)
+		register_signal(target, COMSIG_PARENT_QDELETING, .proc/ui_close)
 
 	refresh_preview()
 
@@ -235,9 +235,9 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 
 /datum/greyscale_modify_menu/proc/change_config(datum/greyscale_config/new_config)
 	if(config)
-		UnregisterSignal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED)
+		unregister_signal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED)
 	config = new_config
-	RegisterSignal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED, .proc/queue_refresh)
+	register_signal(config, COMSIG_GREYSCALE_CONFIG_REFRESHED, .proc/queue_refresh)
 
 /datum/greyscale_modify_menu/proc/queue_refresh()
 	SIGNAL_HANDLER

@@ -5,13 +5,13 @@
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	if(isliving(target))
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/LivingWaddle)
+		register_signal(target, COMSIG_MOVABLE_MOVED, .proc/LivingWaddle)
 	else
-		RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/Waddle)
+		register_signal(target, COMSIG_MOVABLE_MOVED, .proc/Waddle)
 
 /datum/element/waddling/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	unregister_signal(source, COMSIG_MOVABLE_MOVED)
 
 
 /datum/element/waddling/proc/LivingWaddle(mob/living/target)

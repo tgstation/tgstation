@@ -20,11 +20,11 @@
 
 	src.emote_message = emote_message
 	src.moodlet = moodlet
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	register_signal(target, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
 
 /datum/element/pet_bonus/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_ATOM_ATTACK_HAND)
+	unregister_signal(target, COMSIG_ATOM_ATTACK_HAND)
 
 /datum/element/pet_bonus/proc/on_attack_hand(mob/living/pet, mob/living/petter, list/modifiers)
 	SIGNAL_HANDLER

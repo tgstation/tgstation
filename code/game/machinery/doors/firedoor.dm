@@ -400,9 +400,9 @@
 		if(QDELETED(user))
 			being_held_open = FALSE
 			return
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
-		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
-		RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/handle_held_open_adjacency)
+		register_signal(user, COMSIG_MOVABLE_MOVED, .proc/handle_held_open_adjacency)
+		register_signal(user, COMSIG_LIVING_SET_BODY_POSITION, .proc/handle_held_open_adjacency)
+		register_signal(user, COMSIG_PARENT_QDELETING, .proc/handle_held_open_adjacency)
 		handle_held_open_adjacency(user)
 	else
 		close()
@@ -427,9 +427,9 @@
 		return
 	being_held_open = FALSE
 	correct_state()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
-	UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+	unregister_signal(user, COMSIG_MOVABLE_MOVED)
+	unregister_signal(user, COMSIG_LIVING_SET_BODY_POSITION)
+	unregister_signal(user, COMSIG_PARENT_QDELETING)
 	if(user)
 		user.balloon_alert_to_viewers("released [src]", "released [src]")
 

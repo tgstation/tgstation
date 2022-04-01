@@ -55,14 +55,14 @@
 	src.y_offset = y_offset
 	src.sweetener = sweetener
 
-	RegisterSignal(owner, COMSIG_ITEM_ATTACK_OBJ, .proc/on_item_attack_obj)
-	RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	register_signal(owner, COMSIG_ITEM_ATTACK_OBJ, .proc/on_item_attack_obj)
+	register_signal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	if(change_name)
-		RegisterSignal(owner, COMSIG_ATOM_UPDATE_NAME, .proc/on_update_name)
+		register_signal(owner, COMSIG_ATOM_UPDATE_NAME, .proc/on_update_name)
 	if(!change_desc)
-		RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/on_examine_more)
+		register_signal(owner, COMSIG_PARENT_EXAMINE_MORE, .proc/on_examine_more)
 	else
-		RegisterSignal(owner, COMSIG_ATOM_UPDATE_DESC, .proc/on_update_desc)
+		register_signal(owner, COMSIG_ATOM_UPDATE_DESC, .proc/on_update_desc)
 
 	if(prefill_flavours)
 		for(var/entry in prefill_flavours)

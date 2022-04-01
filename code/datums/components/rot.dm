@@ -36,25 +36,25 @@
 	scaling_delay = scaling
 	strength = severity
 
-	RegisterSignal(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/rot_hit_react)
+	register_signal(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/rot_hit_react)
 	if(ismovable(parent))
 		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
-		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/rot_react)
+		register_signal(parent, COMSIG_MOVABLE_BUMP, .proc/rot_react)
 	if(isliving(parent))
-		RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/react_to_revive) //mobs stop this when they come to life
-		RegisterSignal(parent, COMSIG_LIVING_GET_PULLED, .proc/rot_react_touch)
+		register_signal(parent, COMSIG_LIVING_REVIVE, .proc/react_to_revive) //mobs stop this when they come to life
+		register_signal(parent, COMSIG_LIVING_GET_PULLED, .proc/rot_react_touch)
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
-		RegisterSignal(carbon_parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT,
+		register_signal(carbon_parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
 			COMSIG_REAGENTS_DEL_REAGENT), .proc/check_reagent)
-		RegisterSignal(parent, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), .proc/check_husk_trait)
+		register_signal(parent, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), .proc/check_husk_trait)
 		check_reagent(carbon_parent.reagents, null)
 		check_husk_trait(null)
 	if(ishuman(parent))
 		var/mob/living/carbon/human/human_parent = parent
-		RegisterSignal(parent, COMSIG_HUMAN_CORETEMP_CHANGE, .proc/check_for_temperature)
+		register_signal(parent, COMSIG_HUMAN_CORETEMP_CHANGE, .proc/check_for_temperature)
 		check_for_temperature(null, 0, human_parent.coretemperature)
 
 	start_up(NONE) //If nothing's blocking it, start

@@ -69,7 +69,7 @@
 	if(fillet_type)
 		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, 1, 5)
 	AddComponent(/datum/component/aquarium_content, .proc/get_aquarium_animation, list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
-	RegisterSignal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, .proc/on_temp_animation)
+	register_signal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, .proc/on_temp_animation)
 
 	check_environment_after_movement()
 	if(status != FISH_DEAD)
@@ -93,14 +93,14 @@
 /obj/item/fish/proc/on_aquarium_insertion(obj/structure/aquarium)
 	if(isnull(last_feeding)) //Fish start fed.
 		last_feeding = world.time
-	RegisterSignal(aquarium, COMSIG_ATOM_EXITED, .proc/aquarium_exited)
-	RegisterSignal(aquarium, COMSIG_PARENT_ATTACKBY, .proc/attack_reaction)
+	register_signal(aquarium, COMSIG_ATOM_EXITED, .proc/aquarium_exited)
+	register_signal(aquarium, COMSIG_PARENT_ATTACKBY, .proc/attack_reaction)
 
 /obj/item/fish/proc/aquarium_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 	if(src != gone)
 		return
-	UnregisterSignal(source,list(COMSIG_ATOM_EXITED,COMSIG_PARENT_ATTACKBY))
+	unregister_signal(source,list(COMSIG_ATOM_EXITED,COMSIG_PARENT_ATTACKBY))
 
 /// Our aquarium is hit with stuff
 /obj/item/fish/proc/attack_reaction(datum/source, obj/item/thing, mob/user, params)

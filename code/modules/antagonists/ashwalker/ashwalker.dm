@@ -25,17 +25,17 @@
 
 /datum/antagonist/ashwalker/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
-	UnregisterSignal(old_body, COMSIG_MOB_EXAMINATE)
-	RegisterSignal(new_body, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
+	unregister_signal(old_body, COMSIG_MOB_EXAMINATE)
+	register_signal(new_body, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
 
 /datum/antagonist/ashwalker/on_gain()
 	. = ..()
-	RegisterSignal(owner.current, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
+	register_signal(owner.current, COMSIG_MOB_EXAMINATE, .proc/on_examinate)
 	owner.teach_crafting_recipe(/datum/crafting_recipe/skeleton_key)
 
 /datum/antagonist/ashwalker/on_removal()
 	. = ..()
-	UnregisterSignal(owner.current, COMSIG_MOB_EXAMINATE)
+	unregister_signal(owner.current, COMSIG_MOB_EXAMINATE)
 
 /datum/antagonist/ashwalker/proc/on_examinate(datum/source, atom/A)
 	SIGNAL_HANDLER

@@ -280,7 +280,7 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 		return
 	set_expanded(FALSE)
 	if(source)
-		UnregisterSignal(source, COMSIG_CLIENT_CLICK)
+		unregister_signal(source, COMSIG_CLIENT_CLICK)
 
 /atom/movable/screen/button_palette/proc/set_expanded(new_expanded)
 	var/datum/action_group/our_group = our_hud.palette_actions
@@ -297,9 +297,9 @@ GLOBAL_LIST_INIT(palette_removed_matrix, list(1.4,0,0,0, 0.7,0.4,0,0, 0.4,0,0.6,
 		return
 
 	if(expanded)
-		RegisterSignal(usr.client, COMSIG_CLIENT_CLICK, .proc/clicked_while_open)
+		register_signal(usr.client, COMSIG_CLIENT_CLICK, .proc/clicked_while_open)
 	else
-		UnregisterSignal(usr.client, COMSIG_CLIENT_CLICK)
+		unregister_signal(usr.client, COMSIG_CLIENT_CLICK)
 
 	closeToolTip(usr) //Our tooltips are now invalid, can't seem to update them in one frame, so here, just close them
 

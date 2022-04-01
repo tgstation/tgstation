@@ -20,13 +20,13 @@
 	src.tracked = tracked
 
 /datum/component/connect_loc_behalf/RegisterWithParent()
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
+	register_signal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
 	update_signals()
 
 /datum/component/connect_loc_behalf/UnregisterFromParent()
 	unregister_signals()
-	UnregisterSignal(tracked, list(
+	unregister_signal(tracked, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_QDELETING,
 	))
@@ -53,13 +53,13 @@
 	tracked_loc = tracked.loc
 
 	for (var/signal in connections)
-		parent.RegisterSignal(tracked_loc, signal, connections[signal])
+		parent.register_signal(tracked_loc, signal, connections[signal])
 
 /datum/component/connect_loc_behalf/proc/unregister_signals()
 	if(isnull(tracked_loc))
 		return
 
-	parent.UnregisterSignal(tracked_loc, connections)
+	parent.unregister_signal(tracked_loc, connections)
 
 	tracked_loc = null
 

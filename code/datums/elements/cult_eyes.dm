@@ -12,7 +12,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	// Register signals for mob transformation to prevent premature halo removal
-	RegisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), .proc/set_eyes)
+	register_signal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_MONKEY_HUMANIZE, COMSIG_HUMAN_MONKEYIZE), .proc/set_eyes)
 	addtimer(CALLBACK(src, .proc/set_eyes, target), initial_delay)
 
 /**
@@ -42,5 +42,5 @@
 		human_parent.eye_color = initial(human_parent.eye_color)
 		human_parent.dna.update_ui_block(DNA_EYE_COLOR_BLOCK)
 		human_parent.update_body()
-	UnregisterSignal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
+	unregister_signal(target, list(COMSIG_CHANGELING_TRANSFORM, COMSIG_HUMAN_MONKEYIZE, COMSIG_MONKEY_HUMANIZE))
 	return ..()

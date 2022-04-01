@@ -85,12 +85,12 @@
 
 /obj/machinery/computer/camera_advanced/xenobio/GrantActions(mob/living/user)
 	..()
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
-	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
-	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
+	register_signal(user, COMSIG_XENO_SLIME_CLICK_CTRL, .proc/XenoSlimeClickCtrl)
+	register_signal(user, COMSIG_XENO_TURF_CLICK_CTRL, .proc/XenoTurfClickCtrl)
+	register_signal(user, COMSIG_XENO_MONKEY_CLICK_CTRL, .proc/XenoMonkeyClickCtrl)
+	register_signal(user, COMSIG_XENO_SLIME_CLICK_ALT, .proc/XenoSlimeClickAlt)
+	register_signal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, .proc/XenoSlimeClickShift)
+	register_signal(user, COMSIG_XENO_TURF_CLICK_SHIFT, .proc/XenoTurfClickShift)
 
 	//Checks for recycler on every interact, prevents issues with load order on certain maps.
 	if(!connected_recycler)
@@ -100,12 +100,12 @@
 				connected_recycler.connected += src
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_CTRL)
-	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_CTRL)
-	UnregisterSignal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_ALT)
-	UnregisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
-	UnregisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
+	unregister_signal(user, COMSIG_XENO_SLIME_CLICK_CTRL)
+	unregister_signal(user, COMSIG_XENO_TURF_CLICK_CTRL)
+	unregister_signal(user, COMSIG_XENO_MONKEY_CLICK_CTRL)
+	unregister_signal(user, COMSIG_XENO_SLIME_CLICK_ALT)
+	unregister_signal(user, COMSIG_XENO_SLIME_CLICK_SHIFT)
+	unregister_signal(user, COMSIG_XENO_TURF_CLICK_SHIFT)
 	..()
 
 /obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/O, mob/user, params)

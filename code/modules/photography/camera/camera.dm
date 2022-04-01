@@ -286,10 +286,10 @@
 /obj/item/circuit_component/camera/register_shell(atom/movable/shell)
 	. = ..()
 	camera = shell
-	RegisterSignal(shell, COMSIG_CAMERA_IMAGE_CAPTURED, .proc/on_image_captured)
+	register_signal(shell, COMSIG_CAMERA_IMAGE_CAPTURED, .proc/on_image_captured)
 
 /obj/item/circuit_component/camera/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, COMSIG_CAMERA_IMAGE_CAPTURED)
+	unregister_signal(shell, COMSIG_CAMERA_IMAGE_CAPTURED)
 	camera = null
 	return ..()
 

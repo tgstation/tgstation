@@ -25,13 +25,13 @@
 /datum/component/hazard_area/RegisterWithParent()
 	var/mob/parent_mob = parent
 	parent_mob.become_area_sensitive(type)
-	RegisterSignal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
-	RegisterSignal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
-	RegisterSignal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
+	register_signal(parent_mob, COMSIG_ENTER_AREA, .proc/handle_parent_area_change)
+	register_signal(parent_mob, COMSIG_LADDER_TRAVEL, .proc/reject_ladder_movement)
+	register_signal(parent_mob, COMSIG_VEHICLE_RIDDEN, .proc/reject_vehicle)
 
 /datum/component/hazard_area/UnregisterFromParent()
 	var/mob/parent_mob = parent
-	UnregisterSignal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL, COMSIG_VEHICLE_RIDDEN))
+	unregister_signal(parent_mob, list(COMSIG_ENTER_AREA, COMSIG_LADDER_TRAVEL, COMSIG_VEHICLE_RIDDEN))
 	parent_mob.lose_area_sensitivity(type)
 
 /**

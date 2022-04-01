@@ -36,11 +36,11 @@
 
 /datum/component/gas_leaker/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE, .proc/start_processing)
+	register_signal(parent, COMSIG_ATOM_TAKE_DAMAGE, .proc/start_processing)
 
 /datum/component/gas_leaker/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_ATOM_TAKE_DAMAGE)
+	unregister_signal(parent, COMSIG_ATOM_TAKE_DAMAGE)
 
 /datum/component/gas_leaker/proc/process_atmos()
 	. = PROCESS_KILL

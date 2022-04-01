@@ -52,15 +52,15 @@
 	. = ..()
 	if(istype(shell, /obj/structure/scanner_gate_shell))
 		attached_gate = shell
-		RegisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS, .proc/on_trigger)
-		RegisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED, .proc/on_set_locked)
+		register_signal(attached_gate, COMSIG_SCANGATE_SHELL_PASS, .proc/on_trigger)
+		register_signal(parent, COMSIG_CIRCUIT_SET_LOCKED, .proc/on_set_locked)
 		attached_gate.locked = parent.locked
 
 /obj/item/circuit_component/scanner_gate/unregister_shell(atom/movable/shell)
-	UnregisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS)
+	unregister_signal(attached_gate, COMSIG_SCANGATE_SHELL_PASS)
 	if(attached_gate)
 		attached_gate.locked = FALSE
-		UnregisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED)
+		unregister_signal(parent, COMSIG_CIRCUIT_SET_LOCKED)
 	attached_gate = null
 	return ..()
 

@@ -10,11 +10,11 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED), .proc/equippedChanged)
+	register_signal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED), .proc/equippedChanged)
 
 /datum/element/earhealing/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	unregister_signal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	user_by_item -= target
 
 /datum/element/earhealing/proc/equippedChanged(datum/source, mob/living/carbon/user, slot)

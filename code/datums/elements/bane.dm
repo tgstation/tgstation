@@ -17,9 +17,9 @@
 		return ELEMENT_INCOMPATIBLE
 
 	if(ispath(target_type, /mob/living))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/mob_check)
+		register_signal(target, COMSIG_ITEM_AFTERATTACK, .proc/mob_check)
 	else if(ispath(target_type, /datum/species))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/species_check)
+		register_signal(target, COMSIG_ITEM_AFTERATTACK, .proc/species_check)
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -29,7 +29,7 @@
 	src.requires_combat_mode = requires_combat_mode
 
 /datum/element/bane/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
+	unregister_signal(source, COMSIG_ITEM_AFTERATTACK)
 	return ..()
 
 /datum/element/bane/proc/species_check(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)

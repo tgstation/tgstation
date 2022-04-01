@@ -87,10 +87,10 @@
 
 /datum/reagent/toxin/plasma/on_new(data)
 	. = ..()
-	RegisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
+	register_signal(holder, COMSIG_REAGENTS_TEMP_CHANGE, .proc/on_temp_change)
 
 /datum/reagent/toxin/plasma/Destroy()
-	UnregisterSignal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
+	unregister_signal(holder, COMSIG_REAGENTS_TEMP_CHANGE)
 	return ..()
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C, delta_time, times_fired)

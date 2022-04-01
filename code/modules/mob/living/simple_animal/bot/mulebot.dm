@@ -60,10 +60,10 @@
 /mob/living/simple_animal/bot/mulebot/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_MOB_BOT_PRE_STEP, .proc/check_pre_step)
-	RegisterSignal(src, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/check_pre_step)
-	RegisterSignal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
-	RegisterSignal(src, COMSIG_MOB_CLIENT_MOVED, .proc/on_bot_step)
+	register_signal(src, COMSIG_MOB_BOT_PRE_STEP, .proc/check_pre_step)
+	register_signal(src, COMSIG_MOB_CLIENT_PRE_MOVE, .proc/check_pre_step)
+	register_signal(src, COMSIG_MOB_BOT_STEP, .proc/on_bot_step)
+	register_signal(src, COMSIG_MOB_CLIENT_MOVED, .proc/on_bot_step)
 
 	ADD_TRAIT(src, TRAIT_NOMOBSWAP, INNATE_TRAIT)
 
@@ -112,7 +112,7 @@
 
 
 /mob/living/simple_animal/bot/mulebot/Destroy()
-	UnregisterSignal(src, list(COMSIG_MOB_BOT_PRE_STEP, COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_MOB_BOT_STEP, COMSIG_MOB_CLIENT_MOVED))
+	unregister_signal(src, list(COMSIG_MOB_BOT_PRE_STEP, COMSIG_MOB_CLIENT_PRE_MOVE, COMSIG_MOB_BOT_STEP, COMSIG_MOB_CLIENT_MOVED))
 	unload(0)
 	QDEL_NULL(wires)
 	QDEL_NULL(cell)
@@ -821,7 +821,7 @@
 
 	if(isobserver(AM))
 		visible_message(span_warning("A ghostly figure appears on [src]!"))
-		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
+		register_signal(AM, COMSIG_MOVABLE_MOVED, .proc/ghostmoved)
 		AM.forceMove(src)
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
@@ -864,7 +864,7 @@
 /mob/living/simple_animal/bot/mulebot/paranormal/proc/ghostmoved()
 	SIGNAL_HANDLER
 	visible_message(span_notice("The ghostly figure vanishes..."))
-	UnregisterSignal(load, COMSIG_MOVABLE_MOVED)
+	unregister_signal(load, COMSIG_MOVABLE_MOVED)
 	unload(0)
 
 #undef SIGH

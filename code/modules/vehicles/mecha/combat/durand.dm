@@ -21,8 +21,8 @@
 /obj/vehicle/sealed/mecha/combat/durand/Initialize(mapload)
 	. = ..()
 	shield = new /obj/durand_shield(loc, src, layer, dir)
-	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
-	RegisterSignal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
+	register_signal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/relay)
+	register_signal(src, COMSIG_PROJECTILE_PREHIT, .proc/prehit)
 
 
 /obj/vehicle/sealed/mecha/combat/durand/Destroy()
@@ -170,7 +170,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	chassis = _chassis
 	layer = _layer
 	setDir(_dir)
-	RegisterSignal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
+	register_signal(src, COMSIG_MECHA_ACTION_TRIGGER, .proc/activate)
 
 
 /obj/durand_shield/Destroy()
@@ -222,14 +222,14 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 		playsound(src, 'sound/mecha/mech_shield_raise.ogg', 50, FALSE)
 		set_light(l_range = MINIMUM_USEFUL_LIGHT_RANGE , l_power = 5, l_color = "#00FFFF")
 		icon_state = "shield"
-		RegisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE, .proc/resetdir)
+		register_signal(chassis, COMSIG_ATOM_DIR_CHANGE, .proc/resetdir)
 	else
 		flick("shield_drop", src)
 		playsound(src, 'sound/mecha/mech_shield_drop.ogg', 50, FALSE)
 		set_light(0)
 		icon_state = "shield_null"
 		invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
-		UnregisterSignal(chassis, COMSIG_ATOM_DIR_CHANGE)
+		unregister_signal(chassis, COMSIG_ATOM_DIR_CHANGE)
 	switching = FALSE
 
 /obj/durand_shield/proc/resetdir(datum/source, olddir, newdir)

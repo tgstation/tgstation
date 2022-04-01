@@ -4,7 +4,7 @@
 /// This is not necessary for Type-A interactions, as you can just apply the flag and register to the signal yourself.
 /obj/item/proc/register_item_context()
 	item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
-	RegisterSignal(
+	register_signal(
 		src,
 		COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET,
 		.proc/add_item_context,

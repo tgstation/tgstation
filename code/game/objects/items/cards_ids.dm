@@ -114,7 +114,7 @@
 
 	register_context()
 
-	RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
+	register_signal(src, COMSIG_ATOM_UPDATED_ICON, .proc/update_in_wallet)
 
 /obj/item/card/id/Destroy()
 	if (registered_account)
@@ -847,11 +847,11 @@
 
 /obj/item/card/id/advanced/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
-	RegisterSignal(src, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+	register_signal(src, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+	register_signal(src, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
 /obj/item/card/id/advanced/Destroy()
-	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	unregister_signal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	return ..()
 
@@ -893,40 +893,40 @@
 /obj/item/card/id/advanced/proc/on_holding_card_slot_moved(obj/item/computer_hardware/card_slot/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	if(istype(old_loc, /obj/item/modular_computer/tablet))
-		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+		unregister_signal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(source.loc, /obj/item/modular_computer/tablet))
-		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
-		RegisterSignal(source.loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+		register_signal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+		register_signal(source.loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
 /obj/item/card/id/advanced/Moved(atom/OldLoc, Dir)
 	. = ..()
 
 	if(istype(OldLoc, /obj/item/pda) || istype(OldLoc, /obj/item/storage/wallet))
-		UnregisterSignal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+		unregister_signal(OldLoc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(OldLoc, /obj/item/computer_hardware/card_slot))
 		var/obj/item/computer_hardware/card_slot/slot = OldLoc
 
-		UnregisterSignal(OldLoc, COMSIG_MOVABLE_MOVED)
+		unregister_signal(OldLoc, COMSIG_MOVABLE_MOVED)
 
 		if(istype(slot.holder, /obj/item/modular_computer/tablet))
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
-			UnregisterSignal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+			unregister_signal(slot_holder, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 	if(istype(loc, /obj/item/pda) || istype(loc, /obj/item/storage/wallet))
-		RegisterSignal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
-		RegisterSignal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+		register_signal(loc, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+		register_signal(loc, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
 	if(istype(loc, /obj/item/computer_hardware/card_slot))
 		var/obj/item/computer_hardware/card_slot/slot = loc
 
-		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, .proc/on_holding_card_slot_moved)
+		register_signal(loc, COMSIG_MOVABLE_MOVED, .proc/on_holding_card_slot_moved)
 
 		if(istype(slot.holder, /obj/item/modular_computer/tablet))
 			var/obj/item/modular_computer/tablet/slot_holder = slot.holder
-			RegisterSignal(slot_holder, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
-			RegisterSignal(slot_holder, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
+			register_signal(slot_holder, COMSIG_ITEM_EQUIPPED, .proc/update_intern_status)
+			register_signal(slot_holder, COMSIG_ITEM_DROPPED, .proc/remove_intern_status)
 
 /obj/item/card/id/advanced/update_overlays()
 	. = ..()

@@ -17,16 +17,16 @@
 	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
 	if(istype(equipped_backpack))
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "back_pain", /datum/mood_event/back_pain)
-		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
+		register_signal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
 	else
-		RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
+		register_signal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
 /datum/quirk/badback/remove()
-	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
+	unregister_signal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
 
 	var/obj/item/storage/equipped_backpack = backpack?.resolve()
 	if(equipped_backpack)
-		UnregisterSignal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
+		unregister_signal(equipped_backpack, COMSIG_ITEM_POST_UNEQUIP)
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "back_pain")
 
 /// Signal handler for when the quirk_holder equips an item. If it's a backpack, adds the back_pain mood event.
@@ -37,18 +37,18 @@
 		return
 
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "back_pain", /datum/mood_event/back_pain)
-	RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
-	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
+	register_signal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, .proc/on_unequipped_backpack)
+	unregister_signal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
 	backpack = WEAKREF(equipped_item)
 
 /// Signal handler for when the quirk_holder unequips an equipped backpack. Removes the back_pain mood event.
 /datum/quirk/badback/proc/on_unequipped_backpack(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, COMSIG_ITEM_POST_UNEQUIP)
+	unregister_signal(source, COMSIG_ITEM_POST_UNEQUIP)
 	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "back_pain")
 	backpack = null
-	RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
+	register_signal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, .proc/on_equipped_item)
 
 /datum/quirk/blooddeficiency
 	name = "Blood Deficiency"
@@ -317,10 +317,10 @@
 	hardcore_value = 5
 
 /datum/quirk/nyctophobia/add()
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
+	register_signal(quirk_holder, COMSIG_MOVABLE_MOVED, .proc/on_holder_moved)
 
 /datum/quirk/nyctophobia/remove()
-	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_MOVED)
+	unregister_signal(quirk_holder, COMSIG_MOVABLE_MOVED)
 	SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "nyctophobia")
 
 /// Called when the quirk holder moves. Updates the quirk holder's mood.
@@ -506,12 +506,12 @@
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/add()
-	RegisterSignal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
-	RegisterSignal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
-	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(quirk_holder, COMSIG_MOB_EYECONTACT, .proc/eye_contact)
+	register_signal(quirk_holder, COMSIG_MOB_EXAMINATE, .proc/looks_at_floor)
+	register_signal(quirk_holder, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/quirk/social_anxiety/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
+	unregister_signal(quirk_holder, list(COMSIG_MOB_EYECONTACT, COMSIG_MOB_EXAMINATE, COMSIG_MOB_SAY))
 
 /datum/quirk/social_anxiety/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -836,10 +836,10 @@
 	hardcore_value = 1
 
 /datum/quirk/bad_touch/add()
-	RegisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT, COMSIG_CARBON_TAILPULL), .proc/uncomfortable_touch)
+	register_signal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT, COMSIG_CARBON_TAILPULL), .proc/uncomfortable_touch)
 
 /datum/quirk/bad_touch/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT, COMSIG_CARBON_TAILPULL))
+	unregister_signal(quirk_holder, list(COMSIG_LIVING_GET_PULLED, COMSIG_CARBON_HUGGED, COMSIG_CARBON_HEADPAT, COMSIG_CARBON_TAILPULL))
 
 /datum/quirk/bad_touch/proc/uncomfortable_touch()
 	SIGNAL_HANDLER

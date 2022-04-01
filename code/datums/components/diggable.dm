@@ -15,7 +15,7 @@
 	src.to_spawn = to_spawn
 	src.amount = amount
 	src.action_text = action_text
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/handle_attack)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/handle_attack)
 
 /datum/component/diggable/proc/handle_attack(datum/source, obj/item/hit_by, mob/living/bastard, params)
 	if(!hit_by.tool_behaviour == TOOL_SHOVEL || !params)

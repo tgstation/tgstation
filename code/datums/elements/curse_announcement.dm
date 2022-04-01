@@ -27,13 +27,13 @@
 	src.new_name = new_name
 	src.fantasy_component = WEAKREF(fantasy_component)
 	if(cursed_item.slot_equipment_priority) //if it can equip somewhere, only go active when it is actually done
-		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+		register_signal(cursed_item, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
 	else
-		RegisterSignal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
+		register_signal(cursed_item, COMSIG_ITEM_PICKUP, .proc/on_pickup)
 
 /datum/element/curse_announcement/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_PICKUP))
+	unregister_signal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_PICKUP))
 
 /datum/element/curse_announcement/proc/on_equipped(obj/item/cursed_item, mob/equipper, slot)
 	SIGNAL_HANDLER

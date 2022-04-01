@@ -41,7 +41,7 @@
 	if(ismovable(parent))
 		AddComponent(/datum/component/connect_loc_behalf, parent, crossed_connections)
 	else
-		RegisterSignal(get_turf(parent), COMSIG_ATOM_ENTERED, .proc/on_entered)
+		register_signal(get_turf(parent), COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 // Inherit the new values passed to the component
 /datum/component/caltrop/InheritComponent(datum/component/caltrop/new_comp, original, min_damage, max_damage, probability, flags, soundfile)

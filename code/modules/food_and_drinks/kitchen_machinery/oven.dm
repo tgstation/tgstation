@@ -105,7 +105,7 @@
 	oven_tray.pixel_y = OVEN_TRAY_Y_OFFSET
 	oven_tray.pixel_x = OVEN_TRAY_X_OFFSET
 
-	RegisterSignal(used_tray, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
+	register_signal(used_tray, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
 	update_baking_audio()
 	update_appearance()
 
@@ -119,7 +119,7 @@
 	oven_tray.flags_1 &= ~IS_ONTOP_1
 	vis_contents -= oven_tray
 	used_tray = null
-	UnregisterSignal(oven_tray, COMSIG_MOVABLE_MOVED)
+	unregister_signal(oven_tray, COMSIG_MOVABLE_MOVED)
 	update_baking_audio()
 
 /obj/machinery/oven/attack_hand(mob/user, modifiers)

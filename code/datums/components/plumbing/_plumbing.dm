@@ -47,17 +47,17 @@
 	if(start)
 		//We're registering here because I need to check whether we start active or not, and this is just easier
 		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
-		RegisterSignal(parent, list(COMSIG_COMPONENT_ADDED), .proc/enable)
+		register_signal(parent, list(COMSIG_COMPONENT_ADDED), .proc/enable)
 
 /datum/component/plumbing/RegisterWithParent()
-	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
-	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
-	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
-	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
-	RegisterSignal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
+	register_signal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
+	register_signal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
+	register_signal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
+	register_signal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
+	register_signal(parent, list(COMSIG_MOVABLE_CHANGE_DUCT_LAYER), .proc/change_ducting_layer)
 
 /datum/component/plumbing/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,COMSIG_OBJ_HIDE, \
+	unregister_signal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH,COMSIG_OBJ_HIDE, \
 	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
 
 /datum/component/plumbing/Destroy()
@@ -219,7 +219,7 @@
 /datum/component/plumbing/proc/enable(obj/object, datum/component/component)
 	SIGNAL_HANDLER
 	if(active || (component && component != src))
-		UnregisterSignal(parent, list(COMSIG_COMPONENT_ADDED))
+		unregister_signal(parent, list(COMSIG_COMPONENT_ADDED))
 		return
 
 	update_dir()
@@ -318,9 +318,9 @@
 
 /datum/component/plumbing/proc/set_recipient_reagents_holder(datum/reagents/receiver)
 	if(recipient_reagents_holder)
-		UnregisterSignal(recipient_reagents_holder, COMSIG_PARENT_QDELETING) //stop tracking whoever we were tracking
+		unregister_signal(recipient_reagents_holder, COMSIG_PARENT_QDELETING) //stop tracking whoever we were tracking
 	if(receiver)
-		RegisterSignal(receiver, COMSIG_PARENT_QDELETING, .proc/handle_reagent_del) //on deletion call a wrapper proc that clears us, and maybe reagents too
+		register_signal(receiver, COMSIG_PARENT_QDELETING, .proc/handle_reagent_del) //on deletion call a wrapper proc that clears us, and maybe reagents too
 
 	recipient_reagents_holder = receiver
 

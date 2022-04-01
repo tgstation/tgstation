@@ -18,14 +18,14 @@
 	if(climb_stun)
 		src.climb_stun = climb_stun
 
-	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, .proc/attack_hand)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/try_speedrun)
+	register_signal(target, COMSIG_ATOM_ATTACK_HAND, .proc/attack_hand)
+	register_signal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(target, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
+	register_signal(target, COMSIG_ATOM_BUMPED, .proc/try_speedrun)
 	ADD_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 
 /datum/element/climbable/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_MOUSEDROPPED_ONTO, COMSIG_ATOM_BUMPED))
+	unregister_signal(target, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_MOUSEDROPPED_ONTO, COMSIG_ATOM_BUMPED))
 	REMOVE_TRAIT(target, TRAIT_CLIMBABLE, ELEMENT_TRAIT(type))
 	return ..()
 

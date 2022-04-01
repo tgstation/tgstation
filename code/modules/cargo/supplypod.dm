@@ -460,7 +460,7 @@
 	vis_contents += glow_effect
 	glow_effect.layer = GASFIRE_LAYER
 	glow_effect.plane = ABOVE_GAME_PLANE
-	RegisterSignal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
+	register_signal(glow_effect, COMSIG_PARENT_QDELETING, .proc/remove_glow)
 
 /obj/structure/closet/supplypod/proc/endGlow()
 	if(!glow_effect)
@@ -471,7 +471,7 @@
 
 /obj/structure/closet/supplypod/proc/remove_glow()
 	SIGNAL_HANDLER
-	UnregisterSignal(glow_effect, COMSIG_PARENT_QDELETING)
+	unregister_signal(glow_effect, COMSIG_PARENT_QDELETING)
 	vis_contents -= glow_effect
 	glow_effect = null
 

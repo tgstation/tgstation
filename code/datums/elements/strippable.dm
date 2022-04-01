@@ -19,7 +19,7 @@
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/mouse_drop_onto)
+	register_signal(target, COMSIG_MOUSEDROP_ONTO, .proc/mouse_drop_onto)
 
 	src.items = items
 	src.should_strip_proc_path = should_strip_proc_path
@@ -27,7 +27,7 @@
 /datum/element/strippable/Detach(datum/source)
 	. = ..()
 
-	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO)
+	unregister_signal(source, COMSIG_MOUSEDROP_ONTO)
 
 	if (!isnull(strip_menus))
 		qdel(strip_menus[source])

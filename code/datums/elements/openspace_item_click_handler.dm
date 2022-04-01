@@ -9,10 +9,10 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
+	register_signal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
 
 /datum/element/openspace_item_click_handler/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
+	unregister_signal(source, COMSIG_ITEM_AFTERATTACK)
 	return ..()
 
 //Invokes the proctype with a turf above as target.

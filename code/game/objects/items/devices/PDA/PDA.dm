@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 		cartridge.host_pda = src
 	if(insert_type)
 		inserted_item = SSwardrobe.provide_type(insert_type, src)
-	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+	register_signal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	update_appearance()
 

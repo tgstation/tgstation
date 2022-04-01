@@ -16,13 +16,13 @@
 
 /obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
-	RegisterSignal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
+	register_signal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), .proc/on_reagent_change)
+	register_signal(reagents, COMSIG_PARENT_QDELETING, .proc/on_reagents_del)
 
 /// Handles properly detaching signal hooks.
 /obj/machinery/plumbing/growing_vat/proc/on_reagents_del(datum/reagents/reagents)
 	SIGNAL_HANDLER
-	UnregisterSignal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
+	unregister_signal(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT, COMSIG_PARENT_QDELETING))
 	return NONE
 
 ///When we process, we make use of our reagents to try and feed the samples we have.
@@ -62,7 +62,7 @@
 	to_chat(user, span_warning("You put some of the sample in the vat!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_appearance()
-	RegisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, .proc/on_sample_growth_completed)
+	register_signal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED, .proc/on_sample_growth_completed)
 
 ///Adds text for when there is a sample in the vat
 /obj/machinery/plumbing/growing_vat/examine(mob/user)
@@ -134,4 +134,4 @@
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
 		return SPARE_SAMPLE
-	UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	unregister_signal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)

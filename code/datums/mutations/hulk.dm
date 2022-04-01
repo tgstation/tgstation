@@ -23,9 +23,9 @@
 	ADD_TRAIT(owner, TRAIT_HULK, GENETIC_MUTATION)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "hulk", /datum/mood_event/hulk)
-	RegisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
-	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/check_swing)
+	register_signal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/on_attack_hand)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOB_CLICKON, .proc/check_swing)
 
 /datum/mutation/human/hulk/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
@@ -80,9 +80,9 @@
 	REMOVE_TRAIT(owner, TRAIT_HULK, GENETIC_MUTATION)
 	owner.update_body_parts()
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "hulk")
-	UnregisterSignal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-	UnregisterSignal(owner, COMSIG_MOB_CLICKON)
+	unregister_signal(owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	unregister_signal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_CLICKON)
 
 /datum/mutation/human/hulk/proc/handle_speech(original_message, wrapped_message)
 	SIGNAL_HANDLER

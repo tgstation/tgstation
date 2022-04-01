@@ -52,7 +52,7 @@
 
 /obj/item/mail/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	register_signal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 	AddElement(/datum/element/item_scaling, 0.75, 1)
 	if(isnull(department_colors))
 		department_colors = list(

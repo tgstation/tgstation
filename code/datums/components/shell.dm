@@ -40,18 +40,18 @@
 		attach_circuit(starting_circuit)
 
 /datum/component/shell/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/on_attack_ghost)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/on_attack_ghost)
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNMODIFIABLE))
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
+		register_signal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), .proc/on_multitool_act)
+		register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/on_attack_by)
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE))
-		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
-		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
+		register_signal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), .proc/on_screwdriver_act)
+		register_signal(parent, COMSIG_OBJ_DECONSTRUCT, .proc/on_object_deconstruct)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
-	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
-	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
+		register_signal(parent, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
+	register_signal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
+	register_signal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
 
 /datum/component/shell/proc/set_unremovable_circuit_components(list/components)
 	if(unremovable_circuit_components)
@@ -64,7 +64,7 @@
 			circuit_component = new circuit_component()
 		circuit_component.removable = FALSE
 		circuit_component.set_circuit_size(0)
-		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+		register_signal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
 		unremovable_circuit_components += circuit_component
 
 /datum/component/shell/proc/save_component(datum/source, list/objects)
@@ -87,7 +87,7 @@
 
 
 /datum/component/shell/UnregisterFromParent()
-	UnregisterSignal(parent, list(
+	unregister_signal(parent, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
@@ -306,14 +306,14 @@
 	locked = FALSE
 	attached_circuit = circuitboard
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && !circuitboard.admin_only)
-		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
+		register_signal(circuitboard, COMSIG_MOVABLE_MOVED, .proc/on_circuit_moved)
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		RegisterSignal(circuitboard, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
-	RegisterSignal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)
+		register_signal(circuitboard, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
+	register_signal(circuitboard, COMSIG_PARENT_QDELETING, .proc/on_circuit_delete)
 	for(var/obj/item/circuit_component/to_add as anything in unremovable_circuit_components)
 		to_add.forceMove(attached_circuit)
 		attached_circuit.add_component(to_add)
-	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
+	register_signal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, .proc/on_circuit_add_component_manually)
 	if(attached_circuit.display_name != "")
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
 	attached_circuit.set_locked(FALSE)
@@ -333,7 +333,7 @@
 /datum/component/shell/proc/remove_circuit()
 	attached_circuit.on = TRUE
 	attached_circuit.remove_current_shell()
-	UnregisterSignal(attached_circuit, list(
+	unregister_signal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY,

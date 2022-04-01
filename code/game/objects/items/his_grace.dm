@@ -31,7 +31,7 @@
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
 	SSpoints_of_interest.make_point_of_interest(src)
-	RegisterSignal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
+	register_signal(src, COMSIG_MOVABLE_POST_THROW, .proc/move_gracefully)
 	update_appearance()
 
 /obj/item/his_grace/Destroy()

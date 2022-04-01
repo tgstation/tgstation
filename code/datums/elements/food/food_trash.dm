@@ -15,21 +15,21 @@
 		return ELEMENT_INCOMPATIBLE
 	src.trash = trash
 	src.flags = flags
-	RegisterSignal(target, COMSIG_FOOD_CONSUMED, .proc/generate_trash)
+	register_signal(target, COMSIG_FOOD_CONSUMED, .proc/generate_trash)
 	if(!generate_trash_procpath && generate_trash_proc)
 		generate_trash_procpath = generate_trash_proc
 	if(flags & FOOD_TRASH_OPENABLE)
-		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/open_trash)
+		register_signal(target, COMSIG_ITEM_ATTACK_SELF, .proc/open_trash)
 	if(flags & FOOD_TRASH_POPABLE)
-		RegisterSignal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
-	RegisterSignal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
-	RegisterSignal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
-	RegisterSignal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)
-	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/generate_trash)
+		register_signal(target, COMSIG_FOOD_CROSSED, .proc/food_crossed)
+	register_signal(target, COMSIG_ITEM_ON_GRIND, .proc/generate_trash)
+	register_signal(target, COMSIG_ITEM_ON_JUICE, .proc/generate_trash)
+	register_signal(target, COMSIG_ITEM_ON_COMPOSTED, .proc/generate_trash)
+	register_signal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/generate_trash)
 
 /datum/element/food_trash/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
+	unregister_signal(target, COMSIG_FOOD_CONSUMED)
 
 /datum/element/food_trash/proc/generate_trash(datum/source, mob/living/eater, mob/living/feeder)
 	SIGNAL_HANDLER

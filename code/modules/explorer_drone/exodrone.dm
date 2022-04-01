@@ -233,10 +233,10 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /obj/item/exodrone/proc/start_adventure(datum/adventure/adventure)
 	current_adventure = adventure
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_FINISHED,.proc/resolve_adventure)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_QUALITY_INIT,.proc/add_tool_qualities)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_START,.proc/adventure_delay_start)
-	RegisterSignal(current_adventure,COMSIG_ADVENTURE_DELAY_END,.proc/adventure_delay_end)
+	register_signal(current_adventure,COMSIG_ADVENTURE_FINISHED,.proc/resolve_adventure)
+	register_signal(current_adventure,COMSIG_ADVENTURE_QUALITY_INIT,.proc/add_tool_qualities)
+	register_signal(current_adventure,COMSIG_ADVENTURE_DELAY_START,.proc/adventure_delay_start)
+	register_signal(current_adventure,COMSIG_ADVENTURE_DELAY_END,.proc/adventure_delay_end)
 	set_status(EXODRONE_ADVENTURE)
 	current_adventure.start_adventure()
 
@@ -246,14 +246,14 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	switch(result)
 		if(ADVENTURE_RESULT_SUCCESS)
 			award_adventure_loot()
-			UnregisterSignal(current_adventure,list(COMSIG_ADVENTURE_FINISHED,COMSIG_ADVENTURE_QUALITY_INIT,COMSIG_ADVENTURE_DELAY_START,COMSIG_ADVENTURE_DELAY_END))
+			unregister_signal(current_adventure,list(COMSIG_ADVENTURE_FINISHED,COMSIG_ADVENTURE_QUALITY_INIT,COMSIG_ADVENTURE_DELAY_START,COMSIG_ADVENTURE_DELAY_END))
 			current_adventure = null
 			set_status(EXODRONE_EXPLORATION)
 			return
 		if(ADVENTURE_RESULT_DAMAGE)
 			damage(max_integrity*0.5) //Half health lost
 			if(!QDELETED(src)) // Don't bother if we just blown up from the damage
-				UnregisterSignal(current_adventure,list(COMSIG_ADVENTURE_FINISHED,COMSIG_ADVENTURE_QUALITY_INIT,COMSIG_ADVENTURE_DELAY_START,COMSIG_ADVENTURE_DELAY_END))
+				unregister_signal(current_adventure,list(COMSIG_ADVENTURE_FINISHED,COMSIG_ADVENTURE_QUALITY_INIT,COMSIG_ADVENTURE_DELAY_START,COMSIG_ADVENTURE_DELAY_END))
 				current_adventure = null
 				set_status(EXODRONE_EXPLORATION)
 			return

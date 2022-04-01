@@ -12,7 +12,7 @@
 	owner = new_owner
 	family_name = new_family_name
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/heirloom/Destroy(force, silent)
 	owner = null

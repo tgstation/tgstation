@@ -37,10 +37,10 @@ SUBSYSTEM_DEF(eigenstates)
 	for(var/atom/target as anything in targets)
 		eigen_targets["[id_counter]"] += target
 		eigen_id[target] = "[id_counter]"
-		RegisterSignal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
-		RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
-		target.RegisterSignal(target, COMSIG_EIGENSTATE_ACTIVATE, /obj/structure/closet/proc/bust_open)
+		register_signal(target, COMSIG_CLOSET_INSERT, .proc/use_eigenlinked_atom)
+		register_signal(target, COMSIG_PARENT_QDELETING, .proc/remove_eigen_entry)
+		register_signal(target, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/tool_interact)
+		target.register_signal(target, COMSIG_EIGENSTATE_ACTIVATE, /obj/structure/closet/proc/bust_open)
 		ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
 		var/obj/item = target
 		if(item)
@@ -70,13 +70,13 @@ SUBSYSTEM_DEF(eigenstates)
 	eigen_id -= entry
 	entry.color = COLOR_WHITE
 	entry.alpha = 255
-	UnregisterSignal(entry, list(
+	unregister_signal(entry, list(
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CLOSET_INSERT,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 	))
 	REMOVE_TRAIT(entry, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
-	entry.UnregisterSignal(entry, COMSIG_EIGENSTATE_ACTIVATE) //This is a signal on the object itself so we have to call it from that
+	entry.unregister_signal(entry, COMSIG_EIGENSTATE_ACTIVATE) //This is a signal on the object itself so we have to call it from that
 	///Remove the current entry if we're empty
 	for(var/targets in eigen_targets)
 		if(!length(eigen_targets[targets]))

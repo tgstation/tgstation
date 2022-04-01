@@ -1,6 +1,6 @@
 /datum/component/personal_crafting/Initialize()
 	if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
+		register_signal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	SIGNAL_HANDLER
@@ -10,7 +10,7 @@
 	C.icon = H.ui_style
 	H.static_inventory += C
 	CL.screen += C
-	RegisterSignal(C, COMSIG_CLICK, .proc/component_ui_interact)
+	register_signal(C, COMSIG_CLICK, .proc/component_ui_interact)
 
 /datum/component/personal_crafting
 	var/busy

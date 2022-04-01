@@ -33,10 +33,10 @@
 /datum/component/deadchat_control/Initialize(_deadchat_mode, _inputs, _input_cooldown = 12 SECONDS, _on_removal)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/orbit_begin)
-	RegisterSignal(parent, COMSIG_ATOM_ORBIT_STOP, .proc/orbit_stop)
-	RegisterSignal(parent, COMSIG_VV_TOPIC, .proc/handle_vv_topic)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_ATOM_ORBIT_BEGIN, .proc/orbit_begin)
+	register_signal(parent, COMSIG_ATOM_ORBIT_STOP, .proc/orbit_stop)
+	register_signal(parent, COMSIG_VV_TOPIC, .proc/handle_vv_topic)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	deadchat_mode = _deadchat_mode
 	inputs = _inputs
 	input_cooldown = _input_cooldown
@@ -129,8 +129,8 @@
 /datum/component/deadchat_control/proc/orbit_begin(atom/source, atom/orbiter)
 	SIGNAL_HANDLER
 
-	RegisterSignal(orbiter, COMSIG_MOB_DEADSAY, .proc/deadchat_react)
-	RegisterSignal(orbiter, COMSIG_MOB_AUTOMUTE_CHECK, .proc/waive_automute)
+	register_signal(orbiter, COMSIG_MOB_DEADSAY, .proc/deadchat_react)
+	register_signal(orbiter, COMSIG_MOB_AUTOMUTE_CHECK, .proc/waive_automute)
 	orbiters |= orbiter
 
 
@@ -138,7 +138,7 @@
 	SIGNAL_HANDLER
 
 	if(orbiter in orbiters)
-		UnregisterSignal(orbiter, list(
+		unregister_signal(orbiter, list(
 			COMSIG_MOB_DEADSAY,
 			COMSIG_MOB_AUTOMUTE_CHECK,
 		))

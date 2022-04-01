@@ -55,7 +55,7 @@
 		if (!crystal.include_in_cims || !isturf(crystal.loc) || !(is_station_level(crystal.z) || is_mining_level(crystal.z) || crystal.z == user_turf.z))
 			continue
 		supermatters.Add(crystal)
-		RegisterSignal(crystal, COMSIG_PARENT_QDELETING, .proc/react_to_del)
+		register_signal(crystal, COMSIG_PARENT_QDELETING, .proc/react_to_del)
 
 /datum/computer_file/program/supermatter_monitor/proc/get_status()
 	. = SUPERMATTER_INACTIVE
@@ -71,8 +71,8 @@
  */
 /datum/computer_file/program/supermatter_monitor/proc/set_signals()
 	if(active)
-		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert, override = TRUE)
-		RegisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM, .proc/send_start_alert, override = TRUE)
+		register_signal(active, COMSIG_SUPERMATTER_DELAM_ALARM, .proc/send_alert, override = TRUE)
+		register_signal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM, .proc/send_start_alert, override = TRUE)
 
 /**
  * Removes the signal listener for Supermatter delaminations from the selected supermatter.
@@ -81,8 +81,8 @@
  */
 /datum/computer_file/program/supermatter_monitor/proc/clear_signals()
 	if(active)
-		UnregisterSignal(active, COMSIG_SUPERMATTER_DELAM_ALARM)
-		UnregisterSignal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM)
+		unregister_signal(active, COMSIG_SUPERMATTER_DELAM_ALARM)
+		unregister_signal(active, COMSIG_SUPERMATTER_DELAM_START_ALARM)
 
 /**
  * Sends an SM delam alert to the computer.
@@ -178,4 +178,4 @@
 	supermatters -= matter
 	if(matter == active)
 		active = null
-	UnregisterSignal(matter, COMSIG_PARENT_QDELETING)
+	unregister_signal(matter, COMSIG_PARENT_QDELETING)

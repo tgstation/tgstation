@@ -22,11 +22,11 @@
 	apply_label()
 
 /datum/component/label/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackby)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/Examine)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackby)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/Examine)
 
 /datum/component/label/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
+	unregister_signal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /**
 	This proc will fire after the parent is hit by a hand labeler which is trying to apply another label.

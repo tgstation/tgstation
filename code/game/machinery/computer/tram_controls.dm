@@ -139,13 +139,13 @@
 	if (istype(shell, /obj/machinery/computer/tram_controls))
 		computer = shell
 		var/obj/structure/industrial_lift/tram/central/tram_part = computer.tram_ref?.resolve()
-		RegisterSignal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_set_travelling)
-		RegisterSignal(tram_part, COMSIG_TRAM_TRAVEL, .proc/on_tram_travel)
+		register_signal(tram_part, COMSIG_TRAM_SET_TRAVELLING, .proc/on_tram_set_travelling)
+		register_signal(tram_part, COMSIG_TRAM_TRAVEL, .proc/on_tram_travel)
 
 /obj/item/circuit_component/tram_controls/unregister_usb_parent(atom/movable/shell)
 	var/obj/structure/industrial_lift/tram/central/tram_part = computer.tram_ref?.resolve()
 	computer = null
-	UnregisterSignal(tram_part, list(COMSIG_TRAM_SET_TRAVELLING, COMSIG_TRAM_TRAVEL))
+	unregister_signal(tram_part, list(COMSIG_TRAM_SET_TRAVELLING, COMSIG_TRAM_TRAVEL))
 	return ..()
 
 /obj/item/circuit_component/tram_controls/input_received(datum/port/input/port)

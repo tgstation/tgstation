@@ -272,20 +272,20 @@
 	if(!.)
 		return
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, .proc/on_nuke_armed)
+	register_signal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, .proc/on_nuke_armed)
 	if(computer)
-		RegisterSignal(computer, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		register_signal(computer, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/computer_file/program/radar/fission360/kill_program(forced)
-	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
+	unregister_signal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
 	if(computer)
-		UnregisterSignal(computer, COMSIG_PARENT_EXAMINE)
+		unregister_signal(computer, COMSIG_PARENT_EXAMINE)
 	return ..()
 
 /datum/computer_file/program/radar/fission360/Destroy()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
+	unregister_signal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
 	if(computer)
-		UnregisterSignal(computer, COMSIG_PARENT_EXAMINE)
+		unregister_signal(computer, COMSIG_PARENT_EXAMINE)
 	return ..()
 
 /datum/computer_file/program/radar/fission360/find_atom()

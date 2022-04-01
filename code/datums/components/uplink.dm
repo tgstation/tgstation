@@ -51,20 +51,20 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackBy)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 	if(istype(parent, /obj/item/implant))
-		RegisterSignal(parent, COMSIG_IMPLANT_ACTIVATED, .proc/implant_activation)
-		RegisterSignal(parent, COMSIG_IMPLANT_IMPLANTING, .proc/implanting)
-		RegisterSignal(parent, COMSIG_IMPLANT_OTHER, .proc/old_implant)
-		RegisterSignal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
+		register_signal(parent, COMSIG_IMPLANT_ACTIVATED, .proc/implant_activation)
+		register_signal(parent, COMSIG_IMPLANT_IMPLANTING, .proc/implanting)
+		register_signal(parent, COMSIG_IMPLANT_OTHER, .proc/old_implant)
+		register_signal(parent, COMSIG_IMPLANT_EXISTING_UPLINK, .proc/new_implant)
 	else if(istype(parent, /obj/item/pda))
-		RegisterSignal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
-		RegisterSignal(parent, COMSIG_PDA_CHECK_DETONATE, .proc/check_detonate)
+		register_signal(parent, COMSIG_PDA_CHANGE_RINGTONE, .proc/new_ringtone)
+		register_signal(parent, COMSIG_PDA_CHECK_DETONATE, .proc/check_detonate)
 	else if(istype(parent, /obj/item/radio))
-		RegisterSignal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
+		register_signal(parent, COMSIG_RADIO_NEW_FREQUENCY, .proc/new_frequency)
 	else if(istype(parent, /obj/item/pen))
-		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
+		register_signal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
 	if(owner)
 		src.owner = owner
@@ -84,7 +84,7 @@
 		uplink_handler.purchase_log = purchase_log
 	else
 		uplink_handler = uplink_handler_override
-	RegisterSignal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, .proc/handle_uplink_handler_update)
+	register_signal(uplink_handler, COMSIG_UPLINK_HANDLER_ON_UPDATE, .proc/handle_uplink_handler_update)
 	if(!lockable)
 		active = TRUE
 		locked = FALSE

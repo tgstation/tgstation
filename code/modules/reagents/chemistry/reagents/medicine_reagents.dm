@@ -652,8 +652,8 @@
 /datum/reagent/medicine/oculine/on_mob_add(mob/living/owner)
 	if(!iscarbon(owner))
 		return
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
+	register_signal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/on_gained_organ)
+	register_signal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/on_removed_organ)
 	var/obj/item/organ/eyes/eyes = owner.getorganslot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
@@ -730,7 +730,7 @@
 /datum/reagent/medicine/inacusiate/on_mob_add(mob/living/owner, amount)
 	. = ..()
 	if(creation_purity >= 1)
-		RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
+		register_signal(owner, COMSIG_MOVABLE_HEAR, .proc/owner_hear)
 
 //Lets us hear whispers from far away!
 /datum/reagent/medicine/inacusiate/proc/owner_hear(datum/source, message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
@@ -751,7 +751,7 @@
 
 /datum/reagent/medicine/inacusiate/on_mob_delete(mob/living/owner)
 	. = ..()
-	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	unregister_signal(owner, COMSIG_MOVABLE_HEAR)
 
 /datum/reagent/medicine/atropine
 	name = "Atropine"

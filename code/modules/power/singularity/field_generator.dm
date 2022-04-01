@@ -66,7 +66,7 @@ no power level overlay is currently in the overlays list.
 	. = ..()
 	fields = list()
 	connected_gens = list()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
+	register_signal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, .proc/block_singularity_if_active)
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()

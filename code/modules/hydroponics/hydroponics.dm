@@ -1118,32 +1118,32 @@
 	. = ..()
 	if(istype(parent, /obj/machinery/hydroponics))
 		attached_tray = parent
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_SEED, .proc/on_set_seed)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, .proc/on_set_selfsustaining)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_WEEDLEVEL, .proc/on_set_weedlevel)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PESTLEVEL, .proc/on_set_pestlevel)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_WATERLEVEL, .proc/on_set_waterlevel)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_HEALTH, .proc/on_set_plant_health)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_TOXIC, .proc/on_set_toxic_level)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_STATUS, .proc/on_set_plant_status)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_ON_HARVEST, .proc/on_harvest)
-		RegisterSignal(attached_tray, COMSIG_HYDROTRAY_PLANT_DEATH, .proc/on_plant_death)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_SEED, .proc/on_set_seed)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, .proc/on_set_selfsustaining)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_WEEDLEVEL, .proc/on_set_weedlevel)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_PESTLEVEL, .proc/on_set_pestlevel)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_WATERLEVEL, .proc/on_set_waterlevel)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_HEALTH, .proc/on_set_plant_health)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_TOXIC, .proc/on_set_toxic_level)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_SET_PLANT_STATUS, .proc/on_set_plant_status)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_ON_HARVEST, .proc/on_harvest)
+		register_signal(attached_tray, COMSIG_HYDROTRAY_PLANT_DEATH, .proc/on_plant_death)
 		var/list/reagents_holder_signals = list(
 			COMSIG_REAGENTS_ADD_REAGENT,
 			COMSIG_REAGENTS_REM_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT,
 			COMSIG_REAGENTS_DEL_REAGENT,
 		)
-		RegisterSignal(attached_tray, reagents_holder_signals, .proc/update_reagents_level)
+		register_signal(attached_tray, reagents_holder_signals, .proc/update_reagents_level)
 
 /obj/item/circuit_component/hydroponics/unregister_usb_parent(atom/movable/parent)
 	attached_tray = null
-	UnregisterSignal(parent, list(COMSIG_HYDROTRAY_SET_SEED, COMSIG_HYDROTRAY_SET_SELFSUSTAINING,
+	unregister_signal(parent, list(COMSIG_HYDROTRAY_SET_SEED, COMSIG_HYDROTRAY_SET_SELFSUSTAINING,
 		COMSIG_HYDROTRAY_SET_WEEDLEVEL, COMSIG_HYDROTRAY_SET_PESTLEVEL, COMSIG_HYDROTRAY_SET_WATERLEVEL,
 		COMSIG_HYDROTRAY_SET_PLANT_HEALTH, COMSIG_HYDROTRAY_SET_TOXIC, COMSIG_HYDROTRAY_SET_PLANT_STATUS,
 		COMSIG_HYDROTRAY_ON_HARVEST, COMSIG_HYDROTRAY_PLANT_DEATH))
 	if(parent.reagents)
-		UnregisterSignal(parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT,
+		unregister_signal(parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_REM_REAGENT,
 			COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_DEL_REAGENT))
 	return ..()
 

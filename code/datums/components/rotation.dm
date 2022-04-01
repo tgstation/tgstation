@@ -19,12 +19,12 @@
 /datum/component/simple_rotation
 	/// Additional stuff to do after rotation
 	var/datum/callback/AfterRotation
-	/// Rotation flags for special behavior 
+	/// Rotation flags for special behavior
 	var/rotation_flags = NONE
 
 /**
  * Adds the ability to rotate an object by Alt-click or using Right-click verbs.
- * 
+ *
  * args:
  * * rotation_flags (optional) Bitflags that determine behavior for rotation (defined at the top of this file)
  * * AfterRotation (optional) Callback proc that is used after the object is rotated (sound effects, balloon alerts, etc.)
@@ -37,9 +37,9 @@
 	src.AfterRotation = AfterRotation || CALLBACK(src, .proc/DefaultAfterRotation)
 
 /datum/component/simple_rotation/proc/AddSignals()
-	RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
-	RegisterSignal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
+	register_signal(parent, COMSIG_CLICK_ALT, .proc/RotateLeft)
+	register_signal(parent, COMSIG_CLICK_ALT_SECONDARY, .proc/RotateRight)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/ExamineMessage)
 
 /datum/component/simple_rotation/proc/AddVerbs()
 	var/obj/rotated_obj = parent
@@ -56,7 +56,7 @@
 		rotated_obj.verbs -= /atom/movable/proc/SimpleRotateCounterclockwise
 
 /datum/component/simple_rotation/proc/RemoveSignals()
-	UnregisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
+	unregister_signal(parent, list(COMSIG_CLICK_ALT, COMSIG_CLICK_ALT_SECONDARY, COMSIG_PARENT_EXAMINE))
 
 /datum/component/simple_rotation/RegisterWithParent()
 	AddVerbs()
@@ -103,7 +103,7 @@
 	if(!istype(user))
 		CRASH("[src] is being rotated without a user of the wrong type: [user.type]")
 	if(!isnum(degrees))
-		CRASH("[src] is being rotated without providing the amount of degrees needed") 
+		CRASH("[src] is being rotated without providing the amount of degrees needed")
 
 	if(!CanBeRotated(user, degrees) || !CanUserRotate(user, degrees))
 		return
@@ -112,14 +112,14 @@
 	rotated_obj.setDir(turn(rotated_obj.dir, degrees))
 	if(rotation_flags & ROTATION_REQUIRE_WRENCH)
 		playsound(rotated_obj, 'sound/items/ratchet.ogg', 50, TRUE)
-		
+
 	AfterRotation.Invoke(user, degrees)
 
 /datum/component/simple_rotation/proc/CanUserRotate(mob/user, degrees)
 	if(isliving(user) && user.canUseTopic(parent, BE_CLOSE, NO_DEXTERITY, FALSE, !iscyborg(user)))
 		return TRUE
 	if((rotation_flags & ROTATION_GHOSTS_ALLOWED) && isobserver(user) && CONFIG_GET(flag/ghost_interaction))
-		return TRUE	
+		return TRUE
 	return FALSE
 
 /datum/component/simple_rotation/proc/CanBeRotated(mob/user, degrees)
@@ -149,7 +149,7 @@
 	return TRUE
 
 /datum/component/simple_rotation/proc/DefaultAfterRotation(mob/user, degrees)
-	return 
+	return
 
 /atom/movable/proc/SimpleRotateClockwise()
 	set name = "Rotate Clockwise"

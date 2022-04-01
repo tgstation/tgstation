@@ -75,7 +75,7 @@
 	. = ..()
 	if(can_be_tied && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
+		register_signal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
@@ -120,11 +120,11 @@
 	if(tied == SHOES_TIED)
 		if(our_guy)
 			our_guy.clear_alert(ALERT_SHOES_KNOT)
-		UnregisterSignal(src, COMSIG_SHOES_STEP_ACTION)
+		unregister_signal(src, COMSIG_SHOES_STEP_ACTION)
 	else
 		if(tied == SHOES_UNTIED && our_guy && user == our_guy)
 			our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied)) // if we're the ones unknotting our own laces, of course we know they're untied
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
+		register_signal(src, COMSIG_SHOES_STEP_ACTION, .proc/check_trip, override=TRUE)
 
 /**
  * handle_tying deals with all the actual tying/untying/knotting, inferring your intent from who you are in relation to the state of the laces

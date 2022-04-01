@@ -624,10 +624,10 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 /datum/everyone_is_a_traitor_controller/New(objective)
 	src.objective = objective
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/make_traitor)
+	register_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/make_traitor)
 
 /datum/everyone_is_a_traitor_controller/Destroy()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	unregister_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	return ..()
 
 /datum/everyone_is_a_traitor_controller/proc/make_traitor(datum/source, mob/living/player)

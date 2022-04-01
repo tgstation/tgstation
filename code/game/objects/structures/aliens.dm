@@ -170,7 +170,7 @@
 
 /obj/structure/alien/weeds/Destroy()
 	if(parent_node)
-		UnregisterSignal(parent_node, COMSIG_PARENT_QDELETING)
+		unregister_signal(parent_node, COMSIG_PARENT_QDELETING)
 		parent_node = null
 	return ..()
 
@@ -214,7 +214,7 @@
 		check_weed = new(check_turf)
 		//set the new one's parent node to our parent node
 		check_weed.parent_node = parent_node
-		check_weed.RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		check_weed.register_signal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
 
 /**
  * Called when the parent node is destroyed
@@ -236,7 +236,7 @@
 		if(new_parent == previous_node)
 			continue
 		parent_node = new_parent
-		RegisterSignal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
+		register_signal(parent_node, COMSIG_PARENT_QDELETING, .proc/after_parent_destroyed)
 		return parent_node
 	return FALSE
 

@@ -318,7 +318,7 @@
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/I, mob/living/user)
 	. = ..()
 	attached_items += I
-	RegisterSignal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
+	register_signal(I, COMSIG_MOVABLE_MOVED, .proc/RemoveItemFromTable) //Listen for the pickup event, unregister on pick-up so we aren't moved
 
 /obj/structure/table/rolling/proc/RemoveItemFromTable(datum/source, newloc, dir)
 	SIGNAL_HANDLER
@@ -326,7 +326,7 @@
 	if(newloc != loc) //Did we not move with the table? because that shit's ok
 		return FALSE
 	attached_items -= source
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	unregister_signal(source, COMSIG_MOVABLE_MOVED)
 
 /obj/structure/table/rolling/Moved(atom/OldLoc, Dir)
 	. = ..()
@@ -686,10 +686,10 @@
 
 /obj/structure/table/optable/proc/set_patient(new_patient)
 	if(patient)
-		UnregisterSignal(patient, COMSIG_PARENT_QDELETING)
+		unregister_signal(patient, COMSIG_PARENT_QDELETING)
 	patient = new_patient
 	if(patient)
-		RegisterSignal(patient, COMSIG_PARENT_QDELETING, .proc/patient_deleted)
+		register_signal(patient, COMSIG_PARENT_QDELETING, .proc/patient_deleted)
 
 /obj/structure/table/optable/proc/patient_deleted(datum/source)
 	SIGNAL_HANDLER

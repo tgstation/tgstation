@@ -16,12 +16,12 @@
 	src.visor_up = clothing_parent.up //Initial values could vary, so we need to get it.
 
 /datum/component/clothing_fov_visor/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(parent, COMSIG_CLOTHING_VISOR_TOGGLE, .proc/on_visor_toggle)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	register_signal(parent, COMSIG_CLOTHING_VISOR_TOGGLE, .proc/on_visor_toggle)
 
 /datum/component/clothing_fov_visor/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_VISOR_TOGGLE))
+	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_VISOR_TOGGLE))
 	return ..()
 
 /// On dropping the item, remove the FoV trait if visor was down.

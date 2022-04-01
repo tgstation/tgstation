@@ -32,12 +32,12 @@
 /obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
 	if(.)
-		RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+		register_signal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /obj/item/implant/chem/removed(mob/target, silent = FALSE, special = FALSE)
 	. = ..()
 	if(.)
-		UnregisterSignal(target, COMSIG_LIVING_DEATH)
+		unregister_signal(target, COMSIG_LIVING_DEATH)
 
 /obj/item/implant/chem/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER

@@ -24,12 +24,12 @@
 		weather_trait = trait
 		playlist = weather_playlist
 
-	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/handle_z_level_change, override = TRUE)
-	RegisterSignal(target, COMSIG_MOB_LOGOUT, .proc/handle_logout, override = TRUE)
+	register_signal(target, COMSIG_MOVABLE_Z_CHANGED, .proc/handle_z_level_change, override = TRUE)
+	register_signal(target, COMSIG_MOB_LOGOUT, .proc/handle_logout, override = TRUE)
 
 /datum/element/weather_listener/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGOUT)
+	unregister_signal(source, COMSIG_MOVABLE_Z_CHANGED, COMSIG_MOB_LOGOUT)
 
 /datum/element/weather_listener/proc/handle_z_level_change(datum/source, old_z, new_z)
 	SIGNAL_HANDLER
@@ -37,7 +37,7 @@
 	if(!(new_z in fitting_z_levels))
 		return
 	var/datum/component/our_comp = source.AddComponent(/datum/component/area_sound_manager, playlist, list(), COMSIG_MOB_LOGOUT, fitting_z_levels)
-	our_comp.RegisterSignal(SSdcs, sound_change_signals, /datum/component/area_sound_manager/proc/handle_change)
+	our_comp.register_signal(SSdcs, sound_change_signals, /datum/component/area_sound_manager/proc/handle_change)
 
 /datum/element/weather_listener/proc/handle_logout(datum/source)
 	SIGNAL_HANDLER

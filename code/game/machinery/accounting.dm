@@ -26,7 +26,7 @@
 			to_chat(user, span_warning("\the [src] blinks red as you try to insert the ID Card!"))
 			return
 		inserted_id = new_id
-		RegisterSignal(inserted_id, COMSIG_PARENT_QDELETING, .proc/remove_card)
+		register_signal(inserted_id, COMSIG_PARENT_QDELETING, .proc/remove_card)
 		var/datum/bank_account/bank_account = new /datum/bank_account(inserted_id.registered_name)
 		inserted_id.registered_account = bank_account
 		if(istype(new_id.trim, /datum/id_trim/job))
@@ -66,7 +66,7 @@
 ///Used to clean up variables after the card has been removed, unregisters the removal signal, sets inserted ID to null, and updates the icon.
 /obj/machinery/accounting/proc/remove_card()
 	SIGNAL_HANDLER
-	UnregisterSignal(inserted_id, COMSIG_PARENT_QDELETING)
+	unregister_signal(inserted_id, COMSIG_PARENT_QDELETING)
 	inserted_id = null
 	update_appearance()
 

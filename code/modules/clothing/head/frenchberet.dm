@@ -10,15 +10,15 @@
 /obj/item/clothing/head/frenchberet/equipped(mob/M, slot)
 	. = ..()
 	if (slot == ITEM_SLOT_HEAD)
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+		register_signal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 		ADD_TRAIT(M, TRAIT_GARLIC_BREATH, type)
 	else
-		UnregisterSignal(M, COMSIG_MOB_SAY)
+		unregister_signal(M, COMSIG_MOB_SAY)
 		REMOVE_TRAIT(M, TRAIT_GARLIC_BREATH, type)
 
 /obj/item/clothing/head/frenchberet/dropped(mob/M)
 	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	unregister_signal(M, COMSIG_MOB_SAY)
 	REMOVE_TRAIT(M, TRAIT_GARLIC_BREATH, type)
 
 /obj/item/clothing/head/frenchberet/proc/handle_speech(datum/source, mob/speech_args)

@@ -104,7 +104,7 @@
 		return
 	if(!var_value)
 		if(listeningTo)
-			UnregisterSignal(listeningTo, COMSIG_TURF_MULTIZ_NEW)
+			unregister_signal(listeningTo, COMSIG_TURF_MULTIZ_NEW)
 			listeningTo = null
 	else
 		build_signal_listener()
@@ -112,9 +112,9 @@
 
 /obj/structure/stairs/proc/build_signal_listener()
 	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_TURF_MULTIZ_NEW)
+		unregister_signal(listeningTo, COMSIG_TURF_MULTIZ_NEW)
 	var/turf/open/openspace/T = get_step_multiz(get_turf(src), UP)
-	RegisterSignal(T, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_new)
+	register_signal(T, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_new)
 	listeningTo = T
 
 /obj/structure/stairs/proc/force_open_above()

@@ -151,7 +151,7 @@
 		ADD_TRAIT(user, TRAIT_NODEATH, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOHARDCRIT, CLOTHING_TRAIT)
 		ADD_TRAIT(user, TRAIT_NOCRITDAMAGE, CLOTHING_TRAIT)
-		RegisterSignal(user, COMSIG_CARBON_HEALTH_UPDATE, .proc/check_health)
+		register_signal(user, COMSIG_CARBON_HEALTH_UPDATE, .proc/check_health)
 		icon_state = "memento_mori_active"
 		active_owner = user
 
@@ -159,7 +159,7 @@
 	icon_state = "memento_mori"
 	if(!active_owner)
 		return
-	UnregisterSignal(active_owner, COMSIG_CARBON_HEALTH_UPDATE)
+	unregister_signal(active_owner, COMSIG_CARBON_HEALTH_UPDATE)
 	var/mob/living/carbon/human/H = active_owner //to avoid infinite looping when dust unequips the pendant
 	active_owner = null
 	to_chat(H, span_userdanger("You feel your life rapidly slipping away from you!"))
@@ -264,7 +264,7 @@
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
 	if(ismob(thing))
-		RegisterSignal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
+		register_signal(thing, COMSIG_MOB_UPDATE_SIGHT, .proc/update_user_sight)
 		var/mob/being = thing
 		being.update_sight()
 		to_chat(thing, span_notice("The wisp enhances your vision."))
@@ -272,7 +272,7 @@
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits)
 	. = ..()
 	if(ismob(orbits.parent))
-		UnregisterSignal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
+		unregister_signal(orbits.parent, COMSIG_MOB_UPDATE_SIGHT)
 		to_chat(orbits.parent, span_notice("Your vision returns to normal."))
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
@@ -561,8 +561,8 @@
 	. = ..()
 	if(slot == ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
-		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
-		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
+		register_signal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
+		register_signal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
 	else
 		stopmining(user)
 
@@ -572,8 +572,8 @@
 
 /obj/item/clothing/gloves/gauntlets/proc/stopmining(mob/user)
 	tool_behaviour = initial(tool_behaviour)
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	UnregisterSignal(user, COMSIG_MOVABLE_BUMP)
+	unregister_signal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	unregister_signal(user, COMSIG_MOVABLE_BUMP)
 
 /obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
 	SIGNAL_HANDLER
@@ -955,7 +955,7 @@
 		span_notice("You hilt strike [target]!"))
 	to_chat(target, span_userdanger("You've been struck by [user]!"))
 	playsound(src, 'sound/weapons/genhit3.ogg', 50, TRUE)
-	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/strike_throw_impact)
+	register_signal(target, COMSIG_MOVABLE_IMPACT, .proc/strike_throw_impact)
 	var/atom/throw_target = get_edge_target_turf(target, user.dir)
 	target.throw_at(throw_target, 5, 3, user, FALSE, gentle = TRUE)
 	target.apply_damage(damage = 17, bare_wound_bonus = 10)
@@ -965,7 +965,7 @@
 /obj/item/cursed_katana/proc/strike_throw_impact(mob/living/source, atom/hit_atom, datum/thrownthing/thrownthing)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, COMSIG_MOVABLE_IMPACT)
+	unregister_signal(source, COMSIG_MOVABLE_IMPACT)
 	if(isclosedturf(hit_atom))
 		source.apply_damage(damage = 5)
 		if(ishostile(source))

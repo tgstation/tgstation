@@ -86,7 +86,7 @@
 
 	limb.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
-	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/weaponDeleted)
+	register_signal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/weaponDeleted)
 	victim.visible_message(span_danger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] [victim]'s [limb.name]!"), span_userdanger("[weapon] [harmful ? "embeds" : "sticks"] itself [harmful ? "in" : "to"] your [limb.name]!"))
 
 	var/damage = weapon.throwforce
@@ -107,19 +107,19 @@
 		victim.clear_alert(ALERT_EMBEDDED_OBJECT)
 		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 	if(weapon)
-		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		unregister_signal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	weapon = null
 	limb = null
 	return ..()
 
 /datum/component/embedded/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
-	RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, .proc/ripOut)
-	RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, .proc/safeRemove)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/checkTweeze)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
+	register_signal(parent, COMSIG_CARBON_EMBED_RIP, .proc/ripOut)
+	register_signal(parent, COMSIG_CARBON_EMBED_REMOVAL, .proc/safeRemove)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/checkTweeze)
 
 /datum/component/embedded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY))
+	unregister_signal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_ATTACKBY))
 
 /datum/component/embedded/process(delta_time)
 	var/mob/living/carbon/victim = parent
@@ -216,10 +216,10 @@
 
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
-	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
+	unregister_signal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to do it here otherwise we trigger weaponDeleted()
 
 	if(!weapon.unembedded()) // if it hasn't deleted itself due to drop del
-		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+		unregister_signal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 		if(to_hands)
 			INVOKE_ASYNC(to_hands, /mob.proc/put_in_hands, weapon)
 		else

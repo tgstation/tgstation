@@ -22,12 +22,12 @@
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/wacky/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/wacky/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -78,12 +78,12 @@
 /datum/mutation/human/swedish/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/swedish/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/swedish/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -109,12 +109,12 @@
 /datum/mutation/human/chav/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/chav/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/chav/proc/handle_speech(datum/source, mob/speech_args)
 	SIGNAL_HANDLER
@@ -158,12 +158,12 @@
 /datum/mutation/human/elvis/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/elvis/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/elvis/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -211,12 +211,12 @@
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/medieval/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
@@ -251,12 +251,12 @@
 /datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_SAY)
 
 /datum/mutation/human/piglatin/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER

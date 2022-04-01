@@ -51,13 +51,13 @@
 	. = ..()
 	if(!pin)
 		pin = new
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
+	register_signal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/channel_blastwave)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/blastcannon/Destroy()
 	if(bomb)
 		QDEL_NULL(bomb)
-	UnregisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION)
+	unregister_signal(src, COMSIG_ATOM_INTERNAL_EXPLOSION)
 	cached_firer = null
 	cached_target = null
 	return ..()

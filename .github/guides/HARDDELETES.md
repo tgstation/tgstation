@@ -242,10 +242,10 @@ Here's an example
 
 /somemob/proc/set_target(new_target)
     if(target)
-        UnregisterSignal(target, COMSIG_PARENT_QDELETING) //We need to make sure any old signals are cleared
+        unregister_signal(target, COMSIG_PARENT_QDELETING) //We need to make sure any old signals are cleared
     target = new_target
     if(target)
-        RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_target) //Call clear_target if target is ever qdel()'d
+        register_signal(target, COMSIG_PARENT_QDELETING, .proc/clear_target) //Call clear_target if target is ever qdel()'d
 
 /somemob/proc/clear_target(datum/source)
     SIGNAL_HANDLER

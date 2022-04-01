@@ -26,14 +26,14 @@
 	if(!ishostile(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 
-	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
-	RegisterSignal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
-	RegisterSignal(new_pawn, COMSIG_RIDDEN_DRIVER_MOVE, .proc/on_ridden_driver_move)
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_PREBUCKLE, .proc/on_prebuckle)
+	register_signal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
+	register_signal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
+	register_signal(new_pawn, COMSIG_RIDDEN_DRIVER_MOVE, .proc/on_ridden_driver_move)
+	register_signal(new_pawn, COMSIG_MOVABLE_PREBUCKLE, .proc/on_prebuckle)
 	return ..() //Run parent at end
 
 /datum/ai_controller/hostile_friend/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(
+	unregister_signal(pawn, list(
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_CLICK_ALT,
@@ -81,15 +81,15 @@
 	if(in_range(pawn, new_friend))
 		new_friend.visible_message("<b>[pawn]</b> looks at [new_friend] in a friendly manner!", span_notice("[pawn] looks at you in a friendly manner!"))
 	blackboard[BB_HOSTILE_FRIEND] = friend_ref
-	RegisterSignal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
-	RegisterSignal(new_friend, COMSIG_MOB_SAY, .proc/check_verbal_command)
+	register_signal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
+	register_signal(new_friend, COMSIG_MOB_SAY, .proc/check_verbal_command)
 
 /// Someone is being mean to us, take them off our friends (add actual enemies behavior later)
 /datum/ai_controller/hostile_friend/proc/unfriend()
 	var/datum/weakref/friend_ref = blackboard[BB_HOSTILE_FRIEND]
 	var/mob/living/old_friend = friend_ref?.resolve()
 	if(old_friend)
-		UnregisterSignal(old_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
+		unregister_signal(old_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
 	blackboard[BB_HOSTILE_FRIEND] = null
 
 /// Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend

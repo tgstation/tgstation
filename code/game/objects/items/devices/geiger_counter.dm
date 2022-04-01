@@ -19,7 +19,7 @@
 /obj/item/geiger_counter/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	register_signal(src, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 
 /obj/item/geiger_counter/examine(mob/user)
 	. = ..()
@@ -82,12 +82,12 @@
 /obj/item/geiger_counter/equipped(mob/user, slot, initial)
 	. = ..()
 
-	RegisterSignal(user, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	register_signal(user, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 
 /obj/item/geiger_counter/dropped(mob/user, silent = FALSE)
 	. = ..()
 
-	UnregisterSignal(user, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
+	unregister_signal(user, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 
 /obj/item/geiger_counter/proc/on_pre_potential_irradiation(datum/source, datum/radiation_pulse_information/pulse_information, insulation_to_target)
 	SIGNAL_HANDLER

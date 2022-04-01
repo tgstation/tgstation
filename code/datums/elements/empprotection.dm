@@ -8,10 +8,10 @@
 	if(. == ELEMENT_INCOMPATIBLE || !isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	flags = _flags
-	RegisterSignal(target, COMSIG_ATOM_EMP_ACT, .proc/getEmpFlags)
+	register_signal(target, COMSIG_ATOM_EMP_ACT, .proc/getEmpFlags)
 
 /datum/element/empprotection/Detach(atom/target)
-	UnregisterSignal(target, COMSIG_ATOM_EMP_ACT)
+	unregister_signal(target, COMSIG_ATOM_EMP_ACT)
 	return ..()
 
 /datum/element/empprotection/proc/getEmpFlags(datum/source, severity)

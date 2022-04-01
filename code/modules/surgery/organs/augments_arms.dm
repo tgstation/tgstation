@@ -78,14 +78,14 @@
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = arm_owner.hand_bodyparts[side]
 	if(hand)
-		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/on_item_attack_self) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
-		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
+		register_signal(hand, COMSIG_ITEM_ATTACK_SELF, .proc/on_item_attack_self) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
+		register_signal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
 /obj/item/organ/cyberimp/arm/Remove(mob/living/carbon/arm_owner, special = 0)
 	Retract()
 	if(hand)
-		UnregisterSignal(hand, COMSIG_ITEM_ATTACK_SELF)
-		UnregisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
+		unregister_signal(hand, COMSIG_ITEM_ATTACK_SELF)
+		unregister_signal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN)
 	..()
 
 /obj/item/organ/cyberimp/arm/proc/on_item_attack_self()

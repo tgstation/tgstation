@@ -16,7 +16,7 @@
 
 	create_notice()
 
-	RegisterSignal(
+	register_signal(
 		ticket,
 		list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
@@ -33,7 +33,7 @@
 	QDEL_NULL(admin_popup)
 
 	if (!QDELETED(ticket))
-		UnregisterSignal(ticket, list(
+		unregister_signal(ticket, list(
 			COMSIG_ADMIN_HELP_MADE_INACTIVE,
 			COMSIG_ADMIN_HELP_REPLIED,
 			COMSIG_PARENT_QDELETING,

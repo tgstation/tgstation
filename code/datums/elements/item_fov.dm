@@ -11,11 +11,11 @@
 		return ELEMENT_INCOMPATIBLE
 	src.fov_angle = fov_angle
 
-	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(target, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	register_signal(target, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(target, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
 /datum/element/item_fov/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	unregister_signal(target, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	return ..()
 
 /// On dropping the item, remove the FoV trait.

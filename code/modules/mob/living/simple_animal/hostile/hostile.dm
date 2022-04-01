@@ -600,13 +600,13 @@
 
 /mob/living/simple_animal/hostile/proc/handle_target_del(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	unregister_signal(target, COMSIG_PARENT_QDELETING)
 	target = null
 	LoseTarget()
 
 /mob/living/simple_animal/hostile/proc/add_target(new_target)
 	if(target)
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+		unregister_signal(target, COMSIG_PARENT_QDELETING)
 	target = new_target
 	if(target)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_target_del)
+		register_signal(target, COMSIG_PARENT_QDELETING, .proc/handle_target_del)

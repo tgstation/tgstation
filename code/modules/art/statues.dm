@@ -343,7 +343,7 @@ Moving interrupts
 /obj/item/chisel/proc/set_block(obj/structure/carving_block/B,mob/living/user)
 	prepared_block = B
 	tracked_user = user
-	RegisterSignal(tracked_user,COMSIG_MOVABLE_MOVED,.proc/break_sculpting)
+	register_signal(tracked_user,COMSIG_MOVABLE_MOVED,.proc/break_sculpting)
 	to_chat(user,span_notice("You prepare to work on [B]."),type=MESSAGE_TYPE_INFO)
 
 /obj/item/chisel/dropped(mob/user, silent)
@@ -357,7 +357,7 @@ Moving interrupts
 		prepared_block.reset_target()
 	prepared_block = null
 	if(tracked_user)
-		UnregisterSignal(tracked_user,COMSIG_MOVABLE_MOVED)
+		unregister_signal(tracked_user,COMSIG_MOVABLE_MOVED)
 		tracked_user = null
 
 /obj/item/chisel/proc/show_generic_statues_prompt(mob/living/user)

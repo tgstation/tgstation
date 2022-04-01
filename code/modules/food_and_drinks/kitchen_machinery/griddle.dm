@@ -28,7 +28,7 @@
 	grill_loop = new(src, FALSE)
 	if(isnum(variant))
 		variant = rand(1,3)
-	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
+	register_signal(src, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
 
 /obj/machinery/griddle/Destroy()
 	QDEL_NULL(grill_loop)
@@ -96,9 +96,9 @@
 	vis_contents += item_to_grill
 	griddled_objects += item_to_grill
 	item_to_grill.flags_1 |= IS_ONTOP_1
-	RegisterSignal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
-	RegisterSignal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
-	RegisterSignal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
+	register_signal(item_to_grill, COMSIG_MOVABLE_MOVED, .proc/ItemMoved)
+	register_signal(item_to_grill, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
+	register_signal(item_to_grill, COMSIG_PARENT_QDELETING, .proc/ItemRemovedFromGrill)
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemRemovedFromGrill(obj/item/I)
@@ -106,7 +106,7 @@
 	I.flags_1 &= ~IS_ONTOP_1
 	griddled_objects -= I
 	vis_contents -= I
-	UnregisterSignal(I, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	unregister_signal(I, list(COMSIG_GRILL_COMPLETED, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	update_grill_audio()
 
 /obj/machinery/griddle/proc/ItemMoved(obj/item/I, atom/OldLoc, Dir, Forced)

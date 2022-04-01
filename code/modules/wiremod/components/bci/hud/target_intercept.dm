@@ -25,11 +25,11 @@
 /obj/item/circuit_component/target_intercept/register_shell(atom/movable/shell)
 	if(istype(shell, /obj/item/organ/cyberimp/bci))
 		bci = shell
-		RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+		register_signal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 /obj/item/circuit_component/target_intercept/unregister_shell(atom/movable/shell)
 	bci = null
-	UnregisterSignal(shell, COMSIG_ORGAN_REMOVED)
+	unregister_signal(shell, COMSIG_ORGAN_REMOVED)
 
 /obj/item/circuit_component/target_intercept/input_received(datum/port/input/port)
 	if(!bci)

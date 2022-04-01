@@ -64,13 +64,13 @@ Behavior that's still missing from this component that original food items had t
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
-	RegisterSignal(parent, COMSIG_ATOM_CHECKPARTS, .proc/OnCraft)
-	RegisterSignal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
-	RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
-	RegisterSignal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
-	RegisterSignal(parent, COMSIG_OOZE_EAT_ATOM, .proc/on_ooze_eat)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	register_signal(parent, COMSIG_ATOM_ATTACK_ANIMAL, .proc/UseByAnimal)
+	register_signal(parent, COMSIG_ATOM_CHECKPARTS, .proc/OnCraft)
+	register_signal(parent, COMSIG_ATOM_CREATEDBY_PROCESSING, .proc/OnProcessed)
+	register_signal(parent, COMSIG_ITEM_MICROWAVE_COOKED, .proc/OnMicrowaveCooked)
+	register_signal(parent, COMSIG_EDIBLE_INGREDIENT_ADDED, .proc/edible_ingredient_added)
+	register_signal(parent, COMSIG_OOZE_EAT_ATOM, .proc/on_ooze_eat)
 
 	if(!isturf(parent))
 		var/static/list/loc_connections = list(
@@ -78,20 +78,20 @@ Behavior that's still missing from this component that original food items had t
 		)
 		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 	else
-		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
+		register_signal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
-		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
-		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
-		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/used_to_customize)
+		register_signal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
+		register_signal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
+		register_signal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
+		register_signal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/used_to_customize)
 
 		var/obj/item/item = parent
 		if (!item.grind_results)
 			item.grind_results = list() //If this doesn't already exist, add it as an empty list. This is needed for the grinder to accept it.
 
 	else if(isturf(parent) || isstructure(parent))
-		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatIt)
+		register_signal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/TryToEatIt)
 
 	src.bite_consumption = bite_consumption
 	src.food_flags = food_flags

@@ -30,7 +30,7 @@
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/ComponentInitialize()
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/explosion_handle)
+	register_signal(src, COMSIG_ATOM_INTERNAL_EXPLOSION, .proc/explosion_handle)
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/examine()
 	. = ..()
@@ -59,7 +59,7 @@
 			return ..()
 		inserted_tank = tank_item
 		last_recorded_pressure = 0
-		RegisterSignal(inserted_tank, COMSIG_PARENT_QDELETING, .proc/tank_destruction)
+		register_signal(inserted_tank, COMSIG_PARENT_QDELETING, .proc/tank_destruction)
 		update_appearance()
 		return
 	if(istype(item, /obj/item/computer_hardware/hard_drive/portable))
@@ -86,7 +86,7 @@
 		return FALSE
 	update_appearance()
 	return TRUE
-	
+
 /obj/machinery/atmospherics/components/binary/tank_compressor/crowbar_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
 		return FALSE
@@ -172,7 +172,7 @@
 	return COMSIG_CANCEL_EXPLOSION
 
 /**
- * Everytime a tank is destroyed or a new tank is inserted, our buffer is flushed. 
+ * Everytime a tank is destroyed or a new tank is inserted, our buffer is flushed.
  * Mole requirements in experiments are tracked by buffer data.
  */
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/flush_buffer()
@@ -194,7 +194,7 @@
 	new_record.timestamp = station_time_timestamp()
 	for(var/gas_path in leaked_gas_buffer.gases)
 		new_record.gas_data[gas_path] = leaked_gas_buffer.gases[gas_path][MOLES]
-	
+
 	compressor_record += new_record
 	record_number += 1
 	say("Buffer data stored.")
@@ -207,7 +207,7 @@
 		if(experiment.required_gas in gas_data)
 			if(gas_data[experiment.required_gas] > MINIMUM_MOLE_COUNT)
 				passed_experiments += list(experiment.type = gas_data[experiment.required_gas])
-	
+
 	return passed_experiments
 
 /obj/machinery/atmospherics/components/binary/tank_compressor/proc/print(mob/user, datum/data/compressor_record/record)
@@ -254,7 +254,7 @@
 	if(gone == inserted_disk)
 		inserted_disk = null
 	if(gone == inserted_tank)
-		UnregisterSignal(inserted_tank, COMSIG_PARENT_QDELETING)
+		unregister_signal(inserted_tank, COMSIG_PARENT_QDELETING)
 		inserted_tank = null
 		update_appearance()
 	. = ..()

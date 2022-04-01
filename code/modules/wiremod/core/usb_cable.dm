@@ -19,7 +19,7 @@
 
 /obj/item/usb_cable/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(src, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
 /obj/item/usb_cable/examine(mob/user)
 	. = ..()
@@ -85,17 +85,17 @@
 	return OXYLOSS
 
 /obj/item/usb_cable/proc/register_circuit_signals()
-	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_qdeling)
-	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(attached_circuit, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_qdeling)
+	register_signal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
 /obj/item/usb_cable/proc/unregister_circuit_signals(obj/item/integrated_circuit/old_circuit)
-	UnregisterSignal(attached_circuit, list(
+	unregister_signal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_QDELETING,
 	))
 
-	UnregisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED)
+	unregister_signal(attached_circuit.shell, COMSIG_MOVABLE_MOVED)
 
 /obj/item/usb_cable/proc/on_moved()
 	SIGNAL_HANDLER

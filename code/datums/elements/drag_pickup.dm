@@ -9,11 +9,11 @@
 /datum/element/drag_pickup/Attach(datum/target)
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOUSEDROP_ONTO, .proc/pick_up)
+	register_signal(target, COMSIG_MOUSEDROP_ONTO, .proc/pick_up)
 	return ..()
 
 /datum/element/drag_pickup/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_MOUSEDROP_ONTO)
+	unregister_signal(source, COMSIG_MOUSEDROP_ONTO)
 	return ..()
 
 /datum/element/drag_pickup/proc/pick_up(atom/source, atom/over, mob/user)

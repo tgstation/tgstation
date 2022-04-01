@@ -112,13 +112,13 @@
 	. = ..()
 	if(!.)
 		return
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP, .proc/bump_mine)
+	register_signal(mod.wearer, COMSIG_MOVABLE_BUMP, .proc/bump_mine)
 
 /obj/item/mod/module/drill/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_BUMP)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_BUMP)
 
 /obj/item/mod/module/drill/on_select_use(atom/target)
 	. = ..()
@@ -161,10 +161,10 @@
 	var/list/ores = list()
 
 /obj/item/mod/module/orebag/on_equip()
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/ore_pickup)
+	register_signal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/ore_pickup)
 
 /obj/item/mod/module/orebag/on_unequip()
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_MOVED)
 
 /obj/item/mod/module/orebag/proc/ore_pickup(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
@@ -259,10 +259,10 @@
 	disposal_tag = pick(GLOB.TAGGERLOCATIONS)
 
 /obj/item/mod/module/disposal_connector/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	register_signal(mod.wearer, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
 /obj/item/mod/module/disposal_connector/on_suit_deactivation()
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_DISPOSING)
 
 /obj/item/mod/module/disposal_connector/get_configuration()
 	. = ..()
@@ -328,13 +328,13 @@
 		return
 	mod.wearer.start_pulling(locker)
 	locker.strong_grab = TRUE
-	RegisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED, .proc/on_stop_pull)
+	register_signal(locker, COMSIG_ATOM_NO_LONGER_PULLED, .proc/on_stop_pull)
 
 /obj/item/mod/module/magnet/proc/on_stop_pull(obj/structure/closet/locker, atom/movable/last_puller)
 	SIGNAL_HANDLER
 
 	locker.strong_grab = FALSE
-	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
+	unregister_signal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
 
 /obj/item/mod/module/ash_accretion
 	name = "MOD ash accretion module"
@@ -382,12 +382,12 @@
 /obj/item/mod/module/ash_accretion/on_suit_activation()
 	ADD_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
 	ADD_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	register_signal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /obj/item/mod/module/ash_accretion/on_suit_deactivation()
 	REMOVE_TRAIT(mod.wearer, TRAIT_ASHSTORM_IMMUNE, MOD_TRAIT)
 	REMOVE_TRAIT(mod.wearer, TRAIT_SNOWSTORM_IMMUNE, MOD_TRAIT)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	if(!traveled_tiles)
 		return
 	var/list/parts = mod.mod_parts + mod
@@ -478,7 +478,7 @@
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
-	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
+	register_signal(mod.wearer, COMSIG_MOB_STATCHANGE, .proc/on_statchange)
 
 /obj/item/mod/module/sphere_transform/on_deactivation(display_message = TRUE)
 	. = ..()
@@ -496,7 +496,7 @@
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
-	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
+	unregister_signal(mod.wearer, COMSIG_MOB_STATCHANGE)
 
 /obj/item/mod/module/sphere_transform/on_use()
 	if(!lavaland_equipment_pressure_check(get_turf(src)))

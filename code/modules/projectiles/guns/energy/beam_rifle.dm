@@ -261,13 +261,13 @@
 		return
 	stop_aiming(current_user)
 	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		unregister_signal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 	if(istype(current_user))
 		current_user = null
 	if(istype(user))
 		current_user = user
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
+		register_signal(user, COMSIG_MOVABLE_MOVED, .proc/on_mob_move)
 		listeningTo = user
 
 /obj/item/gun/energy/beam_rifle/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)

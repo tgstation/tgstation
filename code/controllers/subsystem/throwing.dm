@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(throwing)
 /datum/thrownthing/New(thrownthing, target, init_dir, maxrange, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 	. = ..()
 	src.thrownthing = thrownthing
-	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
+	register_signal(thrownthing, COMSIG_PARENT_QDELETING, .proc/on_thrownthing_qdel)
 	src.target_turf = get_turf(target)
 	if(target_turf != target)
 		src.initial_target = WEAKREF(target)

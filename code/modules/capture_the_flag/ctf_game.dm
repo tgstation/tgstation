@@ -40,7 +40,7 @@
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 		reset.flag = src
-	RegisterSignal(src, COMSIG_PARENT_PREQDELETED, .proc/reset_flag) //just in case CTF has some map hazards (read: chasms).
+	register_signal(src, COMSIG_PARENT_PREQDELETED, .proc/reset_flag) //just in case CTF has some map hazards (read: chasms).
 
 /obj/item/ctf/process()
 	if(is_ctf_target(loc)) //pickup code calls temporary drops to test things out, we need to make sure the flag doesn't reset from
@@ -393,7 +393,7 @@
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(chosen_class)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/ctf_qdelled_player) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
+	register_signal(M, COMSIG_PARENT_QDELETING, .proc/ctf_qdelled_player) //just in case CTF has some map hazards (read: chasms). bit shorter than dust
 	for(var/trait in player_traits)
 		ADD_TRAIT(M, trait, CAPTURE_THE_FLAG_TRAIT)
 	spawned_mobs[M] = chosen_class

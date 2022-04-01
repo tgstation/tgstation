@@ -280,10 +280,10 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/atmospherics/components/binary/volume_pump))
 		connected_pump = shell
-		RegisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON, .proc/handle_pump_activation)
+		register_signal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON, .proc/handle_pump_activation)
 
 /obj/item/circuit_component/atmos_volume_pump/unregister_usb_parent(atom/movable/shell)
-	UnregisterSignal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON)
+	unregister_signal(connected_pump, COMSIG_ATMOS_MACHINE_SET_ON)
 	connected_pump = null
 	return ..()
 

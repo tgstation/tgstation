@@ -64,44 +64,44 @@
 	closer = new(null, src)
 	orient2hud()
 
-	RegisterSignal(parent, COMSIG_CONTAINS_STORAGE, .proc/on_check)
-	RegisterSignal(parent, COMSIG_IS_STORAGE_LOCKED, .proc/check_locked)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_SHOW, .proc/signal_show_attempt)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/signal_insertion_attempt)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_CAN_INSERT, .proc/signal_can_insert)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_TAKE_TYPE, .proc/signal_take_type)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_FILL_TYPE, .proc/signal_fill_type)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_SET_LOCKSTATE, .proc/set_locked)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_TAKE, .proc/signal_take_obj)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_QUICK_EMPTY, .proc/signal_quick_empty)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_FROM, .proc/signal_hide_attempt)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
+	register_signal(parent, COMSIG_CONTAINS_STORAGE, .proc/on_check)
+	register_signal(parent, COMSIG_IS_STORAGE_LOCKED, .proc/check_locked)
+	register_signal(parent, COMSIG_TRY_STORAGE_SHOW, .proc/signal_show_attempt)
+	register_signal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/signal_insertion_attempt)
+	register_signal(parent, COMSIG_TRY_STORAGE_CAN_INSERT, .proc/signal_can_insert)
+	register_signal(parent, COMSIG_TRY_STORAGE_TAKE_TYPE, .proc/signal_take_type)
+	register_signal(parent, COMSIG_TRY_STORAGE_FILL_TYPE, .proc/signal_fill_type)
+	register_signal(parent, COMSIG_TRY_STORAGE_SET_LOCKSTATE, .proc/set_locked)
+	register_signal(parent, COMSIG_TRY_STORAGE_TAKE, .proc/signal_take_obj)
+	register_signal(parent, COMSIG_TRY_STORAGE_QUICK_EMPTY, .proc/signal_quick_empty)
+	register_signal(parent, COMSIG_TRY_STORAGE_HIDE_FROM, .proc/signal_hide_attempt)
+	register_signal(parent, COMSIG_TRY_STORAGE_HIDE_ALL, .proc/close_all)
+	register_signal(parent, COMSIG_TRY_STORAGE_RETURN_INVENTORY, .proc/signal_return_inv)
 
-	RegisterSignal(parent, COMSIG_TOPIC, .proc/topic_handle)
+	register_signal(parent, COMSIG_TOPIC, .proc/topic_handle)
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby)
 
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
-	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, .proc/emp_act)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
-	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
-	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
-	RegisterSignal(parent, COMSIG_ATOM_CANREACH, .proc/canreach_react)
+	register_signal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	register_signal(parent, COMSIG_ATOM_ATTACK_PAW, .proc/on_attack_hand)
+	register_signal(parent, COMSIG_ATOM_EMP_ACT, .proc/emp_act)
+	register_signal(parent, COMSIG_ATOM_ATTACK_GHOST, .proc/show_to_ghost)
+	register_signal(parent, COMSIG_ATOM_ENTERED, .proc/refresh_mob_views)
+	register_signal(parent, COMSIG_ATOM_EXITED, .proc/_remove_and_refresh)
+	register_signal(parent, COMSIG_ATOM_CANREACH, .proc/canreach_react)
 
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
-	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
+	register_signal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/preattack_intercept)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/attack_self)
+	register_signal(parent, COMSIG_ITEM_PICKUP, .proc/signal_on_pickup)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/update_actions)
 
-	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	register_signal(parent, COMSIG_MOVABLE_POST_THROW, .proc/close_all)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
-	RegisterSignal(parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_HAND_SECONDARY), .proc/on_open_storage_click)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/on_open_storage_attackby)
-	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
-	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
+	register_signal(parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_HAND_SECONDARY), .proc/on_open_storage_click)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/on_open_storage_attackby)
+	register_signal(parent, COMSIG_MOUSEDROP_ONTO, .proc/mousedrop_onto)
+	register_signal(parent, COMSIG_MOUSEDROPPED_ONTO, .proc/mousedrop_receive)
 
 	update_actions()
 
@@ -160,7 +160,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 	var/obj/item/I = parent
 	modeswitch_action = new(I)
-	RegisterSignal(modeswitch_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
+	register_signal(modeswitch_action, COMSIG_ACTION_TRIGGER, .proc/action_trigger)
 	if(I.item_flags & IN_INVENTORY)
 		var/mob/M = I.loc
 		if(!istype(M))
@@ -421,7 +421,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	M.client.screen |= real_location.contents
 	M.set_active_storage(src)
 	LAZYOR(is_using, M)
-	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/mob_deleted)
+	register_signal(M, COMSIG_PARENT_QDELETING, .proc/mob_deleted)
 	return TRUE
 
 /datum/component/storage/proc/mob_deleted(datum/source)
@@ -433,7 +433,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		M.set_active_storage(null)
 	LAZYREMOVE(is_using, M)
 
-	UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+	unregister_signal(M, COMSIG_PARENT_QDELETING)
 	if(!M.client)
 		return TRUE
 	var/atom/real_location = real_location()
@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			cansee |= M
 		else
 			LAZYREMOVE(is_using, M)
-			UnregisterSignal(M, COMSIG_PARENT_QDELETING)
+			unregister_signal(M, COMSIG_PARENT_QDELETING)
 	return cansee
 
 //Tries to dump content

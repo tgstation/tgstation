@@ -34,12 +34,12 @@
 	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
+	register_signal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
 	if(isitem(target))
-		RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbed)
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
-		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
-		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, .proc/detachFromWeapon)
+		register_signal(target, COMSIG_MOVABLE_IMPACT_ZONE, .proc/checkEmbed)
+		register_signal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
+		register_signal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
+		register_signal(target, COMSIG_ITEM_DISABLE_EMBED, .proc/detachFromWeapon)
 		if(!initialized)
 			src.embed_chance = embed_chance
 			src.fall_chance = fall_chance
@@ -55,15 +55,15 @@
 			initialized = TRUE
 	else
 		payload_type = projectile_payload
-		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
+		register_signal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
 
 
 /datum/element/embed/Detach(obj/target)
 	. = ..()
 	if(isitem(target))
-		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
+		unregister_signal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
 	else
-		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_ELEMENT_ATTACH))
+		unregister_signal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT, COMSIG_ELEMENT_ATTACH))
 
 
 /// Checking to see if we're gonna embed into a human

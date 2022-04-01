@@ -64,10 +64,10 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ashen_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
 /datum/heretic_knowledge/ashen_grasp/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+	unregister_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -114,11 +114,11 @@
 	route = PATH_ASH
 
 /datum/heretic_knowledge/ash_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/ash_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+	unregister_signal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/ash_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -185,11 +185,11 @@
 
 /datum/heretic_knowledge/ash_blade_upgrade/on_gain(mob/user)
 	. = ..()
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/ash_blade_upgrade/on_lose(mob/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
+	unregister_signal(user, COMSIG_HERETIC_BLADE_ATTACK)
 
 /datum/heretic_knowledge/ash_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER

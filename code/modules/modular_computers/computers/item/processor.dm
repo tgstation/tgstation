@@ -15,7 +15,7 @@
 /obj/item/modular_computer/processor/Destroy()
 	if(machinery_computer && (machinery_computer.cpu == src))
 		machinery_computer.cpu = null
-		machinery_computer.UnregisterSignal(src, COMSIG_ATOM_UPDATED_ICON)
+		machinery_computer.unregister_signal(src, COMSIG_ATOM_UPDATED_ICON)
 	machinery_computer = null
 	. = ..()
 
@@ -38,7 +38,7 @@
 	integrity_failure = machinery_computer.integrity_failure
 	base_active_power_usage = machinery_computer.base_active_power_usage
 	base_idle_power_usage = machinery_computer.base_idle_power_usage
-	machinery_computer.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/modular_computer/proc/relay_icon_update) //when we update_icon, also update the computer
+	machinery_computer.register_signal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/modular_computer/proc/relay_icon_update) //when we update_icon, also update the computer
 
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)

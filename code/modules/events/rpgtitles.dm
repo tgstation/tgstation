@@ -15,12 +15,12 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 
 /datum/rpgtitle_controller/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/on_crewmember_join)
-	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN, .proc/on_mob_login)
+	register_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/on_crewmember_join)
+	register_signal(SSdcs, COMSIG_GLOB_MOB_LOGGED_IN, .proc/on_mob_login)
 	handle_current_jobs()
 
 /datum/rpgtitle_controller/Destroy(force)
-	UnregisterSignal(SSdcs, list(COMSIG_GLOB_CREWMEMBER_JOINED, COMSIG_GLOB_MOB_LOGGED_IN))
+	unregister_signal(SSdcs, list(COMSIG_GLOB_CREWMEMBER_JOINED, COMSIG_GLOB_MOB_LOGGED_IN))
 	. = ..()
 
 ///signal sent by a player list expanding

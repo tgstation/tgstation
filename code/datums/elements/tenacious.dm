@@ -13,11 +13,11 @@
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/carbon/human/valid_target = target
 	on_stat_change(valid_target, new_stat = valid_target.stat) //immediately try adding movement bonus if they're in soft crit
-	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
+	register_signal(target, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
 	ADD_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
 
 /datum/element/tenacious/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_MOB_STATCHANGE)
+	unregister_signal(target, COMSIG_MOB_STATCHANGE)
 	REMOVE_TRAIT(target, TRAIT_TENACIOUS, ELEMENT_TRAIT(type))
 	return ..()
 

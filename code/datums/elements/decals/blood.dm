@@ -5,10 +5,10 @@
 		return ELEMENT_INCOMPATIBLE
 
 	. = ..()
-	RegisterSignal(target, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name, TRUE)
+	register_signal(target, COMSIG_ATOM_GET_EXAMINE_NAME, .proc/get_examine_name, TRUE)
 
 /datum/element/decal/blood/Detach(atom/source)
-	UnregisterSignal(source, COMSIG_ATOM_GET_EXAMINE_NAME)
+	unregister_signal(source, COMSIG_ATOM_GET_EXAMINE_NAME)
 	return ..()
 
 /datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)

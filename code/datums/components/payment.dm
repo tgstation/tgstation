@@ -25,8 +25,8 @@
 
 	cost = _cost
 	transaction_style = _style
-	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
-	RegisterSignal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
+	register_signal(parent, COMSIG_OBJ_ATTEMPT_CHARGE, .proc/attempt_charge)
+	register_signal(parent, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE, .proc/change_cost)
 
 /datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER

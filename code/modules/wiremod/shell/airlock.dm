@@ -88,13 +88,13 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
-		RegisterSignal(shell, COMSIG_AIRLOCK_SET_BOLT, .proc/on_airlock_set_bolted)
-		RegisterSignal(shell, COMSIG_AIRLOCK_OPEN, .proc/on_airlock_open)
-		RegisterSignal(shell, COMSIG_AIRLOCK_CLOSE, .proc/on_airlock_closed)
+		register_signal(shell, COMSIG_AIRLOCK_SET_BOLT, .proc/on_airlock_set_bolted)
+		register_signal(shell, COMSIG_AIRLOCK_OPEN, .proc/on_airlock_open)
+		register_signal(shell, COMSIG_AIRLOCK_CLOSE, .proc/on_airlock_closed)
 
 /obj/item/circuit_component/airlock/unregister_shell(atom/movable/shell)
 	attached_airlock = null
-	UnregisterSignal(shell, list(
+	unregister_signal(shell, list(
 		COMSIG_AIRLOCK_SET_BOLT,
 		COMSIG_AIRLOCK_OPEN,
 		COMSIG_AIRLOCK_CLOSE,
@@ -156,11 +156,11 @@
 	. = ..()
 	if(istype(shell, /obj/machinery/door/airlock))
 		attached_airlock = shell
-		RegisterSignal(shell, COMSIG_AIRLOCK_SHELL_ALLOWED , .proc/handle_allowed)
+		register_signal(shell, COMSIG_AIRLOCK_SHELL_ALLOWED , .proc/handle_allowed)
 
 /obj/item/circuit_component/airlock_access_event/unregister_shell(atom/movable/shell)
 	attached_airlock = null
-	UnregisterSignal(shell, list(
+	unregister_signal(shell, list(
 		COMSIG_AIRLOCK_SHELL_ALLOWED ,
 	))
 	return ..()
@@ -193,4 +193,4 @@
 		return
 
 	if(result["should_open"])
-		return COMPONENT_AIRLOCK_SHELL_ALLOW 
+		return COMPONENT_AIRLOCK_SHELL_ALLOW

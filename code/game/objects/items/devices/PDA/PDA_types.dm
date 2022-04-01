@@ -67,7 +67,7 @@
 
 /obj/item/pda/ai/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
+	register_signal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/medical
 	name = "medical PDA"
@@ -160,7 +160,7 @@
 
 /obj/item/pda/captain/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
+	register_signal(src, COMSIG_PDA_CHECK_DETONATE, .proc/pda_no_detonate)
 
 /obj/item/pda/cargo
 	name = "cargo technician PDA"

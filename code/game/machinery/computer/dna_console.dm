@@ -2244,12 +2244,12 @@
 
 /obj/machinery/computer/scan_consolenew/proc/set_connected_scanner(new_scanner)
 	if(connected_scanner)
-		UnregisterSignal(connected_scanner, COMSIG_PARENT_QDELETING)
+		unregister_signal(connected_scanner, COMSIG_PARENT_QDELETING)
 		if(connected_scanner.linked_console == src)
 			connected_scanner.set_linked_console(null)
 	connected_scanner = new_scanner
 	if(connected_scanner)
-		RegisterSignal(connected_scanner, COMSIG_PARENT_QDELETING, .proc/react_to_scanner_del)
+		register_signal(connected_scanner, COMSIG_PARENT_QDELETING, .proc/react_to_scanner_del)
 		connected_scanner.set_linked_console(src)
 
 /obj/machinery/computer/scan_consolenew/proc/react_to_scanner_del(datum/source)

@@ -18,14 +18,14 @@
 
 /datum/component/cracked/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/IntegrityChanged)
+	register_signal(parent, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/IntegrityChanged)
 	var/obj/master = parent
 	var/integrity = master.get_integrity()
 	IntegrityChanged(parent, integrity, integrity)
 
 /datum/component/cracked/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_ATOM_INTEGRITY_CHANGED)
+	unregister_signal(parent, COMSIG_ATOM_INTEGRITY_CHANGED)
 
 /datum/component/cracked/proc/IntegrityChanged(obj/source, old_value, new_value)
 	SIGNAL_HANDLER

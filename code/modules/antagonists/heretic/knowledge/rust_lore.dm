@@ -64,11 +64,11 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_fist/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY, .proc/on_secondary_mansus_grasp)
 
 /datum/heretic_knowledge/rust_fist/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
+	unregister_signal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_MANSUS_GRASP_ATTACK_SECONDARY))
 
 /datum/heretic_knowledge/rust_fist/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -98,11 +98,11 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_regen/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	register_signal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 
 /datum/heretic_knowledge/rust_regen/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
+	unregister_signal(user, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -154,11 +154,11 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/rust_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+	unregister_signal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/rust_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -213,10 +213,10 @@
 	route = PATH_RUST
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/rust_blade_upgrade/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
+	unregister_signal(user, COMSIG_HERETIC_BLADE_ATTACK)
 
 /datum/heretic_knowledge/rust_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
@@ -291,8 +291,8 @@
 	. = ..()
 	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
 	new /datum/rust_spread(loc)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	register_signal(user, COMSIG_LIVING_LIFE, .proc/on_life)
 	user.client?.give_award(/datum/award/achievement/misc/rust_ascension, user)
 
 /**

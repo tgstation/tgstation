@@ -18,14 +18,14 @@
 
 	START_PROCESSING(SSmood, src)
 
-	RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
-	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
-	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
-	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
-	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
-	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
-	RegisterSignal(parent, COMSIG_HERETIC_MASK_ACT, .proc/direct_sanity_drain)
-	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, .proc/on_slip)
+	register_signal(parent, COMSIG_ADD_MOOD_EVENT, .proc/add_event)
+	register_signal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
+	register_signal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
+	register_signal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	register_signal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
+	register_signal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
+	register_signal(parent, COMSIG_HERETIC_MASK_ACT, .proc/direct_sanity_drain)
+	register_signal(parent, COMSIG_ON_CARBON_SLIP, .proc/on_slip)
 
 	var/mob/living/owner = parent
 	owner.become_area_sensitive(MOOD_COMPONENT_TRAIT)
@@ -45,7 +45,7 @@
 	SIGNAL_HANDLER
 
 	if(job in list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST))
-		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
+		register_signal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
 	var/msg = "[span_info("*---------*\n<EM>My current mental status:</EM>")]\n"
@@ -326,8 +326,8 @@
 	screen_obj = new
 	screen_obj.color = "#4b96c4"
 	hud.infodisplay += screen_obj
-	RegisterSignal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
-	RegisterSignal(screen_obj, COMSIG_CLICK, .proc/hud_click)
+	register_signal(hud, COMSIG_PARENT_QDELETING, .proc/unmodify_hud)
+	register_signal(screen_obj, COMSIG_CLICK, .proc/hud_click)
 
 /datum/component/mood/proc/unmodify_hud(datum/source)
 	SIGNAL_HANDLER

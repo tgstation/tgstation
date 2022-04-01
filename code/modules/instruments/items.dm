@@ -209,11 +209,11 @@
 
 /obj/item/instrument/harmonica/equipped(mob/M, slot)
 	. = ..()
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 
 /obj/item/instrument/harmonica/dropped(mob/M)
 	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	unregister_signal(M, COMSIG_MOB_SAY)
 
 /obj/item/instrument/bikehorn
 	name = "gilded bike horn"

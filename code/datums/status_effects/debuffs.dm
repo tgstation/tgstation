@@ -158,11 +158,11 @@
 	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
 		ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 		tick_interval = -1
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_insomniac)
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_sleepy)
+	register_signal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_insomniac)
+	register_signal(owner, SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE), .proc/on_owner_sleepy)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
+	unregister_signal(owner, list(SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), SIGNAL_REMOVETRAIT(TRAIT_SLEEPIMMUNE)))
 	if(!HAS_TRAIT(owner, TRAIT_SLEEPIMMUNE))
 		REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 		tick_interval = initial(tick_interval)
@@ -408,13 +408,13 @@
 
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		RegisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/update_owner_underlay)
+		register_signal(owner, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/update_owner_underlay)
 		owner.update_icon(UPDATE_OVERLAYS)
 		return TRUE
 	return FALSE
 
 /datum/status_effect/eldritch/on_remove()
-	UnregisterSignal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
+	unregister_signal(owner, COMSIG_ATOM_UPDATE_OVERLAYS)
 	owner.update_icon(UPDATE_OVERLAYS)
 	return ..()
 
@@ -714,7 +714,7 @@
 /datum/status_effect/trance/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
+	register_signal(owner, COMSIG_MOVABLE_HEAR, .proc/hypnotize)
 	ADD_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
 	owner.add_client_colour(/datum/client_colour/monochrome/trance)
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
@@ -727,7 +727,7 @@
 	return ..()
 
 /datum/status_effect/trance/on_remove()
-	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	unregister_signal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, STATUS_EFFECT_TRAIT)
 	owner.dizziness = 0
 	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
@@ -1045,7 +1045,7 @@
 		if(new_owner.stat < UNCONSCIOUS) // Unconcious people won't get messages
 			to_chat(new_owner, span_userdanger("You're covered in ants!"))
 		ants_remaining += amount_left
-		RegisterSignal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
+		register_signal(new_owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
 	. = ..()
 
 /datum/status_effect/ants/refresh(effect, amount_left)
@@ -1062,7 +1062,7 @@
 /datum/status_effect/ants/on_remove()
 	ants_remaining = 0
 	to_chat(owner, span_notice("All of the ants are off of your body!"))
-	UnregisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
+	unregister_signal(owner, COMSIG_COMPONENT_CLEAN_ACT, .proc/ants_washed)
 	. = ..()
 
 /datum/status_effect/ants/proc/ants_washed()

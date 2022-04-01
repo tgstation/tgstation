@@ -28,10 +28,10 @@
 	return ..()
 
 /datum/component/codeword_hearing/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	register_signal(parent, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 /datum/component/codeword_hearing/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_HEAR)
+	unregister_signal(parent, COMSIG_MOVABLE_HEAR)
 
 /// Callback for COMSIG_MOVABLE_HEAR which highlights syndicate code phrases in chat.
 /datum/component/codeword_hearing/proc/handle_hearing(datum/source, list/hearing_args)

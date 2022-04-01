@@ -14,7 +14,7 @@
 	server_id = conn.hardware_id
 	server_network = conn.network.network_id
 	src.port = port
-	RegisterSignal(conn, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, .proc/_server_disconnected)
+	register_signal(conn, COMSIG_COMPONENT_NTNET_PORT_DESTROYED, .proc/_server_disconnected)
 	..()
 
 /datum/netlink/proc/_server_disconnected(datum/component/com)

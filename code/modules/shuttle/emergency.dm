@@ -590,7 +590,7 @@
 
 /obj/machinery/computer/shuttle/pod/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_lock)
+	register_signal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_lock)
 
 /obj/machinery/computer/shuttle/pod/ComponentInitialize()
 	. = ..()

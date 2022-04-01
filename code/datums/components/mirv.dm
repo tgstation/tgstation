@@ -16,10 +16,10 @@
 
 /datum/component/mirv/RegisterWithParent()
 	if(ismachinery(parent) || isstructure(parent) || isgun(parent)) // turrets, etc
-		RegisterSignal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+		register_signal(parent, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 
 /datum/component/mirv/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PROJECTILE_ON_HIT))
+	unregister_signal(parent, list(COMSIG_PROJECTILE_ON_HIT))
 
 /datum/component/mirv/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)
 	SIGNAL_HANDLER

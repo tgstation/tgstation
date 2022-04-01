@@ -74,10 +74,10 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/void_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
 /datum/heretic_knowledge/void_grasp/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+	unregister_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/void_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -130,11 +130,11 @@
 	route = PATH_VOID
 
 /datum/heretic_knowledge/void_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/void_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+	unregister_signal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/void_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -190,10 +190,10 @@
 
 
 /datum/heretic_knowledge/void_blade_upgrade/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, .proc/on_ranged_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK, .proc/on_ranged_eldritch_blade)
 
 /datum/heretic_knowledge/void_blade_upgrade/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK)
+	unregister_signal(user, COMSIG_HERETIC_RANGED_BLADE_ATTACK)
 
 /datum/heretic_knowledge/void_blade_upgrade/proc/on_ranged_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
@@ -260,12 +260,12 @@
 
 	// Let's get this show on the road!
 	sound_loop = new(user, TRUE, TRUE)
-	RegisterSignal(user, COMSIG_LIVING_LIFE, .proc/on_life)
-	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/on_death)
+	register_signal(user, COMSIG_LIVING_LIFE, .proc/on_life)
+	register_signal(user, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /datum/heretic_knowledge/final/void_final/on_lose(mob/user)
 	on_death() // Losing is pretty much dying. I think
-	RegisterSignal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
+	register_signal(user, list(COMSIG_LIVING_LIFE, COMSIG_LIVING_DEATH))
 
 /**
  * Signal proc for [COMSIG_LIVING_LIFE].

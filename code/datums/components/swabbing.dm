@@ -21,10 +21,10 @@ This component is used in vat growing to swab for microbiological samples which 
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_to_swab)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/handle_overlays)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/handle_icon)
+	register_signal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_to_swab)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	register_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/handle_overlays)
+	register_signal(parent, COMSIG_ATOM_UPDATE_ICON, .proc/handle_icon)
 
 	src.can_swab_objs = can_swab_objs
 	src.can_swab_turfs = can_swab_turfs

@@ -18,9 +18,9 @@
 
 /datum/component/food_storage/Initialize(_minimum_weight_class = WEIGHT_CLASS_SMALL, _bad_chance = 0, _good_chance = 100)
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_item)
-	RegisterSignal(parent, COMSIG_CLICK_CTRL, .proc/try_removing_item)
-	RegisterSignal(parent, COMSIG_FOOD_EATEN, .proc/consume_food_storage)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/try_inserting_item)
+	register_signal(parent, COMSIG_CLICK_CTRL, .proc/try_removing_item)
+	register_signal(parent, COMSIG_FOOD_EATEN, .proc/consume_food_storage)
 
 	var/atom/food = parent
 	initial_volume = food.reagents.total_volume

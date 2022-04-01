@@ -49,7 +49,7 @@
 	LAZYADD(my_area.firealarms, src)
 
 	AddElement(/datum/element/atmos_sensitive, mapload)
-	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
+	register_signal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, .proc/check_security_level)
 	soundloop = new(src, FALSE)
 
 	AddComponent(/datum/component/usb_port, list(
@@ -454,13 +454,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	. = ..()
 	if(istype(parent, /obj/machinery/firealarm))
 		attached_alarm = parent
-		RegisterSignal(parent, COMSIG_FIREALARM_ON_TRIGGER, .proc/on_firealarm_triggered)
-		RegisterSignal(parent, COMSIG_FIREALARM_ON_RESET, .proc/on_firealarm_reset)
+		register_signal(parent, COMSIG_FIREALARM_ON_TRIGGER, .proc/on_firealarm_triggered)
+		register_signal(parent, COMSIG_FIREALARM_ON_RESET, .proc/on_firealarm_reset)
 
 /obj/item/circuit_component/firealarm/unregister_usb_parent(atom/movable/parent)
 	attached_alarm = null
-	UnregisterSignal(parent, COMSIG_FIREALARM_ON_TRIGGER)
-	UnregisterSignal(parent, COMSIG_FIREALARM_ON_RESET)
+	unregister_signal(parent, COMSIG_FIREALARM_ON_TRIGGER)
+	unregister_signal(parent, COMSIG_FIREALARM_ON_RESET)
 	return ..()
 
 /obj/item/circuit_component/firealarm/proc/on_firealarm_triggered(datum/source)

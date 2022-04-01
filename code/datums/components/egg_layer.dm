@@ -41,11 +41,11 @@
 
 /datum/component/egg_layer/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/feed_food)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/feed_food)
 
 /datum/component/egg_layer/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	unregister_signal(parent, COMSIG_PARENT_ATTACKBY)
 
 /datum/component/egg_layer/Destroy(force, silent)
 	. = ..()

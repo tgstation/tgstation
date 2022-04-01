@@ -11,7 +11,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	name = text
 	src.target = target
 	if(istype(target, /datum)) //Harddel man bad
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/cleanup)
+		register_signal(target, COMSIG_PARENT_QDELETING, .proc/cleanup)
 
 /obj/effect/statclick/Destroy()
 	target = null
@@ -70,22 +70,22 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 
 	if(!holder)
 		return
-	
+
 	var/list/controllers = list()
 	var/list/controller_choices = list()
-	
+
 	for (var/datum/controller/controller in world)
 		if (istype(controller, /datum/controller/subsystem))
 			continue
 		controllers["[controller] (controller.type)"] = controller //we use an associated list to ensure clients can't hold references to controllers
 		controller_choices += "[controller] (controller.type)"
-	
+
 	var/datum/controller/controller_string = input("Select controller to debug", "Debug Controller") as null|anything in controller_choices
 	var/datum/controller/controller = controllers[controller_string]
-	
+
 	if (!istype(controller))
 		return
 	debug_variables(controller)
-	
+
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
 	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")

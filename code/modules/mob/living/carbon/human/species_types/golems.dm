@@ -619,14 +619,14 @@
 	..()
 	COOLDOWN_START(src, honkooldown, 0)
 	COOLDOWN_START(src, banana_cooldown, banana_delay)
-	RegisterSignal(C, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(C, COMSIG_MOB_SAY, .proc/handle_speech)
 	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, SPECIES_TRAIT)
 
 /datum/species/golem/bananium/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	UnregisterSignal(C, COMSIG_MOB_SAY)
+	unregister_signal(C, COMSIG_MOB_SAY)
 
 	var/obj/item/organ/liver/liver = C.getorganslot(ORGAN_SLOT_LIVER)
 	if(liver)

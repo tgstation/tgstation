@@ -54,7 +54,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	natural = !forced
 
 	// Cancel early if the target is deleted
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_deleting)
+	register_signal(target, COMSIG_PARENT_QDELETING, .proc/target_deleting)
 
 /datum/hallucination/proc/target_deleting()
 	SIGNAL_HANDLER
@@ -69,7 +69,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	target.investigate_log("was afflicted with a hallucination of type [type] by [natural?"hallucination status":"an external source"]. [feedback_details]", INVESTIGATE_HALLUCINATIONS)
 
 	if (target)
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+		unregister_signal(target, COMSIG_PARENT_QDELETING)
 
 	target = null
 	return ..()

@@ -285,8 +285,8 @@
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
 	addtimer(CALLBACK(src, .proc/after_target_wakes, sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
 
-	RegisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED, .proc/on_target_escape) // Cheese condition
-	RegisterSignal(sac_target, COMSIG_LIVING_DEATH, .proc/on_target_death) // Loss condition
+	register_signal(sac_target, COMSIG_MOVABLE_Z_CHANGED, .proc/on_target_escape) // Cheese condition
+	register_signal(sac_target, COMSIG_LIVING_DEATH, .proc/on_target_death) // Loss condition
 
 /**
  * This proc is called from [proc/after_target_sleeps] when the [sac_target] should be waking up.
@@ -355,8 +355,8 @@
 		deltimer(current_timer)
 	LAZYREMOVE(return_timers, REF(sac_target))
 
-	UnregisterSignal(sac_target, COMSIG_MOVABLE_Z_CHANGED)
-	UnregisterSignal(sac_target, COMSIG_LIVING_DEATH)
+	unregister_signal(sac_target, COMSIG_MOVABLE_Z_CHANGED)
+	unregister_signal(sac_target, COMSIG_LIVING_DEATH)
 	sac_target.remove_status_effect(/datum/status_effect/necropolis_curse)
 	sac_target.remove_status_effect(/datum/status_effect/unholy_determination)
 	sac_target.reagents?.del_reagent(/datum/reagent/inverse/helgrasp/heretic)

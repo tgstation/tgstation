@@ -11,7 +11,7 @@
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/changewarcry)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/changewarcry)
 
 ///Called on COMSIG_HUMAN_MELEE_UNARMED_ATTACK. Yells the warcry and and reduces punch cooldown.
 /datum/component/wearertargeting/punchcooldown/proc/reducecooldown(mob/living/carbon/M, atom/target)

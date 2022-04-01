@@ -199,9 +199,9 @@
 	ui_view = new(null, src)
 	if(enclosed)
 		internal_tank = new (src)
-		RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/play_stepsound)
-	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+		register_signal(src, COMSIG_MOVABLE_PRE_MOVE , .proc/disconnect_air)
+	register_signal(src, COMSIG_MOVABLE_MOVED, .proc/play_stepsound)
+	register_signal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 
 	spark_system.set_up(2, 0, src)
 	spark_system.attach(src)
@@ -1156,18 +1156,18 @@
 
 
 /obj/vehicle/sealed/mecha/add_occupant(mob/M, control_flags)
-	RegisterSignal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
-	RegisterSignal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
-	RegisterSignal(M, COMSIG_MOB_MIDDLECLICKON, .proc/on_middlemouseclick) //For AIs
-	RegisterSignal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
+	register_signal(M, COMSIG_LIVING_DEATH, .proc/mob_exit)
+	register_signal(M, COMSIG_MOB_CLICKON, .proc/on_mouseclick)
+	register_signal(M, COMSIG_MOB_MIDDLECLICKON, .proc/on_middlemouseclick) //For AIs
+	register_signal(M, COMSIG_MOB_SAY, .proc/display_speech_bubble)
 	. = ..()
 	update_appearance()
 
 /obj/vehicle/sealed/mecha/remove_occupant(mob/M)
-	UnregisterSignal(M, COMSIG_LIVING_DEATH)
-	UnregisterSignal(M, COMSIG_MOB_CLICKON)
-	UnregisterSignal(M, COMSIG_MOB_MIDDLECLICKON)
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	unregister_signal(M, COMSIG_LIVING_DEATH)
+	unregister_signal(M, COMSIG_MOB_CLICKON)
+	unregister_signal(M, COMSIG_MOB_MIDDLECLICKON)
+	unregister_signal(M, COMSIG_MOB_SAY)
 	M.clear_alert(ALERT_CHARGE)
 	M.clear_alert(ALERT_MECH_DAMAGE)
 	if(M.client)

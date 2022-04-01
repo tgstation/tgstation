@@ -50,23 +50,23 @@
 	src.start_experiment_callback = start_experiment_callback
 
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
-		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/ignored_handheld_experiment_attempt)
+		register_signal(parent, COMSIG_ITEM_PRE_ATTACK, .proc/try_run_handheld_experiment)
+		register_signal(parent, COMSIG_ITEM_AFTERATTACK, .proc/ignored_handheld_experiment_attempt)
 	if(istype(parent, /obj/machinery/destructive_scanner))
-		RegisterSignal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
+		register_signal(parent, COMSIG_MACHINERY_DESTRUCTIVE_SCAN, .proc/try_run_destructive_experiment)
 	if(istype(parent, /obj/machinery/computer/operating))
-		RegisterSignal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, .proc/try_run_dissection_experiment)
+		register_signal(parent, COMSIG_OPERATING_COMPUTER_DISSECTION_COMPLETE, .proc/try_run_dissection_experiment)
 
 	// Determine UI display mode
 	switch(config_mode)
 		if(EXPERIMENT_CONFIG_ATTACKSELF)
-			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
+			register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_ALTCLICK)
-			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
+			register_signal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
 		if(EXPERIMENT_CONFIG_CLICK)
-			RegisterSignal(parent, COMSIG_ATOM_UI_INTERACT, .proc/configure_experiment_click)
+			register_signal(parent, COMSIG_ATOM_UI_INTERACT, .proc/configure_experiment_click)
 		if(EXPERIMENT_CONFIG_UI)
-			RegisterSignal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
+			register_signal(parent, COMSIG_UI_ACT, .proc/ui_handle_experiment)
 
 	// Auto connect to the first visible techweb (useful for always active handlers)
 	// Note this won't work at the moment for non-machines that have been included

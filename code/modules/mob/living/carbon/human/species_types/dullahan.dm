@@ -209,9 +209,9 @@
 		return INITIALIZE_HINT_QDEL
 	owner = new_owner
 	START_PROCESSING(SSobj, src)
-	RegisterSignal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
-	RegisterSignal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
-	RegisterSignal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
+	register_signal(owner, COMSIG_CLICK_SHIFT, .proc/examinate_check)
+	register_signal(owner, COMSIG_LIVING_REGENERATE_LIMBS, .proc/unlist_head)
+	register_signal(owner, COMSIG_LIVING_REVIVE, .proc/retrieve_head)
 	become_hearing_sensitive(ROUNDSTART_TRAIT)
 
 /obj/item/dullahan_relay/Destroy()

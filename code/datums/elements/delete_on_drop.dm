@@ -9,11 +9,11 @@
 	. = ..()
 	if(!isitem(target))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(target, list(COMSIG_ITEM_DROPPED, COMSIG_CASING_EJECTED), .proc/del_on_drop)
+	register_signal(target, list(COMSIG_ITEM_DROPPED, COMSIG_CASING_EJECTED), .proc/del_on_drop)
 
 /datum/element/delete_on_drop/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_ITEM_DROPPED, COMSIG_CASING_EJECTED))
+	unregister_signal(source, list(COMSIG_ITEM_DROPPED, COMSIG_CASING_EJECTED))
 
 /datum/element/delete_on_drop/proc/del_on_drop(atom/source)
 	SIGNAL_HANDLER

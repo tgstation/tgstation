@@ -366,7 +366,7 @@
 	. = ..()
 	if(!req_defib)
 		return
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/check_range)
 
 /obj/item/shockpaddles/Moved()
 	. = ..()
@@ -405,8 +405,8 @@
 /obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_STORAGE_INSERT, TRAIT_GENERIC) //stops shockpaddles from being inserted in BoH
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	if(!req_defib)
 		return //If it doesn't need a defib, just say it exists
 	if (!loc || !istype(loc, /obj/item/defibrillator)) //To avoid weird issues from admin spawns
@@ -432,7 +432,7 @@
 /obj/item/shockpaddles/dropped(mob/user)
 	. = ..()
 	if(user)
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		unregister_signal(user, COMSIG_MOVABLE_MOVED)
 	if(req_defib)
 		if(user)
 			to_chat(user, span_notice("The paddles snap back into the main unit."))

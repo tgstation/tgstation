@@ -38,8 +38,8 @@
 
 /datum/merger/proc/RemoveMember(atom/thing, clean=TRUE)
 	SEND_SIGNAL(thing, COMSIG_MERGER_REMOVING, src)
-	UnregisterSignal(thing, refresh_signals)
-	UnregisterSignal(thing, COMSIG_PARENT_QDELETING)
+	unregister_signal(thing, refresh_signals)
+	unregister_signal(thing, COMSIG_PARENT_QDELETING)
 	if(!thing.mergers)
 		return
 	thing.mergers -= id
@@ -52,8 +52,8 @@
 
 /datum/merger/proc/AddMember(atom/thing, connected_dir) // note that this fires for the origin of the merger as well
 	SEND_SIGNAL(thing, COMSIG_MERGER_ADDING, src)
-	RegisterSignal(thing, refresh_signals, .proc/QueueRefresh)
-	RegisterSignal(thing, COMSIG_PARENT_QDELETING, .proc/HandleMemberDel)
+	register_signal(thing, refresh_signals, .proc/QueueRefresh)
+	register_signal(thing, COMSIG_PARENT_QDELETING, .proc/HandleMemberDel)
 	if(!thing.mergers)
 		thing.mergers = list()
 	else if(thing.mergers[id])

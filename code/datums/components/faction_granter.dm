@@ -26,11 +26,11 @@
 	src.grant_message = grant_message
 
 /datum/component/faction_granter/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_self_attack)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_self_attack)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/faction_granter/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_EXAMINE))
+	unregister_signal(parent, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_EXAMINE))
 
 ///signal called on parent being examined
 /datum/component/faction_granter/proc/on_examine(datum/source, mob/user, list/examine_list)

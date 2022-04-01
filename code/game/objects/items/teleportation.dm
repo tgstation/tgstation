@@ -198,9 +198,9 @@
 			var/datum/weakref/about_to_replace_location_ref = last_portal_location
 			var/obj/machinery/computer/teleporter/about_to_replace_location = about_to_replace_location_ref.resolve()
 			if (about_to_replace_location)
-				UnregisterSignal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
+				unregister_signal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
 
-		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
+		register_signal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, .proc/on_teleporter_new_target)
 
 		last_portal_location = WEAKREF(teleport_location)
 
@@ -251,8 +251,8 @@
 	var/obj/effect/portal/portal1 = created[1]
 	var/obj/effect/portal/portal2 = created[2]
 
-	RegisterSignal(portal1, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
-	RegisterSignal(portal2, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	register_signal(portal1, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
+	register_signal(portal2, COMSIG_PARENT_QDELETING, .proc/on_portal_destroy)
 
 	try_move_adjacent(portal1, user.dir)
 	active_portal_pairs[portal1] = portal2
@@ -278,7 +278,7 @@
 
 	if (IS_WEAKREF_OF(source, last_portal_location))
 		last_portal_location = null
-		UnregisterSignal(source, COMSIG_TELEPORTER_NEW_TARGET)
+		unregister_signal(source, COMSIG_TELEPORTER_NEW_TARGET)
 
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER

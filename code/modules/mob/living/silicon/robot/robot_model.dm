@@ -469,7 +469,7 @@
 	buffer_on = TRUE
 	// Slow em down a bunch
 	robot_owner.add_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-	RegisterSignal(robot_owner, COMSIG_MOVABLE_MOVED, .proc/clean)
+	register_signal(robot_owner, COMSIG_MOVABLE_MOVED, .proc/clean)
 	//This is basically just about adding a shake to the borg, effect should look ilke an engine's running
 	var/base_x = robot_owner.base_pixel_x
 	var/base_y = robot_owner.base_pixel_y
@@ -494,7 +494,7 @@
 	// Need to ensure that people don't spawn the deactivate button
 	COOLDOWN_START(src, toggle_cooldown, finished_by)
 	// Diable the cleaning, we're revving down
-	UnregisterSignal(robot_owner, COMSIG_MOVABLE_MOVED)
+	unregister_signal(robot_owner, COMSIG_MOVABLE_MOVED)
 	// Do the rumble animation till we're all finished
 	var/base_x = robot_owner.base_pixel_x
 	var/base_y = robot_owner.base_pixel_y

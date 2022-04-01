@@ -105,11 +105,11 @@
 /datum/reagent/gunpowder/on_new(data)
 	. = ..()
 	if(holder?.my_atom)
-		RegisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT, .proc/on_ex_act)
+		register_signal(holder.my_atom, COMSIG_ATOM_EX_ACT, .proc/on_ex_act)
 
 /datum/reagent/gunpowder/Destroy()
 	if(holder?.my_atom)
-		UnregisterSignal(holder.my_atom, COMSIG_ATOM_EX_ACT)
+		unregister_signal(holder.my_atom, COMSIG_ATOM_EX_ACT)
 	return ..()
 
 /datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M, delta_time, times_fired)

@@ -27,12 +27,12 @@
 	riding_component_type = component_type
 	potion_boosted = potion_boost
 
-	RegisterSignal(target, COMSIG_MOVABLE_PREBUCKLE, .proc/check_mounting)
+	register_signal(target, COMSIG_MOVABLE_PREBUCKLE, .proc/check_mounting)
 	if(isvehicle(target))
-		RegisterSignal(target, COMSIG_SPEED_POTION_APPLIED, .proc/check_potion)
+		register_signal(target, COMSIG_SPEED_POTION_APPLIED, .proc/check_potion)
 
 /datum/element/ridable/Detach(datum/target)
-	UnregisterSignal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED))
+	unregister_signal(target, list(COMSIG_MOVABLE_PREBUCKLE, COMSIG_SPEED_POTION_APPLIED))
 	return ..()
 
 /// Someone is buckling to this movable, which is literally the only thing we care about (other than speed potions)

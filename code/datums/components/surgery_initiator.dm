@@ -18,20 +18,20 @@
 	return ..()
 
 /datum/component/surgery_initiator/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
+	register_signal(parent, COMSIG_ITEM_ATTACK, .proc/initiate_surgery_moment)
 
 /datum/component/surgery_initiator/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK)
+	unregister_signal(parent, COMSIG_ITEM_ATTACK)
 	unregister_signals()
 
 /datum/component/surgery_initiator/proc/unregister_signals()
 	var/mob/living/last_user = last_user_ref?.resolve()
 	if (!isnull(last_user_ref))
-		UnregisterSignal(last_user, COMSIG_MOB_SELECTED_ZONE_SET)
+		unregister_signal(last_user, COMSIG_MOB_SELECTED_ZONE_SET)
 
 	var/mob/living/surgery_target = surgery_target_ref?.resolve()
 	if (!isnull(surgery_target_ref))
-		UnregisterSignal(surgery_target, COMSIG_MOB_SURGERY_STARTED)
+		unregister_signal(surgery_target, COMSIG_MOB_SURGERY_STARTED)
 
 /// Does the surgery initiation.
 /datum/component/surgery_initiator/proc/initiate_surgery_moment(datum/source, atom/target, mob/user)
@@ -69,8 +69,8 @@
 	last_user_ref = WEAKREF(user)
 	surgery_target_ref = WEAKREF(target)
 
-	RegisterSignal(user, COMSIG_MOB_SELECTED_ZONE_SET, .proc/on_set_selected_zone)
-	RegisterSignal(target, COMSIG_MOB_SURGERY_STARTED, .proc/on_mob_surgery_started)
+	register_signal(user, COMSIG_MOB_SELECTED_ZONE_SET, .proc/on_set_selected_zone)
+	register_signal(target, COMSIG_MOB_SURGERY_STARTED, .proc/on_mob_surgery_started)
 
 	ui_interact(user)
 

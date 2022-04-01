@@ -408,13 +408,13 @@
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	register_signal(owner, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /datum/mutation/human/extrastun/on_losing()
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	unregister_signal(owner, COMSIG_MOVABLE_MOVED)
 
 ///Triggers on moved(). Randomly makes the owner trip
 /datum/mutation/human/extrastun/proc/on_move()
@@ -439,13 +439,13 @@
 	. = ..()
 	if(.)
 		return TRUE
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/bloody_shower)
+	register_signal(owner, COMSIG_MOB_STATCHANGE, .proc/bloody_shower)
 
 /datum/mutation/human/martyrdom/on_losing()
 	. = ..()
 	if(.)
 		return TRUE
-	UnregisterSignal(owner, COMSIG_MOB_STATCHANGE)
+	unregister_signal(owner, COMSIG_MOB_STATCHANGE)
 
 /datum/mutation/human/martyrdom/proc/bloody_shower(datum/source, new_stat)
 	SIGNAL_HANDLER
@@ -496,7 +496,7 @@
 		head.drop_organs()
 		qdel(head)
 		owner.regenerate_icons()
-	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/abortattachment)
+	register_signal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/abortattachment)
 
 /datum/mutation/human/headless/on_losing()
 	. = ..()
@@ -505,7 +505,7 @@
 	var/obj/item/organ/brain/brain = owner.getorganslot(ORGAN_SLOT_BRAIN)
 	if(brain) //so this doesn't instantly kill you. we could delete the brain, but it lets people cure brain issues they /really/ shouldn't be
 		brain.zone = BODY_ZONE_HEAD
-	UnregisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB)
+	unregister_signal(owner, COMSIG_CARBON_ATTACH_LIMB)
 	var/successful = owner.regenerate_limb(BODY_ZONE_HEAD, noheal = TRUE) //noheal needs to be TRUE to prevent weird adding and removing mutation healing
 	if(!successful)
 		stack_trace("HARS mutation head regeneration failed! (usually caused by headless syndrome having a head)")

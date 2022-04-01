@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 			GLOB.department_order_cooldowns[type] = 0
 			SSshuttle.shopping_list -= department_order
 			department_order = null
-			UnregisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
+			unregister_signal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
 		return TRUE
 
 	if(GLOB.department_order_cooldowns[type] > world.time)
@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	department_order = new(pack, name, rank, ckey, "", null, chosen_delivery_area, null)
 	SSshuttle.shopping_list += department_order
 	if(!already_signalled)
-		RegisterSignal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, .proc/finalize_department_order)
+		register_signal(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY, .proc/finalize_department_order)
 	say("Order processed. Cargo will deliver the crate when it comes in on their shuttle. NOTICE: Heads of staff may override the order.")
 	calculate_cooldown(pack.cost)
 
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(department_order_cooldowns, list(
 	SIGNAL_HANDLER
 	if(department_order && (department_order in SSshuttle.shopping_list))
 		department_order = null
-	UnregisterSignal(subsystem, COMSIG_SUPPLY_SHUTTLE_BUY)
+	unregister_signal(subsystem, COMSIG_SUPPLY_SHUTTLE_BUY)
 
 /obj/machinery/computer/department_orders/proc/calculate_cooldown(credits)
 	//minimum almost the lowest value of a crate

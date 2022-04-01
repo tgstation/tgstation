@@ -68,7 +68,7 @@
 	explosion_block = EXPLOSION_BLOCK_PROC
 
 	flags_1 |= ALLOW_DARK_PAINTS_1
-	RegisterSignal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
+	register_signal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
 

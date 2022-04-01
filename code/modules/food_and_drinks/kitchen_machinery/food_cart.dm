@@ -23,10 +23,10 @@
 	cart_table = new(src)
 	cart_tent = new(src)
 	packed_things = list(cart_table, cart_smartfridge, cart_tent, cart_griddle) //middle, left, left, right
-	RegisterSignal(cart_griddle, COMSIG_PARENT_QDELETING, .proc/lost_part)
-	RegisterSignal(cart_smartfridge, COMSIG_PARENT_QDELETING, .proc/lost_part)
-	RegisterSignal(cart_table, COMSIG_PARENT_QDELETING, .proc/lost_part)
-	RegisterSignal(cart_tent, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	register_signal(cart_griddle, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	register_signal(cart_smartfridge, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	register_signal(cart_table, COMSIG_PARENT_QDELETING, .proc/lost_part)
+	register_signal(cart_tent, COMSIG_PARENT_QDELETING, .proc/lost_part)
 
 /obj/machinery/food_cart/Destroy()
 	if(cart_griddle)
@@ -56,7 +56,7 @@
 	visible_message(span_notice("[src] retracts all of it's unpacked components."))
 	for(var/o in packed_things)
 		var/obj/object = o
-		UnregisterSignal(object, COMSIG_MOVABLE_MOVED)
+		unregister_signal(object, COMSIG_MOVABLE_MOVED)
 		object.forceMove(src)
 	set_anchored(FALSE)
 	unpacked = FALSE
@@ -75,7 +75,7 @@
 		var/turf/T = get_step(grabbed_turf, turn(SOUTH, angle))
 		var/obj/thing = packed_things[iteration]
 		thing.forceMove(T)
-		RegisterSignal(thing, COMSIG_MOVABLE_MOVED, .proc/lost_part)
+		register_signal(thing, COMSIG_MOVABLE_MOVED, .proc/lost_part)
 		iteration++
 	unpacked = TRUE
 
@@ -113,10 +113,10 @@
 	SIGNAL_HANDLER
 
 	//okay, so it's deleting the fridge or griddle which are more important. We're gonna break the machine then
-	UnregisterSignal(cart_griddle, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_smartfridge, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_table, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
-	UnregisterSignal(cart_tent, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	unregister_signal(cart_griddle, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	unregister_signal(cart_smartfridge, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	unregister_signal(cart_table, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
+	unregister_signal(cart_tent, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_MOVED))
 	atom_break()
 
 /obj/machinery/food_cart/atom_break(damage_flag)

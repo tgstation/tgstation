@@ -63,9 +63,9 @@
 	charging += charger
 	actively_moving = FALSE
 	SEND_SIGNAL(owner, COMSIG_STARTED_CHARGE)
-	RegisterSignal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
-	RegisterSignal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
-	RegisterSignal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(charger, COMSIG_MOVABLE_BUMP, .proc/on_bump)
+	register_signal(charger, COMSIG_MOVABLE_PRE_MOVE, .proc/on_move)
+	register_signal(charger, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 	DestroySurroundings(charger)
 	charger.setDir(dir)
 	do_charge_indicator(charger, target)
@@ -77,11 +77,11 @@
 	var/datum/move_loop/new_loop = SSmove_manager.home_onto(charger, target, delay = charge_speed, timeout = time_to_hit, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
 	if(!new_loop)
 		return
-	RegisterSignal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
-	RegisterSignal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
-	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/charge_end)
+	register_signal(new_loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
+	register_signal(new_loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
+	register_signal(new_loop, COMSIG_PARENT_QDELETING, .proc/charge_end)
 	if(ismob(charger))
-		RegisterSignal(charger, COMSIG_MOB_STATCHANGE, .proc/stat_changed)
+		register_signal(charger, COMSIG_MOB_STATCHANGE, .proc/stat_changed)
 
 	// Yes this is disgusting. But we need to queue this stuff, and this code just isn't setup to support that right now. So gotta do it with sleeps
 	sleep(time_to_hit + charge_speed)
@@ -100,7 +100,7 @@
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_end(datum/move_loop/source)
 	SIGNAL_HANDLER
 	var/atom/movable/charger = source.moving
-	UnregisterSignal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_STATCHANGE))
+	unregister_signal(charger, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_MOVED, COMSIG_MOB_STATCHANGE))
 	SEND_SIGNAL(owner, COMSIG_FINISHED_CHARGE)
 	actively_moving = FALSE
 	charging -= charger

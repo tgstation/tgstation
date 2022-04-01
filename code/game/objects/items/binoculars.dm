@@ -14,8 +14,8 @@
 
 /obj/item/binoculars/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/binoculars/ComponentInitialize()
 	. = ..()
@@ -28,8 +28,8 @@
 /obj/item/binoculars/proc/on_wield(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
-	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
+	register_signal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
 	listeningTo = user
 	user.visible_message(span_notice("[user] holds [src] up to [user.p_their()] eyes."), span_notice("You hold [src] up to your eyes."))
 	inhand_icon_state = "binoculars_wielded"
@@ -53,8 +53,8 @@
 	SIGNAL_HANDLER
 
 	if(listeningTo)
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
+		unregister_signal(user, COMSIG_MOVABLE_MOVED)
+		unregister_signal(user, COMSIG_ATOM_DIR_CHANGE)
 		listeningTo = null
 	user.visible_message(span_notice("[user] lowers [src]."), span_notice("You lower [src]."))
 	inhand_icon_state = "binoculars"

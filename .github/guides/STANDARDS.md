@@ -99,7 +99,7 @@ While we normally encourage (and in some cases, even require) bringing out of da
 
 ### Signal Handlers
 
-All procs that are registered to listen for signals using `RegisterSignal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
+All procs that are registered to listen for signals using `register_signal()` must contain at the start of the proc `SIGNAL_HANDLER` eg;
 ```
 /type/path/proc/signal_callback()
 	SIGNAL_HANDLER

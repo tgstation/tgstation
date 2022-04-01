@@ -55,7 +55,7 @@
 			if(!temp_adventure)
 				feedback_message = "Instantiating adventure failed. Check runtime logs for details."
 				return TRUE
-			RegisterSignal(temp_adventure,COMSIG_ADVENTURE_FINISHED,.proc/resolve_adventure)
+			register_signal(temp_adventure,COMSIG_ADVENTURE_FINISHED,.proc/resolve_adventure)
 			temp_adventure.start_adventure()
 			feedback_message = "Adventure started"
 			return TRUE

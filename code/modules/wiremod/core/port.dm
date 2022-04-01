@@ -52,13 +52,13 @@
 
 	if(src.value != value || force)
 		if(isdatum(src.value))
-			UnregisterSignal(src.value, COMSIG_PARENT_QDELETING)
+			unregister_signal(src.value, COMSIG_PARENT_QDELETING)
 		if(datatype_handler.is_extensive)
 			src.value = datatype_handler.convert_value_extensive(src, value, force)
 		else
 			src.value = datatype_handler.convert_value(src, value, force)
 		if(isdatum(value))
-			RegisterSignal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
+			register_signal(value, COMSIG_PARENT_QDELETING, .proc/null_value)
 	SEND_SIGNAL(src, COMSIG_PORT_SET_VALUE, value)
 
 /**
@@ -142,9 +142,9 @@
 /datum/port/input/proc/disconnect(datum/port/output/output)
 	SIGNAL_HANDLER
 	connected_ports -= output
-	UnregisterSignal(output, COMSIG_PORT_SET_VALUE)
-	UnregisterSignal(output, COMSIG_PORT_SET_TYPE)
-	UnregisterSignal(output, COMSIG_PORT_DISCONNECT)
+	unregister_signal(output, COMSIG_PORT_SET_VALUE)
+	unregister_signal(output, COMSIG_PORT_SET_TYPE)
+	unregister_signal(output, COMSIG_PORT_DISCONNECT)
 
 /// Do our part in setting all source references anywhere to null.
 /datum/port/proc/on_value_qdeleting(datum/source)
@@ -186,9 +186,9 @@
 	if(output in connected_ports)
 		return
 	connected_ports += output
-	RegisterSignal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
-	RegisterSignal(output, COMSIG_PORT_SET_TYPE, .proc/check_type)
-	RegisterSignal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
+	register_signal(output, COMSIG_PORT_SET_VALUE, .proc/receive_value)
+	register_signal(output, COMSIG_PORT_SET_TYPE, .proc/check_type)
+	register_signal(output, COMSIG_PORT_DISCONNECT, .proc/disconnect)
 	// For signals, we don't update the input to prevent sending a signal when connecting ports.
 	if(!(datatype_handler.datatype_flags & DATATYPE_FLAG_AVOID_VALUE_UPDATE))
 		set_input(output.value)

@@ -28,12 +28,12 @@
 	src.transfer_prob = transfer_prob
 	src.attacker_message = attacker_message
 	src.victim_message = victim_message
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_attack)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(target, COMSIG_ITEM_ATTACK, .proc/on_attack)
+	register_signal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/element/chemical_transfer/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
+	unregister_signal(target, list(COMSIG_ITEM_ATTACK, COMSIG_PARENT_EXAMINE))
 
 ///signal called on parent being examined
 /datum/element/chemical_transfer/proc/on_examine(datum/target, mob/user, list/examine_list)

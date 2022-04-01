@@ -10,10 +10,10 @@ GLOBAL_LIST_EMPTY(radial_menus)
 
 /atom/movable/screen/radial/proc/set_parent(new_value)
 	if(parent)
-		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+		unregister_signal(parent, COMSIG_PARENT_QDELETING)
 	parent = new_value
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+		register_signal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
 
 /atom/movable/screen/radial/proc/handle_parent_del()
 	SIGNAL_HANDLER

@@ -67,7 +67,7 @@
 	var/icon/bluespace
 
 /datum/status_effect/slimerecall/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
+	register_signal(owner, COMSIG_LIVING_RESIST, .proc/resistField)
 	to_chat(owner, span_danger("You feel a sudden tug from an unknown force, and feel a pull to bluespace!"))
 	to_chat(owner, span_notice("Resist if you wish avoid the force!"))
 	bluespace = icon('icons/effects/effects.dmi',"chronofield")
@@ -80,7 +80,7 @@
 	owner.remove_status_effect(src)
 
 /datum/status_effect/slimerecall/on_remove()
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	unregister_signal(owner, COMSIG_LIVING_RESIST)
 	owner.cut_overlay(bluespace)
 	if(interrupted || !ismob(target))
 		to_chat(owner, span_warning("The bluespace tug fades away, and you feel that the force has passed you by."))
@@ -101,7 +101,7 @@
 	var/obj/structure/ice_stasis/cube
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
+	register_signal(owner, COMSIG_LIVING_RESIST, .proc/breakCube)
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
 	owner.status_flags |= GODMODE
@@ -120,7 +120,7 @@
 	if(cube)
 		qdel(cube)
 	owner.status_flags &= ~GODMODE
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	unregister_signal(owner, COMSIG_LIVING_RESIST)
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"

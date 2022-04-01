@@ -52,12 +52,12 @@
 	left = C.get_bodypart(BODY_ZONE_L_LEG)
 	right = C.get_bodypart(BODY_ZONE_R_LEG)
 	update_limp()
-	RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/check_step)
-	RegisterSignal(C, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB), .proc/update_limp)
+	register_signal(C, COMSIG_MOVABLE_MOVED, .proc/check_step)
+	register_signal(C, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB), .proc/update_limp)
 	return TRUE
 
 /datum/status_effect/limp/on_remove()
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+	unregister_signal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
 
 /atom/movable/screen/alert/status_effect/limp
 	name = "Limping"
@@ -149,12 +149,12 @@
 /datum/status_effect/wound/on_remove()
 	linked_wound = null
 	linked_limb = null
-	UnregisterSignal(owner, COMSIG_CARBON_LOSE_WOUND)
+	unregister_signal(owner, COMSIG_CARBON_LOSE_WOUND)
 
 /datum/status_effect/wound/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_WOUND, .proc/check_remove)
+	register_signal(owner, COMSIG_CARBON_LOSE_WOUND, .proc/check_remove)
 	return TRUE
 
 /// check if the wound getting removed is the wound we're tied to
@@ -170,12 +170,12 @@
 
 /datum/status_effect/wound/blunt/on_apply()
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	register_signal(owner, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
 	on_swap_hands()
 
 /datum/status_effect/wound/blunt/on_remove()
 	. = ..()
-	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
+	unregister_signal(owner, COMSIG_MOB_SWAP_HANDS)
 	var/mob/living/carbon/wound_owner = owner
 	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 

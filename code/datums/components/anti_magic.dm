@@ -10,10 +10,10 @@
 
 /datum/component/anti_magic/Initialize(_magic = FALSE, _holy = FALSE, _psychic = FALSE, _allowed_slots, _charges, _blocks_self = TRUE, datum/callback/_reaction, datum/callback/_expire)
 	if(isitem(parent))
-		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-		RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+		register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+		register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 	else if(ismob(parent))
-		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect)
+		register_signal(parent, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect)
 	else
 		return COMPONENT_INCOMPATIBLE
 
@@ -32,14 +32,14 @@
 	SIGNAL_HANDLER
 
 	if(!(allowed_slots & slot)) //Check that the slot is valid for antimagic
-		UnregisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
+		unregister_signal(equipper, COMSIG_MOB_RECEIVE_MAGIC)
 		return
-	RegisterSignal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
+	register_signal(equipper, COMSIG_MOB_RECEIVE_MAGIC, .proc/protect, TRUE)
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
+	unregister_signal(user, COMSIG_MOB_RECEIVE_MAGIC)
 
 /datum/component/anti_magic/proc/protect(datum/source, mob/user, _magic, _holy, _psychic, chargecost, self, list/protection_sources)
 	SIGNAL_HANDLER

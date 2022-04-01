@@ -8,10 +8,10 @@
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 	impressiveness = impress
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/element/art/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
+	unregister_signal(target, COMSIG_PARENT_EXAMINE)
 	return ..()
 
 /datum/element/art/proc/apply_moodlet(atom/source, mob/user, impress)

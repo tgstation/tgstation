@@ -55,10 +55,10 @@
 		REMOVE_TRAIT(target, TRAIT_IMMOBILIZED, type)
 	var/turf/exit_point = get_turf(holder) //Hopefully this gets updated, otherwise this is our fallback
 	LAZYINITLIST(exit_point_list)
-	RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
+	register_signal(holder, COMSIG_MOVABLE_MOVED, .proc/update_exit_point, target)
 	sleep(jaunt_duration)
 
-	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)
+	unregister_signal(holder, COMSIG_MOVABLE_MOVED)
 	if(target.loc != holder) //mob warped out of the warp
 		qdel(holder)
 		return

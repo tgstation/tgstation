@@ -110,7 +110,7 @@
 	rift.Grant(src)
 	small_sprite = new
 	small_sprite.Grant(src)
-	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
+	register_signal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
 	. = ..()
@@ -206,12 +206,12 @@
 		destroy_rifts()
 	..()
 	add_dragon_overlay()
-	UnregisterSignal(small_sprite, COMSIG_ACTION_TRIGGER)
+	unregister_signal(small_sprite, COMSIG_ACTION_TRIGGER)
 
 /mob/living/simple_animal/hostile/space_dragon/revive(full_heal, admin_revive)
 	. = ..()
 	add_dragon_overlay()
-	RegisterSignal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
+	register_signal(small_sprite, COMSIG_ACTION_TRIGGER, .proc/add_dragon_overlay)
 
 /mob/living/simple_animal/hostile/space_dragon/wabbajack_act(mob/living/new_mob)
 	empty_contents()

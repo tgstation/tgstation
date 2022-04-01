@@ -77,10 +77,10 @@
 
 /obj/item/clothing/accessory/proc/set_detached_pockets(new_pocket)
 	if(detached_pockets)
-		UnregisterSignal(detached_pockets, COMSIG_PARENT_QDELETING)
+		unregister_signal(detached_pockets, COMSIG_PARENT_QDELETING)
 	detached_pockets = new_pocket
 	if(detached_pockets)
-		RegisterSignal(detached_pockets, COMSIG_PARENT_QDELETING, .proc/handle_pockets_del)
+		register_signal(detached_pockets, COMSIG_PARENT_QDELETING, .proc/handle_pockets_del)
 
 /obj/item/clothing/accessory/proc/handle_pockets_del(datum/source)
 	SIGNAL_HANDLER
@@ -335,11 +335,11 @@
 	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_equip(obj/item/clothing/under/U, mob/living/user)
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
+	register_signal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	user.bubble_icon = "lawyer"
 
 /obj/item/clothing/accessory/lawyers_badge/on_uniform_dropped(obj/item/clothing/under/U, mob/living/user)
-	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+	unregister_signal(user, COMSIG_LIVING_SLAM_TABLE)
 	user.bubble_icon = initial(user.bubble_icon)
 
 /obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
@@ -444,11 +444,11 @@
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_equip(obj/item/clothing/under/U, user)
 	. = ..()
-	RegisterSignal(U,COMSIG_PARENT_EXAMINE,.proc/on_examine)
+	register_signal(U,COMSIG_PARENT_EXAMINE,.proc/on_examine)
 
 /obj/item/clothing/accessory/allergy_dogtag/on_uniform_dropped(obj/item/clothing/under/U, user)
 	. = ..()
-	UnregisterSignal(U,COMSIG_PARENT_EXAMINE)
+	unregister_signal(U,COMSIG_PARENT_EXAMINE)
 
 ///What happens when we examine the uniform
 /obj/item/clothing/accessory/allergy_dogtag/proc/on_examine(datum/source, mob/user, list/examine_list)

@@ -18,7 +18,7 @@
 	if(!isgun(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/item/gun = parent
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/wake_up)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/wake_up)
 	if(_autofire_shot_delay)
 		autofire_shot_delay = _autofire_shot_delay
 	if(autofire_stat == AUTOFIRE_STAT_IDLE && ismob(gun.loc))
@@ -59,13 +59,13 @@
 	if(!QDELETED(usercli))
 		clicker = usercli
 		shooter = clicker.mob
-		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
+		register_signal(clicker, COMSIG_CLIENT_MOUSEDOWN, .proc/on_mouse_down)
 	if(!QDELETED(shooter))
-		RegisterSignal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
-		UnregisterSignal(shooter, COMSIG_MOB_LOGIN)
-	RegisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/autofire_off)
-	parent.RegisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
-	parent.RegisterSignal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
+		register_signal(shooter, COMSIG_MOB_LOGOUT, .proc/autofire_off)
+		unregister_signal(shooter, COMSIG_MOB_LOGIN)
+	register_signal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED), .proc/autofire_off)
+	parent.register_signal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN, /obj/item/gun/.proc/autofire_bypass_check)
+	parent.register_signal(parent, COMSIG_AUTOFIRE_SHOT, /obj/item/gun/.proc/do_autofire)
 
 
 /datum/component/automatic_fire/proc/autofire_off(datum/source)
@@ -78,16 +78,16 @@
 	autofire_stat = AUTOFIRE_STAT_IDLE
 
 	if(!QDELETED(clicker))
-		UnregisterSignal(clicker, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP, COMSIG_CLIENT_MOUSEDRAG))
+		unregister_signal(clicker, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP, COMSIG_CLIENT_MOUSEDRAG))
 	mouse_status = AUTOFIRE_MOUSEUP //In regards to the component there's no click anymore to care about.
 	clicker = null
 	if(!QDELETED(shooter))
-		RegisterSignal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
-		UnregisterSignal(shooter, COMSIG_MOB_LOGOUT)
-	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
+		register_signal(shooter, COMSIG_MOB_LOGIN, .proc/on_client_login)
+		unregister_signal(shooter, COMSIG_MOB_LOGOUT)
+	unregister_signal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_ITEM_DROPPED))
 	shooter = null
-	parent.UnregisterSignal(parent, COMSIG_AUTOFIRE_SHOT)
-	parent.UnregisterSignal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)
+	parent.unregister_signal(parent, COMSIG_AUTOFIRE_SHOT)
+	parent.unregister_signal(src, COMSIG_AUTOFIRE_ONMOUSEDOWN)
 
 /datum/component/automatic_fire/proc/on_client_login(mob/source)
 	SIGNAL_HANDLER
@@ -151,10 +151,10 @@
 	clicker.mouse_pointer_icon = clicker.mouse_override_icon
 
 	if(mouse_status == AUTOFIRE_MOUSEUP) //See mouse_status definition for the reason for this.
-		RegisterSignal(clicker, COMSIG_CLIENT_MOUSEUP, .proc/on_mouse_up)
+		register_signal(clicker, COMSIG_CLIENT_MOUSEUP, .proc/on_mouse_up)
 		mouse_status = AUTOFIRE_MOUSEDOWN
 
-	RegisterSignal(shooter, COMSIG_MOB_SWAP_HANDS, .proc/stop_autofiring)
+	register_signal(shooter, COMSIG_MOB_SWAP_HANDS, .proc/stop_autofiring)
 
 	if(isgun(parent))
 		var/obj/item/gun/shoota = parent
@@ -168,12 +168,12 @@
 		return //If it fails, such as when the gun is empty, then there's no need to schedule a second shot.
 
 	START_PROCESSING(SSprojectiles, src)
-	RegisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG, .proc/on_mouse_drag)
+	register_signal(clicker, COMSIG_CLIENT_MOUSEDRAG, .proc/on_mouse_drag)
 
 
 /datum/component/automatic_fire/proc/on_mouse_up(datum/source, atom/object, turf/location, control, params)
 	SIGNAL_HANDLER
-	UnregisterSignal(clicker, COMSIG_CLIENT_MOUSEUP)
+	unregister_signal(clicker, COMSIG_CLIENT_MOUSEUP)
 	mouse_status = AUTOFIRE_MOUSEUP
 	if(autofire_stat == AUTOFIRE_STAT_FIRING)
 		stop_autofiring()
@@ -189,9 +189,9 @@
 	if(clicker)
 		clicker.mouse_override_icon = null
 		clicker.mouse_pointer_icon = clicker.mouse_override_icon
-		UnregisterSignal(clicker, COMSIG_CLIENT_MOUSEDRAG)
+		unregister_signal(clicker, COMSIG_CLIENT_MOUSEDRAG)
 	if(!QDELETED(shooter))
-		UnregisterSignal(shooter, COMSIG_MOB_SWAP_HANDS)
+		unregister_signal(shooter, COMSIG_MOB_SWAP_HANDS)
 	target = null
 	target_loc = null
 	mouse_parameters = null

@@ -123,8 +123,8 @@
 
 	var/mob/living/living_mob = mob_to_tweak
 	handle_clown_mutation(living_mob, "You have evolved beyond your clownish nature, allowing you to wield weapons without harming yourself.")
-	RegisterSignal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
-	RegisterSignal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
+	register_signal(living_mob, COMSIG_MOB_LOGIN, .proc/on_login)
+	register_signal(living_mob, COMSIG_LIVING_LIFE, .proc/on_life)
 	living_mob.hud_used?.lingchemdisplay.invisibility = 0
 	living_mob.hud_used?.lingchemdisplay.maptext = FORMAT_CHEM_CHARGES_TEXT(chem_charges)
 
@@ -132,7 +132,7 @@
 		return
 
 	var/mob/living/carbon/carbon_mob = mob_to_tweak
-	RegisterSignal(carbon_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
+	register_signal(carbon_mob, list(COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON), .proc/on_click_sting)
 
 	// Brains are optional for lings.
 	var/obj/item/organ/brain/our_ling_brain = carbon_mob.getorganslot(ORGAN_SLOT_BRAIN)
@@ -143,7 +143,7 @@
 /datum/antagonist/changeling/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/living_mob = mob_override || owner.current
 	handle_clown_mutation(living_mob, removing = FALSE)
-	UnregisterSignal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
+	unregister_signal(living_mob, list(COMSIG_MOB_LOGIN, COMSIG_LIVING_LIFE, COMSIG_MOB_MIDDLECLICKON, COMSIG_MOB_ALTCLICKON))
 	living_mob.hud_used?.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
 /datum/antagonist/changeling/on_removal()

@@ -59,13 +59,13 @@
 		return
 	A.AddElement(/datum/element/forced_gravity, new_gravity)
 	gravito_targets[A] = new_gravity
-	RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)
+	register_signal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)
 	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/remove_gravity(atom/target)
 	if(isnull(gravito_targets[target]))
 		return
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	unregister_signal(target, COMSIG_MOVABLE_MOVED)
 	target.RemoveElement(/datum/element/forced_gravity, gravito_targets[target])
 	gravito_targets -= target
 

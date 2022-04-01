@@ -17,11 +17,11 @@
 		stack_trace("death drops element added to [target] with NO LOOT")
 	if(!src.loot)
 		src.loot = loot.Copy()
-	RegisterSignal(target, COMSIG_LIVING_DEATH, .proc/on_death)
+	register_signal(target, COMSIG_LIVING_DEATH, .proc/on_death)
 
 /datum/element/death_drops/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_LIVING_DEATH)
+	unregister_signal(target, COMSIG_LIVING_DEATH)
 
 ///signal called by the stat of the target changing
 /datum/element/death_drops/proc/on_death(mob/living/target, gibbed)

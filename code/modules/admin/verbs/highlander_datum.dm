@@ -9,7 +9,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 
 /datum/highlander_controller/New()
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
+	register_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_highlander)
 	sound_to_playing_players('sound/misc/highlander.ogg')
 	send_to_playing_players(span_boldannounce("<font size=6>THERE CAN BE ONLY ONE</font>"))
 	for(var/obj/item/disk/nuclear/nuke_disk as anything in SSpoints_of_interest.real_nuclear_disks)
@@ -40,7 +40,7 @@ GLOBAL_DATUM(highlander_controller, /datum/highlander_controller)
 
 /datum/highlander_controller/Destroy(force, ...)
 	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	unregister_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 /**
  * Triggers at beginning of the game when there is a confirmed list of valid, ready players.

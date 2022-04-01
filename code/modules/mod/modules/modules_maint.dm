@@ -18,10 +18,10 @@
 	mod.activation_step_time *= 2
 
 /obj/item/mod/module/springlock/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
+	register_signal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS, .proc/on_wearer_exposed)
 
 /obj/item/mod/module/springlock/on_suit_deactivation()
-	UnregisterSignal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
+	unregister_signal(mod.wearer, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 ///Signal fired when wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/on_wearer_exposed(atom/source, list/reagents, datum/reagents/source_reagents, methods, volume_modifier, show_message)
@@ -32,7 +32,7 @@
 	to_chat(mod.wearer, span_danger("[src] makes an ominous click sound..."))
 	playsound(src, 'sound/items/modsuit/springlock.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, .proc/snap_shut), rand(3 SECONDS, 5 SECONDS))
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
+	register_signal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_spring_block)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
@@ -43,7 +43,7 @@
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
 /obj/item/mod/module/springlock/proc/snap_shut()
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+	unregister_signal(mod, COMSIG_MOD_ACTIVATE)
 	if(!mod.wearer) //while there is a guaranteed user when on_wearer_exposed() fires, that isn't the same case for this proc
 		return
 	mod.wearer.visible_message("[src] inside [mod.wearer]'s [mod.name] snaps shut, mutilating the user inside!", span_userdanger("*SNAP*"))
@@ -281,7 +281,7 @@
 		return
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_upstairs)
+	register_signal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_upstairs)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
@@ -295,7 +295,7 @@
 		return
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	step_count = 0
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)

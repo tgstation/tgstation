@@ -73,9 +73,9 @@
 		if(quirk_holder.client)
 			post_add()
 		else
-			RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
+			register_signal(quirk_holder, COMSIG_MOB_LOGIN, .proc/on_quirk_holder_first_login)
 
-	RegisterSignal(quirk_holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdeleting)
+	register_signal(quirk_holder, COMSIG_PARENT_QDELETING, .proc/on_holder_qdeleting)
 
 	return TRUE
 
@@ -84,7 +84,7 @@
 	if(!quirk_holder)
 		CRASH("Attempted to remove quirk from the current holder when it has no current holder.")
 
-	UnregisterSignal(quirk_holder, list(COMSIG_MOB_LOGIN, COMSIG_PARENT_QDELETING))
+	unregister_signal(quirk_holder, list(COMSIG_MOB_LOGIN, COMSIG_PARENT_QDELETING))
 
 	quirk_holder.quirks -= src
 
@@ -111,7 +111,7 @@
 /datum/quirk/proc/on_quirk_holder_first_login(mob/living/source)
 		SIGNAL_HANDLER
 
-		UnregisterSignal(source, COMSIG_MOB_LOGIN)
+		unregister_signal(source, COMSIG_MOB_LOGIN)
 		post_add()
 
 /// Any effect that should be applied every single time the quirk is added to any mob, even when transferred.

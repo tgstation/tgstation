@@ -10,7 +10,7 @@
 		return
 
 	LAZYADD(tagged_datums, target_datum)
-	RegisterSignal(target_datum, COMSIG_PARENT_QDELETING, .proc/handle_tagged_del, override = TRUE)
+	register_signal(target_datum, COMSIG_PARENT_QDELETING, .proc/handle_tagged_del, override = TRUE)
 	to_chat(owner, span_notice("[target_datum] has been tagged."))
 
 /// Get ahead of the curve with deleting

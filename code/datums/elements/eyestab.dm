@@ -18,12 +18,12 @@
 	if (!isnull(damage))
 		src.damage = damage
 
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/on_item_attack)
+	register_signal(target, COMSIG_ITEM_ATTACK, .proc/on_item_attack)
 
 /datum/element/eyestab/Detach(datum/source, ...)
 	. = ..()
 
-	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
+	unregister_signal(source, COMSIG_ITEM_ATTACK)
 
 /datum/element/eyestab/proc/on_item_attack(datum/source, mob/living/target, mob/living/user)
 	SIGNAL_HANDLER

@@ -45,9 +45,9 @@
 		user_client = user.client
 		add_prog_bar_image_to_client()
 
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, .proc/on_user_delete)
-	RegisterSignal(user, COMSIG_MOB_LOGOUT, .proc/clean_user_client)
-	RegisterSignal(user, COMSIG_MOB_LOGIN, .proc/on_user_login)
+	register_signal(user, COMSIG_PARENT_QDELETING, .proc/on_user_delete)
+	register_signal(user, COMSIG_MOB_LOGOUT, .proc/clean_user_client)
+	register_signal(user, COMSIG_MOB_LOGIN, .proc/on_user_login)
 
 
 /datum/progressbar/Destroy()

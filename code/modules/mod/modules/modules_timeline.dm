@@ -20,12 +20,12 @@
 	var/true_owner_ckey
 
 /obj/item/mod/module/eradication_lock/on_install()
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
-	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
+	register_signal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
+	register_signal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
 
 /obj/item/mod/module/eradication_lock/on_uninstall()
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
+	unregister_signal(mod, COMSIG_MOD_ACTIVATE)
+	unregister_signal(mod, COMSIG_MOD_MODULE_REMOVAL)
 
 /obj/item/mod/module/eradication_lock/on_use()
 	. = ..()
@@ -74,16 +74,16 @@
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		register_signal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
 	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
+	register_signal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
 
 ///Unregisters the modsuit deactivation blocking signal, after dejavu functionality finishes.
 /obj/item/mod/module/rewinder/proc/unblock_suit_activation()
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+		unregister_signal(module, COMSIG_MODULE_TRIGGERED)
+	unregister_signal(mod, COMSIG_MOD_ACTIVATE)
 
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/rewinder/proc/on_activate_block(datum/source, user)
@@ -121,17 +121,17 @@
 		return
 	//stops all mods from triggering during timestop- including timestop itself
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		RegisterSignal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
+		register_signal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
 	timestop = new /obj/effect/timestop/channelled(get_turf(mod.wearer), 2, INFINITY, list(mod.wearer))
-	RegisterSignal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
+	register_signal(timestop, COMSIG_PARENT_QDELETING, .proc/unblock_suit_activation)
 
 ///Unregisters the modsuit deactivation blocking signal, after timestop functionality finishes.
 /obj/item/mod/module/timestopper/proc/unblock_suit_activation(datum/source)
 	SIGNAL_HANDLER
 	for(var/obj/item/mod/module/module as anything in mod.modules)
-		UnregisterSignal(module, COMSIG_MODULE_TRIGGERED)
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+		unregister_signal(module, COMSIG_MODULE_TRIGGERED)
+	unregister_signal(source, COMSIG_PARENT_QDELETING)
+	unregister_signal(mod, COMSIG_MOD_ACTIVATE)
 	timestop = null
 
 ///Signal fired when wearer attempts to trigger modules, if attempting while time is stopped
@@ -176,11 +176,11 @@
 		mod.wearer.setStaminaLoss(0, 0)
 		phased_mob = new(get_turf(mod.wearer.loc))
 		mod.wearer.forceMove(phased_mob)
-		RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
+		register_signal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	else
 		//phasing in
 		QDEL_NULL(phased_mob)
-		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+		unregister_signal(mod, COMSIG_MOD_ACTIVATE)
 		mod.visible_message(span_warning("[mod.wearer] drops into the timeline!"))
 
 	//probably justifies its own sound but whatever

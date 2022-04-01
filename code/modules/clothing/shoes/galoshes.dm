@@ -20,7 +20,7 @@
 
 /obj/item/clothing/shoes/galoshes/dry/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
+	register_signal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
 
 /obj/item/clothing/shoes/galoshes/dry/proc/on_step()
 	SIGNAL_HANDLER

@@ -709,10 +709,10 @@
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/check_fermentation)
+	register_signal(src, COMSIG_MOVABLE_MOVED, .proc/check_fermentation)
 
 /obj/item/reagent_containers/food/drinks/bottle/pruno/Destroy()
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	unregister_signal(src, COMSIG_MOVABLE_MOVED)
 	return ..()
 
 // Checks to see if the pruno can ferment, i.e. is it inside a structure (e.g. toilet), or a machine (e.g. washer)?

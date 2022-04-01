@@ -11,9 +11,9 @@ clamping the Knockback_Force value below. */
 /datum/element/selfknockback/Attach(datum/target, throw_amount, speed_amount)
 	. = ..()
 	if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/Item_SelfKnockback)
+		register_signal(target, COMSIG_ITEM_AFTERATTACK, .proc/Item_SelfKnockback)
 	else if(isprojectile(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_FIRE, .proc/Projectile_SelfKnockback)
+		register_signal(target, COMSIG_PROJECTILE_FIRE, .proc/Projectile_SelfKnockback)
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -22,7 +22,7 @@ clamping the Knockback_Force value below. */
 
 /datum/element/selfknockback/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PROJECTILE_FIRE))
+	unregister_signal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PROJECTILE_FIRE))
 
 /datum/element/selfknockback/proc/Get_Knockback_Force(default_force)
 	if(override_throw_val)

@@ -183,7 +183,7 @@
 		worm_length = 3 //code breaks below 3, let's just not allow it.
 
 	oldloc = loc
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/update_chain_links)
+	register_signal(src, COMSIG_MOVABLE_MOVED, .proc/update_chain_links)
 	if(!spawn_bodyparts)
 		return
 

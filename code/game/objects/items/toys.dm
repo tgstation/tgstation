@@ -410,7 +410,7 @@
 		throw_speed_on = throw_speed, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	register_signal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 
 /*

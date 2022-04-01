@@ -13,18 +13,18 @@
 /datum/ai_controller/haunted/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	RegisterSignal(new_pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(new_pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	return ..() //Run parent at end
 
 /datum/ai_controller/haunted/UnpossessPawn()
-	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
+	unregister_signal(pawn, COMSIG_ITEM_EQUIPPED)
 	return ..() //Run parent at end
 
 ///Signal response for when the item is picked up; stops listening for follow up equips, just waits for a drop.
 /datum/ai_controller/haunted/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(pawn, COMSIG_ITEM_EQUIPPED)
+	unregister_signal(pawn, COMSIG_ITEM_EQUIPPED)
 	var/haunt_equipper = TRUE
 	if(isliving(equipper))
 		var/mob/living/possibly_cool = equipper
@@ -36,12 +36,12 @@
 	else
 		blackboard[BB_LIKES_EQUIPPER] = TRUE
 
-	RegisterSignal(pawn, COMSIG_ITEM_DROPPED, .proc/on_dropped)
+	register_signal(pawn, COMSIG_ITEM_DROPPED, .proc/on_dropped)
 
 ///Flip it so we listen for equip again but not for drop.
 /datum/ai_controller/haunted/proc/on_dropped(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	RegisterSignal(pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	blackboard[BB_LIKES_EQUIPPER] = FALSE
-	UnregisterSignal(pawn, COMSIG_ITEM_DROPPED)
+	unregister_signal(pawn, COMSIG_ITEM_DROPPED)

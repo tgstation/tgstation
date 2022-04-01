@@ -1799,8 +1799,8 @@
 	if(!can_look_up())
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_up) //We start looking again after we move.
+	register_signal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+	register_signal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_up) //We start looking again after we move.
 	start_look_up()
 
 /mob/living/proc/start_look_up()
@@ -1834,8 +1834,8 @@
 
 /mob/living/proc/end_look_up()
 	stop_look_up()
-	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	unregister_signal(src, COMSIG_MOVABLE_PRE_MOVE)
+	unregister_signal(src, COMSIG_MOVABLE_MOVED)
 
 /**
  * look_down Changes the perspective of the mob to any openspace turf below the mob
@@ -1849,8 +1849,8 @@
 	if(!can_look_up()) //if we cant look up, we cant look down.
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_down) //We start looking again after we move.
+	register_signal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
+	register_signal(src, COMSIG_MOVABLE_MOVED, .proc/start_look_down) //We start looking again after we move.
 	start_look_down()
 
 /mob/living/proc/start_look_down()
@@ -1884,8 +1884,8 @@
 
 /mob/living/proc/end_look_down()
 	stop_look_down()
-	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	unregister_signal(src, COMSIG_MOVABLE_PRE_MOVE)
+	unregister_signal(src, COMSIG_MOVABLE_MOVED)
 
 
 /mob/living/set_stat(new_stat)

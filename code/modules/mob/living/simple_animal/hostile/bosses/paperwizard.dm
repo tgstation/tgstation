@@ -68,14 +68,14 @@
 	for(var/i in 1 to summon_amount)
 		var/atom/chosen_minion = pick_n_take(minions)
 		chosen_minion = new chosen_minion(get_step(boss, pick_n_take(directions)))
-		RegisterSignal(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/lost_minion)
+		register_signal(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), .proc/lost_minion)
 		summoned_minions++
 
 /// Called when a minion is qdeleted or dies, removes it from our minion list
 /datum/action/boss/wizard_summon_minions/proc/lost_minion(mob/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	unregister_signal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	summoned_minions--
 
 //Mimic Ability

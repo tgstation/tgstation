@@ -58,7 +58,7 @@
 	if(selfcharge)
 		START_PROCESSING(SSobj, src)
 	update_appearance()
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
+	register_signal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 /obj/item/gun/energy/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_energy)

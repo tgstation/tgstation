@@ -171,9 +171,9 @@
 
 /obj/item/circuit_component/module/add_to(obj/item/integrated_circuit/added_to)
 	. = ..()
-	RegisterSignal(added_to, COMSIG_CIRCUIT_SET_CELL, .proc/handle_set_cell)
-	RegisterSignal(added_to, COMSIG_CIRCUIT_SET_ON, .proc/handle_set_on)
-	RegisterSignal(added_to, COMSIG_CIRCUIT_SET_SHELL, .proc/handle_set_shell)
+	register_signal(added_to, COMSIG_CIRCUIT_SET_CELL, .proc/handle_set_cell)
+	register_signal(added_to, COMSIG_CIRCUIT_SET_ON, .proc/handle_set_on)
+	register_signal(added_to, COMSIG_CIRCUIT_SET_SHELL, .proc/handle_set_shell)
 	internal_circuit.set_cell(added_to.cell)
 	internal_circuit.set_shell(added_to.shell)
 	internal_circuit.set_on(added_to.on)
@@ -183,7 +183,7 @@
 	internal_circuit.set_cell(null)
 	internal_circuit.set_on(FALSE)
 	internal_circuit.remove_current_shell()
-	UnregisterSignal(removed_from, list(
+	unregister_signal(removed_from, list(
 		COMSIG_CIRCUIT_SET_CELL,
 		COMSIG_CIRCUIT_SET_ON,
 		COMSIG_CIRCUIT_SET_SHELL,

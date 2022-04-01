@@ -97,8 +97,8 @@ Difficulty: Hard
 	blood_warp.Grant(src)
 	hallucination_charge.spawn_blood = TRUE
 	hallucination_charge_surround.spawn_blood = TRUE
-	RegisterSignal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
-	RegisterSignal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
+	register_signal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
+	register_signal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
 	if(spawn_blood)
 		AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, 'sound/effects/meteorimpact.ogg', 200)
 

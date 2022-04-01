@@ -100,8 +100,8 @@
 
 /obj/item/dualsaber/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	if(LAZYLEN(possible_colors))
 		saber_color = pick(possible_colors)
 		switch(saber_color)

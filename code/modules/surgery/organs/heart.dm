@@ -277,12 +277,12 @@
 
 /obj/item/organ/heart/ethereal/Insert(mob/living/carbon/owner, special = 0)
 	. = ..()
-	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
-	RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
-	RegisterSignal(owner, COMSIG_PARENT_PREQDELETED, .proc/owner_deleted)
+	register_signal(owner, COMSIG_MOB_STATCHANGE, .proc/on_stat_change)
+	register_signal(owner, COMSIG_LIVING_POST_FULLY_HEAL, .proc/on_owner_fully_heal)
+	register_signal(owner, COMSIG_PARENT_PREQDELETED, .proc/owner_deleted)
 
 /obj/item/organ/heart/ethereal/Remove(mob/living/carbon/owner, special = 0)
-	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_PREQDELETED))
+	unregister_signal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_PARENT_PREQDELETED))
 	REMOVE_TRAIT(owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(owner)
 	QDEL_NULL(current_crystal)
@@ -342,9 +342,9 @@
 
 	crystalize_timer_id = addtimer(CALLBACK(src, .proc/crystalize, victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
-	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, .proc/reset_crystalizing)
-	RegisterSignal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
+	register_signal(victim, COMSIG_HUMAN_DISARM_HIT, .proc/reset_crystalizing)
+	register_signal(victim, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(victim, COMSIG_MOB_APPLY_DAMAGE, .proc/on_take_damage)
 
 ///Ran when disarmed, prevents the ethereal from reviving
 /obj/item/organ/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone)
@@ -375,9 +375,9 @@
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
 /obj/item/organ/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
-	UnregisterSignal(ethereal, COMSIG_HUMAN_DISARM_HIT)
-	UnregisterSignal(ethereal, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
+	unregister_signal(ethereal, COMSIG_HUMAN_DISARM_HIT)
+	unregister_signal(ethereal, COMSIG_PARENT_EXAMINE)
+	unregister_signal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
 
 	crystalization_process_damage = 0 //Reset damage taken during crystalization
 

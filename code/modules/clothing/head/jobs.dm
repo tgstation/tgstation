@@ -214,13 +214,13 @@
 /obj/item/clothing/head/warden/drill/equipped(mob/M, slot)
 	. = ..()
 	if (slot == ITEM_SLOT_HEAD)
-		RegisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
+		register_signal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	else
-		UnregisterSignal(M, COMSIG_MOB_SAY)
+		unregister_signal(M, COMSIG_MOB_SAY)
 
 /obj/item/clothing/head/warden/drill/dropped(mob/M)
 	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_SAY)
+	unregister_signal(M, COMSIG_MOB_SAY)
 
 /obj/item/clothing/head/warden/drill/proc/handle_speech(datum/source, mob/speech_args)
 	SIGNAL_HANDLER

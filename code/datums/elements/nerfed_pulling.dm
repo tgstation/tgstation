@@ -14,14 +14,14 @@
 
 	src.typecache = typecache
 
-	RegisterSignal(target, COMSIG_LIVING_PUSHING_MOVABLE, .proc/on_push_movable)
-	RegisterSignal(target, COMSIG_LIVING_UPDATING_PULL_MOVESPEED, .proc/on_updating_pull_movespeed)
+	register_signal(target, COMSIG_LIVING_PUSHING_MOVABLE, .proc/on_push_movable)
+	register_signal(target, COMSIG_LIVING_UPDATING_PULL_MOVESPEED, .proc/on_updating_pull_movespeed)
 
 /datum/element/nerfed_pulling/Detach(mob/living/source)
 	source.remove_movespeed_modifier(/datum/movespeed_modifier/nerfed_bump)
 	source.remove_movespeed_modifier(/datum/movespeed_modifier/nerfed_pull)
 
-	UnregisterSignal(source, list(COMSIG_LIVING_PUSHING_MOVABLE, COMSIG_LIVING_UPDATING_PULL_MOVESPEED))
+	unregister_signal(source, list(COMSIG_LIVING_PUSHING_MOVABLE, COMSIG_LIVING_UPDATING_PULL_MOVESPEED))
 
 	return ..()
 

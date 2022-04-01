@@ -77,10 +77,10 @@
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
+	unregister_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
 
 /datum/heretic_knowledge/limited_amount/flesh_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -109,7 +109,7 @@
 	log_game("[key_name(source)] created a ghoul, controlled by [key_name(human_target)].")
 	message_admins("[ADMIN_LOOKUPFLW(source)] created a ghoul, [ADMIN_LOOKUPFLW(human_target)].")
 
-	RegisterSignal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
+	register_signal(human_target, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
 	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
 	human_target.setMaxHealth(GHOUL_MAX_HEALTH)
 	human_target.health = GHOUL_MAX_HEALTH
@@ -129,7 +129,7 @@
 	source.remove_status_effect(/datum/status_effect/ghoul)
 	source.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 
-	UnregisterSignal(source, COMSIG_LIVING_DEATH)
+	unregister_signal(source, COMSIG_LIVING_DEATH)
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
@@ -200,7 +200,7 @@
 	selected_atoms -= soon_to_be_ghoul
 	LAZYADD(created_items, WEAKREF(soon_to_be_ghoul))
 
-	RegisterSignal(soon_to_be_ghoul, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
+	register_signal(soon_to_be_ghoul, COMSIG_LIVING_DEATH, .proc/remove_ghoul)
 	return TRUE
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_ghoul(mob/living/carbon/human/source)
@@ -211,7 +211,7 @@
 	source.remove_status_effect(/datum/status_effect/ghoul)
 	source.mind.remove_antag_datum(/datum/antagonist/heretic_monster)
 
-	UnregisterSignal(source, COMSIG_LIVING_DEATH)
+	unregister_signal(source, COMSIG_LIVING_DEATH)
 
 /datum/heretic_knowledge/flesh_mark
 	name = "Mark of Flesh"
@@ -228,11 +228,11 @@
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/flesh_mark/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, .proc/on_mansus_grasp)
+	register_signal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/flesh_mark/on_lose(mob/user)
-	UnregisterSignal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
+	unregister_signal(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_HERETIC_BLADE_ATTACK))
 
 /datum/heretic_knowledge/flesh_mark/proc/on_mansus_grasp(mob/living/source, mob/living/target)
 	SIGNAL_HANDLER
@@ -294,10 +294,10 @@
 	route = PATH_FLESH
 
 /datum/heretic_knowledge/flesh_blade_upgrade/on_gain(mob/user)
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
+	register_signal(user, COMSIG_HERETIC_BLADE_ATTACK, .proc/on_eldritch_blade)
 
 /datum/heretic_knowledge/flesh_blade_upgrade/on_lose(mob/user)
-	UnregisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK)
+	unregister_signal(user, COMSIG_HERETIC_BLADE_ATTACK)
 
 /datum/heretic_knowledge/flesh_blade_upgrade/proc/on_eldritch_blade(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER

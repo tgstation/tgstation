@@ -62,11 +62,11 @@
 	return ..()
 
 /obj/item/circuit_component/printer/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/handle_secondary_attackby)
-	RegisterSignal(shell, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(shell, COMSIG_PARENT_ATTACKBY_SECONDARY, .proc/handle_secondary_attackby)
+	register_signal(shell, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /obj/item/circuit_component/printer/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, list(COMSIG_PARENT_ATTACKBY_SECONDARY, COMSIG_PARENT_EXAMINE))
+	unregister_signal(shell, list(COMSIG_PARENT_ATTACKBY_SECONDARY, COMSIG_PARENT_EXAMINE))
 
 /obj/item/circuit_component/printer/get_ui_notices()
 	. = ..()

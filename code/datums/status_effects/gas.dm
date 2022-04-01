@@ -16,7 +16,7 @@
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist)
+	register_signal(owner, COMSIG_LIVING_RESIST, .proc/owner_resist)
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
@@ -44,7 +44,7 @@
 		to_chat(owner, span_notice("The cube melts!"))
 	owner.cut_overlay(cube)
 	owner.adjust_bodytemperature(100)
-	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	unregister_signal(owner, COMSIG_LIVING_RESIST)
 	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
 	return ..()
 

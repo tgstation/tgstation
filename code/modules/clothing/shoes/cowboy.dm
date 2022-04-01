@@ -18,7 +18,7 @@
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
-	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
+	register_signal(user, COMSIG_LIVING_SLAM_TABLE, .proc/table_slam)
 	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
@@ -31,7 +31,7 @@
 
 /obj/item/clothing/shoes/cowboy/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
+	unregister_signal(user, COMSIG_LIVING_SLAM_TABLE)
 
 /obj/item/clothing/shoes/cowboy/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER

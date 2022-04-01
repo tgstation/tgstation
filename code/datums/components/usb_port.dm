@@ -37,23 +37,23 @@
 		var/obj/item/circuit_component/component = circuit_component
 		if(ispath(circuit_component))
 			component = new circuit_component(null)
-		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
+		register_signal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, .proc/save_component)
 		circuit_components += component
 
 	if(should_register)
 		RegisterWithParent()
 
 /datum/component/usb_port/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
+	register_signal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, .proc/on_load)
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
 
 /datum/component/usb_port/UnregisterFromParent()
-	UnregisterSignal(parent, list(
+	unregister_signal(parent, list(
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_EXAMINE,
@@ -100,7 +100,7 @@
 	if (isnull(attached_circuit))
 		return
 
-	UnregisterSignal(attached_circuit, list(
+	unregister_signal(attached_circuit, list(
 		COMSIG_CIRCUIT_SHELL_REMOVED,
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CIRCUIT_SET_SHELL,
@@ -110,7 +110,7 @@
 	if (isnull(physical_object))
 		return
 
-	UnregisterSignal(physical_object, list(
+	unregister_signal(physical_object, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_EXAMINE,
 	))
@@ -118,7 +118,7 @@
 /datum/component/usb_port/proc/attach_circuit_components(obj/item/integrated_circuit/circuitboard)
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		circuitboard.add_component(component)
-		RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
+		register_signal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/on_circuit_component_removed)
 
 /datum/component/usb_port/proc/on_examine(datum/source, mob/user, list/examine_text)
 	SIGNAL_HANDLER
@@ -156,7 +156,7 @@
 	if (connecting_cable.attached_circuit.locked)
 		connecting_cable.balloon_alert(user, "shell is locked!")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
-	
+
 	usb_cable_ref = WEAKREF(connecting_cable)
 	attached_circuit = connecting_cable.attached_circuit
 
@@ -169,9 +169,9 @@
 	if(!new_physical_object)
 		new_physical_object = attached_circuit
 
-	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SHELL_REMOVED, .proc/on_circuit_shell_removed)
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_deleting)
-	RegisterSignal(attached_circuit, COMSIG_CIRCUIT_SET_SHELL, .proc/on_set_shell)
+	register_signal(attached_circuit, COMSIG_CIRCUIT_SHELL_REMOVED, .proc/on_circuit_shell_removed)
+	register_signal(attached_circuit, COMSIG_PARENT_QDELETING, .proc/on_circuit_deleting)
+	register_signal(attached_circuit, COMSIG_CIRCUIT_SET_SHELL, .proc/on_set_shell)
 	set_physical_object(new_physical_object)
 
 	return COMSIG_USB_CABLE_ATTACHED
@@ -185,8 +185,8 @@
 	var/atom/atom_parent = parent
 	usb_cable_beam = atom_parent.Beam(new_physical_object, "usb_cable_beam", 'icons/obj/wiremod.dmi')
 
-	RegisterSignal(new_physical_object, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(new_physical_object, COMSIG_PARENT_EXAMINE, .proc/on_examine_shell)
+	register_signal(new_physical_object, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(new_physical_object, COMSIG_PARENT_EXAMINE, .proc/on_examine_shell)
 	physical_object = new_physical_object
 
 // Adds support for loading circuits without shells but with usb cables, or loading circuits with shells because the shells might not load first.
@@ -224,7 +224,7 @@
 		return
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
-		UnregisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED)
+		unregister_signal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED)
 		attached_circuit.remove_component(component)
 		component.moveToNullspace()
 

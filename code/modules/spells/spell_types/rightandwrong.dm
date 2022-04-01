@@ -268,11 +268,11 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	src.survivor_probability = survivor_probability
 	src.give_proc_path = give_proc_path
 
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/gear_up_new_crew)
+	register_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/gear_up_new_crew)
 
 /datum/summon_things_controller/Destroy(force, ...)
 	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	unregister_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 
 /// Calls our give_proc_path on all humans in the player list.
 /datum/summon_things_controller/proc/give_out_gear()

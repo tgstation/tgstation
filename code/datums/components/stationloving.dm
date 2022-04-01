@@ -10,11 +10,11 @@
 /datum/component/stationloving/Initialize(inform_admins = FALSE, allow_item_destruction = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_parent_z_change)
-	RegisterSignal(parent, COMSIG_MOVABLE_SECLUDED_LOCATION, .proc/on_parent_unreachable)
-	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/on_parent_pre_qdeleted)
-	RegisterSignal(parent, COMSIG_ITEM_IMBUE_SOUL, .proc/check_soul_imbue)
-	RegisterSignal(parent, COMSIG_ITEM_MARK_RETRIEVAL, .proc/check_mark_retrieval)
+	register_signal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/on_parent_z_change)
+	register_signal(parent, COMSIG_MOVABLE_SECLUDED_LOCATION, .proc/on_parent_unreachable)
+	register_signal(parent, COMSIG_PARENT_PREQDELETED, .proc/on_parent_pre_qdeleted)
+	register_signal(parent, COMSIG_ITEM_IMBUE_SOUL, .proc/check_soul_imbue)
+	register_signal(parent, COMSIG_ITEM_MARK_RETRIEVAL, .proc/check_mark_retrieval)
 	src.inform_admins = inform_admins
 	src.allow_item_destruction = allow_item_destruction
 
@@ -105,7 +105,7 @@
 		log_game("[parent] has been !!force deleted!! in [loc_name(current_turf)].")
 
 	if(force || allow_item_destruction)
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_SECLUDED_LOCATION))
+		unregister_signal(parent, list(COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_SECLUDED_LOCATION))
 		return FALSE
 
 	var/turf/new_turf = relocate()

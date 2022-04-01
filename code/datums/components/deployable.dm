@@ -27,8 +27,8 @@
 	src.thing_to_be_deployed = thing_to_be_deployed
 	src.delete_on_use = delete_on_use
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_hand)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_hand)
 
 	var/obj/item/typecast = thing_to_be_deployed
 	deployed_name = initial(typecast.name)

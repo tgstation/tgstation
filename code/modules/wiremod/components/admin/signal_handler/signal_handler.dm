@@ -134,7 +134,7 @@
 	if(target_datum)
 		log_admin_circuit("[parent.get_creator()] registered the signal '[registered_signal]' on [target_datum]")
 		// We override because an admin may try registering a signal on the same object/datum again, so this prevents any runtimes from occuring
-		RegisterSignal(target_datum, registered_signal, .proc/handle_signal_received, override = TRUE)
+		register_signal(target_datum, registered_signal, .proc/handle_signal_received, override = TRUE)
 		registered_entities |= WEAKREF(target_datum)
 
 /obj/item/circuit_component/signal_handler/proc/load_new_ports(list/ports_to_load)
@@ -160,7 +160,7 @@
 		var/datum/datum_to_unregister = weakref_of_object.resolve()
 		if(!datum_to_unregister)
 			continue
-		UnregisterSignal(datum_to_unregister, registered_signal)
+		unregister_signal(datum_to_unregister, registered_signal)
 	registered_entities.Cut()
 
 /obj/item/circuit_component/signal_handler/proc/unregister_signals(datum/port/input/port)
@@ -173,7 +173,7 @@
 	if(!registered_datum)
 		return
 
-	UnregisterSignal(registered_datum, registered_signal)
+	unregister_signal(registered_datum, registered_signal)
 	registered_entities -= WEAKREF(registered_datum)
 
 /obj/item/circuit_component/signal_handler/proc/run_ports_on_args(list/arguments)

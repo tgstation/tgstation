@@ -77,9 +77,9 @@
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
-	RegisterSignal(user, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	register_signal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
+	register_signal(user, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
 	if(full_speed)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 	return TRUE
@@ -91,9 +91,9 @@
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 	if(user)
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
-		UnregisterSignal(user, COMSIG_MOVABLE_SPACEMOVE)
+		unregister_signal(user, COMSIG_MOVABLE_MOVED)
+		unregister_signal(user, COMSIG_MOVABLE_PRE_MOVE)
+		unregister_signal(user, COMSIG_MOVABLE_SPACEMOVE)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)

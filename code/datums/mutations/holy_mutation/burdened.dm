@@ -15,24 +15,24 @@
 /datum/mutation/human/burdened/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/organ_added_burden)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/organ_removed_burden)
+	register_signal(owner, COMSIG_CARBON_GAIN_ORGAN, .proc/organ_added_burden)
+	register_signal(owner, COMSIG_CARBON_LOSE_ORGAN, .proc/organ_removed_burden)
 
-	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/limbs_added_burden)
-	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, .proc/limbs_removed_burden)
+	register_signal(owner, COMSIG_CARBON_ATTACH_LIMB, .proc/limbs_added_burden)
+	register_signal(owner, COMSIG_CARBON_REMOVE_LIMB, .proc/limbs_removed_burden)
 
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_ADDICTION, .proc/addict_added_burden)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_ADDICTION, .proc/addict_removed_burden)
+	register_signal(owner, COMSIG_CARBON_GAIN_ADDICTION, .proc/addict_added_burden)
+	register_signal(owner, COMSIG_CARBON_LOSE_ADDICTION, .proc/addict_removed_burden)
 
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_MUTATION, .proc/mutation_added_burden)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_MUTATION, .proc/mutation_removed_burden)
+	register_signal(owner, COMSIG_CARBON_GAIN_MUTATION, .proc/mutation_added_burden)
+	register_signal(owner, COMSIG_CARBON_LOSE_MUTATION, .proc/mutation_removed_burden)
 
-	RegisterSignal(owner, COMSIG_CARBON_GAIN_TRAUMA, .proc/trauma_added_burden)
-	RegisterSignal(owner, COMSIG_CARBON_LOSE_TRAUMA, .proc/trauma_removed_burden)
+	register_signal(owner, COMSIG_CARBON_GAIN_TRAUMA, .proc/trauma_added_burden)
+	register_signal(owner, COMSIG_CARBON_LOSE_TRAUMA, .proc/trauma_removed_burden)
 
 /datum/mutation/human/burdened/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	UnregisterSignal(owner, list(
+	unregister_signal(owner, list(
 		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_CARBON_LOSE_ORGAN,
 		COMSIG_CARBON_ATTACH_LIMB,

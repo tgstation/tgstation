@@ -44,16 +44,16 @@
 	return ..()
 
 /datum/component/cult_ritual_item/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/try_scribe_rune)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/try_purge_holywater)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/try_hit_object)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_clear_rune)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/try_scribe_rune)
+	register_signal(parent, COMSIG_ITEM_ATTACK, .proc/try_purge_holywater)
+	register_signal(parent, COMSIG_ITEM_ATTACK_OBJ, .proc/try_hit_object)
+	register_signal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_clear_rune)
 
 	if(examine_message)
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+		register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/cult_ritual_item/UnregisterFromParent()
-	UnregisterSignal(parent, list(
+	unregister_signal(parent, list(
 		COMSIG_ITEM_ATTACK_SELF,
 		COMSIG_ITEM_ATTACK,
 		COMSIG_ITEM_ATTACK_OBJ,

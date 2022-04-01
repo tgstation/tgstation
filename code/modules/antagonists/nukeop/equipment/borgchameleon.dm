@@ -95,14 +95,14 @@
 	if(listeningTo == user)
 		return
 	if(listeningTo)
-		UnregisterSignal(listeningTo, signalCache)
-	RegisterSignal(user, signalCache, .proc/disrupt)
+		unregister_signal(listeningTo, signalCache)
+	register_signal(user, signalCache, .proc/disrupt)
 	listeningTo = user
 
 /obj/item/borg_chameleon/proc/deactivate(mob/living/silicon/robot/user)
 	STOP_PROCESSING(SSobj, src)
 	if(listeningTo)
-		UnregisterSignal(listeningTo, signalCache)
+		unregister_signal(listeningTo, signalCache)
 		listeningTo = null
 	do_sparks(5, FALSE, user)
 	user.name = savedName

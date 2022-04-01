@@ -31,7 +31,7 @@
 	src.controller = controller
 	src.extra_info = extra_info
 	if(extra_info)
-		RegisterSignal(extra_info, COMSIG_PARENT_QDELETING, .proc/info_deleted)
+		register_signal(extra_info, COMSIG_PARENT_QDELETING, .proc/info_deleted)
 	src.moving = moving
 	src.priority = priority
 	src.flags = flags
@@ -216,7 +216,7 @@
 	target = chasing
 
 	if(!isturf(target))
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because we don't care
+		register_signal(target, COMSIG_PARENT_QDELETING, .proc/handle_no_target) //Don't do this for turfs, because we don't care
 
 /datum/move_loop/has_target/Destroy()
 	target = null
@@ -340,7 +340,7 @@
 	src.avoid = avoid
 	src.skip_first = skip_first
 	if(istype(id, /obj/item/card/id))
-		RegisterSignal(id, COMSIG_PARENT_QDELETING, .proc/handle_no_id) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
+		register_signal(id, COMSIG_PARENT_QDELETING, .proc/handle_no_id) //I prefer erroring to harddels. If this breaks anything consider making id info into a datum or something
 
 /datum/move_loop/has_target/jps/start_loop()
 	. = ..()
@@ -533,16 +533,16 @@
 
 	if(home)
 		if(ismovable(target))
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
-		RegisterSignal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+			register_signal(target, COMSIG_MOVABLE_MOVED, .proc/update_slope) //If it can move, update your slope when it does
+		register_signal(moving, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 	update_slope()
 
 /datum/move_loop/has_target/move_towards/Destroy()
 	if(home)
 		if(ismovable(target))
-			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+			unregister_signal(target, COMSIG_MOVABLE_MOVED)
 		if(moving)
-			UnregisterSignal(moving, COMSIG_MOVABLE_MOVED)
+			unregister_signal(moving, COMSIG_MOVABLE_MOVED)
 	return ..()
 
 /datum/move_loop/has_target/move_towards/move()

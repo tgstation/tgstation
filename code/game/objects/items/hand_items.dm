@@ -20,16 +20,16 @@
 	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
+	register_signal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
 
 /obj/item/hand_item/circlegame/Destroy()
 	var/mob/owner = loc
 	if(istype(owner))
-		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+		unregister_signal(owner, COMSIG_PARENT_EXAMINE)
 	return ..()
 
 /obj/item/hand_item/circlegame/dropped(mob/user)
-	UnregisterSignal(user, COMSIG_PARENT_EXAMINE) //loc will have changed by the time this is called, so Destroy() can't catch it
+	unregister_signal(user, COMSIG_PARENT_EXAMINE) //loc will have changed by the time this is called, so Destroy() can't catch it
 	// this is a dropdel item.
 	return ..()
 

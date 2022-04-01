@@ -30,7 +30,7 @@
 
 		name = "[name] - [poster_structure.original_name]"
 		//If the poster structure is being deleted something has gone wrong, kill yourself off too
-		RegisterSignal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
+		register_signal(poster_structure, COMSIG_PARENT_QDELETING, .proc/react_to_deletion)
 
 /obj/item/poster/Destroy()
 	poster_structure = null

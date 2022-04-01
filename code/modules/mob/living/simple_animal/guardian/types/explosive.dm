@@ -1,7 +1,7 @@
 #define UNREGISTER_BOMB_SIGNALS(A) \
 	do { \
-		UnregisterSignal(A, boom_signals); \
-		UnregisterSignal(A, COMSIG_PARENT_EXAMINE); \
+		unregister_signal(A, boom_signals); \
+		unregister_signal(A, COMSIG_PARENT_EXAMINE); \
 	} while (0)
 
 //Bomb
@@ -47,8 +47,8 @@
 		if(bomb_cooldown <= world.time && !stat)
 			to_chat(src, span_danger("<B>Success! Bomb armed!</B>"))
 			bomb_cooldown = world.time + 200
-			RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/display_examine)
-			RegisterSignal(A, boom_signals, .proc/kaboom)
+			register_signal(A, COMSIG_PARENT_EXAMINE, .proc/display_examine)
+			register_signal(A, boom_signals, .proc/kaboom)
 			addtimer(CALLBACK(src, .proc/disable, A), 600, TIMER_UNIQUE|TIMER_OVERRIDE)
 		else
 			to_chat(src, span_danger("<B>Your powers are on cooldown! You must wait 20 seconds between bombs.</B>"))

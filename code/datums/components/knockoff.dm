@@ -10,8 +10,8 @@
 /datum/component/knockoff/Initialize(knockoff_chance,zone_override,slots_knockoffable)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED,.proc/OnEquipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED,.proc/OnDropped)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED,.proc/OnEquipped)
+	register_signal(parent, COMSIG_ITEM_DROPPED,.proc/OnDropped)
 
 	src.knockoff_chance = knockoff_chance
 
@@ -58,14 +58,14 @@
 	if(!istype(H))
 		return
 	if(slots_knockoffable && !(slot in slots_knockoffable))
-		UnregisterSignal(H, COMSIG_HUMAN_DISARM_HIT)
-		UnregisterSignal(H, COMSIG_LIVING_STATUS_KNOCKDOWN)
+		unregister_signal(H, COMSIG_HUMAN_DISARM_HIT)
+		unregister_signal(H, COMSIG_LIVING_STATUS_KNOCKDOWN)
 		return
-	RegisterSignal(H, COMSIG_HUMAN_DISARM_HIT, .proc/Knockoff, TRUE)
-	RegisterSignal(H, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/Knockoff_knockdown, TRUE)
+	register_signal(H, COMSIG_HUMAN_DISARM_HIT, .proc/Knockoff, TRUE)
+	register_signal(H, COMSIG_LIVING_STATUS_KNOCKDOWN, .proc/Knockoff_knockdown, TRUE)
 
 /datum/component/knockoff/proc/OnDropped(datum/source, mob/living/M)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(M, COMSIG_HUMAN_DISARM_HIT)
-	UnregisterSignal(M, COMSIG_LIVING_STATUS_KNOCKDOWN)
+	unregister_signal(M, COMSIG_HUMAN_DISARM_HIT)
+	unregister_signal(M, COMSIG_LIVING_STATUS_KNOCKDOWN)

@@ -34,14 +34,14 @@
 */
 /datum/wound/blunt/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	// hook into gaining/losing gauze so crit bone wounds can re-enable/disable depending if they're slung or not
-	RegisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), .proc/update_inefficiencies)
+	register_signal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), .proc/update_inefficiencies)
 
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group)
 		processes = TRUE
 		active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
-	RegisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/attack_with_hurt_hand)
+	register_signal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/attack_with_hurt_hand)
 	if(limb.held_index && victim.get_item_for_held_index(limb.held_index) && (disabling || prob(30 * severity)))
 		var/obj/item/I = victim.get_item_for_held_index(limb.held_index)
 		if(istype(I, /obj/item/offhand))
@@ -57,9 +57,9 @@
 	limp_chance = 0
 	QDEL_NULL(active_trauma)
 	if(limb)
-		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
+		unregister_signal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
 	if(victim)
-		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+		unregister_signal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
 
 /datum/wound/blunt/handle_process(delta_time, times_fired)
@@ -220,12 +220,12 @@
 
 /datum/wound/blunt/moderate/Destroy()
 	if(victim)
-		UnregisterSignal(victim, COMSIG_LIVING_DOORCRUSHED)
+		unregister_signal(victim, COMSIG_LIVING_DOORCRUSHED)
 	return ..()
 
 /datum/wound/blunt/moderate/wound_injury(datum/wound/old_wound, attack_direction = null)
 	. = ..()
-	RegisterSignal(victim, COMSIG_LIVING_DOORCRUSHED, .proc/door_crush)
+	register_signal(victim, COMSIG_LIVING_DOORCRUSHED, .proc/door_crush)
 
 /// Getting smushed in an airlock/firelock is a last-ditch attempt to try relocating your limb
 /datum/wound/blunt/moderate/proc/door_crush()

@@ -23,17 +23,17 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
-	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
-	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
-	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
+	register_signal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
+	register_signal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
+	register_signal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), .proc/welder_react)
 	if(ismovable(parent))
-		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
-		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
+		register_signal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
+		register_signal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
 		if(isitem(parent))
-			RegisterSignal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
-			RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-			RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+			register_signal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/explodable_attack)
+			register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+			register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
 	if (devastation_range)
 		src.devastation_range = devastation_range
@@ -91,12 +91,12 @@
 /datum/component/explodable/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
-	RegisterSignal(equipper, COMSIG_MOB_APPLY_DAMAGE,  .proc/explodable_attack_zone, TRUE)
+	register_signal(equipper, COMSIG_MOB_APPLY_DAMAGE,  .proc/explodable_attack_zone, TRUE)
 
 /datum/component/explodable/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, COMSIG_MOB_APPLY_DAMAGE)
+	unregister_signal(user, COMSIG_MOB_APPLY_DAMAGE)
 
 /// Checks if we're hitting the zone this component is covering
 /datum/component/explodable/proc/is_hitting_zone(def_zone)

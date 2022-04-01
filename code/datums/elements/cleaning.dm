@@ -2,11 +2,11 @@
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/Clean)
+	register_signal(target, COMSIG_MOVABLE_MOVED, .proc/Clean)
 
 /datum/element/cleaning/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	unregister_signal(target, COMSIG_MOVABLE_MOVED)
 
 /datum/element/cleaning/proc/Clean(datum/source)
 	SIGNAL_HANDLER

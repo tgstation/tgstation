@@ -15,13 +15,13 @@
 	src.projectilesound = projectilesound
 	src.projectiletype = projectiletype
 
-	RegisterSignal(target, COMSIG_MOB_ATTACK_RANGED, .proc/fire_ranged_attack)
+	register_signal(target, COMSIG_MOB_ATTACK_RANGED, .proc/fire_ranged_attack)
 
 	if(casingtype && projectiletype)
 		CRASH("Set both casing type and projectile type in [target]'s ranged attacks element! uhoh! stinky!")
 
 /datum/element/ranged_attacks/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_MOB_ATTACK_RANGED)
+	unregister_signal(target, COMSIG_MOB_ATTACK_RANGED)
 	return ..()
 
 /datum/element/ranged_attacks/proc/fire_ranged_attack(mob/living/basic/firer, atom/target, modifiers)

@@ -19,22 +19,22 @@
 	//moodlet
 	SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "honorbound", /datum/mood_event/honorbound)
 	//checking spells cast by honorbound
-	RegisterSignal(owner, COMSIG_MOB_CAST_SPELL, .proc/spell_check)
-	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, .proc/staff_check)
+	register_signal(owner, COMSIG_MOB_CAST_SPELL, .proc/spell_check)
+	register_signal(owner, COMSIG_MOB_FIRED_GUN, .proc/staff_check)
 	//signals that check for guilt
-	RegisterSignal(owner, COMSIG_PARENT_ATTACKBY, .proc/attackby_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_ATTACK_HAND, .proc/hand_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_ATTACK_PAW, .proc/paw_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_BULLET_ACT, .proc/bullet_guilt)
-	RegisterSignal(owner, COMSIG_ATOM_HITBY, .proc/thrown_guilt)
+	register_signal(owner, COMSIG_PARENT_ATTACKBY, .proc/attackby_guilt)
+	register_signal(owner, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_guilt)
+	register_signal(owner, COMSIG_ATOM_ATTACK_HAND, .proc/hand_guilt)
+	register_signal(owner, COMSIG_ATOM_ATTACK_PAW, .proc/paw_guilt)
+	register_signal(owner, COMSIG_ATOM_BULLET_ACT, .proc/bullet_guilt)
+	register_signal(owner, COMSIG_ATOM_HITBY, .proc/thrown_guilt)
 
 	//signal that checks for dishonorable attacks
-	RegisterSignal(owner, COMSIG_MOB_CLICKON, .proc/attack_honor)
+	register_signal(owner, COMSIG_MOB_CLICKON, .proc/attack_honor)
 
 /datum/mutation/human/honorbound/on_losing(mob/living/carbon/human/owner)
 	SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "honorbound")
-	UnregisterSignal(owner, list(
+	unregister_signal(owner, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_ATOM_HULK_ATTACK,
 		COMSIG_ATOM_ATTACK_HAND,

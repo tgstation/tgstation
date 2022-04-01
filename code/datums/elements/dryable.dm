@@ -11,13 +11,13 @@
 		return ELEMENT_INCOMPATIBLE
 	src.dry_result = dry_result
 
-	RegisterSignal(target, COMSIG_ITEM_DRIED, .proc/finish_drying)
+	register_signal(target, COMSIG_ITEM_DRIED, .proc/finish_drying)
 	ADD_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 
 /datum/element/dryable/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
+	unregister_signal(target, COMSIG_FOOD_CONSUMED)
 	REMOVE_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
 /datum/element/dryable/proc/finish_drying(atom/source)

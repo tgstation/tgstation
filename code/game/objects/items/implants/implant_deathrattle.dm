@@ -20,9 +20,9 @@
 /datum/deathrattle_group/proc/register(obj/item/implant/deathrattle/implant)
 	if(implant in implants)
 		return
-	RegisterSignal(implant, COMSIG_IMPLANT_IMPLANTED, .proc/on_implant_implantation)
-	RegisterSignal(implant, COMSIG_IMPLANT_REMOVED, .proc/on_implant_removal)
-	RegisterSignal(implant, COMSIG_PARENT_QDELETING, .proc/on_implant_destruction)
+	register_signal(implant, COMSIG_IMPLANT_IMPLANTED, .proc/on_implant_implantation)
+	register_signal(implant, COMSIG_IMPLANT_REMOVED, .proc/on_implant_removal)
+	register_signal(implant, COMSIG_PARENT_QDELETING, .proc/on_implant_destruction)
 
 	implants += implant
 
@@ -32,12 +32,12 @@
 /datum/deathrattle_group/proc/on_implant_implantation(obj/item/implant/implant, mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	SIGNAL_HANDLER
 
-	RegisterSignal(target, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
+	register_signal(target, COMSIG_MOB_STATCHANGE, .proc/on_user_statchange)
 
 /datum/deathrattle_group/proc/on_implant_removal(obj/item/implant/implant, mob/living/source, silent = FALSE, special = 0)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, COMSIG_MOB_STATCHANGE)
+	unregister_signal(source, COMSIG_MOB_STATCHANGE)
 
 /datum/deathrattle_group/proc/on_implant_destruction(obj/item/implant/implant)
 	SIGNAL_HANDLER

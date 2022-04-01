@@ -92,8 +92,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/storage/part_replacer/bluespace/Initialize(mapload)
 	. = ..()
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_part_exited)
+	register_signal(src, COMSIG_ATOM_ENTERED, .proc/on_part_entered)
+	register_signal(src, COMSIG_ATOM_EXITED, .proc/on_part_exited)
 
 /**
  * Signal handler for when a part has been inserted into the BRPED.
@@ -110,7 +110,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		if(length(inserted_component.reagents.reagent_list))
 			inserted_component.reagents.clear_reagents()
 			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
-		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, .proc/on_insered_component_reagent_pre_add)
+		register_signal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, .proc/on_insered_component_reagent_pre_add)
 
 
 	if(!istype(inserted_component, /obj/item/stock_parts/cell))
@@ -146,7 +146,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	SIGNAL_HANDLER
 
 	if(removed_component.reagents)
-		UnregisterSignal(removed_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT)
+		unregister_signal(removed_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT)
 
 
 /obj/item/storage/part_replacer/bluespace/tier1

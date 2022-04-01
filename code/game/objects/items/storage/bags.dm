@@ -125,14 +125,14 @@
 	if(listeningTo == user)
 		return
 	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
+		unregister_signal(listeningTo, COMSIG_MOVABLE_MOVED)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/Pickup_ores)
 	listeningTo = user
 
 /obj/item/storage/bag/ore/dropped()
 	. = ..()
 	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		unregister_signal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
 /obj/item/storage/bag/ore/proc/Pickup_ores(mob/living/user)
@@ -371,7 +371,7 @@
 	var/delay = rand(2,4)
 	var/datum/move_loop/loop = SSmove_manager.move_rand(tray_item, list(NORTH,SOUTH,EAST,WEST), delay, timeout = rand(1, 2) * delay, flags = MOVEMENT_LOOP_START_FAST)
 	//This does mean scattering is tied to the tray. Not sure how better to handle it
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/change_speed)
+	register_signal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/change_speed)
 
 /obj/item/storage/bag/tray/proc/change_speed(datum/move_loop/source)
 	SIGNAL_HANDLER

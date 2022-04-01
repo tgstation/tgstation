@@ -17,8 +17,8 @@
 	else
 		our_turf.plane = TRANSPARENT_FLOOR_PLANE
 
-	RegisterSignal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
-	RegisterSignal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
+	register_signal(target, COMSIG_TURF_MULTIZ_DEL, .proc/on_multiz_turf_del)
+	register_signal(target, COMSIG_TURF_MULTIZ_NEW, .proc/on_multiz_turf_new)
 
 	ADD_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
@@ -31,7 +31,7 @@
 	. = ..()
 	var/turf/our_turf = source
 	our_turf.vis_contents.len = 0
-	UnregisterSignal(our_turf, list(COMSIG_TURF_MULTIZ_NEW, COMSIG_TURF_MULTIZ_DEL))
+	unregister_signal(our_turf, list(COMSIG_TURF_MULTIZ_NEW, COMSIG_TURF_MULTIZ_DEL))
 	REMOVE_TRAIT(our_turf, TURF_Z_TRANSPARENT_TRAIT, ELEMENT_TRAIT(type))
 
 ///Updates the viscontents or underlays below this tile.

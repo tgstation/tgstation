@@ -20,7 +20,7 @@
 /obj/item/soulstone/Initialize(mapload)
 	. = ..()
 	if(theme != THEME_HOLY)
-		RegisterSignal(src, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
+		register_signal(src, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
 
 ///signal called whenever a soulstone is smacked by a bible
 /obj/item/soulstone/proc/on_bible_smacked(datum/source, mob/living/user, direction)
@@ -54,7 +54,7 @@
 		sharded_shade.icon_state = "ghost1"
 		sharded_shade.name = "Purified [sharded_shade.real_name]"
 	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
-	UnregisterSignal(src, COMSIG_BIBLE_SMACKED)
+	unregister_signal(src, COMSIG_BIBLE_SMACKED)
 
 /**
  * corrupt: turns the soulstone into a cult one and turns the occupant shade, if any, into a cultist
@@ -75,7 +75,7 @@
 	for(var/mob/living/simple_animal/shade/sharded_shade in src)
 		sharded_shade.icon_state = "shade_cult"
 		sharded_shade.name = sharded_shade.real_name
-	RegisterSignal(src, COMSIG_BIBLE_SMACKED)
+	register_signal(src, COMSIG_BIBLE_SMACKED)
 	return TRUE
 
 /obj/item/soulstone/proc/role_check(mob/who)

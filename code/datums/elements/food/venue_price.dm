@@ -10,11 +10,11 @@
 		stack_trace("A venue_price element was attached to something without specifying an actual price.")
 		return ELEMENT_INCOMPATIBLE
 	src.venue_price = venue_price
-	RegisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/item_sold)
+	register_signal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER, .proc/item_sold)
 
 /datum/element/venue_price/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER)
+	unregister_signal(target, COMSIG_ITEM_SOLD_TO_CUSTOMER)
 
 /datum/element/venue_price/proc/item_sold(datum/thing_sold, mob/living/simple_animal/robot_customer/sold_to, obj/item/container)
 	SIGNAL_HANDLER

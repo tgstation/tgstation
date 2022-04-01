@@ -23,18 +23,18 @@
 
 /datum/component/traitor_objective_register/RegisterWithParent()
 	if(succeed_signals)
-		RegisterSignal(target, succeed_signals, .proc/on_success)
+		register_signal(target, succeed_signals, .proc/on_success)
 	if(fail_signals)
-		RegisterSignal(target, fail_signals, .proc/on_fail)
-	RegisterSignal(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
+		register_signal(target, fail_signals, .proc/on_fail)
+	register_signal(parent, list(COMSIG_TRAITOR_OBJECTIVE_COMPLETED, COMSIG_TRAITOR_OBJECTIVE_FAILED), .proc/delete_self)
 
 /datum/component/traitor_objective_register/UnregisterFromParent()
 	if(target)
 		if(succeed_signals)
-			UnregisterSignal(target, succeed_signals)
+			unregister_signal(target, succeed_signals)
 		if(fail_signals)
-			UnregisterSignal(target, fail_signals)
-	UnregisterSignal(parent, list(
+			unregister_signal(target, fail_signals)
+	unregister_signal(parent, list(
 		COMSIG_TRAITOR_OBJECTIVE_COMPLETED,
 		COMSIG_TRAITOR_OBJECTIVE_FAILED
 	))

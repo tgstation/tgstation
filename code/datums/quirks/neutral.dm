@@ -66,7 +66,7 @@
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food &= ~MEAT
 	species.disliked_food |= MEAT
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	register_signal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/vegetarian/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -81,7 +81,7 @@
 		species.liked_food |= MEAT
 	if(!(initial(species.disliked_food) & MEAT))
 		species.disliked_food &= ~MEAT
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	unregister_signal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/snob
 	name = "Snob"
@@ -106,7 +106,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food |= PINEAPPLE
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	register_signal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/pineapple_liker/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -116,7 +116,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food &= ~PINEAPPLE
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	unregister_signal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/pineapple_hater
 	name = "Ananas Aversion"
@@ -131,7 +131,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.disliked_food |= PINEAPPLE
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	register_signal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/pineapple_hater/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -141,7 +141,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.disliked_food &= ~PINEAPPLE
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	unregister_signal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/deviant_tastes
 	name = "Deviant Tastes"
@@ -158,7 +158,7 @@
 	var/liked = species.liked_food
 	species.liked_food = species.disliked_food
 	species.disliked_food = liked
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	register_signal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
 
 /datum/quirk/deviant_tastes/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -171,7 +171,7 @@
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = initial(species.liked_food)
 	species.disliked_food = initial(species.disliked_food)
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
+	unregister_signal(human_holder, COMSIG_SPECIES_GAIN)
 
 /datum/quirk/monochromatic
 	name = "Monochromacy"
@@ -260,8 +260,8 @@
 	old_hair = human_holder.hairstyle
 	human_holder.hairstyle = "Bald"
 	human_holder.update_hair()
-	RegisterSignal(human_holder, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
-	RegisterSignal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
+	register_signal(human_holder, COMSIG_CARBON_EQUIP_HAT, .proc/equip_hat)
+	register_signal(human_holder, COMSIG_CARBON_UNEQUIP_HAT, .proc/unequip_hat)
 
 /datum/quirk/item_quirk/bald/add_unique()
 	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
@@ -280,7 +280,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.hairstyle = old_hair
 	human_holder.update_hair()
-	UnregisterSignal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
+	unregister_signal(human_holder, list(COMSIG_CARBON_EQUIP_HAT, COMSIG_CARBON_UNEQUIP_HAT))
 	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "bad_hair_day")
 
 ///Checks if the headgear equipped is a wig and sets the mood event accordingly
@@ -381,10 +381,10 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = JUNKFOOD
-	RegisterSignal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
-	RegisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME, .proc/won_game)
-	RegisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME, .proc/lost_game)
-	RegisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME, .proc/gamed)
+	register_signal(human_holder, COMSIG_SPECIES_GAIN, .proc/on_species_gain)
+	register_signal(human_holder, COMSIG_MOB_WON_VIDEOGAME, .proc/won_game)
+	register_signal(human_holder, COMSIG_MOB_LOST_VIDEOGAME, .proc/lost_game)
+	register_signal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME, .proc/gamed)
 
 /datum/quirk/gamer/proc/on_species_gain(datum/source, datum/species/new_species, datum/species/old_species)
 	SIGNAL_HANDLER
@@ -394,10 +394,10 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/species/species = human_holder.dna.species
 	species.liked_food = initial(species.liked_food)
-	UnregisterSignal(human_holder, COMSIG_SPECIES_GAIN)
-	UnregisterSignal(human_holder, COMSIG_MOB_WON_VIDEOGAME)
-	UnregisterSignal(human_holder, COMSIG_MOB_LOST_VIDEOGAME)
-	UnregisterSignal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME)
+	unregister_signal(human_holder, COMSIG_SPECIES_GAIN)
+	unregister_signal(human_holder, COMSIG_MOB_WON_VIDEOGAME)
+	unregister_signal(human_holder, COMSIG_MOB_LOST_VIDEOGAME)
+	unregister_signal(human_holder, COMSIG_MOB_PLAYED_VIDEOGAME)
 
 /datum/quirk/gamer/add_unique()
 	// The gamer starts off quelled
@@ -438,7 +438,7 @@
  */
 /datum/quirk/gamer/proc/gamed()
 	SIGNAL_HANDLER
-	
+
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	// Remove withdrawal malus
 	SEND_SIGNAL(human_holder, COMSIG_CLEAR_MOOD_EVENT, "gamer_withdrawal")
@@ -446,7 +446,7 @@
 	if (gaming_withdrawal_timer)
 		deltimer(gaming_withdrawal_timer)
 	gaming_withdrawal_timer = addtimer(CALLBACK(src, .proc/enter_withdrawal), GAMING_WITHDRAWAL_TIME, TIMER_STOPPABLE)
-	
+
 
 /datum/quirk/gamer/proc/gamer_moment()
 	// It was a heated gamer moment...

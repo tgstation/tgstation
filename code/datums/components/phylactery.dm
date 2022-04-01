@@ -43,15 +43,15 @@
 	src.stun_per_resurrection = stun_per_resurrection
 	src.phylactery_color = phylactery_color
 
-	RegisterSignal(lich_mind, COMSIG_PARENT_QDELETING, .proc/on_lich_mind_lost)
-	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, .proc/check_if_lich_died)
+	register_signal(lich_mind, COMSIG_PARENT_QDELETING, .proc/on_lich_mind_lost)
+	register_signal(SSdcs, COMSIG_GLOB_MOB_DEATH, .proc/check_if_lich_died)
 
 	var/obj/obj_parent = parent
 	obj_parent.name = "ensouled [obj_parent.name]"
 	obj_parent.add_atom_colour(phylactery_color, ADMIN_COLOUR_PRIORITY)
 	obj_parent.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
-	RegisterSignal(obj_parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(obj_parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 	SSpoints_of_interest.make_point_of_interest(obj_parent)
 
@@ -62,10 +62,10 @@
 	// Stationloving items should really never be made a phylactery so I feel safe in doing this
 	qdel(obj_parent.GetComponent(/datum/component/stationloving))
 
-	UnregisterSignal(obj_parent, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH)
+	unregister_signal(obj_parent, COMSIG_PARENT_EXAMINE)
+	unregister_signal(SSdcs, COMSIG_GLOB_MOB_DEATH)
 	// Sweep up any revive signals left on the mind's current
-	UnregisterSignal(lich_mind.current, COMSIG_LIVING_REVIVE)
+	unregister_signal(lich_mind.current, COMSIG_LIVING_REVIVE)
 
 	lich_mind = null
 	return ..()
@@ -128,7 +128,7 @@
 	// If we aren't gibbed, we need to check if the lich is
 	// revived at some point between returning
 	if(!gibbed)
-		RegisterSignal(died, COMSIG_LIVING_REVIVE, .proc/stop_timer)
+		register_signal(died, COMSIG_LIVING_REVIVE, .proc/stop_timer)
 
 	// Start revival
 	var/time_to_revive = base_respawn_time + (num_resurrections * time_per_resurrection)
@@ -147,7 +147,7 @@
 	deltimer(revive_timer)
 	revive_timer = null
 
-	UnregisterSignal(source, COMSIG_LIVING_REVIVE)
+	unregister_signal(source, COMSIG_LIVING_REVIVE)
 
 /**
  * Actually undergo the process of reviving the lich at the site of the phylacery.
@@ -195,7 +195,7 @@
 	lich.Paralyze(stun_per_resurrection * num_resurrections)
 
 	if(!QDELETED(corpse))
-		UnregisterSignal(corpse, COMSIG_LIVING_REVIVE)
+		unregister_signal(corpse, COMSIG_LIVING_REVIVE)
 
 		if(iscarbon(corpse))
 			var/mob/living/carbon/carbon_body = corpse

@@ -13,11 +13,11 @@
 /datum/element/knockback/Attach(datum/target, throw_distance = 1, throw_anchored = FALSE, throw_gentle = FALSE)
 	. = ..()
 	if(ismachinery(target) || isstructure(target) || isgun(target)) // turrets, etc
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+		register_signal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
+		register_signal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
 	else if(ishostile(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		register_signal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 	else
 		return ELEMENT_INCOMPATIBLE
 
@@ -26,7 +26,7 @@
 	src.throw_gentle = throw_gentle
 
 /datum/element/knockback/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
+	unregister_signal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET, COMSIG_PROJECTILE_ON_HIT))
 	return ..()
 
 /// triggered after an item attacks something

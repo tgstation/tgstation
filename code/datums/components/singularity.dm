@@ -75,25 +75,25 @@
 	parent.AddElement(/datum/element/forced_gravity, FALSE)
 
 	parent.AddElement(/datum/element/bsa_blocker)
-	RegisterSignal(parent, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
+	register_signal(parent, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
 
-	RegisterSignal(parent, COMSIG_ATOM_BLOB_ACT, .proc/block_blob)
+	register_signal(parent, COMSIG_ATOM_BLOB_ACT, .proc/block_blob)
 
-	RegisterSignal(parent, list(
+	register_signal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,
 	), .proc/consume_attack)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/consume_attackby)
 
-	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
-	RegisterSignal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
+	register_signal(parent, COMSIG_MOVABLE_PRE_MOVE, .proc/moved)
+	register_signal(parent, COMSIG_ATOM_BUMPED, .proc/consume)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
-	RegisterSignal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
+	register_signal(parent, COMSIG_ATOM_BULLET_ACT, .proc/consume_bullets)
 
 	if (notify_admins)
 		admin_investigate_setup()
@@ -113,7 +113,7 @@
 	parent.RemoveElement(/datum/element/bsa_blocker)
 	parent.RemoveElement(/datum/element/forced_gravity)
 
-	UnregisterSignal(parent, list(
+	unregister_signal(parent, list(
 		COMSIG_ATOM_ATTACK_ANIMAL,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_ATTACK_PAW,

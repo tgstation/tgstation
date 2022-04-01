@@ -1249,10 +1249,10 @@
 
 /mob/proc/set_active_storage(new_active_storage)
 	if(active_storage)
-		UnregisterSignal(active_storage, COMSIG_PARENT_QDELETING)
+		unregister_signal(active_storage, COMSIG_PARENT_QDELETING)
 	active_storage = new_active_storage
 	if(active_storage)
-		RegisterSignal(active_storage, COMSIG_PARENT_QDELETING, .proc/active_storage_deleted)
+		register_signal(active_storage, COMSIG_PARENT_QDELETING, .proc/active_storage_deleted)
 
 /mob/proc/active_storage_deleted(datum/source)
 	SIGNAL_HANDLER

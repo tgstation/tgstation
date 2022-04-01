@@ -21,7 +21,7 @@
 	src.sounds = sounds
 	src.uses = uses
 
-	RegisterSignal(parent, signal_list, .proc/play_sound)
+	register_signal(parent, signal_list, .proc/play_sound)
 
 /**
  * Attempt to play the sound on parent

@@ -20,11 +20,11 @@
 	subtype_list = subtypesof(subtype)
 	src.series_name = series_name
 	var/atom/attached = target
-	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(attached, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/element/series/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_PARENT_EXAMINE)
+	unregister_signal(target, COMSIG_PARENT_EXAMINE)
 
 ///signal called examining
 /datum/element/series/proc/on_examine(datum/target, mob/user, list/examine_list)

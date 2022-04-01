@@ -15,9 +15,9 @@
 		return COMPONENT_INCOMPATIBLE
 	if (connected_bag)
 		attach_bag(null, connected_bag)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/suck)
-	RegisterSignal(parent, COMSIG_VACUUM_BAG_ATTACH, .proc/attach_bag)
-	RegisterSignal(parent, COMSIG_VACUUM_BAG_DETACH, .proc/detach_bag)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/suck)
+	register_signal(parent, COMSIG_VACUUM_BAG_ATTACH, .proc/attach_bag)
+	register_signal(parent, COMSIG_VACUUM_BAG_DETACH, .proc/detach_bag)
 
 /**
  * Called when parent moves, deligates vacuuming functionality
@@ -71,7 +71,7 @@
 	SIGNAL_HANDLER
 
 	vacuum_bag = new_bag
-	RegisterSignal(new_bag, COMSIG_PARENT_QDELETING, .proc/detach_bag)
+	register_signal(new_bag, COMSIG_PARENT_QDELETING, .proc/detach_bag)
 
 /**
  * Handler for when a trash bag is detached
@@ -82,5 +82,5 @@
 /datum/component/vacuum/proc/detach_bag(datum/source)
 	SIGNAL_HANDLER
 	if (vacuum_bag) // null check to avoid runtime on bag being deleted then sending detach as a result from parent
-		UnregisterSignal(vacuum_bag, COMSIG_PARENT_QDELETING)
+		unregister_signal(vacuum_bag, COMSIG_PARENT_QDELETING)
 		vacuum_bag = null

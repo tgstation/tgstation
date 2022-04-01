@@ -33,7 +33,7 @@
 
 
 /datum/disease/pierrot_throat/after_add()
-	RegisterSignal(affected_mob, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(affected_mob, COMSIG_MOB_SAY, .proc/handle_speech)
 
 
 /datum/disease/pierrot_throat/proc/handle_speech(datum/source, list/speech_args)
@@ -56,9 +56,9 @@
 
 
 /datum/disease/pierrot_throat/Destroy()
-	UnregisterSignal(affected_mob, COMSIG_MOB_SAY)
+	unregister_signal(affected_mob, COMSIG_MOB_SAY)
 	return ..()
 
 /datum/disease/pierrot_throat/remove_disease()
-	UnregisterSignal(affected_mob, COMSIG_MOB_SAY)
+	unregister_signal(affected_mob, COMSIG_MOB_SAY)
 	return ..()

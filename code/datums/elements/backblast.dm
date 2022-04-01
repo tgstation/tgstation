@@ -25,13 +25,13 @@
 	src.range = range
 
 	if(plumes == 1)
-		RegisterSignal(target, COMSIG_GUN_FIRED, .proc/gun_fired_simple)
+		register_signal(target, COMSIG_GUN_FIRED, .proc/gun_fired_simple)
 	else
-		RegisterSignal(target, COMSIG_GUN_FIRED, .proc/gun_fired)
+		register_signal(target, COMSIG_GUN_FIRED, .proc/gun_fired)
 
 /datum/element/backblast/Detach(datum/source)
 	if(source)
-		UnregisterSignal(source, COMSIG_GUN_FIRED)
+		unregister_signal(source, COMSIG_GUN_FIRED)
 	return ..()
 
 /// For firing multiple plumes behind us, we evenly spread out our projectiles based on the [angle_spread][/datum/element/backblast/var/angle_spread] and [number of plumes][/datum/element/backblast/var/plumes]

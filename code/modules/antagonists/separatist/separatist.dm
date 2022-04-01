@@ -10,13 +10,13 @@
 
 /datum/team/nation/New(starting_members, potential_recruits, department)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_possible_separatist)
+	register_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, .proc/new_possible_separatist)
 	src.potential_recruits = potential_recruits
 	src.department = department
 
 /datum/team/nation/Destroy(force, ...)
 	department = null
-	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	unregister_signal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 	. = ..()
 
 /**

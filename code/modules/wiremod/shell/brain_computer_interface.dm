@@ -123,8 +123,8 @@
 	charge_action = new(src)
 	bci.actions += list(charge_action)
 
-	RegisterSignal(shell, COMSIG_ORGAN_IMPLANTED, .proc/on_organ_implanted)
-	RegisterSignal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+	register_signal(shell, COMSIG_ORGAN_IMPLANTED, .proc/on_organ_implanted)
+	register_signal(shell, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 /obj/item/circuit_component/bci_core/unregister_shell(atom/movable/shell)
 	var/obj/item/organ/cyberimp/bci/bci = shell
@@ -132,7 +132,7 @@
 	bci.actions -= charge_action
 	QDEL_NULL(charge_action)
 
-	UnregisterSignal(shell, list(
+	unregister_signal(shell, list(
 		COMSIG_ORGAN_IMPLANTED,
 		COMSIG_ORGAN_REMOVED,
 	))
@@ -162,9 +162,9 @@
 	user_port.set_output(owner)
 	user = WEAKREF(owner)
 
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
-	RegisterSignal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
+	register_signal(owner, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+	register_signal(owner, COMSIG_LIVING_ELECTROCUTE_ACT, .proc/on_electrocute)
 
 /obj/item/circuit_component/bci_core/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
@@ -172,7 +172,7 @@
 	user_port.set_output(null)
 	user = null
 
-	UnregisterSignal(owner, list(
+	unregister_signal(owner, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_PROCESS_BORGCHARGER_OCCUPANT,
 		COMSIG_LIVING_ELECTROCUTE_ACT,

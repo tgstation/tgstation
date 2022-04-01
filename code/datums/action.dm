@@ -23,8 +23,8 @@
 
 /datum/action/proc/link_to(Target)
 	target = Target
-	RegisterSignal(target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
+	register_signal(target, COMSIG_ATOM_UPDATED_ICON, .proc/OnUpdatedIcon)
+	register_signal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 /datum/action/Destroy()
 	if(owner)
@@ -42,7 +42,7 @@
 			return
 		Remove(owner)
 	owner = M
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
+	register_signal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
 	GiveAction(M)
 
@@ -62,9 +62,9 @@
 	viewers = list()
 
 	if(owner)
-		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
+		unregister_signal(owner, COMSIG_PARENT_QDELETING)
 		if(target == owner)
-			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
+			register_signal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
 		owner = null
 
 /datum/action/proc/Trigger(trigger_flags)
@@ -327,10 +327,10 @@
 
 /datum/action/item_action/toggle_spacesuit/New(Target)
 	. = ..()
-	RegisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE, .proc/toggle)
+	register_signal(target, COMSIG_SUIT_SPACE_TOGGLE, .proc/toggle)
 
 /datum/action/item_action/toggle_spacesuit/Destroy()
-	UnregisterSignal(target, COMSIG_SUIT_SPACE_TOGGLE)
+	unregister_signal(target, COMSIG_SUIT_SPACE_TOGGLE)
 	return ..()
 
 /datum/action/item_action/toggle_spacesuit/Trigger(trigger_flags)
@@ -588,11 +588,11 @@
 /datum/action/item_action/agent_box/Grant(mob/M)
 	. = ..()
 	if(owner)
-		RegisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)
+		register_signal(owner, COMSIG_HUMAN_SUICIDE_ACT, .proc/suicide_act)
 
 /datum/action/item_action/agent_box/Remove(mob/M)
 	if(owner)
-		UnregisterSignal(owner, COMSIG_HUMAN_SUICIDE_ACT)
+		unregister_signal(owner, COMSIG_HUMAN_SUICIDE_ACT)
 	return ..()
 
 /datum/action/item_action/agent_box/proc/suicide_act(datum/source)

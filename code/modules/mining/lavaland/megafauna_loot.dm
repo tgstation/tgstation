@@ -311,14 +311,14 @@
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
+	register_signal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/butcher_target)
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = TRUE
 	to_chat(user, span_notice("You feel a bloodlust. You can now butcher corpses with your bare arms."))
 
 /obj/item/clothing/head/hooded/hostile_environment/dropped(mob/user, silent = FALSE)
 	. = ..()
-	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	unregister_signal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering)
 	butchering.butchering_enabled = FALSE
 	to_chat(user, span_notice("You lose your bloodlust."))
@@ -386,10 +386,10 @@
 /obj/item/soulscythe/Initialize(mapload)
 	. = ..()
 	soul = new(src)
-	RegisterSignal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
-	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED, .proc/on_attack)
-	RegisterSignal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, .proc/on_secondary_attack)
-	RegisterSignal(src, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/on_integrity_change)
+	register_signal(soul, COMSIG_LIVING_RESIST, .proc/on_resist)
+	register_signal(soul, COMSIG_MOB_ATTACK_RANGED, .proc/on_attack)
+	register_signal(soul, COMSIG_MOB_ATTACK_RANGED_SECONDARY, .proc/on_secondary_attack)
+	register_signal(src, COMSIG_ATOM_INTEGRITY_CHANGED, .proc/on_integrity_change)
 
 /obj/item/soulscythe/examine(mob/user)
 	. = ..()
@@ -854,7 +854,7 @@
 		w_class_on = w_class, \
 		attack_verb_continuous_on = list("cleaves", "swipes", "slashes", "chops"), \
 		attack_verb_simple_on = list("cleave", "swipe", "slash", "chop"))
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	register_signal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/melee/cleaving_saw/examine(mob/user)
 	. = ..()

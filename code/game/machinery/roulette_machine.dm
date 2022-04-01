@@ -177,7 +177,7 @@
 				name = msg
 				desc = "Owned by [new_card.registered_account.account_holder], draws directly from [user.p_their()] account."
 				my_card = new_card
-				RegisterSignal(my_card, COMSIG_PARENT_QDELETING, .proc/on_my_card_deleted)
+				register_signal(my_card, COMSIG_PARENT_QDELETING, .proc/on_my_card_deleted)
 				to_chat(user, span_notice("You link the wheel to your account."))
 				power_change()
 				return

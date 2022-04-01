@@ -33,31 +33,31 @@
 /datum/sparring_match/proc/hook_signals(mob/living/carbon/human/sparring)
 	//weapon conditions
 	if(weapons_condition < CONDITION_ANY_WEAPON)
-		RegisterSignal(sparring, COMSIG_MOB_FIRED_GUN, .proc/gun_violation)
-		RegisterSignal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
+		register_signal(sparring, COMSIG_MOB_FIRED_GUN, .proc/gun_violation)
+		register_signal(sparring, COMSIG_MOB_GRENADE_ARMED, .proc/grenade_violation)
 	if(weapons_condition <= CONDITION_CEREMONIAL_ONLY)
-		RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/melee_violation)
+		register_signal(sparring, COMSIG_PARENT_ATTACKBY, .proc/melee_violation)
 	//arena conditions
-	RegisterSignal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
+	register_signal(sparring, COMSIG_MOVABLE_MOVED, .proc/arena_violation)
 	//severe violations (insta violation win for other party) conditions
-	RegisterSignal(sparring, COMSIG_MOVABLE_TELEPORTED, .proc/teleport_violation)
+	register_signal(sparring, COMSIG_MOVABLE_TELEPORTED, .proc/teleport_violation)
 	//win conditions
-	RegisterSignal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
+	register_signal(sparring, COMSIG_MOB_STATCHANGE, .proc/check_for_victory)
 	//flub conditions
-	RegisterSignal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference)
-	RegisterSignal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference)
+	register_signal(sparring, COMSIG_PARENT_ATTACKBY, .proc/outsider_interference)
+	register_signal(sparring, COMSIG_ATOM_HULK_ATTACK, .proc/hulk_interference)
+	register_signal(sparring, COMSIG_ATOM_ATTACK_HAND, .proc/hand_interference)
+	register_signal(sparring, COMSIG_ATOM_ATTACK_PAW, .proc/paw_interference)
+	register_signal(sparring, COMSIG_ATOM_HITBY, .proc/thrown_interference)
+	register_signal(sparring, COMSIG_ATOM_BULLET_ACT, .proc/projectile_interference)
 	//severe flubs (insta match ender, no winners) conditions
-	RegisterSignal(sparring, COMSIG_LIVING_DEATH, .proc/death_flub)
-	RegisterSignal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flub)
+	register_signal(sparring, COMSIG_LIVING_DEATH, .proc/death_flub)
+	register_signal(sparring, COMSIG_PARENT_QDELETING, .proc/deletion_flub)
 
 /datum/sparring_match/proc/unhook_signals(mob/living/carbon/human/sparring)
 	if(!sparring)
 		return
-	UnregisterSignal(sparring, list(
+	unregister_signal(sparring, list(
 		COMSIG_MOB_FIRED_GUN,
 		COMSIG_MOB_GRENADE_ARMED,
 		COMSIG_MOB_ITEM_ATTACK,

@@ -178,7 +178,7 @@
  * * proctype The proc to call back when the signal is emitted
  * * override If a previous registration exists you must explicitly set this
  */
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
+/datum/proc/register_signal(datum/target, sig_type_or_types, proctype, override = FALSE)
 	if(QDELETED(src) || QDELETED(target))
 		return
 
@@ -219,7 +219,7 @@
  * * datum/target Datum to stop listening to signals from
  * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
  */
-/datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
+/datum/proc/unregister_signal(datum/target, sig_type_or_types)
 	var/list/lookup = target.comp_lookup
 	if(!signal_procs || !signal_procs[target] || !lookup)
 		return

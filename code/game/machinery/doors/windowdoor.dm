@@ -53,7 +53,7 @@
 	src.unres_sides = unres_sides
 	update_appearance(UPDATE_ICON)
 
-	RegisterSignal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
+	register_signal(src, COMSIG_COMPONENT_NTNET_RECEIVE, .proc/ntnet_receive)
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = .proc/on_exit,

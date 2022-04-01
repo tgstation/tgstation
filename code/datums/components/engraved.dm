@@ -47,26 +47,26 @@
 		engraved_wall.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
 	icon_state_append = rand(1, 2)
 	//must be here to allow overlays to be updated
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	register_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	engraved_wall.update_appearance()
 
 /datum/component/engraved/Destroy(force, silent)
 	. = ..()
 	parent.RemoveElement(/datum/element/art)
 	//must be here to allow overlays to be updated
-	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+	unregister_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	if(parent && !QDELING(parent))
 		var/atom/parent_atom = parent
 		parent_atom.update_appearance()
 
 /datum/component/engraved/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	//supporting component transfer means putting these here instead of initialize
 	SSpersistence.wall_engravings += src
 	ADD_TRAIT(parent, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC)
 
 /datum/component/engraved/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	unregister_signal(parent, COMSIG_PARENT_EXAMINE)
 	//supporting component transfer means putting these here instead of destroy
 	SSpersistence.wall_engravings -= src
 	REMOVE_TRAIT(parent, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC)

@@ -76,8 +76,8 @@
 	random_shots.Grant(src)
 	shotgun_blast.Grant(src)
 	dir_shots.Grant(src)
-	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
-	RegisterSignal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
+	register_signal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
+	register_signal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
 	AddElement(/datum/element/projectile_shield)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()

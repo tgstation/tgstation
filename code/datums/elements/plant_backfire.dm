@@ -21,13 +21,13 @@
 	src.extra_traits = extra_traits
 	src.extra_genes = extra_genes
 
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK, .proc/attack_safety_check)
-	RegisterSignal(target, COMSIG_ITEM_PICKUP, .proc/pickup_safety_check)
-	RegisterSignal(target, COMSIG_MOVABLE_PRE_THROW, .proc/throw_safety_check)
+	register_signal(target, COMSIG_ITEM_PRE_ATTACK, .proc/attack_safety_check)
+	register_signal(target, COMSIG_ITEM_PICKUP, .proc/pickup_safety_check)
+	register_signal(target, COMSIG_MOVABLE_PRE_THROW, .proc/throw_safety_check)
 
 /datum/element/plant_backfire/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_PRE_THROW))
+	unregister_signal(target, list(COMSIG_ITEM_PRE_ATTACK, COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_PRE_THROW))
 
 /*
  * Checks before we attack if we're okay to continue.
@@ -40,7 +40,7 @@
 
 	if(plant_safety_check(source, user))
 		return
-	
+
 	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
 	if(cancel_action)
 		return COMPONENT_CANCEL_ATTACK_CHAIN

@@ -25,9 +25,9 @@
 
 /obj/machinery/doppler_array/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, .proc/update_doppler_light)
-	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/update_doppler_light)
+	register_signal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	register_signal(src, COMSIG_MACHINERY_POWER_LOST, .proc/update_doppler_light)
+	register_signal(src, COMSIG_MACHINERY_POWER_RESTORED, .proc/update_doppler_light)
 	update_doppler_light()
 
 	// Rotation determines the detectable direction.
@@ -92,8 +92,8 @@
 	else
 		playsound(src, 'sound/machines/terminal_error.ogg', 25)
 
-/** 
- * Checks a specified tachyon record for fitting reactions, then returns a list with 
+/**
+ * Checks a specified tachyon record for fitting reactions, then returns a list with
  * the experiment typepath as key and score as value.
  * The score is the same for all explosive experiments (light radius).
  */

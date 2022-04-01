@@ -38,7 +38,7 @@
 
 	Make(S)
 	connect_to_network()
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
+	register_signal(SSsun, COMSIG_SUN_MOVED, .proc/queue_update_solar_exposure)
 
 /obj/machinery/power/solar/Destroy()
 	unset_control() //remove from control computer
@@ -242,7 +242,7 @@
 //Bit of a hack but this whole type is a hack
 /obj/machinery/power/solar/fake/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
-	UnregisterSignal(SSsun, COMSIG_SUN_MOVED)
+	unregister_signal(SSsun, COMSIG_SUN_MOVED)
 
 /obj/machinery/power/solar/fake/process()
 	return PROCESS_KILL
@@ -374,7 +374,7 @@
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
 	azimuth_rate = SSsun.base_rotation
-	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
+	register_signal(SSsun, COMSIG_SUN_MOVED, .proc/timed_track)
 	connect_to_network()
 	if(powernet)
 		set_panels(azimuth_target)

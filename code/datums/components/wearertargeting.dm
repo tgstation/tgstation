@@ -9,18 +9,18 @@
 /datum/component/wearertargeting/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
 
 /datum/component/wearertargeting/proc/on_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
 	if((slot in valid_slots) && istype(equipper, mobtype))
-		RegisterSignal(equipper, signals, proctype, TRUE)
+		register_signal(equipper, signals, proctype, TRUE)
 	else
-		UnregisterSignal(equipper, signals)
+		unregister_signal(equipper, signals)
 
 /datum/component/wearertargeting/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, signals)
+	unregister_signal(user, signals)

@@ -33,7 +33,7 @@
 
 	if(undertile_pressureplate)
 		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
-	RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/ToggleActive)
+	register_signal(src, COMSIG_OBJ_HIDE, .proc/ToggleActive)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)

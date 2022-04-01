@@ -58,12 +58,12 @@
 
 /datum/component/riding/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
-	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
-	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/vehicle_bump)
-	RegisterSignal(parent, COMSIG_BUCKLED_CAN_Z_MOVE, .proc/riding_can_z_move)
+	register_signal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/vehicle_turned)
+	register_signal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
+	register_signal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/vehicle_moved)
+	register_signal(parent, COMSIG_MOVABLE_BUMP, .proc/vehicle_bump)
+	register_signal(parent, COMSIG_BUCKLED_CAN_Z_MOVE, .proc/riding_can_z_move)
 
 /**
  * This proc handles all of the proc calls to things like set_vehicle_dir_layer() that a type of riding datum needs to call on creation

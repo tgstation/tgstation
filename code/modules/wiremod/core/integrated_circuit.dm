@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	GLOB.integrated_circuits += src
 
-	RegisterSignal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
+	register_signal(src, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, .proc/on_atom_usb_cable_try_attach)
 
 /obj/item/integrated_circuit/loaded/Initialize(mapload)
 	. = ..()
@@ -182,7 +182,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	set_on(TRUE)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_SHELL, new_shell)
 	shell = new_shell
-	RegisterSignal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
+	register_signal(shell, COMSIG_PARENT_QDELETING, .proc/remove_current_shell)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
 		attached_component.register_shell(shell)
 		// Their input ports may be updated with user values, but the outputs haven't updated
@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	shell.name = initial(shell.name)
 	for(var/obj/item/circuit_component/attached_component as anything in attached_components)
 		attached_component.unregister_shell(shell)
-	UnregisterSignal(shell, COMSIG_PARENT_QDELETING)
+	unregister_signal(shell, COMSIG_PARENT_QDELETING)
 	shell = null
 	set_on(FALSE)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SHELL_REMOVED)
@@ -243,7 +243,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	to_add.parent = src
 	attached_components += to_add
 	current_size += to_add.circuit_size
-	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
+	register_signal(to_add, COMSIG_MOVABLE_MOVED, .proc/component_move_handler)
 	SStgui.update_uis(src)
 
 	if(shell)
@@ -273,7 +273,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	if(shell)
 		to_remove.unregister_shell(shell)
 
-	UnregisterSignal(to_remove, COMSIG_MOVABLE_MOVED)
+	unregister_signal(to_remove, COMSIG_MOVABLE_MOVED)
 	current_size -= to_remove.circuit_size
 	attached_components -= to_remove
 	to_remove.disconnect()
@@ -603,7 +603,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			component.variable_name.set_input(params["variable"])
 			component.rel_x = text2num(params["rel_x"])
 			component.rel_y = text2num(params["rel_y"])
-			RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
+			register_signal(component, COMSIG_CIRCUIT_COMPONENT_REMOVED, .proc/clear_setter_or_getter)
 			setter_and_getter_count++
 			return TRUE
 		if("move_screen")

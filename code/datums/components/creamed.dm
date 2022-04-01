@@ -49,13 +49,13 @@ GLOBAL_LIST_INIT(creamable, typecacheof(list(
 	return ..()
 
 /datum/component/creamed/RegisterWithParent()
-	RegisterSignal(parent, list(
+	register_signal(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT),
 		.proc/clean_up)
 
 /datum/component/creamed/UnregisterFromParent()
-	UnregisterSignal(parent, list(
+	unregister_signal(parent, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_COMPONENT_CLEAN_FACE_ACT))
 

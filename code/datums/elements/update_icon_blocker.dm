@@ -4,7 +4,7 @@
 	. = ..()
 	if(!istype(target, /atom))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ATOM_UPDATE_ICON, .proc/block_update_icon)
+	register_signal(target, COMSIG_ATOM_UPDATE_ICON, .proc/block_update_icon)
 
 /datum/element/update_icon_blocker/proc/block_update_icon()
 	SIGNAL_HANDLER

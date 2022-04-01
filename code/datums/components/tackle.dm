@@ -53,12 +53,12 @@
 	return ..()
 
 /datum/component/tackler/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)
-	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/sack)
-	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/registerTackle)
+	register_signal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)
+	register_signal(parent, COMSIG_MOVABLE_IMPACT, .proc/sack)
+	register_signal(parent, COMSIG_MOVABLE_POST_THROW, .proc/registerTackle)
 
 /datum/component/tackler/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
+	unregister_signal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
 
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/tackle)
@@ -104,7 +104,7 @@
 
 
 	tackling = TRUE
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/checkObstacle)
 	playsound(user, 'sound/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
 	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
@@ -448,7 +448,7 @@
 /datum/component/tackler/proc/resetTackle()
 	tackling = FALSE
 	QDEL_NULL(tackle_ref)
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+	unregister_signal(parent, COMSIG_MOVABLE_MOVED)
 
 ///A special case for splatting for handling windows
 /datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)

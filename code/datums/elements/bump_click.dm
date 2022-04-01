@@ -30,10 +30,10 @@
 	src.allow_unarmed = allow_unarmed
 	src.allow_combat = allow_combat
 
-	RegisterSignal(target, COMSIG_ATOM_BUMPED, .proc/use_tool, override = TRUE)
+	register_signal(target, COMSIG_ATOM_BUMPED, .proc/use_tool, override = TRUE)
 
 /datum/element/bump_click/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_ATOM_BUMPED)
+	unregister_signal(target, COMSIG_ATOM_BUMPED)
 	return ..()
 
 /datum/element/bump_click/proc/check_tool(obj/item/held_item)

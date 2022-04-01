@@ -80,23 +80,23 @@
 	base_icon_state = _icon_state
 	smoothing = _smoothing
 
-	RegisterSignal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
+	register_signal(target,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay, TRUE)
 	if(target.flags_1 & INITIALIZED_1)
 		target.update_appearance(UPDATE_OVERLAYS) //could use some queuing here now maybe.
 	else
-		RegisterSignal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
+		register_signal(target,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon, TRUE)
 	if(isitem(target))
 		INVOKE_ASYNC(target, /obj/item/.proc/update_slot_icon, TRUE)
 	if(_dir)
-		SSdcs.RegisterSignal(target,COMSIG_ATOM_DIR_CHANGE, /datum/controller/subsystem/processing/dcs/proc/rotate_decals, TRUE)
+		SSdcs.register_signal(target,COMSIG_ATOM_DIR_CHANGE, /datum/controller/subsystem/processing/dcs/proc/rotate_decals, TRUE)
 	if(!isnull(_smoothing))
-		RegisterSignal(target, COMSIG_ATOM_SMOOTHED_ICON, .proc/smooth_react, TRUE)
+		register_signal(target, COMSIG_ATOM_SMOOTHED_ICON, .proc/smooth_react, TRUE)
 	if(_cleanable)
-		RegisterSignal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react, TRUE)
+		register_signal(target, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react, TRUE)
 	if(_description)
-		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
+		register_signal(target, COMSIG_PARENT_EXAMINE, .proc/examine,TRUE)
 
-	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
+	register_signal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, .proc/shuttle_move_react,TRUE)
 
 /**
  * ## generate_appearance
@@ -117,8 +117,8 @@
 	return TRUE
 
 /datum/element/decal/Detach(atom/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_TURF_ON_SHUTTLE_MOVE, COMSIG_ATOM_SMOOTHED_ICON))
-	SSdcs.UnregisterSignal(source, COMSIG_ATOM_DIR_CHANGE)
+	unregister_signal(source, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_TURF_ON_SHUTTLE_MOVE, COMSIG_ATOM_SMOOTHED_ICON))
+	SSdcs.unregister_signal(source, COMSIG_ATOM_DIR_CHANGE)
 	source.update_appearance(UPDATE_OVERLAYS)
 	if(isitem(source))
 		INVOKE_ASYNC(source, /obj/item/.proc/update_slot_icon)
@@ -130,7 +130,7 @@
 
 	if(source && istype(source))
 		source.update_appearance(UPDATE_OVERLAYS)
-		UnregisterSignal(source, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+		unregister_signal(source, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
 
 /datum/element/decal/proc/apply_overlay(atom/source, list/overlay_list)

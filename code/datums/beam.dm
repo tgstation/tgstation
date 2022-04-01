@@ -47,8 +47,8 @@
 	visuals.icon = icon
 	visuals.icon_state = icon_state
 	Draw()
-	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, .proc/redrawing)
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/redrawing)
+	register_signal(origin, COMSIG_MOVABLE_MOVED, .proc/redrawing)
+	register_signal(target, COMSIG_MOVABLE_MOVED, .proc/redrawing)
 
 /**
  * Triggered by signals set up when the beam is set up. If it's still sane to create a beam, it removes the old beam, creates a new one. Otherwise it kills the beam.
@@ -69,8 +69,8 @@
 /datum/beam/Destroy()
 	QDEL_LIST(elements)
 	QDEL_NULL(visuals)
-	UnregisterSignal(origin, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	unregister_signal(origin, COMSIG_MOVABLE_MOVED)
+	unregister_signal(target, COMSIG_MOVABLE_MOVED)
 	target = null
 	origin = null
 	return ..()

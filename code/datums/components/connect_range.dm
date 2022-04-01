@@ -50,7 +50,7 @@
 /datum/component/connect_range/proc/set_tracked(atom/new_tracked)
 	if(tracked) //Unregister the signals from the old tracked and its surroundings
 		unregister_signals(isturf(tracked) ? tracked : tracked.loc)
-		UnregisterSignal(tracked, list(
+		unregister_signal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
 			COMSIG_PARENT_QDELETING,
 		))
@@ -58,8 +58,8 @@
 	if(!tracked)
 		return
 	//Register signals on the new tracked atom and its surroundings.
-	RegisterSignal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
+	register_signal(tracked, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(tracked, COMSIG_PARENT_QDELETING, .proc/handle_tracked_qdel)
 	update_signals(tracked)
 
 /datum/component/connect_range/proc/handle_tracked_qdel()
@@ -79,13 +79,13 @@
 			return
 		//Keep track of possible movement of all movables the target is in.
 		for(var/atom/movable/container as anything in get_nested_locs(target))
-			RegisterSignal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+			register_signal(container, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
 	if(on_same_turf && !forced)
 		return
 	for(var/turf/target_turf in RANGE_TURFS(range, current_turf))
 		for(var/signal in connections)
-			parent.RegisterSignal(target_turf, signal, connections[signal])
+			parent.register_signal(target_turf, signal, connections[signal])
 
 /datum/component/connect_range/proc/unregister_signals(atom/location, on_same_turf = FALSE)
 	//The location is null or is a container and the component shouldn't have register signals on it
@@ -94,13 +94,13 @@
 
 	if(ismovable(location))
 		for(var/atom/movable/target as anything in (get_nested_locs(location) + location))
-			UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+			unregister_signal(target, COMSIG_MOVABLE_MOVED)
 
 	if(on_same_turf)
 		return
 	var/turf/previous_turf = get_turf(location)
 	for(var/turf/target_turf in RANGE_TURFS(range, previous_turf))
-		parent.UnregisterSignal(target_turf, connections)
+		parent.unregister_signal(target_turf, connections)
 
 /datum/component/connect_range/proc/on_moved(atom/movable/movable, atom/old_loc)
 	SIGNAL_HANDLER

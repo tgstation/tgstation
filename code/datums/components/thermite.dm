@@ -46,15 +46,15 @@
 	overlay = mutable_appearance('icons/effects/effects.dmi', "thermite")
 	master.add_overlay(overlay)
 
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
-	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
+	register_signal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
+	register_signal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
 
 /datum/component/thermite/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT)
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
-	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
-	UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+	unregister_signal(parent, COMSIG_COMPONENT_CLEAN_ACT)
+	unregister_signal(parent, COMSIG_PARENT_ATTACKBY)
+	unregister_signal(parent, COMSIG_ATOM_FIRE_ACT)
+	unregister_signal(parent, COMSIG_PARENT_QDELETING)
 
 /datum/component/thermite/Destroy()
 	var/turf/master = parent
@@ -85,7 +85,7 @@
 	fakefire = new(master)
 	burn_timer = addtimer(CALLBACK(src, .proc/burn_parent, user), min(amount * 0.35 SECONDS, 20 SECONDS), TIMER_STOPPABLE)
 	UnregisterFromParent()
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/delete_fire) //in case parent gets deleted, get ready to delete the fire
+	register_signal(parent, COMSIG_PARENT_QDELETING, .proc/delete_fire) //in case parent gets deleted, get ready to delete the fire
 
 /**
  * Used to actually melt parent

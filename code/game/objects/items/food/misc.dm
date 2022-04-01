@@ -51,7 +51,7 @@
 
 /obj/item/food/cheese/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
+	register_signal(src, COMSIG_RAT_INTERACT, .proc/on_rat_eat)
 
 /obj/item/food/cheese/proc/on_rat_eat(datum/source, mob/living/simple_animal/hostile/regalrat/king)
 	SIGNAL_HANDLER
@@ -210,7 +210,7 @@
 
 /obj/item/food/badrecipe/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
+	register_signal(src, COMSIG_ITEM_GRILLED, .proc/OnGrill)
 
 /obj/item/food/badrecipe/moldy
 	name = "moldy mess"

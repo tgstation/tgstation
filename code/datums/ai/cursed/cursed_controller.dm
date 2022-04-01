@@ -18,12 +18,12 @@
 /datum/ai_controller/cursed/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_IMPACT, .proc/on_throw_hit)
-	RegisterSignal(new_pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(new_pawn, COMSIG_MOVABLE_IMPACT, .proc/on_throw_hit)
+	register_signal(new_pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	return ..() //Run parent at end
 
 /datum/ai_controller/cursed/UnpossessPawn()
-	UnregisterSignal(pawn, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_EQUIPPED))
+	unregister_signal(pawn, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_EQUIPPED))
 	return ..() //Run parent at end
 
 ///signal called by the pawn hitting something after a throw

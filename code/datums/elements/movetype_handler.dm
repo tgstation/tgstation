@@ -22,11 +22,11 @@
 		return
 
 	var/atom/movable/movable_target = target
-	RegisterSignal(movable_target, GLOB.movement_type_addtrait_signals, .proc/on_movement_type_trait_gain)
-	RegisterSignal(movable_target, GLOB.movement_type_removetrait_signals, .proc/on_movement_type_trait_loss)
-	RegisterSignal(movable_target, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_gain)
-	RegisterSignal(movable_target, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_loss)
-	RegisterSignal(movable_target, COMSIG_PAUSE_FLOATING_ANIM, .proc/pause_floating_anim)
+	register_signal(movable_target, GLOB.movement_type_addtrait_signals, .proc/on_movement_type_trait_gain)
+	register_signal(movable_target, GLOB.movement_type_removetrait_signals, .proc/on_movement_type_trait_loss)
+	register_signal(movable_target, SIGNAL_ADDTRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_gain)
+	register_signal(movable_target, SIGNAL_REMOVETRAIT(TRAIT_NO_FLOATING_ANIM), .proc/on_no_floating_anim_trait_loss)
+	register_signal(movable_target, COMSIG_PAUSE_FLOATING_ANIM, .proc/pause_floating_anim)
 	attached_atoms[movable_target] = TRUE
 
 	if(movable_target.movement_type & (FLOATING|FLYING) && !HAS_TRAIT(movable_target, TRAIT_NO_FLOATING_ANIM))
@@ -40,7 +40,7 @@
 	)
 	signals_to_remove += GLOB.movement_type_addtrait_signals
 	signals_to_remove += GLOB.movement_type_removetrait_signals
-	UnregisterSignal(source, signals_to_remove)
+	unregister_signal(source, signals_to_remove)
 
 	attached_atoms -= source
 	paused_floating_anim_atoms -= source

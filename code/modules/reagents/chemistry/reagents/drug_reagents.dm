@@ -518,8 +518,8 @@
 	. = ..()
 
 	SEND_SIGNAL(dancer, COMSIG_ADD_MOOD_EVENT, "vibing", /datum/mood_event/high, name)
-	RegisterSignal(dancer, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
-	RegisterSignal(dancer, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
+	register_signal(dancer, COMSIG_MOB_EMOTED("flip"), .proc/on_flip)
+	register_signal(dancer, COMSIG_MOB_EMOTED("spin"), .proc/on_spin)
 
 	if(!dancer.hud_used)
 		return
@@ -549,8 +549,8 @@
 	. = ..()
 
 	SEND_SIGNAL(dancer, COMSIG_CLEAR_MOOD_EVENT, "vibing")
-	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("flip"))
-	UnregisterSignal(dancer, COMSIG_MOB_EMOTED("spin"))
+	unregister_signal(dancer, COMSIG_MOB_EMOTED("flip"))
+	unregister_signal(dancer, COMSIG_MOB_EMOTED("spin"))
 
 	if(!dancer.hud_used)
 		return

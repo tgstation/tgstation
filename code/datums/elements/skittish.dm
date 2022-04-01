@@ -10,10 +10,10 @@
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_MOVABLE_BUMP, .proc/Bump)
+	register_signal(target, COMSIG_MOVABLE_BUMP, .proc/Bump)
 
 /datum/element/skittish/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_MOVABLE_BUMP)
+	unregister_signal(target, COMSIG_MOVABLE_BUMP)
 	. = ..()
 
 /datum/element/skittish/proc/Bump(mob/living/scooby, atom/target)

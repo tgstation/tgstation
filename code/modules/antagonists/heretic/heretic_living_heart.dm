@@ -32,7 +32,7 @@
 	action.Grant(organ_parent.owner)
 
 	ADD_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
-	RegisterSignal(parent, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
+	register_signal(parent, COMSIG_ORGAN_REMOVED, .proc/on_organ_removed)
 
 	// It's not technically visible,
 	// but the organ sprite shows up in the action
@@ -48,7 +48,7 @@
 /datum/component/living_heart/Destroy(force, silent)
 	QDEL_NULL(action)
 	REMOVE_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
-	UnregisterSignal(parent, COMSIG_ORGAN_REMOVED)
+	unregister_signal(parent, COMSIG_ORGAN_REMOVED)
 
 	parent.RemoveElement(/datum/element/update_icon_blocker)
 	var/obj/item/organ/organ_parent = parent

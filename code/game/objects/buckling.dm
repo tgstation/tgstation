@@ -112,7 +112,7 @@
 	if(anchored)
 		ADD_TRAIT(M, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
 	if(!length(buckled_mobs))
-		RegisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
+		register_signal(src, COMSIG_MOVABLE_SET_ANCHORED, .proc/on_set_anchored)
 	M.set_buckled(src)
 	buckled_mobs |= M
 	M.throw_alert(ALERT_BUCKLED, /atom/movable/screen/alert/buckled)
@@ -157,7 +157,7 @@
 	if(anchored)
 		REMOVE_TRAIT(buckled_mob, TRAIT_NO_FLOATING_ANIM, BUCKLED_TRAIT)
 	if(!length(buckled_mobs))
-		UnregisterSignal(src, COMSIG_MOVABLE_SET_ANCHORED)
+		unregister_signal(src, COMSIG_MOVABLE_SET_ANCHORED)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_UNBUCKLE, buckled_mob, force)
 
 	if(can_fall)

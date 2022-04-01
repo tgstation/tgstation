@@ -49,13 +49,13 @@
 	if(ispath(device))
 		device = new device(src)
 		ADD_TRAIT(device, TRAIT_NODROP, MOD_TRAIT)
-		RegisterSignal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
-		RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+		register_signal(device, COMSIG_PARENT_PREQDELETED, .proc/on_device_deletion)
+		register_signal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 
 /obj/item/mod/module/Destroy()
 	mod?.uninstall(src)
 	if(device)
-		UnregisterSignal(device, COMSIG_PARENT_PREQDELETED)
+		unregister_signal(device, COMSIG_PARENT_PREQDELETED)
 		QDEL_NULL(device)
 	return ..()
 
@@ -124,8 +124,8 @@
 		if(device)
 			if(mod.wearer.put_in_hands(device))
 				balloon_alert(mod.wearer, "[device] extended")
-				RegisterSignal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-				RegisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey)
+				register_signal(mod.wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+				register_signal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN, .proc/dropkey)
 			else
 				balloon_alert(mod.wearer, "can't extend [device]!")
 				mod.wearer.transferItemToLoc(device, src, force = TRUE)
@@ -149,10 +149,10 @@
 			balloon_alert(mod.wearer, device ? "[device] retracted" : "[src] deactivated")
 		if(device)
 			mod.wearer.transferItemToLoc(device, src, force = TRUE)
-			UnregisterSignal(mod.wearer, COMSIG_ATOM_EXITED)
-			UnregisterSignal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN)
+			unregister_signal(mod.wearer, COMSIG_ATOM_EXITED)
+			unregister_signal(mod.wearer, COMSIG_KB_MOB_DROPITEM_DOWN)
 		else
-			UnregisterSignal(mod.wearer, used_signal)
+			unregister_signal(mod.wearer, used_signal)
 			used_signal = null
 	mod.wearer.update_inv_back()
 	SEND_SIGNAL(src, COMSIG_MODULE_DEACTIVATED)
@@ -284,7 +284,7 @@
 			mod.selected_module.used_signal = COMSIG_MOB_MIDDLECLICKON
 		if(ALT_CLICK)
 			mod.selected_module.used_signal = COMSIG_MOB_ALTCLICKON
-	RegisterSignal(mod.wearer, mod.selected_module.used_signal, /obj/item/mod/module.proc/on_special_click)
+	register_signal(mod.wearer, mod.selected_module.used_signal, /obj/item/mod/module.proc/on_special_click)
 
 /// Pins the module to the user's action buttons
 /obj/item/mod/module/proc/pin(mob/user)

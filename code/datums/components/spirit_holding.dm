@@ -19,12 +19,12 @@
 		QDEL_NULL(bound_spirit)
 
 /datum/component/spirit_holding/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/on_destroy)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	register_signal(parent, COMSIG_PARENT_QDELETING, .proc/on_destroy)
 
 /datum/component/spirit_holding/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_QDELETING))
+	unregister_signal(parent, list(COMSIG_PARENT_EXAMINE, COMSIG_ITEM_ATTACK_SELF, COMSIG_PARENT_QDELETING))
 
 ///signal fired on examining the parent
 /datum/component/spirit_holding/proc/on_examine(datum/source, mob/user, list/examine_list)
@@ -64,7 +64,7 @@
 		return
 
 	//Immediately unregister to prevent making a new spirit
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	unregister_signal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 	var/mob/dead/observer/chosen_spirit = pick(candidates)
 	bound_spirit = new(parent)
@@ -80,8 +80,8 @@
 		bound_spirit.fully_replace_character_name(null, "The spirit of [input]")
 
 	//Add new signals for parent and stop attempting to awaken
-	RegisterSignal(parent, COMSIG_ATOM_RELAYMOVE, .proc/block_buckle_message)
-	RegisterSignal(parent, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
+	register_signal(parent, COMSIG_ATOM_RELAYMOVE, .proc/block_buckle_message)
+	register_signal(parent, COMSIG_BIBLE_SMACKED, .proc/on_bible_smacked)
 	attempting_awakening = FALSE
 
 ///signal fired from a mob moving inside the parent
@@ -107,8 +107,8 @@
 	if(!do_after(exorcist, 4 SECONDS, target = exorcised_movable))
 		return
 	playsound(parent, 'sound/effects/pray_chaplain.ogg',60,TRUE)
-	UnregisterSignal(exorcised_movable, list(COMSIG_ATOM_RELAYMOVE, COMSIG_BIBLE_SMACKED))
-	RegisterSignal(exorcised_movable, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	unregister_signal(exorcised_movable, list(COMSIG_ATOM_RELAYMOVE, COMSIG_BIBLE_SMACKED))
+	register_signal(exorcised_movable, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 	to_chat(bound_spirit, span_userdanger("You were exorcised!"))
 	QDEL_NULL(bound_spirit)
 	exorcised_movable.name = initial(exorcised_movable.name)

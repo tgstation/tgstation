@@ -16,11 +16,11 @@
 
 	src.break_chance = break_chance
 
-	RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
+	register_signal(target, COMSIG_ITEM_AFTERATTACK, .proc/on_afterattack)
 
 /datum/element/easily_fragmented/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_ITEM_AFTERATTACK)
+	unregister_signal(target, COMSIG_ITEM_AFTERATTACK)
 
 /datum/element/easily_fragmented/proc/on_afterattack(datum/source, atom/target, mob/user, proximity_flag, click_parameters)
 	SIGNAL_HANDLER

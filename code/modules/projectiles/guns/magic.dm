@@ -57,7 +57,7 @@
 		chambered = new ammo_type(src)
 	if(can_charge)
 		START_PROCESSING(SSobj, src)
-	RegisterSignal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
+	register_signal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 
 /obj/item/gun/magic/Destroy()

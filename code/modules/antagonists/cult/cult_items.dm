@@ -725,8 +725,8 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/halberd/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()

@@ -34,15 +34,15 @@
 	src.colors = colors
 	src.selected_color = selected_color || "#ffffff"
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, .proc/on_attack_self_secondary)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_PAINTING_TOOL_SET_COLOR, .proc/on_painting_tool_set_color)
-	RegisterSignal(parent, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .proc/get_palette_data)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF_SECONDARY, .proc/on_attack_self_secondary)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_PAINTING_TOOL_SET_COLOR, .proc/on_painting_tool_set_color)
+	register_signal(parent, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA, .proc/get_palette_data)
 
 /datum/component/palette/Destroy()
 	QDEL_NULL(color_picker_menu)
 	QDEL_LIST(menu_choices)
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF_SECONDARY, COMSIG_PARENT_EXAMINE,
+	unregister_signal(parent, list(COMSIG_ITEM_ATTACK_SELF_SECONDARY, COMSIG_PARENT_EXAMINE,
 		COMSIG_ITEM_DROPPED, COMSIG_PAINTING_TOOL_SET_COLOR, COMSIG_PAINTING_TOOL_GET_ADDITIONAL_DATA))
 	return ..()
 
@@ -67,7 +67,7 @@
 
 	color_picker_menu = show_radial_menu_persistent(user, parent, choices, select_proc = CALLBACK(src, .proc/choice_selected, user), tooltips = TRUE, radial_slice_icon = "palette_bg")
 
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/close_radial_menu)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/close_radial_menu)
 
 /datum/component/palette/proc/build_radial_list()
 	var/radial_list = list()
@@ -90,7 +90,7 @@
 	SIGNAL_HANDLER
 
 	QDEL_NULL(color_picker_menu)
-	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
+	unregister_signal(parent, COMSIG_ITEM_DROPPED)
 
 /datum/component/palette/proc/update_radial_list()
 	if(QDELETED(color_picker_menu))

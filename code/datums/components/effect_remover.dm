@@ -42,15 +42,15 @@
 	return ..()
 
 /datum/component/effect_remover/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_remove_effect)
+	register_signal(parent, COMSIG_ITEM_ATTACK_EFFECT, .proc/try_remove_effect)
 
 	if(tip_text)
 		var/obj/item/item_parent = parent
 		item_parent.item_flags |= ITEM_HAS_CONTEXTUAL_SCREENTIPS
-		RegisterSignal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/add_item_context)
+		register_signal(parent, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET, .proc/add_item_context)
 
 /datum/component/effect_remover/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_ATTACK_EFFECT, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
+	unregister_signal(parent, list(COMSIG_ITEM_ATTACK_EFFECT, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET))
 
 /*
  * Signal proc for [COMSIG_ITEM_ATTACK_EFFECT].

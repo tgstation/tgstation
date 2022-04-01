@@ -10,11 +10,11 @@
 		P = .proc/snail_crawl
 	else
 		P = .proc/lubricate
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, P)
+	register_signal(target, COMSIG_MOVABLE_MOVED, P)
 
 /datum/element/snailcrawl/Detach(mob/living/carbon/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	unregister_signal(target, COMSIG_MOVABLE_MOVED)
 	if(istype(target))
 		target.remove_movespeed_modifier(/datum/movespeed_modifier/snail_crawl)
 

@@ -593,11 +593,11 @@
 	if(slot != ITEM_SLOT_EYES)
 		return
 	bigshot = user
-	RegisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE, .proc/moodshift)
+	register_signal(bigshot, COMSIG_CARBON_SANITY_UPDATE, .proc/moodshift)
 
 /obj/item/clothing/glasses/salesman/dropped(mob/living/carbon/human/user)
 	..()
-	UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
+	unregister_signal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
 	bigshot = initial(bigshot)
 	icon_state = initial(icon_state)
 	desc = initial(desc)

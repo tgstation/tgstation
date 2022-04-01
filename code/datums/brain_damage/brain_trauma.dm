@@ -36,24 +36,24 @@
 /datum/brain_trauma/proc/on_gain()
 	if(gain_text)
 		to_chat(owner, gain_text)
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
-	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
+	register_signal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(owner, COMSIG_MOVABLE_HEAR, .proc/handle_hearing)
 
 //Called when removed from a mob
 /datum/brain_trauma/proc/on_lose(silent)
 	if(!silent && lose_text)
 		to_chat(owner, lose_text)
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	unregister_signal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOVABLE_HEAR)
 
 //Called when hearing a spoken message
 /datum/brain_trauma/proc/handle_hearing(datum/source, list/hearing_args)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
+	unregister_signal(owner, COMSIG_MOVABLE_HEAR)
 
 //Called when speaking
 /datum/brain_trauma/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	unregister_signal(owner, COMSIG_MOB_SAY)

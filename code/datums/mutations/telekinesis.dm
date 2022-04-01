@@ -19,13 +19,13 @@
 	. = ..()
 	if(.)
 		return
-	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, .proc/on_ranged_attack)
+	register_signal(H, COMSIG_MOB_ATTACK_RANGED, .proc/on_ranged_attack)
 
 /datum/mutation/human/telekinesis/on_losing(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
 		return
-	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
+	unregister_signal(H, COMSIG_MOB_ATTACK_RANGED)
 
 /datum/mutation/human/telekinesis/get_visual_indicator()
 	return visual_indicators[type][1]

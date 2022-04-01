@@ -151,12 +151,12 @@ Example:
 
 ```dm
 /datum/ai_planning_subtree/item_ghost_resist/SetupSubtree(datum/ai_controller/controller)
-	RegisterSignal(controller.pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(controller.pawn, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
 	controller.blackboard[BB_LIKES_EQUIPPER] = FALSE
 	controller.blackboard[BB_ITEM_AGGRO_LIST] = list()
 
 /datum/ai_planning_subtree/item_ghost_resist/ForgetSubtree(datum/ai_controller/controller)
-	UnregisterSignal(controller.pawn, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	unregister_signal(controller.pawn, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 ```
 
 ### Lil' Subtree Warning

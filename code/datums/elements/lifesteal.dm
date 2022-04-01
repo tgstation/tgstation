@@ -12,18 +12,18 @@
 /datum/element/lifesteal/Attach(datum/target, flat_heal)
 	. = ..()
 	if(isgun(target))
-		RegisterSignal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
+		register_signal(target, COMSIG_PROJECTILE_ON_HIT, .proc/projectile_hit)
 	else if(isitem(target))
-		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
+		register_signal(target, COMSIG_ITEM_AFTERATTACK, .proc/item_afterattack)
 	else if(ishostile(target))
-		RegisterSignal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
+		register_signal(target, COMSIG_HOSTILE_POST_ATTACKINGTARGET, .proc/hostile_attackingtarget)
 	else
 		return ELEMENT_INCOMPATIBLE
 
 	src.flat_heal = flat_heal
 
 /datum/element/lifesteal/Detach(datum/source)
-	UnregisterSignal(source, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
+	unregister_signal(source, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_ITEM_AFTERATTACK, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
 	return ..()
 
 /datum/element/lifesteal/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)

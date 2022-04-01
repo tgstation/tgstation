@@ -12,7 +12,7 @@
 
 /obj/structure/big_delivery/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	register_signal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
 /obj/structure/big_delivery/interact(mob/user)
 	to_chat(user, span_notice("You start to unwrap the package..."))
@@ -190,7 +190,7 @@
 
 /obj/item/small_delivery/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
+	register_signal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
 
 /obj/item/small_delivery/contents_explosion(severity, target)
 	switch(severity)

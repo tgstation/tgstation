@@ -24,11 +24,11 @@
 
 /datum/component/subtype_picker/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
+	register_signal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/on_attack_self)
 
 /datum/component/subtype_picker/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	unregister_signal(parent, COMSIG_ITEM_ATTACK_SELF)
 
 ///signal called by the stat of the target changing
 /datum/component/subtype_picker/proc/on_attack_self(datum/target, mob/user)

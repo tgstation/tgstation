@@ -9,11 +9,11 @@
 	if(!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/applyplate)
-	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/dropplates)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/applyplate)
+	register_signal(parent, COMSIG_PARENT_PREQDELETED, .proc/dropplates)
 	if(istype(parent, /obj/vehicle/sealed/mecha/working/ripley))
-		RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_mech_overlays)
+		register_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_mech_overlays)
 
 	if(_maxamount)
 		maxamount = _maxamount

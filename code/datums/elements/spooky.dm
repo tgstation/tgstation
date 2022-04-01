@@ -8,10 +8,10 @@
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 	src.too_spooky = too_spooky
-	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
+	register_signal(target, COMSIG_ITEM_ATTACK, .proc/spectral_attack)
 
 /datum/element/spooky/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_ITEM_ATTACK)
+	unregister_signal(source, COMSIG_ITEM_ATTACK)
 	return ..()
 
 /datum/element/spooky/proc/spectral_attack(datum/source, mob/living/carbon/C, mob/user)

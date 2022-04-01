@@ -84,7 +84,7 @@
 	if(istype(loc, /obj/effect/dummy/phased_mob))
 		bloodspell.phased = TRUE
 	if(bloodpool)
-		bloodpool.RegisterSignal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
+		bloodpool.register_signal(src, list(COMSIG_LIVING_AFTERPHASEIN,COMSIG_PARENT_QDELETING), /obj/effect/dummy/phased_mob/.proc/deleteself)
 
 /// Performs the classic slaughter demon bodyslam on the attack_target. Yeets them a screen away.
 /mob/living/simple_animal/hostile/imp/slaughter/proc/bodyslam(atom/attack_target)
@@ -235,7 +235,7 @@
 			continue
 
 		// Unregister the signal first, otherwise it'll trigger the "ling revived inside us" code
-		UnregisterSignal(M, COMSIG_MOB_STATCHANGE)
+		unregister_signal(M, COMSIG_MOB_STATCHANGE)
 
 		M.forceMove(T)
 		if(M.revive(full_heal = TRUE, admin_revive = TRUE))
@@ -246,7 +246,7 @@
 /mob/living/simple_animal/hostile/imp/slaughter/laughter/bloodcrawl_swallow(mob/living/victim)
 	// Keep their corpse so rescue is possible
 	consumed_mobs += victim
-	RegisterSignal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
+	register_signal(victim, COMSIG_MOB_STATCHANGE, .proc/on_victim_statchange)
 
 /* Handle signal from a consumed mob changing stat.
  *
@@ -264,7 +264,7 @@
 	victim.exit_blood_effect()
 	victim.visible_message(span_warning("[victim] falls out of the air, covered in blood, with a confused look on their face."))
 	consumed_mobs -= victim
-	UnregisterSignal(victim, COMSIG_MOB_STATCHANGE)
+	unregister_signal(victim, COMSIG_MOB_STATCHANGE)
 
 /mob/living/simple_animal/hostile/imp/slaughter/engine_demon
 	name = "engine demon"

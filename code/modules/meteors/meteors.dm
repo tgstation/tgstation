@@ -160,7 +160,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust=1)) //for space dust eve
 	if(!new_loop)
 		return
 
-	RegisterSignal(new_loop, COMSIG_PARENT_QDELETING, .proc/handle_stopping)
+	register_signal(new_loop, COMSIG_PARENT_QDELETING, .proc/handle_stopping)
 
 ///Deals with what happens when we stop moving, IE we die
 /obj/effect/meteor/proc/handle_stopping()

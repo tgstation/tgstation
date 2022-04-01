@@ -44,12 +44,12 @@
 /datum/species/synth/on_species_gain(mob/living/carbon/human/H, datum/species/old_species)
 	..()
 	assume_disguise(old_species, H)
-	RegisterSignal(H, COMSIG_MOB_SAY, .proc/handle_speech)
+	register_signal(H, COMSIG_MOB_SAY, .proc/handle_speech)
 	H.set_safe_hunger_level()
 
 /datum/species/synth/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
-	UnregisterSignal(H, COMSIG_MOB_SAY)
+	unregister_signal(H, COMSIG_MOB_SAY)
 
 /datum/species/synth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/medicine/c2/synthflesh)

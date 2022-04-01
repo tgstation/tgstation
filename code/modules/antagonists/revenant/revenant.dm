@@ -80,7 +80,7 @@
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/overload(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/blight(null))
 	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/revenant/malfunction(null))
-	RegisterSignal(src, COMSIG_LIVING_BANED, .proc/on_baned)
+	register_signal(src, COMSIG_LIVING_BANED, .proc/on_baned)
 	random_revenant_name()
 
 /mob/living/simple_animal/revenant/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE, no_hands = FALSE, floor_okay=FALSE)

@@ -12,14 +12,14 @@
 	src.gravity = gravity
 	src.ignore_space = ignore_space
 
-	RegisterSignal(target, COMSIG_ATOM_HAS_GRAVITY, .proc/gravity_check)
+	register_signal(target, COMSIG_ATOM_HAS_GRAVITY, .proc/gravity_check)
 	if(isturf(target))
-		RegisterSignal(target, COMSIG_TURF_HAS_GRAVITY, .proc/turf_gravity_check)
+		register_signal(target, COMSIG_TURF_HAS_GRAVITY, .proc/turf_gravity_check)
 
 /datum/element/forced_gravity/Detach(datum/source)
 	. = ..()
 	var/static/list/signals_b_gone = list(COMSIG_ATOM_HAS_GRAVITY, COMSIG_TURF_HAS_GRAVITY)
-	UnregisterSignal(source, signals_b_gone)
+	unregister_signal(source, signals_b_gone)
 
 /datum/element/forced_gravity/proc/gravity_check(datum/source, turf/location, list/gravs)
 	SIGNAL_HANDLER

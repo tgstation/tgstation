@@ -32,11 +32,11 @@
 	src.sound_volume = sound_volume
 	src.blood_spawn_chance = blood_spawn_chance
 	src.target_dir_change = target_dir_change
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/spread_blood)
+	register_signal(target, COMSIG_MOVABLE_MOVED, .proc/spread_blood)
 
 /datum/element/blood_walk/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	unregister_signal(target, COMSIG_MOVABLE_MOVED)
 
 ///Spawns blood (if possible) under the source, and plays a sound effect (if any)
 /datum/element/blood_walk/proc/spread_blood(datum/source)

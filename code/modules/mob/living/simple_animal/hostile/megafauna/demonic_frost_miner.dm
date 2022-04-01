@@ -64,7 +64,7 @@ Difficulty: Extremely Hard
 	ice_shotgun.Grant(src)
 	for(var/obj/structure/frost_miner_prism/prism_to_set in GLOB.frost_miner_prisms)
 		prism_to_set.set_prism_light(LIGHT_COLOR_BLUE, 5)
-	RegisterSignal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
+	register_signal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
 	AddElement(/datum/element/knockback, 7, FALSE, TRUE)
 	AddElement(/datum/element/lifesteal, 50)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
@@ -234,7 +234,7 @@ Difficulty: Extremely Hard
 		return
 	forceMove(user)
 	to_chat(user, span_notice("You feel a bit safer... but a demonic presence lurks in the back of your head..."))
-	RegisterSignal(user, COMSIG_LIVING_DEATH, .proc/resurrect)
+	register_signal(user, COMSIG_LIVING_DEATH, .proc/resurrect)
 
 /// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
@@ -266,7 +266,7 @@ Difficulty: Extremely Hard
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
+	register_signal(src, COMSIG_SHOES_STEP_ACTION, .proc/on_step)
 
 /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/equipped(mob/user, slot)
 	. = ..()
@@ -342,7 +342,7 @@ Difficulty: Extremely Hard
 	icon_state = "frozen"
 
 /datum/status_effect/ice_block_talisman/on_apply()
-	RegisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/owner_moved)
+	register_signal(owner, COMSIG_MOVABLE_PRE_MOVE, .proc/owner_moved)
 	if(!owner.stat)
 		to_chat(owner, span_userdanger("You become frozen in a cube!"))
 	cube = icon('icons/effects/freeze.dmi', "ice_cube")
@@ -360,7 +360,7 @@ Difficulty: Extremely Hard
 	if(!owner.stat)
 		to_chat(owner, span_notice("The cube melts!"))
 	owner.cut_overlay(cube)
-	UnregisterSignal(owner, COMSIG_MOVABLE_PRE_MOVE)
+	unregister_signal(owner, COMSIG_MOVABLE_PRE_MOVE)
 
 /obj/item/ice_energy_crystal
 	name = "ice energy crystal"

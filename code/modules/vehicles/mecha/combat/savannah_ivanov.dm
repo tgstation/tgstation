@@ -266,8 +266,8 @@
 	chassis.balloon_alert(owner, "missile mode on (click to target)")
 	aiming_missile = TRUE
 	rockets_left = 3
-	RegisterSignal(chassis, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
-	RegisterSignal(chassis, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
+	register_signal(chassis, COMSIG_MECHA_MELEE_CLICK, .proc/on_melee_click)
+	register_signal(chassis, COMSIG_MECHA_EQUIPMENT_CLICK, .proc/on_equipment_click)
 	owner.client.mouse_override_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi'
 	owner.update_mouse_pointer()
 	owner.overlay_fullscreen("ivanov", /atom/movable/screen/fullscreen/ivanov_display, 1)
@@ -282,7 +282,7 @@
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/end_missile_targeting()
 	aiming_missile = FALSE
 	rockets_left = 0
-	UnregisterSignal(chassis, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
+	unregister_signal(chassis, list(COMSIG_MECHA_MELEE_CLICK, COMSIG_MECHA_EQUIPMENT_CLICK))
 	owner.client.mouse_override_icon = null
 	owner.update_mouse_pointer()
 	owner.clear_fullscreen("ivanov")
@@ -347,7 +347,7 @@
 		return INITIALIZE_HINT_QDEL
 	src.mecha = mecha
 	animate(src, alpha = 255, TOTAL_SKYFALL_LEAP_TIME/2, easing = CIRCULAR_EASING|EASE_OUT)
-	RegisterSignal(mecha, COMSIG_MOVABLE_MOVED, .proc/follow)
+	register_signal(mecha, COMSIG_MOVABLE_MOVED, .proc/follow)
 	QDEL_IN(src, TOTAL_SKYFALL_LEAP_TIME) //when the animations land
 
 /obj/effect/skyfall_landingzone/Destroy(force)

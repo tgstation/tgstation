@@ -9,7 +9,7 @@
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_target_move)
+	register_signal(target, COMSIG_MOVABLE_MOVED, .proc/on_target_move)
 	var/atom/movable/movable_target = target
 	if(!isturf(movable_target.loc))
 		return
@@ -19,7 +19,7 @@
 
 /datum/element/light_blocking/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_MOVABLE_MOVED))
+	unregister_signal(target, list(COMSIG_MOVABLE_MOVED))
 	var/atom/movable/movable_target = target
 	if(!isturf(movable_target.loc))
 		return

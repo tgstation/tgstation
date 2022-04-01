@@ -6,7 +6,7 @@
 /obj/effect/proc_holder/spell/aimed/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
 	AddComponent(/datum/component/sdql_executor, giver)
-	RegisterSignal(src, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
+	register_signal(src, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
 
 /obj/effect/proc_holder/spell/aimed/sdql/proc/on_projectile_hit(source, firer, target)
 	SIGNAL_HANDLER
@@ -137,7 +137,7 @@
 		for(var/V in hand_var_overrides)
 			if(attached_hand.vars[V])
 				attached_hand.vv_edit_var(V, hand_var_overrides[V])
-		RegisterSignal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_touch_attack)
+		register_signal(attached_hand, COMSIG_ITEM_AFTERATTACK, .proc/on_touch_attack)
 		user.update_inv_hands()
 
 /obj/effect/proc_holder/spell/targeted/touch/sdql/proc/on_touch_attack(source, target, user)

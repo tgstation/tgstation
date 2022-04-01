@@ -35,7 +35,7 @@
 	. = ..()
 
 	if(hide)
-		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+		register_signal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
 
 // Iconnery
 

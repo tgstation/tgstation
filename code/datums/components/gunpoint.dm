@@ -33,9 +33,9 @@
 	var/mob/living/shooter = parent
 	target = targ
 	weapon = wep
-	RegisterSignal(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
+	register_signal(targ, list(COMSIG_MOB_ATTACK_HAND, COMSIG_MOB_ITEM_ATTACK, COMSIG_MOVABLE_MOVED, COMSIG_MOB_FIRED_GUN), .proc/trigger_reaction)
 
-	RegisterSignal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
+	register_signal(weapon, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_EQUIPPED), .proc/cancel)
 
 	shooter.visible_message(span_danger("[shooter] aims [weapon] point blank at [target]!"), \
 		span_danger("You aim [weapon] point blank at [target]!"), ignored_mobs = target)
@@ -63,16 +63,16 @@
 	return ..()
 
 /datum/component/gunpoint/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
-	RegisterSignal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
-	RegisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/check_deescalate)
+	register_signal(parent, COMSIG_MOB_APPLY_DAMAGE, .proc/flinch)
+	register_signal(parent, COMSIG_MOB_ATTACK_HAND, .proc/check_shove)
+	register_signal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP), .proc/check_bump)
 
 /datum/component/gunpoint/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
-	UnregisterSignal(parent, COMSIG_MOB_ATTACK_HAND)
-	UnregisterSignal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
+	unregister_signal(parent, COMSIG_MOVABLE_MOVED)
+	unregister_signal(parent, COMSIG_MOB_APPLY_DAMAGE)
+	unregister_signal(parent, COMSIG_MOB_ATTACK_HAND)
+	unregister_signal(parent, list(COMSIG_LIVING_START_PULL, COMSIG_MOVABLE_BUMP))
 
 ///If the shooter bumps the target, cancel the holdup to avoid cheesing and forcing the charged shot
 /datum/component/gunpoint/proc/check_bump(atom/B, atom/A)

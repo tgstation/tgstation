@@ -18,20 +18,20 @@
 /datum/component/jousting/Initialize()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/on_drop)
+	register_signal(parent, COMSIG_ITEM_ATTACK, .proc/on_attack)
 
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/mob_move, TRUE)
+	register_signal(user, COMSIG_MOVABLE_MOVED, .proc/mob_move, TRUE)
 	current_holder = user
 
 /datum/component/jousting/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	unregister_signal(user, COMSIG_MOVABLE_MOVED)
 	current_holder = null
 	current_direction = NONE
 	current_tile_charge = 0

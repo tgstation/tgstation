@@ -68,7 +68,7 @@
 			return
 		else if(!grilled_item && user.transferItemToLoc(I, src))
 			grilled_item = I
-			RegisterSignal(grilled_item, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
+			register_signal(grilled_item, COMSIG_GRILL_COMPLETED, .proc/GrillCompleted)
 			ADD_TRAIT(grilled_item, TRAIT_FOOD_GRILLED, "boomers")
 			to_chat(user, span_notice("You put the [grilled_item] on [src]."))
 			update_appearance()
@@ -151,7 +151,7 @@
 			grilled_item.desc = "A [grilled_item.name]. Reminds you of your wife, wait, no, it's prettier!"
 			grilled_item.foodtype |= FRIED
 	grill_time = 0
-	UnregisterSignal(grilled_item, COMSIG_GRILL_COMPLETED)
+	unregister_signal(grilled_item, COMSIG_GRILL_COMPLETED)
 	grill_loop.stop()
 
 ///Called when a food is transformed by the grillable component

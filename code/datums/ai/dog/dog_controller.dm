@@ -27,11 +27,11 @@
 	if(!isliving(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 
-	RegisterSignal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
-	RegisterSignal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
-	RegisterSignal(new_pawn, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
-	RegisterSignal(SSdcs, COMSIG_GLOB_CARBON_THROW_THING, .proc/listened_throw)
+	register_signal(new_pawn, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	register_signal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
+	register_signal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
+	register_signal(new_pawn, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING), .proc/on_death)
+	register_signal(SSdcs, COMSIG_GLOB_CARBON_THROW_THING, .proc/listened_throw)
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/UnpossessPawn(destroy)
@@ -40,7 +40,7 @@
 		pawn.visible_message(span_danger("[pawn] drops [carried_item]"))
 		carried_item.forceMove(pawn.drop_location())
 		blackboard[BB_SIMPLE_CARRY_ITEM] = null
-	UnregisterSignal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_LIVING_DEATH, COMSIG_GLOB_CARBON_THROW_THING, COMSIG_PARENT_QDELETING))
+	unregister_signal(pawn, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_EXAMINE, COMSIG_CLICK_ALT, COMSIG_LIVING_DEATH, COMSIG_GLOB_CARBON_THROW_THING, COMSIG_PARENT_QDELETING))
 	return ..() //Run parent at end
 
 /datum/ai_controller/dog/able_to_run()
@@ -72,13 +72,13 @@
 	if(blackboard[BB_FETCH_IGNORE_LIST][WEAKREF(thrown_thing)])
 		return
 
-	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, .proc/listen_throw_land)
+	register_signal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, .proc/listen_throw_land)
 
 /// A throw we were listening to has finished, see if it's in range for us to try grabbing it
 /datum/ai_controller/dog/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwing_datum)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(thrown_thing, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_THROW_LANDED))
+	unregister_signal(thrown_thing, list(COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_THROW_LANDED))
 	if(!istype(thrown_thing) || !isturf(thrown_thing.loc) || !can_see(pawn, thrown_thing, length=AI_DOG_VISION_RANGE))
 		return
 
@@ -119,14 +119,14 @@
 	if(in_range(pawn, new_friend))
 		new_friend.visible_message("<b>[pawn]</b> licks at [new_friend] in a friendly manner!", span_notice("[pawn] licks at you in a friendly manner!"))
 	friends[friend_ref] = TRUE
-	RegisterSignal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
-	RegisterSignal(new_friend, COMSIG_MOB_SAY, .proc/check_verbal_command)
+	register_signal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
+	register_signal(new_friend, COMSIG_MOB_SAY, .proc/check_verbal_command)
 
 /// Someone is being mean to us, take them off our friends (add actual enemies behavior later)
 /datum/ai_controller/dog/proc/unfriend(mob/living/ex_friend)
 	var/list/friends = blackboard[BB_DOG_FRIENDS]
 	friends -= WEAKREF(ex_friend)
-	UnregisterSignal(ex_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
+	unregister_signal(ex_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
 
 /// Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend
 /datum/ai_controller/dog/proc/on_examined(datum/source, mob/user, list/examine_text)

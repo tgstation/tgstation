@@ -40,8 +40,8 @@
 /// Returns the created loop
 /obj/effect/particle_effect/water/extinguisher/proc/move_at(atom/target, delay, lifetime)
 	var/datum/move_loop/loop = SSmove_manager.move_towards_legacy(src, target, delay, timeout = delay * lifetime, flags = MOVEMENT_LOOP_START_FAST, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_forcemove)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/movement_stopped)
+	register_signal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_forcemove)
+	register_signal(loop, COMSIG_PARENT_QDELETING, .proc/movement_stopped)
 	return loop
 
 /obj/effect/particle_effect/water/extinguisher/proc/post_forcemove(datum/move_loop/source, success)

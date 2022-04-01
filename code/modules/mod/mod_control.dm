@@ -140,8 +140,8 @@
 	for(var/obj/item/mod/module/module as anything in initial_modules)
 		module = new module(src)
 		install(module)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
-	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, .proc/on_potion)
+	register_signal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	register_signal(src, COMSIG_SPEED_POTION_APPLIED, .proc/on_potion)
 	movedelay = CONFIG_GET(number/movedelay/run_delay)
 
 /obj/item/mod/control/Destroy()
@@ -432,8 +432,8 @@
 /obj/item/mod/control/proc/set_wearer(mob/user)
 	wearer = user
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_SET, wearer)
-	RegisterSignal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
-	RegisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_unequip)
+	register_signal(wearer, COMSIG_ATOM_EXITED, .proc/on_exit)
+	register_signal(src, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_unequip)
 	update_charge_alert()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_equip()
@@ -441,8 +441,8 @@
 /obj/item/mod/control/proc/unset_wearer()
 	for(var/obj/item/mod/module/module as anything in modules)
 		module.on_unequip()
-	UnregisterSignal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
-	UnregisterSignal(src, COMSIG_ITEM_PRE_UNEQUIP)
+	unregister_signal(wearer, list(COMSIG_ATOM_EXITED, COMSIG_PROCESS_BORGCHARGER_OCCUPANT))
+	unregister_signal(src, COMSIG_ITEM_PRE_UNEQUIP)
 	wearer.clear_alert(ALERT_MODSUIT_CHARGE)
 	SEND_SIGNAL(src, COMSIG_MOD_WEARER_UNSET, wearer)
 	wearer = null

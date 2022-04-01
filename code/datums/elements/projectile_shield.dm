@@ -4,11 +4,11 @@
 	if(!ismob(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
+	register_signal(target, COMSIG_ATOM_BULLET_ACT, .proc/on_bullet_act)
 
 /datum/element/projectile_shield/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, COMSIG_ATOM_BULLET_ACT)
+	unregister_signal(target, COMSIG_ATOM_BULLET_ACT)
 
 /datum/element/projectile_shield/proc/on_bullet_act(datum/source, obj/projectile/proj)
 	SIGNAL_HANDLER

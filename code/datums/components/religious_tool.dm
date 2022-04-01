@@ -29,11 +29,11 @@
 		catalyst_type = override_catalyst_type
 
 /datum/component/religious_tool/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/AttemptActions)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY,.proc/AttemptActions)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/religious_tool/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
+	unregister_signal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /**
  * Sets the easy access variable to the global if it exists.

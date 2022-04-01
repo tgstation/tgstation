@@ -12,11 +12,11 @@ See _element.dm for detailed explanations
 /datum/element/myelement/Attach(datum/target)
 	if(!ismovable(target))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, myproc)
+	register_signal(target, COMSIG_MOVABLE_MOVED, myproc)
 	to_chat(target, "Hey, you're in your element.")
 
 /datum/element/myelement/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	unregister_signal(source, COMSIG_MOVABLE_MOVED)
 	to_chat(source, "You feel way out of your element.")
 
 /datum/element/myelement/proc/myproc(datum/source)

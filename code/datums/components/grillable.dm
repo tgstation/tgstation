@@ -26,8 +26,8 @@
 	src.positive_result = positive_result
 	src.use_large_steam_sprite = use_large_steam_sprite
 
-	RegisterSignal(parent, COMSIG_ITEM_GRILLED, .proc/OnGrill)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	register_signal(parent, COMSIG_ITEM_GRILLED, .proc/OnGrill)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 // Inherit the new values passed to the component
 /datum/component/grillable/InheritComponent(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)
@@ -58,8 +58,8 @@
 ///Ran when an object starts grilling on something
 /datum/component/grillable/proc/StartGrilling(atom/grill_source)
 	currently_grilling = TRUE
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/OnMoved)
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/AddGrilledItemOverlay)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/OnMoved)
+	register_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/AddGrilledItemOverlay)
 
 	var/atom/A = parent
 	A.update_appearance()
@@ -76,7 +76,7 @@
 		currently_grilling = FALSE
 		grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
 		grilled_result.pixel_x = original_object.pixel_x
-		grilled_result.pixel_y = original_object.pixel_y	
+		grilled_result.pixel_y = original_object.pixel_y
 		qdel(parent)
 		return
 
@@ -88,7 +88,7 @@
 	grilled_result.pixel_x = original_object.pixel_x
 	grilled_result.pixel_y = original_object.pixel_y
 
-	
+
 	grill_source.visible_message("<span class='[positive_result ? "notice" : "warning"]'>[parent] turns into \a [grilled_result]!</span>")
 	SEND_SIGNAL(parent, COMSIG_GRILL_COMPLETED, grilled_result)
 	currently_grilling = FALSE
@@ -115,8 +115,8 @@
 /datum/component/grillable/proc/OnMoved(atom/A, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	currently_grilling = FALSE
-	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+	unregister_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+	unregister_signal(parent, COMSIG_MOVABLE_MOVED)
 	A.update_appearance()
 
 /datum/component/grillable/proc/AddGrilledItemOverlay(datum/source, list/overlays)

@@ -23,10 +23,10 @@
 		. = COMPONENT_OVERRIDE_POWER_USAGE
 
 /obj/item/mod/module/circuit/on_install()
-	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
+	register_signal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, .proc/override_power_usage)
 
 /obj/item/mod/module/circuit/on_uninstall()
-	UnregisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
+	unregister_signal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/mod/module/circuit/on_use()
 	. = ..()
@@ -107,10 +107,10 @@
 	. = ..()
 	if(istype(shell, /obj/item/mod/module))
 		attached_module = shell
-	RegisterSignal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	register_signal(attached_module, COMSIG_MOVABLE_MOVED, .proc/on_move)
 
 /obj/item/circuit_component/mod_adapter_core/unregister_shell(atom/movable/shell)
-	UnregisterSignal(attached_module, COMSIG_MOVABLE_MOVED)
+	unregister_signal(attached_module, COMSIG_MOVABLE_MOVED)
 	attached_module = null
 	return ..()
 
@@ -129,11 +129,11 @@
 /obj/item/circuit_component/mod_adapter_core/proc/on_move(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	if(istype(source.loc, /obj/item/mod/control))
-		RegisterSignal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
-		RegisterSignal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
+		register_signal(source.loc, COMSIG_MOD_MODULE_SELECTED, .proc/on_module_select)
+		register_signal(source.loc, COMSIG_ITEM_EQUIPPED, .proc/equip_check)
 		equip_check()
 	else if(istype(old_loc, /obj/item/mod/control))
-		UnregisterSignal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
+		unregister_signal(old_loc, list(COMSIG_MOD_MODULE_SELECTED, COMSIG_ITEM_EQUIPPED))
 		selected_module.set_output(null)
 		wearer.set_output(null)
 

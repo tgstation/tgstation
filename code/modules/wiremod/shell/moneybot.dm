@@ -103,20 +103,20 @@
 	if(istype(shell, /obj/structure/money_bot))
 		attached_bot = shell
 		total_money.set_output(attached_bot.stored_money)
-		RegisterSignal(shell, COMSIG_PARENT_ATTACKBY, .proc/handle_money_insert)
-		RegisterSignal(shell, COMSIG_MONEYBOT_ADD_MONEY, .proc/handle_money_update)
-		RegisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED, .proc/on_set_locked)
+		register_signal(shell, COMSIG_PARENT_ATTACKBY, .proc/handle_money_insert)
+		register_signal(shell, COMSIG_MONEYBOT_ADD_MONEY, .proc/handle_money_update)
+		register_signal(parent, COMSIG_CIRCUIT_SET_LOCKED, .proc/on_set_locked)
 		attached_bot.locked = parent.locked
 
 /obj/item/circuit_component/money_bot/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, list(
+	unregister_signal(shell, list(
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_MONEYBOT_ADD_MONEY,
 	))
 	total_money.set_output(null)
 	if(attached_bot)
 		attached_bot.locked = FALSE
-		UnregisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED)
+		unregister_signal(parent, COMSIG_CIRCUIT_SET_LOCKED)
 	attached_bot = null
 	return ..()
 

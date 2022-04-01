@@ -55,7 +55,7 @@
 	to_chat(user, span_notice("You remove [paper] from [src]."))
 	var/obj/item/paper/toppaper = toppaper_ref?.resolve()
 	if(paper == toppaper)
-		UnregisterSignal(toppaper, COMSIG_ATOM_UPDATED_ICON)
+		unregister_signal(toppaper, COMSIG_ATOM_UPDATED_ICON)
 		toppaper_ref = null
 		var/obj/item/paper/newtop = locate(/obj/item/paper) in src
 		if(newtop && (newtop != paper))
@@ -103,8 +103,8 @@
 		if(!user.transferItemToLoc(weapon, src))
 			return
 		if(toppaper)
-			UnregisterSignal(toppaper, COMSIG_ATOM_UPDATED_ICON)
-		RegisterSignal(weapon, COMSIG_ATOM_UPDATED_ICON, .proc/on_top_paper_change)
+			unregister_signal(toppaper, COMSIG_ATOM_UPDATED_ICON)
+		register_signal(weapon, COMSIG_ATOM_UPDATED_ICON, .proc/on_top_paper_change)
 		toppaper_ref = WEAKREF(weapon)
 		to_chat(user, span_notice("You clip [weapon] onto [src]."))
 	else if(istype(weapon, /obj/item/pen) && !pen)

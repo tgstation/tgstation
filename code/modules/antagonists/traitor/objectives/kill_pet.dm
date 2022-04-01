@@ -83,7 +83,7 @@
 
 /datum/traitor_objective/kill_pet/ungenerate_objective()
 	if(target_pet)
-		UnregisterSignal(target_pet, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+		unregister_signal(target_pet, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	target_pet = null
 
 /datum/traitor_objective/kill_pet/is_duplicate(datum/traitor_objective/kill_pet/objective_to_compare)

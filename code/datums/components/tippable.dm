@@ -54,13 +54,13 @@
 	src.roleplay_callback = roleplay_callback
 
 /datum/component/tippable/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/interact_with_tippable)
+	register_signal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/interact_with_tippable)
 	if (roleplay_friendly)
-		RegisterSignal(parent, COMSIG_MOB_EMOTE, .proc/accept_roleplay)
+		register_signal(parent, COMSIG_MOB_EMOTE, .proc/accept_roleplay)
 
 
 /datum/component/tippable/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
+	unregister_signal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
 
 /datum/component/tippable/Destroy()
 	if(pre_tipped_callback)

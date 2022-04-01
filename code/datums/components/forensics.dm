@@ -25,10 +25,10 @@
 
 /datum/component/forensics/RegisterWithParent()
 	check_blood()
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
+	register_signal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_act)
 
 /datum/component/forensics/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_COMPONENT_CLEAN_ACT))
+	unregister_signal(parent, list(COMSIG_COMPONENT_CLEAN_ACT))
 
 /datum/component/forensics/PostTransfer()
 	if(!isatom(parent))

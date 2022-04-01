@@ -71,9 +71,9 @@
 
 	affecting[AM] = AM.dir
 	var/datum/move_loop/loop = SSmove_manager.move(AM, direction, speed, tiles ? tiles * speed : INFINITY)
-	RegisterSignal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
-	RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
-	RegisterSignal(loop, COMSIG_PARENT_QDELETING, .proc/set_to_normal)
+	register_signal(loop, COMSIG_MOVELOOP_PREPROCESS_CHECK, .proc/pre_move)
+	register_signal(loop, COMSIG_MOVELOOP_POSTPROCESS, .proc/post_move)
+	register_signal(loop, COMSIG_PARENT_QDELETING, .proc/set_to_normal)
 
 /obj/effect/step_trigger/thrower/proc/pre_move(datum/move_loop/source)
 	SIGNAL_HANDLER

@@ -178,7 +178,7 @@ GLOBAL_LIST_EMPTY(gravity_generators) // We will keep track of this by adding ne
 		part.main_part = src
 		parts += part
 		part.update_appearance()
-		part.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/gravity_generator/part/proc/on_update_icon)
+		part.register_signal(src, COMSIG_ATOM_UPDATED_ICON, /obj/machinery/gravity_generator/part/proc/on_update_icon)
 
 /obj/machinery/gravity_generator/main/proc/connected_parts()
 	return parts.len == 8

@@ -65,7 +65,7 @@
 
 /obj/structure/pitgrate/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, .proc/OnButtonPressed)
+	register_signal(SSdcs,COMSIG_GLOB_BUTTON_PRESSED, .proc/OnButtonPressed)
 	if(hidden)
 		update_openspace()
 

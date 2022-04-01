@@ -40,7 +40,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goose/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
+	register_signal(src, COMSIG_MOVABLE_MOVED, .proc/goosement)
 
 /mob/living/simple_animal/hostile/retaliate/goose/proc/goosement(atom/movable/AM, OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
@@ -105,7 +105,7 @@
 		deadchat_plays()
 
 /mob/living/simple_animal/hostile/retaliate/goose/vomit/Destroy()
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	unregister_signal(src, COMSIG_MOVABLE_MOVED)
 	QDEL_NULL(goosevomit)
 	return ..()
 

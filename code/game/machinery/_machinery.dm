@@ -194,9 +194,9 @@
 
 	var/area/our_area = get_area(src)
 	if(our_area)
-		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
-	RegisterSignal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
-	RegisterSignal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
+		register_signal(our_area, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	register_signal(src, COMSIG_ENTER_AREA, .proc/on_enter_area)
+	register_signal(src, COMSIG_EXIT_AREA, .proc/on_exit_area)
 
 /**
  * proc to call when the machine stops requiring power after a duration of requiring power
@@ -206,22 +206,22 @@
 /obj/machinery/proc/remove_area_power_relationship()
 	var/area/our_area = get_area(src)
 	if(our_area)
-		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
+		unregister_signal(our_area, COMSIG_AREA_POWER_CHANGE)
 
 	lose_area_sensitivity(INNATE_TRAIT)
-	UnregisterSignal(src, COMSIG_ENTER_AREA)
-	UnregisterSignal(src, COMSIG_EXIT_AREA)
+	unregister_signal(src, COMSIG_ENTER_AREA)
+	unregister_signal(src, COMSIG_EXIT_AREA)
 
 /obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
 	update_current_power_usage()
 	power_change()
-	RegisterSignal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
+	register_signal(area_to_register, COMSIG_AREA_POWER_CHANGE, .proc/power_change)
 
 /obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
 	unset_static_power()
-	UnregisterSignal(area_to_unregister, COMSIG_AREA_POWER_CHANGE)
+	unregister_signal(area_to_unregister, COMSIG_AREA_POWER_CHANGE)
 
 /obj/machinery/proc/set_occupant(atom/movable/new_occupant)
 	SHOULD_CALL_PARENT(TRUE)

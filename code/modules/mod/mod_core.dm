@@ -82,17 +82,17 @@
 	. = ..()
 	if(cell)
 		install_cell(cell)
-	RegisterSignal(mod, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(mod, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
-	RegisterSignal(mod, COMSIG_MOD_WEARER_SET, .proc/on_wearer_set)
+	register_signal(mod, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(mod, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	register_signal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	register_signal(mod, COMSIG_MOD_WEARER_SET, .proc/on_wearer_set)
 	if(mod.wearer)
 		on_wearer_set(mod, mod.wearer)
 
 /obj/item/mod/core/standard/uninstall()
 	if(!QDELETED(cell))
 		cell.forceMove(drop_location())
-	UnregisterSignal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY, COMSIG_MOD_WEARER_SET))
+	unregister_signal(mod, list(COMSIG_PARENT_EXAMINE, COMSIG_ATOM_ATTACK_HAND, COMSIG_PARENT_ATTACKBY, COMSIG_MOD_WEARER_SET))
 	if(mod.wearer)
 		on_wearer_unset(mod, mod.wearer)
 	return ..()
@@ -141,13 +141,13 @@
 /obj/item/mod/core/standard/proc/install_cell(new_cell)
 	cell = new_cell
 	cell.forceMove(src)
-	RegisterSignal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
+	register_signal(src, COMSIG_ATOM_EXITED, .proc/on_exit)
 
 /obj/item/mod/core/standard/proc/uninstall_cell()
 	if(!cell)
 		return
 	cell = null
-	UnregisterSignal(src, COMSIG_ATOM_EXITED)
+	unregister_signal(src, COMSIG_ATOM_EXITED)
 
 /obj/item/mod/core/standard/proc/on_exit(datum/source, obj/item/stock_parts/cell, direction)
 	SIGNAL_HANDLER
@@ -210,14 +210,14 @@
 /obj/item/mod/core/standard/proc/on_wearer_set(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	RegisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
-	RegisterSignal(mod, COMSIG_MOD_WEARER_UNSET, .proc/on_wearer_unset)
+	register_signal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/on_borg_charge)
+	register_signal(mod, COMSIG_MOD_WEARER_UNSET, .proc/on_wearer_unset)
 
 /obj/item/mod/core/standard/proc/on_wearer_unset(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
-	UnregisterSignal(mod, COMSIG_MOD_WEARER_UNSET)
+	unregister_signal(mod.wearer, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
+	unregister_signal(mod, COMSIG_MOD_WEARER_UNSET)
 
 /obj/item/mod/core/standard/proc/on_borg_charge(datum/source, amount)
 	SIGNAL_HANDLER
@@ -281,10 +281,10 @@
 
 /obj/item/mod/core/plasma/install(obj/item/mod/control/mod_unit)
 	. = ..()
-	RegisterSignal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
+	register_signal(mod, COMSIG_PARENT_ATTACKBY, .proc/on_attackby)
 
 /obj/item/mod/core/plasma/uninstall()
-	UnregisterSignal(mod, COMSIG_PARENT_ATTACKBY)
+	unregister_signal(mod, COMSIG_PARENT_ATTACKBY)
 	return ..()
 
 /obj/item/mod/core/plasma/attackby(obj/item/attacking_item, mob/user, params)

@@ -24,10 +24,10 @@
 		return ELEMENT_INCOMPATIBLE
 	src.goal_area_type = goal_area_type
 	src.payment = payment
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
-	RegisterSignal(target, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
-	RegisterSignal(target, COMSIG_CLOSET_POST_OPEN, .proc/on_post_open)
+	register_signal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(target, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
+	register_signal(target, COMSIG_CLOSET_POST_OPEN, .proc/on_post_open)
 	ADD_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
 	//registers pre_open when appropriate
 	area_check(target)
@@ -35,7 +35,7 @@
 /datum/element/deliver_first/Detach(datum/target)
 	. = ..()
 	REMOVE_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, src)
-	UnregisterSignal(target, list(
+	unregister_signal(target, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_EMAG_ACT,
@@ -53,10 +53,10 @@
 /datum/element/deliver_first/proc/area_check(obj/structure/closet/target)
 	var/area/target_area = get_area(target)
 	if(target_area.type == goal_area_type)
-		UnregisterSignal(target, COMSIG_CLOSET_PRE_OPEN)
+		unregister_signal(target, COMSIG_CLOSET_PRE_OPEN)
 		return TRUE
 	else
-		RegisterSignal(target, COMSIG_CLOSET_PRE_OPEN, .proc/on_pre_open, override = TRUE) //very purposefully overriding
+		register_signal(target, COMSIG_CLOSET_PRE_OPEN, .proc/on_pre_open, override = TRUE) //very purposefully overriding
 		return FALSE
 
 /datum/element/deliver_first/proc/on_moved(obj/structure/closet/target, atom/oldloc, direction)

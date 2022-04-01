@@ -861,8 +861,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/highfrequencyblade/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/highfrequencyblade/ComponentInitialize()

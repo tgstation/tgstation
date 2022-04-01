@@ -41,7 +41,7 @@
 		var/mob/living/carbon/human/H = M
 		if(is_clown_job(H.mind?.assigned_role)) //Ensures only clowns can drive the car. (Including more at once)
 			add_control_flags(H, VEHICLE_CONTROL_DRIVE)
-			RegisterSignal(H, COMSIG_MOB_CLICKON, .proc/fire_cannon_at)
+			register_signal(H, COMSIG_MOB_CLICKON, .proc/fire_cannon_at)
 			M.log_message("has entered [src] as a possible driver", LOG_ATTACK)
 			return
 	add_control_flags(M, VEHICLE_CONTROL_KIDNAPPED)
@@ -76,7 +76,7 @@
 
 /obj/vehicle/sealed/car/clowncar/mob_exit(mob/M, silent = FALSE, randomstep = FALSE)
 	. = ..()
-	UnregisterSignal(M, COMSIG_MOB_CLICKON)
+	unregister_signal(M, COMSIG_MOB_CLICKON)
 
 /obj/vehicle/sealed/car/clowncar/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
@@ -173,7 +173,7 @@
 			smoke.start()
 		if(5)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car starts dropping an oil trail."))
-			RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/cover_in_oil)
+			register_signal(src, COMSIG_MOVABLE_MOVED, .proc/cover_in_oil)
 			addtimer(CALLBACK(src, .proc/stop_dropping_oil), 3 SECONDS)
 		if(6)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car lets out a comedic toot."))
@@ -195,7 +195,7 @@
 
 ///Stops dropping oil after the time has run up
 /obj/vehicle/sealed/car/clowncar/proc/stop_dropping_oil()
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	unregister_signal(src, COMSIG_MOVABLE_MOVED)
 
 ///Toggles the on and off state of the clown cannon that shoots random kidnapped people
 /obj/vehicle/sealed/car/clowncar/proc/toggle_cannon(mob/user)

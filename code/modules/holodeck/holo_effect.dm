@@ -34,7 +34,7 @@
 	deck = new(loc)
 	safety(!(HC.obj_flags & EMAGGED))
 	deck.holo = HC
-	RegisterSignal(deck, COMSIG_PARENT_QDELETING, .proc/handle_card_delete)
+	register_signal(deck, COMSIG_PARENT_QDELETING, .proc/handle_card_delete)
 	return deck
 
 /obj/effect/holodeck_effect/cards/proc/handle_card_delete(datum/source)
@@ -92,7 +92,7 @@
 	// these vars are not really standardized but all would theoretically create stuff on death
 	for(var/v in list("butcher_results","corpse","weapon1","weapon2","blood_volume") & our_mob.vars)
 		our_mob.vars[v] = null
-	RegisterSignal(our_mob, COMSIG_PARENT_QDELETING, .proc/handle_mob_delete)
+	register_signal(our_mob, COMSIG_PARENT_QDELETING, .proc/handle_mob_delete)
 	return our_mob
 
 /obj/effect/holodeck_effect/mobspawner/deactivate(obj/machinery/computer/holodeck/HC)

@@ -100,11 +100,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	. = ..()
 	if(istype(parent, /obj/machinery/light_switch))
 		attached_switch = parent
-		RegisterSignal(parent, COMSIG_LIGHT_SWITCH_SET, .proc/on_light_switch_set)
+		register_signal(parent, COMSIG_LIGHT_SWITCH_SET, .proc/on_light_switch_set)
 
 /obj/item/circuit_component/light_switch/unregister_usb_parent(atom/movable/parent)
 	attached_switch = null
-	UnregisterSignal(parent, COMSIG_LIGHT_SWITCH_SET)
+	unregister_signal(parent, COMSIG_LIGHT_SWITCH_SET)
 	return ..()
 
 /obj/item/circuit_component/light_switch/proc/on_light_switch_set(datum/source, status)

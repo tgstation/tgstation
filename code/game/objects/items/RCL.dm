@@ -25,8 +25,8 @@
 
 /obj/item/rcl/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
-	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
 
 /obj/item/rcl/ComponentInitialize()
 	. = ..()
@@ -154,7 +154,7 @@
 
 /obj/item/rcl/dropped(mob/wearer)
 	..()
-	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
+	unregister_signal(wearer, COMSIG_MOVABLE_MOVED)
 	listeningTo = null
 	last = null
 	QDEL_NULL(wiring_gui_menu)
@@ -173,8 +173,8 @@
 	if(listeningTo == to_hook)
 		return
 	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
-	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
+		unregister_signal(listeningTo, COMSIG_MOVABLE_MOVED)
+	register_signal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
 	listeningTo = to_hook
 
 /obj/item/rcl/proc/trigger(mob/user)

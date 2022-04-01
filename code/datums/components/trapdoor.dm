@@ -41,17 +41,17 @@
 
 /datum/component/trapdoor/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_TURF_CHANGE, .proc/turf_changed_pre)
+	register_signal(parent, COMSIG_TURF_CHANGE, .proc/turf_changed_pre)
 	if(!src.assembly)
-		RegisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
+		register_signal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK, .proc/on_link_requested)
 	else
-		RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
+		register_signal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
-	UnregisterSignal(assembly, COMSIG_ASSEMBLY_PULSED)
-	UnregisterSignal(parent, COMSIG_TURF_CHANGE)
+	unregister_signal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
+	unregister_signal(assembly, COMSIG_ASSEMBLY_PULSED)
+	unregister_signal(parent, COMSIG_TURF_CHANGE)
 
 /datum/component/trapdoor/proc/decal_detached(datum/source, description, cleanable, directional, pic)
 	SIGNAL_HANDLER
@@ -80,8 +80,8 @@
 	. = LINKED_UP
 	src.assembly = assembly
 	assembly.linked = TRUE
-	UnregisterSignal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
-	RegisterSignal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
+	unregister_signal(SSdcs, COMSIG_GLOB_TRAPDOOR_LINK)
+	register_signal(assembly, COMSIG_ASSEMBLY_PULSED, .proc/toggle_trapdoor)
 
 ///signal called by our assembly being pulsed
 /datum/component/trapdoor/proc/toggle_trapdoor(datum/source)
@@ -123,7 +123,7 @@
 	var/turf/open/trapdoor_turf = parent
 	///we want to save this turf's decals as they were right before deletion, so this is the point where we begin listening
 	if(assembly)
-		RegisterSignal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
+		register_signal(parent, COMSIG_TURF_DECAL_DETACHED, .proc/decal_detached)
 	playsound(trapdoor_turf, 'sound/machines/trapdoor/trapdoor_open.ogg', 50)
 	trapdoor_turf.visible_message(span_warning("[trapdoor_turf] swings open!"))
 	trapdoor_turf.ChangeTurf(/turf/open/openspace, flags = CHANGETURF_INHERIT_AIR)

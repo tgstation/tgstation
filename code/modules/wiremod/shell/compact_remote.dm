@@ -34,10 +34,10 @@
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/compact_remote/register_shell(atom/movable/shell)
-	RegisterSignal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
+	register_signal(shell, COMSIG_ITEM_ATTACK_SELF, .proc/send_trigger)
 
 /obj/item/circuit_component/compact_remote/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, COMSIG_ITEM_ATTACK_SELF)
+	unregister_signal(shell, COMSIG_ITEM_ATTACK_SELF)
 
 /**
  * Called when the shell item is used in hand.

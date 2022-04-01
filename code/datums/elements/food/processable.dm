@@ -21,12 +21,12 @@
 	src.time_to_process = time_to_process
 	src.result_atom_type = result_atom_type
 
-	RegisterSignal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), .proc/try_process)
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
+	register_signal(target, COMSIG_ATOM_TOOL_ACT(tool_behaviour), .proc/try_process)
+	register_signal(target, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 /datum/element/processable/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_ATOM_TOOL_ACT(tool_behaviour), COMSIG_PARENT_EXAMINE))
+	unregister_signal(target, list(COMSIG_ATOM_TOOL_ACT(tool_behaviour), COMSIG_PARENT_EXAMINE))
 
 /datum/element/processable/proc/try_process(datum/source, mob/living/user, obj/item/I, list/mutable_recipes)
 	SIGNAL_HANDLER

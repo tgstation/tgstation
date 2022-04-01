@@ -83,7 +83,7 @@
 	unfreeze_all()
 	if(channelled)
 		for(var/atom in immune)
-			UnregisterSignal(atom, COMSIG_MOVABLE_MOVED)
+			unregister_signal(atom, COMSIG_MOVABLE_MOVED)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
@@ -95,7 +95,7 @@
 		return FALSE
 	if(immune[A]) //a little special logic but yes immune things don't freeze
 		if(channelled)
-			RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
+			register_signal(A, COMSIG_MOVABLE_MOVED, .proc/atom_broke_channel, override = TRUE)
 		return FALSE
 	if(ismob(A))
 		var/mob/M = A
@@ -123,8 +123,8 @@
 	A.move_resist = INFINITY
 	global_frozen_atoms[A] = src
 	into_the_negative_zone(A)
-	RegisterSignal(A, COMSIG_MOVABLE_PRE_MOVE, .proc/unfreeze_atom)
-	RegisterSignal(A, COMSIG_ITEM_PICKUP, .proc/unfreeze_atom)
+	register_signal(A, COMSIG_MOVABLE_PRE_MOVE, .proc/unfreeze_atom)
+	register_signal(A, COMSIG_ITEM_PICKUP, .proc/unfreeze_atom)
 
 	return TRUE
 
@@ -146,8 +146,8 @@
 	else if(istype(A, /obj/vehicle/sealed/mecha))
 		unfreeze_mecha(A)
 
-	UnregisterSignal(A, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(A, COMSIG_ITEM_PICKUP)
+	unregister_signal(A, COMSIG_MOVABLE_PRE_MOVE)
+	unregister_signal(A, COMSIG_ITEM_PICKUP)
 	escape_the_negative_zone(A)
 	A.move_resist = frozen_things[A]
 	frozen_things -= A

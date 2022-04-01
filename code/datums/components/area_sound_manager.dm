@@ -16,10 +16,10 @@
 	accepted_zs = acceptable_zs
 	change_the_track()
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/react_to_move)
-	RegisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/react_to_z_move)
-	RegisterSignal(parent, change_on, .proc/handle_change)
-	RegisterSignal(parent, remove_on, .proc/handle_removal)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/react_to_move)
+	register_signal(parent, COMSIG_MOVABLE_Z_CHANGED, .proc/react_to_z_move)
+	register_signal(parent, change_on, .proc/handle_change)
+	register_signal(parent, remove_on, .proc/handle_removal)
 
 /datum/component/area_sound_manager/Destroy(force, silent)
 	QDEL_NULL(our_loop)

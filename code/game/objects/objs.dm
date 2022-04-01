@@ -178,7 +178,7 @@
 	SIGNAL_HANDLER
 	if(!machine)
 		return
-	UnregisterSignal(machine, COMSIG_PARENT_QDELETING)
+	unregister_signal(machine, COMSIG_PARENT_QDELETING)
 	machine.on_unset_machine(src)
 	machine = null
 
@@ -190,7 +190,7 @@
 	if(machine)
 		unset_machine()
 	machine = O
-	RegisterSignal(O, COMSIG_PARENT_QDELETING, .proc/unset_machine)
+	register_signal(O, COMSIG_PARENT_QDELETING, .proc/unset_machine)
 	if(istype(O))
 		O.obj_flags |= IN_USE
 

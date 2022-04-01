@@ -23,8 +23,8 @@
 	if(!beauty_counter[target] && ismovable(target))
 		var/atom/movable/mov_target = target
 		mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
-		RegisterSignal(mov_target, COMSIG_ENTER_AREA, .proc/enter_area)
-		RegisterSignal(mov_target, COMSIG_EXIT_AREA, .proc/exit_area)
+		register_signal(mov_target, COMSIG_ENTER_AREA, .proc/enter_area)
+		register_signal(mov_target, COMSIG_EXIT_AREA, .proc/exit_area)
 
 	beauty_counter[target]++
 
@@ -55,7 +55,7 @@
 	var/area/current_area = get_area(source)
 	if(QDELETED(source))
 		. = ..()
-		UnregisterSignal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
+		unregister_signal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
 		if(current_area)
 			exit_area(source, current_area)
 		beauty_counter -= source
@@ -69,7 +69,7 @@
 			current_area.update_beauty()
 		if(!beauty_counter[source])
 			. = ..()
-			UnregisterSignal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
+			unregister_signal(source, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
 			beauty_counter -= source
 			var/atom/movable/movable_source = source
 			if(istype(movable_source))

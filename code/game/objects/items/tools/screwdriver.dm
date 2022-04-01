@@ -104,7 +104,7 @@
 		hitsound_on = hitsound, \
 		w_class_on = w_class, \
 		clumsy_check = FALSE)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	register_signal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].

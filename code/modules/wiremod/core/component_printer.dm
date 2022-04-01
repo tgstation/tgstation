@@ -29,8 +29,8 @@
 
 		current_unlocked_designs[design.build_path] = design.id
 
-	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
-	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
+	register_signal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
+	register_signal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
 
 	materials = AddComponent( \
 		/datum/component/remote_materials, \

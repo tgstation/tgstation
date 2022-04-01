@@ -31,8 +31,8 @@
 /obj/structure/dispenser_bot/proc/add_item(obj/item/to_add)
 	stored_items += to_add
 	to_add.forceMove(src)
-	RegisterSignal(to_add, COMSIG_MOVABLE_MOVED, .proc/handle_stored_item_moved)
-	RegisterSignal(to_add, COMSIG_PARENT_QDELETING, .proc/handle_stored_item_deleted)
+	register_signal(to_add, COMSIG_MOVABLE_MOVED, .proc/handle_stored_item_moved)
+	register_signal(to_add, COMSIG_PARENT_QDELETING, .proc/handle_stored_item_deleted)
 	SEND_SIGNAL(src, COMSIG_DISPENSERBOT_ADD_ITEM, to_add)
 
 /obj/structure/dispenser_bot/proc/handle_stored_item_moved(obj/item/moving_item, atom/location)
@@ -45,7 +45,7 @@
 	remove_item(deleting_item)
 
 /obj/structure/dispenser_bot/proc/remove_item(obj/item/to_remove)
-	UnregisterSignal(to_remove, list(
+	unregister_signal(to_remove, list(
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_PARENT_QDELETING,
 	))
@@ -116,11 +116,11 @@
 
 /obj/item/circuit_component/dispenser_bot/register_shell(atom/movable/shell)
 	. = ..()
-	RegisterSignal(shell, COMSIG_DISPENSERBOT_ADD_ITEM, .proc/on_shell_add_item)
-	RegisterSignal(shell, COMSIG_DISPENSERBOT_REMOVE_ITEM, .proc/on_shell_remove_item)
+	register_signal(shell, COMSIG_DISPENSERBOT_ADD_ITEM, .proc/on_shell_add_item)
+	register_signal(shell, COMSIG_DISPENSERBOT_REMOVE_ITEM, .proc/on_shell_remove_item)
 
 /obj/item/circuit_component/dispenser_bot/unregister_shell(atom/movable/shell)
-	UnregisterSignal(shell, list(
+	unregister_signal(shell, list(
 		COMSIG_DISPENSERBOT_ADD_ITEM,
 		COMSIG_DISPENSERBOT_REMOVE_ITEM,
 	))
@@ -140,7 +140,7 @@
 
 /obj/item/circuit_component/dispenser_bot/proc/remove_vendor_component(obj/item/circuit_component/vendor_component/vendor_component)
 	SIGNAL_HANDLER
-	UnregisterSignal(vendor_component, list(
+	unregister_signal(vendor_component, list(
 		COMSIG_PARENT_QDELETING,
 		COMSIG_CIRCUIT_COMPONENT_REMOVED,
 	))
@@ -157,7 +157,7 @@
 			var/obj/item/circuit_component/vendor_component/vendor_component = new(parent)
 			parent.add_component(vendor_component, user)
 			vendor_components += vendor_component
-			RegisterSignal(vendor_component, list(
+			register_signal(vendor_component, list(
 				COMSIG_PARENT_QDELETING,
 				COMSIG_CIRCUIT_COMPONENT_REMOVED,
 			), .proc/remove_vendor_component)

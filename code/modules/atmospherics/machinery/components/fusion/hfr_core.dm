@@ -171,8 +171,8 @@
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 	investigate_log("has been created.", INVESTIGATE_HYPERTORUS)
-	
-	RegisterSignal(src.loc, COMSIG_ATOM_ENTERED, .proc/on_entered)
+
+	register_signal(src.loc, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 	for(var/atom/movable/movable_object in src.loc)
 		SEND_SIGNAL(movable_object, COMSIG_MOVABLE_SECLUDED_LOCATION)

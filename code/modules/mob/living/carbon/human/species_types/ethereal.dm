@@ -56,9 +56,9 @@
 	r1 = GETREDPART(default_color)
 	g1 = GETGREENPART(default_color)
 	b1 = GETBLUEPART(default_color)
-	RegisterSignal(ethereal, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
-	RegisterSignal(ethereal, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
-	RegisterSignal(ethereal, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
+	register_signal(ethereal, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
+	register_signal(ethereal, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)
+	register_signal(ethereal, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 	ethereal_light = ethereal.mob_light()
 	spec_updatehealth(ethereal)
 	C.set_safe_hunger_level()
@@ -67,9 +67,9 @@
 	ethereal_heart.ethereal_color = default_color
 
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	UnregisterSignal(C, COMSIG_ATOM_EMAG_ACT)
-	UnregisterSignal(C, COMSIG_ATOM_EMP_ACT)
-	UnregisterSignal(C, COMSIG_LIGHT_EATER_ACT)
+	unregister_signal(C, COMSIG_ATOM_EMAG_ACT)
+	unregister_signal(C, COMSIG_ATOM_EMP_ACT)
+	unregister_signal(C, COMSIG_LIGHT_EATER_ACT)
 	QDEL_NULL(ethereal_light)
 	return ..()
 

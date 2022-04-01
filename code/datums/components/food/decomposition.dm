@@ -33,16 +33,16 @@
 		handled = FALSE
 	src.produce_ants = ant_attracting
 
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
-	RegisterSignal(parent, list(
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/handle_movement)
+	register_signal(parent, list(
 		COMSIG_ITEM_PICKUP, //person picks up an item
 		COMSIG_STORAGE_ENTERED), //Object enters a storage object (boxes, etc.)
 		.proc/picked_up)
-	RegisterSignal(parent, list(
+	register_signal(parent, list(
 		COMSIG_ITEM_DROPPED, //Object is dropped anywhere
 		COMSIG_STORAGE_EXITED), //Object exits a storage object (boxes, etc)
 		.proc/dropped)
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 	if(custom_time) // We have a custom decomposition time, set it to that
 		original_time = custom_time
@@ -57,7 +57,7 @@
 
 
 /datum/component/decomposition/UnregisterFromParent()
-	UnregisterSignal(parent, list(
+	unregister_signal(parent, list(
 		COMSIG_ITEM_PICKUP,
 		COMSIG_STORAGE_ENTERED,
 		COMSIG_MOVABLE_MOVED,

@@ -107,10 +107,10 @@
 
 /datum/looping_sound/proc/set_parent(new_parent)
 	if(parent)
-		UnregisterSignal(parent, COMSIG_PARENT_QDELETING)
+		unregister_signal(parent, COMSIG_PARENT_QDELETING)
 	parent = new_parent
 	if(parent)
-		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
+		register_signal(parent, COMSIG_PARENT_QDELETING, .proc/handle_parent_del)
 
 /datum/looping_sound/proc/is_active()
 	return !!timerid

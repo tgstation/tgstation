@@ -36,14 +36,14 @@
 	if(!.)
 		return
 	mod.wearer.research_scanner++
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
+	register_signal(SSdcs, COMSIG_GLOB_EXPLOSION, .proc/sense_explosion)
 
 /obj/item/mod/module/reagent_scanner/advanced/on_deactivation(display_message = TRUE)
 	. = ..()
 	if(!.)
 		return
 	mod.wearer.research_scanner--
-	RegisterSignal(SSdcs, COMSIG_GLOB_EXPLOSION)
+	register_signal(SSdcs, COMSIG_GLOB_EXPLOSION)
 
 /obj/item/mod/module/reagent_scanner/advanced/proc/sense_explosion(datum/source, turf/epicenter,
 	devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)

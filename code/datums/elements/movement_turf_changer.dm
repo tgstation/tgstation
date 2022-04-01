@@ -16,10 +16,10 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.turf_type = turf_type
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
+	register_signal(target, COMSIG_MOVABLE_MOVED, .proc/on_moved)
 
 /datum/element/movement_turf_changer/Detach(datum/target)
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	unregister_signal(target, COMSIG_MOVABLE_MOVED)
 	. = ..()
 
 /datum/element/movement_turf_changer/proc/on_moved(atom/movable/target, atom/origin, direction, forced)

@@ -51,8 +51,8 @@
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = say_mod
 	if (modifies_speech)
-		RegisterSignal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
-	tongue_owner.UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
+		register_signal(tongue_owner, COMSIG_MOB_SAY, .proc/handle_speech)
+	tongue_owner.unregister_signal(tongue_owner, COMSIG_MOB_SAY)
 
 	/* This could be slightly simpler, by making the removal of the
 	* NO_TONGUE_TRAIT conditional on the tongue's `sense_of_taste`, but
@@ -67,8 +67,8 @@
 	..()
 	if(say_mod && tongue_owner.dna && tongue_owner.dna.species)
 		tongue_owner.dna.species.say_mod = initial(tongue_owner.dna.species.say_mod)
-	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
-	tongue_owner.RegisterSignal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
+	unregister_signal(tongue_owner, COMSIG_MOB_SAY)
+	tongue_owner.register_signal(tongue_owner, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, ORGAN_TRAIT)
 	// Carbons by default start with NO_TONGUE_TRAIT caused TRAIT_AGEUSIA
 	ADD_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
@@ -118,10 +118,10 @@
 /datum/action/item_action/organ_action/statue/New(Target)
 	. = ..()
 	statue = new
-	RegisterSignal(statue, COMSIG_PARENT_QDELETING, .proc/statue_destroyed)
+	register_signal(statue, COMSIG_PARENT_QDELETING, .proc/statue_destroyed)
 
 /datum/action/item_action/organ_action/statue/Destroy()
-	UnregisterSignal(statue, COMSIG_PARENT_QDELETING)
+	unregister_signal(statue, COMSIG_PARENT_QDELETING)
 	QDEL_NULL(statue)
 	. = ..()
 
@@ -154,21 +154,21 @@
 		statue.visible_message(span_danger("[statue] becomes animated!"))
 		becoming_statue.forceMove(get_turf(statue))
 		statue.moveToNullspace()
-		UnregisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED)
+		unregister_signal(becoming_statue, COMSIG_MOVABLE_MOVED)
 	else
 		becoming_statue.visible_message(span_notice("[becoming_statue] hardens into a silver statue."), span_notice("You have become a silver statue!"))
 		statue.set_visuals(becoming_statue.appearance)
 		statue.forceMove(get_turf(becoming_statue))
 		becoming_statue.forceMove(statue)
 		statue.update_integrity(becoming_statue.health)
-		RegisterSignal(becoming_statue, COMSIG_MOVABLE_MOVED, .proc/human_left_statue)
+		register_signal(becoming_statue, COMSIG_MOVABLE_MOVED, .proc/human_left_statue)
 
 	//somehow they used an exploit/teleportation to leave statue, lets clean up
 /datum/action/item_action/organ_action/statue/proc/human_left_statue(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
 
 	statue.moveToNullspace()
-	UnregisterSignal(mover, COMSIG_MOVABLE_MOVED)
+	unregister_signal(mover, COMSIG_MOVABLE_MOVED)
 
 /datum/action/item_action/organ_action/statue/proc/statue_destroyed(datum/source)
 	SIGNAL_HANDLER

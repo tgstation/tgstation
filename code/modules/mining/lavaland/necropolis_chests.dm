@@ -15,7 +15,7 @@
 
 /obj/structure/closet/crate/necropolis/tendril/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
+	register_signal(src, COMSIG_PARENT_ATTACKBY, .proc/try_spawn_loot)
 
 /obj/structure/closet/crate/necropolis/tendril/proc/try_spawn_loot(datum/source, obj/item/item, mob/user, params) ///proc that handles key checking and generating loot
 	SIGNAL_HANDLER

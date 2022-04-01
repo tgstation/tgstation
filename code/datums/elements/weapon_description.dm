@@ -20,15 +20,15 @@
 	. = ..()
 	if(!isitem(target)) // Do not attach this to anything that isn't an item
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/warning_label)
-	RegisterSignal(target, COMSIG_TOPIC, .proc/topic_handler)
+	register_signal(target, COMSIG_PARENT_EXAMINE, .proc/warning_label)
+	register_signal(target, COMSIG_TOPIC, .proc/topic_handler)
 	// Don't perform the assignment if there is nothing to assign, or if we already have something for this bespoke element
 	if(attached_proc && !src.attached_proc)
 		src.attached_proc = attached_proc
 
 /datum/element/weapon_description/Detach(datum/target)
 	. = ..()
-	UnregisterSignal(target, list(COMSIG_PARENT_EXAMINE, COMSIG_TOPIC))
+	unregister_signal(target, list(COMSIG_PARENT_EXAMINE, COMSIG_TOPIC))
 
 /**
  *

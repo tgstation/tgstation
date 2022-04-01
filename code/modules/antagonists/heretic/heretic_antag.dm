@@ -193,15 +193,15 @@
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, "Ancient knowledge described to you has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	our_mob.faction |= FACTION_HERETIC
-	RegisterSignal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/on_spell_cast)
-	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, .proc/on_item_afterattack)
-	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
+	register_signal(our_mob, COMSIG_MOB_PRE_CAST_SPELL, .proc/on_spell_cast)
+	register_signal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, .proc/on_item_afterattack)
+	register_signal(our_mob, COMSIG_MOB_LOGIN, .proc/fix_influence_network)
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.faction -= FACTION_HERETIC
-	UnregisterSignal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
+	unregister_signal(our_mob, list(COMSIG_MOB_PRE_CAST_SPELL, COMSIG_MOB_ITEM_AFTERATTACK, COMSIG_MOB_LOGIN))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -361,7 +361,7 @@
 	target_image.overlays = target.overlays
 
 	LAZYSET(sac_targets, target, target_image)
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/on_target_deleted)
+	register_signal(target, COMSIG_PARENT_QDELETING, .proc/on_target_deleted)
 
 /**
  * Removes [target] from the heretic's sacrifice list.
@@ -372,7 +372,7 @@
 		return FALSE
 
 	LAZYREMOVE(sac_targets, target)
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	unregister_signal(target, COMSIG_PARENT_QDELETING)
 	return TRUE
 
 /**

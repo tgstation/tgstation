@@ -176,7 +176,7 @@
 
 	// Add on any bonus lines on examine
 	if(examine_line)
-		RegisterSignal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
+		register_signal(our_plant, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 	return TRUE
 
@@ -199,9 +199,9 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
-	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
-	RegisterSignal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
+	register_signal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/squash_plant)
+	register_signal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/squash_plant)
+	register_signal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/squash_plant)
 
 /*
  * Signal proc to squash the plant this trait belongs to, causing a smudge, exposing the target to reagents, and deleting it,
@@ -287,11 +287,11 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(our_seed.get_gene(/datum/plant_gene/trait/squash))
 		// If we have the squash gene, let that handle slipping
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
+		register_signal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/zap_target)
 	else
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
+		register_signal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/zap_target)
 
-	RegisterSignal(our_plant, COMSIG_FOOD_EATEN, .proc/recharge_cells)
+	register_signal(our_plant, COMSIG_FOOD_EATEN, .proc/recharge_cells)
 
 /*
  * Zaps the target with a stunning shock.
@@ -431,9 +431,9 @@
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	if(our_seed.get_gene(/datum/plant_gene/trait/squash))
 		// If we have the squash gene, let that handle slipping
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
+		register_signal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/squash_teleport)
 	else
-		RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/slip_teleport)
+		register_signal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/slip_teleport)
 
 /*
  * When squashed, makes the target teleport.
@@ -524,8 +524,8 @@
 		return
 
 	our_plant.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-	RegisterSignal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
-	RegisterSignal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
+	register_signal(our_plant, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, .proc/on_requesting_context_from_item)
+	register_signal(our_plant, COMSIG_PARENT_ATTACKBY, .proc/make_battery)
 
 /*
  * Signal proc for [COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM] to add context to plant batteries.
@@ -600,8 +600,8 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/prickles_inject)
-	RegisterSignal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/prickles_inject)
+	register_signal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/prickles_inject)
+	register_signal(our_plant, COMSIG_MOVABLE_IMPACT, .proc/prickles_inject)
 
 /*
  * Injects a target with a number of reagents from our plant.
@@ -634,7 +634,7 @@
 	if(!.)
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/make_smoke)
+	register_signal(our_plant, COMSIG_PLANT_ON_SQUASH, .proc/make_smoke)
 
 /*
  * Makes a cloud of reagent smoke.
@@ -682,10 +682,10 @@
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
 /datum/plant_gene/trait/invasive/on_new_seed(obj/item/seeds/new_seed)
-	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_spread)
+	register_signal(new_seed, COMSIG_SEED_ON_GROW, .proc/try_spread)
 
 /datum/plant_gene/trait/invasive/on_removed(obj/item/seeds/old_seed)
-	UnregisterSignal(old_seed, COMSIG_SEED_ON_GROW)
+	unregister_signal(old_seed, COMSIG_SEED_ON_GROW)
 
 /*
  * Attempt to find an adjacent tray we can spread to.
@@ -776,7 +776,7 @@
 	if(istype(grown_plant) && ispath(grown_plant.trash_type, /obj/item/grown))
 		return
 
-	RegisterSignal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/laughter)
+	register_signal(our_plant, COMSIG_PLANT_ON_SLIP, .proc/laughter)
 
 /*
  * Play a sound effect from our plant.

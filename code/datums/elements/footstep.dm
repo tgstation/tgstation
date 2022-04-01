@@ -29,7 +29,7 @@
 		if(FOOTSTEP_MOB_HUMAN)
 			if(!ishuman(target))
 				return ELEMENT_INCOMPATIBLE
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/play_humanstep)
+			register_signal(target, COMSIG_MOVABLE_MOVED, .proc/play_humanstep)
 			steps_for_living[target] = 0
 			return
 		if(FOOTSTEP_MOB_CLAW)
@@ -44,17 +44,17 @@
 			footstep_sounds = 'sound/effects/footstep/slime1.ogg'
 		if(FOOTSTEP_OBJ_MACHINE)
 			footstep_sounds = 'sound/effects/bang.ogg'
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/play_simplestep_machine)
+			register_signal(target, COMSIG_MOVABLE_MOVED, .proc/play_simplestep_machine)
 			return
 		if(FOOTSTEP_OBJ_ROBOT)
 			footstep_sounds = 'sound/effects/tank_treads.ogg'
-			RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/play_simplestep_machine)
+			register_signal(target, COMSIG_MOVABLE_MOVED, .proc/play_simplestep_machine)
 			return
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/play_simplestep)
+	register_signal(target, COMSIG_MOVABLE_MOVED, .proc/play_simplestep)
 	steps_for_living[target] = 0
 
 /datum/element/footstep/Detach(atom/movable/source)
-	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
+	unregister_signal(source, COMSIG_MOVABLE_MOVED)
 	steps_for_living -= source
 	return ..()
 

@@ -40,12 +40,12 @@ GLOBAL_DATUM(global_funny_embedding, /datum/global_funny_embedding)
 /datum/global_funny_embedding/New()
 	. = ..()
 	//second operation takes MUCH longer, so lets set up signals first.
-	RegisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM, .proc/on_new_item_in_existence)
+	register_signal(SSdcs, COMSIG_GLOB_NEW_ITEM, .proc/on_new_item_in_existence)
 	handle_current_items()
 
 /datum/global_funny_embedding/Destroy(force)
 	. = ..()
-	UnregisterSignal(SSdcs, COMSIG_GLOB_NEW_ITEM)
+	unregister_signal(SSdcs, COMSIG_GLOB_NEW_ITEM)
 
 ///signal sent by a new item being created.
 /datum/global_funny_embedding/proc/on_new_item_in_existence(datum/source, obj/item/created_item)

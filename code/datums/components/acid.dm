@@ -48,7 +48,7 @@
 	set_volume(_acid_volume)
 
 	var/atom/parent_atom = parent
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	register_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
 	parent_atom.update_appearance()
 	sizzle = new(parent, TRUE)
 	START_PROCESSING(SSacid, src)
@@ -58,29 +58,29 @@
 	QDEL_NULL(sizzle)
 	if(process_effect)
 		QDEL_NULL(process_effect)
-	UnregisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
+	unregister_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS)
 	if(parent && !QDELING(parent))
 		var/atom/parent_atom = parent
 		parent_atom.update_appearance()
 	return ..()
 
 /datum/component/acid/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
-	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
-	RegisterSignal(parent, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
+	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/on_clean)
+	register_signal(parent, COMSIG_ATOM_ATTACK_HAND, .proc/on_attack_hand)
+	register_signal(parent, COMSIG_ATOM_EXPOSE_REAGENT, .proc/on_expose_reagent)
 	if(isturf(parent))
-		RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
+		register_signal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
 /datum/component/acid/UnregisterFromParent()
-	UnregisterSignal(parent, list(
+	unregister_signal(parent, list(
 		COMSIG_PARENT_EXAMINE,
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_ATOM_ATTACK_HAND,
 		COMSIG_ATOM_EXPOSE_REAGENT))
 
 	if(isturf(parent))
-		UnregisterSignal(parent, COMSIG_ATOM_ENTERED)
+		unregister_signal(parent, COMSIG_ATOM_ENTERED)
 
 /// Averages corrosive power and sums volume.
 /datum/component/acid/InheritComponent(datum/component/C, i_am_original, _acid_power, _acid_volume)

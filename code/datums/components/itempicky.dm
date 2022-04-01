@@ -14,10 +14,10 @@
 		src.message = message
 
 /datum/component/itempicky/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, .proc/particularly)
+	register_signal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND, .proc/particularly)
 
 /datum/component/itempicky/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND)
+	unregister_signal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND)
 
 /datum/component/itempicky/PostTransfer()
 	if(!ismob(parent))

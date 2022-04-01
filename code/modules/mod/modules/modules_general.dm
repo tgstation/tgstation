@@ -32,7 +32,7 @@
 	modstorage.max_combined_w_class = max_combined_w_class
 	modstorage.max_items = max_items
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, FALSE)
-	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
+	register_signal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, .proc/on_chestplate_unequip)
 
 /obj/item/mod/module/storage/on_uninstall()
 	var/datum/component/storage/modstorage = mod.GetComponent(/datum/component/storage)
@@ -40,7 +40,7 @@
 	qdel(modstorage)
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_QUICK_EMPTY, drop_location())
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
-	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
+	unregister_signal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || newloc == mod.wearer || !mod.wearer.s_store)
@@ -113,9 +113,9 @@
 	if(!.)
 		return
 	ion_trail.start()
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
-	RegisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
+	register_signal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	register_signal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
+	register_signal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE, .proc/spacemove_react)
 	if(full_speed)
 		mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
@@ -124,9 +124,9 @@
 	if(!.)
 		return
 	ion_trail.stop()
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_PRE_MOVE)
+	unregister_signal(mod.wearer, COMSIG_MOVABLE_SPACEMOVE)
 	if(full_speed)
 		mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
@@ -345,10 +345,10 @@
 	incompatible_modules = list(/obj/item/mod/module/longfall)
 
 /obj/item/mod/module/longfall/on_suit_activation()
-	RegisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT, .proc/z_impact_react)
+	register_signal(mod.wearer, COMSIG_LIVING_Z_IMPACT, .proc/z_impact_react)
 
 /obj/item/mod/module/longfall/on_suit_deactivation()
-	UnregisterSignal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
+	unregister_signal(mod.wearer, COMSIG_LIVING_Z_IMPACT)
 
 /obj/item/mod/module/longfall/proc/z_impact_react(datum/source, levels, turf/fell_on)
 	if(!drain_power(use_power_cost*levels))
@@ -405,16 +405,16 @@
 	var/dna = null
 
 /obj/item/mod/module/dna_lock/on_install()
-	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
-	RegisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
-	RegisterSignal(mod, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
-	RegisterSignal(mod, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
+	register_signal(mod, COMSIG_MOD_ACTIVATE, .proc/on_mod_activation)
+	register_signal(mod, COMSIG_MOD_MODULE_REMOVAL, .proc/on_mod_removal)
+	register_signal(mod, COMSIG_ATOM_EMP_ACT, .proc/on_emp)
+	register_signal(mod, COMSIG_ATOM_EMAG_ACT, .proc/on_emag)
 
 /obj/item/mod/module/dna_lock/on_uninstall()
-	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
-	UnregisterSignal(mod, COMSIG_MOD_MODULE_REMOVAL)
-	UnregisterSignal(mod, COMSIG_ATOM_EMP_ACT)
-	UnregisterSignal(mod, COMSIG_ATOM_EMAG_ACT)
+	unregister_signal(mod, COMSIG_MOD_ACTIVATE)
+	unregister_signal(mod, COMSIG_MOD_MODULE_REMOVAL)
+	unregister_signal(mod, COMSIG_ATOM_EMP_ACT)
+	unregister_signal(mod, COMSIG_ATOM_EMAG_ACT)
 
 /obj/item/mod/module/dna_lock/on_use()
 	. = ..()
@@ -531,16 +531,16 @@
 			//Need to subtract the beret because its annoying
 
 /obj/item/mod/module/hat_stabilizer/on_suit_activation()
-	RegisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
-	RegisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
-	RegisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
+	register_signal(mod.helmet, COMSIG_PARENT_EXAMINE, .proc/add_examine)
+	register_signal(mod.helmet, COMSIG_PARENT_ATTACKBY, .proc/place_hat)
+	register_signal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY, .proc/remove_hat)
 
 /obj/item/mod/module/hat_stabilizer/on_suit_deactivation()
 	if(attached_hat)	//knock off the helmet if its on their head. Or, technically, auto-rightclick it for them; that way it saves us code, AND gives them the bubble
 		remove_hat(src, mod.wearer)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(mod.helmet, COMSIG_PARENT_ATTACKBY)
-	UnregisterSignal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
+	unregister_signal(mod.helmet, COMSIG_PARENT_EXAMINE)
+	unregister_signal(mod.helmet, COMSIG_PARENT_ATTACKBY)
+	unregister_signal(mod.helmet, COMSIG_ATOM_ATTACK_HAND_SECONDARY)
 
 /obj/item/mod/module/hat_stabilizer/proc/add_examine(datum/source, mob/user, list/base_examine)
 	SIGNAL_HANDLER

@@ -6,10 +6,10 @@
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
-	RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
+	register_signal(target, COMSIG_ITEM_ATTACK_SELF, .proc/interact)
 
 /datum/element/honkspam/Detach(datum/source)
-	UnregisterSignal(source, COMSIG_ITEM_ATTACK_SELF)
+	unregister_signal(source, COMSIG_ITEM_ATTACK_SELF)
 	return ..()
 
 /datum/element/honkspam/proc/interact(obj/item/source, mob/user)

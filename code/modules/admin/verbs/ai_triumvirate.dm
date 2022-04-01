@@ -11,7 +11,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 
 /datum/triple_ai_controller/New()
 	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, .proc/on_occupations_divided)
+	register_signal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, .proc/on_occupations_divided)
 
 /datum/triple_ai_controller/proc/on_occupations_divided(datum/source)
 	SIGNAL_HANDLER
@@ -23,7 +23,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 	qdel(src)
 
 /datum/triple_ai_controller/Destroy(force)
-	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
+	unregister_signal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
 	GLOB.triple_ai_controller = null
 	. = ..()
 

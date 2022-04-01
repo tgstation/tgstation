@@ -78,19 +78,19 @@
 	return ..()
 
 /datum/component/pellet_cloud/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/nullspace_parent)
+	register_signal(parent, COMSIG_PARENT_PREQDELETED, .proc/nullspace_parent)
 	if(isammocasing(parent))
-		RegisterSignal(parent, COMSIG_PELLET_CLOUD_INIT, .proc/create_casing_pellets)
+		register_signal(parent, COMSIG_PELLET_CLOUD_INIT, .proc/create_casing_pellets)
 	else if(isgrenade(parent))
-		RegisterSignal(parent, COMSIG_GRENADE_ARMED, .proc/grenade_armed)
-		RegisterSignal(parent, COMSIG_GRENADE_DETONATE, .proc/create_blast_pellets)
+		register_signal(parent, COMSIG_GRENADE_ARMED, .proc/grenade_armed)
+		register_signal(parent, COMSIG_GRENADE_DETONATE, .proc/create_blast_pellets)
 	else if(islandmine(parent))
-		RegisterSignal(parent, COMSIG_MINE_TRIGGERED, .proc/create_blast_pellets)
+		register_signal(parent, COMSIG_MINE_TRIGGERED, .proc/create_blast_pellets)
 	else if(issupplypod(parent))
-		RegisterSignal(parent, COMSIG_SUPPLYPOD_LANDED, .proc/create_blast_pellets)
+		register_signal(parent, COMSIG_SUPPLYPOD_LANDED, .proc/create_blast_pellets)
 
 /datum/component/pellet_cloud/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_DETONATE, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
+	unregister_signal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_DETONATE, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
 
 /**
  * create_casing_pellets() is for directed pellet clouds for ammo casings that have multiple pellets (buckshot and scatter lasers for instance)
@@ -119,8 +119,8 @@
 			else //Smart spread
 				spread = round((i / num_pellets - 0.5) * distro)
 
-		RegisterSignal(shell.loaded_projectile, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
-		RegisterSignal(shell.loaded_projectile, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
+		register_signal(shell.loaded_projectile, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+		register_signal(shell.loaded_projectile, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
 		shell.loaded_projectile.damage = original_damage
 		shell.loaded_projectile.wound_bonus = original_wb
 		shell.loaded_projectile.bare_wound_bonus = original_bwb
@@ -215,7 +215,7 @@
 
 		if(martyr.stat != DEAD && martyr.client)
 			LAZYADD(purple_hearts, martyr)
-			RegisterSignal(martyr, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
+			register_signal(martyr, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
 
 		for(var/i in 1 to round(pellets_absorbed * 0.5))
 			pew(martyr)
@@ -254,8 +254,8 @@
 	LAZYADDASSOC(targets_hit[target], "hits", 1)
 	LAZYSET(targets_hit[target], "damage", damage)
 	if(targets_hit[target]["hits"] == 1)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
-	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+		register_signal(target, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
+	unregister_signal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
@@ -264,7 +264,7 @@
 	SIGNAL_HANDLER
 	pellets -= P
 	terminated++
-	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
+	unregister_signal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
 
@@ -280,8 +280,8 @@
 	P.impacted = list(parent = TRUE) // don't hit the target we hit already with the flak
 	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
 	P.preparePixelProjectile(target, parent)
-	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
-	RegisterSignal(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
+	register_signal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+	register_signal(P, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
 	pellets += P
 	P.fire()
 	if(landmine_victim)
@@ -295,7 +295,7 @@
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]["hits"]
 		var/damage = targets_hit[target]["damage"]
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+		unregister_signal(target, COMSIG_PARENT_QDELETING)
 		var/obj/item/bodypart/hit_part
 		if(isbodypart(target))
 			hit_part = target
@@ -319,7 +319,7 @@
 		var/mob/living/martyr = M
 		if(martyr.stat == DEAD && martyr.client)
 			martyr.client.give_award(/datum/award/achievement/misc/lookoutsir, martyr)
-	UnregisterSignal(parent, COMSIG_PARENT_PREQDELETED)
+	unregister_signal(parent, COMSIG_PARENT_PREQDELETED)
 	if(queued_delete)
 		qdel(parent)
 	qdel(src)
@@ -331,8 +331,8 @@
 	if(ismob(nade.loc))
 		shooter = nade.loc
 	LAZYINITLIST(bodies)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/grenade_dropped)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/grenade_moved)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/grenade_dropped)
+	register_signal(parent, COMSIG_MOVABLE_MOVED, .proc/grenade_moved)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXITED =.proc/grenade_uncrossed,
 	)
@@ -351,7 +351,7 @@
 
 	LAZYCLEARLIST(bodies)
 	for(var/mob/living/L in get_turf(parent))
-		RegisterSignal(L, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
+		register_signal(L, COMSIG_PARENT_QDELETING, .proc/on_target_qdel, override=TRUE)
 		bodies += L
 
 /// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
@@ -373,7 +373,7 @@
 /datum/component/pellet_cloud/proc/on_target_qdel(atom/target)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	unregister_signal(target, COMSIG_PARENT_QDELETING)
 	targets_hit -= target
 	LAZYREMOVE(bodies, target)
 	LAZYREMOVE(purple_hearts, target)

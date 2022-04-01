@@ -8,13 +8,13 @@
 	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
-	RegisterSignal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, .proc/on_item_pre_attack_secondary)
+	register_signal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(target, COMSIG_ITEM_PRE_ATTACK_SECONDARY, .proc/on_item_pre_attack_secondary)
 
 /datum/element/wall_engraver/Detach(datum/source)
 	. = ..()
-	UnregisterSignal(source, COMSIG_PARENT_EXAMINE)
-	UnregisterSignal(source, COMSIG_ITEM_PRE_ATTACK_SECONDARY)
+	unregister_signal(source, COMSIG_PARENT_EXAMINE)
+	unregister_signal(source, COMSIG_ITEM_PRE_ATTACK_SECONDARY)
 
 ///signal called on parent being examined
 /datum/element/wall_engraver/proc/on_examine(datum/source, mob/user, list/examine_list)

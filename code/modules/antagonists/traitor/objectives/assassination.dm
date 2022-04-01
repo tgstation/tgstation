@@ -87,7 +87,7 @@
 			card = new(user.drop_location())
 			user.put_in_hands(card)
 			card.balloon_alert(user, "the card materializes in your hand")
-			RegisterSignal(card, COMSIG_ITEM_EQUIPPED, .proc/on_card_planted)
+			register_signal(card, COMSIG_ITEM_EQUIPPED, .proc/on_card_planted)
 			AddComponent(/datum/component/traitor_objective_register, card, \
 				succeed_signals = null, \
 				fail_signals = COMSIG_PARENT_QDELETING, \
@@ -107,13 +107,13 @@
 	. = ..()
 	if(!.) //didn't generate
 		return FALSE
-	RegisterSignal(kill_target, COMSIG_PARENT_QDELETING, .proc/on_target_qdeleted)
+	register_signal(kill_target, COMSIG_PARENT_QDELETING, .proc/on_target_qdeleted)
 
 /datum/traitor_objective/assassinate/calling_card/ungenerate_objective()
-	UnregisterSignal(kill_target, COMSIG_PARENT_QDELETING)
+	unregister_signal(kill_target, COMSIG_PARENT_QDELETING)
 	. = ..() //unsets kill target
 	if(card)
-		UnregisterSignal(card, COMSIG_ITEM_EQUIPPED)
+		unregister_signal(card, COMSIG_ITEM_EQUIPPED)
 	card = null
 
 /datum/traitor_objective/assassinate/calling_card/on_target_qdeleted()
@@ -132,13 +132,13 @@
 	if(!.) //didn't generate
 		return FALSE
 	AddComponent(/datum/component/traitor_objective_register, behead_goal, fail_signals = COMSIG_PARENT_QDELETING)
-	RegisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB, .proc/on_target_dismembered)
+	register_signal(kill_target, COMSIG_CARBON_REMOVE_LIMB, .proc/on_target_dismembered)
 
 /datum/traitor_objective/assassinate/behead/ungenerate_objective()
-	UnregisterSignal(kill_target, COMSIG_CARBON_REMOVE_LIMB)
+	unregister_signal(kill_target, COMSIG_CARBON_REMOVE_LIMB)
 	. = ..() //this unsets kill_target
 	if(behead_goal)
-		UnregisterSignal(behead_goal, COMSIG_ITEM_PICKUP)
+		unregister_signal(behead_goal, COMSIG_ITEM_PICKUP)
 	behead_goal = null
 
 /datum/traitor_objective/assassinate/behead/proc/on_head_pickup(datum/source, mob/taker)
@@ -159,7 +159,7 @@
 		fail_objective()
 	else
 		behead_goal = lost_head
-		RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, .proc/on_head_pickup)
+		register_signal(behead_goal, COMSIG_ITEM_PICKUP, .proc/on_head_pickup)
 
 /datum/traitor_objective/assassinate/New(datum/uplink_handler/handler)
 	. = ..()
@@ -219,11 +219,11 @@
 	kill_target = kill_target_mind.current
 	replace_in_name("%TARGET%", kill_target.real_name)
 	replace_in_name("%JOB TITLE%", kill_target_mind.assigned_role.title)
-	RegisterSignal(kill_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
+	register_signal(kill_target, COMSIG_LIVING_DEATH, .proc/on_target_death)
 	return TRUE
 
 /datum/traitor_objective/assassinate/ungenerate_objective()
-	UnregisterSignal(kill_target, COMSIG_LIVING_DEATH)
+	unregister_signal(kill_target, COMSIG_LIVING_DEATH)
 	kill_target = null
 
 /datum/traitor_objective/assassinate/is_duplicate(datum/traitor_objective/assassinate/objective_to_compare)

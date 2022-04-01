@@ -138,9 +138,9 @@
 	desc = "Quickly activate [linked_module]."
 	icon_icon = linked_module.icon
 	button_icon_state = linked_module.icon_state
-	RegisterSignal(linked_module, COMSIG_MODULE_ACTIVATED, .proc/on_module_activate)
-	RegisterSignal(linked_module, COMSIG_MODULE_DEACTIVATED, .proc/on_module_deactivate)
-	RegisterSignal(linked_module, COMSIG_MODULE_USED, .proc/on_module_use)
+	register_signal(linked_module, COMSIG_MODULE_ACTIVATED, .proc/on_module_activate)
+	register_signal(linked_module, COMSIG_MODULE_DEACTIVATED, .proc/on_module_deactivate)
+	register_signal(linked_module, COMSIG_MODULE_USED, .proc/on_module_use)
 
 /datum/action/item_action/mod/pinned_module/Destroy()
 	module.pinned_to -= pinner_ref

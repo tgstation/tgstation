@@ -248,7 +248,7 @@
 		throw_speed_on = 4, \
 		sharpness_on = SHARP_EDGED, \
 		w_class_on = WEIGHT_CLASS_NORMAL)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
+	register_signal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, .proc/on_transform)
 
 /obj/item/pen/edagger/suicide_act(mob/user)
 	. = BRUTELOSS

@@ -281,10 +281,10 @@
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
-	RegisterSignal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
+	register_signal(radio, COMSIG_ITEM_PRE_EXPORT, .proc/on_export)
 
 /obj/item/bounty_cube/Destroy()
-	UnregisterSignal(radio, COMSIG_ITEM_PRE_EXPORT)
+	unregister_signal(radio, COMSIG_ITEM_PRE_EXPORT)
 	QDEL_NULL(radio)
 	return ..()
 

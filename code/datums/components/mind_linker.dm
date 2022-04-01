@@ -85,11 +85,11 @@
 
 /datum/component/mind_linker/RegisterWithParent()
 	if(signals_which_destroy_us)
-		RegisterSignal(parent, signals_which_destroy_us, .proc/destroy_link)
+		register_signal(parent, signals_which_destroy_us, .proc/destroy_link)
 
 /datum/component/mind_linker/UnregisterFromParent()
 	if(signals_which_destroy_us)
-		UnregisterSignal(parent, signals_which_destroy_us)
+		unregister_signal(parent, signals_which_destroy_us)
 
 /**
  * Attempts to link [to_link] to our network, giving them a speech action.
@@ -120,7 +120,7 @@
 	new_link.Grant(to_link)
 
 	linked_mobs[to_link] = new_link
-	RegisterSignal(to_link, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED), .proc/unlink_mob)
+	register_signal(to_link, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED), .proc/unlink_mob)
 
 	return TRUE
 
@@ -139,7 +139,7 @@
 	to_chat(to_unlink, span_warning(unlink_message))
 	post_unlink_callback?.Invoke(to_unlink)
 
-	UnregisterSignal(to_unlink, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED))
+	unregister_signal(to_unlink, list(COMSIG_LIVING_DEATH, COMSIG_PARENT_QDELETING, COMSIG_MINDSHIELD_IMPLANTED))
 
 	var/datum/action/innate/linked_speech/old_link = linked_mobs[to_unlink]
 	linked_mobs -= to_unlink

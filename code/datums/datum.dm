@@ -135,14 +135,14 @@
 			var/list/comps = lookup[sig]
 			if(length(comps))
 				for(var/datum/component/comp as anything in comps)
-					comp.UnregisterSignal(src, sig)
+					comp.unregister_signal(src, sig)
 			else
 				var/datum/component/comp = comps
-				comp.UnregisterSignal(src, sig)
+				comp.unregister_signal(src, sig)
 		comp_lookup = lookup = null
 
 	for(var/target in signal_procs)
-		UnregisterSignal(target, signal_procs[target])
+		unregister_signal(target, signal_procs[target])
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()

@@ -258,16 +258,16 @@
 
 	being_drained = TRUE
 	balloon_alert(user, "draining influence...")
-	RegisterSignal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
+	register_signal(user, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 	if(!do_after(user, 10 SECONDS, src))
 		being_drained = FALSE
 		balloon_alert(user, "interrupted!")
-		UnregisterSignal(user, COMSIG_PARENT_EXAMINE)
+		unregister_signal(user, COMSIG_PARENT_EXAMINE)
 		return
 
 	// We don't need to set being_drained back since we delete after anyways
-	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)
+	unregister_signal(user, COMSIG_PARENT_EXAMINE)
 	balloon_alert(user, "influence drained")
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)

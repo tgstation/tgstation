@@ -56,17 +56,17 @@
 /datum/component/shielded/Destroy(force, silent)
 	if(wearer)
 		shield_icon = "broken"
-		UnregisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS)
+		unregister_signal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS)
 		wearer.update_appearance(UPDATE_ICON)
 		wearer = null
 	QDEL_NULL(on_hit_effects)
 	return ..()
 
 /datum/component/shielded/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/lost_wearer)
-	RegisterSignal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_react)
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/check_recharge_rune)
+	register_signal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equipped)
+	register_signal(parent, COMSIG_ITEM_DROPPED, .proc/lost_wearer)
+	register_signal(parent, COMSIG_ITEM_HIT_REACT, .proc/on_hit_react)
+	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/check_recharge_rune)
 	var/atom/shield = parent
 	if(ismob(shield.loc))
 		var/mob/holder = shield.loc
@@ -75,7 +75,7 @@
 		set_wearer(holder)
 
 /datum/component/shielded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_HIT_REACT, COMSIG_PARENT_ATTACKBY))
+	unregister_signal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_ITEM_HIT_REACT, COMSIG_PARENT_ATTACKBY))
 	var/atom/shield = parent
 	if(shield.loc == wearer)
 		lost_wearer(src, wearer)
@@ -117,14 +117,14 @@
 	SIGNAL_HANDLER
 
 	if(wearer)
-		UnregisterSignal(wearer, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_PARENT_QDELETING))
+		unregister_signal(wearer, list(COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_PARENT_QDELETING))
 		wearer.update_appearance(UPDATE_ICON)
 		wearer = null
 
 /datum/component/shielded/proc/set_wearer(mob/user)
 	wearer = user
-	RegisterSignal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
-	RegisterSignal(wearer, COMSIG_PARENT_QDELETING, .proc/lost_wearer)
+	register_signal(wearer, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)
+	register_signal(wearer, COMSIG_PARENT_QDELETING, .proc/lost_wearer)
 	if(current_charges)
 		wearer.update_appearance(UPDATE_ICON)
 
