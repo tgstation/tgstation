@@ -10,7 +10,7 @@
 /turf/closed/wall,
 /area/template_noop)
 "g" = (
-/turf/open/floor/plating/asteroid/airless,
+/turf/open/misc/asteroid/airless,
 /area/template_noop)
 "p" = (
 /obj/effect/turf_decal/sand/plating,

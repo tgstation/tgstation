@@ -212,7 +212,7 @@
 	r_pocket = /obj/item/restraints/handcuffs/cable
 	ears = /obj/item/radio/headset
 	id = /obj/item/card/id/advanced/bountyhunter
-	r_hand = /obj/item/storage/firstaid/regular
+	r_hand = /obj/item/storage/medkit/regular
 	l_hand = /obj/item/pinpointer/shuttle
 
 	backpack_contents = list(

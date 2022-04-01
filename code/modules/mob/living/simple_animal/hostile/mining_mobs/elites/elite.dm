@@ -77,24 +77,32 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	///The internal attack ID for the elite's OpenFire() proc to use
 	var/chosen_attack_num = 0
 
-/datum/action/innate/elite_attack/New()
-	..()
+/datum/action/innate/elite_attack/CreateButton()
+	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
 	button.maptext_x = 8
 	button.maptext_y = 0
 	button.maptext_width = 24
 	button.maptext_height = 12
+	return button
 
 /datum/action/innate/elite_attack/process()
 	if(owner == null)
 		STOP_PROCESSING(SSfastprocess, src)
 		qdel(src)
 		return
+	UpdateButtons()
+
+/datum/action/innate/elite_attack/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(status_only)
+		return
 	var/mob/living/simple_animal/hostile/asteroid/elite/elite_owner = owner
 	var/timeleft = max(elite_owner.ranged_cooldown - world.time, 0)
 	if(timeleft == 0)
 		button.maptext = ""
-		UpdateButtonIcon()
 	else
 		button.maptext = "<b class='maptext'>[round(timeleft/10, 0.1)]</b>"
 

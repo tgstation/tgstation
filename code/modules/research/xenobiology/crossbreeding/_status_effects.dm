@@ -270,7 +270,7 @@
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	duration = 100
 
@@ -287,7 +287,7 @@
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	duration = 300
 	var/original_coeff
@@ -416,7 +416,7 @@
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
-	status_type = STATUS_EFFECT_REPLACE
+	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
 	duration = 100
 

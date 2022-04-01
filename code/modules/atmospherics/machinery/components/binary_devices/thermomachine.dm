@@ -43,6 +43,8 @@
 	var/efficiency = 1
 	///Efficiency minimum amount, min 0.25, max 1 (works best on higher laser tiers)
 	var/parts_efficiency = 1
+	/// Checks if the thermomachine has been upgraded with metallic hydrogen
+	var/has_metalh2 = FALSE
 
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize(mapload)
 	. = ..()
@@ -64,6 +66,22 @@
 		deconstruct(TRUE)
 		return
 	return..()
+
+/obj/machinery/atmospherics/components/binary/thermomachine/on_deconstruction()
+	if(has_metalh2)
+		for(var/i in 1 to 3)
+			new /obj/item/stack/sheet/mineral/metal_hydrogen(loc)
+	return ..()
+
+/obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/stack/sheet/mineral/metal_hydrogen) && panel_open)
+		var/obj/item/stack/sheet/mineral/metal_hydrogen/metalh2 = W
+		if(!metalh2.use(3))
+			balloon_alert(user, "3 sheets are needed to upgrade")
+			return
+		has_metalh2 = TRUE
+		return
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/RefreshParts()
 	var/calculated_bin_rating
@@ -126,6 +144,12 @@
 	. += span_notice("-use a wrench with left-click to rotate [src] and right-click to unanchor it.")
 	. += span_notice("-use a multitool with left-click to change the piping layer and right-click to change the piping color.")
 	. += span_notice("The thermostat is set to [target_temperature]K ([(T0C-target_temperature)*-1]C).")
+
+	if(!has_metalh2)
+		. += span_notice("Can be upgraded with 3 sheets of metallic hydrogen.")
+	else
+		. += span_notice("Has been upgraded and does not need the thermal waste port anymore.")
+
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.")
 		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
@@ -190,7 +214,7 @@
 	var/mole_efficiency = 1
 	var/mole_eff_main_port = 1
 	var/mole_eff_thermal_port = 1
-	if(cooling)
+	if(cooling && !has_metalh2)
 		// Exchange target is the thing we are paired with, be it enviroment or the red port.
 		if(use_enviroment_heat)
 			exchange_target = local_turf.return_air()
@@ -209,7 +233,7 @@
 
 	mole_efficiency = min(mole_eff_main_port, mole_eff_thermal_port)
 
-	if(cooling)
+	if(cooling && !has_metalh2)
 		if (exchange_target.total_moles() < 0.01)
 			skipping_work = TRUE
 			return
@@ -242,7 +266,7 @@
 
 		exchange_target.temperature = max((THERMAL_ENERGY(exchange_target) - (heat_amount * efficiency) + motor_heat) / exchange_target.heat_capacity(), TCMB)
 
-	if(!cooling)
+	if(!cooling || has_metalh2)
 		efficiency *= mole_efficiency
 		efficiency = max(efficiency, parts_efficiency)
 

@@ -35,5 +35,14 @@
 	base_icon_state = "reinf_glass"
 	floor_tile = /obj/item/stack/tile/rglass
 
+/turf/open/floor/glass/reinforced/icemoon
+	name = "reinforced glass floor"
+	desc = "Do jump on it, it can take it."
+	icon = 'icons/turf/floors/reinf_glass.dmi'
+	icon_state = "reinf_glass-0"
+	base_icon_state = "reinf_glass"
+	floor_tile = /obj/item/stack/tile/rglass
+	initial_gas_mix = "ICEMOON_ATMOS"
+
 /turf/open/floor/glass/reinforced/setup_broken_states()
 	return list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")

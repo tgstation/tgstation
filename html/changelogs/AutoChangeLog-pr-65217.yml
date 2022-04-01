@@ -1,4 +1,0 @@
-author: "LemonInTheDark, MrStonedOne"
-delete-after: True
-changes: 
-  - code_imp: "Adds a color blindness accessibility testing tool. Use it for testing out your ui changes"
