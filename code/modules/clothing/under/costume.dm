@@ -119,6 +119,13 @@
 	var/obj/item/clothing/accessory/maidapron/A = new (src)
 	attach_accessory(A)
 
+/obj/item/clothing/under/costume/maid/stuck
+	name = "strange maid costume"
+	desc = "Maid in China. Cursed in Florida."
+
+/obj/item/clothing/under/costume/maid/stuck/Initialize()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+
 /obj/item/clothing/under/costume/geisha
 	name = "geisha suit"
 	desc = "Cute space ninja senpai not included."

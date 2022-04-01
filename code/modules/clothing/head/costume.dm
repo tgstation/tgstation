@@ -49,6 +49,13 @@
 	desc = "Just like from one of those chinese cartoons!"
 	icon_state = "maid_headband"
 
+/obj/item/clothing/head/maidheadband/stuck
+	name = "high-quality maid headband"
+	desc = "Attatches itself to the wearer's head, just like real chinese cartoon headwear!"
+
+/obj/item/clothing/head/maidheadband/stuck/Initialize()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT(type))
+
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"

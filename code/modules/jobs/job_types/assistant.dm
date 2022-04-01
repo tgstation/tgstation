@@ -1,3 +1,4 @@
+#define EPIC_PRANK_CHANCE 5
 GLOBAL_DATUM(colored_assistant, /datum/colored_assistant)
 
 /*
@@ -44,6 +45,13 @@ Assistant
 	head = /obj/item/clothing/head/maidheadband
 	neck = /obj/item/clothing/neck/maid
 	gloves = /obj/item/clothing/gloves/maid
+
+/datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/target)
+	if(prob(EPIC_PRANK_CHANCE))
+		uniform = /obj/item/clothing/under/costume/maid/stuck
+		head = /obj/item/clothing/head/maidheadband/stuck
+		neck = /obj/item/clothing/neck/maid/stuck
+		gloves = /obj/item/clothing/gloves/maid/stuck
 
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
