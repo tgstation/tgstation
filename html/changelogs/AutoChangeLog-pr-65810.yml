@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - bugfix: "mechs will now show in their tabs equippable equipment as intended"

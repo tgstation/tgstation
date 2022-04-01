@@ -1,6 +1,0 @@
-author: "san7890"
-delete-after: True
-changes: 
-  - rscadd: "Parts of MetaStation's Xenobiology Satellite have had some moderate re-arrangement, ultimately leading into an experience where you don't have to clamber over canisters to check the camera monitor."
-  - bugfix: "Some weird space turfs south of the Xenobiology Satellite have been banished."
-  - imageadd: "A new area turf for the Xenobiology Hallway has been added, and mapped into the one map that uses it: Meta."

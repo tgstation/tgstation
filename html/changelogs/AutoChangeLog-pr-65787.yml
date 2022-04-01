@@ -1,4 +1,0 @@
-author: "Cenrus"
-delete-after: True
-changes: 
-  - bugfix: "removed stray pixel on the CQC manual"
