@@ -287,7 +287,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/atom_injector/element_injector/inject(atom/target)
 	var/arguments = list(element_type)
 	arguments += element_args
-	target._AddElement(arguments)
+	target._add_element(arguments)
 
 /obj/effect/mapping_helpers/atom_injector/element_injector/generate_stack_trace()
 	. = ..()

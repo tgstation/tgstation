@@ -23,9 +23,9 @@
 		return ELEMENT_INCOMPATIBLE
 	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
 	if(element_flags & ELEMENT_DETACH)
-		register_signal(target, COMSIG_PARENT_QDELETING, .proc/OnTargetDelete, override = TRUE)
+		register_signal(target, COMSIG_PARENT_QDELETING, .proc/on_target_delete, override = TRUE)
 
-/datum/element/proc/OnTargetDelete(datum/source, force)
+/datum/element/proc/on_target_delete(datum/source, force)
 	SIGNAL_HANDLER
 	Detach(source)
 
@@ -46,7 +46,7 @@
 //DATUM PROCS
 
 /// Finds the singleton for the element type given and attaches it to src
-/datum/proc/_AddElement(list/arguments)
+/datum/proc/_add_element(list/arguments)
 	if(QDELING(src))
 		CRASH("We just tried to add an element to a qdeleted datum, something is fucked")
 	var/datum/element/ele = SSdcs.GetElement(arguments)
@@ -58,7 +58,7 @@
  * Finds the singleton for the element type given and detaches it from src
  * You only need additional arguments beyond the type if you're using [ELEMENT_BESPOKE]
  */
-/datum/proc/_RemoveElement(list/arguments)
+/datum/proc/_remove_element(list/arguments)
 	var/datum/element/ele = SSdcs.GetElement(arguments)
 	if(ele.element_flags & ELEMENT_COMPLEX_DETACH)
 		arguments[1] = src

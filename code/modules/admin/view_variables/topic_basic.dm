@@ -79,7 +79,7 @@
 			target._add_component(lst)
 		else
 			datumname = "element"
-			target._AddElement(lst)
+			target._add_element(lst)
 		log_admin("[key_name(usr)] has added [result] [datumname] to [key_name(target)].")
 		message_admins(span_notice("[key_name_admin(usr)] has added [result] [datumname] to [key_name_admin(target)]."))
 	if(href_list[VV_HK_REMOVECOMPONENT] || href_list[VV_HK_MASS_REMOVECOMPONENT])
@@ -123,7 +123,7 @@
 				if(!lst)
 					lst = list()
 				lst.Insert(1, path)
-				target._RemoveElement(lst)
+				target._remove_element(lst)
 			else
 				var/list/components_actual = target_to_remove_from.get_components(path)
 				for(var/to_delete in components_actual)
