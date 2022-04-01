@@ -1,4 +1,4 @@
-///Reagent refiller, refills any drinks .
+///Reagent refiller, refills any drinks poured out of the reagent container (and is allowed within the whitelisted reagents).
 /datum/element/reagent_refiller
 	element_flags = ELEMENT_DETACH
 
@@ -34,6 +34,7 @@
 	UnregisterSignal(source, COMSIG_ITEM_AFTERATTACK)
 	return ..()
 
+///Preps the reagent container for being refilled
 /datum/element/reagent_refiller/proc/refill(obj/item/reagent_containers/target)
 	SIGNAL_HANDLER
 
@@ -47,6 +48,7 @@
 
 	addtimer(CALLBACK(src, .proc/add_reagents, target, target.loc, refill, amount), time_to_refill)
 
+///Refills the reagent container, and uses cell power if applicable
 /datum/element/reagent_refiller/proc/add_reagents(obj/item/reagent_containers/target, oldloc, reagent_to_refill, amount)
 	if (target.loc != oldloc)
 		return
