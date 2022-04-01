@@ -6,11 +6,15 @@
 	movedelay = 4
 	dir_in = 1 //Facing North.
 	max_integrity = 400
-	deflect_chance = 20
 	armor = list(MELEE = 40, BULLET = 35, LASER = 15, ENERGY = 10, BOMB = 20, BIO = 0, FIRE = 100, ACID = 100)
 	max_temperature = 30000
 	force = 40
 	wreckage = /obj/structure/mecha_wreckage/durand
+	max_equip_by_category = list(
+		MECHA_UTILITY = 1,
+		MECHA_POWER = 1,
+		MECHA_ARMOR = 3,
+	)
 	var/obj/durand_shield/shield
 
 
@@ -208,7 +212,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	for(var/occupant in chassis.occupants)
 		var/datum/action/button = chassis.occupant_actions[occupant][/datum/action/vehicle/sealed/mecha/mech_defense_mode]
 		button.button_icon_state = "mech_defense_mode_[chassis.defense_mode ? "on" : "off"]"
-		button.UpdateButtonIcon()
+		button.UpdateButtons()
 
 	set_light_on(chassis.defense_mode)
 

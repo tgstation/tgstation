@@ -40,6 +40,7 @@
 
 	if(plant_safety_check(source, user))
 		return
+	
 	SEND_SIGNAL(source, COMSIG_PLANT_ON_BACKFIRE, user)
 	if(cancel_action)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -87,6 +88,9 @@
  */
 /datum/element/plant_backfire/proc/plant_safety_check(datum/source, mob/living/carbon/user)
 	if(!istype(user))
+		return TRUE
+
+	if(istype(source, /obj/item/tk_grab)) // since we aren't actually touching the plant
 		return TRUE
 
 	if(HAS_TRAIT(user, TRAIT_PLANT_SAFE))
