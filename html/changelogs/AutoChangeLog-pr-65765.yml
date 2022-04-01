@@ -1,4 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "protector stands no longer remove all their overlays when leaving shield mode"

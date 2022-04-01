@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - spellcheck: "Fixed several incorrect menu descriptions of some spider variants regarding their poison injection amount. Injection amount menu descriptions will now automatically update whenever their value changes by future code tweaks."
