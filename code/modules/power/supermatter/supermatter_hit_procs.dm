@@ -35,7 +35,7 @@
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
 	var/gain = 100
-	investigate_log("Supermatter shard consumed by singularity.", INVESTIGATE_SINGULO)
+	investigate_log("consumed by singularity.", INVESTIGATE_ENGINE)
 	message_admins("Singularity has consumed a supermatter shard and can now become stage six.")
 	visible_message(span_userdanger("[src] is consumed by the singularity!"))
 	for(var/mob/hearing_mob as anything in GLOB.player_list)
