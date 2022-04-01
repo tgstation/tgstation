@@ -40,6 +40,11 @@ Assistant
 	jobtype = /datum/job/assistant
 	id_trim = /datum/id_trim/job/assistant
 
+	uniform = /obj/item/clothing/under/costume/maid
+	head = /obj/item/clothing/head/maidheadband
+	neck = /obj/item/clothing/neck/maid
+	gloves = /obj/item/clothing/gloves/maid
+
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
 
