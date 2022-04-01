@@ -174,7 +174,7 @@ SUBSYSTEM_DEF(ticker)
 			//countdown
 			if(timeLeft < 0)
 				return
-			timeLeft -= wait
+			timeLeft -= (world.time - last_fire) / (1 SECONDS)
 
 			if(timeLeft <= 300 && !tipped)
 				send_tip_of_the_round(world, selected_tip)
@@ -197,7 +197,7 @@ SUBSYSTEM_DEF(ticker)
 				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
-			mode.process(wait * 0.1)
+			mode.process((world.time - last_fire) / (1 SECONDS))
 			check_queue()
 
 			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
