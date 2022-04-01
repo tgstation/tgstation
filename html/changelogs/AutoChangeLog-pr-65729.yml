@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Pull tail screentip now works properly"

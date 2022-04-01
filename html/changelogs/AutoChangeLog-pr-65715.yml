@@ -1,4 +1,0 @@
-author: "capsaicinz"
-delete-after: True
-changes: 
-  - admin: "revenants harvesting a mob now logs in the revenant's combat log."
