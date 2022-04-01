@@ -41,12 +41,13 @@ SUBSYSTEM_DEF(tgui)
 		src.current_run = open_uis.Copy()
 	// Cache for sanic speed (lists are references anyways)
 	var/list/current_run = src.current_run
+	var/delta_time = (world.time - last_fire) / (1 SECONDS)
 	while(current_run.len)
 		var/datum/tgui/ui = current_run[current_run.len]
 		current_run.len--
 		// TODO: Move user/src_object check to process()
 		if(ui?.user && ui.src_object)
-			ui.process(wait * 0.1)
+			ui.process(delta_time)
 		else
 			open_uis.Remove(ui)
 		if(MC_TICK_CHECK)
