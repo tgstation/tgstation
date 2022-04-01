@@ -8739,7 +8739,6 @@
 /area/hallway/primary/tram/left)
 "bLN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "left_tram_lower";
@@ -11654,7 +11653,6 @@
 /area/maintenance/central/greater)
 "cSd" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	name = "tunnel access blast door";
@@ -17107,7 +17105,6 @@
 /area/security/office)
 "eMU" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	name = "tunnel access blast door";
@@ -29935,7 +29932,6 @@
 /area/engineering/main)
 "jrz" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	name = "tunnel access blast door";
@@ -46975,7 +46971,6 @@
 /area/ai_monitored/turret_protected/aisat/hallway)
 "pBH" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "left_tram_lower";
@@ -59156,7 +59151,6 @@
 /area/command/heads_quarters/cmo)
 "ucp" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "left_tram_lower";
@@ -61015,7 +61009,6 @@
 /area/science/breakroom)
 "uJk" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	id = "left_tram_lower";
@@ -68591,7 +68584,6 @@
 /area/commons/dorms)
 "xCG" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/delivery,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/preopen{
 	name = "tunnel access blast door";
