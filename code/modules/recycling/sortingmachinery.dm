@@ -22,8 +22,8 @@
 /obj/item/delivery/proc/unwrap_contents()
 	if(!sticker)
 		return
-	for(var/obj/I in src.get_all_contents())
-		SEND_SIGNAL(I, COMSIG_ITEM_UNWRAPPED)
+	for(var/atom/movable/movable_content as anything in contents)
+		SEND_SIGNAL(movable_content, COMSIG_ITEM_UNWRAPPED)
 
 /**
  * Effects after completing unwrapping
@@ -44,8 +44,8 @@
 
 /obj/item/delivery/Destroy()
 	var/turf/T = get_turf(src)
-	for(var/atom/movable/AM in contents)
-		AM.forceMove(T)
+	for(var/atom/movable/movable_content as anything in contents)
+		movable_content.forceMove(T)
 	return ..()
 
 /obj/item/delivery/examine(mob/user)
@@ -218,22 +218,19 @@
 		return
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	unwrap_contents()
-	for(var/X in contents)
-		var/atom/movable/AM = X
-		user.put_in_hands(AM)
+	for(var/atom/movable/movable_content as anything in contents)
+		user.put_in_hands(movable_content)
 	post_unwrap_contents(user)
 
 /obj/item/delivery/small/attack_self_tk(mob/user)
 	if(ismob(loc))
 		var/mob/M = loc
 		M.temporarilyRemoveItemFromInventory(src, TRUE)
-		for(var/X in contents)
-			var/atom/movable/AM = X
-			M.put_in_hands(AM)
+		for(var/atom/movable/movable_content as anything in contents)
+			M.put_in_hands(movable_content)
 	else
-		for(var/X in contents)
-			var/atom/movable/AM = X
-			AM.forceMove(src.loc)
+		for(var/atom/movable/movable_content as anything in contents)
+			movable_content.forceMove(loc)
 
 	unwrap_contents()
 	post_unwrap_contents(user)
