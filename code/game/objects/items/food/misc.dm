@@ -966,7 +966,7 @@
 
 /obj/item/food/pierogi
 	name = "pierogi"
-	desc = "A Polish dumpling made by wrapping unleavened dough around a savoury or sweet filling and cooking in boiling water. This one is filled with a potato and onion mixture."
+	desc = "A dumpling made by wrapping unleavened dough around a savoury or sweet filling and cooking in boiling water. This one is filled with a potato and onion mixture."
 	icon_state = "pierogi"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("potato" = 1, "onions" = 1)
