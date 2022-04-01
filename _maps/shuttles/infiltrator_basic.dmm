@@ -186,6 +186,7 @@
 /area/shuttle/syndicate/airlock)
 "aQ" = (
 /obj/structure/closet/syndicate/personal,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "aS" = (
@@ -228,6 +229,9 @@
 	id = "smindicate";
 	name = "external door control";
 	req_access_txt = "150"
+	},
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/shuttle/syndicate/airlock)
@@ -508,6 +512,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "cf" = (
@@ -632,6 +637,10 @@
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/corner,
 /area/shuttle/syndicate/medical)
+"df" = (
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/iron/dark,
+/area/shuttle/syndicate/bridge)
 "dp" = (
 /obj/machinery/porta_turret/syndicate/shuttle{
 	dir = 10
@@ -643,7 +652,9 @@
 /area/shuttle/syndicate/medical)
 "el" = (
 /obj/machinery/light/directional/east,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
 /area/shuttle/syndicate/hallway)
 "fk" = (
 /obj/machinery/light/directional/east,
@@ -663,6 +674,7 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/zipties,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 2
 	},
@@ -678,6 +690,7 @@
 "iE" = (
 /obj/structure/closet/syndicate/nuclear,
 /obj/structure/railing,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "jf" = (
@@ -738,12 +751,15 @@
 /area/shuttle/syndicate/medical)
 "nq" = (
 /obj/machinery/light/directional/west,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 8
+	},
 /area/shuttle/syndicate/hallway)
 "nN" = (
 /obj/structure/chair/comfy/shuttle/tactical{
 	dir = 8
 	},
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "nZ" = (
@@ -788,7 +804,9 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/syndicate/bridge)
 "tM" = (
-/turf/open/floor/iron/dark/textured,
+/turf/open/floor/iron/dark/textured_corner{
+	dir = 1
+	},
 /area/shuttle/syndicate/engineering)
 "ug" = (
 /obj/machinery/light/directional/west,
@@ -821,6 +839,10 @@
 /obj/item/stamp/syndicate{
 	pixel_x = -7
 	},
+/turf/open/floor/iron/dark,
+/area/shuttle/syndicate/bridge)
+"vQ" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "wK" = (
@@ -1001,6 +1023,9 @@
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
+"Jo" = (
+/turf/open/floor/iron/dark/textured_corner,
+/area/shuttle/syndicate/engineering)
 "JQ" = (
 /obj/structure/sink{
 	dir = 8;
@@ -1093,6 +1118,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
 "RO" = (
+/obj/effect/turf_decal/loading_area/red{
+	dir = 4
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/airlock)
 "Tu" = (
@@ -1300,7 +1328,7 @@ aa
 ae
 ah
 ao
-ap
+df
 ac
 af
 af
@@ -1400,7 +1428,7 @@ aa
 ae
 vv
 ar
-ap
+vQ
 ac
 af
 af
@@ -1488,7 +1516,7 @@ Az
 bn
 bz
 ch
-tM
+Jo
 tM
 cg
 jf
