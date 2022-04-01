@@ -1453,6 +1453,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "\improper Xenobiology Lab"
 	icon_state = "xenobio"
 
+/area/science/xenobiology/hallway
+	name = "\improper Xenobiology Hallway"
+	icon_state = "xenobio_hall"
+
 /area/science/cytology
 	name = "\improper Cytology Lab"
 	icon_state = "cytology"
