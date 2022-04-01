@@ -82,7 +82,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 
 /obj/structure/fluff/empty_sleeper/syndicate/captain/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/gps, "Old Encrypted Signal")
+	add_component(/datum/component/gps, "Old Encrypted Signal")
 
 /obj/item/storage/box/firingpins/syndicate
 	name = "box of syndicate firing pins"

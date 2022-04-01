@@ -18,4 +18,4 @@
 		living_pawn.Move(get_step(living_pawn, move_dir), move_dir)
 	else if(DT_PROB(10, delta_time))
 		living_pawn.manual_emote(pick("dances around.","chases [living_pawn.p_their()] tail!"))
-		living_pawn.AddComponent(/datum/component/spinny)
+		living_pawn.add_component(/datum/component/spinny)

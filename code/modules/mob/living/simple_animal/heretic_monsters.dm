@@ -76,7 +76,7 @@
 
 	var/on_unlink_message = "Your mind shatters as [src]'s Mansus Link leaves your mind."
 
-	AddComponent(/datum/component/mind_linker, \
+	add_component(/datum/component/mind_linker, \
 		network_name = "Mansus Link", \
 		chat_color = "#568b00", \
 		linker_action_path = /datum/action/cooldown/manse_link, \

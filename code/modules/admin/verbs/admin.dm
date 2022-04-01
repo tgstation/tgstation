@@ -270,7 +270,7 @@
 		if(has_component && (toggle || remove))
 			qdel(has_component)
 		else if(toggle || !remove)
-			target.AddComponent(immersies)
+			target.add_component(immersies)
 
 /proc/mass_immerse(remove=FALSE)
 	for(var/mob/living/carbon/M in GLOB.mob_list)

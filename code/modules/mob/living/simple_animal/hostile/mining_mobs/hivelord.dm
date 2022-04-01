@@ -37,7 +37,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord/Initialize(mapload)
 	. = ..()
 	if(has_clickbox)
-		AddComponent(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") //they writhe so much.
+		add_component(/datum/component/clickbox, icon_state = "hivelord", max_scale = INFINITY, dead_state = "hivelord_dead") //they writhe so much.
 
 /mob/living/simple_animal/hostile/asteroid/hivelord/OpenFire(the_target)
 	if(world.time >= ranged_cooldown)
@@ -98,8 +98,8 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), 100)
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/swarming)
-	AddComponent(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
+	add_component(/datum/component/swarming)
+	add_component(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
 
 //Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion
@@ -282,7 +282,7 @@
 
 /mob/living/simple_animal/hostile/big_legion/Initialize(mapload)
 	.=..()
-	AddComponent(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
+	add_component(/datum/component/spawner, list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion), 200, faction, "peels itself off from", 3)
 
 // Snow Legion
 /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow

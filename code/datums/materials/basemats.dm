@@ -138,8 +138,8 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
 		// Ideally exploding plasma objects should delete themselves but we still have the flooder and SSexplosions to rely on deleting it asynchronously so it's not that bad.
-		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250, delete_after = EXPLODABLE_NO_DELETE)
-	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*0.05) //Empty temp arg, fully dependent on whatever ignited it.
+		source.add_component(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250, delete_after = EXPLODABLE_NO_DELETE)
+	source.add_component(/datum/component/combustible_flooder, "plasma", amount*0.05) //Empty temp arg, fully dependent on whatever ignited it.
 
 /datum/material/plasma/on_removed(atom/source, amount, material_flags)
 	. = ..()
@@ -184,7 +184,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/bananium/on_applied(atom/source, amount, material_flags)
 	. = ..()
 	source.LoadComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
-	source.AddComponent(/datum/component/slippery, min(amount / 10, 80))
+	source.add_component(/datum/component/slippery, min(amount / 10, 80))
 
 /datum/material/bananium/on_removed(atom/source, amount, material_flags)
 	. = ..()
@@ -321,7 +321,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/mythril/on_applied_obj(atom/source, amount, material_flags)
 	. = ..()
 	if(istype(source, /obj/item))
-		source.AddComponent(/datum/component/fantasy)
+		source.add_component(/datum/component/fantasy)
 
 /datum/material/mythril/on_removed_obj(atom/source, amount, material_flags)
 	. = ..()
@@ -346,7 +346,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/combustible_flooder, "plasma", amount*1.5, amount*0.2+300)
+	source.add_component(/datum/component/combustible_flooder, "plasma", amount*1.5, amount*0.2+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
 	qdel(source.get_component(/datum/component/combustible_flooder))

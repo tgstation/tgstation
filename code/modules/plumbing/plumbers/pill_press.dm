@@ -40,7 +40,7 @@
 /obj/machinery/plumbing/pill_press/Initialize(mapload, bolt, layer)
 	. = ..()
 
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	add_component(/datum/component/plumbing/simple_demand, bolt, layer)
 
 	//expertly copypasted from chemmasters
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)

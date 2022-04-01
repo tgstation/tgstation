@@ -27,7 +27,7 @@
 	if(!src.on_squash_callback && squash_callback)
 		on_squash_callback = CALLBACK(parent, squash_callback)
 
-	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+	add_component(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 ///Handles the squashing of the mob
 /datum/component/squashable/proc/on_entered(turf/source_turf, atom/movable/crossing_movable)

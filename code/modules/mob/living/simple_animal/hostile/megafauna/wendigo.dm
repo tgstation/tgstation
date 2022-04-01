@@ -326,12 +326,12 @@ Difficulty: Hard
 /obj/item/crusher_trophy/wendigo_horn/add_to(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=40)
+		crusher.add_component(/datum/component/two_handed, force_wielded=40)
 
 /obj/item/crusher_trophy/wendigo_horn/remove_from(obj/item/kinetic_crusher/crusher, mob/living/user)
 	. = ..()
 	if(.)
-		crusher.AddComponent(/datum/component/two_handed, force_wielded=20)
+		crusher.add_component(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/wendigo_skull
 	name = "wendigo skull"

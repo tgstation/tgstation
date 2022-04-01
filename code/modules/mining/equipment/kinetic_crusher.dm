@@ -38,8 +38,8 @@
 
 /obj/item/kinetic_crusher/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+	add_component(/datum/component/butchering, 60, 110) //technically it's huge and bulky, but this provides an incentive to use it
+	add_component(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
 
 /obj/item/kinetic_crusher/Destroy()
 	QDEL_LIST(trophies)
@@ -397,14 +397,14 @@
 	if(.)
 		H.force += bonus_value * 0.2
 		H.detonation_damage += bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
+		add_component(/datum/component/two_handed, force_wielded=(20 + bonus_value * 0.2))
 
 /obj/item/crusher_trophy/demon_claws/remove_from(obj/item/kinetic_crusher/H, mob/living/user)
 	. = ..()
 	if(.)
 		H.force -= bonus_value * 0.2
 		H.detonation_damage -= bonus_value * 0.8
-		AddComponent(/datum/component/two_handed, force_wielded=20)
+		add_component(/datum/component/two_handed, force_wielded=20)
 
 /obj/item/crusher_trophy/demon_claws/on_melee_hit(mob/living/target, mob/living/user)
 	user.heal_ordered_damage(bonus_value * 0.1, damage_heal_order)

@@ -29,7 +29,7 @@
 
 /obj/machinery/plumbing/acclimator/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/acclimator, bolt, layer)
+	add_component(/datum/component/plumbing/acclimator, bolt, layer)
 
 /obj/machinery/plumbing/acclimator/process(delta_time)
 	if(machine_stat & NOPOWER || !enabled || !reagents.total_volume || reagents.chem_temp == target_temperature)

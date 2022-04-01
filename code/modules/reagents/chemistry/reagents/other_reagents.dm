@@ -95,7 +95,7 @@
 			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
 				viri_to_add += virus
 		if(LAZYLEN(viri_to_add))
-			bloodsplatter.AddComponent(/datum/component/infective, viri_to_add)
+			bloodsplatter.add_component(/datum/component/infective, viri_to_add)
 	if(data["blood_DNA"])
 		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 

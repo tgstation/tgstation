@@ -18,7 +18,7 @@
 	id = "[rand(1000, 9999)]"
 	link_power_station()
 
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/teleporter_control_console,
 	))
 

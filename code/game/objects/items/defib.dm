@@ -344,7 +344,7 @@
 /obj/item/shockpaddles/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	AddComponent(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
+	add_component(/datum/component/two_handed, force_unwielded=8, force_wielded=12)
 
 /// triggered on wield of two handed item
 /obj/item/shockpaddles/proc/on_wield(obj/item/source, mob/user)

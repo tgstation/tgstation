@@ -50,7 +50,7 @@
 
 /mob/living/simple_animal/hostile/smspider/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/swarming)
+	add_component(/datum/component/swarming)
 
 /mob/living/simple_animal/hostile/smspider/overcharged
 	name = "overcharged supermatter spider"

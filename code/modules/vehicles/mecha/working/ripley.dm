@@ -54,7 +54,7 @@
 
 /obj/vehicle/sealed/mecha/working/ripley/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
+	add_component(/datum/component/armor_plate,3,/obj/item/stack/sheet/animalhide/goliath_hide,list(MELEE = 10, BULLET = 5, LASER = 5))
 
 
 /obj/vehicle/sealed/mecha/working/ripley/Destroy()

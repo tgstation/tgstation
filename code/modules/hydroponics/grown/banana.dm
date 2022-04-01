@@ -143,7 +143,7 @@
 
 /obj/item/grown/bananapeel/specialpeel/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/slippery, 40)
+	add_component(/datum/component/slippery, 40)
 
 /obj/item/food/grown/banana/bunch
 	name = "banana bunch"

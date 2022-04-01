@@ -207,7 +207,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 			user.put_in_hands(bug)
 			bug.balloon_alert(user, "the bug materializes in your hand")
 			bug.target_object_type = target_item.targetitem
-			AddComponent(/datum/component/traitor_objective_register, bug, \
+			add_component(/datum/component/traitor_objective_register, bug, \
 				fail_signals = COMSIG_PARENT_QDELETING, \
 				penalty = telecrystal_penalty)
 			register_signal(bug, COMSIG_TRAITOR_BUG_PLANTED_OBJECT, .proc/on_bug_planted)

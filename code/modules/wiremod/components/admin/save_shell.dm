@@ -30,7 +30,7 @@
 	SIGNAL_HANDLER
 	var/datum/component/shell/shell_component = loaded_shell.get_component(/datum/component/shell)
 	if(!istype(shell_component))
-		loaded_shell.AddComponent(/datum/component/shell, starting_circuit = parent)
+		loaded_shell.add_component(/datum/component/shell, starting_circuit = parent)
 	else
 		QDEL_NULL(shell_component.attached_circuit)
 		shell_component.attach_circuit(parent)

@@ -150,7 +150,7 @@
 	var/perceived_threat_level
 
 /obj/item/mod/module/rad_protection/on_suit_activation()
-	AddComponent(/datum/component/geiger_sound)
+	add_component(/datum/component/geiger_sound)
 	ADD_TRAIT(mod.wearer, TRAIT_BYPASS_EARLY_IRRADIATED_CHECK, MOD_TRAIT)
 	register_signal(mod.wearer, COMSIG_IN_RANGE_OF_IRRADIATION, .proc/on_pre_potential_irradiation)
 	for(var/obj/item/part in mod.mod_parts)

@@ -112,4 +112,4 @@
 
 /obj/item/clothing/suit/toggle/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_icon, toggle_noun)
+	add_component(/datum/component/toggle_icon, toggle_noun)

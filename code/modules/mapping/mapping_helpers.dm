@@ -592,7 +592,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/trapdoor_placer/LateInitialize()
 	var/turf/component_target = get_turf(src)
-	component_target.AddComponent(/datum/component/trapdoor, starts_open = FALSE)
+	component_target.add_component(/datum/component/trapdoor, starts_open = FALSE)
 	qdel(src)
 
 /obj/effect/mapping_helpers/ztrait_injector
@@ -636,7 +636,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		shell_component.shell_flags |= SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE
 		shell_component.attach_circuit(new_circuit)
 	else
-		shell_component = circuit_shell.AddComponent(/datum/component/shell, \
+		shell_component = circuit_shell.add_component(/datum/component/shell, \
 			capacity = shell_capacity, \
 			shell_flags = SHELL_FLAG_CIRCUIT_UNMODIFIABLE|SHELL_FLAG_CIRCUIT_UNREMOVABLE, \
 			starting_circuit = new_circuit, \

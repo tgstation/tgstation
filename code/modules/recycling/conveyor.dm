@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/static/list/unconveyables = typecacheof(list(/obj/effect, /mob/dead))
 	if(!istype(moving) || is_type_in_typecache(moving, unconveyables) || moving == src)
 		return
-	moving.AddComponent(/datum/component/convey, movedir, speed SECONDS)
+	moving.add_component(/datum/component/convey, movedir, speed SECONDS)
 
 /obj/machinery/conveyor/proc/stop_conveying(atom/movable/thing)
 	if(!ismovable(thing))
@@ -329,7 +329,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	update_appearance()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	wires = new /datum/wires/conveyor(src)
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/conveyor_switch,
 	))
 

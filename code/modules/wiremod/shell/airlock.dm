@@ -14,7 +14,7 @@
 
 /obj/machinery/door/airlock/shell/Initialize(mapload)
 	. = ..()
-	AddComponent( \
+	add_component( \
 		/datum/component/shell, \
 		unremovable_circuit_components = list(new /obj/item/circuit_component/airlock, new /obj/item/circuit_component/airlock_access_event), \
 		capacity = SHELL_CAPACITY_LARGE, \

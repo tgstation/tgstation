@@ -102,7 +102,7 @@
 
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_icon)
+	add_component(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/vest/warden
 	name = "warden's jacket"
@@ -155,7 +155,7 @@
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_icon)
+	add_component(/datum/component/toggle_icon)
 
 /obj/item/clothing/suit/armor/riot
 	name = "riot suit"
@@ -370,4 +370,4 @@
 
 /obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/toggle_icon)
+	add_component(/datum/component/toggle_icon)

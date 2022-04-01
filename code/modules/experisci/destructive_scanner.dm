@@ -19,7 +19,7 @@
 // Late load to ensure the component initialization occurs after the machines are initialized
 /obj/machinery/destructive_scanner/LateInitialize()
 	. = ..()
-	AddComponent(/datum/component/experiment_handler, \
+	add_component(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning),\
 		config_mode = EXPERIMENT_CONFIG_CLICK, \
 		start_experiment_callback = CALLBACK(src, .proc/activate))

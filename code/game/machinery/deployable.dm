@@ -209,7 +209,7 @@
 
 /obj/item/deployable_turret_folded/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, delete_on_use = TRUE)
+	add_component(/datum/component/deployable, 5 SECONDS, /obj/machinery/deployable_turret/hmg, delete_on_use = TRUE)
 
 #undef SINGLE
 #undef VERTICAL

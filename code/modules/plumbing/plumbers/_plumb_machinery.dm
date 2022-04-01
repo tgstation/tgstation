@@ -21,7 +21,7 @@
 	. = ..()
 	set_anchored(bolt)
 	create_reagents(buffer, reagent_flags)
-	AddComponent(/datum/component/simple_rotation)
+	add_component(/datum/component/simple_rotation)
 
 /obj/machinery/plumbing/examine(mob/user)
 	. = ..()
@@ -63,7 +63,7 @@
 
 /obj/machinery/plumbing/input/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
+	add_component(/datum/component/plumbing/simple_supply, bolt, layer)
 
 ///We can fill beakers in here and everything. we dont inheret from input because it has nothing that we need
 /obj/machinery/plumbing/output
@@ -75,7 +75,7 @@
 
 /obj/machinery/plumbing/output/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
+	add_component(/datum/component/plumbing/simple_demand, bolt, layer)
 
 /obj/machinery/plumbing/tank
 	name = "chemical tank"
@@ -85,7 +85,7 @@
 
 /obj/machinery/plumbing/tank/Initialize(mapload, bolt, layer)
 	. = ..()
-	AddComponent(/datum/component/plumbing/tank, bolt, layer)
+	add_component(/datum/component/plumbing/tank, bolt, layer)
 
 
 ///Layer manifold machine that connects a bunch of layers
@@ -98,6 +98,6 @@
 /obj/machinery/plumbing/layer_manifold/Initialize(mapload, bolt, layer)
 	. = ..()
 
-	AddComponent(/datum/component/plumbing/manifold, bolt, SECOND_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, THIRD_DUCT_LAYER)
-	AddComponent(/datum/component/plumbing/manifold, bolt, FOURTH_DUCT_LAYER)
+	add_component(/datum/component/plumbing/manifold, bolt, SECOND_DUCT_LAYER)
+	add_component(/datum/component/plumbing/manifold, bolt, THIRD_DUCT_LAYER)
+	add_component(/datum/component/plumbing/manifold, bolt, FOURTH_DUCT_LAYER)

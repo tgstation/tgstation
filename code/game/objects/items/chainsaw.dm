@@ -31,8 +31,8 @@
 
 /obj/item/chainsaw/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	add_component(/datum/component/butchering, 30, 100, 0, 'sound/weapons/chainsawhit.ogg', TRUE)
+	add_component(/datum/component/two_handed, require_twohands=TRUE)
 
 /// triggered on wield of two handed item
 /obj/item/chainsaw/proc/on_wield(obj/item/source, mob/user)

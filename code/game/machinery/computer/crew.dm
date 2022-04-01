@@ -16,7 +16,7 @@
 
 /obj/machinery/computer/crew/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/medical_console_data,
 	))
 

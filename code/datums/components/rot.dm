@@ -39,7 +39,7 @@
 	register_signal(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), .proc/rot_react_touch)
 	register_signal(parent, COMSIG_PARENT_ATTACKBY, .proc/rot_hit_react)
 	if(ismovable(parent))
-		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+		add_component(/datum/component/connect_loc_behalf, parent, loc_connections)
 		register_signal(parent, COMSIG_MOVABLE_BUMP, .proc/rot_react)
 	if(isliving(parent))
 		register_signal(parent, COMSIG_LIVING_REVIVE, .proc/react_to_revive) //mobs stop this when they come to life

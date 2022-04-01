@@ -303,7 +303,7 @@
 	if(contents.len)
 		to_chat(user, "[span_userdanger("Capture failed!")]: [src] is full! Free an existing soul to make room.")
 		return FALSE
-	shade.AddComponent(/datum/component/soulstoned, src)
+	shade.add_component(/datum/component/soulstoned, src)
 	if(theme == THEME_HOLY)
 		icon_state = "purified_soulstone2"
 		shade.mind?.remove_antag_datum(/datum/antagonist/cult)
@@ -408,7 +408,7 @@
 		shade_controller = victim
 	victim.stop_sound_channel(CHANNEL_HEARTBEAT)
 	var/mob/living/simple_animal/shade/soulstone_spirit = new /mob/living/simple_animal/shade(src)
-	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
+	soulstone_spirit.add_component(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [victim.real_name]"
 	soulstone_spirit.real_name = "Shade of [victim.real_name]"
 	soulstone_spirit.key = shade_controller.key

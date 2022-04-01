@@ -246,4 +246,4 @@
 	// Reagents are not transferred since that should be handled elsewhere.
 	for (var/r in results)
 		var/atom/result = r
-		result.AddComponent(/datum/component/customizable_reagent_holder, null, fill_type, ingredient_type = ingredient_type, max_ingredients = max_ingredients, initial_ingredients = ingredients)
+		result.add_component(/datum/component/customizable_reagent_holder, null, fill_type, ingredient_type = ingredient_type, max_ingredients = max_ingredients, initial_ingredients = ingredients)

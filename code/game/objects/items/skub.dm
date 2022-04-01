@@ -9,7 +9,7 @@
 
 /obj/item/skub/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/container_item/tank_holder, "holder_skub", FALSE)
+	add_component(/datum/component/container_item/tank_holder, "holder_skub", FALSE)
 
 /obj/item/skub/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] has declared themself as anti-skub! The skub tears them apart!"))

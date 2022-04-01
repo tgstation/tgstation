@@ -25,7 +25,7 @@
 	if(!proximity || !istype(target))
 		return
 
-	target.AddComponent(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
+	target.add_component(/datum/component/fantasy, upgrade_amount, null, null, can_backfire, TRUE)
 
 	uses -= 1
 	if(!uses)
@@ -66,7 +66,7 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 /datum/rpgloot_controller/proc/on_new_item_in_existence(datum/source, obj/item/created_item)
 	SIGNAL_HANDLER
 
-	created_item.AddComponent(/datum/component/fantasy)
+	created_item.add_component(/datum/component/fantasy)
 
 /**
  * ### handle_current_items
@@ -82,7 +82,7 @@ GLOBAL_DATUM(rpgloot_controller, /datum/rpgloot_controller)
 		if(!(fantasy_item.flags_1 & INITIALIZED_1) || QDELETED(fantasy_item))
 			continue
 
-		fantasy_item.AddComponent(/datum/component/fantasy)
+		fantasy_item.add_component(/datum/component/fantasy)
 
 		if(istype(fantasy_item, /obj/item/storage))
 			var/obj/item/storage/storage_item = fantasy_item

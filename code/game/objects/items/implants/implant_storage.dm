@@ -27,11 +27,11 @@
 			var/obj/item/implant/storage/imp_e = X
 			var/datum/component/storage/STR = imp_e.get_component(/datum/component/storage)
 			if(!STR || (STR && STR.max_items < max_slot_stacking))
-				imp_e.AddComponent(/datum/component/storage/concrete/implant)
+				imp_e.add_component(/datum/component/storage/concrete/implant)
 				qdel(src)
 				return TRUE
 			return FALSE
-	AddComponent(/datum/component/storage/concrete/implant)
+	add_component(/datum/component/storage/concrete/implant)
 
 	return ..()
 

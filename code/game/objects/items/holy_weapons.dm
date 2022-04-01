@@ -149,8 +149,8 @@
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
-	AddComponent(/datum/component/effect_remover, \
+	add_component(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, null, FALSE)
+	add_component(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
 		tip_text = "Clear rune", \
@@ -164,7 +164,7 @@
 			if(!initial(nullrod_type.chaplain_spawnable))
 				continue
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
-		AddComponent(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
+		add_component(/datum/component/subtype_picker, rods, CALLBACK(src, .proc/on_holy_weapon_picked))
 
 /obj/item/nullrod/proc/on_holy_weapon_picked(obj/item/nullrod/holy_weapon_type)
 	GLOB.holy_weapon_type = holy_weapon_type
@@ -376,7 +376,7 @@
 
 /obj/item/nullrod/scythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
+	add_component(/datum/component/butchering, 70, 110) //the harvest gives a high bonus chance
 
 /obj/item/nullrod/scythe/vibro
 	name = "high frequency blade"
@@ -418,7 +418,7 @@
 
 /obj/item/nullrod/scythe/talking/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/spirit_holding)
+	add_component(/datum/component/spirit_holding)
 
 /obj/item/nullrod/scythe/talking/chainsword
 	name = "possessed chainsaw sword"
@@ -473,7 +473,7 @@
 /obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, 30, 100, 0, hitsound)
+	add_component(/datum/component/butchering, 30, 100, 0, hitsound)
 
 /obj/item/nullrod/clown
 	name = "clown dagger"
@@ -572,7 +572,7 @@
 /obj/item/nullrod/armblade/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	AddComponent(/datum/component/butchering, 80, 70)
+	add_component(/datum/component/butchering, 80, 70)
 
 /obj/item/nullrod/armblade/tentacle
 	name = "unholy blessing"
@@ -597,7 +597,7 @@
 
 /obj/item/nullrod/carp/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/faction_granter, "carp", holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
+	add_component(/datum/component/faction_granter, "carp", holy_role_required = HOLY_ROLE_PRIEST, grant_message = span_boldnotice("You are blessed by Carp-Sie. Wild space carp will no longer attack you."))
 
 /obj/item/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
@@ -637,7 +637,7 @@
 /obj/item/nullrod/tribal_knife/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
-	AddComponent(/datum/component/butchering, 50, 100)
+	add_component(/datum/component/butchering, 50, 100)
 
 /obj/item/nullrod/tribal_knife/Destroy()
 	STOP_PROCESSING(SSobj, src)

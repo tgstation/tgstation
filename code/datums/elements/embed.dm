@@ -100,7 +100,7 @@
 		return
 
 	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || pick(victim.bodyparts)
-	victim.AddComponent(/datum/component/embedded,\
+	victim.add_component(/datum/component/embedded,\
 		weapon,\
 		throwingdatum,\
 		part = limb,\

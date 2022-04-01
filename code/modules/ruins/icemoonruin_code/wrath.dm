@@ -10,7 +10,7 @@
 
 /obj/item/clothing/gloves/butchering/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 5, 125, null, null, TRUE, TRUE)
+	add_component(/datum/component/butchering, 5, 125, null, null, TRUE, TRUE)
 
 /obj/item/clothing/gloves/butchering/equipped(mob/user, slot, initial = FALSE)
 	. = ..()

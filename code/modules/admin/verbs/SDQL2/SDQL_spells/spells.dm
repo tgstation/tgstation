@@ -5,7 +5,7 @@
 
 /obj/effect/proc_holder/spell/aimed/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 	register_signal(src, COMSIG_PROJECTILE_ON_HIT, .proc/on_projectile_hit)
 
 /obj/effect/proc_holder/spell/aimed/sdql/proc/on_projectile_hit(source, firer, target)
@@ -21,7 +21,7 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/aoe_turf/sdql/cast(list/targets, mob/user)
 	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
@@ -36,7 +36,7 @@
 
 /obj/effect/proc_holder/spell/cone/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/cone/sdql/do_mob_cone_effect(mob/living/target_mob, level)
 	targets |= target_mob
@@ -62,7 +62,7 @@
 
 /obj/effect/proc_holder/spell/cone/staggered/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/cone/staggered/sdql/do_mob_cone_effect(mob/living/target_mob, level)
 	targets |= target_mob
@@ -87,7 +87,7 @@
 
 /obj/effect/proc_holder/spell/pointed/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/pointed/sdql/cast(list/targets, mob/user)
 	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
@@ -101,7 +101,7 @@
 
 /obj/effect/proc_holder/spell/self/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/self/sdql/cast(list/targets, mob/user)
 	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
@@ -115,7 +115,7 @@
 
 /obj/effect/proc_holder/spell/targeted/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/targeted/sdql/cast(list/targets, mob/user)
 	var/datum/component/sdql_executor/executor = get_component(/datum/component/sdql_executor)
@@ -130,7 +130,7 @@
 
 /obj/effect/proc_holder/spell/targeted/touch/sdql/Initialize(mapload, new_owner, giver)
 	. = ..()
-	AddComponent(/datum/component/sdql_executor, giver)
+	add_component(/datum/component/sdql_executor, giver)
 
 /obj/effect/proc_holder/spell/targeted/touch/sdql/ChargeHand(mob/living/carbon/user)
 	if(..())

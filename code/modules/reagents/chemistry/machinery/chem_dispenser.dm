@@ -494,7 +494,7 @@
 
 /obj/machinery/chem_dispenser/drinks/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	add_component(/datum/component/simple_rotation)
 
 /obj/machinery/chem_dispenser/drinks/setDir()
 	var/old = dir

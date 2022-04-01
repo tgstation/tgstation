@@ -41,7 +41,7 @@
 
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	singularity = WEAKREF(AddComponent(
+	singularity = WEAKREF(add_component(
 		/datum/component/singularity, \
 		bsa_targetable = FALSE, \
 		consume_callback = CALLBACK(src, .proc/consume), \

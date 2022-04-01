@@ -11,7 +11,7 @@
 
 /obj/item/assembly/wiremod/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(
+	add_component(/datum/component/shell, list(
 		new /obj/item/circuit_component/assembly_input(),
 		new /obj/item/circuit_component/assembly_output(),
 	), SHELL_CAPACITY_SMALL)

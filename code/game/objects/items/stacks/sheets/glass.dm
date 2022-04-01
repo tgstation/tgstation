@@ -286,8 +286,8 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 
 /obj/item/shard/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/caltrop, min_damage = force)
-	AddComponent(/datum/component/butchering, 150, 65)
+	add_component(/datum/component/caltrop, min_damage = force)
+	add_component(/datum/component/butchering, 150, 65)
 	icon_state = pick("large", "medium", "small")
 	switch(icon_state)
 		if("small")

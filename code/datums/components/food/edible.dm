@@ -76,7 +76,7 @@ Behavior that's still missing from this component that original food items had t
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_ENTERED = .proc/on_entered,
 		)
-		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+		add_component(/datum/component/connect_loc_behalf, parent, loc_connections)
 	else
 		register_signal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 

@@ -583,7 +583,7 @@
 /obj/structure/carp_rift/Initialize(mapload)
 	. = ..()
 
-	AddComponent( \
+	add_component( \
 		/datum/component/aura_healing, \
 		range = 0, \
 		simple_heal = 5, \

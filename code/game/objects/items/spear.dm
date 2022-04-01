@@ -26,9 +26,9 @@
 
 /obj/item/spear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
-	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	add_component(/datum/component/butchering, 100, 70) //decent in a pinch, but pretty bad.
+	add_component(/datum/component/jousting)
+	add_component(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
 	update_appearance()
 
 /obj/item/spear/update_icon_state()
@@ -45,7 +45,7 @@
 		if (istype(tip, /obj/item/shard/plasma))
 			throwforce = 21
 			icon_prefix = "spearplasma"
-			AddComponent(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_wielded="[icon_prefix]1")
+			add_component(/datum/component/two_handed, force_unwielded=11, force_wielded=19, icon_wielded="[icon_prefix]1")
 		update_appearance()
 		parts_list -= tip
 		qdel(tip)
@@ -67,7 +67,7 @@
 
 /obj/item/spear/explosive/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	add_component(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
 
 /// triggered on wield of two handed item
 /obj/item/spear/explosive/proc/on_wield(obj/item/source, mob/user)
@@ -96,7 +96,7 @@
 		if(comp_twohand)
 			var/lance_wielded = comp_twohand.force_wielded
 			var/lance_unwielded = comp_twohand.force_unwielded
-			AddComponent(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded)
+			add_component(/datum/component/two_handed, force_unwielded=lance_unwielded, force_wielded=lance_wielded)
 		throwforce = lancePart.throwforce
 		icon_prefix = lancePart.icon_prefix
 		parts_list -= G
@@ -153,7 +153,7 @@
 
 /obj/item/spear/grey_tide/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_wielded="[icon_prefix]1")
+	add_component(/datum/component/two_handed, force_unwielded=15, force_wielded=25, icon_wielded="[icon_prefix]1")
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/AM, mob/living/user, proximity)
 	. = ..()
@@ -185,7 +185,7 @@
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="[icon_prefix]1")
+	add_component(/datum/component/two_handed, force_unwielded=12, force_wielded=20, icon_wielded="[icon_prefix]1")
 
 /*
  * Bamboo Spear
@@ -200,4 +200,4 @@
 
 /obj/item/spear/bamboospear/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")
+	add_component(/datum/component/two_handed, force_unwielded=10, force_wielded=18, icon_wielded="[icon_prefix]1")

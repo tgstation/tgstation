@@ -10,7 +10,7 @@
 	foodtypes = GRAIN
 
 /obj/item/food/dough/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/bread/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, /obj/item/food/bread/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 // Dough + rolling pin = flat dough
 /obj/item/food/dough/MakeProcessable()
@@ -26,7 +26,7 @@
 	foodtypes = GRAIN
 
 /obj/item/food/flatdough/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/pizzabread, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, /obj/item/food/pizzabread, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 // sliceable into 3xdoughslices
 /obj/item/food/flatdough/MakeProcessable()
@@ -44,7 +44,7 @@
 
 /obj/item/food/pizzabread/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/pizza/margherita, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 12)
+	add_component(/datum/component/customizable_reagent_holder, /obj/item/food/pizza/margherita, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 12)
 
 /obj/item/food/doughslice
 	name = "dough slice"
@@ -57,7 +57,7 @@
 	foodtypes = GRAIN
 
 /obj/item/food/doughslice/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/bun, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, /obj/item/food/bun, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/bun
 	name = "bun"
@@ -72,7 +72,7 @@
 
 /obj/item/food/bun/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/burger/empty, CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
+	add_component(/datum/component/customizable_reagent_holder, /obj/item/food/burger/empty, CUSTOM_INGREDIENT_ICON_STACKPLUSTOP)
 
 /obj/item/food/cakebatter
 	name = "cake batter"
@@ -84,7 +84,7 @@
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/cakebatter/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/cake/plain, rand(70 SECONDS, 90 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, /obj/item/food/cake/plain, rand(70 SECONDS, 90 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cakebatter/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/piedough, 1, 30)
@@ -99,7 +99,7 @@
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/piedough/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/pie/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, /obj/item/food/pie/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/piedough/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rawpastrybase, 3, 30)
@@ -115,7 +115,7 @@
 	foodtypes = GRAIN | DAIRY
 
 /obj/item/food/rawpastrybase/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/pastrybase, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, /obj/item/food/pastrybase, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pastrybase
 	name = "pastry base"

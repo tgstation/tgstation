@@ -169,7 +169,7 @@
 		to_chat(src, span_notice("You cannot orbit ["[A]" || "them"] at this time."))
 		return
 	orbit_target = A
-	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	return A.add_component(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
 /atom/movable/proc/stop_orbit(datum/component/orbiter/orbits)
 	orbit_target = null

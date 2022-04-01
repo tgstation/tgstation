@@ -38,7 +38,7 @@ Can be used to scrape blood runes away, removing any trace of them.
 Striking another cultist with it will purge all holy water from them and transform it into unholy water.
 Striking a noncultist, however, will tear their flesh."}
 
-	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
+	add_component(/datum/component/cult_ritual_item, span_cult(examine_text))
 
 /obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	var/block_message = "[owner] parries [attack_text] with [src]"
@@ -78,7 +78,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40, 100)
+	add_component(/datum/component/butchering, 40, 100)
 
 /obj/item/melee/cultblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(IS_CULTIST(owner) && prob(final_block_chance))
@@ -155,8 +155,8 @@ Striking a noncultist, however, will tear their flesh."}
 	. = ..()
 	jaunt = new(src)
 	linked_action = new(src)
-	AddComponent(/datum/component/butchering, 50, 80)
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	add_component(/datum/component/butchering, 50, 80)
+	add_component(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/cult_bastard/Destroy()
 	QDEL_NULL(jaunt)
@@ -445,7 +445,7 @@ Striking a noncultist, however, will tear their flesh."}
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/setup_shielding()
-	AddComponent(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, .proc/shield_damaged))
+	add_component(/datum/component/shielded, recharge_start_delay = 0 SECONDS, shield_icon_file = 'icons/effects/cult/effects.dmi', shield_icon = "shield-cult", run_hit_callback = CALLBACK(src, .proc/shield_damaged))
 
 /// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
@@ -730,8 +730,8 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/halberd/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 100, 90)
-	AddComponent(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
+	add_component(/datum/component/butchering, 100, 90)
+	add_component(/datum/component/two_handed, force_unwielded=17, force_wielded=24)
 
 /// triggered on wield of two handed item
 /obj/item/melee/cultblade/halberd/proc/on_wield(obj/item/source, mob/user)

@@ -27,7 +27,7 @@
 
 ///Override for checkliked callback
 /obj/item/food/donut/MakeEdible()
-	AddComponent(/datum/component/edible,\
+	add_component(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
 				foodtypes = foodtypes,\
@@ -437,7 +437,7 @@
 
 //donk pockets cook quick... try not to burn them for using an unoptimal tool
 /obj/item/food/donkpocket/MakeBakeable()
-	AddComponent(/datum/component/bakeable, microwaved_type, rand(25 SECONDS, 30 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, microwaved_type, rand(25 SECONDS, 30 SECONDS), TRUE, TRUE)
 
 /obj/item/food/donkpocket/warm
 	name = "warm Donk-pocket"
@@ -449,7 +449,7 @@
 
 ///Override for fast-burning food
 /obj/item/food/donkpocket/warm/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(10 SECONDS, 15 SECONDS), FALSE)
+	add_component(/datum/component/bakeable, /obj/item/food/badrecipe, rand(10 SECONDS, 15 SECONDS), FALSE)
 
 /obj/item/food/dankpocket
 	name = "\improper Dank-pocket"
@@ -594,7 +594,7 @@
 
 /obj/item/food/fortunecookie/proc/get_fortune()
 	var/atom/drop_location = drop_location()
-	
+
 	var/obj/item/paper/fortune = locate(/obj/item/paper) in src
 	// If a fortune exists, use that.
 	if (fortune)
@@ -748,7 +748,7 @@
 	burns_on_grill = FALSE
 
 /obj/item/food/pancakes/raw/MakeGrillable()
-	AddComponent(/datum/component/grillable,\
+	add_component(/datum/component/grillable,\
 				cook_result = /obj/item/food/pancakes,\
 				required_cook_time = rand(30 SECONDS, 40 SECONDS),\
 				positive_result = TRUE,\
@@ -771,7 +771,7 @@
 	if(newresult)
 		qdel(garnish)
 		to_chat(user, span_notice("You add [garnish] to [src]."))
-		AddComponent(/datum/component/grillable, cook_result = newresult)
+		add_component(/datum/component/grillable, cook_result = newresult)
 
 /obj/item/food/pancakes/raw/examine(mob/user)
 	. = ..()
@@ -913,7 +913,7 @@
 
 /obj/item/food/icecream/MakeEdible()
 	. = ..()
-	AddComponent(/datum/component/ice_cream_holder, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
+	add_component(/datum/component/ice_cream_holder, filled_name = "ice cream", change_desc = TRUE, prefill_flavours = prefill_flavours)
 
 /obj/item/food/icecream/chocolate
 	name = "chocolate cone"

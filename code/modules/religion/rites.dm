@@ -724,7 +724,7 @@
 /datum/religion_rites/unbreakable/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
 	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s will to keep fighting pouring into you!"))
-	user.AddComponent(/datum/component/unbreakable)
+	user.add_component(/datum/component/unbreakable)
 
 /datum/religion_rites/tenacious
 	name = "Become Tenacious"

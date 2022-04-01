@@ -45,7 +45,7 @@ RLD
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 	if(upgrade & RCD_UPGRADE_SILO_LINK)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload, FALSE)
+		silo_mats = add_component(/datum/component/remote_materials, "RCD", mapload, FALSE)
 
 /obj/item/construction/examine(mob/user)
 	. = ..()
@@ -86,7 +86,7 @@ RLD
 		return
 	upgrade |= rcd_up.upgrade
 	if((rcd_up.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = AddComponent(/datum/component/remote_materials, "RCD", FALSE, FALSE)
+		silo_mats = add_component(/datum/component/remote_materials, "RCD", FALSE, FALSE)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(rcd_up)
 

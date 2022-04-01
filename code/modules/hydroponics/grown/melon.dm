@@ -66,7 +66,7 @@
 	return //No drying
 
 /obj/item/food/grown/holymelon/MakeEdible()
-	AddComponent(/datum/component/edible, \
+	add_component(/datum/component/edible, \
 		initial_reagents = food_reagents, \
 		food_flags = food_flags, \
 		foodtypes = foodtypes, \

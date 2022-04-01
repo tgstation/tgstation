@@ -117,7 +117,7 @@
 		for(var/obj/wrapped_item in get_all_contents())
 			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
 				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
+			wrapped_item.add_component(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -137,7 +137,7 @@
 		for(var/obj/wrapped_item in get_all_contents())
 			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
 				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
+			wrapped_item.add_component(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -312,7 +312,7 @@
 		for(var/obj/wrapped_item in get_all_contents())
 			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
 				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
+			wrapped_item.add_component(/datum/component/pricetag, sticker.payments_acc, tagger.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext(overlaystring, 5)
@@ -333,7 +333,7 @@
 		for(var/obj/wrapped_item in get_all_contents())
 			if(HAS_TRAIT(wrapped_item, TRAIT_NO_BARCODES))
 				continue
-			wrapped_item.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
+			wrapped_item.add_component(/datum/component/pricetag, sticker.payments_acc, sticker.cut_multiplier)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1

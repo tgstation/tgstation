@@ -16,7 +16,7 @@
 #define RemoveElement(arguments...) _RemoveElement(list(##arguments))
 
 /// A wrapper for _add_component that allows us to pretend we're using normal named arguments
-#define AddComponent(arguments...) _add_component(list(##arguments))
+#define add_component(arguments...) _add_component(list(##arguments))
 
 /// A wrapper for _load_component that allows us to pretend we're using normal named arguments
 #define LoadComponent(arguments...) _load_component(list(##arguments))

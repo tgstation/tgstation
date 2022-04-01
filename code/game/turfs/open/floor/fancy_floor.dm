@@ -132,7 +132,7 @@
 /turf/open/floor/grass/Initialize(mapload)
 	. = ..()
 	spawniconchange()
-	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass, 2, "uproot")
+	add_component(/datum/component/diggable, /obj/item/stack/ore/glass, 2, "uproot")
 
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
@@ -170,7 +170,7 @@
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/sheet/mineral/snow, 2, "dig up")
+	add_component(/datum/component/diggable, /obj/item/stack/sheet/mineral/snow, 2, "dig up")
 
 /turf/open/floor/fake_snow/setup_broken_states()
 	return list("snow_dug")
@@ -197,7 +197,7 @@
 
 /turf/open/floor/fakebasalt/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/diggable, /obj/item/stack/ore/glass/basalt, 2, "dig up")
+	add_component(/datum/component/diggable, /obj/item/stack/ore/glass/basalt, 2, "dig up")
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
 		set_basalt_light(src)

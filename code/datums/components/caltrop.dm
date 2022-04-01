@@ -39,7 +39,7 @@
 	src.soundfile = soundfile
 
 	if(ismovable(parent))
-		AddComponent(/datum/component/connect_loc_behalf, parent, crossed_connections)
+		add_component(/datum/component/connect_loc_behalf, parent, crossed_connections)
 	else
 		register_signal(get_turf(parent), COMSIG_ATOM_ENTERED, .proc/on_entered)
 

@@ -64,4 +64,4 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/sbiten
 
 /obj/item/food/grown/potato/sweet/MakeBakeable()
-	AddComponent(/datum/component/bakeable, /obj/item/food/yakiimo, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)
+	add_component(/datum/component/bakeable, /obj/item/food/yakiimo, rand(15 SECONDS, 35 SECONDS), TRUE, TRUE)

@@ -303,7 +303,7 @@
 		if(7.1 to 10)
 			icon_state = "[initial(icon_state)]_4"
 
-	AddComponent(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = ant_flags, soundfile = bite_sound)
+	add_component(/datum/component/caltrop, min_damage = 0.1, max_damage = ant_bite_damage, flags = ant_flags, soundfile = bite_sound)
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/effect/decal/cleanable/ants/update_overlays()

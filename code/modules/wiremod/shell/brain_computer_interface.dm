@@ -13,7 +13,7 @@
 	var/obj/item/integrated_circuit/circuit = new(src)
 	circuit.add_circuit_component(new /obj/item/circuit_component/equipment_action/bci(null, "One"))
 
-	AddComponent(/datum/component/shell, list(
+	add_component(/datum/component/shell, list(
 		new /obj/item/circuit_component/bci_core,
 	), SHELL_CAPACITY_SMALL, starting_circuit = circuit)
 

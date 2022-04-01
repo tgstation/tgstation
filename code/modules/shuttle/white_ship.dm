@@ -13,7 +13,7 @@
 
 /obj/machinery/computer/shuttle/white_ship/bridge/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	AddComponent(/datum/component/gps, SPACE_SIGNAL_GPSTAG)
+	add_component(/datum/component/gps, SPACE_SIGNAL_GPSTAG)
 
 /obj/machinery/computer/shuttle/white_ship/pod
 	name = "Salvage Pod Console"

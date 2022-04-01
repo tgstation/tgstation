@@ -29,7 +29,7 @@
 
 	to_chat(equipper, span_notice("You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!"))
 
-	pull_component_weakref = WEAKREF(equipper.AddComponent(/datum/component/strong_pull))
+	pull_component_weakref = WEAKREF(equipper.add_component(/datum/component/strong_pull))
 
 /*
  * Called when the glove is unequipped. Deletes the component if one exists.
@@ -58,7 +58,7 @@
 
 /obj/item/clothing/gloves/rapid/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/wearertargeting/punchcooldown)
+	add_component(/datum/component/wearertargeting/punchcooldown)
 
 /obj/item/clothing/gloves/radio
 	name = "translation gloves"

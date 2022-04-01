@@ -51,7 +51,7 @@
 
 /obj/item/melee/synthetic_arm_blade/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 60, 80) //very imprecise
+	add_component(/datum/component/butchering, 60, 80) //very imprecise
 
 /obj/item/melee/sabre
 	name = "officer's sabre"
@@ -77,7 +77,7 @@
 
 /obj/item/melee/sabre/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
+	add_component(/datum/component/butchering, 30, 95, 5) //fast and effective, but as a sword, it might damage the results.
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(attack_type == PROJECTILE_ATTACK)
@@ -320,7 +320,7 @@
 	. = ..()
 	if (!ovens)
 		ovens = typecacheof(list(/obj/singularity, /obj/energy_ball, /obj/machinery/power/supermatter_crystal, /obj/structure/bonfire))
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		hitsound_on = hitsound, \
 		clumsy_check = FALSE)
 	register_signal(src, COMSIG_TRANSFORMING_PRE_TRANSFORM, .proc/attempt_transform)

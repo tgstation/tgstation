@@ -28,7 +28,7 @@
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
+	add_component(/datum/component/two_handed, force_multiplier=4, icon_wielded="[base_icon_state]1")
 
 ///triggered on wield of two handed item
 /obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
@@ -104,7 +104,7 @@
 
 /obj/item/mjollnir/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound=SFX_SPARKS)
+	add_component(/datum/component/two_handed, force_multiplier=5, icon_wielded="[base_icon_state]1", attacksound=SFX_SPARKS)
 
 /// triggered on wield of two handed item
 /obj/item/mjollnir/proc/on_wield(obj/item/source, mob/user)

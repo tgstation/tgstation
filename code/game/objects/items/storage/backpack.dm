@@ -364,7 +364,7 @@
 /obj/item/storage/backpack/duffelbag/cursed/Initialize(mapload)
 	. = ..()
 	var/add_dropdel = TRUE //clarified boolean
-	AddComponent(/datum/component/curse_of_hunger, add_dropdel)
+	add_component(/datum/component/curse_of_hunger, add_dropdel)
 
 /obj/item/storage/backpack/duffelbag/captain
 	name = "captain's duffel bag"

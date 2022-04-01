@@ -319,4 +319,4 @@
 /mob/living/simple_animal/hostile/viscerator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/swarming)
+	add_component(/datum/component/swarming)

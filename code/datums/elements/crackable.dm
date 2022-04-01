@@ -24,4 +24,4 @@
 	SIGNAL_HANDLER
 	if(new_value >= source.max_integrity * crack_integrity)
 		return
-	source.AddComponent(/datum/component/cracked, crack_icons, crack_integrity)
+	source.add_component(/datum/component/cracked, crack_icons, crack_integrity)

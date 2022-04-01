@@ -43,7 +43,7 @@
 
 /obj/item/camera/Initialize()
 	. = ..()
-	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
+	add_component(/datum/component/shell, list(new /obj/item/circuit_component/camera), SHELL_CAPACITY_SMALL)
 
 /obj/item/camera/attack_self(mob/user)
 	if(!disk)

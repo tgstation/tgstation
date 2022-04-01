@@ -33,7 +33,7 @@
 	if(admin)
 		can_rotate = FALSE
 
-	AddComponent(/datum/component/usb_port, list(
+	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/reflector,
 	))
 

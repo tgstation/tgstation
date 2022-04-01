@@ -8,7 +8,7 @@
 
 /obj/item/food/cake/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/food_storage)
+	add_component(/datum/component/food_storage)
 
 /obj/item/food/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'

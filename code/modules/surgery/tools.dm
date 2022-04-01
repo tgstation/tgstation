@@ -78,7 +78,7 @@
 
 /obj/item/cautery/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \
@@ -169,7 +169,7 @@
 
 /obj/item/scalpel/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+	add_component(/datum/component/butchering, 80 * toolspeed, 100, 0)
 	AddElement(/datum/element/eyestab)
 
 /obj/item/scalpel/augment
@@ -208,7 +208,7 @@
 
 /obj/item/circular_saw/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
+	add_component(/datum/component/butchering, 40 * toolspeed, 100, 5, 'sound/weapons/circsawhit.ogg') //saws are very accurate and fast at butchering
 
 /obj/item/circular_saw/augment
 	desc = "A small but very fast spinning saw. It rips and tears until it is done."
@@ -230,7 +230,7 @@
 
 /obj/item/surgical_drapes/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/surgery_initiator)
+	add_component(/datum/component/surgery_initiator)
 
 
 /obj/item/surgical_processor //allows medical cyborgs to scan and initiate advanced surgeries
@@ -275,7 +275,7 @@
 
 /obj/item/scalpel/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		force_on = force + 1, \
 		throwforce_on = throwforce, \
 		throw_speed_on = throw_speed, \
@@ -318,7 +318,7 @@
 
 /obj/item/retractor/advanced/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/transforming, \
+	add_component(/datum/component/transforming, \
 		force_on = force, \
 		throwforce_on = throwforce, \
 		hitsound_on = hitsound, \

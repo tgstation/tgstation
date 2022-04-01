@@ -514,7 +514,7 @@
 			qdel(target)
 			CRASH("Incompatible [c_type] transfer attempt to a [type]!")
 
-	if(target == AddComponent(target))
+	if(target == add_component(target))
 		target._join_parent()
 
 /**

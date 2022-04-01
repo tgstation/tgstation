@@ -340,8 +340,8 @@
 
 /obj/machinery/iv_drip/plumbing/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/plumbing/iv_drip, anchored)
-	AddComponent(/datum/component/simple_rotation)
+	add_component(/datum/component/plumbing/iv_drip, anchored)
+	add_component(/datum/component/simple_rotation)
 
 /obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/I)
 	..()
