@@ -4,7 +4,7 @@ SUBSYSTEM_DEF(sun)
 
 	var/azimuth = 0 ///clockwise, top-down rotation from 0 (north) to 359
 	var/azimuth_mod = 1 ///multiplier against base_rotation
-	var/base_rotation = 6 ///base rotation in degrees per fire
+	var/base_rotation = 0.1 ///base rotation in degrees per second
 
 /datum/controller/subsystem/sun/Initialize(start_timeofday)
 	azimuth = rand(0, 359)
@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(sun)
 	return ..()
 
 /datum/controller/subsystem/sun/fire(resumed = FALSE)
-	azimuth += azimuth_mod * base_rotation
+	azimuth += azimuth_mod * base_rotation * (world.time - last_fire) / (1 SECONDS)
 	azimuth = round(azimuth, 0.01)
 	if(azimuth >= 360)
 		azimuth -= 360
