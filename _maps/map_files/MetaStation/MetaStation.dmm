@@ -14522,11 +14522,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/security/brig)
-"dVD" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/sign/poster/contraband/random/directional/west,
-/turf/open/floor/carpet/green,
-/area/maintenance/port/aft)
 "dVE" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Bridge - Port"
@@ -82290,7 +82285,7 @@ dux
 pmu
 wOn
 wOn
-dVD
+wfq
 wOn
 ckP
 ckP
