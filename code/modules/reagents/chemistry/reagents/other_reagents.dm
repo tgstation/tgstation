@@ -1505,6 +1505,28 @@
 	L.adjustToxLoss(-5 * REM * delta_time, FALSE)
 	L.adjustBruteLoss(-2 * REM * delta_time, FALSE)
 
+/datum/reagent/pluoxium
+	name = "Pluoxium"
+	description = "An Oxygen compound that delivers eight times more Oxygen"
+	reagent_state = GAS
+	metabolization_rate = REAGENTS_METABOLISM * 0.5
+	color = "90560B"
+	taste_description = "tasteless"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+
+/datum/reagent/pluoxium/on_mob_life(mob/living/L, delta_time, times_fired)
+	. = ..()
+	L.adjustOxyLoss(-4 * REM * delta_time, FALSE)
+
+/datum/reagent/pluoxium/on_mob_metabolize(mob/living/L)
+	. = ..()
+	ADD_TRAIT(L, TRAIT_NOCRITDAMAGE, type)
+
+/datum/reagent/pluoxium/on_mob_end_metabolize(mob/living/L)
+	. = ..()
+	REMOVE_TRAIT(L, TRAIT_NOCRITDAMAGE, type)
+	return ..()
+
 /datum/reagent/halon
 	name = "Halon"
 	description = "A fire suppression gas that removes oxygen and cools down the area"

@@ -355,6 +355,14 @@
 		gas_breathed = breath_gases[/datum/gas/healium][MOLES]
 		breath_gases[/datum/gas/healium][MOLES]-=gas_breathed
 
+	//Pluoxium
+		var/pluoxium_pp = breath.get_breath_partial_pressure(breath_gases[/datum/gas/pluoxium][MOLES])
+		if(pluoxium_pp > gas_stimulation_min)
+			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/pluoxium)
+			breather.reagents.add_reagent(/datum/reagent/pluoxium, max(0, 10 - existing))
+		gas_breathed = breath_gases[/datum/gas/pluoxium][MOLES]
+		breath_gases[/datum/gas/pluoxium][MOLES]-= gas_breathed
+
 	// Proto Nitrate
 		// Inert
 	// Zauker
@@ -372,7 +380,7 @@
 		if(halon_pp > gas_stimulation_min)
 			breather.adjustOxyLoss(5)
 			var/existing = breather.reagents.get_reagent_amount(/datum/reagent/halon)
-			breather.reagents.add_reagent(/datum/reagent/halon,max(0, 1 - existing))
+			breather.reagents.add_reagent(/datum/reagent/halon,max(0, 10 - existing))
 		gas_breathed = breath_gases[/datum/gas/halon][MOLES]
 		breath_gases[/datum/gas/halon][MOLES]-=gas_breathed
 
