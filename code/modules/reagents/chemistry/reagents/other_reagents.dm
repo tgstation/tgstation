@@ -1531,7 +1531,7 @@
 	metabolization_rate = REAGENTS_METABOLISM * 0.5
 	color = "90560B"
 	taste_description = "bitter"
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/zauker/on_mob_life(mob/living/L, delta_time, times_fired)
 	. = ..()
