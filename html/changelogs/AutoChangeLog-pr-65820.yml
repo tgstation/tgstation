@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes: 
+  - spellcheck: "Cargo crate naming has been made slightly more consistent. Rejoice."
