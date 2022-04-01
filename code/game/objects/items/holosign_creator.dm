@@ -21,7 +21,7 @@
 
 /obj/item/holosign_creator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/openspace_item_click_handler)
+	add_element(/datum/element/openspace_item_click_handler)
 
 /obj/item/holosign_creator/handle_openspace_click(turf/target, mob/user, proximity_flag, click_parameters)
 	afterattack(target, user, proximity_flag, click_parameters)

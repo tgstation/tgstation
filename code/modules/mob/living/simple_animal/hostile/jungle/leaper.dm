@@ -75,7 +75,7 @@
 
 /obj/effect/decal/cleanable/leaper_sludge/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/structure/leaper_bubble
 	name = "leaper bubble"
@@ -91,12 +91,12 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/structure/leaper_bubble/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/movetype_handler)
+	add_element(/datum/element/movetype_handler)
 	ADD_TRAIT(src, TRAIT_MOVE_FLOATING, LEAPER_BUBBLE_TRAIT)
 
 /obj/structure/leaper_bubble/Destroy()
@@ -284,6 +284,6 @@
 
 /mob/living/simple_animal/hostile/jungle/leaper/add_cell_sample()
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_LEAPER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 #undef PLAYER_HOP_DELAY

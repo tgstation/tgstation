@@ -274,7 +274,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/power/apc/auto_name, APC_PIXEL_OFFSET
 
 /obj/machinery/power/apc/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 	alarm_manager = new(src)
 
 	if(!mapload)

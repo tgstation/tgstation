@@ -16,7 +16,7 @@
 	. = ..()
 	reflect_sect_in_icons()
 	GLOB.chaplain_altars += src
-	AddElement(/datum/element/climbable)
+	add_element(/datum/element/climbable)
 
 /obj/structure/altar_of_gods/ComponentInitialize()
 	. = ..()

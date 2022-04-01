@@ -93,11 +93,11 @@
 				junkiness = junkiness)
 
 /obj/item/food/grown/proc/make_dryable()
-	AddElement(/datum/element/dryable, type)
+	add_element(/datum/element/dryable, type)
 
 /obj/item/food/grown/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
+		add_element(/datum/element/food_trash, trash_type, FOOD_TRASH_OPENABLE, /obj/item/food/grown/.proc/generate_trash)
 	return
 
 /// Callback proc for bonus behavior for generating trash of grown food. Used by [/datum/element/food_trash].

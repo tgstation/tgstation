@@ -37,7 +37,7 @@
 	// It's not technically visible,
 	// but the organ sprite shows up in the action
 	// So we'll do this anyways
-	parent.AddElement(/datum/element/update_icon_blocker)
+	parent.add_element(/datum/element/update_icon_blocker)
 	old_icon = organ_parent.icon
 	old_icon_state = organ_parent.icon_state
 

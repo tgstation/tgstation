@@ -333,7 +333,7 @@
 
 /obj/item/stock_parts/cell/infinite/abductor/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/item/stock_parts/cell/potato
 	name = "potato battery"
@@ -355,7 +355,7 @@
 
 /obj/item/stock_parts/cell/emproof/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
+	add_element(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/empty
 	empty = TRUE

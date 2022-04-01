@@ -10,7 +10,7 @@
 	var/obj/item/master = target
 	master.add_filter("haunt_glow", 2, list("type" = "outline", "color" = "#f8f8ff", "size" = 1))
 	master.ai_controller = new /datum/ai_controller/haunted(master)
-	master.AddElement(/datum/element/movetype_handler)
+	master.add_element(/datum/element/movetype_handler)
 	ADD_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 
 /datum/element/haunted/Detach(datum/source)

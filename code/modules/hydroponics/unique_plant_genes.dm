@@ -154,7 +154,7 @@
 	if(!.)
 		return
 
-	our_plant.AddElement(/datum/element/plant_backfire, cancel_action_on_backfire, traits_to_check, genes_to_check)
+	our_plant.add_element(/datum/element/plant_backfire, cancel_action_on_backfire, traits_to_check, genes_to_check)
 	register_signal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/backfire_effect)
 
 /*
@@ -317,7 +317,7 @@
 		return
 
 	if(dangerous)
-		our_plant.AddElement(/datum/element/plant_backfire, TRUE)
+		our_plant.add_element(/datum/element/plant_backfire, TRUE)
 		register_signal(our_plant, COMSIG_PLANT_ON_BACKFIRE, .proc/early_awakening)
 	register_signal(our_plant, COMSIG_ITEM_ATTACK_SELF, .proc/manual_awakening)
 	register_signal(our_plant, COMSIG_ITEM_PRE_ATTACK, .proc/pre_consumption_check)

@@ -36,7 +36,7 @@
 	. = ..()
 	if(body_color == null)
 		body_color = pick("brown","gray","white")
-	AddElement(/datum/element/animal_variety, "mouse", body_color, FALSE)
+	add_element(/datum/element/animal_variety, "mouse", body_color, FALSE)
 	add_component(/datum/component/squeak, list('sound/effects/mousesqueek.ogg' = 1), 100, extrarange = SHORT_RANGE_SOUND_EXTRARANGE) //as quiet as a mouse or whatever
 	add_cell_sample()
 
@@ -44,10 +44,10 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 /mob/living/simple_animal/mouse/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
@@ -188,7 +188,7 @@
 
 /mob/living/simple_animal/mouse/brown/tom/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "squeaks happily!")
+	add_element(/datum/element/pet_bonus, "squeaks happily!")
 	// Tom fears no cable.
 	ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
 
@@ -208,7 +208,7 @@
 
 /obj/item/food/deadmouse/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 10)
 
 /obj/item/food/deadmouse/examine(mob/user)
 	. = ..()

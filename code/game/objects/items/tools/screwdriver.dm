@@ -52,7 +52,7 @@
 		var/our_color = pick(screwdriver_colors)
 		set_greyscale(colors=list(screwdriver_colors[our_color]))
 	. = ..()
-	AddElement(/datum/element/eyestab)
+	add_element(/datum/element/eyestab)
 
 /obj/item/screwdriver/abductor
 	name = "alien screwdriver"

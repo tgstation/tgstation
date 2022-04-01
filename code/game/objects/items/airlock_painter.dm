@@ -174,7 +174,7 @@
 		to_chat(user, span_notice("You need to get closer!"))
 		return
 	if(use_paint(user) && isturf(F))
-		F.AddElement(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, CLEAN_TYPE_PAINT, null)
+		F.add_element(/datum/element/decal, 'icons/turf/decals.dmi', stored_decal_total, stored_dir, null, null, alpha, color, null, CLEAN_TYPE_PAINT, null)
 
 /obj/item/airlock_painter/decal/AltClick(mob/user)
 	. = ..()

@@ -113,7 +113,7 @@
 	mod_ai.blackboard[BB_MOD_TARGET] = imp_in
 	mod_ai.blackboard[BB_MOD_IMPLANT] = src
 	module.mod.interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-	module.mod.AddElement(/datum/element/movetype_handler)
+	module.mod.add_element(/datum/element/movetype_handler)
 	ADD_TRAIT(module.mod, TRAIT_MOVE_FLYING, MOD_TRAIT)
 	animate(module.mod, 0.2 SECONDS, pixel_x = base_pixel_y, pixel_y = base_pixel_y)
 	module.mod.add_overlay(jet_icon)

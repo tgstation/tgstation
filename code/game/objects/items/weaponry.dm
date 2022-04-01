@@ -17,7 +17,7 @@
 
 /obj/item/banhammer/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/kneejerk)
+	add_element(/datum/element/kneejerk)
 
 /obj/item/banhammer/suicide_act(mob/user)
 		user.visible_message(span_suicide("[user] is hitting [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to ban [user.p_them()]self from life."))
@@ -299,7 +299,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		),
 	)
 
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	add_element(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 /obj/item/wirerod/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/shard))
@@ -390,7 +390,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/switchblade/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 	add_component(/datum/component/butchering, 7 SECONDS, 100)
 	add_component(/datum/component/transforming, \
 		start_transformed = start_extended, \
@@ -554,8 +554,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/statuebust/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/art, impressiveness)
-	AddElement(/datum/element/beauty, 1000)
+	add_element(/datum/element/art, impressiveness)
+	add_element(/datum/element/beauty, 1000)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
@@ -662,7 +662,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		else
 			desc = "You gotta know what a crumpet is to understand cricket."
 
-	AddElement(/datum/element/kneecapping)
+	add_element(/datum/element/kneecapping)
 
 /obj/item/melee/baseball_bat/homerun
 	name = "home run bat"
@@ -863,7 +863,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	register_signal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	register_signal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 
 /obj/item/highfrequencyblade/ComponentInitialize()
 	. = ..()

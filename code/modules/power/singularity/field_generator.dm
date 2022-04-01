@@ -74,7 +74,7 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	add_element(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/field/generator/process()
 	if(active == FG_ONLINE)

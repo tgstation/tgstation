@@ -11,7 +11,7 @@
 
 /obj/vehicle/ridden/atv/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/atv)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/atv)
 	if(!atvcover)
 		atvcover = mutable_appearance(icon, "atvcover", MOB_LAYER + 0.1)
 

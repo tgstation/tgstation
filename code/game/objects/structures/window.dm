@@ -69,7 +69,7 @@
 
 	flags_1 |= ALLOW_DARK_PAINTS_1
 	register_signal(src, COMSIG_OBJ_PAINTED, .proc/on_painted)
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 	add_component(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM, AfterRotation = CALLBACK(src,.proc/AfterRotation))
 
 	var/static/list/loc_connections = list(
@@ -77,7 +77,7 @@
 	)
 
 	if (flags_1 & ON_BORDER_1)
-		AddElement(/datum/element/connect_loc, loc_connections)
+		add_element(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

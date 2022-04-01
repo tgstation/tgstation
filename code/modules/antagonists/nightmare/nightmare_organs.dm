@@ -40,7 +40,7 @@
 
 /obj/item/organ/heart/nightmare/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)

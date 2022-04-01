@@ -37,7 +37,7 @@
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(C.dropItemToGround(bag)) //returns TRUE even if its null
 			C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), ITEM_SLOT_BACK)
-	C.AddElement(/datum/element/snailcrawl)
+	C.add_element(/datum/element/snailcrawl)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()

@@ -73,7 +73,7 @@
 		return
 	if(mod.wearer.has_gravity())
 		new /obj/effect/temp_visual/mook_dust(get_turf(src))
-	mod.wearer.AddElement(/datum/element/forced_gravity, 0)
+	mod.wearer.add_element(/datum/element/forced_gravity, 0)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	playsound(src, 'sound/effects/gravhit.ogg', 50)
 

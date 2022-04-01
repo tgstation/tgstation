@@ -399,7 +399,7 @@
 
 /obj/structure/ladder/unbreakable/rune/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
 	user.visible_message(span_notice("[user] activates \the [src]."), span_notice("You activate \the [src]."))

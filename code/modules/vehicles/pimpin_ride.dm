@@ -15,7 +15,7 @@
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 	if (installed_upgrade)
 		installed_upgrade.install(src)
 
@@ -150,7 +150,7 @@
 	greyscale_colors = "#ffffff#6aa3ff#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/buffer/install(obj/vehicle/ridden/janicart/installee)
-	installee.AddElement(/datum/element/cleaning)
+	installee.add_element(/datum/element/cleaning)
 
 /obj/item/janicart_upgrade/buffer/uninstall(obj/vehicle/ridden/janicart/installee)
 	installee.RemoveElement(/datum/element/cleaning)

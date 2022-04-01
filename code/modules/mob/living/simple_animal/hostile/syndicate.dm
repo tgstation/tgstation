@@ -318,5 +318,5 @@
 
 /mob/living/simple_animal/hostile/viscerator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	add_component(/datum/component/swarming)

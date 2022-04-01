@@ -40,11 +40,11 @@
 		if(STORY_VALUE_LEGENDARY)
 			beauty_value = rand(500, 800) //Almost always a good story! this is for memories you can barely ever get, killing megafauna, doing ultimate feats!
 
-	engraved_wall.AddElement(/datum/element/art, beauty_value / ENGRAVING_BEAUTY_TO_ART_FACTOR)
+	engraved_wall.add_element(/datum/element/art, beauty_value / ENGRAVING_BEAUTY_TO_ART_FACTOR)
 	if(persistent_save)
-		engraved_wall.AddElement(/datum/element/beauty, beauty_value)
+		engraved_wall.add_element(/datum/element/beauty, beauty_value)
 	else
-		engraved_wall.AddElement(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
+		engraved_wall.add_element(/datum/element/beauty, beauty_value / ENGRAVING_PERSISTENCE_BEAUTY_LOSS_FACTOR) //Old age does them harm
 	icon_state_append = rand(1, 2)
 	//must be here to allow overlays to be updated
 	register_signal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/on_update_overlays)

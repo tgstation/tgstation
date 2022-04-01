@@ -8,7 +8,7 @@
 
 /obj/item/clothing/head/collectable/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/series, /obj/item/clothing/head/collectable, "Super duper collectable hats")
+	add_element(/datum/element/series, /obj/item/clothing/head/collectable, "Super duper collectable hats")
 
 /obj/item/clothing/head/collectable/petehat
 	name = "ultra rare Pete's hat!"

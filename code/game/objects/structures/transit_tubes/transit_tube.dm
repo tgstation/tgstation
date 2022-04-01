@@ -19,7 +19,7 @@
 		setDir(newdirection)
 	init_tube_dirs()
 	generate_tube_overlays()
-	AddElement(/datum/element/climbable)
+	add_element(/datum/element/climbable)
 
 /obj/structure/transit_tube/Destroy()
 	for(var/obj/structure/transit_tube_pod/P in loc)

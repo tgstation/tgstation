@@ -14,7 +14,7 @@
 	var/datum/ai_controller/ai = new /datum/ai_controller/cursed(master)
 	ai.blackboard[BB_TARGET_SLOT] = slot
 	master.ai_controller = ai
-	master.AddElement(/datum/element/movetype_handler)
+	master.add_element(/datum/element/movetype_handler)
 	ADD_TRAIT(master, TRAIT_MOVE_FLYING, ELEMENT_TRAIT(type))
 
 /datum/element/cursed/Detach(datum/source)

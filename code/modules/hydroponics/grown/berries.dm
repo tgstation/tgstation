@@ -138,7 +138,7 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/wine
 
 /obj/item/food/grown/grapes/make_dryable()
-	AddElement(/datum/element/dryable, /obj/item/food/no_raisin/healthy)
+	add_element(/datum/element/dryable, /obj/item/food/no_raisin/healthy)
 
 // Green Grapes
 /obj/item/seeds/grape/green

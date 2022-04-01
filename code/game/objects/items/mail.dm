@@ -53,7 +53,7 @@
 /obj/item/mail/Initialize(mapload)
 	. = ..()
 	register_signal(src, COMSIG_MOVABLE_DISPOSING, .proc/disposal_handling)
-	AddElement(/datum/element/item_scaling, 0.75, 1)
+	add_element(/datum/element/item_scaling, 0.75, 1)
 	if(isnull(department_colors))
 		department_colors = list(
 			ACCOUNT_CIV = COLOR_WHITE,

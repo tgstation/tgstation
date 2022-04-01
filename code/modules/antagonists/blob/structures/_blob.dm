@@ -45,7 +45,7 @@
 		air_update_turf(TRUE, TRUE)
 	ConsumeTile()
 	if(!QDELETED(src)) //Consuming our tile can in rare cases cause us to del
-		AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
+		add_element(/datum/element/swabable, CELL_LINE_TABLE_BLOB, CELL_VIRUS_TABLE_GENERIC, 2, 2)
 
 /obj/structure/blob/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

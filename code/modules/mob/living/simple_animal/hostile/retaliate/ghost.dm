@@ -43,7 +43,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/ghost/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	give_hair()
 	if(random)
 		switch(rand(0,1))

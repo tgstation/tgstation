@@ -241,7 +241,7 @@ FLOOR SAFES
 
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/undertile)
+	add_element(/datum/element/undertile)
 
 #undef SOUND_CHANCE
 #undef BROKEN_THRESHOLD

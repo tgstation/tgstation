@@ -59,7 +59,7 @@
 
 /// I assign the ridable element in this so i don't have to fuss with hand wheelchairs and motor wheelchairs having different subtypes
 /obj/vehicle/ridden/wheelchair/proc/make_ridable()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/hand)
 
 /obj/vehicle/ridden/wheelchair/gold
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS

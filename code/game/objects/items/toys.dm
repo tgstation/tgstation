@@ -52,7 +52,7 @@
 
 /obj/item/toy/waterballoon/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 
 /obj/item/toy/waterballoon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -611,7 +611,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 /obj/item/toy/snappop/proc/on_entered(datum/source, H as mob|obj)
 	SIGNAL_HANDLER
@@ -868,7 +868,7 @@
 
 /obj/item/toy/cards/deck/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/drag_pickup)
+	add_element(/datum/element/drag_pickup)
 	populate_deck()
 
 /**

@@ -348,7 +348,7 @@
 	. = ..()
 	add_component(/datum/component/tactical)
 	add_component(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
-	AddElement(/datum/element/beauty, 500)
+	add_element(/datum/element/beauty, 500)
 
 /obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -427,7 +427,7 @@
 
 /obj/item/kirbyplants/fern/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_ALGAE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_ALGAE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 5)
 
 //a rock is flora according to where the icon file is
 //and now these defines

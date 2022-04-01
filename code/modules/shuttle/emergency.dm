@@ -594,7 +594,7 @@
 
 /obj/machinery/computer/shuttle/pod/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	if(obj_flags & EMAGGED)

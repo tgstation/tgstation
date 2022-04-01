@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/butterfly/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	var/newcolor = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 	add_atom_colour(newcolor, FIXED_COLOUR_PRIORITY)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

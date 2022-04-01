@@ -85,7 +85,7 @@
 /turf/closed/wall/rust/Initialize(mapload)
 	. = ..()
 	color = null
-	AddElement(/datum/element/rust)
+	add_element(/datum/element/rust)
 
 /turf/closed/wall/r_wall/rust
 	//SDMM supports colors, this is simply for easier mapping
@@ -95,7 +95,7 @@
 /turf/closed/wall/r_wall/rust/Initialize(mapload)
 	. = ..()
 	color = null
-	AddElement(/datum/element/rust)
+	add_element(/datum/element/rust)
 
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"

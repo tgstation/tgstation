@@ -76,7 +76,7 @@
 	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/bane, picked_mobtype)
+	master.add_element(/datum/element/bane, picked_mobtype)
 	target_types_by_comp[comp] = picked_mobtype
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
 
@@ -166,7 +166,7 @@
 /datum/fantasy_affix/strength/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
+	master.add_element(/datum/element/knockback, CEILING(comp.quality/2, 1), FLOOR(comp.quality/10, 1))
 	return "[newName] of strength"
 
 /datum/fantasy_affix/strength/remove(datum/component/fantasy/comp)
@@ -202,7 +202,7 @@
 	var/obj/item/master = comp.parent
 	var/filter_color = "#8a0c0ca1" //clarified args
 	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
-	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
+	master.add_element(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
 	var/add_dropdel = FALSE //clarified boolean
 	comp.appliedComponents += master.add_component(/datum/component/curse_of_hunger, add_dropdel)
 	return newName //no spoilers!

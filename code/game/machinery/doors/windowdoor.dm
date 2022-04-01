@@ -59,8 +59,8 @@
 		COMSIG_ATOM_EXIT = .proc/on_exit,
 	)
 
-	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/atmos_sensitive, mapload)
 
 /obj/machinery/door/window/ComponentInitialize()
 	. = ..()

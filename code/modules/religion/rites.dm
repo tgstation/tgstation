@@ -744,4 +744,4 @@
 /datum/religion_rites/tenacious/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
 	to_chat(user, span_nicegreen("You feel [GLOB.deity]'s tenacity pouring into you!"))
-	user.AddElement(/datum/element/tenacious)
+	user.add_element(/datum/element/tenacious)

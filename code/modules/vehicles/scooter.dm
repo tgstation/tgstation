@@ -9,7 +9,7 @@
 	make_ridable()
 
 /obj/vehicle/ridden/scooter/proc/make_ridable()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/scooter)
 
 /obj/vehicle/ridden/scooter/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -57,7 +57,7 @@
 	sparks.attach(src)
 
 /obj/vehicle/ridden/scooter/skateboard/make_ridable()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/scooter/skateboard)
 
 /obj/vehicle/ridden/scooter/skateboard/Destroy()
 	if(sparks)
@@ -278,7 +278,7 @@
 	var/component_type = /datum/component/riding/vehicle/scooter/skateboard/wheelys
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/make_ridable()
-	AddElement(/datum/element/ridable, component_type)
+	add_element(/datum/element/ridable, component_type)
 
 /obj/vehicle/ridden/scooter/skateboard/wheelys/post_unbuckle_mob(mob/living/M)
 	if(!has_buckled_mobs())

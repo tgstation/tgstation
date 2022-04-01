@@ -29,9 +29,9 @@
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/effect/decal/cleanable/insectguts))
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
-	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
+	add_element(/datum/element/death_drops, list(/obj/effect/decal/cleanable/insectguts))
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+	add_element(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
 	add_component(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -80,7 +80,7 @@
 
 /mob/living/basic/cockroach/glockroach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
+	add_element(/datum/element/ranged_attacks, /obj/item/ammo_casing/glockroach)
 
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(

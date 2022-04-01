@@ -210,7 +210,7 @@
 
 /turf/open/floor/plating/rust/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/rust)
+	add_element(/datum/element/rust)
 
 /turf/open/floor/plating/plasma
 	initial_gas_mix = ATMOS_TANK_PLASMA
@@ -219,7 +219,7 @@
 	. = ..()
 	// Because this is a fluff turf explicitly for KiloStation it doesn't make sense to ChangeTurf like usual
 	// Especially since it looks like we don't even change the default icon/iconstate???
-	AddElement(/datum/element/rust)
+	add_element(/datum/element/rust)
 
 /turf/open/floor/stone
 	name = "stone brick floor"

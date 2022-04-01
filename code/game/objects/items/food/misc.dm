@@ -35,7 +35,7 @@
 	add_component(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
 
 /obj/item/food/cheese/wheel/MakeBakeable()
 	add_component(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -108,7 +108,7 @@
 
 /obj/item/food/hugemushroomslice/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_WALKING_MUSHROOM, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/food/popcorn
 	name = "popcorn"
@@ -144,7 +144,7 @@
 
 /obj/item/food/fries/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dunkable, 10)
+	add_element(/datum/element/dunkable, 10)
 
 /obj/item/food/tatortot
 	name = "tator tot"
@@ -158,7 +158,7 @@
 
 /obj/item/food/tatortot/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dunkable, 10)
+	add_element(/datum/element/dunkable, 10)
 
 /obj/item/food/soydope
 	name = "soy dope"
@@ -183,7 +183,7 @@
 
 /obj/item/food/cheesyfries/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dunkable, 10)
+	add_element(/datum/element/dunkable, 10)
 
 /obj/item/food/poutine
 	name = "poutine"
@@ -197,7 +197,7 @@
 
 /obj/item/food/poutine/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dunkable, 10)
+	add_element(/datum/element/dunkable, 10)
 
 /obj/item/food/badrecipe
 	name = "burned mess"
@@ -227,7 +227,7 @@
 
 /obj/item/food/badrecipe/moldy/bacteria/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_MOLD, CELL_VIRUS_TABLE_GENERIC, rand(2, 4), 25)
 
 ///Prevents grilling burnt shit from well, burning.
 /obj/item/food/badrecipe/proc/OnGrill()
@@ -246,7 +246,7 @@
 
 /obj/item/food/carrotfries/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dunkable, 10)
+	add_element(/datum/element/dunkable, 10)
 
 /obj/item/food/candiedapple
 	name = "candied apple"
@@ -308,7 +308,7 @@
 
 /obj/item/food/spiderlollipop/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/chewable)
+	add_element(/datum/element/chewable)
 
 /obj/item/food/chococoin
 	name = "chocolate coin"
@@ -439,7 +439,7 @@
 	. = ..()
 	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
 	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
-	AddElement(/datum/element/chewable)
+	add_element(/datum/element/chewable)
 
 /obj/item/food/lollipop/proc/change_head_color(C)
 	head_color = C
@@ -477,7 +477,7 @@
 
 /obj/item/food/bubblegum/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/chewable, metabolization_amount = metabolization_amount)
+	add_element(/datum/element/chewable, metabolization_amount = metabolization_amount)
 
 /obj/item/food/bubblegum/nicotine
 	name = "nicotine gum"
@@ -556,7 +556,7 @@
 /obj/item/food/gumball/Initialize(mapload)
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
-	AddElement(/datum/element/chewable)
+	add_element(/datum/element/chewable)
 
 /obj/item/food/branrequests
 	name = "Bran Requests Cereal"
@@ -826,7 +826,7 @@
 
 /obj/item/food/cheese_curds/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dryable,  /obj/item/food/firm_cheese)
+	add_element(/datum/element/dryable,  /obj/item/food/firm_cheese)
 
 /obj/item/food/firm_cheese
 	name = "firm cheese"
@@ -838,7 +838,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/firm_cheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/firm_cheese_slice, 3, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/firm_cheese_slice, 3, 30)
 
 /obj/item/food/firm_cheese_slice
 	name = "firm cheese slice"

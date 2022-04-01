@@ -88,7 +88,7 @@
 
 	drawtype = pick(all_drawables)
 
-	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
+	add_element(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
 	if(can_change_colour)
 		add_component(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
@@ -409,9 +409,9 @@
 						return
 			C.add_hiddenprint(user)
 			if(istagger)
-				C.AddElement(/datum/element/art, GOOD_ART)
+				C.add_element(/datum/element/art, GOOD_ART)
 			else
-				C.AddElement(/datum/element/art, BAD_ART)
+				C.add_element(/datum/element/art, BAD_ART)
 
 	if(!instant)
 		to_chat(user, span_notice("You finish drawing \the [temp]."))

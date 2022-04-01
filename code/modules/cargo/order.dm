@@ -1,4 +1,4 @@
-/// The chance for a manifest or crate to be created with errors 
+/// The chance for a manifest or crate to be created with errors
 #define MANIFEST_ERROR_CHANCE 5
 
 // MANIFEST BITFLAGS
@@ -6,7 +6,7 @@
 #define MANIFEST_ERROR_NAME (1 << 0)
 /// Determines if contents will be deleted from the manifest but still be present in the crate
 #define MANIFEST_ERROR_CONTENTS (1 << 1)
-/// Determines if contents will be deleted from the crate but still be present in the manifest 
+/// Determines if contents will be deleted from the crate but still be present in the manifest
 #define MANIFEST_ERROR_ITEM (1 << 2)
 
 /obj/item/paper/fluff/jobs/cargo/manifest
@@ -130,7 +130,7 @@
 		account_holder = "Cargo"
 	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
 	if(department_destination)
-		crate.AddElement(/datum/element/deliver_first, department_destination, pack.cost)
+		crate.add_element(/datum/element/deliver_first, department_destination, pack.cost)
 	generateManifest(crate, account_holder, pack, pack.cost)
 	return crate
 

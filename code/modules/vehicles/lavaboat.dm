@@ -13,7 +13,7 @@
 
 /obj/vehicle/ridden/lavaboat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat)
 
 /obj/item/oar
 	name = "oar"
@@ -77,4 +77,4 @@
 
 /obj/vehicle/ridden/lavaboat/dragon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat/dragonboat)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/lavaboat/dragonboat)

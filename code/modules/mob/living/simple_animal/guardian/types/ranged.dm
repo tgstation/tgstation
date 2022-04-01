@@ -116,7 +116,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/snare/proc/on_entered(datum/source, AM as mob|obj)
 	SIGNAL_HANDLER

@@ -83,7 +83,7 @@
 	mulebot_count += 1
 	set_id(suffix || id || "#[mulebot_count]")
 	suffix = null
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/mulebot)
+	add_element(/datum/element/ridable, /datum/component/riding/creature/mulebot)
 	diag_hud_set_mulebotcell()
 
 	if(network_id)

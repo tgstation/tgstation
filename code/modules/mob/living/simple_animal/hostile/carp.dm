@@ -68,7 +68,7 @@
 	)
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload, mob/tamer)
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	if(random_color)
 		set_greyscale(new_config=/datum/greyscale_config/carp)
 		carp_randomify(rarechance)
@@ -89,7 +89,7 @@
 /mob/living/simple_animal/hostile/carp/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
 	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/carp)
+	add_element(/datum/element/ridable, /datum/component/riding/creature/carp)
 	if(ai_controller)
 		var/datum/ai_controller/hostile_friend/ai_current_controller = ai_controller
 		ai_current_controller.befriend(tamer)
@@ -98,7 +98,7 @@
 
 
 /mob/living/simple_animal/hostile/carp/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /**
  * Randomly assigns a color to a carp from either a common or rare color variant lists
@@ -181,7 +181,7 @@
 
 
 /mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -193,7 +193,7 @@
 	if(!. || !client)
 		return FALSE
 
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/megacarp)
+	add_element(/datum/element/ridable, /datum/component/riding/creature/megacarp)
 	can_buckle = TRUE
 	buckle_lying = 0
 
@@ -221,7 +221,7 @@
 
 /mob/living/simple_animal/hostile/carp/lia/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	add_element(/datum/element/pet_bonus, "bloops happily!")
 
 
 /mob/living/simple_animal/hostile/carp/cayenne
@@ -243,7 +243,7 @@
 
 /mob/living/simple_animal/hostile/carp/cayenne/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "bloops happily!")
+	add_element(/datum/element/pet_bonus, "bloops happily!")
 	colored_disk_mouth = mutable_appearance(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/carp/disk_mouth, greyscale_colors), "disk_mouth")
 	ADD_TRAIT(src, TRAIT_DISK_VERIFIER, INNATE_TRAIT) //carp can verify disky
 	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT) //carp can take the disk off the captain

@@ -24,13 +24,13 @@
 	. = ..()
 	ini_dir = dir
 	if(climbable)
-		AddElement(/datum/element/climbable)
+		add_element(/datum/element/climbable)
 
 	if(density && flags_1 & ON_BORDER_1) // blocks normal movement from and to the direction it's facing.
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_EXIT = .proc/on_exit,
 		)
-		AddElement(/datum/element/connect_loc, loc_connections)
+		add_element(/datum/element/connect_loc, loc_connections)
 
 	add_component(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
 

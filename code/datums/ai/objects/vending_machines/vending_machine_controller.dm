@@ -14,8 +14,8 @@
 		return AI_CONTROLLER_INCOMPATIBLE
 	var/obj/machinery/vending/vendor_pawn = new_pawn
 	vendor_pawn.tiltable = FALSE  //Not manually tiltable by hitting it anymore. We are now aggressively doing it ourselves.
-	vendor_pawn.AddElement(/datum/element/waddling)
-	vendor_pawn.AddElement(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, sound_vary = TRUE)
+	vendor_pawn.add_element(/datum/element/waddling)
+	vendor_pawn.add_element(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, sound_vary = TRUE)
 	vendor_pawn.squish_damage = 15
 	return ..() //Run parent at end
 

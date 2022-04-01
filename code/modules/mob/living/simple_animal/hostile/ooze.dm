@@ -129,7 +129,7 @@
 	consume.stop_consuming()
 
 /mob/living/simple_animal/hostile/ooze/gelatinous/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GELATINOUS, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_GELATINOUS, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 ///This ability lets the gelatinious ooze speed up for a little bit
 /datum/action/cooldown/metabolicboost
@@ -300,7 +300,7 @@
 	QDEL_NULL(globules)
 
 /mob/living/simple_animal/hostile/ooze/grapes/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 ///Ability that allows the owner to fire healing globules at mobs, targetting specific limbs.
 /obj/effect/proc_holder/globules

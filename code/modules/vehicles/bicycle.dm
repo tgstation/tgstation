@@ -8,7 +8,7 @@
 
 /obj/vehicle/ridden/bicycle/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/bicycle)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/bicycle)
 
 /obj/vehicle/ridden/bicycle/zap_act(power, zap_flags) // :::^^^)))
 	//This didn't work for 3 years because none ever tested it I hate life

@@ -206,7 +206,7 @@
 
 /obj/machinery/smartfridge/survival_pod/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)
 	. = ..()

@@ -52,7 +52,7 @@
 
 /obj/item/toy/mecha/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/series, /obj/item/toy/mecha, "Mini-Mecha action figures")
+	add_element(/datum/element/series, /obj/item/toy/mecha, "Mini-Mecha action figures")
 	combat_health = max_combat_health
 	switch(special_attack_type)
 		if(SPECIAL_ATTACK_DAMAGE)

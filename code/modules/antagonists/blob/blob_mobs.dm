@@ -131,7 +131,7 @@
 
 /mob/living/simple_animal/hostile/blob/blobspore/Initialize(mapload, obj/structure/blob/special/linked_node)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
@@ -243,7 +243,7 @@
 		add_overlay(blob_head_overlay)
 
 /mob/living/simple_animal/hostile/blob/blobspore/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/blob/blobspore/independent
 	gold_core_spawnable = HOSTILE_SPAWN
@@ -291,7 +291,7 @@
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life(delta_time = SSMOBS_DT, times_fired)
 	if(!..())

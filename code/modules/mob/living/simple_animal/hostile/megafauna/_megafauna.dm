@@ -57,7 +57,7 @@
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	if(gps_name && true_spawn)
 		add_component(/datum/component/gps, gps_name)
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, MEGAFAUNA_TRAIT)

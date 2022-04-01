@@ -284,7 +284,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/legionnaire_bonfire/proc/on_entered(datum/source, atom/movable/mover)
 	SIGNAL_HANDLER

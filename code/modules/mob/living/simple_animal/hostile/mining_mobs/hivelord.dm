@@ -97,7 +97,7 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), 100)
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	add_component(/datum/component/swarming)
 	add_component(/datum/component/clickbox, icon_state = clickbox_state, max_scale = clickbox_max_scale)
 

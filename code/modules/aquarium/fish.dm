@@ -67,7 +67,7 @@
 /obj/item/fish/Initialize(mapload)
 	. = ..()
 	if(fillet_type)
-		AddElement(/datum/element/processable, TOOL_KNIFE, fillet_type, 1, 5)
+		add_element(/datum/element/processable, TOOL_KNIFE, fillet_type, 1, 5)
 	add_component(/datum/component/aquarium_content, .proc/get_aquarium_animation, list(COMSIG_FISH_STATUS_CHANGED,COMSIG_FISH_STIRRED))
 	register_signal(src, COMSIG_ATOM_TEMPORARY_ANIMATION_START, .proc/on_temp_animation)
 

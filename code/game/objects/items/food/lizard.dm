@@ -14,7 +14,7 @@
 
 /obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dryable, /obj/item/food/tiziran_sausage)
+	add_element(/datum/element/dryable, /obj/item/food/tiziran_sausage)
 
 /obj/item/food/tiziran_sausage
 	name = "\improper Tiziran blood sausage"
@@ -38,7 +38,7 @@
 
 /obj/item/food/raw_headcheese/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dryable,  /obj/item/food/headcheese)
+	add_element(/datum/element/dryable,  /obj/item/food/headcheese)
 
 /obj/item/food/headcheese
 	name = "headcheese block"
@@ -51,7 +51,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/headcheese/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/headcheese_slice, 5, 30)
 
 /obj/item/food/headcheese_slice
 	name = "headcheese slice"
@@ -289,7 +289,7 @@
 	add_component(/datum/component/bakeable, /obj/item/food/bread/root, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 30)
+	add_element(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 30)
 
 /obj/item/food/flatrootdough
 	name = "flat rootdough"
@@ -301,7 +301,7 @@
 	foodtypes = VEGETABLES | NUTS
 
 /obj/item/food/flatrootdough/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 30)
 
 /obj/item/food/flatrootdough/MakeGrillable()
 	add_component(/datum/component/grillable, /obj/item/food/root_flatbread, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
@@ -317,7 +317,7 @@
 	foodtypes = VEGETABLES | NUTS
 
 /obj/item/food/rootdoughslice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 30)
 
 /obj/item/food/rootdoughslice/MakeBakeable()
 	add_component(/datum/component/bakeable, /obj/item/food/rootroll, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -362,7 +362,7 @@
 	add_component(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/root/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/root, 5, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/root, 5, 30)
 
 /obj/item/food/breadslice/root
 	name = "rootbread slice"
@@ -514,7 +514,7 @@
 	foodtypes = NUTS | SUGAR
 
 /obj/item/food/cake/korta_brittle/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/korta_brittle, 5, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/korta_brittle, 5, 30)
 
 /obj/item/food/cakeslice/korta_brittle
 	name = "korta brittle slice"

@@ -14,7 +14,7 @@
 /obj/machinery/power/terminal/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
+	add_element(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)

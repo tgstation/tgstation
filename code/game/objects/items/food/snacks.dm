@@ -89,7 +89,7 @@
 
 /obj/item/food/chips/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+		add_element(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 /obj/item/food/chips/shrimp
 	name = "shrimp chips"
@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/cornchips/MakeLeaveTrash()
-	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+	add_element(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
 
 /obj/item/food/cornchips/blue
 	name = "\improper Coolest Ranch Boritos corn chips"

@@ -161,7 +161,7 @@
 
 /obj/item/dice/d100/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/item/dice/eightbd20
 	name = "strange d20"
@@ -172,7 +172,7 @@
 
 /obj/item/dice/eightbd20/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/item/dice/fourdd6
 	name = "4d d6"
@@ -183,7 +183,7 @@
 
 /obj/item/dice/fourdd6/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/item/dice/attack_self(mob/user)
 	diceroll(user)

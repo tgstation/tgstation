@@ -89,7 +89,7 @@
 	set_frequency(sanitize_frequency(frequency, freerange))
 	set_on(on)
 
-	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	add_element(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
 /obj/item/radio/Destroy()
 	remove_radio_all(src) //Just to be sure

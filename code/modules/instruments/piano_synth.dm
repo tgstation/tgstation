@@ -31,7 +31,7 @@
 
 /obj/item/instrument/piano_synth/headphones/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 	register_signal(src, COMSIG_SONG_START, .proc/start_playing)
 	register_signal(src, COMSIG_SONG_END, .proc/stop_playing)
 

@@ -156,8 +156,8 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 
 /obj/item/stack/sheet/wethide/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)
 	. = ..()
-	AddElement(/datum/element/dryable, /obj/item/stack/sheet/leather)
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/dryable, /obj/item/stack/sheet/leather)
+	add_element(/datum/element/atmos_sensitive, mapload)
 	add_component(/datum/component/grillable, /obj/item/stack/sheet/leather, rand(1 SECONDS, 3 SECONDS), TRUE)
 
 /obj/item/stack/sheet/wethide/burn()

@@ -234,7 +234,7 @@
 	diag_hud_set_mechstat()
 	update_appearance()
 
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 	become_hearing_sensitive(trait_source = ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_ASHSTORM_IMMUNE, ROUNDSTART_TRAIT) //protects pilots from ashstorms.
 	for(var/key in equip_by_category)

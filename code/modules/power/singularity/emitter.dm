@@ -72,7 +72,7 @@
 	sparks.attach(src)
 	sparks.set_up(5, TRUE, src)
 	add_component(/datum/component/simple_rotation)
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+	add_element(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/power/emitter/welded/Initialize(mapload)
 	welded = TRUE

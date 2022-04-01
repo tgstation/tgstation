@@ -32,12 +32,12 @@
 		sigdev.set_frequency(roundstart_signaller_freq)
 
 	if(undertile_pressureplate)
-		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
+		add_element(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
 	register_signal(src, COMSIG_OBJ_HIDE, .proc/ToggleActive)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 /obj/item/pressure_plate/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER

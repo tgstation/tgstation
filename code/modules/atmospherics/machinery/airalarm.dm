@@ -136,7 +136,7 @@
 	update_appearance()
 
 	set_frequency(frequency)
-	AddElement(/datum/element/connect_loc, atmos_connections)
+	add_element(/datum/element/connect_loc, atmos_connections)
 	add_component(/datum/component/usb_port, list(
 		/obj/item/circuit_component/air_alarm,
 	))

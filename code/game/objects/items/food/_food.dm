@@ -58,7 +58,7 @@
 	if(eatverbs)
 		eatverbs = string_list(eatverbs)
 	if(venue_value)
-		AddElement(/datum/element/venue_price, venue_value)
+		add_element(/datum/element/venue_price, venue_value)
 	MakeEdible()
 	MakeProcessable()
 	MakeLeaveTrash()
@@ -101,7 +101,7 @@
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
 /obj/item/food/proc/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type)
+		add_element(/datum/element/food_trash, trash_type)
 	return
 
 ///This proc makes things decompose. Set preserved_food to TRUE to make it never decompose.

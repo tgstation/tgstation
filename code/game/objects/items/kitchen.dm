@@ -38,7 +38,7 @@
 
 /obj/item/kitchen/fork/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/eyestab)
+	add_element(/datum/element/eyestab)
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!"))
@@ -73,7 +73,7 @@
 
 /obj/item/kitchen/fork/plastic/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
+	add_element(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/knife/kitchen
 	name = "kitchen knife"
@@ -96,7 +96,7 @@
 
 /obj/item/knife/plastic/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
+	add_element(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 /obj/item/kitchen/rollingpin
 	name = "rolling pin"
@@ -146,6 +146,6 @@
 
 /obj/item/kitchen/spoon/plastic/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
+	add_element(/datum/element/easily_fragmented, PLASTIC_BREAK_PROBABILITY)
 
 #undef PLASTIC_BREAK_PROBABILITY

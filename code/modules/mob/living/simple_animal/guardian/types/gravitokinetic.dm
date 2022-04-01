@@ -45,8 +45,8 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Manifest(forced)
 	. = ..()
 	//just make sure to reapply a gravity immunity wherever you summon. it can be overridden but not by you at least
-	summoner.AddElement(/datum/element/forced_gravity, 1)
-	AddElement(/datum/element/forced_gravity, 1)
+	summoner.add_element(/datum/element/forced_gravity, 1)
+	add_element(/datum/element/forced_gravity, 1)
 
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/Moved(oldLoc, dir)
 	. = ..()
@@ -57,7 +57,7 @@
 /mob/living/simple_animal/hostile/guardian/gravitokinetic/proc/add_gravity(atom/A, new_gravity = 3)
 	if(gravito_targets[A])
 		return
-	A.AddElement(/datum/element/forced_gravity, new_gravity)
+	A.add_element(/datum/element/forced_gravity, new_gravity)
 	gravito_targets[A] = new_gravity
 	register_signal(A, COMSIG_MOVABLE_MOVED, .proc/__distance_check)
 	playsound(src, 'sound/effects/gravhit.ogg', 100, TRUE)

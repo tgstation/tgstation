@@ -14,7 +14,7 @@
 		user.RemoveElement(/datum/element/digitalcamo)
 	else
 		to_chat(user, span_notice("We distort our form to hide from the AI."))
-		user.AddElement(/datum/element/digitalcamo)
+		user.add_element(/datum/element/digitalcamo)
 	active = !active
 	return TRUE
 

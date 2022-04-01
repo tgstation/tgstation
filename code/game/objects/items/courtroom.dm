@@ -16,7 +16,7 @@
 
 /obj/item/gavelhammer/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/kneejerk)
+	add_element(/datum/element/kneejerk)
 
 /obj/item/gavelhammer/suicide_act(mob/user)
 	user.visible_message(span_suicide("[user] has sentenced [user.p_them()]self to death with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

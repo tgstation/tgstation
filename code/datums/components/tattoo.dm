@@ -20,7 +20,7 @@
 		///okay, i need to add some way to saved tattoos
 		return COMPONENT_INCOMPATIBLE
 	src.tattoo_description = tattoo_description
-	tatted_limb.AddElement(/datum/element/art/commoner, 15)
+	tatted_limb.add_element(/datum/element/art/commoner, 15)
 
 	if(tatted_limb.owner)
 		setup_tatted_owner(tatted_limb.owner)

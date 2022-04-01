@@ -37,7 +37,7 @@
 	riot = new /datum/action/cooldown/riot
 	domain.Grant(src)
 	riot.Grant(src)
-	AddElement(/datum/element/waddling)
+	add_element(/datum/element/waddling)
 
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 

@@ -143,8 +143,8 @@
 /obj/item/gun/energy/plasmacutter/ComponentInitialize()
 	. = ..()
 	add_component(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
-	AddElement(/datum/element/update_icon_blocker)
-	AddElement(/datum/element/tool_flash, 1)
+	add_element(/datum/element/update_icon_blocker)
+	add_element(/datum/element/tool_flash, 1)
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
@@ -332,7 +332,7 @@
 
 /obj/item/gun/energy/printer/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 	add_component(/datum/component/automatic_fire, 0.3 SECONDS)
 
 /obj/item/gun/energy/printer/emp_act()

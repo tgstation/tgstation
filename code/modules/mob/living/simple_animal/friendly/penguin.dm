@@ -24,8 +24,8 @@
 
 /mob/living/simple_animal/pet/penguin/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "honks happily!")
-	AddElement(/datum/element/waddling)
+	add_element(/datum/element/pet_bonus, "honks happily!")
+	add_element(/datum/element/waddling)
 
 /mob/living/simple_animal/pet/penguin/emperor
 	name = "Emperor penguin"

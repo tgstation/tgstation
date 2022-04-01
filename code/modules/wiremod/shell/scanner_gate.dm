@@ -11,7 +11,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 	add_component(/datum/component/shell, list(
 		new /obj/item/circuit_component/scanner_gate()

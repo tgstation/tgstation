@@ -24,7 +24,7 @@
 
 /obj/item/ammo_box/magazine/recharge/ctf/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	add_element(/datum/element/delete_on_drop)
 
 
 /obj/item/ammo_casing/caseless/laser/ctf
@@ -32,7 +32,7 @@
 
 /obj/item/ammo_casing/caseless/laser/ctf/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	add_element(/datum/element/delete_on_drop)
 
 // LASER RIFLE
 
@@ -45,7 +45,7 @@
 
 /obj/item/gun/ballistic/automatic/laser/ctf/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	add_element(/datum/element/delete_on_drop)
 
 
 /obj/item/ammo_box/magazine/recharge/ctf/rifle
@@ -79,7 +79,7 @@
 
 /obj/item/gun/ballistic/shotgun/ctf/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	add_element(/datum/element/delete_on_drop)
 
 /obj/item/ammo_box/magazine/recharge/ctf/shotgun
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/shotgun
@@ -129,7 +129,7 @@
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/ctf/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	add_element(/datum/element/delete_on_drop)
 
 
 /obj/item/ammo_box/magazine/recharge/ctf/deagle
@@ -167,7 +167,7 @@
 
 /obj/item/gun/energy/laser/instakill/ctf/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/delete_on_drop)
+	add_element(/datum/element/delete_on_drop)
 
 /obj/item/ammo_casing/energy/instakill
 	projectile_type = /obj/projectile/beam/instakill

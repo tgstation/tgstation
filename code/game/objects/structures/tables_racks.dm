@@ -40,13 +40,13 @@
 	. = ..()
 	if(_buildstack)
 		buildstack = _buildstack
-	AddElement(/datum/element/climbable)
+	add_element(/datum/element/climbable)
 
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_COLLIDE = .proc/table_carbon,
 	)
 
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 	if (!(flags_1 & NODECONSTRUCT_1))
 		var/static/list/tool_behaviors = list(
@@ -59,7 +59,7 @@
 			),
 		)
 
-		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+		add_element(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
@@ -367,7 +367,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/table/glass/Destroy()
 	QDEL_LIST(debris)

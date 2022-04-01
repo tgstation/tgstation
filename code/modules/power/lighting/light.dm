@@ -84,7 +84,7 @@
 		cell = new/obj/item/stock_parts/cell/emergency_light(src)
 
 	register_signal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()

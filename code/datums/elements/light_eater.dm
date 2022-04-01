@@ -84,7 +84,7 @@
 	if(SEND_SIGNAL(morsel, COMSIG_LIGHT_EATER_ACT, eater) & COMPONENT_BLOCK_LIGHT_EATER)
 		return FALSE // Either the light eater can't eat it or it had special behaviors.
 
-	morsel.AddElement(/datum/element/light_eaten)
+	morsel.add_element(/datum/element/light_eaten)
 	SEND_SIGNAL(src, COMSIG_LIGHT_EATER_DEVOUR, morsel)
 	return TRUE
 

@@ -153,7 +153,7 @@
 /datum/material/alloy/alien/on_applied_obj(obj/item/target_item, amount, material_flags)
 	. = ..()
 
-	target_item.AddElement(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
+	target_item.add_element(/datum/element/obj_regen, _rate=0.02) // 2% regen per tick.
 	if(!istype(target_item))
 		return
 

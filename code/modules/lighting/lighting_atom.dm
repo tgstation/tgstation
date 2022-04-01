@@ -69,7 +69,7 @@
 		return
 
 	if(opacity)
-		AddElement(/datum/element/light_blocking)
+		add_element(/datum/element/light_blocking)
 	else
 		RemoveElement(/datum/element/light_blocking)
 

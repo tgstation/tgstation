@@ -127,8 +127,8 @@
 			  /mob/living/simple_animal/parrot/proc/toggle_mode,
 			  /mob/living/simple_animal/parrot/proc/perch_mob_player))
 
-	AddElement(/datum/element/strippable, GLOB.strippable_parrot_items)
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/strippable, GLOB.strippable_parrot_items)
+	add_element(/datum/element/simple_flying)
 
 /mob/living/simple_animal/parrot/examine(mob/user)
 	. = ..()

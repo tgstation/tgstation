@@ -21,7 +21,7 @@
 
 /obj/item/food/donut/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dunkable, amount_per_dunk = 10)
+	add_element(/datum/element/dunkable, amount_per_dunk = 10)
 	if(prob(DONUT_SPRINKLE_CHANCE))
 		decorate_donut()
 
@@ -576,7 +576,7 @@
 
 /obj/item/food/cookie/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/dunkable, 10)
+	add_element(/datum/element/dunkable, 10)
 
 /obj/item/food/cookie/sleepy
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/chloralhydrate = 10)
@@ -606,7 +606,7 @@
 
 /obj/item/food/fortunecookie/MakeLeaveTrash()
 	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, food_flags, /obj/item/food/fortunecookie/proc/get_fortune)
+		add_element(/datum/element/food_trash, trash_type, food_flags, /obj/item/food/fortunecookie/proc/get_fortune)
 
 /obj/item/food/poppypretzel
 	name = "poppy pretzel"

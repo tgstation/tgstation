@@ -31,7 +31,7 @@
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/netherworld/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 0)
 
 /datum/action/innate/creature
 	background_icon_state = "bg_default"

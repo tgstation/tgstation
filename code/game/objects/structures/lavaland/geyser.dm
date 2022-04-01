@@ -33,7 +33,7 @@
 /obj/structure/geyser/Initialize(mapload) //if xenobio wants to bother, nethermobs are around geysers.
 	. = ..()
 
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_NETHER, CELL_VIRUS_TABLE_GENERIC, 1, 5)
 
 ///start producing chems, should be called just once
 /obj/structure/geyser/proc/start_chemming()

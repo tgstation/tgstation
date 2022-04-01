@@ -180,7 +180,7 @@
 	decayedRange = range
 	if(embedding)
 		updateEmbedding()
-	AddElement(/datum/element/connect_loc, projectile_connections)
+	add_element(/datum/element/connect_loc, projectile_connections)
 
 /obj/projectile/proc/Range()
 	range--
@@ -661,7 +661,7 @@
 		SEND_SIGNAL(fired_from, COMSIG_PROJECTILE_BEFORE_FIRE, src, original)
 	//If no angle needs to resolve it from xo/yo!
 	if(shrapnel_type && LAZYLEN(embedding))
-		AddElement(/datum/element/embed, projectile_payload = shrapnel_type)
+		add_element(/datum/element/embed, projectile_payload = shrapnel_type)
 	if(!log_override && firer && original)
 		log_combat(firer, original, "fired at", src, "from [get_area_name(src, TRUE)]")
 	if(direct_target && (get_dist(direct_target, get_turf(src)) <= 1)) // point blank shots
@@ -1014,7 +1014,7 @@
 	if(!shrapnel_type || !LAZYLEN(embedding))
 		return
 
-	AddElement(/datum/element/embed,\
+	add_element(/datum/element/embed,\
 		embed_chance = (!isnull(embedding["embed_chance"]) ? embedding["embed_chance"] : EMBED_CHANCE),\
 		fall_chance = (!isnull(embedding["fall_chance"]) ? embedding["fall_chance"] : EMBEDDED_ITEM_FALLOUT),\
 		pain_chance = (!isnull(embedding["pain_chance"]) ? embedding["pain_chance"] : EMBEDDED_PAIN_CHANCE),\

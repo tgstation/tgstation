@@ -38,7 +38,7 @@
 
 	glob_lists_register(init=TRUE)
 
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	add_element(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 /obj/machinery/navbeacon/Destroy()
 	glob_lists_deregister()

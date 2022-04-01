@@ -38,6 +38,6 @@
 
 //starts partially discharged
 /obj/item/stock_parts/cell/lead/Initialize(mapload)
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 	. = ..()
 	charge = rand(0.2,0.8) * maxcharge

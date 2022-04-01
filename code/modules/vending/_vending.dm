@@ -621,7 +621,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				else
 					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5) // otherwise, deal it to 2 random limbs (or the same one) which will likely shatter something
 					C.take_bodypart_damage((squish_damage - crit_rebate)*0.5, wound_bonus = 5)
-				C.AddElement(/datum/element/squish, 80 SECONDS)
+				C.add_element(/datum/element/squish, 80 SECONDS)
 			else
 				L.visible_message(span_danger("[L] is crushed by [src]!"), \
 				span_userdanger("You are crushed by [src]!"))

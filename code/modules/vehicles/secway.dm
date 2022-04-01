@@ -13,7 +13,7 @@
 
 /obj/vehicle/ridden/secway/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/secway)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/secway)
 
 /obj/vehicle/ridden/secway/atom_break()
 	START_PROCESSING(SSobj, src)

@@ -403,7 +403,7 @@
 
 /obj/item/canvas/thirtysix_twentyfour/Initialize()
 	. = ..()
-	AddElement(/datum/element/item_scaling, 1, 0.8)
+	add_element(/datum/element/item_scaling, 1, 0.8)
 	icon = 'icons/obj/artstuff_64x64.dmi'
 	icon_state = "36x24"
 
@@ -426,7 +426,7 @@
 
 /obj/item/canvas/fortyfive_twentyseven/Initialize()
 	. = ..()
-	AddElement(/datum/element/item_scaling, 1, 0.7)
+	add_element(/datum/element/item_scaling, 1, 0.7)
 	icon = 'icons/obj/artstuff_64x64.dmi'
 	icon_state = "45x27"
 

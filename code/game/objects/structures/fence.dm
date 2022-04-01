@@ -79,7 +79,7 @@
 					if(MEDIUM_HOLE)
 						visible_message(span_notice("\The [user] cuts into \the [src] some more."))
 						to_chat(user, span_info("You could probably fit yourself through that hole now. Although climbing through would be much faster if you made it even bigger."))
-						AddElement(/datum/element/climbable)
+						add_element(/datum/element/climbable)
 					if(LARGE_HOLE)
 						visible_message(span_notice("\The [user] completely cuts through \the [src]."))
 						to_chat(user, span_info("The hole in \the [src] is now big enough to walk through."))

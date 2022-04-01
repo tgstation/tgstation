@@ -11,7 +11,7 @@
 #define SIGNAL_HANDLER SHOULD_NOT_SLEEP(TRUE)
 
 /// A wrapper for _add_element that allows us to pretend we're using normal named arguments
-#define AddElement(arguments...) _add_element(list(##arguments))
+#define add_element(arguments...) _add_element(list(##arguments))
 /// A wrapper for _remove_element that allows us to pretend we're using normal named arguments
 #define RemoveElement(arguments...) _remove_element(list(##arguments))
 

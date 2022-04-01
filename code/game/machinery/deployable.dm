@@ -112,7 +112,7 @@
 
 /obj/structure/barricade/sandbags/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/climbable)
+	add_element(/datum/element/climbable)
 
 /obj/structure/barricade/security
 	name = "security barrier"

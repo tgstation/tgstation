@@ -141,7 +141,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/green_lasagne/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/green_lasagne_slice, 6, 30)
 
 /obj/item/food/green_lasagne_slice
 	name = "green lasagne al forno slice"
@@ -178,7 +178,7 @@
 	burns_in_oven = TRUE
 
 /obj/item/food/big_baked_rice/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 30)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 30)
 
 /obj/item/food/lil_baked_rice
 	name = "lil baked rice"
@@ -699,7 +699,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/bread/corn/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/corn, 6, 20)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/corn, 6, 20)
 
 /obj/item/food/breadslice/corn
 	name = "cornbread slice"
@@ -730,7 +730,7 @@
 	foodtypes = VEGETABLES | SUGAR
 
 /obj/item/food/cake/mothmallow/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/mothmallow, 6, 20)
+	add_element(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cakeslice/mothmallow, 6, 20)
 
 /obj/item/food/cakeslice/mothmallow
 	name = "mothmallow"

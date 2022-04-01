@@ -265,13 +265,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(is_main_engine)
 		GLOB.main_supermatter_engine = src
 
-	AddElement(/datum/element/bsa_blocker)
+	add_element(/datum/element/bsa_blocker)
 	register_signal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
 
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_INDUSTRIAL_LIFT_ENTER = .proc/tram_contents_consume,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
+	add_element(/datum/element/connect_loc, loc_connections)	//Speficially for the tram, hacky
 
 	soundloop = new(src, TRUE)
 	if(ispath(psyOverlay))

@@ -75,7 +75,7 @@
 		),
 	)
 
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	add_element(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 	register_context()
 
 /obj/machinery/hydroponics/add_context(

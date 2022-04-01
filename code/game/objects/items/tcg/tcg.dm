@@ -18,7 +18,7 @@
 
 /obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
-	AddElement(/datum/element/item_scaling, 0.3, 1)
+	add_element(/datum/element/item_scaling, 0.3, 1)
 	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
 	if(!datum_series)
 		datum_series = series
@@ -355,7 +355,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/cardpack/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/item_scaling, 0.4, 1)
+	add_element(/datum/element/item_scaling, 0.4, 1)
 	rarity_table = SStrading_card_game.get_rarity_table(type, rarity_table)
 	guar_rarity = SStrading_card_game.get_guarenteed_rarity_table(type, guar_rarity)
 

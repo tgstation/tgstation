@@ -121,7 +121,7 @@
 		can_buckle = TRUE
 		buckle_lying = 0
 		add_overlay("goliath_saddled")
-		AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
+		add_element(/datum/element/ridable, /datum/component/riding/creature/goliath)
 	else
 		user.visible_message(span_warning("[src] is rocking around! You can't put the saddle on!"))
 	..()

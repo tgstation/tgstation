@@ -15,8 +15,8 @@
 		roleplay_callback = CALLBACK(src, .proc/untip_roleplay))
 
 	wires = new /datum/wires/robot(src)
-	AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/cyborg)
+	add_element(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	add_element(/datum/element/ridable, /datum/component/riding/creature/cyborg)
 	register_signal(src, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, .proc/charge)
 	register_signal(src, COMSIG_LIGHT_EATER_ACT, .proc/on_light_eater)
 

@@ -33,7 +33,7 @@
 
 /mob/living/simple_animal/pet/fox/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "pants and yaps happily!")
+	add_element(/datum/element/pet_bonus, "pants and yaps happily!")
 
 //Captain fox
 /mob/living/simple_animal/pet/fox/renault

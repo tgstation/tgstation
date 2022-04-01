@@ -61,7 +61,7 @@
 	register_signal(src, COMSIG_ITEM_RECHARGED, .proc/instant_recharge)
 
 /obj/item/gun/energy/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_energy)
+	add_element(/datum/element/weapon_description, attached_proc = .proc/add_notes_energy)
 
 /**
  *
@@ -94,7 +94,7 @@
 
 /obj/item/gun/energy/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 
 /obj/item/gun/energy/proc/update_ammo_types()
 	var/obj/item/ammo_casing/energy/shot

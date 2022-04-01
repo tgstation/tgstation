@@ -78,7 +78,7 @@
 	dir_shots.Grant(src)
 	register_signal(src, COMSIG_ABILITY_STARTED, .proc/start_attack)
 	register_signal(src, COMSIG_ABILITY_FINISHED, .proc/finished_attack)
-	AddElement(/datum/element/projectile_shield)
+	add_element(/datum/element/projectile_shield)
 
 /mob/living/simple_animal/hostile/megafauna/colossus/Destroy()
 	RemoveElement(/datum/element/projectile_shield)
@@ -502,7 +502,7 @@
 
 /mob/living/simple_animal/hostile/lightgeist/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	remove_verb(src, /mob/living/verb/pulled)
 	remove_verb(src, /mob/verb/me_verb)
 	var/datum/atom_hud/medsensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]

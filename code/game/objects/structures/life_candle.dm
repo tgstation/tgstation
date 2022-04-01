@@ -26,7 +26,7 @@
 
 /obj/structure/life_candle/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/movetype_handler)
+	add_element(/datum/element/movetype_handler)
 
 /obj/structure/life_candle/attack_hand(mob/user, list/modifiers)
 	. = ..()

@@ -2645,11 +2645,11 @@
 
 /datum/reagent/gravitum/expose_obj(obj/exposed_obj, volume)
 	. = ..()
-	exposed_obj.AddElement(/datum/element/forced_gravity, 0)
+	exposed_obj.add_element(/datum/element/forced_gravity, 0)
 	addtimer(CALLBACK(exposed_obj, .proc/_remove_element, list(/datum/element/forced_gravity, 0)), volume * time_multiplier)
 
 /datum/reagent/gravitum/on_mob_metabolize(mob/living/L)
-	L.AddElement(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
+	L.add_element(/datum/element/forced_gravity, 0) //0 is the gravity, and in this case weightless
 	return ..()
 
 /datum/reagent/gravitum/on_mob_end_metabolize(mob/living/L)

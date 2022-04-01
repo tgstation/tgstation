@@ -174,7 +174,7 @@ GLOBAL_LIST_EMPTY(lifts)
 		COMSIG_ATOM_ENTERED = .proc/AddItemOnLift,
 		COMSIG_ATOM_INITIALIZED_ON = .proc/AddItemOnLift,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 	register_signal(src, COMSIG_MOVABLE_BUMP, .proc/GracefullyBreak)
 
 	if(!lift_master_datum)

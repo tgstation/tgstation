@@ -35,19 +35,19 @@
 			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_APPRENTICE to SKILL_LEVEL_JOURNEYMAN) //At least they tried
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has inefficiently become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))
-			user.AddElement(/datum/element/cleaning)
+			user.add_element(/datum/element/cleaning)
 			addtimer(CALLBACK(src, .proc/manual_suicide, user), 51)
 			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_EXPERT to SKILL_LEVEL_MASTER) //They are worthy enough, but can it go even further beyond?
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has skillfully become one with the janicart! It looks like [user.p_theyre()] trying to commit suicide!"))
-			user.AddElement(/datum/element/cleaning)
+			user.add_element(/datum/element/cleaning)
 			for(var/i in 1 to 100)
 				addtimer(CALLBACK(user, /atom/proc/add_atom_colour, (i % 2)? "#a245bb" : "#7a7d82", ADMIN_COLOUR_PRIORITY), i)
 			addtimer(CALLBACK(src, .proc/manual_suicide, user), 101)
 			return MANUAL_SUICIDE
 		if(SKILL_LEVEL_LEGENDARY to INFINITY) //Holy shit, look at that janny go!
 			user.visible_message(span_suicide("[user] is putting \the [src] in [user.p_their()] mouth and has epically become one with the janicart, and they're even in overdrive mode! It looks like [user.p_theyre()] trying to commit suicide!"))
-			user.AddElement(/datum/element/cleaning)
+			user.add_element(/datum/element/cleaning)
 			playsound(src, 'sound//magic/lightning_chargeup.ogg', 50, TRUE, -1)
 			user.reagents.add_reagent(/datum/reagent/drug/methamphetamine, 10) //Gotta go fast!
 			for(var/i in 1 to 150)

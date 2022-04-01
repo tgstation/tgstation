@@ -36,7 +36,7 @@
 
 /mob/living/simple_animal/sloth/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "slowly smiles!")
+	add_element(/datum/element/pet_bonus, "slowly smiles!")
 
 //Cargo Sloth
 /mob/living/simple_animal/sloth/paperwork

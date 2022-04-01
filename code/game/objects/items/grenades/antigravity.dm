@@ -15,7 +15,7 @@
 	update_mob()
 
 	for(var/turf/lanced_turf in view(range, src))
-		lanced_turf.AddElement(/datum/element/forced_gravity, forced_value)
+		lanced_turf.add_element(/datum/element/forced_gravity, forced_value)
 		addtimer(CALLBACK(lanced_turf, /datum/.proc/_remove_element, list(/datum/element/forced_gravity, forced_value)), duration)
 
 	qdel(src)

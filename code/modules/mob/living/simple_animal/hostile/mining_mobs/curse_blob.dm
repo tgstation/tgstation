@@ -30,7 +30,7 @@
 /mob/living/simple_animal/hostile/asteroid/curseblob/Initialize(mapload)
 	. = ..()
 	QDEL_IN(src, 60 SECONDS)
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	playsound(src, 'sound/effects/curse1.ogg', 100, TRUE, -1)
 
 /mob/living/simple_animal/hostile/asteroid/curseblob/Destroy()

@@ -8,7 +8,7 @@
 /obj/vehicle/ridden/speedbike/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, cover_iconstate, ABOVE_MOB_LAYER))
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/speedbike)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/speedbike)
 
 /obj/vehicle/ridden/speedbike/Move(newloc,move_dir)
 	if(has_buckled_mobs())
@@ -36,7 +36,7 @@
 /obj/vehicle/ridden/speedwagon/Initialize(mapload)
 	. = ..()
 	add_overlay(image(icon, "speedwagon_cover", ABOVE_MOB_LAYER))
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/speedwagon)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/speedwagon)
 
 /obj/vehicle/ridden/speedwagon/Bump(atom/A)
 	. = ..()

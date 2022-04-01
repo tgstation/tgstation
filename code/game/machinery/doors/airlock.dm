@@ -172,7 +172,7 @@
 	var/static/list/connections = list(
 		COMSIG_ATOM_ATTACK_HAND = .proc/on_attack_hand
 	)
-	AddElement(/datum/element/connect_loc, connections)
+	add_element(/datum/element/connect_loc, connections)
 
 	return INITIALIZE_HINT_LATELOAD
 

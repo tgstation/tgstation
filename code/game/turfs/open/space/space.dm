@@ -233,7 +233,7 @@
 
 /turf/open/space/openspace/LateInitialize()
 	. = ..()
-	AddElement(/datum/element/turf_z_transparency, is_openspace = TRUE)
+	add_element(/datum/element/turf_z_transparency, is_openspace = TRUE)
 
 /turf/open/space/openspace/zAirIn()
 	return TRUE

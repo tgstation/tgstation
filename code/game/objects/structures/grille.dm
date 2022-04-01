@@ -21,7 +21,7 @@
 
 /obj/structure/grille/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))

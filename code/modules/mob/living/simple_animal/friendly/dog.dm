@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/pet/dog/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "woofs happily!")
+	add_element(/datum/element/pet_bonus, "woofs happily!")
 	add_cell_sample()
 
 //Corgis and pugs are now under one dog subtype
@@ -53,7 +53,7 @@
 	var/nofur = FALSE //Corgis that have risen past the material plane of existence.
 
 /mob/living/simple_animal/pet/dog/corgi/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/pet/dog/corgi/Destroy()
 	QDEL_NULL(inventory_head)
@@ -136,7 +136,7 @@
 	held_state = "pug"
 
 /mob/living/simple_animal/pet/dog/pug/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/pet/dog/pug/mcgriff
 	name = "McGriff"
@@ -177,7 +177,7 @@
 /mob/living/simple_animal/pet/dog/corgi/Initialize(mapload)
 	. = ..()
 	regenerate_icons()
-	AddElement(/datum/element/strippable, GLOB.strippable_corgi_items)
+	add_element(/datum/element/strippable, GLOB.strippable_corgi_items)
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi/Initialize(mapload)
 		. = ..()

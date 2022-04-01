@@ -27,7 +27,7 @@
 
 /obj/item/knife/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/eyestab)
+	add_element(/datum/element/eyestab)
 	set_butchering()
 
 ///Adds the butchering component, used to override stats for special cases

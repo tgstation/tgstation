@@ -100,7 +100,7 @@ Difficulty: Hard
 	register_signal(src, COMSIG_BLOOD_WARP, .proc/blood_enrage)
 	register_signal(src, COMSIG_FINISHED_CHARGE, .proc/after_charge)
 	if(spawn_blood)
-		AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, 'sound/effects/meteorimpact.ogg', 200)
+		add_element(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/bubblegum, 'sound/effects/meteorimpact.ogg', 200)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/Destroy()
 	QDEL_NULL(triple_charge)

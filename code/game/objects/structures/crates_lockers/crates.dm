@@ -24,9 +24,9 @@
 	. = ..()
 	if(icon_state == "[initial(icon_state)]open")
 		opened = TRUE
-		AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+		add_element(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 	else
-		AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+		add_element(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 	update_appearance()
 
 /obj/structure/closet/crate/Destroy()
@@ -68,12 +68,12 @@
 /obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
-	AddElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
+	add_element(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
 
 /obj/structure/closet/crate/after_close(mob/living/user, force)
 	. = ..()
 	RemoveElement(/datum/element/climbable, climb_time = crate_climb_time * 0.5, climb_stun = 0)
-	AddElement(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
+	add_element(/datum/element/climbable, climb_time = crate_climb_time, climb_stun = 0)
 
 
 /obj/structure/closet/crate/open(mob/living/user, force = FALSE)
@@ -123,7 +123,7 @@
 
 /obj/structure/closet/crate/trashcart/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
 
 /obj/structure/closet/crate/trashcart/filled
 

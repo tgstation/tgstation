@@ -18,7 +18,7 @@
 	var/rmb_text_combat_mode
 
 // If you're curious about `use_named_parameters`, it's because you should use named parameters!
-// AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Do the thing")
+// add_element(/datum/element/contextual_screentip_bare_hands, lmb_text = "Do the thing")
 /datum/element/contextual_screentip_bare_hands/Attach(
 	datum/target,
 	use_named_parameters,

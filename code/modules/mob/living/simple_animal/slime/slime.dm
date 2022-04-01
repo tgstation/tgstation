@@ -506,7 +506,7 @@
 	. = ..(mapload, pick(slime_colours), prob(50))
 
 /mob/living/simple_animal/slime/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_SLIME, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/slime/proc/set_target(new_target)
 	var/old_target = Target

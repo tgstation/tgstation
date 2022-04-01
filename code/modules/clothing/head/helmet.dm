@@ -527,7 +527,7 @@
 
 /obj/item/clothing/head/helmet/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/head/helmet/update_icon_state()
 	if(attached_light)

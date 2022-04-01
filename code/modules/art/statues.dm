@@ -19,8 +19,8 @@
 
 /obj/structure/statue/Initialize(mapload)
 	. = ..()
-	AddElement(art_type, impressiveness)
-	AddElement(/datum/element/beauty, impressiveness * 75)
+	add_element(art_type, impressiveness)
+	add_element(/datum/element/beauty, impressiveness * 75)
 	add_component(/datum/component/simple_rotation)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
@@ -278,10 +278,10 @@
 
 /obj/item/chisel/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/eyestab)
-	AddElement(/datum/element/wall_engraver)
+	add_element(/datum/element/eyestab)
+	add_element(/datum/element/wall_engraver)
 	//deals 200 damage to statues, meaning you can actually kill one in ~250 hits
-	AddElement(/datum/element/bane, /mob/living/simple_animal/hostile/statue, damage_multiplier = 40)
+	add_element(/datum/element/bane, /mob/living/simple_animal/hostile/statue, damage_multiplier = 40)
 
 /obj/item/chisel/Destroy()
 	prepared_block = null

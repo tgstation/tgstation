@@ -20,15 +20,15 @@
 
 	register_signal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
 	add_component(/datum/component/personal_crafting)
-	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
+	add_element(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	add_component(/datum/component/bloodysoles/feet)
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
-	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
+	add_element(/datum/element/ridable, /datum/component/riding/creature/human)
+	add_element(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
 	GLOB.human_list += src
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 
 /mob/living/carbon/human/proc/setup_human_dna()
 	//initialize dna. for spawned humans; overwritten by other code

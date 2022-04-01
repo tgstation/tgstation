@@ -21,7 +21,7 @@ SUBSYSTEM_DEF(points_of_interest)
  * Turns new_poi into a new point of interest by adding the /datum/element/point_of_interest element to it.
  */
 /datum/controller/subsystem/points_of_interest/proc/make_point_of_interest(atom/new_poi)
-	new_poi.AddElement(/datum/element/point_of_interest)
+	new_poi.add_element(/datum/element/point_of_interest)
 
 /**
  * Stops old_poi from being a point of interest by removing the /datum/element/point_of_interest element from it.

@@ -105,7 +105,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	if (isitem(source))
 		return
 
-	source.AddElement(/datum/element/radioactive)
+	source.add_element(/datum/element/radioactive)
 
 /datum/material/uranium/on_removed(atom/source, amount, material_flags)
 	. = ..()
@@ -136,7 +136,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
 	if(ismovable(source))
-		source.AddElement(/datum/element/firestacker, amount=1)
+		source.add_element(/datum/element/firestacker, amount=1)
 		// Ideally exploding plasma objects should delete themselves but we still have the flooder and SSexplosions to rely on deleting it asynchronously so it's not that bad.
 		source.add_component(/datum/component/explodable, 0, 0, amount / 2500, 0, amount / 1250, delete_after = EXPLODABLE_NO_DELETE)
 	source.add_component(/datum/component/combustible_flooder, "plasma", amount*0.05) //Empty temp arg, fully dependent on whatever ignited it.

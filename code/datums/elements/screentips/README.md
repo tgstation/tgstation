@@ -18,7 +18,7 @@ Example:
 /obj/machinery/firealarm/Initialize(mapload)
 	. = ..()
 
-	AddElement( \
+	add_element( \
 		/datum/element/contextual_screentip_bare_hands, \
 		lmb_text = "Turn on", \
 		rmb_text = "Turn off", \
@@ -46,7 +46,7 @@ Example:
 			),
 		)
 
-		AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
+		add_element(/datum/element/contextual_screentip_tools, tool_behaviors)
 ```
 
 This will display "RMB: Deconstruct" when the user hovers over a table with a wrench.
@@ -71,7 +71,7 @@ Example:
 		),
 	)
 
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	add_element(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 ```
 
 This will display "LMB: Craft bola" when the user hovers over cable restraints with metal in their hand.

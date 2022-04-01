@@ -80,7 +80,7 @@
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_ENTERED = .proc/burst,
 		)
-		AddElement(/datum/element/connect_loc, loc_connections)
+		add_element(/datum/element/connect_loc, loc_connections)
 	. = ..()
 	creator = set_creator
 	parent_resonator = set_resonator

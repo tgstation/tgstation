@@ -166,7 +166,7 @@
 
 	set_base_icon()
 
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/alien/weeds/Destroy()
 	if(parent_node)
@@ -353,7 +353,7 @@
 	if(status == BURST)
 		atom_integrity = integrity_failure * max_integrity
 
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/alien/egg/update_icon_state()
 	switch(status)

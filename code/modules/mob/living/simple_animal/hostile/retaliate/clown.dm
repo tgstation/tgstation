@@ -40,7 +40,7 @@
 /mob/living/simple_animal/hostile/retaliate/clown/Initialize(mapload)
 	. = ..()
 	if(attack_reagent)
-		AddElement(/datum/element/venomous, attack_reagent, list(1, 5))
+		add_element(/datum/element/venomous, attack_reagent, list(1, 5))
 
 /mob/living/simple_animal/hostile/retaliate/clown/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	..()
@@ -68,7 +68,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/clown/lube/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/snailcrawl)
+	add_element(/datum/element/snailcrawl)
 
 /mob/living/simple_animal/hostile/retaliate/clown/banana
 	name = "Clownana"
@@ -458,10 +458,10 @@
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
 	buckle_lying = 0
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/glutton)
+	add_element(/datum/element/ridable, /datum/component/riding/creature/glutton)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/Exited(atom/movable/gone, direction)
 	. = ..()

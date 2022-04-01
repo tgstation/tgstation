@@ -9,7 +9,7 @@
 
 /obj/item/paper/employment_contract/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/item/paper/employment_contract/Initialize(mapload, new_employee_name)
 	. = ..()

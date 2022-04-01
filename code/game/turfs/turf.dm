@@ -590,7 +590,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(HAS_TRAIT(src, TRAIT_RUSTY))
 		return
 
-	AddElement(/datum/element/rust)
+	add_element(/datum/element/rust)
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))

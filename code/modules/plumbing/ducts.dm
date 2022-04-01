@@ -64,7 +64,7 @@ All the important duct code:
 			return INITIALIZE_HINT_QDEL //If we have company, end it all
 
 	attempt_connect()
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	add_element(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()

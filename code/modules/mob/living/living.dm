@@ -14,7 +14,7 @@
 
 /mob/living/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/movetype_handler)
+	add_element(/datum/element/movetype_handler)
 
 /mob/living/prepare_huds()
 	..()

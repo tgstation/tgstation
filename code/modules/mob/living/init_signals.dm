@@ -207,7 +207,7 @@
 /// Called when [TRAIT_SKITTISH] is added to the mob.
 /mob/living/proc/on_skittish_trait_gain(datum/source)
 	SIGNAL_HANDLER
-	AddElement(/datum/element/skittish)
+	add_element(/datum/element/skittish)
 
 /// Called when [TRAIT_SKITTISH] is removed from the mob.
 /mob/living/proc/on_skittish_trait_loss(datum/source)

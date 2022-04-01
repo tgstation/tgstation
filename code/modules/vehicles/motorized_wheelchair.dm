@@ -21,7 +21,7 @@
 	var/obj/item/stock_parts/cell/power_cell
 
 /obj/vehicle/ridden/wheelchair/motorized/make_ridable()
-	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
+	add_element(/datum/element/ridable, /datum/component/riding/vehicle/wheelchair/motorized)
 
 /obj/vehicle/ridden/wheelchair/motorized/CheckParts(list/parts_list)
 	. = ..()

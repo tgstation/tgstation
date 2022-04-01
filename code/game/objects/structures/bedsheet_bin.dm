@@ -33,7 +33,7 @@ LINEN BINS
 /obj/item/bedsheet/Initialize(mapload)
 	. = ..()
 	add_component(/datum/component/surgery_initiator)
-	AddElement(/datum/element/bed_tuckable, 0, 0, 0)
+	add_element(/datum/element/bed_tuckable, 0, 0, 0)
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET

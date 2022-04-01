@@ -280,7 +280,7 @@
 	if(!.)
 		return
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
-	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
+	mod.wearer.add_element(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	register_signal(mod.wearer, COMSIG_MOVABLE_MOVED, .proc/check_upstairs)
 	mod.wearer.update_gravity(mod.wearer.has_gravity())
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)

@@ -187,7 +187,7 @@
 	if(!spawn_bodyparts)
 		return
 
-	AddElement(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/tracks, target_dir_change = TRUE)
+	add_element(/datum/element/blood_walk, /obj/effect/decal/cleanable/blood/tracks, target_dir_change = TRUE)
 
 	allow_pulling = TRUE
 	// Sets the hp of the head to be exactly the (length * hp), so the head is de facto the hardest to destroy.

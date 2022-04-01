@@ -84,7 +84,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		source.name = "[name] [source.name]"
 
 	if(beauty_modifier)
-		source.AddElement(/datum/element/beauty, beauty_modifier * amount)
+		source.add_element(/datum/element/beauty, beauty_modifier * amount)
 
 	if(istype(source, /obj)) //objs
 		on_applied_obj(source, amount, material_flags)
@@ -148,7 +148,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 			O.clawfootstep = turf_sound_override
 			O.heavyfootstep = turf_sound_override
 	if(alpha < 255)
-		T.AddElement(/datum/element/turf_z_transparency)
+		T.add_element(/datum/element/turf_z_transparency)
 	return
 
 /datum/material/proc/get_greyscale_config_for(datum/greyscale_config/config_path)

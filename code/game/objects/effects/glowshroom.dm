@@ -100,7 +100,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = base_icon_state
 
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 	COOLDOWN_START(src, spread_cooldown, rand(min_delay_spread, max_delay_spread))
 
 	START_PROCESSING(SSobj, src)
@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(glowshrooms, 0)
 		),
 	)
 
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	add_element(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 /obj/structure/glowshroom/Destroy()
 	if(isatom(myseed))

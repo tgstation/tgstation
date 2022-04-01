@@ -87,7 +87,7 @@
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 
 /obj/item/hierophant_club/examine(mob/user)
 	. = ..()
@@ -277,7 +277,7 @@
 
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/radiation_protected_clothing)
+	add_element(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/hooded/hostile_environment/process(delta_time)
 	. = ..()
@@ -307,7 +307,7 @@
 	. = ..()
 	update_appearance()
 	add_component(/datum/component/butchering, 5, 150, null, null, null, TRUE, CALLBACK(src, .proc/consume))
-	AddElement(/datum/element/radiation_protected_clothing)
+	add_element(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/head/hooded/hostile_environment/equipped(mob/user, slot, initial = FALSE)
 	. = ..()

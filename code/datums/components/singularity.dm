@@ -72,9 +72,9 @@
 	START_PROCESSING(SSsinguloprocess, src)
 
 	// The singularity stops drifting for no man!
-	parent.AddElement(/datum/element/forced_gravity, FALSE)
+	parent.add_element(/datum/element/forced_gravity, FALSE)
 
-	parent.AddElement(/datum/element/bsa_blocker)
+	parent.add_element(/datum/element/bsa_blocker)
 	register_signal(parent, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
 
 	register_signal(parent, COMSIG_ATOM_BLOB_ACT, .proc/block_blob)

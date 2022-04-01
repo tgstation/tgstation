@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		COMSIG_ATOM_ENTERED = .proc/conveyable_enter,
 		COMSIG_ATOM_INITIALIZED_ON = .proc/conveyable_enter
 	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	add_element(/datum/element/connect_loc, loc_connections)
 	update_move_direction()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 	return INITIALIZE_HINT_LATELOAD

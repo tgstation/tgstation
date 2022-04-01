@@ -47,7 +47,7 @@
 	prev_access = access_card.access.Copy()
 
 	create_extinguisher()
-	AddElement(/datum/element/atmos_sensitive, mapload)
+	add_element(/datum/element/atmos_sensitive, mapload)
 
 /mob/living/simple_animal/bot/firebot/bot_reset()
 	create_extinguisher()

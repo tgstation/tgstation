@@ -33,7 +33,7 @@
 /datum/component/light_eater/register_with_parent()
 	. = ..()
 	register_signal(parent, COMSIG_LIGHT_EATER_DEVOUR, .proc/on_devour)
-	parent.AddElement(/datum/element/light_eater)
+	parent.add_element(/datum/element/light_eater)
 
 /datum/component/light_eater/unregister_from_parent()
 	. = ..()

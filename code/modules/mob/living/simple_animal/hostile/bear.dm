@@ -54,14 +54,14 @@
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/bear/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	add_element(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/bear/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
 
-	AddElement(/datum/element/ridable, /datum/component/riding/creature/bear)
+	add_element(/datum/element/ridable, /datum/component/riding/creature/bear)
 	can_buckle = TRUE
 	buckle_lying = 0
 

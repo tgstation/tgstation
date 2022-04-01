@@ -131,7 +131,7 @@
 
 /obj/item/clothing/head/radiation/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/radiation_protected_clothing)
+	add_element(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/radiation
 	name = "radiation suit"
@@ -152,7 +152,7 @@
 
 /obj/item/clothing/suit/radiation/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/radiation_protected_clothing)
+	add_element(/datum/element/radiation_protected_clothing)
 
 /obj/item/clothing/suit/radiation/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()

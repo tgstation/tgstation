@@ -185,4 +185,4 @@
 		return
 	if(!length(blood_DNA))
 		return
-	parent.AddElement(/datum/element/decal/blood)
+	parent.add_element(/datum/element/decal/blood)

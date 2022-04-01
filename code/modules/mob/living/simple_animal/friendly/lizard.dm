@@ -29,7 +29,7 @@
 
 /mob/living/simple_animal/hostile/lizard/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "sticks its tongue out contentedly!")
+	add_element(/datum/element/pet_bonus, "sticks its tongue out contentedly!")
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/simple_animal/hostile/lizard/CanAttack(atom/the_target)//Can we actually attack a possible target?

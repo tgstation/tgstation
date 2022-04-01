@@ -687,7 +687,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bed_tuckable, 6, -6, 0)
+	add_element(/datum/element/bed_tuckable, 6, -6, 0)
 
 	if(!fake)
 		SSpoints_of_interest.make_point_of_interest(src)

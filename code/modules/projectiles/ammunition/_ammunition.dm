@@ -55,7 +55,7 @@
 	return ..()
 
 /obj/item/ammo_casing/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ammo)
+	add_element(/datum/element/weapon_description, attached_proc = .proc/add_notes_ammo)
 
 /**
  *

@@ -174,7 +174,7 @@
 
 /obj/item/gun/energy/laser/thermal/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
+	add_element(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
 
 /obj/item/gun/energy/laser/thermal/inferno //the magma gun
 	name = "inferno pistol"

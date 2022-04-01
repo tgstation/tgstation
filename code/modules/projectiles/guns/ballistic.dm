@@ -134,7 +134,7 @@
 	register_signal(src, COMSIG_ITEM_RECHARGED, .proc/instant_reload)
 
 /obj/item/gun/ballistic/add_weapon_description()
-	AddElement(/datum/element/weapon_description, attached_proc = .proc/add_notes_ballistic)
+	add_element(/datum/element/weapon_description, attached_proc = .proc/add_notes_ballistic)
 
 /**
  *

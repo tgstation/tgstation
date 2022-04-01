@@ -19,7 +19,7 @@
 		),
 	)
 
-	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
+	add_element(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 
 /obj/structure/loom/attackby(obj/item/I, mob/user)
 	if(weave(I, user))

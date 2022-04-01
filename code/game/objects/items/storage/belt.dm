@@ -772,7 +772,7 @@
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
+	add_element(/datum/element/update_icon_updates_onmob)
 	var/datum/component/storage/STR = get_component(/datum/component/storage)
 	STR.max_items = 1
 	STR.rustle_sound = FALSE

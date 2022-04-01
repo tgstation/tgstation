@@ -98,7 +98,7 @@
 			em_block = new(src, render_target)
 			add_overlay(list(em_block))
 	if(opacity)
-		AddElement(/datum/element/light_blocking)
+		add_element(/datum/element/light_blocking)
 	switch(light_system)
 		if(MOVABLE_LIGHT)
 			add_component(/datum/component/overlay_lighting)

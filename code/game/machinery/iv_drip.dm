@@ -320,7 +320,7 @@
 
 /obj/machinery/iv_drip/saline/ComponentInitialize()
 	. = ..()
-	AddElement(/datum/element/update_icon_blocker)
+	add_element(/datum/element/update_icon_blocker)
 
 /obj/machinery/iv_drip/saline/eject_beaker()
 	return

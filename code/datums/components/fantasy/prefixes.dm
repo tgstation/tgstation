@@ -71,7 +71,7 @@
 
 /datum/fantasy_affix/vampiric/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/lifesteal, comp.quality)
+	master.add_element(/datum/element/lifesteal, comp.quality)
 	return "vampiric [newName]"
 
 /datum/fantasy_affix/vampiric/remove(datum/component/fantasy/comp)
@@ -85,7 +85,7 @@
 
 /datum/fantasy_affix/beautiful/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/beauty, max(comp.quality, 1) * 250)
+	master.add_element(/datum/element/beauty, max(comp.quality, 1) * 250)
 	return "[pick("aesthetic", "beautiful", "gorgeous", "pretty")] [newName]"
 
 /datum/fantasy_affix/beautiful/remove(datum/component/fantasy/comp)
@@ -99,7 +99,7 @@
 
 /datum/fantasy_affix/ugly/apply(datum/component/fantasy/comp, newName)
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/beauty, min(comp.quality, -1) * 250)
+	master.add_element(/datum/element/beauty, min(comp.quality, -1) * 250)
 	return "[pick("fugly", "ugly", "grotesque", "hideous")] [newName]"
 
 /datum/fantasy_affix/ugly/remove(datum/component/fantasy/comp)
@@ -137,7 +137,7 @@
 		/datum/reagent/toxin/histamine = "creeping malaise"
 	)
 	var/poisonname = names[picked_poison]
-	master.AddElement(/datum/element/venomous, picked_poison, comp.quality+1)
+	master.add_element(/datum/element/venomous, picked_poison, comp.quality+1)
 	//seriously don't @ me about the correct use of venom vs poison. shut up.
 	return "[poisonname]-[pick("poisoned", "envenomed", "laced")] [newName]"
 

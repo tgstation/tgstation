@@ -113,7 +113,7 @@
 	else if(!isturf(cursed_item.loc))
 		cursed_item.forceMove(get_turf(cursed_item))
 	//only taking the most reasonable slot is fine since it unequips what is there to equip itself.
-	cursed_item.AddElement(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
+	cursed_item.add_element(/datum/element/cursed, cursed_item.slot_equipment_priority[1])
 	cursed_item.visible_message(span_warning("[cursed_item] begins to move on [cursed_item.p_their()] own..."))
 
 /datum/component/curse_of_hunger/process(delta_time)

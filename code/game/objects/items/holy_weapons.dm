@@ -157,7 +157,7 @@
 		on_clear_callback = CALLBACK(src, .proc/on_cult_rune_removed), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune))
 
-	AddElement(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
+	add_element(/datum/element/bane, /mob/living/simple_animal/revenant, 0, 25, FALSE)
 	if(!GLOB.holy_weapon_type && istype(src, /obj/item/nullrod))
 		var/list/rods = list()
 		for(var/obj/item/nullrod/nullrod_type as anything in typesof(/obj/item/nullrod))
@@ -450,7 +450,7 @@
 
 /obj/item/nullrod/hammer/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/kneejerk)
+	add_element(/datum/element/kneejerk)
 
 /obj/item/nullrod/chainsaw
 	name = "chainsaw hand"
@@ -509,8 +509,8 @@
 
 /obj/item/nullrod/pride_hammer/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/kneejerk)
-	AddElement(
+	add_element(/datum/element/kneejerk)
+	add_element(
 		/datum/element/chemical_transfer,\
 		span_notice("Your pride reflects on %VICTIM."),\
 		span_userdanger("You feel insecure, taking on %ATTACKER's burden."),\

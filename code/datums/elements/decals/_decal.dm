@@ -43,7 +43,7 @@
 		decal.Detach(source)
 
 	for(var/result in resulting_decals_params)
-		source.AddElement(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["plane"], result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
+		source.add_element(/datum/element/decal, result["icon"], result["icon_state"], result["dir"], result["plane"], result["layer"], result["alpha"], result["color"], result["smoothing"], result["cleanable"], result["desc"])
 
 
 /datum/element/decal/proc/get_rotated_parameters(old_dir,new_dir)
@@ -157,7 +157,7 @@
 	if(new_turf == source)
 		return
 	Detach(source)
-	new_turf.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing, cleanable, description)
+	new_turf.add_element(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing, cleanable, description)
 
 /**
  * Reacts to the source atom smoothing.
@@ -172,5 +172,5 @@
 		return NONE
 
 	Detach(source)
-	source.AddElement(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
+	source.add_element(type, pic.icon, base_icon_state, directional, pic.plane, pic.layer, pic.alpha, pic.color, smoothing_junction, cleanable, description)
 	return NONE

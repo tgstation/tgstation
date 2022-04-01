@@ -45,7 +45,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 
 /obj/projectile/temp/basilisk/ice
 	name = "ice blast"

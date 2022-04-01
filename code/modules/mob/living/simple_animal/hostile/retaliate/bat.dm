@@ -38,7 +38,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/bat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/simple_flying)
+	add_element(/datum/element/simple_flying)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
@@ -67,4 +67,4 @@
 
 /mob/living/simple_animal/hostile/retaliate/bat/sgt_araneus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "chitters proudly!")
+	add_element(/datum/element/pet_bonus, "chitters proudly!")

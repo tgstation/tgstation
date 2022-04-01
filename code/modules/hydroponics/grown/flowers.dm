@@ -192,7 +192,7 @@
 	throw_range = 3
 
 /obj/item/food/grown/sunflower/make_dryable()
-	AddElement(/datum/element/dryable, /obj/item/food/semki/healthy) //yum
+	add_element(/datum/element/dryable, /obj/item/food/semki/healthy) //yum
 
 // Moonflower
 /obj/item/seeds/sunflower/moonflower
