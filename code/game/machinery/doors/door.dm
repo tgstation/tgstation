@@ -157,10 +157,7 @@
 		var/obj/item/I = AM
 		if(!density || (I.w_class < WEIGHT_CLASS_NORMAL && !LAZYLEN(I.GetAccess())))
 			return
-		if(check_access(I))
-			open()
-		else
-			do_animate("deny")
+		I.balloon_alert_to_viewers("bounced off the payment slot!")
 		return
 
 /obj/machinery/door/Move()

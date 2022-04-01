@@ -1621,7 +1621,7 @@
 	if(ID)
 		name_to_use = ID.registered_name
 		var/datum/bank_account/account = ID.registered_account
-		if(account.adjust_money(-airlock_price))
+		if(account && account.adjust_money(-airlock_price))
 			playsound(src, 'sound/effects/cashregister.ogg', 50, TRUE)
 			return TRUE
 	var/datum/airlock_advertisement/advertisement = new(M)
