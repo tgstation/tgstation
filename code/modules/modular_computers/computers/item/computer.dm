@@ -59,6 +59,8 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 	var/comp_light_luminosity = 3 //The brightness of that light
 	var/comp_light_color //The color of that light
 
+	var/datum/picture/saved_image // the saved image used for messaging purpose like come on dude
+
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -95,6 +97,16 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
+// shameless copy of newscaster photo saving
+
+/obj/item/modular_computer/proc/save_photo(icon/photo)
+	var/photo_file = copytext_char(md5("\icon[photo]"), 1, 6)
+	if(!fexists("[GLOB.log_directory]/photos/[photo_file].png"))
+		//Clean up repeated frames
+		var/icon/clean = new /icon()
+		clean.Insert(photo, "", SOUTH, 1, 0)
+		fcopy(clean, "[GLOB.log_directory]/photos/[photo_file].png")
+	return photo_file
 
 /**
  * Plays a ping sound.
@@ -542,6 +554,15 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 /obj/item/modular_computer/attackby(obj/item/W as obj, mob/user as mob)
 	// Check for ID first
 	if(istype(W, /obj/item/card/id) && InsertID(W))
+		return
+
+	if(istype(W, /obj/item/photo))
+		var/obj/item/computer_hardware/hard_drive/hdd = all_components[MC_HDD]
+		var/obj/item/photo/pic = W
+		if(hdd)
+			for(var/datum/computer_file/program/messenger/messenger in hdd.stored_files)
+				saved_image = pic.picture
+				messenger.ProcessPhoto()
 		return
 
 	var/obj/item/computer_hardware/cartridge_slot/cart_slot = all_components[MC_CARD]

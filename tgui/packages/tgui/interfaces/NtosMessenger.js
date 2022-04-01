@@ -44,6 +44,7 @@ export const NtosMessenger = (props, context) => {
     sortByJob,
     canSpam,
     isSilicon,
+    photo,
   } = data;
   if (viewingMessages) {
     return (
@@ -91,6 +92,12 @@ export const NtosMessenger = (props, context) => {
                   <Box italic>
                     {message.contents}
                   </Box>
+                  {!!message.photo && (
+                    <Box
+                      as="img"
+                      src={message.photo}
+                    />
+                  )}
                 </Section>
               </Stack>
             ))}
@@ -144,6 +151,25 @@ export const NtosMessenger = (props, context) => {
             </Box>
           </Section>
         </Stack>
+        {!!photo && (
+          <Stack vertical mt={1}>
+            <Section fill textAlign="center">
+              <Icon name="camera" mr={1} />
+              Current Photo
+            </Section>
+            <Section align="center">
+              <Button
+                onClick={() => act('PDA_clearPhoto')}
+              >
+                <Box
+                  mt={1}
+                  as="img"
+                  src={photo ? photo : null}
+                />
+              </Button>
+            </Section>
+          </Stack>
+        )}
         <Stack vertical mt={1}>
           <Section fill textAlign="center">
             <Icon name="address-card" mr={1} />

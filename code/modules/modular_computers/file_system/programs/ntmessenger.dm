@@ -25,6 +25,8 @@
 	var/monitor_hidden = FALSE // whether or not this device is currently hidden from the message monitor
 	var/sort = TRUE // whether or not we're sorting by job
 
+	var/photo_path // the path for the current loaded image in rsc
+
 	var/is_silicon = FALSE
 
 /datum/computer_file/program/messenger/proc/ScrubMessengerList()
@@ -64,6 +66,13 @@
 
 /datum/computer_file/program/messenger/proc/StringifyMessengerTarget(obj/item/modular_computer/messenger)
 	return "[messenger.saved_identification] ([messenger.saved_job])"
+
+/datum/computer_file/program/messenger/proc/ProcessPhoto()
+	if(computer.saved_image)
+		var/icon/img = computer.saved_image.picture_image
+		var/deter_path = "tmp_msg_photo[rand(0, 99999)].png"
+		usr << browse_rsc(img, deter_path) // funny random assignment for now, i'll make an actual key later
+		photo_path = deter_path
 
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
@@ -127,6 +136,9 @@
 					return
 				send_message(usr, list(target))
 				return(UI_UPDATE)
+		if("PDA_clearPhoto")
+			computer.saved_image = null
+			photo_path = null
 
 /datum/computer_file/program/messenger/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -139,6 +151,7 @@
 	data["viewingMessages"] = viewingMessages
 	data["sortByJob"] = sort
 	data["isSilicon"] = is_silicon
+	data["photo"] = photo_path
 
 	var/obj/item/computer_hardware/cartridge_slot/cart = computer.all_components[MC_CART]
 
@@ -211,7 +224,7 @@
 		"targets" = targets,
 		"emojis" = allow_emojis,
 		"rigged" = rigged,
-		"photo" = null,
+		"photo" = photo_path,
 		"automated" = FALSE,
 	))
 	if(rigged) //Will skip the message server and go straight to the hub so it can't be cheesed by disabling the message server machine
@@ -239,6 +252,7 @@
 	message_data["contents"] = html_decode(signal.format_message())
 	message_data["outgoing"] = TRUE
 	message_data["ref"] = signal.data["ref"]
+	message_data["photo"] = signal.data["photo"]
 
 	if (!ringerStatus)
 		computer.send_sound()
@@ -260,6 +274,7 @@
 	message_data["outgoing"] = FALSE
 	message_data["ref"] = signal.data["ref"]
 	message_data["automated"] = signal.data["automated"]
+	message_data["photo"] = signal.data["photo"]
 	messages += list(message_data)
 
 	var/mob/living/L = null
