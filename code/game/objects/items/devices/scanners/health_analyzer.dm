@@ -1,15 +1,3 @@
-
-/*
-
-CONTAINS:
-T-RAY
-HEALTH ANALYZER
-GAS ANALYZER
-SLIME SCANNER
-GENE SCANNER
-
-*/
-
 // Describes the three modes of scanning available for health analyzers
 #define SCANMODE_HEALTH 0
 #define SCANMODE_WOUND 1
@@ -17,6 +5,7 @@ GENE SCANNER
 #define SCANNER_CONDENSED 0
 #define SCANNER_VERBOSE 1
 
+<<<<<<< HEAD:code/game/objects/items/devices/scanners.dm
 /obj/item/t_scanner
 	name = "\improper T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
@@ -76,6 +65,8 @@ GENE SCANNER
 	if(t_ray_images.len)
 		flick_overlay(t_ray_images, list(viewer.client), flick_time)
 
+=======
+>>>>>>> upstream/master:code/game/objects/items/devices/scanners/health_analyzer.dm
 /obj/item/healthanalyzer
 	name = "health analyzer"
 	icon = 'icons/obj/device.dmi'
@@ -582,6 +573,7 @@ GENE SCANNER
 
 	woundscan(user, patient, src)
 
+<<<<<<< HEAD:code/game/objects/items/devices/scanners.dm
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."
 	name = "gas analyzer"
@@ -923,6 +915,8 @@ GENE SCANNER
 	var/returned_target = selected_target
 	return returned_target
 
+=======
+>>>>>>> upstream/master:code/game/objects/items/devices/scanners/health_analyzer.dm
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND
 #undef SCANMODE_COUNT

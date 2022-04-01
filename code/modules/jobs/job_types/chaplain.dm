@@ -96,7 +96,7 @@
 			B.deity_name = "Anime"
 		else
 			if(new_bible == DEFAULT_BIBLE)
-				new_bible = "The Holy Book of [new_religion]"
+				new_bible = DEFAULT_BIBLE_REPLACE(new_bible)
 
 	B.name = new_bible
 

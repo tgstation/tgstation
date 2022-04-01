@@ -1,0 +1,4 @@
+author: "PetMudstone"
+delete-after: True
+changes: 
+  - spellcheck: "Voice and chemical analyzers now have more consistent names and spelling."

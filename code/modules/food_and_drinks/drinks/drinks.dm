@@ -43,7 +43,7 @@
 			return // The drink might be empty after the delay, such as by spam-feeding
 		M.visible_message(span_danger("[user] fed [M] the contents of [src]."), \
 			span_userdanger("[user] fed you the contents of [src]."))
-		log_combat(user, M, "fed", reagents.log_list())
+		log_combat(user, M, "fed", reagents.get_reagent_log_string())
 
 	SEND_SIGNAL(src, COMSIG_DRINK_DRANK, M, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)

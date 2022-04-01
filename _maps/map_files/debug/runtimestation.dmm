@@ -1049,6 +1049,13 @@
 /obj/structure/table,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
+"dO" = (
+/obj/structure/table,
+/obj/machinery/light/directional/south,
+/obj/item/storage/medkit/regular,
+/obj/item/healthanalyzer/advanced,
+/turf/open/floor/iron,
+/area/commons/storage/primary)
 "dP" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -2096,10 +2103,6 @@
 /obj/machinery/door/airlock/shell,
 /turf/open/floor/iron/dark,
 /area/construction)
-"sA" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/engineering/gravity_generator)
 "sE" = (
 /obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
@@ -2108,13 +2111,6 @@
 "sH" = (
 /obj/structure/table,
 /obj/item/storage/box/shipping,
-/turf/open/floor/iron,
-/area/commons/storage/primary)
-"tt" = (
-/obj/structure/table,
-/obj/machinery/light/directional/south,
-/obj/item/storage/medkit/regular,
-/obj/item/healthanalyzer/advanced,
 /turf/open/floor/iron,
 /area/commons/storage/primary)
 "tE" = (
@@ -2352,11 +2348,6 @@
 	},
 /turf/open/floor/iron,
 /area/medical/chemistry)
-"Ia" = (
-/obj/machinery/gravity_generator/main/station,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/engineering/gravity_generator)
 "If" = (
 /obj/machinery/rnd/production/techfab/department,
 /turf/open/floor/iron,
@@ -2375,6 +2366,11 @@
 	},
 /turf/open/floor/iron,
 /area/command/bridge)
+"IE" = (
+/obj/machinery/gravity_generator/main/station,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "II" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -2432,6 +2428,10 @@
 	},
 /turf/open/floor/iron,
 /area/cargo/miningoffice)
+"MN" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/engineering/gravity_generator)
 "MY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/structure/cable,
@@ -2466,9 +2466,9 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/science)
-"PJ" = (
-/obj/machinery/newscaster,
-/turf/closed/wall/r_wall,
+"OV" = (
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron,
 /area/engineering/main)
 "Qi" = (
 /obj/structure/cable,
@@ -7189,7 +7189,7 @@ aa
 aj
 al
 aA
-PJ
+aj
 WT
 aj
 aj
@@ -7281,7 +7281,7 @@ aa
 aj
 ap
 aA
-aA
+OV
 Vy
 aS
 bd
@@ -7582,7 +7582,7 @@ dJ
 dJ
 dJ
 dJ
-tt
+dO
 cS
 gz
 fO
@@ -8018,9 +8018,9 @@ ad
 af
 ak
 av
-sA
-sA
-sA
+MN
+MN
+MN
 av
 by
 bU
@@ -8110,9 +8110,9 @@ ad
 af
 ak
 dT
-sA
+MN
 av
-Ia
+IE
 av
 by
 bV
@@ -8202,9 +8202,9 @@ ad
 af
 ak
 av
-sA
-sA
-sA
+MN
+MN
+MN
 av
 by
 bW

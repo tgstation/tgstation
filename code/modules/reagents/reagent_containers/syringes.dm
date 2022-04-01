@@ -45,7 +45,7 @@
 	if (!try_syringe(target, user, proximity))
 		return
 
-	var/contained = reagents.log_list()
+	var/contained = reagents.get_reagent_log_string()
 	log_combat(user, target, "attempted to inject", src, addition="which had [contained]")
 
 	if(!reagents.total_volume)

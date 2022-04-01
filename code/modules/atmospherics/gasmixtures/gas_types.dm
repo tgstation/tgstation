@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 /proc/meta_gas_list()
 	. = subtypesof(/datum/gas)
 	for(var/gas_path in .)
-		var/list/gas_info = new(7)
+		var/list/gas_info = new(8)
 		var/datum/gas/gas = gas_path
 
 		gas_info[META_GAS_SPECIFIC_HEAT] = initial(gas.specific_heat)
@@ -20,6 +20,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 		gas_info[META_GAS_FUSION_POWER] = initial(gas.fusion_power)
 		gas_info[META_GAS_DANGER] = initial(gas.dangerous)
 		gas_info[META_GAS_ID] = initial(gas.id)
+		gas_info[META_GAS_DESC] = initial(gas.desc)
 		.[gas_path] = gas_info
 
 /proc/gas_id2path(id)
@@ -58,6 +59,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	var/purchaseable = FALSE
 	///How does a single mole of this gas sell for? Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm. Doesn't matter for roundstart gasses.
 	var/base_value = 0
+	var/desc
 
 
 /datum/gas/oxygen
@@ -67,6 +69,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	rarity = 900
 	purchaseable = TRUE
 	base_value = 0.2
+	desc = "The gas most life forms need to be able to survive. Also an oxidizer."
 
 /datum/gas/nitrogen
 	id = "n2"
@@ -75,6 +78,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	rarity = 1000
 	purchaseable = TRUE
 	base_value = 0.1
+	desc = "A very common gas that used to pad artifical atmospheres to habitable pressure."
 
 /datum/gas/carbon_dioxide //what the fuck is this?
 	id = "co2"
@@ -84,6 +88,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	rarity = 700
 	purchaseable = TRUE
 	base_value = 0.2
+	desc = "What the fuck is carbon dioxide?"
 
 /datum/gas/plasma
 	id = "plasma"
@@ -93,7 +98,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	rarity = 800
+<<<<<<< HEAD
 	base_value = 1.5
+=======
+	base_value = 2
+	desc = "A flammable gas with many other curious properties. It's research is one of NT's primary objective."
+>>>>>>> upstream/master
 
 /datum/gas/water_vapor
 	id = "water_vapor"
@@ -105,6 +115,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	rarity = 500
 	purchaseable = TRUE
 	base_value = 0.5
+	desc = "Water, in gas form. Makes things slippery."
 
 /datum/gas/hypernoblium
 	id = "nob"
@@ -115,7 +126,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	fusion_power = 10
 	rarity = 50
+<<<<<<< HEAD
 	base_value = 2.5
+=======
+	base_value = 5
+	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occuring."
+>>>>>>> upstream/master
 
 /datum/gas/nitrous_oxide
 	id = "n2o"
@@ -127,7 +143,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	rarity = 600
 	purchaseable = TRUE
+<<<<<<< HEAD
 	base_value = 1.5
+=======
+	base_value = 3
+	desc = "Causes drowsiness, euphoria, and eventually unconsciousness."
+>>>>>>> upstream/master
 
 /datum/gas/nitrium
 	id = "nitrium"
@@ -138,7 +159,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	dangerous = TRUE
 	rarity = 1
+<<<<<<< HEAD
 	base_value = 6
+=======
+	base_value = 100
+	desc = "An experimental performance enhancing gas. Nitrium can have amplified effects as more of it gets into your bloodstream."
+>>>>>>> upstream/master
 
 /datum/gas/tritium
 	id = "tritium"
@@ -149,7 +175,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	dangerous = TRUE
 	fusion_power = 5
 	rarity = 300
+<<<<<<< HEAD
 	base_value = 2.5
+=======
+	base_value = 5
+	desc = "A highly flammable and radioctive gas."
+>>>>>>> upstream/master
 
 /datum/gas/bz
 	id = "bz"
@@ -159,7 +190,12 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = 8
 	rarity = 400
 	purchaseable = TRUE
+<<<<<<< HEAD
 	base_value = 1.5
+=======
+	base_value = 2
+	desc = "A powerful hallucinogenic nerve agent able to induce cognitive damage."
+>>>>>>> upstream/master
 
 /datum/gas/pluoxium
 	id = "pluox"
@@ -168,6 +204,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = -10
 	rarity = 200
 	base_value = 2.5
+	desc = "A gas that could supply even more oxygen to the bloodstream when inhaled, without being an oxidizer."
 
 /datum/gas/miasma
 	id = "miasma"
@@ -178,6 +215,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
 	base_value = 1
+	desc = "Not necessarily a gas, miasma refers to biological pollutants found in the atmosphere."
 
 /datum/gas/freon
 	id = "freon"
@@ -189,6 +227,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = -5
 	rarity = 10
 	base_value = 5
+	desc = "A coolant gas. Mainly used for it's endothermic reaction with oxygen."
 
 /datum/gas/hydrogen
 	id = "hydrogen"
@@ -198,6 +237,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = 2
 	rarity = 600
 	base_value = 1
+	desc = "A highly flammable gas."
 
 /datum/gas/healium
 	id = "healium"
@@ -208,6 +248,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 	base_value = 5.5
+	desc = "Causes deep, regenerative sleep."
 
 /datum/gas/proto_nitrate
 	id = "proto_nitrate"
@@ -218,6 +259,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 200
 	base_value = 2.5
+	desc = "A very volatile gas that reacts differently with various gases."
 
 /datum/gas/zauker
 	id = "zauker"
@@ -228,6 +270,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 1
 	base_value = 7
+	desc = "A highly toxic gas, it's production is highly regulated on top of being difficult. It also breaks down when in contact with nitrogen."
 
 /datum/gas/halon
 	id = "halon"
@@ -238,6 +281,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 	base_value = 4
+	desc = "A potent fire supressant. Removes oxygen from high temperature fires and cools down the area"
 
 /datum/gas/helium
 	id = "helium"
@@ -246,6 +290,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = 7
 	rarity = 50
 	base_value = 3.5
+	desc = "A very inert gas produced by the fusion of hydrogen and it's derivatives."
 
 /datum/gas/antinoblium
 	id = "antinoblium"
@@ -256,7 +301,7 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 20
 	rarity = 1
-	base_value = 4.5
+	desc = "We still don't know what it does, but it sells for a lot."
 
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
