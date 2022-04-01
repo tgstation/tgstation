@@ -266,5 +266,5 @@
 
 /obj/item/clothing/gloves/maid
 	name = "maid arm covers"
-	desc = "Cylidrical looking tubes that go over your arm, weird."
+	desc = "Cylindrical looking tubes that go over your arm, weird."
 	icon_state = "maid_arms"
