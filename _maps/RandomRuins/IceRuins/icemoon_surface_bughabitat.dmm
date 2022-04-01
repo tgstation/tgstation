@@ -218,7 +218,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "yC" = (
-/obj/machinery/door/window/eastleft,
+/obj/machinery/door/window/left/directional/east,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 4
@@ -260,7 +260,7 @@
 /turf/open/floor/plastic,
 /area/ruin/bughabitat)
 "Ea" = (
-/obj/machinery/door/window/northright,
+/obj/machinery/door/window/right/directional/north,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 1
@@ -342,7 +342,7 @@
 /area/ruin/bughabitat)
 "Pt" = (
 /obj/machinery/light/warm/directional/west,
-/obj/machinery/door/window/northright,
+/obj/machinery/door/window/right/directional/north,
 /obj/effect/turf_decal/siding/wideplating/light{
 	color = "#236F26";
 	dir = 9

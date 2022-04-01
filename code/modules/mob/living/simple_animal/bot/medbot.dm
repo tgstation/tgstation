@@ -338,12 +338,12 @@
 	if(!.)
 		return
 
-	if(mode == BOT_TIPPED)
-		handle_panic()
-		return
-
-	if(mode == BOT_HEALING)
-		return
+	switch(mode)
+		if(BOT_TIPPED)
+			handle_panic()
+			return
+		if(BOT_HEALING)
+			return
 
 	if(IsStun() || IsParalyzed())
 		oldpatient = patient
@@ -405,11 +405,11 @@
 		frustration++
 
 	if(bot_mode_flags & BOT_MODE_AUTOPATROL && !(medical_mode_flags & MEDBOT_STATIONARY_MODE) && !patient)
-		if(mode == BOT_IDLE || mode == BOT_START_PATROL)
-			start_patrol()
-
-		if(mode == BOT_PATROL)
-			bot_patrol()
+		switch(mode)
+			if(BOT_IDLE, BOT_START_PATROL)
+				start_patrol()
+			if(BOT_PATROL)
+				bot_patrol()
 
 /mob/living/simple_animal/bot/medbot/proc/assess_patient(mob/living/carbon/C)
 	. = FALSE
@@ -567,8 +567,6 @@
 			tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/explode()
-	bot_mode_flags &= ~BOT_MODE_ON
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	drop_part(medkit_type, Tsec)
@@ -577,9 +575,7 @@
 
 	if(bot_cover_flags & BOT_COVER_EMAGGED && prob(25))
 		playsound(src, 'sound/voice/medbot/insult.ogg', 50)
-
-	do_sparks(3, TRUE, src)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/medbot/proc/declare(crit_patient)
 	if(!COOLDOWN_FINISHED(src, last_patient_message))

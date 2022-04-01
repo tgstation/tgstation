@@ -351,6 +351,16 @@
 	id = "comp_bar_overlay"
 	build_path = /obj/item/circuit_component/object_overlay/bar
 
+/datum/design/component/bci/vox
+	name = "VOX Announcement Component"
+	id = "comp_vox"
+	build_path = /obj/item/circuit_component/vox
+
+/datum/design/component/bci/thought_listener
+	name = "Thought Listener Component"
+	id = "comp_thought_listener"
+	build_path = /obj/item/circuit_component/thought_listener
+
 /datum/design/component/bci/target_intercept
 	name = "BCI Target Interceptor"
 	id = "comp_target_intercept"
@@ -382,7 +392,7 @@
 	build_path = /obj/item/circuit_component/id_getter
 
 /datum/design/component/id_info_reader
-	name = "ID Getter Component"
+	name = "ID Info Reader Component"
 	id = "comp_id_info_reader"
 	build_path = /obj/item/circuit_component/id_info_reader
 
@@ -395,6 +405,11 @@
 	name = "Set Variable Trigger"
 	id = "comp_set_variable_trigger"
 	build_path = /obj/item/circuit_component/variable/setter/trigger
+
+/datum/design/component/view_sensor
+	name = "View Sensor Component"
+	id = "comp_view_sensor"
+	build_path = /obj/item/circuit_component/view_sensor
 
 /datum/design/component/access_checker
 	name = "Access Checker Component"

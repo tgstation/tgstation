@@ -101,17 +101,22 @@
 //airlock helpers
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
+	late = TRUE
 
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
-		return
+		return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/airlock/LateInitialize()
+	. = ..()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
 	else
 		payload(airlock)
+	qdel(src)
 
 /obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
 	return
@@ -174,6 +179,16 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
 	else
 		airlock.cutAiWire = TRUE
+
+/obj/effect/mapping_helpers/airlock/autoname
+	name = "airlock autoname helper"
+	icon_state = "airlock_autoname"
+
+/obj/effect/mapping_helpers/airlock/autoname/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.autoname)
+		log_mapping("[src] at [AREACOORD(src)] tried to autoname the [airlock] but it's already autonamed!")
+	else
+		airlock.autoname = TRUE
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
