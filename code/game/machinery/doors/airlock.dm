@@ -139,7 +139,7 @@
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
-	var/airlock_price = 5 // How many credits do we bill for entry?
+	var/airlock_price = 10 // How many credits do we bill for entry?
 
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
