@@ -153,3 +153,10 @@ interface Window {
   update: (msg: unknown) => unknown;
   Byond: ByondType;
 }
+
+namespace JSX {
+  interface IntrinsicElements {
+    marquee: any;
+    blink: any;
+  }
+}

@@ -139,6 +139,7 @@
 	var/delayed_close_requested = FALSE // TRUE means the door will automatically close the next time it's opened.
 	var/air_tight = FALSE //TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
+	var/airlock_price = 5 // How many credits do we bill for entry?
 
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -1589,6 +1590,52 @@
 		if("open-close")
 			user_toggle_open(usr)
 			. = TRUE
+
+/datum/airlock_advertisement
+	var/customer = "Real Human Being"
+	var/price = 69
+
+/datum/airlock_advertisement/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Advertisement")
+		ui.open()
+
+/datum/airlock_advertisement/ui_data(mob/user)
+	var/list/data = list()
+	data["customer"] = customer
+	data["price"] = price
+	return data
+
+/datum/airlock_advertisement/ui_state()
+	return GLOB.always_state
+
+/obj/machinery/door/airlock/allowed(mob/M)
+	. = FALSE
+	var/mob/living/potential_customer = M
+	var/obj/item/card/id/ID = potential_customer.get_idcard(TRUE)
+	var/name_to_use = "Poor Person"
+	if(ID)
+		name_to_use = ID.registered_name
+		var/datum/bank_account/account = ID.registered_account
+		if(account.adjust_money(-airlock_price))
+			playsound(src, 'sound/effects/cashregister.ogg', 50, TRUE)
+			return TRUE
+	var/datum/airlock_advertisement/advertisement = new(M)
+	advertisement.customer = name_to_use
+	advertisement.price = airlock_price
+	advertisement.ui_interact(M)
+	playsound(src, 'sound/airlock_ad.ogg', 100, FALSE)
+	if(do_after(potential_customer, 20 SECONDS, src))
+		. = TRUE
+	var/datum/tgui/ui = SStgui.get_open_ui(potential_customer, advertisement)
+	if(!QDELETED(ui))
+		ui.close()
+
+
 
 /obj/machinery/door/airlock/proc/user_allowed(mob/user)
 	return (issilicon(user) && canAIControl(user)) || isAdminGhostAI(user)

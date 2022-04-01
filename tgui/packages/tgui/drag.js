@@ -42,7 +42,7 @@ const setWindowPosition = vec => {
   });
 };
 
-const setWindowSize = vec => {
+export const setWindowSize = vec => {
   return Byond.winset(window.__windowId__, {
     size: vec[0] + 'x' + vec[1],
   });
@@ -53,7 +53,7 @@ const getScreenPosition = () => [
   0 - screenOffset[1],
 ];
 
-const getScreenSize = () => [
+export const getScreenSize = () => [
   window.screen.availWidth * pixelRatio,
   window.screen.availHeight * pixelRatio,
 ];
