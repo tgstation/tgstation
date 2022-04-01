@@ -139,7 +139,7 @@
 
 /obj/item/reagent_containers/glass/bowl/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/salad/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 
 // empty salad for custom salads
 /obj/item/food/salad/empty

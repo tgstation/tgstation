@@ -44,7 +44,7 @@
 			to_chat(caster, span_warning("Your soul snaps back to your body as you stop ensouling [marked_item]!"))
 			return
 
-		marked_item.add_component(/datum/component/phylactery, caster.mind)
+		marked_item.AddComponent(/datum/component/phylactery, caster.mind)
 
 		caster.set_species(/datum/species/skeleton)
 		to_chat(caster, span_userdanger("With a hideous feeling of emptiness you watch in horrified fascination \

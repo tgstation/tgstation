@@ -145,7 +145,7 @@
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/caltrop, min_damage = 3, max_damage = 6, probability = 70)
+	AddComponent(/datum/component/caltrop, min_damage = 3, max_damage = 6, probability = 70)
 
 /obj/structure/flora/ash/seraka
 	icon_state = "seraka_mushroom"

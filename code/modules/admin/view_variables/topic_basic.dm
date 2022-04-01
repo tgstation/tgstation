@@ -76,7 +76,7 @@
 		lst.Insert(1, result)
 		if(result in componentsubtypes)
 			datumname = "component"
-			target._add_component(lst)
+			target._AddComponent(lst)
 		else
 			datumname = "element"
 			target._AddElement(lst)
@@ -125,7 +125,7 @@
 				lst.Insert(1, path)
 				target._RemoveElement(lst)
 			else
-				var/list/components_actual = target_to_remove_from.get_components(path)
+				var/list/components_actual = target_to_remove_from.GetComponents(path)
 				for(var/to_delete in components_actual)
 					qdel(to_delete)
 

@@ -11,7 +11,7 @@
 
 /obj/machinery/plumbing/sender/Initialize(mapload, bolt, layer)
 	. = ..()
-	add_component(/datum/component/plumbing/simple_demand, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt, layer)
 
 /obj/machinery/plumbing/sender/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I))
@@ -66,7 +66,7 @@
 
 /obj/machinery/plumbing/receiver/Initialize(mapload, bolt)
 	. = ..()
-	add_component(/datum/component/plumbing/simple_supply, bolt)
+	AddComponent(/datum/component/plumbing/simple_supply, bolt)
 
 /obj/machinery/plumbing/receiver/multitool_act(mob/living/user, obj/item/I)
 	if(!multitool_check_buffer(user, I))

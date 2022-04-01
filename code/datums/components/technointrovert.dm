@@ -20,11 +20,11 @@
 /datum/component/technointrovert/unregister_from_parent()
 	unregister_signal(parent, list(COMSIG_TRY_USE_MACHINE, COMSIG_TRY_WIRES_INTERACT))
 
-/datum/component/technointrovert/post_transfer()
+/datum/component/technointrovert/PostTransfer()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/technointrovert/inherit_component(datum/component/technointrovert/friend, i_am_original, list/arguments)
+/datum/component/technointrovert/InheritComponent(datum/component/technointrovert/friend, i_am_original, list/arguments)
 	if(i_am_original)
 		whitelist = friend.whitelist
 		message = friend.message

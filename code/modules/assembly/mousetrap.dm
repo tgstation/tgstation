@@ -47,7 +47,7 @@
 
 /obj/item/assembly/mousetrap/on_attach()
 	. = ..()
-	add_component(/datum/component/connect_loc_behalf, holder, holder_connections)
+	AddComponent(/datum/component/connect_loc_behalf, holder, holder_connections)
 
 /obj/item/assembly/mousetrap/on_detach()
 	. = ..()

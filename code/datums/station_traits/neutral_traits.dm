@@ -39,7 +39,7 @@
 		// Makes this station trait more interesting. Ian probably won't go anywhere without a little external help.
 		// Also gives him a couple extra lives to survive eventual tiders.
 		dog.deadchat_plays(DEMOCRACY_MODE|MUTE_DEMOCRACY_MESSAGES, 3 SECONDS)
-		dog.add_component(/datum/component/multiple_lives, 2)
+		dog.AddComponent(/datum/component/multiple_lives, 2)
 		register_signal(dog, COMSIG_ON_MULTIPLE_LIVES_RESPAWN, .proc/do_corgi_respawn)
 
 		// The extended safety checks at time of writing are about chasms and lava

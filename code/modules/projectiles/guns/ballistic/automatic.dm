@@ -61,7 +61,7 @@
 
 /obj/item/gun/ballistic/automatic/proto/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/automatic_fire, 0.2 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
@@ -115,7 +115,7 @@
 
 /obj/item/gun/ballistic/automatic/wt550/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/automatic_fire, 0.3 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.3 SECONDS)
 
 /obj/item/gun/ballistic/automatic/plastikov
 	name = "\improper PP-95 SMG"
@@ -230,7 +230,7 @@
 
 /obj/item/gun/ballistic/automatic/tommygun/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/automatic_fire, 0.1 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.1 SECONDS)
 
 /obj/item/gun/ballistic/automatic/ar
 	name = "\improper NT-ARG 'Boarder'"
@@ -277,7 +277,7 @@
 /obj/item/gun/ballistic/automatic/l6_saw/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
-	add_component(/datum/component/automatic_fire, 0.2 SECONDS)
+	AddComponent(/datum/component/automatic_fire, 0.2 SECONDS)
 
 /obj/item/gun/ballistic/automatic/l6_saw/examine(mob/user)
 	. = ..()

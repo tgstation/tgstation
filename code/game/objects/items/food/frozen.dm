@@ -33,7 +33,7 @@
 
 /obj/item/food/spacefreezy/MakeEdible()
 	. = ..()
-	add_component(/datum/component/ice_cream_holder)
+	AddComponent(/datum/component/ice_cream_holder)
 
 /obj/item/food/sundae
 	name = "sundae"
@@ -47,7 +47,7 @@
 
 /obj/item/food/sundae/MakeEdible()
 	. = ..()
-	add_component(/datum/component/ice_cream_holder, y_offset = -2, sweetener = /datum/reagent/consumable/caramel)
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2, sweetener = /datum/reagent/consumable/caramel)
 
 /obj/item/food/honkdae
 	name = "honkdae"
@@ -61,7 +61,7 @@
 
 /obj/item/food/honkdae/MakeEdible()
 	. = ..()
-	add_component(/datum/component/ice_cream_holder, y_offset = -2) //The sugar will react with the banana forming laughter. Honk!
+	AddComponent(/datum/component/ice_cream_holder, y_offset = -2) //The sugar will react with the banana forming laughter. Honk!
 
 /////////////
 //SNOWCONES//
@@ -239,7 +239,7 @@
 	update_icon() // make sure the popsicle overlay is primed so it's not just a stick until you start eating it
 
 /obj/item/food/popsicle/MakeEdible()
-	add_component(/datum/component/edible,\
+	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
 				foodtypes = foodtypes,\

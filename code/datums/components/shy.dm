@@ -59,11 +59,11 @@
 		COMSIG_TRY_ALT_ACTION,
 	))
 
-/datum/component/shy/post_transfer()
+/datum/component/shy/PostTransfer()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/shy/inherit_component(datum/component/shy/friend, i_am_original, list/arguments)
+/datum/component/shy/InheritComponent(datum/component/shy/friend, i_am_original, list/arguments)
 	if(i_am_original)
 		shy_range = friend.shy_range
 		mob_whitelist = friend.mob_whitelist

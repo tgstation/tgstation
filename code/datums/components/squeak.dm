@@ -34,7 +34,7 @@
 	if(ismovable(parent))
 		register_signal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_MOVABLE_IMPACT, COMSIG_PROJECTILE_BEFORE_FIRE), .proc/play_squeak)
 
-		add_component(/datum/component/connect_loc_behalf, parent, item_connections)
+		AddComponent(/datum/component/connect_loc_behalf, parent, item_connections)
 		register_signal(parent, COMSIG_MOVABLE_DISPOSING, .proc/disposing_react)
 		if(isitem(parent))
 			register_signal(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ, COMSIG_ITEM_HIT_REACT), .proc/play_squeak)

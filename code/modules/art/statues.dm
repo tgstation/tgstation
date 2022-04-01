@@ -21,7 +21,7 @@
 	. = ..()
 	AddElement(art_type, impressiveness)
 	AddElement(/datum/element/beauty, impressiveness * 75)
-	add_component(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)

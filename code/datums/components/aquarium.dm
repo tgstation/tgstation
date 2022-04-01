@@ -132,7 +132,7 @@
 	base_transform = matrix
 
 
-/datum/component/aquarium_content/pre_transfer()
+/datum/component/aquarium_content/PreTransfer()
 	. = ..()
 	REMOVE_TRAIT(parent, TRAIT_FISH_CASE_COMPATIBILE, src)
 

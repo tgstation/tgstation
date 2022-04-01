@@ -25,7 +25,7 @@
 		if(ismob(loc))
 			var/mob/M = loc
 			to_chat(M, span_warning("The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?"))
-			M.add_component(/datum/component/omen, TRUE, src)
+			M.AddComponent(/datum/component/omen, TRUE, src)
 	else
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"

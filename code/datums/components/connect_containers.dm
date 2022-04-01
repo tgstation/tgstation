@@ -22,7 +22,7 @@
 	set_tracked(null)
 	return ..()
 
-/datum/component/connect_containers/inherit_component(datum/component/component, original, atom/movable/tracked, list/connections)
+/datum/component/connect_containers/InheritComponent(datum/component/component, original, atom/movable/tracked, list/connections)
 	// Not equivalent. Checks if they are not the same list via shallow comparison.
 	if(!compare_list(src.connections, connections))
 		stack_trace("connect_containers component attached to [parent] tried to inherit another connect_containers component with different connections")

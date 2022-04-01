@@ -160,7 +160,7 @@ Regenerative extracts:
 
 /obj/item/slimecross/regenerative/sepia/core_effect_before(mob/living/target, mob/user)
 	to_chat(target, span_notice("You try to forget how you feel."))
-	target.add_component(/datum/component/dejavu)
+	target.AddComponent(/datum/component/dejavu)
 
 /obj/item/slimecross/regenerative/cerulean
 	colour = "cerulean"

@@ -32,7 +32,7 @@
 	register_signal(techweb, COMSIG_TECHWEB_ADD_DESIGN, .proc/on_research)
 	register_signal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, .proc/on_removed)
 
-	materials = add_component( \
+	materials = AddComponent( \
 		/datum/component/remote_materials, \
 		"component_printer", \
 		mapload, \
@@ -281,7 +281,7 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = add_component( \
+	materials = AddComponent( \
 		/datum/component/remote_materials, \
 		"module_duplicator", \
 		mapload, \

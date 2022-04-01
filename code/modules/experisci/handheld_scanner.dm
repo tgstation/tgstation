@@ -19,6 +19,6 @@
 // Late initialize to allow for the rnd servers to initialize first
 /obj/item/experi_scanner/LateInitialize()
 	. = ..()
-	add_component(/datum/component/experiment_handler, \
+	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/scanning, /datum/experiment/physical),\
 		disallowed_traits = EXPERIMENT_TRAIT_DESTRUCTIVE)

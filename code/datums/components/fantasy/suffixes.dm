@@ -120,7 +120,7 @@
 	var/obj/item/master = comp.parent
 	var/max_mobs = max(CEILING(comp.quality/2, 1), 1)
 	var/spawn_delay = 300 - 30 * comp.quality
-	comp.appliedComponents += master.add_component(/datum/component/summoning, list(picked_mobtype), 100, max_mobs, spawn_delay)
+	comp.appliedComponents += master.AddComponent(/datum/component/summoning, list(picked_mobtype), 100, max_mobs, spawn_delay)
 	return "[newName] of [initial(picked_mobtype.name)] summoning"
 
 /datum/fantasy_affix/shrapnel
@@ -155,7 +155,7 @@
 	var/obj/projectile/picked_projectiletype = pick_weight(weighted_projectile_types)
 
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.add_component(/datum/component/mirv, picked_projectiletype)
+	comp.appliedComponents += master.AddComponent(/datum/component/mirv, picked_projectiletype)
 	return "[newName] of [initial(picked_projectiletype.name)] shrapnel"
 
 /datum/fantasy_affix/strength
@@ -183,7 +183,7 @@
 /datum/fantasy_affix/fool/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	var/obj/item/master = comp.parent
-	comp.appliedComponents += master.add_component(/datum/component/squeak, list('sound/items/bikehorn.ogg' = 1), 50, falloff_exponent = 20)
+	comp.appliedComponents += master.AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg' = 1), 50, falloff_exponent = 20)
 	return "[newName] of the fool"
 
 /datum/fantasy_affix/curse_of_hunger
@@ -204,7 +204,7 @@
 	var/new_name = pick(", eternally hungry", " of the glutton", " cursed with hunger", ", consumer of all", " of the feast")
 	master.AddElement(/datum/element/curse_announcement, "[master] is cursed with the curse of hunger!", filter_color, new_name, comp)
 	var/add_dropdel = FALSE //clarified boolean
-	comp.appliedComponents += master.add_component(/datum/component/curse_of_hunger, add_dropdel)
+	comp.appliedComponents += master.AddComponent(/datum/component/curse_of_hunger, add_dropdel)
 	return newName //no spoilers!
 
 /datum/fantasy_affix/curse_of_hunger/remove(datum/component/fantasy/comp)

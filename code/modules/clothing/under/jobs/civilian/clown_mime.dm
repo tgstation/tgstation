@@ -34,7 +34,7 @@
 
 /obj/item/clothing/under/rank/civilian/clown/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20) //die off quick please
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/clothing/under/rank/civilian/clown/blue

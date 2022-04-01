@@ -282,7 +282,7 @@
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
 
-/// Put your [add_component] calls here
+/// Put your [AddComponent] calls here
 /atom/proc/ComponentInitialize()
 	return
 

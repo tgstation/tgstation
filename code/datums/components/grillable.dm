@@ -30,7 +30,7 @@
 	register_signal(parent, COMSIG_PARENT_EXAMINE, .proc/OnExamine)
 
 // Inherit the new values passed to the component
-/datum/component/grillable/inherit_component(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)
+/datum/component/grillable/InheritComponent(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)
 	if(!original)
 		return
 	if(cook_result)

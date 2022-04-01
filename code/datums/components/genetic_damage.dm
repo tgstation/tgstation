@@ -39,7 +39,7 @@
 
 	return ..()
 
-/datum/component/genetic_damage/inherit_component(datum/component/genetic_damage/old_component)
+/datum/component/genetic_damage/InheritComponent(datum/component/genetic_damage/old_component)
 	total_damage += old_component.total_damage
 
 /datum/component/genetic_damage/process(delta_time)

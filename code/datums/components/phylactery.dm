@@ -49,7 +49,7 @@
 	var/obj/obj_parent = parent
 	obj_parent.name = "ensouled [obj_parent.name]"
 	obj_parent.add_atom_colour(phylactery_color, ADMIN_COLOUR_PRIORITY)
-	obj_parent.add_component(/datum/component/stationloving, FALSE, TRUE)
+	obj_parent.AddComponent(/datum/component/stationloving, FALSE, TRUE)
 
 	register_signal(obj_parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 

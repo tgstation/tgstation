@@ -16,7 +16,7 @@
 		item.item_flags |= IN_STORAGE
 
 /obj/item/storage/ComponentInitialize()
-	add_component(component_type)
+	AddComponent(component_type)
 
 /obj/item/storage/AllowDrop()
 	return FALSE

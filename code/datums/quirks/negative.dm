@@ -203,7 +203,7 @@
 	if(!family_heirloom)
 		to_chat(quirk_holder, "<span class='boldnotice'>A wave of existential dread runs over you as you realise your precious family heirloom is missing. Perhaps the Gods will show mercy on your cursed soul?</span>")
 		return
-	family_heirloom.add_component(/datum/component/heirloom, quirk_holder.mind, family_name)
+	family_heirloom.AddComponent(/datum/component/heirloom, quirk_holder.mind, family_name)
 
 	return ..()
 

@@ -115,8 +115,8 @@
 	if(istype(datum_owner))
 		datum_owner.hack_software = TRUE
 
-	datum_owner.add_component(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-	datum_owner.add_component(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
+	datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/malf_ai/remove_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -126,7 +126,7 @@
 	if(istype(datum_owner))
 		datum_owner.hack_software = FALSE
 
-	for(var/datum/component/codeword_hearing/component as anything in datum_owner.get_components(/datum/component/codeword_hearing))
+	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
 		component.delete_if_from_source(src)
 
 /// Outputs this shift's codewords and responses to the antag's chat and copies them to their memory.

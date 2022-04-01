@@ -15,7 +15,7 @@
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
+	AddComponent(/datum/component/gps/item, "MOD0", state = GLOB.deep_inventory_state, overlay_state = FALSE)
 
 /obj/item/mod/module/gps/on_use()
 	. = ..()

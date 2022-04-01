@@ -19,7 +19,7 @@
 		return FALSE
 	if(handler.get_completion_progression(/datum/traitor_objective) < progression_objectives_minimum)
 		return FALSE
-	add_component(/datum/component/traitor_objective_mind_tracker, generating_for, \
+	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
 		signals = list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK = .proc/on_unarmed_attack))
 	register_signal(generating_for, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, .proc/on_global_obj_completed)
 	return TRUE

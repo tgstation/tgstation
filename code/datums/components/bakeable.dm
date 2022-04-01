@@ -22,7 +22,7 @@
 	src.positive_result = positive_result
 
 // Inherit the new values passed to the component
-/datum/component/bakeable/inherit_component(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
+/datum/component/bakeable/InheritComponent(datum/component/bakeable/new_comp, original, bake_result, required_bake_time, positive_result, use_large_steam_sprite)
 	if(!original)
 		return
 	if(bake_result)

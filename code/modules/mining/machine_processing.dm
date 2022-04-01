@@ -146,7 +146,7 @@
 									/datum/material/titanium,
 									/datum/material/bluespace
 									)
-	add_component(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_ORE_PROCESSOR, allowed_items=/obj/item/stack)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_ORE_PROCESSOR, allowed_items=/obj/item/stack)
 	stored_research = new /datum/techweb/specialized/autounlocking/smelter
 	selected_material = GET_MATERIAL_REF(/datum/material/iron)
 

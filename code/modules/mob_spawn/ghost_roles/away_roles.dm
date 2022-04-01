@@ -17,7 +17,7 @@
 /obj/effect/mob_spawn/ghost_role/human/skeleton/special(mob/living/new_spawn)
 	. = ..()
 	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
-	new_spawn.add_component(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
 
 /obj/effect/mob_spawn/ghost_role/human/zombie
 	name = "rotting corpse"
@@ -33,4 +33,4 @@
 /obj/effect/mob_spawn/ghost_role/human/zombie/special(mob/living/new_spawn)
 	. = ..()
 	to_chat(new_spawn, "<b>You have this horrible lurching feeling deep down that your binding to this world will fail if you abandon this zone... Were you reanimated to protect something?</b>")
-	new_spawn.add_component(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")
+	new_spawn.AddComponent(/datum/component/stationstuck, PUNISHMENT_MURDER, "You experience a feeling like a stressed twine being pulled until it snaps. Then, merciful nothing.")

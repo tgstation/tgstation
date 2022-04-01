@@ -12,7 +12,7 @@
 	. = ..()
 	set_holdable(list(/obj/item/tcgcard))
 
-/datum/component/storage/concrete/tcg/post_transfer()
+/datum/component/storage/concrete/tcg/PostTransfer()
 	. = ..()
 	handle_empty_deck()
 

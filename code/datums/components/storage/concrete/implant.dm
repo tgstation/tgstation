@@ -11,7 +11,7 @@
 	. = ..()
 	set_holdable(null, list(/obj/item/disk/nuclear))
 
-/datum/component/storage/concrete/implant/inherit_component(datum/component/storage/concrete/implant/I, original)
+/datum/component/storage/concrete/implant/InheritComponent(datum/component/storage/concrete/implant/I, original)
 	if(!istype(I))
 		return ..()
 	max_combined_w_class += I.max_combined_w_class

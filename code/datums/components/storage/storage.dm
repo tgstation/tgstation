@@ -112,7 +112,7 @@
 	LAZYCLEARLIST(is_using)
 	return ..()
 
-/datum/component/storage/pre_transfer()
+/datum/component/storage/PreTransfer()
 	update_actions()
 
 /// Almost 100% of the time the lists passed into set_holdable are reused for each instance of the component

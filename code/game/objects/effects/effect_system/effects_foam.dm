@@ -101,7 +101,7 @@
 /obj/effect/particle_effect/foam/ComponentInitialize()
 	. = ..()
 	if(slippery_foam)
-		add_component(/datum/component/slippery, 100)
+		AddComponent(/datum/component/slippery, 100)
 
 /obj/effect/particle_effect/foam/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)

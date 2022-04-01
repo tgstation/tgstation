@@ -73,7 +73,7 @@
 			user.put_in_hands(bug)
 			bug.balloon_alert(user, "the bug materializes in your hand")
 			bug.target_area_type = applicable_heads[target_office.title]
-			add_component(/datum/component/traitor_objective_register, bug, \
+			AddComponent(/datum/component/traitor_objective_register, bug, \
 				succeed_signals = COMSIG_TRAITOR_BUG_PLANTED_GROUND, \
 				fail_signals = COMSIG_PARENT_QDELETING, \
 				penalty = TRUE)

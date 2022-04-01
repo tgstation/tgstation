@@ -122,7 +122,7 @@
 	. = ..()
 	if(!.)
 		return
-	add_component(/datum/component/rot, 0, 5 MINUTES, 0.7)
+	AddComponent(/datum/component/rot, 0, 5 MINUTES, 0.7)
 
 /obj/effect/decal/cleanable/blood/gibs/ex_act(severity, target)
 	return FALSE

@@ -140,7 +140,7 @@
 	update_appearance()
 	linked_techweb = SSresearch.science_tech
 
-	add_component(/datum/component/tippable, \
+	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 3 SECONDS, \
 		self_right_time = 3.5 MINUTES, \

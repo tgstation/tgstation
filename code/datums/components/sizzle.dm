@@ -8,7 +8,7 @@
 		return COMPONENT_INCOMPATIBLE
 	setup_sizzle()
 
-/datum/component/sizzle/inherit_component(datum/component/C, i_am_original)
+/datum/component/sizzle/InheritComponent(datum/component/C, i_am_original)
 	var/atom/food = parent
 	sizzlealpha += 5
 	sizzling.alpha = sizzlealpha

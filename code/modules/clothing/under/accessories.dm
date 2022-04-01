@@ -31,7 +31,7 @@
 	if(storage)
 		if(SEND_SIGNAL(U, COMSIG_CONTAINS_STORAGE))
 			return FALSE
-		U.take_component(storage)
+		U.TakeComponent(storage)
 		set_detached_pockets(storage)
 	U.attached_accessory = src
 	forceMove(U)
@@ -58,7 +58,7 @@
 
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/U, user)
 	if(detached_pockets && detached_pockets.parent == U)
-		take_component(detached_pockets)
+		TakeComponent(detached_pockets)
 
 	U.armor = U.armor.detachArmor(armor)
 

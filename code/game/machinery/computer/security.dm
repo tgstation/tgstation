@@ -21,7 +21,7 @@
 
 /obj/machinery/computer/secure_data/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	add_component(/datum/component/usb_port, list(
+	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/arrest_console_data,
 		/obj/item/circuit_component/arrest_console_arrest,
 	))

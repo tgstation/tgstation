@@ -120,7 +120,7 @@
 
 /obj/item/pen/fountain/captain/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
+	AddComponent(/datum/component/butchering, 200, 115) //the pen is mightier than the sword
 
 /obj/item/pen/fountain/captain/reskin_obj(mob/M)
 	..()
@@ -166,7 +166,7 @@
 			if(input == oldname || !input)
 				to_chat(user, span_notice("You changed [O] to... well... [O]."))
 			else
-				O.add_component(/datum/component/rename, input, O.desc)
+				O.AddComponent(/datum/component/rename, input, O.desc)
 				var/datum/component/label/label = O.get_component(/datum/component/label)
 				if(label)
 					label.remove_label()
@@ -182,7 +182,7 @@
 			if(input == olddesc || !input)
 				to_chat(user, span_notice("You decide against changing [O]'s description."))
 			else
-				O.add_component(/datum/component/rename, O.name, input)
+				O.AddComponent(/datum/component/rename, O.name, input)
 				to_chat(user, span_notice("You have successfully changed [O]'s description."))
 				O.renamedByPlayer = TRUE
 
@@ -241,8 +241,8 @@
 
 /obj/item/pen/edagger/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/butchering, _speed = 6 SECONDS, _butcher_sound = 'sound/weapons/blade1.ogg')
-	add_component(/datum/component/transforming, \
+	AddComponent(/datum/component/butchering, _speed = 6 SECONDS, _butcher_sound = 'sound/weapons/blade1.ogg')
+	AddComponent(/datum/component/transforming, \
 		force_on = 18, \
 		throwforce_on = 35, \
 		throw_speed_on = 4, \

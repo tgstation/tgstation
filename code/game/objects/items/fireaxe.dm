@@ -30,8 +30,8 @@
 
 /obj/item/fireaxe/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
-	add_component(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/butchering, 100, 80, 0 , hitsound) //axes are not known for being precision butchering tools
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=24, icon_wielded="[base_icon_state]1")
 
 /// triggered on wield of two handed item
 /obj/item/fireaxe/proc/on_wield(obj/item/source, mob/user)
@@ -73,7 +73,7 @@
 
 /obj/item/fireaxe/boneaxe/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")
 
 
 /*
@@ -87,4 +87,4 @@
 
 /obj/item/fireaxe/metal_h2_axe/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=5, force_wielded=23, icon_wielded="[base_icon_state]1")

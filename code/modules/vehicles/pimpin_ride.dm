@@ -161,7 +161,7 @@
 	greyscale_colors = "#ffffff#ffea6a#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/vacuum/install(obj/vehicle/ridden/janicart/installee)
-	installee.add_component(/datum/component/vacuum, installee.trash_bag)
+	installee.AddComponent(/datum/component/vacuum, installee.trash_bag)
 
 /obj/item/janicart_upgrade/vacuum/uninstall(obj/vehicle/ridden/janicart/installee)
 	qdel(installee.get_component(/datum/component/vacuum))

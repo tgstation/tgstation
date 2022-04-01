@@ -93,7 +93,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/syndicate/alt/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/syndicate/alt/leader
 	name = "team leader headset"
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_sec/alt/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/headset_eng
 	name = "engineering radio headset"
@@ -191,7 +191,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/heads/captain/alt/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/heads/rd
 	name = "\proper the research director's headset"
@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/heads/hos/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/heads/ce
 	name = "\proper the chief engineer's headset"
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/headset_cent/alt/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
+	AddComponent(/datum/component/wearertargeting/earprotection, list(ITEM_SLOT_EARS))
 
 /obj/item/radio/headset/silicon/pai
 	name = "\proper mini Integrated Subspace Transceiver "

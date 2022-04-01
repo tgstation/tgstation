@@ -18,7 +18,7 @@
 
 /obj/machinery/plumbing/splitter/Initialize(mapload, bolt, layer)
 	. = ..()
-	add_component(/datum/component/plumbing/splitter, bolt, layer)
+	AddComponent(/datum/component/plumbing/splitter, bolt, layer)
 
 /obj/machinery/plumbing/splitter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -269,18 +269,18 @@ new /datum/disease_ability/symptom/powerful/youth
 	if(!host)
 		return FALSE
 	for(var/obj/thing as anything in host.get_equipped_items(FALSE))
-		thing.add_component(/datum/component/infective, our_disease.disease_template, 300)
+		thing.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
 	//no shoes? infect the floor.
 	if(!host.shoes)
 		var/turf/host_turf = get_turf(host)
 		if(host_turf && !isspaceturf(host_turf))
-			host_turf.add_component(/datum/component/infective, our_disease.disease_template, 300)
+			host_turf.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
 	//no gloves? infect whatever we are holding.
 	if(!host.gloves)
 		for(var/obj/held_thing as anything in host.held_items)
 			if(isnull(held_thing))
 				continue
-			held_thing.add_component(/datum/component/infective, our_disease.disease_template, 300)
+			held_thing.AddComponent(/datum/component/infective, our_disease.disease_template, 300)
 	return TRUE
 
 /*******************BASE SYMPTOM TYPES*******************/

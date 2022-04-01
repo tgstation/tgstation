@@ -17,7 +17,7 @@
 
 /obj/item/controller/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/shell, list(
+	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/controller()
 	), SHELL_CAPACITY_MEDIUM)
 

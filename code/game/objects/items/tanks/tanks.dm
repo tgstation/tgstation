@@ -87,7 +87,7 @@
 	reaction_info = list()
 	explosion_info = list()
 
-	add_component(/datum/component/atmos_reaction_recorder, reset_criteria = list(COMSIG_GASMIX_MERGING = air_contents, COMSIG_GASMIX_REMOVING = air_contents), target_list = reaction_info)
+	AddComponent(/datum/component/atmos_reaction_recorder, reset_criteria = list(COMSIG_GASMIX_MERGING = air_contents, COMSIG_GASMIX_REMOVING = air_contents), target_list = reaction_info)
 
 	// This is separate from the reaction recorder.
 	// In this case we are only listening to determine if the tank is overpressurized but not destroyed.
@@ -101,7 +101,7 @@
 /obj/item/tank/ComponentInitialize()
 	. = ..()
 	if(tank_holder_icon_state)
-		add_component(/datum/component/container_item/tank_holder, tank_holder_icon_state)
+		AddComponent(/datum/component/container_item/tank_holder, tank_holder_icon_state)
 
 /obj/item/tank/Destroy()
 	unregister_signal(air_contents, COMSIG_GASMIX_MERGED)

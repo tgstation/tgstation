@@ -38,7 +38,7 @@
 	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/retaliate/goat/Initialize(mapload)
-	add_component(/datum/component/udder)
+	AddComponent(/datum/component/udder)
 	. = ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
@@ -198,7 +198,7 @@
 	chicken_count++
 	add_cell_sample()
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown","black","white"), TRUE)
-	add_component(/datum/component/egg_layer,\
+	AddComponent(/datum/component/egg_layer,\
 		/obj/item/food/egg,\
 		list(/obj/item/food/grown/wheat),\
 		feed_messages = list("She clucks happily."),\

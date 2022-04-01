@@ -19,9 +19,9 @@
 	. = ..()
 
 	register_signal(src, COMSIG_COMPONENT_CLEAN_FACE_ACT, .proc/clean_face)
-	add_component(/datum/component/personal_crafting)
+	AddComponent(/datum/component/personal_crafting)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
-	add_component(/datum/component/bloodysoles/feet)
+	AddComponent(/datum/component/bloodysoles/feet)
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/human)
 	AddElement(/datum/element/strippable, GLOB.strippable_human_items, /mob/living/carbon/human/.proc/should_strip)
 	GLOB.human_list += src
@@ -39,7 +39,7 @@
 /mob/living/carbon/human/ComponentInitialize()
 	. = ..()
 	if(!CONFIG_GET(flag/disable_human_mood))
-		add_component(/datum/component/mood)
+		AddComponent(/datum/component/mood)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)

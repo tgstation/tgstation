@@ -17,7 +17,7 @@
 
 /obj/machinery/power/generator/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation)
 	find_circs()
 	connect_to_network()
 	SSair.start_processing_machine(src)

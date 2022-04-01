@@ -14,4 +14,4 @@
 
 /datum/smite/bad_luck/effect(client/user, mob/living/target)
 	. = ..()
-	target.add_component(/datum/component/omen, silent, null, permanent)
+	target.AddComponent(/datum/component/omen, silent, null, permanent)

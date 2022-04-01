@@ -15,7 +15,7 @@
 
 /turf/open/misc/snow/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/diggable, /obj/item/stack/sheet/mineral/snow, 2, "dig up")
+	AddComponent(/datum/component/diggable, /obj/item/stack/sheet/mineral/snow, 2, "dig up")
 
 /turf/open/misc/snow/break_tile()
 	. = ..()

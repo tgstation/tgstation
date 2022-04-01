@@ -75,7 +75,7 @@
 	//stops all mods from triggering during rewinding
 	for(var/obj/item/mod/module/module as anything in mod.modules)
 		register_signal(module, COMSIG_MODULE_TRIGGERED, .proc/on_module_triggered)
-	mod.wearer.add_component(/datum/component/dejavu/timeline, 1, 10 SECONDS)
+	mod.wearer.AddComponent(/datum/component/dejavu/timeline, 1, 10 SECONDS)
 	register_signal(mod, COMSIG_MOD_ACTIVATE, .proc/on_activate_block)
 	addtimer(CALLBACK(src, .proc/unblock_suit_activation), 10 SECONDS)
 

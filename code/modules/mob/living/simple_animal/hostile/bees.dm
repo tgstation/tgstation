@@ -64,8 +64,8 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	generate_bee_visuals()
 	AddElement(/datum/element/simple_flying)
-	add_component(/datum/component/clickbox, x_offset = -2, y_offset = -2)
-	add_component(/datum/component/swarming)
+	AddComponent(/datum/component/clickbox, x_offset = -2, y_offset = -2)
+	AddComponent(/datum/component/swarming)
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/bee/mob_pickup(mob/living/L)
@@ -75,7 +75,7 @@
 	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
 	if(beegent)
 		reee[beegent.type] = 5
-	holder.add_component(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	holder.AddComponent(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
 	L.visible_message(span_warning("[L] scoops up [src]!"))
 	L.put_in_hands(holder)
 
@@ -367,7 +367,7 @@
 
 /obj/item/trash/bee/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/trash/bee/update_overlays()

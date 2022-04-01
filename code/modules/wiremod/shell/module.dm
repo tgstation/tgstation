@@ -12,7 +12,7 @@
 
 /obj/item/mod/module/circuit/Initialize(mapload)
 	. = ..()
-	shell = add_component(/datum/component/shell, \
+	shell = AddComponent(/datum/component/shell, \
 		list(new /obj/item/circuit_component/mod_adapter_core()), \
 		capacity = SHELL_CAPACITY_LARGE, \
 	)

@@ -5,7 +5,7 @@ See _component.dm for detailed explanations
 
 ```dm
 /datum/component/mycomponent
-	//can_transfer = TRUE                   // Must have post_transfer
+	//can_transfer = TRUE                   // Must have PostTransfer
 	//dupe_mode = COMPONENT_DUPE_ALLOWED    // code/__DEFINES/dcs/flags.dm
 	var/myvar
 
@@ -32,7 +32,7 @@ See _component.dm for detailed explanations
 	send_to_playing_players("[source] signaled [src]!")
 
 /*
-/datum/component/mycomponent/inherit_component(datum/component/mycomponent/old, i_am_original, list/arguments)
+/datum/component/mycomponent/InheritComponent(datum/component/mycomponent/old, i_am_original, list/arguments)
 	myvar = old.myvar
 
 	if(i_am_original)
@@ -40,15 +40,15 @@ See _component.dm for detailed explanations
 */
 
 /*
-/datum/component/mycomponent/pre_transfer()
+/datum/component/mycomponent/PreTransfer()
 	send_to_playing_players("Goodbye [parent], I'm getting adopted")
 
-/datum/component/mycomponent/post_transfer()
+/datum/component/mycomponent/PostTransfer()
 	send_to_playing_players("Hello my new parent, [parent]! It's nice to meet you!")
 */
 
 /*
-/datum/component/mycomponent/check_dupe_component(datum/mycomponent/new, myargone, myargtwo)
+/datum/component/mycomponent/CheckDupeComponent(datum/mycomponent/new, myargone, myargtwo)
 	if(myargone == myvar)
 		return TRUE
 */

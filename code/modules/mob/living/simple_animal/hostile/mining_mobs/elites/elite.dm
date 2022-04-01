@@ -219,7 +219,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 /obj/structure/elite_tumor/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/gps, "Menacing Signal")
+	AddComponent(/datum/component/gps, "Menacing Signal")
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/elite_tumor/Destroy()

@@ -33,7 +33,7 @@
 /obj/item/melee/energy/Initialize(mapload)
 	. = ..()
 	make_transformable()
-	add_component(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
+	AddComponent(/datum/component/butchering, _speed = 5 SECONDS, _butcher_sound = active_hitsound)
 
 /obj/item/melee/energy/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -43,7 +43,7 @@
  * Gives our item the transforming component, passing in our various vars.
  */
 /obj/item/melee/energy/proc/make_transformable()
-	add_component(/datum/component/transforming, \
+	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
 		throw_speed_on = 4, \
@@ -137,7 +137,7 @@
 	active_w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/melee/energy/axe/make_transformable()
-	add_component(/datum/component/transforming, \
+	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
 		throw_speed_on = throw_speed, \

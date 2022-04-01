@@ -34,7 +34,7 @@
 /obj/machinery/smoke_machine/Initialize(mapload)
 	. = ..()
 	create_reagents(REAGENTS_BASE_VOLUME)
-	add_component(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/plumbing/simple_demand)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
 	if(is_operational)

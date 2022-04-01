@@ -25,7 +25,7 @@
 
 /obj/structure/money_bot/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/shell, list(
+	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/money_bot(),
 		new /obj/item/circuit_component/money_dispenser()
 	), SHELL_CAPACITY_LARGE)

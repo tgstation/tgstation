@@ -156,9 +156,9 @@
 
 /obj/machinery/hydroponics/constructable/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/simple_rotation)
-	add_component(/datum/component/plumbing/simple_demand)
-	add_component(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
+	AddComponent(/datum/component/simple_rotation)
+	AddComponent(/datum/component/plumbing/simple_demand)
+	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/hydroponics))
 
 /obj/machinery/hydroponics/constructable/RefreshParts()
 	var/tmp_capacity = 0

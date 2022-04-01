@@ -31,7 +31,7 @@
 	update_doppler_light()
 
 	// Rotation determines the detectable direction.
-	add_component(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation)
 
 /datum/data/tachyon_record
 	name = "Log Recording"

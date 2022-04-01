@@ -41,7 +41,7 @@
 /datum/component/fantasy/unregister_from_parent()
 	unmodify()
 
-/datum/component/fantasy/inherit_component(datum/component/fantasy/newComp, original, quality, list/affixes, canFail, announce)
+/datum/component/fantasy/InheritComponent(datum/component/fantasy/newComp, original, quality, list/affixes, canFail, announce)
 	unmodify()
 	if(newComp)
 		src.quality += newComp.quality

@@ -25,7 +25,7 @@
 	if(map_pad_id)
 		mapped_quantum_pads[map_pad_id] = src
 
-	add_component(/datum/component/usb_port, list(
+	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/quantumpad,
 	))
 

@@ -32,13 +32,13 @@
 
 /obj/item/food/cheese/wheel/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/food_storage)
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
 
 /obj/item/food/cheese/wheel/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cheese/royal
 	name = "royal cheese"
@@ -508,7 +508,7 @@
 		hallucinate(loc)
 
 /obj/item/food/bubblegum/bubblegum/MakeEdible()
-	add_component(/datum/component/edible,\
+	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
 				foodtypes = foodtypes,\
@@ -731,7 +731,7 @@
 
 ///Override for checkliked callback
 /obj/item/food/rationpack/MakeEdible()
-	add_component(/datum/component/edible,\
+	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
 				foodtypes = foodtypes,\
@@ -851,7 +851,7 @@
 	burns_on_grill = TRUE
 
 /obj/item/food/firm_cheese_slice/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_cheese, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
 
 /obj/item/food/mozzarella
 	name = "mozzarella cheese"

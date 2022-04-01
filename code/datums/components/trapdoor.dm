@@ -111,7 +111,7 @@
  * apparently callbacks with arguments on invoke and the callback itself have the callback args go first. interesting!
  */
 /obj/item/assembly/trapdoor/proc/carry_over_trapdoor(trapdoor_turf_path, turf/new_turf)
-	new_turf.add_component(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src)
+	new_turf.AddComponent(/datum/component/trapdoor, FALSE, trapdoor_turf_path, src)
 
 /**
  * ## try_opening

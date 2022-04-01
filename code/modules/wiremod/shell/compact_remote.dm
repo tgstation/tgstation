@@ -16,7 +16,7 @@
 
 /obj/item/compact_remote/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/shell, list(
+	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/compact_remote()
 	), SHELL_CAPACITY_SMALL)
 

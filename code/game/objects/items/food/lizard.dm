@@ -286,7 +286,7 @@
 	foodtypes = VEGETABLES | NUTS
 
 /obj/item/food/rootdough/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/bread/root, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/bread/root, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdough/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, /obj/item/food/flatrootdough, 1, 30)
@@ -304,7 +304,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/rootdoughslice, 3, 30)
 
 /obj/item/food/flatrootdough/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/root_flatbread, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/root_flatbread, rand(25 SECONDS, 35 SECONDS), TRUE, TRUE)
 
 /obj/item/food/rootdoughslice
 	name = "rootdough ball"
@@ -320,7 +320,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/spaghetti/nizaya, 1, 30)
 
 /obj/item/food/rootdoughslice/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/rootroll, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/rootroll, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/root_flatbread
 	name = "root flatbread"
@@ -359,7 +359,7 @@
 
 /obj/item/food/bread/root/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/root/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/root, 5, 30)
@@ -376,7 +376,7 @@
 
 /obj/item/food/breadslice/root/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 //Pizza Dishes
 /obj/item/food/pizza/rustic_flatbread

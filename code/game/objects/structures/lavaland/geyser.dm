@@ -80,7 +80,7 @@
 	if(true_name)
 		name = true_name
 
-	add_component(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
+	AddComponent(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
 
 	if(isliving(user))
 		var/mob/living/living = user

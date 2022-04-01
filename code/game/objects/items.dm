@@ -275,7 +275,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	. = ..()
 
 	if(sharpness && force > 5) //give sharp objects butchering functionality, for consistency
-		add_component(/datum/component/butchering, 80 * toolspeed)
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /**Makes cool stuff happen when you suicide with an item
  *
@@ -439,7 +439,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		var/canFail = FALSE
 		var/announce = FALSE
 		//Apply fantasy with affix. failing this should never happen, but if it does it should not be silent.
-		if(add_component(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
+		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, span_warning("Fantasy component not compatible with [src]."))
 			CRASH("fantasy component incompatible with object of type: [type]")
 

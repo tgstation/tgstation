@@ -139,7 +139,7 @@
 
 /obj/structure/punji_sticks/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
+	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_BYPASS_SHOES)
 
 /obj/structure/punji_sticks/spikes
 	name = "wooden spikes"

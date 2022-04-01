@@ -30,7 +30,7 @@
 	var/revelation = FALSE
 
 /obj/item/food/candy/bronx/MakeEdible()
-	add_component(/datum/component/edible,\
+	AddComponent(/datum/component/edible,\
 				initial_reagents = food_reagents,\
 				food_flags = food_flags,\
 				foodtypes = foodtypes,\

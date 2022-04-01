@@ -13,7 +13,7 @@
 
 /obj/machinery/plumbing/fermenter/Initialize(mapload, bolt, layer)
 	. = ..()
-	add_component(/datum/component/plumbing/simple_supply, bolt, layer)
+	AddComponent(/datum/component/plumbing/simple_supply, bolt, layer)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)

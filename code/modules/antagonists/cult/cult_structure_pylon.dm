@@ -15,7 +15,7 @@
 /obj/structure/destructible/cult/pylon/Initialize(mapload)
 	. = ..()
 
-	add_component( \
+	AddComponent( \
 		/datum/component/aura_healing, \
 		range = 5, \
 		brute_heal = 0.4, \

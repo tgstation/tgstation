@@ -176,7 +176,7 @@
 
 /obj/item/staff/bostaff/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=10, force_wielded=24, icon_wielded="[base_icon_state]1")
 
 /// triggered on wield of two handed item
 /obj/item/staff/bostaff/proc/on_wield(obj/item/source, mob/user)

@@ -214,7 +214,7 @@
 
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/transforming, \
+	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		throwforce_on = active_throwforce, \
 		throw_speed_on = active_throw_speed, \
@@ -259,7 +259,7 @@
 
 /obj/item/shield/riot/tele/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/transforming, \
+	AddComponent(/datum/component/transforming, \
 		force_on = 8, \
 		throwforce_on = 5, \
 		throw_speed_on = 2, \

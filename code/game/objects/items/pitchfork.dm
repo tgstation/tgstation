@@ -24,7 +24,7 @@
 
 /obj/item/pitchfork/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="[base_icon_state]1")
 
 /obj/item/pitchfork/update_icon_state()
 	icon_state = "[base_icon_state]0"

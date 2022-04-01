@@ -13,7 +13,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-	add_component(/datum/component/shell, list(
+	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/scanner_gate()
 	), SHELL_CAPACITY_LARGE, SHELL_FLAG_REQUIRE_ANCHOR)
 

@@ -30,7 +30,7 @@
 /datum/material/meat/proc/make_edible(atom/source, amount, material_flags)
 	var/nutriment_count = 3 * (amount / MINERAL_MATERIAL_AMOUNT)
 	var/oil_count = 2 * (amount / MINERAL_MATERIAL_AMOUNT)
-	source.add_component(/datum/component/edible, list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), null, RAW | MEAT | GROSS, null, 30, list("Fleshy"))
+	source.AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/cooking_oil = oil_count), null, RAW | MEAT | GROSS, null, 30, list("Fleshy"))
 
 
 /datum/material/meat/mob_meat

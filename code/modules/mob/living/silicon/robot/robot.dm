@@ -4,7 +4,7 @@
 	spark_system.attach(src)
 
 	ADD_TRAIT(src, TRAIT_CAN_STRIP, INNATE_TRAIT)
-	add_component(/datum/component/tippable, \
+	AddComponent(/datum/component/tippable, \
 		tip_time = 3 SECONDS, \
 		untip_time = 2 SECONDS, \
 		self_right_time = 60 SECONDS, \

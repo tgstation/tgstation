@@ -32,7 +32,7 @@
 	Since the parent already has a rename component, it will remove the old one and apply the new one.
 	The name and description changes will be merged or overwritten.
 */
-/datum/component/rename/inherit_component(datum/component/rename/new_comp , i_am_original, custom_name, custom_desc)
+/datum/component/rename/InheritComponent(datum/component/rename/new_comp , i_am_original, custom_name, custom_desc)
 	revert_rename()
 	if(new_comp)
 		src.custom_name = new_comp.custom_name

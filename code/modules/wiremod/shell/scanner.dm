@@ -16,7 +16,7 @@
 
 /obj/item/wiremod_scanner/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/shell, list(
+	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/wiremod_scanner()
 	), SHELL_CAPACITY_SMALL)
 

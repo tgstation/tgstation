@@ -32,7 +32,7 @@
 	AddElement(/datum/element/death_drops, list(/obj/effect/decal/cleanable/insectguts))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
 	AddElement(/datum/element/basic_body_temp_sensitive, 270, INFINITY)
-	add_component(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
+	AddComponent(/datum/component/squashable, squash_chance = 50, squash_damage = 1)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/basic/cockroach/death(gibbed)
@@ -114,8 +114,8 @@
 
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
-	add_component(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/basic/cockroach/hauberoach/.proc/on_squish)
+	AddComponent(/datum/component/caltrop, min_damage = 10, max_damage = 15, flags = (CALTROP_BYPASS_SHOES | CALTROP_SILENT))
+	AddComponent(/datum/component/squashable, squash_chance = 100, squash_damage = 1, squash_callback = /mob/living/basic/cockroach/hauberoach/.proc/on_squish)
 
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)

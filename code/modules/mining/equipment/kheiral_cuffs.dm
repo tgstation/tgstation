@@ -62,7 +62,7 @@
 	var/obj/item/card/id/id_card = user.get_idcard(hand_first = FALSE)
 	if(id_card)
 		gps_name = id_card.registered_name
-	add_component(/datum/component/gps, "*[gps_name]'s Kheiral Link")
+	AddComponent(/datum/component/gps, "*[gps_name]'s Kheiral Link")
 	balloon_alert(user, "GPS activated")
 	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, src)
 	gps_enabled = TRUE

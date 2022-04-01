@@ -40,7 +40,7 @@
 	parent.RemoveElement(/datum/element/light_eater)
 	unregister_signal(parent, COMSIG_LIGHT_EATER_DEVOUR)
 
-/datum/component/light_eater/inherit_component(datum/component/C, i_am_original, list/_eaten)
+/datum/component/light_eater/InheritComponent(datum/component/C, i_am_original, list/_eaten)
 	. = ..()
 	if(!LAZYLEN(_eaten))
 		return

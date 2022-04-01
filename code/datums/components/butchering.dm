@@ -148,7 +148,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)
-	add_component(/datum/component/connect_loc_behalf, parent, loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 
 /datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER

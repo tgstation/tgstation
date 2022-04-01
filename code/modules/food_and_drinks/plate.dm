@@ -110,4 +110,4 @@
 
 /obj/item/plate_shard/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/caltrop, min_damage = force)
+	AddComponent(/datum/component/caltrop, min_damage = force)

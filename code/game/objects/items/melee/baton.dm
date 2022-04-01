@@ -301,7 +301,7 @@
 
 /obj/item/melee/baton/telescopic/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/transforming, \
+	AddComponent(/datum/component/transforming, \
 		force_on = active_force, \
 		hitsound_on = hitsound, \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
@@ -682,7 +682,7 @@
 
 /obj/item/melee/baton/security/boomerang/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/boomerang, throw_range+2, TRUE)
+	AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 
 /obj/item/melee/baton/security/boomerang/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(!active)

@@ -208,7 +208,7 @@
 	var/team_shield_icon = "shield-old"
 
 /obj/item/clothing/suit/armor/vest/ctf/setup_shielding()
-	add_component(/datum/component/shielded, max_charges = 150, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
+	AddComponent(/datum/component/shielded, max_charges = 150, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
 
 // LIGHT SHIELDED VEST
 
@@ -221,7 +221,7 @@
 	slowdown = -0.25
 
 /obj/item/clothing/suit/armor/vest/ctf/light/setup_shielding()
-	add_component(/datum/component/shielded, max_charges = 30, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
+	AddComponent(/datum/component/shielded, max_charges = 30, recharge_start_delay = 20 SECONDS, charge_increment_delay = 1 SECONDS, charge_recovery = 30, lose_multiple_charges = TRUE, shield_icon = team_shield_icon)
 
 // RED TEAM GUNS
 

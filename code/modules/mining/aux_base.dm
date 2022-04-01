@@ -38,7 +38,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 
 /obj/machinery/computer/auxiliary_base/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/gps, "NT_AUX")
+	AddComponent(/datum/component/gps, "NT_AUX")
 
 /obj/machinery/computer/auxiliary_base/Destroy() // Shouldn't be destroyable... but just in case
 	LAZYCLEARLIST(turrets)

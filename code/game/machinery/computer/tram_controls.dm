@@ -14,7 +14,7 @@
 
 /obj/machinery/computer/tram_controls/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	add_component(/datum/component/usb_port, list(/obj/item/circuit_component/tram_controls))
+	AddComponent(/datum/component/usb_port, list(/obj/item/circuit_component/tram_controls))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/tram_controls/LateInitialize()

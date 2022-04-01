@@ -16,7 +16,7 @@
 /obj/machinery/plumbing/buffer/Initialize(mapload, bolt, layer)
 	. = ..()
 
-	add_component(/datum/component/plumbing/buffer, bolt, layer)
+	AddComponent(/datum/component/plumbing/buffer, bolt, layer)
 
 /obj/machinery/plumbing/buffer/create_reagents(max_vol, flags)
 	. = ..()

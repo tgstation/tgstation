@@ -14,7 +14,7 @@
 		return
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	shield_uses = round(our_seed.potency / 20)
-	our_plant.add_component(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, shield_uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
+	our_plant.AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, shield_uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
 
 /*
  * The proc called when the holymelon successfully blocks a spell.

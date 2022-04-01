@@ -46,7 +46,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(organ_flags & ORGAN_EDIBLE)
-		add_component(/datum/component/edible,\
+		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
 			foodtypes = RAW | MEAT | GROSS,\
 			volume = reagent_vol,\

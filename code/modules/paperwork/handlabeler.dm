@@ -58,7 +58,7 @@
 
 	user.visible_message(span_notice("[user] labels [A] with \"[label]\"."), \
 		span_notice("You label [A] with \"[label]\"."))
-	A.add_component(/datum/component/label, label)
+	A.AddComponent(/datum/component/label, label)
 	playsound(A, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
 	labels_left--
 

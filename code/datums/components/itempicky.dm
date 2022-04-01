@@ -19,11 +19,11 @@
 /datum/component/itempicky/unregister_from_parent()
 	unregister_signal(parent, COMSIG_LIVING_TRY_PUT_IN_HAND)
 
-/datum/component/itempicky/post_transfer()
+/datum/component/itempicky/PostTransfer()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/itempicky/inherit_component(datum/component/itempicky/friend, i_am_original, list/arguments)
+/datum/component/itempicky/InheritComponent(datum/component/itempicky/friend, i_am_original, list/arguments)
 	if(i_am_original)
 		whitelist = friend.whitelist
 		message = friend.message

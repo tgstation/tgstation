@@ -97,7 +97,7 @@
 	banana_rustle.Grant(src)
 	banana_bunch = new()
 	banana_bunch.Grant(src)
-
+	
 /mob/living/simple_animal/hostile/retaliate/clown/banana/Destroy()
 	. = ..()
 	QDEL_NULL(banana_rustle)
@@ -400,7 +400,7 @@
 	my_regurgitate = new
 	AddAbility(my_regurgitate)
 	add_cell_sample()
-	add_component(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, .proc/tamed))
 
 
 /mob/living/simple_animal/hostile/retaliate/clown/mutant/glutton/attacked_by(obj/item/I, mob/living/user)

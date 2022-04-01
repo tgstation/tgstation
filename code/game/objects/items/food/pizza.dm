@@ -19,7 +19,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizza/MakeProcessable()
 	if (slice_type)
@@ -58,7 +58,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/margherita/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/margherita, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/margherita, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizza/margherita/robo
 	food_reagents = list(/datum/reagent/cyborg_mutation_nanomachines = 70, /datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/nutriment/protein = 8, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
@@ -72,7 +72,7 @@
 
 /obj/item/food/pizzaslice/margherita/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 12)
 
 /obj/item/food/pizza/meat
 	name = "meatpizza"
@@ -91,7 +91,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/meat/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/meat, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/meat, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizzaslice/meat
 	name = "meatpizza slice"
@@ -118,7 +118,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/mushroom/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/mushroom, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/mushroom, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizzaslice/mushroom
 	name = "mushroom pizza slice"
@@ -147,7 +147,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/vegetable/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/vegetable, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/vegetable, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizzaslice/vegetable
 	name = "vegetable pizza slice"
@@ -175,7 +175,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/donkpocket/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/donkpocket, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/donkpocket, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizzaslice/donkpocket
 	name = "donkpocket pizza slice"
@@ -203,7 +203,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/dank/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/dank, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/dank, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizzaslice/dank
 	name = "dank pizza slice"
@@ -231,7 +231,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/sassysage/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/sassysage, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/sassysage, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizzaslice/sassysage
 	name = "sassysage pizza slice"
@@ -259,7 +259,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/pineapple/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/pineapple, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/pineapple, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 /obj/item/food/pizzaslice/pineapple
 	name = "\improper Hawaiian pizza slice"
@@ -308,7 +308,7 @@
 	slice_type = null
 
 /obj/item/food/pizza/arnold/raw/MakeBakeable()
-	add_component(/datum/component/bakeable, /obj/item/food/pizza/arnold, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/bakeable, /obj/item/food/pizza/arnold, rand(70 SECONDS, 80 SECONDS), TRUE, TRUE)
 
 //fuck it, i will leave this at the food level for now.
 /obj/item/food/proc/try_break_off(mob/living/attacker, mob/living/user) //maybe i give you a pizza maybe i break off your arm

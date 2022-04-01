@@ -90,7 +90,7 @@
 
 	AddElement(/datum/element/venue_price, FOOD_PRICE_EXOTIC)
 	if(can_change_colour)
-		add_component(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
+		AddComponent(/datum/component/palette, AVAILABLE_SPRAYCAN_SPACE, paint_color)
 
 	refill()
 

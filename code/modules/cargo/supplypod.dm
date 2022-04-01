@@ -230,7 +230,7 @@
 	var/turf/turf_underneath = get_turf(src)
 	var/list/B = explosionSize //Mostly because B is more readable than explosionSize :p
 	set_density(TRUE) //Density is originally false so the pod doesn't block anything while it's still falling through the air
-	add_component(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
 	if(effectShrapnel)
 		SEND_SIGNAL(src, COMSIG_SUPPLYPOD_LANDED)
 	for (var/mob/living/target_living in turf_underneath)

@@ -48,7 +48,7 @@
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
+	AddComponent(/datum/component/payment, 5, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 	toner_cartridge = new(src)
 
 /obj/machinery/photocopier/ui_interact(mob/user, datum/tgui/ui)

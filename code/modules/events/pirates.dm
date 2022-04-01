@@ -130,7 +130,7 @@
 
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
 	SSshuttle.registerTradeBlockade(src)
-	add_component(/datum/component/gps, "Nautical Signal")
+	AddComponent(/datum/component/gps, "Nautical Signal")
 	active = TRUE
 	to_chat(user,span_notice("You toggle [src] [active ? "on":"off"]."))
 	to_chat(user,span_warning("The scrambling signal can be now tracked by GPS."))

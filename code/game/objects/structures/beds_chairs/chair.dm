@@ -32,7 +32,7 @@
 
 ///This proc adds the rotate component, overwrite this if you for some reason want to change some specific args.
 /obj/structure/chair/proc/MakeRotate()
-	add_component(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
+	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED|ROTATION_GHOSTS_ALLOWED)
 
 /obj/structure/chair/Destroy()
 	RemoveFromLatejoin()
@@ -78,9 +78,9 @@
 		return
 	if(!overlays_from_child_procs || overlays_from_child_procs.len == 0)
 		var/image/echair_over_overlay = image('icons/obj/chairs.dmi', loc, "echair_over")
-		add_component(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
+		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, list(echair_over_overlay), FALSE)
 	else
-		add_component(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
+		AddComponent(/datum/component/electrified_buckle, (SHOCK_REQUIREMENT_ITEM | SHOCK_REQUIREMENT_LIVE_CABLE | SHOCK_REQUIREMENT_SIGNAL_RECEIVED_TOGGLE), input_shock_kit, overlays_from_child_procs, FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
 		to_chat(user, span_notice("You connect the shock kit to the [name], electrifying it "))
@@ -273,7 +273,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool, 0)
 		usr.visible_message(span_notice("[usr] grabs \the [src.name]."), span_notice("You grab \the [src.name]."))
 		var/obj/item/C = new item_chair(loc)
 		C.set_custom_materials(custom_materials)
-		add_component(C)
+		TransferComponents(C)
 		usr.put_in_hands(C)
 		qdel(src)
 
@@ -345,7 +345,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	user.visible_message(span_notice("[user] rights \the [src.name]."), span_notice("You right \the [name]."))
 	var/obj/structure/chair/C = new origin_type(get_turf(loc))
 	C.set_custom_materials(custom_materials)
-	add_component(C)
+	TransferComponents(C)
 	C.setDir(dir)
 	qdel(src)
 

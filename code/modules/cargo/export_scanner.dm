@@ -38,7 +38,7 @@
 				to_chat(user, span_warning("Bank account for handling tip already registered!"))
 
 			else if(scanner_account)
-				cube.add_component(/datum/component/pricetag, scanner_account, cube.handler_tip, FALSE)
+				cube.AddComponent(/datum/component/pricetag, scanner_account, cube.handler_tip, FALSE)
 
 				cube.bounty_handler_account = scanner_account
 				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> credit " : ""]handling tip successfully registered.")

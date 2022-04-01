@@ -37,7 +37,7 @@
 /datum/component/storage/concrete/real_location()
 	return parent
 
-/datum/component/storage/concrete/pre_transfer()
+/datum/component/storage/concrete/PreTransfer()
 	if(is_using)
 		_user_limbo = is_using.Copy()
 		close_all()
@@ -47,7 +47,7 @@
 			_contents_limbo += AM
 			AM.moveToNullspace()
 
-/datum/component/storage/concrete/post_transfer()
+/datum/component/storage/concrete/PostTransfer()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(transfer_contents_on_component_transfer)

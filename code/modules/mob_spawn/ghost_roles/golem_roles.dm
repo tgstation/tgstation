@@ -55,7 +55,7 @@
 		var/static/list/allowed_areas
 		if(!allowed_areas)
 			allowed_areas = typecacheof(list(/area/icemoon, /area/lavaland, /area/ruin))
-		new_spawn.add_component(/datum/component/hazard_area, area_whitelist=allowed_areas)
+		new_spawn.AddComponent(/datum/component/hazard_area, area_whitelist=allowed_areas)
 	else
 		new_spawn.mind.enslave_mind_to_creator(owner)
 		log_game("[key_name(new_spawn)] possessed a golem shell enslaved to [key_name(owner)].")

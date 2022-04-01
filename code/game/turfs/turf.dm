@@ -572,7 +572,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if((acidpwr <= 0) || (acid_volume <= 0))
 		return FALSE
 
-	add_component(/datum/component/acid, acidpwr, acid_volume)
+	AddComponent(/datum/component/acid, acidpwr, acid_volume)
 	for(var/obj/O in src)
 		if(underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
 			continue

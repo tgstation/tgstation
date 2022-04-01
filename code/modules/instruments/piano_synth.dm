@@ -11,7 +11,7 @@
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
 	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
-	add_component(/datum/component/shell, list(new circuit_type), shell_capacity)
+	AddComponent(/datum/component/shell, list(new circuit_type), shell_capacity)
 
 /obj/item/instrument/piano_synth/headphones
 	name = "headphones"

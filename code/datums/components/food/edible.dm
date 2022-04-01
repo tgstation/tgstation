@@ -76,7 +76,7 @@ Behavior that's still missing from this component that original food items had t
 		var/static/list/loc_connections = list(
 			COMSIG_ATOM_ENTERED = .proc/on_entered,
 		)
-		add_component(/datum/component/connect_loc_behalf, parent, loc_connections)
+		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 	else
 		register_signal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
 
@@ -117,7 +117,7 @@ Behavior that's still missing from this component that original food items had t
 		else
 			owner.reagents.add_reagent(rid, amount)
 
-/datum/component/edible/inherit_component(
+/datum/component/edible/InheritComponent(
 	datum/component/C,
 	i_am_original,
 	list/initial_reagents,

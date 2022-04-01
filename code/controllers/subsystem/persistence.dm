@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(persistence)
 			if(HAS_TRAIT(engraved_wall, TRAIT_NOT_ENGRAVABLE))
 				continue
 
-			engraved_wall.add_component(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
+			engraved_wall.AddComponent(/datum/component/engraved, engraving["story"], FALSE, engraving["story_value"])
 			successfully_loaded_engravings++
 			turfs_to_pick_from -= engraved_wall
 

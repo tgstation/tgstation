@@ -75,7 +75,7 @@
 	COOLDOWN_DECLARE(next_trombone_allowed)
 
 /obj/item/melee/energy/sword/bananium/make_transformable()
-	add_component(/datum/component/transforming, \
+	AddComponent(/datum/component/transforming, \
 		throw_speed_on = 4, \
 		attack_verb_continuous_on = list("slips"), \
 		attack_verb_simple_on = list("slip"), \
@@ -91,7 +91,7 @@
  */
 /obj/item/melee/energy/sword/bananium/proc/adjust_slipperiness()
 	if(blade_active)
-		add_component(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
+		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
 	else
 		qdel(get_component(/datum/component/slippery))
 
@@ -148,8 +148,8 @@
  */
 /obj/item/shield/energy/bananium/proc/adjust_comedy()
 	if(enabled)
-		add_component(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-		add_component(/datum/component/boomerang, throw_range+2, TRUE)
+		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
+		AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
 	else
 		qdel(get_component(/datum/component/slippery))
 		qdel(get_component(/datum/component/boomerang))
@@ -194,7 +194,7 @@
 
 /obj/item/grown/bananapeel/bombanana/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/slippery, det_time)
+	AddComponent(/datum/component/slippery, det_time)
 
 /obj/item/grown/bananapeel/bombanana/Destroy()
 	. = ..()

@@ -11,7 +11,7 @@
 		var/list/display_message = list(
 			span_notice("Something wet falls out of their pocket and hits the ground. Is that... [name]?"),
 			span_warning("Oh shit! All your pocket [name] fell out!"))
-		add_component(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
+		AddComponent(/datum/component/spill, display_message, 'sound/effects/splat.ogg', MEMORY_SPAGHETTI_SPILL)
 
 /obj/item/food/spaghetti/raw
 	name = "spaghetti"
@@ -29,7 +29,7 @@
 
 /obj/item/food/spaghetti/boiledspaghetti/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_SCATTER, max_ingredients = 6)
 
 /obj/item/food/spaghetti/pastatomato
 	name = "spaghetti"

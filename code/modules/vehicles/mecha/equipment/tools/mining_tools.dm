@@ -22,7 +22,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/drill/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/butchering, 50, 100, null, null, TRUE)
+	AddComponent(/datum/component/butchering, 50, 100, null, null, TRUE)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.

@@ -44,7 +44,7 @@
 
 	// Are clown "bike" horns made from the livers of ex-clowns?
 	// Would that make the clown more or less likely to honk it
-	add_component(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
+	AddComponent(/datum/component/squeak, list('sound/items/bikehorn.ogg'=1), 50, falloff_exponent = 20)
 
 /obj/item/organ/liver/examine(mob/user)
 	. = ..()

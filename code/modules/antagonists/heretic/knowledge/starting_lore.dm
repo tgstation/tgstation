@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 				break
 
 	if(where_to_put_our_heart)
-		where_to_put_our_heart.add_component(/datum/component/living_heart)
+		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
 		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], \
 			allowing you to track sacrifice targets. \
 			Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(our_new_heart in selected_atoms)
 		selected_atoms -= our_new_heart
 
-	our_new_heart.add_component(/datum/component/living_heart)
+	our_new_heart.AddComponent(/datum/component/living_heart)
 	to_chat(user, span_warning("You feel your [our_new_heart.name] begin pulse faster and faster as it awakens!"))
 	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
 	return TRUE

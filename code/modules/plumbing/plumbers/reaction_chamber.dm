@@ -29,13 +29,13 @@
 
 /obj/machinery/plumbing/reaction_chamber/Initialize(mapload, bolt, layer)
 	. = ..()
-	add_component(/datum/component/plumbing/reaction_chamber, bolt, layer)
+	AddComponent(/datum/component/plumbing/reaction_chamber, bolt, layer)
 
 	acidic_beaker = new (src)
 	alkaline_beaker = new (src)
 
-	add_component(/datum/component/plumbing/acidic_input, bolt, custom_receiver = acidic_beaker)
-	add_component(/datum/component/plumbing/alkaline_input, bolt, custom_receiver = alkaline_beaker)
+	AddComponent(/datum/component/plumbing/acidic_input, bolt, custom_receiver = acidic_beaker)
+	AddComponent(/datum/component/plumbing/alkaline_input, bolt, custom_receiver = alkaline_beaker)
 
 /// Make sure beakers are deleted when being deconstructed
 /obj/machinery/plumbing/reaction_chamber/Destroy()

@@ -27,18 +27,18 @@
 
 /atom/proc/add_fingerprint_list(list/fingerprints) //ASSOC LIST FINGERPRINT = FINGERPRINT
 	if(length(fingerprints))
-		. = add_component(/datum/component/forensics, fingerprints)
+		. = AddComponent(/datum/component/forensics, fingerprints)
 
 //Set ignoregloves to add prints irrespective of the mob having gloves on.
 /atom/proc/add_fingerprint(mob/M, ignoregloves = FALSE)
 	if (QDELING(src))
 		return
-	var/datum/component/forensics/D = add_component(/datum/component/forensics)
+	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D?.add_fingerprint(M, ignoregloves)
 
 /atom/proc/add_fiber_list(list/fibertext) //ASSOC LIST FIBERTEXT = FIBERTEXT
 	if(length(fibertext))
-		. = add_component(/datum/component/forensics, null, null, null, fibertext)
+		. = AddComponent(/datum/component/forensics, null, null, null, fibertext)
 
 /atom/proc/add_fibers(mob/living/carbon/human/M)
 	var/old = 0
@@ -52,15 +52,15 @@
 		old = length(M.return_blood_DNA())
 		if(add_blood_DNA(M.return_blood_DNA()) && length(M.return_blood_DNA()) > old)
 			M.blood_in_hands--
-	var/datum/component/forensics/D = add_component(/datum/component/forensics)
+	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_fibers(M)
 
 /atom/proc/add_hiddenprint_list(list/hiddenprints) //NOTE: THIS IS FOR ADMINISTRATION FINGERPRINTS, YOU MUST CUSTOM SET THIS TO INCLUDE CKEY/REAL NAMES! CHECK FORENSICS.DM
 	if(length(hiddenprints))
-		. = add_component(/datum/component/forensics, null, hiddenprints)
+		. = AddComponent(/datum/component/forensics, null, hiddenprints)
 
 /atom/proc/add_hiddenprint(mob/M)
-	var/datum/component/forensics/D = add_component(/datum/component/forensics)
+	var/datum/component/forensics/D = AddComponent(/datum/component/forensics)
 	. = D.add_hiddenprint(M)
 
 /atom/proc/add_blood_DNA(list/dna) //ASSOC LIST DNA = BLOODTYPE
@@ -69,7 +69,7 @@
 /obj/add_blood_DNA(list/dna)
 	. = ..()
 	if(length(dna))
-		. = add_component(/datum/component/forensics, null, null, dna)
+		. = AddComponent(/datum/component/forensics, null, null, dna)
 
 /obj/item/clothing/gloves/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	. = ..()
@@ -94,7 +94,7 @@
 		var/obj/item/clothing/gloves/G = gloves
 		G.add_blood_DNA(blood_dna)
 	else if(length(blood_dna))
-		add_component(/datum/component/forensics, null, null, blood_dna)
+		AddComponent(/datum/component/forensics, null, null, blood_dna)
 		blood_in_hands = rand(2, 4)
 	update_inv_gloves() //handles bloody hands overlays and updating
 	return TRUE

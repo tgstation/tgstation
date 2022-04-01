@@ -122,4 +122,4 @@
 		return
 
 	admin.cmd_admin_pm(target, message)
-	target.add_component(/datum/component/admin_popup, current_ticket)
+	target.AddComponent(/datum/component/admin_popup, current_ticket)

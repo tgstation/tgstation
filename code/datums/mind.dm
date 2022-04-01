@@ -427,7 +427,7 @@
 
 	. = uplink_loc
 	var/unlock_text
-	var/datum/component/uplink/new_uplink = uplink_loc.add_component(/datum/component/uplink, traitor_mob.key)
+	var/datum/component/uplink/new_uplink = uplink_loc.AddComponent(/datum/component/uplink, traitor_mob.key)
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()

@@ -37,7 +37,7 @@
 
 /obj/item/clothing/shoes/bronze/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	AddComponent(/datum/component/squeak, list('sound/machines/clockcult/integration_cog_install.ogg' = 1, 'sound/magic/clockwork/fellowship_armory.ogg' = 1), 50, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/clothing/shoes/cookflops
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"

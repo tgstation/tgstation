@@ -12,7 +12,7 @@
 ///Add that sexy demnand component
 /obj/machinery/plumbing/growing_vat/Initialize(mapload, bolt)
 	. = ..()
-	add_component(/datum/component/plumbing/simple_demand, bolt)
+	AddComponent(/datum/component/plumbing/simple_demand, bolt)
 
 /obj/machinery/plumbing/growing_vat/create_reagents(max_vol, flags)
 	. = ..()

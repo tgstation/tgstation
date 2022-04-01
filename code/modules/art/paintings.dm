@@ -756,7 +756,7 @@
 
 /obj/item/paint_palette/Initialize()
 	. = ..()
-	add_component(/datum/component/palette, AVAILABLE_PALETTE_SPACE, current_color)
+	AddComponent(/datum/component/palette, AVAILABLE_PALETTE_SPACE, current_color)
 
 /obj/item/paint_palette/attack_self(mob/user, modifiers)
 	. = ..()

@@ -7,7 +7,7 @@
 
 /obj/machinery/computer/upload/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/gps, "Encrypted Upload")
+	AddComponent(/datum/component/gps, "Encrypted Upload")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/ai_module))

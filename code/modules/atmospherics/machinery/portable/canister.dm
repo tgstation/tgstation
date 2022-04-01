@@ -111,7 +111,7 @@ GLOBAL_LIST_INIT(gas_id_to_canister, init_gas_id_to_canister())
 	update_appearance()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddElement(/datum/element/volatile_gas_storage)
-	add_component(/datum/component/gas_leaker, leak_rate=0.01)
+	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()

@@ -7,7 +7,7 @@
 /**
  * # electrified_buckle component:
  * attach it to any atom/movable that can be buckled to in order to have it shock mobs buckled to it. by default it shocks mobs buckled to parent every shock_loop_time.
- * the parent is supposed to define its behavior with arguments in add_component
+ * the parent is supposed to define its behavior with arguments in AddComponent
 */
 /datum/component/electrified_buckle
 	///if usage_flags has SHOCK_REQUIREMENT_ITEM, this is the item required to be inside parent in order for it to shock buckled mobs

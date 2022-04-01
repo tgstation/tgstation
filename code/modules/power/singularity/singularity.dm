@@ -51,7 +51,7 @@
 	START_PROCESSING(SSsinguloprocess, src)
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	var/datum/component/singularity/new_component = add_component(
+	var/datum/component/singularity/new_component = AddComponent(
 		/datum/component/singularity, \
 		consume_callback = CALLBACK(src, .proc/consume), \
 	)
@@ -441,7 +441,7 @@
 	return gain
 
 /obj/singularity/deadchat_plays(mode = DEMOCRACY_MODE, cooldown = 12 SECONDS)
-	. = add_component(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(), cooldown, CALLBACK(src, .proc/stop_deadchat_plays))
 
 	if(. == COMPONENT_INCOMPATIBLE)
 		return

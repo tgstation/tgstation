@@ -93,7 +93,7 @@
 		grill_time += delta_time
 		grilled_item.reagents.add_reagent(/datum/reagent/consumable/char, 0.5 * delta_time)
 		grill_fuel -= GRILL_FUELUSAGE_ACTIVE * delta_time
-		grilled_item.add_component(/datum/component/sizzle)
+		grilled_item.AddComponent(/datum/component/sizzle)
 
 /obj/machinery/grill/Exited(atom/movable/gone, direction)
 	if(gone == grilled_item)

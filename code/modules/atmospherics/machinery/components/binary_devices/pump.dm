@@ -30,7 +30,7 @@
 
 /obj/machinery/atmospherics/components/binary/pump/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/usb_port, list(
+	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/atmos_pump,
 	))
 

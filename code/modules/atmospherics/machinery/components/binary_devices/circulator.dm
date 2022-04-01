@@ -23,7 +23,7 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/machinery/atmospherics/components/binary/circulator/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation

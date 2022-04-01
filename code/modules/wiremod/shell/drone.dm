@@ -13,7 +13,7 @@
 
 /mob/living/circuit_drone/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/shell, list(
+	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/bot_circuit()
 	), SHELL_CAPACITY_LARGE)
 

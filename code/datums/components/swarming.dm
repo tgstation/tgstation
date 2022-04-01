@@ -15,7 +15,7 @@
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)
 
-	add_component(/datum/component/connect_loc_behalf, parent, swarming_loc_connections)
+	AddComponent(/datum/component/connect_loc_behalf, parent, swarming_loc_connections)
 
 /datum/component/swarming/Destroy()
 	for(var/other in swarm_members)

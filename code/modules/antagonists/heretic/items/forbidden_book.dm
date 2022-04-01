@@ -10,7 +10,7 @@
 
 /obj/item/codex_cicatrix/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/effect_remover, \
+	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You remove %THEEFFECT.", \
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/heretic_rune))

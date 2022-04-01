@@ -70,7 +70,7 @@
 	return ..()
 
 /mob/living/simple_animal/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
-	. = add_component(/datum/component/deadchat_control/cardinal_movement, mode, list(
+	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
 		"speak" = CALLBACK(src, .proc/handle_automated_speech, TRUE),
 		"wear_hat" = CALLBACK(src, .proc/find_new_hat),
 		"drop_hat" = CALLBACK(src, .proc/drop_hat),

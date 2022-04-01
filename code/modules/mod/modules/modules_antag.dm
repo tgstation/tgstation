@@ -108,7 +108,7 @@
 	charges = max_charges
 
 /obj/item/mod/module/energy_shield/on_suit_activation()
-	mod.add_component(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
+	mod.AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, lose_multiple_charges = lose_multiple_charges, recharge_path = recharge_path, starting_charges = charges, shield_icon_file = shield_icon_file, shield_icon = shield_icon)
 	register_signal(mod.wearer, COMSIG_HUMAN_CHECK_SHIELDS, .proc/shield_reaction)
 

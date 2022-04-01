@@ -70,7 +70,7 @@ All the important duct code:
 /obj/machinery/duct/proc/attempt_connect()
 
 	for(var/atom/movable/AM in loc)
-		for(var/datum/component/plumbing/plumber as anything in AM.get_components(/datum/component/plumbing))
+		for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
 			if(plumber.active)
 				disconnect_duct() //let's not built under plumbing machinery
 				return
@@ -88,7 +88,7 @@ All the important duct code:
 	if(istype(AM, /obj/machinery/duct))
 		return connect_duct(AM, direction, ignore_color)
 
-	for(var/datum/component/plumbing/plumber as anything in AM.get_components(/datum/component/plumbing))
+	for(var/datum/component/plumbing/plumber as anything in AM.GetComponents(/datum/component/plumbing))
 		. += connect_plumber(plumber, direction) //so that if one is true, all is true. beautiful.
 
 ///connect to a duct

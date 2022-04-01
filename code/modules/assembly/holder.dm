@@ -15,7 +15,7 @@
 
 /obj/item/assembly_holder/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/item/assembly_holder/Destroy()
 	QDEL_LAZYLIST(assemblies)

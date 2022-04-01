@@ -36,7 +36,7 @@
 			if(D.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
 				diseases_to_add += D
 		if(LAZYLEN(diseases_to_add))
-			add_component(/datum/component/infective, diseases_to_add)
+			AddComponent(/datum/component/infective, diseases_to_add)
 
 	AddElement(/datum/element/beauty, beauty)
 

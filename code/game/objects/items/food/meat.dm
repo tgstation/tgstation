@@ -49,7 +49,7 @@
 	icon_state = "moonfish_fillet"
 
 /obj/item/food/fishmeat/moonfish/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/grilled_moonfish, rand(40 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/grilled_moonfish, rand(40 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/fishmeat/gunner_jellyfish
 	name = "filleted gunner jellyfish"
@@ -129,7 +129,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/spiderleg/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/boiledspiderleg, rand(50 SECONDS, 60 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/boiledspiderleg, rand(50 SECONDS, 60 SECONDS), TRUE, TRUE)
 
 /obj/item/food/cornedbeef
 	name = "corned beef and cabbage"
@@ -162,7 +162,7 @@
 	var/patty_type = /obj/item/food/raw_patty
 
 /obj/item/food/raw_meatball/MakeGrillable()
-	add_component(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
+	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_meatball/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, 20)
@@ -233,7 +233,7 @@
 	var/patty_type = /obj/item/food/patty/plain
 
 /obj/item/food/raw_patty/MakeGrillable()
-	add_component(/datum/component/grillable, patty_type, rand(30 SECONDS, 40 SECONDS), TRUE)
+	AddComponent(/datum/component/grillable, patty_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_patty/human
 	name = "strange raw patty"
@@ -301,7 +301,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/raw_sausage/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/sausage, rand(60 SECONDS, 75 SECONDS), TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/sausage, rand(60 SECONDS, 75 SECONDS), TRUE)
 
 /obj/item/food/sausage
 	name = "sausage"
@@ -348,7 +348,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/rawkhinkali/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/khinkali, rand(50 SECONDS, 60 SECONDS), TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/khinkali, rand(50 SECONDS, 60 SECONDS), TRUE)
 
 /obj/item/food/khinkali
 	name = "khinkali"
@@ -538,7 +538,7 @@
 
 /obj/item/food/meatclown/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/slippery, 30)
+	AddComponent(/datum/component/slippery, 30)
 
 /obj/item/food/lasagna
 	name = "Lasagna"
@@ -635,7 +635,7 @@
 	AddElement(/datum/element/dryable,  /obj/item/food/sosjerky/healthy)
 
 /obj/item/food/meat/slab/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/plain, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain, 3, 30)
@@ -649,7 +649,7 @@
 	venue_value = FOOD_MEAT_HUMAN
 
 /obj/item/food/meat/slab/human/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/plain/human, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/slab/human/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/meat/rawcutlet/plain/human, 3, 30)
@@ -683,7 +683,7 @@
 	venue_value = FOOD_MEAT_MUTANT
 
 /obj/item/food/meat/slab/human/mutant/lizard/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/human/lizard, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/human/mutant/plant
 	icon_state = "plantmeat"
@@ -751,7 +751,7 @@
 	venue_value = FOOD_PRICE_WORTHLESS
 
 /obj/item/food/meat/slab/synthmeat/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/plain/synth, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/meatproduct
 	name = "meat product"
@@ -761,7 +761,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/meatproduct/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/meatproduct, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/meatproduct, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/monkey
 	name = "monkey meat"
@@ -804,7 +804,7 @@
 	foodtypes = FRUIT
 
 /obj/item/food/meat/slab/killertomato/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/killertomato, rand(70 SECONDS, 85 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/killertomato, rand(70 SECONDS, 85 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/killertomato/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/killertomato, 3, 30)
@@ -821,7 +821,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/bear, 3, 30)
 
 /obj/item/food/meat/slab/bear/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/bear, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/bear, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/bear/Initialize(mapload)
 	. = ..()
@@ -840,7 +840,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/xeno, 3, 30)
 
 /obj/item/food/meat/slab/xeno/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/xeno, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/xeno, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/spider
 	name = "spider meat"
@@ -854,7 +854,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/spider, 3, 30)
 
 /obj/item/food/meat/slab/spider/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/spider, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/spider, rand(40 SECONDS, 70 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/slab/goliath
 	name = "goliath meat"
@@ -893,7 +893,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/rawbacon/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/bacon, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/bacon, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/bacon
 	name = "piece of bacon"
@@ -915,7 +915,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/gondola, 3, 30)
 
 /obj/item/food/meat/slab/gondola/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/gondola, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 
 /obj/item/food/meat/slab/penguin
@@ -930,7 +930,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/penguin, 3, 30)
 
 /obj/item/food/meat/slab/penguin/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/penguin, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/penguin, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/rawcrab
 	name = "raw crab meat"
@@ -942,7 +942,7 @@
 	foodtypes = RAW | MEAT
 
 /obj/item/food/meat/slab/rawcrab/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/crab, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/crab, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe?
 
 /obj/item/food/meat/crab
 	name = "crab meat"
@@ -964,7 +964,7 @@
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/meat/rawcutlet/chicken, 3, 30)
 
 /obj/item/food/meat/slab/chicken/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/steak/chicken, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe? (no this is chicken)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/steak/chicken, rand(30 SECONDS, 90 SECONDS), TRUE, TRUE) //Add medium rare later maybe? (no this is chicken)
 
 /obj/item/food/meat/slab/chicken/Initialize(mapload)
 	. = ..()
@@ -1081,7 +1081,7 @@
 	var/meat_type = "meat"
 
 /obj/item/food/meat/rawcutlet/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/rawcutlet/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	..()
@@ -1104,7 +1104,7 @@
 	foodtypes = MEAT | RAW | GROSS
 
 /obj/item/food/meat/rawcutlet/plain/human/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/plain/human, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/plain/human, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/rawcutlet/plain/human/OnCreatedFromProcessing(mob/living/user, obj/item/item, list/chosen_option, atom/original_atom)
 	. = ..()
@@ -1124,7 +1124,7 @@
 	foodtypes = FRUIT
 
 /obj/item/food/meat/rawcutlet/killertomato/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/killertomato, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/killertomato, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/rawcutlet/bear
 	name = "raw bear cutlet"
@@ -1135,39 +1135,39 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/food/meat/rawcutlet/bear/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/bear, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/bear, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 /obj/item/food/meat/rawcutlet/xeno
 	name = "raw xeno cutlet"
 	tastes = list("meat" = 1, "acid" = 1)
 
 /obj/item/food/meat/rawcutlet/xeno/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/xeno, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/xeno, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/rawcutlet/spider
 	name = "raw spider cutlet"
 	tastes = list("cobwebs" = 1)
 
 /obj/item/food/meat/rawcutlet/spider/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/spider, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/spider, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 /obj/item/food/meat/rawcutlet/gondola
 	name = "raw gondola cutlet"
 	tastes = list("meat" = 1, "tranquility" = 1)
 
 /obj/item/food/meat/rawcutlet/gondola/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/gondola, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/gondola, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 /obj/item/food/meat/rawcutlet/penguin
 	name = "raw penguin cutlet"
 	tastes = list("beef" = 1, "cod fish" = 1)
 
 /obj/item/food/meat/rawcutlet/penguin/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/penguin, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/penguin, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/rawcutlet/chicken
 	name = "raw chicken cutlet"
 	tastes = list("chicken" = 1)
 
 /obj/item/food/meat/rawcutlet/chicken/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/meat/cutlet/chicken, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/meat/cutlet/chicken, rand(35 SECONDS, 50 SECONDS), TRUE, TRUE)
 
 /obj/item/food/meat/rawcutlet/chicken/Initialize(mapload)
 	. = ..()

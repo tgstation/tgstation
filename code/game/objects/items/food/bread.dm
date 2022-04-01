@@ -9,7 +9,7 @@
 /obj/item/food/bread/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
-	add_component(/datum/component/food_storage)
+	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -36,7 +36,7 @@
 
 /obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/bread/plain/MakeProcessable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/breadslice/plain, 5, 30)
@@ -52,10 +52,10 @@
 
 /obj/item/food/breadslice/plain/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/plain/MakeGrillable()
-	add_component(/datum/component/grillable, /obj/item/food/griddle_toast, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
+	AddComponent(/datum/component/grillable, /obj/item/food/griddle_toast, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
 /obj/item/food/breadslice/moldy
 	name = "moldy 'bread' slice"
@@ -239,7 +239,7 @@
 
 /obj/item/food/breadslice/empty/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/baguette
 	name = "baguette"
@@ -294,4 +294,4 @@
 
 /obj/item/food/butterdog/ComponentInitialize()
 	. = ..()
-	add_component(/datum/component/slippery, 80)
+	AddComponent(/datum/component/slippery, 80)

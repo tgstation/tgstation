@@ -32,8 +32,8 @@
 		/datum/material/titanium,
 		/datum/material/bluespace
 	)
-	add_component(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
-	add_component(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
+	AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	AddComponent(/datum/component/butchering/recycler, 1, amount_produced,amount_produced/5)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 

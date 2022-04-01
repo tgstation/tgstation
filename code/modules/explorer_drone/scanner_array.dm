@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 
 /obj/machinery/computer/exoscanner_control/LateInitialize()
 	. = ..()
-	add_component(/datum/component/experiment_handler, \
+	AddComponent(/datum/component/experiment_handler, \
 		allowed_experiments = list(/datum/experiment/exploration_scan), \
 		config_mode = EXPERIMENT_CONFIG_UI, \
 		config_flags = EXPERIMENT_CONFIG_ALWAYS_ACTIVE)

@@ -2,7 +2,7 @@
 /// `parent` must not be modified if this is to be returned.
 /// This will be noted in the runtime logs
 #define COMPONENT_INCOMPATIBLE 1
-/// Returned in post_transfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
+/// Returned in PostTransfer to prevent transfer, similar to `COMPONENT_INCOMPATIBLE`
 #define COMPONENT_NOTRANSFER 2
 
 /// Return value to cancel attaching

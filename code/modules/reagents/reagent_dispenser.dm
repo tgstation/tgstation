@@ -246,7 +246,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/plumbed/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/plumbing/simple_supply)
+	AddComponent(/datum/component/plumbing/simple_supply)
 
 /obj/structure/reagent_dispensers/plumbed/wrench_act(mob/living/user, obj/item/I)
 	..()
@@ -260,7 +260,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/plumbed/storage/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/simple_rotation)
+	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/reagent_dispensers/plumbed/storage/AltClick(mob/user)
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation

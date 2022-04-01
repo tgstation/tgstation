@@ -26,7 +26,7 @@
 	. = ..()
 	QDEL_IN(src, 5 SECONDS) // vanishes after 5 seconds
 
-	add_component(
+	AddComponent(
 		/datum/component/singularity, \
 		consume_range = BOH_TEAR_CONSUME_RANGE, \
 		grav_pull = BOH_TEAR_GRAV_PULL, \

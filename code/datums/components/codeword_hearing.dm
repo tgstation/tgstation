@@ -5,7 +5,7 @@
  * between <span class=''></span> tags with the provided span class. This modifies the output that
  * is sent to the parent's chat window.
  *
- * Removal of this component should be done by calling [get_components(/datum/component/codeword_hearing)]
+ * Removal of this component should be done by calling [GetComponents(/datum/component/codeword_hearing)]
  * on the parent and then iterating through all components calling [delete_if_from_source(source)].
  */
 /datum/component/codeword_hearing

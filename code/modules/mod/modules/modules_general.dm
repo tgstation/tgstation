@@ -19,7 +19,7 @@
 
 /obj/item/mod/module/storage/Initialize(mapload)
 	. = ..()
-	storage = add_component(/datum/component/storage/concrete)
+	storage = AddComponent(/datum/component/storage/concrete)
 	storage.max_w_class = max_w_class
 	storage.max_combined_w_class = max_combined_w_class
 	storage.max_items = max_items
@@ -27,7 +27,7 @@
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_SET_LOCKSTATE, TRUE)
 
 /obj/item/mod/module/storage/on_install()
-	var/datum/component/storage/modstorage = mod.add_component(/datum/component/storage, storage)
+	var/datum/component/storage/modstorage = mod.AddComponent(/datum/component/storage, storage)
 	modstorage.max_w_class = max_w_class
 	modstorage.max_combined_w_class = max_combined_w_class
 	modstorage.max_items = max_items

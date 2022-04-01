@@ -22,7 +22,7 @@
 	if(!atom_in_bounds(parent))
 		relocate()
 
-/datum/component/stationloving/inherit_component(datum/component/stationloving/newc, original, inform_admins, allow_death)
+/datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
 	if (original)
 		if (newc)
 			inform_admins = newc.inform_admins

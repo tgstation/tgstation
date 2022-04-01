@@ -30,7 +30,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/cow
 
 /mob/living/basic/cow/Initialize(mapload)
-	add_component(/datum/component/tippable, \
+	AddComponent(/datum/component/tippable, \
 		tip_time = 0.5 SECONDS, \
 		untip_time = 0.5 SECONDS, \
 		self_right_time = rand(25 SECONDS, 50 SECONDS), \
@@ -43,11 +43,11 @@
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/udder_component()
-	add_component(/datum/component/udder)
+	AddComponent(/datum/component/udder)
 
 ///wrapper for the tameable component addition so you can have non tamable cow subtypes
 /mob/living/basic/cow/proc/make_tameable()
-	add_component(/datum/component/tameable, food_types = list(/obj/item/food/grown/wheat), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/wheat), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/basic/cow/proc/tamed(mob/living/tamer)
 	can_buckle = TRUE
@@ -140,10 +140,10 @@
 	AddElement(/datum/element/movement_turf_changer, /turf/open/floor/grass/fairy)
 
 /mob/living/basic/cow/moonicorn/udder_component()
-	add_component(/datum/component/udder, /obj/item/udder, null, null, /datum/reagent/drug/mushroomhallucinogen)
+	AddComponent(/datum/component/udder, /obj/item/udder, null, null, /datum/reagent/drug/mushroomhallucinogen)
 
 /mob/living/basic/cow/moonicorn/make_tameable()
-	add_component(/datum/component/tameable, food_types = list(/obj/item/food/grown/galaxythistle), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
+	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/galaxythistle), tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, .proc/tamed))
 
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer)
 	. = ..()

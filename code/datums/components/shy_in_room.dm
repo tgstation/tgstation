@@ -32,11 +32,11 @@
 		COMSIG_TRY_ALT_ACTION,
 	))
 
-/datum/component/shy_in_room/post_transfer()
+/datum/component/shy_in_room/PostTransfer()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/shy_in_room/inherit_component(datum/component/shy_in_room/friend, i_am_original, list/arguments)
+/datum/component/shy_in_room/InheritComponent(datum/component/shy_in_room/friend, i_am_original, list/arguments)
 	if(i_am_original)
 		blacklist = friend.blacklist
 		message = friend.message

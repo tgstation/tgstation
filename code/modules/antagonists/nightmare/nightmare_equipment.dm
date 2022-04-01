@@ -21,5 +21,5 @@
 /obj/item/light_eater/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT)
-	add_component(/datum/component/butchering, 80, 70)
-	add_component(/datum/component/light_eater)
+	AddComponent(/datum/component/butchering, 80, 70)
+	AddComponent(/datum/component/light_eater)

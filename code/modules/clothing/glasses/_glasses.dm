@@ -217,7 +217,7 @@
 
 /obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
-	add_component(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
+	AddComponent(/datum/component/knockoff,25,list(BODY_ZONE_PRECISE_EYES),list(ITEM_SLOT_EYES))
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = .proc/on_entered,
 	)

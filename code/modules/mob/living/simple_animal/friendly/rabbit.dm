@@ -76,7 +76,7 @@
 	var/eggs_added_from_eating = rand(1, 4)
 	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
 	AddElement(/datum/element/animal_variety, icon_prefix, pick("brown","black","white"), TRUE)
-	add_component(/datum/component/egg_layer,\
+	AddComponent(/datum/component/egg_layer,\
 		/obj/item/surprise_egg,\
 		list(/obj/item/food/grown/carrot),\
 		feed_messages,\

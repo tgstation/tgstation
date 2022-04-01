@@ -126,7 +126,7 @@
 /obj/tear_in_reality/Initialize(mapload)
 	. = ..()
 
-	add_component(
+	AddComponent(
 		/datum/component/singularity, \
 		consume_range = TEAR_IN_REALITY_CONSUME_RANGE, \
 		notify_admins = !mapload, \

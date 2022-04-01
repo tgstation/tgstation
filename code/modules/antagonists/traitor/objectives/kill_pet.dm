@@ -75,7 +75,7 @@
 		return FALSE
 	if(target_pet.stat == DEAD)
 		return FALSE
-	add_component(/datum/component/traitor_objective_register, target_pet, \
+	AddComponent(/datum/component/traitor_objective_register, target_pet, \
 		succeed_signals = list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
 	replace_in_name("%DEPARTMENT HEAD%", target.title)
 	replace_in_name("%PET%", target_pet.name)
