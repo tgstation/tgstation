@@ -1,0 +1,4 @@
+author: "unit0016"
+delete-after: True
+changes: 
+  - bugfix: "The brig disposal bin on Tramstation is now actually hooked up. Because of course it wasn't."
