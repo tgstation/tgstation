@@ -2,13 +2,13 @@
     "bandskull_worn": [
         {
             "type": "icon_state",
-            "icon_state": "bandskull_cloth_worn",
+            "icon_state": "bandana_cloth_worn",
             "blend_mode": "overlay",
             "color_ids": [ 1 ]
         },
 		{
             "type": "icon_state",
-            "icon_state": "bandskull_skull_worn",
+            "icon_state": "bandana_skull_worn",
             "blend_mode": "overlay",
             "color_ids": [ 2 ]
         }

@@ -36,11 +36,6 @@
 	else
 		to_chat(user, span_warning("You must be holding [src] in order to tie it!"))
 
-/obj/item/clothing/mask/bandana/durathread
-	name = "durathread bandana"
-	desc = "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
-	icon_state = "banddurathread"
-
 /obj/item/clothing/mask/bandana/color
 	dying_key = DYE_REGISTRY_BANDANA
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -118,6 +113,12 @@
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE
 
+/obj/item/clothing/mask/bandana/color/durathread
+	name = "durathread bandana"
+	desc = "A bandana made from durathread, you wish it would provide some protection to its wearer, but it's far too thin..."
+	greyscale_colors = "#5c6d80"
+	flags_1 = NONE
+
 /obj/item/clothing/mask/bandana/color/striped
 	name = "striped bandana"
 	desc = "A fine bandana with nanotech lining and a stripe across."
@@ -125,7 +126,7 @@
 	worn_icon_state = "bandstriped_worn"
 	greyscale_config = /datum/greyscale_config/bandstriped
 	greyscale_config_worn = /datum/greyscale_config/bandstriped/worn
-	greyscale_colors = "#3F3F3F#C6C6C6"
+	greyscale_colors = "#2e2e2e#C6C6C6"
 
 /obj/item/clothing/mask/bandana/color/striped/attack_self(mob/user)
 	if(slot_flags & ITEM_SLOT_NECK)

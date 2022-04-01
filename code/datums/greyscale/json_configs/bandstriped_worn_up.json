@@ -2,13 +2,13 @@
     "bandstriped_worn_up": [
         {
             "type": "icon_state",
-            "icon_state": "bandstriped_cloth_worn_up",
+            "icon_state": "bandana_cloth_worn_up",
             "blend_mode": "overlay",
             "color_ids": [ 1 ]
         },
 		{
             "type": "icon_state",
-            "icon_state": "bandstriped_stripe_worn_up",
+            "icon_state": "bandana_stripe_worn_up",
             "blend_mode": "overlay",
             "color_ids": [ 2 ]
         }
