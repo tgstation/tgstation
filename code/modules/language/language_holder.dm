@@ -386,6 +386,12 @@ Key procs
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/nekomimetic = list(LANGUAGE_ATOM))
 
+/datum/language_holder/shark
+	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+								/datum/language/gawr = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
+							/datum/language/gawr = list(LANGUAGE_ATOM))
+
 /datum/language_holder/shadowpeople
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/shadowtongue = list(LANGUAGE_ATOM))

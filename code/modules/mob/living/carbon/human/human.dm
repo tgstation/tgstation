@@ -1018,6 +1018,9 @@
 /mob/living/carbon/human/species/felinid
 	race = /datum/species/human/felinid
 
+/mob/living/carbon/human/species/shark
+	race = /datum/species/human/shark
+
 /mob/living/carbon/human/species/fly
 	race = /datum/species/fly
 

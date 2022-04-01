@@ -151,3 +151,27 @@
 	name = "fox tail"
 	desc = "A severed fox tail. Sad."
 	tail_type = "Fox 2"
+
+/obj/item/organ/tail/shark
+	name = "fox tail"
+	desc = "A severed fox tail. Sad."
+	tail_type = "Shark"
+
+/obj/item/organ/tail/shark/Insert(mob/living/carbon/human/tail_owner, special = FALSE, drop_if_replaced = TRUE)
+	..()
+	if(istype(tail_owner))
+		var/default_part = tail_owner.dna.species.mutant_bodyparts["tail_human"]
+		if(!default_part || default_part == "None")
+			if(tail_type)
+				tail_owner.dna.features["tail_human"] = tail_owner.dna.species.mutant_bodyparts["tail_human"] = tail_type
+				tail_owner.dna.update_uf_block(DNA_HUMAN_TAIL_BLOCK)
+			else
+				tail_owner.dna.species.mutant_bodyparts["tail_human"] = tail_owner.dna.features["tail_human"]
+			tail_owner.update_body()
+
+/obj/item/organ/tail/shark/Remove(mob/living/carbon/human/tail_owner, special = FALSE)
+	..()
+	if(istype(tail_owner))
+		tail_owner.dna.species.mutant_bodyparts -= "tail_human"
+		color = tail_owner.hair_color
+		tail_owner.update_body()

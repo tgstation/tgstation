@@ -1764,6 +1764,18 @@
 	icon_state = "fox"
 	color_src = HAIR
 
+/datum/sprite_accessory/tails/human/shark
+	icon = 'icons/mob/shark.dmi'
+	name = "Shark"
+	icon_state = "shark"
+	color_src = HAIR
+
+/datum/sprite_accessory/tails_animated/human/shark
+	icon = 'icons/mob/shark.dmi'
+	name = "Shark"
+	icon_state = "shark"
+	color_src = HAIR
+
 /datum/sprite_accessory/tails/human/fox/alt
 	icon = 'icons/mob/fox.dmi'
 	name = "Fox 2"

@@ -208,6 +208,7 @@ GLOBAL_LIST_INIT(organ_process_order, list(
 #define SPECIES_ZOMBIE "memezombies"
 #define SPECIES_ZOMBIE_HALLOWEEN "zombie"
 #define SPECIES_ADDICT "goofzombies"
+#define SPECIES_SHARK "shark"
 
 #define SPECIES_ABDUCTOR "abductor"
 #define SPECIES_ANDROID "android"

@@ -71,7 +71,16 @@
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
 	if(.)
-		user.SpinAnimation(7,1)
+		if(is_species(user, /datum/species/human/shark))
+			var/mob/living/carbon/human/shark = user
+			shark.Knockdown(1 SECONDS)
+			shark.adjustStaminaLoss(70)
+			shark.visible_message(
+				span_notice("[user] rotates [user.p_them()]self!"),
+				span_notice("You rotate yourself!")
+			)
+		else
+			user.SpinAnimation(7,1)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)
 	. = ..()
