@@ -61,3 +61,26 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	var/proportion = min(air_mixture.gases[/datum/gas/hypernoblium][MOLES], (1.5 * (working_power ** 2)))
 	air_mixture.gases[/datum/gas/hypernoblium][MOLES] -= proportion
 	air_mixture.gases[/datum/gas/antinoblium][MOLES] += proportion * 0.5
+
+/datum/electrolyzer_reaction/halon_generation
+	name = "Halon generation"
+	id = "halon_generation"
+	requirements = list(
+		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT,
+		"MAX_TEMP" = 230
+	)
+
+/datum/electrolyzer_reaction/halon_generation/react(turf/location, datum/gas_mixture/air_mixture, working_power)
+
+	var/old_heat_capacity = air_mixture.heat_capacity()
+	air_mixture.assert_gases(/datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/halon)
+	var/pressure = air_mixture.return_pressure()
+	var/reaction_efficency = min(1 / ((pressure / (0.5 * ONE_ATMOSPHERE)) * (max(air_mixture.gases[/datum/gas/carbon_dioxide][MOLES] / air_mixture.gases[/datum/gas/nitrous_oxide][MOLES], 1))), air_mixture.gases[/datum/gas/nitrous_oxide][MOLES], air_mixture.gases[/datum/gas/carbon_dioxide][MOLES] * INVERSE(2))
+	air_mixture.gases[/datum/gas/carbon_dioxide][MOLES] -= reaction_efficency * 2
+	air_mixture.gases[/datum/gas/nitrous_oxide][MOLES] -= reaction_efficency
+	air_mixture.gases[/datum/gas/halon][MOLES] += reaction_efficency
+	var/energy_used = reaction_efficency * HALON_FORMATION_ENERGY
+	var/new_heat_capacity = air_mixture.heat_capacity()
+	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+		air_mixture.temperature = max(((air_mixture.temperature * old_heat_capacity + energy_used) / new_heat_capacity), TCMB)

@@ -58,12 +58,12 @@
 	/// A short string describing this reaction.
 	var/desc
 	/** REACTION FACTORS
-	 * 
+	 *
 	 * Describe (to a human) factors influencing this reaction in an assoc list format.
 	 * Also include gases formed by the reaction
 	 * Implement various interaction for different keys under subsystem/air/proc/atmos_handbook_init()
-	 * 
-	 * E.G. 
+	 *
+	 * E.G.
 	 * factor["Temperature"] = "Minimum temperature of 20 kelvins, maximum temperature of 100 kelvins"
 	 * factor["o2"] = "Minimum oxygen amount of 20 moles, more oxygen increases reaction rate up to 150 moles"
 	 */
@@ -544,7 +544,7 @@
 	var/list/cached_gases = air.gases
 	var/pressure = air.return_pressure()
 	// This slows down in relation to pressure, very quickly. Please don't expect it to be anything more then a snail
-	
+
 	// Bigger is better for these two values.
 	var/pressure_efficiency = (0.1 * ONE_ATMOSPHERE) / pressure // More pressure = more bad
 	var/ratio_efficiency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES] / cached_gases[/datum/gas/plasma][MOLES], 1) // Malus to production if more plasma than n2o.
@@ -783,7 +783,7 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	air.assert_gases(/datum/gas/hypernoblium, /datum/gas/bz)
-	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed 
+	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed
 	cached_gases[/datum/gas/nitrogen][MOLES] -= 10 * nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
 	SET_REACTION_RESULTS(nob_formed)
@@ -795,46 +795,6 @@
 
 
 // Halon
-
-/**
- * Halon Formation:
- *
- * Exothermic
- */
-/datum/gas_reaction/halon_formation
-	priority_group = PRIORITY_FORMATION
-	name = "Halon Formation"
-	id = "halon_formation"
-	desc = "Production of halon from BZ and tritium."
-
-/datum/gas_reaction/halon_formation/init_reqs()
-	requirements = list(
-		/datum/gas/bz = MINIMUM_MOLE_COUNT,
-		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
-		"MIN_TEMP" = HALON_FORMATION_MIN_TEMPERATURE,
-		"MAX_TEMP" = HALON_FORMATION_MAX_TEMPERATURE,
-	)
-
-/datum/gas_reaction/halon_formation/react(datum/gas_mixture/air, datum/holder)
-	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
-	var/heat_efficency = min(temperature * 0.01, cached_gases[/datum/gas/tritium][MOLES] * INVERSE(4), cached_gases[/datum/gas/bz][MOLES] * INVERSE(0.25))
-	if (heat_efficency <= 0 || (cached_gases[/datum/gas/tritium][MOLES] - heat_efficency * 4 < 0 ) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency * 0.25 < 0)) //Shouldn't produce gas from nothing.
-		return NO_REACTION
-
-	var/old_heat_capacity = air.heat_capacity()
-	ASSERT_GAS(/datum/gas/halon, air)
-	cached_gases[/datum/gas/tritium][MOLES] -= heat_efficency * 4
-	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25
-	cached_gases[/datum/gas/halon][MOLES] += heat_efficency * 4.25
-
-	SET_REACTION_RESULTS(heat_efficency * 4.25)
-	var/energy_released = heat_efficency * HALON_FORMATION_ENERGY
-	var/new_heat_capacity = air.heat_capacity()
-	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(((temperature * old_heat_capacity + energy_released) / new_heat_capacity), TCMB)
-	return REACTING
-
 
 /**
  * Halon Combustion:
