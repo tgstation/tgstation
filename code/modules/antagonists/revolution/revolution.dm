@@ -49,6 +49,7 @@
 	create_objectives()
 	equip_rev()
 	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/viva.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /datum/antagonist/rev/on_removal()
 	remove_objectives()
