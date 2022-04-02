@@ -27,8 +27,8 @@
 	objectives += summon
 
 /datum/antagonist/space_dragon/on_gain()
-	. = ..()
 	forge_objectives()
+	. = ..()
 	rift = new
 	rift.Grant(owner.current)
 
