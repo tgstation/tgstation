@@ -515,7 +515,7 @@
 	return ..()
 
 /datum/status_effect/eldritch/blade
-	effect_sprite = "emark2" // MELBERT TODO sprite
+	effect_sprite = "emark4" // MELBERT TODO sprite
 	/// If set, the owner of the status effect will not be able to leave this area.
 	var/area/locked_to
 

@@ -45,10 +45,6 @@
 	if(!user_turf || !user_area)
 		return FALSE // nullspaced?
 
-	if(!is_reflection_nearby(user_turf))
-		to_chat(user, span_warning("There are no reflective surfaces nearby to [we_are_phasing ? "exit":"enter"] the mirror's realm here!"))
-		return FALSE
-
 	if(user_area.area_flags & NOTELEPORT)
 		to_chat(user, span_warning("An otherwordly force is preventing you from [we_are_phasing ? "exiting":"entering"] the mirror's realm here!"))
 		return FALSE
@@ -57,16 +53,22 @@
 		to_chat(user, span_warning("An otherwordly force is preventing you from [we_are_phasing ? "exiting":"entering"] the mirror's realm here!"))
 		return FALSE
 
-	if(user_turf.is_blocked_turf(exclude_mobs = TRUE))
-		to_chat(user, span_warning("Something is blocking you from [we_are_phasing ? "exiting":"entering"] the mirror's realm here!"))
-		return FALSE /// MELBERT TODO breaks recharging I hate spells I hate spells
-
 	return TRUE
 
 /obj/effect/proc_holder/spell/targeted/mirror_walk/cast(list/targets, mob/living/user = usr)
+	var/we_are_phasing = IS_MIRROR_PHASED(user)
+	var/turf/user_turf = get_turf(user)
+
+	if(!is_reflection_nearby(user_turf))
+		to_chat(user, span_warning("There are no reflective surfaces nearby to [we_are_phasing ? "exit":"enter"] the mirror's realm here!"))
+		return FALSE
+
+	if(user_turf.is_blocked_turf(exclude_mobs = TRUE))
+		to_chat(user, span_warning("Something is blocking you from [we_are_phasing ? "exiting":"entering"] the mirror's realm here!"))
+		return FALSE
 
 	// If our loc is a phased mob, we're currently jaunting so we should exit
-	if(IS_MIRROR_PHASED(user))
+	if(we_are_phasing)
 		try_exit_phase(user)
 		return
 
