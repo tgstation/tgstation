@@ -18510,7 +18510,7 @@
 /area/science/test_area)
 "dGX" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/science/test_area)
 "dHb" = (
 /obj/structure/cable,
