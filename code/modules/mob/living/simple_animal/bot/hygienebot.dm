@@ -11,6 +11,7 @@
 	anchored = FALSE
 	health = 100
 	maxHealth = 100
+	flags_1 = MOB_PAINTABLE_1
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
@@ -92,6 +93,8 @@
 	if(washing)
 		do_wash(loc)
 		for(var/AM in loc)
+			if (AM == src)
+				continue
 			do_wash(AM)
 		if(isopenturf(loc) && !(bot_cover_flags & BOT_COVER_EMAGGED))
 			var/turf/open/tile = loc
