@@ -96,8 +96,8 @@
 	to_chat(user, span_notice("You pull out the needle from [src] and flip the switch, and start injecting yourself with it."))
 	if(!do_after(user, CARP_MIX_DNA_TIMER))
 		return
-	user.mind.add_antag_datum(/datum/antagonist/space_dragon)
-	user.change_mob_type(/mob/living/simple_animal/hostile/space_dragon, location = loc, delete_old_mob = TRUE)
+	var/mob/living/simple_animal/hostile/space_dragon/new_dragon = user.change_mob_type(/mob/living/simple_animal/hostile/space_dragon, location = loc, delete_old_mob = TRUE)
+	new_dragon.permanant_empower()
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	qdel(src)
 

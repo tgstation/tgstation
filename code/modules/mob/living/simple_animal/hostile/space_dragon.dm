@@ -89,8 +89,6 @@
 	var/rifts_charged = 0
 	/// Whether or not Space Dragon has completed their objective, and thus triggered the ending sequence.
 	var/objective_complete = FALSE
-	/// The innate ability to summon rifts
-	var/datum/action/innate/summon_rift/rift
 	/// The color of the space dragon.
 	var/chosen_color
 	/// Minimum devastation damage dealt coefficient based on max health
@@ -104,8 +102,6 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_HEALS_FROM_CARP_RIFTS, INNATE_TRAIT)
-	rift = new
-	rift.Grant(src)
 
 /mob/living/simple_animal/hostile/space_dragon/Login()
 	. = ..()
@@ -127,6 +123,8 @@
 		visible_message(span_danger("[src] vomits up [consumed_mob]!"))
 		consumed_mob.forceMove(loc)
 		consumed_mob.Paralyze(50)
+	if(!mind.has_antag_datum(/datum/antagonist/space_dragon))
+		return
 	if((rifts_charged == 3 || (SSshuttle.emergency.mode == SHUTTLE_DOCKED && rifts_charged > 0)) && !objective_complete)
 		victory()
 	if(riftTimer == -1)
@@ -389,7 +387,7 @@
  * Empowers and depowers Space Dragon after a successful rift charge.
  * Empowered, Space Dragon regains all his health and becomes temporarily faster for 30 seconds, along with being tinted red.
  */
-/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower(is_permanent)
+/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower()
 	fully_heal()
 	add_filter("anger_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
 	add_movespeed_modifier(/datum/movespeed_modifier/dragon_rage)
@@ -668,8 +666,8 @@
 		resistance_flags = INDESTRUCTIBLE
 		dragon.rifts_charged += 1
 		if(dragon.rifts_charged != 3 && !dragon.objective_complete)
-			dragon.rift = new
-			dragon.rift.Grant(dragon)
+			var/datum/action/innate/summon_rift/rift = new()
+			rift.Grant(dragon)
 			dragon.riftTimer = 0
 			dragon.rift_empower()
 		// Early return, nothing to do after this point.
