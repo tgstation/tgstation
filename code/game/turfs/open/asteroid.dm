@@ -3,6 +3,7 @@
 /turf/open/misc/asteroid //floor piece
 	gender = PLURAL
 	name = "asteroid sand"
+	desc = "It's coarse and rough and gets everywhere."
 	baseturfs = /turf/open/misc/asteroid
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "asteroid"

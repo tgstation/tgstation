@@ -42,6 +42,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 	data["is_funmin"] = is_funmin
 	return data
 
+#define THUNDERDOME_TEMPLATE_FILE "admin_thunderdome.dmm"
 /datum/secrets_menu/ui_act(action, params)
 	. = ..()
 	if(.)
@@ -159,8 +160,9 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if(!istype(obj, /obj/machinery/camera))
 					qdel(obj) //Clear objects
 
-			var/area/template = GLOB.areas_by_type[/area/tdome/arena_source]
-			template.copy_contents_to(thunderdome)
+			var/datum/map_template/thunderdome_template = SSmapping.map_templates[THUNDERDOME_TEMPLATE_FILE]
+			var/turf/thunderdome_corner = locate(thunderdome.x - 3, thunderdome.y - 1, 1) // have to do a little bit of coord manipulation to get it in the right spot
+			thunderdome_template.load(thunderdome_corner)
 		if("set_name")
 			var/new_name = input(holder, "Please input a new name for the station.", "What?", "") as text|null
 			if(!new_name)
@@ -588,6 +590,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret [action]")
+#undef THUNDERDOME_TEMPLATE_FILE
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = FALSE

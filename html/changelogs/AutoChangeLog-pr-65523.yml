@@ -1,0 +1,8 @@
+author: "Kapu1178"
+delete-after: True
+changes: 
+  - rscadd: "Limbgrower limbs are now a sickly green"
+  - refactor: "Digitigrade legs should now behave consistently."
+  - refactor: "Limbs will no longer update appearance as owner is transferred, allowing for multi-species frankensteins"
+  - bugfix: "CHANGELING TRANSFORM FUNCTIONS PROPERLY"
+  - rscdel: "Synths and synth-related mechanics (Synth fugative)"
