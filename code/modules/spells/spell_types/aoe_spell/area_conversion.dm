@@ -13,7 +13,7 @@
 
 	outer_radius = 2
 
-/datum/action/cooldown/spell/aoe/area_conversion/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/area_conversion/is_affected_by_aoe(atom/center, atom/thing)
 	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/area_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster)

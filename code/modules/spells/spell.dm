@@ -241,9 +241,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/sig_return = SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on) | SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src, cast_on)
-	if(sig_return & COMPONENT_CANCEL_SPELL)
+	if(SEND_SIGNAL(src, COMSIG_SPELL_BEFORE_CAST, cast_on) & COMPONENT_CANCEL_SPELL)
 		return FALSE
+
+	if(owner)
+		if(SEND_SIGNAL(owner, COMSIG_MOB_BEFORE_SPELL_CAST, src, cast_on) & COMPONENT_CANCEL_SPELL)
+			return FALSE
 
 	return TRUE
 
@@ -257,10 +260,10 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_SPELL_CAST, cast_on)
-	SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src, cast_on)
-
-	if(owner?.ckey)
-		owner.log_message("cast the spell [name][cast_on != owner ? " on [cast_on]":""].", LOG_ATTACK)
+	if(owner)
+		SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src, cast_on)
+		if(owner.ckey)
+			owner.log_message("cast the spell [name][cast_on != owner ? " on [cast_on]":""].", LOG_ATTACK)
 
 /**
  * Actions done after the main cast is finished.
@@ -273,8 +276,12 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/proc/after_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
 
-	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
 	SEND_SIGNAL(src, COMSIG_SPELL_AFTER_CAST, cast_on)
+
+	if(!owner)
+		return
+
+	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
 
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
@@ -297,6 +304,9 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 /// Provides feedback after a spell cast occurs, in the form of a cast sound or invocation
 /datum/action/cooldown/spell/proc/spell_feedback()
+	if(!owner)
+		return
+
 	if(invocation_type != INVOCATION_NONE)
 		invocation()
 	if(sound)
@@ -427,3 +437,4 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 			spell_title = "Ludicrous "
 
 	name = "[spell_title][initial(name)]"
+	UpdateButtons()

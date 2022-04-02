@@ -31,7 +31,7 @@
 	// Now go through and cast our spell where applicable
 	var/num_targets = 0
 	for(var/atom/thing_to_target as anything in things_to_cast_on)
-		if(!is_affected_by_aoe(thing_to_target))
+		if(!is_affected_by_aoe(cast_on, thing_to_target))
 			continue
 		if(max_targets > 0 && num_targets >= max_targets)
 			continue
@@ -53,13 +53,12 @@
  * Checks if the past atom [thing]
  * is valid and affected by our aoe spell.
  */
-/datum/action/cooldown/spell/aoe/proc/is_affected_by_aoe(atom/thing)
-	if(thing == owner)
+/datum/action/cooldown/spell/aoe/proc/is_affected_by_aoe(atom/center, atom/thing)
+	if(thing == owner || thing == center)
 		return FALSE
 
 	return isatom(thing)
 
-///
 /**
  * Actually cause effects on the thing in our aoe.
  * Override this for your spell! not cast().

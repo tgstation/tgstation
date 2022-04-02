@@ -18,7 +18,7 @@
 	cast_on.extinguish_mob()
 	return ..()
 
-/datum/action/cooldown/spell/aoe/fiery_rebirth/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/fiery_rebirth/is_affected_by_aoe(atom/center, atom/thing)
 	if(!iscarbon(thing))
 		return FALSE
 

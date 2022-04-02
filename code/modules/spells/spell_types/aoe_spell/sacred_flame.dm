@@ -17,7 +17,7 @@
 	var/firestacks_to_give = 20
 
 // All livings in view are valid, including ourselves
-/datum/action/cooldown/spell/aoe/sacred_flame/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/sacred_flame/is_affected_by_aoe(atom/center, atom/thing)
 	return isliving(thing)
 
 /datum/action/cooldown/spell/aoe/sacred_flame/get_things_to_cast_on(atom/center)

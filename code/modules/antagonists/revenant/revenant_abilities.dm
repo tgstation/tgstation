@@ -226,7 +226,7 @@
 	/// The damage the shcoskf rom the lgihts do
 	var/shock_damage = 15
 
-/datum/action/cooldown/spell/aoe/revenant/overload/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/revenant/overload/is_affected_by_aoe(atom/center, atom/thing)
 	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/revenant/overload/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
@@ -266,7 +266,7 @@
 	reveal_duration = 4 SECONDS
 	stun_duration = 2 SECONDS
 
-/datum/action/cooldown/spell/aoe/revenant/defile/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/revenant/defile/is_affected_by_aoe(atom/center, atom/thing)
 	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/revenant/defile/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)
@@ -316,7 +316,7 @@
 	cast_amount = 60
 	unlock_amount = 125
 
-/datum/action/cooldown/spell/aoe/revenant/malfunction/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/revenant/malfunction/is_affected_by_aoe(atom/center, atom/thing)
 	return isturf(thing)
 
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
@@ -361,7 +361,7 @@
 	cast_amount = 50
 	unlock_amount = 75
 
-/datum/action/cooldown/spell/aoe/revenant/blight/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/revenant/blight/is_affected_by_aoe(atom/center, atom/thing)
 	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/revenant/blight/cast_on_thing_in_aoe(turf/victim, mob/living/simple_animal/revenant/caster)

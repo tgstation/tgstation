@@ -15,7 +15,7 @@
 
 	outer_radius = 3
 
-/datum/action/cooldown/spell/aoe/rust_conversion/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/rust_conversion/is_affected_by_aoe(atom/center, atom/thing)
 	return isturf(thing)
 
 /datum/action/cooldown/spell/aoe/rust_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster) // MELBERT TODO seems big

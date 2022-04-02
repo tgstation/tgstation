@@ -185,7 +185,7 @@
 	spell_requirements = NONE
 	outer_radius = 14
 
-/datum/action/cooldown/spell/aoe/flicker_lights/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/flicker_lights/is_affected_by_aoe(atom/center, atom/thing)
 	return istype(thing, /obj/machinery/light)
 
 /datum/action/cooldown/spell/aoe/flicker_lights/cast_on_thing_in_aoe(obj/machinery/light/victim, atom/caster)
@@ -204,7 +204,7 @@
 	cast_on.visible_message(span_danger("[cast_on] glares their eyes."))
 	return ..()
 
-/datum/action/cooldown/spell/aoe/blindness/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/blindness/is_affected_by_aoe(atom/center, atom/thing)
 	if(thing == owner)
 		return FALSE
 

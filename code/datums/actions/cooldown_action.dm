@@ -1,12 +1,10 @@
-
-//Preset for an action with a cooldown
+/// Preset for an action that has a cooldown.
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
 
 	/// The actual next time this ability can be used
 	var/next_use_time = 0
-
 	/// The stat panel this action shows up in the stat panel in. If null, will not show up.
 	var/panel
 	/// The default cooldown applied when StartCooldown() is called

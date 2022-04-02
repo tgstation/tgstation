@@ -6,8 +6,8 @@
 	/// The moveforce of the throw done by the repulsion.
 	var/repulse_force = MOVE_FORCE_EXTREMELY_STRONG
 
-/datum/action/cooldown/spell/aoe/repulse/is_affected_by_aoe(atom/thing)
-	if(thing == owner)
+/datum/action/cooldown/spell/aoe/repulse/is_affected_by_aoe(atom/center, atom/thing)
+	if(thing == owner || thing == center)
 		return FALSE
 
 	if(!ismovable(thing))
@@ -61,7 +61,7 @@
 	cooldown_time = 40 SECONDS
 	cooldown_reduction_per_rank = 6.25 SECONDS
 
-/datum/action/cooldown/spell/aoe/repulse/wizard/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/repulse/wizard/is_affected_by_aoe(atom/center, atom/thing)
 	. = ..()
 	if(!.)
 		return FALSE

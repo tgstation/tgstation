@@ -34,7 +34,7 @@
 /datum/action/cooldown/spell/aoe/void_pull/get_things_to_cast_on(atom/center)
 	return view(outer_radius, center)
 
-/datum/action/cooldown/spell/aoe/void_pull/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/void_pull/is_affected_by_aoe(atom/center, atom/thing)
 	if(!isturf(thing.loc))
 		return FALSE
 

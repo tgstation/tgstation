@@ -18,7 +18,7 @@
 		/obj/structure/closet,
 	))
 
-/datum/action/cooldown/spell/aoe/knock/is_affected_by_aoe(atom/thing)
+/datum/action/cooldown/spell/aoe/knock/is_affected_by_aoe(atom/center, atom/thing)
 	return is_type_in_typecache(thing, knockable_things)
 
 /datum/action/cooldown/spell/aoe/knock/cast_on_thing_in_aoe(atom/victim, atom/caster)
