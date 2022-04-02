@@ -32,6 +32,10 @@
 	rift = new
 	rift.Grant(owner.current)
 
+/datum/antagonist/space_dragon/on_removal()
+	. = ..()
+	rift.Remove(owner.current)
+
 /datum/antagonist/space_dragon/get_preview_icon()
 	var/icon/icon = icon('icons/mob/spacedragon.dmi', "spacedragon")
 
