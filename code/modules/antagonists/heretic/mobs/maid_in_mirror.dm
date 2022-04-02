@@ -53,7 +53,7 @@
 		)
 
 		recent_examiner_refs += user_ref
-		apply_damage(health * 0.1) // We take 10% of our health as damage upon being examined
+		apply_damage(maxHealth * 0.1) // We take 10% of our health as damage upon being examined
 		playsound(src, 'sound/effects/ghost2.ogg', 40, TRUE)
 		addtimer(CALLBACK(src, .proc/clear_recent_examiner, user_ref), recent_examine_damage_cooldown)
 
