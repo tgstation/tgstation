@@ -781,6 +781,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define EXPIRED_LIFE_TRAIT "expired_life"
 /// Trait given to an atom/movable when they orbit something.
 #define ORBITING_TRAIT "orbiting"
+/// From the item_scaling element
+#define ITEM_SCALING_TRAIT "item_scaling"
 
 /**
 * Trait granted by [/mob/living/carbon/Initialize] and
@@ -849,3 +851,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// This mob heals from cult pylons.
 #define TRAIT_HEALS_FROM_CULT_PYLONS "heals_from_cult_pylons"
+
+/// Ignore Crew monitor Z levels
+#define TRAIT_MULTIZ_SUIT_SENSORS "multiz_suit_sensors"
+
+/// Ignores body_parts_covered during the add_fingerprint() proc. Works both on the person and the item in the glove slot.
+#define TRAIT_FINGERPRINT_PASSTHROUGH "fingerprint_passthrough"

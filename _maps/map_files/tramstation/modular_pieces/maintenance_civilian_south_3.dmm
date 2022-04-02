@@ -12,11 +12,11 @@
 	pixel_y = 8
 	},
 /obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "f" = (
 /obj/item/wrench,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/port/aft)
 "k" = (
 /obj/modular_map_root/tramstation{
@@ -26,7 +26,7 @@
 /area/template_noop)
 "l" = (
 /obj/item/pickaxe/mini,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/maintenance/port/aft)
 "m" = (
 /obj/effect/decal/cleanable/dirt,
@@ -98,7 +98,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "N" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "P" = (
 /obj/effect/turf_decal/sand/plating,
@@ -110,7 +110,7 @@
 /area/maintenance/port/aft)
 "R" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 
 (1,1,1) = {"

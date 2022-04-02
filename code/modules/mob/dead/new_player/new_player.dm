@@ -112,6 +112,7 @@
 	spawning = TRUE
 
 	observer.started_as_observer = TRUE
+	close_spawn_windows()
 	var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
 	to_chat(src, span_notice("Now teleporting."))
 	if (O)
@@ -180,6 +181,7 @@
 		return FALSE
 
 	if(SSshuttle.arrivals)
+		close_spawn_windows() //In case we get held up
 		if(SSshuttle.arrivals.damaged && CONFIG_GET(flag/arrivals_shuttle_require_safe_latejoin))
 			src << tgui_alert(usr,"The arrivals shuttle is currently malfunctioning! You cannot join.")
 			return FALSE
@@ -322,6 +324,7 @@
 /// Creates, assigns and returns the new_character to spawn as. Assumes a valid mind.assigned_role exists.
 /mob/dead/new_player/proc/create_character(atom/destination)
 	spawning = TRUE
+	close_spawn_windows()
 
 	mind.active = FALSE //we wish to transfer the key manually
 	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
@@ -364,6 +367,9 @@
 /mob/dead/new_player/Move()
 	return 0
 
+
+/mob/dead/new_player/proc/close_spawn_windows()
+	src << browse(null, "window=latechoices") //closes late choices window (Hey numbnuts go make this tgui)
 
 // Used to make sure that a player has a valid job preference setup, used to knock players out of eligibility for anything if their prefs don't make sense.
 // A "valid job preference setup" in this situation means at least having one job set to low, or not having "return to lobby" enabled

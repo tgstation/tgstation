@@ -192,7 +192,7 @@
 
 /datum/component/riding/vehicle/scooter/skateboard/wheelys/skishoes/handle_specials()
 	. = ..()
-	allowed_turf_typecache = typecacheof(list(/turf/open/floor/plating/asteroid/snow, /turf/open/floor/grass/snow, /turf/open/floor/holofloor/snow, /turf/open/floor/plating/ice))
+	allowed_turf_typecache = typecacheof(list(/turf/open/misc/asteroid/snow, /turf/open/misc/snow, /turf/open/floor/holofloor/snow, /turf/open/misc/ice, /turf/open/floor/fake_snow))
 
 /datum/component/riding/vehicle/secway
 	keytype = /obj/item/key/security
