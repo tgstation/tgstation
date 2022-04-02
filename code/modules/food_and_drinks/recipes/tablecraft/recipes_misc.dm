@@ -240,7 +240,6 @@
 
 /datum/crafting_recipe/food/pierogi
 	name = "Pierogi"
-	time = 40
 	reqs = list(
 		/obj/item/food/grown/potato = 1,
 		/obj/item/food/grown/onion = 1,
@@ -251,7 +250,6 @@
 
 /datum/crafting_recipe/food/stuffed_cabbage
 	name = "Stuffed cabbage"
-	time = 40
 	reqs = list(
 		/obj/item/food/meat/cutlet = 2,
 		/obj/item/food/salad/boiledrice = 1,
