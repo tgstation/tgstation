@@ -1323,7 +1323,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	pixel_y = initialpixely
 
 ///Checks if the given iconstate exists in the given file, caching the result. Setting scream to TRUE will print a stack trace ONCE.
-/proc/icon_exists(file, state, scream)
+/proc/icon_exists(file, state, scream = TRUE)
 	var/static/list/icon_states_cache = list()
 	if(icon_states_cache[file]?[state])
 		return TRUE
