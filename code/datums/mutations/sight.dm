@@ -55,12 +55,15 @@
 	owner.update_sight()
 
 /datum/mutation/human/thermal/modify()
-	var/datum/action/cooldown/spell/thermal_vision/to_modify = ..()
+	. = ..()
+	var/datum/action/cooldown/spell/thermal_vision/to_modify = .
 	if(!istype(to_modify)) // null or invalid
 		return
 
 	to_modify.eye_damage = 10 * GET_MUTATION_SYNCHRONIZER(src)
 	to_modify.thermal_duration = 10 * GET_MUTATION_POWER(src)
+
+	return .
 
 /datum/action/cooldown/spell/thermal_vision
 	name = "Activate Thermal Vision"

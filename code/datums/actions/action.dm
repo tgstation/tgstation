@@ -30,8 +30,6 @@
 	var/icon_icon = 'icons/hud/actions.dmi'
 	/// This is the icon state for the icon that appears OVER the button background
 	var/button_icon_state = "default"
-	/// A list of all child actions created and shared by this "parent" action
-	var/list/datum/weakref/shared
 	///List of all mobs that are viewing our action button -> A unique movable for them to view.
 	var/list/viewers = list()
 
@@ -50,7 +48,6 @@
 		RegisterSignal(target, COMSIG_MIND_TRANSFERRED, .proc/on_target_mind_swapped)
 
 /datum/action/Destroy()
-	QDEL_LAZYLIST(shared)
 	if(owner)
 		Remove(owner)
 	target = null
@@ -198,7 +195,7 @@
 	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
 		return
 
-	var/atom/movable/screen/movable/action_button/button = CreateButton()
+	var/atom/movable/screen/movable/action_button/button = CreateButton(viewer)
 	SetId(button, viewer)
 
 	button.our_hud = our_hud
@@ -217,7 +214,7 @@
 	if(button)
 		qdel(button)
 
-/datum/action/proc/CreateButton()
+/datum/action/proc/CreateButton(mob/for_who)
 	var/atom/movable/screen/movable/action_button/button = new()
 	button.linked_action = src
 	button.name = name
@@ -255,53 +252,3 @@
 
 	// Grant() calls Remove() from the existing owner so we're covered on that
 	Grant(source.current)
-
-/**
- * Handles sharing our action with another mob / player
- *
- * Essentially, creates a duplicate of our action, and grant it
- * to whoever we're sharing the action with.
- *
- * The duplicate is linked to our action, so if we go, it goes.
- * The duplicate is stored as a weakref in the shared lazylist.
- *
- * Returns the instance of the created shared action.
- */
-/datum/action/proc/share_action(mob/share_with)
-	// We already have this action, either our own version or are already sharing
-	if(locate(type) in share_with.actions)
-		return
-
-	// Create a copy of our action, linked to us
-	// That way childs can reference the parent action
-	// And, if the parent's deleted, all childs are too
-	var/datum/action/to_share = new type(src)
-	to_share.Grant(share_with)
-
-	LAZYADD(shared, WEAKREF(to_share))
-	RegisterSignal(to_share, COMSIG_ACTION_REMOVED, .proc/on_shared_action_removed)
-	return to_share
-
-/**
- * Handles unsharing our action from another mob / player.
- */
-/datum/action/proc/unshare_action(mob/share_with)
-	for(var/datum/action/to_unshare as anything in share_with.actions)
-		if(to_unshare.type != type || to_unshare.target != src)
-			continue
-
-		LAZYREMOVE(shared, WEAKREF(to_unshare))
-		UnregisterSignal(to_unshare, COMSIG_ACTION_REMOVED)
-		// unshare_action() can be called during a destroy, as Destroy() calls Remove().
-		if(!QDELETED(to_unshare))
-			qdel(to_unshare)
-
-/**
- * Signal proc for [COMSIG_ACTION_REMOVED] on shared actions
- *
- * If our action's removed from a mob we're sharing with, unshare it
- */
-/datum/action/proc/on_shared_action_removed(datum/source, mob/removed_from)
-	SIGNAL_HANDLER
-
-	unshare_action(removed_from)

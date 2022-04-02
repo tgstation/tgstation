@@ -30,13 +30,9 @@
 
 /atom/movable/screen/movable/action_button/proc/can_use(mob/user)
 	if(linked_action)
-<<<<<<< HEAD
-		return (linked_action.owner == user)
-=======
 		if(linked_action.viewers[user.hud_used])
 			return TRUE
 		return FALSE
->>>>>>> master
 	else if (isobserver(user))
 		var/mob/dead/observer/O = user
 		return !O.observetarget

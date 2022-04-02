@@ -62,7 +62,7 @@
 		var/pos = 2 + spellnum * 31
 		if(construct_spells.len >= 4)
 			pos -= 31 * (construct_spells.len - 4)
-		spell.button.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
+		spell.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
 		spellnum++
 
 	if(icon_state)

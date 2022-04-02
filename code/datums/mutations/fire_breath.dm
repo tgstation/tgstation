@@ -12,15 +12,18 @@
 	power_coeff = 1
 
 /datum/mutation/human/firebreath/modify()
-	var/datum/action/cooldown/spell/cone/staggered/fire_breath/to_modify = ..()
+	. = ..()
+	var/datum/action/cooldown/spell/cone/staggered/fire_breath/to_modify = .
 	if(!istype(to_modify)) // null or invalid
 		return
 
-	if(GET_MUTATION_POWER(src) <= 1)
+	if(GET_MUTATION_POWER(src) <= 1) // we only care about power from here on
 		return
 
 	to_modify.cone_levels += 2  // Cone fwooshes further, and...
 	to_modify.self_throw_range += 1 // the breath throws the user back more
+
+	return .
 
 /datum/action/cooldown/spell/cone/staggered/fire_breath
 	name = "Fire Breath"

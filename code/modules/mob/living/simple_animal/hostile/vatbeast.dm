@@ -40,47 +40,34 @@
 /mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-/// Ability that allows the owner to slap other mobs a short distance away
-/// For vatbeats, this ability is shared with the rider
+/// Ability that allows the owner to slap other mobs a short distance away.
+/// For vatbeats, this ability is shared with the rider.
 /datum/action/cooldown/tentacle_slap
 	name = "Tentacle slap"
 	desc = "Slap a creature with your tentacles."
 	background_icon_state = "bg_revenant"
-	button_icon = 'icons/mob/actions/actions_animal.dmi'
+	icon_icon = 'icons/mob/actions/actions_animal.dmi'
 	button_icon_state = "tentacle_slap"
 	check_flags = AB_CHECK_CONSCIOUS
 	cooldown_time = 12 SECONDS
 	click_to_activate = TRUE
 	ranged_mousepointer = 'icons/effects/mouse_pointers/supplypod_target.dmi'
 
-/datum/action/cooldown/tentacle_slap/share_action(mob/share_with)
-	. = ..()
-	var/datum/action/cooldown/tentacle_slap/slapper = .
-	if(!istype(slapper))
-		return
+/datum/action/cooldown/tentacle_slap/CreateButton(mob/for_who)
+	var/atom/movable/screen/movable/action_button/button = ..()
 
-	slapper.name = "Command Tentacle Slap"
-	slapper.desc = "Command your steed to slap a creature with its tentacles."
+	if(for_who != owner)
+		button.name = "Command Tentacle Slap"
+		button.desc = "Command your steed to slap a creature with its tentacles."
 
-/datum/action/cooldown/tentacle_slap/IsAvailable()
-	. = ..()
-	if(!.)
-		return FALSE
-
-	// If we're a shared action, we're the rider of the beast
-	// and not the beast itself, so defer to that action
-	if(target == type)
-		var/datum/action/cooldown/tentacle_slap = target
-		return tentacle_slap.IsAvailable()
-
-	return TRUE
+	return button
 
 /datum/action/cooldown/tentacle_slap/set_click_ability(mob/on_who)
 	. = ..()
 	if(!.)
 		return
 
-	to_chat(on_who, span_notice("You prepare your [target == type ? "steed's ":""]pimp-tentacle. <b>Left-click to slap a target!</b>"))
+	to_chat(on_who, span_notice("You prepare your [on_who == owner ? "":"steed's "]pimp-tentacle. <b>Left-click to slap a target!</b>"))
 
 /datum/action/cooldown/tentacle_slap/unset_click_ability(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
@@ -88,26 +75,34 @@
 		return
 
 	if(refund_cooldown)
-		to_chat(on_who, span_notice("You stop preparing your [target == type ? "steed's ":""]pimp-tentacle."))
+		to_chat(on_who, span_notice("You stop preparing your [on_who == owner ? "":"steed's "]pimp-tentacle."))
 
-/datum/action/cooldown/tentacle_slap/Activate(atom/to_slap)
-	if(to_slap == owner)
-		return FALSE
-
-	// If we're a shared action, let the parent action
-	// do the slapping instead of our's
-	if(target == type)
-		var/datum/action/cooldown/tentacle_slap = target
-		return tentacle_slap.Activate(to_slap)
-
-	if(!isliving(to_slap))
+// This is inended to be shared action, where a mob
+// riding another mob uses this ability for them
+// As such caller may not always be owner
+/datum/action/cooldown/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
+	// Check if we can slap
+	if(!isliving(target) ||  target == owner)
 		return FALSE
 
 	StartCooldown(cooldown_time / 4)
-	if(!owner.Adjacent(to_slap))
-		owner.balloon_alert(owner, "too far!")
+	if(!owner.Adjacent(target))
+		owner.balloon_alert(caller, "too far!")
 		return FALSE
 
+	// Do the slap
+	. =  ..()
+	if(!.)
+		return FALSE
+
+	// Give feedback from the slap.
+	// Additional feedback for if a rider did it
+	if(caller != owner)
+		to_chat(caller, span_notice("You command [owner] to slap [target] with its tentacles."))
+
+	return TRUE
+
+/datum/action/cooldown/tentacle_slap/Activate(atom/to_slap)
 	var/mob/living/living_to_slap = to_slap
 
 	owner.visible_message(

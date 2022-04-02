@@ -77,7 +77,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	///The internal attack ID for the elite's OpenFire() proc to use
 	var/chosen_attack_num = 0
 
-/datum/action/innate/elite_attack/CreateButton()
+/datum/action/innate/elite_attack/CreateButton(mob/for_who)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
 	button.maptext_x = 8

@@ -24,7 +24,7 @@
 	/// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
 
-/datum/action/cooldown/CreateButton()
+/datum/action/cooldown/CreateButton(mob/for_who)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
 	button.maptext_x = 8
@@ -52,14 +52,6 @@
 				continue
 			shared_ability.StartCooldownSelf(override_cooldown_time)
 
-	// "Shared actions" covers actions which are of the same type of us
-	// that are shared with another mob entirely (stored in the "shared" lazylist)
-	for(var/datum/weakref/shared_ref as anything in shared)
-		var/datum/action/cooldown/shared = shared_ref.resolve()
-		if(QDELETED(shared) || !istype(shared))
-			continue
-		shared.StartCooldownSelf(override_cooldown_time)
-
 	StartCooldownSelf(override_cooldown_time)
 
 /// Starts a cooldown time for this ability only
@@ -79,6 +71,11 @@
 	if(!owner)
 		return FALSE
 
+	message_admins("[usr] and [owner]")
+	var/mob/user = owner
+	if(usr != owner)
+		user = usr
+
 	// If our cooldown action is a click_to_activate action:
 	// The actual action is activated on whatever the user clicks on -
 	// the target is what the action is being used on
@@ -86,23 +83,23 @@
 	if(click_to_activate)
 		if(target)
 			// For automatic / mob handling
-			return InterceptClickOn(owner, null, target)
+			return InterceptClickOn(user, null, target)
 
-		var/datum/action/cooldown/already_set = owner.click_intercept
+		var/datum/action/cooldown/already_set = user.click_intercept
 		if(already_set == src)
 			// if we clicked ourself and we're already set, unset and return
-			return unset_click_ability(owner, refund_cooldown = TRUE)
+			return unset_click_ability(user, refund_cooldown = TRUE)
 
 		else if (istype(already_set))
 			// if we have an active set already, unset it before we set our's
-			already_set.unset_click_ability(owner, refund_cooldown = TRUE)
+			already_set.unset_click_ability(user, refund_cooldown = TRUE)
 
-		return set_click_ability(owner)
+		return set_click_ability(user)
 
 	// If our cooldown action is not a click_to_activate action:
 	// We can just continue on and use the action
 	// the target is the user of the action (often, the owner)
-	return PreActivate(owner)
+	return PreActivate(user)
 
 /// Intercepts client owner clicks to activate the ability
 /datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
@@ -176,8 +173,9 @@
 	if(!owner || (next_use_time - world.time) <= 0)
 		UpdateButtons()
 		STOP_PROCESSING(SSfastprocess, src)
+		return
 
-	update_button_text()
+	UpdateButtons()
 
 /datum/action/cooldown/Grant(mob/M)
 	..()

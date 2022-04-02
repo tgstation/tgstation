@@ -10,11 +10,14 @@
 	synchronizer_coeff = 1
 
 /datum/mutation/human/olfaction/modify()
-	var/datum/action/cooldown/spell/olfaction/to_modify = ..()
+	. = ..()
+	var/datum/action/cooldown/spell/olfaction/to_modify = .
 	if(!istype(to_modify)) // null or invalid
 		return
 
 	to_modify.sensitivity = GET_MUTATION_SYNCHRONIZER(src)
+
+	return .
 
 /datum/action/cooldown/spell/olfaction
 	name = "Remember the Scent"
