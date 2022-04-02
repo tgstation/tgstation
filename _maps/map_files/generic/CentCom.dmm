@@ -3549,14 +3549,6 @@
 /obj/structure/table/wood,
 /turf/open/floor/iron/grimy,
 /area/centcom/courtroom)
-"mq" = (
-/obj/structure/chair{
-	dir = 8
-	},
-/obj/machinery/newscaster/directional/east,
-/obj/machinery/light/directional/east,
-/turf/open/floor/iron/grimy,
-/area/centcom/courtroom)
 "mr" = (
 /turf/closed/indestructible/abductor{
 	icon_state = "alien6"
@@ -4934,6 +4926,13 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/supplypod/loading/ert)
+"rc" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/grimy,
+/area/centcom/courtroom)
 "re" = (
 /obj/item/paper/fluff/stations/centcom/disk_memo,
 /obj/structure/noticeboard/directional/west,
@@ -5040,6 +5039,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/control)
+"ry" = (
+/obj/structure/toilet{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/admin)
 "rz" = (
 /obj/structure/sign/warning/securearea,
 /turf/closed/indestructible/riveted,
@@ -7099,6 +7107,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
+"yi" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/admin/storage)
 "yj" = (
 /obj/machinery/door/airlock/centcom{
 	name = "CentCom Security";
@@ -8650,11 +8665,6 @@
 	},
 /turf/open/floor/engine/cult,
 /area/wizard_station)
-"DF" = (
-/obj/structure/table/wood,
-/obj/machinery/computer/libraryconsole/bookmanagement,
-/turf/open/floor/carpet/black,
-/area/centcom/holding)
 "DG" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -8748,13 +8758,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/wizard_station)
-"DU" = (
-/obj/machinery/firealarm/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8
-	},
-/turf/open/floor/iron/grimy,
-/area/centcom/admin)
 "DV" = (
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
@@ -8881,6 +8884,16 @@
 	},
 /turf/open/floor/iron,
 /area/tdome/observation)
+"EJ" = (
+/obj/structure/chair/comfy/brown{
+	color = "#596479";
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/centcom/admin)
 "EK" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
@@ -9086,6 +9099,13 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/ferry)
+"Gf" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/turf/open/floor/iron/grimy,
+/area/centcom/admin)
 "Gr" = (
 /obj/structure/window/reinforced{
 	color = "#008000";
@@ -9187,10 +9207,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/courtroom)
-"Hd" = (
-/obj/machinery/newscaster,
-/turf/closed/indestructible/riveted,
-/area/centcom/admin)
 "Hi" = (
 /obj/structure/flora/rock/pile,
 /obj/structure/flora/ausbushes/grassybush,
@@ -9649,12 +9665,6 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/centcom/holding)
-"Kb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/centcom/admin)
 "Kd" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -11049,6 +11059,11 @@
 /obj/machinery/duct,
 /obj/item/clothing/suit/apron,
 /turf/open/floor/catwalk_floor,
+/area/centcom/holding)
+"Px" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/libraryconsole/bookmanagement,
+/turf/open/floor/carpet/black,
 /area/centcom/holding)
 "Pz" = (
 /obj/structure/table/reinforced,
@@ -13287,13 +13302,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/centcom/admin)
-"WV" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/admin/storage)
 "WX" = (
 /obj/machinery/light_switch/directional/west,
 /turf/open/floor/iron/grimy,
@@ -13451,6 +13459,12 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/ferry)
+"Xz" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/centcom/admin)
 "XA" = (
 /obj/structure/filingcabinet/filingcabinet,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -13585,14 +13599,6 @@
 /obj/item/stamp,
 /turf/open/floor/iron/grimy,
 /area/centcom/admin)
-"XX" = (
-/obj/structure/toilet{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north,
-/turf/open/floor/iron/white,
-/area/centcom/admin)
 "Ya" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/armory)
@@ -13708,16 +13714,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/tdome/observation)
-"YE" = (
-/obj/structure/chair/comfy/brown{
-	color = "#596479";
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump{
-	dir = 8
-	},
-/turf/open/floor/iron/grimy,
-/area/centcom/admin)
 "YF" = (
 /obj/machinery/gibber,
 /turf/open/floor/catwalk_floor,
@@ -36427,7 +36423,7 @@ fO
 OT
 bX
 Sd
-DF
+Px
 Rv
 YC
 YC
@@ -37455,7 +37451,7 @@ fO
 Vo
 ba
 Sd
-DF
+Px
 Rv
 YC
 YC
@@ -51041,7 +51037,7 @@ aa
 On
 AF
 Xq
-Kb
+Xz
 Xq
 cw
 On
@@ -51807,7 +51803,7 @@ aa
 aa
 aa
 On
-Hd
+On
 YI
 On
 gI
@@ -52064,7 +52060,7 @@ aa
 aa
 aa
 On
-XX
+ry
 TW
 fG
 nA
@@ -52841,7 +52837,7 @@ On
 yO
 To
 ye
-DU
+Gf
 oV
 On
 Wq
@@ -53610,7 +53606,7 @@ nl
 pd
 On
 eO
-YE
+EJ
 QV
 QV
 Mo
@@ -54644,7 +54640,7 @@ nm
 XA
 Sx
 Nn
-WV
+yi
 cL
 YU
 vb
@@ -66454,7 +66450,7 @@ zo
 pc
 Xc
 KD
-mq
+rc
 na
 dp
 gC

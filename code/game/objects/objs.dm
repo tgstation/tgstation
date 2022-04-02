@@ -356,8 +356,8 @@
 		return FALSE
 	return TRUE
 
-/obj/analyzer_act(mob/living/user, obj/item/I)
-	if(atmosanalyzer_scan(user, src))
+/obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	if(atmos_scan(user=user, target=src, tool=tool, silent=FALSE))
 		return TRUE
 	return ..()
 
