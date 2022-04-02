@@ -483,7 +483,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/eva)
 "bY" = (
-/obj/machinery/chem_master,
+/obj/structure/closet,
 /turf/open/floor/iron,
 /area/shuttle/syndicate/medical)
 "ce" = (
