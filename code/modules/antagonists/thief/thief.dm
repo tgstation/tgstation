@@ -100,7 +100,7 @@
 	if(SSatoms.initialized == INITIALIZATION_INSSATOMS)
 		thief.w_uniform?.update_greyscale()
 		thief.update_inv_w_uniform()
-	thief.body_type = FEMALE //update_body() and gender block or something
+	thief.physique = FEMALE //update_body() and gender block or something
 	thief.hair_color = "#2A71DC" //hair color dna block
 	thief.skin_tone = "caucasian2" //skin tone dna block
 	thief.hairstyle = "Bun Head 2" //update_hair()
