@@ -32,8 +32,10 @@
 	if(!ismovable(fired_from))
 		return TRUE
 
+	var/atom/movable/firer = fired_from
+
 	//gun thrown backwards
-	var/throwtarget = get_edge_target_turf(firer, get_dir(target, firer))
+	var/throwtarget = get_edge_target_turf(fired_from, get_dir(target, fired_from))
 	firer.safe_throw_at(throwtarget, tk_recoil, 2)
 	return TRUE
 

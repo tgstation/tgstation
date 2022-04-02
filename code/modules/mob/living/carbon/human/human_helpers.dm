@@ -102,9 +102,13 @@
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, span_warning("You can't bring yourself to use a ranged weapon!"))
 		return FALSE
+
 	if(G.trigger_guard == TRIGGER_GUARD_NORMAL)
-		var/obj/item/tk_grab/grabber = is_holding_item_of_type(/obj/item/tk_grab) //can fire with tk even if our fingers are fat
-		if(grabber && grabber.focus == G)
+		var/obj/item/tk_grab/telekinetic_grab = is_holding_item_of_type(/obj/item/tk_grab) //can fire with tk even if our fingers are fat
+		if(telekinetic_grab && telekinetic_grab.focus == G)
+			if(HAS_TRAIT(src, TRAIT_HULK))
+				G.balloon_alert(src, "not allowed!")
+				return FALSE
 			return TRUE
 		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
 			balloon_alert(src, "fingers are too big!")
