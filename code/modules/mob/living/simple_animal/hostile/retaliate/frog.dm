@@ -28,6 +28,8 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
+	can_be_held = TRUE
+	held_w_class = WEIGHT_CLASS_TINY
 	var/stepped_sound = 'sound/effects/huuu.ogg'
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize(mapload)
