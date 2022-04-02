@@ -42,7 +42,7 @@
 	screen = new(src)
 	moth_reaction = new(src)
 	moth_reaction.icon = 'icons/effects/station_explosion.dmi'
-	moth_reaction.icon_state = "live_moth_reaction"
+	moth_reaction.icon_state = "live_moth_reaction_a"
 	moth_reaction.plane = screen.plane + 1
 	moth_reaction.mouse_opacity = screen.mouse_opacity
 	moth_reaction.screen_loc = "BOTTOM,RIGHT"
