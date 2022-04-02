@@ -989,6 +989,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/onehalf/bridge)
+"WB" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/black{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/onehalf/dorms_med)
 
 (1,1,1) = {"
 aa
@@ -1214,9 +1223,9 @@ aa
 aa
 ab
 ag
-ao
+WB
 aC
-ao
+WB
 ag
 bj
 bz

@@ -725,8 +725,12 @@
 /turf/open/space,
 /area/space/nearstation)
 "dp" = (
-/obj/structure/bed,
-/obj/item/bedsheet/brown,
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/brown{
+	dir = 4
+	},
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "dq" = (
@@ -1702,6 +1706,12 @@
 "gY" = (
 /obj/item/paper/fluff/awaymissions/wildwest/journal/page8,
 /turf/open/misc/ironsand,
+/area/awaymission/wildwest/mines)
+"oK" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood,
 /area/awaymission/wildwest/mines)
 "pD" = (
 /obj/machinery/door/airlock/external/ruin,
@@ -39141,7 +39151,7 @@ bj
 bj
 aT
 bu
-bB
+oK
 bj
 bj
 bu

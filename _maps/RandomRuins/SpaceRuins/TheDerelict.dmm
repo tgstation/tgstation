@@ -2067,7 +2067,9 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/derelict/medical)
 "jB" = (
@@ -2310,7 +2312,9 @@
 /turf/open/floor/plating,
 /area/ruin/space/derelict/arrival)
 "kN" = (
-/obj/structure/bed,
+/obj/structure/bed{
+	dir = 4
+	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/derelict/hallway/primary)
 "kO" = (
@@ -3195,6 +3199,12 @@
 /obj/item/wallframe/airalarm,
 /turf/open/floor/plating/airless,
 /area/ruin/space/derelict/atmospherics)
+"ts" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/derelict/hallway/primary/port)
 "tS" = (
 /turf/template_noop,
 /area/ruin/unpowered/no_grav)
@@ -9949,8 +9959,8 @@ fZ
 KN
 Vz
 Vz
-lE
-lE
+ts
+ts
 Vz
 OT
 Vz

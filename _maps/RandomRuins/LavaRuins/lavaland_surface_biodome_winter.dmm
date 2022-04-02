@@ -337,6 +337,15 @@
 	},
 /turf/open/misc/asteroid/snow,
 /area/ruin/powered/snow_biodome)
+"BQ" = (
+/obj/structure/bed{
+	dir = 4
+	},
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered/snow_biodome)
 "Dd" = (
 /obj/structure/rack,
 /obj/item/clothing/suit/hooded/wintercoat/science,
@@ -414,6 +423,15 @@
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
+"Qp" = (
+/obj/item/bedsheet/blue{
+	dir = 4
+	},
+/obj/structure/bed{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/ruin/powered/snow_biodome)
 "QI" = (
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors/explored)
@@ -782,8 +800,8 @@ ac
 am
 aq
 aq
-au
-au
+Qp
+BQ
 aq
 aq
 aq
