@@ -11,7 +11,6 @@ export const NtosRoboControl = (props, context) => {
   const {
     bots,
     id_owner,
-    has_id,
   } = data;
   return (
     <NtosWindow
@@ -20,17 +19,10 @@ export const NtosRoboControl = (props, context) => {
       <NtosWindow.Content scrollable>
         <Section title="Robot Control Console">
           <LabeledList>
-            <LabeledList.Item label="Id Card">
+            <LabeledList.Item label="ID Card">
               {id_owner}
-              {!!has_id && (
-                <Button
-                  ml={2}
-                  icon="eject"
-                  content="Eject"
-                  onClick={() => act('ejectcard')} />
-              )}
             </LabeledList.Item>
-            <LabeledList.Item label="Bots in range">
+            <LabeledList.Item label="Bots In Range">
               {data.botcount}
             </LabeledList.Item>
           </LabeledList>

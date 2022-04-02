@@ -13,6 +13,10 @@
 	var/botcount = 0
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
+	///Whether or not this is the cartridge program version.
+	var/cart_mode = FALSE
+	///The bots that the inserted cartridge can access.
+	var/cart_access
 
 /datum/computer_file/program/robocontrol/ui_data(mob/user)
 	var/list/data = get_header_data()
@@ -21,20 +25,23 @@
 	var/list/botlist = list()
 	var/list/mulelist = list()
 
+	var/obj/item/computer_hardware/cartridge_slot/cart_slot = computer ? computer.all_components[MC_CART] : null
 	var/obj/item/computer_hardware/card_slot/card_slot = computer ? computer.all_components[MC_CARD] : null
 	data["have_id_slot"] = !!card_slot
 	if(computer)
 		var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
-		data["has_id"] = !!id_card
-		data["id_owner"] = id_card ? id_card.registered_name : "No Card Inserted."
-		data["access_on_card"] = id_card ? id_card.access : null
+		data["id_owner"] = id_card ? id_card.registered_name : ""
+	if(cart_mode && cart_slot)
+		data["id_owner"] = "CARTRIDGE OVERRIDE"
 
 	botcount = 0
 
 	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
 		if(simple_bot.z != zlevel || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(computer && !simple_bot.check_access(user)) // Only check Bots we can access)
+		if(computer && !simple_bot.check_access(user) && !cart_mode) // Only check Bots we can access)
+			continue
+		if(!(simple_bot.bot_type in cart_access) && cart_mode)
 			continue
 		var/list/newbot = list(
 			"name" = simple_bot.name,
@@ -106,12 +113,4 @@
 	switch(action)
 		if("summon")
 			simple_bot.bot_control(action, current_user, id_card ? id_card.access : current_access)
-		if("ejectcard")
-			if(!computer || !card_slot)
-				return
-			if(id_card)
-				GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
-				card_slot.try_eject(current_user)
-			else
-				playsound(get_turf(ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
 	return

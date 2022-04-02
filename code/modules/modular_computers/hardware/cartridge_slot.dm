@@ -67,11 +67,27 @@
 // finds the program to store in the cart reader
 /obj/item/computer_hardware/cartridge_slot/proc/set_program(obj/item/cartridge/cart)
 	stored_programs = list()
+	var/list/cartridge_programs = list()
 
-	if(istype(cart, /obj/item/cartridge/engineering))
-		var/datum/computer_file/program/power_monitor/pm = new(src)
-		pm.usage_flags = PROGRAM_ALL
-		stored_programs += pm
+	if(cart)
+		if(cart.access & CART_ATMOS)
+			cartridge_programs += new /datum/computer_file/program/atmosscan(src)
+		if(cart.access & CART_ENGINE)
+			cartridge_programs += new /datum/computer_file/program/power_monitor(src)
+		if(cart.access & CART_MANIFEST)
+			cartridge_programs += new /datum/computer_file/program/crew_manifest(src)
+		if(cart.access & CART_DRONEPHONE)
+			var/datum/computer_file/program/robocontrol/rc = new(src)
+			rc.cart_mode = TRUE
+			rc.cart_access = cart.bot_access
+			cartridge_programs += rc
+
+	if(cart.radio) // check to see if it's a signaler cartridge
+		cartridge_programs += new /datum/computer_file/program/signaler(src)
+
+	for(var/datum/computer_file/program/prog in cartridge_programs)
+		prog.usage_flags = PROGRAM_ALL
+		stored_programs += prog
 
 /obj/item/computer_hardware/cartridge_slot/proc/find_file_by_name(filename)
 	if(!filename)

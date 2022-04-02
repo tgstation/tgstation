@@ -75,19 +75,15 @@ export const NtosMain = (props, context) => {
           </Section>
         )}
         {!!cartholder && (
-          <Section>
-            <Section
-              title="Cartridge"
-              buttons={(
-                <Button
-                  icon="eject"
-                  content="Eject Cartridge"
-                  disabled={!cart_name}
-                  onClick={() => act('PC_Eject_Disk', { name: "cart" })}
-                />
-              )}>
-              Installed Cartridge: {cart_name || "None"}
-            </Section>
+          <Section
+            title={cart_name ? (cart_name.substring(0, cart_name.length-10)) : "No Cartridge Inserted"} // pain
+            buttons={(
+              <Button
+                icon="eject"
+                content="Eject Cartridge"
+                disabled={!cart_name}
+                onClick={() => act('PC_Eject_Disk', { name: "cart" })} />
+            )}>
             <Table>
               {cart_programs.map(program => (
                 <Table.Row key={program.name}>
