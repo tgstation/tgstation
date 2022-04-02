@@ -392,7 +392,7 @@
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	on_remove_on_mob_delete = TRUE'
+	on_remove_on_mob_delete = TRUE
 	///underlay used to indicate that someone is marked
 	var/mutable_appearance/marked_underlay
 	/// icon file for the underlay
