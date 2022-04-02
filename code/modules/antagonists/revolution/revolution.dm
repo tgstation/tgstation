@@ -14,6 +14,8 @@
 	var/datum/team/revolution/rev_team
 	///when this antagonist is being de-antagged, this is why
 	var/deconversion_reason
+	/// What sound should we play for becoming this brand of revolutionary?
+	var/internationale = 'sound/ambience/antag/viva_short.ogg'
 
 	/// What message should the player receive when they are being demoted, and the revolution has won?
 	var/victory_message = "The revolution has overpowered the command staff! Viva la revolution! Execute any head of staff and security should you find them alive."
@@ -49,7 +51,7 @@
 	create_objectives()
 	equip_rev()
 	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/viva.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+	owner.current.playsound_local(get_turf(owner.current), internationale, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /datum/antagonist/rev/on_removal()
 	remove_objectives()
@@ -166,7 +168,7 @@
 	job_rank = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
-
+	internationale = 'sound/ambience/antag/viva.ogg'
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
