@@ -67,9 +67,6 @@
 	my_area = get_area(src)
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/door/firedoor)
-	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
-	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
-	GetMergeGroup(merger_id, merger_typecache)
 
 	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
 		base_icon_state = "sus"
@@ -79,6 +76,9 @@
 
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
+	RegisterSignal(src, COMSIG_MERGER_ADDING, .proc/merger_adding)
+	RegisterSignal(src, COMSIG_MERGER_REMOVING, .proc/merger_removing)
+	GetMergeGroup(merger_id, merger_typecache)
 	register_adjacent_turfs(src)
 /**
  * Sets the offset for the warning lights.
@@ -223,20 +223,24 @@
 
 /obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(loc),dir)
+		var/turf/checked_turf = get_step(get_turf(loc), dir)
+
+		if(!checked_turf)
+			continue
 		process_results(checked_turf)
-		if(checked_turf)
-			RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
-			RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
+		RegisterSignal(checked_turf, COMSIG_TURF_EXPOSE, .proc/process_results)
+		RegisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS, .proc/process_results)
 
 
 /obj/machinery/door/firedoor/proc/unregister_adjacent_turfs(atom/loc)
 	for(var/dir in GLOB.cardinals)
-		var/turf/checked_turf = get_step(get_turf(loc),dir)
-		process_results(checked_turf)
-		if(checked_turf)
-			UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
-			UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
+		var/turf/checked_turf = get_step(get_turf(loc), dir)
+	
+		if(!checked_turf)
+			continue
+
+		UnregisterSignal(checked_turf, COMSIG_TURF_EXPOSE)
+		UnregisterSignal(checked_turf, COMSIG_TURF_CALCULATED_ADJACENT_ATMOS)
 
 /obj/machinery/door/firedoor/proc/check_atmos(turf/checked_turf)
 	var/datum/gas_mixture/environment = checked_turf.return_air()
@@ -278,7 +282,7 @@
 		if(result)
 			start_activation_process(result)
 			return
-	if((result && TURF_SHARES(checked_turf)) && issue_turfs)
+	if(result && TURF_SHARES(checked_turf) && issue_turfs)
 		issue_turfs |= checked_turf
 	else if((!result && issue_turfs?.len || !TURF_SHARES(checked_turf)) && issue_turfs)
 		issue_turfs -= checked_turf
