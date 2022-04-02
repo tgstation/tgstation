@@ -619,6 +619,12 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"aqa" = (
+/obj/structure/sign/poster/official/no_erp{
+	pixel_x = -32
+	},
+/turf/closed/wall,
+/area/maintenance/starboard/fore)
 "aqc" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -26011,7 +26017,7 @@
 /area/science/misc_lab)
 "lMh" = (
 /obj/structure/sign/poster/official/no_erp{
-	pixel_x = -30
+	pixel_x = -32
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -98423,7 +98429,7 @@ alP
 alP
 alP
 alP
-alP
+aqa
 alP
 alP
 alP
