@@ -21,20 +21,24 @@ PROCESSING_SUBSYSTEM_DEF(reagents)
 /datum/controller/subsystem/processing/reagents/fire(resumed = FALSE)
 	if (!resumed)
 		currentrun = processing.Copy()
+
+	var/now = world.time
+	var/delta_time
+	var/max_delta_time = wait * MAX_PROCESSING_OVERCLOCK
 	//cache for sanic speed (lists are references anyways)
 	var/list/current_run = currentrun
-
-	//Attempt to realtime reactions in a way that doesn't make them overtly dangerous
-	var/delta_realtime = (world.time - last_fire) / (1 SECONDS) //normalise to s from ds
-
 	while(current_run.len)
 		var/datum/thing = current_run[current_run.len]
 		current_run.len--
 		if(QDELETED(thing))
 			stack_trace("Found qdeleted thing in [type], in the current_run list.")
 			processing -= thing
-		else if(thing.process(delta_realtime) == PROCESS_KILL) //we are realtime
-			// fully stop so that a future START_PROCESSING will work
-			STOP_PROCESSING(src, thing)
+		else
+			delta_time = min(now - thing.last_processed, max_delta_time) / (1 SECONDS)
+			if(thing.process(delta_time) == PROCESS_KILL) //we are realtime
+				// fully stop so that a future START_PROCESSING will work
+				STOP_PROCESSING(src, thing)
+			else
+				thing.last_processed += delta_time
 		if (MC_TICK_CHECK)
 			return

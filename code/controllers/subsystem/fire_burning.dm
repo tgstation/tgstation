@@ -19,7 +19,6 @@ SUBSYSTEM_DEF(fire_burning)
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	var/delta_time = (world.time - last_fire) / (1 SECONDS)
-
 	while(currentrun.len)
 		var/obj/O = currentrun[currentrun.len]
 		currentrun.len--

@@ -29,15 +29,19 @@ SUBSYSTEM_DEF(mobs)
 	if (!resumed)
 		src.currentrun = GLOB.mob_living_list.Copy()
 
+	var/now = world.time
+	var/delta_time
+	var/max_delta_time = wait * MAX_PROCESSING_OVERCLOCK
+	var/times_fired = src.times_fired
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-	var/times_fired = src.times_fired
-	var/delta_time = (world.time - last_fire) / (1 SECONDS)
 	while(currentrun.len)
 		var/mob/living/L = currentrun[currentrun.len]
 		currentrun.len--
 		if(L)
+			delta_time = min(now - L.last_life_tick, max_delta_time) / (1 SECONDS)
 			L.Life(delta_time, times_fired)
+			L.last_life_tick += delta_time
 		else
 			GLOB.mob_living_list.Remove(L)
 		if (MC_TICK_CHECK)

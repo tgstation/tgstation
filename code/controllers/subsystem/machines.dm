@@ -33,16 +33,21 @@ SUBSYSTEM_DEF(machines)
 			powernet.reset() //reset the power state.
 		src.currentrun = processing.Copy()
 
+	var/now = world.time
+	var/delta_time
+	var/max_delta_time = wait * MAX_PROCESSING_OVERCLOCK
 	//cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
-	var/delta_time = (world.time - last_fire) / (1 SECONDS)
-
 	while(currentrun.len)
 		var/obj/machinery/thing = currentrun[currentrun.len]
 		currentrun.len--
+
+		delta_time = min(now - thing.last_processed, max_delta_time) / (1 SECONDS)
 		if(QDELETED(thing) || thing.process(delta_time) == PROCESS_KILL)
 			processing -= thing
 			thing.datum_flags &= ~DF_ISPROCESSING
+		else
+			thing.last_processed += delta_time
 		if (MC_TICK_CHECK)
 			return
 

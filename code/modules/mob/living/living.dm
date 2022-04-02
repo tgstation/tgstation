@@ -9,6 +9,7 @@
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	last_life_tick = world.time
 	SSpoints_of_interest.make_point_of_interest(src)
 	update_fov()
 

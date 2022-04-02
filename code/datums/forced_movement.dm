@@ -3,7 +3,6 @@
 /datum/forced_movement
 	var/atom/movable/victim
 	var/atom/target
-	var/last_processed
 	var/steps_per_tick
 	var/allow_climbing
 	var/datum/callback/on_step

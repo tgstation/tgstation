@@ -17,18 +17,23 @@ SUBSYSTEM_DEF(processing)
 /datum/controller/subsystem/processing/fire(resumed = FALSE)
 	if (!resumed)
 		currentrun = processing.Copy()
-	//cache for sanic speed (lists are references anyways)
-	var/list/current_run = currentrun
-	var/delta_time = (world.time - last_fire) / (1 SECONDS) // A better solution would be tracking this per-datum, but overhead.
 
+	var/now = world.time // Cache because this should stay the same over the course of the run.
+	var/delta_time
+	var/max_delta_time = wait * MAX_PROCESSING_OVERCLOCK / (1 SECONDS)
+	var/list/current_run = currentrun // cache for sanic speed (lists are references anyways)
 	while(current_run.len)
 		var/datum/thing = current_run[current_run.len]
 		current_run.len--
 		if(QDELETED(thing))
 			processing -= thing
-		else if(thing.process(delta_time) == PROCESS_KILL)
-			// fully stop so that a future START_PROCESSING will work
-			STOP_PROCESSING(src, thing)
+		else
+			delta_time = min((now - thing.last_processed) / (1 SECONDS), max_delta_time)
+			if(thing.process(delta_time) == PROCESS_KILL)
+				// fully stop so that a future START_PROCESSING will work
+				STOP_PROCESSING(src, thing)
+			else
+				thing.last_processed += delta_time // This should stay in sync unless the subsystem really starts to chug.
 		if (MC_TICK_CHECK)
 			return
 

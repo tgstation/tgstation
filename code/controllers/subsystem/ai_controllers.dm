@@ -23,12 +23,12 @@ SUBSYSTEM_DEF(ai_controllers)
 		ai_subtrees[subtree_type] = subtree
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
-	var/delta_time = (world.time - last_fire) / (1 SECONDS)
+	var/delta_time = wait / (1 SECONDS)
 	for(var/datum/ai_controller/ai_controller as anything in active_ai_controllers)
 		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
 			continue
 
 		if(!LAZYLEN(ai_controller.current_behaviors))
-			ai_controller.SelectBehaviors(delta_time)
+			ai_controller.SelectBehaviors(delta_time) // TODO: Proper lag compensation.
 			if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
 				COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)

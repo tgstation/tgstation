@@ -30,14 +30,17 @@ SUBSYSTEM_DEF(events)
 		checkEvent() //only check these if we aren't resuming a paused fire
 		src.currentrun = running.Copy()
 
-	//cache for sanic speed (lists are references anyways)
-	var/list/currentrun = src.currentrun
-	var/delta_time = (world.time - last_fire) / (1 SECONDS)
+	var/now = world.time
+	var/delta_time
+	var/max_delta_time = wait * MAX_PROCESSING_OVERCLOCK
+	var/list/currentrun = src.currentrun //cache for sanic speed (lists are references anyways)
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
 		if(thing)
+			delta_time = min(now - thing.last_processed, max_delta_time) / (1 SECONDS)
 			thing.process(delta_time)
+			thing.last_processed += delta_time
 		else
 			running.Remove(thing)
 		if (MC_TICK_CHECK)

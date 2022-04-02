@@ -19,6 +19,8 @@
 
 	/// Active timers with this datum as the target
 	var/list/active_timers
+	/// The last world time this datum was processed. Used to make lag compensation consistent.
+	var/last_processed
 	/// Status traits attached to this datum. associative list of the form: list(trait name (string) = list(source1, source2, source3,...))
 	var/list/status_traits
 

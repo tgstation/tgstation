@@ -39,17 +39,23 @@ SUBSYSTEM_DEF(tgui)
 /datum/controller/subsystem/tgui/fire(resumed = FALSE)
 	if(!resumed)
 		src.current_run = open_uis.Copy()
+
+	var/now = world.time
+	var/delta_time = (world.time - last_fire) / (1 SECONDS)
+	var/max_delta_time = wait * MAX_PROCESSING_OVERCLOCK
 	// Cache for sanic speed (lists are references anyways)
 	var/list/current_run = src.current_run
-	var/delta_time = (world.time - last_fire) / (1 SECONDS)
 	while(current_run.len)
 		var/datum/tgui/ui = current_run[current_run.len]
 		current_run.len--
 		// TODO: Move user/src_object check to process()
 		if(ui?.user && ui.src_object)
+			delta_time = min(now - ui.last_processed, max_delta_time) / (1 SECONDS)
 			ui.process(delta_time)
+			ui.last_processed += delta_time
 		else
 			open_uis.Remove(ui)
+
 		if(MC_TICK_CHECK)
 			return
 
@@ -294,6 +300,7 @@ SUBSYSTEM_DEF(tgui)
 	var/list/uis = open_uis_by_src[key]
 	uis |= ui
 	open_uis |= ui
+	ui.last_processed = world.time
 
 /**
  * private
