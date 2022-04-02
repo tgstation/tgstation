@@ -20,6 +20,8 @@
 #define META_GAS_ID 6
 ///Power of the gas when used in the current iteration of fusion
 #define META_GAS_FUSION_POWER 7
+///Short description of the gas.
+#define META_GAS_DESC 8
 //ATMOS
 //stuff you should probably leave well alone!
 /// kPa*L/(K*mol)

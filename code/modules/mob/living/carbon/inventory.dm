@@ -14,6 +14,16 @@
 			return legcuffed
 	return null
 
+/mob/living/carbon/proc/get_all_worn_items()
+	return list(
+		back,
+		wear_mask,
+		wear_neck,
+		head,
+		handcuffed,
+		legcuffed,
+	)
+
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/I, list/slots, qdel_on_fail = 1)
 	for(var/slot in slots)
 		if(equip_to_slot_if_possible(I, slots[slot], qdel_on_fail = 0, disable_warning = TRUE))
@@ -242,3 +252,26 @@
 	visible_message(span_notice("[src] takes [I] from [offerer]."), \
 					span_notice("You take [I] from [offerer]."))
 	put_in_hands(I)
+
+///Returns a list of all body_zones covered by clothing
+/mob/living/carbon/proc/get_covered_body_zones()
+	RETURN_TYPE(/list)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/covered_flags = NONE
+	var/list/all_worn_items = get_all_worn_items()
+	for(var/obj/item/worn_item in all_worn_items)
+		covered_flags |= worn_item.body_parts_covered
+
+	return cover_flags2body_zones(covered_flags)
+
+///Returns a bitfield of all zones covered by clothing
+/mob/living/carbon/proc/get_all_covered_flags()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	var/covered_flags = NONE
+	var/list/all_worn_items = get_all_worn_items()
+	for(var/obj/item/worn_item in all_worn_items)
+		covered_flags |= worn_item.body_parts_covered
+
+	return covered_flags

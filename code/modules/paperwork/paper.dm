@@ -4,12 +4,6 @@
  *
  * lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
  */
-#define MAX_PAPER_LENGTH 5000
-#define MAX_PAPER_STAMPS 30 // Too low?
-#define MAX_PAPER_STAMPS_OVERLAYS 4
-#define MODE_READING 0
-#define MODE_WRITING 1
-#define MODE_STAMPING 2
 
 #define DEFAULT_ADD_INFO_COLOR "black"
 #define DEFAULT_ADD_INFO_FONT "Verdana"
@@ -116,7 +110,7 @@
 	if(contact_poison && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/gloves/G = H.gloves
-		if(!istype(G) || G.transfer_prints)
+		if(!istype(G) || !(G.body_parts_covered & HANDS) || HAS_TRAIT(G, TRAIT_FINGERPRINT_PASSTHROUGH) || HAS_TRAIT(H, TRAIT_FINGERPRINT_PASSTHROUGH))
 			H.reagents.add_reagent(contact_poison,contact_poison_volume)
 			contact_poison = null
 	. = ..()
