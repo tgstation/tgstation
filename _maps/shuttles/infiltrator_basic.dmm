@@ -29,14 +29,14 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/hallway)
 "ag" = (
-/obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/folder/red,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/smooth_corner,
 /area/shuttle/syndicate/bridge)
 "ah" = (
-/obj/structure/table/reinforced,
 /obj/item/storage/fancy/donut_box,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "ai" = (
@@ -61,8 +61,8 @@
 	req_access_txt = "150";
 	pixel_y = 24
 	},
-/obj/structure/table/reinforced,
 /obj/item/aicard,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 8
 	},
@@ -142,7 +142,6 @@
 	},
 /area/shuttle/syndicate/eva)
 "aO" = (
-/obj/structure/table/reinforced,
 /obj/item/grenade/syndieminibomb{
 	pixel_x = 4;
 	pixel_y = 2
@@ -165,6 +164,7 @@
 /obj/item/grenade/c4{
 	pixel_x = -6
 	},
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -194,11 +194,11 @@
 /area/shuttle/syndicate/hallway)
 "aX" = (
 /obj/machinery/light/directional/west,
-/obj/structure/table/reinforced,
 /obj/item/sbeacondrop/bomb{
 	pixel_y = 5
 	},
 /obj/item/sbeacondrop/bomb,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/smooth_edge{
 	dir = 8
 	},
@@ -340,7 +340,6 @@
 /turf/open/floor/plating,
 /area/shuttle/syndicate/engineering)
 "bx" = (
-/obj/structure/table/reinforced,
 /obj/item/assembly/prox_sensor{
 	pixel_x = -8;
 	pixel_y = 4
@@ -354,27 +353,27 @@
 /obj/item/assembly/voice{
 	pixel_y = 3
 	},
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/syndicate/engineering)
 "by" = (
 /obj/machinery/status_display/evac/directional/north,
-/obj/structure/table/reinforced,
 /obj/item/assembly/signaler{
 	pixel_x = 8
 	},
 /obj/item/assembly/infra,
-/obj/item/assembly/signaler,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/syndicate/engineering)
 "bz" = (
 /obj/machinery/light/directional/north,
-/obj/structure/table/reinforced,
 /obj/item/weldingtool/largetank{
 	pixel_y = 3
 	},
 /obj/item/multitool,
 /obj/item/wrench,
 /obj/item/crowbar/red,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/side,
 /area/shuttle/syndicate/engineering)
 "bA" = (
@@ -487,7 +486,6 @@
 /turf/open/floor/iron,
 /area/shuttle/syndicate/medical)
 "ce" = (
-/obj/structure/table/reinforced,
 /obj/machinery/cell_charger,
 /obj/item/stock_parts/cell/high{
 	pixel_x = -3;
@@ -498,14 +496,15 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/syndicate/engineering)
 "cf" = (
-/obj/structure/table/reinforced,
 /obj/item/storage/toolbox/syndicate,
 /obj/item/screwdriver{
 	pixel_y = 9
 	},
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/engineering)
 "cg" = (
@@ -653,13 +652,13 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/shuttle/syndicate/engineering)
 "gt" = (
-/obj/structure/table/reinforced,
 /obj/item/storage/box/handcuffs{
 	pixel_x = 3;
 	pixel_y = 3
 	},
 /obj/item/storage/box/zipties,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 2
 	},
@@ -818,11 +817,11 @@
 	},
 /area/shuttle/syndicate/medical)
 "vv" = (
-/obj/structure/table/reinforced,
 /obj/item/clothing/head/hos/syndicate,
 /obj/item/stamp/syndicate{
 	pixel_x = -7
 	},
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/bridge)
 "vQ" = (
@@ -1047,8 +1046,8 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/shuttle/syndicate/medical)
 "Nr" = (
-/obj/structure/table/reinforced,
 /obj/machinery/computer/secure_data/laptop/syndie,
+/obj/structure/table/reinforced/plastitaniumglass,
 /turf/open/floor/iron/dark,
 /area/shuttle/syndicate/airlock)
 "NA" = (
