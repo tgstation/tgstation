@@ -9541,7 +9541,7 @@
 /area/science/test_area)
 "czK" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/science/test_area)
 "czL" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -39716,7 +39716,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/science/test_area)
 "ndO" = (
 /obj/structure/extinguisher_cabinet/directional/west,
@@ -47787,7 +47787,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/airless,
 /area/science/test_area)
 "qei" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
