@@ -5,4 +5,3 @@
 	..()
 	var/obj/item/item_target = target
 	name = "Adjust [item_target.name]"
-	button.name = name

@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /datum/action/cooldown/spell, list())
 		if("confirm")
 			if(target_spell)
 				reassign_vars(target_spell)
-				target_spell.UpdateButtonIcon()
+				target_spell.UpdateButtons()
 				log_admin("[key_name(user)] edited the SDQL spell \"[target_spell]\" owned by [key_name(target_mob)].")
 			else
 				var/new_spell = give_spell()
@@ -855,6 +855,7 @@ GLOBAL_LIST_INIT_TYPED(sdql_spells, /datum/action/cooldown/spell, list())
 	var/datum/action/cooldown/spell/new_spell = new path(target_mob.mind || target_mob, user.ckey)
 
 	GLOB.sdql_spells += new_spell
+	reassign_vars(new_spell)
 	new_spell.Grant(target_mob)
 	if(target_mob.mind)
 		to_chat(user, span_bolddanger("Spells given to mindless mobs will not be transferred in mindswap or cloning!"))

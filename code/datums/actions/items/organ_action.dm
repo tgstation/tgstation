@@ -15,7 +15,6 @@
 	..()
 	var/obj/item/organ/organ_target = target
 	name = "Toggle [organ_target.name]"
-	button.name = name
 
 /datum/action/item_action/organ_action/use
 	name = "Use Organ"
@@ -24,4 +23,3 @@
 	..()
 	var/obj/item/organ/organ_target = target
 	name = "Use [organ_target.name]"
-	button.name = name

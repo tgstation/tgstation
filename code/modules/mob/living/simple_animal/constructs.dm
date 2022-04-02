@@ -62,8 +62,7 @@
 		var/pos = 2 + spellnum * 31
 		if(construct_spells.len >= 4)
 			pos -= 31 * (construct_spells.len - 4)
-		spell.button.screen_loc = "6:[pos],4:-2"
-		spell.button.moved = "6:[pos],4:-2"
+		spell.button.default_button_position = "6:[pos],4:-2" // Set the default position to this random position
 		spellnum++
 
 	if(icon_state)
@@ -254,7 +253,7 @@
 			total_refund += attack_refund
 
 		jaunt.next_use_time -= total_refund
-		jaunt.UpdateButtonIcon()
+		jaunt.UpdateButtons()
 
 /mob/living/simple_animal/hostile/construct/wraith/hostile //actually hostile, will move around, hit things
 	AIStatus = AI_ON

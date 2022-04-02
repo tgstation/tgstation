@@ -38,6 +38,15 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 	species_language_holder = /datum/language_holder/skeleton
 
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/skeleton,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/skeleton,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/skeleton,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/skeleton,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/skeleton,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/skeleton,
+	)
+
 /datum/species/skeleton/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
 	C.set_safe_hunger_level()

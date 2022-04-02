@@ -11,8 +11,8 @@
 	/// The target the action is attached to. If the target datum is deleted, the action is as well.
 	/// Set in New() via the proc link_to(). PLEASE set a target if you're making an action
 	var/datum/target
-	/// The screen button shown on our owner's actual screen. What they click to call Trigger() on the action.
-	var/atom/movable/screen/movable/action_button/button = null
+	/// Where any buttons we create should be by default. Accepts screen_loc and location defines
+	var/default_button_position = SCRN_OBJ_IN_LIST
 	/// This is who currently owns the action, and most often, this is who is using the action if it is triggered
 	/// This can be the same as "target" but is not ALWAYS the same - this is set and unset with Grant() and Remove()
 	var/mob/owner
@@ -32,15 +32,11 @@
 	var/button_icon_state = "default"
 	/// A list of all child actions created and shared by this "parent" action
 	var/list/datum/weakref/shared
+	///List of all mobs that are viewing our action button -> A unique movable for them to view.
+	var/list/viewers = list()
 
 /datum/action/New(Target)
 	link_to(Target)
-	button = new
-	button.linked_action = src
-	button.name = name
-	button.actiontooltipstyle = buttontooltipstyle
-	if(desc)
-		button.desc = desc
 
 /// Links the passed target to our action, registering any relevant signals
 /datum/action/proc/link_to(Target)
@@ -58,56 +54,8 @@
 	if(owner)
 		Remove(owner)
 	target = null
-	QDEL_NULL(button)
+	QDEL_LIST_ASSOC_VAL(viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
 	return ..()
-
-/// Granst the action to the passed mob, making it the owner
-/datum/action/proc/Grant(mob/M)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(M)
-		if(owner)
-			if(owner == M)
-				return
-			Remove(owner)
-		SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, M)
-		owner = M
-		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
-
-		// Register some signals based on our check_flags
-		// so that our button icon updates when relevant
-		if(check_flags & AB_CHECK_CONSCIOUS)
-			RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/update_icon_on_signal)
-		if(check_flags & AB_CHECK_IMMOBILE)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), .proc/update_icon_on_signal)
-		if(check_flags & AB_CHECK_HANDS_BLOCKED)
-			RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), .proc/update_icon_on_signal)
-		if(check_flags & AB_CHECK_LYING)
-			RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/update_icon_on_signal)
-
-		//button id generation
-		var/counter = 0
-		var/bitfield = 0
-		for(var/datum/action/A in M.actions)
-			if(A.name == name && A.button.id)
-				counter += 1
-				bitfield |= A.button.id
-		bitfield = ~bitfield
-		var/bitflag = 1
-		for(var/i in 1 to (counter + 1))
-			if(bitfield & bitflag)
-				button.id = bitflag
-				break
-			bitflag *= 2
-
-		LAZYADD(M.actions, src)
-		if(M.client)
-			M.client.screen += button
-			button.locked = M.client.prefs.read_preference(/datum/preference/toggle/buttons_locked) || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
-			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
-		M.update_action_buttons()
-	else
-		Remove(owner)
 
 /// Signal proc that clears any references based on the owner or target deleting
 /// If the owner's deleted, we will simply remove from them, but if the target's deleted, we will self-delete
@@ -118,15 +66,44 @@
 	if(ref == target)
 		qdel(src)
 
+/// Grants the action to the passed mob, making it the owner
+/datum/action/proc/Grant(mob/M)
+	if(!M)
+		Remove(owner)
+		return
+	if(owner)
+		if(owner == M)
+			return
+		Remove(owner)
+	SEND_SIGNAL(src, COMSIG_ACTION_GRANTED, M)
+	owner = M
+	RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
+
+	// Register some signals based on our check_flags
+	// so that our button icon updates when relevant
+	if(check_flags & AB_CHECK_CONSCIOUS)
+		RegisterSignal(owner, COMSIG_MOB_STATCHANGE, .proc/update_icon_on_signal)
+	if(check_flags & AB_CHECK_IMMOBILE)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), .proc/update_icon_on_signal)
+	if(check_flags & AB_CHECK_HANDS_BLOCKED)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED), .proc/update_icon_on_signal)
+	if(check_flags & AB_CHECK_LYING)
+		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, .proc/update_icon_on_signal)
+
+
+	GiveAction(M)
+
 /// Remove the passed mob from being owner of our action
 /datum/action/proc/Remove(mob/M)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(M)
-		if(M.client)
-			M.client.screen -= button
-		LAZYREMOVE(M.actions, src)
-		M.update_action_buttons()
+	for(var/datum/hud/hud in viewers)
+		if(!hud.mymob)
+			continue
+		HideFrom(hud.mymob)
+	LAZYREMOVE(M.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
+	viewers = list()
+
 	if(owner)
 		SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
 		UnregisterSignal(owner, COMSIG_PARENT_QDELETING)
@@ -142,10 +119,6 @@
 		if(target == owner)
 			RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/clear_ref)
 		owner = null
-	if(button)
-		button.moved = FALSE //so the button appears in its normal position when given to another owner.
-		button.locked = FALSE
-		button.id = null
 
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
@@ -172,31 +145,36 @@
 		return FALSE
 	return TRUE
 
-/// Updates the icon of the button on the owner's screen
-/datum/action/proc/UpdateButtonIcon(status_only = FALSE, force = FALSE)
-	if(button)
-		if(!status_only)
-			button.name = name
-			button.desc = desc
-			if(owner?.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
-				var/list/settings = owner.hud_used.get_action_buttons_icons()
-				if(button.icon != settings["bg_icon"])
-					button.icon = settings["bg_icon"]
-				if(button.icon_state != settings["bg_state"])
-					button.icon_state = settings["bg_state"]
-			else
-				if(button.icon != button_icon)
-					button.icon = button_icon
-				if(button.icon_state != background_icon_state)
-					button.icon_state = background_icon_state
+/datum/action/proc/UpdateButtons(status_only, force)
+	for(var/datum/hud/hud in viewers)
+		var/atom/movable/screen/movable/button = viewers[hud]
+		UpdateButton(button, status_only, force)
 
-			ApplyIcon(button, force)
-
-		if(!IsAvailable())
-			button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+/datum/action/proc/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
+	if(!button)
+		return
+	if(!status_only)
+		button.name = name
+		button.desc = desc
+		if(owner?.hud_used && background_icon_state == ACTION_BUTTON_DEFAULT_BACKGROUND)
+			var/list/settings = owner.hud_used.get_action_buttons_icons()
+			if(button.icon != settings["bg_icon"])
+				button.icon = settings["bg_icon"]
+			if(button.icon_state != settings["bg_state"])
+				button.icon_state = settings["bg_state"]
 		else
-			button.color = rgb(255,255,255,255)
-			return TRUE
+			if(button.icon != button_icon)
+				button.icon = button_icon
+			if(button.icon_state != background_icon_state)
+				button.icon_state = background_icon_state
+
+		ApplyIcon(button, force)
+
+	. = IsAvailable()
+	if(.)
+		button.color = rgb(255,255,255,255)
+	else
+		button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
 
 /// Applies our button icon over top the background icon of the action
 /datum/action/proc/ApplyIcon(atom/movable/screen/movable/action_button/current_button, force = FALSE)
@@ -205,11 +183,71 @@
 		current_button.add_overlay(mutable_appearance(icon_icon, button_icon_state))
 		current_button.button_icon_state = button_icon_state
 
+//Give our action button to the player
+/datum/action/proc/GiveAction(mob/viewer)
+	var/datum/hud/our_hud = viewer.hud_used
+	if(viewers[our_hud]) // Already have a copy of us? go away
+		return
+
+	LAZYOR(viewer.actions, src) // Move this in
+	ShowTo(viewer)
+
+//Adds our action button to the screen of a player
+/datum/action/proc/ShowTo(mob/viewer)
+	var/datum/hud/our_hud = viewer.hud_used
+	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
+		return
+
+	var/atom/movable/screen/movable/action_button/button = CreateButton()
+	SetId(button, viewer)
+
+	button.our_hud = our_hud
+	viewers[our_hud] = button
+	if(viewer.client)
+		viewer.client.screen += button
+
+	button.load_position(viewer)
+	viewer.update_action_buttons()
+
+//Removes our action button from the screen of a player
+/datum/action/proc/HideFrom(mob/viewer)
+	var/datum/hud/our_hud = viewer.hud_used
+	var/atom/movable/screen/movable/action_button/button = viewers[our_hud]
+	LAZYREMOVE(viewer.actions, src)
+	if(button)
+		qdel(button)
+
+/datum/action/proc/CreateButton()
+	var/atom/movable/screen/movable/action_button/button = new()
+	button.linked_action = src
+	button.name = name
+	button.actiontooltipstyle = buttontooltipstyle
+	if(desc)
+		button.desc = desc
+	return button
+
+/datum/action/proc/SetId(atom/movable/screen/movable/action_button/our_button, mob/owner)
+	//button id generation
+	var/bitfield = 0
+	for(var/datum/action/action in owner.actions)
+		if(action == src) // This could be us, which is dumb
+			continue
+		var/atom/movable/screen/movable/action_button/button = action.viewers[owner.hud_used]
+		if(action.name == name && button.id)
+			bitfield |= button.id
+
+	bitfield = ~bitfield // Flip our possible ids, so we can check if we've found a unique one
+	for(var/i in 0 to 23) // We get 24 possible bitflags in dm
+		var/bitflag = 1 << i // Shift us over one
+		if(bitfield & bitflag)
+			our_button.id = bitflag
+			return
+
 /// A general use signal proc that reacts to an event and updates our button icon in accordance
 /datum/action/proc/update_icon_on_signal(datum/source)
 	SIGNAL_HANDLER
 
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /// Signal proc for COMSIG_MIND_TRANSFERRED - for minds, transfers our action to our new mob on mind transfer
 /datum/action/proc/on_target_mind_swapped(datum/mind/source, mob/old_current)

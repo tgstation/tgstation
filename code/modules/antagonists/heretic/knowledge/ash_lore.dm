@@ -138,7 +138,7 @@
 	var/datum/action/cooldown/spell/touch/mansus_grasp/grasp = locate() in user.actions
 	if(grasp)
 		grasp.next_use_time = min(round(grasp.next_use_time - grasp.cooldown_time * 0.75, 0), 0)
-		grasp.UpdateButtonIcon()
+		grasp.UpdateButtons()
 
 /datum/heretic_knowledge/knowledge_ritual/ash
 	next_knowledge = list(/datum/heretic_knowledge/mad_mask)

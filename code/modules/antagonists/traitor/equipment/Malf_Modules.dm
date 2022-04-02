@@ -449,7 +449,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
-		UpdateButtonIcon()
+		UpdateButtons()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
 	addtimer(CALLBACK(src, .proc/animate_machine, caller, clicked_machine), 5 SECONDS) //kabeep!
@@ -508,7 +508,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/ranged/overload_machine/New()
 	..()
 	desc = "[desc] It has [uses] use\s remaining."
-	button.desc = desc
 
 /datum/action/innate/ai/ranged/overload_machine/proc/detonate_machine(mob/living/caller, obj/machinery/to_explode)
 	if(QDELETED(to_explode))
@@ -537,7 +536,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
-		UpdateButtonIcon()
+		UpdateButtons()
 
 	clicked_machine.audible_message(span_userdanger("You hear a loud electrical buzzing sound coming from [clicked_machine]!"))
 	addtimer(CALLBACK(src, .proc/detonate_machine, caller, clicked_machine), 5 SECONDS) //kaboom!
@@ -563,7 +562,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/blackout/New()
 	..()
 	desc = "[desc] It has [uses] use\s remaining."
-	button.desc = desc
 
 /datum/action/innate/ai/blackout/Activate()
 	for(var/obj/machinery/power/apc/apc in GLOB.apcs_list)
@@ -574,9 +572,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	to_chat(owner, span_notice("Overcurrent applied to the powernet."))
 	owner.playsound_local(owner, SFX_SPARKS, 50, 0)
 	adjust_uses(-1)
-	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
-		desc = "[initial(desc)] It has [uses] use\s remaining."
-		UpdateButtonIcon()
+	if(QDELETED(src) || uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
+		return
+	desc = "[initial(desc)] It has [uses] use\s remaining."
+	UpdateButtons()
 
 /// HIGH IMPACT HONKING
 /datum/ai_module/destructive/megahonk
@@ -782,7 +781,6 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()
 	desc = "[desc] It has [uses] use\s remaining."
-	button.desc = desc
 
 /datum/action/innate/ai/reactivate_cameras/Activate()
 	var/fixed_cameras = 0
@@ -798,9 +796,10 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module))
 	to_chat(owner, span_notice("Diagnostic complete! Cameras reactivated: <b>[fixed_cameras]</b>. Reactivations remaining: <b>[uses]</b>."))
 	owner.playsound_local(owner, 'sound/items/wirecutter.ogg', 50, 0)
 	adjust_uses(0, TRUE) //Checks the uses remaining
-	if(src && uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
-		desc = "[initial(desc)] It has [uses] use\s remaining."
-		UpdateButtonIcon()
+	if(QDELETED(src) || !uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
+		return
+	desc = "[initial(desc)] It has [uses] use\s remaining."
+	UpdateButtons()
 
 /// Upgrade Camera Network: EMP-proofs all cameras, in addition to giving them X-ray vision.
 /datum/ai_module/upgrade/upgrade_cameras

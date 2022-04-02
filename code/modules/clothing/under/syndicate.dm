@@ -19,6 +19,7 @@
 	alt_covers_chest = TRUE
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
@@ -51,6 +52,7 @@
 	armor = list(MELEE = 0, BULLET = 0, LASER = 0,ENERGY = 0, BOMB = 0, BIO = 0, FIRE = 50, ACID = 40)
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "tactical turtleneck suit"

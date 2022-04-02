@@ -1,7 +1,7 @@
 //Small sprites
 /datum/action/small_sprite
 	name = "Toggle Giant Sprite"
-	desc = "Others will always see you as giant"
+	desc = "Others will always see you as giant."
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "smallqueen"
 	background_icon_state = "bg_alien"
@@ -15,8 +15,6 @@
 
 /datum/action/small_sprite/megafauna
 	icon_icon = 'icons/mob/actions/actions_xeno.dmi'
-	button_icon_state = "smallqueen"
-	background_icon_state = "bg_alien"
 	small_icon = 'icons/mob/lavaland/lavaland_monsters.dmi'
 
 /datum/action/small_sprite/megafauna/drake
@@ -35,6 +33,12 @@
 	small_icon = 'icons/mob/jungle/arachnid.dmi'
 	small_icon_state = "arachnid_mini"
 	background_icon_state = "bg_demon"
+
+/datum/action/small_sprite/space_dragon
+	small_icon = 'icons/mob/carp.dmi'
+	small_icon_state = "carp"
+	icon_icon = 'icons/mob/carp.dmi'
+	button_icon_state = "carp"
 
 /datum/action/small_sprite/Trigger(trigger_flags)
 	..()

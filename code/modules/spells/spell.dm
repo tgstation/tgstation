@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
 	after_cast(cast_on)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 	return TRUE
 
@@ -348,7 +348,7 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 /datum/action/cooldown/spell/proc/reset_spell_cooldown()
 	SEND_SIGNAL(src, COMSIG_SPELL_CAST_RESET)
 	next_use_time -= cooldown_time // Basically, ensures that the ability can be used now
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /// TODO: This is ugly, and should be replaced. Only tesla blast uses it.
 /// Checks if the from_atom has line of sight to the to_atom

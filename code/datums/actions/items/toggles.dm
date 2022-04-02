@@ -4,7 +4,6 @@
 	..()
 	var/obj/item/item_target = target
 	name = "Toggle [item_target.name]"
-	button.name = name
 
 /datum/action/item_action/toggle_light
 	name = "Toggle Light"
@@ -80,7 +79,7 @@
 	SIGNAL_HANDLER
 
 	button_icon_state = "thermal_[suit.thermal_on ? "on" : "off"]"
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/item_action/toggle_helmet_flashlight
 	name = "Toggle Helmet Flashlight"

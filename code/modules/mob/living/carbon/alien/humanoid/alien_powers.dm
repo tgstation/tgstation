@@ -250,7 +250,7 @@ Doesn't work on other aliens/AI.*/
 	to_chat(on_who, span_notice("You prepare your neurotoxin gland. <B>Left-click to fire at a target!</B>"))
 
 	button_icon_state = "alien_neurotoxin_1"
-	UpdateButtonIcon()
+	UpdateButtons()
 
 	if(isalienadult(on_who))
 		var/mob/living/carbon/alien/humanoid/alien = on_who
@@ -266,7 +266,7 @@ Doesn't work on other aliens/AI.*/
 		to_chat(on_who, span_notice("You empty your neurotoxin gland."))
 
 	button_icon_state = "alien_neurotoxin_0"
-	UpdateButtonIcon()
+	UpdateButtons()
 
 	if(isalienadult(on_who))
 		var/mob/living/carbon/alien/humanoid/alien = on_who
@@ -381,7 +381,7 @@ Doesn't work on other aliens/AI.*/
 	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)
 	vessel.stored_plasma = min(vessel.stored_plasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
 	for(var/datum/action/cooldown/alien/ability in actions)
-		ability.UpdateButtonIcon()
+		ability.UpdateButtons()
 	return TRUE
 
 /mob/living/carbon/alien/adjustPlasma(amount)

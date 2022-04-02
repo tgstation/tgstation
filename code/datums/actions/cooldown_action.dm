@@ -24,13 +24,14 @@
 	/// Shares cooldowns with other cooldown abilities of the same value, not active if null
 	var/shared_cooldown
 
-/datum/action/cooldown/New(Target)
-	..()
+/datum/action/cooldown/CreateButton()
+	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
-	button.maptext_x = 2
+	button.maptext_x = 8
 	button.maptext_y = 0
 	button.maptext_width = 24
 	button.maptext_height = 12
+	return button
 
 /datum/action/cooldown/IsAvailable()
 	return ..() && (next_use_time <= world.time)
@@ -68,7 +69,7 @@
 		next_use_time = world.time + override_cooldown_time
 	else
 		next_use_time = world.time + cooldown_time
-	UpdateButtonIcon()
+	UpdateButtons()
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
@@ -141,7 +142,7 @@
 	on_who.click_intercept = src
 	if(ranged_mousepointer)
 		on_who.client?.mouse_pointer_icon = ranged_mousepointer
-	UpdateButtonIcon()
+	UpdateButtons()
 	return TRUE
 
 /**
@@ -156,41 +157,35 @@
 	on_who.click_intercept = null
 	if(ranged_mousepointer)
 		on_who.client?.mouse_pointer_icon = initial(on_who.client?.mouse_pointer_icon)
-	UpdateButtonIcon()
+	UpdateButtons()
 	return TRUE
 
-/datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+/datum/action/cooldown/UpdateButton(atom/movable/screen/movable/action_button/button, status_only = FALSE, force = FALSE)
 	. = ..()
-	if(button)
-		update_button_text()
-		if(IsAvailable() && owner.click_intercept == src)
-			button.color = COLOR_GREEN
-
-/// Updates the cooldown text overtop the action button.
-/datum/action/cooldown/proc/update_button_text()
+	if(!button)
+		return
 	var/time_left = max(next_use_time - world.time, 0)
-	if(text_cooldown && time_left >= 0)
-		var/formatted_time_left = round(time_left/10, 0.1)
-		if(formatted_time_left == 0)
-			button.maptext = ""
-		else
-			button.maptext = MAPTEXT("<b>[formatted_time_left]</b>")
-	else
+	if(text_cooldown)
+		button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
+	if(!owner || time_left == 0)
 		button.maptext = ""
+	if(IsAvailable() && owner.click_intercept == src)
+		button.color = COLOR_GREEN
 
 /datum/action/cooldown/process()
 	if(!owner || (next_use_time - world.time) <= 0)
-		UpdateButtonIcon()
+		UpdateButtons()
 		STOP_PROCESSING(SSfastprocess, src)
 
 	update_button_text()
 
 /datum/action/cooldown/Grant(mob/M)
-	. = ..()
-	if(owner)
-		UpdateButtonIcon()
-		if(next_use_time > world.time)
-			START_PROCESSING(SSfastprocess, src)
+	..()
+	if(!owner)
+		return
+	UpdateButtons()
+	if(next_use_time > world.time)
+		START_PROCESSING(SSfastprocess, src)
 
 /// Formats the action to be returned to the stat panel.
 /datum/action/cooldown/proc/set_statpanel_format()

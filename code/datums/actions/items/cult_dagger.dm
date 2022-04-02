@@ -6,15 +6,14 @@
 	button_icon_state = "draw"
 	buttontooltipstyle = "cult"
 	background_icon_state = "bg_demon"
+	default_button_position = "6:157,4:-2"
 
 /datum/action/item_action/cult_dagger/Grant(mob/M)
 	if(!IS_CULTIST(M))
 		Remove(owner)
 		return
 
-	. = ..()
-	button.screen_loc = "6:157,4:-2"
-	button.moved = "6:157,4:-2"
+	return ..()
 
 /datum/action/item_action/cult_dagger/Trigger(trigger_flags)
 	for(var/obj/item/held_item as anything in owner.held_items) // In case we were already holding a dagger

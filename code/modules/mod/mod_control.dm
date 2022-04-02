@@ -371,14 +371,6 @@
 	else if(is_wire_tool(attacking_item) && open)
 		wires.interact(user)
 		return TRUE
-	else if(istype(attacking_item, /obj/item/mod/paint))
-		if(active || activating)
-			balloon_alert(user, "suit is active!")
-		else if(paint(user, attacking_item))
-			balloon_alert(user, "suit painted")
-		else
-			balloon_alert(user, "not painted!")
-		return TRUE
 	else if(open && attacking_item.GetID())
 		update_access(user, attacking_item.GetID())
 		return TRUE
@@ -516,23 +508,6 @@
 		return
 	picked_module.on_select()
 
-/obj/item/mod/control/proc/paint(mob/user, obj/item/paint)
-	if(length(theme.skins) <= 1)
-		return FALSE
-	var/list/skins = list()
-	for(var/mod_skin in theme.skins)
-		skins[mod_skin] = image(icon = icon, icon_state = "[mod_skin]-control")
-	var/pick = show_radial_menu(user, src, skins, custom_check = FALSE, require_near = TRUE)
-	if(!pick || !user.is_holding(paint))
-		return FALSE
-	skin = pick
-	var/list/skin_updating = mod_parts.Copy() + src
-	for(var/obj/item/piece as anything in skin_updating)
-		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
-	update_flags()
-	wearer?.regenerate_icons()
-	return TRUE
-
 /obj/item/mod/control/proc/shock(mob/living/user)
 	if(!istype(user) || get_charge() < 1)
 		return FALSE
@@ -634,6 +609,21 @@
 	balloon_alert(wearer, "no power!")
 	toggle_activate(wearer, force_deactivate = TRUE)
 
+/obj/item/mod/control/proc/set_mod_color(new_color)
+	var/list/all_parts = mod_parts.Copy() + src
+	for(var/obj/item/part as anything in all_parts)
+		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+		part.add_atom_colour(new_color, FIXED_COLOUR_PRIORITY)
+	wearer?.regenerate_icons()
+
+/obj/item/mod/control/proc/set_mod_skin(new_skin)
+	skin = new_skin
+	var/list/skin_updating = mod_parts.Copy() + src
+	for(var/obj/item/piece as anything in skin_updating)
+		piece.icon_state = "[skin]-[initial(piece.icon_state)]"
+	update_flags()
+	wearer?.regenerate_icons()
+
 /obj/item/mod/control/proc/on_exit(datum/source, atom/movable/part, direction)
 	SIGNAL_HANDLER
 
@@ -645,10 +635,10 @@
 		return
 	if(part.loc == wearer)
 		return
-	if(modules.Find(part))
+	if(part in modules)
 		uninstall(part)
 		return
-	if(mod_parts.Find(part))
+	if(part in mod_parts)
 		conceal(wearer, part)
 		if(active)
 			INVOKE_ASYNC(src, .proc/toggle_activate, wearer, TRUE)
@@ -660,14 +650,11 @@
 	if(slowdown_inactive <= 0)
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
 		return SPEED_POTION_STOP
-	if(wearer)
-		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's on someone!"))
+	if(active)
+		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
-	var/list/all_parts = mod_parts.Copy() + src
-	for(var/obj/item/part as anything in all_parts)
-		part.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		part.add_atom_colour("#FF0000", FIXED_COLOUR_PRIORITY)
+	set_mod_color("#FF0000")
 	slowdown_inactive = 0
 	slowdown_active = 0
 	update_speed()

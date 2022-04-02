@@ -10,8 +10,7 @@
 	synchronizer_coeff = 1
 
 /datum/mutation/human/olfaction/modify()
-	. = ..()
-	var/datum/action/cooldown/spell/olfaction/to_modify = .
+	var/datum/action/cooldown/spell/olfaction/to_modify = ..()
 	if(!istype(to_modify)) // null or invalid
 		return
 

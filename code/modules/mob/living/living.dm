@@ -853,6 +853,10 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
+/// Proc that only really gets called for humans, to handle bleeding overlays.
+/mob/living/proc/update_wound_overlays()
+	return
+
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 	if(lying_angle != 0)
 		lying_angle_on_movement(direct)
@@ -1330,9 +1334,7 @@
 
 			// Randomize everything but the species, which was already handled above.
 			new_human.randomize_human_appearance(~RANDOMIZE_SPECIES)
-			new_human.update_body()
-			new_human.update_hair()
-			new_human.update_body_parts()
+			new_human.update_body(is_creating = TRUE)
 			new_human.dna.update_dna_identity()
 			new_mob = new_human
 

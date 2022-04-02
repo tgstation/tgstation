@@ -105,6 +105,16 @@
 	QDEL_NULL(lava_swoop)
 	return ..()
 
+/mob/living/simple_animal/hostile/megafauna/dragon/revive(full_heal = FALSE, admin_revive = FALSE)
+	. = ..()
+	if(!.)
+		return
+	pull_force = MOVE_FORCE_OVERPOWERING
+
+/mob/living/simple_animal/hostile/megafauna/dragon/death(gibbed)
+	move_force = MOVE_FORCE_DEFAULT
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/dragon/OpenFire()
 	if(swooping)
 		return

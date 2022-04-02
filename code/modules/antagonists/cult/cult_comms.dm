@@ -273,8 +273,8 @@
 		to_chat(caller, span_cult("The marking rite is complete! It will last for [DisplayTimeText(cult_mark_duration)] seconds."))
 		owner.click_intercept = null
 		COOLDOWN_START(src, cult_mark_cooldown, cult_mark_cooldown_duration)
-		UpdateButtonIcon()
-		addtimer(CALLBACK(src, .proc/UpdateButtonIcon), cult_mark_cooldown_duration + 1)
+		UpdateButtons()
+		addtimer(CALLBACK(src, .proc/UpdateButtons), cult_mark_cooldown_duration + 1)
 		return TRUE
 
 	to_chat(caller, span_cult("The marking rite failed!"))
@@ -344,7 +344,7 @@
 		desc = "Remove the Blood Mark you previously set."
 		button_icon_state = "emp"
 
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /datum/action/innate/cult/ghostmark/proc/reset_button()
 	if(QDELETED(owner) || QDELETED(src))
@@ -436,8 +436,8 @@
 		to_chat(caller, span_cult("A pulse of blood magic surges through you as you shift [throwee] through time and space."))
 		caller.click_intercept = null
 		throwee_ref = null
-		UpdateButtonIcon()
-		addtimer(CALLBACK(src, .proc/UpdateButtonIcon), pulse_cooldown_duration + 1)
+		UpdateButtons()
+		addtimer(CALLBACK(src, .proc/UpdateButtons), pulse_cooldown_duration + 1)
 
 		return TRUE
 
