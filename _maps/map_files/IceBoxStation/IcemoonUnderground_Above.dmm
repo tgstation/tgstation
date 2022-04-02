@@ -465,8 +465,8 @@
 /area/hallway/primary/central/fore)
 "bC" = (
 /obj/machinery/button/door/directional/east{
-	name = "Privacy Shutters"s;
-	id = "kanyewest"
+	id = "kanyewest";
+	name = "Privacy Shutters"s
 	},
 /obj/structure/chair/office{
 	dir = 8
@@ -733,8 +733,8 @@
 "cu" = (
 /obj/structure/bed/maint,
 /obj/item/toy/plush/rouny{
-	name = "Therapy Dog";
-	desc = "What is this? Is this a dog?"
+	desc = "What is this? Is this a dog?";
+	name = "Therapy Dog"
 	},
 /obj/structure/cable,
 /obj/machinery/camera/directional/east{
@@ -1134,8 +1134,8 @@
 "dA" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Cells"
+	c_tag = "Security - Permabrig Cells";
+	network = list("ss13","prison")
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -1853,8 +1853,8 @@
 /area/icemoon/underground/explored)
 "fv" = (
 /obj/structure/toilet/greyscale{
-	dir = 4;
-	cistern = 1
+	cistern = 1;
+	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -4448,8 +4448,8 @@
 /area/maintenance/fore)
 "mx" = (
 /obj/structure/chair{
-	name = "Judge";
-	dir = 8
+	dir = 8;
+	name = "Judge"
 	},
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/wood,
@@ -5049,14 +5049,14 @@
 /area/mine/eva)
 "oj" = (
 /obj/machinery/button/door/directional/east{
-	id = "xenobiomain";
-	name = "Containment Blast Door";
+	id = "misclab";
+	name = "Test Chamber Blast Doors";
 	pixel_y = 6;
 	req_access_txt = "55"
 	},
 /obj/machinery/button/door/directional/east{
 	id = "xenobiomain";
-	name = "Containment Blast Door";
+	name = "Xenobiology Containment Blast Door";
 	pixel_y = -6;
 	req_access_txt = "55"
 	},
@@ -5855,9 +5855,9 @@
 /area/icemoon/underground/explored)
 "qv" = (
 /obj/machinery/door/window/brigdoor/security/cell{
+	dir = 8;
 	id = "Cell 1";
-	name = "Cell 1";
-	dir = 8
+	name = "Cell 1"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_half{
@@ -6128,8 +6128,8 @@
 	},
 /obj/item/pen,
 /obj/machinery/camera/directional/south{
-	network = list("ss13","prison");
-	c_tag = "Security - Permabrig Recreation"
+	c_tag = "Security - Permabrig Recreation";
+	network = list("ss13","prison")
 	},
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -7373,9 +7373,9 @@
 /area/security/detectives_office)
 "uC" = (
 /obj/machinery/door/window/brigdoor/security/cell{
+	dir = 8;
 	id = "Cell 3";
-	name = "Cell 3";
-	dir = 8
+	name = "Cell 3"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_half{
@@ -9171,8 +9171,8 @@
 /area/maintenance/department/medical/morgue)
 "zQ" = (
 /obj/structure/chair{
-	name = "Judge";
-	dir = 8
+	dir = 8;
+	name = "Judge"
 	},
 /obj/machinery/camera/directional/east{
 	c_tag = "Courtroom"
@@ -9793,9 +9793,9 @@
 /area/maintenance/department/crew_quarters/bar)
 "BS" = (
 /obj/machinery/door/window/brigdoor/security/cell{
+	dir = 8;
 	id = "Cell 2";
-	name = "Cell 2";
-	dir = 8
+	name = "Cell 2"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_half{
@@ -12208,8 +12208,8 @@
 	id = "visitation";
 	name = "Visitation Shutters";
 	pixel_x = 6;
-	req_access_txt = "2";
-	pixel_y = -24
+	pixel_y = -24;
+	req_access_txt = "2"
 	},
 /obj/machinery/button/flasher{
 	id = "visitorflash";
@@ -14177,8 +14177,8 @@
 /area/commons/lounge)
 "NM" = (
 /obj/structure/chair{
-	name = "Judge";
-	dir = 8
+	dir = 8;
+	name = "Judge"
 	},
 /obj/machinery/light/directional/east,
 /turf/open/floor/wood,
@@ -14824,10 +14824,10 @@
 "PH" = (
 /obj/structure/table,
 /obj/machinery/computer/security/telescreen/interrogation{
+	dir = 1;
 	name = "isolation room monitor";
 	network = list("isolation");
-	pixel_y = -32;
-	dir = 1
+	pixel_y = -32
 	},
 /obj/item/clothing/suit/straight_jacket,
 /obj/item/clothing/suit/straight_jacket{
@@ -16478,9 +16478,9 @@
 /obj/machinery/button/door{
 	id = "Trial Transfer";
 	name = "Trial Transfer Lockdown";
+	pixel_x = -7;
 	pixel_y = -23;
-	req_access_txt = "2";
-	pixel_x = -7
+	req_access_txt = "2"
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/textured,
@@ -16513,22 +16513,22 @@
 /obj/machinery/button/door{
 	id = "Prison Gate";
 	name = "Prison Wing Lockdown";
+	pixel_x = 5;
 	pixel_y = 8;
-	req_access_txt = "2";
-	pixel_x = 5
+	req_access_txt = "2"
 	},
 /obj/machinery/button/door{
 	id = "Trial Transfer";
 	name = "Trial Transfer Lockdown";
+	pixel_x = -7;
 	pixel_y = 8;
-	req_access_txt = "2";
-	pixel_x = -7
+	req_access_txt = "2"
 	},
 /obj/machinery/button/door{
 	id = "Secure Gate";
 	name = "Cell Shutters";
-	pixel_y = -3;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -3
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
