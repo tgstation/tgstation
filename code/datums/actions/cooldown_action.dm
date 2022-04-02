@@ -71,10 +71,7 @@
 	if(!owner)
 		return FALSE
 
-	message_admins("[usr] and [owner]")
-	var/mob/user = owner
-	if(usr != owner)
-		user = usr
+	var/mob/user = usr || owner
 
 	// If our cooldown action is a click_to_activate action:
 	// The actual action is activated on whatever the user clicks on -

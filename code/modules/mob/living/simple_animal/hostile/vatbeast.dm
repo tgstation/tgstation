@@ -102,6 +102,7 @@
 
 	return TRUE
 
+// MELBERT TODO works funky.
 /datum/action/cooldown/tentacle_slap/Activate(atom/to_slap)
 	var/mob/living/living_to_slap = to_slap
 
