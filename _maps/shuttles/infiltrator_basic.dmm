@@ -284,6 +284,9 @@
 	pixel_x = -4;
 	pixel_y = -8
 	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/shuttle/syndicate/medical)
 "br" = (
@@ -319,6 +322,9 @@
 	},
 /obj/structure/table/reinforced,
 /obj/machinery/status_display/ai/directional/north,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /turf/open/floor/iron/edge,
 /area/shuttle/syndicate/medical)
 "bu" = (
@@ -463,7 +469,12 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/yellow/half{
+	dir = 8
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
 /area/shuttle/syndicate/medical)
 "bV" = (
 /obj/effect/spawner/structure/window/survival_pod,
@@ -483,6 +494,9 @@
 /area/shuttle/syndicate/eva)
 "bY" = (
 /obj/structure/closet,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/shuttle/syndicate/medical)
 "ce" = (
@@ -619,6 +633,7 @@
 	pixel_y = -3
 	},
 /obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/corner,
 /area/shuttle/syndicate/medical)
 "df" = (
@@ -731,6 +746,9 @@
 /turf/open/floor/iron/dark/smooth_corner,
 /area/shuttle/syndicate/hallway)
 "mZ" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
 /turf/open/floor/iron/corner{
 	dir = 1
 	},
@@ -1082,6 +1100,10 @@
 /obj/effect/turf_decal/syndicateemblem/middle/right,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/syndicate/hallway)
+"Ro" = (
+/obj/effect/turf_decal/tile/blue/full,
+/turf/open/floor/iron/large,
+/area/shuttle/syndicate/medical)
 "RO" = (
 /obj/effect/turf_decal/loading_area/red{
 	dir = 4
@@ -1139,6 +1161,7 @@
 	},
 /area/shuttle/syndicate/bridge)
 "ZL" = (
+/obj/effect/turf_decal/tile/blue,
 /turf/open/floor/iron/corner,
 /area/shuttle/syndicate/medical)
 
@@ -1211,7 +1234,7 @@ dz
 lJ
 ZL
 bQ
-bQ
+Ro
 KQ
 cp
 cu
@@ -1259,7 +1282,7 @@ aZ
 aJ
 bt
 br
-bQ
+Ro
 br
 cT
 aK
