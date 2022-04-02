@@ -123,3 +123,19 @@
   - rscadd: Added an ic atmos reaction guide. Available in your atmos control consoles/monitors,
       ntosatmos app, and analyzer.
   - code_imp: Some changes to how gas canister descriptions are generated.
+2022-04-02:
+  Ebin-Halcyon:
+  - imageadd: New and updated maid costume sprites
+  Rhials:
+  - spellcheck: Cargo crate naming has been made slightly more consistent. Rejoice.
+  - bugfix: When an airlock that is being hacked receives plasteel reinforcement,
+      it will no longer keep the hacking UI open and useable.
+  TheSmallBlue:
+  - spellcheck: There are no longer two ID Getter Components
+  TiviPlus:
+  - code_imp: changed some mech FOV cone backend to work better
+  - bugfix: fixed mmis seeing the wrong mech UI
+  san7890:
+  - rscadd: A new plushie has appeared on TramStation. Seek it out if you dare.
+  timothymtorres:
+  - bugfix: Fix shutters contextual screentips to not display as open with LMB.
