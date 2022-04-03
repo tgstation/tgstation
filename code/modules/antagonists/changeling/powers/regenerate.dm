@@ -23,7 +23,7 @@
 				"<span class='hear'>You hear organic matter ripping \
 				and tearing!</span>")
 			C.emote("scream")
-			C.regenerate_limbs(1)
+			C.regenerate_limbs()
 		if(!user.getorganslot(ORGAN_SLOT_BRAIN))
 			var/obj/item/organ/brain/B
 			if(C.has_dna() && C.dna.species.mutantbrain)

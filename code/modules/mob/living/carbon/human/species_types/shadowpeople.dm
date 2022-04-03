@@ -18,6 +18,15 @@
 	mutanteyes = /obj/item/organ/eyes/night_vision
 	species_language_holder = /datum/language_holder/shadowpeople
 
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/shadow,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/shadow,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/shadow,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/shadow,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/shadow,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/shadow,
+	)
+
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	var/turf/T = H.loc
@@ -25,9 +34,9 @@
 		var/light_amount = T.get_lumcount()
 
 		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-			H.take_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYPART_ORGANIC)
+			H.take_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
 		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYPART_ORGANIC)
+			H.heal_overall_damage(0.5 * delta_time, 0.5 * delta_time, 0, BODYTYPE_ORGANIC)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])

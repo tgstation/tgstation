@@ -492,10 +492,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/character_preview_view)
 	character.dna.real_name = character.real_name
 
 	if(icon_updates)
-		character.icon_render_key = null //turns out if you don't set this to null update_body_parts does nothing, since it assumes the operation was cached
-		character.update_body()
-		character.update_hair()
-		character.update_body_parts()
+		character.icon_render_keys = list()
+		character.update_body(is_creating = TRUE)
 
 
 /// Returns whether the parent mob should have the random hardcore settings enabled. Assumes it has a mind.
