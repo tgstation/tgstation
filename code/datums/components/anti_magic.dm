@@ -120,8 +120,10 @@
 			antimagic_color = LIGHT_COLOR_HOLY_MAGIC
 			playsound(user, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
 		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_MIND)
-			user.visible_message(span_warning("[user] forehead shines as [visible_subject] repulses magic from their mind!"),
-			span_userdanger("A feeling of cold splashes on [self_subject] as your forehead reflects magic usering your mind!"))
+			user.visible_message(
+				span_warning("[user] forehead shines as [visible_subject] repulses magic from their mind!"),
+				span_userdanger("A feeling of cold splashes on [self_subject] as your forehead reflects magic usering your mind!"),
+			)
 			antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "telekinesishead", MOB_SHIELD_LAYER)
 			antimagic_color = LIGHT_COLOR_DARK_BLUE
 			playsound(user, 'sound/magic/magic_block_mind.ogg', 50, TRUE)
