@@ -32,11 +32,9 @@
 /datum/component/reagent_refiller/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/refill)
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, .proc/delete_self)
-	return ..()
 
 /datum/component/reagent_refiller/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_EXITED))
-	return ..()
 
 /datum/component/reagent_refiller/proc/delete_self()
 	SIGNAL_HANDLER
@@ -60,6 +58,8 @@
 
 ///Refills the reagent container, and uses cell power if applicable
 /datum/component/reagent_refiller/proc/add_reagents(obj/item/reagent_containers/target, oldloc, reagent_to_refill, amount)
+	if (QDELETED(src) || QDELETED(target))
+		return
 	if (target.loc != oldloc)
 		return
 
