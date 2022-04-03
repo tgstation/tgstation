@@ -12,7 +12,7 @@ if grep -El '^\".+\" = \(.+\)' _maps/**/*.dmm;	then
     st=1
 fi;
 if grep -P '//' _maps/**/*.dmm | grep -v '//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE' | grep -Ev 'name|desc'; then
-	echo "ERROR: Commented out line detected in this map file."
+	echo "ERROR: Unexpected commented out line detected in this map file. Please remove it."
 	st=1
 fi;
 if grep -P 'Merge conflict marker' _maps/**/*.dmm; then
