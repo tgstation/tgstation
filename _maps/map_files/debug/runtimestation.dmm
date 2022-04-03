@@ -1964,6 +1964,12 @@
 	},
 /turf/open/floor/iron,
 /area/medical/chemistry)
+"hQ" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/debug,
+/obj/machinery/power/rtg/debug,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "ii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -2104,8 +2110,8 @@
 /turf/open/floor/iron/dark,
 /area/construction)
 "sE" = (
-/obj/machinery/power/rtg/advanced,
 /obj/structure/cable,
+/obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "sH" = (
@@ -6728,7 +6734,7 @@ aa
 aa
 ae
 ab
-sE
+hQ
 an
 sE
 an
