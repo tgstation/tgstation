@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - soundadd: "Sound effects for attacking bushes, trees, mushrooms and rocks."
-  - code_imp: "Minor code improvements in flora.dm"
