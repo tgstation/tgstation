@@ -40849,13 +40849,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/security/checkpoint/medical)
-"jbV" = (
-/obj/machinery/camera/directional/north{
-	c_tag = "Armoury External"
-	},
-/obj/structure/lattice/catwalk,
-/turf/open/space,
-/area/space/nearstation)
 "jcx" = (
 /obj/structure/sign/warning/electricshock{
 	pixel_y = -32
@@ -101163,7 +101156,7 @@ aeu
 aeu
 aeU
 acm
-cry
+aaa
 acm
 aaa
 aaa
@@ -108615,8 +108608,8 @@ aka
 aeu
 aeu
 aeu
-cke
-jbV
+aeu
+aeu
 aaa
 aaa
 aaa
@@ -108873,7 +108866,7 @@ aeu
 aeu
 aeu
 aeu
-aaa
+aeu
 aaa
 aaa
 aaa
