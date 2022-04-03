@@ -10,6 +10,8 @@
 	var/datum/callback/drain_antimagic
 	/// The proc that is triggered when the object is depleted of charges
 	var/datum/callback/expiration
+	/// If we have already sent a notification message to the mob picking up an antimagic item
+	var/casting_restriction_alert = FALSE
 
 /**
  * Adds magic resistances to an object
@@ -70,11 +72,13 @@
 	RegisterSignal(equipper, COMSIG_MOB_RESTRICT_MAGIC, .proc/restrict_casting_magic, override = TRUE)
 	equipper.update_action_buttons()
 
-	// Check to see if we have any spells that are blocked due to antimagic
-	for(var/obj/effect/proc_holder/spell/magic_spell in equipper.mind?.spell_list)
-		if(antimagic_flags & magic_spell.antimagic_flags)
-			to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
-			break
+	if(!casting_restriction_alert)
+		// Check to see if we have any spells that are blocked due to antimagic
+		for(var/obj/effect/proc_holder/spell/magic_spell in equipper.mind?.spell_list)
+			if(antimagic_flags & magic_spell.antimagic_flags)
+				to_chat(equipper, span_warning("[parent] is interfering with your ability to cast magic!"))
+				casting_restriction_alert = TRUE
+				break
 
 /datum/component/anti_magic/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
@@ -82,6 +86,7 @@
 	UnregisterSignal(user, COMSIG_MOB_RECEIVE_MAGIC)
 	UnregisterSignal(user, COMSIG_MOB_RESTRICT_MAGIC)
 	user.update_action_buttons()
+	casting_restriction_alert = FALSE
 
 /datum/component/anti_magic/proc/block_receiving_magic(mob/living/carbon/user, casted_magic_flags, charge_cost, list/protection_was_used)
 	SIGNAL_HANDLER
