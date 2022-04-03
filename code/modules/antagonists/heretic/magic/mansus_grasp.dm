@@ -8,6 +8,7 @@
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mansus_grasp"
 	action_background_icon_state = "bg_ecult"
+	antimagic_flags = NONE // no casting restriction but there is a can_block_magic check in afterattack to allow antimagic
 
 /obj/item/melee/touch_attack/mansus_fist
 	name = "Mansus Grasp"
