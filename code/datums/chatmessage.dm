@@ -200,8 +200,11 @@
 
 	// Approximate text height
 	var/complete_text = "<span class='center [extra_classes.Join(" ")]' style='color: [tgt_color]'>[owner.say_emphasis(text)]</span>"
-	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH))
+	var/measurement = owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH)//resolving it to a var so the macro doesnt call MeasureText() twice
+	var/mheight = WXH_TO_HEIGHT(measurement)
 	SSrunechat.message_queue += CALLBACK(src, .proc/generate_image, target, owner, complete_text, mheight)
+	//queue to the subsystem because when client input returns we're in the verb stage of tick execution which means
+	//generate_image() is very likely to create a lot of overtime.
 
 /**
  * actually generates the runechat image for the message spoken by target and heard by owner.

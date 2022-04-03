@@ -5,7 +5,9 @@
 #define MAPTEXT(text) {"<span class='maptext'>[##text]</span>"}
 
 /// Macro from Lummox used to get height from a MeasureText proc
-#define WXH_TO_HEIGHT(x) text2num(copytext(x, findtextEx(x, "x") + 1))
+#define WXH_TO_HEIGHT(x) text2num(copytext(x, findtextEx(x, "x") + 1));
+// since this duplicates the input twice do not call this as WXH_TO_HEIGHT(client.MeasureText(...)) directly! it will wait for the client
+// return value twice in a row
 
 /// Removes characters incompatible with file names.
 #define SANITIZE_FILENAME(text) (GLOB.filename_forbidden_chars.Replace(text, ""))
@@ -24,7 +26,7 @@
 /// Folder directory for strings
 #define STRING_DIRECTORY "strings"
 
-// JSON text files found in the tgstation/strings folder 
+// JSON text files found in the tgstation/strings folder
 /// File location for brain damage traumas
 #define BRAIN_DAMAGE_FILE "traumas.json"
 /// File location for AI ion laws
