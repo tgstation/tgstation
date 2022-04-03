@@ -69,7 +69,7 @@
 
 	var/hardcore_survival_score = 0
 	/// Which body type to use
-	var/body_type = MALE
+	var/physique = MALE
 
 	/// How many "units of blood" we have on our hands
 	var/blood_in_hands = 0

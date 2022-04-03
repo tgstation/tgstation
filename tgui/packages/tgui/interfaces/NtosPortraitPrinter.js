@@ -18,6 +18,8 @@ export const NtosPortraitPrinter = (props, context) => {
     && "By " + paintings[listIndex]["creator"];
   const current_portrait_asset_name = got_paintings
     && "paintings" + "_" + paintings[listIndex]["md5"];
+  const current_portrait_ratio = got_paintings
+    && paintings[listIndex]["ratio"]; 
   return (
     <NtosWindow
       title="Art Galaxy"
@@ -60,7 +62,7 @@ export const NtosPortraitPrinter = (props, context) => {
                       <img
                         src={resolveAsset(current_portrait_asset_name)}
                         height="128px"
-                        width="128px"
+                        width={`${Math.round(128 * current_portrait_ratio)}px`}
                         style={{
                           'vertical-align': 'middle',
                           '-ms-interpolation-mode': 'nearest-neighbor',

@@ -171,6 +171,7 @@
 	if(scanned_tray.myseed)
 		returned_message += "*** [span_bold("[scanned_tray.myseed.plantname]")] ***\n"
 		returned_message += "- Plant Age: [span_notice("[scanned_tray.age]")]\n"
+		returned_message += "- Plant Health: [span_notice("[scanned_tray.plant_health]")]\n"
 		returned_message += scan_plant_stats(scanned_tray.myseed)
 	else
 		returned_message += span_bold("No plant found.\n")

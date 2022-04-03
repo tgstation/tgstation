@@ -114,7 +114,7 @@
 	var/client/controlling_client = controller.client
 	if(controlling_client)
 		var/modifiers = params2list(controlling_client.mouseParams)
-		var/atom/target_atom = controlling_client.mouseObject
+		var/atom/target_atom = controlling_client.mouse_object_ref?.resolve()
 		var/turf/target_turf = get_turf(target_atom)
 		if(istype(target_turf)) //They're hovering over something in the map.
 			direction_track(controller, target_turf)
