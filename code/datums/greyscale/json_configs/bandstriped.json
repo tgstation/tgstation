@@ -1,0 +1,16 @@
+{
+    "bandstriped": [
+        {
+            "type": "icon_state",
+            "icon_state": "bandana_cloth",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+		{
+            "type": "icon_state",
+            "icon_state": "bandana_stripe",
+            "blend_mode": "overlay",
+            "color_ids": [ 2 ]
+        }
+    ]
+}
