@@ -724,6 +724,7 @@
 	button.maptext_y = 0
 	button.maptext_width = 24
 	button.maptext_height = 12
+	return button
 
 /datum/action/cooldown/Destroy()
 	. = ..()
@@ -732,13 +733,14 @@
 
 /datum/action/cooldown/Grant(mob/M)
 	..()
-	if(owner)
-		UpdateButtonIcon()
-		if(next_use_time > world.time)
-			START_PROCESSING(SSfastprocess, src)
-		RegisterSignal(owner, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/handle_melee_attack)
-		for(var/datum/action/cooldown/ability in initialized_actions)
-			ability.Grant(owner)
+	if(!owner)
+		return
+	UpdateButtons()
+	if(next_use_time > world.time)
+		START_PROCESSING(SSfastprocess, src)
+	RegisterSignal(owner, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/handle_melee_attack)
+	for(var/datum/action/cooldown/ability in initialized_actions)
+		ability.Grant(owner)
 
 /datum/action/cooldown/Remove(mob/M)
 	..()
@@ -755,6 +757,7 @@
 		var/datum/action/cooldown/ability = new type_path(target, original = FALSE)
 		// prevents clients from using the individual abilities in sequences (this stops it from being added to mob actions when granted as well)
 		ability.owner_has_control = FALSE
+		// [ability] = delay
 		initialized_actions[ability] = sequence_actions[type_path]
 
 /// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
@@ -846,14 +849,6 @@
 	if(!owner || time_left == 0)
 		STOP_PROCESSING(SSfastprocess, src)
 	UpdateButtons()
-
-/datum/action/cooldown/Grant(mob/M)
-	..()
-	if(!owner)
-		return
-	UpdateButtons()
-	if(next_use_time > world.time)
-		START_PROCESSING(SSfastprocess, src)
 
 /datum/action/cooldown/proc/handle_melee_attack(mob/source, mob/target)
 	SIGNAL_HANDLER
