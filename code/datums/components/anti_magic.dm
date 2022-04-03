@@ -104,8 +104,10 @@
 		var/self_subject = ismob(parent) ? "you" : "[parent]"
 
 		if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE)
-			user.visible_message(span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"),
-			span_userdanger("An intense magical aura pulses around [self_subject] as it dissipates into the air!"))
+			user.visible_message(
+				span_warning("[user] pulses red as [visible_subject] absorbs magic energy!"),
+				span_userdanger("An intense magical aura pulses around [self_subject] as it dissipates into the air!"),
+			)
 			antimagic_effect = mutable_appearance('icons/effects/effects.dmi', "shield-red", MOB_SHIELD_LAYER)
 			antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
 			playsound(user, 'sound/magic/magic_block.ogg', 50, TRUE)
