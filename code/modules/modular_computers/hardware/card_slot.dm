@@ -78,6 +78,7 @@
 	stored_card = I
 	to_chat(user, span_notice("You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	holder.update_appearance()
 
 	current_identification = stored_card.registered_name
 	current_job = stored_card.assignment
@@ -104,6 +105,7 @@
 
 	to_chat(user, span_notice("You remove the card from \the [src]."))
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	holder.update_appearance()
 
 	stored_card = null
 	current_identification = null

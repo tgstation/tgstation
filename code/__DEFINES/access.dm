@@ -474,36 +474,36 @@
  * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
  */
 #define PDA_PAINTING_REGIONS list( \
-	/obj/item/pda = list(REGION_GENERAL), \
-	/obj/item/pda/clown = list(REGION_GENERAL), \
-	/obj/item/pda/mime = list(REGION_GENERAL), \
-	/obj/item/pda/medical = list(REGION_MEDBAY), \
-	/obj/item/pda/viro = list(REGION_MEDBAY), \
-	/obj/item/pda/engineering = list(REGION_ENGINEERING), \
-	/obj/item/pda/security = list(REGION_SECURITY), \
-	/obj/item/pda/detective = list(REGION_SECURITY), \
-	/obj/item/pda/warden = list(REGION_SECURITY), \
-	/obj/item/pda/janitor = list(REGION_GENERAL), \
-	/obj/item/pda/science = list(REGION_RESEARCH), \
-	/obj/item/pda/heads/hop = list(REGION_COMMAND), \
-	/obj/item/pda/heads/hos = list(REGION_COMMAND), \
-	/obj/item/pda/heads/cmo = list(REGION_COMMAND), \
-	/obj/item/pda/heads/ce = list(REGION_COMMAND), \
-	/obj/item/pda/heads/rd = list(REGION_COMMAND), \
-	/obj/item/pda/captain = list(REGION_COMMAND), \
-	/obj/item/pda/cargo = list(REGION_SUPPLY), \
-	/obj/item/pda/quartermaster = list(REGION_SUPPLY), \
-	/obj/item/pda/shaftminer = list(REGION_SUPPLY), \
-	/obj/item/pda/chaplain = list(REGION_GENERAL), \
-	/obj/item/pda/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
-	/obj/item/pda/botanist = list(REGION_GENERAL), \
-	/obj/item/pda/roboticist = list(REGION_RESEARCH), \
-	/obj/item/pda/curator = list(REGION_GENERAL), \
-	/obj/item/pda/cook = list(REGION_GENERAL), \
-	/obj/item/pda/bar = list(REGION_GENERAL), \
-	/obj/item/pda/atmos = list(REGION_ENGINEERING), \
-	/obj/item/pda/chemist = list(REGION_MEDBAY), \
-	/obj/item/pda/geneticist = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/nano = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/clown = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/mime = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/medical = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/tablet/nano/viro = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/tablet/nano/engineering = list(REGION_ENGINEERING), \
+	/obj/item/modular_computer/tablet/nano/security = list(REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/nano/detective = list(REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/nano/warden = list(REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/nano/janitor = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/science = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/nano/heads/hop = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/nano/heads/hos = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/nano/heads/cmo = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/nano/heads/ce = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/nano/heads/rd = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/nano/captain = list(REGION_COMMAND), \
+	/obj/item/modular_computer/tablet/nano/cargo = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/tablet/nano/quartermaster = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/tablet/nano/shaftminer = list(REGION_SUPPLY), \
+	/obj/item/modular_computer/tablet/nano/chaplain = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/lawyer = list(REGION_GENERAL, REGION_SECURITY), \
+	/obj/item/modular_computer/tablet/nano/botanist = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/roboticist = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/tablet/nano/curator = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/cook = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/bar = list(REGION_GENERAL), \
+	/obj/item/modular_computer/tablet/nano/atmos = list(REGION_ENGINEERING), \
+	/obj/item/modular_computer/tablet/nano/chemist = list(REGION_MEDBAY), \
+	/obj/item/modular_computer/tablet/nano/geneticist = list(REGION_RESEARCH), \
 )
 
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.

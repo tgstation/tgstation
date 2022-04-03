@@ -109,7 +109,7 @@
 
 /datum/greyscale_config/pda
 	name = "PDA"
-	icon_file = 'icons/obj/pda.dmi'
+	icon_file = 'icons/obj/modular_tablet.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
 /datum/greyscale_config/pda/chaplain

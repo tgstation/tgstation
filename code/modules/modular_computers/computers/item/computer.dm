@@ -192,6 +192,7 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
 		update_slot_icon()
+		update_appearance()
 
 		return removed_id
 
@@ -213,6 +214,7 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 			var/mob/living/carbon/human/human_wearer = loc
 			if(human_wearer.wear_id == src)
 				human_wearer.sec_hud_set_ID()
+		update_appearance()
 		update_slot_icon()
 
 	return FALSE
@@ -270,14 +272,18 @@ GLOBAL_LIST_EMPTY(MMessengers) // a list of all active messengers, similar to GL
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
+	var/init_icon = initial(icon)
+
+	if(!init_icon)
+		return
 	if(!display_overlays)
 		return
 
 	if(enabled)
-		. += active_program?.program_icon_state || icon_state_menu
+		. += active_program ? mutable_appearance(init_icon, active_program.program_icon_state) : mutable_appearance(init_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
-		. += "bsod"
-		. += "broken"
+		. += mutable_appearance(init_icon, "bsod")
+		. += mutable_appearance(init_icon, "broken")
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.

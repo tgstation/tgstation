@@ -10,22 +10,6 @@
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
 	install_component(new /obj/item/computer_hardware/network_card)
 
-/obj/item/modular_computer/tablet/preset/nano
-	name = "nanotablet"
-	desc = "A result of collaborations between Thinktronic Systems, and Nanotrasen. Providing you with the best way to keep your ID and programs in one place!"
-	deconstructable = FALSE
-	upgradable = FALSE
-
-/obj/item/modular_computer/tablet/preset/nano/Initialize(mapload)
-	. = ..()
-	install_component(new /obj/item/computer_hardware/hard_drive/micro)
-	install_component(new /obj/item/computer_hardware/processor_unit/small)
-	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
-	install_component(new /obj/item/computer_hardware/network_card)
-	install_component(new /obj/item/computer_hardware/card_slot)
-	install_component(new /obj/item/computer_hardware/cartridge_slot)
-	install_component(new /obj/item/computer_hardware/identifier)
-
 // Alternative version, an average one, for higher ranked positions mostly
 /obj/item/modular_computer/tablet/preset/advanced/Initialize(mapload)
 	. = ..()
