@@ -21,21 +21,6 @@
 	/// List of charging mobs
 	var/list/charging = list()
 
-/datum/action/cooldown/mob_cooldown/charge/New(Target, delay, past, distance, speed, damage, destroy)
-	. = ..()
-	if(!isnull(delay))
-		charge_delay = delay
-	if(!isnull(past))
-		charge_past = past
-	if(!isnull(distance))
-		charge_distance = distance
-	if(!isnull(speed))
-		charge_speed = speed
-	if(!isnull(damage))
-		charge_damage = damage
-	if(!isnull(destroy))
-		destroy_objects = destroy
-
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 
@@ -271,7 +256,7 @@
 		our_clone.alpha = 127.5
 		our_clone.move_through_mob = owner
 		our_clone.spawn_blood = spawn_blood
-		do_charge(our_clone, target_atom, delay, past)
+		INVOKE_ASYNC(src, .proc/do_charge, our_clone, target_atom, delay, past)
 	if(use_self)
 		do_charge(owner, target_atom, delay, past)
 

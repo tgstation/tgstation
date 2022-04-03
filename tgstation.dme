@@ -593,6 +593,8 @@
 #include "code\datums\actions\mobs\mobcooldown.dm"
 #include "code\datums\actions\mobs\projectileattack.dm"
 #include "code\datums\actions\mobs\transform_weapon.dm"
+#include "code\datums\actions\mobs\sequences\dash_attack.dm"
+#include "code\datums\actions\mobs\sequences\projectile.dm"
 #include "code\datums\ai\_ai_behavior.dm"
 #include "code\datums\ai\_ai_controller.dm"
 #include "code\datums\ai\_ai_planning_subtree.dm"

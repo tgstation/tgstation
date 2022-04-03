@@ -17,15 +17,6 @@
 	/// The multiplier to the projectiles speed (a value of 2 makes it twice as slow, 0.5 makes it twice as fast)
 	var/projectile_speed_multiplier = 1
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/New(Target, projectile, homing, spread)
-	. = ..()
-	if(projectile)
-		projectile_type = projectile
-	if(homing)
-		has_homing = homing
-	if(spread)
-		default_projectile_spread = spread
-
 /datum/action/cooldown/mob_cooldown/projectile_attack/Activate(atom/target_atom)
 	attack_sequence(owner, target_atom)
 
@@ -93,7 +84,7 @@
 	shot_delay = 1 SECONDS
 	var/shrapnel_projectile_type = /obj/projectile/colossus/ice_blast
 	var/shrapnel_angles = list(0, 60, 120, 180, 240, 300)
-	var/shrapnel_spread = 10
+	var/shrapnel_spread = 60
 	var/break_time = 2 SECONDS
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/rapid_fire/shrapnel/attack_sequence(mob/living/firer, atom/target)

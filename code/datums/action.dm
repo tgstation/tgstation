@@ -38,7 +38,7 @@
 	QDEL_NULL(button)
 	return ..()
 
-/datum/action/proc/Grant(mob/M, visibility = TRUE)
+/datum/action/proc/Grant(mob/M)
 	if(M)
 		if(owner)
 			if(owner == M)
@@ -47,27 +47,28 @@
 		owner = M
 		RegisterSignal(owner, COMSIG_PARENT_QDELETING, .proc/clear_ref, override = TRUE)
 
-		//button id generation
-		var/counter = 0
-		var/bitfield = 0
-		for(var/datum/action/A in M.actions)
-			if(A.name == name && A.button.id)
-				counter += 1
-				bitfield |= A.button.id
-		bitfield = ~bitfield
-		var/bitflag = 1
-		for(var/i in 1 to (counter + 1))
-			if(bitfield & bitflag)
-				button.id = bitflag
-				break
-			bitflag *= 2
+		if(button)
+			//button id generation
+			var/counter = 0
+			var/bitfield = 0
+			for(var/datum/action/A in M.actions)
+				if(A.name == name && A.button.id)
+					counter += 1
+					bitfield |= A.button.id
+			bitfield = ~bitfield
+			var/bitflag = 1
+			for(var/i in 1 to (counter + 1))
+				if(bitfield & bitflag)
+					button.id = bitflag
+					break
+				bitflag *= 2
 
-		LAZYADD(M.actions, src)
-		if(M.client && visibility)
-			M.client.screen += button
-			button.locked = M.client.prefs.read_preference(/datum/preference/toggle/buttons_locked) || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
-			button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
-		M.update_action_buttons()
+			LAZYADD(M.actions, src)
+			if(M.client)
+				M.client.screen += button
+				button.locked = M.client.prefs.read_preference(/datum/preference/toggle/buttons_locked) || button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE //even if it's not defaultly locked we should remember we locked it before
+				button.moved = button.id ? M.client.prefs.action_buttons_screen_locs["[name]_[button.id]"] : FALSE
+			M.update_action_buttons()
 	else
 		Remove(owner)
 
@@ -513,7 +514,7 @@
 	buttontooltipstyle = "cult"
 	background_icon_state = "bg_demon"
 
-/datum/action/item_action/cult_dagger/Grant(mob/M, visibility = TRUE)
+/datum/action/item_action/cult_dagger/Grant(mob/M)
 	if(!IS_CULTIST(M))
 		Remove(owner)
 		return
@@ -682,42 +683,84 @@
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
-	// The default cooldown applied when StartCooldown() is called
+	// The default cooldown applied after the ability ends
 	var/cooldown_time = 0
 	// The actual next time this ability can be used
 	var/next_use_time = 0
+	// The default melee cooldown applied after the ability ends
+	var/melee_cooldown_time
+	// The actual next time the owner of this action can melee
+	var/next_melee_use_time = 0
 	// Whether or not you want the cooldown for the ability to display in text form
 	var/text_cooldown = TRUE
 	// Setting for intercepting clicks before activating the ability
 	var/click_to_activate = FALSE
-	// Shares cooldowns with other cooldown abilities of the same value, not active if null
+	// Shares cooldowns with other abiliies, bitflag
 	var/shared_cooldown
-	// List of prerequisite actions that are used in this ability
-	var/list/sequence_actions
+	// List of prerequisite actions that are used in this sequenced ability, you cannot put other sequenced abilities in this
+	var/list/sequence_actions = list()
 	// List of prerequisite actions that have been initialized
-	var/list/initialized_actions
+	var/list/initialized_actions = list()
 
-/datum/action/cooldown/New(Target)
+/datum/action/cooldown/New(Target, original = TRUE)
 	..()
-	button.maptext = ""
-	button.maptext_x = 8
-	button.maptext_y = 0
-	button.maptext_width = 24
-	button.maptext_height = 12
+	if(melee_cooldown_time == null)
+		melee_cooldown_time = cooldown_time
+	if(original)
+		CreateSequenceActions()
+	if(button)
+		button.maptext = ""
+		button.maptext_x = 8
+		button.maptext_y = 0
+		button.maptext_width = 24
+		button.maptext_height = 12
+
+/datum/action/cooldown/Destroy()
+	. = ..()
+	QDEL_LIST(sequence_actions)
+	QDEL_LIST(initialized_actions)
+
+/datum/action/cooldown/Grant(mob/M)
+	..()
+	if(owner)
+		UpdateButtonIcon()
+		if(next_use_time > world.time)
+			START_PROCESSING(SSfastprocess, src)
+		RegisterSignal(owner, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, .proc/handle_melee_attack)
+		for(var/datum/action/cooldown/ability in initialized_actions)
+			ability.Grant(owner)
+
+/datum/action/cooldown/Remove(mob/M)
+	..()
+	UnregisterSignal(M, COMSIG_HOSTILE_PRE_ATTACKINGTARGET)
+	for(var/datum/action/cooldown/ability in initialized_actions)
+		ability.Remove(M)
 
 /datum/action/cooldown/IsAvailable()
 	return ..() && (next_use_time <= world.time)
 
+/// Initializes any sequence actions
+/datum/action/cooldown/proc/CreateSequenceActions()
+	for(var/type_path in sequence_actions)
+		var/datum/action/cooldown/ability = new type_path(target, original = FALSE)
+		// prevents clients from using the individual abilities in sequences (this stops it from being added to mob actions when granted as well)
+		QDEL_NULL(ability.button)
+		initialized_actions[ability] = sequence_actions[type_path]
+
 /// Starts a cooldown time to be shared with similar abilities, will use default cooldown time if an override is not specified
-/datum/action/cooldown/proc/StartCooldown(override_cooldown_time)
+/datum/action/cooldown/proc/StartCooldown(override_cooldown_time, override_melee_cooldown_time)
 	if(shared_cooldown)
 		for(var/datum/action/cooldown/shared_ability in owner.actions - src)
-			if(shared_cooldown == shared_ability.shared_cooldown)
+			if(shared_cooldown & shared_ability.shared_cooldown)
 				if(isnum(override_cooldown_time))
 					shared_ability.StartCooldownSelf(override_cooldown_time)
 				else
 					shared_ability.StartCooldownSelf(cooldown_time)
 	StartCooldownSelf(override_cooldown_time)
+	if(isnum(override_melee_cooldown_time))
+		next_melee_use_time = world.time + override_melee_cooldown_time
+	else
+		next_melee_use_time = world.time + melee_cooldown_time
 
 /// Starts a cooldown time for this ability only, will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
@@ -761,22 +804,28 @@
 /datum/action/cooldown/proc/PreActivate(atom/target)
 	if(SEND_SIGNAL(owner, COMSIG_ABILITY_STARTED, src) & COMPONENT_BLOCK_ABILITY_START)
 		return
-	StartCooldown(60 SECONDS)
+	StartCooldown(360 SECONDS, 360 SECONDS)
 	. = Activate(target)
 	StartCooldown()
 	SEND_SIGNAL(owner, COMSIG_ABILITY_FINISHED, src)
 
-/// To be implemented by subtypes
+/// To be implemented by subtypes (if not generic)
 /datum/action/cooldown/proc/Activate(atom/target)
-	return
+	var/total_delay = 0
+	for(var/datum/action/cooldown/ability in initialized_actions)
+		if(ability.initialized_actions.len > 0)
+			ability.initialized_actions = list()
+		addtimer(CALLBACK(ability, .proc/Activate, target), total_delay)
+		total_delay += initialized_actions[ability]
 
 /datum/action/cooldown/UpdateButtonIcon(status_only = FALSE, force = FALSE)
 	. = ..()
 	var/time_left = max(next_use_time - world.time, 0)
 	if(button)
-		if(text_cooldown)
+		// don't display cooldown if its very long
+		if(text_cooldown && time_left < 180 SECONDS)
 			button.maptext = MAPTEXT("<b>[round(time_left/10, 0.1)]</b>")
-	if(!owner || time_left == 0)
+	if(!owner || time_left == 0 || time_left > 180 SECONDS)
 		button.maptext = ""
 	if(IsAvailable() && owner.click_intercept == src)
 		button.color = COLOR_GREEN
@@ -787,12 +836,10 @@
 		STOP_PROCESSING(SSfastprocess, src)
 	UpdateButtonIcon()
 
-/datum/action/cooldown/Grant(mob/M, visibility = TRUE)
-	..()
-	if(owner)
-		UpdateButtonIcon()
-		if(next_use_time > world.time)
-			START_PROCESSING(SSfastprocess, src)
+/datum/action/cooldown/proc/handle_melee_attack(mob/source, mob/target)
+	SIGNAL_HANDLER
+	if(next_melee_use_time > world.time)
+		return COMPONENT_HOSTILE_NO_ATTACK
 
 ///Like a cooldown action, but with an associated proc holder.
 /datum/action/cooldown/spell_like

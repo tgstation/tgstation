@@ -35,8 +35,6 @@
 	crusher_loot = /obj/item/crusher_trophy/lobster_claw
 	/// Charging ability
 	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
-	/// Charging ability
-	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/charge
 
 /mob/living/simple_animal/hostile/asteroid/lobstrosity/Initialize(mapload)
 	. = ..()
