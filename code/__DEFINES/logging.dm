@@ -5,7 +5,6 @@
 #define INVESTIGATE_CARGO "cargo"
 #define INVESTIGATE_CRAFTING "crafting"
 #define INVESTIGATE_ENGINE "engine"
-#define INVESTIGATE_EXONET "exonet"
 #define INVESTIGATE_EXPERIMENTOR "experimentor"
 #define INVESTIGATE_GRAVITY "gravity"
 #define INVESTIGATE_HALLUCINATIONS "hallucinations"
