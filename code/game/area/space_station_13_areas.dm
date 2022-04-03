@@ -46,6 +46,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "start"
 	requires_power = FALSE
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 	has_gravity = STANDARD_GRAVITY
 
 
@@ -1451,6 +1452,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/science/xenobiology
 	name = "\improper Xenobiology Lab"
 	icon_state = "xenobio"
+
+/area/science/xenobiology/hallway
+	name = "\improper Xenobiology Hallway"
+	icon_state = "xenobio_hall"
 
 /area/science/cytology
 	name = "\improper Cytology Lab"

@@ -11,6 +11,7 @@
 	miner_fluff_string = "<span class='holoparasite'>You encounter... Uranium, a very resistant guardian.</span>"
 	toggle_button_type = /atom/movable/screen/guardian/toggle_mode
 	var/toggle = FALSE
+	var/mutable_appearance/shield_overlay
 
 /mob/living/simple_animal/hostile/guardian/protector/ex_act(severity)
 	if(severity >= EXPLODE_DEVASTATE)
@@ -35,7 +36,7 @@
 		return 0
 	cooldown = world.time + 10
 	if(toggle)
-		cut_overlays()
+		cut_overlay(shield_overlay)
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
 		speed = initial(speed)
@@ -43,9 +44,10 @@
 		to_chat(src, "[span_danger("<B>You switch to combat mode.")]</B>")
 		toggle = FALSE
 	else
-		var/mutable_appearance/shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
-		if(guardiancolor)
-			shield_overlay.color = guardiancolor
+		if(!shield_overlay)
+			shield_overlay = mutable_appearance('icons/effects/effects.dmi', "shield-grey")
+			if(guardiancolor)
+				shield_overlay.color = guardiancolor
 		add_overlay(shield_overlay)
 		melee_damage_lower = 2
 		melee_damage_upper = 2

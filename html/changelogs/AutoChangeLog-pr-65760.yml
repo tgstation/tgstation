@@ -1,0 +1,10 @@
+author: "Ebb-Real"
+delete-after: True
+changes: 
+  - expansion: "Bandanas are now craftable from 2 pieces of cloth."
+  - expansion: "Adds the striped bandana and adds various preset colored bandanas to clothing vendors and lockers."
+  - expansion: "You can now dye bandanas with washing machines and customize bandanas from inside the clothesmate."
+  - bugfix: "You can no longer reset all the values of a bandana just by adjusting it, this included integrity."
+  - imageadd: "Adds bandana GAGS sprites."
+  - imagedel: "Removes old non GAGS sprites."
+  - refactor: "Refractors bandana neckerchief code."

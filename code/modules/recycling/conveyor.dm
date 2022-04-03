@@ -84,7 +84,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXITED = .proc/conveyable_exit,
 		COMSIG_ATOM_ENTERED = .proc/conveyable_enter,
-		COMSIG_ATOM_CREATED = .proc/conveyable_enter
+		COMSIG_ATOM_INITIALIZED_ON = .proc/conveyable_enter
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	update_move_direction()
@@ -284,8 +284,9 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())
-	else
-		return ..()
+	
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user, list/modifiers)
