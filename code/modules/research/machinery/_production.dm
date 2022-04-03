@@ -170,7 +170,7 @@
 		if(!reagents.has_reagent(R, D.reagents_list[R]*print_quantity/coeff))
 			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
-	if(is_station_level(z)) //We don't block purchases on station Z.
+	if(is_station_level(z)) //We don't block purchases off station Z.
 		if(attempt_charge(src, usr, (LATHE_TAX * print_quantity)) & COMPONENT_OBJ_CANCEL_CHARGE)
 			return FALSE
 	materials.mat_container.use_materials(efficient_mats, print_quantity)
