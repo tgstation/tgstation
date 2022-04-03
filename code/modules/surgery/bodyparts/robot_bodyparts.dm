@@ -17,7 +17,7 @@
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
 	icon = 'icons/mob/augmentation/augments.dmi'
-	icon_static = null
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	flags_1 = CONDUCT_1
 	icon_state = "borg_l_arm"
 	is_dimorphic = FALSE
@@ -36,16 +36,12 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
-/obj/item/bodypart/l_arm/robot/Initialize(mapload)
-	. = ..()
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-
 /obj/item/bodypart/r_arm/robot
 	name = "cyborg right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	attack_verb_simple = list("slapped", "punched")
 	inhand_icon_state = "buildpipe"
-	icon_static =  null
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
@@ -66,16 +62,12 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
-/obj/item/bodypart/r_arm/robot/Initialize(mapload)
-	. = ..()
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-
 /obj/item/bodypart/l_leg/robot
 	name = "cyborg left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
-	icon_static =  null
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
@@ -96,16 +88,12 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
-/obj/item/bodypart/l_leg/robot/Initialize(mapload)
-	. = ..()
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-
 /obj/item/bodypart/r_leg/robot
 	name = "cyborg right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	attack_verb_simple = list("kicked", "stomped")
 	inhand_icon_state = "buildpipe"
-	icon_static =  null
+	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
@@ -126,15 +114,11 @@
 	medium_burn_msg = ROBOTIC_MEDIUM_BURN_MSG
 	heavy_burn_msg = ROBOTIC_HEAVY_BURN_MSG
 
-/obj/item/bodypart/r_leg/robot/Initialize(mapload)
-	. = ..()
-	icon_static =  'icons/mob/augmentation/augments.dmi'
-
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
 	desc = "A heavily reinforced case containing cyborg logic boards, with space for a standard power cell."
 	inhand_icon_state = "buildpipe"
-	icon_static =  null
+	icon_static =  'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
@@ -157,10 +141,6 @@
 
 	var/wired = FALSE
 	var/obj/item/stock_parts/cell/cell = null
-
-/obj/item/bodypart/chest/robot/Initialize(mapload)
-	. = ..()
-	icon_static =  'icons/mob/augmentation/augments.dmi'
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -246,7 +226,7 @@
 	name = "cyborg head"
 	desc = "A standard reinforced braincase, with spine-plugged neural socket and sensor gimbals."
 	inhand_icon_state = "buildpipe"
-	icon_static = null
+	icon_static = 'icons/mob/augmentation/augments.dmi'
 	icon = 'icons/mob/augmentation/augments.dmi'
 	limb_id = "robotic"
 	flags_1 = CONDUCT_1
@@ -269,10 +249,6 @@
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
-
-/obj/item/bodypart/head/robot/Initialize(mapload)
-	. = ..()
-	icon_static =  'icons/mob/augmentation/augments.dmi'
 
 /obj/item/bodypart/head/robot/handle_atom_del(atom/head_atom)
 	if(head_atom == flash1)
