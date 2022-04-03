@@ -407,7 +407,7 @@
 		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE usr.key = :player_key AND id = :id",
 			list("id" = rounded_message_id)
-			)
+		)
 		if(!query_message_read.warn_execute())
 			qdel(query_message_read)
 			return
