@@ -657,7 +657,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 			existing_authors += iterated_feed_channel.author
 	if((current_user?.account_holder == "Unknown") || (current_user?.account_holder in existing_authors) || isnull(current_user?.account_holder))
 		creating_channel = FALSE
-		tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel.", list("Okay"))
+		tgui_alert(usr, "ERROR: User cannot be found or already has an owned feed channel. Please verify that you are wearing your ID card.", list("Okay"))
+		if(current_user)
+			visible_message("<span_class='danger'>The current_user is:[current_user]</span>")
+		else
+			visible_message("<span_class='danger'>Current user is null.</span>")
+		if(current_user?.account_holder)
+			visible_message("<span_class='danger'>The account_holder is: [current_user.account_holder]</span>")
+		else
+			visible_message("<span_class='danger'>Account holder is null.</span>")
 		return TRUE
 	creating_channel = TRUE
 	return TRUE
