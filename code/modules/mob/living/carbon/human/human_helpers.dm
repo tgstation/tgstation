@@ -107,7 +107,7 @@
 		var/obj/item/tk_grab/telekinetic_grab = is_holding_item_of_type(/obj/item/tk_grab) //can fire with tk even if our fingers are fat
 		if(telekinetic_grab && telekinetic_grab.focus == G)
 			if(HAS_TRAIT(src, TRAIT_HULK))
-				G.balloon_alert(src, "not allowed!")
+				G.balloon_alert(src, "too angry to concentrate!")
 				return FALSE
 			return TRUE
 		if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS))
