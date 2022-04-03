@@ -1964,12 +1964,6 @@
 	},
 /turf/open/floor/iron,
 /area/medical/chemistry)
-"hQ" = (
-/obj/structure/cable,
-/obj/machinery/power/rtg/debug,
-/obj/machinery/power/rtg/debug,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "ii" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -6734,7 +6728,7 @@ aa
 aa
 ae
 ab
-hQ
+sE
 an
 sE
 an
