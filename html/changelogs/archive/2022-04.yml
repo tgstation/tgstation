@@ -139,3 +139,28 @@
   - rscadd: A new plushie has appeared on TramStation. Seek it out if you dare.
   timothymtorres:
   - bugfix: Fix shutters contextual screentips to not display as open with LMB.
+2022-04-03:
+  Kapu1178:
+  - balance: Humans aren't spaceproof anymore
+  - rscadd: Limbgrower limbs are now a sickly green
+  - refactor: Digitigrade legs should now behave consistently.
+  - refactor: Limbs will no longer update appearance as owner is transferred, allowing
+      for multi-species frankensteins
+  - bugfix: CHANGELING TRANSFORM FUNCTIONS PROPERLY
+  - rscdel: Synths and synth-related mechanics (Synth fugative)
+  RandomGamer123:
+  - bugfix: Stops find_safe_turf, used by salvation signposts in deep space and the
+      super secret room, from teleporting people into the windows of the toxins test
+      area and killing them if they didn't have spaceproof equipment.
+  Rhials:
+  - bugfix: Fixed up the wiring in Icebox Xenobiology's shutter buttons. The two buttons
+      no longer close the same shutters, and now close their intended targets.
+  Zonespace27:
+  - bugfix: Standard HoS headset no longer protects against loud sounds.
+  dragomagol:
+  - admin: singulo and supermatter logging have been combined into engine logging!
+  san7890:
+  - bugfix: You know that shower room in the northeastern portion of IceBox Station?
+      We fixed the, erm, posters, there.
+  timothymtorres:
+  - bugfix: Fix Cryo areas to have CO2 filtering from the gas loops.
