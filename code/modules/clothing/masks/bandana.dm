@@ -44,7 +44,9 @@
 	icon_state = "bandana"
 	worn_icon_state = "bandana_worn"
 	greyscale_config = /datum/greyscale_config/bandana
-	greyscale_config_worn = /datum/greyscale_config/bandana/worn
+	greyscale_config_worn = /datum/greyscale_config/bandana_worn
+	var/greyscale_config_up = /datum/greyscale_config/bandana_up
+	var/greyscale_config_worn_up = /datum/greyscale_config/bandana_worn_up
 	greyscale_colors = "#2e2e2e"
 
 /obj/item/clothing/mask/bandana/color/attack_self(mob/user)
@@ -55,8 +57,8 @@
 	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
 		worn_icon_state += "_up"
 		set_greyscale(
-			new_config = /datum/greyscale_config/bandana_up,
-			new_worn_config = /datum/greyscale_config/bandana_up/worn
+			new_config = greyscale_config_up,
+			new_worn_config = greyscale_config_worn_up
 		)
 	else
 		worn_icon_state = initial(worn_icon_state)
@@ -125,26 +127,10 @@
 	icon_state = "bandstriped"
 	worn_icon_state = "bandstriped_worn"
 	greyscale_config = /datum/greyscale_config/bandstriped
-	greyscale_config_worn = /datum/greyscale_config/bandstriped/worn
+	greyscale_config_worn = /datum/greyscale_config/bandstriped_worn
+	greyscale_config_up = /datum/greyscale_config/bandstriped_up
+	greyscale_config_worn_up = /datum/greyscale_config/bandstriped_worn_up
 	greyscale_colors = "#2e2e2e#C6C6C6"
-
-/obj/item/clothing/mask/bandana/color/striped/attack_self(mob/user)
-	if(slot_flags & ITEM_SLOT_NECK)
-		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
-		return
-	adjustmask(user)
-	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
-		worn_icon_state += "_up"
-		set_greyscale(
-			new_config = /datum/greyscale_config/bandstriped_up,
-			new_worn_config = /datum/greyscale_config/bandstriped_up/worn
-		)
-	else
-		worn_icon_state = initial(worn_icon_state)
-		set_greyscale(
-			new_config = initial(greyscale_config),
-			new_worn_config = initial(greyscale_config_worn)
-		)
 
 /obj/item/clothing/mask/bandana/color/striped/black
 	name = "striped bandana"
@@ -176,26 +162,10 @@
 	icon_state = "bandskull"
 	worn_icon_state = "bandskull_worn"
 	greyscale_config = /datum/greyscale_config/bandskull
-	greyscale_config_worn = /datum/greyscale_config/bandskull/worn
+	greyscale_config_worn = /datum/greyscale_config/bandskull_worn
+	greyscale_config_up = /datum/greyscale_config/bandskull_up
+	greyscale_config_worn_up = /datum/greyscale_config/bandskull_worn_up
 	greyscale_colors = "#2e2e2e#C6C6C6"
-
-/obj/item/clothing/mask/bandana/color/skull/attack_self(mob/user)
-	if(slot_flags & ITEM_SLOT_NECK)
-		to_chat(user, span_warning("You must undo [src] in order to push it into a hat!"))
-		return
-	adjustmask(user)
-	if(greyscale_config == initial(greyscale_config) && greyscale_config_worn == initial(greyscale_config_worn))
-		worn_icon_state += "_up"
-		set_greyscale(
-			new_config = /datum/greyscale_config/bandskull_up,
-			new_worn_config = /datum/greyscale_config/bandskull_up/worn
-		)
-	else
-		worn_icon_state = initial(worn_icon_state)
-		set_greyscale(
-			new_config = initial(greyscale_config),
-			new_worn_config = initial(greyscale_config_worn)
-		)
 
 /obj/item/clothing/mask/bandana/color/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
