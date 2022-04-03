@@ -1,4 +1,0 @@
-author: "dragomagol"
-delete-after: True
-changes: 
-  - admin: "singulo and supermatter logging have been combined into engine logging!"
