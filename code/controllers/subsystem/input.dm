@@ -62,7 +62,8 @@ SUBSYSTEM_DEF(input)
 	if(!TICK_CHECK_HIGH_PRIORITY \
 		|| average_click_delay >= MAXIMUM_CLICK_LATENCY \
 		|| FOR_ADMINS_IF_CLICKS_BROKE_immediately_execute_all_clicks \
-		|| !initialized)
+		|| !initialized \
+		|| !(runlevels & Master.current_runlevel))
 
 		clicked_atom.Click(location, control, params)//this is why it works via usr and not a passed in mob arg. atom/Click() assumes usr is correct
 		current_clicks++
