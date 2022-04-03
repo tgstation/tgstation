@@ -1,7 +1,12 @@
 #define MAX_NAVIGATE_RANGE 125
 
 /mob/living
+	/// Cooldown of the navigate() verb.
 	COOLDOWN_DECLARE(navigate_cooldown)
+
+/client
+	/// Images of the path created by navigate().
+	var/list/navigation_images = list()
 
 /mob/living/verb/navigate()
 	set name = "Navigate"
@@ -10,12 +15,15 @@
 	if(incapacitated())
 		return
 	if(length(client.navigation_images))
-		cut_navigation()
+		addtimer(CALLBACK(src, .proc/cut_navigation), world.tick_lag)
 		balloon_alert(src, "navigation path removed")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
 		return
+	addtimer(CALLBACK(src, .proc/create_navigation), world.tick_lag)
+
+/mob/living/proc/create_navigation()
 	var/list/beacon_list = list()
 	for(var/obj/machinery/navbeacon/beacon in GLOB.wayfindingbeacons)
 		if(beacon.z != z || get_dist(beacon, src) > MAX_NAVIGATE_RANGE)
@@ -56,9 +64,16 @@
 		path_image.icon_state = "[dir_1]-[dir_2]"
 		client.images += path_image
 		client.navigation_images += path_image
-		animate(path_image, 1 SECONDS, alpha = 150)
+		animate(path_image, 0.5 SECONDS, alpha = 150)
+	addtimer(CALLBACK(src, .proc/shine_navigation), 0.5 SECONDS)
 	RegisterSignal(src, COMSIG_LIVING_DEATH, .proc/cut_navigation)
 	balloon_alert(src, "navigation path created")
+
+/mob/living/proc/shine_navigation()
+	for(var/i in 1 to length(client.navigation_images))
+		animate(client.navigation_images[i], time = 1 SECONDS, loop = -1, alpha = 200, color = "#bbffff", easing = BACK_EASING | EASE_OUT)
+		animate(time = 2 SECONDS, loop = -1, alpha = 150, color = "#00ffff", easing = CUBIC_EASING | EASE_OUT)
+		stoplag(0.1 SECONDS)
 
 /mob/living/proc/cut_navigation()
 	SIGNAL_HANDLER

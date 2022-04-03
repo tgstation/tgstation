@@ -254,6 +254,3 @@
 
 	/// If this client has been fully initialized or not
 	var/fully_created = FALSE
-
-	/// All navigation images
-	var/list/navigation_images = list()

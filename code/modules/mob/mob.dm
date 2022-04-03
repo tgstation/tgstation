@@ -1400,3 +1400,9 @@
 
 	data["memories"] = memories
 	return data
+
+/mob/verb/view_skills()
+	set category = "IC"
+	set name = "View Skills"
+
+	mind?.print_levels(src)
