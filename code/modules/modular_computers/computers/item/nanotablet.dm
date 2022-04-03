@@ -1,12 +1,12 @@
 /obj/item/modular_computer/tablet/nano
-	name = "nanotablet"
+	name = "standard nanotablet"
 	desc = "A result of collaborations between Thinktronic Systems, and Nanotrasen. Providing you with the best way to keep your ID and programs in one place!"
 	deconstructable = FALSE
 	upgradable = FALSE
 
 	icon_state = "pda"
 
-	greyscale_config = /datum/greyscale_config/pda
+	greyscale_config = /datum/greyscale_config/nanotablet
 	greyscale_colors = "#999875#a92323"
 
 	var/default_cartridge = 0
@@ -55,19 +55,19 @@
 /obj/item/modular_computer/tablet/nano/medical
 	name = "medical nanotablet"
 	default_cartridge = /obj/item/cartridge/medical
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#e2e2e2#000099#5d99be"
 
 /obj/item/modular_computer/tablet/nano/viro
 	name = "virology nanotablet"
 	default_cartridge = /obj/item/cartridge/medical
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#e2e2e2#355FAC#789876"
 
 /obj/item/modular_computer/tablet/nano/engineering
 	name = "engineering nanotablet"
 	default_cartridge = /obj/item/cartridge/engineering
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#C5994C#69DBF3#D9D65B"
 
 /obj/item/modular_computer/tablet/nano/security
@@ -83,7 +83,7 @@
 /obj/item/modular_computer/tablet/nano/warden
 	name = "warden nanotablet"
 	default_cartridge = /obj/item/cartridge/security
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#cc4242#0000cc#666666"
 
 /obj/item/modular_computer/tablet/nano/janitor
@@ -94,12 +94,12 @@
 /obj/item/modular_computer/tablet/nano/science
 	name = "scientist nanotablet"
 	default_cartridge = /obj/item/cartridge/signal/ordnance
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#e2e2e2#000099#9F5CA5"
 
 /obj/item/modular_computer/tablet/nano/heads
 	default_cartridge = /obj/item/cartridge/head
-	greyscale_config = /datum/greyscale_config/pda/head
+	greyscale_config = /datum/greyscale_config/nanotablet/head
 	greyscale_colors = "#789876#a92323"
 
 /obj/item/modular_computer/tablet/nano/heads/hop
@@ -109,31 +109,31 @@
 /obj/item/modular_computer/tablet/nano/heads/hos
 	name = "head of security nanotablet"
 	default_cartridge = /obj/item/cartridge/hos
-	greyscale_config = /datum/greyscale_config/pda/head
+	greyscale_config = /datum/greyscale_config/nanotablet/head
 	greyscale_colors = "#cc4242#0000cc"
 
 /obj/item/modular_computer/tablet/nano/heads/ce
 	name = "chief engineer nanotablet"
 	default_cartridge = /obj/item/cartridge/ce
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick/head
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick/head
 	greyscale_colors = "#C4A56D#69DBF3#e2e2e2"
 
 /obj/item/modular_computer/tablet/nano/heads/cmo
 	name = "chief medical officer nanotablet"
 	default_cartridge = /obj/item/cartridge/cmo
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick/head
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick/head
 	greyscale_colors = "#e2e2e2#000099#5d99be"
 
 /obj/item/modular_computer/tablet/nano/heads/rd
 	name = "research director nanotablet"
 	default_cartridge = /obj/item/cartridge/rd
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick/head
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick/head
 	greyscale_colors = "#e2e2e2#000099#9F5CA5"
 
 /obj/item/modular_computer/tablet/nano/captain
 	name = "captain nanotablet"
 	default_cartridge = /obj/item/cartridge/captain
-	greyscale_config = /datum/greyscale_config/pda/captain
+	greyscale_config = /datum/greyscale_config/nanotablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#F5D67B"
 
 /obj/item/modular_computer/tablet/nano/cargo
@@ -144,17 +144,17 @@
 /obj/item/modular_computer/tablet/nano/quartermaster
 	name = "quartermaster nanotablet"
 	default_cartridge = /obj/item/cartridge/quartermaster
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#D6B328#6506ca#927444"
 
 /obj/item/modular_computer/tablet/nano/shaftminer
 	name = "shaft miner nanotablet"
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#927444#D6B328#6C3BA1"
 
 /obj/item/modular_computer/tablet/nano/chaplain
 	name = "chaplain nanotablet"
-	greyscale_config = /datum/greyscale_config/pda/chaplain
+	greyscale_config = /datum/greyscale_config/nanotablet/chaplain
 	greyscale_colors = "#333333#d11818"
 
 /obj/item/modular_computer/tablet/nano/lawyer
@@ -164,12 +164,12 @@
 
 /obj/item/modular_computer/tablet/nano/botanist
 	name = "botanist nanotablet"
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#50E193#E26F41#71A7CA"
 
 /obj/item/modular_computer/tablet/nano/roboticist
 	name = "roboticist nanotablet"
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#484848#0099cc#d33725"
 	default_cartridge = /obj/item/cartridge/roboticist
 
@@ -184,19 +184,19 @@
 /obj/item/modular_computer/tablet/nano/atmos
 	name = "atmospherics nanotablet"
 	default_cartridge = /obj/item/cartridge/atmos
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#ceca2b#00E5DA#727272"
 
 /obj/item/modular_computer/tablet/nano/chemist
 	name = "chemist nanotablet"
 	default_cartridge = /obj/item/cartridge/chemistry
-	greyscale_config = /datum/greyscale_config/pda/stripe_thick
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_thick
 	greyscale_colors = "#e2e2e2#355FAC#ea6400"
 
 /obj/item/modular_computer/tablet/nano/geneticist
 	name = "geneticist nanotablet"
 	default_cartridge = /obj/item/cartridge/medical
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 // unimplemented
@@ -204,19 +204,19 @@
 /obj/item/modular_computer/tablet/nano/clown
 	name = "clown nanotablet"
 	default_cartridge = /obj/item/cartridge/virus/clown
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/nano/mime
 	name = "mime nanotablet"
 	default_cartridge = /obj/item/cartridge/virus/mime
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/nano/curator
 	name = "curator nanotablet"
 	default_cartridge = /obj/item/cartridge/curator
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/nano/syndicate

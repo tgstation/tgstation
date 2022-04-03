@@ -109,7 +109,7 @@
 
 /datum/greyscale_config/pda
 	name = "PDA"
-	icon_file = 'icons/obj/modular_tablet.dmi'
+	icon_file = 'icons/obj/pda.dmi'
 	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
 /datum/greyscale_config/pda/chaplain
@@ -143,6 +143,43 @@
 /datum/greyscale_config/pda/stripe_thick/head
 	name = "Head Thick Stripe PDA"
 	json_config = 'code/datums/greyscale/json_configs/pda_stripe_thick_head.json'
+
+/datum/greyscale_config/nanotablet
+	name = "nanotablet"
+	icon_file = 'icons/obj/modular_tablet.dmi'
+	json_config = 'code/datums/greyscale/json_configs/nanotablet.json'
+
+/datum/greyscale_config/nanotablet/chaplain
+	name = "Chaplain nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_chaplain.json'
+
+/datum/greyscale_config/nanotablet/captain
+	name = "Captain nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_captain.json'
+
+/datum/greyscale_config/nanotablet/clown
+	name = "Clown nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_clown.json'
+
+/datum/greyscale_config/nanotablet/head
+	name = "Head nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_head.json'
+
+/datum/greyscale_config/nanotablet/mime
+	name = "Mime nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_mime.json'
+
+/datum/greyscale_config/nanotablet/stripe_split
+	name = "Split Stripe nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_stripe_split.json'
+
+/datum/greyscale_config/nanotablet/stripe_thick
+	name = "Thick Stripe nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_stripe_thick.json'
+
+/datum/greyscale_config/nanotablet/stripe_thick/head
+	name = "Head Thick Stripe nanotablet"
+	json_config = 'code/datums/greyscale/json_configs/nanotablet_stripe_thick_head.json'
 
 /datum/greyscale_config/sneakers
 	name = "Sneakers"
