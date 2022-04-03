@@ -110,8 +110,10 @@
 			antimagic_color = LIGHT_COLOR_BLOOD_MAGIC
 			playsound(user, 'sound/magic/magic_block.ogg', 50, TRUE)
 		else if(casted_magic_flags & antimagic_flags & MAGIC_RESISTANCE_HOLY)
-			user.visible_message(span_warning("[user] starts to glow as [visible_subject] emits a halo of light!"),
-			span_userdanger("A feeling of warmth washes over [self_subject] as rays of light surround your body and protect you!"))
+			user.visible_message(
+				span_warning("[user] starts to glow as [visible_subject] emits a halo of light!"),
+				span_userdanger("A feeling of warmth washes over [self_subject] as rays of light surround your body and protect you!"),
+			)
 			antimagic_effect = mutable_appearance('icons/effects/genetics.dmi', "servitude", -MUTATIONS_LAYER)
 			antimagic_color = LIGHT_COLOR_HOLY_MAGIC
 			playsound(user, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
