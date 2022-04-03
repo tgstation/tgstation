@@ -141,7 +141,7 @@
 
 	var/median_temperature = (selected_recipe.max_temp + selected_recipe.min_temp) / 2
 	if(internal.temperature >= (median_temperature * MIN_DEVIATION_RATE) && internal.temperature <= (median_temperature * MAX_DEVIATION_RATE))
-		quality_loss = max(quality_loss - 5.5, -100)
+		quality_loss = max(quality_loss - 5.5, -85)
 
 	internal.temperature = max(internal.temperature + (selected_recipe.energy_release / internal.heat_capacity()), TCMB)
 	update_parents()
@@ -196,7 +196,8 @@
 	progress_bar = 0
 
 	for(var/gas_type in selected_recipe.requirements)
-		var/amount_consumed = selected_recipe.requirements[gas_type] + quality_loss * 5
+		var/required_gas_moles = selected_recipe.requirements[gas_type]
+		var/amount_consumed = required_gas_moles + (required_gas_moles * (quality_loss * 0.01))
 		if(internal.gases[gas_type][MOLES] < amount_consumed)
 			quality_loss = min(quality_loss + 10, 100)
 		internal.remove_specific(gas_type, amount_consumed)
@@ -231,7 +232,7 @@
 			var/obj/creation = new path(get_step(src, SOUTH))
 			creation.name = "[quality_control] [creation.name]"
 			if(selected_recipe.dangerous)
-				investigate_log("has been created in the crystallizer.", INVESTIGATE_SUPERMATTER)
+				investigate_log("has been created in the crystallizer.", INVESTIGATE_ENGINE)
 				message_admins("[src] has been created in the crystallizer [ADMIN_JMP(src)].")
 
 

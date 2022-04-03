@@ -10,6 +10,7 @@
 	name = "Snow Forest"
 	icon_state = "away"
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/awaymission/cabin/snowforest/sovietsurface
 	name = "Snow Forest"
@@ -21,6 +22,7 @@
 	icon_state = "away3"
 	requires_power = FALSE
 	static_lighting = FALSE
+	base_lighting_alpha = 255
 
 /area/awaymission/cabin/caves/sovietcave
 	name = "Soviet Bunker"

@@ -187,7 +187,7 @@
 /datum/outfit/consumed_dame/pre_equip(mob/living/carbon/human/dame, visualsOnly = FALSE)
 	if(!visualsOnly)
 		dame.gender = FEMALE
-		dame.body_type = FEMALE
+		dame.physique = FEMALE
 		dame.update_body()
 	if(prob(30))
 		back = /obj/item/nullrod/scythe/talking
