@@ -147,39 +147,39 @@
 /datum/greyscale_config/nanotablet
 	name = "nanotablet"
 	icon_file = 'icons/obj/modular_tablet.dmi'
-	json_config = 'code/datums/greyscale/json_configs/nanotablet.json'
+	json_config = 'code/datums/greyscale/json_configs/pda.json'
 
 /datum/greyscale_config/nanotablet/chaplain
 	name = "Chaplain nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_chaplain.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_chaplain.json'
 
 /datum/greyscale_config/nanotablet/captain
 	name = "Captain nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_captain.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_captain.json'
 
 /datum/greyscale_config/nanotablet/clown
 	name = "Clown nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_clown.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_clown.json'
 
 /datum/greyscale_config/nanotablet/head
 	name = "Head nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_head.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_head.json'
 
 /datum/greyscale_config/nanotablet/mime
 	name = "Mime nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_mime.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_mime.json'
 
 /datum/greyscale_config/nanotablet/stripe_split
 	name = "Split Stripe nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_stripe_split.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_stripe_split.json'
 
 /datum/greyscale_config/nanotablet/stripe_thick
 	name = "Thick Stripe nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_stripe_thick.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_stripe_thick.json'
 
 /datum/greyscale_config/nanotablet/stripe_thick/head
 	name = "Head Thick Stripe nanotablet"
-	json_config = 'code/datums/greyscale/json_configs/nanotablet_stripe_thick_head.json'
+	json_config = 'code/datums/greyscale/json_configs/pda_stripe_thick_head.json'
 
 /datum/greyscale_config/sneakers
 	name = "Sneakers"
