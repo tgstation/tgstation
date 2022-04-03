@@ -28,8 +28,10 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = FRIENDLY_SPAWN
-	can_be_held = TRUE
-	held_w_class = WEIGHT_CLASS_TINY
+	can_be_held = TRUE //frogs can be picked up
+	held_w_class = WEIGHT_CLASS_TINY //you can fit them in your pockets too!
+	worn_slot_flags = ITEM_SLOT_HEAD //put them on your head :)
+	head_icon = 'icons/mob/animal_item_head.dmi'
 	var/stepped_sound = 'sound/effects/huuu.ogg'
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize(mapload)
