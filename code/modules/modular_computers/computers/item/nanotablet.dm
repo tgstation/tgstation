@@ -24,6 +24,8 @@
 	if(card)
 		if(card.stored_card)
 			. += mutable_appearance(init_icon, "id_overlay")
+	if(light_on)
+		. += mutable_appearance(init_icon, "light_overlay")
 
 /obj/item/modular_computer/tablet/nano/Initialize(mapload)
 	. = ..()
@@ -45,6 +47,8 @@
 	preload += default_cartridge
 	return preload
 
+/obj/item/modular_computer/tablet/nano/attack_ai(mob/user)
+	return // we don't want ais or cyborgs using a private nanotablet
 
 // PRESETS
 
@@ -198,27 +202,39 @@
 // unimplemented
 
 /obj/item/modular_computer/tablet/nano/clown
-	name = "geneticist nanotablet"
-	default_cartridge = /obj/item/cartridge/medical
+	name = "clown nanotablet"
+	default_cartridge = /obj/item/cartridge/virus/clown
 	greyscale_config = /datum/greyscale_config/pda/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/nano/mime
-	name = "geneticist nanotablet"
-	default_cartridge = /obj/item/cartridge/medical
+	name = "mime nanotablet"
+	default_cartridge = /obj/item/cartridge/virus/mime
 	greyscale_config = /datum/greyscale_config/pda/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/nano/curator
-	name = "geneticist nanotablet"
-	default_cartridge = /obj/item/cartridge/medical
+	name = "curator nanotablet"
+	default_cartridge = /obj/item/cartridge/curator
 	greyscale_config = /datum/greyscale_config/pda/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/nano/syndicate
-	name = "geneticist nanotablet"
-	default_cartridge = /obj/item/cartridge/medical
-	greyscale_config = /datum/greyscale_config/pda/stripe_split
-	greyscale_colors = "#e2e2e2#000099#0097ca"
+	name = "military nanotablet"
+	greyscale_colors = "#891417#80FF80"
+	saved_identification = "John Doe"
+	saved_job = "Citizen"
+
+/obj/item/modular_computer/tablet/nano/syndicate/Initialize()
+	. = ..()
+
+	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
+
+	if(hard_drive)
+		var/datum/computer_file/program/messenger/msg = hard_drive.find_file_by_name("nt_messenger")
+
+		if(msg)
+			msg.sAndR = FALSE
+
 
 

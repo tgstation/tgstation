@@ -111,10 +111,15 @@
 		stack_trace("[type] initialized outside of an AI, deleting.")
 		return INITIALIZE_HINT_QDEL
 
+/obj/item/modular_computer/tablet/ai/Destroy()
+	ayeye = null
+	return ..()
+
 /obj/item/modular_computer/tablet/ai/turn_on(mob/user)
 	if(ayeye?.stat != DEAD)
 		return ..()
 	return FALSE
+
 
 /**
  * Returns a ref to the RoboTact app, creating the app if need be.
