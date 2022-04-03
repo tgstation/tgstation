@@ -129,6 +129,7 @@
 			organ.transfer_to_limb(src, phantom_owner)
 
 	update_icon_dropped()
+	synchronize_bodytypes(phantom_owner)
 	phantom_owner.update_health_hud() //update the healthdoll
 	phantom_owner.update_body()
 	phantom_owner.update_hair()
@@ -292,11 +293,6 @@
 		if(pill)
 			pill.forceMove(src)
 
-	//Make sure de-zombification happens before organ removal instead of during it
-	var/obj/item/organ/zombie_infection/ooze = owner.getorganslot(ORGAN_SLOT_ZOMBIE)
-	if(istype(ooze))
-		ooze.transfer_to_limb(src, owner)
-
 	name = "[owner.real_name]'s head"
 	..()
 
@@ -304,11 +300,13 @@
 /obj/item/bodypart/proc/replace_limb(mob/living/carbon/limb_owner, special)
 	if(!istype(limb_owner))
 		return
-	var/obj/item/bodypart/limb = limb_owner.get_bodypart(body_zone) //needs to happen before attach because multiple limbs in same zone breaks helpers
-	if(!attach_limb(limb_owner, special))//we can attach this limb and drop the old after because of our robust bodyparts system. you know, just for a sec.
-		return
-	if(limb)
-		limb.drop_limb(1)
+	var/obj/item/bodypart/old_limb = limb_owner.get_bodypart(body_zone)
+	if(old_limb)
+		old_limb.drop_limb(TRUE)
+
+	. = attach_limb(limb_owner, special)
+	if(!.) //If it failed to replace, re-attach their old limb as if nothing happened.
+		old_limb.attach_limb(limb_owner, TRUE)
 
 /obj/item/bodypart/head/replace_limb(mob/living/carbon/head_owner, special)
 	if(!istype(head_owner))
@@ -322,7 +320,11 @@
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/new_limb_owner, special)
 	if(SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
-	. = TRUE
+
+	var/obj/item/bodypart/chest/mob_chest = new_limb_owner.get_bodypart(BODY_ZONE_CHEST)
+	if(mob_chest && !(mob_chest.acceptable_bodytype & bodytype) && !special)
+		return FALSE
+
 	moveToNullspace()
 	set_owner(new_limb_owner)
 	new_limb_owner.add_bodypart(src)
@@ -365,20 +367,14 @@
 	if(can_be_disabled)
 		update_disabled()
 
+	synchronize_bodytypes(new_limb_owner)
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
-	new_limb_owner.update_hair()
 	new_limb_owner.update_damage_overlays()
-
+	return TRUE
 
 /obj/item/bodypart/head/attach_limb(mob/living/carbon/new_head_owner, special = FALSE, abort = FALSE)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
-	var/hair_color = src.hair_color
-	var/hairstyle = src.hairstyle
-	var/facial_hair_color = src.facial_hair_color
-	var/facial_hairstyle = src.facial_hairstyle
-	var/lip_style = src.lip_style
-	var/lip_color = src.lip_color
 	var/real_name = src.real_name
 
 	. = ..()
@@ -401,17 +397,9 @@
 	if(eyes)
 		eyes = null
 
-	if(ishuman(new_head_owner))
-		var/mob/living/carbon/human/human_head_owner = new_head_owner
-		human_head_owner.hair_color = hair_color
-		human_head_owner.hairstyle = hairstyle
-		human_head_owner.facial_hair_color = facial_hair_color
-		human_head_owner.facial_hairstyle = facial_hairstyle
-		human_head_owner.update_lips(lip_style, lip_color, stored_lipstick_trait)
 	if(real_name)
 		new_head_owner.real_name = real_name
 	real_name = ""
-	name = initial(name)
 
 	//Handle dental implants
 	for(var/obj/item/reagent_containers/pill/pill in src)
@@ -422,41 +410,57 @@
 
 	new_head_owner.updatehealth()
 	new_head_owner.update_body()
-	new_head_owner.update_hair()
 	new_head_owner.update_damage_overlays()
 
+///Makes sure that the owner's bodytype flags match the flags of all of it's parts.
+/obj/item/bodypart/proc/synchronize_bodytypes(mob/living/carbon/carbon_owner)
+	if(!carbon_owner.dna.species)
+		return
+	var/all_limb_flags
+	for(var/obj/item/bodypart/limb as anything in carbon_owner.bodyparts)
+		all_limb_flags = all_limb_flags | limb.bodytype
+
+	carbon_owner.dna.species.bodytype = all_limb_flags
 
 //Regenerates all limbs. Returns amount of limbs regenerated
-/mob/living/proc/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())
-	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, noheal, excluded_zones)
+/mob/living/proc/regenerate_limbs(list/excluded_zones = list())
+	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, excluded_zones)
 
-/mob/living/carbon/regenerate_limbs(noheal = FALSE, list/excluded_zones = list())
-	. = ..()
+/mob/living/carbon/regenerate_limbs(list/excluded_zones = list())
+	SEND_SIGNAL(src, COMSIG_LIVING_REGENERATE_LIMBS, excluded_zones)
 	var/list/zone_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 	if(length(excluded_zones))
 		zone_list -= excluded_zones
 	for(var/limb_zone in zone_list)
-		. += regenerate_limb(limb_zone, noheal)
+		regenerate_limb(limb_zone)
 
-/mob/living/proc/regenerate_limb(limb_zone, noheal)
+/mob/living/proc/regenerate_limb(limb_zone)
 	return
 
-/mob/living/carbon/regenerate_limb(limb_zone, noheal)
+/mob/living/carbon/regenerate_limb(limb_zone)
 	var/obj/item/bodypart/limb
 	if(get_bodypart(limb_zone))
 		return FALSE
 	limb = newBodyPart(limb_zone, 0, 0)
 	if(limb)
-		if(!noheal)
-			limb.set_brute_dam(0)
-			limb.set_burn_dam(0)
-			limb.brutestate = 0
-			limb.burnstate = 0
-
 		if(!limb.attach_limb(src, 1))
 			qdel(limb)
 			return FALSE
+		limb.update_limb(is_creating = TRUE)
 		var/datum/scar/scaries = new
 		var/datum/wound/loss/phantom_loss = new // stolen valor, really
 		scaries.generate(limb, phantom_loss)
+
+		//Copied from /datum/species/proc/on_species_gain()
+		for(var/obj/item/organ/external/organ_path as anything in dna.species.external_organs)
+			//Load a persons preferences from DNA
+			var/zone = initial(organ_path.zone)
+			if(zone != limb_zone)
+				continue
+			var/feature_key_name = dna.features[initial(organ_path.feature_key)]
+			var/obj/item/organ/external/new_organ = SSwardrobe.provide_type(organ_path)
+			new_organ.set_sprite(feature_key_name)
+			new_organ.Insert(src)
+
+		update_body_parts()
 		return TRUE
