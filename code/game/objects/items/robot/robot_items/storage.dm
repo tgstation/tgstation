@@ -155,9 +155,7 @@
 		bro = loc
 
 	if (!stored || force)
-		glass.AddElement(/datum/element/reagent_refiller, cell = bro?.cell)
-	else
-		glass.RemoveElement(/datum/element/reagent_refiller)
+		glass.AddComponent(/datum/component/reagent_refiller, cell = bro?.cell)
 
 /obj/item/borg/apparatus/beaker/service/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if (!istype(arrived, /obj/item/reagent_containers/food/drinks))
