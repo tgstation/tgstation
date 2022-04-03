@@ -13,7 +13,6 @@
 	var/list/whitelisted_reagents
 
 /datum/component/reagent_refiller/Initialize(
-	...,
 	time_to_refill = 60 SECONDS,
 	obj/item/stock_parts/cell/cell,
 	power_to_draw = 30,
