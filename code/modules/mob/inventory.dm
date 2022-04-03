@@ -427,9 +427,7 @@
 	set name = "quick-equip"
 	set hidden = TRUE
 
-	if(TRY_QUEUE_VERB(src, .proc/execute_quick_equip))
-		return
-	execute_quick_equip()
+	QUEUE_OR_CALL_VERB(src, .proc/execute_quick_equip, VERB_DEFAULT_QUEUE_THRESHOLD)
 
 ///proc extender of [/mob/verb/quick_equip] used to make the verb queuable if the server is overloaded
 /mob/proc/execute_quick_equip()

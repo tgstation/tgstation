@@ -1002,9 +1002,7 @@
 	set name = "Resist"
 	set category = "IC"
 
-	if(TRY_QUEUE_VERB(src, .proc/execute_resist))
-		return
-	execute_resist()
+	QUEUE_OR_CALL_VERB(src, .proc/execute_resist, VERB_DEFAULT_QUEUE_THRESHOLD)
 
 ///proc extender of [/mob/living/verb/resist] meant to make the process queable if the server is overloaded when the verb is called
 /mob/living/proc/execute_resist()

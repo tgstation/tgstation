@@ -32,6 +32,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	/// world.time of last fire, for tracking lag outside of the mc
 	var/last_run
+	/// the last MAPTICK_LAST_INTERNAL_TICK_USAGE the mc recorded, used for tracking tick portions outside the MC.
+	var/last_maptick
 
 	/// List of subsystems to process().
 	var/list/subsystems
@@ -109,7 +111,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 			for(var/global_var in global.vars)
 				if (istype(global.vars[global_var], /datum/controller/subsystem))
 					existing_subsystems += global.vars[global_var]
-					
+
 			//Either init a new SS or if an existing one was found use that
 			for(var/I in subsystem_types)
 				var/ss_idx = existing_subsystems.Find(I)
@@ -344,6 +346,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	while (1)
 		tickdrift = max(0, MC_AVERAGE_FAST(tickdrift, (((REALTIMEOFDAY - init_timeofday) - (world.time - init_time)) / world.tick_lag)))
 		var/starting_tick_usage = TICK_USAGE
+		last_maptick = MAPTICK_LAST_INTERNAL_TICK_USAGE
 		if (processing <= 0)
 			current_ticklimit = TICK_LIMIT_RUNNING
 			sleep(10)

@@ -458,10 +458,7 @@
 	set name = "Examine"
 	set category = "IC"
 
-	if(TRY_QUEUE_VERB(src, .proc/finish_examinate, examinify))//try to queue this verb for the next tick if the server is overloaded
-		return
-
-	finish_examinate(examinify)
+	QUEUE_OR_CALL_VERB(src, .proc/finish_examinate, VERB_DEFAULT_QUEUE_THRESHOLD, examinify)
 
 /mob/proc/finish_examinate(atom/examinify)
 
@@ -607,7 +604,7 @@
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
 
-	if(TRY_QUEUE_VERB(src, .proc/wrap_pointed, A))
+	if(TRY_QUEUE_VERB(src, .proc/wrap_pointed, VERB_DEFAULT_QUEUE_THRESHOLD, A))
 		return
 
 	return wrap_pointed(A)
@@ -676,9 +673,7 @@
 	set category = "Object"
 	set src = usr
 
-	if(TRY_QUEUE_VERB(src, .proc/execute_mode))
-		return
-	execute_mode()
+	QUEUE_OR_CALL_VERB(src, .proc/execute_mode, VERB_DEFAULT_QUEUE_THRESHOLD)
 
 ///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
 /mob/proc/execute_mode()

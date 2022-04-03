@@ -308,9 +308,7 @@
 			window = window,
 			src_object = src_object)
 		process_status()
-		if(TRY_QUEUE_VERB(src, .proc/on_act_message, act_type, payload, state))
-			return FALSE
-		on_act_message(act_type, payload, state)
+		QUEUE_OR_CALL_VERB(src, .proc/on_act_message, VERB_DEFAULT_QUEUE_THRESHOLD, act_type, payload, state)
 		return FALSE
 	switch(type)
 		if("ready")
