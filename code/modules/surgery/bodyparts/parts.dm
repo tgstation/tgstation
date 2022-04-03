@@ -34,7 +34,8 @@
 	..()
 
 /obj/item/bodypart/chest/monkey
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = null
 	icon_state = "default_monkey_chest"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -42,6 +43,10 @@
 	wound_resistance = -10
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	acceptable_bodytype = BODYTYPE_MONKEY
+
+/obj/item/bodypart/chest/monkey/Initialize(mapload)
+	. = ..()
+	icon_static = 'icons/mob/animal_parts.dmi'
 
 /obj/item/bodypart/chest/alien
 	icon = 'icons/mob/animal_parts.dmi'
@@ -137,7 +142,8 @@
 
 
 /obj/item/bodypart/l_arm/monkey
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = null
 	icon_state = "default_monkey_l_arm"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -146,6 +152,10 @@
 	wound_resistance = -10
 	px_x = -5
 	px_y = -3
+
+/obj/item/bodypart/l_arm/monkey/Initialize(mapload)
+	. = ..()
+	icon_static = 'icons/mob/animal_parts.dmi'
 
 /obj/item/bodypart/l_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
@@ -235,7 +245,8 @@
 
 
 /obj/item/bodypart/r_arm/monkey
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = null
 	icon_state = "default_monkey_r_arm"
 	limb_id = SPECIES_MONKEY
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
@@ -243,6 +254,10 @@
 	wound_resistance = -10
 	px_x = 5
 	px_y = -3
+
+/obj/item/bodypart/r_arm/monkey/Initialize(mapload)
+	. = ..()
+	icon_static = 'icons/mob/animal_parts.dmi'
 
 /obj/item/bodypart/r_arm/alien
 	icon = 'icons/mob/animal_parts.dmi'
@@ -323,7 +338,8 @@
 		owner.set_usable_legs(owner.usable_legs + 1)
 
 /obj/item/bodypart/l_leg/monkey
-	icon_static = 'icons/mob/animal_parts.dmi'
+	icon = 'icons/mob/animal_parts.dmi'
+	icon_static = null
 	icon_state = "default_monkey_l_leg"
 	limb_id = SPECIES_MONKEY
 	should_draw_greyscale = FALSE
@@ -331,6 +347,10 @@
 	bodytype = BODYTYPE_MONKEY | BODYTYPE_ORGANIC
 	wound_resistance = -10
 	px_y = 4
+
+/obj/item/bodypart/l_leg/monkey/Initialize(mapload)
+	. = ..()
+	icon_static = 'icons/mob/animal_parts.dmi'
 
 /obj/item/bodypart/l_leg/alien
 	icon = 'icons/mob/animal_parts.dmi'
