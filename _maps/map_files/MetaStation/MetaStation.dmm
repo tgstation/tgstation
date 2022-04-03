@@ -3536,6 +3536,11 @@
 	},
 /turf/open/floor/iron/white,
 /area/medical/chemistry)
+"aQi" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/extinguisher_cabinet/directional/east,
+/turf/open/floor/plating,
+/area/cargo/drone_bay)
 "aQr" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/engine,
@@ -3756,7 +3761,7 @@
 	pixel_y = -2
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "aTk" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
@@ -9630,7 +9635,7 @@
 "cAO" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "cAW" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/warning{
@@ -12284,6 +12289,10 @@
 	},
 /turf/open/floor/iron,
 /area/construction/storage_wing)
+"dik" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/cargo/drone_bay)
 "din" = (
 /obj/machinery/door/airlock/external{
 	name = "Solar Maintenance";
@@ -12607,6 +12616,7 @@
 /turf/open/floor/iron,
 /area/hallway/primary/starboard)
 "dnF" = (
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/plating{
 	icon_state = "panelscorched"
 	},
@@ -13999,7 +14009,7 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "dLC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
@@ -14552,7 +14562,7 @@
 	pixel_y = 1
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "dVY" = (
 /obj/machinery/computer/operating{
 	dir = 1
@@ -17073,7 +17083,7 @@
 	pixel_x = 5
 	},
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "eNR" = (
 /turf/closed/wall,
 /area/ai_monitored/aisat/exterior)
@@ -21241,8 +21251,9 @@
 /obj/machinery/computer/exodrone_control_console{
 	dir = 1
 	},
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "gsF" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -23780,7 +23791,7 @@
 "hrY" = (
 /obj/structure/chair/office,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "hsb" = (
 /obj/structure/sign/warning/pods{
 	pixel_x = 32
@@ -26023,7 +26034,7 @@
 "imB" = (
 /obj/machinery/exodrone_launcher,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "imG" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -28227,7 +28238,7 @@
 /obj/machinery/airalarm/directional/west,
 /obj/effect/spawner/random/structure/tank_holder,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "jer" = (
 /obj/structure/closet/l3closet/scientist,
 /obj/effect/turf_decal/stripes/line,
@@ -31568,8 +31579,9 @@
 /area/hallway/primary/starboard)
 "ksg" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "kta" = (
 /obj/structure/chair/comfy/brown{
 	dir = 8
@@ -32347,6 +32359,14 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/engineering/gravity_generator)
+"kFR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/cargo/drone_bay)
 "kGj" = (
 /obj/structure/window/reinforced{
 	dir = 1
@@ -37852,12 +37872,11 @@
 /turf/open/floor/iron/dark,
 /area/science/genetics)
 "mDa" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "mDh" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -45393,8 +45412,9 @@
 	name = "Drone Bay";
 	req_access_txt = "31"
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "plr" = (
 /obj/machinery/disposal/bin{
 	pixel_x = -2;
@@ -45685,6 +45705,9 @@
 /obj/structure/window/reinforced/plasma/spawner/west,
 /turf/open/space/basic,
 /area/space/nearstation)
+"ppT" = (
+/turf/closed/wall,
+/area/cargo/drone_bay)
 "pqd" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
@@ -48103,8 +48126,9 @@
 /obj/structure/rack,
 /obj/machinery/light/directional/east,
 /obj/item/fuel_pellet,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "qjC" = (
 /obj/machinery/door/airlock/hatch{
 	name = "MiniSat Space Access Airlock";
@@ -49547,6 +49571,7 @@
 "qNg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -52590,7 +52615,7 @@
 	},
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "rWY" = (
 /obj/machinery/airalarm/directional/north,
 /obj/item/clothing/under/suit/burgundy,
@@ -56191,8 +56216,10 @@
 /obj/item/circuitboard/machine/exoscanner{
 	pixel_y = -3
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "ttX" = (
 /obj/structure/rack,
 /obj/item/electronics/airlock,
@@ -56388,6 +56415,10 @@
 /obj/effect/spawner/random/structure/crate,
 /turf/open/floor/plating,
 /area/maintenance/aft/greater)
+"txA" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/cargo/drone_bay)
 "txE" = (
 /obj/structure/cable,
 /obj/effect/landmark/blobstart,
@@ -58051,6 +58082,9 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/security/checkpoint/science)
+"ufU" = (
+/turf/open/floor/plating,
+/area/cargo/drone_bay)
 "ugi" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 8
@@ -62205,6 +62239,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "vMD" = (
@@ -63854,7 +63889,7 @@
 /area/hallway/primary/central)
 "wvo" = (
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "wvy" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Prison Cafeteria"
@@ -64386,8 +64421,9 @@
 	c_tag = "Cargo Bay - Drone Launch Room";
 	pixel_x = 14
 	},
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "wFB" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral,
@@ -64667,12 +64703,16 @@
 /obj/machinery/exodrone_launcher,
 /obj/item/exodrone,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/cargo/drone_bay)
 "wKi" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"wKG" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/cargo/drone_bay)
 "wKI" = (
 /obj/structure/cable,
 /obj/structure/sign/poster/ripped{
@@ -88384,8 +88424,8 @@ aaa
 aaa
 aaa
 aaa
-aip
-aRG
+dik
+ufU
 wJV
 ksg
 mDa
@@ -88641,11 +88681,11 @@ aaa
 aaa
 aaa
 aaa
-aip
-aRG
-aRG
-ksg
-cAO
+dik
+ufU
+ufU
+wKG
+kFR
 cAO
 dLr
 wFh
@@ -88898,11 +88938,11 @@ aeJ
 lMJ
 lMJ
 lMJ
-aip
-aRG
+dik
+ufU
 imB
-ksg
-wvo
+aQi
+txA
 wvo
 hrY
 gsy
@@ -89155,10 +89195,10 @@ aeJ
 aaa
 aaa
 aaa
-aip
-aip
-aip
-dne
+dik
+dik
+dik
+ppT
 ttV
 qjz
 rWX
