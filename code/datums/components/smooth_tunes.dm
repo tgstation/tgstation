@@ -56,9 +56,10 @@
 	if(linked_songtuner_rite.song_start_message)
 		starting_song.parent.visible_message(linked_songtuner_rite.song_start_message)
 
-	///prevent more songs from being blessed concurrently
+	///prevent more songs from being blessed concurrently, mob signal
 	UnregisterSignal(parent, COMSIG_ATOM_STARTING_INSTRUMENT)
-	///and hook into the song datum this time, preventing other weird exploity stuff.
+	///and hook into the instrument this time, preventing other weird exploity stuff.
+	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, .proc/tempo_change)
 	RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_END, .proc/stop_singing)
 	if(!allow_repeats)
 		RegisterSignal(starting_song.parent, COMSIG_INSTRUMENT_REPEAT, .proc/stop_singing)
@@ -71,6 +72,14 @@
 	//filters
 	linked_song.parent?.add_filter("smooth_tunes_outline", 9, list("type" = "outline", "color" = glow_color))
 
+///Prevents changing tempo during a song to sneak in final effects quicker
+
+/datum/component/smooth_tunes/proc/tempo_change(datum/source, datum/song/modified_song)
+	SIGNAL_HANDLER
+	if(modified_song.playing && viable_for_final_effect)
+		to_chat(parent, span_warning("Modifying the song mid-performance has removed your ability to perform the song finishing effect."))
+		viable_for_final_effect = FALSE
+
 ///Ends the effect when the song is no longer playing.
 /datum/component/smooth_tunes/proc/stop_singing(datum/source, finished)
 	SIGNAL_HANDLER
@@ -82,6 +91,7 @@
 			linked_songtuner_rite.finish_effect(parent, linked_song)
 	linked_song.parent?.remove_filter("smooth_tunes_outline")
 	UnregisterSignal(linked_song.parent, list(
+		COMSIG_INSTRUMENT_TEMPO_CHANGE,
 		COMSIG_INSTRUMENT_END,
 		COMSIG_INSTRUMENT_REPEAT,
 	))

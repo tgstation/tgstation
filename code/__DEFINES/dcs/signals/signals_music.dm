@@ -8,3 +8,5 @@
 #define COMSIG_INSTRUMENT_SHOULD_STOP_PLAYING "instrument_should_stop_playing"
 ///sent to the instrument (and player if available) when a song repeats (datum/song)
 #define COMSIG_INSTRUMENT_REPEAT "instrument_repeat"
+///sent to the instrument when tempo changes, skipped on new. (datum/song)
+#define COMSIG_INSTRUMENT_TEMPO_CHANGE "instrument_tempo_change"

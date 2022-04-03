@@ -126,7 +126,7 @@
 /datum/song/New(atom/parent, list/instrument_ids, new_range)
 	SSinstruments.on_song_new(src)
 	lines = list()
-	tempo = sanitize_tempo(tempo)
+	tempo = sanitize_tempo(tempo, TRUE)
 	src.parent = parent
 	if(instrument_ids)
 		allowed_instrument_ids = islist(instrument_ids)? instrument_ids : list(instrument_ids)
@@ -309,8 +309,10 @@
 /**
  * Sanitizes tempo to a value that makes sense and fits the current world.tick_lag.
  */
-/datum/song/proc/sanitize_tempo(new_tempo)
+/datum/song/proc/sanitize_tempo(new_tempo, initializing = FALSE)
 	new_tempo = abs(new_tempo)
+	if(!initializing) // not only is it not helpful while initializing but it will runtime really hard since nothing is set up
+		SEND_SIGNAL(parent, COMSIG_INSTRUMENT_TEMPO_CHANGE, src)
 	return clamp(round(new_tempo, world.tick_lag), world.tick_lag, 5 SECONDS)
 
 /**
