@@ -97,7 +97,7 @@
 	new /obj/item/stock_parts/cell/potato(Tsec)
 	var/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/drinking_oil = new(Tsec)
 	drinking_oil.reagents.add_reagent(/datum/reagent/consumable/ethanol/whiskey, 15)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/secbot/Initialize(mapload)
 	. = ..()
@@ -464,7 +464,6 @@
 	return FALSE
 
 /mob/living/simple_animal/bot/secbot/explode()
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 	switch(bot_type)
 		if(ADVANCED_SEC_BOT)
@@ -499,10 +498,8 @@
 			new /obj/item/assembly/prox_sensor(Tsec)
 			drop_part(baton_type, Tsec)
 
-	do_sparks(3, TRUE, src)
-
 	new /obj/effect/decal/cleanable/oil(loc)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	..()

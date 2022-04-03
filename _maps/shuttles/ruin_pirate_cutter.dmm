@@ -217,7 +217,7 @@
 /area/shuttle/caravan/pirate)
 "om" = (
 /obj/structure/table,
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	base_state = "right";
 	icon_state = "right";
 	name = "Weapon Storage"
@@ -696,7 +696,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/door/window/southleft{
+/obj/machinery/door/window/left/directional/south{
 	name = "Weapon Storage"
 	},
 /obj/item/grenade/smokebomb{

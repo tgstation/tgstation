@@ -161,8 +161,8 @@
 				if("equipment", "lighting", "environ")
 					target.vars[type] = value
 				else
-					message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set [type] on [target] to [value]")
-					log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set [type] on [target] to [value]")
+					message_admins("Warning: possible href exploit by [key_name(usr)] - attempted to set [html_encode(type)] on [target] to [html_encode(value)]")
+					log_game("Warning: possible href exploit by [key_name(usr)] - attempted to set [html_encode(type)] on [target] to [html_encode(value)]")
 					return
 
 			target.update_appearance()

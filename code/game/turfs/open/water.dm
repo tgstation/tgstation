@@ -19,6 +19,7 @@
 /turf/open/water/jungle
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
+//This version of the beach turf uses low pressure, inherieted from above
 /turf/open/water/beach
 	gender = PLURAL
 	desc = "You get the feeling that nobody's bothered to actually make this water functional..."
@@ -27,4 +28,6 @@
 	base_icon_state = "water"
 	baseturfs = /turf/open/water/beach
 
-
+//Same turf, but instead used in the Beach Biodome
+/turf/open/water/beach/biodome
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS

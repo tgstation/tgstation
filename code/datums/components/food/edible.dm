@@ -328,19 +328,25 @@ Behavior that's still missing from this component that original food items had t
 			to_chat(feeder, span_warning("[eater] doesn't seem to have a mouth!"))
 			return
 		if(fullness <= (600 * (1 + eater.overeatduration / (2000 SECONDS))))
-			eater.visible_message(span_danger("[feeder] attempts to feed [eater] [parent]."), \
-									span_userdanger("[feeder] attempts to feed you [parent]."))
+			eater.visible_message(
+				span_danger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed [eater] [parent]." : "stuff [parent] down [eater]'s throat hole! Gross."]"),
+				span_userdanger("[feeder] attempts to [eater.get_bodypart(BODY_ZONE_HEAD) ? "feed you [parent]." : "stuff [parent] down your throat hole! Gross."]")
+			)
 		else
-			eater.visible_message(span_warning("[feeder] cannot force any more of [parent] down [eater]'s throat!"), \
-									span_warning("[feeder] cannot force any more of [parent] down your throat!"))
+			eater.visible_message(
+				span_danger("[feeder] cannot force any more of [parent] down [eater]'s [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]"),
+				span_userdanger("[feeder] cannot force any more of [parent] down your [eater.get_bodypart(BODY_ZONE_HEAD) ? "throat!" : "throat hole! Eugh."]")
+			)
 			return
 		if(!do_mob(feeder, eater)) //Wait 3 seconds before you can feed
 			return
 		if(IsFoodGone(owner, feeder))
 			return
-		log_combat(feeder, eater, "fed", owner.reagents.log_list())
-		eater.visible_message(span_danger("[feeder] forces [eater] to eat [parent]!"), \
-									span_userdanger("[feeder] forces you to eat [parent]!"))
+		log_combat(feeder, eater, "fed", owner.reagents.get_reagent_log_string())
+		eater.visible_message(
+			span_danger("[feeder] forces [eater] to eat [parent]!"),
+			span_userdanger("[feeder] forces you to eat [parent]!")
+		)
 
 	TakeBite(eater, feeder)
 
