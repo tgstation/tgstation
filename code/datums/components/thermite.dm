@@ -16,18 +16,18 @@
 		/turf/open/lava,
 		/turf/open/space,
 		/turf/open/water,
-		/turf/open/chasm)
-		)
+		/turf/open/chasm,
+	))
 	///List of turfs that are immune to thermite
 	var/static/list/immunelist = typecacheof(list(
 		/turf/closed/wall/mineral/diamond,
 		/turf/closed/indestructible,
-		/turf/open/indestructible)
-		)
+		/turf/open/indestructible,
+	))
 	///List of turfs that take extra thermite to burn through
-	var/static/list/resistlist = typecacheof(
-		/turf/closed/wall/r_wall
-		)
+	var/static/list/resistlist = typecacheof(list(
+		/turf/closed/wall/r_wall,
+	))
 
 /datum/component/thermite/Initialize(_amount)
 	if(!istype(parent, /turf) || blacklist[parent.type])

@@ -1,16 +1,26 @@
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
+/**
+ * # Abstract cheese class
+ *
+ * Everything that is a subclass of this counts as cheese for regal rats.
+ */
 /obj/item/food/cheese
+	name = "the concept of cheese"
+	desc = "This probably shouldn't exist."
+	tastes = list("cheese" = 1)
+	foodtypes = DAIRY
+	/// used to determine how much health rats/regal rats recover when they eat it.
+	var/rat_heal = 0
+
+/obj/item/food/cheese/wedge
 	name = "cheese wedge"
 	desc = "A wedge of delicious Cheddar. The cheese wheel it was cut from can't have gone far."
 	icon_state = "cheesewedge"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/protein = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
-	tastes = list("cheese" = 1)
-	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
-	/// used to determine how much health rats/regal rats recover when they eat it.
-	var/rat_heal = 10
+	rat_heal = 10
 
 /obj/item/food/cheese/wheel
 	name = "cheese wheel"
@@ -25,7 +35,7 @@
 	AddComponent(/datum/component/food_storage)
 
 /obj/item/food/cheese/wheel/MakeProcessable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese, 5, 30)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/cheese/wedge, 5, 30)
 
 /obj/item/food/cheese/wheel/MakeBakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/baked_cheese, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -206,6 +216,10 @@
 	name = "moldy mess"
 	desc = "A rancid, disgusting culture of mold and ants. Somewhere under there, at <i>some point,</i> there was food."
 	food_reagents = list(/datum/reagent/consumable/mold = 30)
+	preserved_food = FALSE
+	ant_attracting = TRUE
+	decomp_type = null
+	decomposition_time = 30 SECONDS
 
 /obj/item/food/badrecipe/moldy/bacteria
 	name = "bacteria rich moldy mess"
@@ -263,6 +277,15 @@
 	foodtypes = MEAT | TOXIC
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/food/spidereggs/processed
+	name = "spider eggs"
+	desc = "A cluster of juicy spider eggs. Pops in your mouth without making you sick."
+	icon_state = "spidereggs"
+	food_reagents = list(/datum/reagent/consumable/nutriment/protein = 4)
+	tastes = list("cobwebs" = 1)
+	foodtypes = MEAT
+	w_class = WEIGHT_CLASS_TINY
+
 /obj/item/food/spiderling
 	name = "spiderling"
 	desc = "It's slightly twitching in your hand. Ew..."
@@ -314,7 +337,7 @@
 	icon_state = "chocoorange"
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 1)
 	tastes = list("chocolate" = 3, "oranges" = 1)
-	foodtypes = JUNKFOOD | SUGAR
+	foodtypes = JUNKFOOD | SUGAR | ORANGES
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -338,6 +361,7 @@
 	tastes = list("sweet potato" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
+	burns_in_oven = TRUE
 
 /obj/item/food/roastparsnip
 	name = "roast parsnip"
@@ -407,6 +431,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_WORTHLESS
 	var/mutable_appearance/head
 	var/head_color = rgb(0, 0, 0)
 
@@ -526,6 +551,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
+	venue_value = FOOD_PRICE_WORTHLESS
 
 /obj/item/food/gumball/Initialize(mapload)
 	. = ..()
@@ -661,7 +687,7 @@
 	icon_state = "peachcanmaint"
 	trash_type = /obj/item/trash/can/food/peaches/maint
 	tastes = list("peaches" = 1, "tin" = 7)
-	venue_value = FOOD_EXOTIC
+	venue_value = FOOD_PRICE_EXOTIC
 
 /obj/item/food/canned/tomatoes
 	name = "canned San Marzano tomatoes"
@@ -896,11 +922,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/ready_donk/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You browse the back of the box...</i>"))
-	msg += "\t[span_info("Ready-Donk: a product of Donk Co.")]"
-	msg += "\t[span_info("Heating instructions: open box and pierce film, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
-	msg += "\t[span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")]"
-	return msg
+	. = ..()
+	. += span_notice("<i>You browse the back of the box...</i>")
+	. += "\t[span_info("Ready-Donk: a product of Donk Co.")]"
+	. += "\t[span_info("Heating instructions: open box and pierce film, heat in microwave on high for 2 minutes. Allow to stand for 60 seconds prior to eating. Product will be hot.")]"
+	. += "\t[span_info("Per 200g serving contains: 8g Sodium; 25g Fat, of which 22g are saturated; 2g Sugar.")]"
+	return .
 
 /obj/item/food/ready_donk/warm
 	name = "warm Ready-Donk: Bachelor Chow"

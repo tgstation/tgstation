@@ -10,7 +10,8 @@
 	drop_sound = 'sound/items/handling/cloth_drop.ogg'
 	pickup_sound = 'sound/items/handling/cloth_pickup.ogg'
 	limb_integrity = 30
-	var/fitted = FEMALE_UNIFORM_FULL // For use in alternate clothing styles for women
+	/// The variable containing the flags for how the woman uniform cropping is supposed to interact with the sprite.
+	var/female_sprite_flags = FEMALE_UNIFORM_FULL
 	var/has_sensor = HAS_SENSORS // For the crew computer
 	var/random_sensor = TRUE
 	var/sensor_mode = NO_SENSORS
@@ -19,8 +20,13 @@
 	var/alt_covers_chest = FALSE // for adjusted/rolled-down jumpsuits, FALSE = exposes chest and arms, TRUE = exposes arms only
 	var/obj/item/clothing/accessory/attached_accessory
 	var/mutable_appearance/accessory_overlay
-	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 	var/freshly_laundered = FALSE
+
+/obj/item/clothing/under/Initialize(mapload)
+	. = ..()
+	if(random_sensor)
+		//make the sensor mode favor higher levels, except coords.
+		sensor_mode = pick(SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_LIVING, SENSOR_LIVING, SENSOR_COORDS, SENSOR_COORDS, SENSOR_OFF)
 
 /obj/item/clothing/under/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
 	. = ..()
@@ -62,12 +68,6 @@
 	else if(damaged_state == CLOTHING_PRISTINE && has_sensor == BROKEN_SENSORS)
 		has_sensor = HAS_SENSORS
 
-/obj/item/clothing/under/Initialize(mapload)
-	. = ..()
-	if(random_sensor)
-		//make the sensor mode favor higher levels, except coords.
-		sensor_mode = pick(SENSOR_OFF, SENSOR_LIVING, SENSOR_LIVING, SENSOR_VITALS, SENSOR_VITALS, SENSOR_VITALS, SENSOR_COORDS, SENSOR_COORDS)
-
 /obj/item/clothing/under/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -93,13 +93,13 @@
 	..()
 	if(adjusted)
 		adjusted = NORMAL_STYLE
-		fitted = initial(fitted)
+		female_sprite_flags = initial(female_sprite_flags)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
-	if(mutantrace_variation && ishuman(user))
+	if((supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION) && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.species_traits)
+		if(H.dna.species.bodytype & BODYTYPE_DIGITIGRADE)
 			adjusted = DIGITIGRADE_STYLE
 		H.update_inv_w_uniform()
 
@@ -308,13 +308,13 @@
 		return
 	adjusted = !adjusted
 	if(adjusted)
-		if(fitted != FEMALE_UNIFORM_TOP)
-			fitted = NO_FEMALE_UNIFORM
+		if(female_sprite_flags != FEMALE_UNIFORM_TOP_ONLY)
+			female_sprite_flags = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted (and also the arms, realistically)
 			body_parts_covered &= ~CHEST
 			body_parts_covered &= ~ARMS
 	else
-		fitted = initial(fitted)
+		female_sprite_flags = initial(female_sprite_flags)
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 			body_parts_covered |= ARMS
@@ -322,7 +322,7 @@
 				return adjusted
 			for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)) // ugly check to make sure we don't reenable protection on a disabled part
 				if(damage_by_parts[zone] > limb_integrity)
-					for(var/part in zone2body_parts_covered(zone))
+					for(var/part in body_zone2cover_flags(zone))
 						body_parts_covered &= part
 	return adjusted
 

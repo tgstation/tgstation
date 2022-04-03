@@ -22,7 +22,7 @@
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
 
-/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -121,7 +121,7 @@
 				return
 			playsound(src, get_dismember_sound(), 80, TRUE)
 			target.visible_message(span_danger("[chassis] rips [target]'s arms off!"), \
-						   span_userdanger("[chassis] rips your arms off!"))
+						span_userdanger("[chassis] rips your arms off!"))
 			log_combat(source, M, "removed both arms with a real clamp,", "[name]", "(COMBAT MODE: [uppertext(source.combat_mode)] (DAMTYPE: [uppertext(damtype)])")
 			return ..()
 
@@ -202,7 +202,7 @@
 	reagents.trans_to(water, 1)
 
 	var/delay = 2
-	var/datum/move_loop/our_loop = SSmove_manager.move_towards_legacy(water, pick(targets), delay, timeout = delay * 4, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
+	var/datum/move_loop/our_loop = water.move_at(pick(targets), delay, 4)
 	RegisterSignal(our_loop, COMSIG_PARENT_QDELETING, .proc/water_finished_moving)
 
 /obj/item/mecha_parts/mecha_equipment/extinguisher/proc/water_finished_moving(datum/move_loop/has_target/source)
@@ -212,10 +212,14 @@
 		return
 	extinguish(source.target)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/get_equip_info()
-	return "[..()] \[[src.reagents.total_volume]\]"
+/obj/item/mecha_parts/mecha_equipment/extinguisher/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_EXTINGUISHER,
+		"reagents" = reagents.total_volume,
+		"total_reagents" = reagents.maximum_volume,
+	)
 
-/obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/vehicle/sealed/mecha/M)
+/obj/item/mecha_parts/mecha_equipment/extinguisher/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	. = ..()
 	if(!.)
 		return
@@ -245,6 +249,45 @@
 /obj/item/mecha_parts/mecha_equipment/rcd/Destroy()
 	GLOB.rcd_list -= src
 	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/rcd/get_snowflake_data()
+	return list(
+		"snowflake_id" = MECHA_SNOWFLAKE_ID_MODE,
+		"name" = "RCD control",
+		"mode" = get_mode_name(),
+	)
+
+/// fetches the mode name to display in the UI
+/obj/item/mecha_parts/mecha_equipment/rcd/proc/get_mode_name()
+	switch(mode)
+		if(MODE_DECONSTRUCT)
+			return "Deconstruct"
+		if(MODE_WALL)
+			return "Build wall"
+		if(MODE_AIRLOCK)
+			return "Build Airlock"
+		else
+			return "Someone didnt set this"
+
+/obj/item/mecha_parts/mecha_equipment/rcd/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+	if(action == "change_mode")
+		mode++
+		if(mode > MODE_AIRLOCK)
+			mode = MODE_DECONSTRUCT
+		switch(mode)
+			if(MODE_DECONSTRUCT)
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Deconstruct.")]")
+				energy_drain = initial(energy_drain)
+			if(MODE_WALL)
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Walls and Flooring.")]")
+				energy_drain = 2*initial(energy_drain)
+			if(MODE_AIRLOCK)
+				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Airlock.")]")
+				energy_drain = 2*initial(energy_drain)
+		return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
 	if(!isturf(target) && !istype(target, /obj/machinery/door/airlock))
@@ -295,24 +338,6 @@
 	playsound(target, 'sound/items/deconstruct.ogg', 50, TRUE)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/rcd/Topic(href,href_list)
-	..()
-	if(href_list["mode"])
-		mode = text2num(href_list["mode"])
-		switch(mode)
-			if(MODE_DECONSTRUCT)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Deconstruct.")]")
-				energy_drain = initial(energy_drain)
-			if(MODE_WALL)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Walls and Flooring.")]")
-				energy_drain = 2*initial(energy_drain)
-			if(MODE_AIRLOCK)
-				to_chat(chassis.occupants, "[icon2html(src, chassis.occupants)][span_notice("Switched RCD to Construct Airlock.")]")
-				energy_drain = 2*initial(energy_drain)
-
-/obj/item/mecha_parts/mecha_equipment/rcd/get_equip_info()
-	return "[..()] \[<a href='?src=[REF(src)];mode=0'>D</a>|<a href='?src=[REF(src)];mode=1'>C</a>|<a href='?src=[REF(src)];mode=2'>A</a>\]"
-
 #undef MODE_DECONSTRUCT
 #undef MODE_WALL
 #undef MODE_AIRLOCK
@@ -324,7 +349,7 @@
 	icon_state = "ripleyupgrade"
 	mech_flags = EXOSUIT_MODULE_RIPLEY
 
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/working/ripley/M)
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/working/ripley/M, attach_right = FALSE)
 	if(M.type != /obj/vehicle/sealed/mecha/working/ripley)
 		to_chat(loc, span_warning("This conversion kit can only be applied to APLU MK-I models."))
 		return FALSE
@@ -342,7 +367,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone)
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone, attach_right = FALSE)
 	var/obj/vehicle/sealed/mecha/working/ripley/mk2/marktwo = new (get_turf(markone),1)
 	if(!marktwo)
 		return
@@ -362,12 +387,10 @@
 		markone.capacitor.forceMove(marktwo)
 		markone.capacitor = null
 	marktwo.update_part_values()
-	for(var/obj/item/mecha_parts/equipment in markone.contents)
-		if(istype(equipment, /obj/item/mecha_parts/concealed_weapon_bay)) //why is the bay not just a variable change who did this
-			equipment.forceMove(marktwo)
-	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.equipment) //Move the equipment over...
+	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
+		var/righthandgun = markone.equip_by_category[MECHA_R_ARM] == equipment
 		equipment.detach(marktwo)
-		equipment.attach(marktwo)
+		equipment.attach(marktwo, righthandgun)
 	marktwo.dna_lock = markone.dna_lock
 	marktwo.mecha_flags = markone.mecha_flags
 	marktwo.strafe = markone.strafe

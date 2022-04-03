@@ -177,14 +177,16 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 	data["reason"] = reason
 
+	data["settlers"] = settlers
+	data["settlermoods"] = settlermoods
+
 	return data
 
 /obj/machinery/computer/arcade/orion_trail/ui_static_data(mob/user)
 	var/list/static_data = list()
 	static_data["gamename"] = name
 	static_data["emagged"] = obj_flags & EMAGGED
-	static_data["settlers"] = settlers
-	static_data["settlermoods"] = settlermoods
+
 	return static_data
 
 /obj/machinery/computer/arcade/orion_trail/ui_act(action, list/params)
@@ -219,7 +221,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 			set_game_over(gamer)
 			return
 		new_settler_mood() //events shake people up a bit and can also change food
-		update_static_data(usr)
 		return TRUE
 	switch(action)
 		if("start_game")
@@ -348,7 +349,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 /obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
 	usr.lost_game()
-	
+
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
 	reason = given_reason || death_reason(user)
@@ -396,7 +397,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive++
 	if(update)
 		new_settler_mood()//new faces!
-		update_static_data(usr)
 	return newcrew
 
 
@@ -417,7 +417,6 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 		alive--
 	if(update)
 		new_settler_mood()//bro, i...
-		update_static_data(usr)
 	return removed
 
 /**
@@ -476,7 +475,7 @@ GLOBAL_LIST_INIT(orion_events, generate_orion_events())
 
 /obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
 	usr.won_game()
-	
+
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)

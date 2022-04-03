@@ -542,7 +542,7 @@
 
 	if(transfered_by && target_atom)
 		target_atom.add_hiddenprint(transfered_by) //log prints so admins can figure out who touched it last.
-		log_combat(transfered_by, target_atom, "transferred reagents ([log_list(transfer_log)]) from [my_atom] to")
+		log_combat(transfered_by, target_atom, "transferred reagents ([get_external_reagent_log_string(transfer_log)]) from [my_atom] to")
 
 	update_total()
 	R.update_total()
@@ -590,38 +590,40 @@
 	return amount
 
 /// Copies the reagents to the target object
-/datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1)
+/datum/reagents/proc/copy_to(obj/target, amount = 1, multiplier = 1, preserve_data = TRUE, no_react = FALSE)
 	var/list/cached_reagents = reagent_list
 	if(!target || !total_volume)
 		return
 
-	var/datum/reagents/R
+	var/datum/reagents/target_holder
 	if(istype(target, /datum/reagents))
-		R = target
+		target_holder = target
 	else
 		if(!target.reagents)
 			return
-		R = target.reagents
+		target_holder = target.reagents
 
 	if(amount < 0)
 		return
 
-	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
+	amount = min(min(amount, total_volume), target_holder.maximum_volume - target_holder.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
 	for(var/datum/reagent/reagent as anything in cached_reagents)
 		var/copy_amount = reagent.volume * part
 		if(preserve_data)
 			trans_data = reagent.data
-		R.add_reagent(reagent.type, copy_amount * multiplier, trans_data, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+		target_holder.add_reagent(reagent.type, copy_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
 
-	//pass over previous ongoing reactions before handle_reactions is called
-	transfer_reactions(R)
+	if(!no_react)
+		// pass over previous ongoing reactions before handle_reactions is called
+		transfer_reactions(target_holder)
 
-	src.update_total()
-	R.update_total()
-	R.handle_reactions()
-	src.handle_reactions()
+		src.update_total()
+		target_holder.update_total()
+		target_holder.handle_reactions()
+		src.handle_reactions()
+
 	return amount
 
 ///Multiplies the reagents inside this holder by a specific amount
@@ -1463,28 +1465,39 @@
 	ph = clamp(total_ph/total_volume, 0, 14)
 
 /**
- * Used in attack logs for reagents in pills and such
+ * Outputs a log-friendly list of reagents based on an external reagent list.
  *
  * Arguments:
- * * external_list - assoc list of reagent type = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
+ * * external_list - Assoc list of (reagent_type) = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
  */
-/datum/reagents/proc/log_list(external_list)
-	if((external_list && !length(external_list)) || !length(reagent_list))
+/datum/reagents/proc/get_external_reagent_log_string(external_list)
+	if(!length(external_list))
 		return "no reagents"
 
-
-
 	var/list/data = list()
-	if(external_list)
-		for(var/r in external_list)
-			var/list/qualities = external_list[r]
-			data += "[r] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u, [qualities[REAGENT_PURITY]] purity)"
-	else
-		for(var/datum/reagent/reagent as anything in reagent_list) //no reagents will be left behind
-			data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
-			//Using types because SOME chemicals (I'm looking at you, chlorhydrate-beer) have the same names as other chemicals.
+
+	for(var/reagent_type in external_list)
+		var/list/qualities = external_list[reagent_type]
+		data += "[reagent_type] ([round(qualities[REAGENT_TRANSFER_AMOUNT], 0.1)]u, [qualities[REAGENT_PURITY]] purity)"
+
 	return english_list(data)
 
+/**
+ * Outputs a log-friendly list of reagents based on the internal reagent_list.
+ *
+ * Arguments:
+ * * external_list - Assoc list of (reagent_type) = list(REAGENT_TRANSFER_AMOUNT = amounts, REAGENT_PURITY = purity)
+ */
+/datum/reagents/proc/get_reagent_log_string()
+	if(!length(reagent_list))
+		return "no reagents"
+
+	var/list/data = list()
+
+	for(var/datum/reagent/reagent as anything in reagent_list)
+		data += "[reagent.type] ([round(reagent.volume, 0.1)]u, [reagent.purity] purity)"
+
+	return english_list(data)
 
 /////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////UI / REAGENTS LOOKUP CODE/////////////////////////////

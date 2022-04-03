@@ -73,8 +73,6 @@
 	var/obj/item/organ/lungs = getorganslot(ORGAN_SLOT_LUNGS)
 	if(reagents.has_reagent(/datum/reagent/toxin/lexorin, needs_metabolizing = TRUE))
 		return
-	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-		return
 
 	var/datum/gas_mixture/environment
 	if(loc)
@@ -133,7 +131,7 @@
 /mob/living/carbon/proc/check_breath(datum/gas_mixture/breath)
 	if(status_flags & GODMODE)
 		failed_last_breath = FALSE
-		clear_alert("not_enough_oxy")
+		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_NOBREATH))
 		return FALSE
@@ -149,7 +147,7 @@
 		adjustOxyLoss(1)
 
 		failed_last_breath = TRUE
-		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+		throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		return FALSE
 
 	var/safe_oxy_min = 16
@@ -179,14 +177,14 @@
 		else
 			adjustOxyLoss(3)
 			failed_last_breath = TRUE
-		throw_alert("not_enough_oxy", /atom/movable/screen/alert/not_enough_oxy)
+		throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 
 	else //Enough oxygen
 		failed_last_breath = FALSE
 		if(health >= crit_threshold)
 			adjustOxyLoss(-5)
 		oxygen_used = breath_gases[/datum/gas/oxygen][MOLES]
-		clear_alert("not_enough_oxy")
+		clear_alert(ALERT_NOT_ENOUGH_OXYGEN)
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
@@ -210,30 +208,30 @@
 	if(Plasma_partialpressure > safe_plas_max)
 		var/ratio = (breath_gases[/datum/gas/plasma][MOLES]/safe_plas_max) * 10
 		adjustToxLoss(clamp(ratio, MIN_TOXIC_GAS_DAMAGE, MAX_TOXIC_GAS_DAMAGE))
-		throw_alert("too_much_plas", /atom/movable/screen/alert/too_much_plas)
+		throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 	else
-		clear_alert("too_much_plas")
+		clear_alert(ALERT_TOO_MUCH_PLASMA)
 
 	//NITROUS OXIDE
 	if(breath_gases[/datum/gas/nitrous_oxide])
 		var/SA_partialpressure = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/breath.total_moles())*breath_pressure
 		if(SA_partialpressure > SA_para_min)
-			throw_alert("too_much_n2o", /atom/movable/screen/alert/too_much_n2o)
+			throw_alert(ALERT_TOO_MUCH_N2O, /atom/movable/screen/alert/too_much_n2o)
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
 			Unconscious(60)
 			if(SA_partialpressure > SA_sleep_min)
 				Sleeping(max(AmountSleeping() + 40, 200))
 		else if(SA_partialpressure > 0.01)
-			clear_alert("too_much_n2o")
+			clear_alert(ALERT_TOO_MUCH_N2O)
 			if(prob(20))
 				emote(pick("giggle","laugh"))
 			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
-			clear_alert("too_much_n2o")
+			clear_alert(ALERT_TOO_MUCH_N2O)
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
-		clear_alert("too_much_n2o")
+		clear_alert(ALERT_TOO_MUCH_N2O)
 
 	//BZ (Facepunch port of their Agent B)
 	if(breath_gases[/datum/gas/bz])
@@ -326,15 +324,11 @@
 	return
 
 /mob/living/carbon/proc/handle_bodyparts(delta_time, times_fired)
-	var/stam_regen = FALSE
 	if(stam_regen_start_time <= world.time)
-		stam_regen = TRUE
 		if(HAS_TRAIT_FROM(src, TRAIT_INCAPACITATED, STAMINA))
 			. |= BODYPART_LIFE_UPDATE_HEALTH //make sure we remove the stamcrit
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
-		if(BP.needs_processing)
-			. |= BP.on_life(delta_time, times_fired, stam_regen)
+	for(var/obj/item/bodypart/limb as anything in bodyparts)
+		. |= limb.on_life(delta_time, times_fired)
 
 /mob/living/carbon/proc/handle_organs(delta_time, times_fired)
 	if(stat != DEAD)
@@ -490,11 +484,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(DT_PROB(16, delta_time))
 				slurring += 2
 			jitteriness = max(jitteriness - (1.5 * delta_time), 0)
-			throw_alert("drunk", /atom/movable/screen/alert/drunk)
+			throw_alert(ALERT_DRUNK, /atom/movable/screen/alert/drunk)
 			sound_environment_override = SOUND_ENVIRONMENT_PSYCHOTIC
 		else
 			SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "drunk")
-			clear_alert("drunk")
+			clear_alert(ALERT_DRUNK)
 			sound_environment_override = SOUND_ENVIRONMENT_NONE
 
 		if(drunkenness >= 11 && slurring < 5)
@@ -760,7 +754,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			if(limb.get_damage() >= limb.max_damage)
 				limb.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 				if(limb.cremation_progress >= 100)
-					if(limb.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+					if(IS_ORGANIC_LIMB(limb)) //Non-organic limbs don't burn
 						limb.drop_limb()
 						limb.visible_message(span_warning("[src]'s [limb.name] crumbles into ash!"))
 						qdel(limb)
@@ -776,7 +770,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		if(head.get_damage() >= head.max_damage)
 			head.cremation_progress += rand(1 * delta_time, 2.5 * delta_time)
 			if(head.cremation_progress >= 100)
-				if(head.status == BODYPART_ORGANIC) //Non-organic limbs don't burn
+				if(IS_ORGANIC_LIMB(head)) //Non-organic limbs don't burn
 					head.drop_limb()
 					head.visible_message(span_warning("[src]'s head crumbles into ash!"))
 					qdel(head)

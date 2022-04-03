@@ -15,7 +15,7 @@
 	icon_state = "mulebot0"
 	density = TRUE
 	move_resist = MOVE_FORCE_STRONG
-	animate_movement = FORWARD_STEPS
+	animate_movement = SLIDE_STEPS
 	health = 50
 	maxHealth = 50
 	speed = 3
@@ -149,34 +149,38 @@
 	reached_target = FALSE
 
 /mob/living/simple_animal/bot/mulebot/screwdriver_act(mob/living/user, obj/item/tool)
-	..()
+	. = ..()
 	update_appearance()
-	return TRUE
+
+/mob/living/simple_animal/bot/mulebot/crowbar_act(mob/living/user, obj/item/tool)
+	if(!(bot_cover_flags & BOT_COVER_OPEN) || user.combat_mode)
+		return
+	if(!cell)
+		to_chat(user, span_warning("[src] doesn't have a power cell!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	cell.add_fingerprint(user)
+	if(Adjacent(user) && !issilicon(user))
+		user.put_in_hands(cell)
+	else
+		cell.forceMove(drop_location())
+	visible_message(span_notice("[user] crowbars [cell] out from [src]."),
+					span_notice("You pry [cell] out of [src]."))
+	cell = null
+	diag_hud_set_mulebotcell()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
-			return
+			return TRUE
 		if(!user.transferItemToLoc(I, src))
-			return
+			return TRUE
 		cell = I
 		diag_hud_set_mulebotcell()
 		visible_message(span_notice("[user] inserts \a [cell] into [src]."),
 						span_notice("You insert [cell] into [src]."))
-	else if(I.tool_behaviour == TOOL_CROWBAR && bot_cover_flags & BOT_COVER_OPEN && !user.combat_mode)
-		if(!cell)
-			to_chat(user, span_warning("[src] doesn't have a power cell!"))
-			return
-		cell.add_fingerprint(user)
-		if(Adjacent(user) && !issilicon(user))
-			user.put_in_hands(cell)
-		else
-			cell.forceMove(drop_location())
-		visible_message(span_notice("[user] crowbars [cell] out from [src]."),
-						span_notice("You pry [cell] out of [src]."))
-		cell = null
-		diag_hud_set_mulebotcell()
+		return TRUE
 	else if(is_wire_tool(I) && bot_cover_flags & BOT_COVER_OPEN)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider
@@ -197,7 +201,7 @@
 		bot_cover_flags ^= BOT_COVER_LOCKED
 		to_chat(user, span_notice("You [bot_cover_flags & BOT_COVER_LOCKED ? "lock" : "unlock"] [src]'s controls!"))
 	flick("[base_icon]-emagged", src)
-	playsound(src, "sparks", 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, SFX_SPARKS, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /mob/living/simple_animal/bot/mulebot/update_icon_state() //if you change the icon_state names, please make sure to update /datum/wires/mulebot/on_pulse() as well. <3
 	. = ..()
@@ -245,7 +249,7 @@
 	data["on"] = bot_mode_flags & BOT_MODE_ON
 	data["locked"] = bot_cover_flags & BOT_COVER_LOCKED
 	data["siliconUser"] = user.has_unlimited_silicon_privilege
-	data["mode"] = mode ? mode_name[mode] : "Ready"
+	data["mode"] = mode ? "[mode]" : "Ready"
 	data["modeStatus"] = ""
 	switch(mode)
 		if(BOT_IDLE, BOT_DELIVER, BOT_GO_HOME)
@@ -298,7 +302,7 @@
 
 	switch(command)
 		if("stop")
-			if(mode >= BOT_DELIVER)
+			if(mode != BOT_IDLE)
 				bot_reset()
 		if("go")
 			if(mode == BOT_IDLE)
@@ -738,7 +742,6 @@
 
 
 /mob/living/simple_animal/bot/mulebot/explode()
-	visible_message(span_boldannounce("[src] blows apart!"))
 	var/atom/Tsec = drop_location()
 
 	new /obj/item/assembly/prox_sensor(Tsec)
@@ -750,10 +753,8 @@
 		cell.update_appearance()
 		cell = null
 
-	do_sparks(3, TRUE, src)
-
 	new /obj/effect/decal/cleanable/oil(loc)
-	..()
+	return ..()
 
 /mob/living/simple_animal/bot/mulebot/remove_air(amount) //To prevent riders suffocating
 	return loc ? loc.remove_air(amount) : null

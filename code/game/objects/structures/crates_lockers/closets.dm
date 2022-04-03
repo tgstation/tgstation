@@ -409,14 +409,6 @@
 							span_hear("You hear welding."))
 			log_game("[key_name(user)] [welded ? "welded":"unwelded"] closet [src] with [W] at [AREACOORD(src)]")
 			update_appearance()
-	else if(W.tool_behaviour == TOOL_WRENCH && anchorable)
-		if(isinspace() && !anchored)
-			return
-		set_anchored(!anchored)
-		W.play_tool_sound(src, 75)
-		user.visible_message(span_notice("[user] [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						span_notice("You [anchored ? "anchored" : "unanchored"] \the [src] [anchored ? "to" : "from"] the ground."), \
-						span_hear("You hear a ratchet."))
 	else if (can_install_electronics && istype(W, /obj/item/electronics/airlock)\
 			&& !secure && !electronics && !locked && (welded || !can_weld_shut) && !broken)
 		user.visible_message(span_notice("[user] installs the electronics into the [src]."),\
@@ -469,6 +461,18 @@
 			togglelock(user)
 	else
 		return FALSE
+
+/obj/structure/closet/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(!anchorable)
+		balloon_alert(user, "no anchor bolts!")
+		return TRUE
+	if(isinspace() && !anchored) // We want to prevent anchoring a locker in space, but we should still be able to unanchor it there
+		balloon_alert(user, "nothing to anchor to!")
+		return TRUE
+	set_anchored(!anchored)
+	tool.play_tool_sound(src, 75)
+	user.balloon_alert_to_viewers("[anchored ? "anchored" : "unanchored"]")
+	return TRUE
 
 /obj/structure/closet/proc/after_weld(weld_state)
 	return
@@ -650,7 +654,7 @@
 			user.visible_message(span_warning("Sparks fly from [src]!"),
 							span_warning("You scramble [src]'s lock, breaking it open!"),
 							span_hear("You hear a faint electrical spark."))
-		playsound(src, "sparks", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
 		update_appearance()

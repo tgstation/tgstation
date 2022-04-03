@@ -7,7 +7,7 @@
 	dir = 4;
 	name = "Finds-The-Relics"
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "c" = (
 /obj/effect/decal/cleanable/dirt,
@@ -24,15 +24,15 @@
 	pixel_y = 9
 	},
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "o" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/item/wirebrush,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "p" = (
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
@@ -65,7 +65,7 @@
 /area/maintenance/port/fore)
 "C" = (
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "F" = (
 /obj/effect/decal/cleanable/dirt,
@@ -86,7 +86,7 @@
 /area/maintenance/port/fore)
 "L" = (
 /obj/item/stack/ore/iron,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "N" = (
 /obj/effect/turf_decal/sand/plating,
@@ -104,7 +104,7 @@
 /area/maintenance/port/fore)
 "S" = (
 /obj/item/shovel,
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "U" = (
 /obj/effect/decal/cleanable/dirt,
@@ -118,7 +118,7 @@
 /obj/item/pen{
 	pixel_x = 5
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 "Y" = (
 /obj/item/relic,
@@ -131,18 +131,14 @@
 	pixel_y = -7
 	},
 /obj/item/stack/ore/glass,
-/turf/open/floor/plating/asteroid{
-	base_icon_state = "asteroid_dug";
-	dug = 1;
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid/dug,
 /area/mine/explored)
 "Z" = (
 /obj/item/stack/ore/iron{
 	pixel_x = -9;
 	pixel_y = 11
 	},
-/turf/open/floor/plating/asteroid,
+/turf/open/misc/asteroid,
 /area/mine/explored)
 
 (1,1,1) = {"

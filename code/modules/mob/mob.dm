@@ -220,7 +220,7 @@
 			if(M != loc) // Only give the blind message to hearers that aren't the location
 				msg = blind_message
 				msg_type = MSG_AUDIBLE
-		else if(M.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
+		else if(!HAS_TRAIT(M, TRAIT_HEAR_THROUGH_DARKNESS) && M.lighting_alpha > LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE && T.is_softly_lit() && !in_range(T,M)) //if it is too dark, unless we're right next to them.
 			msg = blind_message
 			msg_type = MSG_AUDIBLE
 		if(!msg)
@@ -797,77 +797,6 @@
 					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
 	return L
 
-#define MOB_FACE_DIRECTION_DELAY 1
-
-// facing verbs
-/**
- * Returns true if a mob can turn to face things
- *
- * Conditions:
- * * client.last_turn > world.time
- * * not dead or unconcious
- * * not anchored
- * * no transform not set
- * * we are not restrained
- */
-/mob/proc/canface()
-	if(world.time < client.last_turn)
-		return FALSE
-	if(stat >= UNCONSCIOUS)
-		return FALSE
-	if(anchored)
-		return FALSE
-	if(notransform)
-		return FALSE
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		return FALSE
-	return TRUE
-
-///Checks mobility move as well as parent checks
-/mob/living/canface()
-	if(!(mobility_flags & MOBILITY_MOVE))
-		return FALSE
-	return ..()
-
-/mob/dead/observer/canface()
-	return TRUE
-
-///Hidden verb to turn east
-/mob/verb/eastface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(EAST)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn west
-/mob/verb/westface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(WEST)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn north
-/mob/verb/northface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(NORTH)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
-///Hidden verb to turn south
-/mob/verb/southface()
-	set hidden = TRUE
-	if(!canface())
-		return FALSE
-	setDir(SOUTH)
-	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
-	return TRUE
-
 /mob/proc/swap_hand()
 	var/obj/item/held_item = get_active_held_item()
 	if(SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
@@ -1230,7 +1159,7 @@
  */
 /mob/vv_get_var(var_name)
 	switch(var_name)
-		if("logging")
+		if(NAMEOF(src, logging))
 			return debug_variable(var_name, logging, 0, src, FALSE)
 	. = ..()
 
@@ -1400,3 +1329,9 @@
 
 	data["memories"] = memories
 	return data
+
+/mob/verb/view_skills()
+	set category = "IC"
+	set name = "View Skills"
+
+	mind?.print_levels(src)

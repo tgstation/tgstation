@@ -1063,11 +1063,11 @@
 "cj" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/bot,
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/fire,
+/obj/item/storage/medkit/fire,
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/syndicate/medical)
 "ck" = (
@@ -1385,11 +1385,11 @@
 	pixel_x = 32
 	},
 /obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high/plus{
+/obj/item/stock_parts/cell/high{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/stock_parts/cell/high/plus,
+/obj/item/stock_parts/cell/high,
 /obj/item/multitool,
 /turf/open/floor/pod/dark,
 /area/shuttle/syndicate/armory)
@@ -1709,11 +1709,11 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/item/storage/firstaid/regular{
+/obj/item/storage/medkit/regular{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/storage/firstaid/brute,
+/obj/item/storage/medkit/brute,
 /obj/structure/window/reinforced{
 	dir = 8
 	},

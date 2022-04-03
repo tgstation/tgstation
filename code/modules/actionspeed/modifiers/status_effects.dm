@@ -9,3 +9,6 @@
 
 /datum/actionspeed_modifier/power_chord
 	multiplicative_slowdown = -0.15
+
+/datum/actionspeed_modifier/status_effect/hazard_area
+	multiplicative_slowdown = 4

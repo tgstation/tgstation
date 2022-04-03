@@ -189,6 +189,8 @@
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+
 /obj/structure/sign/poster/contraband
 	poster_item_name = "contraband poster"
 	poster_item_desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."
@@ -199,6 +201,8 @@
 	icon_state = "random_contraband"
 	never_random = TRUE
 	random_basetype = /obj/structure/sign/poster/contraband
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/random, 32)
 
 /obj/structure/sign/poster/contraband/free_tonto
 	name = "Free Tonto"
@@ -464,11 +468,12 @@
 	icon_state = "gas_power"
 
 /obj/structure/sign/poster/contraband/donk_co/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You browse some of the poster's information...</i>"))
-	msg += "\t[span_info("DONK CO. BRAND DONK POCKETS: IRRESISTABLY DONK!")]"
-	msg += "\t[span_info("AVAILABLE IN OVER 200 DONKTASTIC FLAVOURS: TRY CLASSIC MEAT, HOT AND SPICY, NEW YORK PEPPERONI PIZZA, BREAKFAST SAUSAGE AND EGG, PHILADELPHIA CHEESESTEAK, HAMBURGER DONK-A-RONI, CHEESE-O-RAMA, AND MANY MORE!")]"
-	msg += "\t[span_info("AVAILABLE FROM ALL GOOD RETAILERS, AND MANY BAD ONES TOO!")]"
-	return msg
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("DONK CO. BRAND DONK POCKETS: IRRESISTABLY DONK!")]"
+	. += "\t[span_info("AVAILABLE IN OVER 200 DONKTASTIC FLAVOURS: TRY CLASSIC MEAT, HOT AND SPICY, NEW YORK PEPPERONI PIZZA, BREAKFAST SAUSAGE AND EGG, PHILADELPHIA CHEESESTEAK, HAMBURGER DONK-A-RONI, CHEESE-O-RAMA, AND MANY MORE!")]"
+	. += "\t[span_info("AVAILABLE FROM ALL GOOD RETAILERS, AND MANY BAD ONES TOO!")]"
+	return .
 
 /obj/structure/sign/poster/contraband/cybersun_six_hundred
 	name = "Saibāsan: 600 Years Commemorative Poster"
@@ -526,10 +531,12 @@
 	poster_item_icon_state = "rolled_legit"
 
 /obj/structure/sign/poster/official/random
-	name = "random official poster"
+	name = "Random Official Poster (ROP)"
 	random_basetype = /obj/structure/sign/poster/official
 	icon_state = "random_official"
 	never_random = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 
 /obj/structure/sign/poster/official/here_for_your_safety
 	name = "Here For Your Safety"
@@ -728,15 +735,16 @@
 	icon_state = "plasma_effects"
 
 /obj/structure/sign/poster/official/plasma_effects/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You browse some of the poster's information...</i>"))
-	msg += "\t[span_info("Plasma (scientific name Amenthium) is classified by TerraGov as a Grade 1 Health Hazard, and has significant risks to health associated with chronic exposure.")]"
-	msg += "\t[span_info("Plasma is known to cross the blood/brain barrier and bioaccumulate in brain tissue, where it begins to result in degradation of brain function. The mechanism for attack is not yet fully known, and as such no concrete preventative advice is available barring proper use of PPE (gloves + protective jumpsuit + respirator).")]"
-	msg += "\t[span_info("In small doses, plasma induces confusion, short-term amnesia, and heightened aggression. These effects persist with continual exposure.")]"
-	msg += "\t[span_info("In individuals with chronic exposure, severe effects have been noted. Further heightened aggression, long-term amnesia, Alzheimer's symptoms, schizophrenia, macular degeneration, aneurysms, heightened risk of stroke, and Parkinsons symptoms have all been noted.")]"
-	msg += "\t[span_info("It is recommended that all individuals in unprotected contact with raw plasma regularly check with company health officials.")]"
-	msg += "\t[span_info("For more information, please check with TerraGov's extranet site on Amenthium: www.terra.gov/health_and_safety/amenthium/, or our internal risk-assessment documents (document numbers #47582-b (Plasma safety data sheets) and #64210 through #64225 (PPE regulations for working with Plasma), available via NanoDoc to all employees).")]"
-	msg += "\t[span_info("Nanotrasen: Always looking after your health.")]"
-	return msg
+	. = ..()
+	. += span_notice("<i>You browse some of the poster's information...</i>")
+	. += "\t[span_info("Plasma (scientific name Amenthium) is classified by TerraGov as a Grade 1 Health Hazard, and has significant risks to health associated with chronic exposure.")]"
+	. += "\t[span_info("Plasma is known to cross the blood/brain barrier and bioaccumulate in brain tissue, where it begins to result in degradation of brain function. The mechanism for attack is not yet fully known, and as such no concrete preventative advice is available barring proper use of PPE (gloves + protective jumpsuit + respirator).")]"
+	. += "\t[span_info("In small doses, plasma induces confusion, short-term amnesia, and heightened aggression. These effects persist with continual exposure.")]"
+	. += "\t[span_info("In individuals with chronic exposure, severe effects have been noted. Further heightened aggression, long-term amnesia, Alzheimer's symptoms, schizophrenia, macular degeneration, aneurysms, heightened risk of stroke, and Parkinsons symptoms have all been noted.")]"
+	. += "\t[span_info("It is recommended that all individuals in unprotected contact with raw plasma regularly check with company health officials.")]"
+	. += "\t[span_info("For more information, please check with TerraGov's extranet site on Amenthium: www.terra.gov/health_and_safety/amenthium/, or our internal risk-assessment documents (document numbers #47582-b (Plasma safety data sheets) and #64210 through #64225 (PPE regulations for working with Plasma), available via NanoDoc to all employees).")]"
+	. += "\t[span_info("Nanotrasen: Always looking after your health.")]"
+	return .
 
 /obj/structure/sign/poster/official/terragov
 	name = "TerraGov: United for Humanity"

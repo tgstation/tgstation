@@ -17,6 +17,7 @@
 	base_icon_state = "chamber"
 	density = TRUE
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	use_power = IDLE_POWER_USE
 	active_power_usage = 1500
 	circuit = /obj/item/circuitboard/machine/bepis

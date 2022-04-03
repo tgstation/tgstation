@@ -6,7 +6,7 @@
 /obj/machinery/door/firedoor
 	name = "firelock"
 	desc = "Apply crowbar."
-	icon = 'icons/obj/doors/Doorfireglass.dmi'
+	icon = 'icons/obj/doors/doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = FALSE
 	density = FALSE
@@ -74,6 +74,10 @@
 
 	check_atmos()
 
+	if(prob(0.004) && icon == 'icons/obj/doors/doorfireglass.dmi')
+		base_icon_state = "sus"
+		desc += " This one looks a bit sus..."
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/door/firedoor/LateInitialize()
@@ -106,6 +110,60 @@
 		. += span_notice("It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.")
 	else
 		. += span_notice("The bolt locks have been <i>unscrewed</i>, but the bolts themselves are still <b>wrenched</b> to the floor.")
+
+/obj/machinery/door/firedoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(!isliving(user))
+		return .
+
+	var/mob/living/living_user = user
+
+	if (isnull(held_item))
+		if(density)
+			if(isalienadult(living_user) || issilicon(living_user))
+				context[SCREENTIP_CONTEXT_LMB] = "Open"
+				return CONTEXTUAL_SCREENTIP_SET
+			if(!living_user.combat_mode)
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Knock"
+					return CONTEXTUAL_SCREENTIP_SET
+			else
+				if(ismonkey(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Attack"
+					return CONTEXTUAL_SCREENTIP_SET
+				if(ishuman(living_user))
+					context[SCREENTIP_CONTEXT_LMB] = "Bash"
+					return CONTEXTUAL_SCREENTIP_SET
+		else if(issilicon(living_user))
+			context[SCREENTIP_CONTEXT_LMB] = "Close"
+			return CONTEXTUAL_SCREENTIP_SET
+		return .
+
+	if(!Adjacent(src, living_user))
+		return .
+
+	switch (held_item.tool_behaviour)
+		if (TOOL_CROWBAR)
+			if (!density)
+				context[SCREENTIP_CONTEXT_LMB] = "Close"
+			else if (!welded)
+				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
+				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WELDER)
+			context[SCREENTIP_CONTEXT_LMB] = welded ? "Unweld shut" : "Weld shut"
+			return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_WRENCH)
+			if (welded && !boltslocked)
+				context[SCREENTIP_CONTEXT_LMB] = "Unfasten bolts"
+				return CONTEXTUAL_SCREENTIP_SET
+		if (TOOL_SCREWDRIVER)
+			if (welded)
+				context[SCREENTIP_CONTEXT_LMB] = "Unlock bolts"
+				return CONTEXTUAL_SCREENTIP_SET
+
+	return .
 
 /**
  * Calculates what areas we should worry about.
@@ -288,32 +346,33 @@
 			span_warning("You bash [src]!"))
 		playsound(src, bash_sound, 100, TRUE)
 
-/obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
+/obj/machinery/door/firedoor/wrench_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
-	if(operating)
-		return
-	if(welded)
-		if(C.tool_behaviour == TOOL_WRENCH)
-			if(boltslocked)
-				to_chat(user, span_notice("There are screws locking the bolts in place!"))
-				return
-			C.play_tool_sound(src)
-			user.visible_message(span_notice("[user] starts undoing [src]'s bolts..."), \
-				span_notice("You start unfastening [src]'s floor bolts..."))
-			if(!C.use_tool(src, user, DEFAULT_STEP_TIME))
-				return
-			playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
-			user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
-				span_notice("You undo [src]'s floor bolts."))
-			deconstruct(TRUE)
-			return
-		if(C.tool_behaviour == TOOL_SCREWDRIVER)
-			user.visible_message(span_notice("[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts."), \
+	if(operating || !welded)
+		return FALSE
+
+	if(boltslocked)
+		to_chat(user, span_notice("There are screws locking the bolts in place!"))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	tool.play_tool_sound(src)
+	user.visible_message(span_notice("[user] starts undoing [src]'s bolts..."), \
+		span_notice("You start unfastening [src]'s floor bolts..."))
+	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME))
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
+	user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
+		span_notice("You undo [src]'s floor bolts."))
+	deconstruct(TRUE)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/door/firedoor/screwdriver_act(mob/living/user, obj/item/tool)
+	if(operating || !welded)
+		return FALSE
+	user.visible_message(span_notice("[user] [boltslocked ? "unlocks" : "locks"] [src]'s bolts."), \
 				span_notice("You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts."))
-			C.play_tool_sound(src)
-			boltslocked = !boltslocked
-			return
-	return ..()
+	tool.play_tool_sound(src)
+	boltslocked = !boltslocked
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return
@@ -401,9 +460,9 @@
 /obj/machinery/door/firedoor/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("door_opening", src)
+			flick("[base_icon_state]_opening", src)
 		if("closing")
-			flick("door_closing", src)
+			flick("[base_icon_state]_closing", src)
 
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
@@ -521,6 +580,9 @@
 	. = ..()
 	if(!(border_dir == dir)) //Make sure looking at appropriate border
 		return TRUE
+
+/obj/machinery/door/firedoor/border_only/CanAStarPass(obj/item/card/id/ID, to_dir)
+	return !density || (dir != to_dir)
 
 /obj/machinery/door/firedoor/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
 	SIGNAL_HANDLER

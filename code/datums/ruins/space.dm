@@ -4,6 +4,8 @@
 	prefix = "_maps/RandomRuins/SpaceRuins/"
 	cost = 1
 	allow_duplicates = FALSE
+	ruin_type = ZTRAIT_SPACE_RUINS
+	default_area = /area/space
 
 /datum/map_template/ruin/space/zoo
 	id = "zoo"
@@ -217,8 +219,8 @@
 	id = "crashedship"
 	suffix = "crashedship.dmm"
 	name = "Crashed Ship"
-	description = "Among civilian vessels the most common cause of tragedy is lack of food. \
-	This ship was outfitted with a multitude of food-generating features, then summarily ran into an asteroid shortly after takeoff."
+	description = "The SSCV Atrus was chartered to survey over 600 planets in its maiden voyage. \
+	Hopefully the SSC is content with an indepth analysis of just this asteroid."
 
 /datum/map_template/ruin/space/listeningstation
 	id = "listeningstation"

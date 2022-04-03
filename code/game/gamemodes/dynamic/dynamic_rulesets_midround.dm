@@ -982,7 +982,7 @@
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_candidates = 1
-	weight = 5
+	weight = 0 // Disabled until Dynamic midround rolling handles minor threats better
 	cost = 3 //Worth less than obsessed, but there's more of them.
 	requirements = list(10,10,10,10,10,10,10,10,10,10)
 	repeatable = TRUE

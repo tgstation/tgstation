@@ -235,7 +235,6 @@
 
 /obj/item/robot_model/proc/do_transform_delay()
 	var/mob/living/silicon/robot/cyborg = loc
-	var/prev_lockcharge = cyborg.lockcharge
 	sleep(1)
 	flick("[cyborg_base_icon]_transform", cyborg)
 	cyborg.notransform = TRUE
@@ -247,7 +246,7 @@
 	for(var/i in 1 to 4)
 		playsound(cyborg, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
 		sleep(7)
-	cyborg.SetLockdown(prev_lockcharge)
+	cyborg.SetLockdown(FALSE)
 	cyborg.setDir(SOUTH)
 	cyborg.set_anchored(FALSE)
 	cyborg.notransform = FALSE
@@ -284,7 +283,7 @@
 		/obj/item/bikehorn,
 		/obj/item/bikehorn/airhorn,
 		/obj/item/paint/anycolor,
-		/obj/item/soap/nanotrasen,
+		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/pneumatic_cannon/pie/selfcharge/cyborg,
 		/obj/item/razor, //killbait material
 		/obj/item/lipstick/purple,
@@ -300,6 +299,13 @@
 	model_select_icon = "service"
 	cyborg_base_icon = "clown"
 	hat_offset = -2
+
+/obj/item/robot_model/clown/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)
+	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
+	if(!soap)
+		return
+	if(soap.uses < initial(soap.uses))
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
 /obj/item/robot_model/engineering
 	name = "Engineering"
@@ -340,7 +346,7 @@
 		/obj/item/screwdriver/cyborg,
 		/obj/item/crowbar/cyborg,
 		/obj/item/stack/tile/iron/base/cyborg,
-		/obj/item/soap/nanotrasen,
+		/obj/item/soap/nanotrasen/cyborg,
 		/obj/item/storage/bag/trash/cyborg,
 		/obj/item/melee/flyswatter,
 		/obj/item/extinguisher/mini,
@@ -478,7 +484,7 @@
 	if(!wash_audio.is_active())
 		wash_audio.start()
 	clean()
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /// Start the process of disabling the buffer. Plays some effects, waits a bit, then finishes
 /datum/action/toggle_buffer/proc/deactivate_wash()
@@ -508,7 +514,7 @@
 	var/mob/living/silicon/robot/robot_owner = owner
 	buffer_on = FALSE
 	robot_owner.remove_movespeed_modifier(/datum/movespeed_modifier/auto_wash)
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /// Should we keep trying to activate our buffer, or did you fuck it up somehow
 /datum/action/toggle_buffer/proc/allow_buffer_activate()
@@ -545,7 +551,7 @@
 	// We use more water doing this then mopping
 	reagents.remove_any(2) //reaction() doesn't use up the reagents
 
-/datum/action/toggle_buffer/UpdateButtonIcon(status_only = FALSE, force = FALSE)
+/datum/action/toggle_buffer/UpdateButtons(status_only = FALSE, force = FALSE)
 	if(buffer_on)
 		name = "De-Activate Auto-Wash"
 		button_icon_state = "deactivate_wash"
@@ -578,6 +584,12 @@
 	var/obj/item/reagent_containers/spray/cyborg_lube/lube = locate(/obj/item/reagent_containers/spray/cyborg_lube) in emag_modules
 	if(lube)
 		lube.reagents.add_reagent(/datum/reagent/lube, 2 * coeff)
+
+	var/obj/item/soap/nanotrasen/cyborg/soap = locate(/obj/item/soap/nanotrasen/cyborg) in basic_modules
+	if(!soap)
+		return
+	if(soap.uses < initial(soap.uses))
+		soap.uses += ROUND_UP(initial(soap.uses) / 100) * coeff
 
 /obj/item/robot_model/medical
 	name = "Medical"

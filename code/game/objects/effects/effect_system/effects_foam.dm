@@ -12,7 +12,7 @@
 	anchored = TRUE
 	density = FALSE
 	layer = EDGED_TURF_LAYER
-	plane = ABOVE_GAME_PLANE
+	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/amount = 3
 	animate_movement = NO_STEPS
@@ -20,9 +20,10 @@
 	var/lifetime = 40
 	var/reagent_divisor = 7
 	var/static/list/blacklisted_turfs = typecacheof(list(
-	/turf/open/space/transit,
-	/turf/open/chasm,
-	/turf/open/lava))
+		/turf/open/space/transit,
+		/turf/open/chasm,
+		/turf/open/lava,
+	))
 	var/slippery_foam = TRUE
 
 /obj/effect/particle_effect/foam/firefighting
@@ -92,7 +93,7 @@
 
 /obj/effect/particle_effect/foam/Initialize(mapload)
 	. = ..()
-	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT) //limited by the size of the reagent holder anyway. Works without instant possibly edit in future
+	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -225,7 +226,7 @@
 /datum/effect_system/foam_spread/New()
 	..()
 	chemholder = new()
-	chemholder.create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
+	chemholder.create_reagents(1000, NO_REACT)
 
 /datum/effect_system/foam_spread/Destroy()
 	QDEL_NULL(chemholder)
@@ -270,6 +271,7 @@
 	opacity = TRUE // changed in New()
 	anchored = TRUE
 	layer = EDGED_TURF_LAYER
+	plane = GAME_PLANE_UPPER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."

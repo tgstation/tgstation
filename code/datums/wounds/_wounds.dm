@@ -110,7 +110,7 @@
  * * attack_direction: For bloodsplatters, if relevant
  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !L.is_organic_limb() || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || !IS_ORGANIC_LIMB(L) || HAS_TRAIT(L.owner, TRAIT_NEVER_WOUNDED))
 		qdel(src)
 		return
 
@@ -136,8 +136,8 @@
 	if(status_effect_type)
 		victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
-	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
-		victim.throw_alert("wound", /atom/movable/screen/alert/status_effect/wound)
+	if(!victim.alerts[ALERT_WOUNDED]) // only one alert is shared between all of the wounds
+		victim.throw_alert(ALERT_WOUNDED, /atom/movable/screen/alert/status_effect/wound)
 
 	var/demoted
 	if(old_wound)
@@ -146,7 +146,7 @@
 	if(severity == WOUND_SEVERITY_TRIVIAL)
 		return
 
-	if(!(silent || demoted))
+	if(!silent && !demoted)
 		var/msg = span_danger("[victim]'s [limb.name] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
@@ -158,8 +158,8 @@
 		if(sound_effect)
 			playsound(L.owner, sound_effect, 70 + 20 * severity, TRUE)
 
+	wound_injury(old_wound, attack_direction = attack_direction)
 	if(!demoted)
-		wound_injury(old_wound, attack_direction = attack_direction)
 		second_wind()
 
 /datum/wound/proc/null_victim()
@@ -196,7 +196,7 @@
 		return
 	LAZYREMOVE(victim.all_wounds, src)
 	if(!victim.all_wounds)
-		victim.clear_alert("wound")
+		victim.clear_alert(ALERT_WOUNDED)
 	SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 
 /**

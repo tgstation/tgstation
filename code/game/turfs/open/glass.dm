@@ -1,6 +1,6 @@
 /turf/open/floor/glass
-	name = "Glass floor"
-	desc = "Dont jump on it, or do, I'm not your mom."
+	name = "glass floor"
+	desc = "Don't jump on it, or do, I'm not your mom."
 	icon = 'icons/turf/floors/glass.dmi'
 	icon_state = "glass-0"
 	base_icon_state = "glass"
@@ -28,12 +28,21 @@
 	AddElement(/datum/element/turf_z_transparency)
 
 /turf/open/floor/glass/reinforced
-	name = "Reinforced glass floor"
+	name = "reinforced glass floor"
 	desc = "Do jump on it, it can take it."
 	icon = 'icons/turf/floors/reinf_glass.dmi'
 	icon_state = "reinf_glass-0"
 	base_icon_state = "reinf_glass"
 	floor_tile = /obj/item/stack/tile/rglass
+
+/turf/open/floor/glass/reinforced/icemoon
+	name = "reinforced glass floor"
+	desc = "Do jump on it, it can take it."
+	icon = 'icons/turf/floors/reinf_glass.dmi'
+	icon_state = "reinf_glass-0"
+	base_icon_state = "reinf_glass"
+	floor_tile = /obj/item/stack/tile/rglass
+	initial_gas_mix = "ICEMOON_ATMOS"
 
 /turf/open/floor/glass/reinforced/setup_broken_states()
 	return list("reinf_glass-damaged1", "reinf_glass-damaged2", "reinf_glass-damaged3")

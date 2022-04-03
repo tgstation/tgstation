@@ -1,5 +1,5 @@
 import { multiline } from "common/string";
-import { FeatureColorInput, Feature, FeatureToggle, CheckboxInput } from "../base";
+import { FeatureColorInput, Feature, FeatureChoiced, FeatureDropdownInput } from "../base";
 
 export const screentip_color: Feature<string> = {
   name: "Screentips color",
@@ -10,11 +10,13 @@ export const screentip_color: Feature<string> = {
   component: FeatureColorInput,
 };
 
-export const screentip_pref: FeatureToggle = {
+export const screentip_pref: FeatureChoiced = {
   name: "Enable screentips",
   category: "UI",
   description: multiline`
     Enables screen tips, the text you see when hovering over something.
+    When set to "Only with tips", will only show when there is more information
+    than just the name, such as what right-clicking it does.
   `,
-  component: CheckboxInput,
+  component: FeatureDropdownInput,
 };

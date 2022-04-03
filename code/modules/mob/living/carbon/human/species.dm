@@ -15,28 +15,36 @@ GLOBAL_LIST_EMPTY(features_by_species)
 /datum/species
 	///If the game needs to manually check your race to do something not included in a proc here, it will use this.
 	var/id
-	//This is used if you want to use a different species' limb sprites.
-	var/limbs_id
 	///This is the fluff name. They are displayed on health analyzers and in the character setup menu. Leave them generic for other servers to customize.
 	var/name
+	/// The formatting of the name of the species in plural context. Defaults to "[name]\s" if unset.
+	/// Ex "[Plasmamen] are weak", "[Mothmen] are strong", "[Lizardpeople] don't like", "[Golems] hate"
+	var/plural_form
 	// Default color. If mutant colors are disabled, this is the color that will be used by that race.
 	var/default_color = "#FFFFFF"
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
-
+	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
+	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
 	var/list/offset_features = list(OFFSET_UNIFORM = list(0,0), OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_GLASSES = list(0,0), OFFSET_EARS = list(0,0), OFFSET_SHOES = list(0,0), OFFSET_S_STORE = list(0,0), OFFSET_FACEMASK = list(0,0), OFFSET_HEAD = list(0,0), OFFSET_FACE = list(0,0), OFFSET_BELT = list(0,0), OFFSET_BACK = list(0,0), OFFSET_SUIT = list(0,0), OFFSET_NECK = list(0,0))
 
+	///The maximum number of bodyparts this species can have.
+	var/max_bodypart_count = 6
 	///This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If "mutcolor", it uses the H's mutant_color. If "fixedmutcolor", it uses fixedmutcolor
 	var/hair_color
 	///The alpha used by the hair. 255 is completely solid, 0 is invisible.
 	var/hair_alpha = 255
 
+	///This is used for children, it will determine their default limb ID for use of examine. See [/mob/living/carbon/human/proc/examine].
+	var/examine_limb_id
+	///Never, Optional, or Forced digi legs?
+	var/digitigrade_customization = DIGITIGRADE_NEVER
 	///Does the species use skintones or not? As of now only used by humans.
 	var/use_skintones = FALSE
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
-	var/exotic_blood = ""
+	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	var/exotic_bloodtype = ""
 	///What the species drops when gibbed by a gibber machine.
@@ -70,13 +78,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
 	///The bodyparts this species uses. assoc of bodypart string - bodypart type. Make sure all the fucking entries are in or I'll skin you alive.
-	var/list/bodypart_overides = list(
-		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm,\
-		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm,\
-		BODY_ZONE_HEAD = /obj/item/bodypart/head,\
-		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,\
-		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,\
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest)
+	var/list/bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
+	)
 
 	///List of external organs to generate like horns, frills, wings, etc. list(typepath of organ = "Round Beautiful BDSM Snout"). Still WIP
 	var/list/external_organs = list()
@@ -158,7 +167,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/list/inherent_factions
 
 	///Punch-specific attack verb.
-	var/attack_verb = "punch"
+	var/attack_verb = SFX_PUNCH
 	/// The visual effect of the attack.
 	var/attack_effect = ATTACK_EFFECT_PUNCH
 	var/sound/attack_sound = 'sound/weapons/punch1.ogg'
@@ -220,17 +229,21 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
 
+	///Was the species changed from its original type at the start of the round?
+	var/roundstart_changed = FALSE
+
 ///////////
 // PROCS //
 ///////////
 
 
 /datum/species/New()
-
-	if(!limbs_id) //if we havent set a limbs id to use, just use our own id
-		limbs_id = id
 	wings_icons = string_list(wings_icons)
-	..()
+
+	if(!plural_form)
+		plural_form = "[name]\s"
+
+	return ..()
 
 /// Gets a list of all species available to choose in roundstart.
 /proc/get_selectable_species()
@@ -406,16 +419,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(C.hud_used)
 		C.hud_used.update_locked_slots()
 
-	fix_non_native_limbs(C)
-
-	// this needs to be FIRST because qdel calls update_body which checks if we have DIGITIGRADE legs or not and if not then removes DIGITIGRADE from species_traits
-	if(C.dna.species.mutant_bodyparts["legs"] && C.dna.features["legs"] == "Digitigrade Legs")
-		species_traits += DIGITIGRADE
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(FALSE)
 
 	C.mob_biotypes = inherent_biotypes
 
+	replace_body(C, src)
 	regenerate_organs(C, old_species, visual_only = C.visual_only_organs)
 
 	if(exotic_bloodtype && C.dna.blood_type != exotic_bloodtype)
@@ -488,8 +495,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	SHOULD_CALL_PARENT(TRUE)
 	if(C.dna.species.exotic_bloodtype)
 		C.dna.blood_type = random_blood_type()
-	if(DIGITIGRADE in species_traits)
-		C.Digitigrade_Leg_Swap(TRUE)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 	for(var/obj/item/organ/external/organ in C.internal_organs)
@@ -516,199 +521,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	C.remove_movespeed_modifier(/datum/movespeed_modifier/species)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_LOSS, src)
-
-/**
- * Handles hair icons and dynamic hair.
- *
- * Handles hiding hair with clothing, hair layers, losing hair due to husking or augmented heads, facial hair, head hair, and hair styles.
- * Arguments:
- * * H - Human, whoever we're handling the hair for
- * * forced_colour - The colour of hair we're forcing on this human. Leave null to not change. Mind the british spelling!
- */
-/datum/species/proc/handle_hair(mob/living/carbon/human/H, forced_colour)
-	H.remove_overlay(HAIR_LAYER)
-	var/obj/item/bodypart/head/noggin = H.get_bodypart(BODY_ZONE_HEAD)
-	if(!noggin) //Decapitated
-		return
-
-	if(HAS_TRAIT(H, TRAIT_HUSK) || HAS_TRAIT(H, TRAIT_INVISIBLE_MAN))
-		return
-	var/datum/sprite_accessory/S
-	var/list/standing = list()
-
-	var/hair_hidden = FALSE //ignored if the matching dynamic_X_suffix is non-empty
-	var/facialhair_hidden = FALSE // ^
-
-	var/dynamic_hair_suffix = "" //if this is non-null, and hair+suffix matches an iconstate, then we render that hair instead
-	var/dynamic_fhair_suffix = ""
-
-	//for augmented heads
-	if(noggin.status == BODYPART_ROBOTIC)
-		return
-
-	//we check if our hat or helmet hides our facial hair.
-	if(H.head)
-		var/obj/item/I = H.head
-		if(isclothing(I))
-			var/obj/item/clothing/C = I
-			dynamic_fhair_suffix = C.dynamic_fhair_suffix
-		if(I.flags_inv & HIDEFACIALHAIR)
-			facialhair_hidden = TRUE
-
-	if(H.wear_mask)
-		var/obj/item/I = H.wear_mask
-		if(isclothing(I))
-			var/obj/item/clothing/C = I
-			dynamic_fhair_suffix = C.dynamic_fhair_suffix //mask > head in terms of facial hair
-		if(I.flags_inv & HIDEFACIALHAIR)
-			facialhair_hidden = TRUE
-
-	if(H.facial_hairstyle && (FACEHAIR in species_traits) && (!facialhair_hidden || dynamic_fhair_suffix))
-		S = GLOB.facial_hairstyles_list[H.facial_hairstyle]
-		if(S)
-
-			//List of all valid dynamic_fhair_suffixes
-			var/static/list/fextensions
-			if(!fextensions)
-				var/icon/fhair_extensions = icon('icons/mob/facialhair_extensions.dmi')
-				fextensions = list()
-				for(var/s in fhair_extensions.IconStates(1))
-					fextensions[s] = TRUE
-				qdel(fhair_extensions)
-
-			//Is hair+dynamic_fhair_suffix a valid iconstate?
-			var/fhair_state = S.icon_state
-			var/fhair_file = S.icon
-			if(fextensions[fhair_state+dynamic_fhair_suffix])
-				fhair_state += dynamic_fhair_suffix
-				fhair_file = 'icons/mob/facialhair_extensions.dmi'
-
-			var/mutable_appearance/facial_overlay = mutable_appearance(fhair_file, fhair_state, -HAIR_LAYER)
-			var/mutable_appearance/gradient_overlay
-
-			if(!forced_colour)
-				if(hair_color)
-					if(hair_color == "mutcolor")
-						facial_overlay.color = H.dna.features["mcolor"]
-					else if(hair_color == "fixedmutcolor")
-						facial_overlay.color = fixed_mut_color
-					else
-						facial_overlay.color = hair_color
-				else
-					facial_overlay.color = H.facial_hair_color
-				//Gradients
-				var/grad_style = LAZYACCESS(H.grad_style, GRADIENT_FACIAL_HAIR_KEY)
-				if(grad_style)
-					var/grad_color = LAZYACCESS(H.grad_color, GRADIENT_FACIAL_HAIR_KEY)
-					gradient_overlay = make_gradient_overlay(fhair_file, fhair_state, HAIR_LAYER, GLOB.facial_hair_gradients_list[grad_style], grad_color)
-			else
-				facial_overlay.color = forced_colour
-
-			facial_overlay.alpha = hair_alpha
-			facial_overlay.overlays += emissive_blocker(fhair_file, fhair_state, alpha = hair_alpha)
-
-			standing += facial_overlay
-			if(gradient_overlay)
-				standing += gradient_overlay
-
-	if(H.head)
-		var/obj/item/I = H.head
-		if(isclothing(I))
-			var/obj/item/clothing/C = I
-			dynamic_hair_suffix = C.dynamic_hair_suffix
-		if(I.flags_inv & HIDEHAIR)
-			hair_hidden = TRUE
-
-	if(H.w_uniform)
-		var/obj/item/item_uniform = H.w_uniform
-		if(isclothing(item_uniform))
-			var/obj/item/clothing/clothing_object = item_uniform
-			dynamic_hair_suffix = clothing_object.dynamic_hair_suffix
-		if(item_uniform.flags_inv & HIDEHAIR)
-			hair_hidden = TRUE
-
-	if(H.wear_mask)
-		var/obj/item/I = H.wear_mask
-		if(!dynamic_hair_suffix && isclothing(I)) //head > mask in terms of head hair
-			var/obj/item/clothing/C = I
-			dynamic_hair_suffix = C.dynamic_hair_suffix
-		if(I.flags_inv & HIDEHAIR)
-			hair_hidden = TRUE
-
-	if(!hair_hidden || dynamic_hair_suffix)
-		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIR_LAYER)
-		var/mutable_appearance/gradient_overlay
-		if(!hair_hidden && !H.getorgan(/obj/item/organ/brain)) //Applies the debrained overlay if there is no brain
-			if(!(NOBLOOD in species_traits))
-				hair_overlay.icon = 'icons/mob/human_face.dmi'
-				hair_overlay.icon_state = "debrained"
-
-		else if(H.hairstyle && (HAIR in species_traits))
-			S = GLOB.hairstyles_list[H.hairstyle]
-			if(S)
-
-				//List of all valid dynamic_hair_suffixes
-				var/static/list/extensions
-				if(!extensions)
-					var/icon/hair_extensions = icon('icons/mob/hair_extensions.dmi') //hehe
-					extensions = list()
-					for(var/s in hair_extensions.IconStates(1))
-						extensions[s] = TRUE
-					qdel(hair_extensions)
-
-				//Is hair+dynamic_hair_suffix a valid iconstate?
-				var/hair_state = S.icon_state
-				var/hair_file = S.icon
-				if(extensions[hair_state+dynamic_hair_suffix])
-					hair_state += dynamic_hair_suffix
-					hair_file = 'icons/mob/hair_extensions.dmi'
-
-				hair_overlay.icon = hair_file
-				hair_overlay.icon_state = hair_state
-
-				if(!forced_colour)
-					if(hair_color)
-						if(hair_color == "mutcolor")
-							hair_overlay.color = H.dna.features["mcolor"]
-						else if(hair_color == "fixedmutcolor")
-							hair_overlay.color = fixed_mut_color
-						else
-							hair_overlay.color = hair_color
-					else
-						hair_overlay.color = H.hair_color
-
-					//Gradients
-					var/grad_style = LAZYACCESS(H.grad_style, GRADIENT_HAIR_KEY)
-					if(grad_style)
-						var/grad_color = LAZYACCESS(H.grad_color, GRADIENT_HAIR_KEY)
-						gradient_overlay = make_gradient_overlay(hair_file, hair_state, HAIR_LAYER, GLOB.hair_gradients_list[grad_style], grad_color)
-				else
-					hair_overlay.color = forced_colour
-
-				hair_overlay.alpha = hair_alpha
-				if(OFFSET_FACE in H.dna.species.offset_features)
-					hair_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-					hair_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-
-		if(hair_overlay.icon)
-			hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, alpha = hair_alpha)
-			standing += hair_overlay
-			if(gradient_overlay)
-				standing += gradient_overlay
-
-	if(standing.len)
-		H.overlays_standing[HAIR_LAYER] = standing
-
-	H.apply_overlay(HAIR_LAYER)
-
-/datum/species/proc/make_gradient_overlay(file, icon, layer, datum/sprite_accessory/gradient, grad_color)
-	var/mutable_appearance/gradient_overlay = mutable_appearance(layer = -layer)
-	var/icon/temp = icon(gradient.icon, gradient.icon_state)
-	var/icon/temp_hair = icon(file, icon)
-	temp.Blend(temp_hair, ICON_ADD)
-	gradient_overlay.icon = temp
-	gradient_overlay.color = grad_color
-	return gradient_overlay
 
 /**
  * Handles the body of a human
@@ -776,27 +588,27 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/datum/sprite_accessory/markings = GLOB.moth_markings_list[species_human.dna.features["moth_markings"]]
 
 		if(!HAS_TRAIT(species_human, TRAIT_HUSK))
-			if(noggin && (noggin.status != BODYPART_ROBOTIC))
+			if(noggin && (IS_ORGANIC_LIMB(noggin)))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
 				standing += markings_head_overlay
 
-			if(chest && (chest.status != BODYPART_ROBOTIC))
+			if(chest && (IS_ORGANIC_LIMB(chest)))
 				var/mutable_appearance/markings_chest_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_chest", -BODY_LAYER)
 				standing += markings_chest_overlay
 
-			if(right_arm && (right_arm.status != BODYPART_ROBOTIC))
+			if(right_arm && (IS_ORGANIC_LIMB(right_arm)))
 				var/mutable_appearance/markings_r_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_arm", -BODY_LAYER)
 				standing += markings_r_arm_overlay
 
-			if(left_arm && (left_arm.status != BODYPART_ROBOTIC))
+			if(left_arm && (IS_ORGANIC_LIMB(left_arm)))
 				var/mutable_appearance/markings_l_arm_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_arm", -BODY_LAYER)
 				standing += markings_l_arm_overlay
 
-			if(right_leg && (right_leg.status != BODYPART_ROBOTIC))
+			if(right_leg && (IS_ORGANIC_LIMB(right_leg)))
 				var/mutable_appearance/markings_r_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_r_leg", -BODY_LAYER)
 				standing += markings_r_leg_overlay
 
-			if(left_leg && (left_leg.status != BODYPART_ROBOTIC))
+			if(left_leg && (IS_ORGANIC_LIMB(left_leg)))
 				var/mutable_appearance/markings_l_leg_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_l_leg", -BODY_LAYER)
 				standing += markings_l_leg_overlay
 
@@ -806,7 +618,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
-				if(species_human.dna.species.sexes && species_human.body_type == FEMALE && (underwear.gender == MALE))
+				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
 					underwear_overlay = wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
 				else
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
@@ -817,12 +629,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(species_human.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
-				if(species_human.dna.species.sexes && species_human.body_type == FEMALE)
+				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
 					standing += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					standing += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
 
-		if(species_human.socks && species_human.num_legs >= 2 && !(DIGITIGRADE in species_traits))
+		if(species_human.socks && species_human.num_legs >= 2 && !(src.bodytype & BODYTYPE_DIGITIGRADE))
 			var/datum/sprite_accessory/socks/socks = GLOB.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
@@ -891,36 +703,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			bodyparts_to_add -= "waggingspines"
 
 	if(mutant_bodyparts["ears"])
-		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || noggin.status == BODYPART_ROBOTIC)
+		if(!source.dna.features["ears"] || source.dna.features["ears"] == "None" || source.head && (source.head.flags_inv & HIDEHAIR) || (source.wear_mask && (source.wear_mask.flags_inv & HIDEHAIR)) || !noggin || !IS_ORGANIC_LIMB(noggin))
 			bodyparts_to_add -= "ears"
-
-	//Digitigrade legs are stuck in the phantom zone between true limbs and mutant bodyparts. Mainly it just needs more aggressive updating than most limbs.
-	var/update_needed = FALSE
-	var/not_digitigrade = TRUE
-	for(var/obj/item/bodypart/bodypart as anything in source.bodyparts)
-		if(!bodypart.use_digitigrade)
-			continue
-		not_digitigrade = FALSE
-		if(!(DIGITIGRADE in species_traits)) //Someone cut off a digitigrade leg and tacked it on
-			species_traits += DIGITIGRADE
-		var/should_be_squished = FALSE
-		if(source.wear_suit && ((source.wear_suit.flags_inv & HIDEJUMPSUIT) || (source.wear_suit.body_parts_covered & LEGS)) || (source.w_uniform && (source.w_uniform.body_parts_covered & LEGS)))
-			should_be_squished = TRUE
-		if(bodypart.use_digitigrade == FULL_DIGITIGRADE && should_be_squished)
-			bodypart.use_digitigrade = SQUISHED_DIGITIGRADE
-			update_needed = TRUE
-		else if(bodypart.use_digitigrade == SQUISHED_DIGITIGRADE && !should_be_squished)
-			bodypart.use_digitigrade = FULL_DIGITIGRADE
-			update_needed = TRUE
-	if(update_needed)
-		source.update_body_parts()
-	if(not_digitigrade && (DIGITIGRADE in species_traits)) //Curse is lifted
-		species_traits -= DIGITIGRADE
 
 	if(!bodyparts_to_add)
 		return
 
-	var/g = (source.body_type == FEMALE) ? "f" : "m"
+	var/g = (source.physique == FEMALE) ? "f" : "m"
 
 	for(var/layer in relevent_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)
@@ -950,6 +739,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					accessory = GLOB.caps_list[source.dna.features["caps"]]
 				if("tail_monkey")
 					accessory = GLOB.tails_list_monkey[source.dna.features["tail_monkey"]]
+
 			if(!accessory || accessory.icon_state == "none")
 				continue
 
@@ -1092,15 +882,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_FEET)
 			if(H.num_legs < 2)
 				return FALSE
-			if((DIGITIGRADE in species_traits) && !(I.item_flags & IGNORE_DIGITIGRADE))
-				if(!disable_warning)
-					to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
-				return FALSE
+			if((bodytype & BODYTYPE_DIGITIGRADE) && !(I.item_flags & IGNORE_DIGITIGRADE))
+				if(!(I.supports_variations_flags & (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON)))
+					if(!disable_warning)
+						to_chat(H, span_warning("The footwear around here isn't compatible with your feet!"))
+					return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_BELT)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -1124,7 +915,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -1137,7 +928,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_L_LEG)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -1150,7 +941,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_LEG)
 
-			if(!H.w_uniform && !nojumpsuit && (!O || O.status != BODYPART_ROBOTIC))
+			if(!H.w_uniform && !nojumpsuit && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
@@ -1469,7 +1260,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/bloody = FALSE
 	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
-		if(affecting.status == BODYPART_ORGANIC)
+		if(IS_ORGANIC_LIMB(affecting))
 			I.add_mob_blood(H) //Make the weapon bloody, not the person.
 			if(prob(I.force * 2)) //blood spatter!
 				bloody = TRUE
@@ -1728,11 +1519,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// display alerts based on how hot it is
 		switch(humi.bodytemperature)
 			if(bodytemp_heat_damage_limit to BODYTEMP_HEAT_WARNING_2)
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 1)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 1)
 			if(BODYTEMP_HEAT_WARNING_2 to BODYTEMP_HEAT_WARNING_3)
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 2)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 2)
 			else
-				humi.throw_alert("temp", /atom/movable/screen/alert/hot, 3)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/hot, 3)
 
 	// Body temperature is too cold, and we do not have resist traits
 	else if(humi.bodytemperature < bodytemp_cold_damage_limit && !HAS_TRAIT(humi, TRAIT_RESISTCOLD))
@@ -1744,15 +1535,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Display alerts based how cold it is
 		switch(humi.bodytemperature)
 			if(BODYTEMP_COLD_WARNING_2 to bodytemp_cold_damage_limit)
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 1)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 1)
 			if(BODYTEMP_COLD_WARNING_3 to BODYTEMP_COLD_WARNING_2)
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 2)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 2)
 			else
-				humi.throw_alert("temp", /atom/movable/screen/alert/cold, 3)
+				humi.throw_alert(ALERT_TEMPERATURE, /atom/movable/screen/alert/cold, 3)
 
 	// We are not to hot or cold, remove status and moods
 	else
-		humi.clear_alert("temp")
+		humi.clear_alert(ALERT_TEMPERATURE)
 		humi.remove_movespeed_modifier(/datum/movespeed_modifier/cold)
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "cold")
 		SEND_SIGNAL(humi, COMSIG_CLEAR_MOOD_EVENT, "hot")
@@ -1864,34 +1655,34 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
 			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * delta_time)
-				H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 2)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 			else
-				H.clear_alert("pressure")
+				H.clear_alert(ALERT_PRESSURE)
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert("pressure", /atom/movable/screen/alert/highpressure, 1)
+			H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 1)
 
 		// No pressure issues here clear pressure alerts
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.clear_alert("pressure")
+			H.clear_alert(ALERT_PRESSURE)
 
 		// Low pressure here, show an alert
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			// We have low pressure resit trait, clear alerts
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert("pressure")
+				H.clear_alert(ALERT_PRESSURE)
 			else
-				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 1)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
 
 		// Very low pressure, show an alert and take damage
 		else
 			// We have low pressure resit trait, clear alerts
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert("pressure")
+				H.clear_alert(ALERT_PRESSURE)
 			else
 				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * delta_time)
-				H.throw_alert("pressure", /atom/movable/screen/alert/lowpressure, 2)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
 
 //////////
@@ -2088,7 +1879,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	else
 		wings_icon = wings_icons[1]
 
-	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.body_type)
+	var/obj/item/organ/external/wings/functional/wings = new(null, wings_icon, H.physique)
 	wings.Insert(H)
 	handle_mutant_bodyparts(H)
 
@@ -2105,18 +1896,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 ///Species override for unarmed attacks because the attack_hand proc was made by a mouth-breathing troglodyte on a tricycle. Also to whoever thought it would be a good idea to make it so the original spec_unarmedattack was not actually linked to unarmed attack needs to be checked by a doctor because they clearly have a vast empty space in their head.
 /datum/species/proc/spec_unarmedattack(mob/living/carbon/human/user, atom/target, modifiers)
 	return FALSE
-
-
-///Removes any non-native limbs from the mob
-/datum/species/proc/fix_non_native_limbs(mob/living/carbon/human/H)
-	for(var/X in H.bodyparts)
-		var/obj/item/bodypart/current_part = X
-		var/obj/item/bodypart/species_part = bodypart_overides[current_part.body_zone]
-
-		if(current_part.type == species_part)
-			continue
-
-		current_part.change_bodypart(species_part)
 
 /// Returns a list of strings representing features this species has.
 /// Used by the preferences UI to know what buttons to show.
@@ -2185,3 +1964,391 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_owner_login(mob/living/carbon/human/owner)
 	return
+
+/**
+ * Gets a short description for the specices. Should be relatively succinct.
+ * Used in the preference menu.
+ *
+ * Returns a string.
+ */
+/datum/species/proc/get_species_description()
+	SHOULD_CALL_PARENT(FALSE)
+
+	stack_trace("Species [name] ([type]) did not have a description set, and is a selectable roundstart race! Override get_species_description.")
+	return "No species description set, file a bug report!"
+
+/**
+ * Gets the lore behind the type of species. Can be long.
+ * Used in the preference menu.
+ *
+ * Returns a list of strings.
+ * Between each entry in the list, a newline will be inserted, for formatting.
+ */
+/datum/species/proc/get_species_lore()
+	SHOULD_CALL_PARENT(FALSE)
+	RETURN_TYPE(/list)
+
+	stack_trace("Species [name] ([type]) did not have lore set, and is a selectable roundstart race! Override get_species_lore.")
+	return list("No species lore set, file a bug report!")
+
+/**
+ * Translate the species liked foods from bitfields into strings
+ * and returns it in the form of an associated list.
+ *
+ * Returns a list, or null if they have no diet.
+ */
+/datum/species/proc/get_species_diet()
+	if(TRAIT_NOHUNGER in inherent_traits)
+		return null
+
+	var/list/food_flags = FOOD_FLAGS
+
+	return list(
+		"liked_food" = bitfield_to_list(liked_food, food_flags),
+		"disliked_food" = bitfield_to_list(disliked_food, food_flags),
+		"toxic_food" = bitfield_to_list(toxic_food, food_flags),
+	)
+
+/**
+ * Generates a list of "perks" related to this species
+ * (Postives, neutrals, and negatives)
+ * in the format of a list of lists.
+ * Used in the preference menu.
+ *
+ * "Perk" format is as followed:
+ * list(
+ *   SPECIES_PERK_TYPE = type of perk (postiive, negative, neutral - use the defines)
+ *   SPECIES_PERK_ICON = icon shown within the UI
+ *   SPECIES_PERK_NAME = name of the perk on hover
+ *   SPECIES_PERK_DESC = description of the perk on hover
+ * )
+ *
+ * Returns a list of lists.
+ * The outer list is an assoc list of [perk type]s to a list of perks.
+ * The innter list is a list of perks. Can be empty, but won't be null.
+ */
+/datum/species/proc/get_species_perks()
+	var/list/species_perks = list()
+
+	// Let us get every perk we can concieve of in one big list.
+	// The order these are called (kind of) matters.
+	// Species unique perks first, as they're more important than genetic perks,
+	// and language perk last, as it comes at the end of the perks list
+	species_perks += create_pref_unique_perks()
+	species_perks += create_pref_blood_perks()
+	species_perks += create_pref_combat_perks()
+	species_perks += create_pref_damage_perks()
+	species_perks += create_pref_temperature_perks()
+	species_perks += create_pref_traits_perks()
+	species_perks += create_pref_biotypes_perks()
+	species_perks += create_pref_language_perk()
+
+	// Some overrides may return `null`, prevent those from jamming up the list.
+	list_clear_nulls(species_perks)
+
+	// Now let's sort them out for cleanliness and sanity
+	var/list/perks_to_return = list(
+		SPECIES_POSITIVE_PERK = list(),
+		SPECIES_NEUTRAL_PERK = list(),
+		SPECIES_NEGATIVE_PERK =  list(),
+	)
+
+	for(var/list/perk as anything in species_perks)
+		var/perk_type = perk[SPECIES_PERK_TYPE]
+		// If we find a perk that isn't postiive, negative, or neutral,
+		// it's a bad entry - don't add it to our list. Throw a stack trace and skip it instead.
+		if(isnull(perks_to_return[perk_type]))
+			stack_trace("Invalid species perk ([perk[SPECIES_PERK_NAME]]) found for species [name]. \
+				The type should be positive, negative, or neutral. (Got: [perk_type])")
+			continue
+
+		perks_to_return[perk_type] += list(perk)
+
+	return perks_to_return
+
+/**
+ * Used to add any species specific perks to the perk list.
+ *
+ * Returns null by default. When overriding, return a list of perks.
+ */
+/datum/species/proc/create_pref_unique_perks()
+	return null
+
+/**
+ * Adds adds any perks related to combat.
+ * For example, the damage type of their punches.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_combat_perks()
+	var/list/to_add = list()
+
+	if(attack_type != BRUTE)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "fist-raised",
+			SPECIES_PERK_NAME = "Elemental Attacker",
+			SPECIES_PERK_DESC = "[plural_form] deal [attack_type] damage with their punches instead of brute.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to sustaining damage.
+ * For example, brute damage vulnerability, or fire damage resistance.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_damage_perks()
+	var/list/to_add = list()
+
+	// Brute related
+	if(brutemod > 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "band-aid",
+			SPECIES_PERK_NAME = "Brutal Weakness",
+			SPECIES_PERK_DESC = "[plural_form] are weak to brute damage.",
+		))
+
+	if(brutemod < 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Brutal Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to bruising and brute damage.",
+		))
+
+	// Burn related
+	if(burnmod > 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "burn",
+			SPECIES_PERK_NAME = "Fire Weakness",
+			SPECIES_PERK_DESC = "[plural_form] are weak to fire and burn damage.",
+		))
+
+	if(burnmod < 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Fire Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to flames, and burn damage.",
+		))
+
+	// Shock damage
+	if(siemens_coeff > 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "bolt",
+			SPECIES_PERK_NAME = "Shock Vulnerability",
+			SPECIES_PERK_DESC = "[plural_form] are vulnerable to being shocked.",
+		))
+
+	if(siemens_coeff < 1)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield-alt",
+			SPECIES_PERK_NAME = "Shock Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to being shocked.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to how the species deals with temperature.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_temperature_perks()
+	var/list/to_add = list()
+
+	// Hot temperature tolerance
+	if(heatmod > 1 || bodytemp_heat_damage_limit < BODYTEMP_HEAT_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "temperature-high",
+			SPECIES_PERK_NAME = "Heat Vulnerability",
+			SPECIES_PERK_DESC = "[plural_form] are vulnerable to high temperatures.",
+		))
+
+	if(heatmod < 1 || bodytemp_heat_damage_limit > BODYTEMP_HEAT_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "thermometer-empty",
+			SPECIES_PERK_NAME = "Heat Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to hotter environments.",
+		))
+
+	// Cold temperature tolerance
+	if(coldmod > 1 || bodytemp_cold_damage_limit > BODYTEMP_COLD_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "temperature-low",
+			SPECIES_PERK_NAME = "Cold Vulnerability",
+			SPECIES_PERK_DESC = "[plural_form] are vulnerable to cold temperatures.",
+		))
+
+	if(coldmod < 1 || bodytemp_cold_damage_limit < BODYTEMP_COLD_DAMAGE_LIMIT)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "thermometer-empty",
+			SPECIES_PERK_NAME = "Cold Resilience",
+			SPECIES_PERK_DESC = "[plural_form] are resilient to colder environments.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to the species' blood (or lack thereof).
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_blood_perks()
+	var/list/to_add = list()
+
+	// NOBLOOD takes priority by default
+	if(NOBLOOD in species_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "tint-slash",
+			SPECIES_PERK_NAME = "Bloodletted",
+			SPECIES_PERK_DESC = "[plural_form] do not have blood.",
+		))
+
+	// Otherwise, check if their exotic blood is a valid typepath
+	else if(ispath(exotic_blood))
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = initial(exotic_blood.name),
+			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make recieving medical treatment harder.",
+		))
+
+	// Otherwise otherwise, see if they have an exotic bloodtype set
+	else if(exotic_bloodtype)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "tint",
+			SPECIES_PERK_NAME = "Exotic Blood",
+			SPECIES_PERK_DESC = "[plural_form] have \"[exotic_bloodtype]\" type blood, which can make recieving medical treatment harder.",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to the species' inherent_traits list.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_traits_perks()
+	var/list/to_add = list()
+
+	if(TRAIT_LIMBATTACHMENT in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "user-plus",
+			SPECIES_PERK_NAME = "Limbs Easily Reattached",
+			SPECIES_PERK_DESC = "[plural_form] limbs are easily readded, and as such do not \
+				require surgery to restore. Simply pick it up and pop it back in, champ!",
+		))
+
+	if(TRAIT_EASYDISMEMBER in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "user-times",
+			SPECIES_PERK_NAME = "Limbs Easily Dismembered",
+			SPECIES_PERK_DESC = "[plural_form] limbs are not secured well, and as such they are easily dismembered.",
+		))
+
+	if(TRAIT_EASILY_WOUNDED in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "user-times",
+			SPECIES_PERK_NAME = "Easily Wounded",
+			SPECIES_PERK_DESC = "[plural_form] skin is very weak and fragile. They are much easier to apply serious wounds to.",
+		))
+
+	if(TRAIT_TOXINLOVER in inherent_traits)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "syringe",
+			SPECIES_PERK_NAME = "Toxins Lover",
+			SPECIES_PERK_DESC = "Toxins damage dealt to [plural_form] are reversed - healing toxins will instead cause harm, and \
+				causing toxins will instead cause healing. Be careful around purging chemicals!",
+		))
+
+	return to_add
+
+/**
+ * Adds adds any perks related to the species' inherent_biotypes flags.
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_biotypes_perks()
+	var/list/to_add = list()
+
+	if(inherent_biotypes & MOB_UNDEAD)
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "skull",
+			SPECIES_PERK_NAME = "Undead",
+			SPECIES_PERK_DESC = "[plural_form] are of the undead! The undead do not have the need to eat or breathe, and \
+				most viruses will not be able to infect a walking corpse. Their worries mostly stop at remaining in one piece, really.",
+		))
+
+	return to_add
+
+/**
+ * Adds in a language perk based on all the languages the species
+ * can speak by default (according to their language holder).
+ *
+ * Returns a list containing perks, or an empty list.
+ */
+/datum/species/proc/create_pref_language_perk()
+	var/list/to_add = list()
+
+	// Grab galactic common as a path, for comparisons
+	var/datum/language/common_language = /datum/language/common
+
+	// Now let's find all the languages they can speak that aren't common
+	var/list/bonus_languages = list()
+	var/datum/language_holder/temp_holder = new species_language_holder()
+	for(var/datum/language/language_type as anything in temp_holder.spoken_languages)
+		if(ispath(language_type, common_language))
+			continue
+		bonus_languages += initial(language_type.name)
+
+	// If we have any languages we can speak: create a perk for them all
+	if(length(bonus_languages))
+		to_add += list(list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "comment",
+			SPECIES_PERK_NAME = "Native Speaker",
+			SPECIES_PERK_DESC = "Alongside [initial(common_language.name)], [plural_form] gain the ability to speak [english_list(bonus_languages)].",
+		))
+
+	qdel(temp_holder)
+
+	return to_add
+
+///Handles replacing all of the bodyparts with their species version during set_species()
+/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species)
+	new_species ||= target.dna.species //If no new species is provided, assume its src.
+	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
+
+	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == "Digitigrade Legs") || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
+		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/r_leg/digitigrade
+		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/l_leg/digitigrade
+
+	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
+		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)
+			continue
+
+		var/path = new_species.bodypart_overrides?[old_part.body_zone]
+		var/obj/item/bodypart/new_part
+		if(path)
+			new_part = new path()
+			new_part.replace_limb(target, TRUE)
+			new_part.update_limb(is_creating = TRUE)
+			qdel(old_part)

@@ -80,10 +80,13 @@
 			to_chat(owner, span_warning("Being near [obsession] makes you nervous and you begin to stutter..."))
 		owner.stuttering = max(3, owner.stuttering)
 
-/datum/brain_trauma/special/obsessed/proc/on_hug(mob/living/hugger, mob/living/hugged)
+/datum/brain_trauma/special/obsessed/proc/on_hug(datum/source, mob/living/hugger, mob/living/hugged)
 	SIGNAL_HANDLER
-	if(hugged == obsession)
-		obsession_hug_count++
+
+	if(hugged != obsession)
+		return
+
+	obsession_hug_count++
 
 /datum/brain_trauma/special/obsessed/proc/on_failed_social_interaction()
 	if(QDELETED(owner) || owner.stat >= UNCONSCIOUS)

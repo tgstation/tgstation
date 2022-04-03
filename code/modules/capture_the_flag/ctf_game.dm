@@ -389,7 +389,8 @@
 
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human(get_turf(src))
 	new_team_member.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
-	M.set_species(/datum/species/synth)
+	if(M.dna.species.outfit_important_for_life)
+		M.set_species(/datum/species/human)
 	M.key = new_team_member.key
 	M.faction += team
 	M.equipOutfit(chosen_class)
@@ -588,7 +589,8 @@
 	resistance_flags = INDESTRUCTIBLE
 	var/obj/machinery/capture_the_flag/controlling
 	var/team = "none"
-	var/point_rate = 0.5
+	///This is how many points are gained a second while controlling this point
+	var/point_rate = 1
 	var/game_area = /area/ctf
 
 /obj/machinery/control_point/process(delta_time)

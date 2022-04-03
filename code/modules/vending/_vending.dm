@@ -504,6 +504,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 					freebie(user, 2)
 				if(16 to 25)
 					freebie(user, 1)
+				if(26 to 75)
+					return
 				if(76 to 90)
 					tilt(user)
 				if(91 to 100)
@@ -537,6 +539,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	visible_message(span_danger("[src] tips over!"))
 	tilted = TRUE
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 
 	var/crit_case
 	if(crit)
@@ -596,7 +599,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 					if(5) // limb squish!
 						for(var/i in C.bodyparts)
 							var/obj/item/bodypart/squish_part = i
-							if(squish_part.is_organic_limb())
+							if(IS_ORGANIC_LIMB(squish_part))
 								var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 								squish_part.force_wound_upwards(type_wound)
 							else
@@ -651,6 +654,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	tilted = FALSE
 	layer = initial(layer)
+	plane = initial(plane)
 
 	var/matrix/M = matrix()
 	M.Turn(0)

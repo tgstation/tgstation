@@ -30,6 +30,8 @@
 	throwforce = 10
 	maxcharge = 20000 //decent max charge
 	chargerate = 1400 //charging is about 30% less efficient compared lithium batteries.
+	charge_light_type = null
+	connector_type = "leadacid"
 	rating = 2 //Kind of a mid-tier battery
 	w_class = WEIGHT_CLASS_NORMAL
 	grind_results = list(/datum/reagent/lead = 15, /datum/reagent/toxin/acid = 15, /datum/reagent/water = 20)

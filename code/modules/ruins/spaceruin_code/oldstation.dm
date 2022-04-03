@@ -20,10 +20,10 @@
 		monochromatic cyan, leaving the user unable to see long distances. However, the way the helmet retracts is pretty cool."
 
 /obj/item/paper/fluff/ruins/oldstation/protohealth
-	name = "Health Analyser Report"
-	info = "<b>*Health Analyser*</b><br><br>The portable Health Analyser is essentially a handheld variant of a health analyser. Years of research have concluded with this device which is \
+	name = "Health Analyzer Report"
+	info = "<b>*Health Analyzer*</b><br><br>The portable Health Analyzer is essentially a handheld variant of a health analyzer. Years of research have concluded with this device which is \
 	capable of diagnosing even the most critical, obscure or technical injuries any humanoid entity is suffering in an easy to understand format that even a non-trained health professional \
-	can understand.<br><br>The health analyser is expected to go into full production as standard issue medical kit."
+	can understand.<br><br>The health analyzer is expected to go into full production as standard issue medical kit."
 
 /obj/item/paper/fluff/ruins/oldstation/protogun
 	name = "K14 Energy Gun Report"
