@@ -216,7 +216,7 @@
 /obj/item/modular_computer/tablet/nano/curator
 	name = "curator nanotablet"
 	default_cartridge = /obj/item/cartridge/curator
-	greyscale_config = /datum/greyscale_config/nanotablet/curator
+	greyscale_config = /datum/greyscale_config/nanotablet/stripe_split
 	greyscale_colors = "#e2e2e2#000099#0097ca"
 
 /obj/item/modular_computer/tablet/nano/syndicate
