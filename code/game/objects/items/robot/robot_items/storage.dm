@@ -165,10 +165,6 @@
 	handle_refilling(arrived)
 	return ..()
 
-/obj/item/borg/apparatus/beaker/service/Exited(atom/movable/gone, direction)
-	handle_refilling(gone)
-	return ..()
-
 //Organ storage bag
 /obj/item/borg/apparatus/organ_storage //allows medical cyborgs to manipulate organs without hands
 	name = "organ storage bag"
