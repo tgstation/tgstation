@@ -42978,7 +42978,6 @@
 /area/ai_monitored/command/nuke_storage)
 "jQX" = (
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/pinpointer_dispenser,
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
 "jRb" = (
