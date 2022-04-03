@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes: 
-  - bugfix: "Fixed up the wiring in Icebox Xenobiology's shutter buttons. The two buttons no longer close the same shutters, and now close their intended targets."
