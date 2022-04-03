@@ -53,19 +53,29 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	///Stores the hashed values of traits such as skin tones, hair style, and gender
 	var/unique_identity
 	var/blood_type
-	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
-	var/list/features = list("FFF") //first value is mutant color
+	///The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human
+	///first value is mutant color
+	var/list/features = list("FFF")
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
-	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
-	var/list/mutations = list()   //All mutations are from now on here
-	var/list/temporary_mutations = list() //Temporary changes to the UE
-	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
+	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	var/real_name
+	///All mutations are from now on here
+	var/list/mutations = list()
+	///Temporary changes to the UE
+	var/list/temporary_mutations = list()
+	///For temporary name/ui/ue/blood_type modifications
+	var/list/previous = list()
 	var/mob/living/holder
-	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
-	var/default_mutation_genes[DNA_MUTATION_BLOCKS] //List of the default genes from this mutation to allow DNA Scanner highlighting
+	///List of which mutations this carbon has and its assigned block
+	var/mutation_index[DNA_MUTATION_BLOCKS]
+	///List of the default genes from this mutation to allow DNA Scanner highlighting
+	var/default_mutation_genes[DNA_MUTATION_BLOCKS]
 	var/stability = 100
-	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
+	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
+	var/scrambled = FALSE
+
 
 /datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
@@ -479,9 +489,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /mob/living/carbon/human/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
 	..()
 	if(icon_update)
-		update_body()
-		update_hair()
-		update_body_parts()
+		update_body(is_creating = TRUE)
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
 
@@ -523,9 +531,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		domutcheck()
 
 	if(mrace || newfeatures || ui)
-		update_body()
-		update_hair()
-		update_body_parts()
+		update_body(is_creating = TRUE)
 		update_mutations_overlay()
 
 	if(LAZYLEN(mutations))
@@ -605,9 +611,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 	if(icon_update)
 		dna.species.handle_body(src) // We want 'update_body_parts()' to be called only if mutcolor_update is TRUE, so no 'update_body()' here.
-		update_hair()
+		update_hair(is_creating = TRUE)
 		if(mutcolor_update)
-			update_body_parts()
+			update_body_parts(update_limb_data = TRUE)
 		if(mutations_overlay_update)
 			update_mutations_overlay()
 

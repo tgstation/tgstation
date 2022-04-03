@@ -853,3 +853,250 @@
       red, and really bad is bold red.
   - bugfix: Fixed icebox plasma facility mood event color not working.
   - code_imp: Improved mood events descriptions to be simpler to write.
+2022-03-24:
+  Ghilker:
+  - refactor: refactored the electrolyzer to use datumized reactions instead of hardcode
+      them in process
+  - expansion: added the hypernoblium to antinoblium conversion, when hypernoblium
+      is exposed to the electrolyzer it will be converted to antinoblium
+2022-03-25:
+  Fikou:
+  - balance: xray lasers now have 100 armor penetration
+  Ghommie:
+  - bugfix: Fixed the size of plaques on the painting UI. They were awfully thin.
+  - bugfix: Fixed 24x24 paintings not being centered inside their frames.
+  JohnFulpWillard:
+  - bugfix: Bot's modes have been fixed, Medibots will no longer be on 'arrest' mode.
+  san7890:
+  - imageadd: Nanotrasen has upgraded "that machine that prints all of those decals
+      on our station tiles" to now print two corners that face opposite each other
+      at the same time. Very cool!
+  tnekohue:
+  - bugfix: Fixed Departmental Techfab machine board for service being named oddly
+      compared to the other ones.
+  vincentiusvin:
+  - refactor: Refactored the atmos control console devices. The ones that hook to
+      the big turf chambers.
+  - qol: Distro meter now broadcast the whole gasmix info instead of just pressure
+      to the monitors.
+  - bugfix: Lavaland syndie's atmos chamber vents are now actually configurable. Moved
+      a few things around to accomodate this.
+  - bugfix: Lavalannd syndie chambers hooked to distro and moved distro pipe to layer2
+  - qol: atmos monitors can detect reactions now.
+  - code_imp: Some minor code changes to how anomaly refinery and implosion compressor
+      show the gas info. No changes expected, report if bug.
+  - code_imp: recoded checks for atmos chamber abnormalities in debug verbs.
+2022-03-26:
+  Colovorat:
+  - bugfix: Clicking on airlock with ID Scan wire cut, should not open airlock.
+  Ghilker:
+  - bugfix: Fix an overlooked crystallizer issue where gases wouldn't get consumed
+      because of a fixed rate of removal instead of an percentage based one.
+  OperativeLyn:
+  - bugfix: Fixed double firelocks in Deltastation's fore customs area.
+  SmArtKar:
+  - expansion: Added VOX and Thought Listener BCI components
+  - expansion: Object Overlay component overlays can now be rotated
+  - expansion: Added new view sensor component.
+  Tastyfish:
+  - qol: The supply and supply request consoles now have a search bar.
+  - bugfix: Picking a high priority role in character creation no longer breaks assistant
+      selection behind the scenes.
+  Wallem:
+  - bugfix: GPSes don't start deactivated anymore, which also brings back most space
+      ruin GPS signals. Sorry about that.
+  dragomagol:
+  - bugfix: Kiosk wands can no longer be put into storage containers
+  - qol: Windoors now use directional variants
+  maxspells:
+  - expansion: Surgery steps play sound effects appropriate to the step
+  san7890:
+  - rscadd: Nanotrasen has refurbished the Recreation Deck on DeltaStation. Feel free
+      to "ooh" and "aah" at all of the new features that have been added.
+  unit0016:
+  - qol: Mappers now have access to an autoname helper for airlocks! One less field
+      to punch in means a few seconds extra YOU can use placing down lizard plushies,
+      wondering where it all went wrong, and adding lattices on the CentCom Z-level.
+2022-03-27:
+  AdipemDragon:
+  - imageadd: For those who seek out rarer materials, Runite Bars have a nicer appearance.
+  ArcaneMusic ft. sprites by Kryson:
+  - rscadd: Newscasters have been moved over to TGUI, and with them several new features.
+  - expansion: Newscaster channels can now be given channel descriptions!
+  - expansion: Messages can now be censored by crew with brig access from any console.
+  - rscdel: Standalone bounty boards have been replaced with newscasters, as the two
+      have been merged.
+  - refactor: Bounty boards and newscaster code have been refactored in order to merge
+      the two pieces of content.
+  GoblinBackwards:
+  - bugfix: Fixed airlocks and windoors not being able to be attacked by melee weapons
+      in combat mode.
+  - bugfix: Fixed stray syndicate supply pods not containing any items.
+  Jolly:
+  - bugfix: SnowCabin.dmm had its active turfs rectified.
+  LemonInTheDark:
+  - balance: Airlocks will now autoclose in 8 seconds rather then 15
+  - bugfix: The latejoin menu will now properly close when you join the game
+  Maurukas:
+  - bugfix: The engineering console on Icebox is once again connected to the station's
+      grid and can see APC status and available power.
+  OperativeLyn:
+  - bugfix: IceBox had two washing machines on the same tile, as well as a bit brighter
+      than usual decals. That tile is back to normal.
+  Pickle-Coding:
+  - bugfix: Fix tritium fire releasing more radiation than it should.
+  Rhials:
+  - rscadd: Added command encryption keys to the cargo order console
+  Ryll/Shaps:
+  - qol: Mystery boxes no longer cut off each other's sound clips when playing their
+      own
+  SuperNovaa41:
+  - bugfix: Fixes nonhuman head of departments showing up as their original species
+      in security records.
+  Watermelon914:
+  - balance: Destroy the Blackbox is now worth 6-9 TC instead of 4 TC
+  cacogen:
+  - expansion: Can fire guns and secondary attack (right-click) with TK. Throwing
+      things with TK now requires throw mode.
+  - bugfix: You can no longer offer things to yourself, choosing instead to take them
+      directly
+  - bugfix: Can no longer headpat mobs without heads
+  - expansion: Adds screentips for headpatting, hugging and tail pulling
+  - soundadd: Sound effects for attacking bushes, trees, mushrooms and rocks.
+  - code_imp: Minor code improvements in flora.dm
+  dragomagol:
+  - bugfix: The chairs on the casino shuttle are now facing the proper directions
+  - bugfix: The Zeta shuttle brig now uses the brig shuttle area
+  - qol: Shuttle doors that previously had varedited accesses now use preset access
+      helpers
+  nianjiilical:
+  - balance: Sentient Diseases now require a minimum playercount of 25 to activate,
+      up from 10.
+  san7890:
+  - bugfix: If you were a prisoner on KiloStation and you noticed some abnormally
+      dark rocks, I hope you are pleased to know that they have been brightened up.
+      No compensation is offered.
+  vincentiusvin:
+  - spellcheck: made the reaction list on a few machines' ui (compressor, atmos control)
+      to be newlined.
+  willox:
+  - bugfix: TGUI and Tooltip windows now work with high-dpi web browsers
+2022-03-28:
+  CocaColaTastesGood:
+  - bugfix: Fixes an exploit that allowed players to send unsanitized text to admins.
+  Fikou:
+  - rscadd: Right-click with a MOD paint now lets you paint the suit's color!
+  LemonInTheDark:
+  - bugfix: Bartenders can throw drinks again, rejoice!
+  YakumoChen:
+  - qol: Added a 50 count bamboo stack to base stack types
+  vincentiusvin:
+  - bugfix: fixed lavaland syndie base's pipes popping up.
+2022-03-29:
+  ArcaneMusic:
+  - bugfix: You can no longer create money out of thin air using bounty boards.
+  JohnFulpWillard:
+  - bugfix: Bots blowing up can now be sorted under Info.
+  - bugfix: Gunpowder's reaction can now be sorted under Info.
+  - code_imp: boldnotice messages are now sorted under Info.
+  Jolly:
+  - bugfix: Lavaland agents rejoice! Theres no longer a missing tile that leads to
+      space! ..Wait, what?
+  RandomGamer123:
+  - bugfix: The 0.7% charge high capacity power cell (which actually also stored 50%
+      more charge than a regular high capacity power cell, didn't notice that right?)
+      in Metastation engineering has been replaced with a regular high capacity power
+      cell.
+  Ryll/Shaps and MrDoomBringer:
+  - imageadd: Added new bleeding overlays for humans! People who are losing blood
+      will now have overlays displayed on them that show which bodyparts are bleeding,
+      and how much blood they're losing from that bodypart.
+  - bugfix: Slash wounds now properly retain their bleed rate when being demoted to
+      lower severities, meaning critical slashes will no longer be fully healed after
+      using one suture.
+  - balance: Critical slash wounds have had their initial bloodflow reduced, and existing
+      slash wounds gain less bloodloss when hit with further slash attacks. The cap
+      for how much blood a slash can lose per tick has been raised slightly.
+  - balance: Grabbing your own bleeding limb to staunch the bleeding is quicker and
+      slows you down less
+  Son-of-Space:
+  - qol: Contractors lost some appliances in kitchen maintenance on MetaStation, BoxStation,
+      and DeltaStation
+  SuperNovaa41:
+  - bugfix: The thunderdome side rooms will now properly reset.
+  - admin: The thunderdome is now a placeable map template.
+  TiviPlus:
+  - refactor: The mech UI(s) now use TGUI
+  - rscadd: Mechs no longer have RNG chances to completely ignore attacks
+  - rscadd: Mech armor will now directly add armor instead increasing deflection chance
+  - rscadd: Mechs now have slots for equipping "power", "utility" and "armor" modules
+  - rscadd: Mechs now use left and right click to use the left and right weapons respectively
+  - rscadd: Mech internal damage no longer requires low HP and instead now requires
+      a minimum damage in an attack to consider it
+  - rscdel: hidden mech bay has (at least for now) been removed
+  - rscdel: Some ballistic weapons reloading with energy has been removed so they
+      have infinite ammo
+  - rscdel: tesla power module has been removed
+  - rscdel: Honker no longer has snowflake UI that plays sounds
+  - bugfix: admin uis now work on mech equipment properly
+  ZephyrTFA:
+  - balance: Free Golems are now penalized for leaving their natural habitat
+  capsaicinz:
+  - bugfix: cleans up some force-feeding code indentation, and adds some headless
+      flavor
+  - bugfix: removes duplicate dorm airlock on tramstation.
+  - bugfix: charlie station dorms now only has one APC, as god intended
+  dragomagol:
+  - qol: the gulag item reclaimer now requires brig access to use instead of general
+      security access
+  - bugfix: The Zeta emergency shuttle's brig now travels with the rest of the shuttle
+  magatsuchi:
+  - bugfix: fixes a bug that causes podpeople hair to crash the pref menu
+2022-03-30:
+  Fikou:
+  - bugfix: you can no longer push ash drake corpses into doors
+  - bugfix: modsuit painting is fixed
+  FlamingCheese:
+  - bugfix: Reality has downloaded CS Source which fixed the missing texture of a
+      poster in departures security checkpoint
+  LemonInTheDark:
+  - qol: The beach away mission has a light yellow tint
+  - bugfix: Some areas that were once pitch black are no longer
+  - bugfix: I've replaced the pumps in server rooms/slime kill rooms with passive
+      vents. It's faster ok don't worry about it
+  Son-of-Space:
+  - rscadd: IceBox Station has a new Security Department
+  TemporalOroboros:
+  - balance: Improvements in the smoke powder formula have resulted in a doubling
+      of the maximum possible carry density for the resulting clouds. This brings
+      it to par with the fluorosurfactant formula in this area.
+  - balance: Fluorosurfactant no longer acts as an arbitrarily powerful accelerating
+      catalyst in an emulsified state. Research into foam based thermobaric weaponry
+      has begun.
+  san7890:
+  - bugfix: On IceBoxStation, hopefully all (if not a good chunk) of the cameras have
+      been moved to no longer be on windows, and on walls instead.
+2022-03-31:
+  ArcaneMusic:
+  - bugfix: Fixed 2 newscasters that were accidently mapped next to each other on
+      tram.
+  Capsandi:
+  - expansion: The crashed ship ruin has been remapped
+  ErdinyoBarboza:
+  - bugfix: Makes cyborg lollipop dispenser use the cyborg (non-omnizine) variant
+      for consistency.
+  Kylerace:
+  - balance: scrubbers now remove small amounts of gas faster than they used to, without
+      affecting how fast they scrub gases in high concentrations.
+  Watermelon914:
+  - admin: Admins can now see the number of players when someone sends an urgent ahelp.
+  - admin: Added an option to config send non-urgent ahelps to a channel (where there
+      are no available admins on).
+  - admin: Added a response that is sent by the server when an ahelp is responded
+      to in any way by an admin.
+  timothymtorres:
+  - bugfix: Fix jumpsuits to drop accessories when destroyed
+  - bugfix: Fix welders wasting fuel when clicking on tiles
+  - bugfix: Fix plants to not hurt user while using telekinesis
+  timothymtorres, lewcc:
+  - bugfix: Fix attack messages appearing when using tools on blast doors

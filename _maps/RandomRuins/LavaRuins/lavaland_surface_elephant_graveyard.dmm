@@ -445,7 +445,7 @@
 "EF" = (
 /obj/effect/decal/remains/human,
 /obj/item/clothing/under/misc/overalls,
-/obj/item/clothing/mask/bandana/green,
+/obj/item/clothing/mask/bandana/color/green,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "EI" = (
