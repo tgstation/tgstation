@@ -82129,11 +82129,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/engineering/transit_tube)
-"vVy" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/pinpointer_dispenser,
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "vVI" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/kirbyplants/random,
@@ -123905,7 +123900,7 @@ aaa
 aaa
 aaa
 aaa
-vVy
+aaO
 wit
 svt
 tUC
