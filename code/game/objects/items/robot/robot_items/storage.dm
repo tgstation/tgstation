@@ -153,6 +153,8 @@
 /obj/item/borg/apparatus/beaker/service/proc/handle_refilling(obj/item/reagent_containers/glass, mob/living/silicon/robot/bro, force = FALSE)
 	if (isnull(bro))
 		bro = loc
+	if (!iscyborg(bro))
+		return
 
 	if (!stored || force)
 		glass.AddComponent(/datum/component/reagent_refiller, cell = bro?.cell)
