@@ -220,6 +220,11 @@
 	var/list/shared_problems = list() // We only want to do this once, this is a nice way of pulling that off
 	for(var/obj/machinery/door/firedoor/firelock as anything in merge_group.members)
 		firelock.issue_turfs = shared_problems
+		for(var/dir in GLOB.cardinals)
+			var/turf/checked_turf = get_step(get_turf(firelock), dir)
+			if(!checked_turf)
+				continue
+			process_results(checked_turf)
 
 /obj/machinery/door/firedoor/proc/register_adjacent_turfs(atom/loc)
 	for(var/dir in GLOB.cardinals)
