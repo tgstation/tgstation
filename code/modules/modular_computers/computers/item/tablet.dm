@@ -108,6 +108,7 @@
 	ayeye = loc
 	if(!istype(ayeye))
 		ayeye = null
+		stack_trace("[type] initialized outside of an AI, deleting.")
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/modular_computer/tablet/ai/turn_on(mob/user)
