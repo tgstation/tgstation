@@ -261,7 +261,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	radio.keyslot = new radio_key
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
-	investigate_log("has been created.", INVESTIGATE_SUPERMATTER)
+	investigate_log("has been created.", INVESTIGATE_ENGINE)
 	if(is_main_engine)
 		GLOB.main_supermatter_engine = src
 
@@ -286,7 +286,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	update_constants()
 
 /obj/machinery/power/supermatter_crystal/Destroy()
-	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
+	investigate_log("has been destroyed.", INVESTIGATE_ENGINE)
 	SSair.stop_processing_machine(src)
 	QDEL_NULL(radio)
 	QDEL_NULL(countdown)
@@ -462,14 +462,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 
 	if(combined_gas > MOLE_PENALTY_THRESHOLD)
-		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
+		investigate_log("has collapsed into a singularity.", INVESTIGATE_ENGINE)
 		if(local_turf) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
 			var/obj/singularity/created_singularity = new(local_turf)
 			created_singularity.energy = 800
 			created_singularity.consume(src)
 			return //No boom for me sir
 	if(power > POWER_PENALTY_THRESHOLD)
-		investigate_log("has spawned additional energy balls.", INVESTIGATE_SUPERMATTER)
+		investigate_log("has spawned additional energy balls.", INVESTIGATE_ENGINE)
 		if(local_turf)
 			var/obj/energy_ball/created_tesla = new(local_turf)
 			created_tesla.energy = 200 //Gets us about 9 balls
