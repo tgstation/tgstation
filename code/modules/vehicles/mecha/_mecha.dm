@@ -297,6 +297,13 @@
 	if(driver_amount() < max_drivers)
 		add_control_flags(M, FULL_MECHA_CONTROL)
 
+/obj/vehicle/sealed/mecha/generate_actions()
+	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_SETTINGS)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
+	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/strafe, VEHICLE_CONTROL_DRIVE)
+
 /obj/vehicle/sealed/mecha/proc/get_mecha_occupancy_state()
 	if((mecha_flags & SILICON_PILOT) && silicon_icon_state)
 		return silicon_icon_state
@@ -744,7 +751,7 @@
 	if(dir != direction && !strafe || forcerotate || keyheld)
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
-		set_dir_mecha(direction)
+		setDir(direction)
 		return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
@@ -753,7 +760,7 @@
 	if(phasing)
 		use_power(phasing_energy_drain)
 	if(strafe)
-		set_dir_mecha(olddir)
+		setDir(olddir)
 
 
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
@@ -985,8 +992,6 @@
 	pilot_mob.forceMove(get_turf(src))
 	update_appearance()
 
-
-
 /obj/vehicle/sealed/mecha/mob_try_enter(mob/M)
 	if(!ishuman(M)) // no silicons or drones in mechas.
 		return
@@ -1004,39 +1009,24 @@
 		to_chat(M, span_warning("Access denied. Insufficient operation keycodes."))
 		log_message("Permission denied (No keycode).", LOG_MECHA)
 		return
+	. = ..()
+	if(.)
+		moved_inside(M)
+
+/obj/vehicle/sealed/mecha/enter_checks(mob/M)
+	if(atom_integrity <= 0)
+		to_chat(M, span_warning("You cannot get in the [src], it has been destroyed!"))
+		return FALSE
 	if(M.buckled)
-		to_chat(M, span_warning("You are currently buckled and cannot move."))
+		to_chat(M, span_warning("You can't enter the exosuit while buckled."))
 		log_message("Permission denied (Buckled).", LOG_MECHA)
-		return
-	if(M.has_buckled_mobs()) //mob attached to us
+		return FALSE
+	if(M.has_buckled_mobs())
 		to_chat(M, span_warning("You can't enter the exosuit with other creatures attached to you!"))
 		log_message("Permission denied (Attached mobs).", LOG_MECHA)
-		return
+		return FALSE
+	return ..()
 
-	visible_message(span_notice("[M] starts to climb into [name]."))
-
-	if(do_after(M, enter_delay, target = src))
-		if(atom_integrity <= 0)
-			to_chat(M, span_warning("You cannot get in the [name], it has been destroyed!"))
-		else if(LAZYLEN(occupants) >= max_occupants)
-			to_chat(M, span_danger("[occupants[length(occupants)]] was faster! Try better next time, loser."))//get the last one that hopped in
-		else if(M.buckled)
-			to_chat(M, span_warning("You can't enter the exosuit while buckled."))
-		else if(M.has_buckled_mobs())
-			to_chat(M, span_warning("You can't enter the exosuit with other creatures attached to you!"))
-		else
-			moved_inside(M)
-			return ..()
-	else
-		to_chat(M, span_warning("You stop entering the exosuit!"))
-
-
-/obj/vehicle/sealed/mecha/generate_actions()
-	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_internals, VEHICLE_CONTROL_SETTINGS)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_lights, VEHICLE_CONTROL_SETTINGS)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_view_stats, VEHICLE_CONTROL_SETTINGS)
-	initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/strafe, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/sealed/mecha/proc/moved_inside(mob/living/newoccupant)
 	if(!(newoccupant?.client))
@@ -1048,7 +1038,7 @@
 	newoccupant.update_mouse_pointer()
 	add_fingerprint(newoccupant)
 	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
-	set_dir_mecha(dir_in)
+	setDir(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1095,7 +1085,7 @@
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
 	brain_mob.update_mouse_pointer()
-	set_dir_mecha(dir_in)
+	setDir(dir_in)
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
 		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1161,7 +1151,7 @@
 			remove_occupant(ejector)
 		mmi.set_mecha(null)
 		mmi.update_appearance()
-	set_dir_mecha(dir_in)
+	setDir(dir_in)
 	return ..()
 
 
@@ -1282,7 +1272,7 @@
 			else
 				gun.projectiles_cache = gun.projectiles_cache + ammo_needed
 			playsound(get_turf(user),A.load_audio,50,TRUE)
-			to_chat(user, span_notice("You add [ammo_needed] [A.round_term][ammo_needed > 1?"s":""] to the [gun.name]"))
+			to_chat(user, span_notice("You add [ammo_needed] [A.ammo_type][ammo_needed > 1?"s":""] to the [gun.name]"))
 			A.rounds = A.rounds - ammo_needed
 			if(A.custom_materials)
 				A.set_custom_materials(A.custom_materials, A.rounds / initial(A.rounds))
@@ -1294,7 +1284,7 @@
 		else
 			gun.projectiles_cache = gun.projectiles_cache + A.rounds
 		playsound(get_turf(user),A.load_audio,50,TRUE)
-		to_chat(user, span_notice("You add [A.rounds] [A.round_term][A.rounds > 1?"s":""] to the [gun.name]"))
+		to_chat(user, span_notice("You add [A.rounds] [A.ammo_type][A.rounds > 1?"s":""] to the [gun.name]"))
 		A.rounds = 0
 		A.set_custom_materials(list(/datum/material/iron=2000))
 		A.update_name()
@@ -1319,7 +1309,7 @@
 	return COMPONENT_BLOCK_LIGHT_EATER
 
 /// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
-/obj/vehicle/sealed/mecha/proc/set_dir_mecha(new_dir)
-	setDir(new_dir)
+/obj/vehicle/sealed/mecha/setDir(newdir)
+	. = ..()
 	for(var/mob/living/occupant as anything in occupants)
-		occupant.setDir(new_dir)
+		occupant.setDir(newdir)

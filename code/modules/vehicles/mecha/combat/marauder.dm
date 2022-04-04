@@ -69,7 +69,7 @@
 		SEND_SOUND(owner, sound('sound/mecha/imag_enh.ogg', volume=50))
 	else
 		owner.client.view_size.resetToDefault()
-	UpdateButtonIcon()
+	UpdateButtons()
 
 /obj/vehicle/sealed/mecha/combat/marauder/seraph
 	desc = "Heavy-duty, command-type exosuit. This is a custom model, utilized only by high-ranking military personnel."

@@ -680,31 +680,32 @@
 	. += span_notice("<i>There's more information below, you can look again to take a closer look...</i>")
 
 /obj/item/card/id/examine_more(mob/user)
-	var/list/msg = list(span_notice("<i>You examine [src] closer, and note the following...</i>"))
+	. = ..()
+	. += span_notice("<i>You examine [src] closer, and note the following...</i>")
 
 	if(registered_age)
-		msg += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
+		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b>[span_danger("'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'")]</b> along the bottom of the card." : ""]"
 	if(mining_points)
-		msg += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
+		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
-		msg += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
+		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(registered_account.account_job)
 			var/datum/bank_account/D = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			if(D)
-				msg += "The [D.account_holder] reports a balance of [D.account_balance] cr."
-		msg += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
-		msg += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
+				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
+		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
+		. += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
 		if(registered_account.civilian_bounty)
-			msg += "<span class='info'><b>There is an active civilian bounty.</b>"
-			msg += span_info("<i>[registered_account.bounty_text()]</i>")
-			msg += span_info("Quantity: [registered_account.bounty_num()]")
-			msg += span_info("Reward: [registered_account.bounty_value()]")
+			. += "<span class='info'><b>There is an active civilian bounty.</b>"
+			. += span_info("<i>[registered_account.bounty_text()]</i>")
+			. += span_info("Quantity: [registered_account.bounty_num()]")
+			. += span_info("Reward: [registered_account.bounty_value()]")
 		if(registered_account.account_holder == user.real_name)
-			msg += span_boldnotice("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
+			. += span_boldnotice("If you lose this ID card, you can reclaim your account by Alt-Clicking a blank ID card while holding it and entering your account ID number.")
 	else
-		msg += span_info("There is no registered account linked to this card. Alt-Click to add one.")
+		. += span_info("There is no registered account linked to this card. Alt-Click to add one.")
 
-	return msg
+	return .
 
 /obj/item/card/id/GetAccess()
 	return access.Copy()

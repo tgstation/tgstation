@@ -568,6 +568,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/broken/directional/south,
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
 "sl" = (
@@ -855,6 +856,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron/dark/side{
 	dir = 10
 	},
@@ -944,6 +946,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
+/obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
 "FL" = (
@@ -1113,10 +1116,6 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/ruin/pizzeria/kitchen)
-"KM" = (
-/obj/machinery/newscaster,
-/turf/closed/wall,
-/area/ruin/pizzeria)
 "KU" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -1323,7 +1322,6 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/pizzeria)
 "PK" = (
-/obj/machinery/newscaster,
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
@@ -1382,12 +1380,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/ruin/pizzeria/kitchen)
-"QP" = (
-/obj/machinery/newscaster{
-	pixel_x = -5
-	},
-/turf/closed/wall,
-/area/ruin/pizzeria)
 "RF" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 1
@@ -2057,7 +2049,7 @@ TK
 TK
 NL
 NL
-KM
+NL
 se
 PK
 Fe
@@ -2137,7 +2129,7 @@ Sw
 Lg
 iV
 Za
-QP
+NL
 wS
 wS
 TK
