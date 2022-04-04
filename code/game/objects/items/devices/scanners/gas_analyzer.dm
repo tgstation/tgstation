@@ -168,7 +168,7 @@
 		else
 			message += airs.len > 1 ? span_notice("This node is empty!") : span_notice("[target] is empty!")
 		
-		last_gasmix_data += list(gas_mixture_parser(air, mix_name))
+		gasmix_data += list(gas_mixture_parser(air, mix_name))
 
 	if(istype(tool))
 		tool.last_gasmix_data = gasmix_data
