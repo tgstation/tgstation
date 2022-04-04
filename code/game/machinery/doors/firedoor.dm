@@ -279,17 +279,17 @@
 	var/turf/checked_turf = source
 	var/result = check_atmos(checked_turf)
 	
-	if(!issue_turfs?.len && alarm_type)
+	if(!length(issue_turfs) && alarm_type)
 		start_deactivation_process()
 		return
-	else if(issue_turfs?.len && !alarm_type)
+	else if(length(issue_turfs) && !alarm_type)
 		result = check_atmos(issue_turfs[1])
 		if(result)
 			start_activation_process(result)
 			return
 	if(result && TURF_SHARES(checked_turf) && issue_turfs)
 		issue_turfs |= checked_turf
-	else if((!result && issue_turfs?.len || !TURF_SHARES(checked_turf)) && issue_turfs)
+	else if((!result && length(issue_turfs) || !TURF_SHARES(checked_turf)) && issue_turfs)
 		issue_turfs -= checked_turf
 	
 
