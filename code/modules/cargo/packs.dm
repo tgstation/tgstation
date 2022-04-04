@@ -2347,6 +2347,7 @@
 	cost = CARGO_CRATE_VALUE * 3 //state-of-the-art technology doesn't come cheap
 	contains = list(/obj/item/clothing/under/costume/mech_suit,
 					/obj/item/clothing/under/costume/mech_suit,
+	contains = list(/obj/item/clothing/under/costume/mech_suit,
 					/obj/item/clothing/under/costume/mech_suit)
 	crate_name = "mech pilot's suit crate"
 	crate_type = /obj/structure/closet/crate/wooden
