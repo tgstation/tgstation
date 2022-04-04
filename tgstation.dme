@@ -2279,6 +2279,7 @@
 #include "code\modules\atmospherics\machinery\components\binary_devices\thermomachine.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\valve.dm"
 #include "code\modules\atmospherics\machinery\components\binary_devices\volume_pump.dm"
+#include "code\modules\atmospherics\machinery\components\binary_devices\thermomachine\thermomachine_datums.dm"
 #include "code\modules\atmospherics\machinery\components\electrolyzer\electrolyzer.dm"
 #include "code\modules\atmospherics\machinery\components\electrolyzer\electrolyzer_reactions.dm"
 #include "code\modules\atmospherics\machinery\components\fusion\hfr_core.dm"

@@ -46,6 +46,8 @@
 	/// Checks if the thermomachine has been upgraded with metallic hydrogen
 	var/has_metalh2 = FALSE
 
+	var/obj/item/tank/internal_tank
+
 /obj/machinery/atmospherics/components/binary/thermomachine/Initialize(mapload)
 	. = ..()
 	RefreshParts()
@@ -153,6 +155,8 @@
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.")
 		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
+	if(!internal_tank)
+		. += span_notice("A tank can be inserted with gases to change some functions.")
 
 /obj/machinery/atmospherics/components/binary/thermomachine/AltClick(mob/living/user)
 	if(!can_interact(user))
@@ -184,6 +188,9 @@
 	// The gas we want to cool/heat
 	var/datum/gas_mixture/main_port = airs[2]
 	var/datum/gas_mixture/exchange_target = airs[1]
+
+	if(internal_tank && internal_tank.air_contents)
+		check_tank_gases()
 
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - main_port.temperature
@@ -422,6 +429,9 @@
 	if(exchange_target)
 		loc.assume_air(exchange_target.remove_ratio(1))
 	qdel(src)
+
+/obj/machinery/atmospherics/components/binary/thermomachine/proc/check_tank_gases()
+
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
 	if(interactive)
