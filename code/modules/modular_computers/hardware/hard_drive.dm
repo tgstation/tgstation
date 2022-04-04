@@ -9,6 +9,7 @@
 	var/max_capacity = 128
 	var/used_capacity = 0
 	var/list/stored_files = list() // List of stored files on this drive. DO NOT MODIFY DIRECTLY!
+	var/default_installs = TRUE // install the default progs
 
 /obj/item/computer_hardware/hard_drive/on_remove(obj/item/modular_computer/remove_from, mob/user)
 	remove_from.shutdown_computer()
@@ -130,7 +131,9 @@
 
 /obj/item/computer_hardware/hard_drive/Initialize(mapload)
 	. = ..()
-	install_default_programs()
+
+	if(default_installs)
+		install_default_programs()
 
 
 /obj/item/computer_hardware/hard_drive/advanced

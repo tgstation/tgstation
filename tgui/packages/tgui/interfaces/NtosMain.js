@@ -14,9 +14,9 @@ export const NtosMain = (props, context) => {
     cardholder,
     login = [],
     proposed_login = [],
-    cartholder,
-    cart_name,
-    cart_programs = [],
+    disk,
+    disk_name,
+    disk_programs = [],
   } = data;
   return (
     <NtosWindow
@@ -74,18 +74,18 @@ export const NtosMain = (props, context) => {
             </Table>
           </Section>
         )}
-        {!!cartholder && (
+        {!!disk && (
           <Section
-            title={cart_name ? (cart_name.substring(0, cart_name.length-10)) : "No Cartridge Inserted"} // pain
+            title={disk_name ? (disk_name.substring(0, disk_name.length-5)) : "No Job Disk Inserted"} // pain
             buttons={(
               <Button
                 icon="eject"
-                content="Eject Cartridge"
-                disabled={!cart_name}
-                onClick={() => act('PC_Eject_Disk', { name: "cart" })} />
+                content="Eject Job Disk"
+                disabled={!disk_name}
+                onClick={() => act('PC_Eject_Disk', { name: "job disk" })} />
             )}>
             <Table>
-              {cart_programs.map(program => (
+              {disk_programs.map(program => (
                 <Table.Row key={program.name}>
                   <Table.Cell>
                     <Button
@@ -95,7 +95,7 @@ export const NtosMain = (props, context) => {
                       content={program.desc}
                       onClick={() => act('PC_runprogram', {
                         name: program.name,
-                        is_cart: true,
+                        is_disk: true,
                       })} />
                   </Table.Cell>
                   <Table.Cell collapsing width="18px">
@@ -146,7 +146,7 @@ export const NtosMain = (props, context) => {
                     content={program.desc}
                     onClick={() => act('PC_runprogram', {
                       name: program.name,
-                      is_cart: false,
+                      is_disk: false,
                     })} />
                 </Table.Cell>
                 <Table.Cell collapsing width="18px">

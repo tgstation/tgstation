@@ -48,12 +48,12 @@
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
 	data["device_theme"] = device_theme
-
 	data["login"] = list()
+
 	var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
-	var/obj/item/computer_hardware/cartridge_slot/cartholder = all_components[MC_CART]
+	var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
 	data["cardholder"] = FALSE
-	data["cartholder"] = FALSE
+
 	if(cardholder)
 		data["cardholder"] = TRUE
 
@@ -72,17 +72,16 @@
 			IDJob = cardholder.current_job,
 		)
 
-	if(cartholder)
-		data["cartholder"] = TRUE
-		data["cart_programs"] = list()
-		data["cart_name"] = cartholder.stored_cart?.name || null
+	if(ssd)
+		data["disk"] = ssd
+		data["disk_name"] = ssd.name
 
-		for(var/datum/computer_file/program/prog in cartholder.stored_programs)
+		for(var/datum/computer_file/program/prog in ssd.stored_files)
 			var/running = FALSE
 			if(prog in idle_threads)
 				running = TRUE
 
-			data["cart_programs"] += list(list("name" = prog.filename, "desc" = prog.filedesc, "running" = running, "icon" = prog.program_icon, "alert" = prog.alert_pending))
+			data["disk_programs"] += list(list("name" = prog.filename, "desc" = prog.filedesc, "running" = running, "icon" = prog.program_icon, "alert" = prog.alert_pending))
 
 	data["removable_media"] = list()
 	if(all_components[MC_SDD])
@@ -151,15 +150,15 @@
 
 		if("PC_runprogram")
 			var/prog = params["name"]
-			var/is_cart = params["is_cart"]
+			var/is_disk = params["is_disk"]
 			var/datum/computer_file/program/P = null
-			var/obj/item/computer_hardware/cartridge_slot/cartholder = all_components[MC_CART]
+			var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
 			var/mob/user = usr
 
-			if(is_cart && cartholder)
-				P = cartholder.find_file_by_name(prog)
-			if(hard_drive && !is_cart)
+			if(hard_drive && !is_disk)
 				P = hard_drive.find_file_by_name(prog)
+			if(ssd && is_disk)
+				P = ssd.find_file_by_name(prog)
 
 			if(!P || !istype(P)) // Program not found or it's not executable program.
 				to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
@@ -220,6 +219,13 @@
 					if(uninstall_component(portable_drive, usr))
 						user.put_in_hands(portable_drive)
 						playsound(src, 'sound/machines/card_slide.ogg', 50)
+				if("job disk")
+					var/obj/item/computer_hardware/hard_drive/role/ssd = all_components[MC_HDD_JOB]
+					if(!ssd)
+						return
+					if(uninstall_component(ssd, usr))
+						user.put_in_hands(ssd)
+						playsound(src, 'sound/machines/card_slide.ogg', 50)
 				if("intelliCard")
 					var/obj/item/computer_hardware/ai_slot/intelliholder = all_components[MC_AI]
 					if(!intelliholder)
@@ -236,11 +242,6 @@
 					if(!cardholder)
 						return
 					cardholder.try_eject(user)
-				if("cart")
-					var/obj/item/computer_hardware/card_slot/cartholder = all_components[MC_CART]
-					if(!cartholder)
-						return
-					cartholder.try_eject(user)
 		if("PC_Imprint_ID")
 			var/obj/item/computer_hardware/card_slot/cardholder = all_components[MC_CARD]
 			var/obj/item/computer_hardware/identifier/id_hardware = all_components[MC_IDENTIFY]
