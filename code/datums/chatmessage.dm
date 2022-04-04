@@ -311,7 +311,7 @@
 	if(!message_image || !associated_client)
 		return
 
-	associated_client.images |= max(message_image, 1)
+	associated_client.images |= message_image
 
 	approx_lines[message_image] = approximate_lines
 	if(set_time)
