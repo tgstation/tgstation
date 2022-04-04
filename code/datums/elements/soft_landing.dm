@@ -20,6 +20,6 @@
 /datum/element/soft_landing/proc/intercept_z_fall(obj/soft_object, falling_movables, levels)
 	SIGNAL_HANDLER
 
-	for(var/mob/living/falling_victim in falling_movables)
+	for (var/mob/living/falling_victim in falling_movables)
 		to_chat(falling_victim, span_notice("[soft_object] provides a soft landing for you!"))
 	return FALL_INTERCEPTED | FALL_NO_MESSAGE
