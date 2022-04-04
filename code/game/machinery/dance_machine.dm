@@ -12,12 +12,14 @@
 	var/list/songs = list()
 	var/datum/track/selection = null
 	/// Volume of the songs played
-	var/volume = 50
+	var/volume = 100
+	var/current_song_url
+	var/asset_md5_cache
 	COOLDOWN_DECLARE(jukebox_error_cd)
 
 /obj/machinery/jukebox/disco
 	name = "radiant dance machine mark IV"
-	desc = "The first three prototypes were discontinued after mass casualty incidents."
+	desc = "The first three prototypes were discontinued after mass casual 	ty incidents."
 	icon_state = "disco"
 	req_access = list(ACCESS_ENGINE)
 	anchored = FALSE
@@ -35,6 +37,7 @@
 /datum/track
 	var/song_name = "generic"
 	var/song_path = null
+	var/song_path_raw = null
 	var/song_length = 0
 	var/song_beat = 0
 
@@ -51,6 +54,7 @@
 	for(var/S in tracks)
 		var/datum/track/T = new()
 		T.song_path = file("[global.config.directory]/jukebox_music/sounds/[S]")
+		T.song_path_raw = "[global.config.directory]/jukebox_music/sounds/[S]"
 		var/list/L = splittext(S,"+")
 		if(L.len != 3)
 			continue
@@ -119,7 +123,7 @@
 		data["track_selected"] = selection.song_name
 		data["track_length"] = DisplayTimeText(selection.song_length)
 		data["track_beat"] = selection.song_beat
-	data["volume"] = volume
+	data["volume"] = min(volume, 100) // funny hrefsploit
 	return data
 
 /obj/machinery/jukebox/ui_act(action, list/params)
@@ -174,6 +178,46 @@
 
 /obj/machinery/jukebox/proc/activate_music()
 	active = TRUE
+	var/datum/asset_transport/AS = SSassets.transport
+	var/asset_md5 = "[md5filepath(selection.song_path_raw)].mp3"
+	var/datum/asset_cache_item/ACI = new(asset_md5, selection.song_path)
+	ACI.namespace = "jukebox_muzak"
+	if(istype(AS, /datum/asset_transport/webroot))
+		var/datum/asset_transport/webroot/WR = AS
+		WR.save_asset_to_webroot(ACI)
+	else
+		AS.register_asset(asset_md5, ACI)
+		asset_md5_cache = asset_md5
+	current_song_url = AS.get_asset_url(null, ACI)
+	for(var/m in GLOB.player_list)
+		if(ismob(m))
+			var/mob/M = m
+			if(!istype(SSassets.transport, /datum/asset_transport/webroot)) // SET UP A GODDAMN CDN.
+				SSassets.transport.send_assets(M, list(asset_md5_cache))
+			var/browse_html ={"
+			<META http-equiv="X-UA-Compatible" content="IE=edge">
+			<audio id="music_player" autoplay volume="0">
+				<source src=\"[current_song_url]\" type="audio/mpeg"/>
+			</audio>
+			<script>
+			function setVolume(volume)
+			{
+				console.log(volume)
+				var music_player = document.getElementById("music_player");
+				music_player.volume = parseFloat(volume);
+			}
+			</script>
+			"}
+			M << browse(browse_html, "window=music_player&file=music_player.htm")
+			if(get_dist(src,M) <= 10)
+				rangers[M] = TRUE
+				if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
+					continue
+				var/distance = get_dist(M, src)
+				var/volume_to_use = ((10 - distance) * 0.1) * (volume * 0.01)
+				M << output(url_encode(num2text(volume_to_use)), "music_player:setVolume")
+			else
+				M << output(url_encode(num2text(0)), "music_player:setVolume")
 	update_appearance()
 	START_PROCESSING(SSobj, src)
 	stop = world.time + selection.song_length
@@ -440,7 +484,7 @@
 	for(var/mob/living/L in rangers)
 		if(!L || !L.client)
 			continue
-		L.stop_sound_channel(CHANNEL_JUKEBOX)
+		L << output(url_encode(num2text(0)), "music_player:setVolume")
 	rangers = list()
 
 /obj/machinery/jukebox/disco/dance_over()
@@ -450,20 +494,21 @@
 
 /obj/machinery/jukebox/process()
 	if(world.time < stop && active)
-		var/sound/song_played = sound(selection.song_path)
-
 		for(var/mob/M in range(10,src))
 			if(!M.client || !(M.client.prefs.toggles & SOUND_INSTRUMENTS))
 				continue
 			if(!(M in rangers))
 				rangers[M] = TRUE
-				M.playsound_local(get_turf(M), null, volume, channel = CHANNEL_JUKEBOX, S = song_played, use_reverb = FALSE)
 		for(var/mob/L in rangers)
 			if(get_dist(src,L) > 10)
 				rangers -= L
 				if(!L || !L.client)
 					continue
-				L.stop_sound_channel(CHANNEL_JUKEBOX)
+				L << output(url_encode(num2text(0)), "music_player:setVolume")
+			else
+				var/distance = get_dist(L, src)
+				var/volume_to_use = ((10 - distance) * 0.1) * (volume * 0.01)
+				L << output(url_encode(num2text(volume_to_use)), "music_player:setVolume")
 	else if(active)
 		active = FALSE
 		STOP_PROCESSING(SSobj, src)

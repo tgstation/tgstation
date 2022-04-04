@@ -4,6 +4,8 @@ Using unnecessarily huge sounds can cause client side lag and should be avoided.
 
 You may add as many sounds as you would like.
 
+Sounds MUST be mp3, because of limitations on the sound playback system we use, via embedding an audio tag in a player window.
+
 ---
 
 Naming Conventions:
