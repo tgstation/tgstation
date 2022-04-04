@@ -53,6 +53,11 @@
 	RefreshParts()
 	update_appearance()
 
+/obj/machinery/atmospherics/components/binary/thermomachine/Destroy()
+	if(internal_tank)
+		QDEL_NULL(internal_tank)
+	return ..()
+
 /obj/machinery/atmospherics/components/binary/thermomachine/is_connectable()
 	if(!anchored || panel_open)
 		return FALSE
@@ -73,6 +78,9 @@
 	if(has_metalh2)
 		for(var/i in 1 to 3)
 			new /obj/item/stack/sheet/mineral/metal_hydrogen(loc)
+	if(internal_tank)
+		internal_tank.forceMove(loc)
+		internal_tank = null
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/attackby(obj/item/W, mob/user, params)
@@ -82,6 +90,16 @@
 			balloon_alert(user, "3 sheets are needed to upgrade")
 			return
 		has_metalh2 = TRUE
+		return
+	if(istype(W, /obj/item/tank) && panel_open)
+		var/obj/item/tank/to_insert = W
+		var/message = "inserted new tank"
+		if(internal_tank)
+			internal_tank.drop_location()
+			message = "swapped tanks"
+		to_insert.forceMove(src)
+		internal_tank = to_insert
+		balloon_alert(user, message)
 		return
 	return ..()
 
@@ -156,7 +174,9 @@
 		. += span_notice("Heat capacity at <b>[heat_capacity] Joules per Kelvin</b>.")
 		. += span_notice("Temperature range <b>[min_temperature]K - [max_temperature]K ([(T0C-min_temperature)*-1]C - [(T0C-max_temperature)*-1]C)</b>.")
 	if(!internal_tank)
-		. += span_notice("A tank can be inserted with gases to change some functions.")
+		. += span_notice("A tank can be inserted with freon to increase the efficiency.")
+	else
+		. += span_notice("The tank can be swapped by inserting a new one or removed by deconstruction.")
 
 /obj/machinery/atmospherics/components/binary/thermomachine/AltClick(mob/living/user)
 	if(!can_interact(user))
@@ -189,14 +209,12 @@
 	var/datum/gas_mixture/main_port = airs[2]
 	var/datum/gas_mixture/exchange_target = airs[1]
 
-	if(internal_tank && internal_tank.air_contents)
-		check_tank_gases()
-
 	// The difference between target and what we need to heat/cool. Positive if heating, negative if cooling.
 	var/temperature_target_delta = target_temperature - main_port.temperature
 
 	// This variable holds the (C1*C2)/(C1+C2)*(T2-T1) part of the equation.
 	var/heat_amount = temperature_target_delta * (main_port.heat_capacity() * heat_capacity / (main_port.heat_capacity() + heat_capacity))
+	var/energy_amount_moved
 
 	// Motor heat is the heat added to both ports of the thermomachine at every tick.
 	var/motor_heat = 5000
@@ -257,6 +275,11 @@
 		efficiency *= mole_efficiency
 		efficiency = max(efficiency, parts_efficiency)
 
+		if(internal_tank && internal_tank.air_contents)
+			check_tank_gases()
+
+		energy_amount_moved = heat_amount * efficiency
+
 		if (exchange_target.temperature > THERMOMACHINE_SAFE_TEMPERATURE && safeties)
 			on = FALSE
 			visible_message(span_warning("The heat reservoir has reached critical levels, shutting down..."))
@@ -271,13 +294,14 @@
 					explode()
 					return PROCESS_KILL //We're dying anyway, so let's stop processing
 
-		exchange_target.temperature = max((THERMAL_ENERGY(exchange_target) - (heat_amount * efficiency) + motor_heat) / exchange_target.heat_capacity(), TCMB)
+		exchange_target.temperature = max((THERMAL_ENERGY(exchange_target) - (energy_amount_moved) + motor_heat) / exchange_target.heat_capacity(), TCMB)
 
 	if(!cooling || has_metalh2)
 		efficiency *= mole_efficiency
 		efficiency = max(efficiency, parts_efficiency)
+		energy_amount_moved = heat_amount * efficiency
 
-	main_port.temperature = max((THERMAL_ENERGY(main_port) + (heat_amount * efficiency)) / main_port.heat_capacity(), TCMB)
+	main_port.temperature = max((THERMAL_ENERGY(main_port) + (energy_amount_moved)) / main_port.heat_capacity(), TCMB)
 
 	heat_amount = min(abs(heat_amount), 1e8) * THERMOMACHINE_POWER_CONVERSION
 	var/power_usage = 0
@@ -431,7 +455,19 @@
 	qdel(src)
 
 /obj/machinery/atmospherics/components/binary/thermomachine/proc/check_tank_gases()
+	var/datum/gas_mixture/tank_mix = internal_tank.air_contents
+	if(tank_mix.gases[/datum/gas/freon][MOLES] > MINIMUM_MOLE_COUNT)
+		var/efficiency_increase = 0.25 * (1 - NUM_E ** (-0.1 * tank_mix.gases[/datum/gas/freon][MOLES]))
+		efficiency += efficiency_increase
 
+		var/consumption_multiplier = 0.01
+		if(efficiency > 1)
+			consumption_multiplier = 1
+		var/freon_consumption = efficiency_increase * consumption_multiplier
+		tank_mix.gases[/datum/gas/freon][MOLES] -= max(freon_consumption, MINIMUM_MOLE_COUNT)
+		tank_mix.assert_gas(/datum/gas/carbon_dioxide)
+		tank_mix.gases[/datum/gas/carbon_dioxide][MOLES] += freon_consumption * consumption_multiplier
+	tank_mix.garbage_collect()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
 	if(interactive)
