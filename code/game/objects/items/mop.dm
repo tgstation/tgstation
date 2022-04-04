@@ -26,8 +26,8 @@
 	GLOB.janitor_devices += src
 
 /obj/item/mop/Destroy(force)
-	. = ..()
 	GLOB.janitor_devices -= src
+	return ..()
 
 /obj/item/mop/proc/clean(turf/A, mob/living/cleaner)
 	if(reagents.has_chemical_flag(REAGENT_CLEANS, 1))

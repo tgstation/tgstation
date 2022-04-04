@@ -248,10 +248,6 @@
 				return TRUE
 	return FALSE
 
-///////////////
-// Custodial //
-///////////////
-
 ///Tracks all janitor equipment
 /datum/computer_file/program/radar/custodial_locator
 	filename = "custodiallocator"
@@ -274,9 +270,23 @@
 	for(var/obj/custodial_tools as anything in GLOB.janitor_devices)
 		if(!trackable(custodial_tools))
 			continue
+		var/tool_name = custodial_tools.name
+
+		if(istype(custodial_tools, /obj/item/mop))
+			var/obj/item/mop/wet_mop = custodial_tools
+			tool_name = "[wet_mop.reagents.total_volume ? "Wet" : "Dry"] [wet_mop.name]"
+
+		if(istype(custodial_tools, /obj/structure/janitorialcart))
+			var/obj/structure/janitorialcart/janicart = custodial_tools
+			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / 100"
+
+		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
+			var/mob/living/simple_animal/bot/cleanbot/cleanbots = custodial_tools
+			tool_name = "[cleanbots.name] - [cleanbots.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]"
+
 		var/list/tool_information = list(
 			ref = REF(custodial_tools),
-			name = custodial_tools.name,
+			name = tool_name,
 		)
 		objects += list(tool_information)
 
