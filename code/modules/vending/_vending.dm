@@ -430,12 +430,14 @@ GLOBAL_LIST_EMPTY(vending_products)
 	default_deconstruction_crowbar(I)
 	return TRUE
 
-/obj/machinery/vending/wrench_act(mob/living/user, obj/item/I)
-	..()
-	if(panel_open)
-		default_unfasten_wrench(user, I, time = 60)
+/obj/machinery/vending/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!panel_open)
+		return FALSE
+	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
 		unbuckle_all_mobs(TRUE)
-	return TRUE
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())

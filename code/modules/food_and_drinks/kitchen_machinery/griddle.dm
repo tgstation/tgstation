@@ -123,10 +123,10 @@
 	else
 		grill_loop.stop()
 
-/obj/machinery/griddle/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 2 SECONDS)
-	return TRUE
+/obj/machinery/griddle/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 2 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 ///Override to prevent storage dumping onto the griddle until I figure out how to navigate the mess that is storage code to allow me to nicely move the dumped objects onto the griddle.
 /obj/machinery/griddle/get_dumping_location()

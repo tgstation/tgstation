@@ -235,10 +235,10 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	else
 		icon_state = "scanner_off"
 
-/obj/machinery/exoscanner/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I, 10)
-	return TRUE
+/obj/machinery/exoscanner/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool, time = 1 SECONDS)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/machinery/exoscanner/set_anchored(anchorvalue)
 	. = ..()
