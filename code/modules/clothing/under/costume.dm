@@ -229,10 +229,11 @@
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
-	unique_reskin = list("Red" = "red_mech_suit",
+	unique_reskin = list(
+						"Red" = "red_mech_suit",
 						"White" = "white_mech_suit",
 						"Blue" = "blue_mech_suit",
-						"Black" = "black_mech_suit"
+						"Black" = "black_mech_suit",
 						)
 
 /obj/item/clothing/under/costume/russian_officer

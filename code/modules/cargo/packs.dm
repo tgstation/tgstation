@@ -2343,7 +2343,7 @@
 
 /datum/supply_pack/costumes_toys/mech_suits
 	name = "Mech Pilot's Suit Crate"
-	desc = "Suits for piloting big robots. Contains three of those!"
+	desc = "Suits for piloting big robots. Contains four of those!"
 	cost = CARGO_CRATE_VALUE * 3 //state-of-the-art technology doesn't come cheap
 	contains = list(/obj/item/clothing/under/costume/mech_suit,
 					/obj/item/clothing/under/costume/mech_suit,
