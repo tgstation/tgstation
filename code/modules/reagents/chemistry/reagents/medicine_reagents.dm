@@ -635,7 +635,7 @@
 
 /datum/reagent/medicine/oculine
 	name = "Oculine"
-	description = "Quickly restores eye damage, cures nearsightedness, and has a chance to restore vision to the blind."
+	description = "Quickly restores eye damage, cures halfsightedness, and has a chance to restore vision to the blind."
 	reagent_state = LIQUID
 	color = "#404040" //oculine is dark grey, inacusiate is light grey
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
@@ -701,11 +701,11 @@
 		if(DT_PROB(fix_prob, delta_time))
 			to_chat(owner, span_warning("Your vision slowly returns..."))
 			owner.cure_blind(EYE_DAMAGE)
-			owner.cure_nearsighted(EYE_DAMAGE)
+			owner.cure_halfsighted(EYE_DAMAGE)
 			owner.blur_eyes(35)
-	else if(HAS_TRAIT_FROM(owner, TRAIT_NEARSIGHT, EYE_DAMAGE))
+	else if(HAS_TRAIT_FROM(owner, TRAIT_HALFSIGHT, EYE_DAMAGE))
 		to_chat(owner, span_warning("The blackness in your peripheral vision fades."))
-		owner.cure_nearsighted(EYE_DAMAGE)
+		owner.cure_halfsighted(EYE_DAMAGE)
 		owner.blur_eyes(10)
 	..()
 

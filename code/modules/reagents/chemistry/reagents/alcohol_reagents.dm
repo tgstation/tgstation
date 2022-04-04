@@ -2330,7 +2330,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 			metabolizer.hair_color = "#cccccc"
 			metabolizer.update_hair()
 			if(metabolizer.age > 100)
-				metabolizer.become_nearsighted(type)
+				metabolizer.become_halfsighted(type)
 				if(metabolizer.gender == MALE)
 					metabolizer.facial_hairstyle = "Beard (Very Long)"
 					metabolizer.update_hair()

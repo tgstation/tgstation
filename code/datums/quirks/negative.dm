@@ -277,18 +277,18 @@
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
 	hardcore_value = 3
 
-/datum/quirk/item_quirk/nearsighted
-	name = "Nearsighted"
-	desc = "You are nearsighted without prescription glasses, but spawn with a pair."
+/datum/quirk/item_quirk/halfsighted
+	name = "Halfsighted"
+	desc = "You are halfsighted without prescription glasses, but spawn with a pair."
 	icon = "glasses"
 	value = -4
 	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
-	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
+	medical_record_text = "Patient requires prescription glasses in order to counteract halfsightedness."
 	hardcore_value = 5
 	var/glasses
 
-/datum/quirk/item_quirk/nearsighted/add_unique()
+/datum/quirk/item_quirk/halfsighted/add_unique()
 	glasses = glasses || quirk_holder.client?.prefs?.read_preference(/datum/preference/choiced/glasses)
 	switch(glasses)
 		if ("Thin")
@@ -302,11 +302,11 @@
 
 	give_item_to_holder(glasses, list(LOCATION_EYES = ITEM_SLOT_EYES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
 
-/datum/quirk/item_quirk/nearsighted/add()
-	quirk_holder.become_nearsighted(QUIRK_TRAIT)
+/datum/quirk/item_quirk/halfsighted/add()
+	quirk_holder.become_halfsighted(QUIRK_TRAIT)
 
-/datum/quirk/item_quirk/nearsighted/remove()
-	quirk_holder.cure_nearsighted(QUIRK_TRAIT)
+/datum/quirk/item_quirk/halfsighted/remove()
+	quirk_holder.cure_halfsighted(QUIRK_TRAIT)
 
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"

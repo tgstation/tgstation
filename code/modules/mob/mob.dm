@@ -1070,8 +1070,8 @@
 /mob/proc/is_literate()
 	return FALSE
 
-/// Is this mob affected by nearsight
-/mob/proc/is_nearsighted()
+/// Is this mob affected by halfsight
+/mob/proc/is_halfsighted()
 	return FALSE
 
 /* Can this mob see in the dark
@@ -1100,7 +1100,7 @@
 		to_chat(src, span_warning("You are blind and can't write anything!"))
 		return FALSE
 
-	if(is_nearsighted())
+	if(is_halfsighted())
 		to_chat(src, span_warning("Your vision is too blurry to write anything!"))
 		return FALSE
 
@@ -1132,7 +1132,7 @@
 		to_chat(src, span_warning("You are blind and can't read anything!"))
 		return FALSE
 
-	if(is_nearsighted())
+	if(is_halfsighted())
 		to_chat(src, span_warning("Your vision is too blurry to read anything!"))
 		return FALSE
 

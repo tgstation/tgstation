@@ -213,7 +213,7 @@
 	desc = "Made by Nerd. Co."
 	icon_state = "glasses"
 	inhand_icon_state = "glasses"
-	vision_correction = TRUE //corrects nearsightedness
+	vision_correction = TRUE //corrects halfsightedness
 
 /obj/item/clothing/glasses/regular/Initialize(mapload)
 	. = ..()
