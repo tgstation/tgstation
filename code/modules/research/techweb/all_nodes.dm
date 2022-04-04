@@ -945,8 +945,7 @@
 		"quadultra_micro_laser",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	discount_experiments = list(/datum/experiment/scanning/points/machinery_pinpoint_scan/tier3_microlaser = 4000)
-	required_experiments = list(/datum/experiment/ordnance/gaseous/noblium)
+	discount_experiments = list(/datum/experiment/ordnance/gaseous/noblium = 5000)
 
 /////////////////////////Clown tech/////////////////////////
 /datum/techweb_node/clown
