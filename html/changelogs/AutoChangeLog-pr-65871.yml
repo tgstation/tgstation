@@ -1,4 +1,0 @@
-author: "wesoda25"
-delete-after: True
-changes: 
-  - admin: "admin messages now appear every time you connect until you click a link confirming that you read them"
