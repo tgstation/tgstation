@@ -369,7 +369,8 @@
  * Allows to null the various machines and references from the main core
  */
 /obj/machinery/power/turbine/core_rotor/proc/deactivate_parts()
-	power_off()
+	if(all_parts_connected)
+		power_off()
 	compressor = null
 	turbine = null
 	input_turf = null
