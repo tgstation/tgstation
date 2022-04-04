@@ -135,6 +135,22 @@
 	experiment_proper = TRUE
 	required_gas = /datum/gas/halon
 
+/datum/experiment/ordnance/gaseous/proto_nitrate
+	name = "Proto-nitrate Gas Shells"
+	description = "The delivery of Proto-nitrate gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	gain = list(30, 90)
+	target_amount = list(20, 200)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/proto_nitrate
+
+/datum/experiment/ordnance/gaseous/antinoblium
+	name = "Anti-noblium Gas Shells"
+	description = "The delivery of Anti-noblium gas into an area of operation might prove useful. Perform research and publish papers on this field."
+	gain = list(10, 80, 200)
+	target_amount = list(1, 20, 1000)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/antinoblium
+
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"
 	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those nay-sayers wrong."

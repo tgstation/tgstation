@@ -25,7 +25,7 @@
 /datum/scientific_partner/engineering
 	name="Corps of Engineers"
 	flufftext = "Many engineers are interested in the application of exotic gases in their day-to-day work. They might be able to offer us information on some their gadgets in return."
-	accepted_experiments=list(/datum/experiment/ordnance/gaseous/halon, /datum/experiment/ordnance/gaseous/noblium, /datum/experiment/ordnance/explosive/lowyieldbomb)
+	accepted_experiments=list(/datum/experiment/ordnance/gaseous/halon, /datum/experiment/ordnance/gaseous/noblium, /datum/experiment/ordnance/gaseous/proto_nitrate, /datum/experiment/ordnance/explosive/lowyieldbomb)
 	boosted_nodes=list(/datum/techweb_node/adv_engi=2500, /datum/techweb_node/adv_power=1500, /datum/techweb_node/bluespace_power=2000, /datum/techweb_node/high_efficiency=2500, /datum/techweb_node/micro_bluespace=2500)
 
 /datum/scientific_partner/medical

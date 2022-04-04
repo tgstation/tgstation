@@ -1313,6 +1313,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 7500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/hard/one = 5000)
+	required_experiments = list(/datum/experiment/ordnance/gaseous/proto_nitrate)
 
 /datum/techweb_node/sec_basic
 	id = "sec_basic"
@@ -1374,7 +1375,7 @@
 		"pin_loyalty",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	required_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb)
+	required_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb, /datum/experiment/ordnance/gaseous/antinoblium)
 
 /datum/techweb_node/electric_weapons
 	id = "electronic_weapons"
