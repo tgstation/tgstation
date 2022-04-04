@@ -339,16 +339,19 @@ GLOBAL_LIST_INIT(spells, subtypesof(/datum/action/cooldown/spell))
 
 	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
 	if(!isliving(owner))
-		to_chat(owner, span_warning("You need to be living to invoke [src]!"))
+		if(feedback)
+			to_chat(owner, span_warning("You need to be living to invoke [src]!"))
 		return FALSE
 
 	var/mob/living/living_owner = owner
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE)) // melbert todo cl
-		to_chat(owner, span_warning("You can't get form to invoke [src]!"))
+		if(feedback)
+			to_chat(owner, span_warning("You can't get form to invoke [src]!"))
 		return FALSE
 
 	if((invocation_type == INVOCATION_WHISPER || invocation_type == INVOCATION_SHOUT) && !living_owner.can_speak_vocal())
-		to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
+		if(feedback)
+			to_chat(owner, span_warning("You can't get the words out to invoke [src]!"))
 		return FALSE
 
 	return TRUE

@@ -5,7 +5,7 @@
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "ninja_cloak"
 
-	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_NO_ANTIMAGIC)
+	spell_requirements = SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_NO_ANTIMAGIC
 
 	jaunt_type = /obj/effect/dummy/phased_mob/shadow
 

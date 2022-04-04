@@ -5,7 +5,7 @@
 	sound = 'sound/magic/mutate.ogg'
 
 	school = SCHOOL_TRANSMUTATION
-	spell_requirements = (SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
+	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB
 
 	/// A list of all mutations we add on cast
 	var/list/mutations_to_add = list()

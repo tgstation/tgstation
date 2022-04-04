@@ -22,7 +22,7 @@
 	name = "Santa Teleport"
 
 	invocation = "HO HO HO!"
-	spell_requirements = (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED
 
 	invocation_says_area = FALSE // Santa moves in mysterious ways
 

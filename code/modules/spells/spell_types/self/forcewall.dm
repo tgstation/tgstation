@@ -51,7 +51,7 @@
 	school = SCHOOL_MIME
 	cooldown_time = 1 MINUTES
 	cooldown_reduction_per_rank = 0 SECONDS
-	spell_requirements = (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN)
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN
 
 	invocation = "" // Set via get_invocation_content().
 	invocation_type = INVOCATION_EMOTE

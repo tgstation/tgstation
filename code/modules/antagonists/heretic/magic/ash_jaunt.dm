@@ -11,7 +11,7 @@
 
 	invocation = "ASH'N P'SSG'"
 	invocation_type = INVOCATION_WHISPER
-	spell_requirements = (SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
+	spell_requirements = SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED
 
 	exit_jaunt_sound = null
 	jaunt_duration = 1 SECONDS

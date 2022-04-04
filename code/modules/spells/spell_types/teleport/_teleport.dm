@@ -8,7 +8,7 @@
 	sound = 'sound/weapons/zapbang.ogg'
 
 	school = SCHOOL_TRANSLOCATION
-	spell_requirements = (SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED)
+	spell_requirements = SPELL_REQUIRES_WIZARD_GARB|SPELL_REQUIRES_NON_ABSTRACT|SPELL_REQUIRES_UNPHASED
 
 	/// Whether we force the teleport to happen (ie, it cannot be blocked by noteleport areas or blessings or whatever)
 	var/force_teleport = FALSE

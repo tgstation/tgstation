@@ -50,7 +50,7 @@
 	if(!forced)
 		if(enter_blood_time > 0 SECONDS)
 			blood.visible_message(span_warning("[jaunter] starts to sink into [blood]!"))
-			if(!do_after(src, enter_blood_time, target = blood))
+			if(!do_after(jaunter, enter_blood_time, target = blood))
 				return FALSE
 
 	if(equip_blood_hands && iscarbon(jaunter))
@@ -98,7 +98,7 @@
 		if(exit_blood_time > 0 SECONDS)
 
 			blood.visible_message(span_warning("[blood] starts to bubble..."))
-			if(!do_after(src, exit_blood_time, target = blood))
+			if(!do_after(jaunter, exit_blood_time, target = blood)) // melbert todo broken
 				return FALSE
 
 	if(!exit_jaunt(jaunter, get_turf(blood)))

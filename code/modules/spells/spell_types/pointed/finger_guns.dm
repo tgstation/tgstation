@@ -10,7 +10,7 @@
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS
-	spell_requirements = (SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN)
+	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC|SPELL_REQUIRES_HUMAN
 	spell_max_level = 1
 
 	invocation = "" // Set by get_invocation_content()
