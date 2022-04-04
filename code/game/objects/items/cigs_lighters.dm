@@ -580,8 +580,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "pipeoff"
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
-	inhand_icon_on = "pipeon"
-	inhand_icon_off = "pipeoff"
+	inhand_icon_on = null
+	inhand_icon_off = null
 	smoketime = 0
 	chem_volume = 200 // So we can fit densified chemicals plants
 	list_reagents = null
@@ -650,8 +650,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = "cobpipeoff"
 	icon_on = "cobpipeon"  //Note - these are in masks.dmi
 	icon_off = "cobpipeoff"
-	inhand_icon_on = "cornpipeon"
-	inhand_icon_off = "cornpipeoff"
+	inhand_icon_on = null
+	inhand_icon_off = null
 
 /////////
 //ZIPPO//
