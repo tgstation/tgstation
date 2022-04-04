@@ -58,12 +58,12 @@
 	/// A short string describing this reaction.
 	var/desc
 	/** REACTION FACTORS
-	 * 
+	 *
 	 * Describe (to a human) factors influencing this reaction in an assoc list format.
 	 * Also include gases formed by the reaction
 	 * Implement various interaction for different keys under subsystem/air/proc/atmos_handbook_init()
-	 * 
-	 * E.G. 
+	 *
+	 * E.G.
 	 * factor["Temperature"] = "Minimum temperature of 20 kelvins, maximum temperature of 100 kelvins"
 	 * factor["o2"] = "Minimum oxygen amount of 20 moles, more oxygen increases reaction rate up to 150 moles"
 	 */
@@ -544,7 +544,7 @@
 	var/list/cached_gases = air.gases
 	var/pressure = air.return_pressure()
 	// This slows down in relation to pressure, very quickly. Please don't expect it to be anything more then a snail
-	
+
 	// Bigger is better for these two values.
 	var/pressure_efficiency = (0.1 * ONE_ATMOSPHERE) / pressure // More pressure = more bad
 	var/ratio_efficiency = min(cached_gases[/datum/gas/nitrous_oxide][MOLES] / cached_gases[/datum/gas/plasma][MOLES], 1) // Malus to production if more plasma than n2o.
@@ -783,7 +783,7 @@
 
 	var/old_heat_capacity = air.heat_capacity()
 	air.assert_gases(/datum/gas/hypernoblium, /datum/gas/bz)
-	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed 
+	cached_gases[/datum/gas/tritium][MOLES] -= 5 * nob_formed
 	cached_gases[/datum/gas/nitrogen][MOLES] -= 10 * nob_formed
 	cached_gases[/datum/gas/hypernoblium][MOLES] += nob_formed // I'm not going to nitpick, but N20H10 feels like it should be an explosive more than anything.
 	SET_REACTION_RESULTS(nob_formed)
@@ -1179,6 +1179,41 @@
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
+	return REACTING
+
+/datum/gas_reaction/wordimadeupium_formation
+	priority_group = PRIORITY_FORMATION
+	name = "Wordimadeupium Formation"
+	id = "wordimadeupium_formation"
+	desc = "Production of wordimadeupium using zauker and water vapor under very high temperatures."
+
+/datum/gas_reaction/wordimadeupium_formation/init_reqs()
+	requirements = list(
+		/datum/gas/zauker = MINIMUM_MOLE_COUNT,
+		/datum/gas/water_vapor = MINIMUM_MOLE_COUNT,
+		"MIN_TEMP" = 1000000,
+		"MAX_TEMP" = 10000000,
+	)
+
+/datum/gas_reaction/wordimadeupium_formation/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+
+	var/heat_efficency = min(temperature * ZAUKER_FORMATION_TEMPERATURE_SCALE, cached_gases[/datum/gas/zauker][MOLES] * INVERSE(0.01), cached_gases[/datum/gas/water_vapor][MOLES] * INVERSE(0.5))
+	if (heat_efficency <= 0 || (cached_gases[/datum/gas/zauker][MOLES] - heat_efficency * 0.01 < 0 ) || (cached_gases[/datum/gas/water_vapor][MOLES] - heat_efficency * 0.5 < 0)) //Shouldn't produce gas from nothing.
+		return NO_REACTION
+
+	var/old_heat_capacity = air.heat_capacity()
+	ASSERT_GAS(/datum/gas/wordimadeupium, air)
+	cached_gases[/datum/gas/zauker][MOLES] -= heat_efficency * 0.01
+	cached_gases[/datum/gas/water_vapor][MOLES] -= heat_efficency * 0.5
+	cached_gases[/datum/gas/wordimadeupium][MOLES] += heat_efficency * 0.5
+
+	SET_REACTION_RESULTS(heat_efficency * 0.5)
+	var/energy_used = heat_efficency * ZAUKER_FORMATION_ENERGY
+	var/new_heat_capacity = air.heat_capacity()
+	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+		air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity), TCMB)
 	return REACTING
 
 #undef SET_REACTION_RESULTS

@@ -272,6 +272,18 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	base_value = 10
 	desc = "We still don't know what it does, but it sells for a lot."
 
+/datum/gas/wordimadeupium
+	id = "wordimadeupium"
+	specific_heat = 1
+	name = "Wordimadeupium"
+	dangerous = TRUE
+	gas_overlay = "wordimadeupium"
+	moles_visible = MOLES_GAS_VISIBLE
+	fusion_power = 1000
+	rarity = 0.0001
+	base_value = 10
+	desc = "A word I made up."
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

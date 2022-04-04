@@ -135,6 +135,14 @@
 	experiment_proper = TRUE
 	required_gas = /datum/gas/halon
 
+/datum/experiment/ordnance/gaseous/wordimadeupium
+	name = "Wordimadeupium Gas Shells"
+	description = "We want these words to be made up."
+	gain = list(10,30,60)
+	target_amount = list(15,55,250)
+	experiment_proper = TRUE
+	required_gas = /datum/gas/wordimadeupium
+
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"
 	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those nay-sayers wrong."

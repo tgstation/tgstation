@@ -10,7 +10,7 @@
 	id_tag = chamber_id + "_in"
 	radio_connection = SSradio.add_object(src, frequency, RADIO_ATMOSIA)
 	return ..()
-	
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/atmos_init()
 	. = ..()
 	broadcast_status()
@@ -156,6 +156,10 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/antinoblium_input
 	name = "antinoblium tank input injector"
 	chamber_id = ATMOS_GAS_MONITOR_ANTINOBLIUM
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/wordimadeupium_input
+	name = "wordimadeupium tank input injector"
+	chamber_id = ATMOS_GAS_MONITOR_WORDIMADEUPIUM
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input
 	name = "incinerator chamber input injector"

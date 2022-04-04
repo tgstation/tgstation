@@ -116,6 +116,10 @@
 	name = "antinoblium tank output inlet"
 	chamber_id = ATMOS_GAS_MONITOR_ANTINOBLIUM
 
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/wordimadeupium_output
+	name = "wordimadeupium tank output inlet"
+	chamber_id = ATMOS_GAS_MONITOR_WORDIMADEUPIUM
+
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/incinerator_output
 	name = "incinerator chamber output inlet"
 	chamber_id = ATMOS_GAS_MONITOR_INCINERATOR

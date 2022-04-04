@@ -33,6 +33,7 @@
 		/datum/gas/proto_nitrate,
 		/datum/gas/zauker,
 		/datum/gas/halon,
+		/datum/gas/wordimadeupium,
 	)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()

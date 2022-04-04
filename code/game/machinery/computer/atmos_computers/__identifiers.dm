@@ -25,6 +25,7 @@
 #define ATMOS_GAS_MONITOR_ZAUKER "zauker"
 #define ATMOS_GAS_MONITOR_HELIUM "helium"
 #define ATMOS_GAS_MONITOR_ANTINOBLIUM "antinoblium"
+#define ATMOS_GAS_MONITOR_WORDIMADEUPIUM "wordimadeupium"
 #define ATMOS_GAS_MONITOR_INCINERATOR "incinerator"
 #define ATMOS_GAS_MONITOR_ORDNANCE_LAB "ordnancelab"
 #define ATMOS_GAS_MONITOR_DISTRO "distro"
@@ -53,6 +54,7 @@ GLOBAL_LIST_INIT(station_gas_chambers, list(
 	ATMOS_GAS_MONITOR_ZAUKER = "Zauker Supply",
 	ATMOS_GAS_MONITOR_HELIUM = "Helium Supply",
 	ATMOS_GAS_MONITOR_ANTINOBLIUM = "Antinoblium Supply",
+	ATMOS_GAS_MONITOR_WORDIMADEUPIUM = "Wordimadeupium Supply",
 	ATMOS_GAS_MONITOR_MIX = "Mix Chamber",
 	ATMOS_GAS_MONITOR_INCINERATOR = "Incinerator Chamber",
 	ATMOS_GAS_MONITOR_ORDNANCE_LAB = "Ordnance Chamber",

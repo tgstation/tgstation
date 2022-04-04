@@ -122,6 +122,7 @@
 								/datum/gas/helium,
 								/datum/gas/antinoblium,
 								/datum/gas/halon,
+								/datum/gas/wordimadeupium,
 								)
 
 	for(var/gasID in gases_to_check)

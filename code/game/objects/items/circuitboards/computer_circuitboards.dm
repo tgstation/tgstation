@@ -148,6 +148,10 @@
 	name = "Antinoblium Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/antinoblium_tank
 
+/obj/item/circuitboard/computer/atmos_control/wordimadeupium_tank
+	name = "Wordimadeupium Supply Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/wordimadeupium_tank
+
 /obj/item/circuitboard/computer/auxiliary_base
 	name = "Auxiliary Base Management Console (Computer Board)"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

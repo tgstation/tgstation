@@ -522,6 +522,7 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 12500)
 	discount_experiments = list(/datum/experiment/scanning/random/material/easy = 7500)
+	required_experiments = list(/datum/experiment/ordnance/gaseous/wordimadeupium)
 
 /datum/techweb_node/adv_engi
 	id = "adv_engi"
