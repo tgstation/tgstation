@@ -1,5 +1,5 @@
 /**
- * # soft landing element!
+ * ## soft landing element!
  *
  * Non bespoke element (1 in existence) that makes objs provide a soft landing when you fall on them!
  */
@@ -8,7 +8,7 @@
 
 /datum/element/soft_landing/Attach(datum/target)
 	. = ..()
-	if(!isobj(target))
+	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ATOM_INTERCEPT_Z_FALL, .proc/intercept_z_fall)
 
