@@ -22,4 +22,4 @@
 
 	for (var/mob/living/falling_victim in falling_movables)
 		to_chat(falling_victim, span_notice("[soft_object] provides a soft landing for you!"))
-	return FALL_INTERCEPTED + FALL_NO_MESSAGE - FALL_STOP_INTERCEPTING*2 + FALL_RETAIN_PULL
+	return FALL_INTERCEPTED | FALL_NO_MESSAGE
