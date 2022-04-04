@@ -7,7 +7,7 @@
 ///Amount of damage healed when under the heat threshold
 #define TURBINE_DAMAGE_HEALING 2
 ///Amount of damage that the machine must have to start launching alarms to the engi comms
-#define TURBINE_DAMAGE_ALARM_START 30
+#define TURBINE_DAMAGE_ALARM_START 15
 ///Multiplier when converting the gas energy into gas work
 #define TURBINE_WORK_CONVERSION_MULTIPLIER 0.01
 ///Multiplier when converting gas work back into heat

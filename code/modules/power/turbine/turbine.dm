@@ -111,9 +111,15 @@
 		return
 	user.put_in_hands(installed_part)
 
+/**
+ * Allow easy enabling of each machine for connection to the main controller
+ */
 /obj/machinery/power/turbine/proc/enable_parts(mob/user)
 	can_connect = TRUE
 
+/**
+ * Allow easy disabling of each machine from the main controller
+ */
 /obj/machinery/power/turbine/proc/disable_parts(mob/user)
 	can_connect = FALSE
 
@@ -146,6 +152,10 @@
 
 	install_part(object, user)
 
+/**
+ * Checks if the machine part we are installing is an improvement over the installed one (if present)
+ * Currently it doesn't allow worst parts to be installed
+ */
 /obj/machinery/power/turbine/proc/install_part(obj/item/turbine_parts/part_object, mob/user)
 	// If we're already got one and it's better, go away
 	if(get_efficiency() >= part_object.part_efficiency)
@@ -162,11 +172,17 @@
 	installed_part = part_object
 	calculate_parts_limits()
 
+/**
+ * Gets the efficiency of the installed part, returns 0 if no part is installed
+ */
 /obj/machinery/power/turbine/proc/get_efficiency()
 	if(installed_part)
 		return installed_part.part_efficiency
 	return 0
 
+/**
+ * Called when installing new parts and when activating the main machine
+ */
 /obj/machinery/power/turbine/proc/calculate_parts_limits()
 	return
 
@@ -308,6 +324,10 @@
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/**
+ * Called to activate the complete machine, checks for part presence, correct orientation and installed parts
+ * Registers the input/output turfs and start process_atmos()
+ */
 /obj/machinery/power/turbine/core_rotor/proc/activate_parts(mob/user, check_only = FALSE)
 
 	compressor = locate(/obj/machinery/power/turbine/inlet_compressor) in get_step(src, turn(dir, 180))
@@ -345,6 +365,9 @@
 	SSair.start_processing_machine(src)
 	return TRUE
 
+/**
+ * Allows to null the various machines and references from the main core
+ */
 /obj/machinery/power/turbine/core_rotor/proc/deactivate_parts()
 	power_off()
 	compressor = null
@@ -364,6 +387,9 @@
 		max_allowed_rpm = (compressor.installed_part.max_rpm + turbine.installed_part.max_rpm + installed_part.max_rpm) / 3
 		max_allowed_temperature = (compressor.installed_part.max_temperature + turbine.installed_part.max_temperature + installed_part.max_temperature) / 3
 
+/**
+ * Called on each atmos tick, calculates the damage done and healed based on temperature
+ */
 /obj/machinery/power/turbine/core_rotor/proc/calculate_damage_done(temperature)
 	damage_archived = damage
 	var/temperature_difference = temperature - max_allowed_temperature
@@ -377,25 +403,40 @@
 	if((damage - damage_archived >= 2 || damage > TURBINE_DAMAGE_ALARM_START) && COOLDOWN_FINISHED(src, turbine_damage_alert))
 		damage_alert(damage_done)
 
+/**
+ * Toggle power on and off, not safe
+ */
 /obj/machinery/power/turbine/core_rotor/proc/toggle_power()
 	if(active)
 		power_off()
 		return
 	power_on()
 
+/**
+ * Activate all three parts, not safe, it assumes the machine already connected and properly working
+ */
 /obj/machinery/power/turbine/core_rotor/proc/power_on()
 	active = TRUE
 	compressor.active = TRUE
 	turbine.active = TRUE
 
+/**
+ * Deactivate all three parts, not safe, it assumes the machine already connected and properly working
+ */
 /obj/machinery/power/turbine/core_rotor/proc/power_off()
 	active = FALSE
 	compressor.active = FALSE
 	turbine.active = FALSE
 
+/**
+ * Returns true if all parts have their panel closed
+ */
 /obj/machinery/power/turbine/core_rotor/proc/all_parts_ready()
 	return !panel_open && !compressor.panel_open && !turbine.panel_open
 
+/**
+ * Called once every 15 to 5 seconds (depend on damage done), handles alarm calls
+ */
 /obj/machinery/power/turbine/core_rotor/proc/damage_alert(damage_done)
 	COOLDOWN_START(src, turbine_damage_alert, max(round(TURBINE_DAMAGE_ALARM_START - damage_done), 5) SECONDS)
 
@@ -406,12 +447,19 @@
 		return
 
 	radio.talk_into(src, "Warning, turbine at [get_area_name(src)] taking damage, current integrity at [integrity]%!", engineering_channel)
+	playsound(src, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 
+/**
+ * Getter for turbine integrity, return the amount in %
+ */
 /obj/machinery/power/turbine/core_rotor/proc/get_turbine_integrity()
 	var/integrity = damage / 500
 	integrity = max(round(100 - integrity * 100, 0.01), 0)
 	return integrity
 
+/**
+ * Called when the integrity reaches 0%, explode the machine based on the reached RPM
+ */
 /obj/machinery/power/turbine/core_rotor/proc/failure()
 	deactivate_parts()
 	if(rpm < 35000)
@@ -468,6 +516,9 @@
 	turbine.machine_gasmix.pump_gas_to(output_turf.air, turbine.machine_gasmix.return_pressure())
 	output_turf.air_update_turf(TRUE)
 
+/**
+ * Handles all the calculations needed for the gases, work done, temperature increase/decrease
+ */
 /obj/machinery/power/turbine/core_rotor/proc/do_calculations(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, regulated = FALSE)
 	var/work_done = input_mix.total_moles() * R_IDEAL_GAS_EQUATION * input_mix.temperature * log((input_mix.volume * max(input_mix.return_pressure(), 0.01)) / (output_mix.volume * max(output_mix.return_pressure(), 0.01))) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
