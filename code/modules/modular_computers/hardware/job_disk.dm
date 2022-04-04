@@ -11,6 +11,9 @@
 
 	var/disk_flags = 0 // bit flag for the programs
 
+/obj/item/computer_hardware/hard_drive/portable/on_remove(obj/item/modular_computer/remove_from, mob/user)
+	return
+
 /obj/item/computer_hardware/hard_drive/role/Initialize(mapload)
 	. = ..()
 	if(disk_flags & DISK_POWER)
