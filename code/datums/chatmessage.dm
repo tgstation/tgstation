@@ -121,7 +121,7 @@
 	LAZYREMOVEASSOC(hearer.seen_messages, message_loc, src)
 	if(istype(hearers[hearer], /image))
 		var/image/seen_image = hearers[hearer]
-		messages[seen_image] -= hearer
+		messages -= seen_image
 
 	hearers -= hearer
 
