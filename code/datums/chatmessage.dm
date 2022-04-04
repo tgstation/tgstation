@@ -308,7 +308,10 @@
 
 
 /datum/chatmessage/proc/handle_new_image_association(image/message_image, client/associated_client, approximate_lines, set_time = TRUE)
-	associated_client.images |= message_image
+	if(!message_image || !associated_client)
+		return
+
+	associated_client.images |= max(message_image, 1)
 
 	approx_lines[message_image] = approximate_lines
 	if(set_time)
