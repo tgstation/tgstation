@@ -248,6 +248,38 @@
 				return TRUE
 	return FALSE
 
+///////////////
+// Custodial //
+///////////////
+
+///Tracks all janitor equipment
+/datum/computer_file/program/radar/custodial_locator
+	filename = "custodiallocator"
+	filedesc = "Custodial Locator"
+	extended_desc = "This program allows for tracking of custodial equipment."
+	requires_ntnet = TRUE
+	transfer_access = list(ACCESS_JANITOR)
+	available_on_ntnet = TRUE
+	program_icon = "broom"
+	size = 2
+
+/datum/computer_file/program/radar/custodial_locator/find_atom()
+	return locate(selected) in GLOB.janitor_devices
+
+/datum/computer_file/program/radar/custodial_locator/scan()
+	if(world.time < next_scan)
+		return
+	next_scan = world.time + (2 SECONDS)
+	objects = list()
+	for(var/obj/custodial_tools as anything in GLOB.janitor_devices)
+		if(!trackable(custodial_tools))
+			continue
+		var/list/tool_information = list(
+			ref = REF(custodial_tools),
+			name = custodial_tools.name,
+		)
+		objects += list(tool_information)
+
 ////////////////////////
 //Nuke Disk Finder App//
 ////////////////////////
