@@ -28909,11 +28909,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/maintenance/tram/left)
-"iYu" = (
-/obj/effect/turf_decal/sand/plating,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/plating/airless,
-/area/mine/explored)
 "iYG" = (
 /obj/machinery/power/smes/engineering,
 /obj/structure/cable,
@@ -97528,7 +97523,7 @@ jTk
 jTk
 pDT
 aRN
-dDG
+cuX
 dhe
 dhe
 dhe
@@ -98043,12 +98038,12 @@ jTk
 pDT
 sLE
 aRN
-guj
+xFs
 lvw
 lvw
 tRC
 lvw
-dDG
+xFs
 ajc
 ajc
 ajc
@@ -98303,7 +98298,7 @@ aRN
 aRN
 oOe
 aRN
-iYu
+aRN
 lBU
 aRN
 ajc
@@ -98557,12 +98552,12 @@ jTk
 pDT
 sLE
 aRN
-cuX
+xFs
 lvw
 tRC
 lvw
 tRC
-wUS
+xFs
 ajc
 ajc
 ajc
