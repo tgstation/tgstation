@@ -100,7 +100,7 @@
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE)
-	if(user.incapacitated() !user.can_read(src))
+	if(user.incapacitated() || !user.can_read(src))
 		return
 
 	// the final list of strings to render
