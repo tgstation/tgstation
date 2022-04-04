@@ -217,6 +217,8 @@
  */
 /datum/chatmessage/proc/generate_image(atom/target, mob/owner, complete_text, mheight)
 	var/client/owned_by = owner.client
+	if(!owned_by)//possible now since generate_image() is called via a queue
+		return
 
 	var/our_approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
