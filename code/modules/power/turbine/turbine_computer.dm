@@ -22,11 +22,13 @@
 	return ..()
 
 /obj/machinery/computer/turbine_computer/locate_machinery(multitool_connection)
-	if(mapping_id)
-		for(var/obj/machinery/power/turbine/core_rotor/main in GLOB.machines)
-			if(main.mapping_id == mapping_id)
-				main_control = main
-				return
+	if(!mapping_id)
+		return
+	for(var/obj/machinery/power/turbine/core_rotor/main in GLOB.machines)
+		if(main.mapping_id != mapping_id)
+			continue
+		register_machine(main)
+		return
 
 /obj/machinery/computer/turbine_computer/multitool_act(mob/living/user, obj/item/tool)
 	var/obj/item/multitool/multitool = tool
@@ -62,20 +64,22 @@
 	var/list/data = list()
 
 	data["connected"] = main_control ? TRUE : FALSE
-	data["active"] = main_control?.active
-	data["rpm"] = main_control?.rpm ? main_control?.rpm : 0
-	data["power"] = main_control?.produced_energy ? main_control?.produced_energy : 0
-	data["temp"] = main_control?.input_turf?.air.temperature
-	data["integrity"] = main_control?.get_turbine_integrity()
-	data["parts_linked"] = main_control?.all_parts_connected
-	data["parts_ready"] = main_control?.all_parts_ready()
+	if(!main_control)
+		return
+	data["active"] = main_control.active
+	data["rpm"] = main_control.rpm ? main_control.rpm : 0
+	data["power"] = main_control.produced_energy ? main_control.produced_energy : 0
+	data["temp"] = main_control.input_turf?.air.temperature
+	data["integrity"] = main_control.get_turbine_integrity()
+	data["parts_linked"] = main_control.all_parts_connected
+	data["parts_ready"] = main_control.all_parts_ready()
 
-	data["max_rpm"] = main_control?.max_allowed_rpm
-	data["max_temperature"] = main_control?.max_allowed_temperature
+	data["max_rpm"] = main_control.max_allowed_rpm
+	data["max_temperature"] = main_control.max_allowed_temperature
 
-	data["can_turn_off"] = main_control?.rpm < 1000
+	data["can_turn_off"] = main_control.rpm < 1000
 
-	data["regulator"] = main_control?.intake_regulator
+	data["regulator"] = main_control.intake_regulator
 
 	return data
 
@@ -86,15 +90,17 @@
 
 	switch(action)
 		if("toggle_power")
-			if(main_control?.all_parts_connected && main_control?.rpm < 1000)
-				if(!main_control.activate_parts(usr))
-					return TRUE
-				main_control.toggle_power()
-				main_control.rpm = 0
-				main_control.produced_energy = 0
-				. = TRUE
+			if(!main_control || !main_control.all_parts_connected || main_control.rpm > 1000)
+				return TRUE
+			if(!main_control.activate_parts(usr, check_only = TRUE))
+				return TRUE
+			main_control.toggle_power()
+			main_control.rpm = 0
+			main_control.produced_energy = 0
+			. = TRUE
 		if("regulate")
 			var/intake_size = text2num(params["regulate"])
-			if(intake_size != null)
-				main_control.intake_regulator = clamp(intake_size, 0.01, 1)
-				. = TRUE
+			if(intake_size == null || !main_control)
+				return
+			main_control.intake_regulator = clamp(intake_size, 0.01, 1)
+			. = TRUE

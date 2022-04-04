@@ -22,8 +22,6 @@
 	///Path of the turbine part we can install
 	var/obj/item/turbine_parts/part_path
 
-	var/installed_part_efficiency
-
 	var/has_gasmix = FALSE
 	var/datum/gas_mixture/machine_gasmix
 
@@ -38,7 +36,6 @@
 
 	if(part_path && mapped)
 		installed_part = new part_path(src)
-		installed_part_efficiency = installed_part.part_efficiency
 
 	var/turf/our_turf = get_turf(src)
 	if(our_turf.thermal_conductivity != 0 && isopenturf(our_turf))
@@ -107,14 +104,12 @@
 /obj/machinery/power/turbine/on_deconstruction()
 	if(installed_part)
 		installed_part.forceMove(loc)
-		installed_part = null
 	return ..()
 
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	if(!installed_part)
 		return
 	user.put_in_hands(installed_part)
-	installed_part = null
 
 /obj/machinery/power/turbine/proc/enable_parts(mob/user)
 	can_connect = TRUE
@@ -124,12 +119,18 @@
 
 /obj/machinery/power/turbine/Moved(atom/OldLoc, Dir)
 	. = ..()
+	disable_parts()
 	var/turf/old_turf = get_turf(OldLoc)
 	old_turf.thermal_conductivity = our_turf_thermal_conductivity
 	var/turf/new_turf = get_turf(src)
 	if(new_turf)
 		our_turf_thermal_conductivity = new_turf.thermal_conductivity
 		new_turf.thermal_conductivity = 0
+
+/obj/machinery/power/turbine/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(istype(gone, installed_part))
+		installed_part = null
 
 /obj/machinery/power/turbine/attackby(obj/item/object, mob/user, params)
 	if(active)
@@ -146,27 +147,25 @@
 	install_part(object, user)
 
 /obj/machinery/power/turbine/proc/install_part(obj/item/turbine_parts/part_object, mob/user)
-	if(!installed_part)
-		if(!do_after(user, 2 SECONDS, src))
-			return
-		user.transferItemToLoc(part_object, src)
-		installed_part = part_object
-		installed_part_efficiency = part_object.part_efficiency
-		calculate_parts_limits()
-		balloon_alert(user, "installed new part")
+	// If we're already got one and it's better, go away
+	if(get_efficiency() >= part_object.part_efficiency)
+		balloon_alert(user, "a better part is installed")
 		return
-	if(installed_part.part_efficiency < part_object.part_efficiency)
-		if(!do_after(user, 2 SECONDS, src))
-			return
-		user.transferItemToLoc(part_object, src)
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	if(installed_part)
 		user.put_in_hands(installed_part)
-		installed_part = part_object
-		installed_part_efficiency = part_object.part_efficiency
-		calculate_parts_limits()
 		balloon_alert(user, "replaced part with a better one")
-		return
+	else
+		balloon_alert(user, "installed new part")
+	user.transferItemToLoc(part_object, src)
+	installed_part = part_object
+	calculate_parts_limits()
 
-	balloon_alert(user, "a better part is installed")
+/obj/machinery/power/turbine/proc/get_efficiency()
+	if(installed_part)
+		return installed_part.part_efficiency
+	return 0
 
 /obj/machinery/power/turbine/proc/calculate_parts_limits()
 	return
@@ -185,16 +184,8 @@
 
 	has_gasmix = TRUE
 
-	///Reference to the core part
-	var/obj/machinery/power/turbine/core_rotor/core
-
 /obj/machinery/power/turbine/inlet_compressor/constructed
 	mapped = FALSE
-
-/obj/machinery/power/turbine/inlet_compressor/Destroy()
-	if(core)
-		core = null
-	return ..()
 
 /obj/machinery/power/turbine/turbine_outlet
 	name = "turbine outlet"
@@ -210,16 +201,8 @@
 
 	has_gasmix = TRUE
 
-	///Reference to the core part
-	var/obj/machinery/power/turbine/core_rotor/core
-
 /obj/machinery/power/turbine/turbine_outlet/constructed
 	mapped = FALSE
-
-/obj/machinery/power/turbine/turbine_outlet/Destroy()
-	if(core)
-		core = null
-	return ..()
 
 /obj/machinery/power/turbine/core_rotor
 	name = "core rotor"
@@ -289,7 +272,7 @@
 	radio.set_listening(FALSE)
 	radio.recalculateChannels()
 
-	new/obj/item/paper/guides/jobs/atmos/turbine(loc)
+	new /obj/item/paper/guides/jobs/atmos/turbine(loc)
 
 /obj/machinery/power/turbine/core_rotor/LateInitialize()
 	. = ..()
@@ -352,9 +335,6 @@
 	if(check_only)
 		return TRUE
 
-	compressor.core = src
-	turbine.core = src
-
 	input_turf = get_step(compressor.loc, turn(dir, 180))
 	output_turf = get_step(turbine.loc, dir)
 
@@ -366,8 +346,7 @@
 	return TRUE
 
 /obj/machinery/power/turbine/core_rotor/proc/deactivate_parts()
-	compressor?.core = null
-	turbine?.core = null
+	power_off()
 	compressor = null
 	turbine = null
 	input_turf = null
@@ -459,21 +438,27 @@
 
 	calculate_damage_done(input_turf_mixture.temperature)
 
+	//the compressor compresses down the gases from 2500 L to 1000 L
+	//the temperature and pressure rises up, you can regulate this to increase/decrease the amount of gas moved in.
 	var/compressor_work = do_calculations(input_turf_mixture, compressor.machine_gasmix, regulated = TRUE)
 	input_turf.air_update_turf(TRUE)
 	var/compressor_pressure = max(compressor.machine_gasmix.return_pressure(), 0.01)
 
+	//the rotor moves the gases that expands from 1000 L to 3000 L, they cool down and both temperature and pressure lowers
 	var/rotor_work = do_calculations(compressor.machine_gasmix, machine_gasmix, compressor_work)
 
+	//the turbine expands the gases more from 3000 L to 6000 L, cooling them down further.
 	var/turbine_work = do_calculations(machine_gasmix, turbine.machine_gasmix, abs(rotor_work))
 
 	var/turbine_pressure = max(turbine.machine_gasmix.return_pressure(), 0.01)
 
+	//the total work done by the gas
 	var/work_done = turbine.machine_gasmix.total_moles() * R_IDEAL_GAS_EQUATION * turbine.machine_gasmix.temperature * log(compressor_pressure / turbine_pressure)
 
+	//removing the work needed to move the compressor but adding back the turbine work that is the one generating most of the power.
 	work_done = max(work_done - compressor_work * TURBINE_COMPRESSOR_STATOR_INTERACTION_MULTIPLIER - turbine_work, 0)
 
-	rpm = ((work_done * compressor.installed_part_efficiency) ** turbine.installed_part_efficiency) * installed_part_efficiency / TURBINE_RPM_CONVERSION
+	rpm = ((work_done * compressor.get_efficiency()) ** turbine.get_efficiency()) * get_efficiency() / TURBINE_RPM_CONVERSION
 	rpm = min(rpm, max_allowed_rpm)
 
 	produced_energy = rpm * TURBINE_ENERGY_RECTIFICATION_MULTIPLIER * TURBINE_RPM_CONVERSION
