@@ -1091,6 +1091,11 @@
 ///This mob is abile to read books
 /mob/proc/is_literate()
 	return FALSE
+
+/// Is this mob affected by halfsight
+/mob/proc/is_halfsighted()
+	return FALSE
+
 ///Can this mob read (is literate and not blind)
 /mob/proc/can_read(obj/O)
 	if(is_blind())

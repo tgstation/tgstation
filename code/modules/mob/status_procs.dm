@@ -1,7 +1,7 @@
 
 //Here are the procs used to modify status effects of a mob.
 //The effects include: stun, knockdown, unconscious, sleeping, resting, jitteriness, dizziness, drowsyness, ear damage,
-// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_NEARSIGHT trait.
+// eye damage, eye_blind, eye_blurry, druggy, TRAIT_BLIND trait, and TRAIT_HALFSIGHT trait.
 
 ///Set the jitter of a mob
 /mob/proc/Jitter(amount)

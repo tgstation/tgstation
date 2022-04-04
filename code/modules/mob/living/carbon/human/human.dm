@@ -767,6 +767,16 @@
 	heat_exposure_stacks = 0
 	return ..()
 
+/mob/living/carbon/human/is_halfsighted()
+	if(!HAS_TRAIT(src, TRAIT_HALFSIGHT))
+		return FALSE
+
+	var/obj/item/clothing/glasses/eyewear = src.glasses
+	if(istype(eyewear) && eyewear.vision_correction)
+		return FALSE
+
+	return TRUE
+
 /mob/living/carbon/human/is_literate()
 	return TRUE
 

@@ -42,7 +42,7 @@
 	display_pain(target, "Your vision blurs, but it seems like you can see a little better now!")
 	target.cure_blind(list(EYE_DAMAGE))
 	target.set_blindness(0)
-	target.cure_nearsighted(list(EYE_DAMAGE))
+	target.cure_halfsighted(list(EYE_DAMAGE))
 	target.blur_eyes(35) //this will fix itself slowly.
 	target_eyes.setOrganDamage(0)
 	return ..()
