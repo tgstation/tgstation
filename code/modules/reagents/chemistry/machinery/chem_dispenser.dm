@@ -1,7 +1,7 @@
 /proc/translate_legacy_chem_id(id)
 	switch (id)
 		if ("sacid")
-			return "sulphuricacid"
+			return "sulfuricacid"
 		if ("facid")
 			return "fluorosulfuricacid"
 		if ("co2")
