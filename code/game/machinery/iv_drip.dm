@@ -343,10 +343,10 @@
 	AddComponent(/datum/component/plumbing/iv_drip, anchored)
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/I)
-	..()
-	default_unfasten_wrench(user, I)
-	return TRUE
+/obj/machinery/iv_drip/plumbing/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 #undef IV_TAKING
 #undef IV_INJECTING

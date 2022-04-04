@@ -143,6 +143,10 @@
 	if(honeycombs.len >= get_max_honeycomb())
 		. += span_warning("There's no room for more honeycomb!")
 
+/obj/structure/beebox/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
 /obj/structure/beebox/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/honey_frame))
@@ -155,10 +159,6 @@
 		else
 			to_chat(user, span_warning("There's no room for any more frames in the apiary!"))
 		return
-
-	if(I.tool_behaviour == TOOL_WRENCH)
-		if(default_unfasten_wrench(user, I, time = 20))
-			return
 
 	if(istype(I, /obj/item/queen_bee))
 		if(queen_bee)
