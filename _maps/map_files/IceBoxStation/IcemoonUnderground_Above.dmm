@@ -12758,9 +12758,6 @@
 	dir = 1
 	},
 /area/mine/living_quarters)
-"JY" = (
-/turf/closed/wall/r_wall,
-/area/icemoon/underground/unexplored/rivers)
 "JZ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment{
@@ -48252,7 +48249,7 @@ tW
 tW
 tW
 tW
-JY
+tW
 mO
 mO
 mO
@@ -49280,7 +49277,7 @@ kN
 tW
 tW
 tW
-JY
+tW
 mO
 mO
 mO
