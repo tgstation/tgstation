@@ -24699,6 +24699,7 @@
 	pixel_x = 35
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/hos)
 "kZL" = (
