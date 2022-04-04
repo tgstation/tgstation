@@ -100,11 +100,7 @@
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE)
-	if(user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, span_warning("You realize that your scanner has no accessibility support for the blind!"))
+	if(user.incapacitated() !user.can_read(src))
 		return
 
 	// the final list of strings to render
@@ -371,11 +367,7 @@
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /proc/chemscan(mob/living/user, mob/living/target)
-	if(user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, span_warning("You realize that your scanner has no accessibility support for the blind!"))
+	if(user.incapacitated() || !user.can_read(src))
 		return
 
 	if(istype(target) && target.reagents)
@@ -434,7 +426,7 @@
 /obj/item/healthanalyzer/AltClick(mob/user)
 	..()
 
-	if(!user.canUseTopic(src, BE_CLOSE))
+	if(!user.canUseTopic(src, BE_CLOSE) || !user.can_read(src))
 		return
 
 	mode = !mode
@@ -448,11 +440,7 @@
 
 /// Displays wounds with extended information on their status vs medscanners
 /proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
-	if(!istype(patient) || user.incapacitated())
-		return
-
-	if(user.is_blind())
-		to_chat(user, span_warning("You realize that your scanner has no accessibility support for the blind!"))
+	if(!istype(patient) || user.incapacitated() || !user.can_read(src))
 		return
 
 	var/render_list = ""
