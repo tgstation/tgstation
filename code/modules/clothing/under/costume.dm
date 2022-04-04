@@ -232,7 +232,7 @@
 	unique_reskin = list("Red" = "red_mech_suit",
 						"White" = "white_mech_suit",
 						"Blue" = "blue_mech_suit",
-						"Retro" = "robotics_retro"
+						"Black" = "black_mech_suit"
 						)
 
 /obj/item/clothing/under/costume/russian_officer
