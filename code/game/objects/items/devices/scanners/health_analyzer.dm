@@ -29,7 +29,6 @@
 
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
-
 	register_item_context()
 
 /obj/item/healthanalyzer/examine(mob/user)
@@ -41,6 +40,9 @@
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
+	if(!user.can_read(src))
+		return
+
 	scanmode = (scanmode + 1) % SCANMODE_COUNT
 	switch(scanmode)
 		if(SCANMODE_HEALTH)
@@ -49,6 +51,9 @@
 			to_chat(user, span_notice("You switch the health analyzer to report extra info on wounds."))
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
+	if(!user.can_read(src))
+		return
+
 	flick("[icon_state]-scan", src) //makes it so that it plays the scan animation upon scanning, including clumsy scanning
 
 	// Clumsiness/brain damage check
@@ -77,6 +82,9 @@
 	add_fingerprint(user)
 
 /obj/item/healthanalyzer/attack_secondary(mob/living/victim, mob/living/user, params)
+	if(!user.can_read(src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	chemscan(user, victim)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -100,7 +108,7 @@
 
 // Used by the PDA medical scanner too
 /proc/healthscan(mob/user, mob/living/target, mode = SCANNER_VERBOSE, advanced = FALSE)
-	if(user.incapacitated() || !user.can_read(src))
+	if(user.incapacitated())
 		return
 
 	// the final list of strings to render
@@ -367,7 +375,7 @@
 	to_chat(user, jointext(render_list, ""), trailing_newline = FALSE, type = MESSAGE_TYPE_INFO)
 
 /proc/chemscan(mob/living/user, mob/living/target)
-	if(user.incapacitated() || !user.can_read(src))
+	if(user.incapacitated())
 		return
 
 	if(istype(target) && target.reagents)
@@ -440,7 +448,7 @@
 
 /// Displays wounds with extended information on their status vs medscanners
 /proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
-	if(!istype(patient) || user.incapacitated() || !user.can_read(src))
+	if(!istype(patient) || user.incapacitated())
 		return
 
 	var/render_list = ""
@@ -489,6 +497,9 @@
 			L.dropItemToGround(src)
 
 /obj/item/healthanalyzer/wound/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
+	if(!user.can_read(src))
+		return
+
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] scans [patient] for serious injuries."), span_notice("You scan [patient] for serious injuries."))
 
