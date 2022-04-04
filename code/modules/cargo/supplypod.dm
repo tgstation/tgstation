@@ -657,6 +657,7 @@
 /obj/effect/pod_landingzone/proc/endLaunch()
 	pod.tryMakeRubble(drop_location())
 	pod.layer = initial(pod.layer)
+	pod.plane = initial(pod.plane)
 	pod.endGlow()
 	QDEL_NULL(helper)
 	pod.preOpen() //Begin supplypod open procedures. Here effects like explosions, damage, and other dangerous (and potentially admin-caused, if the centcom_podlauncher datum was used) memes will take place
