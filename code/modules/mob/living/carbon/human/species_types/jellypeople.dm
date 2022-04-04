@@ -39,6 +39,7 @@
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
+	RemoveElement(/datum/element/soft_landing)
 	..()
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -46,6 +47,7 @@
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
+	AddElement(/datum/element/soft_landing)
 
 /datum/species/jelly/spec_life(mob/living/carbon/human/H, delta_time, times_fired)
 	if(H.stat == DEAD) //can't farm slime jelly from a dead slime/jelly person indefinitely
