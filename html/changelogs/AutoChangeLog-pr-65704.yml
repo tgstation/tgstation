@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes: 
+  - bugfix: "DNA Vault's DNA scanners no longer accept Plasmamen, Skeleton, and Golems as DNA."
+  - expansion: "A new Traitor Final objective has been added: Harvest the DNA of a Space Carp, and use it to turn yourself into a Space Dragon!"
