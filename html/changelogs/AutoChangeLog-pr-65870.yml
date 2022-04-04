@@ -1,4 +1,0 @@
-author: "azizonkg"
-delete-after: True
-changes: 
-  - bugfix: "fixed typo in filename that cause build fail"
