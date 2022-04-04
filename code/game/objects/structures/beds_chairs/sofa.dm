@@ -7,9 +7,9 @@
 	var/mutable_appearance/armrest
 
 /obj/structure/chair/sofa/Initialize(mapload)
+	. = ..()
 	armrest = mutable_appearance(icon, "[icon_state]_armrest", ABOVE_MOB_LAYER)
 	armrest.plane = GAME_PLANE_UPPER
-	. = ..()
 	AddElement(/datum/element/soft_landing)
 
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
