@@ -83,6 +83,7 @@ Behavior that's still missing from this component that original food items had t
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_ATTACK, .proc/UseFromHand)
 		RegisterSignal(parent, COMSIG_ITEM_FRIED, .proc/OnFried)
+		RegisterSignal(parent, COMSIG_GRILL_FOOD, .proc/GrillFood)
 		RegisterSignal(parent, COMSIG_ITEM_MICROWAVE_ACT, .proc/OnMicrowaved)
 		RegisterSignal(parent, COMSIG_ITEM_USED_AS_INGREDIENT, .proc/used_to_customize)
 
@@ -183,6 +184,10 @@ Behavior that's still missing from this component that original food items had t
 	our_atom.reagents.trans_to(fry_object, our_atom.reagents.total_volume)
 	qdel(our_atom)
 	return COMSIG_FRYING_HANDLED
+
+/datum/component/edible/proc/GrillFood(datum/source, atom/fry_object)
+	SIGNAL_HANDLER
+	foodtypes |= FRIED
 
 ///Called when food is created through processing (Usually this means it was sliced). We use this to pass the OG items reagents.
 /datum/component/edible/proc/OnProcessed(datum/source, atom/original_atom, list/chosen_processing_option)
