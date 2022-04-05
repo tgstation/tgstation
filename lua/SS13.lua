@@ -2,6 +2,8 @@ local SS13 = {}
 
 SS13.SSlua = dm.global_vars:get_var("SSlua")
 
+SS13.global_proc = "some_magic_bullshit"
+
 local states = SS13.SSlua:get_var("states"):to_table()
 for _, state in pairs(states) do
 	if state:get_var("internal_id") == dm.state_id then
@@ -20,9 +22,15 @@ function SS13.new(type, ...)
 end
 
 function SS13.await(thing_to_call, proc_to_call, ...)
+	if thing_to_call == nil then
+		thing_to_call = SS13.global_proc
+	end
+	if thing_to_call == SS13.global_proc then
+		proc_to_call = "/proc/" .. proc_to_call
+	end
 	local args = table.pack(thing_to_call, proc_to_call, ...)
 	args["n"] = nil
-	local promise = SS13.new("/datum/promise", args)
+	local promise = SS13.new("/datum/promise", table.unpack(args))
 	while promise:get_var("status") == 0 do
 		sleep()
 	end
@@ -32,7 +40,7 @@ end
 function SS13.wait(time, _timer)
 	local index = #__yield_table + 1
 	local callback = SS13.new("/datum/callback", SS13.SSlua, "queue_resume", SS13.state, index)
-	local timer = dm.global_proc("_addtimer", callback, time*10, 8, _timer, "lua/SS13.lua", 35)
+	local timer = dm.global_proc("_addtimer", callback, time*10, 8, _timer, "lua/SS13.lua", 43)
 	coroutine.yield()
 	dm.global_proc("deltimer", timer, _timer or nil)
 end

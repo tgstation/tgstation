@@ -54,6 +54,14 @@ Due to limitations inherent in the wrapper functions used on tgstation, `world:s
 ### dm.global_vars
 A reference to DM's `global`, in the form of datum userdata. Subject to the same limitations as `dm.world`
 
+### dm.usr
+A weak reference to DM's `usr`. As a rule of thumb, this is a reference to the mob of the client who triggered the chain of procs leading to the execution of lua code. The following is a list of what `usr` is for the most common ways of executing lua code:
+- For resumes and awakens, which are generally executed by the MC, `usr` is (most liekly) null.
+- `SS13.wait` queues a resume, which gets executed by the MC. Therefore, `usr` is null after `SS13.wait` finishes.
+- For chunk loads, `usr` is generally the current mob of the admin that loaded that chunk.
+- For function calls done from the lua editor, `usr` is the current mob of the admin calling the function.
+- `SS13.register_signal` creates a `/datum/callback` that gets executed by the `SEND_SIGNAL` macro for the corresponding signal. As such, `usr` is the mob that triggered the chain of procs leading to the invocation of `SEND_SIGNAL`.
+
 ---
 
 ## Task management
@@ -73,6 +81,9 @@ The `SS13` package contains various helper functions that use code specific to t
 
 ### SS13.state
 A reference to the state datum handling this lua state.
+
+### SS13.global_proc
+A wrapper for the magic string used to tell `WrapAdminProcCall` to call a global proc
 
 ### SS13.new(type, ...)
 Instantiates a datum of type `type` with `...` as the arguments passed to `/proc/_new`
@@ -113,6 +124,3 @@ A table of key-value-pairs, where the keys are threads, and the values are table
 - status: A string, either "sleep" or "yield"
 - index: The task's index in `__sleep_queue` or `__yield_table`
 The threads constituting this table's keys can be resumed from lua code, but doing so is heavily advised against.
-
-### env
-Auxlua uses this table as the initial environment for every task executed. This table uses the global environment as its `__index` metamethod, allowing you to access (but not modify) global fields as if you were in the global environment.
