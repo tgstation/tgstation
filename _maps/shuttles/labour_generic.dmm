@@ -46,13 +46,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/labor)
-"i" = (
-/obj/machinery/door/airlock/titanium{
-	name = "Labor Shuttle Airlock";
-	req_access_txt = "2"
-	},
-/turf/open/floor/plating,
-/area/shuttle/labor)
 "j" = (
 /obj/machinery/door/airlock/titanium{
 	name = "Labor Shuttle Airlock";
@@ -104,8 +97,10 @@
 	width = 9;
 	port_direction = 4
 	},
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/open/floor/plating,
+/obj/machinery/door/airlock/titanium{
+	name = "Labor Shuttle Airlock"
+	},
+/turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
 "r" = (
 /obj/structure/shuttle/engine/heater,
@@ -121,7 +116,8 @@
 /area/shuttle/labor)
 "W" = (
 /obj/machinery/door/airlock/titanium{
-	name = "Labor Shuttle Airlock"
+	name = "Labor Shuttle Airlock";
+	req_access_txt = "2"
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/labor)
@@ -129,11 +125,11 @@
 (1,1,1) = {"
 a
 a
-i
+b
 a
 a
 b
-W
+b
 a
 a
 "}
@@ -173,7 +169,7 @@ s
 (5,1,1) = {"
 a
 a
-b
+W
 a
 a
 a
