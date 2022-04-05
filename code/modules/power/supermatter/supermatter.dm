@@ -248,7 +248,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/include_in_cims = TRUE
 
 	var/freonbonus = 0
-
+	///Can the crystal trigger the station wide anomaly spawn?
 	var/anomaly_event = TRUE
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
