@@ -1,0 +1,6 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - balance: "IceBoxStation's Public Mining Storage got shuffled around a bit. Nanotrasen realized they were spending too much on reinforced walls, and decided to re-opt for normal walls instead. To accomodate for this downturn in reinforced wallage, another layer of protection was added to the southern wall of the AI's Upload."
+  - bugfix: "The Public Mining Storage now has an APC. Whoopsie."
+  - bugfix: "On the mapping end, it's now easier than ever to tell whatever the fuck \"Mining\" is (it goes for so many things these days it's ridiculous) from \"Mining Storage\". Very cool."
