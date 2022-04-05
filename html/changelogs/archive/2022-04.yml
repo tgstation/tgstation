@@ -189,3 +189,9 @@
   wesoda25:
   - admin: admin messages now appear every time you connect until you click a link
       confirming that you read them
+2022-04-05:
+  JohnFulpWillard:
+  - bugfix: DNA Vault's DNA scanners no longer accept Plasmamen, Skeleton, and Golems
+      as DNA.
+  - expansion: 'A new Traitor Final objective has been added: Harvest the DNA of a
+      Space Carp, and use it to turn yourself into a Space Dragon!'
