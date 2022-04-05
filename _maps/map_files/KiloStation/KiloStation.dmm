@@ -11969,7 +11969,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
 	},
-/obj/structure/grille,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "bvG" = (
@@ -49191,7 +49191,7 @@
 /area/maintenance/port/lesser)
 "lRG" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/obj/structure/grille,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall/rust,
 /area/engineering/atmos)
 "lSd" = (
@@ -52590,7 +52590,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/structure/grille,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall/rust,
 /area/engineering/atmos)
 "mUW" = (
@@ -53981,13 +53981,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/service/chapel/funeral)
-"nvo" = (
-/obj/structure/grille,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/engineering/atmos)
 "nvS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/stripes/line,
@@ -54803,7 +54796,7 @@
 /area/engineering/supermatter/room)
 "nLu" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/obj/structure/grille,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "nLK" = (
@@ -56298,7 +56291,7 @@
 /area/service/library)
 "ojE" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
-/obj/structure/grille,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "ojS" = (
@@ -63279,7 +63272,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/obj/structure/grille,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "qwL" = (
@@ -85274,7 +85267,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
-/obj/structure/grille,
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "xIo" = (
@@ -113495,7 +113488,7 @@ xHX
 tmq
 mUT
 idD
-nvo
+bvF
 tmq
 bvF
 idD

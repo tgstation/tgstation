@@ -103,6 +103,12 @@
 		stored_id_card = null
 		update_appearance(UPDATE_ICON)
 
+/obj/machinery/pdapainter/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool))
+		power_change()
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
 		if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
@@ -120,10 +126,6 @@
 				update_appearance(UPDATE_ICON)
 			return
 		return ..()
-
-	if(default_unfasten_wrench(user, O))
-		power_change()
-		return
 
 	// Chameleon checks first so they can exit the logic early if they're detected.
 	if(istype(O, /obj/item/card/id/advanced/chameleon))

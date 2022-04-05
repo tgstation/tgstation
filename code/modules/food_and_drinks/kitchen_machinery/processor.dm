@@ -68,6 +68,11 @@
 		qdel(what)
 	LAZYREMOVE(processor_contents, what)
 
+/obj/machinery/processor/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
 /obj/machinery/processor/attackby(obj/item/O, mob/living/user, params)
 	if(processing)
 		to_chat(user, span_warning("[src] is in the process of processing!"))
@@ -76,9 +81,6 @@
 		return
 
 	if(default_pry_open(O))
-		return
-
-	if(default_unfasten_wrench(user, O))
 		return
 
 	if(default_deconstruction_crowbar(O))
