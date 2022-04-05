@@ -1,0 +1,4 @@
+author: "Son-of-Space"
+delete-after: True
+changes: 
+  - bugfix: "Labor shuttle is useable again on Meta, Box, Tram, and Runtime."
