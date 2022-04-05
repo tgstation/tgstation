@@ -460,13 +460,12 @@
 		var/efficiency_increase = 0.25 * (1 - NUM_E ** (-0.1 * tank_mix.gases[/datum/gas/freon][MOLES]))
 		efficiency += efficiency_increase
 
-		var/consumption_multiplier = 0.01
+		var/freon_consumption = 0.5
 		if(efficiency > 1)
-			consumption_multiplier = 1
-		var/freon_consumption = efficiency_increase * consumption_multiplier
+			freon_consumption = 1
 		tank_mix.gases[/datum/gas/freon][MOLES] -= max(freon_consumption, MINIMUM_MOLE_COUNT)
 		tank_mix.assert_gas(/datum/gas/carbon_dioxide)
-		tank_mix.gases[/datum/gas/carbon_dioxide][MOLES] += freon_consumption * consumption_multiplier
+		tank_mix.gases[/datum/gas/carbon_dioxide][MOLES] += freon_consumption
 	tank_mix.garbage_collect()
 
 /obj/machinery/atmospherics/components/binary/thermomachine/ui_status(mob/user)
