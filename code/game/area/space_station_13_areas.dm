@@ -699,7 +699,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/commons/storage/mining
 	name = "\improper Public Mining Storage"
-	icon_state = "mining"
+	icon_state = "mining_storage"
 
 //Service
 
