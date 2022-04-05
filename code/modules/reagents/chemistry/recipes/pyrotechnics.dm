@@ -396,7 +396,8 @@
 		return
 	var/turf/open/T = get_turf(holder.my_atom)
 	if(istype(T))
-		T.atmos_spawn_air("plasma=[created_volume];TEMP=1000")
+		T.air.temperature += 10 * created_volume
+		T.air_update_turf(TRUE)
 	holder.clear_reagents()
 	return
 
