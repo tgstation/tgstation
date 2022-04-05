@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes: 
+  - bugfix: "Nanotrasen dug around on TramStation, DeltaStation, and KiloStation and found that grilles were covering a few gas flow meters in each of their atmospherics divisions. This should now be fully rectified."
