@@ -194,6 +194,11 @@
 		power_transmission_bonus += gas_comp[gas_id] * gas_trans[gas_id] * (isnull(transit_mod[gas_id]) ? 1 : transit_mod[gas_id])
 	power_transmission_bonus *= h2obonus
 
+	powerloss_inhibitor_comp = 0
+	for(var/gas_id in gas_powerloss_inhibitors)
+		powerloss_inhibitor_comp += gas_comp[gas_id] * gas_powerloss_inhibitors[gas_id]
+	powerloss_inhibitor_comp = clamp(powerloss_inhibitor_comp, 0, 1)
+
 /obj/machinery/power/supermatter_crystal/proc/special_gases_interactions(datum/gas_mixture/env, datum/gas_mixture/removed)
 	//Miasma is really just microscopic particulate. It gets consumed like anything else that touches the crystal.
 	if(gas_comp[/datum/gas/miasma])
@@ -214,6 +219,15 @@
 			removed.gases[/datum/gas/oxygen][MOLES] -= consumed_carbon_dioxide * 0.5
 			removed.gases[/datum/gas/pluoxium][MOLES] += consumed_carbon_dioxide * 0.25
 
+	//Very high energy radiaton will convert helium into tritium.
+	if(gas_comp[/datum/gas/helium] && power > POWER_PENALTY_THRESHOLD)
+		var/helium_pp = env.return_pressure() * gas_comp[/datum/gas/helium]
+		var/consumed_helium = clamp(((helium_pp - HELIUM_CONSUMPTION_PP) / (helium_pp + HELIUM_PRESSURE_SCALING)) * gasmix_power_ratio * HELIUM_GASMIX_SCALING * clamp((power - POWER_PENALTY_THRESHOLD) / POWER_PENALTY_THRESHOLD, 0, 1), HELIUM_CONSUMPTION_RATIO_MIN, HELIUM_CONSUMPTION_RATIO_MAX)
+		consumed_helium = min(consumed_helium * gas_comp[/datum/gas/helium] * combined_gas, removed.gases[/datum/gas/helium][MOLES])
+		if(consumed_helium)
+			removed.gases[/datum/gas/helium][MOLES] -= consumed_helium
+			removed.gases[/datum/gas/tritium][MOLES] += consumed_helium
+
 	if(prob(gas_comp[/datum/gas/zauker]))
 		playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 		supermatter_zap(src, 6, clamp(power * 2, 4000, 20000), ZAP_MOB_STUN, zap_cutoff = src.zap_cutoff, power_level = power, zap_icon = src.zap_icon)
@@ -226,11 +240,11 @@
 	//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 	mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 
-	//Ramps up or down in increments of 0.02 up to the proportion of co2
-	//Given infinite time, powerloss_dynamic_scaling = co2comp
+	//Ramps up or down in increments of 0.02 up to the proportion of powerloss_inhibitor_comp
+	//Given infinite time, powerloss_dynamic_scaling = powerloss_inhibitor_comp
 	//Some value between 0 and 1
-	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && gas_comp[/datum/gas/carbon_dioxide] > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% co2
-		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(gas_comp[/datum/gas/carbon_dioxide] - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
+	if (combined_gas > POWERLOSS_INHIBITION_MOLE_THRESHOLD && powerloss_inhibitor_comp > POWERLOSS_INHIBITION_GAS_THRESHOLD) //If there are more then 20 mols, and more then 20% powerloss_inhibitor_comp
+		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling + clamp(powerloss_inhibitor_comp - powerloss_dynamic_scaling, -0.02, 0.02), 0, 1)
 	else
 		powerloss_dynamic_scaling = clamp(powerloss_dynamic_scaling - 0.05, 0, 1)
 	//Ranges from 0 to 1(1-(value between 0 and 1 * ranges from 1 to 1.5(mol / 500)))
@@ -266,11 +280,10 @@
 		playsound(src, 'sound/weapons/emitter2.ogg', 70, TRUE)
 		var/power_multiplier = max(0, (1 + (power_transmission_bonus / (10 - (gas_comp[/datum/gas/bz] * BZ_RADIOACTIVITY_MODIFIER)))) * freonbonus)// RadModBZ(500%)
 		var/pressure_multiplier = max((1 / ((env.return_pressure() ** pressure_bonus_curve_angle) + 1) * pressure_bonus_derived_steepness) + pressure_bonus_derived_constant, 1)
-		var/co2_power_increase = max(gas_comp[/datum/gas/carbon_dioxide] * 2, 1)
 		supermatter_zap(
 			zapstart = src,
 			range = 3,
-			zap_str = 2.5 * power * power_multiplier * pressure_multiplier * co2_power_increase,
+			zap_str = 2.5 * power * power_multiplier * pressure_multiplier,
 			zap_flags = ZAP_SUPERMATTER_FLAGS,
 			zap_cutoff = 300,
 			power_level = power

@@ -2,7 +2,7 @@
 #define OXYGEN_HEAT_PENALTY 1
 #define PLUOXIUM_HEAT_PENALTY -0.5 //Better then co2, worse then n2
 #define TRITIUM_HEAT_PENALTY 10
-#define CO2_HEAT_PENALTY 6
+#define CO2_HEAT_PENALTY 2
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 12 //This'll get made slowly over time, I want my spice rock spicy god damnit
@@ -11,6 +11,8 @@
 #define HEALIUM_HEAT_PENALTY 4
 #define PROTO_NITRATE_HEAT_PENALTY -3
 #define ZAUKER_HEAT_PENALTY 8
+#define HELIUM_HEAT_PENALTY 6
+#define ANTINOBLIUM_HEAT_PENALTY 23
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
 //Keep the negative values here above -10 and we won't get negative rads
@@ -24,6 +26,8 @@
 #define HEALIUM_TRANSMIT_MODIFIER 2.4
 #define PROTO_NITRATE_TRANSMIT_MODIFIER 15
 #define ZAUKER_TRANSMIT_MODIFIER 20
+#define HELIUM_TRANSMIT_MODIFIER 5
+#define ANTINOBLIUM_TRANSMIT_MODIFIER 40
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
@@ -31,7 +35,7 @@
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 #define PROTO_NITRATE_HEAT_RESISTANCE 5
 
-/// The minimum portion of the miasma in the air that will be consumed. Higher values mean more miasma will be consumed be default.
+/// The minimum portion of the miasma in the air that will be consumed. Higher values mean more miasma will be consumed by default.
 #define MIASMA_CONSUMPTION_RATIO_MIN 0
 /// The maximum portion of the miasma in the air that will be consumed. Lower values mean the miasma consumption rate caps earlier.
 #define MIASMA_CONSUMPTION_RATIO_MAX 1
@@ -44,7 +48,7 @@
 /// The amount of matter power generated for every mole of miasma consumed. Higher values mean miasma generates more power.
 #define MIASMA_POWER_GAIN 10
 
-/// The minimum portion of the CO2 in the air that will be consumed. Higher values mean more CO2 will be consumed be default.
+/// The minimum portion of the CO2 in the air that will be consumed. Higher values mean more CO2 will be consumed by default.
 #define CO2_CONSUMPTION_RATIO_MIN 0
 /// The maximum portion of the CO2 in the air that will be consumed. Lower values mean the CO2 consumption rate caps earlier.
 #define CO2_CONSUMPTION_RATIO_MAX 1
@@ -52,8 +56,17 @@
 #define CO2_CONSUMPTION_PP (ONE_ATMOSPHERE*0.01)
 /// How the amount of CO2 consumed per tick scales with partial pressure. Higher values decrease the rate CO2 consumption scales with partial pressure. Should be >0
 #define CO2_PRESSURE_SCALING (ONE_ATMOSPHERE*0.25)
-/// How much the amount of CO2 consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the CO2 consumed.
-#define CO2_GASMIX_SCALING (0.1)
+
+/// The minimum portion of the helium in the air that will be consumed. Higher values mean more helium will be consumed by default.
+#define HELIUM_CONSUMPTION_RATIO_MIN 0
+/// The maximum portion of the helium in the air that will be consumed. Lower values mean the helium consumption rate caps earlier.
+#define HELIUM_CONSUMPTION_RATIO_MAX 1
+/// The minimum pressure for a pure helium atmosphere to begin being consumed. Higher values mean it takes more helium pressure to make helium be consumed. Should be >= 0
+#define HELIUM_CONSUMPTION_PP (ONE_ATMOSPHERE*0.01)
+/// How the amount of helium consumed per tick scales with partial pressure. Higher values decrease the rate helium consumption scales with partial pressure. Should be >0
+#define HELIUM_PRESSURE_SCALING (ONE_ATMOSPHERE*0.125)
+/// How much the amount of helium consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the helium consumed.
+#define HELIUM_GASMIX_SCALING (1)
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
