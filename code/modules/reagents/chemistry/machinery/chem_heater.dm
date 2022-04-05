@@ -61,11 +61,20 @@
 	icon_state = "[base_icon_state][beaker ? 1 : 0]b"
 	return ..()
 
-/obj/machinery/chem_heater/AltClick(mob/living/user)
+/obj/machinery/chem_heater/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!can_interact(user) || !user.canUseTopic(src, !issilicon(user), FALSE, NO_TK))
 		return
 	replace_beaker(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/chem_heater/attack_robot_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
+
+/obj/machinery/chem_heater/attack_ai_secondary(mob/user, list/modifiers)
+	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/chem_heater/proc/replace_beaker(mob/living/user, obj/item/reagent_containers/new_beaker)
 	if(!user)
