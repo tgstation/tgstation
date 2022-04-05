@@ -49106,6 +49106,7 @@
 	dir = 1
 	},
 /obj/machinery/computer/cargo,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/cargo/office)
 "qqF" = (
@@ -179698,7 +179699,7 @@ kQm
 tVu
 hRw
 bah
-pXz
+xtb
 qqw
 lrq
 eqy
