@@ -485,7 +485,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		ignorecap = TRUE
 	)
 
-	if(!is_tesla && is_station_level(loc.z))
+	if(!is_tesla && is_station_level(loc.z) && is_main_engine && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
 		new /datum/supermatter_delamination(power = src.power)
 
 	qdel(src)
