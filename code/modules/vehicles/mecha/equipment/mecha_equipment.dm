@@ -24,8 +24,6 @@
 	var/mech_flags = NONE
 	///boolean: FALSE if this equipment can not be removed/salvaged
 	var/detachable = TRUE
-	///Boolean: whether we can equip this equipment through the mech UI or the cycling ability
-	var/selectable = TRUE
 	///Boolean: whether a pacifist can use this equipment
 	var/harmful = FALSE
 	///Sound file: Sound to play when this equipment is destroyed while still attached to the mech
