@@ -54,8 +54,6 @@
 /obj/item/cartridge/virus/syndicate
 	name = "\improper Detomatix cartridge"
 	icon_state = "cart"
-	access = CART_REMOTE_DOOR
-	remote_door_id = "smindicate" //Make sure this matches the syndicate shuttle's shield/door id!! //don't ask about the name, testing.
 	charges = 6
 
 /obj/item/cartridge/virus/syndicate/send_virus(obj/item/pda/target, mob/living/user)

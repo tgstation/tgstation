@@ -12,8 +12,6 @@
 
 	var/access = 0 //Bit flags for cartridge access
 
-	var/remote_door_id = ""
-
 	var/list/bot_access = list()
 //	Selection: SEC_BOT | ADVANCED_SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT | VIBE_BOT
 
@@ -203,7 +201,7 @@
 	name = "\improper Value-PAK cartridge"
 	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
 	icon_state = "cart-c"
-	access = ~(CART_CLOWN | CART_MIME | CART_REMOTE_DOOR)
+	access = ~(CART_CLOWN | CART_MIME)
 	spam_enabled = 1
 	bot_access = list(
 		SEC_BOT,

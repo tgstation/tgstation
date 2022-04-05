@@ -9,12 +9,11 @@
 #define CART_JANITOR (1<<7)
 #define CART_REAGENT_SCANNER (1<<8)
 #define CART_NEWSCASTER (1<<9)
-#define CART_REMOTE_DOOR (1<<10)
-#define CART_STATUS_DISPLAY (1<<11)
-#define CART_QUARTERMASTER (1<<12)
-#define CART_HYDROPONICS (1<<13)
-#define CART_DRONEPHONE (1<<14)
-#define CART_DRONEACCESS (1<<15)
+#define CART_STATUS_DISPLAY (1<<10)
+#define CART_QUARTERMASTER (1<<11)
+#define CART_HYDROPONICS (1<<12)
+#define CART_DRONEPHONE (1<<13)
+#define CART_DRONEACCESS (1<<14)
 
 /// PDA ui menu defines
 #define PDA_UI_HUB 0
