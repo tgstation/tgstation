@@ -1,4 +1,4 @@
-///Multiplier for converting work done into rpm and rpm in energy out
+///Multiplier for converting work into rpm and rpm into power
 #define TURBINE_RPM_CONVERSION 15
 ///Efficiency of the turbine to turn work into energy, higher values will yield more power
 #define TURBINE_ENERGY_RECTIFICATION_MULTIPLIER 0.25
