@@ -5,13 +5,15 @@
 /// Probability of using letters of envelope sprites on all letters.
 #define FULL_CRATE_LETTER_ODDS 70
 
-//Experimental change: These are subject to tweaking based on the /tg/ economy overhaul.
-//Current design direction: Higher paying jobs are vastly outnumbered by lower paying jobs, so anything above medium hurts inflation, common jobs help inflation
+//Current Paycheck values. Altering these changes both the cost of items meant for each paygrade, as well as the passive/starting income of each job.
 #define PAYCHECK_LOWER 25
 #define PAYCHECK_CREW 50
 #define PAYCHECK_COMMAND 100
 
+//How many credits a player is charged if they print something from a departmental lathe they shouldn't have access to.
 #define LATHE_TAX 10
+//How much POWER a borg's cell is taxed if they print something from a departmental lathe.
+#define SILICON_LATHE_TAX 2000
 
 #define STATION_TARGET_BUFFER 40
 

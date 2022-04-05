@@ -170,9 +170,26 @@
 		if(!reagents.has_reagent(R, D.reagents_list[R]*print_quantity/coeff))
 			say("Not enough reagents to complete prototype[print_quantity > 1? "s" : ""].")
 			return FALSE
-	if(is_station_level(z)) //We don't block purchases off station Z.
-		if(attempt_charge(src, usr, (LATHE_TAX * print_quantity)) & COMPONENT_OBJ_CANCEL_CHARGE)
+
+	if(is_station_level(z) && isliving(usr)) //We don't block purchases off station Z.
+		var/total_cost = (LATHE_TAX * print_quantity)
+		var/mob/living/user = usr
+		var/obj/item/card/id/card = user.get_idcard(TRUE)
+		if(!card && istype(user.pulling, /obj/item/card/id))
+			card = user.pulling
+		if(card)
+			var/datum/bank_account/our_acc = card.registered_account
+			if(our_acc.account_job && SSeconomy.get_dep_account(our_acc.account_job?.paycheck_department) == SSeconomy.get_dep_account(payment_department))
+				total_cost = 0 //We are not charging crew for printing their own supplies and equipment.
+		if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
 			return FALSE
+
+	if(iscyborg(usr))
+		var/mob/living/silicon/robot/borg = usr
+		if(!borg.cell)
+			return
+		borg.cell.use(SILICON_LATHE_TAX)
+
 	materials.mat_container.use_materials(efficient_mats, print_quantity)
 	materials.silo_log(src, "built", -print_quantity, "[D.name]", efficient_mats)
 	for(var/R in D.reagents_list)

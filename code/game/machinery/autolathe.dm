@@ -47,7 +47,6 @@
 /obj/machinery/autolathe/Initialize(mapload)
 	AddComponent(/datum/component/material_container, SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], 0, MATCONTAINER_EXAMINE, _after_insert = CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
-	AddComponent(/datum/component/payment, 0, SSeconomy.get_dep_account(ACCOUNT_CAR), PAYMENT_CLINICAL)
 	wires = new /datum/wires/autolathe(src)
 	stored_research = new /datum/techweb/specialized/autounlocking/autolathe
 	matching_designs = list()
@@ -214,8 +213,6 @@
 				materials_used[used_material] = amount_needed
 
 			if(materials.has_materials(materials_used))
-				if(attempt_charge(src, usr, (LATHE_TAX * multiplier)) & COMPONENT_OBJ_CANCEL_CHARGE)
-					return FALSE
 				busy = TRUE
 				to_chat(usr, span_notice("You print [multiplier] item(s) from the [src]"))
 				use_power(power)
