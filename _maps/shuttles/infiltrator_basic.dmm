@@ -206,7 +206,6 @@
 /area/shuttle/syndicate/airlock)
 "aY" = (
 /obj/machinery/door/poddoor{
-	id = "smindicate";
 	name = "outer blast door"
 	},
 /obj/docking_port/mobile/infiltrator,
@@ -215,7 +214,6 @@
 	dir = 1
 	},
 /obj/machinery/button/door/directional/north{
-	id = "smindicate";
 	name = "external door control";
 	req_access_txt = "150"
 	},
