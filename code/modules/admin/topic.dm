@@ -405,8 +405,8 @@
 			return
 		var/rounded_message_id = round(href_list["message_id"], 1)
 		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
-			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE usr.key = :player_key AND id = :id",
-			list("id" = rounded_message_id)
+			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
+			list("id" = rounded_message_id, "player_key" = usr.ckey)
 		)
 		if(!query_message_read.warn_execute())
 			qdel(query_message_read)
