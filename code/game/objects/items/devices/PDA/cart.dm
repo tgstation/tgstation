@@ -199,7 +199,7 @@
 
 /obj/item/cartridge/captain
 	name = "\improper Value-PAK cartridge"
-	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Mime, Clown, and Syndie)
+	desc = "Now with 350% more value!" //Give the Captain...EVERYTHING! (Except Clown and Mime ones)
 	icon_state = "cart-c"
 	access = ~(CART_CLOWN | CART_MIME)
 	spam_enabled = 1
