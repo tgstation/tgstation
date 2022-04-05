@@ -1225,9 +1225,6 @@
 	dir = 8
 	},
 /area/mine/eva)
-"dL" = (
-/turf/closed/wall/ice,
-/area/mine/storage)
 "dM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1651,13 +1648,6 @@
 	},
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/underground/explored)
-"eS" = (
-/obj/structure/fluff/tram_rail{
-	pixel_y = 17
-	},
-/obj/structure/fluff/tram_rail,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/mine/storage)
 "eT" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/airalarm/directional/west,
@@ -2072,8 +2062,9 @@
 /turf/open/floor/iron,
 /area/service/bar)
 "fY" = (
+/obj/structure/ore_box,
 /turf/open/misc/asteroid/snow/icemoon,
-/area/mine/storage)
+/area/icemoon/underground/explored)
 "ga" = (
 /turf/closed/wall,
 /area/security/execution/education)
@@ -3412,10 +3403,6 @@
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"jx" = (
-/obj/structure/sign/warning,
-/turf/closed/wall/ice,
-/area/mine/storage)
 "jy" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -5475,10 +5462,6 @@
 /obj/structure/stairs/north,
 /turf/open/floor/iron,
 /area/service/chapel)
-"py" = (
-/obj/structure/ore_box,
-/turf/open/misc/asteroid/snow/icemoon,
-/area/mine/storage)
 "pA" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5680,12 +5663,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/maintenance/department/chapel)
-"qf" = (
-/obj/structure/marker_beacon/burgundy{
-	name = "landing marker"
-	},
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/mine/storage)
 "qg" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser{
@@ -6709,9 +6686,6 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/iron/textured,
 /area/mine/mechbay)
-"sT" = (
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/mine/storage)
 "sU" = (
 /obj/machinery/door/airlock/highsecurity{
 	name = "Service Hall Exit";
@@ -7477,9 +7451,9 @@
 /turf/open/floor/iron/white,
 /area/medical/virology)
 "uV" = (
-/obj/structure/ore_box,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/mine/storage)
+/area/icemoon/underground/explored)
 "uW" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron/white,
@@ -12220,9 +12194,9 @@
 	},
 /area/medical/chemistry)
 "IE" = (
-/obj/machinery/light/small/directional/west,
+/obj/structure/ore_box,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/mine/storage)
+/area/icemoon/underground/explored)
 "IF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43827,9 +43801,9 @@ ak
 ak
 ak
 ak
-dL
-sT
-dL
+HQ
+PG
+HQ
 ak
 ak
 ak
@@ -44084,9 +44058,9 @@ ak
 ak
 ak
 ak
-sT
-fY
-sT
+PG
+kK
+PG
 ak
 ak
 ak
@@ -44341,9 +44315,9 @@ ak
 ak
 ak
 ak
-dL
-sT
-dL
+HQ
+PG
+HQ
 ak
 ak
 ak
@@ -44598,9 +44572,9 @@ ak
 ak
 ak
 ak
-fY
-fY
-fY
+kK
+kK
+kK
 ak
 ak
 ak
@@ -44854,10 +44828,10 @@ ak
 ak
 ak
 ak
-fY
-fY
-fY
-fY
+kK
+kK
+kK
+kK
 ak
 ak
 ak
@@ -45111,10 +45085,10 @@ ak
 ak
 ak
 ak
-fY
-fY
-fY
-fY
+kK
+kK
+kK
+kK
 ak
 ak
 ak
@@ -45367,12 +45341,12 @@ ak
 ak
 ak
 ak
-fY
-fY
-fY
-fY
-fY
-fY
+kK
+kK
+kK
+kK
+kK
+kK
 ak
 ak
 ak
@@ -45622,14 +45596,14 @@ ak
 ak
 ak
 ak
-fY
+ak
+kK
 Gk
-fY
+kK
 Gk
-fY
-fY
-fY
-fY
+kK
+kK
+kK
 ak
 ak
 ak
@@ -45878,15 +45852,15 @@ ak
 ak
 ak
 ak
-fY
-fY
+ak
+kK
+kK
 SR
 Bh
 SR
-fY
-fY
-fY
-fY
+kK
+kK
+kK
 ak
 ak
 ak
@@ -46134,16 +46108,16 @@ ak
 ak
 ak
 ak
-fY
-fY
-fY
+ak
+kK
+kK
+kK
 RK
 QP
 RK
-fY
-fY
-fY
-Et
+kK
+kK
+kK
 ak
 ak
 ak
@@ -46391,16 +46365,16 @@ ak
 ak
 ak
 ak
-fY
-fY
+kK
+kK
+kK
 Hv
 Hv
 ER
 Hv
 Hv
-py
 fY
-Et
+kK
 Et
 Et
 ak
@@ -46648,14 +46622,14 @@ ak
 ak
 ak
 ak
-fY
-fY
+kK
+kK
+kK
 Hv
 xP
 hV
 zK
 Hv
-py
 fY
 kK
 kK
@@ -46905,6 +46879,7 @@ ak
 ak
 ak
 ak
+kK
 Hv
 Hv
 Hv
@@ -46912,7 +46887,6 @@ om
 wT
 Up
 Hv
-py
 fY
 kK
 kK
@@ -47162,6 +47136,7 @@ ak
 ak
 ak
 ak
+kK
 Hv
 ZB
 AF
@@ -47171,7 +47146,6 @@ AF
 Hv
 SR
 mH
-kK
 kK
 kK
 kK
@@ -47419,6 +47393,7 @@ ak
 ak
 ak
 ak
+kK
 Hv
 Hy
 fw
@@ -47427,8 +47402,7 @@ BJ
 QW
 aE
 YZ
-sT
-kK
+PG
 PG
 kK
 kK
@@ -47676,6 +47650,7 @@ ak
 ak
 ak
 ak
+kK
 Hv
 iw
 AF
@@ -47685,7 +47660,6 @@ AF
 Hv
 SR
 DR
-kK
 kK
 Et
 ak
@@ -47933,6 +47907,7 @@ ak
 ak
 ak
 ak
+kK
 Hv
 Hv
 Hv
@@ -47940,9 +47915,8 @@ iX
 uP
 Ja
 RK
-qf
-fY
-Et
+NW
+kK
 Et
 Et
 ak
@@ -48190,16 +48164,16 @@ ak
 ak
 ak
 ak
-fY
-sT
+kK
+kK
+PG
 Hv
 Sk
 KT
 LW
 RK
-fY
-fY
-Et
+kK
+kK
 ak
 ak
 ak
@@ -48446,17 +48420,17 @@ ak
 ak
 ak
 ak
-fY
-fY
-fY
-Hv
-hp
-hp
-hp
-Hv
-fY
-fY
+kK
 ak
+kK
+kK
+Hv
+hp
+hp
+hp
+Hv
+kK
+kK
 ak
 ak
 ak
@@ -48703,17 +48677,17 @@ ak
 ak
 ak
 ak
-fY
-fY
-fY
-IE
-uV
-uV
-uV
-IE
-fY
-fY
+kK
 ak
+kK
+kK
+uV
+IE
+IE
+IE
+uV
+kK
+kK
 ak
 ak
 ak
@@ -48960,16 +48934,16 @@ ak
 ak
 ak
 ak
-sT
-fY
-fY
-sT
-sT
-sT
-sT
-qf
-fY
-fY
+PG
+kK
+kK
+PG
+PG
+PG
+PG
+NW
+kK
+kK
 ak
 ak
 ak
@@ -49216,18 +49190,18 @@ ak
 ak
 ak
 ak
-sT
-sT
-sT
-fY
-fY
-fY
-fY
-fY
-fY
-fY
-sT
-fY
+PG
+PG
+PG
+kK
+kK
+kK
+kK
+kK
+kK
+kK
+PG
+kK
 ak
 ak
 ak
@@ -49472,20 +49446,20 @@ mO
 mO
 mO
 mO
-fY
-sT
-sT
-sT
-fY
+kK
+PG
+PG
+PG
+kK
 ak
 ak
 ak
 ak
 ak
-jx
-sT
-jx
-fY
+EO
+PG
+EO
+kK
 ak
 mO
 mO
@@ -49730,16 +49704,16 @@ mO
 mO
 mO
 mO
-qf
-sT
-fY
+NW
+PG
+kK
 ak
 ak
 ak
 ak
 ak
 ak
-eS
+lb
 zd
 FS
 mO
