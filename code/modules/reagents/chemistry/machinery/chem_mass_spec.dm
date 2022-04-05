@@ -66,8 +66,12 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 	if(panel_open)
 		. += mutable_appearance(icon, "[base_icon_state]_panel-o")
 
-/*			beaker swapping/attack code			*/
+/obj/machinery/chem_mass_spec/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
 
+/*			beaker swapping/attack code			*/
 /obj/machinery/chem_mass_spec/attackby(obj/item/item, mob/user, params)
 	if(processing_reagents)
 		to_chat(user, "<span class='notice'> The [src] is currently processing a batch!")
@@ -75,9 +79,6 @@ This will not clean any inverted reagents. Inverted reagents will still be corre
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
 		update_appearance()
-		return
-
-	if(default_unfasten_wrench(user, item))
 		return
 
 	if(istype(item, /obj/item/reagent_containers) && !(item.item_flags & ABSTRACT) && item.is_open_container())
