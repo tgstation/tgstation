@@ -482,6 +482,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		adminlog = TRUE,
 		ignorecap = TRUE
 	)
+
+	new /datum/supermatter_delamination(power = src.power)
+
 	qdel(src)
 
 
@@ -504,18 +507,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				continue //You can't pull someone nailed to the deck
 		step_towards(movable_atom,center)
 
-/obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
+/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5, has_changed_lifespan = TRUE)
 	var/turf/local_turf = pick(orange(anomalyrange, anomalycenter))
 	if(!local_turf)
 		return
 	switch(type)
 		if(FLUX_ANOMALY)
-			var/obj/effect/anomaly/flux/flux = new(local_turf, 300, FALSE)
-			flux.explosive = FALSE
+			var/obj/effect/anomaly/flux/flux = new(local_turf, has_changed_lifespan ? 300 : null, FALSE)
+			flux.explosive = !has_changed_lifespan
 		if(GRAVITATIONAL_ANOMALY)
-			new /obj/effect/anomaly/grav(local_turf, 250, FALSE)
+			new /obj/effect/anomaly/grav(local_turf, has_changed_lifespan ? 250 : null, FALSE)
 		if(PYRO_ANOMALY)
-			new /obj/effect/anomaly/pyro(local_turf, 200, FALSE)
+			new /obj/effect/anomaly/pyro(local_turf, has_changed_lifespan ? 200 : null, FALSE)
 
 /obj/machinery/proc/supermatter_zap(atom/zapstart = src, range = 5, zap_str = 4000, zap_flags = ZAP_SUPERMATTER_FLAGS, list/targets_hit = list(), zap_cutoff = 1500, power_level = 0, zap_icon = DEFAULT_ZAP_ICON_STATE)
 	if(QDELETED(zapstart))
