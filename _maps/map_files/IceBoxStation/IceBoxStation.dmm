@@ -13363,9 +13363,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/cargo/storage)
-"fzZ" = (
-/turf/closed/wall,
-/area/command/teleporter)
 "fAi" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/ordnance,
@@ -81506,14 +81503,14 @@ piu
 nQT
 olj
 olj
-vtF
-vtF
-vtF
+olj
+olj
+olj
 cUa
-fzZ
-fzZ
-fzZ
-fzZ
+cUa
+cUa
+cUa
+cUa
 cUa
 aJq
 lUZ
