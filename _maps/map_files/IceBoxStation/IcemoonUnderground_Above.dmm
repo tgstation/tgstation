@@ -16784,9 +16784,9 @@
 /turf/open/floor/plating,
 /area/maintenance/department/crew_quarters/bar)
 "US" = (
-/obj/machinery/computer/secure_data,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/machinery/computer/med_data,
 /turf/open/floor/iron/grimy,
 /area/security/detectives_office)
 "UT" = (
