@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(navbeacons)     //list of all bot nagivation beacons, used for
 GLOBAL_LIST_EMPTY(teleportbeacons)         //list of all tracking beacons used by teleporters
 GLOBAL_LIST_EMPTY(deliverybeacons)         //list of all MULEbot delivery beacons.
 GLOBAL_LIST_EMPTY(deliverybeacontags)     //list of all tags associated with delivery beacons.
-GLOBAL_LIST_EMPTY(wayfindingbeacons)     //list of all navigation beacons used by wayfinding pinpointers
+GLOBAL_LIST_EMPTY(wayfindingbeacons)     //list of all navigation beacons used by navigate verb
 GLOBAL_LIST_EMPTY(nuke_list)
 GLOBAL_LIST_EMPTY(alarmdisplay)         //list of all machines or programs that can display station alerts
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity) //list of all singularities on the station
@@ -51,3 +51,6 @@ GLOBAL_LIST_EMPTY(alert_consoles) // Station alert consoles, /obj/machinery/comp
 
 GLOBAL_LIST_EMPTY(air_scrub_names) // Name list of all air scrubbers
 GLOBAL_LIST_EMPTY(air_vent_names) // Name list of all air vents
+
+GLOBAL_LIST_EMPTY(roundstart_station_borgcharger_areas) // List of area names of roundstart station cyborg rechargers, for the low charge/no charge cyborg screen alert tooltips.
+GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas) // List of area names of roundstart station mech rechargers, for the low charge/no charge mech screen alert tooltips.

@@ -220,6 +220,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
+	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any manipulator and not just a micro-manipulator.
+	var/base_name
 
 /obj/item/stock_parts/Initialize(mapload)
 	. = ..()
@@ -248,6 +250,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	desc = "A tiny little manipulator used in the construction of certain devices."
 	icon_state = "micro_mani"
 	custom_materials = list(/datum/material/iron=30)
+	base_name = "manipulator"
 
 /obj/item/stock_parts/micro_laser
 	name = "micro-laser"

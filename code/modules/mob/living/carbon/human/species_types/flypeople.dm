@@ -1,7 +1,7 @@
 /datum/species/fly
 	name = "Flyperson"
 	plural_form = "Flypeople"
-	id = SPECIES_FLY
+	id = SPECIES_FLYPERSON
 	say_mod = "buzzes"
 	species_traits = list(HAS_FLESH, HAS_BONE, TRAIT_ANTENNAE)
 	inherent_traits = list(
@@ -26,6 +26,15 @@
 	mutantstomach = /obj/item/organ/stomach/fly
 	mutantappendix = /obj/item/organ/appendix/fly
 	mutant_organs = list(/obj/item/organ/fly, /obj/item/organ/fly/groin)
+
+	bodypart_overrides = list(
+		BODY_ZONE_L_ARM = /obj/item/bodypart/l_arm/fly,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/r_arm/fly,
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/fly,
+		BODY_ZONE_L_LEG = /obj/item/bodypart/l_leg/fly,
+		BODY_ZONE_R_LEG = /obj/item/bodypart/r_leg/fly,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
+	)
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, delta_time, times_fired)
 	if(chem.type == /datum/reagent/toxin/pestkiller)

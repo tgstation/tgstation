@@ -60,33 +60,36 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	if(in_range(user, src) || isobserver(user))
 		. += span_notice("The status display reads: Frying at <b>[fry_speed*100]%</b> speed.<br>Using <b>[oil_use]</b> units of oil per second.")
 
-/obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/reagent_containers/pill))
+/obj/machinery/deepfryer/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
+	if(istype(weapon, /obj/item/reagent_containers/pill))
 		if(!reagents.total_volume)
-			to_chat(user, span_warning("There's nothing to dissolve [I] in!"))
+			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
-		user.visible_message(span_notice("[user] drops [I] into [src]."), span_notice("You dissolve [I] in [src]."))
-		I.reagents.trans_to(src, I.reagents.total_volume, transfered_by = user)
-		qdel(I)
+		user.visible_message(span_notice("[user] drops [weapon] into [src]."), span_notice("You dissolve [weapon] in [src]."))
+		weapon.reagents.trans_to(src, weapon.reagents.total_volume, transfered_by = user)
+		qdel(weapon)
 		return
 	if(!reagents.has_reagent(/datum/reagent/consumable/cooking_oil))
 		to_chat(user, span_warning("[src] has no cooking oil to fry with!"))
 		return
-	if(I.resistance_flags & INDESTRUCTIBLE)
-		to_chat(user, span_warning("You don't feel it would be wise to fry [I]..."))
+	if(weapon.resistance_flags & INDESTRUCTIBLE)
+		to_chat(user, span_warning("You don't feel it would be wise to fry [weapon]..."))
 		return
-	if(istype(I, /obj/item/food/deepfryholder))
+	if(istype(weapon, /obj/item/food/deepfryholder))
 		to_chat(user, span_userdanger("Your cooking skills are not up to the legendary Doublefry technique."))
 		return
-	if(default_unfasten_wrench(user, I))
-		return
-	else if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off" ,I)) //where's the open maint panel icon?!
+	if(default_deconstruction_screwdriver(user, "fryer_off", "fryer_off", weapon)) //where's the open maint panel icon?!
 		return
 	else
-		if(is_type_in_typecache(I, deepfry_blacklisted_items) || is_type_in_typecache(I, GLOB.oilfry_blacklisted_items) || SEND_SIGNAL(I, COMSIG_CONTAINS_STORAGE) || HAS_TRAIT(I, TRAIT_NODROP) || (I.item_flags & (ABSTRACT | DROPDEL)))
+		if(is_type_in_typecache(weapon, deepfry_blacklisted_items) || is_type_in_typecache(weapon, GLOB.oilfry_blacklisted_items) || SEND_SIGNAL(weapon, COMSIG_CONTAINS_STORAGE) || HAS_TRAIT(weapon, TRAIT_NODROP) || (weapon.item_flags & (ABSTRACT | DROPDEL)))
 			return ..()
-		else if(!frying && user.transferItemToLoc(I, src))
-			fry(I, user)
+		else if(!frying && user.transferItemToLoc(weapon, src))
+			fry(weapon, user)
 
 /obj/machinery/deepfryer/process(delta_time)
 	..()
