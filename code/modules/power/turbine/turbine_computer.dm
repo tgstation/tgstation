@@ -4,8 +4,8 @@
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
 	circuit = /obj/item/circuitboard/computer/turbine_computer
-	///Reference of the connected machine to this computer
-	var/obj/machinery/power/turbine/core_rotor/main_control
+	///Weakref of the connected machine to this computer
+	var/datum/weakref/turbine_core
 	///Easy way to connect a computer and a turbine roundstart by setting an id on both this and the core_rotor
 	var/mapping_id
 
@@ -35,7 +35,7 @@
 	if(!istype(multitool.buffer, /obj/machinery/power/turbine/core_rotor))
 		to_chat(user, span_notice("Wrong machine type in [multitool] buffer..."))
 		return
-	if(main_control)
+	if(turbine_core)
 		to_chat(user, span_notice("Changing [src] bluespace network..."))
 	if(!do_after(user, 0.2 SECONDS, src))
 		return
@@ -45,14 +45,14 @@
 	return TRUE
 
 /obj/machinery/computer/turbine_computer/proc/register_machine(machine)
-	main_control = machine
-	RegisterSignal(main_control, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
+	turbine_core = WEAKREF(machine)
+	RegisterSignal(machine, COMSIG_PARENT_QDELETING, .proc/unregister_machine)
 
 /obj/machinery/computer/turbine_computer/proc/unregister_machine()
 	SIGNAL_HANDLER
-	if(main_control)
+	if(turbine_core)
+		var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core.resolve()
 		UnregisterSignal(main_control, COMSIG_PARENT_QDELETING)
-		main_control = null
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -62,6 +62,8 @@
 
 /obj/machinery/computer/turbine_computer/ui_data(mob/user)
 	var/list/data = list()
+
+	var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core.resolve()
 
 	data["connected"] = main_control ? TRUE : FALSE
 	if(!main_control)
@@ -90,6 +92,7 @@
 
 	switch(action)
 		if("toggle_power")
+			var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core?.resolve()
 			if(!main_control || !main_control.all_parts_connected || main_control.rpm > 1000)
 				return TRUE
 			if(!main_control.activate_parts(usr, check_only = TRUE))
@@ -100,6 +103,7 @@
 			. = TRUE
 		if("regulate")
 			var/intake_size = text2num(params["regulate"])
+			var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core?.resolve()
 			if(intake_size == null || !main_control)
 				return
 			main_control.intake_regulator = clamp(intake_size, 0.01, 1)
