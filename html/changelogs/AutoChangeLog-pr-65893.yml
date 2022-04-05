@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes: 
+  - expansion: "Metastation's Drone Room is now its own area, with its APC and Air Alarm, instead of sharing an area with the maintenance. It has otherwise remained largely unchanged, though some extra wall amenities were afforded to it."
