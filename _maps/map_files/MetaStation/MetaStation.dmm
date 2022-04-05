@@ -16653,9 +16653,6 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron,
 /area/engineering/atmos)
-"eGX" = (
-/turf/closed/wall,
-/area/service/chapel/storage)
 "eGZ" = (
 /turf/open/floor/iron,
 /area/cargo/sorting)
@@ -37761,12 +37758,6 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/open/floor/plating,
 /area/maintenance/starboard/lesser)
-"mAG" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
-/area/maintenance/aft/lesser)
 "mAI" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
@@ -86991,7 +86982,7 @@ gZp
 krK
 osv
 osv
-mAG
+osv
 lox
 oPi
 gZp
@@ -87248,7 +87239,7 @@ gZp
 eTz
 gZp
 far
-kkO
+far
 gZp
 kAa
 eQf
@@ -87505,7 +87496,7 @@ gZp
 rXt
 gZp
 gZp
-wrP
+gZp
 gZp
 ckh
 gZp
@@ -88543,7 +88534,7 @@ gZp
 lMJ
 aaa
 aaa
-eGX
+iRA
 iFJ
 iFJ
 iFJ
@@ -88800,7 +88791,7 @@ gZp
 iRA
 iRA
 iRA
-eGX
+iRA
 pvR
 akT
 aLb
@@ -89057,7 +89048,7 @@ fpF
 jZv
 huj
 fqt
-eGX
+iRA
 mvJ
 wkc
 mvJ
