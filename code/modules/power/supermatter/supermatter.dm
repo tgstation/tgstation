@@ -249,6 +249,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/freonbonus = 0
 
+	var/anomaly_event = TRUE
 
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
@@ -485,7 +486,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		ignorecap = TRUE
 	)
 
-	if(!is_tesla && is_station_level(loc.z) && is_main_engine && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
+	if(!is_tesla && is_station_level(loc.z) && is_main_engine && anomaly_event)
 		new /datum/supermatter_delamination(power = src.power)
 
 	qdel(src)
@@ -678,6 +679,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	plane = GAME_PLANE_UPPER
 	moveable = TRUE
 	psyOverlay = /obj/overlay/psy/shard
+	anomaly_event = FALSE
 
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
