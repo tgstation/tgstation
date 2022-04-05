@@ -21,6 +21,8 @@
 	var/datum/bounty/civilian_bounty
 	///If player is currently picking a civilian bounty to do, these options are held here to prevent soft-resetting through the UI.
 	var/list/datum/bounty/bounties
+	///Can this account be replaced? Set to true for default IDs not recognized by the station.
+	var/replaceable = FALSE
 	///Cooldown timer on replacing a civilain bounty. Bounties can only be replaced once every 5 minutes.
 	COOLDOWN_DECLARE(bounty_timer)
 

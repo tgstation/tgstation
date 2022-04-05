@@ -675,14 +675,6 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/board/accounting
-	name = "Machine Design (Account Registration Device)"
-	desc = "The circuit board for a Account Registration Device."
-	id = "accounting"
-	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_SERVICE
-	build_path = /obj/item/circuitboard/machine/accounting
-	category = list ("Misc. Machinery")
-
 //Hypertorus fusion reactor designs
 
 /datum/design/board/HFR_core
