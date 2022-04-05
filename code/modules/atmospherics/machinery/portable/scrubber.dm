@@ -214,9 +214,11 @@
 
 	return ..()
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user, W))
+/obj/machinery/portable_atmospherics/scrubber/huge/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_unfasten_wrench(user, tool))
 		if(!movable)
 			on = FALSE
-	else
-		return ..()
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+	return FALSE
+

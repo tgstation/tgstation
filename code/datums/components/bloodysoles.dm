@@ -262,7 +262,7 @@
 		var/obj/item/bodypart/affecting = X
 		if(affecting.body_part == LEG_RIGHT || affecting.body_part == LEG_LEFT)
 			if(!affecting.bodypart_disabled)
-				FP.species_types |= affecting.species_id
+				FP.species_types |= affecting.limb_id
 				break
 
 

@@ -31,7 +31,7 @@
 	use_skintones = TRUE
 	mutantheart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
-	limbs_id = "human"
+	examine_limb_id = SPECIES_HUMAN
 	skinned_type = /obj/item/stack/sheet/animalhide/human
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
@@ -51,7 +51,7 @@
 /datum/species/vampire/spec_life(mob/living/carbon/human/vampire, delta_time, times_fired)
 	. = ..()
 	if(istype(vampire.loc, /obj/structure/closet/crate/coffin))
-		vampire.heal_overall_damage(2 * delta_time, 2 * delta_time, 0, BODYPART_ORGANIC)
+		vampire.heal_overall_damage(2 * delta_time, 2 * delta_time, 0, BODYTYPE_ORGANIC)
 		vampire.adjustToxLoss(-2 * delta_time)
 		vampire.adjustOxyLoss(-2 * delta_time)
 		vampire.adjustCloneLoss(-2 * delta_time)

@@ -751,7 +751,7 @@
 	if(dir != direction && !strafe || forcerotate || keyheld)
 		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
 			playsound(src,turnsound,40,TRUE)
-		set_dir_mecha(direction)
+		setDir(direction)
 		return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
@@ -760,7 +760,7 @@
 	if(phasing)
 		use_power(phasing_energy_drain)
 	if(strafe)
-		set_dir_mecha(olddir)
+		setDir(olddir)
 
 
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
@@ -1038,7 +1038,7 @@
 	newoccupant.update_mouse_pointer()
 	add_fingerprint(newoccupant)
 	log_message("[newoccupant] moved in as pilot.", LOG_MECHA)
-	set_dir_mecha(dir_in)
+	setDir(dir_in)
 	playsound(src, 'sound/machines/windowdoor.ogg', 50, TRUE)
 	if(!internal_damage)
 		SEND_SOUND(newoccupant, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1085,7 +1085,7 @@
 	brain_mob.reset_perspective(src)
 	brain_mob.remote_control = src
 	brain_mob.update_mouse_pointer()
-	set_dir_mecha(dir_in)
+	setDir(dir_in)
 	log_message("[brain_obj] moved in as pilot.", LOG_MECHA)
 	if(!internal_damage)
 		SEND_SOUND(brain_obj, sound('sound/mecha/nominal.ogg',volume=50))
@@ -1151,7 +1151,7 @@
 			remove_occupant(ejector)
 		mmi.set_mecha(null)
 		mmi.update_appearance()
-	set_dir_mecha(dir_in)
+	setDir(dir_in)
 	return ..()
 
 
@@ -1309,7 +1309,7 @@
 	return COMPONENT_BLOCK_LIGHT_EATER
 
 /// Sets the direction of the mecha and all of its occcupents, required for FOV. Alternatively one could make a recursive contents registration and register topmost direction changes in the fov component
-/obj/vehicle/sealed/mecha/proc/set_dir_mecha(new_dir)
-	setDir(new_dir)
+/obj/vehicle/sealed/mecha/setDir(newdir)
+	. = ..()
 	for(var/mob/living/occupant as anything in occupants)
-		occupant.setDir(new_dir)
+		occupant.setDir(newdir)

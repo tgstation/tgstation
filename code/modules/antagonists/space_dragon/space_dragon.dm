@@ -6,7 +6,10 @@
 	show_in_antagpanel = TRUE
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
+	/// All space carps created by this antagonist space dragon
 	var/list/datum/mind/carp = list()
+	/// The innate ability to summon rifts
+	var/datum/action/innate/summon_rift/rift_ability
 
 /datum/antagonist/space_dragon/greet()
 	. = ..()
@@ -26,6 +29,12 @@
 /datum/antagonist/space_dragon/on_gain()
 	forge_objectives()
 	. = ..()
+	rift_ability = new
+	rift_ability.Grant(owner.current)
+
+/datum/antagonist/space_dragon/on_removal()
+	. = ..()
+	rift_ability.Remove(owner.current)
 
 /datum/antagonist/space_dragon/get_preview_icon()
 	var/icon/icon = icon('icons/mob/spacedragon.dmi', "spacedragon")

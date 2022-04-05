@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - expansion: "The library computers have received a graphical and functional upgrade. Better inventory management, poster printing, bible viewing, and well, TGUI."
-  - server: "Bookcases will generate way more db calls during init then is normal. If this causes issues please bug me and I'll work out a solution"
-  - bugfix: "Library consoles and a few other things will no longer look \"on\" even when their power is cut."
