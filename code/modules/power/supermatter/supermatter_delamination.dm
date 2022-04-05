@@ -34,9 +34,10 @@
 		var/anomaly_to_spawn = pick_weight(anomaly_types)
 		var/anomaly_location = pick_n_take(anomaly_places)
 		var/next_spawn = rand(5 SECONDS, 10 SECONDS)
-		addtimer(CALLBACK(src, .proc/spawn_anomaly, anomaly_location, anomaly_to_spawn), current_spawn)
+		var/extended_spawn = 0
 		if(DT_PROB(1, next_spawn))
-			current_spawn += rand(5 MINUTES, 15 MINUTES)
+			extended_spawn = rand(5 MINUTES, 15 MINUTES)
+		addtimer(CALLBACK(src, .proc/spawn_anomaly, anomaly_location, anomaly_to_spawn), current_spawn + extended_spawn)
 		current_spawn += next_spawn
 
 /datum/supermatter_delamination/proc/spawn_anomaly(location, type)
