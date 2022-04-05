@@ -24699,6 +24699,7 @@
 	pixel_x = 35
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/command/heads_quarters/hos)
 "kZL" = (
@@ -28036,12 +28037,13 @@
 /obj/machinery/door/airlock/security{
 	name = "Security Office"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/any/security/general,
+/obj/effect/mapping_helpers/airlock/access/any/security/detective,
 /turf/open/floor/iron/dark/textured,
 /area/security/office)
 "mRQ" = (
