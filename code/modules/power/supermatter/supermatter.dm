@@ -468,11 +468,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			created_singularity.energy = 800
 			created_singularity.consume(src)
 			return //No boom for me sir
+	var/is_tesla = FALSE
 	if(power > POWER_PENALTY_THRESHOLD)
 		investigate_log("has spawned additional energy balls.", INVESTIGATE_ENGINE)
 		if(local_turf)
 			var/obj/energy_ball/created_tesla = new(local_turf)
 			created_tesla.energy = 200 //Gets us about 9 balls
+			is_tesla = TRUE
 	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(origin = src,
 		devastation_range = explosion_power * max(gasmix_power_ratio, 0.205) * 0.5,
@@ -483,7 +485,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		ignorecap = TRUE
 	)
 
-	new /datum/supermatter_delamination(power = src.power)
+	if(!is_tesla)
+		new /datum/supermatter_delamination(power = src.power)
 
 	qdel(src)
 
