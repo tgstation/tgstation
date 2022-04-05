@@ -729,7 +729,9 @@
 /datum/action/cooldown/Destroy()
 	. = ..()
 	QDEL_LIST(sequence_actions)
-	QDEL_LIST(initialized_actions)
+	for(var/datum/action/cooldown/ability in initialized_actions)
+		QDEL_NULL(ability)
+	initialized_actions.Cut()
 
 /datum/action/cooldown/Grant(mob/M)
 	..()
