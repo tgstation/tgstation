@@ -10048,7 +10048,6 @@
 /turf/open/floor/iron,
 /area/hallway/primary/central/fore)
 "crK" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
 	},
@@ -27248,10 +27247,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "fGc" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "fGi" = (
@@ -45920,10 +45919,10 @@
 /turf/open/floor/carpet/red,
 /area/hallway/secondary/service)
 "leT" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "lfd" = (
@@ -57117,7 +57116,6 @@
 	dir = 4
 	},
 /obj/machinery/meter,
-/obj/structure/grille,
 /turf/closed/wall/r_wall,
 /area/engineering/atmos)
 "osk" = (
@@ -64724,7 +64722,6 @@
 /area/medical/surgery/aft)
 "qJT" = (
 /obj/machinery/meter,
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
 	dir = 4
 	},
@@ -79175,7 +79172,6 @@
 /turf/open/floor/iron,
 /area/security/office)
 "uYg" = (
-/obj/structure/grille,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
@@ -110827,17 +110823,17 @@ uYg
 vFd
 abj
 vFd
-cHo
+fGc
 jEV
-tjL
+leT
 vFd
-cHo
+fGc
 jEV
-tjL
+leT
 vFd
-cHo
+fGc
 jEV
-tjL
+leT
 vFd
 yfC
 vFd
