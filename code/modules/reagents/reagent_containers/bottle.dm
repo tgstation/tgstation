@@ -398,7 +398,7 @@
 	list_reagents = list(/datum/reagent/consumable/sugar = 30)
 
 /obj/item/reagent_containers/glass/bottle/sacid
-	name = "sulphuric acid bottle"
+	name = "sulfuric acid bottle"
 	list_reagents = list(/datum/reagent/toxin/acid = 30)
 
 /obj/item/reagent_containers/glass/bottle/welding_fuel
