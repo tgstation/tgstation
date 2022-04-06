@@ -7,23 +7,26 @@
 				"a": "ah",
 				"c": "th",
 				"i": "ks",
-				"r": " CRACK "
+				"m": "nth"
 			},
 			"uncommon": {
 				" ": " endless... ",
 				"H": " THE HANDS... ",
 				"h": " BRIGHT ",
-				"s": " LEAK "
+				"s": " LEAK ",
+				"r": " CRACK "
 			}
 		},
 		"string_replacements": [
 			"'",
 			"br",
 			"th",
-			"see"
+			"see",
+			"etch"
 		],
 		"string_additions": [
-			"ah"
+			"ah",
+			"wth"
 		]
 	}
 }

@@ -363,7 +363,6 @@
 	SEND_SIGNAL(sac_target, COMSIG_CLEAR_MOOD_EVENT, "shadow_realm")
 
 	// Wherever we end up, we sure as hell won't be able to explain
-	sac_target.add_speech_impediment(40 SECONDS, /datum/status_effect/speech/slurring/normal)
 	sac_target.add_speech_impediment(40 SECONDS, /datum/status_effect/speech/slurring/heretic)
 	sac_target.add_speech_impediment(40 SECONDS, /datum/status_effect/speech/stutter)
 

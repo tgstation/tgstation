@@ -148,8 +148,10 @@
 	string_additions = speech_changes["string_additions"]
 
 /datum/status_effect/speech/slurring/apply_speech(original_char, modified_char)
-	if(prob(common_prob) && (modified_char in common_replacements))
-		var/to_replace = common_replacements[modified_char]
+
+	var/lower_char = lowertext(modified_char)
+	if(prob(common_prob) && (lower_char in common_replacements))
+		var/to_replace = common_replacements[lower_char]
 		if(islist(to_replace))
 			modified_char = pick(to_replace)
 		else
@@ -205,8 +207,8 @@
 
 /datum/status_effect/speech/slurring/heretic
 	id = "heretic_slurring"
-	common_prob = 40
+	common_prob = 50
 	uncommon_prob = 20
-	replacement_prob = 10
-	doubletext_prob = 0
+	replacement_prob = 30
+	doubletext_prob = 5
 	text_modification_file = "slurring_heretic_text.json"
