@@ -213,6 +213,8 @@
 	var/table_smacks_left = 3
 
 /obj/item/hand_item/slapper/attack(mob/living/slapped, mob/living/carbon/human/user)
+	SEND_SIGNAL(user, COMSIG_LIVING_SLAP_MOB, slapped)
+
 	if(ishuman(slapped))
 		var/mob/living/carbon/human/human_slapped = slapped
 		human_slapped.dna?.species?.stop_wagging_tail(slapped)
